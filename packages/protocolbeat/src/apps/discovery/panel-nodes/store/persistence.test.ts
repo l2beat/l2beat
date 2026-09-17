@@ -64,7 +64,7 @@ describe(mergeNodeStoreState.name, () => {
       currentState,
     )
 
-    expect(result.projectId).toEqual('')
+    expect(result.projectId).toBe('')
     expect(result.nodes).toEqual([])
     expect(result.userPreferences).toEqual(USER_PREFERENCES)
   })

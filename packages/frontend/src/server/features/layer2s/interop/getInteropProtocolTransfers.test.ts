@@ -93,10 +93,10 @@ describe(toInteropProtocolTransferDetailsItem.name, () => {
       { name: 'Across', href: '/interop/protocols/across' },
     )
 
-    expect(result.srcTxHashHref).toEqual('https://etherscan.io/tx/0xsrc')
-    expect(result.dstTxHashHref).toEqual('https://arbiscan.io/tx/0xdst')
-    expect(result.srcTokenIconUrl).toEqual('https://token/eth.png')
-    expect(result.dstTokenIconUrl).toEqual('https://token/eth.png')
+    expect(result.srcTxHashHref).toBe('https://etherscan.io/tx/0xsrc')
+    expect(result.dstTxHashHref).toBe('https://arbiscan.io/tx/0xdst')
+    expect(result.srcTokenIconUrl).toBe('https://token/eth.png')
+    expect(result.dstTokenIconUrl).toBe('https://token/eth.png')
   })
 
   it('builds token hrefs from the abstract token issuer and symbol', () => {
@@ -116,8 +116,8 @@ describe(toInteropProtocolTransferDetailsItem.name, () => {
       { name: 'Across', href: '/interop/protocols/across' },
     )
 
-    expect(result.srcTokenHref).toEqual('/interop/tokens/eth/circle/usdc')
-    expect(result.dstTokenHref).toEqual('/interop/tokens/eth/circle/usdc')
+    expect(result.srcTokenHref).toBe('/interop/tokens/eth/circle/usdc')
+    expect(result.dstTokenHref).toBe('/interop/tokens/eth/circle/usdc')
   })
 
   it('does not link tokens we have no abstract token record for', () => {
@@ -128,8 +128,8 @@ describe(toInteropProtocolTransferDetailsItem.name, () => {
       { name: 'Across', href: '/interop/protocols/across' },
     )
 
-    expect(result.srcTokenHref).toEqual(undefined)
-    expect(result.dstTokenHref).toEqual(undefined)
+    expect(result.srcTokenHref).toBe(undefined)
+    expect(result.dstTokenHref).toBe(undefined)
   })
 
   it('does not link the shared unknown token', () => {
@@ -152,8 +152,8 @@ describe(toInteropProtocolTransferDetailsItem.name, () => {
       { name: 'Across', href: '/interop/protocols/across' },
     )
 
-    expect(result.srcTokenHref).toEqual(undefined)
-    expect(result.dstTokenHref).toEqual(undefined)
+    expect(result.srcTokenHref).toBe(undefined)
+    expect(result.dstTokenHref).toBe(undefined)
   })
 
   it('keeps transfer item valid when tx hashes are missing', () => {
@@ -185,11 +185,11 @@ describe(toInteropProtocolTransferDetailsItem.name, () => {
       { name: 'Across', href: '/interop/protocols/across' },
     )
 
-    expect(result.srcTxHash).toEqual(undefined)
-    expect(result.srcTxHashHref).toEqual(undefined)
-    expect(result.dstTxHash).toEqual(undefined)
-    expect(result.dstTxHashHref).toEqual(undefined)
-    expect(result.duration).toEqual(undefined)
+    expect(result.srcTxHash).toBe(undefined)
+    expect(result.srcTxHashHref).toBe(undefined)
+    expect(result.dstTxHash).toBe(undefined)
+    expect(result.dstTxHashHref).toBe(undefined)
+    expect(result.duration).toBe(undefined)
   })
 })
 

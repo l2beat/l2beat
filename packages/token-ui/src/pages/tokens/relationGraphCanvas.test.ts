@@ -70,7 +70,7 @@ describe(drawRelationGraph.name, () => {
     if (symbol === undefined || cluster === undefined) {
       throw new Error('Expected both symbol and cluster labels to be drawn')
     }
-    expect(cluster.y <= symbol.y - 8).toEqual(true)
+    expect(cluster.y <= symbol.y - 8).toBe(true)
   })
 })
 
@@ -96,8 +96,8 @@ describe(getLinkStyle.name, () => {
     )
 
     for (const style of [hoveredDirectly, hoveredViaEndpoint]) {
-      expect(style.opacity).toEqual(0.95)
-      expect(style.width).toEqual(3)
+      expect(style.opacity).toBe(0.95)
+      expect(style.width).toBe(3)
     }
   })
 
@@ -117,7 +117,7 @@ describe(getLinkStyle.name, () => {
         link,
         styleInputs({ focus: { nodeIds: new Set(), relationIds: new Set() } }),
       ).opacity,
-    ).toEqual(0.08)
+    ).toBe(0.08)
   })
 
   it('recolors links by conflict state when anomalies are highlighted', () => {
@@ -146,13 +146,13 @@ describe(getNodeRingOpacity.name, () => {
         node,
         styleInputs({ hovered: { type: 'node', id: node.data.id } }),
       ),
-    ).toEqual(0.8)
+    ).toBe(0.8)
     expect(
       getNodeRingOpacity(
         node,
         styleInputs({ selection: { type: 'node', id: node.data.id } }),
       ),
-    ).toEqual(1)
+    ).toBe(1)
   })
 
   it('shows a softer ring on the endpoints of a selected relation', () => {
@@ -167,19 +167,19 @@ describe(getNodeRingOpacity.name, () => {
           },
         }),
       ),
-    ).toEqual(0.7)
+    ).toBe(0.7)
   })
 
   it('hides the ring otherwise', () => {
-    expect(getNodeRingOpacity(node, styleInputs({}))).toEqual(0)
+    expect(getNodeRingOpacity(node, styleInputs({}))).toBe(0)
   })
 })
 
 describe(nodeVisualScreenScale.name, () => {
   it('scales nodes with the world until they reach constant screen size', () => {
-    expect(nodeVisualScreenScale(0.5)).toEqual(0.5)
-    expect(nodeVisualScreenScale(1.2)).toEqual(1.2)
-    expect(nodeVisualScreenScale(4)).toEqual(1.2)
+    expect(nodeVisualScreenScale(0.5)).toBe(0.5)
+    expect(nodeVisualScreenScale(1.2)).toBe(1.2)
+    expect(nodeVisualScreenScale(4)).toBe(1.2)
   })
 })
 

@@ -49,7 +49,7 @@ describe(TimeLoop.name, () => {
       const secondIntervalHandle = timeLoop.start()
       clearInterval(intervalHandle)
 
-      expect(secondIntervalHandle).toEqual(undefined)
+      expect(secondIntervalHandle).toBe(undefined)
     })
   })
 

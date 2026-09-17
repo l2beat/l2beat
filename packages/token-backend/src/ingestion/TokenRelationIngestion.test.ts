@@ -56,7 +56,7 @@ describe(TokenRelationIngestion.name, () => {
       bridgeType: 'lockAndMint',
       lockedToken: 'B',
     })
-    expect(evidenceTransferId(inserted)).toEqual('lock-mint')
+    expect(evidenceTransferId(inserted)).toBe('lock-mint')
     expect(historyInsert).toHaveBeenCalledTimes(1)
     expect(historyInsert.mock.calls[0][0]).toMatchObject({
       source: 'ingestion',
@@ -355,10 +355,10 @@ describe(TokenRelationIngestion.name, () => {
 
     expect(insert).toHaveBeenCalledTimes(1)
     const inserted = insert.mock.calls[0][0] as TokenRelationRecord
-    expect(inserted.bridgeType).toEqual('lockAndMint')
+    expect(inserted.bridgeType).toBe('lockAndMint')
     const evidence = inserted.transfer as Record<string, unknown>
-    expect('srcWasBurned' in evidence).toEqual(false)
-    expect(evidence['dstWasMinted']).toEqual(true)
+    expect('srcWasBurned' in evidence).toBe(false)
+    expect(evidence['dstWasMinted']).toBe(true)
   })
 
   it('ignores swap-like and unclassifiable transfers', async () => {
@@ -458,7 +458,7 @@ describe(TokenRelationIngestion.name, () => {
 
     expect(insert).toHaveBeenCalledTimes(1)
     const inserted = insert.mock.calls[0][0] as TokenRelationRecord
-    expect(evidenceTransferId(inserted)).toEqual('first')
+    expect(evidenceTransferId(inserted)).toBe('first')
   })
 
   it('pages through transfers and advances the cursor after every batch', async () => {

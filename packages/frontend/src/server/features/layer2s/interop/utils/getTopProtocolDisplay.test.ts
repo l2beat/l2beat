@@ -29,7 +29,7 @@ describe(getTopProtocolDisplay.name, () => {
       new Map(),
     )
 
-    expect(result).toEqual(undefined)
+    expect(result).toBe(undefined)
   })
 })
 

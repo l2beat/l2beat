@@ -98,7 +98,7 @@ describe('searchRouter', () => {
       const result = await caller.all('bitcoin')
 
       expect(result.abstractTokens.length).toBeGreaterThan(0)
-      expect(result.abstractTokens[0]?.symbol).toEqual('Bitcoin')
+      expect(result.abstractTokens[0]?.symbol).toBe('Bitcoin')
       expect(mockGetAllDeployed).toHaveBeenCalledWith()
       expect(mockGetAllAbstract).toHaveBeenCalledWith()
       expect(mockGetAllChains).toHaveBeenCalledWith()
@@ -204,7 +204,7 @@ describe('searchRouter', () => {
       const result = await caller.all('ethereum')
 
       expect(result.chains.length).toBeGreaterThan(0)
-      expect(result.chains[0]?.name).toEqual('ethereum')
+      expect(result.chains[0]?.name).toBe('ethereum')
     })
   })
 })

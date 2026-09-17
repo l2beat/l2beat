@@ -102,7 +102,7 @@ describe(InteropEventStore.name, () => {
     await store.start()
 
     expect(store.getEvents(CreatorEvent.type)).toEqual([event])
-    expect(store.derivedTxStore.getCount()).toEqual(0)
+    expect(store.derivedTxStore.getCount()).toBe(0)
   })
 
   it('removes derived tx requests for matched and unsupported events', async () => {
@@ -124,7 +124,7 @@ describe(InteropEventStore.name, () => {
       unsupported: [],
     })
 
-    expect(store.derivedTxStore.getCount()).toEqual(0)
+    expect(store.derivedTxStore.getCount()).toBe(0)
   })
 
   it('removes expired derived tx requests', async () => {
@@ -141,7 +141,7 @@ describe(InteropEventStore.name, () => {
     await store.saveNewEvents([event])
     await store.deleteExpired(UnixTime(10))
 
-    expect(store.derivedTxStore.getCount()).toEqual(0)
+    expect(store.derivedTxStore.getCount()).toBe(0)
   })
 
   it('removes derived tx requests when deleting all events for a plugin', async () => {
@@ -158,7 +158,7 @@ describe(InteropEventStore.name, () => {
     await store.saveNewEvents([event])
     await store.deleteAllForPlugin(plugin.name)
 
-    expect(store.derivedTxStore.getCount()).toEqual(0)
+    expect(store.derivedTxStore.getCount()).toBe(0)
   })
 
   it('removes evicted derived tx requests when the in-memory event cap is hit', async () => {
@@ -205,7 +205,7 @@ describe(InteropEventStore.name, () => {
     await store.updateDerivedFulfilled([event])
 
     expect(updateDerivedFulfilled).toHaveBeenCalledWith([event.eventId])
-    expect(store.derivedTxStore.getCount()).toEqual(0)
+    expect(store.derivedTxStore.getCount()).toBe(0)
   })
 })
 

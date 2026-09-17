@@ -31,7 +31,7 @@ describe('deployedTokensRouter', () => {
         chain: 'ethereum',
         address: '0x123',
       })
-      expect(result).toEqual(null)
+      expect(result).toBe(null)
       expect(mockFindByChainAndAddress).toHaveBeenCalledWith({
         chain: 'ethereum',
         address: '0x123',
@@ -97,7 +97,7 @@ describe('deployedTokensRouter', () => {
         address: '0x123',
       })
 
-      expect(result).toEqual(false)
+      expect(result).toBe(false)
     })
 
     it('returns true when token exists', async () => {
@@ -120,7 +120,7 @@ describe('deployedTokensRouter', () => {
         address: '0x123',
       })
 
-      expect(result).toEqual(true)
+      expect(result).toBe(true)
     })
   })
 
@@ -982,7 +982,7 @@ describe('deployedTokensRouter', () => {
         address: '0x123',
       })
 
-      expect(result.error).toEqual(undefined)
+      expect(result.error).toBe(undefined)
       expect(result.data).toEqual({
         symbol: 'RPC-TKN',
         symbolSource: 'rpc',
@@ -1053,7 +1053,7 @@ describe('deployedTokensRouter', () => {
         address: '0x123',
       })
 
-      expect(result.error).toEqual(undefined)
+      expect(result.error).toBe(undefined)
       expect(result.data).toEqual({
         symbol: 'TKN',
         symbolSource: 'rpc',
@@ -1609,7 +1609,7 @@ describe('deployedTokensRouter', () => {
         address: targetAddress,
       })
 
-      expect(result.error).toEqual(undefined)
+      expect(result.error).toBe(undefined)
       expect(result.data?.abstractTokenSuggestions).toEqual([
         {
           id: 'abstract-usdc',
@@ -1676,7 +1676,7 @@ describe('deployedTokensRouter', () => {
         address: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
       })
 
-      expect(result.error).toEqual(undefined)
+      expect(result.error).toBe(undefined)
       expect(result.data).toEqual({
         symbol: 'USDC',
         symbolSource: 'coingecko',
@@ -1730,8 +1730,8 @@ describe('deployedTokensRouter', () => {
         address: '0x123',
       })
 
-      expect(result.error).toEqual(undefined)
-      expect(result.data?.symbol).toEqual('USDC')
+      expect(result.error).toBe(undefined)
+      expect(result.data?.symbol).toBe('USDC')
       expect(result.warnings).toEqual([
         {
           field: 'decimals',
@@ -1799,8 +1799,8 @@ describe('deployedTokensRouter', () => {
         address: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
       })
 
-      expect(result.error).toEqual(undefined)
-      expect(result.data?.symbol).toEqual('USDC')
+      expect(result.error).toBe(undefined)
+      expect(result.data?.symbol).toBe('USDC')
     })
 
     it('returns otherChains information', async () => {
@@ -1878,7 +1878,7 @@ describe('deployedTokensRouter', () => {
         address: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
       })
 
-      expect(result.error).toEqual(undefined)
+      expect(result.error).toBe(undefined)
       expect(result.data?.suggestions).toEqual([
         {
           chain: 'arbitrum',
@@ -1936,8 +1936,8 @@ describe('deployedTokensRouter', () => {
         address: '0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48',
       })
 
-      expect(result.error).toEqual(undefined)
-      expect(result.data?.symbol).toEqual('USDC')
+      expect(result.error).toBe(undefined)
+      expect(result.data?.symbol).toBe('USDC')
     })
   })
 

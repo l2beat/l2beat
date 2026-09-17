@@ -3,7 +3,7 @@ import { asciiProgressBar } from './asciiProgressBar.js'
 
 describe(asciiProgressBar.name, () => {
   it('should return a string', () => {
-    expect(typeof asciiProgressBar(0, 100)).toEqual('string')
+    expect(typeof asciiProgressBar(0, 100)).toBe('string')
   })
 
   it('should return a string with the correct length', () => {
@@ -19,12 +19,12 @@ describe(asciiProgressBar.name, () => {
   })
 
   it('empty progress bar', () => {
-    expect(asciiProgressBar(0, 10, 10)).toEqual('░░░░░░░░░░')
-    expect(asciiProgressBar(-30, 10, 10)).toEqual('░░░░░░░░░░')
+    expect(asciiProgressBar(0, 10, 10)).toBe('░░░░░░░░░░')
+    expect(asciiProgressBar(-30, 10, 10)).toBe('░░░░░░░░░░')
   })
 
   it('full progress bar', () => {
-    expect(asciiProgressBar(10, 10, 10)).toEqual('██████████')
-    expect(asciiProgressBar(14, 10, 10)).toEqual('██████████')
+    expect(asciiProgressBar(10, 10, 10)).toBe('██████████')
+    expect(asciiProgressBar(14, 10, 10)).toBe('██████████')
   })
 })

@@ -8,15 +8,11 @@ describe(executeBlip.name, () => {
     const contractValue = { a: 1, b: 'test' }
 
     it('can use contract values in comparisons', () => {
-      expect(executeBlip(contractValue, ['=', 1, contractValue.a])).toEqual(
+      expect(executeBlip(contractValue, ['=', 1, contractValue.a])).toBe(true)
+      expect(executeBlip(contractValue, ['=', 'test', contractValue.b])).toBe(
         true,
       )
-      expect(
-        executeBlip(contractValue, ['=', 'test', contractValue.b]),
-      ).toEqual(true)
-      expect(executeBlip(contractValue, ['!=', 2, contractValue.a])).toEqual(
-        true,
-      )
+      expect(executeBlip(contractValue, ['!=', 2, contractValue.a])).toBe(true)
     })
 
     it('handles complex contract value expressions', () => {
@@ -27,7 +23,7 @@ describe(executeBlip.name, () => {
           ['!=', contractValue.b, 'invalid'],
           ['=', contractValue.a, 1],
         ]),
-      ).toEqual(true)
+      ).toBe(true)
     })
   })
 
@@ -40,77 +36,77 @@ describe(executeBlip.name, () => {
         ['!=', 1, 2],
         ['=', 1, 1],
       ]),
-    ).toEqual(true)
+    ).toBe(true)
 
-    expect(
-      executeBlip({}, ['and', ['not', true], 'test', ['=', 1, 1]]),
-    ).toEqual(false)
+    expect(executeBlip({}, ['and', ['not', true], 'test', ['=', 1, 1]])).toBe(
+      false,
+    )
   })
 
   it('returns true only if all arguments are truthy', () => {
-    expect(executeBlip({}, ['and', true, true, true])).toEqual(true)
-    expect(executeBlip({}, ['and', true, false, true])).toEqual(false)
-    expect(executeBlip({}, ['and', true, true, false])).toEqual(false)
-    expect(executeBlip({}, ['and', 1, 'hello', true])).toEqual(true)
-    expect(executeBlip({}, ['and', 1, '', true])).toEqual(false)
+    expect(executeBlip({}, ['and', true, true, true])).toBe(true)
+    expect(executeBlip({}, ['and', true, false, true])).toBe(false)
+    expect(executeBlip({}, ['and', true, true, false])).toBe(false)
+    expect(executeBlip({}, ['and', 1, 'hello', true])).toBe(true)
+    expect(executeBlip({}, ['and', 1, '', true])).toBe(false)
   })
 
   it('returns false when given a single falsy argument', () => {
-    expect(executeBlip({}, ['and', false])).toEqual(false)
-    expect(executeBlip({}, ['and', 0])).toEqual(false)
-    expect(executeBlip({}, ['and', ''])).toEqual(false)
-    expect(executeBlip({}, ['and', ['=', 1, 2]])).toEqual(false)
+    expect(executeBlip({}, ['and', false])).toBe(false)
+    expect(executeBlip({}, ['and', 0])).toBe(false)
+    expect(executeBlip({}, ['and', ''])).toBe(false)
+    expect(executeBlip({}, ['and', ['=', 1, 2]])).toBe(false)
   })
 
   it('handles multiple and nested expressions', () => {
-    expect(executeBlip({}, ['and', true, 1, ['not', false]])).toEqual(true)
-    expect(executeBlip({}, ['and', true, 0, ['not', false]])).toEqual(false)
+    expect(executeBlip({}, ['and', true, 1, ['not', false]])).toBe(true)
+    expect(executeBlip({}, ['and', true, 0, ['not', false]])).toBe(false)
   })
 
   describe('equality comparisons', () => {
     it('compares multiple values for equality', () => {
-      expect(executeBlip({}, ['=', 1, 1, 1])).toEqual(true)
-      expect(executeBlip({}, ['=', 1, 2, 1])).toEqual(false)
-      expect(executeBlip({}, ['=', 'a', 'a', 'a'])).toEqual(true)
-      expect(executeBlip({}, ['=', 'a', 'b', 'a'])).toEqual(false)
+      expect(executeBlip({}, ['=', 1, 1, 1])).toBe(true)
+      expect(executeBlip({}, ['=', 1, 2, 1])).toBe(false)
+      expect(executeBlip({}, ['=', 'a', 'a', 'a'])).toBe(true)
+      expect(executeBlip({}, ['=', 'a', 'b', 'a'])).toBe(false)
     })
 
     it('works with different types', () => {
-      expect(executeBlip({}, ['=', 1, '1'])).toEqual(false)
+      expect(executeBlip({}, ['=', 1, '1'])).toBe(false)
     })
   })
 
   describe('inequality comparisons', () => {
     it('compares multiple values for inequality', () => {
-      expect(executeBlip({}, ['!=', 1, 2, 3])).toEqual(true)
-      expect(executeBlip({}, ['!=', 1, 1, 2])).toEqual(true)
-      expect(executeBlip({}, ['!=', 1, 1, 1])).toEqual(false)
-      expect(executeBlip({}, ['!=', 'a', 'a', 'b'])).toEqual(true)
-      expect(executeBlip({}, ['!=', 'a', 'b', 'c'])).toEqual(true)
-      expect(executeBlip({}, ['!=', 'a', 'a', 'a'])).toEqual(false)
+      expect(executeBlip({}, ['!=', 1, 2, 3])).toBe(true)
+      expect(executeBlip({}, ['!=', 1, 1, 2])).toBe(true)
+      expect(executeBlip({}, ['!=', 1, 1, 1])).toBe(false)
+      expect(executeBlip({}, ['!=', 'a', 'a', 'b'])).toBe(true)
+      expect(executeBlip({}, ['!=', 'a', 'b', 'c'])).toBe(true)
+      expect(executeBlip({}, ['!=', 'a', 'a', 'a'])).toBe(false)
     })
 
     it('works with different types', () => {
-      expect(executeBlip({}, ['!=', 1, '1'])).toEqual(true)
-      expect(executeBlip({}, ['!=', 0, false])).toEqual(true)
+      expect(executeBlip({}, ['!=', 1, '1'])).toBe(true)
+      expect(executeBlip({}, ['!=', 0, false])).toBe(true)
     })
   })
 
   describe('less-than comparisons', () => {
     it('compares the current value against a single argument', () => {
-      expect(executeBlip(1, ['<', 2])).toEqual(true)
-      expect(executeBlip(2, ['<', 2])).toEqual(false)
-      expect(executeBlip(3, ['<', 2])).toEqual(false)
+      expect(executeBlip(1, ['<', 2])).toBe(true)
+      expect(executeBlip(2, ['<', 2])).toBe(false)
+      expect(executeBlip(3, ['<', 2])).toBe(false)
     })
 
     it('checks that the first argument is less than the rest', () => {
-      expect(executeBlip({}, ['<', 1, 2, 3])).toEqual(true)
-      expect(executeBlip({}, ['<', 1, 2, 0])).toEqual(false)
+      expect(executeBlip({}, ['<', 1, 2, 3])).toBe(true)
+      expect(executeBlip({}, ['<', 1, 2, 0])).toBe(false)
     })
 
     it('compares strings lexicographically', () => {
-      expect(executeBlip('a', ['<', 'b'])).toEqual(true)
-      expect(executeBlip('b', ['<', 'a'])).toEqual(false)
+      expect(executeBlip('a', ['<', 'b'])).toBe(true)
+      expect(executeBlip('b', ['<', 'a'])).toBe(false)
     })
 
     it('throws when operands are not both numbers or both strings', () => {
@@ -122,54 +118,54 @@ describe(executeBlip.name, () => {
 
   describe('greater-than comparisons', () => {
     it('compares the current value against a single argument', () => {
-      expect(executeBlip(3, ['>', 2])).toEqual(true)
-      expect(executeBlip(2, ['>', 2])).toEqual(false)
-      expect(executeBlip(1, ['>', 2])).toEqual(false)
+      expect(executeBlip(3, ['>', 2])).toBe(true)
+      expect(executeBlip(2, ['>', 2])).toBe(false)
+      expect(executeBlip(1, ['>', 2])).toBe(false)
     })
 
     it('checks that the first argument is greater than the rest', () => {
-      expect(executeBlip({}, ['>', 3, 2, 1])).toEqual(true)
-      expect(executeBlip({}, ['>', 3, 2, 4])).toEqual(false)
+      expect(executeBlip({}, ['>', 3, 2, 1])).toBe(true)
+      expect(executeBlip({}, ['>', 3, 2, 4])).toBe(false)
     })
 
     it('works inside a pipe after get', () => {
-      expect(executeBlip({ n: 10 }, ['pipe', ['get', 'n'], ['>', 5]])).toEqual(
+      expect(executeBlip({ n: 10 }, ['pipe', ['get', 'n'], ['>', 5]])).toBe(
         true,
       )
     })
   })
 
   it('negates boolean values', () => {
-    expect(executeBlip({}, ['not', true])).toEqual(false)
-    expect(executeBlip({}, ['not', false])).toEqual(true)
+    expect(executeBlip({}, ['not', true])).toBe(false)
+    expect(executeBlip({}, ['not', false])).toBe(true)
   })
 
   it('handles nested not operations', () => {
-    expect(executeBlip({}, ['not', ['not', true]])).toEqual(true)
-    expect(executeBlip({}, ['not', ['not', false]])).toEqual(false)
+    expect(executeBlip({}, ['not', ['not', true]])).toBe(true)
+    expect(executeBlip({}, ['not', ['not', false]])).toBe(false)
   })
 
   it('executes simple values', () => {
-    expect(executeBlip({}, 'string')).toEqual('string')
-    expect(executeBlip({}, 123)).toEqual(123)
-    expect(executeBlip({}, 0)).toEqual(0)
-    expect(executeBlip({}, false)).toEqual(false)
-    expect(executeBlip({}, true)).toEqual(true)
+    expect(executeBlip({}, 'string')).toBe('string')
+    expect(executeBlip({}, 123)).toBe(123)
+    expect(executeBlip({}, 0)).toBe(0)
+    expect(executeBlip({}, false)).toBe(false)
+    expect(executeBlip({}, true)).toBe(true)
   })
 
   describe('get operations', () => {
     it('handles get operations for objects and arrays', () => {
-      expect(executeBlip({ foo: 'bar' }, ['get', 'foo'])).toEqual('bar')
-      expect(executeBlip({ a: 1, b: 2 }, ['get', 'b'])).toEqual(2)
-      expect(executeBlip([10, 20, 30], ['get', 0])).toEqual(10)
-      expect(executeBlip(['first', 'second'], ['get', 1])).toEqual('second')
+      expect(executeBlip({ foo: 'bar' }, ['get', 'foo'])).toBe('bar')
+      expect(executeBlip({ a: 1, b: 2 }, ['get', 'b'])).toBe(2)
+      expect(executeBlip([10, 20, 30], ['get', 0])).toBe(10)
+      expect(executeBlip(['first', 'second'], ['get', 1])).toBe('second')
 
       expect(
         executeBlip({ user: { name: 'Alice' } }, ['get', 'user', 'name']),
-      ).toEqual('Alice')
+      ).toBe('Alice')
 
       // Numeric string keys (should work for objects)
-      expect(executeBlip({ '1': 'numeric key' }, ['get', '1'])).toEqual(
+      expect(executeBlip({ '1': 'numeric key' }, ['get', '1'])).toBe(
         'numeric key',
       )
     })
@@ -223,25 +219,23 @@ describe(executeBlip.name, () => {
       }
 
       // Get array element then object property
-      expect(executeBlip(data, ['get', 'users', 1, 'name'])).toEqual('Bob')
+      expect(executeBlip(data, ['get', 'users', 1, 'name'])).toBe('Bob')
 
       // Get nested object property
-      expect(executeBlip(data, ['get', 'meta', 'timestamp'])).toEqual(
-        1234567890,
-      )
+      expect(executeBlip(data, ['get', 'meta', 'timestamp'])).toBe(1234567890)
 
       // Chained gets
-      expect(executeBlip(data, ['get', 'users', 0, 'id'])).toEqual(1)
+      expect(executeBlip(data, ['get', 'users', 0, 'id'])).toBe(1)
     })
 
     it('handles edge cases for get operations', () => {
       // Empty string key
-      expect(executeBlip({ '': 'empty key' }, ['get', ''])).toEqual('empty key')
+      expect(executeBlip({ '': 'empty key' }, ['get', ''])).toBe('empty key')
 
       // Sparse arrays
       const sparse: string[] = []
       sparse[2] = 'item'
-      expect(executeBlip(sparse, ['get', 2])).toEqual('item')
+      expect(executeBlip(sparse, ['get', 2])).toBe('item')
       expect(() => executeBlip(sparse, ['get', 1])).toThrow(
         'Key not found in object',
       )
@@ -251,7 +245,7 @@ describe(executeBlip.name, () => {
       expect(() => executeBlip(arrayLike, ['get', 0])).toThrow(
         'Numeric keys only work on arrays',
       )
-      expect(executeBlip(arrayLike, ['get', '0'])).toEqual('a')
+      expect(executeBlip(arrayLike, ['get', '0'])).toBe('a')
     })
   })
 
@@ -638,7 +632,7 @@ describe(executeBlip.name, () => {
   describe('find operations', () => {
     it('finds the first element matching a predicate', () => {
       const arr = [1, 2, 3, 4, 5]
-      expect(executeBlip(arr, ['find', ['=', 3]])).toEqual(3)
+      expect(executeBlip(arr, ['find', ['=', 3]])).toBe(3)
     })
 
     it('throws when no elements match', () => {
@@ -650,7 +644,7 @@ describe(executeBlip.name, () => {
 
     it('returns the first matching element when multiple match', () => {
       const arr = [1, 2, 2, 3]
-      expect(executeBlip(arr, ['find', ['=', 2]])).toEqual(2)
+      expect(executeBlip(arr, ['find', ['=', 2]])).toBe(2)
     })
 
     it('finds objects in arrays', () => {
@@ -829,7 +823,7 @@ describe(executeBlip.name, () => {
   describe('pipe operations', () => {
     it('applies a sequence of operations to a value', () => {
       const data = { a: 1 }
-      expect(executeBlip(data, ['pipe', ['get', 'a'], ['=', 1]])).toEqual(true)
+      expect(executeBlip(data, ['pipe', ['get', 'a'], ['=', 1]])).toBe(true)
     })
 
     it('passes the result of each operation to the next', () => {
@@ -879,17 +873,17 @@ describe(executeBlip.name, () => {
     })
 
     it('returns the input value when no operations are provided', () => {
-      expect(executeBlip(42, ['pipe'])).toEqual(42)
+      expect(executeBlip(42, ['pipe'])).toBe(42)
     })
 
     it('handles single operation pipes', () => {
       const data = { a: 1 }
-      expect(executeBlip(data, ['pipe', ['get', 'a']])).toEqual(1)
+      expect(executeBlip(data, ['pipe', ['get', 'a']])).toBe(1)
     })
 
     it('works with boolean operations', () => {
-      expect(executeBlip(true, ['pipe', ['not'], ['not']])).toEqual(true)
-      expect(executeBlip(false, ['pipe', ['not']])).toEqual(true)
+      expect(executeBlip(true, ['pipe', ['not'], ['not']])).toBe(true)
+      expect(executeBlip(false, ['pipe', ['not']])).toBe(true)
     })
 
     it('can transform between different types', () => {
@@ -909,7 +903,7 @@ describe(executeBlip.name, () => {
           ['pick', 'a'],
           ['pipe', ['get', 'a'], ['=', 1]],
         ]),
-      ).toEqual(true)
+      ).toBe(true)
     })
 
     it('handles edge cases with empty inputs', () => {
@@ -1280,29 +1274,29 @@ describe(executeBlip.name, () => {
           ['map_keys', ['if', ['=', 'old'], 'new', 'other']],
           ['get', 'new'],
         ]),
-      ).toEqual(42)
+      ).toBe(42)
     })
   })
 
   describe('length operations', () => {
     it('returns length of arrays', () => {
-      expect(executeBlip([1, 2, 3], ['length'])).toEqual(3)
-      expect(executeBlip([], ['length'])).toEqual(0)
-      expect(executeBlip(['a', 'b', 'c', 'd'], ['length'])).toEqual(4)
+      expect(executeBlip([1, 2, 3], ['length'])).toBe(3)
+      expect(executeBlip([], ['length'])).toBe(0)
+      expect(executeBlip(['a', 'b', 'c', 'd'], ['length'])).toBe(4)
     })
 
     it('returns length of objects', () => {
-      expect(executeBlip({ a: 1, b: 2 }, ['length'])).toEqual(2)
-      expect(executeBlip({}, ['length'])).toEqual(0)
-      expect(
-        executeBlip({ x: 'one', y: 'two', z: 'three' }, ['length']),
-      ).toEqual(3)
+      expect(executeBlip({ a: 1, b: 2 }, ['length'])).toBe(2)
+      expect(executeBlip({}, ['length'])).toBe(0)
+      expect(executeBlip({ x: 'one', y: 'two', z: 'three' }, ['length'])).toBe(
+        3,
+      )
     })
 
     it('returns length of strings', () => {
-      expect(executeBlip('hello', ['length'])).toEqual(5)
-      expect(executeBlip('', ['length'])).toEqual(0)
-      expect(executeBlip('test string', ['length'])).toEqual(11)
+      expect(executeBlip('hello', ['length'])).toBe(5)
+      expect(executeBlip('', ['length'])).toBe(0)
+      expect(executeBlip('test string', ['length'])).toBe(11)
     })
 
     it('throws on invalid inputs', () => {
@@ -1318,15 +1312,11 @@ describe(executeBlip.name, () => {
     })
 
     it('can be used in pipe operations', () => {
-      expect(executeBlip([1, 2, 3], ['pipe', ['length'], ['=', 3]])).toEqual(
+      expect(executeBlip([1, 2, 3], ['pipe', ['length'], ['=', 3]])).toBe(true)
+      expect(executeBlip({ a: 1, b: 2 }, ['pipe', ['length'], ['!=', 0]])).toBe(
         true,
       )
-      expect(
-        executeBlip({ a: 1, b: 2 }, ['pipe', ['length'], ['!=', 0]]),
-      ).toEqual(true)
-      expect(executeBlip('hello', ['pipe', ['length'], ['!=', 10]])).toEqual(
-        true,
-      )
+      expect(executeBlip('hello', ['pipe', ['length'], ['!=', 10]])).toBe(true)
     })
   })
 })

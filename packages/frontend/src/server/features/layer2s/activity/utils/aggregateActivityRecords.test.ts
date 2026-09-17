@@ -45,7 +45,7 @@ describe(aggregateActivityRecords.name, () => {
 
     const result = aggregateActivityRecords(records)
 
-    expect(result).toEqual(undefined)
+    expect(result).toBe(undefined)
   })
 
   it('starts aggregating from the first non-Ethereum record with count > 0', () => {
@@ -71,7 +71,7 @@ describe(aggregateActivityRecords.name, () => {
 
   it('handles empty input array', () => {
     const result = aggregateActivityRecords([])
-    expect(result).toEqual(undefined)
+    expect(result).toBe(undefined)
   })
 })
 

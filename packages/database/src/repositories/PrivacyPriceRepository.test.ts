@@ -77,8 +77,8 @@ describeDatabase(PrivacyPriceRepository.name, (db) => {
       )
 
       expect(result).toHaveLength(2)
-      expect(result[0]!.priceUsd).toEqual(1.5)
-      expect(result[1]!.priceUsd).toEqual(2.5)
+      expect(result[0]!.priceUsd).toBe(1.5)
+      expect(result[1]!.priceUsd).toBe(2.5)
     })
   })
 
@@ -116,8 +116,8 @@ describeDatabase(PrivacyPriceRepository.name, (db) => {
         )
 
         expect(result).toHaveLength(2)
-        expect(result[0]!.priceUsd).toEqual(1.5)
-        expect(result[1]!.priceUsd).toEqual(2.5)
+        expect(result[0]!.priceUsd).toBe(1.5)
+        expect(result[1]!.priceUsd).toBe(2.5)
       })
     },
   )
@@ -247,7 +247,7 @@ describeDatabase(PrivacyPriceRepository.name, (db) => {
 
         const result = await repository.getLatestPriceByPriceId('bitcoin')
 
-        expect(result).toEqual(undefined)
+        expect(result).toBe(undefined)
       })
     },
   )
@@ -285,7 +285,7 @@ describeDatabase(PrivacyPriceRepository.name, (db) => {
         },
       ])
 
-      expect(deleted).toEqual(2)
+      expect(deleted).toBe(2)
 
       const remaining = await repository.getAll()
       expect(remaining).toHaveLength(1)

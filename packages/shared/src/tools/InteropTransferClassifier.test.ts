@@ -117,11 +117,11 @@ describe(InteropTransferClassifier.name, () => {
       srcAbstractTokenId: 'circle-usdc',
     }
 
-    expect(matches(observation)).toEqual(true)
-    expect(matches({ ...observation, dstChain: 'optimism' })).toEqual(false)
-    expect(
-      matches({ ...observation, srcAbstractTokenId: 'tether-usdt' }),
-    ).toEqual(false)
+    expect(matches(observation)).toBe(true)
+    expect(matches({ ...observation, dstChain: 'optimism' })).toBe(false)
+    expect(matches({ ...observation, srcAbstractTokenId: 'tether-usdt' })).toBe(
+      false,
+    )
   })
 
   it('only bypasses plugin bridge type matching for one-sided transfers with unknown bridge type', () => {
@@ -174,27 +174,27 @@ describe(InteropTransferClassifier.name, () => {
     it('reads the locked side from either flag alone', () => {
       // One-sided transfers only ever observe one of the two flags, and one is
       // enough: the roles of a lock-and-mint pair are complementary.
-      expect(lockedSide(false, undefined)).toEqual('src')
-      expect(lockedSide(undefined, true)).toEqual('src')
-      expect(lockedSide(true, undefined)).toEqual('dst')
-      expect(lockedSide(undefined, false)).toEqual('dst')
+      expect(lockedSide(false, undefined)).toBe('src')
+      expect(lockedSide(undefined, true)).toBe('src')
+      expect(lockedSide(true, undefined)).toBe('dst')
+      expect(lockedSide(undefined, false)).toBe('dst')
     })
 
     it('reads the locked side from both flags', () => {
-      expect(lockedSide(false, true)).toEqual('src')
-      expect(lockedSide(true, false)).toEqual('dst')
+      expect(lockedSide(false, true)).toBe('src')
+      expect(lockedSide(true, false)).toBe('dst')
     })
 
     it('identifies no side when the flags were not observed', () => {
-      expect(lockedSide(undefined, undefined)).toEqual(undefined)
+      expect(lockedSide(undefined, undefined)).toBe(undefined)
     })
 
     it('identifies no side when the flags contradict lock-and-mint', () => {
       // Both reachable when a plugin declares `lockAndMint` itself: (false,
       // false) is really non-minting and (true, true) is really burn-and-mint,
       // so neither identifies a locked endpoint.
-      expect(lockedSide(false, false)).toEqual(undefined)
-      expect(lockedSide(true, true)).toEqual(undefined)
+      expect(lockedSide(false, false)).toBe(undefined)
+      expect(lockedSide(true, true)).toBe(undefined)
     })
   })
 })

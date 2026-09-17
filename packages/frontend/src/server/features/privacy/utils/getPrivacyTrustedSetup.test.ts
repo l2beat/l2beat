@@ -29,9 +29,9 @@ describe(getPrivacyTrustedSetup.name, () => {
 
   it('falls back to No setup when there are no trusted setups', () => {
     const trustedSetup = getPrivacyTrustedSetup([])
-    expect(trustedSetup.id).toEqual('NoSetup')
-    expect(trustedSetup.name).toEqual('No setup')
-    expect(trustedSetup.risk).toEqual('None')
+    expect(trustedSetup.id).toBe('NoSetup')
+    expect(trustedSetup.name).toBe('No setup')
+    expect(trustedSetup.risk).toBe('None')
   })
 })
 
@@ -60,7 +60,7 @@ describe(toTrustedSetupSummaryValue.name, () => {
         ...trustedSetup,
         participantCount: undefined,
       }).value,
-    ).toEqual('Trusted setup name')
+    ).toBe('Trusted setup name')
   })
 
   for (const [risk, sentiment] of [

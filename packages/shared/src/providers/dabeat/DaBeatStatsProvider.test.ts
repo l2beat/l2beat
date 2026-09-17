@@ -299,7 +299,7 @@ describe(DaBeatStatsProvider.name, () => {
       const mockCelestiaClient = {
         getValidatorsInfo: vi.fn(async ({ page, perPage }: any) => {
           callCount++
-          expect(perPage).toEqual(100)
+          expect(perPage).toBe(100)
 
           if (page === 1) {
             return {
@@ -333,7 +333,7 @@ describe(DaBeatStatsProvider.name, () => {
 
       const result = await provider.getCelestiaStats()
 
-      expect(callCount).toEqual(2)
+      expect(callCount).toBe(2)
       expect(result).toEqual({
         totalStake: 20000000000n, // (100 * 100 + 50 * 200) * 10^6
         thresholdStake: 13333333333n,

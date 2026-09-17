@@ -14,7 +14,7 @@ describe(EthRpcClient.name, () => {
     )
     const address = EthereumAddress.random()
     const result = await client.getBalance(address, 0x9999n)
-    expect(result).toEqual(0x1234n)
+    expect(result).toBe(0x1234n)
     expect(http.lastFetch?.init.body).toEqual(
       JSON.stringify({
         jsonrpc: '2.0',
@@ -179,7 +179,7 @@ describe(EthRpcClient.name, () => {
 
     const result = await client.getTransactionByHash(`0x${'ff'.repeat(32)}`)
 
-    expect(result?.calls).toEqual(undefined)
+    expect(result?.calls).toBe(undefined)
   })
 
   it('records rpc metrics for calls', async () => {
@@ -205,7 +205,7 @@ describe(EthRpcClient.name, () => {
     await client.getBlockNumber()
 
     expect(recorded).toHaveLength(1)
-    expect(recorded[0]?.method).toEqual('eth_blockNumber')
+    expect(recorded[0]?.method).toBe('eth_blockNumber')
   })
 })
 
@@ -225,32 +225,32 @@ for (const url of URLS) {
 
       it(EthRpcClient.prototype.getChainId.name, async () => {
         const chainId = await client.getChainId()
-        expect(chainId > 0n).toEqual(true)
+        expect(chainId > 0n).toBe(true)
       })
 
       it(EthRpcClient.prototype.getBlockNumber.name, async () => {
         const blockNumber = await client.getBlockNumber()
-        expect(blockNumber > 0n).toEqual(true)
+        expect(blockNumber > 0n).toBe(true)
       })
 
       it(EthRpcClient.prototype.getGasPrice.name, async () => {
         const gasPrice = await client.getGasPrice()
-        expect(gasPrice >= 0n).toEqual(true)
+        expect(gasPrice >= 0n).toBe(true)
       })
 
       it(EthRpcClient.prototype.getBalance.name, async () => {
         const balance = await client.getBalance(VITALIK, 'latest')
-        expect(balance >= 0n).toEqual(true)
+        expect(balance >= 0n).toBe(true)
       })
 
       it(EthRpcClient.prototype.getStorageAt.name, async () => {
         const storage = await client.getStorageAt(VITALIK, 0n, 'latest')
-        expect(storage).toEqual('0x' + '0'.repeat(64))
+        expect(storage).toBe('0x' + '0'.repeat(64))
       })
 
       it(EthRpcClient.prototype.getTransactionCount.name, async () => {
         const count = await client.getTransactionCount(VITALIK, 'latest')
-        expect(count >= 0n).toEqual(true)
+        expect(count >= 0n).toBe(true)
       })
 
       it(EthRpcClient.prototype.getCode.name, async () => {
@@ -267,7 +267,7 @@ for (const url of URLS) {
           },
           'latest',
         )
-        expect(result1.reverted).toEqual(false)
+        expect(result1.reverted).toBe(false)
         if (!result1.reverted) {
           expect(BigInt(result1.data)).toEqual(chainId)
         }
@@ -279,7 +279,7 @@ for (const url of URLS) {
           },
           'latest',
         )
-        expect(result2.reverted).toEqual(true)
+        expect(result2.reverted).toBe(true)
       })
 
       it(EthRpcClient.prototype.estimateGas.name, async () => {
@@ -290,9 +290,9 @@ for (const url of URLS) {
           },
           'latest',
         )
-        expect(result1.reverted).toEqual(false)
+        expect(result1.reverted).toBe(false)
         if (!result1.reverted) {
-          expect(result1.gas >= 0n).toEqual(true)
+          expect(result1.gas >= 0n).toBe(true)
         }
 
         const result2 = await client.estimateGas(
@@ -302,7 +302,7 @@ for (const url of URLS) {
           },
           'latest',
         )
-        expect(result2.reverted).toEqual(true)
+        expect(result2.reverted).toBe(true)
       })
 
       const interestingBlocks: bigint[] = [0n, 1000n]
@@ -324,7 +324,7 @@ for (const url of URLS) {
       describe(EthRpcClient.prototype.getBlockByNumber.name, () => {
         it('latest', async () => {
           const latest = await client.getBlockByNumber('latest', false)
-          expect((latest?.number ?? 0n) > 0n).toEqual(true)
+          expect((latest?.number ?? 0n) > 0n).toBe(true)
         })
 
         it('interesting blocks', async () => {
@@ -372,7 +372,7 @@ for (const url of URLS) {
           for (const hash of top5) {
             console.log('HASH', hash)
             const tx = await client.getTransactionByHash(hash)
-            expect(tx).not.toEqual(null)
+            expect(tx).not.toBe(null)
           }
         })
 
@@ -381,7 +381,7 @@ for (const url of URLS) {
           for (const hash of top5) {
             console.log('HASH', hash)
             const receipt = await client.getTransactionReceipt(hash)
-            expect(receipt).not.toEqual(null)
+            expect(receipt).not.toBe(null)
           }
         })
       })

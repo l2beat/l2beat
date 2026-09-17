@@ -3,70 +3,70 @@ import { formatJson } from './formatJson.js'
 
 describe(formatJson.name, () => {
   it('primitives', () => {
-    expect(formatJson(null).trimEnd()).toEqual('null')
-    expect(formatJson(true).trimEnd()).toEqual('true')
-    expect(formatJson(false).trimEnd()).toEqual('false')
-    expect(formatJson(1).trimEnd()).toEqual('1')
-    expect(formatJson(-1).trimEnd()).toEqual('-1')
-    expect(formatJson(3.14).trimEnd()).toEqual('3.14')
-    expect(formatJson(1e9).trimEnd()).toEqual('1000000000')
-    expect(formatJson('string').trimEnd()).toEqual('"string"')
+    expect(formatJson(null).trimEnd()).toBe('null')
+    expect(formatJson(true).trimEnd()).toBe('true')
+    expect(formatJson(false).trimEnd()).toBe('false')
+    expect(formatJson(1).trimEnd()).toBe('1')
+    expect(formatJson(-1).trimEnd()).toBe('-1')
+    expect(formatJson(3.14).trimEnd()).toBe('3.14')
+    expect(formatJson(1e9).trimEnd()).toBe('1000000000')
+    expect(formatJson('string').trimEnd()).toBe('"string"')
   })
 
   it('edge cases', () => {
-    expect(formatJson(() => {}).trimEnd()).toEqual('null')
+    expect(formatJson(() => {}).trimEnd()).toBe('null')
   })
 
   it('numbers – edge cases', () => {
-    expect(formatJson(0).trimEnd()).toEqual('0')
-    expect(formatJson(-0).trimEnd()).toEqual('0')
-    expect(formatJson(Number.MAX_SAFE_INTEGER).trimEnd()).toEqual(
+    expect(formatJson(0).trimEnd()).toBe('0')
+    expect(formatJson(-0).trimEnd()).toBe('0')
+    expect(formatJson(Number.MAX_SAFE_INTEGER).trimEnd()).toBe(
       '9007199254740991',
     )
-    expect(formatJson(Number.MIN_SAFE_INTEGER).trimEnd()).toEqual(
+    expect(formatJson(Number.MIN_SAFE_INTEGER).trimEnd()).toBe(
       '-9007199254740991',
     )
-    expect(formatJson(1e-9).trimEnd()).toEqual('1e-9')
-    expect(formatJson(-1e-9).trimEnd()).toEqual('-1e-9')
-    expect(formatJson(Number.NaN).trimEnd()).toEqual('null')
-    expect(formatJson(Number.POSITIVE_INFINITY).trimEnd()).toEqual('null')
-    expect(formatJson(Number.NEGATIVE_INFINITY).trimEnd()).toEqual('null')
+    expect(formatJson(1e-9).trimEnd()).toBe('1e-9')
+    expect(formatJson(-1e-9).trimEnd()).toBe('-1e-9')
+    expect(formatJson(Number.NaN).trimEnd()).toBe('null')
+    expect(formatJson(Number.POSITIVE_INFINITY).trimEnd()).toBe('null')
+    expect(formatJson(Number.NEGATIVE_INFINITY).trimEnd()).toBe('null')
     expect(() => formatJson(1n)).toThrow()
   })
 
   it('strings – edge cases', () => {
-    expect(formatJson('').trimEnd()).toEqual('""')
-    expect(formatJson('"').trimEnd()).toEqual('"\\""')
-    expect(formatJson('back\\slash').trimEnd()).toEqual('"back\\\\slash"')
-    expect(formatJson('line\nbreak').trimEnd()).toEqual('"line\\nbreak"')
-    expect(formatJson('emoji 😊').trimEnd()).toEqual('"emoji 😊"')
+    expect(formatJson('').trimEnd()).toBe('""')
+    expect(formatJson('"').trimEnd()).toBe('"\\""')
+    expect(formatJson('back\\slash').trimEnd()).toBe('"back\\\\slash"')
+    expect(formatJson('line\nbreak').trimEnd()).toBe('"line\\nbreak"')
+    expect(formatJson('emoji 😊').trimEnd()).toBe('"emoji 😊"')
   })
 
   it('basic arrays', () => {
-    expect(formatJson([]).trimEnd()).toEqual('[]')
-    expect(formatJson([1, 2, 3]).trimEnd()).toEqual('[1, 2, 3]')
-    expect(formatJson(['string1', 'string2']).trimEnd()).toEqual(
+    expect(formatJson([]).trimEnd()).toBe('[]')
+    expect(formatJson([1, 2, 3]).trimEnd()).toBe('[1, 2, 3]')
+    expect(formatJson(['string1', 'string2']).trimEnd()).toBe(
       '["string1", "string2"]',
     )
   })
 
   it('arrays – edge cases', () => {
-    expect(formatJson([null, true, 'str', 0]).trimEnd().trimEnd()).toEqual(
+    expect(formatJson([null, true, 'str', 0]).trimEnd().trimEnd()).toBe(
       '[null, true, "str", 0]',
     )
-    expect(formatJson([[]]).trimEnd().trimEnd()).toEqual('[[]]')
+    expect(formatJson([[]]).trimEnd().trimEnd()).toBe('[[]]')
     expect(
       formatJson([[1], [2, 3]])
         .trimEnd()
         .trimEnd(),
-    ).toEqual('[[1], [2, 3]]')
+    ).toBe('[[1], [2, 3]]')
     expect(
       formatJson([[1, [2]], 3])
         .trimEnd()
         .trimEnd(),
-    ).toEqual('[[1, [2]], 3]')
-    expect(formatJson([0, -0]).trimEnd().trimEnd()).toEqual('[0, 0]')
-    expect(formatJson([1, undefined, 3]).trimEnd().trimEnd()).toEqual(
+    ).toBe('[[1, [2]], 3]')
+    expect(formatJson([0, -0]).trimEnd().trimEnd()).toBe('[0, 0]')
+    expect(formatJson([1, undefined, 3]).trimEnd().trimEnd()).toBe(
       '[1, null, 3]',
     )
   })
@@ -107,32 +107,30 @@ describe(formatJson.name, () => {
   })
 
   it('basic objects', () => {
-    expect(formatJson({}).trimEnd()).toEqual('{}')
-    expect(formatJson({ name: 'John' }).trimEnd()).toEqual('{ "name": "John" }')
+    expect(formatJson({}).trimEnd()).toBe('{}')
+    expect(formatJson({ name: 'John' }).trimEnd()).toBe('{ "name": "John" }')
     expect(
       formatJson({
         name: 'John',
         age: 42,
         hobbies: ['fishing', 'drawing'],
       }).trimEnd(),
-    ).toEqual(
-      '{ "name": "John", "age": 42, "hobbies": ["fishing", "drawing"] }',
-    )
+    ).toBe('{ "name": "John", "age": 42, "hobbies": ["fishing", "drawing"] }')
   })
 
   it('objects – edge cases', () => {
-    expect(formatJson({ a: { b: 1 } }).trimEnd()).toEqual('{ "a": { "b": 1 } }')
-    expect(formatJson({ mixed: [1, { x: 'y' }], empty: {} }).trimEnd()).toEqual(
+    expect(formatJson({ a: { b: 1 } }).trimEnd()).toBe('{ "a": { "b": 1 } }')
+    expect(formatJson({ mixed: [1, { x: 'y' }], empty: {} }).trimEnd()).toBe(
       '{ "mixed": [1, { "x": "y" }], "empty": {} }',
     )
     expect(
       formatJson({ nullish: null, truthy: true, num: 0, str: '' }).trimEnd(),
-    ).toEqual('{ "nullish": null, "truthy": true, "num": 0, "str": "" }')
-    expect(formatJson({ 'weird key': 1, 'quote"key': 2 }).trimEnd()).toEqual(
+    ).toBe('{ "nullish": null, "truthy": true, "num": 0, "str": "" }')
+    expect(formatJson({ 'weird key': 1, 'quote"key': 2 }).trimEnd()).toBe(
       '{ "weird key": 1, "quote\\"key": 2 }',
     )
 
-    expect(formatJson({ a: 123, b: 234, c: undefined }).trimEnd()).toEqual(
+    expect(formatJson({ a: 123, b: 234, c: undefined }).trimEnd()).toBe(
       '{ "a": 123, "b": 234 }',
     )
   })
@@ -205,12 +203,12 @@ describe(formatJson.name, () => {
   })
 
   it('strings with multiple escape sequences', () => {
-    expect(formatJson('tab\tnewline\ncarriage\rreturn').trimEnd()).toEqual(
+    expect(formatJson('tab\tnewline\ncarriage\rreturn').trimEnd()).toBe(
       '"tab\\tnewline\\ncarriage\\rreturn"',
     )
   })
 
   it('deeply nested arrays', () => {
-    expect(formatJson([[[[[1]]]]]).trimEnd()).toEqual('[[[[[1]]]]]')
+    expect(formatJson([[[[[1]]]]]).trimEnd()).toBe('[[[[[1]]]]]')
   })
 })

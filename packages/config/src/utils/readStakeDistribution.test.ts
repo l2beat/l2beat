@@ -53,7 +53,7 @@ describe(readStakeDistribution.name, () => {
   })
 
   it('requires validatorCount only when asked', () => {
-    expect(readStakeDistribution(valid).validatorCount).toEqual(undefined)
+    expect(readStakeDistribution(valid).validatorCount).toBe(undefined)
     expect(() =>
       readStakeDistribution(valid, { requireValidatorCount: true }),
     ).toThrow()
@@ -62,6 +62,6 @@ describe(readStakeDistribution.name, () => {
         { ...valid, validatorCount: 3 },
         { requireValidatorCount: true },
       ).validatorCount,
-    ).toEqual(3)
+    ).toBe(3)
   })
 })

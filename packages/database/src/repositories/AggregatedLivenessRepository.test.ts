@@ -129,13 +129,13 @@ describeDatabase(AggregatedLivenessRepository.name, (db) => {
     it('is true for a project and subtype with records', async () => {
       expect(
         await repository.checkIfExists(PROJECT_A, 'batchSubmissions'),
-      ).toEqual(true)
+      ).toBe(true)
     })
 
     it('is false for a subtype the project has no records for', async () => {
       expect(
         await repository.checkIfExists(PROJECT_B, 'batchSubmissions'),
-      ).toEqual(false)
+      ).toBe(false)
     })
 
     it('only counts records at or after fromInclusive', async () => {
@@ -145,10 +145,10 @@ describeDatabase(AggregatedLivenessRepository.name, (db) => {
           'batchSubmissions',
           START + UnixTime.HOUR,
         ),
-      ).toEqual(false)
+      ).toBe(false)
       expect(
         await repository.checkIfExists(PROJECT_A, 'batchSubmissions', START),
-      ).toEqual(true)
+      ).toBe(true)
     })
   })
 
@@ -441,7 +441,7 @@ describeDatabase(AggregatedLivenessRepository.name, (db) => {
           'batchSubmissions',
         )
 
-        expect(result).toEqual(undefined)
+        expect(result).toBe(undefined)
       })
     },
   )

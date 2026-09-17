@@ -107,7 +107,7 @@ describe('Discord message formatting', () => {
 
       const result = formatNonce(nonce)
 
-      expect(result).toEqual('#0001')
+      expect(result).toBe('#0001')
     })
 
     it('two digit nonce', () => {
@@ -115,7 +115,7 @@ describe('Discord message formatting', () => {
 
       const result = formatNonce(nonce)
 
-      expect(result).toEqual('#0010')
+      expect(result).toBe('#0010')
     })
 
     it('three digit nonce', () => {
@@ -123,7 +123,7 @@ describe('Discord message formatting', () => {
 
       const result = formatNonce(nonce)
 
-      expect(result).toEqual('#0100')
+      expect(result).toBe('#0100')
     })
 
     it('four digit nonce', () => {
@@ -131,7 +131,7 @@ describe('Discord message formatting', () => {
 
       const result = formatNonce(nonce)
 
-      expect(result).toEqual('#1000')
+      expect(result).toBe('#1000')
     })
 
     it('five digit nonce', () => {
@@ -139,7 +139,7 @@ describe('Discord message formatting', () => {
 
       const result = formatNonce(nonce)
 
-      expect(result).toEqual('#10000')
+      expect(result).toBe('#10000')
     })
   })
 

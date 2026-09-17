@@ -380,7 +380,7 @@ describe(CirculatingSupplyAmountIndexer.name, () => {
 
   describe('SOURCE', () => {
     it('returns the correct source identifier', () => {
-      expect(CirculatingSupplyAmountIndexer.SOURCE()).toEqual(
+      expect(CirculatingSupplyAmountIndexer.SOURCE()).toBe(
         'l2b-circulating-supply',
       )
     })

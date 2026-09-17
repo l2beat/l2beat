@@ -51,7 +51,7 @@ describe(generateEntrypoints.name, () => {
       Logger.SILENT,
       { updateOnly: true, keepLegacy: true },
     )
-    expect(result?.entrypoints).toEqual(undefined)
+    expect(result?.entrypoints).toBe(undefined)
   })
 
   it('overwrites entrypoints when updateOnly is true and file exists, but keepLegacy is false', () => {

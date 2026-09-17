@@ -43,7 +43,7 @@ describe(CodexEngine.name, () => {
       commands: ["/bin/zsh -lc 'echo probe'"],
     })
     expect(calls).toHaveLength(1)
-    expect(calls[0][0]).toEqual('codex')
+    expect(calls[0][0]).toBe('codex')
     expect(calls[0][1]).toEqual(expect.arrayContaining(['--model', 'm', '-']))
     expect(calls[0][2]).toEqual({
       cwd: '/repo',

@@ -26,7 +26,7 @@ describe(evaluateInteropChart.name, () => {
       const result = evaluateInteropChart(series)
       const count = result.signals.find((s) => s.metric === 'count')
       expect(count == null).toBe(false)
-      expect(count?.severity).toEqual('severe')
+      expect(count?.severity).toBe('severe')
     })
 
     it('suppresses volume signal when baseline volume is below $10k/day', () => {
@@ -48,8 +48,8 @@ describe(evaluateInteropChart.name, () => {
       ])
       const result = evaluateInteropChart(series)
       const count = result.signals.find((s) => s.metric === 'count')
-      expect(count?.kind).toEqual('flatLine')
-      expect(count?.severity).toEqual('severe')
+      expect(count?.kind).toBe('flatLine')
+      expect(count?.severity).toBe('severe')
     })
 
     it('does not flag flat line when the last 3 days differ', () => {
@@ -58,7 +58,7 @@ describe(evaluateInteropChart.name, () => {
       ])
       const result = evaluateInteropChart(series)
       const count = result.signals.find((s) => s.metric === 'count')
-      expect(count?.kind).not.toEqual('flatLine')
+      expect(count?.kind).not.toBe('flatLine')
     })
   })
 
@@ -70,8 +70,8 @@ describe(evaluateInteropChart.name, () => {
       ])
       const result = evaluateInteropChart(series)
       const count = result.signals.find((s) => s.metric === 'count')
-      expect(count?.kind).toEqual('ratioDrop')
-      expect(count?.severity).toEqual('severe')
+      expect(count?.kind).toBe('ratioDrop')
+      expect(count?.severity).toBe('severe')
     })
 
     it('flags a 10x+ ratio spike in count', () => {
@@ -80,8 +80,8 @@ describe(evaluateInteropChart.name, () => {
       ])
       const result = evaluateInteropChart(series)
       const count = result.signals.find((s) => s.metric === 'count')
-      expect(count?.kind).toEqual('ratioSpike')
-      expect(count?.severity).toEqual('severe')
+      expect(count?.kind).toBe('ratioSpike')
+      expect(count?.severity).toBe('severe')
     })
 
     it('flags a 30x+ ratio spike in src volume', () => {
@@ -95,8 +95,8 @@ describe(evaluateInteropChart.name, () => {
       )
       const result = evaluateInteropChart(series)
       const src = result.signals.find((s) => s.metric === 'srcVolume')
-      expect(src?.kind).toEqual('ratioSpike')
-      expect(src?.severity).toEqual('severe')
+      expect(src?.kind).toBe('ratioSpike')
+      expect(src?.severity).toBe('severe')
     })
 
     it('does not flag a 5x volume spike (under 30x threshold) as ratio spike', () => {
@@ -110,7 +110,7 @@ describe(evaluateInteropChart.name, () => {
       )
       const result = evaluateInteropChart(series)
       const src = result.signals.find((s) => s.metric === 'srcVolume')
-      expect(src?.kind).not.toEqual('ratioSpike')
+      expect(src?.kind).not.toBe('ratioSpike')
     })
   })
 
@@ -122,7 +122,7 @@ describe(evaluateInteropChart.name, () => {
       ])
       const result = evaluateInteropChart(series)
       const count = result.signals.find((s) => s.metric === 'count')
-      expect(count?.severity).toEqual('severe')
+      expect(count?.severity).toBe('severe')
     })
 
     it('does not emit anything for a moderate robust-Z anomaly', () => {
@@ -145,8 +145,8 @@ describe(evaluateInteropChart.name, () => {
         Array.from({ length: 13 }, () => 1_500_000).concat([1_000_000]),
       )
       const result = evaluateInteropChart(series)
-      expect(result.sideMismatch?.diffPercent).toEqual(50)
-      expect(result.sideMismatch?.largerSideUsd).toEqual(2_000_000)
+      expect(result.sideMismatch?.diffPercent).toBe(50)
+      expect(result.sideMismatch?.largerSideUsd).toBe(2_000_000)
     })
 
     it('does not flag when below the $2M floor', () => {
@@ -158,7 +158,7 @@ describe(evaluateInteropChart.name, () => {
         Array.from({ length: 14 }, () => 760_000),
       )
       const result = evaluateInteropChart(series)
-      expect(result.sideMismatch).toEqual(null)
+      expect(result.sideMismatch).toBe(null)
     })
 
     it('does not flag when one side is zero', () => {
@@ -168,7 +168,7 @@ describe(evaluateInteropChart.name, () => {
         Array.from({ length: 14 }, () => 0),
       )
       const result = evaluateInteropChart(series)
-      expect(result.sideMismatch).toEqual(null)
+      expect(result.sideMismatch).toBe(null)
     })
 
     it('does not flag when diff is below 50%', () => {
@@ -180,7 +180,7 @@ describe(evaluateInteropChart.name, () => {
         Array.from({ length: 14 }, () => 1_100_000),
       )
       const result = evaluateInteropChart(series)
-      expect(result.sideMismatch).toEqual(null)
+      expect(result.sideMismatch).toBe(null)
     })
   })
 
@@ -229,7 +229,7 @@ describe(evaluateInteropChart.name, () => {
       )
       const result = evaluateInteropChart(points)
       const count = result.signals.find((s) => s.metric === 'count')
-      expect(count?.severity).toEqual('severe')
+      expect(count?.severity).toBe('severe')
       expect(
         result.signals.filter(
           (s) => s.metric === 'srcVolume' || s.metric === 'dstVolume',
@@ -292,7 +292,7 @@ describe(evaluateInteropChart.name, () => {
         volumeUsd: 5_000_000,
       })
       const src = result.signals.find((s) => s.metric === 'srcVolume')
-      expect(src?.kind).toEqual('zScoreSpike')
+      expect(src?.kind).toBe('zScoreSpike')
     })
 
     it('suppresses a flat line on a low-count lane', () => {
@@ -328,9 +328,9 @@ describe(evaluateInteropChart.name, () => {
       })
       const src = result.signals.find((s) => s.metric === 'srcVolume')
       const dst = result.signals.find((s) => s.metric === 'dstVolume')
-      expect(src?.kind).toEqual('ratioSpike')
-      expect(dst?.kind).toEqual('ratioSpike')
-      expect(result.sideMismatch).toEqual(null)
+      expect(src?.kind).toBe('ratioSpike')
+      expect(dst?.kind).toBe('ratioSpike')
+      expect(result.sideMismatch).toBe(null)
     })
 
     it('fires on the legitimate volume drop for circlegateway ethereum→polygonpos', () => {
@@ -351,8 +351,8 @@ describe(evaluateInteropChart.name, () => {
       })
       const src = result.signals.find((s) => s.metric === 'srcVolume')
       const dst = result.signals.find((s) => s.metric === 'dstVolume')
-      expect(src?.kind).toEqual('ratioDrop')
-      expect(dst?.kind).toEqual('ratioDrop')
+      expect(src?.kind).toBe('ratioDrop')
+      expect(dst?.kind).toBe('ratioDrop')
     })
 
     it('stays silent on across base→bsc — a "moderate" noisy case from the old policy', () => {
@@ -376,7 +376,7 @@ describe(evaluateInteropChart.name, () => {
         volumeUsd: 57_833_300,
       })
       expect(result.signals).toEqual([])
-      expect(result.sideMismatch).toEqual(null)
+      expect(result.sideMismatch).toBe(null)
     })
   })
 

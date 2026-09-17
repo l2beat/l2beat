@@ -25,7 +25,7 @@ describe(StarkWareNamedStorageHandler.name, () => {
         type: 'starkWareNamedStorage',
         tag: 'foo',
       })
-      expect(handler.field).toEqual('someName')
+      expect(handler.field).toBe('someName')
 
       const result = await handler.execute(provider, address)
       expect(result).toEqual({
@@ -51,7 +51,7 @@ describe(StarkWareNamedStorageHandler.name, () => {
         tag: 'foo',
         returnType: 'number',
       })
-      expect(handler.field).toEqual('someName')
+      expect(handler.field).toBe('someName')
 
       const result = await handler.execute(provider, address)
       expect(result).toEqual({
@@ -81,7 +81,7 @@ describe(StarkWareNamedStorageHandler.name, () => {
         tag: 'foo',
         returnType: 'address',
       })
-      expect(handler.field).toEqual('someName')
+      expect(handler.field).toBe('someName')
 
       const result = await handler.execute(provider, address)
       expect(result).toEqual({

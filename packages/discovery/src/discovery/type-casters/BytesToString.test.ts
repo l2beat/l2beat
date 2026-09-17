@@ -11,7 +11,7 @@ describe('BytesToString', () => {
   })
 
   it('decodes empty bytes to an empty string', () => {
-    expect(BytesToString.cast({}, '0x')).toEqual('')
+    expect(BytesToString.cast({}, '0x')).toBe('')
   })
 
   it('returns the original value when bytes are not valid UTF-8', () => {

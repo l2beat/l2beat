@@ -110,7 +110,7 @@ describe(formatNumber.name, () => {
         }
         it(`formats ${-value} as -${expected}`, () => {
           const result = formatNumber(-value, 4)
-          expect(result).toEqual('-' + expected)
+          expect(result).toBe('-' + expected)
         })
       }
     })
@@ -124,17 +124,17 @@ describe(formatNumberWithCommas.name, () => {
         minimumFractionDigits: 2,
         maximumFractionDigits: 2,
       }),
-    ).toEqual('1,234.50')
+    ).toBe('1,234.50')
   })
 
   it('supports variable decimals with maximumFractionDigits', () => {
     expect(
       formatNumberWithCommas(1234.567891, { maximumFractionDigits: 5 }),
-    ).toEqual('1,234.56789')
-    expect(
-      formatNumberWithCommas(1234.5, { maximumFractionDigits: 5 }),
-    ).toEqual('1,234.5')
-    expect(formatNumberWithCommas(1234, { maximumFractionDigits: 5 })).toEqual(
+    ).toBe('1,234.56789')
+    expect(formatNumberWithCommas(1234.5, { maximumFractionDigits: 5 })).toBe(
+      '1,234.5',
+    )
+    expect(formatNumberWithCommas(1234, { maximumFractionDigits: 5 })).toBe(
       '1,234',
     )
   })

@@ -274,7 +274,7 @@ describe(TokenValueIndexer.name, () => {
 
       const configId = TokenValueIndexer.idToConfigurationId(token)
 
-      expect(configId).toEqual('c4b862cc3e9e')
+      expect(configId).toBe('c4b862cc3e9e')
     })
   })
 

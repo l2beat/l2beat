@@ -38,11 +38,11 @@ describe(parseDiscoveryUpdates.name, () => {
       ].join('\n'),
     )
 
-    expect(discoveryUpdates.length).toEqual(1)
+    expect(discoveryUpdates.length).toBe(1)
     const update = discoveryUpdates[0]!
     expect(update.id).toMatch(/^[0-9a-f]{8}$/)
-    expect(update.description).toEqual('A public update.')
-    expect(update.changeCount).toEqual(1)
+    expect(update.description).toBe('A public update.')
+    expect(update.changeCount).toBe(1)
     expect(update.sections).toEqual([
       {
         kind: 'watched-changes',
@@ -106,7 +106,7 @@ describe(parseDiscoveryUpdates.name, () => {
       ].join('\n'),
     )
 
-    expect(discoveryUpdates.length).toEqual(1)
+    expect(discoveryUpdates.length).toBe(1)
     const update = discoveryUpdates[0]!
     expect(update.sections).toEqual([
       {
@@ -114,7 +114,7 @@ describe(parseDiscoveryUpdates.name, () => {
         body: [verifiedContract, createdContract].join('\n\n'),
       },
     ])
-    expect(update.changeCount).toEqual(3)
+    expect(update.changeCount).toBe(3)
   })
 
   it('keeps standalone contracts added through config', () => {
@@ -158,8 +158,8 @@ describe(parseDiscoveryUpdates.name, () => {
       ].join('\n'),
     )
 
-    expect(discoveryUpdates.length).toEqual(1)
-    expect(discoveryUpdates[0]?.sections[0]?.kind).toEqual('initial-discovery')
+    expect(discoveryUpdates.length).toBe(1)
+    expect(discoveryUpdates[0]?.sections[0]?.kind).toBe('initial-discovery')
   })
 
   it('marks high severity for implementation changes', () => {
@@ -178,7 +178,7 @@ describe(parseDiscoveryUpdates.name, () => {
       ].join('\n'),
     )
 
-    expect(discoveryUpdates[0]?.isHighSeverity).toEqual(true)
+    expect(discoveryUpdates[0]?.isHighSeverity).toBe(true)
   })
 
   it('marks high severity from explicit severity metadata', () => {
@@ -196,7 +196,7 @@ describe(parseDiscoveryUpdates.name, () => {
       ].join('\n'),
     )
 
-    expect(discoveryUpdates[0]?.isHighSeverity).toEqual(true)
+    expect(discoveryUpdates[0]?.isHighSeverity).toBe(true)
   })
 
   it('does not mark descriptions mentioning implementation as high severity', () => {
@@ -213,7 +213,7 @@ describe(parseDiscoveryUpdates.name, () => {
       ].join('\n'),
     )
 
-    expect(discoveryUpdates[0]?.isHighSeverity).toEqual(false)
+    expect(discoveryUpdates[0]?.isHighSeverity).toBe(false)
   })
 
   it('uses current timestamp metadata when present', () => {
@@ -232,7 +232,7 @@ describe(parseDiscoveryUpdates.name, () => {
       ].join('\n'),
     )
 
-    expect(discoveryUpdates[0]?.timestamp).toEqual(1700000000)
+    expect(discoveryUpdates[0]?.timestamp).toBe(1700000000)
     expect(discoveryUpdates[0]?.id ?? '').toMatch(/^[0-9a-f]{8}$/)
   })
 
@@ -315,7 +315,7 @@ describe(parseDiscoveryUpdates.name, () => {
       ].join('\n'),
     )
 
-    expect(discoveryUpdates[0]?.timestamp).toEqual(null)
+    expect(discoveryUpdates[0]?.timestamp).toBe(null)
     expect(discoveryUpdates[0]?.id ?? '').toMatch(/^[0-9a-f]{8}$/)
   })
 })

@@ -295,21 +295,21 @@ describe(Decoder.name, () => {
     const recipient0 = recipientsArg.decoded.values[0]
     const recipient1 = recipientsArg.decoded.values[1]
 
-    expect(recipient0?.decoded?.type).toEqual('address')
-    expect(recipient1?.decoded?.type).toEqual('address')
+    expect(recipient0?.decoded?.type).toBe('address')
+    expect(recipient1?.decoded?.type).toBe('address')
 
     assert(recipient0?.decoded?.type === 'address')
     assert(recipient1?.decoded?.type === 'address')
 
     // Check token address
-    expect(tokenArg?.decoded?.type).toEqual('address')
+    expect(tokenArg?.decoded?.type).toBe('address')
     assert(tokenArg?.decoded?.type === 'address')
-    expect(tokenArg?.decoded?.name).toEqual('FiatTokenV2_2')
+    expect(tokenArg?.decoded?.name).toBe('FiatTokenV2_2')
 
     // Check from address
-    expect(fromArg?.decoded?.type).toEqual('address')
+    expect(fromArg?.decoded?.type).toBe('address')
     assert(fromArg?.decoded?.type === 'address')
-    expect(fromArg.decoded.name).toEqual('FiatTokenV2_2')
+    expect(fromArg.decoded.name).toBe('FiatTokenV2_2')
   })
 
   it('decodes Taiko DAO execute actions', async () => {
@@ -373,7 +373,7 @@ describe(Decoder.name, () => {
       '((address target, uint256 value, bytes data)[])',
       actionsBytes,
     )
-    expect(preDecoded.decoded.type).toEqual('array')
+    expect(preDecoded.decoded.type).toBe('array')
 
     const data = encodeFunctionData({
       abi: parseAbi(['function execute(bytes _actions)']),
@@ -387,7 +387,7 @@ describe(Decoder.name, () => {
       chain: ethereum,
     })
 
-    expect(result.data.decoded?.type).toEqual('call')
+    expect(result.data.decoded?.type).toBe('call')
     assert(result.data.decoded?.type === 'call')
 
     const decodedCall = result.data.decoded
@@ -395,8 +395,8 @@ describe(Decoder.name, () => {
 
     const actionsArg = decodedCall.arguments[0]
     assert(actionsArg?.decoded?.type === 'array')
-    expect(actionsArg.abi).toEqual('(address, uint256, bytes)[]')
-    expect(actionsArg.decoded.values.length).toEqual(2)
+    expect(actionsArg.abi).toBe('(address, uint256, bytes)[]')
+    expect(actionsArg.decoded.values.length).toBe(2)
 
     const [firstAction, secondAction] = actionsArg.decoded.values
     assert(firstAction?.decoded?.type === 'array')
@@ -408,9 +408,9 @@ describe(Decoder.name, () => {
     assert(firstData?.decoded?.type === 'call')
 
     expect(firstTarget.decoded.value).toEqual(targetA)
-    expect(firstValue.decoded.value).toEqual('123')
-    expect(firstValue.decoded.currency).toEqual('ETH')
-    expect(firstValue.decoded.decimals).toEqual(18)
+    expect(firstValue.decoded.value).toBe('123')
+    expect(firstValue.decoded.currency).toBe('ETH')
+    expect(firstValue.decoded.decimals).toBe(18)
     expect(firstData.decoded.selector).toEqual(nestedSelector)
     expect(firstData.decoded.arguments[0]?.decoded).toEqual({
       hint: 'e18',
@@ -424,7 +424,7 @@ describe(Decoder.name, () => {
     assert(secondData?.decoded?.type === 'call')
 
     expect(secondTarget.decoded.value).toEqual(targetB)
-    expect(secondValue.decoded.value).toEqual('0')
+    expect(secondValue.decoded.value).toBe('0')
     expect(secondData.decoded.selector).toEqual(noopSelector)
     expect(secondData.decoded.arguments).toEqual([])
   })
@@ -450,7 +450,7 @@ describe(Decoder.name, () => {
       chain: ethereum,
     })
 
-    expect(result.data.decoded?.type).toEqual('call')
+    expect(result.data.decoded?.type).toBe('call')
     assert(result.data.decoded?.type === 'call')
     expect(result.data.decoded.selector).toEqual(executeSelector)
 

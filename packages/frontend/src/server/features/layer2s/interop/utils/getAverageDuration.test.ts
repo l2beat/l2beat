@@ -125,7 +125,7 @@ describe(getAverageDuration.name, () => {
       undefined,
     )
 
-    expect(result).toEqual(null)
+    expect(result).toBe(null)
   })
 
   it('keeps configured splits even when a subset has no matching transfers', () => {

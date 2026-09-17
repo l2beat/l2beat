@@ -78,8 +78,8 @@ describe('buildPastUpgradeRows', () => {
 
     const [row] = buildPastUpgradeRows(value)
 
-    expect(row?.txHash).toEqual('0xdeadbeef')
-    expect(row?.txUrl).toEqual('https://etherscan.io/tx/0xdeadbeef')
+    expect(row?.txHash).toBe('0xdeadbeef')
+    expect(row?.txUrl).toBe('https://etherscan.io/tx/0xdeadbeef')
   })
 
   it('keeps the transaction hash even when the chain has no explorer', () => {
@@ -92,8 +92,8 @@ describe('buildPastUpgradeRows', () => {
 
     const [row] = buildPastUpgradeRows(value)
 
-    expect(row?.txHash).toEqual('0xdeadbeef')
-    expect(row?.txUrl).toEqual(undefined)
+    expect(row?.txHash).toBe('0xdeadbeef')
+    expect(row?.txUrl).toBe(undefined)
   })
 
   it('exposes one address per facet for diamond upgrades', () => {
@@ -107,7 +107,7 @@ describe('buildPastUpgradeRows', () => {
 
     const rows = buildPastUpgradeRows(value)
 
-    expect(rows.length).toEqual(2)
+    expect(rows.length).toBe(2)
     expect(rows[0]?.addresses).toEqual([A, D])
     expect(rows[1]?.addresses).toEqual([B, C])
   })
@@ -127,7 +127,7 @@ describe('buildPastUpgradeRows', () => {
 
     const rows = buildPastUpgradeRows(value)
 
-    expect(rows.length).toEqual(2)
+    expect(rows.length).toBe(2)
     expect(rows.map((r) => r.addresses[0])).toEqual([A, D])
   })
 
@@ -144,7 +144,7 @@ describe('buildPastUpgradeRows', () => {
 
     const rows = buildPastUpgradeRows(value)
 
-    expect(rows.length).toEqual(3)
+    expect(rows.length).toBe(3)
     expect(rows.map((r) => r.addresses[0])).toEqual([A, B, C])
     expect(rows.map((r) => r.txHash)).toEqual([
       '0xsecond',
@@ -168,7 +168,7 @@ describe('buildPastUpgradeRows', () => {
 
     const rows = buildPastUpgradeRows(value)
 
-    expect(rows.length).toEqual(4)
+    expect(rows.length).toBe(4)
     expect(rows.map((r) => r.addresses[0])).toEqual([A, B, A, C])
   })
 
@@ -185,7 +185,7 @@ describe('buildPastUpgradeRows', () => {
 
     const rows = buildPastUpgradeRows(value)
 
-    expect(rows.length).toEqual(2)
+    expect(rows.length).toBe(2)
     expect(rows.map((r) => r.txHash)).toEqual(['0xreset', '0xdeploy'])
     expect(rows.map((r) => r.addresses[0])).toEqual([D, D])
   })

@@ -15,7 +15,7 @@ describe(DynamicArrayHandler.name, () => {
           .fn()
           .mockImplementationOnce((passedAddress, slot) => {
             expect(passedAddress).toEqual(address)
-            expect(slot).toEqual(85n)
+            expect(slot).toBe(85n)
             return 2n
           }),
         getStorage: vi
@@ -48,7 +48,7 @@ describe(DynamicArrayHandler.name, () => {
         type: 'dynamicArray',
         slot: 85,
       })
-      expect(handler.field).toEqual('someName')
+      expect(handler.field).toBe('someName')
 
       const result = await handler.execute(provider, address, {})
       expect(result).toEqual({
@@ -70,7 +70,7 @@ describe(DynamicArrayHandler.name, () => {
           .fn()
           .mockImplementationOnce((passedAddress, slot) => {
             expect(passedAddress).toEqual(address)
-            expect(slot).toEqual(85n)
+            expect(slot).toBe(85n)
             return 0n
           }),
       } as unknown as IProvider
@@ -79,7 +79,7 @@ describe(DynamicArrayHandler.name, () => {
         type: 'dynamicArray',
         slot: 85,
       })
-      expect(handler.field).toEqual('someName')
+      expect(handler.field).toBe('someName')
 
       const result = await handler.execute(provider, address, {})
       expect(result).toEqual({

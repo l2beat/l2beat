@@ -166,7 +166,7 @@ describe(parseCompareStateFromSearchParams.name, () => {
   it('falls back to the default range when custom bounds are inverted', () => {
     const result = parse('range=1710000000-1700000000')
 
-    expect(result.range).toEqual('1y')
+    expect(result.range).toBe('1y')
   })
 
   it('round-trips through buildCompareUrl', () => {
@@ -268,7 +268,7 @@ describe(parseCompareStateFromSearchParams.name, () => {
     const url = buildCompareUrl('/layer2s/compare', state)
     const search = url.split('?')[1] ?? ''
 
-    expect(url).toEqual('/layer2s/compare?charts=tvs:filter=rwaRestricted')
+    expect(url).toBe('/layer2s/compare?charts=tvs:filter=rwaRestricted')
     expect(parse(search)).toEqual(state)
   })
 })

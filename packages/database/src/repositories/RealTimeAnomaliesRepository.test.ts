@@ -201,7 +201,7 @@ describeDatabase(RealTimeAnomaliesRepository.name, (db) => {
           'batchSubmissions',
         )
 
-        expect(deleted).toEqual(1)
+        expect(deleted).toBe(1)
         const results = await repository.getAll()
         expect(results).toHaveLength(3)
         expect(results).toEqual(
@@ -215,7 +215,7 @@ describeDatabase(RealTimeAnomaliesRepository.name, (db) => {
           'stateUpdates',
         )
 
-        expect(deleted).toEqual(0)
+        expect(deleted).toBe(0)
         const results = await repository.getAll()
         expect(results).toHaveLength(DATA.length)
         expect(results).toEqual(expect.arrayContaining(DATA))
@@ -227,7 +227,7 @@ describeDatabase(RealTimeAnomaliesRepository.name, (db) => {
           'proofSubmissions',
         )
 
-        expect(deleted).toEqual(0)
+        expect(deleted).toBe(0)
         const results = await repository.getAll()
         expect(results).toHaveLength(DATA.length)
         expect(results).toEqual(expect.arrayContaining(DATA))

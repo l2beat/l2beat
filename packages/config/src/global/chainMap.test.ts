@@ -6,11 +6,11 @@ import { chainToProjectId, projectIdToChain } from './chainMap'
 describe('chainMap', () => {
   it('maps Polygon PoS between chain id and project id', () => {
     expect(chainToProjectId('polygonpos')).toEqual(ProjectId('polygon-pos'))
-    expect(projectIdToChain(ProjectId('polygon-pos'))).toEqual('polygonpos')
+    expect(projectIdToChain(ProjectId('polygon-pos'))).toBe('polygonpos')
   })
 
   it('keeps matching chain ids and project ids unchanged', () => {
     expect(chainToProjectId('hyperliquid')).toEqual(ProjectId('hyperliquid'))
-    expect(projectIdToChain(ProjectId('hyperliquid'))).toEqual('hyperliquid')
+    expect(projectIdToChain(ProjectId('hyperliquid'))).toBe('hyperliquid')
   })
 })

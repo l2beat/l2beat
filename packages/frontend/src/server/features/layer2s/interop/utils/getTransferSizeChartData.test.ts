@@ -41,11 +41,11 @@ function record(
 
 describe(aggregateTransferSize.name, () => {
   it('returns undefined for no records', () => {
-    expect(aggregateTransferSize([])).toEqual(undefined)
+    expect(aggregateTransferSize([])).toBe(undefined)
   })
 
   it('returns undefined when no transfers fall into any bucket', () => {
-    expect(aggregateTransferSize([record({ srcValueUsd: 100 })])).toEqual(
+    expect(aggregateTransferSize([record({ srcValueUsd: 100 })])).toBe(
       undefined,
     )
   })
@@ -92,19 +92,19 @@ describe(aggregateTransferSize.name, () => {
     const result = aggregateTransferSize([
       record({ countUnder100: 1, identifiedCount: 0, srcValueUsd: 50 }),
     ])
-    expect(result?.averageTransferSizeUsd).toEqual(undefined)
+    expect(result?.averageTransferSizeUsd).toBe(undefined)
   })
 })
 
 describe(aggregateTransferType.name, () => {
   it('returns undefined for no records', () => {
-    expect(aggregateTransferType([])).toEqual(undefined)
+    expect(aggregateTransferType([])).toBe(undefined)
   })
 
   it('returns undefined when total volume is zero', () => {
-    expect(
-      aggregateTransferType([record({ bridgeType: 'lockAndMint' })]),
-    ).toEqual(undefined)
+    expect(aggregateTransferType([record({ bridgeType: 'lockAndMint' })])).toBe(
+      undefined,
+    )
   })
 
   it('sums volume per bridge type', () => {

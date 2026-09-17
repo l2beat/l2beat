@@ -90,7 +90,7 @@ describe(ProjectDiscovery.name, () => {
       const replaced = discovery.replaceAddressesWithNames(
         'Can be updated by eth:0x0D4C1222f5e839a911e2053860e45F18921D72ac, eth:0x787A0ACaB02437c60Aafb1a29167A3609801e320',
       )
-      expect(replaced).toEqual(
+      expect(replaced).toBe(
         'Can be updated by MockedContract, 0x787A0ACaB02437c60Aafb1a29167A3609801e320',
       )
     })
@@ -130,7 +130,7 @@ describe(ProjectDiscovery.name, () => {
 
       expect(actors.raw).toHaveLength(1)
       expect(actors.linkable).toHaveLength(1)
-      expect(actors.linkable[0]?.name).toEqual('OwnName')
+      expect(actors.linkable[0]?.name).toBe('OwnName')
     })
 
     it('should return empty arrays when no EOAs have permissions', () => {
@@ -203,8 +203,8 @@ describe(ProjectDiscovery.name, () => {
       expect(result.raw).toHaveLength(1)
       expect(result.linkable).toHaveLength(1)
       expect(result.grouped).toHaveLength(1)
-      expect(result.linkable[0].name).toEqual('TestEOA')
-      expect(result.grouped[0].name).toEqual('TestEOA')
+      expect(result.linkable[0].name).toBe('TestEOA')
+      expect(result.grouped[0].name).toBe('TestEOA')
     })
 
     it('should group EOAs with same description but different chains', () => {
@@ -299,14 +299,14 @@ describe(ProjectDiscovery.name, () => {
       const ethGroup = result.grouped.find((g) => g.chain === 'ethereum')
       const arbGroup = result.grouped.find((g) => g.chain === 'arbitrum')
 
-      expect(ethGroup).not.toEqual(undefined)
-      expect(arbGroup).not.toEqual(undefined)
+      expect(ethGroup).not.toBe(undefined)
+      expect(arbGroup).not.toBe(undefined)
       expect(ethGroup?.accounts ?? []).toHaveLength(2)
       expect(arbGroup?.accounts ?? []).toHaveLength(1)
-      expect(ethGroup?.name).toEqual('MultiSigMember1 and MultiSigMember3')
-      expect(ethGroup?.id).toEqual('MultiSigMember1-and-MultiSigMember3')
-      expect(arbGroup?.name).toEqual('MultiSigMember2')
-      expect(arbGroup?.id).toEqual('MultiSigMember2')
+      expect(ethGroup?.name).toBe('MultiSigMember1 and MultiSigMember3')
+      expect(ethGroup?.id).toBe('MultiSigMember1-and-MultiSigMember3')
+      expect(arbGroup?.name).toBe('MultiSigMember2')
+      expect(arbGroup?.id).toBe('MultiSigMember2')
     })
   })
 })

@@ -119,7 +119,7 @@ describe(getGraphProjection.name, () => {
     expect(projection.visibleEdges).toEqual([
       { source: 'root', target: 'visible-target', fieldName: 'visible' },
     ])
-    expect(projection.hiddenFieldCount).toEqual(1)
+    expect(projection.hiddenFieldCount).toBe(1)
   })
 })
 
@@ -169,8 +169,8 @@ describe(hideItems.name, () => {
 
     const updated = hideItems(nodes, new Set(['standalone']))
 
-    expect(updated === nodes).toEqual(true)
-    expect(updated[0] === nodes[0]).toEqual(true)
+    expect(updated === nodes).toBe(true)
+    expect(updated[0] === nodes[0]).toBe(true)
   })
 
   it('does not hide initial targets', () => {
@@ -181,7 +181,7 @@ describe(hideItems.name, () => {
 
     const updated = hideItems(nodes, new Set(['initial']))
 
-    expect(updated === nodes).toEqual(true)
+    expect(updated === nodes).toBe(true)
     expect(hidden(updated)).toEqual([])
   })
 })
@@ -198,9 +198,9 @@ describe(isHideable.name, () => {
     const nodes = [root, referenced, initial, standalone]
     const projection = getGraphProjection(nodes)
 
-    expect(isHideable(projection, referenced)).toEqual(true)
-    expect(isHideable(projection, initial)).toEqual(false)
-    expect(isHideable(projection, standalone)).toEqual(false)
+    expect(isHideable(projection, referenced)).toBe(true)
+    expect(isHideable(projection, initial)).toBe(false)
+    expect(isHideable(projection, standalone)).toBe(false)
   })
 })
 
@@ -222,7 +222,7 @@ describe('compressed rows and hiddenness', () => {
     ]
 
     expect(hidden(nodes)).toEqual([])
-    expect(getGraphProjection(nodes).visibleEdges.length).toEqual(2)
+    expect(getGraphProjection(nodes).visibleEdges.length).toBe(2)
   })
 })
 
@@ -239,7 +239,7 @@ describe(mapGraphItems.name, () => {
     )
 
     expect(updated[0]?.hiddenFields).toEqual(['group-field'])
-    expect(updated[0]?.subnodes[0]?.name).toEqual('updated')
+    expect(updated[0]?.subnodes[0]?.name).toBe('updated')
   })
 
   it('preserves references when nothing changes', () => {
@@ -248,8 +248,8 @@ describe(mapGraphItems.name, () => {
 
     const updated = mapGraphItems(nodes, (node) => node)
 
-    expect(updated[0] === group).toEqual(true)
-    expect(updated[0]?.subnodes[0] === group.subnodes[0]).toEqual(true)
+    expect(updated[0] === group).toBe(true)
+    expect(updated[0]?.subnodes[0] === group.subnodes[0]).toBe(true)
   })
 })
 

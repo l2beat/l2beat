@@ -75,7 +75,7 @@ describe(findRangeChanges.name, () => {
 describe(compareProject.name, () => {
   it('returns null when nothing changed', () => {
     const entries = [identity('a', 100), identity('b', 100, 200)]
-    expect(compareProject(domain, 'proj', entries, entries)).toEqual(null)
+    expect(compareProject(domain, 'proj', entries, entries)).toBe(null)
   })
 
   it('reports a rotation as one message with the freeze recipe', () => {
@@ -184,7 +184,7 @@ describe(diffSnapshots.name, () => {
         new: { since: 100, until: 200 },
       },
     ])
-    expect(diff.unchanged).toEqual(2)
+    expect(diff.unchanged).toBe(2)
   })
 
   it('reports nothing for identical snapshots', () => {

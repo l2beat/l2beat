@@ -89,7 +89,7 @@ describe('chainRouter', () => {
       const caller = createRouter(mockTokenDb)
       const result = await caller.getByName('nonexistent')
 
-      expect(result).toEqual(null)
+      expect(result).toBe(null)
       expect(mockFindByName).toHaveBeenCalledWith('nonexistent')
     })
   })
@@ -189,7 +189,7 @@ describe('chainRouter', () => {
         update,
       })
 
-      expect(result).toEqual(1)
+      expect(result).toBe(1)
       expect(mockUpdateByName).toHaveBeenCalledWith('ethereum', update)
     })
 
@@ -211,7 +211,7 @@ describe('chainRouter', () => {
         update,
       })
 
-      expect(result).toEqual(1)
+      expect(result).toBe(1)
       expect(mockUpdateByName).toHaveBeenCalledWith('ethereum', update)
     })
 
@@ -235,7 +235,7 @@ describe('chainRouter', () => {
         update,
       })
 
-      expect(result).toEqual(1)
+      expect(result).toBe(1)
       expect(mockUpdateByName).toHaveBeenCalledWith('arbitrum', update)
     })
   })
@@ -252,7 +252,7 @@ describe('chainRouter', () => {
       const caller = createRouter(mockTokenDb)
       const result = await caller.delete({ name: 'ethereum' })
 
-      expect(result).toEqual(1)
+      expect(result).toBe(1)
       expect(mockDeleteByName).toHaveBeenCalledWith('ethereum')
     })
   })

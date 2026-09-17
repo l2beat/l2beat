@@ -17,7 +17,7 @@ describe(getTvsCompareChartParams.name, () => {
       CHART_RANGE,
     )
 
-    expect(params.excludeRwaRestrictedTokens).toEqual(true)
+    expect(params.excludeRwaRestrictedTokens).toBe(true)
   })
 
   it('overrides the rwa exclusion while the restricted rwa filter is active', () => {
@@ -29,6 +29,6 @@ describe(getTvsCompareChartParams.name, () => {
       CHART_RANGE,
     )
 
-    expect(params.excludeRwaRestrictedTokens).toEqual(false)
+    expect(params.excludeRwaRestrictedTokens).toBe(false)
   })
 })

@@ -120,10 +120,10 @@ describe(ManyChainMultiSigHandler.name, () => {
       >
     }
 
-    expect(v.summary).toEqual(
+    expect(v.summary).toBe(
       'Root: 2-of-4, childGroups=(1,2,3,4) | Group 1: 2-of-2, parent=0, signers=2 | Group 2: 2-of-2, parent=0, signers=2 | Group 3: 2-of-2, parent=0, signers=2 | Group 4: 2-of-2, parent=0, signers=2',
     )
-    expect(v.rootQuorum).toEqual(2)
+    expect(v.rootQuorum).toBe(2)
     expect(Object.keys(v.signerGroups)).toEqual([
       'root',
       'group1',
@@ -137,12 +137,12 @@ describe(ManyChainMultiSigHandler.name, () => {
       childGroups: [1, 2, 3, 4],
       members: [],
     })
-    expect(v.signerGroups['group1']?.members.length).toEqual(2)
+    expect(v.signerGroups['group1']?.members.length).toBe(2)
     // minSigs: root picks 2 cheapest of 4 child groups; each child group needs
     // 2 of 2 sigs → cheapest two cost 2 each → total = 4.
     const v2 = result.value as { minSigs: number; allMembers: string[] }
-    expect(v2.minSigs).toEqual(4)
-    expect(v2.allMembers.length).toEqual(8)
+    expect(v2.minSigs).toBe(4)
+    expect(v2.allMembers.length).toBe(8)
   })
 
   it('drops disabled groups (quorum=0) and ignores padding', async () => {
@@ -197,11 +197,11 @@ describe(ManyChainMultiSigHandler.name, () => {
         { quorum: number; childGroups: number[]; members: string[] }
       >
     }
-    expect(v.summary).toEqual(
+    expect(v.summary).toBe(
       'Root: 2-of-2, childGroups=(2), signers=1 | Group 2: 1-of-2, parent=0, signers=2',
     )
     expect(v.signerGroups['root']?.childGroups).toEqual([2])
-    expect(v.signerGroups['root']?.members.length).toEqual(1)
+    expect(v.signerGroups['root']?.members.length).toBe(1)
   })
 
   it('passes ignoreRelative through to the result', async () => {
@@ -220,6 +220,6 @@ describe(ManyChainMultiSigHandler.name, () => {
       provider,
       ChainSpecificAddress.random(),
     )
-    expect(result.ignoreRelative).toEqual(true)
+    expect(result.ignoreRelative).toBe(true)
   })
 })

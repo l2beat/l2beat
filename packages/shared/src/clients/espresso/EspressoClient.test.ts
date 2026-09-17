@@ -61,7 +61,7 @@ describe(EspressoClient.name, () => {
         },
       })
 
-      expect(validationInfo.success).toEqual(false)
+      expect(validationInfo.success).toBe(false)
     })
 
     it('returns true for response without error', () => {
@@ -71,7 +71,7 @@ describe(EspressoClient.name, () => {
         stake_table: [],
       })
 
-      expect(validationInfo.success).toEqual(true)
+      expect(validationInfo.success).toBe(true)
     })
   })
 })

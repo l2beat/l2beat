@@ -5,7 +5,7 @@ describe('undefinedIfEmpty', () => {
   describe('array overload', () => {
     it('returns undefined for empty array', () => {
       const result = undefinedIfEmpty([])
-      expect(result).toEqual(undefined)
+      expect(result).toBe(undefined)
     })
 
     it('returns array for non-empty array', () => {
@@ -21,19 +21,19 @@ describe('undefinedIfEmpty', () => {
     })
 
     it('works with string arrays', () => {
-      expect(undefinedIfEmpty([] as string[])).toEqual(undefined)
+      expect(undefinedIfEmpty([] as string[])).toBe(undefined)
       expect(undefinedIfEmpty(['a', 'b'])).toEqual(['a', 'b'])
     })
 
     it('works with number arrays', () => {
-      expect(undefinedIfEmpty([] as number[])).toEqual(undefined)
+      expect(undefinedIfEmpty([] as number[])).toBe(undefined)
       expect(undefinedIfEmpty([1, 2, 3])).toEqual([1, 2, 3])
     })
 
     it('works with object arrays', () => {
       const empty: { id: number }[] = []
       const nonEmpty = [{ id: 1 }, { id: 2 }]
-      expect(undefinedIfEmpty(empty)).toEqual(undefined)
+      expect(undefinedIfEmpty(empty)).toBe(undefined)
       expect(undefinedIfEmpty(nonEmpty)).toEqual(nonEmpty)
     })
   })
@@ -41,7 +41,7 @@ describe('undefinedIfEmpty', () => {
   describe('record overload', () => {
     it('returns undefined for empty record', () => {
       const result = undefinedIfEmpty({})
-      expect(result).toEqual(undefined)
+      expect(result).toBe(undefined)
     })
 
     it('returns undefined when all values are undefined', () => {
@@ -49,7 +49,7 @@ describe('undefinedIfEmpty', () => {
         key1: undefined,
         key2: undefined,
       })
-      expect(result).toEqual(undefined)
+      expect(result).toBe(undefined)
     })
 
     it('returns record when it has defined values', () => {
@@ -75,30 +75,30 @@ describe('undefinedIfEmpty', () => {
     })
 
     it('works with string values', () => {
-      expect(undefinedIfEmpty({} as Record<string, string>)).toEqual(undefined)
+      expect(undefinedIfEmpty({} as Record<string, string>)).toBe(undefined)
       expect(undefinedIfEmpty({ a: 'test' })).toEqual({ a: 'test' })
     })
 
     it('works with number values', () => {
-      expect(undefinedIfEmpty({} as Record<string, number>)).toEqual(undefined)
+      expect(undefinedIfEmpty({} as Record<string, number>)).toBe(undefined)
       expect(undefinedIfEmpty({ x: 1, y: 2 })).toEqual({ x: 1, y: 2 })
     })
 
     it('works with boolean values', () => {
-      expect(undefinedIfEmpty({} as Record<string, boolean>)).toEqual(undefined)
+      expect(undefinedIfEmpty({} as Record<string, boolean>)).toBe(undefined)
       expect(undefinedIfEmpty({ flag: true })).toEqual({ flag: true })
     })
 
     it('works with object values', () => {
       const empty: Record<string, { id: number }> = {}
       const nonEmpty = { item1: { id: 1 }, item2: { id: 2 } }
-      expect(undefinedIfEmpty(empty)).toEqual(undefined)
+      expect(undefinedIfEmpty(empty)).toBe(undefined)
       expect(undefinedIfEmpty(nonEmpty)).toEqual(nonEmpty)
     })
 
     it('handles mixed undefined and defined values correctly', () => {
       const record1 = { a: undefined, b: undefined }
-      expect(undefinedIfEmpty(record1)).toEqual(undefined)
+      expect(undefinedIfEmpty(record1)).toBe(undefined)
 
       const record2 = { a: undefined, b: 'value' }
       expect(undefinedIfEmpty(record2)).toEqual(record2)
@@ -114,7 +114,7 @@ describe('undefinedIfEmpty', () => {
       const result = undefinedIfEmpty(arr)
       // Type check: result should be string[] | undefined
       if (result) {
-        expect(result[0]).toEqual('a')
+        expect(result[0]).toBe('a')
       }
     })
 
@@ -123,7 +123,7 @@ describe('undefinedIfEmpty', () => {
       const result = undefinedIfEmpty(record)
       // Type check: result should be Record<string, number> | undefined
       if (result) {
-        expect(result.x).toEqual(1)
+        expect(result.x).toBe(1)
       }
     })
   })

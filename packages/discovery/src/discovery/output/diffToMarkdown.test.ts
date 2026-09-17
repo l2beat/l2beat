@@ -151,7 +151,7 @@ describe(discoveryDiffToMarkdown.name, () => {
 
   it('empty diffs, no meta', () => {
     const result = discoveryDiffToMarkdown([])
-    expect(result).toEqual('')
+    expect(result).toBe('')
   })
 })
 
@@ -375,7 +375,7 @@ describe(fieldDiffToMarkdown.name, () => {
 
     const maxLength = 32
     const result = fieldDiffToMarkdown(diff, maxLength)
-    expect(result).toEqual('      valu... (message too long)')
+    expect(result).toBe('      valu... (message too long)')
     expect(result.length).toBeLessThanOrEqual(maxLength)
   })
 
@@ -429,6 +429,6 @@ describe(fieldDiffToMarkdown.name, () => {
     const maxLength = 48
     const result = fieldDiffToMarkdown(diff, maxLength)
     expect(result.length).toBeLessThanOrEqual(maxLength)
-    expect(result).toEqual('+++ description: The bar v... (message too long)')
+    expect(result).toBe('+++ description: The bar v... (message too long)')
   })
 })

@@ -48,7 +48,7 @@ describe(getPrivacyConfig.name, () => {
       [],
     )
 
-    expect(config).toEqual(false)
+    expect(config).toBe(false)
   })
 
   it('includes a project that only tracks relayers', async () => {
@@ -278,7 +278,7 @@ describe(getPrivacyConfig.name, () => {
           const priceSince = token.token.sinceTimestamp
           if (!token.token.priceId || !priceSince) continue
           for (const bucket of token.buckets) {
-            expect(priceSince <= bucket.sinceTimestamp).toEqual(true)
+            expect(priceSince <= bucket.sinceTimestamp).toBe(true)
           }
         }
       }

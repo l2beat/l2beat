@@ -28,7 +28,7 @@ describe(MulticallV3Client.name, () => {
 
       const result = client.encodeBatches(requests)
 
-      expect(result.length).toEqual(1)
+      expect(result.length).toBe(1)
 
       const expectedCalldata = multicallInterface.encodeFunctionData(
         'tryAggregate',
@@ -53,7 +53,7 @@ describe(MulticallV3Client.name, () => {
 
       const result = client.encodeBatches(requests)
 
-      expect(result.length).toEqual(3)
+      expect(result.length).toBe(3)
 
       // First batch should have 3 items
       const firstBatchCalldata = multicallInterface.encodeFunctionData(

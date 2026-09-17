@@ -8,7 +8,7 @@ describe(getBasicTableHeaderSections.name, () => {
 
     const result = getBasicTableHeaderSections([header])
 
-    expect(result.groupedHeader).toEqual(undefined)
+    expect(result.groupedHeader).toBe(undefined)
     expect(result.actualHeader).toEqual(header)
   })
 

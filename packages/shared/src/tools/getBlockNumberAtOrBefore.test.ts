@@ -60,7 +60,7 @@ describe(getBlockNumberAtOrBefore.name, async () => {
       rhs,
       getBlock,
     )
-    expect(res).toEqual(37)
+    expect(res).toBe(37)
   })
 
   it('handles the minimal searchable interval (rhs = lhs + 1)', async () => {
@@ -105,13 +105,13 @@ describe(getBlockNumberAtOrBefore.name, async () => {
   it('returns lhsBlock when target equals lhsTimestamp and lhs is unique', async () => {
     const getBlock = linear(10, 100)
     const res = await getBlockNumberAtOrBefore(UnixTime(100), 0, 50, getBlock)
-    expect(res).toEqual(0)
+    expect(res).toBe(0)
   })
 
   it('returns rhsBlock when target equals rhsTimestamp exactly', async () => {
     const getBlock = linear(10)
     const res = await getBlockNumberAtOrBefore(UnixTime(500), 0, 50, getBlock)
-    expect(res).toEqual(50)
+    expect(res).toBe(50)
   })
 
   // Flat region then a massive spike — interpolation initially undershoots and
@@ -122,7 +122,7 @@ describe(getBlockNumberAtOrBefore.name, async () => {
       timestamp: n <= 900 ? n : 900 + (n - 900) * 10_000,
     })
     const res = await getBlockNumberAtOrBefore(UnixTime(500), 0, 1000, getBlock)
-    expect(res).toEqual(500)
+    expect(res).toBe(500)
   })
 
   // On linear data interpolation should resolve in a handful of calls. The
@@ -141,6 +141,6 @@ describe(getBlockNumberAtOrBefore.name, async () => {
   it('handles degenerate range where lhsBlock === rhsBlock', async () => {
     const getBlock = linear(10)
     const res = await getBlockNumberAtOrBefore(UnixTime(50), 42, 42, getBlock)
-    expect(res).toEqual(42)
+    expect(res).toBe(42)
   })
 })

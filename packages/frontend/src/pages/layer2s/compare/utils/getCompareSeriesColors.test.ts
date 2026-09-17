@@ -7,7 +7,7 @@ describe(getCompareSeriesColors.name, () => {
     const colors = getCompareSeriesColors(ids)
 
     expect(Object.keys(colors)).toEqual(ids)
-    expect(new Set(Object.values(colors)).size).toEqual(10)
+    expect(new Set(Object.values(colors)).size).toBe(10)
   })
 
   it('keeps colors of preceding projects stable when the selection grows', () => {
@@ -26,7 +26,7 @@ describe(getCompareSeriesColors.name, () => {
       'base',
     ])
 
-    expect(withEthereum.ethereum).toEqual('var(--chart-ethereum)')
+    expect(withEthereum.ethereum).toBe('var(--chart-ethereum)')
     expect(withEthereum.arbitrum).toEqual(without.arbitrum)
     expect(withEthereum.base).toEqual(without.base)
   })
@@ -34,6 +34,6 @@ describe(getCompareSeriesColors.name, () => {
   it('does not map Ethereum when it is not selected', () => {
     const colors = getCompareSeriesColors(['arbitrum'])
 
-    expect(colors.ethereum).toEqual(undefined)
+    expect(colors.ethereum).toBe(undefined)
   })
 })

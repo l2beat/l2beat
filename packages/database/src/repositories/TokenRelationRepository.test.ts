@@ -269,7 +269,7 @@ describeTokenDatabase(TokenRelationRepository.name, (db) => {
         transfer: updatedTransfer,
       })
 
-      expect(updatedRows).toEqual(1)
+      expect(updatedRows).toBe(1)
       expect(await repository.findByPrimaryKey(relation)).toEqual({
         ...relation,
         transfer: updatedTransfer,
@@ -291,7 +291,7 @@ describeTokenDatabase(TokenRelationRepository.name, (db) => {
         await repository.updateByPrimaryKey(relation, {
           lockedToken: 'A',
         }),
-      ).toEqual(1)
+      ).toBe(1)
       expect(await repository.findByPrimaryKey(relation)).toEqual({
         ...relation,
         lockedToken: 'A',
@@ -544,7 +544,7 @@ describeTokenDatabase(TokenRelationRepository.name, (db) => {
       })
       await repository.insert(relation)
 
-      expect(await repository.deleteByPrimaryKey(relation)).toEqual(1)
+      expect(await repository.deleteByPrimaryKey(relation)).toBe(1)
       expect(await repository.getAll()).toEqual([])
     })
   })

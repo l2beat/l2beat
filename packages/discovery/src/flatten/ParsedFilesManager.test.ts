@@ -98,7 +98,7 @@ describe(ParsedFilesManager.name, () => {
       const manager = ParsedFilesManager.parseFiles(files, EMPTY_REMAPPINGS)
       const root = manager.findDeclaration('R1')
 
-      expect(manager.tryFindDeclaration('NonExistent', root.file)).toEqual(
+      expect(manager.tryFindDeclaration('NonExistent', root.file)).toBe(
         undefined,
       )
     })
@@ -134,14 +134,14 @@ describe(ParsedFilesManager.name, () => {
 
       expect(
         manager.tryFindDeclaration('Alias1', root.file)?.declaration.name,
-      ).toEqual('S1')
-      expect(manager.tryFindDeclaration('S2', root.file)).toEqual(undefined)
+      ).toBe('S1')
+      expect(manager.tryFindDeclaration('S2', root.file)).toBe(undefined)
       expect(
         manager.tryFindDeclaration('A1', root.file)?.declaration.name,
-      ).toEqual('A1')
+      ).toBe('A1')
       expect(
         manager.tryFindDeclaration('A2', root.file)?.declaration.name,
-      ).toEqual('A2')
+      ).toBe('A2')
     })
 
     it('normalizes imports', () => {
@@ -175,14 +175,14 @@ describe(ParsedFilesManager.name, () => {
 
       expect(
         manager.tryFindDeclaration('Alias1', root.file)?.declaration.name,
-      ).toEqual('S1')
-      expect(manager.tryFindDeclaration('S2', root.file)).toEqual(undefined)
+      ).toBe('S1')
+      expect(manager.tryFindDeclaration('S2', root.file)).toBe(undefined)
       expect(
         manager.tryFindDeclaration('A1', root.file)?.declaration.name,
-      ).toEqual('A1')
+      ).toBe('A1')
       expect(
         manager.tryFindDeclaration('A2', root.file)?.declaration.name,
-      ).toEqual('A2')
+      ).toBe('A2')
     })
   })
 
@@ -363,7 +363,7 @@ contract MyContract { function f() public {} }`,
       const result = manager.findDeclaration('MyContract')
 
       // Content should start with 'contract', not comments
-      expect(result.declaration.content.startsWith('contract')).toEqual(true)
+      expect(result.declaration.content.startsWith('contract')).toBe(true)
       expect(result.declaration.content).not.toContain('/// @title')
     })
 
@@ -428,7 +428,7 @@ contract Second { function f() public {} }`,
       const result = manager.findDeclaration('Second')
 
       // Second contract should NOT include the trailing comment from First
-      expect(result.declaration.content.startsWith('contract Second')).toEqual(
+      expect(result.declaration.content.startsWith('contract Second')).toBe(
         true,
       )
       expect(result.declaration.content).not.toContain('trailing comment')

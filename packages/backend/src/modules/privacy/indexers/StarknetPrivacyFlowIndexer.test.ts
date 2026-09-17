@@ -174,7 +174,7 @@ describe(StarknetPrivacyFlowIndexer.name, () => {
           extractor: 'strk20Deposit',
           params: { tokenAddress: TOKEN },
         }),
-      ).toEqual('3bf7f8ee2c73')
+      ).toBe('3bf7f8ee2c73')
     })
   })
 })

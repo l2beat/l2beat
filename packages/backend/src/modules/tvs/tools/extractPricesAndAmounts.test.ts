@@ -467,8 +467,8 @@ describe(extractPricesAndAmounts.name, () => {
         } as unknown as TvsToken,
       ]
       const { amounts } = extractPricesAndAmounts(tokens, chainRanges)
-      expect(getAmount(amounts, 'form').sinceTimestamp).toEqual(1200)
-      expect(getAmount(amounts, 'form').untilTimestamp).toEqual(1800)
+      expect(getAmount(amounts, 'form').sinceTimestamp).toBe(1200)
+      expect(getAmount(amounts, 'form').untilTimestamp).toBe(1800)
     })
 
     it('skips when chain not in config', () => {
@@ -487,7 +487,7 @@ describe(extractPricesAndAmounts.name, () => {
         } as unknown as TvsToken,
       ]
       const { amounts } = extractPricesAndAmounts(tokens, chainRanges)
-      expect(getAmount(amounts, 'unknown-chain').sinceTimestamp).toEqual(500)
+      expect(getAmount(amounts, 'unknown-chain').sinceTimestamp).toBe(500)
     })
 
     it('sets untilTimestamp when token has none', () => {

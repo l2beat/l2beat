@@ -11,7 +11,7 @@ describe(Bytes.name, () => {
 
     it('normalizes the input', () => {
       const bytes = Bytes.fromHex('0x123')
-      expect(bytes.toString()).toEqual('0x0123')
+      expect(bytes.toString()).toBe('0x0123')
     })
   })
 
@@ -24,12 +24,12 @@ describe(Bytes.name, () => {
 
     it('encodes 0 as 00', () => {
       const bytes = Bytes.fromByte(0)
-      expect(bytes.toString()).toEqual('0x00')
+      expect(bytes.toString()).toBe('0x00')
     })
 
     it('encodes the byte', () => {
       const bytes = Bytes.fromByte(0xfa)
-      expect(bytes.toString()).toEqual('0xfa')
+      expect(bytes.toString()).toBe('0xfa')
     })
   })
 
@@ -44,12 +44,12 @@ describe(Bytes.name, () => {
 
     it('encodes 0 as empty', () => {
       const bytes = Bytes.fromNumber(0)
-      expect(bytes.toString()).toEqual('0x')
+      expect(bytes.toString()).toBe('0x')
     })
 
     it('encodes a number', () => {
       const bytes = Bytes.fromNumber(123456)
-      expect(bytes.toString()).toEqual('0x01e240')
+      expect(bytes.toString()).toBe('0x01e240')
     })
   })
 
@@ -62,7 +62,7 @@ describe(Bytes.name, () => {
 
     it('concatenates encoded bytes', () => {
       const bytes = Bytes.fromByteArray([0, 1, 2, 3])
-      expect(bytes.toString()).toEqual('0x00010203')
+      expect(bytes.toString()).toBe('0x00010203')
     })
   })
 
@@ -72,27 +72,27 @@ describe(Bytes.name, () => {
     const third = Bytes.fromHex('1234')
 
     it('first == second', () => {
-      expect(first.equals(second)).toEqual(true)
+      expect(first.equals(second)).toBe(true)
     })
 
     it('second == first', () => {
-      expect(second.equals(first)).toEqual(true)
+      expect(second.equals(first)).toBe(true)
     })
 
     it('first != third', () => {
-      expect(first.equals(third)).toEqual(false)
+      expect(first.equals(third)).toBe(false)
     })
 
     it('third != first', () => {
-      expect(third.equals(first)).toEqual(false)
+      expect(third.equals(first)).toBe(false)
     })
 
     it('second != third', () => {
-      expect(second.equals(third)).toEqual(false)
+      expect(second.equals(third)).toBe(false)
     })
 
     it('third != second', () => {
-      expect(third.equals(second)).toEqual(false)
+      expect(third.equals(second)).toBe(false)
     })
   })
 
@@ -109,23 +109,23 @@ describe(Bytes.name, () => {
 
   describe(Bytes.prototype.toString.name, () => {
     it('encodes empty as "0x"', () => {
-      expect(Bytes.EMPTY.toString()).toEqual('0x')
+      expect(Bytes.EMPTY.toString()).toBe('0x')
     })
 
     it('encodes bytes as normalized hex string', () => {
       const bytes = Bytes.fromHex('aBcD123')
-      expect(bytes.toString()).toEqual('0x0abcd123')
+      expect(bytes.toString()).toBe('0x0abcd123')
     })
   })
 
   describe(Bytes.prototype.toNumber.name, () => {
     it('treats empty as zero', () => {
-      expect(Bytes.EMPTY.toNumber()).toEqual(0)
+      expect(Bytes.EMPTY.toNumber()).toBe(0)
     })
 
     it('returns a number', () => {
       const bytes = Bytes.fromHex('00000123')
-      expect(bytes.toNumber()).toEqual(291)
+      expect(bytes.toNumber()).toBe(291)
     })
   })
 
@@ -139,18 +139,18 @@ describe(Bytes.name, () => {
 
     it('returns a specific byte', () => {
       const bytes = Bytes.fromHex('112233')
-      expect(bytes.get(1)).toEqual(0x22)
+      expect(bytes.get(1)).toBe(0x22)
     })
   })
 
   describe('length', () => {
     it('returns 0 for empty', () => {
-      expect(Bytes.EMPTY.length).toEqual(0)
+      expect(Bytes.EMPTY.length).toBe(0)
     })
 
     it('returns the number of bytes', () => {
       const bytes = Bytes.fromHex('112233')
-      expect(bytes.length).toEqual(3)
+      expect(bytes.length).toBe(3)
     })
   })
 

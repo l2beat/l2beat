@@ -9,12 +9,12 @@ describe(countDiffChanges.name, () => {
   it('counts a contiguous +/- run as one change', () => {
     expect(
       countDiffChanges(diffBody('      values.$upgradeCount:', '-        3')),
-    ).toEqual(1)
+    ).toBe(1)
     expect(
       countDiffChanges(
         diffBody('      values.$upgradeCount:', '-        3', '+        5'),
       ),
-    ).toEqual(1)
+    ).toBe(1)
     expect(
       countDiffChanges(
         diffBody(
@@ -25,7 +25,7 @@ describe(countDiffChanges.name, () => {
           '+        "eth:0xnew2"',
         ),
       ),
-    ).toEqual(1)
+    ).toBe(1)
   })
 
   it('starts a new change after a context line', () => {
@@ -40,7 +40,7 @@ describe(countDiffChanges.name, () => {
           '+        "eth:0xnew2"',
         ),
       ),
-    ).toEqual(2)
+    ).toBe(2)
   })
 
   it('ignores meta lines', () => {
@@ -52,6 +52,6 @@ describe(countDiffChanges.name, () => {
           '+   Status: CREATED',
         ),
       ),
-    ).toEqual(1)
+    ).toBe(1)
   })
 })

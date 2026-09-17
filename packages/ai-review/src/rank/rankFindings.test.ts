@@ -38,7 +38,7 @@ describe(rankFindings.name, () => {
       'blocker-low',
       'minor-high',
     ])
-    expect(score(ranked[0])).toEqual(1.4)
+    expect(score(ranked[0])).toBe(1.4)
   })
 
   it('caps at 5', () => {

@@ -11,7 +11,7 @@ import {
 
 describe(parseTimeArg.name, () => {
   it('parses unix seconds', () => {
-    expect(parseTimeArg('1700000000')).toEqual(1700000000)
+    expect(parseTimeArg('1700000000')).toBe(1700000000)
   })
 
   it('parses ISO dates', () => {
@@ -73,10 +73,10 @@ describe(clampBlockRange.name, () => {
   })
 
   it('returns undefined when there is no overlap', () => {
-    expect(clampBlockRange({ sinceBlock: 300 }, 100, 200)).toEqual(undefined)
-    expect(
-      clampBlockRange({ sinceBlock: 0, untilBlock: 50 }, 100, 200),
-    ).toEqual(undefined)
+    expect(clampBlockRange({ sinceBlock: 300 }, 100, 200)).toBe(undefined)
+    expect(clampBlockRange({ sinceBlock: 0, untilBlock: 50 }, 100, 200)).toBe(
+      undefined,
+    )
   })
 })
 
@@ -92,7 +92,7 @@ describe(clampTimestampRange.name, () => {
   })
 
   it('returns undefined when there is no overlap', () => {
-    expect(clampTimestampRange({ sinceTimestamp: 200 }, 100, 200)).toEqual(
+    expect(clampTimestampRange({ sinceTimestamp: 200 }, 100, 200)).toBe(
       undefined,
     )
   })

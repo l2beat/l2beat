@@ -8,29 +8,29 @@ describe('fromJsonSchema', () => {
     it('converts string schema', () => {
       const schema = { type: 'string' }
       const validator = fromJsonSchema(schema)
-      expect(validator.parse('hello')).toEqual('hello')
-      expect(validator.safeParse(123).success).toEqual(false)
+      expect(validator.parse('hello')).toBe('hello')
+      expect(validator.safeParse(123).success).toBe(false)
     })
 
     it('converts number schema', () => {
       const schema = { type: 'number' }
       const validator = fromJsonSchema(schema)
-      expect(validator.parse(42)).toEqual(42)
-      expect(validator.safeParse('hello').success).toEqual(false)
+      expect(validator.parse(42)).toBe(42)
+      expect(validator.safeParse('hello').success).toBe(false)
     })
 
     it('converts boolean schema', () => {
       const schema = { type: 'boolean' }
       const validator = fromJsonSchema(schema)
-      expect(validator.parse(true)).toEqual(true)
-      expect(validator.safeParse('true').success).toEqual(false)
+      expect(validator.parse(true)).toBe(true)
+      expect(validator.safeParse('true').success).toBe(false)
     })
 
     it('converts null schema', () => {
       const schema = { type: 'null' }
       const validator = fromJsonSchema(schema)
-      expect(validator.parse(null)).toEqual(null)
-      expect(validator.safeParse(undefined).success).toEqual(false)
+      expect(validator.parse(null)).toBe(null)
+      expect(validator.safeParse(undefined).success).toBe(false)
     })
   })
 
@@ -38,16 +38,16 @@ describe('fromJsonSchema', () => {
     it('converts const (literal) schema', () => {
       const schema = { const: 'specific-value' }
       const validator = fromJsonSchema(schema)
-      expect(validator.parse('specific-value')).toEqual('specific-value')
-      expect(validator.safeParse('other-value').success).toEqual(false)
+      expect(validator.parse('specific-value')).toBe('specific-value')
+      expect(validator.safeParse('other-value').success).toBe(false)
     })
 
     it('converts enum schema', () => {
       const schema = { enum: ['red', 'green', 'blue'] }
       const validator = fromJsonSchema(schema)
-      expect(validator.parse('red')).toEqual('red')
-      expect(validator.parse('blue')).toEqual('blue')
-      expect(validator.safeParse('yellow').success).toEqual(false)
+      expect(validator.parse('red')).toBe('red')
+      expect(validator.parse('blue')).toBe('blue')
+      expect(validator.safeParse('yellow').success).toBe(false)
     })
   })
 
@@ -56,7 +56,7 @@ describe('fromJsonSchema', () => {
       const schema = { type: 'array', items: { type: 'string' } }
       const validator = fromJsonSchema(schema)
       expect(validator.parse(['a', 'b'])).toEqual(['a', 'b'])
-      expect(validator.safeParse([1, 2]).success).toEqual(false)
+      expect(validator.safeParse([1, 2]).success).toBe(false)
     })
 
     it('converts tuple schema', () => {
@@ -67,7 +67,7 @@ describe('fromJsonSchema', () => {
       }
       const validator = fromJsonSchema(schema)
       expect(validator.parse(['hello', 42])).toEqual(['hello', 42])
-      expect(validator.safeParse([42, 'hello']).success).toEqual(false)
+      expect(validator.safeParse([42, 'hello']).success).toBe(false)
     })
 
     it('converts array with no items constraint', () => {
@@ -93,7 +93,7 @@ describe('fromJsonSchema', () => {
         age: 30,
       })
       expect(validator.parse({ name: 'Bob' })).toEqual({ name: 'Bob' })
-      expect(validator.safeParse({ age: 25 }).success).toEqual(false)
+      expect(validator.safeParse({ age: 25 }).success).toBe(false)
     })
 
     it('converts strict object schema', () => {
@@ -111,7 +111,7 @@ describe('fromJsonSchema', () => {
       })
       expect(
         validator.safeParse({ name: 'Alice', extra: 'data' }).success,
-      ).toEqual(false)
+      ).toBe(false)
     })
 
     it('converts passthrough object schema', () => {
@@ -137,7 +137,7 @@ describe('fromJsonSchema', () => {
       }
       const validator = fromJsonSchema(schema)
       expect(validator.parse({ a: 1, b: 2 })).toEqual({ a: 1, b: 2 })
-      expect(validator.safeParse({ a: 'string' }).success).toEqual(false)
+      expect(validator.safeParse({ a: 'string' }).success).toBe(false)
     })
   })
 
@@ -147,9 +147,9 @@ describe('fromJsonSchema', () => {
         anyOf: [{ type: 'string' }, { type: 'number' }],
       }
       const validator = fromJsonSchema(schema)
-      expect(validator.parse('hello')).toEqual('hello')
-      expect(validator.parse(42)).toEqual(42)
-      expect(validator.safeParse(true).success).toEqual(false)
+      expect(validator.parse('hello')).toBe('hello')
+      expect(validator.parse(42)).toBe(42)
+      expect(validator.safeParse(true).success).toBe(false)
     })
 
     it('converts oneOf schema', () => {
@@ -157,8 +157,8 @@ describe('fromJsonSchema', () => {
         oneOf: [{ type: 'string' }, { type: 'number' }],
       }
       const validator = fromJsonSchema(schema)
-      expect(validator.parse('hello')).toEqual('hello')
-      expect(validator.parse(42)).toEqual(42)
+      expect(validator.parse('hello')).toBe('hello')
+      expect(validator.parse(42)).toBe(42)
     })
   })
 
@@ -208,8 +208,8 @@ describe('fromJsonSchema', () => {
     it('converts empty schema as unknown', () => {
       const schema = {}
       const validator = fromJsonSchema(schema)
-      expect(validator.parse('anything')).toEqual('anything')
-      expect(validator.parse(123)).toEqual(123)
+      expect(validator.parse('anything')).toBe('anything')
+      expect(validator.parse(123)).toBe(123)
       expect(validator.parse({ any: 'object' })).toEqual({
         any: 'object',
       })
@@ -221,7 +221,7 @@ describe('fromJsonSchema', () => {
       const original = v.string()
       const schema = toJsonSchema(original) as JsonSchema
       const restored = fromJsonSchema(schema)
-      expect(restored.parse('test')).toEqual('test')
+      expect(restored.parse('test')).toBe('test')
     })
 
     it('object validator round-trips', () => {
@@ -247,23 +247,23 @@ describe('fromJsonSchema', () => {
       const original = v.union([v.string(), v.number()])
       const schema = toJsonSchema(original) as JsonSchema
       const restored = fromJsonSchema(schema)
-      expect(restored.parse('text')).toEqual('text')
-      expect(restored.parse(42)).toEqual(42)
+      expect(restored.parse('text')).toBe('text')
+      expect(restored.parse(42)).toBe(42)
     })
 
     it('literal validator round-trips', () => {
       const original = v.literal('constant')
       const schema = toJsonSchema(original) as JsonSchema
       const restored = fromJsonSchema(schema)
-      expect(restored.parse('constant')).toEqual('constant')
+      expect(restored.parse('constant')).toBe('constant')
     })
 
     it('enum validator round-trips', () => {
       const original = v.enum(['red', 'green', 'blue'])
       const schema = toJsonSchema(original) as JsonSchema
       const restored = fromJsonSchema(schema)
-      expect(restored.parse('red')).toEqual('red')
-      expect(restored.safeParse('yellow').success).toEqual(false)
+      expect(restored.parse('red')).toBe('red')
+      expect(restored.safeParse('yellow').success).toBe(false)
     })
 
     it('record validator round-trips', () => {

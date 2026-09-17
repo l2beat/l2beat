@@ -596,12 +596,12 @@ describe(OpenApi.name, () => {
         !Object.keys(
           response?.content['application/json'].schema ?? {},
         ).includes('$ref'),
-      ).toEqual(true)
+      ).toBe(true)
       expect(
         Object.keys(
           response?.content['application/json'].schema ?? {},
         ).includes('type'),
-      ).toEqual(true)
+      ).toBe(true)
     })
   })
 })

@@ -122,13 +122,11 @@ describe(getDaTrackingStatusRows.name, () => {
       details: 'base layer',
       status: 'missing',
     })
-    expect(rowsByConfigId.get('ethereum')?.details).toEqual(
+    expect(rowsByConfigId.get('ethereum')?.details).toBe(
       'inbox: 0x123; sequencers: 0x456; topics: 0x789',
     )
-    expect(rowsByConfigId.get('celestia')?.details).toEqual(
-      'namespace: namespace',
-    )
-    expect(rowsByConfigId.get('avail')?.details).toEqual('app IDs: 1, 2')
+    expect(rowsByConfigId.get('celestia')?.details).toBe('namespace: namespace')
+    expect(rowsByConfigId.get('avail')?.details).toBe('app IDs: 1, 2')
     expect(rowsByConfigId.get('eigenda')).toEqual({
       configId: 'eigenda',
       type: 'eigen-da',

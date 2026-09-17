@@ -29,7 +29,7 @@ describe(DayActivityIndexer.name, () => {
       const newSafeHeight = await indexer.update(0, 100)
 
       expect(txsCountService.getTxsCount).toHaveBeenCalledWith(0, 50)
-      expect(newSafeHeight).toEqual(50)
+      expect(newSafeHeight).toBe(50)
     })
 
     it('make update based on batchSize and uncertaintyBuffer', async () => {
@@ -46,7 +46,7 @@ describe(DayActivityIndexer.name, () => {
       const newSafeHeight = await indexer.update(50, 100)
 
       expect(txsCountService.getTxsCount).toHaveBeenCalledWith(39, 89)
-      expect(newSafeHeight).toEqual(89)
+      expect(newSafeHeight).toBe(89)
     })
 
     it('gets blocks counts, saves to db and updates sync metadata', async () => {
@@ -90,7 +90,7 @@ describe(DayActivityIndexer.name, () => {
         ['a'],
         10 * UnixTime.DAY,
       )
-      expect(newSafeHeight).toEqual(10)
+      expect(newSafeHeight).toBe(10)
     })
   })
 

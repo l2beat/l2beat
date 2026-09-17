@@ -109,7 +109,7 @@ describe(InteropRecentPricesIndexer.name, () => {
         const to = start + 59 * UnixTime.MINUTE
 
         const result = indexer.findFullHourInRange(from, to)
-        expect(result).toEqual(undefined)
+        expect(result).toBe(undefined)
       })
     },
   )

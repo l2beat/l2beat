@@ -34,7 +34,7 @@ describe(DerivedTxStore.name, () => {
     const store = new DerivedTxStore([plugin])
     store.onEventCreated(creatorEvent)
 
-    expect(store.getCount()).toEqual(1)
+    expect(store.getCount()).toBe(1)
     expect(store.get('base', '0xabc')).toEqual([
       {
         chain: 'base',
@@ -103,7 +103,7 @@ describe(DerivedTxStore.name, () => {
     store.onEventCreated(creatorEvent)
     store.onEventsRemoved([creatorEvent])
 
-    expect(store.getCount()).toEqual(0)
+    expect(store.getCount()).toBe(0)
     expect(store.get('base', '0xabc')).toEqual([])
   })
 
@@ -179,7 +179,7 @@ describe(DerivedTxStore.name, () => {
     store.onEventCreated(creatorEvent, true)
 
     expect(store.getHashesPendingHistoryCheck('base', ['across'])).toEqual([])
-    expect(store.getCount()).toEqual(1)
+    expect(store.getCount()).toBe(1)
   })
 
   it('only returns hashes for the requested plugins', () => {

@@ -252,7 +252,7 @@ describe(sortByKeys.name, () => {
       bar: 'bar',
     }
 
-    expect(JSON.stringify(obj)).toEqual('{"foo":"foo","bar":"bar"}')
-    expect(JSON.stringify(sortByKeys(obj))).toEqual('{"bar":"bar","foo":"foo"}')
+    expect(JSON.stringify(obj)).toBe('{"foo":"foo","bar":"bar"}')
+    expect(JSON.stringify(sortByKeys(obj))).toBe('{"bar":"bar","foo":"foo"}')
   })
 })

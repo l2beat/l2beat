@@ -118,14 +118,14 @@ describe(ArbitrumScheduledTransactionsHandler.name, () => {
       ChainSpecificAddress.random(),
     )
     const value = response.value as Record<string, unknown>[]
-    expect(value.length).toEqual(1)
+    expect(value.length).toBe(1)
     const entry = value[0]
-    expect(entry?.raw).not.toEqual(undefined)
-    expect(entry?.id).not.toEqual(undefined)
+    expect(entry?.raw).not.toBe(undefined)
+    expect(entry?.id).not.toBe(undefined)
     // Degraded: no decoded field, and the whole field did not error out.
-    expect(entry?.decoded).toEqual(undefined)
+    expect(entry?.decoded).toBe(undefined)
     // The degradation is marked so it is visible in the diff, not silent.
-    expect(entry?.decodingFailed).toEqual(true)
+    expect(entry?.decodingFailed).toBe(true)
   })
 })
 

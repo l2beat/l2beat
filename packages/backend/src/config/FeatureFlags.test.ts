@@ -36,8 +36,8 @@ describe(FeatureFlags.name, () => {
 
     it('can be called with multiple arguments', () => {
       const flags = new FeatureFlags('foo,!foo.baz')
-      expect(flags.isEnabled('foo', 'bar')).toEqual(true)
-      expect(flags.isEnabled('foo', 'baz')).toEqual(false)
+      expect(flags.isEnabled('foo', 'bar')).toBe(true)
+      expect(flags.isEnabled('foo', 'baz')).toBe(false)
     })
   })
 
@@ -46,8 +46,8 @@ describe(FeatureFlags.name, () => {
       const flags = new FeatureFlags('foo')
       const newFlags = flags.append('bar')
       expect(newFlags).not.toBe(flags)
-      expect(newFlags.isEnabled('foo')).toEqual(true)
-      expect(newFlags.isEnabled('bar')).toEqual(true)
+      expect(newFlags.isEnabled('foo')).toBe(true)
+      expect(newFlags.isEnabled('bar')).toBe(true)
     })
   })
 

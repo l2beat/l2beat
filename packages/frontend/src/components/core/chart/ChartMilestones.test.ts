@@ -32,7 +32,7 @@ describe('getTimestampedMilestones', () => {
     ])
 
     const attached = result.filter((p) => p.milestones.length > 0)
-    expect(attached.length).toEqual(1)
+    expect(attached.length).toBe(1)
     expect(attached[0]?.timestamp).toEqual(ts('2024-05-26T00:00:00Z'))
   })
 
@@ -47,7 +47,7 @@ describe('getTimestampedMilestones', () => {
     ])
 
     const attached = result.filter((p) => p.milestones.length > 0)
-    expect(attached.length).toEqual(1)
+    expect(attached.length).toBe(1)
     expect(attached[0]?.timestamp).toEqual(ts('2024-05-26T21:00:00Z'))
   })
 
@@ -60,7 +60,7 @@ describe('getTimestampedMilestones', () => {
       milestone('2024-05-24T12:00:00Z'),
     ])
 
-    expect(result.every((p) => p.milestones.length === 0)).toEqual(true)
+    expect(result.every((p) => p.milestones.length === 0)).toBe(true)
   })
 
   it('drops milestones in a bucket after the last datapoint', () => {
@@ -72,7 +72,7 @@ describe('getTimestampedMilestones', () => {
       milestone('2024-05-28T06:00:00Z'),
     ])
 
-    expect(result.every((p) => p.milestones.length === 0)).toEqual(true)
+    expect(result.every((p) => p.milestones.length === 0)).toBe(true)
   })
 
   it('keeps a milestone within the last bucket on the last datapoint', () => {
@@ -85,7 +85,7 @@ describe('getTimestampedMilestones', () => {
     ])
 
     const attached = result.filter((p) => p.milestones.length > 0)
-    expect(attached.length).toEqual(1)
+    expect(attached.length).toBe(1)
     expect(attached[0]?.timestamp).toEqual(ts('2024-05-26T21:00:00Z'))
   })
 
@@ -100,8 +100,8 @@ describe('getTimestampedMilestones', () => {
     ])
 
     const attached = result.filter((p) => p.milestones.length > 0)
-    expect(attached.length).toEqual(1)
-    expect(attached[0]?.milestones.length).toEqual(2)
+    expect(attached.length).toBe(1)
+    expect(attached[0]?.milestones.length).toBe(2)
   })
 
   it('separates same-day milestones on an hourly grid', () => {
@@ -117,7 +117,7 @@ describe('getTimestampedMilestones', () => {
     ])
 
     const attached = result.filter((p) => p.milestones.length > 0)
-    expect(attached.length).toEqual(2)
+    expect(attached.length).toBe(2)
     expect(attached.map((p) => p.timestamp)).toEqual([
       ts('2024-05-26T03:00:00Z'),
       ts('2024-05-26T21:00:00Z'),

@@ -6,27 +6,27 @@ describe('clone', () => {
   describe('primitives and null/undefined', () => {
     it('clones null', () => {
       const result = clone(null)
-      expect(result).toEqual(null)
+      expect(result).toBe(null)
     })
 
     it('clones undefined', () => {
       const result = clone(undefined)
-      expect(result).toEqual(undefined)
+      expect(result).toBe(undefined)
     })
 
     it('clones string', () => {
       const result = clone('hello')
-      expect(result).toEqual('hello')
+      expect(result).toBe('hello')
     })
 
     it('clones number', () => {
       const result = clone(42)
-      expect(result).toEqual(42)
+      expect(result).toBe(42)
     })
 
     it('clones boolean', () => {
-      expect(clone(true)).toEqual(true)
-      expect(clone(false)).toEqual(false)
+      expect(clone(true)).toBe(true)
+      expect(clone(false)).toBe(false)
     })
   })
 
@@ -37,7 +37,7 @@ describe('clone', () => {
 
       expect(cloned).toEqual(obj)
       // Verify it's a different reference (deep clone)
-      expect(cloned !== obj).toEqual(true)
+      expect(cloned !== obj).toBe(true)
     })
 
     it('clones object with top-level comments', () => {
@@ -76,7 +76,7 @@ describe('clone', () => {
       // CommentArray has same elements
       expect(Array.from(cloned as unknown[])).toEqual(arr)
       // Verify it's a different reference (deep clone)
-      expect(cloned !== arr).toEqual(true)
+      expect(cloned !== arr).toBe(true)
     })
 
     it('clones array with comments', () => {
@@ -305,17 +305,17 @@ describe('clone', () => {
       const cloned = clone(obj)
       expect(cloned).toEqual({})
       // Verify it's a different reference
-      expect(cloned !== obj).toEqual(true)
+      expect(cloned !== obj).toBe(true)
     })
 
     it('clones empty array', () => {
       const arr: unknown[] = []
       const cloned = clone(arr)
       // CommentArray is still an array
-      expect(Array.isArray(cloned)).toEqual(true)
-      expect((cloned as unknown[]).length).toEqual(0)
+      expect(Array.isArray(cloned)).toBe(true)
+      expect((cloned as unknown[]).length).toBe(0)
       // Verify it's a different reference
-      expect(cloned !== arr).toEqual(true)
+      expect(cloned !== arr).toBe(true)
     })
 
     // toStrictEqual, not toEqual: these assertions are about an optional key being present with value undefined, which toEqual ignores.
@@ -347,14 +347,14 @@ describe('clone', () => {
     it('preserves array type', () => {
       const arr = [1, 2, 3]
       const cloned = clone(arr)
-      expect(Array.isArray(cloned)).toEqual(true)
+      expect(Array.isArray(cloned)).toBe(true)
     })
 
     it('preserves object type', () => {
       const obj = { a: 1 }
       const cloned = clone(obj)
-      expect(typeof cloned).toEqual('object')
-      expect(Array.isArray(cloned)).toEqual(false)
+      expect(typeof cloned).toBe('object')
+      expect(Array.isArray(cloned)).toBe(false)
     })
 
     it('preserves CommentArray special properties after cloning', () => {

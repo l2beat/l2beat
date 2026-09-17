@@ -151,7 +151,7 @@ describeDatabase(AggregatedInteropTokensPairRepository.name, (db) => {
         const deleted = await repository.deleteAllButEarliestPerDayBefore(
           UnixTime(500 + UnixTime.DAY),
         )
-        expect(deleted).toEqual(3)
+        expect(deleted).toBe(3)
 
         const remaining = await repository.getAll()
         expect(remaining).toHaveLength(2)
@@ -162,7 +162,7 @@ describeDatabase(AggregatedInteropTokensPairRepository.name, (db) => {
         const deleted = await repository.deleteAllButEarliestPerDayBefore(
           UnixTime(100),
         )
-        expect(deleted).toEqual(0)
+        expect(deleted).toBe(0)
       })
     },
   )
@@ -209,7 +209,7 @@ describeDatabase(AggregatedInteropTokensPairRepository.name, (db) => {
         await repository.insertMany(records)
 
         const deleted = await repository.deleteByTimestamp(UnixTime(200))
-        expect(deleted).toEqual(2)
+        expect(deleted).toBe(2)
 
         const remaining = await repository.getAll()
         expect(remaining).toHaveLength(1)
@@ -232,12 +232,12 @@ describeDatabase(AggregatedInteropTokensPairRepository.name, (db) => {
         ])
 
         const deleted = await repository.deleteByTimestamp(UnixTime(300))
-        expect(deleted).toEqual(0)
+        expect(deleted).toBe(0)
       })
 
       it('returns 0 when no records exist', async () => {
         const deleted = await repository.deleteByTimestamp(UnixTime(100))
-        expect(deleted).toEqual(0)
+        expect(deleted).toBe(0)
       })
     },
   )

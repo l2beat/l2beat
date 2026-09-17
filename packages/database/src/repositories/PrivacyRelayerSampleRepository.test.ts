@@ -17,16 +17,16 @@ describeDatabase(PrivacyRelayerSampleRepository.name, (db) => {
   describe(PrivacyRelayerSampleRepository.prototype.upsertMany.name, () => {
     it('inserts and updates records', async () => {
       const initial = sample(0, 10)
-      expect(await repository.upsertMany([initial])).toEqual(1)
+      expect(await repository.upsertMany([initial])).toBe(1)
 
       const updated = { ...initial, relayerCount: 15 }
-      expect(await repository.upsertMany([updated])).toEqual(1)
+      expect(await repository.upsertMany([updated])).toBe(1)
 
       expect(await repository.getAll()).toEqual([updated])
     })
 
     it('handles an empty array', async () => {
-      expect(await repository.upsertMany([])).toEqual(0)
+      expect(await repository.upsertMany([])).toBe(0)
     })
   })
 
@@ -79,7 +79,7 @@ describeDatabase(PrivacyRelayerSampleRepository.name, (db) => {
       it('returns undefined when there are no samples', async () => {
         expect(
           await repository.getAverageRelayerCount('project', START, day(1)),
-        ).toEqual(undefined)
+        ).toBe(undefined)
       })
     },
   )
@@ -100,7 +100,7 @@ describeDatabase(PrivacyRelayerSampleRepository.name, (db) => {
 
         expect(
           await repository.deleteByConfigInTimeRange(configA, day(1), day(2)),
-        ).toEqual(2)
+        ).toBe(2)
 
         const actual = await repository.getAll()
         expect(actual).toHaveLength(2)
@@ -123,12 +123,12 @@ describeDatabase(PrivacyRelayerSampleRepository.name, (db) => {
         ]
         await repository.upsertMany(records)
 
-        expect(await repository.deleteByConfigIds([configA])).toEqual(1)
+        expect(await repository.deleteByConfigIds([configA])).toBe(1)
         expect(await repository.getAll()).toEqual([records[1]!])
       })
 
       it('handles an empty array', async () => {
-        expect(await repository.deleteByConfigIds([])).toEqual(0)
+        expect(await repository.deleteByConfigIds([])).toBe(0)
       })
     },
   )

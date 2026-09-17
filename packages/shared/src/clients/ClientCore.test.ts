@@ -61,7 +61,7 @@ describe(ClientCore.name, () => {
         'blockSync.fetch',
         UNCATEGORIZED_METRICS_LABEL,
       ])
-      expect(stats.labels['blockSync.fetch']?.dispatched).toEqual(1)
+      expect(stats.labels['blockSync.fetch']?.dispatched).toBe(1)
     })
 
     it('Keeps the label across retries', async () => {
@@ -75,7 +75,7 @@ describe(ClientCore.name, () => {
       expect(
         clientCore.rateLimiter.takeStats().labels['blockSync.fetch']
           ?.dispatched,
-      ).toEqual(2)
+      ).toBe(2)
     })
   })
 })

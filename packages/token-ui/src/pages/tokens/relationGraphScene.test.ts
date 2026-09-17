@@ -34,10 +34,10 @@ describe(buildRelationGraphScene.name, () => {
   it('positions every node and connects links to the shared node objects', () => {
     const scene = buildRelationGraphScene(graph)
 
-    expect(scene.nodes.length).toEqual(3)
+    expect(scene.nodes.length).toBe(3)
     for (const node of scene.nodes) {
-      expect(Number.isFinite(node.x)).toEqual(true)
-      expect(Number.isFinite(node.y)).toEqual(true)
+      expect(Number.isFinite(node.x)).toBe(true)
+      expect(Number.isFinite(node.y)).toBe(true)
     }
     for (const link of scene.links) {
       // Reference equality matters: dragging a node must move its links.
@@ -58,14 +58,14 @@ describe(buildRelationGraphScene.name, () => {
     const single = scene.links.find(
       (link) => link.target.data.id === tokenId('optimism', '0xccc'),
     )
-    expect(single?.curve).toEqual(0)
+    expect(single?.curve).toBe(0)
   })
 
   it('labels the cluster with its most common deployed symbol', () => {
     const scene = buildRelationGraphScene(graph)
 
     expect(scene.clusterLabels.map((label) => label.text)).toEqual(['USDC'])
-    expect(scene.clusterLabels[0]?.nodes.length).toEqual(3)
+    expect(scene.clusterLabels[0]?.nodes.length).toBe(3)
   })
 
   it('attaches a node without relations to the cluster whose most common abstract token matches, without an edge', () => {
@@ -89,19 +89,19 @@ describe(buildRelationGraphScene.name, () => {
       ],
     })
 
-    expect(scene.clusterLabels.length).toEqual(1)
+    expect(scene.clusterLabels.length).toBe(1)
     expect(
       scene.clusterLabels[0]?.nodes.some(
         (node) => node.data.id === withoutRelations.id,
       ),
-    ).toEqual(true)
+    ).toBe(true)
     expect(
       scene.links.some(
         (link) =>
           link.source.data.id === withoutRelations.id ||
           link.target.data.id === withoutRelations.id,
       ),
-    ).toEqual(false)
+    ).toBe(false)
   })
 
   it('keeps a node without relations whose abstract token claims no cluster as its own cluster', () => {
@@ -121,7 +121,7 @@ describe(buildRelationGraphScene.name, () => {
       'USDC',
       'DAI',
     ])
-    expect(scene.clusterLabels[1]?.nodes.length).toEqual(1)
+    expect(scene.clusterLabels[1]?.nodes.length).toBe(1)
   })
 
   it('prefers the largest cluster when several share the most common abstract token', () => {
@@ -178,7 +178,7 @@ describe(findNodeAt.name, () => {
   })
 
   it('returns undefined when every node is out of reach', () => {
-    expect(findNodeAt(scene, 2, 1, 1)).toEqual(undefined)
+    expect(findNodeAt(scene, 2, 1, 1)).toBe(undefined)
   })
 })
 
@@ -194,7 +194,7 @@ describe(findLinkAt.name, () => {
     // line, which puts its midpoint 8 units off it.
     expect(found(findLinkAt(scene, 50, 0, 2))).toBe(straight)
     expect(found(findLinkAt(scene, 50, 8, 2))).toBe(curved)
-    expect(findLinkAt(scene, 50, 20, 5)).toEqual(undefined)
+    expect(findLinkAt(scene, 50, 20, 5)).toBe(undefined)
   })
 
   it('ignores excluded links', () => {
@@ -206,7 +206,7 @@ describe(findLinkAt.name, () => {
     )
     expect(
       findLinkAt(scene, 50, 0, 10, new Set([straight.id, curved.id])),
-    ).toEqual(undefined)
+    ).toBe(undefined)
   })
 })
 
@@ -218,8 +218,8 @@ describe(distanceToLink.name, () => {
       'straight',
       0,
     )
-    expect(distanceToLink(linkGeometry(link), 50, 7)).toEqual(7)
-    expect(distanceToLink(linkGeometry(link), -3, 0)).toEqual(3)
+    expect(distanceToLink(linkGeometry(link), 50, 7)).toBe(7)
+    expect(distanceToLink(linkGeometry(link), -3, 0)).toBe(3)
   })
 })
 

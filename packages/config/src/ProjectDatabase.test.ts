@@ -125,6 +125,6 @@ describe(ProjectDatabase.name, () => {
       whereNotNull: [],
       whereNull: [],
     })
-    expect(result).toEqual(undefined)
+    expect(result).toBe(undefined)
   })
 })

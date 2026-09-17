@@ -32,9 +32,9 @@ describe(KnowledgeBase.name, () => {
 
     it('returns undefined when no facts are found', () => {
       const knowledgeBase = new KnowledgeBase(FACTS)
-      expect(
-        knowledgeBase.getFactOrUndefined('contract', ['abc', 'def']),
-      ).toEqual(undefined)
+      expect(knowledgeBase.getFactOrUndefined('contract', ['abc', 'def'])).toBe(
+        undefined,
+      )
     })
 
     it('throws when multiple facts are found', () => {

@@ -67,7 +67,7 @@ describe(createFinancialsRouter.name, () => {
       expect(getByFilter).toHaveBeenCalledExactlyOnceWith(EXPECTED_FILTER, 1000)
       expect(getStatsByFilter).toHaveBeenCalledExactlyOnceWith(EXPECTED_FILTER)
       expect(result.stats).toEqual(stats)
-      expect(result.limit).toEqual(1000)
+      expect(result.limit).toBe(1000)
       expect(result.transfers).toEqual([
         {
           transferId: 'msg1',

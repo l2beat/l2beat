@@ -14,7 +14,7 @@ describe(InMemoryCache.name, () => {
 
       expect(fallback).not.toHaveBeenCalled()
       expect(cache._get(['key'])).toEqual({ result: 'test', timestamp: now })
-      expect(result).toEqual('test')
+      expect(result).toBe('test')
     })
 
     it('should return value from fallback if it is expired', async () => {
@@ -31,7 +31,7 @@ describe(InMemoryCache.name, () => {
         timestamp: now,
         maxLifetime: 1000,
       })
-      expect(result).toEqual('test2')
+      expect(result).toBe('test2')
     })
 
     it('should not run fallback three times if three getData calls are ongoing', async () => {
@@ -45,9 +45,9 @@ describe(InMemoryCache.name, () => {
       ])
 
       expect(fallback).toHaveBeenCalledTimes(1)
-      expect(res1).toEqual('test2')
-      expect(res2).toEqual('test2')
-      expect(res3).toEqual('test2')
+      expect(res1).toBe('test2')
+      expect(res2).toBe('test2')
+      expect(res3).toBe('test2')
     })
 
     it('should timeout if fallback takes too long', async () => {
@@ -64,8 +64,8 @@ describe(InMemoryCache.name, () => {
         cache.get(cacheOptions, fallback2),
       ])
 
-      expect(result1).toEqual('test1')
-      expect(result2).toEqual('test2')
+      expect(result1).toBe('test1')
+      expect(result2).toBe('test2')
     })
 
     it('should not overwrite cache when superseded fallback resolves last', async () => {
@@ -78,15 +78,15 @@ describe(InMemoryCache.name, () => {
       const secondRequest = cache.get(cacheOptions, () => second.promise)
 
       second.resolve('new')
-      expect(await secondRequest).toEqual('new')
+      expect(await secondRequest).toBe('new')
 
       first.resolve('old')
-      expect(await firstRequest).toEqual('old')
+      expect(await firstRequest).toBe('old')
 
       const fallback = vi.fn().mockResolvedValue('unexpected')
       const result = await cache.get(cacheOptions, fallback)
 
-      expect(result).toEqual('new')
+      expect(result).toBe('new')
       expect(fallback).not.toHaveBeenCalled()
     })
 
@@ -103,7 +103,7 @@ describe(InMemoryCache.name, () => {
           fallback,
         )
 
-        expect(result1).toEqual('stale')
+        expect(result1).toBe('stale')
         expect(fallback).toHaveBeenCalledTimes(1)
 
         // Wait for background revalidation to complete
@@ -115,7 +115,7 @@ describe(InMemoryCache.name, () => {
           fallback,
         )
 
-        expect(result2).toEqual('fresh')
+        expect(result2).toBe('fresh')
         expect(fallback).toHaveBeenCalledTimes(1) // Still only called once
       })
 
@@ -130,7 +130,7 @@ describe(InMemoryCache.name, () => {
           fallback,
         )
 
-        expect(result).toEqual('fresh')
+        expect(result).toBe('fresh')
         expect(fallback).toHaveBeenCalledTimes(1)
       })
 
@@ -155,9 +155,9 @@ describe(InMemoryCache.name, () => {
           ),
         ])
 
-        expect(result1).toEqual('stale')
-        expect(result2).toEqual('stale')
-        expect(result3).toEqual('stale')
+        expect(result1).toBe('stale')
+        expect(result2).toBe('stale')
+        expect(result3).toBe('stale')
         expect(fallback).toHaveBeenCalledTimes(1)
 
         // Wait for background revalidation
@@ -169,7 +169,7 @@ describe(InMemoryCache.name, () => {
           fallback,
         )
 
-        expect(result4).toEqual('fresh')
+        expect(result4).toBe('fresh')
         expect(fallback).toHaveBeenCalledTimes(1)
       })
 
@@ -198,16 +198,16 @@ describe(InMemoryCache.name, () => {
           timestamp: now - 99999,
         })
 
-        expect(cache._get(['expired1'])).not.toEqual(undefined)
-        expect(cache._get(['expired2'])).not.toEqual(undefined)
+        expect(cache._get(['expired1'])).not.toBe(undefined)
+        expect(cache._get(['expired2'])).not.toBe(undefined)
 
         // Trigger a get — sweep should remove expired entries
         await cache.get({ key: ['other'], ttl: 1000 }, async () => 'result')
 
-        expect(cache._get(['fresh'])).not.toEqual(undefined)
-        expect(cache._get(['expired1'])).toEqual(undefined)
-        expect(cache._get(['expired2'])).toEqual(undefined)
-        expect(cache._get(['no-lifetime'])).not.toEqual(undefined)
+        expect(cache._get(['fresh'])).not.toBe(undefined)
+        expect(cache._get(['expired1'])).toBe(undefined)
+        expect(cache._get(['expired2'])).toBe(undefined)
+        expect(cache._get(['no-lifetime'])).not.toBe(undefined)
       })
 
       it('should handle failed background revalidation gracefully', async () => {
@@ -230,7 +230,7 @@ describe(InMemoryCache.name, () => {
           fallback,
         )
 
-        expect(result1).toEqual('stale')
+        expect(result1).toBe('stale')
         expect(fallback).toHaveBeenCalledTimes(1)
 
         // Wait for background revalidation to fail
@@ -250,7 +250,7 @@ describe(InMemoryCache.name, () => {
           fallback,
         )
 
-        expect(result2).toEqual('stale')
+        expect(result2).toBe('stale')
         expect(fallback).toHaveBeenCalledTimes(2)
       })
 
@@ -266,10 +266,8 @@ describe(InMemoryCache.name, () => {
         const first = deferred<string>()
         const second = deferred<string>()
 
-        expect(await cache.get(cacheOptions, () => first.promise)).toEqual(
-          'stale',
-        )
-        expect(await cache.get(cacheOptions, () => second.promise)).toEqual(
+        expect(await cache.get(cacheOptions, () => first.promise)).toBe('stale')
+        expect(await cache.get(cacheOptions, () => second.promise)).toBe(
           'stale',
         )
 
@@ -278,7 +276,7 @@ describe(InMemoryCache.name, () => {
         first.resolve('old')
         await new Promise((resolve) => setTimeout(resolve, 0))
 
-        expect(cache._get(['key'])?.result).toEqual('new')
+        expect(cache._get(['key'])?.result).toBe('new')
       })
 
       it('should keep stale data when revalidation resolves to undefined', async () => {
@@ -292,7 +290,7 @@ describe(InMemoryCache.name, () => {
           fallback,
         )
 
-        expect(result1).toEqual('stale')
+        expect(result1).toBe('stale')
         await new Promise((resolve) => setTimeout(resolve, 10))
 
         expect(cache._get(['key'])).toEqual({
@@ -322,8 +320,8 @@ describe(InMemoryCache.name, () => {
           async () => 'REAL',
         )
 
-        expect(bogus).toEqual('BOGUS')
-        expect(real).toEqual('REAL')
+        expect(bogus).toBe('BOGUS')
+        expect(real).toBe('REAL')
       })
 
       it('should reject a key part that is not a string', async () => {
@@ -353,8 +351,8 @@ describe(InMemoryCache.name, () => {
           async () => 'EMPTY',
         )
 
-        expect(absent).toEqual('ABSENT')
-        expect(empty).toEqual('EMPTY')
+        expect(absent).toBe('ABSENT')
+        expect(empty).toBe('EMPTY')
       })
 
       it('should not let nullish key parts collapse onto the parent key', async () => {
@@ -370,8 +368,8 @@ describe(InMemoryCache.name, () => {
           async () => 'CHILD',
         )
 
-        expect(parent).toEqual('PARENT')
-        expect(child).toEqual('CHILD')
+        expect(parent).toBe('PARENT')
+        expect(child).toBe('CHILD')
       })
     })
 
@@ -382,8 +380,8 @@ describe(InMemoryCache.name, () => {
 
         const result = await cache.get({ key: ['key'], ttl: 1000 }, fallback)
 
-        expect(result).toEqual(undefined)
-        expect(cache._get(['key'])).toEqual(undefined)
+        expect(result).toBe(undefined)
+        expect(cache._get(['key'])).toBe(undefined)
 
         await cache.get({ key: ['key'], ttl: 1000 }, fallback)
         expect(fallback).toHaveBeenCalledTimes(2)
@@ -395,7 +393,7 @@ describe(InMemoryCache.name, () => {
 
         await cache.get({ key: ['key'], ttl: 1000 }, fallback)
 
-        expect(cache._get(['key'])).toEqual(undefined)
+        expect(cache._get(['key'])).toBe(undefined)
       })
 
       it('should cache undefined when cacheNullish is set', async () => {
@@ -428,9 +426,9 @@ describe(InMemoryCache.name, () => {
         await cache.get({ key: ['empty'], ttl: 1000 }, async () => '')
         await cache.get({ key: ['false'], ttl: 1000 }, async () => false)
 
-        expect(cache._get(['zero'])?.result).toEqual(0)
-        expect(cache._get(['empty'])?.result).toEqual('')
-        expect(cache._get(['false'])?.result).toEqual(false)
+        expect(cache._get(['zero'])?.result).toBe(0)
+        expect(cache._get(['empty'])?.result).toBe('')
+        expect(cache._get(['false'])?.result).toBe(false)
       })
     })
 
@@ -458,11 +456,11 @@ describe(InMemoryCache.name, () => {
           maxLifetime: 1000,
         })
         await cache.get({ key: ['probe'], ttl: 1000 }, async () => 'probe')
-        expect(cache._get(['expired'])).not.toEqual(undefined)
+        expect(cache._get(['expired'])).not.toBe(undefined)
 
         fakeNow += 1
         await cache.get({ key: ['probe'], ttl: 1000 }, async () => 'probe')
-        expect(cache._get(['expired'])).toEqual(undefined)
+        expect(cache._get(['expired'])).toBe(undefined)
       })
 
       it('should timestamp an entry when the fallback returned', async () => {
@@ -507,15 +505,15 @@ describe(InMemoryCache.name, () => {
         expect(fallback).toHaveBeenCalledTimes(2)
 
         controls[0]?.reject(new Error('too slow'))
-        expect(await first).toEqual('failed')
+        expect(await first).toBe('failed')
         await new Promise((resolve) => setTimeout(resolve, 5))
 
         const third = cache.get({ key: ['key'], ttl: 1000 }, fallback)
         expect(fallback).toHaveBeenCalledTimes(2)
 
         controls[1]?.resolve('second')
-        expect(await second).toEqual('second')
-        expect(await third).toEqual('second')
+        expect(await second).toBe('second')
+        expect(await third).toBe('second')
       })
 
       it('should not let a superseded fallback clear a newer in-flight one', async () => {
@@ -529,7 +527,7 @@ describe(InMemoryCache.name, () => {
         const secondRequest = cache.get(cacheOptions, () => second.promise)
 
         first.resolve('old')
-        expect(await firstRequest).toEqual('old')
+        expect(await firstRequest).toBe('old')
 
         cache._set(['key'], { result: 'expired', timestamp: fakeNow - 2000 })
         const fallback = vi.fn().mockResolvedValue('unexpected')
@@ -537,8 +535,8 @@ describe(InMemoryCache.name, () => {
         expect(fallback).not.toHaveBeenCalled()
 
         second.resolve('new')
-        expect(await secondRequest).toEqual('new')
-        expect(await thirdRequest).toEqual('new')
+        expect(await secondRequest).toBe('new')
+        expect(await thirdRequest).toBe('new')
       })
 
       it('should store a superseded result when the newer fallback failed', async () => {
@@ -551,11 +549,11 @@ describe(InMemoryCache.name, () => {
         const secondRequest = cache
           .get(cacheOptions, () => Promise.reject(new Error('failed')))
           .catch(() => 'failed')
-        expect(await secondRequest).toEqual('failed')
+        expect(await secondRequest).toBe('failed')
 
         fakeNow += 5
         first.resolve('old')
-        expect(await firstRequest).toEqual('old')
+        expect(await firstRequest).toBe('old')
 
         expect(cache._get(['key'])).toEqual({
           result: 'old',
@@ -571,12 +569,12 @@ describe(InMemoryCache.name, () => {
 
         const firstRequest = cache.get(cacheOptions, () => first.promise)
         fakeNow += 31
-        expect(await cache.get(cacheOptions, async () => 'new')).toEqual('new')
+        expect(await cache.get(cacheOptions, async () => 'new')).toBe('new')
         const storedAt = fakeNow
 
         fakeNow += 5
         first.resolve('old')
-        expect(await firstRequest).toEqual('old')
+        expect(await firstRequest).toBe('old')
 
         expect(cache._get(['key'])).toEqual({
           result: 'new',
@@ -610,7 +608,7 @@ describe(InMemoryCache.name, () => {
 
         second.resolve('new')
         await new Promise((resolve) => setTimeout(resolve, 0))
-        expect(cache._get(['key'])?.result).toEqual('new')
+        expect(cache._get(['key'])?.result).toBe('new')
       })
     })
   })

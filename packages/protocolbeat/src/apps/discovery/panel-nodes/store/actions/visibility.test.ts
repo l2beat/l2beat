@@ -120,7 +120,7 @@ describe(showHidden.name, () => {
 
     expect(nodes[0]?.hiddenFields).toEqual([])
     expect(nodes[2]?.hiddenFields).toEqual([])
-    expect(getGraphProjection(nodes).hiddenFieldCount).toEqual(0)
+    expect(getGraphProjection(nodes).hiddenFieldCount).toBe(0)
   })
 })
 

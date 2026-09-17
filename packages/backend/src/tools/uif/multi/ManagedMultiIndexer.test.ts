@@ -182,7 +182,7 @@ describe(ManagedMultiIndexer.name, () => {
       const newHeight = await indexer.update(0, 50)
 
       expect(indexer.multiUpdate).not.toHaveBeenCalled()
-      expect(newHeight).toEqual(50)
+      expect(newHeight).toBe(50)
     })
 
     it('gets configurations from range, updates and saves the state', async () => {
@@ -226,7 +226,7 @@ describe(ManagedMultiIndexer.name, () => {
         indexerService.updateConfigurationsCurrentHeight,
       ).toHaveBeenCalledExactlyOnceWith(INDEXER_ID, 1100)
 
-      expect(newHeight).toEqual(1100)
+      expect(newHeight).toBe(1100)
     })
 
     it('cannot return more than currentHeight', async () => {
@@ -338,7 +338,7 @@ describe(ManagedMultiIndexer.name, () => {
 
       const targetHeight = await indexer.invalidate(100)
 
-      expect(targetHeight).toEqual(100)
+      expect(targetHeight).toBe(100)
     })
   })
 

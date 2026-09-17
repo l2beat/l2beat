@@ -41,7 +41,7 @@ describe(getSession.name, () => {
       jwtVerifyFn: jwtVerifyFn as typeof jwtVerify,
     })
 
-    expect(session).toEqual(undefined)
+    expect(session).toBe(undefined)
   })
 
   it('returns a session if the jwt token is valid', async () => {
@@ -68,7 +68,7 @@ describe(getSession.name, () => {
   it('returns undefined if no token is provided', async () => {
     const session = await getSession(new Headers(), mockAuth)
 
-    expect(session).toEqual(undefined)
+    expect(session).toBe(undefined)
   })
 
   it('returns a session when the backoffice auth token matches (Authorization header)', async () => {

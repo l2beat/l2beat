@@ -20,7 +20,7 @@ describe(asArray.name, () => {
 
 describe(emptyArrayToUndefined.name, () => {
   it('returns undefined for empty arrays', () => {
-    expect(emptyArrayToUndefined([])).toEqual(undefined)
+    expect(emptyArrayToUndefined([])).toBe(undefined)
 
     const original = ['x']
     const result = emptyArrayToUndefined(original)

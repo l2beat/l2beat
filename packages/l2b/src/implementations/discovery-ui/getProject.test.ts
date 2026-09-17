@@ -53,7 +53,7 @@ describe(getProject.name, () => {
     const response = getProject(configReader, mockTemplateService(), PROJECT)
 
     expect(addressesOf(response.entries[1])).toEqual([SHARED_EOA])
-    expect(response.entries.length).toEqual(2)
+    expect(response.entries.length).toBe(2)
   })
 
   it('drops entries nothing in the project references', () => {
@@ -104,7 +104,7 @@ describe(getProject.name, () => {
 
     const response = getProject(configReader, mockTemplateService(), PROJECT)
 
-    expect(response.entries.length).toEqual(1)
+    expect(response.entries.length).toBe(1)
     expect(addressesOf(response.entries[0])).toEqual([PROJECT_CONTRACT])
   })
 

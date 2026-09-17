@@ -18,7 +18,7 @@ describeDatabase(InteropRecentPricesRepository.name, (database) => {
 
       const count = await repository.insertMany(records)
 
-      expect(count).toEqual(2)
+      expect(count).toBe(2)
       const result = await repository.getAll()
       expect(result).toHaveLength(2)
       expect(result).toEqual(
@@ -36,7 +36,7 @@ describeDatabase(InteropRecentPricesRepository.name, (database) => {
       }
 
       const count = await repository.insertMany(records)
-      expect(count).toEqual(15000)
+      expect(count).toBe(15000)
 
       const result = await repository.getAll()
       expect(result).toHaveLength(15000)
@@ -44,7 +44,7 @@ describeDatabase(InteropRecentPricesRepository.name, (database) => {
 
     it('returns 0 for empty array', async () => {
       const count = await repository.insertMany([])
-      expect(count).toEqual(0)
+      expect(count).toBe(0)
     })
   })
 
@@ -100,7 +100,7 @@ describeDatabase(InteropRecentPricesRepository.name, (database) => {
           UnixTime.DAY,
         )
 
-        expect(result.get(1)).toEqual(undefined)
+        expect(result.get(1)).toBe(undefined)
       })
     },
   )
@@ -117,7 +117,7 @@ describeDatabase(InteropRecentPricesRepository.name, (database) => {
       await repository.insertMany(records)
 
       const deletedCount = await repository.deleteBefore(UnixTime(250))
-      expect(deletedCount).toEqual(3)
+      expect(deletedCount).toBe(3)
 
       const remaining = await repository.getAll()
       expect(remaining).toHaveLength(1)
@@ -133,7 +133,7 @@ describeDatabase(InteropRecentPricesRepository.name, (database) => {
       ])
 
       const deletedCount = await repository.deleteBefore(UnixTime(100))
-      expect(deletedCount).toEqual(0)
+      expect(deletedCount).toBe(0)
 
       const remaining = await repository.getAll()
       expect(remaining).toHaveLength(2)
@@ -141,7 +141,7 @@ describeDatabase(InteropRecentPricesRepository.name, (database) => {
 
     it('returns 0 when no records exist', async () => {
       const deletedCount = await repository.deleteBefore(UnixTime(100))
-      expect(deletedCount).toEqual(0)
+      expect(deletedCount).toBe(0)
     })
   })
 
@@ -157,7 +157,7 @@ describeDatabase(InteropRecentPricesRepository.name, (database) => {
       await repository.insertMany(records)
 
       const deletedCount = await repository.deleteAfter(UnixTime(150))
-      expect(deletedCount).toEqual(3)
+      expect(deletedCount).toBe(3)
 
       const remaining = await repository.getAll()
       expect(remaining).toHaveLength(1)
@@ -173,7 +173,7 @@ describeDatabase(InteropRecentPricesRepository.name, (database) => {
       ])
 
       const deletedCount = await repository.deleteAfter(UnixTime(300))
-      expect(deletedCount).toEqual(0)
+      expect(deletedCount).toBe(0)
 
       const remaining = await repository.getAll()
       expect(remaining).toHaveLength(2)
@@ -181,7 +181,7 @@ describeDatabase(InteropRecentPricesRepository.name, (database) => {
 
     it('returns 0 when no records exist', async () => {
       const deletedCount = await repository.deleteAfter(UnixTime(100))
-      expect(deletedCount).toEqual(0)
+      expect(deletedCount).toBe(0)
     })
   })
 

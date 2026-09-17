@@ -27,7 +27,7 @@ describe(getAnomalyFailureMechanism.name, () => {
   })
 
   it('returns undefined without a risk view', () => {
-    expect(getAnomalyFailureMechanism('batchSubmissions', undefined)).toEqual(
+    expect(getAnomalyFailureMechanism('batchSubmissions', undefined)).toBe(
       undefined,
     )
   })

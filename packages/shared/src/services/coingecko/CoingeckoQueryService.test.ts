@@ -367,9 +367,9 @@ describe(CoingeckoQueryService.name, () => {
         CoingeckoId('venice-token'),
         { from: START, to: START + (hours - 1) * UnixTime.HOUR },
       )
-      expect(supplies[1].value).toEqual(100000)
-      expect(supplies[hours - 2].value).toEqual(100000)
-      expect(supplies[hours - 1].value).toEqual(300000)
+      expect(supplies[1].value).toBe(100000)
+      expect(supplies[hours - 2].value).toBe(100000)
+      expect(supplies[hours - 1].value).toBe(300000)
     })
 
     it('throws when the corrupt stretch is longer than the repairable gap', async () => {
@@ -693,17 +693,15 @@ describe(approximateCirculatingSupply.name, () => {
   }
 
   it('returns NaN for a negative market cap', () => {
-    expect(Number.isNaN(approximateCirculatingSupply(-1, 11.9))).toEqual(true)
+    expect(Number.isNaN(approximateCirculatingSupply(-1, 11.9))).toBe(true)
   })
 
   it('returns NaN for a zero price and positive market cap', () => {
-    expect(Number.isNaN(approximateCirculatingSupply(1_000_000, 0))).toEqual(
-      true,
-    )
+    expect(Number.isNaN(approximateCirculatingSupply(1_000_000, 0))).toBe(true)
   })
 
   it('returns 0 for a zero market cap and positive price', () => {
-    expect(approximateCirculatingSupply(0, 10)).toEqual(0)
+    expect(approximateCirculatingSupply(0, 10)).toBe(0)
   })
 })
 

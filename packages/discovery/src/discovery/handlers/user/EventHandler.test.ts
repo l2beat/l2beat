@@ -554,7 +554,7 @@ describe(EventHandler.name, () => {
 
       const result = await handler.execute(provider, ADDRESS)
 
-      expect(result.value).toEqual(2)
+      expect(result.value).toBe(2)
     })
 
     it('throws if ABI compatibility is not met', async () => {
@@ -594,7 +594,7 @@ describe(EventHandler.name, () => {
 
       const result = await handler.execute(provider, ADDRESS)
 
-      expect(result.value).toEqual(3)
+      expect(result.value).toBe(3)
     })
 
     it('multiple events with multiple values, grouped and filtered', async () => {
@@ -719,7 +719,7 @@ describe(EventHandler.name, () => {
 
       const result = await handler.execute(provider, ADDRESS)
 
-      expect(result.value).toEqual(2)
+      expect(result.value).toBe(2)
     })
 
     it('multiple events multiple values', async () => {
@@ -795,7 +795,7 @@ describe(EventHandler.name, () => {
 
       const result = await handler.execute(provider, ADDRESS)
 
-      expect(result.value).toEqual(undefined)
+      expect(result.value).toBe(undefined)
     })
 
     it('multiple events with filter', async () => {
@@ -822,7 +822,7 @@ describe(EventHandler.name, () => {
 
       const result = await handler.execute(provider, ADDRESS)
 
-      expect(result.value).toEqual(2)
+      expect(result.value).toBe(2)
     })
 
     it('multiple events', async () => {
@@ -845,7 +845,7 @@ describe(EventHandler.name, () => {
 
       const result = await handler.execute(provider, ADDRESS)
 
-      expect(result.value).toEqual(2)
+      expect(result.value).toBe(2)
     })
 
     it('single event', async () => {
@@ -868,7 +868,7 @@ describe(EventHandler.name, () => {
 
       const result = await handler.execute(provider, ADDRESS)
 
-      expect(result.value).toEqual(1)
+      expect(result.value).toBe(1)
     })
 
     it('no events', async () => {
@@ -891,7 +891,7 @@ describe(EventHandler.name, () => {
 
       const result = await handler.execute(provider, ADDRESS)
 
-      expect(result.value).toEqual(undefined)
+      expect(result.value).toBe(undefined)
     })
   })
 

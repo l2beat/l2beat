@@ -27,7 +27,7 @@ describe(LimitedArrayHandler.name, () => {
     } as unknown as IProvider
 
     const handler = new LimitedArrayHandler(method, 3)
-    expect(handler.field).toEqual('owners')
+    expect(handler.field).toBe('owners')
 
     const result = await handler.execute(provider, address)
     expect(result).toEqual({

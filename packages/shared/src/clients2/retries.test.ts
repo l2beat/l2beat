@@ -71,10 +71,10 @@ describe(withRetries.name, () => {
       initialTimeoutMs: 1,
       maxAttempts: 2,
     })
-    expect(await fooService.getFoo()).toEqual('foo')
-    expect(await fooService.getBar()).toEqual('bar')
-    expect(fooService.notAsync()).toEqual(42)
+    expect(await fooService.getFoo()).toBe('foo')
+    expect(await fooService.getBar()).toBe('bar')
+    expect(fooService.notAsync()).toBe(42)
     expect(() => fooService.notAsyncThrow()).toThrow('oops')
-    expect(fooService.toString()).toEqual('[object Object]')
+    expect(fooService.toString()).toBe('[object Object]')
   })
 })

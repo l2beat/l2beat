@@ -37,23 +37,23 @@ describe('SliceAddress', () => {
 
   it('returns UNRESOLVED for non-0x input (EXPECT_REVERT)', () => {
     const result = SliceAddress.cast({ offset: 124 }, 'EXPECT_REVERT')
-    expect(result).toEqual('UNRESOLVED')
+    expect(result).toBe('UNRESOLVED')
   })
 
   it('returns UNRESOLVED for empty bytes (0x)', () => {
     const result = SliceAddress.cast({ offset: 124 }, '0x')
-    expect(result).toEqual('UNRESOLVED')
+    expect(result).toBe('UNRESOLVED')
   })
 
   it('returns UNRESOLVED when offset exceeds data length', () => {
     const result = SliceAddress.cast({ offset: 124 }, '0x' + '00'.repeat(10))
-    expect(result).toEqual('UNRESOLVED')
+    expect(result).toBe('UNRESOLVED')
   })
 
   it('returns UNRESOLVED for zero address at offset', () => {
     const data = '0x' + '00'.repeat(124) + '0'.repeat(40) + '00'.repeat(20)
     const result = SliceAddress.cast({ offset: 124 }, data)
-    expect(result).toEqual('UNRESOLVED')
+    expect(result).toBe('UNRESOLVED')
   })
 
   it('throws if value is not a string', () => {

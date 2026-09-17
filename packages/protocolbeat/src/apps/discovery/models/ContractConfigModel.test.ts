@@ -80,22 +80,22 @@ describe('ContractConfigModel', () => {
   describe('edge cases', () => {
     it('isEmpty returns true for empty config', () => {
       const model = new ContractConfigModel({} as any)
-      expect(model.isEmpty()).toEqual(true)
+      expect(model.isEmpty()).toBe(true)
     })
 
     it('isEmpty returns false for config with values', () => {
       const model = ContractConfigModel.fromRawJsonc(
         `{ "ignoreMethods": ["m1"] }`,
       )
-      expect(model.isEmpty()).toEqual(false)
+      expect(model.isEmpty()).toBe(false)
     })
 
     it('hasDefinition works correctly', () => {
       const model = ContractConfigModel.fromRawJsonc(
         `{ "ignoreMethods": ["m1"] }`,
       )
-      expect(model.hasDefinition('ignoreMethods')).toEqual(true)
-      expect(model.hasDefinition('ignoreRelatives')).toEqual(false)
+      expect(model.hasDefinition('ignoreMethods')).toBe(true)
+      expect(model.hasDefinition('ignoreRelatives')).toBe(false)
     })
   })
 
@@ -107,14 +107,14 @@ describe('ContractConfigModel', () => {
       }`
       const model = ContractConfigModel.fromRawJsonc(jsonc)
 
-      expect(model.hasComments()).toEqual(true)
+      expect(model.hasComments()).toBe(true)
     })
 
     it('returns false when config has no comments', () => {
       const jsonc = `{ "ignoreMethods": ["method1"] }`
       const model = ContractConfigModel.fromRawJsonc(jsonc)
 
-      expect(model.hasComments()).toEqual(false)
+      expect(model.hasComments()).toBe(false)
     })
   })
 
@@ -123,18 +123,18 @@ describe('ContractConfigModel', () => {
       const model = ContractConfigModel.fromRawJsonc(
         `{ "description": "test" }`,
       )
-      expect(model.description).toEqual('test')
+      expect(model.description).toBe('test')
       const updated = model.setDescription('new description')
-      expect(updated.description).toEqual('new description')
+      expect(updated.description).toBe('new description')
     })
 
     it('removes description when setting to undefined', () => {
       const model = ContractConfigModel.fromRawJsonc(
         `{ "description": "test" }`,
       )
-      expect(model.description).toEqual('test')
+      expect(model.description).toBe('test')
       const updated = model.setDescription(undefined)
-      expect(updated.description).toEqual(undefined)
+      expect(updated.description).toBe(undefined)
       const string = updated.toString()
       expect(string).not.toContain('description')
     })

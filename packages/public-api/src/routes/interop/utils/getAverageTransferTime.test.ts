@@ -20,7 +20,7 @@ describe('getAverageTransferTime', () => {
         },
         undefined,
       ),
-    ).toEqual(null)
+    ).toBe(null)
   })
 
   it('returns a single average when there is no duration split', () => {
@@ -73,7 +73,7 @@ describe('getAverageTransferTimeSeconds', () => {
         totalDurationSum: 100,
         transferTypeStats: undefined,
       }),
-    ).toEqual(null)
+    ).toBe(null)
   })
 
   it('returns floored average duration in seconds', () => {
@@ -83,7 +83,7 @@ describe('getAverageTransferTimeSeconds', () => {
         totalDurationSum: 370,
         transferTypeStats: undefined,
       }),
-    ).toEqual(123)
+    ).toBe(123)
   })
 })
 
@@ -174,7 +174,7 @@ describe('getProtocolAverageTransferTime', () => {
 
 describe('hasUnknownTransferTime', () => {
   it('returns true only for projects configured as unknown', () => {
-    expect(hasUnknownTransferTime(undefined)).toEqual(false)
+    expect(hasUnknownTransferTime(undefined)).toBe(false)
     expect(
       hasUnknownTransferTime(
         interopProject('relay', {
@@ -183,7 +183,7 @@ describe('hasUnknownTransferTime', () => {
           transfersTimeMode: 'unknown',
         }),
       ),
-    ).toEqual(true)
+    ).toBe(true)
   })
 })
 

@@ -22,7 +22,7 @@ describeDatabase(InteropConfigRepository.name, (database) => {
     it('returns undefined when config does not exist', async () => {
       const result = await repository.find('non-existent-key')
 
-      expect(result).toEqual(undefined)
+      expect(result).toBe(undefined)
     })
 
     it('returns latest record when multiple records exist for the same key', async () => {
@@ -146,7 +146,7 @@ describeDatabase(InteropConfigRepository.name, (database) => {
             .map((r) => (r.value as { version: number }).version)
             .sort((a, b) => a - b)
 
-        expect(deleted).toEqual(3)
+        expect(deleted).toBe(3)
         expect(versionsFor('a')).toEqual([3, 4])
         expect(versionsFor('b')).toEqual([2, 3])
         expect(versionsFor('c')).toEqual([1])

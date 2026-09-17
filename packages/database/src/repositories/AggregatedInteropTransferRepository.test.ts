@@ -40,7 +40,7 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
         ]
 
         const inserted = await repository.insertMany(records)
-        expect(inserted).toEqual(2)
+        expect(inserted).toBe(2)
 
         const result = await repository.getAll()
         expect(result).toHaveLength(records.length)
@@ -49,7 +49,7 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
 
       it('handles empty array', async () => {
         const inserted = await repository.insertMany([])
-        expect(inserted).toEqual(0)
+        expect(inserted).toBe(0)
 
         const result = await repository.getAll()
         expect(result).toEqual([])
@@ -71,7 +71,7 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
         }
 
         const inserted = await repository.insertMany(records)
-        expect(inserted).toEqual(1500)
+        expect(inserted).toBe(1500)
 
         const result = await repository.getAll()
         expect(result).toHaveLength(1500)
@@ -472,7 +472,7 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
         ])
 
         const result = await repository.getEarliestTimestampForDay(missingDay)
-        expect(result).toEqual(undefined)
+        expect(result).toBe(undefined)
       })
     },
   )
@@ -537,7 +537,7 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
         const deleted = await repository.deleteAllButEarliestPerDayBefore(
           UnixTime(500 + UnixTime.DAY),
         )
-        expect(deleted).toEqual(3) // Should delete record2, record3, record5
+        expect(deleted).toBe(3) // Should delete record2, record3, record5
 
         const remaining = await repository.getAll()
         expect(remaining).toHaveLength(2)
@@ -601,7 +601,7 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
         // Should delete record2 (day1Mid), but keep record1 (earliest of day1)
         // Should keep record3 (earliest of day2) and record4 (at timestamp boundary)
         // Should keep record5 (after timestamp)
-        expect(deleted).toEqual(1)
+        expect(deleted).toBe(1)
 
         const remaining = await repository.getAll()
         expect(remaining).toHaveLength(4)
@@ -614,7 +614,7 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
         const deleted = await repository.deleteAllButEarliestPerDayBefore(
           UnixTime(100),
         )
-        expect(deleted).toEqual(0)
+        expect(deleted).toBe(0)
       })
 
       it('returns 0 when all records are after timestamp', async () => {
@@ -643,7 +643,7 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
         const deleted = await repository.deleteAllButEarliestPerDayBefore(
           UnixTime(50),
         )
-        expect(deleted).toEqual(0)
+        expect(deleted).toBe(0)
 
         const remaining = await repository.getAll()
         expect(remaining).toHaveLength(2)
@@ -686,7 +686,7 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
           UnixTime(500 + 2 * UnixTime.DAY),
         )
         // All records are earliest of their day, so nothing to delete
-        expect(deleted).toEqual(0)
+        expect(deleted).toBe(0)
 
         const remaining = await repository.getAll()
         expect(remaining).toHaveLength(records.length)
@@ -731,7 +731,7 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
           UnixTime(500),
         )
         // Should keep earliest (record1), delete others
-        expect(deleted).toEqual(2)
+        expect(deleted).toBe(2)
 
         const remaining = await repository.getAll()
         expect(remaining).toHaveLength(1)
@@ -821,7 +821,7 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
         )
         // Should keep: record1 (earliest day1), record3 (earliest day2), record6 (earliest day3)
         // Should delete: record2, record4, record5, record7
-        expect(deleted).toEqual(4)
+        expect(deleted).toBe(4)
 
         const remaining = await repository.getAll()
         expect(remaining).toHaveLength(3)
@@ -873,7 +873,7 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
         await repository.insertMany(records)
 
         const deleted = await repository.deleteByTimestamp(UnixTime(200))
-        expect(deleted).toEqual(2)
+        expect(deleted).toBe(2)
 
         const remaining = await repository.getAll()
         expect(remaining).toHaveLength(2)
@@ -901,7 +901,7 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
         ])
 
         const deleted = await repository.deleteByTimestamp(UnixTime(300))
-        expect(deleted).toEqual(0)
+        expect(deleted).toBe(0)
 
         const remaining = await repository.getAll()
         expect(remaining).toHaveLength(2)
@@ -909,7 +909,7 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
 
       it('returns 0 when no records exist', async () => {
         const deleted = await repository.deleteByTimestamp(UnixTime(100))
-        expect(deleted).toEqual(0)
+        expect(deleted).toBe(0)
       })
 
       it('deletes only records with exact timestamp match', async () => {
@@ -942,7 +942,7 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
         await repository.insertMany(records)
 
         const deleted = await repository.deleteByTimestamp(UnixTime(200))
-        expect(deleted).toEqual(1)
+        expect(deleted).toBe(1)
 
         const remaining = await repository.getAll()
         expect(remaining).toHaveLength(2)
@@ -994,7 +994,7 @@ describeDatabase(AggregatedInteropTransferRepository.name, (db) => {
 
         const result = await repository.getMaxTimestampAtOrBefore(UnixTime(100))
 
-        expect(result).toEqual(undefined)
+        expect(result).toBe(undefined)
       })
     },
   )

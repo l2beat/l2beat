@@ -56,7 +56,7 @@ describeDatabase(UpdateMessageRepository.name, (db) => {
     await repository.upsertMany([oldMessage, newMessage])
 
     const deleted = await repository.deleteBefore(UnixTime(150))
-    expect(deleted).toEqual(1)
+    expect(deleted).toBe(1)
 
     const remaining = await repository.getAll()
     expect(remaining).toEqual([newMessage])

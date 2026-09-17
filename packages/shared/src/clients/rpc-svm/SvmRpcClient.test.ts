@@ -80,7 +80,7 @@ describe(SvmRpcClient.name, () => {
       const client = mockClient({ http, generateId: () => 'unique-id' })
       const result = await client.getBlockWithTransactions(123)
 
-      expect(result).toEqual(undefined)
+      expect(result).toBe(undefined)
     })
   })
 
@@ -134,7 +134,7 @@ describe(SvmRpcClient.name, () => {
 
       const result = await client.query('rpc_method', ['a', 1, true])
 
-      expect(result).toEqual('data-returned-from-api')
+      expect(result).toBe('data-returned-from-api')
       expect(http.fetch).toHaveBeenCalledExactlyOnceWith('API_URL', {
         body: JSON.stringify({
           method: 'rpc_method',
@@ -160,7 +160,7 @@ describe(SvmRpcClient.name, () => {
         },
       })
 
-      expect(validationInfo.success).toEqual(false)
+      expect(validationInfo.success).toBe(false)
     })
 
     it('returns true otherwise', async () => {
@@ -169,7 +169,7 @@ describe(SvmRpcClient.name, () => {
         result: 'success',
       })
 
-      expect(validationInfo.success).toEqual(true)
+      expect(validationInfo.success).toBe(true)
     })
   })
 })

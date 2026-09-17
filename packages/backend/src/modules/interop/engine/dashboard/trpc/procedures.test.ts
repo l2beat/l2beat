@@ -27,6 +27,6 @@ describe('interop trpc auth', () => {
     }
 
     expect(error).toBeInstanceOf(TRPCError)
-    expect((error as TRPCError).code).toEqual('UNAUTHORIZED')
+    expect((error as TRPCError).code).toBe('UNAUTHORIZED')
   })
 })

@@ -147,8 +147,8 @@ describe(getTopToken.name, () => {
       subgroupProjects: new Set(),
     })
 
-    expect(result?.symbol).toEqual('USDC')
-    expect(result?.transferCount).toEqual(20)
+    expect(result?.symbol).toBe('USDC')
+    expect(result?.transferCount).toBe(20)
   })
 
   it('skips tokens missing metadata', () => {
@@ -173,7 +173,7 @@ describe(getTopToken.name, () => {
       subgroupProjects: new Set(),
     })
 
-    expect(result?.symbol).toEqual('ETH')
+    expect(result?.symbol).toBe('ETH')
   })
 
   it('returns undefined for empty or fully invalid records', () => {
@@ -200,8 +200,8 @@ describe(getTopToken.name, () => {
       subgroupProjects: new Set(),
     })
 
-    expect(emptyResult).toEqual(undefined)
-    expect(invalidResult).toEqual(undefined)
+    expect(emptyResult).toBe(undefined)
+    expect(invalidResult).toBe(undefined)
   })
 })
 

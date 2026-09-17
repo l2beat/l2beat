@@ -502,7 +502,7 @@ describe(LivenessAggregatingIndexer.name, () => {
         NOW,
       )
 
-      expect(result).toEqual(undefined)
+      expect(result).toBe(undefined)
     })
   })
 })

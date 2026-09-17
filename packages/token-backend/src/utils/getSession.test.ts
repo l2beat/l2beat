@@ -42,7 +42,7 @@ describe(getSession.name, () => {
       jwtVerifyFn: jwtVerifyFn as typeof jwtVerify,
     })
 
-    expect(result).toEqual(undefined)
+    expect(result).toBe(undefined)
   })
 
   it('returns session if auth is set but no correct token is set', async () => {
@@ -94,6 +94,6 @@ describe(getSession.name, () => {
 
     const session = await getSession(headers, mockConfig)
 
-    expect(session).toEqual(undefined)
+    expect(session).toBe(undefined)
   })
 })

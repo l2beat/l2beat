@@ -119,17 +119,17 @@ describe('cluster permission modelling', () => {
       expect(findStaleReferences(registry, model.modelledAgainst)).toEqual([])
 
       const upgrades = fresh.permissions?.[council]?.receivedPermissions ?? []
-      expect(upgrades.length).toEqual(1)
-      expect(upgrades[0]?.permission).toEqual('upgrade')
+      expect(upgrades.length).toBe(1)
+      expect(upgrades[0]?.permission).toBe('upgrade')
       expect(upgrades[0]?.from).toEqual(diamond)
       expect(upgrades[0]?.via?.map((step) => step.address)).toEqual([
         admin,
         timelock,
       ])
-      expect(fresh.permissions?.[unrelatedOwner]).toEqual(undefined)
+      expect(fresh.permissions?.[unrelatedOwner]).toBe(undefined)
       expect(
         fresh.entries.every((entry) => entry.receivedPermissions === undefined),
-      ).toEqual(true)
+      ).toBe(true)
 
       const governance = registry.get('governance').discoveryOutput
       // A different, stale model on the referenced file must not contribute.

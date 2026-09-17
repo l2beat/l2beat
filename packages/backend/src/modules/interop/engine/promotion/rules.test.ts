@@ -21,8 +21,8 @@ describe('promotion rules', () => {
       const violations = maxLaneVolumeRule(1000).evaluate(ctx)
 
       expect(violations).toHaveLength(1)
-      expect(violations[0]?.scope).toEqual('a|nonMinting|ethereum|base')
-      expect(violations[0]?.value).toEqual(2000)
+      expect(violations[0]?.scope).toBe('a|nonMinting|ethereum|base')
+      expect(violations[0]?.value).toBe(2000)
     })
 
     it('passes when every lane is under the threshold and treats missing values as zero', () => {

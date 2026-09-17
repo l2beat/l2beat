@@ -108,7 +108,7 @@ describe('LeveledCache', () => {
         expect(l1Mock.get).toHaveBeenCalledWith(key)
         expect(l2Mock.get).toHaveBeenCalledWith(key)
         expect(l1Mock.set).not.toHaveBeenCalled()
-        expect(result).toEqual(undefined)
+        expect(result).toBe(undefined)
       })
     })
 

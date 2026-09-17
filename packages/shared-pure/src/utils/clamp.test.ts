@@ -3,15 +3,15 @@ import { clamp } from './clamp.js'
 
 describe(clamp.name, () => {
   it('clamps to the min bound when value is below', () => {
-    expect(clamp(0, 1, 2)).toEqual(1)
+    expect(clamp(0, 1, 2)).toBe(1)
   })
 
   it('clamps to the max bound when value is above', () => {
-    expect(clamp(5, 1, 3)).toEqual(3)
+    expect(clamp(5, 1, 3)).toBe(3)
   })
 
   it('returns the value when it is within the bounds', () => {
-    expect(clamp(2, 1, 3)).toEqual(2)
+    expect(clamp(2, 1, 3)).toBe(2)
   })
 
   const table: Array<[number, number, number, number]> = [

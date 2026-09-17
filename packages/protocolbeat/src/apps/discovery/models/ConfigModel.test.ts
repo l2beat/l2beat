@@ -54,15 +54,15 @@ describe('ConfigModel', () => {
       const jsonc = `{ "name": "test", "overrides": { "0xContract": { "ignoreMethods": ["m1"] } } }`
       const model = ConfigModel.fromRawJsonc(jsonc)
 
-      expect(
-        model.hasOverrideDefinition('0xContract', 'ignoreMethods'),
-      ).toEqual(true)
-      expect(
-        model.hasOverrideDefinition('0xContract', 'ignoreRelatives'),
-      ).toEqual(false)
+      expect(model.hasOverrideDefinition('0xContract', 'ignoreMethods')).toBe(
+        true,
+      )
+      expect(model.hasOverrideDefinition('0xContract', 'ignoreRelatives')).toBe(
+        false,
+      )
       expect(
         model.hasOverrideDefinition('0xNonExistent', 'ignoreMethods'),
-      ).toEqual(false)
+      ).toBe(false)
     })
 
     it('removes override when all fields are removed', () => {
@@ -71,7 +71,7 @@ describe('ConfigModel', () => {
       const updated = model.setFieldSeverity('0xContract', 'field1', undefined)
 
       expect(updated.toString()).not.toContain('0xContract')
-      expect(updated.peek().overrides).toEqual(undefined)
+      expect(updated.peek().overrides).toBe(undefined)
     })
 
     it('keeps override when some fields remain', () => {
@@ -101,7 +101,7 @@ describe('ConfigModel', () => {
       const model1 = ConfigModel.fromRawJsonc(jsonc)
       const model2 = ConfigModel.fromRawJsonc(jsonc)
 
-      expect(model1.diff(model2)).toEqual(false)
+      expect(model1.diff(model2)).toBe(false)
     })
   })
 
@@ -113,7 +113,7 @@ describe('ConfigModel', () => {
       }`
       const model = ConfigModel.fromRawJsonc(jsonc)
 
-      expect(model.hasComments()).toEqual(true)
+      expect(model.hasComments()).toBe(true)
     })
 
     it('returns true when config has nested comments in overrides', () => {
@@ -128,14 +128,14 @@ describe('ConfigModel', () => {
       }`
       const model = ConfigModel.fromRawJsonc(jsonc)
 
-      expect(model.hasComments()).toEqual(true)
+      expect(model.hasComments()).toBe(true)
     })
 
     it('returns false when config has no comments', () => {
       const jsonc = `{ "name": "test-project", "overrides": { "0xContract": { "ignoreMethods": ["method1"] } } }`
       const model = ConfigModel.fromRawJsonc(jsonc)
 
-      expect(model.hasComments()).toEqual(false)
+      expect(model.hasComments()).toBe(false)
     })
   })
 })

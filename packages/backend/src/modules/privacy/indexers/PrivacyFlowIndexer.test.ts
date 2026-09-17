@@ -533,10 +533,10 @@ describe(PrivacyFlowIndexer.name, () => {
       await updateFn()
 
       const call = vi.mocked(privacyFlowEventRepo.upsertMany).mock.calls[0][0]
-      expect(call?.length).toEqual(1)
+      expect(call?.length).toBe(1)
       // 2.5 USDC * $1.01
-      expect(call?.[0]?.valueUsd).toEqual(2.5 * 1.01)
-      expect(call?.[0]?.amount).toEqual(2_500_000n)
+      expect(call?.[0]?.valueUsd).toBe(2.5 * 1.01)
+      expect(call?.[0]?.amount).toBe(2_500_000n)
     })
 
     it('throws when price is missing for raw record', async () => {
@@ -774,7 +774,7 @@ describe(PrivacyFlowIndexer.name, () => {
 
       const records = vi.mocked(privacyFlowEventRepo.upsertMany).mock
         .calls[0][0]
-      expect(records?.length).toEqual(2)
+      expect(records?.length).toBe(2)
       expect(records?.map((r) => r.configurationId).sort()).toEqual([
         'config-A',
         'config-B',
@@ -1010,9 +1010,7 @@ describe(PrivacyFlowIndexer.name, () => {
         extractor: 'fixedAmount' as const,
         params: { amount: '1000' },
       }
-      expect(PrivacyFlowIndexer.idToConfigurationId(props)).toEqual(
-        '30b264b834f9',
-      )
+      expect(PrivacyFlowIndexer.idToConfigurationId(props)).toBe('30b264b834f9')
     })
 
     it('differs by direction', () => {

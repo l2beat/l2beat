@@ -50,7 +50,7 @@ describe(FuelClient.name, () => {
 
       const result = await client.getLatestBlockNumber()
 
-      expect(result).toEqual(100)
+      expect(result).toBe(100)
     })
   })
 
@@ -67,7 +67,7 @@ describe(FuelClient.name, () => {
 
       const result = await client.query(query, variables)
 
-      expect(result).toEqual('data-returned-from-api')
+      expect(result).toBe('data-returned-from-api')
       expect(http.fetch).toHaveBeenCalledExactlyOnceWith('API_URL', {
         method: 'POST',
         headers: {

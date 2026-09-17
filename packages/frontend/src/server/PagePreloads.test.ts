@@ -45,6 +45,6 @@ describe(createPagePreloads.name, () => {
   })
 
   it('emits nothing for a page missing from the manifest', () => {
-    expect(preloads('HomePage')).toEqual('')
+    expect(preloads('HomePage')).toBe('')
   })
 })

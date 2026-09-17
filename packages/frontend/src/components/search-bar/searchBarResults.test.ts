@@ -32,9 +32,9 @@ describe(searchEntries.name, () => {
       'Ethereal',
       'Ethereum with Enshrined Bridge',
     ])
-    expect(isDirectMatch('ethere', entries[0]!)).toEqual(true)
-    expect(isDirectMatch('ethere', entries[1]!)).toEqual(true)
-    expect(isDirectMatch('ethere', entries[2]!)).toEqual(false)
+    expect(isDirectMatch('ethere', entries[0]!)).toBe(true)
+    expect(isDirectMatch('ethere', entries[1]!)).toBe(true)
+    expect(isDirectMatch('ethere', entries[2]!)).toBe(false)
   })
 })
 

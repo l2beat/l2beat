@@ -37,7 +37,7 @@ describe(RpcUopsAnalyzer.name, () => {
       } as unknown as Block
 
       const result = analyzer.calculateUops(block)
-      expect(result).toEqual(7)
+      expect(result).toBe(7)
     })
   })
 
@@ -53,7 +53,7 @@ describe(RpcUopsAnalyzer.name, () => {
       analyzer.countUserOperations = vi.fn().mockReturnValue(2)
 
       const count = analyzer.mapTransaction(tx)
-      expect(count).toEqual(2)
+      expect(count).toBe(2)
     })
 
     it('should handle ERC-4337:EntryPoint0.7.0', () => {
@@ -67,7 +67,7 @@ describe(RpcUopsAnalyzer.name, () => {
       analyzer.countUserOperations = vi.fn().mockReturnValue(2)
 
       const count = analyzer.mapTransaction(tx)
-      expect(count).toEqual(2)
+      expect(count).toBe(2)
     })
 
     it('should handle ERC-4337:EntryPoint0.8.0', () => {
@@ -81,7 +81,7 @@ describe(RpcUopsAnalyzer.name, () => {
       analyzer.countUserOperations = vi.fn().mockReturnValue(2)
 
       const count = analyzer.mapTransaction(tx)
-      expect(count).toEqual(2)
+      expect(count).toBe(2)
     })
 
     it('should handle Safe:MultiSendCallOnly1.3.0', () => {
@@ -95,7 +95,7 @@ describe(RpcUopsAnalyzer.name, () => {
       analyzer.countUserOperations = vi.fn().mockReturnValue(2)
 
       const count = analyzer.mapTransaction(tx)
-      expect(count).toEqual(2)
+      expect(count).toBe(2)
     })
 
     it('should handle Safe:Singleton1.3.0', () => {
@@ -109,7 +109,7 @@ describe(RpcUopsAnalyzer.name, () => {
       analyzer.countUserOperations = vi.fn().mockReturnValue(2)
 
       const count = analyzer.mapTransaction(tx)
-      expect(count).toEqual(2)
+      expect(count).toBe(2)
     })
 
     it('should handle EIP-712', () => {
@@ -124,7 +124,7 @@ describe(RpcUopsAnalyzer.name, () => {
       analyzer.countUserOperations = vi.fn().mockReturnValue(2)
 
       const count = analyzer.mapTransaction(tx)
-      expect(count).toEqual(2)
+      expect(count).toBe(2)
     })
 
     it('should handle Multicall v3', () => {
@@ -138,7 +138,7 @@ describe(RpcUopsAnalyzer.name, () => {
       analyzer.countUserOperations = vi.fn().mockReturnValue(2)
 
       const count = analyzer.mapTransaction(tx)
-      expect(count).toEqual(2)
+      expect(count).toBe(2)
     })
 
     it('should handle ERC20Router', () => {
@@ -152,7 +152,7 @@ describe(RpcUopsAnalyzer.name, () => {
       analyzer.countUserOperations = vi.fn().mockReturnValue(2)
 
       const count = analyzer.mapTransaction(tx)
-      expect(count).toEqual(2)
+      expect(count).toBe(2)
     })
 
     it('should handle EIP-7821', () => {
@@ -166,7 +166,7 @@ describe(RpcUopsAnalyzer.name, () => {
       analyzer.countUserOperations = vi.fn().mockReturnValue(2)
 
       const count = analyzer.mapTransaction(tx)
-      expect(count).toEqual(2)
+      expect(count).toBe(2)
     })
 
     it('should handle unrecognized tx', () => {
@@ -180,7 +180,7 @@ describe(RpcUopsAnalyzer.name, () => {
       analyzer.countUserOperations = vi.fn().mockReturnValue(2)
 
       const count = analyzer.mapTransaction(tx)
-      expect(count).toEqual(1)
+      expect(count).toBe(1)
     })
   })
 
@@ -192,7 +192,7 @@ describe(RpcUopsAnalyzer.name, () => {
       ]
 
       const result = analyzer.countUserOperations('0x1234abcd', mockMethods)
-      expect(result).toEqual(1)
+      expect(result).toBe(1)
     })
 
     it('should correctly count recursive operations', () => {
@@ -212,7 +212,7 @@ describe(RpcUopsAnalyzer.name, () => {
       ]
 
       const result = analyzer.countUserOperations('0x5678abcd', mockMethods)
-      expect(result).toEqual(2)
+      expect(result).toBe(2)
     })
 
     it('should handle unknown selectors', () => {
@@ -222,7 +222,7 @@ describe(RpcUopsAnalyzer.name, () => {
       ]
 
       const result = analyzer.countUserOperations('0x5678abcd', mockMethods)
-      expect(result).toEqual(1)
+      expect(result).toBe(1)
     })
   })
 })

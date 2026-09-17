@@ -95,15 +95,15 @@ describe(getDaLayerRisks.name, () => {
 
     // Testing good sentiment case (ES > TVS)
     const result1 = getDaLayerRisks(mockDaLayer, 1000, 1500)
-    expect(result1.economicSecurity?.sentiment).toEqual('good')
+    expect(result1.economicSecurity?.sentiment).toBe('good')
 
     // Testing warning sentiment case (ES > TVS/3)
     const result2 = getDaLayerRisks(mockDaLayer, 1000, 500)
-    expect(result2.economicSecurity?.sentiment).toEqual('warning')
+    expect(result2.economicSecurity?.sentiment).toBe('warning')
 
     // Testing bad sentiment case (ES < TVS/3)
     const result3 = getDaLayerRisks(mockDaLayer, 1000, 300)
-    expect(result3.economicSecurity?.sentiment).toEqual('bad')
+    expect(result3.economicSecurity?.sentiment).toBe('bad')
   })
 
   it('works with ProjectCustomDa type', () => {
@@ -120,6 +120,6 @@ describe(getDaLayerRisks.name, () => {
     } as ProjectCustomDa
 
     const result = getDaLayerRisks(mockCustomDa)
-    expect(result.economicSecurity?.sentiment).toEqual('good')
+    expect(result.economicSecurity?.sentiment).toBe('good')
   })
 })

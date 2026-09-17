@@ -61,7 +61,7 @@ describe(getTimeRangeIntersection.name, () => {
     )
 
     expect(result.sinceTimestamp).toEqual(UnixTime(1500))
-    expect(result.untilTimestamp).toEqual(undefined)
+    expect(result.untilTimestamp).toBe(undefined)
   })
 
   it('throws when any sinceTimestamp is undefined', () => {

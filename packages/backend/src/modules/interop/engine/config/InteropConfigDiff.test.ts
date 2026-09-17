@@ -28,7 +28,7 @@ describe('InteropConfigDiff', () => {
 
     const entries = diffInteropConfigValues(previous, current)
 
-    expect(entries.length).toEqual(0)
+    expect(entries.length).toBe(0)
   })
 
   it('ignores order-only changes in arrays of objects', () => {
@@ -56,7 +56,7 @@ describe('InteropConfigDiff', () => {
 
     const interopDiff = diffInteropConfig('cctp-v2', previous, current)
 
-    expect(interopDiff.entries.length).toEqual(0)
+    expect(interopDiff.entries.length).toBe(0)
   })
 
   it('formats a readable markdown diff', () => {
@@ -73,11 +73,11 @@ describe('InteropConfigDiff', () => {
 
     const markdown = interopConfigDiffToMarkdown(interopDiff)
 
-    expect(markdown.startsWith('```diff')).toEqual(true)
-    expect(markdown.includes('+ $.networks[0].onRamp: "0xabc"')).toEqual(true)
-    expect(markdown.includes('- $.networks[1].offRamp: "0xdef"')).toEqual(true)
-    expect(markdown.includes('~ $.version')).toEqual(true)
-    expect(markdown.endsWith('```')).toEqual(true)
+    expect(markdown.startsWith('```diff')).toBe(true)
+    expect(markdown.includes('+ $.networks[0].onRamp: "0xabc"')).toBe(true)
+    expect(markdown.includes('- $.networks[1].offRamp: "0xdef"')).toBe(true)
+    expect(markdown.includes('~ $.version')).toBe(true)
+    expect(markdown.endsWith('```')).toBe(true)
   })
 
   it('removes muted entries for selected config keys', () => {

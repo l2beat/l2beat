@@ -27,12 +27,12 @@ describe(withChangeSort.name, () => {
       (row) => ({ change: row.change, period: row.changePeriod }),
     )
 
-    expect(valueColumn.meta?.changeSortColumnId).toEqual('totalChange')
-    expect(valueColumn.meta?.align).toEqual('right')
-    expect(changeColumn.id).toEqual('totalChange')
-    expect(typeof changeColumn.header).toEqual('function')
-    expect(changeColumn.enableHiding).toEqual(false)
-    expect(changeColumn.meta?.isChangeSortColumn).toEqual(true)
+    expect(valueColumn.meta?.changeSortColumnId).toBe('totalChange')
+    expect(valueColumn.meta?.align).toBe('right')
+    expect(changeColumn.id).toBe('totalChange')
+    expect(typeof changeColumn.header).toBe('function')
+    expect(changeColumn.enableHiding).toBe(false)
+    expect(changeColumn.meta?.isChangeSortColumn).toBe(true)
   })
 
   it('derives the header label from row changePeriod', () => {
@@ -57,10 +57,10 @@ describe(withChangeSort.name, () => {
     }))
 
     const header = table.getColumn('totalChange')?.columnDef.header
-    expect(typeof header).toEqual('function')
+    expect(typeof header).toBe('function')
     if (typeof header !== 'function') {
       throw new Error('expected a header function')
     }
-    expect(header({ table } as never)).toEqual('7D%')
+    expect(header({ table } as never)).toBe('7D%')
   })
 })

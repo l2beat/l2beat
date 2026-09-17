@@ -26,9 +26,7 @@ describe('OpenAPI document', () => {
     const response = document.components.schemas.ProjectResponse as {
       properties: Record<string, { description?: string }>
     }
-    expect(response.properties.generatedAt?.description).toEqual(
-      'Unix seconds.',
-    )
+    expect(response.properties.generatedAt?.description).toBe('Unix seconds.')
   })
 
   it('describes a 404 only on the lookup routes, checked against the route table', () => {
@@ -40,7 +38,7 @@ describe('OpenAPI document', () => {
   })
 
   it('is OpenAPI 3.1', () => {
-    expect(document.openapi).toEqual('3.1.0')
+    expect(document.openapi).toBe('3.1.0')
   })
 
   it('names the ledger network and warns about a testnet only while on one', () => {

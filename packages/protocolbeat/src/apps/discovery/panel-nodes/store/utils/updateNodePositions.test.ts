@@ -17,7 +17,7 @@ describe('updateNodePositions', () => {
 
     const result = updateNodePositions(state)
 
-    expect(result === state).toEqual(true)
+    expect(result === state).toBe(true)
   })
 
   it('reuses untouched node and field references during drag', () => {
@@ -44,9 +44,9 @@ describe('updateNodePositions', () => {
       },
     })
 
-    expect(result.nodes[0] === untouchedNode).toEqual(true)
-    expect(result.nodes[0]?.fields[0] === untouchedField).toEqual(true)
-    expect(result.nodes[1] === movedNode).toEqual(false)
+    expect(result.nodes[0] === untouchedNode).toBe(true)
+    expect(result.nodes[0]?.fields[0] === untouchedField).toBe(true)
+    expect(result.nodes[1] === movedNode).toBe(false)
   })
 
   it('recomputes fields when hidden field membership changes with the same count', () => {
@@ -76,12 +76,12 @@ describe('updateNodePositions', () => {
       nodes: [nextNode, ...state.nodes.slice(1)],
     })
 
-    expect(result.nodes[0] === nextNode).toEqual(false)
-    expect(result.nodes[0]?.fields[1] === nextNode.fields[1]).toEqual(false)
+    expect(result.nodes[0] === nextNode).toBe(false)
+    expect(result.nodes[0]?.fields[1] === nextNode.fields[1]).toBe(false)
     expect(
       result.nodes[0]?.fields[1]?.connection.from.y ===
         nextNode.fields[1]?.connection.from.y,
-    ).toEqual(false)
+    ).toBe(false)
   })
 
   it('updates connections when target nodes move outside drag state', () => {
@@ -104,12 +104,10 @@ describe('updateNodePositions', () => {
       nodes: [state.nodes[0] as Node, movedTarget],
     })
 
-    expect(result.nodes[0]?.fields[0]?.connection === oldConnection).toEqual(
-      false,
-    )
+    expect(result.nodes[0]?.fields[0]?.connection === oldConnection).toBe(false)
     expect(
       result.nodes[0]?.fields[0]?.connection.to.y === oldConnection?.to.y,
-    ).toEqual(false)
+    ).toBe(false)
   })
 
   it('recomputes fields when hidden fields change from non-empty to empty', () => {
@@ -137,11 +135,11 @@ describe('updateNodePositions', () => {
       nodes: [nextNode, ...state.nodes.slice(1)],
     })
 
-    expect(result.nodes[0]?.fields[1] === nextNode.fields[1]).toEqual(false)
+    expect(result.nodes[0]?.fields[1] === nextNode.fields[1]).toBe(false)
     expect(
       result.nodes[0]?.fields[1]?.connection.from.y ===
         nextNode.fields[1]?.connection.from.y,
-    ).toEqual(false)
+    ).toBe(false)
   })
 
   it('recomputes fields when node fields are replaced with fresh data', () => {
@@ -168,10 +166,8 @@ describe('updateNodePositions', () => {
       nodes: [refreshedNode, state.nodes[1] as Node],
     })
 
-    expect(result.nodes[0]?.fields[0] === refreshedNode.fields[0]).toEqual(
-      false,
-    )
-    expect(result.nodes[0]?.fields[0]?.connection.to.x === 0).toEqual(false)
+    expect(result.nodes[0]?.fields[0] === refreshedNode.fields[0]).toBe(false)
+    expect(result.nodes[0]?.fields[0]?.connection.to.x === 0).toBe(false)
   })
 
   it('aligns visible field hit-boxes with their rendered row, ignoring hidden fields above', () => {
@@ -263,12 +259,12 @@ describe('compressed rows', () => {
       .slice(0, 2)
       .map((field) => field.connection.from.y)
     for (const anchor of anchors) {
-      expect(anchor > rowTop).toEqual(true)
-      expect(anchor < rowTop + FIELD_HEIGHT).toEqual(true)
+      expect(anchor > rowTop).toBe(true)
+      expect(anchor < rowTop + FIELD_HEIGHT).toBe(true)
     }
     // Links leave the shared row at distinct heights, so a 1:N row reads as a
     // fan rather than one stroke.
-    expect(new Set(anchors).size).toEqual(2)
+    expect(new Set(anchors).size).toBe(2)
   })
 })
 

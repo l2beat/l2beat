@@ -34,9 +34,9 @@ function review(
 
 describe(buildMarker.name, () => {
   it('carries run id, lessons version, engine and sources', () => {
-    expect(
-      buildMarker(review([], { context_sources: ['a', 'b'] }), meta),
-    ).toEqual('<!-- ai-review run=r1 lessons=none engine=codex sources=a,b -->')
+    expect(buildMarker(review([], { context_sources: ['a', 'b'] }), meta)).toBe(
+      '<!-- ai-review run=r1 lessons=none engine=codex sources=a,b -->',
+    )
   })
 })
 
@@ -51,8 +51,8 @@ describe(buildReview.name, () => {
       ]),
       meta,
     )
-    expect(payload.event).toEqual('COMMENT')
-    expect(payload.commit_id).toEqual('sha1')
+    expect(payload.event).toBe('COMMENT')
+    expect(payload.commit_id).toBe('sha1')
     expect(payload.comments.map((c) => [c.path, c.start_line, c.line])).toEqual(
       [
         ['src/a.ts', 2, 3],
@@ -90,7 +90,7 @@ describe(buildReview.name, () => {
     expect(payload.body).toContain(
       'Reviewed, consulted `diff`, no findings above the bar.',
     )
-    expect(payload.body.trim().endsWith(buildMarker(r, meta))).toEqual(true)
+    expect(payload.body.trim().endsWith(buildMarker(r, meta))).toBe(true)
   })
 
   it('aborted review posts the abort reason and no findings', () => {

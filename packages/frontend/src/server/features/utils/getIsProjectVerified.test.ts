@@ -28,7 +28,7 @@ describe(getProjectVerification.name, () => {
     const result = getProjectVerification(project, changes)
 
     expect(result.unverifiedContracts).toEqual([stillUnverified])
-    expect(result.warnings.contracts).toEqual(
+    expect(result.warnings.contracts).toBe(
       'This project includes unverified contracts.',
     )
   })
@@ -49,6 +49,6 @@ describe(getProjectVerification.name, () => {
     const result = getProjectVerification(project, changes)
 
     expect(result.unverifiedContracts).toEqual([])
-    expect(result.warnings.contracts).toEqual(undefined)
+    expect(result.warnings.contracts).toBe(undefined)
   })
 })

@@ -51,8 +51,8 @@ describe('FieldConfigModel', () => {
       const original = FieldConfigModel.fromRawJsonc(jsonc)
       const updated = original.setSeverity('LOW')
 
-      expect(original.severity).toEqual('HIGH')
-      expect(updated.severity).toEqual('LOW')
+      expect(original.severity).toBe('HIGH')
+      expect(updated.severity).toBe('LOW')
     })
 
     it('peek returns cloned data, mutations do not affect original', () => {
@@ -61,7 +61,7 @@ describe('FieldConfigModel', () => {
 
       peeked.severity = 'LOW'
 
-      expect(model.severity).toEqual('HIGH')
+      expect(model.severity).toBe('HIGH')
     })
 
     it('multiple operations create independent instances', () => {
@@ -69,9 +69,9 @@ describe('FieldConfigModel', () => {
       const branch1 = original.setSeverity('LOW')
       const branch2 = original.setSeverity(undefined)
 
-      expect(original.severity).toEqual('HIGH')
-      expect(branch1.severity).toEqual('LOW')
-      expect(branch2.severity).toEqual(undefined)
+      expect(original.severity).toBe('HIGH')
+      expect(branch1.severity).toBe('LOW')
+      expect(branch2.severity).toBe(undefined)
     })
 
     it('sequential operations maintain immutability chain', () => {
@@ -80,68 +80,68 @@ describe('FieldConfigModel', () => {
       const v3 = v2.setSeverity(undefined)
       const v4 = v3.setSeverity('HIGH')
 
-      expect(v1.severity).toEqual('HIGH')
-      expect(v2.severity).toEqual('LOW')
-      expect(v3.severity).toEqual(undefined)
-      expect(v4.severity).toEqual('HIGH')
+      expect(v1.severity).toBe('HIGH')
+      expect(v2.severity).toBe('LOW')
+      expect(v3.severity).toBe(undefined)
+      expect(v4.severity).toBe('HIGH')
     })
   })
 
   describe('edge cases', () => {
     it('hasDefinition works correctly', () => {
       const model = FieldConfigModel.fromRawJsonc(`{ "severity": "HIGH" }`)
-      expect(model.hasDefinition('severity')).toEqual(true)
-      expect(model.hasDefinition('description')).toEqual(false)
+      expect(model.hasDefinition('severity')).toBe(true)
+      expect(model.hasDefinition('description')).toBe(false)
     })
 
     it('hasDefinition works for description field', () => {
       const model = FieldConfigModel.fromRawJsonc(`{ "description": "Test" }`)
-      expect(model.hasDefinition('description')).toEqual(true)
-      expect(model.hasDefinition('severity')).toEqual(false)
+      expect(model.hasDefinition('description')).toBe(true)
+      expect(model.hasDefinition('severity')).toBe(false)
     })
 
     it('handles empty config', () => {
       const model = FieldConfigModel.fromRawJsonc('{}')
-      expect(model.hasDefinition('severity')).toEqual(false)
-      expect(model.hasDefinition('description')).toEqual(false)
-      expect(model.severity).toEqual(undefined)
+      expect(model.hasDefinition('severity')).toBe(false)
+      expect(model.hasDefinition('description')).toBe(false)
+      expect(model.severity).toBe(undefined)
     })
 
     it('handles config with only severity', () => {
       const model = FieldConfigModel.fromRawJsonc(`{ "severity": "LOW" }`)
-      expect(model.severity).toEqual('LOW')
-      expect(model.hasDefinition('severity')).toEqual(true)
+      expect(model.severity).toBe('LOW')
+      expect(model.hasDefinition('severity')).toBe(true)
     })
 
     it('handles config with only description', () => {
       const model = FieldConfigModel.fromRawJsonc(
         `{ "description": "Test description" }`,
       )
-      expect(model.hasDefinition('description')).toEqual(true)
-      expect(model.severity).toEqual(undefined)
+      expect(model.hasDefinition('description')).toBe(true)
+      expect(model.severity).toBe(undefined)
     })
   })
 
   describe('severity getter', () => {
     it('returns HIGH when set', () => {
       const model = FieldConfigModel.fromRawJsonc(`{ "severity": "HIGH" }`)
-      expect(model.severity).toEqual('HIGH')
+      expect(model.severity).toBe('HIGH')
     })
 
     it('returns LOW when set', () => {
       const model = FieldConfigModel.fromRawJsonc(`{ "severity": "LOW" }`)
-      expect(model.severity).toEqual('LOW')
+      expect(model.severity).toBe('LOW')
     })
 
     it('returns undefined when not set', () => {
       const model = FieldConfigModel.fromRawJsonc('{}')
-      expect(model.severity).toEqual(undefined)
+      expect(model.severity).toBe(undefined)
     })
 
     it('returns undefined after setting to undefined', () => {
       const model = FieldConfigModel.fromRawJsonc(`{ "severity": "HIGH" }`)
       const updated = model.setSeverity(undefined)
-      expect(updated.severity).toEqual(undefined)
+      expect(updated.severity).toBe(undefined)
     })
   })
 
@@ -149,34 +149,34 @@ describe('FieldConfigModel', () => {
     it('sets severity to HIGH', () => {
       const model = FieldConfigModel.fromRawJsonc('{}')
       const updated = model.setSeverity('HIGH')
-      expect(updated.severity).toEqual('HIGH')
+      expect(updated.severity).toBe('HIGH')
     })
 
     it('sets severity to LOW', () => {
       const model = FieldConfigModel.fromRawJsonc('{}')
       const updated = model.setSeverity('LOW')
-      expect(updated.severity).toEqual('LOW')
+      expect(updated.severity).toBe('LOW')
     })
 
     it('removes severity when set to undefined', () => {
       const model = FieldConfigModel.fromRawJsonc(`{ "severity": "HIGH" }`)
       const updated = model.setSeverity(undefined)
-      expect(updated.severity).toEqual(undefined)
-      expect(updated.hasDefinition('severity')).toEqual(false)
+      expect(updated.severity).toBe(undefined)
+      expect(updated.hasDefinition('severity')).toBe(false)
     })
 
     it('changes severity from HIGH to LOW', () => {
       const model = FieldConfigModel.fromRawJsonc(`{ "severity": "HIGH" }`)
       const updated = model.setSeverity('LOW')
-      expect(model.severity).toEqual('HIGH')
-      expect(updated.severity).toEqual('LOW')
+      expect(model.severity).toBe('HIGH')
+      expect(updated.severity).toBe('LOW')
     })
 
     it('changes severity from LOW to HIGH', () => {
       const model = FieldConfigModel.fromRawJsonc(`{ "severity": "LOW" }`)
       const updated = model.setSeverity('HIGH')
-      expect(model.severity).toEqual('LOW')
-      expect(updated.severity).toEqual('HIGH')
+      expect(model.severity).toBe('LOW')
+      expect(updated.severity).toBe('HIGH')
     })
   })
 
@@ -184,14 +184,14 @@ describe('FieldConfigModel', () => {
     it('sets a normal description', () => {
       const model = FieldConfigModel.fromRawJsonc('{}')
       const updated = model.setDescription('Test description')
-      expect(updated.peek().description).toEqual('Test description')
-      expect(updated.hasDefinition('description')).toEqual(true)
+      expect(updated.peek().description).toBe('Test description')
+      expect(updated.hasDefinition('description')).toBe(true)
     })
 
     it('trims whitespace from description', () => {
       const model = FieldConfigModel.fromRawJsonc('{}')
       const updated = model.setDescription('  Test description  ')
-      expect(updated.peek().description).toEqual('Test description')
+      expect(updated.peek().description).toBe('Test description')
     })
 
     it('converts empty string to undefined', () => {
@@ -199,8 +199,8 @@ describe('FieldConfigModel', () => {
         `{ "description": "Existing" }`,
       )
       const updated = model.setDescription('')
-      expect(updated.peek().description).toEqual(undefined)
-      expect(updated.hasDefinition('description')).toEqual(false)
+      expect(updated.peek().description).toBe(undefined)
+      expect(updated.hasDefinition('description')).toBe(false)
     })
 
     it('converts whitespace-only string to undefined', () => {
@@ -208,8 +208,8 @@ describe('FieldConfigModel', () => {
         `{ "description": "Existing" }`,
       )
       const updated = model.setDescription('   ')
-      expect(updated.peek().description).toEqual(undefined)
-      expect(updated.hasDefinition('description')).toEqual(false)
+      expect(updated.peek().description).toBe(undefined)
+      expect(updated.hasDefinition('description')).toBe(false)
     })
 
     it('removes description when set to undefined', () => {
@@ -217,8 +217,8 @@ describe('FieldConfigModel', () => {
         `{ "description": "Existing" }`,
       )
       const updated = model.setDescription(undefined)
-      expect(updated.peek().description).toEqual(undefined)
-      expect(updated.hasDefinition('description')).toEqual(false)
+      expect(updated.peek().description).toBe(undefined)
+      expect(updated.hasDefinition('description')).toBe(false)
     })
 
     it('changes description from one value to another', () => {
@@ -226,15 +226,15 @@ describe('FieldConfigModel', () => {
         `{ "description": "Old description" }`,
       )
       const updated = model.setDescription('New description')
-      expect(model.peek().description).toEqual('Old description')
-      expect(updated.peek().description).toEqual('New description')
+      expect(model.peek().description).toBe('Old description')
+      expect(updated.peek().description).toBe('New description')
     })
 
     it('maintains immutability when setting description', () => {
       const original = FieldConfigModel.fromRawJsonc('{}')
       const updated = original.setDescription('Test')
-      expect(original.peek().description).toEqual(undefined)
-      expect(updated.peek().description).toEqual('Test')
+      expect(original.peek().description).toBe(undefined)
+      expect(updated.peek().description).toBe('Test')
     })
 
     it('preserves comments when setting description', () => {

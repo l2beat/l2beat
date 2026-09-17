@@ -394,7 +394,7 @@ describeDatabase(LivenessRepository.name, (db) => {
         txIdB.toString(),
       ])
 
-      expect(deleted).toEqual(3)
+      expect(deleted).toBe(3)
 
       const results = await repository.getAll()
       expect(results).toHaveLength(1)
@@ -403,7 +403,7 @@ describeDatabase(LivenessRepository.name, (db) => {
 
     it('returns 0 for empty ids', async () => {
       const deleted = await repository.deleteByConfigIds([])
-      expect(deleted).toEqual(0)
+      expect(deleted).toBe(0)
 
       const results = await repository.getAll()
       expect(results).toHaveLength(DATA.length)
@@ -412,7 +412,7 @@ describeDatabase(LivenessRepository.name, (db) => {
 
     it('returns 0 when no matching config found', async () => {
       const deleted = await repository.deleteByConfigIds(['non-existent-id'])
-      expect(deleted).toEqual(0)
+      expect(deleted).toBe(0)
 
       const results = await repository.getAll()
       expect(results).toHaveLength(DATA.length)

@@ -56,7 +56,7 @@ describe(attachPermissions.name, () => {
 
     attachPermissions([consumer, module])
 
-    expect(module.entries.at(0)?.receivedPermissions).toEqual(undefined)
+    expect(module.entries.at(0)?.receivedPermissions).toBe(undefined)
   })
 
   it('leaves an address the map does not mention alone', () => {
@@ -66,9 +66,7 @@ describe(attachPermissions.name, () => {
 
     attachPermissions([discovery])
 
-    expect(discovery.entries.at(0)?.eoaWithUpgradePermissions).toEqual(
-      undefined,
-    )
+    expect(discovery.entries.at(0)?.eoaWithUpgradePermissions).toBe(undefined)
   })
 })
 

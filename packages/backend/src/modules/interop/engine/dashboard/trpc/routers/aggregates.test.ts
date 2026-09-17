@@ -82,10 +82,10 @@ describe(createAggregatesRouter.name, () => {
     const result = await caller.latest()
 
     expect(result.latestTimestamp).toEqual(latestTimestamp)
-    expect(result.latestTransfersCount).toEqual(4)
-    expect(result.includedTransfersCount).toEqual(3)
+    expect(result.latestTransfersCount).toBe(4)
+    expect(result.includedTransfersCount).toBe(3)
     expect(result.notIncludedTransfers).toHaveLength(1)
-    expect(result.notIncludedTransfers[0]?.transferId).toEqual('missing-relay')
+    expect(result.notIncludedTransfers[0]?.transferId).toBe('missing-relay')
     expect(result.notIncludedByPlugin).toEqual([
       {
         plugin: 'relay',
@@ -109,8 +109,8 @@ describe(createAggregatesRouter.name, () => {
         notIncludedTransferTypes: ['withdraw'],
       },
     ])
-    expect(result.aggregationConfigured).toEqual(true)
-    expect(result.aggregationConfigsCount).toEqual(1)
+    expect(result.aggregationConfigured).toBe(true)
+    expect(result.aggregationConfigsCount).toBe(1)
   })
 
   it('returns disabled state when aggregation configs are unavailable', async () => {

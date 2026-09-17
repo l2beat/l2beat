@@ -53,27 +53,25 @@ describeDatabase(ActivityRepository.name, (db) => {
 
     it('is true when the project has a non-zero count', async () => {
       await repository.upsertMany([record('a', START, 5)])
-      expect(await repository.checkIfExists(ProjectId('a'))).toEqual(true)
+      expect(await repository.checkIfExists(ProjectId('a'))).toBe(true)
     })
 
     it('ignores rows with a zero count, which draw an empty chart', async () => {
       await repository.upsertMany([record('a', START, 0)])
-      expect(await repository.checkIfExists(ProjectId('a'))).toEqual(false)
+      expect(await repository.checkIfExists(ProjectId('a'))).toBe(false)
     })
 
     it('is scoped to the project', async () => {
       await repository.upsertMany([record('a', START, 5)])
-      expect(await repository.checkIfExists(ProjectId('b'))).toEqual(false)
+      expect(await repository.checkIfExists(ProjectId('b'))).toBe(false)
     })
 
     it('only counts rows at or after fromInclusive', async () => {
       await repository.upsertMany([record('a', START - UnixTime.DAY, 5)])
-      expect(await repository.checkIfExists(ProjectId('a'), START)).toEqual(
-        false,
-      )
+      expect(await repository.checkIfExists(ProjectId('a'), START)).toBe(false)
       expect(
         await repository.checkIfExists(ProjectId('a'), START - UnixTime.DAY),
-      ).toEqual(true)
+      ).toBe(true)
     })
   })
 
@@ -113,7 +111,7 @@ describeDatabase(ActivityRepository.name, (db) => {
           [],
         )
 
-        expect(result).toEqual(undefined)
+        expect(result).toBe(undefined)
       })
     },
   )
@@ -331,7 +329,7 @@ describeDatabase(ActivityRepository.name, (db) => {
             [START, START + 2 * UnixTime.DAY],
           )
 
-        expect(result).toEqual(11)
+        expect(result).toBe(11)
       })
     },
   )
@@ -508,7 +506,7 @@ describeDatabase(ActivityRepository.name, (db) => {
 
       const latestBlock = await repository.getLatestProcessedBlock(projectId)
 
-      expect(latestBlock).toEqual(300)
+      expect(latestBlock).toBe(300)
     })
 
     it('should return undefined if no records exist for the project', async () => {
@@ -516,7 +514,7 @@ describeDatabase(ActivityRepository.name, (db) => {
 
       const latestBlock = await repository.getLatestProcessedBlock(projectId)
 
-      expect(latestBlock).toEqual(undefined)
+      expect(latestBlock).toBe(undefined)
     })
   })
 

@@ -21,12 +21,12 @@ describe('crops', () => {
     })
 
     it('resolves an ungraded crop to neutral, since it declares no sentiment', () => {
-      expect(
-        resolveCropEvaluation({ status: 'notReviewed' }).sentiment,
-      ).toEqual('neutral')
+      expect(resolveCropEvaluation({ status: 'notReviewed' }).sentiment).toBe(
+        'neutral',
+      )
       expect(
         resolveCropEvaluation({ status: 'fullyTransparent' }).sentiment,
-      ).toEqual('neutral')
+      ).toBe('neutral')
     })
 
     it('keeps the sentiment of a partially reviewed crop', () => {
@@ -34,8 +34,8 @@ describe('crops', () => {
         sentiment: 'warning',
         status: 'partiallyReviewed',
       })
-      expect(resolved.sentiment).toEqual('warning')
-      expect(resolved.status).toEqual('partiallyReviewed')
+      expect(resolved.sentiment).toBe('warning')
+      expect(resolved.status).toBe('partiallyReviewed')
     })
 
     it('resolves a declared license id against the OSI list', () => {
@@ -72,21 +72,21 @@ describe('crops', () => {
           security: { sentiment: 'warning', status: 'partiallyReviewed' },
         }),
       )
-      expect(qualifiesForGarden(resolved)).toEqual(true)
+      expect(qualifiesForGarden(resolved)).toBe(true)
     })
 
     it('keeps a project out when any crop is red', () => {
       const resolved = resolveProjectCrops(
         crops({ security: { sentiment: 'bad' } }),
       )
-      expect(qualifiesForGarden(resolved)).toEqual(false)
+      expect(qualifiesForGarden(resolved)).toBe(false)
     })
 
     it('keeps it out even when the red crop is only partially reviewed', () => {
       const resolved = resolveProjectCrops(
         crops({ security: { sentiment: 'bad', status: 'partiallyReviewed' } }),
       )
-      expect(qualifiesForGarden(resolved)).toEqual(false)
+      expect(qualifiesForGarden(resolved)).toBe(false)
     })
   })
 })

@@ -4,64 +4,64 @@ import { shapeMatches } from './shapeMatching'
 describe('shapeMatches', () => {
   describe('primitives', () => {
     it('matches equal strings', () => {
-      expect(shapeMatches('hello', 'hello')).toEqual(true)
+      expect(shapeMatches('hello', 'hello')).toBe(true)
     })
 
     it('does not match different strings', () => {
-      expect(shapeMatches('hello', 'world')).toEqual(false)
+      expect(shapeMatches('hello', 'world')).toBe(false)
     })
 
     it('matches equal numbers', () => {
-      expect(shapeMatches(42, 42)).toEqual(true)
+      expect(shapeMatches(42, 42)).toBe(true)
     })
 
     it('does not match different numbers', () => {
-      expect(shapeMatches(42, 43)).toEqual(false)
+      expect(shapeMatches(42, 43)).toBe(false)
     })
 
     it('matches equal booleans', () => {
-      expect(shapeMatches(true, true)).toEqual(true)
-      expect(shapeMatches(false, false)).toEqual(true)
+      expect(shapeMatches(true, true)).toBe(true)
+      expect(shapeMatches(false, false)).toBe(true)
     })
 
     it('does not match different booleans', () => {
-      expect(shapeMatches(true, false)).toEqual(false)
+      expect(shapeMatches(true, false)).toBe(false)
     })
 
     it('matches null', () => {
-      expect(shapeMatches(null, null)).toEqual(true)
+      expect(shapeMatches(null, null)).toBe(true)
     })
 
     it('matches undefined', () => {
-      expect(shapeMatches(undefined, undefined)).toEqual(true)
+      expect(shapeMatches(undefined, undefined)).toBe(true)
     })
 
     it('does not match null vs undefined', () => {
-      expect(shapeMatches(null, undefined)).toEqual(false)
-      expect(shapeMatches(undefined, null)).toEqual(false)
+      expect(shapeMatches(null, undefined)).toBe(false)
+      expect(shapeMatches(undefined, null)).toBe(false)
     })
   })
 
   describe('bigint', () => {
     it('matches equal bigints', () => {
-      expect(shapeMatches(BigInt(123), BigInt(123))).toEqual(true)
+      expect(shapeMatches(BigInt(123), BigInt(123))).toBe(true)
     })
 
     it('does not match different bigints', () => {
-      expect(shapeMatches(BigInt(123), BigInt(456))).toEqual(false)
+      expect(shapeMatches(BigInt(123), BigInt(456))).toBe(false)
     })
 
     it('matches bigint with string representation', () => {
-      expect(shapeMatches(BigInt(123), '123')).toEqual(true)
+      expect(shapeMatches(BigInt(123), '123')).toBe(true)
     })
 
     it('does not match bigint with different string', () => {
-      expect(shapeMatches(BigInt(123), '456')).toEqual(false)
+      expect(shapeMatches(BigInt(123), '456')).toBe(false)
     })
 
     it('handles large bigint values', () => {
       const large = BigInt('1000000000000000000') // 1 ETH in wei
-      expect(shapeMatches(large, '1000000000000000000')).toEqual(true)
+      expect(shapeMatches(large, '1000000000000000000')).toBe(true)
     })
   })
 
@@ -69,31 +69,31 @@ describe('shapeMatches', () => {
     it('matches when expected is subset of actual', () => {
       const actual = { a: 1, b: 2, c: 3 }
       const expected = { a: 1 }
-      expect(shapeMatches(actual, expected)).toEqual(true)
+      expect(shapeMatches(actual, expected)).toBe(true)
     })
 
     it('matches when all properties match', () => {
       const actual = { a: 1, b: 2 }
       const expected = { a: 1, b: 2 }
-      expect(shapeMatches(actual, expected)).toEqual(true)
+      expect(shapeMatches(actual, expected)).toBe(true)
     })
 
     it('does not match when expected has key not in actual', () => {
       const actual = { a: 1 }
       const expected = { b: 2 }
-      expect(shapeMatches(actual, expected)).toEqual(false)
+      expect(shapeMatches(actual, expected)).toBe(false)
     })
 
     it('does not match when values differ', () => {
       const actual = { a: 1 }
       const expected = { a: 2 }
-      expect(shapeMatches(actual, expected)).toEqual(false)
+      expect(shapeMatches(actual, expected)).toBe(false)
     })
 
     it('allows additional keys in actual', () => {
       const actual = { a: 1, b: 2, c: 3, d: 4 }
       const expected = { a: 1, c: 3 }
-      expect(shapeMatches(actual, expected)).toEqual(true)
+      expect(shapeMatches(actual, expected)).toBe(true)
     })
   })
 
@@ -106,7 +106,7 @@ describe('shapeMatches', () => {
       const expected = {
         src: { ctx: { chain: 'ethereum' } },
       }
-      expect(shapeMatches(actual, expected)).toEqual(true)
+      expect(shapeMatches(actual, expected)).toBe(true)
     })
 
     it('matches deeply nested properties', () => {
@@ -116,7 +116,7 @@ describe('shapeMatches', () => {
       const expected = {
         a: { b: { c: { d: { e: 42 } } } },
       }
-      expect(shapeMatches(actual, expected)).toEqual(true)
+      expect(shapeMatches(actual, expected)).toBe(true)
     })
 
     it('allows extra properties in nested objects', () => {
@@ -128,7 +128,7 @@ describe('shapeMatches', () => {
       const expected = {
         src: { chain: 'ethereum' },
       }
-      expect(shapeMatches(actual, expected)).toEqual(true)
+      expect(shapeMatches(actual, expected)).toBe(true)
     })
 
     it('does not match when nested value differs', () => {
@@ -138,7 +138,7 @@ describe('shapeMatches', () => {
       const expected = {
         src: { ctx: { chain: 'base' } },
       }
-      expect(shapeMatches(actual, expected)).toEqual(false)
+      expect(shapeMatches(actual, expected)).toBe(false)
     })
 
     it('does not match when nested key is missing', () => {
@@ -148,7 +148,7 @@ describe('shapeMatches', () => {
       const expected = {
         src: { ctx: { nonexistent: 'value' } },
       }
-      expect(shapeMatches(actual, expected)).toEqual(false)
+      expect(shapeMatches(actual, expected)).toBe(false)
     })
   })
 
@@ -172,7 +172,7 @@ describe('shapeMatches', () => {
       }
 
       it('matches by type only', () => {
-        expect(shapeMatches(event, { type: 'ccip.CCIPSendRequested' })).toEqual(
+        expect(shapeMatches(event, { type: 'ccip.CCIPSendRequested' })).toBe(
           true,
         )
       })
@@ -183,7 +183,7 @@ describe('shapeMatches', () => {
             type: 'ccip.CCIPSendRequested',
             ctx: { chain: 'arbitrum' },
           }),
-        ).toEqual(true)
+        ).toBe(true)
       })
 
       it('matches by direction', () => {
@@ -192,7 +192,7 @@ describe('shapeMatches', () => {
             type: 'ccip.CCIPSendRequested',
             direction: 'outgoing',
           }),
-        ).toEqual(true)
+        ).toBe(true)
       })
 
       it('matches by plugin', () => {
@@ -201,7 +201,7 @@ describe('shapeMatches', () => {
             type: 'ccip.CCIPSendRequested',
             plugin: 'ccip',
           }),
-        ).toEqual(true)
+        ).toBe(true)
       })
 
       it('matches nested args', () => {
@@ -209,7 +209,7 @@ describe('shapeMatches', () => {
           shapeMatches(event, {
             args: { sender: '0x123...' },
           }),
-        ).toEqual(true)
+        ).toBe(true)
       })
 
       it('does not match wrong chain', () => {
@@ -217,7 +217,7 @@ describe('shapeMatches', () => {
           shapeMatches(event, {
             ctx: { chain: 'ethereum' },
           }),
-        ).toEqual(false)
+        ).toBe(false)
       })
     })
 
@@ -242,7 +242,7 @@ describe('shapeMatches', () => {
             type: 'opstack.L1ToL2Message',
             app: 'opstack-standardbridge',
           }),
-        ).toEqual(true)
+        ).toBe(true)
       })
 
       it('matches source chain', () => {
@@ -250,7 +250,7 @@ describe('shapeMatches', () => {
           shapeMatches(message, {
             src: { ctx: { chain: 'ethereum' } },
           }),
-        ).toEqual(true)
+        ).toBe(true)
       })
 
       it('matches destination chain', () => {
@@ -258,7 +258,7 @@ describe('shapeMatches', () => {
           shapeMatches(message, {
             dst: { ctx: { chain: 'base' } },
           }),
-        ).toEqual(true)
+        ).toBe(true)
       })
 
       it('matches both chains', () => {
@@ -267,7 +267,7 @@ describe('shapeMatches', () => {
             src: { ctx: { chain: 'ethereum' } },
             dst: { ctx: { chain: 'base' } },
           }),
-        ).toEqual(true)
+        ).toBe(true)
       })
 
       it('does not match wrong destination', () => {
@@ -275,7 +275,7 @@ describe('shapeMatches', () => {
           shapeMatches(message, {
             dst: { ctx: { chain: 'arbitrum' } },
           }),
-        ).toEqual(false)
+        ).toBe(false)
       })
     })
 
@@ -308,7 +308,7 @@ describe('shapeMatches', () => {
           shapeMatches(transfer, {
             src: { event: { ctx: { chain: 'arbitrum' } } },
           }),
-        ).toEqual(true)
+        ).toBe(true)
       })
 
       it('matches destination chain', () => {
@@ -316,7 +316,7 @@ describe('shapeMatches', () => {
           shapeMatches(transfer, {
             dst: { event: { ctx: { chain: 'ethereum' } } },
           }),
-        ).toEqual(true)
+        ).toBe(true)
       })
 
       it('matches token address', () => {
@@ -324,7 +324,7 @@ describe('shapeMatches', () => {
           shapeMatches(transfer, {
             src: { tokenAddress: '0xtoken1' },
           }),
-        ).toEqual(true)
+        ).toBe(true)
       })
 
       it('matches amount as bigint', () => {
@@ -332,7 +332,7 @@ describe('shapeMatches', () => {
           shapeMatches(transfer, {
             src: { tokenAmount: BigInt('1000000') },
           }),
-        ).toEqual(true)
+        ).toBe(true)
       })
 
       it('matches amount as string', () => {
@@ -340,7 +340,7 @@ describe('shapeMatches', () => {
           shapeMatches(transfer, {
             src: { tokenAmount: '1000000' },
           }),
-        ).toEqual(true)
+        ).toBe(true)
       })
 
       it('matches burn flag', () => {
@@ -348,7 +348,7 @@ describe('shapeMatches', () => {
           shapeMatches(transfer, {
             src: { wasBurned: true },
           }),
-        ).toEqual(true)
+        ).toBe(true)
       })
 
       it('matches mint flag', () => {
@@ -356,7 +356,7 @@ describe('shapeMatches', () => {
           shapeMatches(transfer, {
             dst: { wasMinted: true },
           }),
-        ).toEqual(true)
+        ).toBe(true)
       })
 
       it('matches complex combination', () => {
@@ -373,7 +373,7 @@ describe('shapeMatches', () => {
               wasMinted: true,
             },
           }),
-        ).toEqual(true)
+        ).toBe(true)
       })
 
       it('does not match wrong amount', () => {
@@ -381,7 +381,7 @@ describe('shapeMatches', () => {
           shapeMatches(transfer, {
             src: { tokenAmount: '2000000' },
           }),
-        ).toEqual(false)
+        ).toBe(false)
       })
 
       it('does not match wrong flag', () => {
@@ -389,30 +389,30 @@ describe('shapeMatches', () => {
           shapeMatches(transfer, {
             src: { wasBurned: false },
           }),
-        ).toEqual(false)
+        ).toBe(false)
       })
     })
   })
 
   describe('edge cases', () => {
     it('handles empty objects', () => {
-      expect(shapeMatches({}, {})).toEqual(true)
-      expect(shapeMatches({ a: 1 }, {})).toEqual(true)
-      expect(shapeMatches({}, { a: 1 })).toEqual(false)
+      expect(shapeMatches({}, {})).toBe(true)
+      expect(shapeMatches({ a: 1 }, {})).toBe(true)
+      expect(shapeMatches({}, { a: 1 })).toBe(false)
     })
 
     it('handles arrays (treats as objects)', () => {
-      expect(shapeMatches([1, 2, 3], [1, 2, 3])).toEqual(true)
-      expect(shapeMatches([1, 2, 3], [1])).toEqual(true) // partial match on indices
+      expect(shapeMatches([1, 2, 3], [1, 2, 3])).toBe(true)
+      expect(shapeMatches([1, 2, 3], [1])).toBe(true) // partial match on indices
     })
 
     it('does not match primitive against object', () => {
-      expect(shapeMatches(42, { value: 42 })).toEqual(false)
-      expect(shapeMatches('string', { value: 'string' })).toEqual(false)
+      expect(shapeMatches(42, { value: 42 })).toBe(false)
+      expect(shapeMatches('string', { value: 'string' })).toBe(false)
     })
 
     it('does not match object against primitive', () => {
-      expect(shapeMatches({ value: 42 }, 42)).toEqual(false)
+      expect(shapeMatches({ value: 42 }, 42)).toBe(false)
     })
 
     it('handles mixed types in nested structures', () => {
@@ -432,7 +432,7 @@ describe('shapeMatches', () => {
           string: 'value',
           nested: { bigint: '999' },
         }),
-      ).toEqual(true)
+      ).toBe(true)
     })
   })
 })

@@ -122,11 +122,11 @@ describe(BlobPriceProvider.name, () => {
 
       const result = await provider.getBlobPricesByBlockRange([50, 1099])
 
-      expect(result.size).toEqual(1050)
-      expect(result.get(100)).toEqual(1n)
-      expect(result.get(1099)).toEqual(1000n)
-      expect(result.get(50)).toEqual(1001n)
-      expect(result.get(549)).toEqual(450n)
+      expect(result.size).toBe(1050)
+      expect(result.get(100)).toBe(1n)
+      expect(result.get(1099)).toBe(1000n)
+      expect(result.get(50)).toBe(1001n)
+      expect(result.get(549)).toBe(450n)
 
       expect(mockRpcClient.getFeeHistory).toHaveBeenCalledTimes(2)
       expect(mockRpcClient.getFeeHistory).toHaveBeenNthCalledWith(
@@ -149,9 +149,9 @@ describe(BlobPriceProvider.name, () => {
 
       const result = await provider.getBlobPricesByBlockRange([100, 1099])
 
-      expect(result.size).toEqual(1000)
-      expect(result.get(100)).toEqual(1n)
-      expect(result.get(1099)).toEqual(1000n)
+      expect(result.size).toBe(1000)
+      expect(result.get(100)).toBe(1n)
+      expect(result.get(1099)).toBe(1000n)
       expect(mockRpcClient.getFeeHistory).toHaveBeenCalledWith(1000, 1099, [])
     })
 
@@ -171,13 +171,13 @@ describe(BlobPriceProvider.name, () => {
 
       const result = await provider.getBlobPricesByBlockRange([500, 2999])
 
-      expect(result.size).toEqual(2500)
-      expect(result.get(2000)).toEqual(10n)
-      expect(result.get(2999)).toEqual(10n)
-      expect(result.get(1000)).toEqual(20n)
-      expect(result.get(1999)).toEqual(20n)
-      expect(result.get(500)).toEqual(30n)
-      expect(result.get(999)).toEqual(30n)
+      expect(result.size).toBe(2500)
+      expect(result.get(2000)).toBe(10n)
+      expect(result.get(2999)).toBe(10n)
+      expect(result.get(1000)).toBe(20n)
+      expect(result.get(1999)).toBe(20n)
+      expect(result.get(500)).toBe(30n)
+      expect(result.get(999)).toBe(30n)
 
       expect(mockRpcClient.getFeeHistory).toHaveBeenCalledTimes(3)
       expect(mockRpcClient.getFeeHistory).toHaveBeenNthCalledWith(

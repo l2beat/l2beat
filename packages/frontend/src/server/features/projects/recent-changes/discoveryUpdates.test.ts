@@ -29,14 +29,14 @@ describe(countRecentDiscoveryUpdates.name, () => {
       NOW,
     )
 
-    expect(count).toEqual(2)
+    expect(count).toBe(2)
   })
 
   it('ignores updates without a timestamp', () => {
-    expect(countRecentDiscoveryUpdates([update(null)], NOW)).toEqual(0)
+    expect(countRecentDiscoveryUpdates([update(null)], NOW)).toBe(0)
   })
 
   it('returns zero for no updates', () => {
-    expect(countRecentDiscoveryUpdates([], NOW)).toEqual(0)
+    expect(countRecentDiscoveryUpdates([], NOW)).toBe(0)
   })
 })

@@ -153,7 +153,7 @@ describeDatabase(TokenFactInputRepository.name, (db) => {
 
       const deleted = await repository.deleteAll()
 
-      expect(deleted).toEqual(2)
+      expect(deleted).toBe(2)
       expect(await repository.getAll()).toEqual([])
     })
   })

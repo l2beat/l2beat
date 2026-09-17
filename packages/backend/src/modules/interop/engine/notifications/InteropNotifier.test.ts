@@ -18,11 +18,11 @@ describe(InteropNotifier.name, () => {
     const message = vi.mocked(webhookClient.sendMessage).mock
       .calls[0][0] as string
 
-    expect(message.includes('**ccip** config change')).toEqual(true)
-    expect(message.includes('```diff')).toEqual(true)
-    expect(message.includes('~ $.version')).toEqual(true)
-    expect(message.includes('-   1')).toEqual(true)
-    expect(message.includes('+   2')).toEqual(true)
+    expect(message.includes('**ccip** config change')).toBe(true)
+    expect(message.includes('```diff')).toBe(true)
+    expect(message.includes('~ $.version')).toBe(true)
+    expect(message.includes('-   1')).toBe(true)
+    expect(message.includes('+   2')).toBe(true)
   })
 
   it('does not send message when diff is empty after undefined normalization', async () => {
@@ -55,9 +55,9 @@ describe(InteropNotifier.name, () => {
     notifier.handleConfigChange('second', { value: 10 }, { value: 20 })
     await notifier._TEST_ONLY_waitTillEmpty()
 
-    expect(sent.length).toEqual(2)
-    expect(sent[0]?.includes('**first** config change')).toEqual(true)
-    expect(sent[1]?.includes('**second** config change')).toEqual(true)
+    expect(sent.length).toBe(2)
+    expect(sent[0]?.includes('**first** config change')).toBe(true)
+    expect(sent[1]?.includes('**second** config change')).toBe(true)
   })
 
   it('queues and sends suspicious transfer notifications', async () => {
@@ -95,14 +95,14 @@ describe(InteropNotifier.name, () => {
     const message = vi.mocked(webhookClient.sendMessage).mock
       .calls[0][0] as string
 
-    expect(message.includes('Interop financials flagged')).toEqual(true)
+    expect(message.includes('Interop financials flagged')).toBe(true)
     expect(
       message.includes(
         '`msg-1` `stargate` `deposit` `USDC on ethereum -> USDC.e on arbitrum`',
       ),
-    ).toEqual(true)
-    expect(message.includes('$600.00 vs $100.00')).toEqual(true)
-    expect(message.includes('6.00x src/dst')).toEqual(true)
+    ).toBe(true)
+    expect(message.includes('$600.00 vs $100.00')).toBe(true)
+    expect(message.includes('6.00x src/dst')).toBe(true)
   })
 
   it('adds a backoffice deep-link per suspicious transfer when environment is set', async () => {
@@ -142,7 +142,7 @@ describe(InteropNotifier.name, () => {
       message.includes(
         '[↗](https://backoffice.l2beat.com/interop/insights/activity/suspicious-transfers?env=staging#msg%2F1)',
       ),
-    ).toEqual(true)
+    ).toBe(true)
   })
 
   it('does not add a backoffice deep-link when environment is not set', async () => {
@@ -180,7 +180,7 @@ describe(InteropNotifier.name, () => {
       message.includes(
         '[Review in backoffice ↗](https://backoffice.l2beat.com/interop/promotion?env=production#2000000)',
       ),
-    ).toEqual(true)
+    ).toBe(true)
   })
 
   it('queues and sends skipped valuation notifications', async () => {
@@ -227,14 +227,14 @@ describe(InteropNotifier.name, () => {
     const message = vi.mocked(webhookClient.sendMessage).mock
       .calls[0][0] as string
 
-    expect(message.includes('Interop financials skipped')).toEqual(true)
-    expect(
-      message.includes('price $1,500,000.00 is above $1,000,000.00'),
-    ).toEqual(true)
+    expect(message.includes('Interop financials skipped')).toBe(true)
+    expect(message.includes('price $1,500,000.00 is above $1,000,000.00')).toBe(
+      true,
+    )
     expect(
       message.includes(
         'skipped value $2,000,000,000.00 above $1,000,000,000.00',
       ),
-    ).toEqual(true)
+    ).toBe(true)
   })
 })

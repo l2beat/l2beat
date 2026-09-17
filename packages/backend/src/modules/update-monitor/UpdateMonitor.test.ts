@@ -307,7 +307,7 @@ describe(UpdateMonitor.name, () => {
       await updateMonitor.update(0)
 
       expect(calls.lastIndexOf('discover')).toBeLessThan(calls.indexOf('diff'))
-      expect(calls.filter((c) => c === 'diff').length).toEqual(1)
+      expect(calls.filter((c) => c === 'diff').length).toBe(1)
     })
   })
 
@@ -632,7 +632,7 @@ describe(UpdateMonitor.name, () => {
       await updateMonitor.update(timestamp)
       const result = updateMonitor.generateDailyReminder()
 
-      expect(Object.entries(result).length).toEqual(1)
+      expect(Object.entries(result).length).toBe(1)
       expect(result).toEqual({
         [PROJECT_A]: {
           severityCounts: { low: 0, medium: 0, high: 0, unknown: 3 },
@@ -688,7 +688,7 @@ describe(UpdateMonitor.name, () => {
       await updateMonitor.update(timestamp)
       const result = updateMonitor.generateDailyReminder()
 
-      expect(Object.entries(result).length).toEqual(1)
+      expect(Object.entries(result).length).toBe(1)
     })
   })
 })

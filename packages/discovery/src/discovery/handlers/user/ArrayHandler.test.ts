@@ -75,7 +75,7 @@ describe(ArrayHandler.name, () => {
         [],
       )
 
-      expect(handler.getMethod()).toEqual(
+      expect(handler.getMethod()).toBe(
         'function foo(uint256 i) view returns (uint256)',
       )
     })
@@ -116,7 +116,7 @@ describe(ArrayHandler.name, () => {
         'function someName() view returns (uint256)',
       ])
 
-      expect(handler.getMethod()).toEqual(
+      expect(handler.getMethod()).toBe(
         'function someName(uint256 i) view returns (uint256)',
       )
     })
@@ -147,7 +147,7 @@ describe(ArrayHandler.name, () => {
         ],
       )
 
-      expect(handler.getMethod()).toEqual(
+      expect(handler.getMethod()).toBe(
         'function bar(uint256 i) view returns (uint256)',
       )
     })

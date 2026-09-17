@@ -44,8 +44,8 @@ describe(getAltDaStage.name, () => {
         },
       },
     )
-    expect(result.stage).toEqual('Stage 1')
-    expect(result.missing?.nextStage).toEqual('Stage 2')
+    expect(result.stage).toBe('Stage 1')
+    expect(result.missing?.nextStage).toBe('Stage 2')
     expect(result.missing?.requirements).toEqual([
       'Fraud proof submission is open only to whitelisted actors.',
       'Upgrades unrelated to onchain provable bugs, including upgrades to the DA verifier, provide less than 30d to exit.',
@@ -62,13 +62,13 @@ describe(getAltDaStage.name, () => {
       stage0Summary?.requirements.some((r) =>
         r.description.includes('[View code](nodelink)'),
       ),
-    ).toEqual(true)
+    ).toBe(true)
     const stage1Summary = result.summary.find((s) => s.stage === 'Stage 1')
     expect(
       stage1Summary?.requirements.some((r) =>
         r.description.includes('[View code](daverifierlink)'),
       ),
-    ).toEqual(true)
+    ).toBe(true)
   })
 
   it('should throw error if no node source link is present and nodeSourceAvailable is satisfied', () => {
@@ -140,6 +140,6 @@ describe(getAltDaStage.name, () => {
       },
       { nodeSourceLink: 'nodelink' },
     )
-    expect(result.stage).toEqual('Stage 2')
+    expect(result.stage).toBe('Stage 2')
   })
 })

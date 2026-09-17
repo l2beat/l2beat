@@ -20,7 +20,7 @@ describe('OverwriteCacheWrapper', () => {
 
       const result = await wrapper.get(key)
 
-      expect(result).toEqual(undefined)
+      expect(result).toBe(undefined)
       // Verify that the underlying cache was not called
       expect(cacheMock.get).not.toHaveBeenCalled()
     })

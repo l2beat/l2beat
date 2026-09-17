@@ -26,15 +26,11 @@ describe(fieldPathPrefixes.name, () => {
 
 describe(resolveRowKey.name, () => {
   it('keeps a value on its own row when nothing encloses it', () => {
-    expect(resolveRowKey('$members[0]', new Set(['other']))).toEqual(
-      '$members[0]',
-    )
+    expect(resolveRowKey('$members[0]', new Set(['other']))).toBe('$members[0]')
   })
 
   it('lets the outermost compression win over a nested one', () => {
-    expect(resolveRowKey('foo.bar[1]', new Set(['foo', 'foo.bar']))).toEqual(
-      'foo',
-    )
+    expect(resolveRowKey('foo.bar[1]', new Set(['foo', 'foo.bar']))).toBe('foo')
   })
 })
 
@@ -61,8 +57,8 @@ describe(getRowLayout.name, () => {
       ),
     )
 
-    expect(layout.rows.length).toEqual(2)
-    expect(layout.rows[1]?.label).toEqual('$members (3)')
+    expect(layout.rows.length).toBe(2)
+    expect(layout.rows[1]?.label).toBe('$members (3)')
     expect(layout.rows[1]?.fieldIndices).toEqual([1, 2, 3])
     expect(layout.rowByField).toEqual([0, 1, 1, 1])
   })
@@ -96,7 +92,7 @@ describe(getRowLayout.name, () => {
       fields: [{ ...(node.fields[0] as Field), label: 'Member' }],
     } as unknown as Node
 
-    expect(getRowLayout(labelled).rows[0]?.label).toEqual('Member')
+    expect(getRowLayout(labelled).rows[0]?.label).toBe('Member')
   })
 
   it('anchors a lone value at its row centre and fans a compressed row', () => {

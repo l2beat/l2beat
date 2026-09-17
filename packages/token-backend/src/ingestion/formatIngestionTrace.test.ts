@@ -100,8 +100,8 @@ describe(formatIngestionTrace.name, () => {
       log.includes(
         '1. Found 0 transfers (0 non-swapping). Other sides resolve to: no abstract tokens.',
       ),
-    ).toEqual(true)
-    expect(log.includes('Transfers by plugin')).toEqual(false)
+    ).toBe(true)
+    expect(log.includes('Transfers by plugin')).toBe(false)
   })
 
   it('renders the symbol adoption step', () => {
@@ -121,7 +121,7 @@ describe(formatIngestionTrace.name, () => {
       log.includes(
         '1. CoinGecko symbol $PEPE differs only in punctuation from the deployed-token symbol; adopted Pepe.',
       ),
-    ).toEqual(true)
+    ).toBe(true)
   })
 
   it('handles conflict outcomes', () => {
@@ -137,6 +137,6 @@ describe(formatIngestionTrace.name, () => {
       formatIngestionTrace(trace).includes(
         'Outcome: conflict — multiple abstracts',
       ),
-    ).toEqual(true)
+    ).toBe(true)
   })
 })

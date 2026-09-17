@@ -153,7 +153,7 @@ describe(decodeHandlerResults.name, () => {
         emptyTypes,
         expiredEnv,
       )
-      expect(expired.values?.hasExpired).toEqual(true)
+      expect(expired.values?.hasExpired).toBe(true)
 
       const notExpired = decodeHandlerResults(
         longChain,
@@ -162,7 +162,7 @@ describe(decodeHandlerResults.name, () => {
         emptyTypes,
         notExpiredEnv,
       )
-      expect(notExpired.values?.hasExpired).toEqual(false)
+      expect(notExpired.values?.hasExpired).toBe(false)
     })
   })
 })

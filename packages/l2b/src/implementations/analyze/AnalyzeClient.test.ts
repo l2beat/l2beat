@@ -14,7 +14,7 @@ describe(createSourcesArchive.name, () => {
       'contracts/token/Token.sol',
       'interfaces/IERC20.sol',
     ])
-    expect(strFromU8(files['contracts/token/Token.sol']!)).toEqual(
+    expect(strFromU8(files['contracts/token/Token.sol']!)).toBe(
       'contract Token {}',
     )
   })

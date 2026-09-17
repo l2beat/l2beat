@@ -79,12 +79,12 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
         record('project-b', 'layer-a', 'config-id-2', START, 200n),
       ]
       const result = await repository.upsertMany(records)
-      expect(result).toEqual(2)
+      expect(result).toBe(2)
     })
 
     it('returns 0 for empty array', async () => {
       const result = await repository.upsertMany([])
-      expect(result).toEqual(0)
+      expect(result).toBe(0)
     })
   })
 
@@ -93,24 +93,24 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
       await repository.upsertMany([
         record('project-a', 'layer-a', 'config-id', START, 100n),
       ])
-      expect(await repository.checkIfExists('project-a')).toEqual(true)
+      expect(await repository.checkIfExists('project-a')).toBe(true)
     })
 
     it('is scoped to the project', async () => {
       await repository.upsertMany([
         record('project-a', 'layer-a', 'config-id', START, 100n),
       ])
-      expect(await repository.checkIfExists('project-b')).toEqual(false)
+      expect(await repository.checkIfExists('project-b')).toBe(false)
     })
 
     it('only counts records at or after fromInclusive', async () => {
       await repository.upsertMany([
         record('project-a', 'layer-a', 'config-id', START - UnixTime.DAY, 1n),
       ])
-      expect(await repository.checkIfExists('project-a', START)).toEqual(false)
+      expect(await repository.checkIfExists('project-a', START)).toBe(false)
       expect(
         await repository.checkIfExists('project-a', START - UnixTime.DAY),
-      ).toEqual(true)
+      ).toBe(true)
     })
   })
 
@@ -692,7 +692,7 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
         'config-id-2',
       ])
 
-      expect(deleted).toEqual(3)
+      expect(deleted).toBe(3)
 
       const results = await repository.getAll()
       expect(results).toHaveLength(1)
@@ -709,7 +709,7 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
       ])
 
       const deleted = await repository.deleteByConfigIds([])
-      expect(deleted).toEqual(0)
+      expect(deleted).toBe(0)
 
       const results = await repository.getAll()
       expect(results).toHaveLength(1)
@@ -726,7 +726,7 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
       ])
 
       const deleted = await repository.deleteByConfigIds(['non-existent-id'])
-      expect(deleted).toEqual(0)
+      expect(deleted).toBe(0)
 
       const results = await repository.getAll()
       expect(results).toHaveLength(1)
@@ -756,7 +756,7 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
           START,
           START + 2,
         )
-        expect(deleted).toEqual(3)
+        expect(deleted).toBe(3)
 
         const results = await repository.getAll()
         expect(results).toHaveLength(3)
@@ -779,7 +779,7 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
           START + 1,
           START + 2,
         )
-        expect(deleted).toEqual(0)
+        expect(deleted).toBe(0)
       })
     },
   )
@@ -804,7 +804,7 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
         const deletedCount =
           await repository.deleteByConfigurationId('config-id-1')
 
-        expect(deletedCount).toEqual(2)
+        expect(deletedCount).toBe(2)
 
         const remainingRecords = await repository.getAll()
         expect(remainingRecords).toHaveLength(2)
@@ -914,7 +914,7 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
           'missing',
         ])
 
-        expect(result).toEqual(undefined)
+        expect(result).toBe(undefined)
       })
 
       it('returns undefined for an empty project list', async () => {
@@ -924,7 +924,7 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
 
         const result = await repository.getFirstTimestampByProjectIds([])
 
-        expect(result).toEqual(undefined)
+        expect(result).toBe(undefined)
       })
     },
   )
@@ -1057,7 +1057,7 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
         const result =
           await repository.getFirstTimestampOfSummedProjectsByDaLayers([])
 
-        expect(result).toEqual(undefined)
+        expect(result).toBe(undefined)
       })
     },
   )
@@ -1139,7 +1139,7 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
             'layer-a',
           ])
 
-        expect(result).toEqual(undefined)
+        expect(result).toBe(undefined)
       })
     },
   )
@@ -1212,7 +1212,7 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
 
         const result = await repository.getFirstTimestampByDaLayers([])
 
-        expect(result).toEqual(undefined)
+        expect(result).toBe(undefined)
       })
     },
   )
@@ -1227,7 +1227,7 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
       const deleteResult = await repository.deleteAll()
       const results = await repository.getAll()
 
-      expect(deleteResult).toEqual(2)
+      expect(deleteResult).toBe(2)
       expect(results).toEqual([])
     })
   })

@@ -168,7 +168,7 @@ describe(BlobClient.name, () => {
 
       const result = await client.getBlockSidecar(1)
 
-      expect(vi.mocked(http.fetch).mock.calls[0][0]).toEqual(
+      expect(vi.mocked(http.fetch).mock.calls[0][0]).toBe(
         'example.com/eth/v1/beacon/blob_sidecars/root',
       )
       expect(result).toEqual([
@@ -190,7 +190,7 @@ describe(BlobClient.name, () => {
       const result = await client.call('/eth/blob')
 
       expect(result).toEqual({ result: 'result' })
-      expect(vi.mocked(http.fetch).mock.calls[0][0]).toEqual(
+      expect(vi.mocked(http.fetch).mock.calls[0][0]).toBe(
         'BEACON_API_URL/eth/blob',
       )
     })
