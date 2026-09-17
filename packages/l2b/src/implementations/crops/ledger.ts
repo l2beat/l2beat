@@ -84,17 +84,19 @@ function byRevision<T extends { revision: number }>(items: T[]): T[] {
 }
 
 /**
- * Only crops-attest holds the attester key, so the one realistic way the
- * ledger and the chain diverge is a run whose output was never committed.
- * Refusing to start on top of such a file makes that visible right away.
+ * The ledger is only ever written by crops-record, so the one realistic way it
+ * and the chain diverge is a run whose output was never committed. That is
+ * worth saying out loud - the plan is then built on a file the chain may not
+ * match - but not worth refusing over, so this reports rather than throws.
  */
-export function assertLedgerCommitted(path = getLedgerPath()): void {
+export function findUncommittedLedger(
+  path = getLedgerPath(),
+): string | undefined {
   const status = execSync(`git status --porcelain -- ${JSON.stringify(path)}`, {
     encoding: 'utf8',
   }).trim()
-  if (status !== '') {
-    throw new Error(
-      `${path} has uncommitted changes from an earlier run. Rebuild config, commit the ledger, then run again.`,
-    )
+  if (status === '') {
+    return undefined
   }
+  return `${path} has uncommitted changes. If an earlier crops-record was never committed, this run plans against a ledger the chain does not match.`
 }

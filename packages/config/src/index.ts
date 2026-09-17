@@ -8,6 +8,7 @@ export {
   type CropAttestationLedger,
   type RevokedCropAttestation,
 } from './crops/attestations'
+export { type GardenCrops, qualifiesForGarden } from './crops/garden'
 export { OSI_LICENSES } from './crops/osiLicenses'
 export { PROJECT_COUNTDOWNS } from './global/countdowns'
 export {

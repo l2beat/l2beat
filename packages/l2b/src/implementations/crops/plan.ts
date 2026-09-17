@@ -1,5 +1,5 @@
 import type { CropAttestation, CropAttestationLedger } from '@l2beat/config'
-import type { Hex } from 'viem'
+import { type Hex, zeroHash } from 'viem'
 import {
   type CropPayload,
   decodePayload,
@@ -13,24 +13,29 @@ export interface Revocation {
   schema: Hex
 }
 
+/** Publishing the current set as a new revision, and retiring whatever says something else. */
+export interface AttestAction {
+  kind: 'attest'
+  revoke: Revocation[]
+  payload: CropPayload
+  /** What the new attestation chains to through refUID; zero when nothing is live. */
+  replaces: Hex
+  added: string[]
+  removed: string[]
+  reason: string
+}
+
 /**
- * One decision: is exactly one attestation live, under the current schema,
- * by our attester, naming exactly the projects config names? That one is
- * the keeper. Every other live uid is revoked, and a new attestation is
- * issued only when there is no keeper. Each variant carries exactly what
- * executing it needs.
+ * Two questions, one shape. `planAttestation` asks whether the chain already
+ * agrees with config - exactly one attestation live, under the current schema,
+ * by our attester, naming exactly the projects config names - which is what
+ * crops-verify gates on. `planPublication` asks what to send, and always
+ * answers with an attestation.
  */
 export type AttestPlan =
   | { kind: 'unchanged'; keeper: CropAttestation }
   | { kind: 'prune'; keeper: CropAttestation; revoke: Revocation[] }
-  | {
-      kind: 'attest'
-      revoke: Revocation[]
-      payload: CropPayload
-      added: string[]
-      removed: string[]
-      reason: string
-    }
+  | AttestAction
 
 export interface PlanInput {
   /** Sorted. */
@@ -41,29 +46,86 @@ export interface PlanInput {
   now: number
 }
 
-export function planAttestation(input: PlanInput): AttestPlan {
-  const entries = input.ledger.live
-  // The ledger is a cache; the chain decides what is live and what it says.
-  const live = entries.flatMap((entry) => {
-    const onchain = input.onchain.get(entry.uid)
-    return onchain && onchain.revocationTime === 0 ? [{ entry, onchain }] : []
-  })
-  const keeper = live.find(
-    ({ onchain }) =>
-      isCurrentSchema(onchain.schema) &&
-      isSameAddress(onchain.attester, input.ledger.attester) &&
-      setMatches(decodePayload(onchain.data).projectIds, input.projectIds),
+/** A live ledger entry together with what the chain currently says about it. */
+interface LiveAttestation {
+  entry: CropAttestation
+  onchain: OnchainAttestation
+}
+
+/**
+ * What to send. Every run publishes the current set as a new revision, so a
+ * run always produces calldata. Only attestations that say something else are
+ * revoked: one that already names exactly this set is left where it is.
+ */
+export function planPublication(input: PlanInput): AttestAction {
+  const live = liveNow(input)
+  const revoke = live
+    .filter((x) => !saysTheSame(x.onchain, input.projectIds))
+    .map(toRevocation)
+  return attestAction(
+    live,
+    revoke,
+    input,
+    'the live set already matches config',
   )
-  const revoke: Revocation[] = live
-    .filter((x) => x !== keeper)
-    .map((x) => ({ entry: x.entry, schema: x.onchain.schema }))
+}
+
+/** Whether the chain already agrees with config, and what it would take to get there. */
+export function planAttestation(input: PlanInput): AttestPlan {
+  const live = liveNow(input)
+  const keeper = live.find(
+    (x) =>
+      saysTheSame(x.onchain, input.projectIds) &&
+      isSameAddress(x.onchain.attester, input.ledger.attester),
+  )
+  const revoke = live.filter((x) => x !== keeper).map(toRevocation)
 
   if (keeper) {
     return revoke.length === 0
       ? { kind: 'unchanged', keeper: keeper.entry }
       : { kind: 'prune', keeper: keeper.entry, revoke }
   }
+  return attestAction(
+    live,
+    revoke,
+    input,
+    'attested under a superseded schema or by another attester',
+  )
+}
 
+/** The ledger is a cache; the chain decides what is live and what it says. */
+function liveNow(input: PlanInput): LiveAttestation[] {
+  return input.ledger.live.flatMap((entry) => {
+    const onchain = input.onchain.get(entry.uid)
+    return onchain && onchain.revocationTime === 0 ? [{ entry, onchain }] : []
+  })
+}
+
+/** Same data: the current schema, naming exactly the projects config names. */
+function saysTheSame(
+  onchain: OnchainAttestation,
+  projectIds: string[],
+): boolean {
+  return (
+    isCurrentSchema(onchain.schema) &&
+    setMatches(decodePayload(onchain.data).projectIds, projectIds)
+  )
+}
+
+function toRevocation({ entry, onchain }: LiveAttestation): Revocation {
+  return { entry, schema: onchain.schema }
+}
+
+/**
+ * `sameSet` is the reason to report when config and the chain name the same
+ * projects, which means something other than the set is behind the run.
+ */
+function attestAction(
+  live: LiveAttestation[],
+  revoke: Revocation[],
+  input: PlanInput,
+  sameSet: string,
+): AttestAction {
   const covered = live.flatMap(({ onchain }) =>
     isCurrentSchema(onchain.schema)
       ? decodePayload(onchain.data).projectIds
@@ -77,10 +139,11 @@ export function planAttestation(input: PlanInput): AttestPlan {
   return {
     kind: 'attest',
     revoke,
+    replaces: newestUid(live),
     payload: {
       projectIds: [...input.projectIds].sort(),
       reviewedAt: input.now,
-      revision: nextRevision(entries),
+      revision: nextRevision(input.ledger.live),
     },
     added,
     removed,
@@ -89,8 +152,21 @@ export function planAttestation(input: PlanInput): AttestPlan {
         ? 'nothing is live onchain'
         : changes.length > 0
           ? changes.join(' ')
-          : 'attested under a superseded schema or by another attester',
+          : sameSet,
   }
+}
+
+/**
+ * The attestation the new one supersedes, revoked or not, so the history stays
+ * walkable onchain even on a run that revokes nothing.
+ */
+function newestUid(live: LiveAttestation[]): Hex {
+  const latest = live.reduce<LiveAttestation | undefined>(
+    (best, x) =>
+      best === undefined || x.entry.revision > best.entry.revision ? x : best,
+    undefined,
+  )
+  return latest?.entry.uid ?? zeroHash
 }
 
 /** One line per plan, for the header of crops-attest and the verdict of crops-verify. */
@@ -101,7 +177,7 @@ export function describePlan(plan: AttestPlan): string {
     case 'prune':
       return `revision ${plan.keeper.revision} matches config, but ${plan.revoke.length} older attestation(s) are still live`
     case 'attest':
-      return `revision ${plan.payload.revision} needed: ${plan.reason}`
+      return `revision ${plan.payload.revision} (${plan.reason})`
   }
 }
 

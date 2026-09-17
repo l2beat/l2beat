@@ -1,0 +1,33 @@
+{
+  "$comment": "Everything the crop attestation commands need to know about where they are writing. Edit this file, not the code. `network` picks which entry of `networks` is used by default; --network, --safe and --rpc-url override per run.",
+
+  "network": "sepolia",
+
+  "safe": "0xbcf4c182649899cF47963c95c73B3D5C6169f9e9",
+
+  "rpcUrl": "https://sepolia.gateway.tenderly.co",
+
+  "schema": {
+    "definition": "string[] projectIds,uint64 reviewedAt,uint32 revision",
+    "resolver": "0x0000000000000000000000000000000000000000",
+    "revocable": true,
+    "uid": "0xbe00b10abb2fbae864b99c6ace4e0e622d5f690f822466e167353c32534dc3fb"
+  },
+
+  "networks": {
+    "sepolia": {
+      "chainId": 11155111,
+      "isTestnet": true,
+      "eas": "0xC2679fBD37d54388Ce493F1DB75320D236e1815e",
+      "schemaRegistry": "0x0a7E2Ff54e76B8E6659aedc9103FB21c038050D0",
+      "explorer": "https://sepolia.easscan.org"
+    },
+    "ethereum": {
+      "chainId": 1,
+      "isTestnet": false,
+      "eas": "0xA1207F3BBa224E2c9c3c6D5aF63D0eb1582Ce587",
+      "schemaRegistry": "0xA7b39296258348C78294F95B872b282326A97BDF",
+      "explorer": "https://easscan.org"
+    }
+  }
+}

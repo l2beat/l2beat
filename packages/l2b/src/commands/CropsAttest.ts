@@ -1,71 +1,68 @@
-import type {
-  CropAttestation,
-  CropAttestationLedger,
-  RevokedCropAttestation,
-} from '@l2beat/config'
 import { CROP_ATTESTATIONS } from '@l2beat/config'
 import chalk from 'chalk'
-import { command } from 'cmd-ts'
-import { keyInYN } from 'readline-sync'
-import { zeroHash } from 'viem'
+import { command, option, string } from 'cmd-ts'
+import { writeFileSync } from 'fs'
+import { resolve } from 'path'
+import type { Address } from 'viem'
 import { assertAnonymous } from '../implementations/crops/anonymity'
+import { buildCalls, type PlannedCalls } from '../implementations/crops/calls'
 import {
   createReader,
-  createSigner,
-  encodePayload,
   getAttestations,
-  getAttestationUrl,
   getSchemaUrl,
   isSchemaRegistered,
-  multiAttest,
-  multiRevoke,
-  readAttestedUids,
-  registerSchema,
-  type Signer,
 } from '../implementations/crops/eas'
 import {
   ATTESTATION_NETWORKS,
+  ATTESTATION_RPC_URL,
   ATTESTATION_SCHEMA_UID,
   type AttestationNetworkConfig,
 } from '../implementations/crops/easConfig'
+import { getGardenProjectIds } from '../implementations/crops/gardenProjects'
 import {
-  assertLedgerCommitted,
-  getLedgerPath,
+  findUncommittedLedger,
   ledgerFor,
-  withAttested,
-  withRevoked,
-  writeLedger,
 } from '../implementations/crops/ledger'
 import {
   type AttestPlan,
   describePlan,
-  planAttestation,
-  type Revocation,
+  planPublication,
 } from '../implementations/crops/plan'
-import { getReviewedProjectIds } from '../implementations/crops/reviewedProjects'
-import { attestationNetwork, optionalRpcUrl } from './args'
-import { readAttesterKey } from './cropsKey'
+import { buildReport } from '../implementations/crops/report'
+import { getSafeUrl, resolveSafe } from '../implementations/crops/safeTx'
+import {
+  attestationNetwork,
+  attestationReviewedAt,
+  attestationSafe,
+  optionalRpcUrl,
+} from './args'
 
 export const CropsAttest = command({
   name: 'crops-attest',
   description:
-    'Diffs the set of projects with crop evaluations in config against the set attested onchain, and publishes the difference. A dry run unless L2B_CROPS_PRIVATE_KEY is set, and even then nothing is sent before you confirm. Registers the schema first when the network does not have it yet.',
+    'Publishes the set of projects with crop evaluations in config as a new attestation revision, and prints the calldata that does it, together with the revocation of every live attestation that names a different set. Read-only: the transactions are executed from the attesting Safe, so this command holds no key and sends nothing. Follow it with `l2b crops-record --tx` once the Safe has executed. See packages/l2b/src/implementations/crops/README.md.',
   args: {
     network: attestationNetwork,
+    safe: attestationSafe,
+    reviewedAt: attestationReviewedAt,
     rpcUrl: optionalRpcUrl,
+    out: option({
+      type: string,
+      long: 'out',
+      description: 'where to write the file describing this run.',
+      defaultValue: () => 'crops-attest.md',
+      defaultValueIsSerializable: true,
+    }),
   },
   handler: async (args) => {
     const network = ATTESTATION_NETWORKS[args.network]
-    assertLedgerCommitted()
-    const privateKey = readAttesterKey()
-    const reader = createReader(network, args.rpcUrl)
-    // Until the key is known the header carries the committed attester; the
-    // signer replaces it before anything is written.
-    const ledger = ledgerFor(
-      network,
-      CROP_ATTESTATIONS.attester,
-      CROP_ATTESTATIONS,
-    )
+    const safe = resolveSafe(network, args.safe)
+    const uncommitted = findUncommittedLedger()
+    if (uncommitted) {
+      console.log(chalk.yellow(uncommitted))
+    }
+    const reader = createReader(network, args.rpcUrl ?? ATTESTATION_RPC_URL)
+    const ledger = ledgerFor(network, safe, CROP_ATTESTATIONS)
     if (CROP_ATTESTATIONS.network !== network.name) {
       console.log(
         chalk.yellow(
@@ -74,143 +71,100 @@ export const CropsAttest = command({
       )
     }
 
-    const projectIds = await getReviewedProjectIds()
+    const now = args.reviewedAt ?? Math.floor(Date.now() / 1000)
+    const projectIds = await getGardenProjectIds()
     const onchain = await getAttestations(
       reader,
       network,
       ledger.live.map((x) => x.uid),
     )
-    const plan = planAttestation({
+    const plan = planPublication({
       projectIds,
       ledger,
       onchain,
-      now: Math.floor(Date.now() / 1000),
+      now,
     })
     const schemaRegistered = await isSchemaRegistered(reader, network)
 
-    printPlan(plan, network, schemaRegistered)
-    if (plan.kind === 'unchanged') {
-      console.log(chalk.green('\nNothing to publish.'))
-      return
-    }
-    if (!privateKey) {
-      console.log(chalk.dim('\nDry run. Set L2B_CROPS_PRIVATE_KEY to publish.'))
-      return
-    }
+    printPlan(plan, network, safe, schemaRegistered)
+    assertAnonymous(
+      network,
+      'The attested set',
+      plan.payload.projectIds.join(' '),
+    )
 
-    const signer = createSigner(network, privateKey, args.rpcUrl)
-    if (plan.kind === 'attest') {
-      assertAnonymous(
-        network,
-        'The attested set',
-        plan.payload.projectIds.join(' '),
-      )
-    }
-    console.log(`\nattester ${signer.account.address} on ${network.name}`)
-    if (network.isTestnet) {
-      console.log(
-        chalk.dim(
-          'This is a testnet attester and must stay unlinkable to L2BEAT: a throwaway EOA funded from a faucet.',
-        ),
-      )
-    }
-    if (!keyInYN(`Publish on ${network.name}?`)) {
-      return
-    }
+    const calls = buildCalls({
+      network,
+      safe,
+      plan,
+      onchain,
+      schemaRegistered,
+    })
+    printCalls(calls, network, safe)
 
-    // The ledger is written after every transaction, so a run that dies
-    // halfway leaves a file that matches the chain and a rerun picks up.
-    let next = { ...ledger, attester: signer.account.address }
-    const save = (updated: CropAttestationLedger) => {
-      next = updated
-      writeLedger(next)
-    }
-
-    if (plan.kind === 'attest' && !schemaRegistered) {
-      const txHash = await registerSchema(signer, network)
-      await signer.waitForTransactionReceipt({ hash: txHash })
-      console.log(chalk.green('registered'), txHash)
-    }
-    if (plan.revoke.length > 0) {
-      save(withRevoked(next, await revoke(signer, network, plan.revoke)))
-    }
-    if (plan.kind === 'attest') {
-      save(withAttested(next, await attest(signer, network, plan)))
-    }
+    const path = resolve(args.out)
+    writeFileSync(
+      path,
+      buildReport({ network, safe, plan, calls, generatedAt: now }),
+    )
     console.log(
       chalk.green('\nwrote'),
-      getLedgerPath(),
-      chalk.dim('- rebuild config and commit it.'),
+      path,
+      chalk.dim('- nothing was sent; work from that file.'),
     )
   },
 })
 
-async function revoke(
-  signer: Signer,
+function printCalls(
+  calls: PlannedCalls,
   network: AttestationNetworkConfig,
-  revocations: Revocation[],
-): Promise<RevokedCropAttestation[]> {
-  const txHash = await multiRevoke(
-    signer,
-    network,
-    revocations.map((x) => ({ uid: x.entry.uid, schema: x.schema })),
-  )
-  const receipt = await signer.waitForTransactionReceipt({ hash: txHash })
-  console.log(
-    chalk.green('revoked'),
-    txHash,
-    chalk.dim(`${revocations.length} uid(s)`),
-  )
-  return revocations.map(({ entry, schema }) => ({
-    uid: entry.uid,
-    schema,
-    revision: entry.revision,
-    projectIds: entry.projectIds,
-    revokedTxHash: txHash,
-    revokedBlock: Number(receipt.blockNumber),
-  }))
-}
-
-async function attest(
-  signer: Signer,
-  network: AttestationNetworkConfig,
-  plan: Extract<AttestPlan, { kind: 'attest' }>,
-): Promise<CropAttestation> {
-  const txHash = await multiAttest(signer, network, [
-    {
-      // Chains it to the one it replaces, so the history is walkable onchain.
-      refUID: plan.revoke[0]?.entry.uid ?? zeroHash,
-      data: encodePayload(plan.payload),
-    },
-  ])
-  const receipt = await signer.waitForTransactionReceipt({ hash: txHash })
-  const [uid, ...extra] = readAttestedUids([...receipt.logs])
-  if (!uid || extra.length > 0) {
-    throw new Error(
-      `Expected 1 Attested event in ${txHash}, got ${extra.length + (uid ? 1 : 0)}. The ledger does not list this attestation; add it by hand from the receipt before rerunning.`,
-    )
+  safe: Address,
+): void {
+  console.log(chalk.bold(`\ncalls for the Safe ${safe}`))
+  console.log(chalk.dim(getSafeUrl(network, safe)))
+  if (calls.safe.length === 0) {
+    console.log(chalk.dim('  none'))
   }
-  console.log(chalk.green('attested'), txHash)
-  console.log(`  ${getAttestationUrl(network, uid)}`)
-  return {
-    uid,
-    schema: ATTESTATION_SCHEMA_UID,
-    revision: plan.payload.revision,
-    reviewedAt: plan.payload.reviewedAt,
-    projectIds: plan.payload.projectIds,
-    txHash,
-    block: Number(receipt.blockNumber),
+  calls.safe.forEach((call, i) => {
+    console.log(`\n${chalk.bold(`${i + 1}. ${call.label}`)}`)
+    console.log(`   to     ${call.to}`)
+    console.log('   value  0')
+    console.log(`   data   ${call.data}`)
+  })
+
+  if (calls.foreign.length === 0) {
+    return
+  }
+  console.log(
+    chalk.yellow(`\n${calls.foreign.length} call(s) the Safe cannot make:`),
+  )
+  for (const call of calls.foreign) {
+    console.log(`\n${chalk.bold(call.label)}`)
+    console.log(chalk.yellow(`   ${call.reason}`))
+    console.log(`   from   ${call.from}`)
+    console.log(`   to     ${call.to}`)
+    console.log('   value  0')
+    console.log(`   data   ${call.data}`)
   }
 }
 
 function printPlan(
   plan: AttestPlan,
   network: AttestationNetworkConfig,
+  safe: Address,
   schemaRegistered: boolean,
 ): void {
   console.log(chalk.bold(`\ncrop attestations on ${network.name}\n`))
+  console.log(`attester ${safe}`)
+  if (network.isTestnet) {
+    console.log(
+      chalk.dim(
+        'This is a testnet attester and must stay unlinkable to L2BEAT.',
+      ),
+    )
+  }
   console.log(
-    `schema ${ATTESTATION_SCHEMA_UID}`,
+    `\nschema ${ATTESTATION_SCHEMA_UID}`,
     schemaRegistered
       ? chalk.dim('registered')
       : chalk.yellow('not registered yet - will be registered first'),

@@ -6,18 +6,23 @@ import {
   getAttestations,
   getAttestationUrl,
 } from '../implementations/crops/eas'
-import { ATTESTATION_NETWORKS } from '../implementations/crops/easConfig'
+import {
+  ATTESTATION_NETWORKS,
+  ATTESTATION_RPC_URL,
+} from '../implementations/crops/easConfig'
+import { getGardenProjectIds } from '../implementations/crops/gardenProjects'
 import {
   describePlan,
   findLedgerDrift,
   planAttestation,
 } from '../implementations/crops/plan'
-import { getReviewedProjectIds } from '../implementations/crops/reviewedProjects'
 import { attestationNetwork, optionalRpcUrl } from './args'
 
 /**
- * Read-only. Passes exactly when crops-attest would have nothing to do and
- * the committed ledger says what the chain says, so it can gate CI.
+ * Read-only. Passes exactly when one attestation is live, it says what config
+ * says, and the committed ledger says what the chain says, so it can gate CI.
+ * crops-attest publishes on every run, so this asks the state question itself
+ * rather than asking what that command would send.
  */
 export const CropsVerify = command({
   name: 'crops-verify',
@@ -44,8 +49,8 @@ export const CropsVerify = command({
       return
     }
 
-    const reader = createReader(network, args.rpcUrl)
-    const projectIds = await getReviewedProjectIds()
+    const reader = createReader(network, args.rpcUrl ?? ATTESTATION_RPC_URL)
+    const projectIds = await getGardenProjectIds()
     const onchain = await getAttestations(
       reader,
       network,
@@ -60,7 +65,7 @@ export const CropsVerify = command({
 
     const problems = findLedgerDrift(ledger, onchain)
     if (plan.kind !== 'unchanged') {
-      problems.push(`crops-attest would ${plan.kind}: ${describePlan(plan)}`)
+      problems.push(`config and the chain disagree: ${describePlan(plan)}`)
     }
     if (plan.kind !== 'unchanged' || problems.length > 0) {
       console.log(chalk.red(`${problems.length} problem(s):`))

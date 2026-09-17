@@ -41,17 +41,18 @@ export interface CropAttestationLedger {
   /** The schema string and its uid as registered. Entries carry the uid they were attested under. */
   schema: string
   schemaUid: HexString
+  /** The Safe that attests. Every write is executed by its owners. */
   attester: HexString
   /**
    * Steady state is exactly one. More than one means an interrupted run or a
-   * schema change; `l2b crops-attest` revokes the extras on its next run.
+   * schema change; `l2b crops-attest` plans the revocation of the extras.
    */
   live: CropAttestation[]
   revoked: RevokedCropAttestation[]
 }
 
 /**
- * A cache of onchain state written by `l2b crops-attest`, committed so the
+ * A cache of onchain state written by `l2b crops-record`, committed so the
  * API needs no RPC call. JSON cannot carry the hex literal types, so it is
  * asserted once here; `l2b crops-verify` checks it against the chain.
  */
