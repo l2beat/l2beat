@@ -1,7 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 import type { HttpClient } from '@l2beat/shared'
 import { EthereumAddress, Hash256, UnixTime } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { EtherscanClient } from './EtherscanClient'
 
@@ -34,9 +33,9 @@ describe(EtherscanClient.name, () => {
       ],
     }
 
-    const httpClient = mockObject<HttpClient>({
+    const httpClient = {
       fetch: vi.fn().mockResolvedValueOnce(response),
-    })
+    } as unknown as HttpClient
     const client = new EtherscanClient(
       httpClient,
       logger,
@@ -62,9 +61,9 @@ describe(EtherscanClient.name, () => {
         },
       ],
     }
-    const httpClient = mockObject<HttpClient>({
+    const httpClient = {
       fetch: vi.fn().mockResolvedValueOnce(response),
-    })
+    } as unknown as HttpClient
 
     const client = new EtherscanClient(
       httpClient,
@@ -93,12 +92,12 @@ describe(EtherscanClient.name, () => {
       ],
     }
 
-    const httpClient = mockObject<HttpClient>({
+    const httpClient = {
       fetch: vi
         .fn()
         .mockResolvedValueOnce('randomrandom')
         .mockResolvedValueOnce(response),
-    })
+    } as unknown as HttpClient
 
     const client = new EtherscanClient(
       httpClient,
@@ -128,12 +127,12 @@ describe(EtherscanClient.name, () => {
       ],
     }
 
-    const httpClient = mockObject<HttpClient>({
+    const httpClient = {
       fetch: vi
         .fn()
         .mockResolvedValueOnce(nokResponse)
         .mockResolvedValueOnce(response),
-    })
+    } as unknown as HttpClient
 
     const client = new EtherscanClient(
       httpClient,
@@ -163,14 +162,14 @@ describe(EtherscanClient.name, () => {
       ],
     }
 
-    const httpClient = mockObject<HttpClient>({
+    const httpClient = {
       fetch: vi
         .fn()
         .mockRejectedValueOnce(new Error('error'))
         .mockResolvedValueOnce('randomrandom')
         .mockResolvedValueOnce(nokResponse)
         .mockResolvedValueOnce(response),
-    })
+    } as unknown as HttpClient
 
     const client = new EtherscanClient(
       httpClient,

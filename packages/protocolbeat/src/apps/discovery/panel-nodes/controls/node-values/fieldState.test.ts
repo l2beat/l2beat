@@ -1,4 +1,3 @@
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it } from 'vitest'
 import type { Field } from '../../store/State'
 import { buildFieldTree, type ExpandedField } from './buildFieldTree'
@@ -92,7 +91,7 @@ describe(setFieldState.name, () => {
 const EMPTY: ValueVisibility = { hiddenFields: [], compressedRows: [] }
 
 function field(name: string): Field {
-  return mockObject<Field>({ name, target: '0x0', label: undefined })
+  return { name, target: '0x0', label: undefined } as unknown as Field
 }
 
 function entry(tree: ExpandedField[], property: string): ExpandedField {

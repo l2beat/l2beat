@@ -1,7 +1,6 @@
 import { Bytes, ChainSpecificAddress } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { utils } from 'ethers'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 
 import type { IProvider } from '../../provider/IProvider'
 import { StarkWareNamedStorageHandler } from './StarkWareNamedStorageHandler'
@@ -10,8 +9,8 @@ describe(StarkWareNamedStorageHandler.name, () => {
   describe('return types', () => {
     it('can returns storage as bytes', async () => {
       const address = ChainSpecificAddress.random()
-      const provider = mockObject<IProvider>({
-        async getStorage(passedAddress, slot) {
+      const provider = {
+        getStorage: vi.fn(async (passedAddress, slot) => {
           expect(passedAddress).toStrictEqual(address)
           expect(slot).toStrictEqual(
             Bytes.fromHex(utils.solidityKeccak256(['string'], ['foo'])),
@@ -19,8 +18,8 @@ describe(StarkWareNamedStorageHandler.name, () => {
           return Bytes.fromHex(
             '0x0000000000000000000000000000000000000000000000000000000000000123',
           )
-        },
-      })
+        }),
+      } as unknown as IProvider
 
       const handler = new StarkWareNamedStorageHandler('someName', {
         type: 'starkWareNamedStorage',
@@ -39,13 +38,13 @@ describe(StarkWareNamedStorageHandler.name, () => {
 
     it('can returns storage as number', async () => {
       const address = ChainSpecificAddress.random()
-      const provider = mockObject<IProvider>({
-        async getStorage() {
+      const provider = {
+        getStorage: vi.fn(async () => {
           return Bytes.fromHex(
             '0x0000000000000000000000000000000000000000000000000000000000000123',
           )
-        },
-      })
+        }),
+      } as unknown as IProvider
 
       const handler = new StarkWareNamedStorageHandler('someName', {
         type: 'starkWareNamedStorage',
@@ -66,16 +65,16 @@ describe(StarkWareNamedStorageHandler.name, () => {
       const address = ChainSpecificAddress.random()
       const resultAddress = ChainSpecificAddress.random()
 
-      const provider = mockObject<IProvider>({
-        async getStorage() {
+      const provider = {
+        getStorage: vi.fn(async () => {
           return Bytes.fromHex(
             '0x000000000000000000000000' +
               ChainSpecificAddress.address(resultAddress)
                 .slice(2)
                 .toLowerCase(),
           )
-        },
-      })
+        }),
+      } as unknown as IProvider
 
       const handler = new StarkWareNamedStorageHandler('someName', {
         type: 'starkWareNamedStorage',
@@ -99,11 +98,11 @@ describe(StarkWareNamedStorageHandler.name, () => {
       tag: 'foo',
     })
 
-    const provider = mockObject<IProvider>({
-      async getStorage() {
+    const provider = {
+      getStorage: vi.fn(async () => {
         throw new Error('foo bar')
-      },
-    })
+      }),
+    } as unknown as IProvider
     const address = ChainSpecificAddress.random()
     const result = await handler.execute(provider, address)
     expect(result).toStrictEqual({
@@ -119,13 +118,13 @@ describe(StarkWareNamedStorageHandler.name, () => {
       ignoreRelative: true,
     })
 
-    const provider = mockObject<IProvider>({
-      async getStorage() {
+    const provider = {
+      getStorage: vi.fn(async () => {
         return Bytes.fromHex(
           '0x0000000000000000000000000000000000000000000000000000000000000123',
         )
-      },
-    })
+      }),
+    } as unknown as IProvider
 
     const address = ChainSpecificAddress.random()
     const result = await handler.execute(provider, address)

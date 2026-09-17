@@ -1,7 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 import type { json } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import { ClientCore } from './ClientCore'
 import type { HttpClient } from './http/HttpClient'
 import {
@@ -29,7 +28,7 @@ describe(ClientCore.name, () => {
 
     it('Retries on error', async () => {
       const { clientCore, http } = mocks()
-      http.fetch.mockRejectedValueOnce(new Error('Network error'))
+      vi.mocked(http.fetch).mockRejectedValueOnce(new Error('Network error'))
 
       await clientCore.fetch('https://api.test.com/data', {})
 
@@ -38,7 +37,7 @@ describe(ClientCore.name, () => {
 
     it('Throws on invalid response', async () => {
       const { clientCore, http } = mocks()
-      http.fetch.mockResolvedValue(null)
+      vi.mocked(http.fetch).mockResolvedValue(null)
 
       await expect(
         async () => await clientCore.fetch('https://api.test.com/data', {}),
@@ -66,7 +65,7 @@ describe(ClientCore.name, () => {
 
     it('Keeps the label across retries', async () => {
       const { clientCore, http } = mocks()
-      http.fetch.mockRejectedValueOnce(new Error('Network error'))
+      vi.mocked(http.fetch).mockRejectedValueOnce(new Error('Network error'))
 
       await withRpcMetricsContext({ coreFeature: 'blockSync.fetch' }, () =>
         clientCore.fetch('https://api.test.com/data', {}),
@@ -81,9 +80,9 @@ describe(ClientCore.name, () => {
 })
 
 function mocks(callsPerMinute?: number) {
-  const http = mockObject<HttpClient>({
-    fetch: async () => ({ result: 'success' }) as json,
-  })
+  const http = {
+    fetch: vi.fn(async () => ({ result: 'success' }) as json),
+  } as unknown as HttpClient
 
   class TestClientCore extends ClientCore {
     validateResponse(response: unknown): {

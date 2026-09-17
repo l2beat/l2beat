@@ -1,6 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
 import { UnixTime } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 import type { HttpClient } from '../http/HttpClient'
 import { EigenApiClient } from './EigenApiClient'
@@ -12,9 +11,9 @@ describe(EigenApiClient.name, () => {
         total_bytes_posted: 12345678,
       }
 
-      const http = mockObject<HttpClient>({
-        fetch: async () => mockResponse,
-      })
+      const http = {
+        fetch: vi.fn(async () => mockResponse),
+      } as unknown as HttpClient
 
       const client = mockClient({ http })
       const from = 1640995200 // 2022-01-01 00:00:00 UTC
@@ -34,9 +33,9 @@ describe(EigenApiClient.name, () => {
         error: 'error message',
       }
 
-      const http = mockObject<HttpClient>({
-        fetch: async () => mockErrorResponse,
-      })
+      const http = {
+        fetch: vi.fn(async () => mockErrorResponse),
+      } as unknown as HttpClient
 
       const client = mockClient({ http })
       const from = 1640995200
@@ -52,11 +51,11 @@ describe(EigenApiClient.name, () => {
 {"datetime":"2022-01-01T13:00:00","customer_id":"project2","total_size_mb":200.75}
 {"datetime":"2022-01-01T14:00:00","customer_id":"project1","total_size_mb":150.25}`
 
-      const http = mockObject<HttpClient>({
+      const http = {
         fetchRaw: vi.fn().mockResolvedValue({
           text: async () => mockJsonLines,
         }),
-      })
+      } as unknown as HttpClient
 
       const client = mockClient({ http })
       const until = 1640995200 // 2022-01-01 00:00:00 UTC
@@ -85,11 +84,11 @@ describe(EigenApiClient.name, () => {
   <Message>The specified key does not exist.</Message>
 </Error>`
 
-      const http = mockObject<HttpClient>({
+      const http = {
         fetchRaw: vi.fn().mockResolvedValue({
           text: async () => mockErrorResponse,
         }),
-      })
+      } as unknown as HttpClient
 
       const client = mockClient({ http })
       const until = 1640995200
@@ -104,11 +103,11 @@ describe(EigenApiClient.name, () => {
 {"date":"2022-01-01","customer_id":"project2"}
 {"datetime":"2022-01-01T14:00:00","customer_id":"project2","total_size_mb":150.25}`
 
-      const http = mockObject<HttpClient>({
+      const http = {
         fetchRaw: vi.fn().mockResolvedValue({
           text: async () => mockMalformedJson,
         }),
-      })
+      } as unknown as HttpClient
 
       const client = mockClient({ http })
       const until = 1640995200
@@ -127,7 +126,7 @@ function mockClient(deps: {
   return new EigenApiClient({
     url: deps.url ?? 'https://api.test.com',
     perProjectUrl: deps.perProjectUrl ?? 'https://project.test.com',
-    http: deps.http ?? mockObject<HttpClient>({}),
+    http: deps.http ?? ({} as unknown as HttpClient),
     callsPerMinute: 100_000,
     retryStrategy: 'TEST',
     logger: Logger.SILENT,

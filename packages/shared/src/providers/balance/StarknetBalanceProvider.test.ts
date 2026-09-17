@@ -1,5 +1,4 @@
 import { Logger } from '@l2beat/backend-tools'
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 import type { StarknetClient } from '../../clients'
 import {
@@ -18,16 +17,16 @@ describe(StarknetBalanceProvider.name, () => {
 
   describe(StarknetBalanceProvider.prototype.getBalances.name, () => {
     it('performs a balanceOf call for each token and decodes u256 values', async () => {
-      const client = mockObject<StarknetClient>({
+      const client = {
         call: vi
           .fn()
           .mockResolvedValueOnce(['0x1'])
           .mockResolvedValueOnce(['0x2', '0x1'])
           .mockResolvedValueOnce([]),
         chain: CHAIN,
-      })
+      } as unknown as StarknetClient
       const balanceProvider = new StarknetBalanceProvider(
-        [client, mockObject<StarknetClient>({ chain: 'random' })],
+        [client, { chain: 'random' } as unknown as StarknetClient],
         Logger.SILENT,
       )
 
@@ -64,14 +63,14 @@ describe(StarknetBalanceProvider.name, () => {
     })
 
     it('throws if any call fails', async () => {
-      const client = mockObject<StarknetClient>({
+      const client = {
         call: vi
           .fn()
           .mockResolvedValueOnce(['0x1'])
           .mockResolvedValueOnce(['0x2'])
           .mockRejectedValueOnce(new Error('RPC failure')),
         chain: CHAIN,
-      })
+      } as unknown as StarknetClient
       const balanceProvider = new StarknetBalanceProvider(
         [client],
         Logger.SILENT,
@@ -84,7 +83,7 @@ describe(StarknetBalanceProvider.name, () => {
 
     it('throws if there is no client for the chain', () => {
       const balanceProvider = new StarknetBalanceProvider(
-        [mockObject<StarknetClient>({ chain: 'other-chain' })],
+        [{ chain: 'other-chain' } as unknown as StarknetClient],
         Logger.SILENT,
       )
 

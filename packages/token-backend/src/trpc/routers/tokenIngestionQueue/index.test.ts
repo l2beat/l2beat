@@ -4,7 +4,6 @@ import type {
   TokenIngestionQueueRecord,
 } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { TRPCError } from '@trpc/server'
 import { describe, expect, it, vi } from 'vitest'
 import type { TokenIngestionProcessor } from '../../../ingestion/TokenIngestionProcessor'
@@ -21,15 +20,11 @@ describe('tokenIngestionQueueRouter', () => {
       ]
       const getAll = vi.fn().mockResolvedValue(entries)
 
-      const caller = createRouter(
-        mockObject<TokenDatabase>({
-          tokenIngestionQueue: mockObject<TokenDatabase['tokenIngestionQueue']>(
-            {
-              getAll,
-            },
-          ),
-        }),
-      )
+      const caller = createRouter({
+        tokenIngestionQueue: {
+          getAll,
+        } as unknown as TokenDatabase['tokenIngestionQueue'],
+      } as unknown as TokenDatabase)
 
       const result = await caller.getAll()
 
@@ -64,7 +59,7 @@ describe('tokenIngestionQueueRouter', () => {
         totalCount: 12,
       }
       const getPage = vi.fn().mockResolvedValue(page)
-      const deployedToken = mockObject<DeployedTokenRecord>({})
+      const deployedToken = {} as unknown as DeployedTokenRecord
       const transferIndex = { findInvolving: vi.fn().mockReturnValue([]) }
       const getInteropTransferIndex = vi.fn().mockResolvedValue(transferIndex)
       // A CoinGecko-symbol conflict only fires while the plan wants to build
@@ -110,17 +105,15 @@ describe('tokenIngestionQueueRouter', () => {
         })
 
       const caller = createRouter({
-        tokenDb: mockObject<TokenDatabase>({
-          tokenIngestionQueue: mockObject<TokenDatabase['tokenIngestionQueue']>(
-            {
-              getPage,
-            },
-          ),
-        }),
-        processor: mockObject<TokenIngestionProcessor>({
+        tokenDb: {
+          tokenIngestionQueue: {
+            getPage,
+          } as unknown as TokenDatabase['tokenIngestionQueue'],
+        } as unknown as TokenDatabase,
+        processor: {
           getInteropTransferIndex,
           plan,
-        }),
+        } as unknown as TokenIngestionProcessor,
       })
 
       const result = await caller.getPage({ page: 2, pageSize: 5 })
@@ -194,12 +187,12 @@ describe('tokenIngestionQueueRouter', () => {
       const fetch = vi.fn().mockResolvedValue(trace)
 
       const caller = createRouter({
-        tokenDb: mockObject<TokenDatabase>({}),
-        processor: mockObject<TokenIngestionProcessor>({
+        tokenDb: {} as unknown as TokenDatabase,
+        processor: {
           getInteropTransferIndex,
           plan,
           fetch,
-        }),
+        } as unknown as TokenIngestionProcessor,
       })
 
       const result = await caller.preview(input)
@@ -219,15 +212,11 @@ describe('tokenIngestionQueueRouter', () => {
   describe('approve', () => {
     it('approves a staged entry', async () => {
       const approve = vi.fn().mockResolvedValue(1)
-      const caller = createRouter(
-        mockObject<TokenDatabase>({
-          tokenIngestionQueue: mockObject<TokenDatabase['tokenIngestionQueue']>(
-            {
-              approve,
-            },
-          ),
-        }),
-      )
+      const caller = createRouter({
+        tokenIngestionQueue: {
+          approve,
+        } as unknown as TokenDatabase['tokenIngestionQueue'],
+      } as unknown as TokenDatabase)
 
       const input = { chain: 'ethereum', address: '0x111' }
       const result = await caller.approve(input)
@@ -237,15 +226,11 @@ describe('tokenIngestionQueueRouter', () => {
     })
 
     it('fails when the entry is not staged', async () => {
-      const caller = createRouter(
-        mockObject<TokenDatabase>({
-          tokenIngestionQueue: mockObject<TokenDatabase['tokenIngestionQueue']>(
-            {
-              approve: vi.fn().mockResolvedValue(0),
-            },
-          ),
-        }),
-      )
+      const caller = createRouter({
+        tokenIngestionQueue: {
+          approve: vi.fn().mockResolvedValue(0),
+        } as unknown as TokenDatabase['tokenIngestionQueue'],
+      } as unknown as TokenDatabase)
 
       await expect(
         caller.approve({ chain: 'ethereum', address: '0x111' }),
@@ -256,15 +241,11 @@ describe('tokenIngestionQueueRouter', () => {
   describe('approveMany', () => {
     it('approves supplied staged entries and returns the count', async () => {
       const approve = vi.fn().mockResolvedValueOnce(1).mockResolvedValueOnce(0)
-      const caller = createRouter(
-        mockObject<TokenDatabase>({
-          tokenIngestionQueue: mockObject<TokenDatabase['tokenIngestionQueue']>(
-            {
-              approve,
-            },
-          ),
-        }),
-      )
+      const caller = createRouter({
+        tokenIngestionQueue: {
+          approve,
+        } as unknown as TokenDatabase['tokenIngestionQueue'],
+      } as unknown as TokenDatabase)
 
       const first = { chain: 'ethereum', address: '0x111' }
       const second = { chain: 'base', address: '0x222' }
@@ -280,15 +261,11 @@ describe('tokenIngestionQueueRouter', () => {
   describe('retry', () => {
     it('retries a conflict or error entry', async () => {
       const retry = vi.fn().mockResolvedValue(1)
-      const caller = createRouter(
-        mockObject<TokenDatabase>({
-          tokenIngestionQueue: mockObject<TokenDatabase['tokenIngestionQueue']>(
-            {
-              retry,
-            },
-          ),
-        }),
-      )
+      const caller = createRouter({
+        tokenIngestionQueue: {
+          retry,
+        } as unknown as TokenDatabase['tokenIngestionQueue'],
+      } as unknown as TokenDatabase)
 
       const input = { chain: 'ethereum', address: '0x111' }
       const result = await caller.retry(input)
@@ -298,15 +275,11 @@ describe('tokenIngestionQueueRouter', () => {
     })
 
     it('fails when the entry is not in conflict or error', async () => {
-      const caller = createRouter(
-        mockObject<TokenDatabase>({
-          tokenIngestionQueue: mockObject<TokenDatabase['tokenIngestionQueue']>(
-            {
-              retry: vi.fn().mockResolvedValue(0),
-            },
-          ),
-        }),
-      )
+      const caller = createRouter({
+        tokenIngestionQueue: {
+          retry: vi.fn().mockResolvedValue(0),
+        } as unknown as TokenDatabase['tokenIngestionQueue'],
+      } as unknown as TokenDatabase)
 
       await expect(
         caller.retry({ chain: 'ethereum', address: '0x111' }),
@@ -317,15 +290,11 @@ describe('tokenIngestionQueueRouter', () => {
   describe('retryMany', () => {
     it('retries supplied entries and returns the count', async () => {
       const retry = vi.fn().mockResolvedValueOnce(1).mockResolvedValueOnce(0)
-      const caller = createRouter(
-        mockObject<TokenDatabase>({
-          tokenIngestionQueue: mockObject<TokenDatabase['tokenIngestionQueue']>(
-            {
-              retry,
-            },
-          ),
-        }),
-      )
+      const caller = createRouter({
+        tokenIngestionQueue: {
+          retry,
+        } as unknown as TokenDatabase['tokenIngestionQueue'],
+      } as unknown as TokenDatabase)
 
       const first = { chain: 'ethereum', address: '0x111' }
       const second = { chain: 'base', address: '0x222' }
@@ -353,10 +322,10 @@ function createRouter(
       ? deps
       : { tokenDb: deps, db: undefined, processor: undefined }
   return createCallerFactory(tokenIngestionQueueRouter)({
-    db: config.db ?? mockObject<Database>({}),
+    db: config.db ?? ({} as unknown as Database),
     tokenDb: config.tokenDb,
     tokenIngestionProcessor:
-      config.processor ?? mockObject<TokenIngestionProcessor>({}),
+      config.processor ?? ({} as unknown as TokenIngestionProcessor),
     headers: new Headers(),
     session: {
       email: 'dev@l2beat.com',

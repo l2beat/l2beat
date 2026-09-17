@@ -1,5 +1,4 @@
 import { ChainSpecificAddress, Hash256 } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 
 import type { ContractSource } from '../../utils/IEtherscanClient'
@@ -47,10 +46,10 @@ describe(SourceCodeService.name, () => {
   }
 
   it('single, unverified contract', async () => {
-    const provider = mockObject<IProvider>({
+    const provider = {
       getSource: vi.fn(),
-    })
-    provider.getSource.mockResolvedValueOnce(FOO_METADATA)
+    } as unknown as IProvider
+    vi.mocked(provider.getSource).mockResolvedValueOnce(FOO_METADATA)
 
     const service = new SourceCodeService()
 
@@ -72,10 +71,10 @@ describe(SourceCodeService.name, () => {
   })
 
   it('single, verified contract', async () => {
-    const provider = mockObject<IProvider>({
+    const provider = {
       getSource: vi.fn(),
-    })
-    provider.getSource.mockResolvedValueOnce(BAR_METADATA)
+    } as unknown as IProvider
+    vi.mocked(provider.getSource).mockResolvedValueOnce(BAR_METADATA)
 
     const service = new SourceCodeService()
 
@@ -101,10 +100,10 @@ describe(SourceCodeService.name, () => {
   })
 
   it('multiple verified contracts', async () => {
-    const provider = mockObject<IProvider>({
+    const provider = {
       getSource: vi.fn(),
-    })
-    provider.getSource
+    } as unknown as IProvider
+    vi.mocked(provider.getSource)
       .mockResolvedValueOnce(BAR_METADATA)
       .mockResolvedValueOnce(BAZ_METADATA)
 
@@ -145,10 +144,10 @@ describe(SourceCodeService.name, () => {
   })
 
   it('unverified implementation', async () => {
-    const provider = mockObject<IProvider>({
+    const provider = {
       getSource: vi.fn(),
-    })
-    provider.getSource
+    } as unknown as IProvider
+    vi.mocked(provider.getSource)
       .mockResolvedValueOnce(BAR_METADATA)
       .mockResolvedValueOnce(FOO_METADATA)
 
@@ -186,10 +185,10 @@ describe(SourceCodeService.name, () => {
   })
 
   it('single manually verified contract', async () => {
-    const provider = mockObject<IProvider>({
+    const provider = {
       getSource: vi.fn(),
-    })
-    provider.getSource.mockResolvedValueOnce(FOO_METADATA)
+    } as unknown as IProvider
+    vi.mocked(provider.getSource).mockResolvedValueOnce(FOO_METADATA)
 
     const service = new SourceCodeService()
 
@@ -214,10 +213,10 @@ describe(SourceCodeService.name, () => {
   })
 
   it('manually verified implementation', async () => {
-    const provider = mockObject<IProvider>({
+    const provider = {
       getSource: vi.fn(),
-    })
-    provider.getSource
+    } as unknown as IProvider
+    vi.mocked(provider.getSource)
       .mockResolvedValueOnce(BAR_METADATA)
       .mockResolvedValueOnce(FOO_METADATA)
 

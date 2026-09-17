@@ -1,5 +1,4 @@
 import { ChainSpecificAddress, type EthereumAddress } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 import type { IProvider } from '../../provider/IProvider'
 import { getZkLinkProxy } from './ZkLinkProxy'
@@ -11,7 +10,7 @@ describe(getZkLinkProxy.name, () => {
   const periphery = ChainSpecificAddress.random()
 
   it('includes the periphery contract in the implementation', async () => {
-    const provider = mockObject<IProvider>({
+    const provider = {
       chain: 'ethereum',
       callMethod: vi
         .fn()
@@ -23,7 +22,7 @@ describe(getZkLinkProxy.name, () => {
         .fn()
         .mockResolvedValueOnce(implementation)
         .mockResolvedValueOnce(admin),
-    })
+    } as unknown as IProvider
 
     const result = await getZkLinkProxy(provider, address)
 

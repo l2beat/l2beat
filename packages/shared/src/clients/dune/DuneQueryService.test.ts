@@ -1,5 +1,4 @@
 import { Logger } from '@l2beat/backend-tools'
-import { mockObject } from '@l2beat/test-utils'
 import { v } from '@l2beat/validate'
 import { describe, expect, it, vi } from 'vitest'
 import type { DuneClient } from './DuneClient'
@@ -26,7 +25,7 @@ describe(DuneQueryService.name, () => {
       const resultRows = [{ col1: 'value1' }, { col1: 'value2' }]
       const resultSchema = v.array(v.object({ col1: v.string() }))
 
-      const mockDuneClient = mockObject<DuneClient>({
+      const mockDuneClient = {
         executeSql: vi.fn().mockResolvedValue({
           execution_id: executionId,
           state: 'QUERY_STATE_PENDING',
@@ -46,7 +45,7 @@ describe(DuneQueryService.name, () => {
             rows: resultRows,
           },
         }),
-      })
+      } as unknown as DuneClient
 
       const service = createService(mockDuneClient)
       const result = await service.query(
@@ -73,7 +72,7 @@ describe(DuneQueryService.name, () => {
       const resultRows = [{ col1: 'value1' }, { col1: 'value2' }]
       const resultSchema = v.array(v.object({ col1: v.string() }))
 
-      const mockDuneClient = mockObject<DuneClient>({
+      const mockDuneClient = {
         executeSql: vi.fn().mockResolvedValue({
           execution_id: executionId,
           state: 'QUERY_STATE_PENDING',
@@ -105,7 +104,7 @@ describe(DuneQueryService.name, () => {
             rows: resultRows,
           },
         }),
-      })
+      } as unknown as DuneClient
 
       const service = createService(mockDuneClient)
       const result = await service.query(
@@ -121,7 +120,7 @@ describe(DuneQueryService.name, () => {
     it('throws error when query fails', async () => {
       const executionId = 'exec-123'
 
-      const mockDuneClient = mockObject<DuneClient>({
+      const mockDuneClient = {
         executeSql: vi.fn().mockResolvedValue({
           execution_id: executionId,
           state: 'QUERY_STATE_PENDING',
@@ -138,7 +137,7 @@ describe(DuneQueryService.name, () => {
             state: 'QUERY_STATE_FAILED',
             execution_cost_credits: 5,
           }),
-      })
+      } as unknown as DuneClient
 
       const service = createService(mockDuneClient)
       const resultSchema = v.array(v.object({ col1: v.string() }))
@@ -151,7 +150,7 @@ describe(DuneQueryService.name, () => {
     it('throws error when query is canceled', async () => {
       const executionId = 'exec-123'
 
-      const mockDuneClient = mockObject<DuneClient>({
+      const mockDuneClient = {
         executeSql: vi.fn().mockResolvedValue({
           execution_id: executionId,
           state: 'QUERY_STATE_PENDING',
@@ -168,7 +167,7 @@ describe(DuneQueryService.name, () => {
             state: 'QUERY_STATE_CANCELED',
             execution_cost_credits: 5,
           }),
-      })
+      } as unknown as DuneClient
 
       const service = createService(mockDuneClient)
       const resultSchema = v.array(v.object({ col1: v.string() }))
@@ -181,7 +180,7 @@ describe(DuneQueryService.name, () => {
     it('throws error when query times out', async () => {
       const executionId = 'exec-123'
 
-      const mockDuneClient = mockObject<DuneClient>({
+      const mockDuneClient = {
         executeSql: vi.fn().mockResolvedValue({
           execution_id: executionId,
           state: 'QUERY_STATE_PENDING',
@@ -198,7 +197,7 @@ describe(DuneQueryService.name, () => {
             state: 'QUERY_STATE_TIMED_OUT',
             execution_cost_credits: 5,
           }),
-      })
+      } as unknown as DuneClient
 
       const service = createService(mockDuneClient)
       const resultSchema = v.array(v.object({ col1: v.string() }))
@@ -211,7 +210,7 @@ describe(DuneQueryService.name, () => {
     it('throws error when query completes partially', async () => {
       const executionId = 'exec-123'
 
-      const mockDuneClient = mockObject<DuneClient>({
+      const mockDuneClient = {
         executeSql: vi.fn().mockResolvedValue({
           execution_id: executionId,
           state: 'QUERY_STATE_PENDING',
@@ -228,7 +227,7 @@ describe(DuneQueryService.name, () => {
             state: 'QUERY_STATE_COMPLETED_PARTIAL',
             execution_cost_credits: 5,
           }),
-      })
+      } as unknown as DuneClient
 
       const service = createService(mockDuneClient)
       const resultSchema = v.array(v.object({ col1: v.string() }))
@@ -241,7 +240,7 @@ describe(DuneQueryService.name, () => {
     it('throws error when getExecutionStatus fails', async () => {
       const executionId = 'exec-123'
 
-      const mockDuneClient = mockObject<DuneClient>({
+      const mockDuneClient = {
         executeSql: vi.fn().mockResolvedValue({
           execution_id: executionId,
           state: 'QUERY_STATE_PENDING',
@@ -254,7 +253,7 @@ describe(DuneQueryService.name, () => {
             execution_cost_credits: 0,
           })
           .mockRejectedValueOnce(new Error('Network error')),
-      })
+      } as unknown as DuneClient
 
       const service = createService(mockDuneClient)
       const resultSchema = v.array(v.object({ col1: v.string() }))
@@ -267,7 +266,7 @@ describe(DuneQueryService.name, () => {
     it('throws error when execution timeout is exceeded', async () => {
       const executionId = 'exec-123'
 
-      const mockDuneClient = mockObject<DuneClient>({
+      const mockDuneClient = {
         executeSql: vi.fn().mockResolvedValue({
           execution_id: executionId,
           state: 'QUERY_STATE_PENDING',
@@ -277,7 +276,7 @@ describe(DuneQueryService.name, () => {
           state: 'QUERY_STATE_EXECUTING',
           execution_cost_credits: 5,
         }),
-      })
+      } as unknown as DuneClient
 
       const service = createService(mockDuneClient, 5)
       const resultSchema = v.array(v.object({ col1: v.string() }))
@@ -297,7 +296,7 @@ describe(DuneQueryService.name, () => {
         }),
       )
 
-      const mockDuneClient = mockObject<DuneClient>({
+      const mockDuneClient = {
         executeSql: vi.fn().mockResolvedValue({
           execution_id: executionId,
           state: 'QUERY_STATE_PENDING',
@@ -317,7 +316,7 @@ describe(DuneQueryService.name, () => {
             rows: resultRows,
           },
         }),
-      })
+      } as unknown as DuneClient
 
       const service = createService(mockDuneClient)
       const result = await service.query(

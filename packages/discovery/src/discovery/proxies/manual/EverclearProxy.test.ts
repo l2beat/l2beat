@@ -5,7 +5,6 @@ import {
   type EthereumAddress,
   Hash256,
 } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { type providers, utils } from 'ethers'
 import { describe, expect, it, vi } from 'vitest'
 import type { IProvider } from '../../provider/IProvider'
@@ -139,7 +138,7 @@ describe(getEverclearProxy.name, () => {
       ),
     ]
 
-    const provider = mockObject<IProvider>({
+    const provider = {
       chain: 'ethereum',
       callMethod: callMethodMock,
       getBlock: vi.fn().mockResolvedValue({
@@ -148,7 +147,7 @@ describe(getEverclearProxy.name, () => {
       }),
       getStorageAsAddress: implementationSlotStub,
       getLogs: getLogsStub(logs),
-    })
+    } as unknown as IProvider
 
     // NOTE(radomski): It would be a real hassle to configure timestamps for
     // each mocked event, so we just assume that the date is an error
@@ -246,12 +245,12 @@ describe(getEverclearProxy.name, () => {
   it('fetches all modules, no past upgrades', async () => {
     const callMethodMock = vi.fn().mockImplementation(callMethodStub)
 
-    const provider = mockObject<IProvider>({
+    const provider = {
       chain: 'ethereum',
       callMethod: callMethodMock,
       getStorageAsAddress: implementationSlotStub,
       getLogs: vi.fn().mockResolvedValue([]),
-    })
+    } as unknown as IProvider
 
     const result = await getEverclearProxy(provider, ADDRESS)
     expect(result).toStrictEqual({

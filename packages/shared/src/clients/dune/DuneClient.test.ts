@@ -1,4 +1,3 @@
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 import type { HttpClient } from '../http/HttpClient'
 import { DuneClient } from './DuneClient'
@@ -16,12 +15,12 @@ describe(DuneClient.name, () => {
   describe('executeSql', () => {
     it('calls fetch with correct parameters and returns execution_id', async () => {
       const executionId = 'exec-123'
-      const mockHttp = mockObject<HttpClient>({
+      const mockHttp = {
         fetch: vi.fn().mockResolvedValue({
           execution_id: executionId,
           state: 'QUERY_STATE_PENDING',
         }),
-      })
+      } as unknown as HttpClient
 
       const client = createClient(mockHttp)
       const result = await client.executeSql('SELECT * FROM test', 'large')
@@ -58,9 +57,9 @@ describe(DuneClient.name, () => {
         execution_cost_credits: 10,
       }
 
-      const mockHttp = mockObject<HttpClient>({
+      const mockHttp = {
         fetch: vi.fn().mockResolvedValue(statusResponse),
-      })
+      } as unknown as HttpClient
 
       const client = createClient(mockHttp)
       const result = await client.getExecutionStatus(executionId)
@@ -90,9 +89,9 @@ describe(DuneClient.name, () => {
         },
       }
 
-      const mockHttp = mockObject<HttpClient>({
+      const mockHttp = {
         fetch: vi.fn().mockResolvedValue(resultResponse),
-      })
+      } as unknown as HttpClient
 
       const client = createClient(mockHttp)
       const result = await client.getExecutionResult(executionId)

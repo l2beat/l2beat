@@ -1,22 +1,21 @@
 import { Logger } from '@l2beat/backend-tools'
 import { UnixTime } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import type { HttpClient } from '../http/HttpClient'
 import { VoyagerClient } from './VoyagerClient'
 
 describe(VoyagerClient.name, () => {
   describe(VoyagerClient.prototype.getDailyUops.name, () => {
     it('fetches and parses daily uops data', async () => {
-      const http = mockObject<HttpClient>({
-        fetch: async () => ({
+      const http = {
+        fetch: vi.fn(async () => ({
           items: [
             { date: '2024-01-01', value: '1000' },
             { date: '2024-01-02', value: '2000' },
             { date: '2024-01-03', value: '3000' },
           ],
-        }),
-      })
+        })),
+      } as unknown as HttpClient
 
       const client = mockClient({ http })
       const result = await client.getDailyUops()
@@ -34,11 +33,11 @@ describe(VoyagerClient.name, () => {
     })
 
     it('handles empty response', async () => {
-      const http = mockObject<HttpClient>({
-        fetch: async () => ({
+      const http = {
+        fetch: vi.fn(async () => ({
           items: [],
-        }),
-      })
+        })),
+      } as unknown as HttpClient
 
       const client = mockClient({ http })
       const result = await client.getDailyUops()
@@ -47,11 +46,11 @@ describe(VoyagerClient.name, () => {
     })
 
     it('validates response structure', async () => {
-      const http = mockObject<HttpClient>({
-        fetch: async () => ({
+      const http = {
+        fetch: vi.fn(async () => ({
           invalid: 'structure',
-        }),
-      })
+        })),
+      } as unknown as HttpClient
 
       const client = mockClient({ http })
 
@@ -61,14 +60,14 @@ describe(VoyagerClient.name, () => {
 
   describe(VoyagerClient.prototype.getDailyTxs.name, () => {
     it('fetches and parses daily txs data', async () => {
-      const http = mockObject<HttpClient>({
-        fetch: async () => ({
+      const http = {
+        fetch: vi.fn(async () => ({
           items: [
             { date: '2024-01-01', value: 5000 },
             { date: '2024-01-02', value: 6000 },
           ],
-        }),
-      })
+        })),
+      } as unknown as HttpClient
 
       const client = mockClient({ http })
       const result = await client.getDailyTxs()
@@ -85,11 +84,11 @@ describe(VoyagerClient.name, () => {
     })
 
     it('handles empty response', async () => {
-      const http = mockObject<HttpClient>({
-        fetch: async () => ({
+      const http = {
+        fetch: vi.fn(async () => ({
           items: [],
-        }),
-      })
+        })),
+      } as unknown as HttpClient
 
       const client = mockClient({ http })
       const result = await client.getDailyTxs()
@@ -100,9 +99,9 @@ describe(VoyagerClient.name, () => {
 
   describe(VoyagerClient.prototype.query.name, () => {
     it('constructs correct url with query parameters', async () => {
-      const http = mockObject<HttpClient>({
-        fetch: async () => ({ success: true }),
-      })
+      const http = {
+        fetch: vi.fn(async () => ({ success: true })),
+      } as unknown as HttpClient
 
       const client = mockClient({ http })
       await client.query('/test-endpoint', {
@@ -117,9 +116,9 @@ describe(VoyagerClient.name, () => {
     })
 
     it('constructs url without query parameters', async () => {
-      const http = mockObject<HttpClient>({
-        fetch: async () => ({ success: true }),
-      })
+      const http = {
+        fetch: vi.fn(async () => ({ success: true })),
+      } as unknown as HttpClient
 
       const client = mockClient({ http })
       await client.query('/test-endpoint', {})
@@ -131,9 +130,9 @@ describe(VoyagerClient.name, () => {
     })
 
     it('handles special characters in query parameters', async () => {
-      const http = mockObject<HttpClient>({
-        fetch: async () => ({ success: true }),
-      })
+      const http = {
+        fetch: vi.fn(async () => ({ success: true })),
+      } as unknown as HttpClient
 
       const client = mockClient({ http })
       await client.query('/test-endpoint', {
@@ -166,7 +165,9 @@ describe(VoyagerClient.name, () => {
 
 function mockClient(deps: { http?: HttpClient }) {
   return new VoyagerClient({
-    http: deps.http ?? mockObject<HttpClient>({ fetch: async () => ({}) }),
+    http:
+      deps.http ??
+      ({ fetch: vi.fn(async () => ({})) } as unknown as HttpClient),
     callsPerMinute: 100_000,
     retryStrategy: 'TEST',
     logger: Logger.SILENT,

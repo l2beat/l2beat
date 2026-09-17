@@ -1,5 +1,4 @@
 import { ChainSpecificAddress, Hash256 } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { BigNumber, ethers, type providers } from 'ethers'
 import { describe, expect, it, vi } from 'vitest'
 
@@ -29,10 +28,10 @@ describe(ConstructorArgsHandler.name, () => {
       const txHash = Hash256.random()
       const transaction = fakeEthersTransaction({ data: sampleTxData })
 
-      const provider = mockObject<IProvider>({
+      const provider = {
         getDeployment: vi.fn().mockResolvedValue({ transactionHash: txHash }),
         getTransaction: vi.fn().mockResolvedValue(transaction),
-      })
+      } as unknown as IProvider
 
       const response = await handler.execute(provider, contractAddress)
 
@@ -63,10 +62,10 @@ describe(ConstructorArgsHandler.name, () => {
       const txHash = Hash256.random()
       const transaction = fakeEthersTransaction({ data: sampleTxData })
 
-      const provider = mockObject<IProvider>({
+      const provider = {
         getDeployment: vi.fn().mockResolvedValue({ transactionHash: txHash }),
         getTransaction: vi.fn().mockResolvedValue(transaction),
-      })
+      } as unknown as IProvider
 
       const response = await handler.execute(provider, contractAddress)
 
@@ -117,12 +116,12 @@ describe(ConstructorArgsHandler.name, () => {
 
       const contractAddress = ChainSpecificAddress.random()
 
-      const provider = mockObject<IProvider>({
+      const provider = {
         getDeployment: vi.fn().mockRejectedValue('error'), // We could cover the error during decode but any exception within the block will skip the heruistic approach
         getSource: vi.fn().mockResolvedValue({
           constructorArguments: sampleCtorEncodedArgs,
         }),
-      })
+      } as unknown as IProvider
 
       const response = await handler.execute(provider, contractAddress)
 

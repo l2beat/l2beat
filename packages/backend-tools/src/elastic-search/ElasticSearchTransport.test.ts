@@ -1,4 +1,3 @@
-import { type MockObject, mockObject } from '@l2beat/test-utils'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import type { ElasticSearchClient } from './ElasticSearchClient'
@@ -179,7 +178,7 @@ describe(ElasticSearchTransport.name, () => {
       expectedIndexName,
     )
 
-    const [documents] = clientMock.bulk.mock.calls[1]!
+    const [documents] = vi.mocked(clientMock.bulk).mock.calls[1]!
     expect(documents).toHaveLength(maxItems + 1)
     expect(documents[0]).toStrictEqual({ id, ...log, message: '0000000000' })
     expect(documents[maxItems]).toStrictEqual({
@@ -268,7 +267,7 @@ describe(ElasticSearchTransport.name, () => {
 
     expect(clientMock.bulk).toHaveBeenCalledTimes(1)
 
-    const [recoveryDocs] = clientMock.bulk.mock.calls[0]!
+    const [recoveryDocs] = vi.mocked(clientMock.bulk).mock.calls[0]!
     expect(recoveryDocs).toHaveLength(1)
 
     const recoveryDoc = recoveryDocs[0] as Record<string, unknown>
@@ -280,7 +279,7 @@ describe(ElasticSearchTransport.name, () => {
 
   it('swallows errors from recovery bulk after primary bulk failure', async () => {
     let bulkCalls = 0
-    const clientMock = mockObject<ElasticSearchClient>({
+    const clientMock = {
       indexExist: vi.fn(async (): Promise<boolean> => false),
       indexCreate: vi.fn(async (): Promise<void> => {}),
       bulk: vi.fn(async () => {
@@ -293,7 +292,7 @@ describe(ElasticSearchTransport.name, () => {
         }
         throw new Error('recovery failed')
       }),
-    })
+    } as unknown as ElasticSearchClient
 
     const transportMock = createTransportMock(clientMock)
 
@@ -321,7 +320,7 @@ function createClientMockWithTrackedIndex(
       ? [...bulkResponses]
       : [{ isSuccess: true as const }]
 
-  return mockObject<ElasticSearchClient>({
+  return {
     indexExist: vi.fn(async (_: string): Promise<boolean> => indexExists),
     indexCreate: vi.fn(async (_: string): Promise<void> => {
       indexExists = true
@@ -333,7 +332,7 @@ function createClientMockWithTrackedIndex(
       }
       return next
     }),
-  })
+  } as unknown as ElasticSearchClient
 }
 
 function createClientMock(
@@ -348,7 +347,7 @@ function createClientMock(
       ? [...bulkResponses]
       : [{ isSuccess: true as const }]
 
-  return mockObject<ElasticSearchClient>({
+  return {
     indexExist: vi.fn(async (_: string): Promise<boolean> => indexExist),
     indexCreate: vi.fn(async (_: string): Promise<void> => {}),
     bulk: vi.fn(async () => {
@@ -358,11 +357,11 @@ function createClientMock(
       }
       return next
     }),
-  })
+  } as unknown as ElasticSearchClient
 }
 
 function createTransportMock(
-  clientMock: MockObject<ElasticSearchClient>,
+  clientMock: ElasticSearchClient,
   extraOptions: Partial<ElasticSearchTransportOptions> = {},
 ) {
   const uuidProviderMock: UuidProvider = () => id

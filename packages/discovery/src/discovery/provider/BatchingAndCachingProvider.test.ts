@@ -1,6 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
 import { EthereumAddress } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 import { BatchingAndCachingProvider } from './BatchingAndCachingProvider'
 import type { LowLevelProvider } from './LowLevelProvider'
@@ -12,13 +11,13 @@ describe(BatchingAndCachingProvider.name, () => {
 
   describe(BatchingAndCachingProvider.prototype.getLogs.name, () => {
     it('divides on two calls', async () => {
-      const cache = mockObject<ReorgAwareCache>({
+      const cache = {
         entry: vi.fn().mockReturnValue({
           read: () => undefined,
         }),
         write: vi.fn().mockReturnValue(undefined),
-      })
-      const provider = mockObject<LowLevelProvider>({
+      } as unknown as ReorgAwareCache
+      const provider = {
         getLogs: vi
           .fn()
           .mockImplementationOnce(() => {
@@ -26,8 +25,8 @@ describe(BatchingAndCachingProvider.name, () => {
           })
           .mockReturnValueOnce([])
           .mockReturnValueOnce([]),
-      })
-      const multicallClient = mockObject<MulticallClient>()
+      } as unknown as LowLevelProvider
+      const multicallClient = {} as unknown as MulticallClient
 
       const batchingProvider = new BatchingAndCachingProvider(
         cache,
@@ -64,13 +63,13 @@ describe(BatchingAndCachingProvider.name, () => {
     })
 
     it('correctly divides range of two', async () => {
-      const cache = mockObject<ReorgAwareCache>({
+      const cache = {
         entry: vi.fn().mockReturnValue({
           read: () => undefined,
         }),
         write: vi.fn().mockReturnValue(undefined),
-      })
-      const provider = mockObject<LowLevelProvider>({
+      } as unknown as ReorgAwareCache
+      const provider = {
         getLogs: vi
           .fn()
           .mockImplementationOnce(() => {
@@ -78,8 +77,8 @@ describe(BatchingAndCachingProvider.name, () => {
           })
           .mockReturnValueOnce([])
           .mockReturnValueOnce([]),
-      })
-      const multicallClient = mockObject<MulticallClient>()
+      } as unknown as LowLevelProvider
+      const multicallClient = {} as unknown as MulticallClient
 
       const batchingProvider = new BatchingAndCachingProvider(
         cache,
@@ -116,13 +115,13 @@ describe(BatchingAndCachingProvider.name, () => {
     })
 
     it('fromBlock === toBlock', async () => {
-      const cache = mockObject<ReorgAwareCache>({
+      const cache = {
         entry: vi.fn().mockReturnValue({
           read: () => undefined,
         }),
         write: vi.fn().mockReturnValue(undefined),
-      })
-      const provider = mockObject<LowLevelProvider>({
+      } as unknown as ReorgAwareCache
+      const provider = {
         getLogs: vi
           .fn()
           .mockImplementationOnce(() => {
@@ -130,8 +129,8 @@ describe(BatchingAndCachingProvider.name, () => {
           })
           .mockReturnValueOnce([])
           .mockReturnValueOnce([]),
-      })
-      const multicallClient = mockObject<MulticallClient>()
+      } as unknown as LowLevelProvider
+      const multicallClient = {} as unknown as MulticallClient
 
       const batchingProvider = new BatchingAndCachingProvider(
         cache,

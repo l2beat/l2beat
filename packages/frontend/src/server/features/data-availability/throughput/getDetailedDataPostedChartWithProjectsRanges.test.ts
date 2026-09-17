@@ -1,7 +1,6 @@
 import type { DataAvailabilityRecord, Database } from '@l2beat/database'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import { getDataPostedChartData } from './getDetailedDataPostedChartWithProjectsRanges'
 
 const DAY = UnixTime.DAY
@@ -155,10 +154,10 @@ function repositoryMock(
   records: DataAvailabilityRecord[],
   firstTimestamps: Record<string, UnixTime>,
 ): Database['dataAvailability'] {
-  return mockObject<Database['dataAvailability']>({
-    getByProjectIdsAndTimeRange: async () => records,
-    getFirstTimestampsByProjectIds: async () => firstTimestamps,
-  })
+  return {
+    getByProjectIdsAndTimeRange: vi.fn(async () => records),
+    getFirstTimestampsByProjectIds: vi.fn(async () => firstTimestamps),
+  } as unknown as Database['dataAvailability']
 }
 
 function record(

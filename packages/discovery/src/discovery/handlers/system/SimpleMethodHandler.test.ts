@@ -1,6 +1,5 @@
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 
 import type { IProvider } from '../../provider/IProvider'
 import { toFunctionFragment } from '../utils/toFunctionFragment'
@@ -9,16 +8,14 @@ import { SimpleMethodHandler } from './SimpleMethodHandler'
 describe(SimpleMethodHandler.name, () => {
   it('can correctly call balanceOf', async () => {
     const address = ChainSpecificAddress.random()
-    const provider = mockObject<IProvider>({
-      async callMethod<T>(
-        a: ChainSpecificAddress,
-        _abi: string,
-        _data: unknown[],
-      ) {
-        expect(a).toStrictEqual(address)
-        return 291 as T
-      },
-    })
+    const provider = {
+      callMethod: vi.fn(
+        async <T>(a: ChainSpecificAddress, _abi: string, _data: unknown[]) => {
+          expect(a).toStrictEqual(address)
+          return 291 as T
+        },
+      ),
+    } as unknown as IProvider
 
     const method = 'function balanceOf() view returns (uint256)'
     const fragment = toFunctionFragment(method)
@@ -38,11 +35,11 @@ describe(SimpleMethodHandler.name, () => {
     const fragment = toFunctionFragment(method)
     const handler = new SimpleMethodHandler(method)
 
-    const provider = mockObject<IProvider>({
-      async callMethod() {
+    const provider = {
+      callMethod: vi.fn(async () => {
         throw new Error('Execution reverted')
-      },
-    })
+      }),
+    } as unknown as IProvider
     const address = ChainSpecificAddress.random()
     const result = await handler.execute(provider, address)
     expect(result).toStrictEqual({
@@ -57,11 +54,11 @@ describe(SimpleMethodHandler.name, () => {
     const fragment = toFunctionFragment(method)
     const handler = new SimpleMethodHandler(method)
 
-    const provider = mockObject<IProvider>({
-      async callMethod() {
+    const provider = {
+      callMethod: vi.fn(async () => {
         throw new Error('foo bar')
-      },
-    })
+      }),
+    } as unknown as IProvider
     const address = ChainSpecificAddress.random()
     const result = await handler.execute(provider, address)
     expect(result).toStrictEqual({
@@ -76,11 +73,11 @@ describe(SimpleMethodHandler.name, () => {
     const fragment = toFunctionFragment(method)
     const handler = new SimpleMethodHandler(method)
 
-    const provider = mockObject<IProvider>({
-      async callMethod<T>() {
+    const provider = {
+      callMethod: vi.fn(async <T>() => {
         return 1 as T
-      },
-    })
+      }),
+    } as unknown as IProvider
     const address = ChainSpecificAddress.random()
     const result = await handler.execute(provider, address)
     expect(result).toStrictEqual({

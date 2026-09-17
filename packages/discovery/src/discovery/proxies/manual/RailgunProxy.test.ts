@@ -6,7 +6,6 @@ import {
   Hash256,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { type providers, utils } from 'ethers'
 import { describe, expect, it, vi } from 'vitest'
 import type { IProvider } from '../../provider/IProvider'
@@ -74,7 +73,7 @@ describe(getRailgunProxy.name, () => {
         return match[1]
       }
 
-    return mockObject<IProvider>({
+    return {
       chain: 'ethereum',
       getStorageAsAddress: slotStub([
         [IMPLEMENTATION_SLOT, opts.implementation],
@@ -98,7 +97,7 @@ describe(getRailgunProxy.name, () => {
           timestamp: FIRST_BLOCK_TIMESTAMP + blockNumber,
         } as providers.Block),
       ),
-    })
+    } as unknown as IProvider
   }
 
   it('returns undefined when implementation is not set', async () => {

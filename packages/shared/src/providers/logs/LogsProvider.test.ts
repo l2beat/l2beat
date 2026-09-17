@@ -1,5 +1,4 @@
 import type { Log } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 import type { RpcClient } from '../../clients'
 import { LogsProvider } from './LogsProvider'
@@ -7,9 +6,9 @@ import { LogsProvider } from './LogsProvider'
 describe(LogsProvider.name, () => {
   describe(LogsProvider.prototype.getLogs.name, () => {
     it('returns log', async () => {
-      const rpc = mockObject<RpcClient>({
-        getLogs: async () => [log(1)],
-      })
+      const rpc = {
+        getLogs: vi.fn(async () => [log(1)]),
+      } as unknown as RpcClient
       const provider = new LogsProvider('chain', [rpc])
 
       const result = await provider.getLogs(1, 1)
@@ -24,15 +23,15 @@ describe(LogsProvider.name, () => {
     })
 
     it('calls other client when there are errors', async () => {
-      const rpc_one = mockObject<RpcClient>({
+      const rpc_one = {
         getLogs: vi.fn().mockRejectedValue(new Error()),
-      })
-      const rpc_two = mockObject<RpcClient>({
+      } as unknown as RpcClient
+      const rpc_two = {
         getLogs: vi.fn().mockRejectedValue(new Error()),
-      })
-      const rpc_three = mockObject<RpcClient>({
-        getLogs: async () => [log(1)],
-      })
+      } as unknown as RpcClient
+      const rpc_three = {
+        getLogs: vi.fn(async () => [log(1)]),
+      } as unknown as RpcClient
 
       const provider = new LogsProvider('chain', [rpc_one, rpc_two, rpc_three])
 
@@ -61,15 +60,15 @@ describe(LogsProvider.name, () => {
     })
 
     it('throws when ran out of fallbacks', async () => {
-      const rpc_one = mockObject<RpcClient>({
+      const rpc_one = {
         getLogs: vi.fn().mockRejectedValue(new Error()),
-      })
-      const rpc_two = mockObject<RpcClient>({
+      } as unknown as RpcClient
+      const rpc_two = {
         getLogs: vi.fn().mockRejectedValue(new Error()),
-      })
-      const rpc_three = mockObject<RpcClient>({
+      } as unknown as RpcClient
+      const rpc_three = {
         getLogs: vi.fn().mockRejectedValue(new Error('ERROR')),
-      })
+      } as unknown as RpcClient
 
       const provider = new LogsProvider('chain', [rpc_one, rpc_two, rpc_three])
 

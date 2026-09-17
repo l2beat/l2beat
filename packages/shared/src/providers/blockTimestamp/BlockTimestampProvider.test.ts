@@ -1,5 +1,4 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 import type { BlockIndexerClient } from '../../clients'
 import type { BlockProvider } from '../block/BlockProvider'
@@ -14,15 +13,15 @@ describe(BlockTimestampProvider.name, () => {
     BlockTimestampProvider.prototype.getBlockNumberAtOrBefore.name,
     () => {
       it('uses indexer client if available', async () => {
-        const indexerClient = mockObject<BlockIndexerClient>({
+        const indexerClient = {
           chain: CHAIN,
           getBlockNumberAtOrBefore: vi.fn().mockResolvedValueOnce(BLOCK_NUMBER),
-        })
+        } as unknown as BlockIndexerClient
 
-        const blockProvider = mockObject<BlockProvider>({
+        const blockProvider = {
           chain: CHAIN,
           getBlockNumberAtOrBefore: vi.fn(),
-        })
+        } as unknown as BlockProvider
 
         const provider = new BlockTimestampProvider({
           indexerClients: [indexerClient],
@@ -39,17 +38,17 @@ describe(BlockTimestampProvider.name, () => {
       })
 
       it('falls back to block provider if indexer client fails', async () => {
-        const indexerClient = mockObject<BlockIndexerClient>({
+        const indexerClient = {
           chain: CHAIN,
           getBlockNumberAtOrBefore: vi
             .fn()
             .mockRejectedValueOnce(new Error('Indexer error')),
-        })
+        } as unknown as BlockIndexerClient
 
-        const blockProvider = mockObject<BlockProvider>({
+        const blockProvider = {
           chain: CHAIN,
           getBlockNumberAtOrBefore: vi.fn().mockResolvedValueOnce(BLOCK_NUMBER),
-        })
+        } as unknown as BlockProvider
 
         const provider = new BlockTimestampProvider({
           indexerClients: [indexerClient],
@@ -66,15 +65,15 @@ describe(BlockTimestampProvider.name, () => {
       })
 
       it('uses block provider if no indexer client for chain', async () => {
-        const otherChainIndexer = mockObject<BlockIndexerClient>({
+        const otherChainIndexer = {
           chain: 'other-chain',
           getBlockNumberAtOrBefore: vi.fn(),
-        })
+        } as unknown as BlockIndexerClient
 
-        const blockProvider = mockObject<BlockProvider>({
+        const blockProvider = {
           chain: CHAIN,
           getBlockNumberAtOrBefore: vi.fn().mockResolvedValueOnce(BLOCK_NUMBER),
-        })
+        } as unknown as BlockProvider
 
         const provider = new BlockTimestampProvider({
           indexerClients: [otherChainIndexer],
@@ -93,17 +92,17 @@ describe(BlockTimestampProvider.name, () => {
       })
 
       it('throws error if indexer fails and no block provider available', async () => {
-        const indexerClient = mockObject<BlockIndexerClient>({
+        const indexerClient = {
           chain: CHAIN,
           getBlockNumberAtOrBefore: vi
             .fn()
             .mockRejectedValueOnce(new Error('Indexer error')),
-        })
+        } as unknown as BlockIndexerClient
 
-        const otherChainProvider = mockObject<BlockProvider>({
+        const otherChainProvider = {
           chain: 'other-chain',
           getBlockNumberAtOrBefore: vi.fn(),
-        })
+        } as unknown as BlockProvider
 
         const provider = new BlockTimestampProvider({
           indexerClients: [indexerClient],
@@ -116,15 +115,15 @@ describe(BlockTimestampProvider.name, () => {
       })
 
       it('throws error if no data sources available for chain', async () => {
-        const otherChainIndexer = mockObject<BlockIndexerClient>({
+        const otherChainIndexer = {
           chain: 'other-chain',
           getBlockNumberAtOrBefore: vi.fn(),
-        })
+        } as unknown as BlockIndexerClient
 
-        const otherChainProvider = mockObject<BlockProvider>({
+        const otherChainProvider = {
           chain: 'other-chain',
           getBlockNumberAtOrBefore: vi.fn(),
-        })
+        } as unknown as BlockProvider
 
         const provider = new BlockTimestampProvider({
           indexerClients: [otherChainIndexer],

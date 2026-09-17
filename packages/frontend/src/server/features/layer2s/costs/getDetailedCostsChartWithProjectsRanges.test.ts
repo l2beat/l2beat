@@ -1,7 +1,6 @@
 import type { AggregatedL2CostRecord, Database } from '@l2beat/database'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import { getCostsChartData } from './getDetailedCostsChartWithProjectsRanges'
 
 const DAY = UnixTime.DAY
@@ -135,9 +134,9 @@ describe(getCostsChartData.name, () => {
 function repositoryMock(
   records: AggregatedL2CostRecord[],
 ): Database['aggregatedL2Cost'] {
-  return mockObject<Database['aggregatedL2Cost']>({
-    getByProjectsAndTimeRange: async () => records,
-  })
+  return {
+    getByProjectsAndTimeRange: vi.fn(async () => records),
+  } as unknown as Database['aggregatedL2Cost']
 }
 
 function record(

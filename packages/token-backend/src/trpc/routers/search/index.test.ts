@@ -1,5 +1,4 @@
 import type { Database, TokenDatabase } from '@l2beat/database'
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 import type { TokenIngestionProcessor } from '../../../ingestion/TokenIngestionProcessor'
 import type { AbstractTokenRecord } from '../../../schemas/AbstractToken'
@@ -20,17 +19,17 @@ describe('searchRouter', () => {
           deploymentTimestamp: 0,
         },
       ]
-      const mockTokenDb = mockObject<TokenDatabase>({
-        deployedToken: mockObject<TokenDatabase['deployedToken']>({
+      const mockTokenDb = {
+        deployedToken: {
           getAll: vi.fn().mockResolvedValue(deployedTokens),
-        }),
-        abstractToken: mockObject<TokenDatabase['abstractToken']>({
+        } as unknown as TokenDatabase['deployedToken'],
+        abstractToken: {
           getAll: vi.fn().mockResolvedValue([]),
-        }),
-        chain: mockObject<TokenDatabase['chain']>({
+        } as unknown as TokenDatabase['abstractToken'],
+        chain: {
           getAll: vi.fn().mockResolvedValue([]),
-        }),
-      })
+        } as unknown as TokenDatabase['chain'],
+      } as unknown as TokenDatabase
 
       const caller = createRouter(mockTokenDb)
       const result = await caller.all(
@@ -83,17 +82,17 @@ describe('searchRouter', () => {
       const mockGetAllDeployed = vi.fn().mockResolvedValue(deployedTokens)
       const mockGetAllAbstract = vi.fn().mockResolvedValue(abstractTokens)
       const mockGetAllChains = vi.fn().mockResolvedValue([])
-      const mockTokenDb = mockObject<TokenDatabase>({
-        deployedToken: mockObject<TokenDatabase['deployedToken']>({
+      const mockTokenDb = {
+        deployedToken: {
           getAll: mockGetAllDeployed,
-        }),
-        abstractToken: mockObject<TokenDatabase['abstractToken']>({
+        } as unknown as TokenDatabase['deployedToken'],
+        abstractToken: {
           getAll: mockGetAllAbstract,
-        }),
-        chain: mockObject<TokenDatabase['chain']>({
+        } as unknown as TokenDatabase['abstractToken'],
+        chain: {
           getAll: mockGetAllChains,
-        }),
-      })
+        } as unknown as TokenDatabase['chain'],
+      } as unknown as TokenDatabase
 
       const caller = createRouter(mockTokenDb)
       const result = await caller.all('bitcoin')
@@ -106,17 +105,17 @@ describe('searchRouter', () => {
     })
 
     it('returns empty arrays when no tokens exist', async () => {
-      const mockTokenDb = mockObject<TokenDatabase>({
-        deployedToken: mockObject<TokenDatabase['deployedToken']>({
+      const mockTokenDb = {
+        deployedToken: {
           getAll: vi.fn().mockResolvedValue([]),
-        }),
-        abstractToken: mockObject<TokenDatabase['abstractToken']>({
+        } as unknown as TokenDatabase['deployedToken'],
+        abstractToken: {
           getAll: vi.fn().mockResolvedValue([]),
-        }),
-        chain: mockObject<TokenDatabase['chain']>({
+        } as unknown as TokenDatabase['abstractToken'],
+        chain: {
           getAll: vi.fn().mockResolvedValue([]),
-        }),
-      })
+        } as unknown as TokenDatabase['chain'],
+      } as unknown as TokenDatabase
 
       const caller = createRouter(mockTokenDb)
       const result = await caller.all('test')
@@ -145,17 +144,17 @@ describe('searchRouter', () => {
         abstractTokenId: null,
         deploymentTimestamp: 0,
       }))
-      const mockTokenDb = mockObject<TokenDatabase>({
-        deployedToken: mockObject<TokenDatabase['deployedToken']>({
+      const mockTokenDb = {
+        deployedToken: {
           getAll: vi.fn().mockResolvedValue(deployedTokens),
-        }),
-        abstractToken: mockObject<TokenDatabase['abstractToken']>({
+        } as unknown as TokenDatabase['deployedToken'],
+        abstractToken: {
           getAll: vi.fn().mockResolvedValue(abstractTokens),
-        }),
-        chain: mockObject<TokenDatabase['chain']>({
+        } as unknown as TokenDatabase['abstractToken'],
+        chain: {
           getAll: vi.fn().mockResolvedValue([]),
-        }),
-      })
+        } as unknown as TokenDatabase['chain'],
+      } as unknown as TokenDatabase
 
       const caller = createRouter(mockTokenDb)
       const result = await caller.all('token')
@@ -189,17 +188,17 @@ describe('searchRouter', () => {
           apis: null,
         },
       ]
-      const mockTokenDb = mockObject<TokenDatabase>({
-        deployedToken: mockObject<TokenDatabase['deployedToken']>({
+      const mockTokenDb = {
+        deployedToken: {
           getAll: vi.fn().mockResolvedValue([]),
-        }),
-        abstractToken: mockObject<TokenDatabase['abstractToken']>({
+        } as unknown as TokenDatabase['deployedToken'],
+        abstractToken: {
           getAll: vi.fn().mockResolvedValue([]),
-        }),
-        chain: mockObject<TokenDatabase['chain']>({
+        } as unknown as TokenDatabase['abstractToken'],
+        chain: {
           getAll: vi.fn().mockResolvedValue(chains),
-        }),
-      })
+        } as unknown as TokenDatabase['chain'],
+      } as unknown as TokenDatabase
 
       const caller = createRouter(mockTokenDb)
       const result = await caller.all('ethereum')
@@ -218,9 +217,9 @@ function createRouter(mockTokenDb: TokenDatabase) {
       email: 'test@example.com',
       permissions: ['read', 'write'],
     },
-    db: mockObject<Database>({}),
+    db: {} as unknown as Database,
     tokenDb: mockTokenDb,
-    tokenIngestionProcessor: mockObject<TokenIngestionProcessor>({}),
+    tokenIngestionProcessor: {} as unknown as TokenIngestionProcessor,
   })
 }
 

@@ -4,7 +4,6 @@ import {
   ChainSpecificAddress,
   EthereumAddress,
 } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { utils } from 'ethers'
 import { describe, expect, it, vi } from 'vitest'
 
@@ -72,7 +71,7 @@ describe(FunctionSelectorDecoder.name, () => {
   describe(FunctionSelectorDecoder.prototype.fetchTargets.name, () => {
     it('can fetch a single target address that is not a proxy', async () => {
       const target = ChainSpecificAddress.random()
-      const provider = mockObject<IProvider>({
+      const provider = {
         chain: 'ethereum',
         getBytecode: vi.fn().mockResolvedValue(Bytes.fromHex('0xdeadbeef')),
         getDeployment: vi.fn().mockResolvedValue(undefined),
@@ -86,7 +85,7 @@ describe(FunctionSelectorDecoder.name, () => {
           abi: [],
           source: 'name',
         }),
-      })
+      } as unknown as IProvider
       const decoder = new FunctionSelectorDecoder(provider)
 
       await decoder.fetchTargets([target])
@@ -98,7 +97,7 @@ describe(FunctionSelectorDecoder.name, () => {
     it('can fetch a two target addresses that are not a proxy', async () => {
       const target1 = ChainSpecificAddress.random()
       const target2 = ChainSpecificAddress.random()
-      const provider = mockObject<IProvider>({
+      const provider = {
         chain: 'ethereum',
         getBytecode: vi.fn().mockResolvedValue(Bytes.fromHex('0xdeadbeef')),
         getDeployment: vi.fn().mockResolvedValue(undefined),
@@ -112,7 +111,7 @@ describe(FunctionSelectorDecoder.name, () => {
           abi: [],
           source: 'name',
         }),
-      })
+      } as unknown as IProvider
       const decoder = new FunctionSelectorDecoder(provider)
 
       await decoder.fetchTargets([target1, target2])
@@ -125,7 +124,7 @@ describe(FunctionSelectorDecoder.name, () => {
     it('can fetch a single target address that is an eip1967 proxy', async () => {
       const target = ChainSpecificAddress.random()
       const implementation = ChainSpecificAddress.random()
-      const provider = mockObject<IProvider>({
+      const provider = {
         chain: 'ethereum',
         getBytecode: vi.fn().mockResolvedValue(Bytes.fromHex('0xdeadbeef')),
         getDeployment: vi.fn().mockResolvedValue(undefined),
@@ -138,7 +137,7 @@ describe(FunctionSelectorDecoder.name, () => {
           abi: [],
           source: 'name',
         }),
-      })
+      } as unknown as IProvider
       const decoder = new FunctionSelectorDecoder(provider)
 
       await decoder.fetchTargets([target])
@@ -152,7 +151,7 @@ describe(FunctionSelectorDecoder.name, () => {
       const target = ChainSpecificAddress.random()
       const implementation1 = EthereumAddress.random()
       const implementation2 = EthereumAddress.random()
-      const provider = mockObject<IProvider>({
+      const provider = {
         chain: 'ethereum',
         getBytecode: vi.fn().mockResolvedValue(Bytes.fromHex('0xdeadbeef')),
         getDeployment: vi.fn().mockResolvedValue(undefined),
@@ -169,7 +168,7 @@ describe(FunctionSelectorDecoder.name, () => {
           source: 'name',
         }),
         getLogs: vi.fn().mockResolvedValue([]),
-      })
+      } as unknown as IProvider
       const decoder = new FunctionSelectorDecoder(provider)
 
       await decoder.fetchTargets([target])
@@ -191,7 +190,7 @@ describe(FunctionSelectorDecoder.name, () => {
       const target2 = ChainSpecificAddress.random()
       const implementation1 = ChainSpecificAddress.random()
       const implementation2 = ChainSpecificAddress.random()
-      const provider = mockObject<IProvider>({
+      const provider = {
         chain: 'ethereum',
         getBytecode: vi.fn().mockResolvedValue(Bytes.fromHex('0xdeadbeef')),
         getDeployment: vi.fn().mockResolvedValue(undefined),
@@ -209,7 +208,7 @@ describe(FunctionSelectorDecoder.name, () => {
           abi: [],
           source: 'name',
         }),
-      })
+      } as unknown as IProvider
       const decoder = new FunctionSelectorDecoder(provider)
 
       await decoder.fetchTargets([target1, target2])
@@ -232,7 +231,7 @@ describe(FunctionSelectorDecoder.name, () => {
       const implementation2_r = ChainSpecificAddress.address(implementation2)
       const implementation3_r = ChainSpecificAddress.address(implementation3)
       const implementation4_r = ChainSpecificAddress.address(implementation4)
-      const provider = mockObject<IProvider>({
+      const provider = {
         chain: 'ethereum',
         getBytecode: vi.fn().mockResolvedValue(Bytes.fromHex('0xdeadbeef')),
         getDeployment: vi.fn().mockResolvedValue(undefined),
@@ -252,7 +251,7 @@ describe(FunctionSelectorDecoder.name, () => {
           source: 'name',
         }),
         getLogs: vi.fn().mockResolvedValue([]),
-      })
+      } as unknown as IProvider
       const decoder = new FunctionSelectorDecoder(provider)
 
       await decoder.fetchTargets([target1, target2])
@@ -274,7 +273,7 @@ describe(FunctionSelectorDecoder.name, () => {
       const implementation3 = ChainSpecificAddress.random()
       const implementation2_r = ChainSpecificAddress.address(implementation2)
       const implementation3_r = ChainSpecificAddress.address(implementation3)
-      const provider = mockObject<IProvider>({
+      const provider = {
         chain: 'ethereum',
         getBytecode: vi.fn().mockResolvedValue(Bytes.fromHex('0xdeadbeef')),
         getDeployment: vi.fn().mockResolvedValue(undefined),
@@ -289,7 +288,7 @@ describe(FunctionSelectorDecoder.name, () => {
           abi: [],
           source: 'name',
         }),
-      })
+      } as unknown as IProvider
       const decoder = new FunctionSelectorDecoder(provider)
 
       await decoder.fetchTargets([target1, target2])
@@ -316,7 +315,7 @@ describe(FunctionSelectorDecoder.name, () => {
 
     it('can decode a single selector that is already known', async () => {
       const target = ChainSpecificAddress.random()
-      const provider = mockObject<IProvider>({
+      const provider = {
         chain: 'ethereum',
         getBytecode: vi.fn().mockResolvedValue(Bytes.fromHex('0xdeadbeef')),
         getDeployment: vi.fn().mockResolvedValue(undefined),
@@ -330,7 +329,7 @@ describe(FunctionSelectorDecoder.name, () => {
           abi: [FunctionDeclA, FunctionDeclB],
           source: 'name',
         }),
-      })
+      } as unknown as IProvider
       const decoder = new FunctionSelectorDecoder(provider)
 
       await decoder.fetchTargets([target])
@@ -343,7 +342,7 @@ describe(FunctionSelectorDecoder.name, () => {
 
     it('handles decoding a wrong selector in a contract that is already known', async () => {
       const target = ChainSpecificAddress.random()
-      const provider = mockObject<IProvider>({
+      const provider = {
         chain: 'ethereum',
         getBytecode: vi.fn().mockResolvedValue(Bytes.fromHex('0xdeadbeef')),
         getDeployment: vi.fn().mockResolvedValue(undefined),
@@ -357,7 +356,7 @@ describe(FunctionSelectorDecoder.name, () => {
           abi: [FunctionDeclB],
           source: 'name',
         }),
-      })
+      } as unknown as IProvider
       const decoder = new FunctionSelectorDecoder(provider)
 
       await decoder.fetchTargets([target])
@@ -370,7 +369,7 @@ describe(FunctionSelectorDecoder.name, () => {
 
     it('can decode a single selector that is not known', async () => {
       const target = ChainSpecificAddress.random()
-      const provider = mockObject<IProvider>({
+      const provider = {
         chain: 'ethereum',
         getBytecode: vi.fn().mockResolvedValue(Bytes.fromHex('0xdeadbeef')),
         getDeployment: vi.fn().mockResolvedValue(undefined),
@@ -384,7 +383,7 @@ describe(FunctionSelectorDecoder.name, () => {
           abi: [FunctionDeclB],
           source: 'name',
         }),
-      })
+      } as unknown as IProvider
       const decoder = new FunctionSelectorDecoder(provider)
 
       const result = await decoder.decodeSelector(target, FunctionSigA)
@@ -396,7 +395,7 @@ describe(FunctionSelectorDecoder.name, () => {
 
     it('handles decoding a wrong selector in a contract that is not known', async () => {
       const target = ChainSpecificAddress.random()
-      const provider = mockObject<IProvider>({
+      const provider = {
         chain: 'ethereum',
         getBytecode: vi.fn().mockResolvedValue(Bytes.fromHex('0xdeadbeef')),
         getDeployment: vi.fn().mockResolvedValue(undefined),
@@ -410,7 +409,7 @@ describe(FunctionSelectorDecoder.name, () => {
           abi: [FunctionDeclB],
           source: 'name',
         }),
-      })
+      } as unknown as IProvider
       const decoder = new FunctionSelectorDecoder(provider)
 
       const result = await decoder.decodeSelector(target, FunctionSigA)
@@ -428,7 +427,7 @@ describe(FunctionSelectorDecoder.name, () => {
       const implementation3 = ChainSpecificAddress.random()
       const implementation2_r = ChainSpecificAddress.address(implementation2)
       const implementation3_r = ChainSpecificAddress.address(implementation3)
-      const provider = mockObject<IProvider>({
+      const provider = {
         chain: 'ethereum',
         getBytecode: vi.fn().mockResolvedValue(Bytes.fromHex('0xdeadbeef')),
         getDeployment: vi.fn().mockResolvedValue(undefined),
@@ -446,7 +445,7 @@ describe(FunctionSelectorDecoder.name, () => {
             [implementation3]: [FunctionDeclC],
           }),
         ),
-      })
+      } as unknown as IProvider
       const decoder = new FunctionSelectorDecoder(provider)
 
       await decoder.fetchTargets([target1])

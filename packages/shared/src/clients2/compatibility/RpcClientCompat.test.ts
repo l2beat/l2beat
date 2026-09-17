@@ -1,5 +1,4 @@
 import { EthereumAddress } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 import type { EthRpcClient, RpcBlock } from '../EthRpcClient'
 import { RpcClientCompat } from './RpcClientCompat'
@@ -16,7 +15,7 @@ describe(RpcClientCompat.name, () => {
       } as unknown as RpcBlock
       const getBlockByNumber = vi.fn().mockResolvedValue(header)
       const client = new RpcClientCompat(
-        mockObject<EthRpcClient>({ getBlockByNumber }),
+        { getBlockByNumber } as unknown as EthRpcClient,
         'chain',
       )
 
@@ -31,7 +30,7 @@ describe(RpcClientCompat.name, () => {
     it('passes positional topic filters through unchanged', async () => {
       const getLogs = vi.fn<EthRpcClient['getLogs']>().mockResolvedValue([])
       const client = new RpcClientCompat(
-        mockObject<EthRpcClient>({ getLogs }),
+        { getLogs } as unknown as EthRpcClient,
         'ethereum',
       )
       const addresses = [
@@ -67,7 +66,7 @@ describe(RpcClientCompat.name, () => {
           return block(Number(blockNumber))
         })
       const client = new RpcClientCompat(
-        mockObject<EthRpcClient>({ getBlockByNumber }),
+        { getBlockByNumber } as unknown as EthRpcClient,
         'ethereum',
       )
       const blockNumbers = Array.from({ length: 26 }, (_, index) => index + 1)
@@ -87,9 +86,9 @@ describe(RpcClientCompat.name, () => {
 
     it('rejects a mismatched block number', async () => {
       const client = new RpcClientCompat(
-        mockObject<EthRpcClient>({
+        {
           getBlockByNumber: vi.fn().mockResolvedValue(block(2)),
-        }),
+        } as unknown as EthRpcClient,
         'ethereum',
       )
 

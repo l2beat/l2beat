@@ -1,5 +1,4 @@
 import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 
 import { type CallProvider, MulticallClient } from './MulticallClient'
@@ -34,12 +33,12 @@ describe(MulticallClient.name, () => {
 
   it('falls back to individual requests for old block numbers', async () => {
     const calls: Call[] = []
-    const discoveryProvider = mockObject<CallProvider>({
-      async call(address, data) {
+    const discoveryProvider = {
+      call: vi.fn(async (address, data) => {
         calls.push({ address: address, data })
         return data
-      },
-    })
+      }),
+    } as unknown as CallProvider
 
     const multicallClient = new MulticallClient(
       discoveryProvider,
@@ -69,8 +68,8 @@ describe(MulticallClient.name, () => {
 
   it('uses multicall for new blocks', async () => {
     const calls: Call[] = []
-    const discoveryProvider = mockObject<CallProvider>({
-      async call(address, data) {
+    const discoveryProvider = {
+      call: vi.fn(async (address, data) => {
         calls.push({ address, data })
         return Bytes.fromHex(
           multicallInterface.encodeFunctionResult('tryAggregate', [
@@ -81,8 +80,8 @@ describe(MulticallClient.name, () => {
             ],
           ]),
         )
-      },
-    })
+      }),
+    } as unknown as CallProvider
 
     const multicallClient = new MulticallClient(
       discoveryProvider,
@@ -117,8 +116,8 @@ describe(MulticallClient.name, () => {
 
   it('batches calls', async () => {
     const calls: number[] = []
-    const discoveryProvider = mockObject<CallProvider>({
-      async call(_, data) {
+    const discoveryProvider = {
+      call: vi.fn(async (_, data) => {
         const callCount: number = multicallInterface.decodeFunctionData(
           'tryAggregate',
           data.toString(),
@@ -129,8 +128,8 @@ describe(MulticallClient.name, () => {
             new Array(callCount).fill(0).map(() => [true, '0x1234']),
           ]),
         )
-      },
-    })
+      }),
+    } as unknown as CallProvider
 
     const multicallClient = new MulticallClient(
       discoveryProvider,
@@ -150,8 +149,8 @@ describe(MulticallClient.name, () => {
   })
 
   it('offers a named interface', async () => {
-    const discoveryProvider = mockObject<CallProvider>({
-      async call() {
+    const discoveryProvider = {
+      call: vi.fn(async () => {
         return Bytes.fromHex(
           multicallInterface.encodeFunctionResult('tryAggregate', [
             [
@@ -160,8 +159,8 @@ describe(MulticallClient.name, () => {
             ],
           ]),
         )
-      },
-    })
+      }),
+    } as unknown as CallProvider
 
     const multicallClient = new MulticallClient(
       discoveryProvider,
@@ -194,14 +193,14 @@ describe(MulticallClient.name, () => {
       const error = new Error('bad') as any
       error['error'] = { error: { code: 123, message } }
 
-      const discoveryProvider = mockObject<CallProvider>({
+      const discoveryProvider = {
         call: vi
           .fn()
           .mockImplementationOnce(() => {
             throw error
           })
           .mockReturnValue(Bytes.fromHex('0x42ab')),
-      })
+      } as unknown as CallProvider
 
       const multicallClient = new MulticallClient(
         discoveryProvider,

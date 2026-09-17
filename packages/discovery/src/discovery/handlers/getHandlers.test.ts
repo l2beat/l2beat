@@ -1,4 +1,3 @@
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it } from 'vitest'
 
 import type { StructureContractConfig } from '../config/structureUtils'
@@ -9,10 +8,10 @@ import { SimpleMethodHandler } from './system/SimpleMethodHandler'
 import { StorageHandler } from './user/StorageHandler'
 
 describe(getHandlers.name, () => {
-  const mockConfig = mockObject<StructureContractConfig>({
+  const mockConfig = {
     fields: {},
     ignoreMethods: [],
-  })
+  } as unknown as StructureContractConfig
 
   it('returns empty handlers', () => {
     const handlers = getHandlers([], mockConfig)
@@ -89,10 +88,10 @@ describe(getHandlers.name, () => {
   })
 
   it('ignores methods added to ignore list', () => {
-    const config = mockObject<StructureContractConfig>({
+    const config = {
       ...mockConfig,
       ignoreMethods: ['foo', 'baz', 'flip'],
-    })
+    } as unknown as StructureContractConfig
 
     const handlers = getHandlers(
       [
@@ -114,13 +113,13 @@ describe(getHandlers.name, () => {
   })
 
   it('returns user handlers', () => {
-    const config = mockObject<StructureContractConfig>({
+    const config = {
       ...mockConfig,
       fields: {
         foo: { handler: { type: 'storage', slot: 1 } },
         bar: { handler: { type: 'storage', slot: 2 } },
       },
-    })
+    } as unknown as StructureContractConfig
 
     const handlers = getHandlers([], config)
     expect(handlers).toStrictEqual([
@@ -130,13 +129,13 @@ describe(getHandlers.name, () => {
   })
 
   it('prefers user handlers', () => {
-    const config = mockObject<StructureContractConfig>({
+    const config = {
       ...mockConfig,
       fields: {
         foo: { handler: { type: 'storage', slot: 1 } },
         bar: { handler: { type: 'storage', slot: 2 } },
       },
-    })
+    } as unknown as StructureContractConfig
 
     const handlers = getHandlers(
       [
@@ -153,7 +152,7 @@ describe(getHandlers.name, () => {
   })
 
   it('handles constructor errors', () => {
-    const config = mockObject<StructureContractConfig>({
+    const config = {
       ...mockConfig,
       fields: {
         foo: {
@@ -163,7 +162,7 @@ describe(getHandlers.name, () => {
           },
         },
       },
-    })
+    } as unknown as StructureContractConfig
 
     const handlers = getHandlers([], config)
     expect(handlers).toStrictEqual([

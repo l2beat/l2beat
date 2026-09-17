@@ -1,6 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
-import { mockObject } from '@l2beat/test-utils'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import type { HttpClient } from '../http/HttpClient'
 import { NearClient } from './NearClient'
 
@@ -16,9 +15,9 @@ describe(NearClient.name, () => {
         },
       }
 
-      const http = mockObject<HttpClient>({
-        fetch: async () => mockValidatorsResult,
-      })
+      const http = {
+        fetch: vi.fn(async () => mockValidatorsResult),
+      } as unknown as HttpClient
       const client = mockClient({ http })
 
       const result = await client.getValidatorsInfo()
@@ -40,11 +39,11 @@ describe(NearClient.name, () => {
     })
 
     it('throws error on invalid response', async () => {
-      const http = mockObject<HttpClient>({
-        fetch: async () => ({
+      const http = {
+        fetch: vi.fn(async () => ({
           invalid: 'response',
-        }),
-      })
+        })),
+      } as unknown as HttpClient
       const client = mockClient({ http })
 
       await expect(client.getValidatorsInfo()).rejects.toThrow()
@@ -54,9 +53,9 @@ describe(NearClient.name, () => {
   describe(NearClient.prototype.call.name, () => {
     it('makes JSON-RPC call with correct parameters', async () => {
       const mockResponse = { result: 'success' }
-      const http = mockObject<HttpClient>({
-        fetch: async () => mockResponse,
-      })
+      const http = {
+        fetch: vi.fn(async () => mockResponse),
+      } as unknown as HttpClient
       const client = mockClient({ http })
 
       const result = await client.call('test_method', ['param1', 'param2'])
@@ -79,9 +78,9 @@ describe(NearClient.name, () => {
 
     it('makes JSON-RPC call with custom timeout', async () => {
       const mockResponse = { result: 'success' }
-      const http = mockObject<HttpClient>({
-        fetch: async () => mockResponse,
-      })
+      const http = {
+        fetch: vi.fn(async () => mockResponse),
+      } as unknown as HttpClient
       const client = mockClient({ http, timeout: 5000 })
 
       const result = await client.call('test_method', [])
@@ -104,9 +103,9 @@ describe(NearClient.name, () => {
 
     it('makes JSON-RPC call with null params', async () => {
       const mockResponse = { result: null }
-      const http = mockObject<HttpClient>({
-        fetch: async () => mockResponse,
-      })
+      const http = {
+        fetch: vi.fn(async () => mockResponse),
+      } as unknown as HttpClient
       const client = mockClient({ http })
 
       const result = await client.call('validators', [null])
@@ -166,7 +165,7 @@ function mockClient(deps: {
   return new NearClient({
     sourceName: 'near',
     nearApiUrl: deps.nearApiUrl ?? 'API_URL',
-    http: deps.http ?? mockObject<HttpClient>({}),
+    http: deps.http ?? ({} as unknown as HttpClient),
     callsPerMinute: 100_000,
     retryStrategy: 'TEST',
     logger: Logger.SILENT,

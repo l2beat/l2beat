@@ -1,5 +1,4 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 import type { SvmBlock, SvmBlockClient } from '../../clients'
 import { SvmBlockProvider } from './SvmBlockProvider'
@@ -7,9 +6,9 @@ import { SvmBlockProvider } from './SvmBlockProvider'
 describe(SvmBlockProvider.name, () => {
   describe(SvmBlockProvider.prototype.getBlockWithTransactions.name, () => {
     it('returns block', async () => {
-      const client = mockObject<SvmBlockClient>({
-        getBlockWithTransactions: async () => svmBlock(1),
-      })
+      const client = {
+        getBlockWithTransactions: vi.fn(async () => svmBlock(1)),
+      } as unknown as SvmBlockClient
       const provider = new SvmBlockProvider('chain', [client])
 
       const result = await provider.getBlockWithTransactions(1)
@@ -19,15 +18,15 @@ describe(SvmBlockProvider.name, () => {
     })
 
     it('calls other client when there are errors', async () => {
-      const client_one = mockObject<SvmBlockClient>({
+      const client_one = {
         getBlockWithTransactions: vi.fn().mockRejectedValue(new Error()),
-      })
-      const client_two = mockObject<SvmBlockClient>({
+      } as unknown as SvmBlockClient
+      const client_two = {
         getBlockWithTransactions: vi.fn().mockRejectedValue(new Error()),
-      })
-      const client_three = mockObject<SvmBlockClient>({
-        getBlockWithTransactions: async () => svmBlock(1),
-      })
+      } as unknown as SvmBlockClient
+      const client_three = {
+        getBlockWithTransactions: vi.fn(async () => svmBlock(1)),
+      } as unknown as SvmBlockClient
 
       const provider = new SvmBlockProvider('chain', [
         client_one,
@@ -51,15 +50,15 @@ describe(SvmBlockProvider.name, () => {
     })
 
     it('throws when ran out of fallbacks', async () => {
-      const client_one = mockObject<SvmBlockClient>({
+      const client_one = {
         getBlockWithTransactions: vi.fn().mockRejectedValue(new Error()),
-      })
-      const client_two = mockObject<SvmBlockClient>({
+      } as unknown as SvmBlockClient
+      const client_two = {
         getBlockWithTransactions: vi.fn().mockRejectedValue(new Error()),
-      })
-      const client_three = mockObject<SvmBlockClient>({
+      } as unknown as SvmBlockClient
+      const client_three = {
         getBlockWithTransactions: vi.fn().mockRejectedValue(new Error('ERROR')),
-      })
+      } as unknown as SvmBlockClient
 
       const provider = new SvmBlockProvider('chain', [
         client_one,
@@ -85,10 +84,10 @@ describe(SvmBlockProvider.name, () => {
 
   describe(SvmBlockProvider.prototype.getSlotNumberAtOrBefore.name, () => {
     it('finds the closest slot number to given timestamp', async () => {
-      const client = mockObject<SvmBlockClient>({
-        getLatestSlotNumber: async () => 1000,
-        getSlotTime: async (n: number) => ({ timestamp: n * 100 }),
-      })
+      const client = {
+        getLatestSlotNumber: vi.fn(async () => 1000),
+        getSlotTime: vi.fn(async (n: number) => ({ timestamp: n * 100 })),
+      } as unknown as SvmBlockClient
 
       const provider = new SvmBlockProvider('chain', [client])
 
@@ -101,15 +100,15 @@ describe(SvmBlockProvider.name, () => {
     })
 
     it('calls other client when there are errors', async () => {
-      const client = mockObject<SvmBlockClient>({
-        getLatestSlotNumber: async () => 1000,
+      const client = {
+        getLatestSlotNumber: vi.fn(async () => 1000),
         getSlotTime: vi.fn().mockRejectedValue(new Error('error')),
-      })
+      } as unknown as SvmBlockClient
 
-      const client2 = mockObject<SvmBlockClient>({
-        getLatestSlotNumber: async () => 1000,
-        getSlotTime: async (n: number) => ({ timestamp: n * 100 }),
-      })
+      const client2 = {
+        getLatestSlotNumber: vi.fn(async () => 1000),
+        getSlotTime: vi.fn(async (n: number) => ({ timestamp: n * 100 })),
+      } as unknown as SvmBlockClient
 
       const provider = new SvmBlockProvider('chain', [client, client2])
 
@@ -123,15 +122,15 @@ describe(SvmBlockProvider.name, () => {
     })
 
     it('throws error when run out of fallbacks', async () => {
-      const client = mockObject<SvmBlockClient>({
+      const client = {
         getLatestSlotNumber: vi.fn().mockRejectedValue(new Error('1')),
-      })
-      const client2 = mockObject<SvmBlockClient>({
+      } as unknown as SvmBlockClient
+      const client2 = {
         getLatestSlotNumber: vi.fn().mockRejectedValue(new Error('2')),
-      })
-      const client3 = mockObject<SvmBlockClient>({
+      } as unknown as SvmBlockClient
+      const client3 = {
         getLatestSlotNumber: vi.fn().mockRejectedValue(new Error('3')),
-      })
+      } as unknown as SvmBlockClient
 
       const provider = new SvmBlockProvider('chain', [client, client2, client3])
 

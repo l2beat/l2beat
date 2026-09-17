@@ -1,6 +1,5 @@
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 
 import type { IProvider } from '../../provider/IProvider'
 import { toFunctionFragment } from '../utils/toFunctionFragment'
@@ -179,22 +178,24 @@ describe(ArrayHandler.name, () => {
     ]
 
     it('calls the method "length" times', async () => {
-      const provider = mockObject<IProvider>({
+      const provider = {
         blockNumber: 123,
         chain: 'foo',
-        async callMethod<T>(
-          passedAddress: ChainSpecificAddress,
-          _abi: string,
-          data: unknown[],
-        ) {
-          expect(passedAddress).toStrictEqual(address)
+        callMethod: vi.fn(
+          async <T>(
+            passedAddress: ChainSpecificAddress,
+            _abi: string,
+            data: unknown[],
+          ) => {
+            expect(passedAddress).toStrictEqual(address)
 
-          const index = data[0] as number
-          expect(data).toStrictEqual([index])
+            const index = data[0] as number
+            expect(data).toStrictEqual([index])
 
-          return owners[index]!.toString() as T
-        },
-      })
+            return owners[index]!.toString() as T
+          },
+        ),
+      } as unknown as IProvider
 
       const handler = new ArrayHandler(
         'owners',
@@ -211,19 +212,21 @@ describe(ArrayHandler.name, () => {
     })
 
     it('passes the ignoreRelative field', async () => {
-      const provider = mockObject<IProvider>({
+      const provider = {
         blockNumber: 123,
         chain: 'foo',
-        async callMethod<T>(
-          passedAddress: ChainSpecificAddress,
-          _abi: string,
-          data: unknown[],
-        ) {
-          expect(passedAddress).toStrictEqual(address)
-          const index = data[0] as number
-          return owners[index]!.toString() as T
-        },
-      })
+        callMethod: vi.fn(
+          async <T>(
+            passedAddress: ChainSpecificAddress,
+            _abi: string,
+            data: unknown[],
+          ) => {
+            expect(passedAddress).toStrictEqual(address)
+            const index = data[0] as number
+            return owners[index]!.toString() as T
+          },
+        ),
+      } as unknown as IProvider
 
       const handler = new ArrayHandler(
         'owners',
@@ -240,19 +243,21 @@ describe(ArrayHandler.name, () => {
     })
 
     it('resolves the "length" field', async () => {
-      const provider = mockObject<IProvider>({
+      const provider = {
         blockNumber: 123,
         chain: 'foo',
-        async callMethod<T>(
-          passedAddress: ChainSpecificAddress,
-          _abi: string,
-          data: unknown[],
-        ) {
-          expect(passedAddress).toStrictEqual(address)
-          const index = data[0] as number
-          return owners[index]!.toString() as T
-        },
-      })
+        callMethod: vi.fn(
+          async <T>(
+            passedAddress: ChainSpecificAddress,
+            _abi: string,
+            data: unknown[],
+          ) => {
+            expect(passedAddress).toStrictEqual(address)
+            const index = data[0] as number
+            return owners[index]!.toString() as T
+          },
+        ),
+      } as unknown as IProvider
 
       const handler = new ArrayHandler(
         'owners',
@@ -271,22 +276,24 @@ describe(ArrayHandler.name, () => {
     })
 
     it('handles errors when length is present', async () => {
-      const provider = mockObject<IProvider>({
+      const provider = {
         blockNumber: 123,
         chain: 'foo',
-        async callMethod<T>(
-          passedAddress: ChainSpecificAddress,
-          _abi: string,
-          data: unknown[],
-        ) {
-          expect(passedAddress).toStrictEqual(address)
-          const index = data[0] as number
-          if (index === 1) {
-            throw new Error('Execution reverted')
-          }
-          return owners[index]!.toString() as T
-        },
-      })
+        callMethod: vi.fn(
+          async <T>(
+            passedAddress: ChainSpecificAddress,
+            _abi: string,
+            data: unknown[],
+          ) => {
+            expect(passedAddress).toStrictEqual(address)
+            const index = data[0] as number
+            if (index === 1) {
+              throw new Error('Execution reverted')
+            }
+            return owners[index]!.toString() as T
+          },
+        ),
+      } as unknown as IProvider
 
       const handler = new ArrayHandler(
         'owners',
@@ -301,22 +308,24 @@ describe(ArrayHandler.name, () => {
     })
 
     it('calls the method until revert without length', async () => {
-      const provider = mockObject<IProvider>({
+      const provider = {
         blockNumber: 123,
         chain: 'foo',
-        async callMethod<T>(
-          passedAddress: ChainSpecificAddress,
-          _abi: string,
-          data: unknown[],
-        ) {
-          expect(passedAddress).toStrictEqual(address)
-          const index = data[0] as number
-          if (index >= 3) {
-            throw new Error('Execution reverted')
-          }
-          return owners[index]!.toString() as T
-        },
-      })
+        callMethod: vi.fn(
+          async <T>(
+            passedAddress: ChainSpecificAddress,
+            _abi: string,
+            data: unknown[],
+          ) => {
+            expect(passedAddress).toStrictEqual(address)
+            const index = data[0] as number
+            if (index >= 3) {
+              throw new Error('Execution reverted')
+            }
+            return owners[index]!.toString() as T
+          },
+        ),
+      } as unknown as IProvider
 
       const handler = new ArrayHandler('owners', { type: 'array', method }, [])
       const result = await handler.execute(provider, address, {})
@@ -329,22 +338,24 @@ describe(ArrayHandler.name, () => {
     })
 
     it('handles non-revert errors without length', async () => {
-      const provider = mockObject<IProvider>({
+      const provider = {
         blockNumber: 123,
         chain: 'foo',
-        async callMethod<T>(
-          passedAddress: ChainSpecificAddress,
-          _abi: string,
-          data: unknown[],
-        ) {
-          expect(passedAddress).toStrictEqual(address)
-          const index = data[0] as number
-          if (index === 1) {
-            throw new Error('oops')
-          }
-          return owners[index]!.toString() as T
-        },
-      })
+        callMethod: vi.fn(
+          async <T>(
+            passedAddress: ChainSpecificAddress,
+            _abi: string,
+            data: unknown[],
+          ) => {
+            expect(passedAddress).toStrictEqual(address)
+            const index = data[0] as number
+            if (index === 1) {
+              throw new Error('oops')
+            }
+            return owners[index]!.toString() as T
+          },
+        ),
+      } as unknown as IProvider
 
       const handler = new ArrayHandler('owners', { type: 'array', method }, [])
       const result = await handler.execute(provider, address, {})
@@ -355,13 +366,13 @@ describe(ArrayHandler.name, () => {
     })
 
     it('has a builtin limit of 100', async () => {
-      const provider = mockObject<IProvider>({
+      const provider = {
         blockNumber: 123,
         chain: 'foo',
-        async callMethod<T>() {
+        callMethod: vi.fn(async <T>() => {
           return ChainSpecificAddress.ZERO('ethereum') as T
-        },
-      })
+        }),
+      } as unknown as IProvider
 
       const handler = new ArrayHandler('owners', { type: 'array', method }, [])
       const result = await handler.execute(provider, address, {})
@@ -374,13 +385,13 @@ describe(ArrayHandler.name, () => {
     })
 
     it('can have a different maxLength', async () => {
-      const provider = mockObject<IProvider>({
+      const provider = {
         blockNumber: 123,
         chain: 'foo',
-        async callMethod<T>() {
+        callMethod: vi.fn(async <T>() => {
           return ChainSpecificAddress.ZERO('ethereum') as T
-        },
-      })
+        }),
+      } as unknown as IProvider
 
       const handler = new ArrayHandler(
         'owners',
@@ -397,19 +408,21 @@ describe(ArrayHandler.name, () => {
     })
 
     it('calls indices if present', async () => {
-      const provider = mockObject<IProvider>({
+      const provider = {
         blockNumber: 123,
         chain: 'foo',
-        async callMethod<T>(
-          passedAddress: ChainSpecificAddress,
-          _abi: string,
-          data: unknown[],
-        ) {
-          expect(passedAddress).toStrictEqual(address)
-          const index = data[0] as number
-          return owners[index]!.toString() as T
-        },
-      })
+        callMethod: vi.fn(
+          async <T>(
+            passedAddress: ChainSpecificAddress,
+            _abi: string,
+            data: unknown[],
+          ) => {
+            expect(passedAddress).toStrictEqual(address)
+            const index = data[0] as number
+            return owners[index]!.toString() as T
+          },
+        ),
+      } as unknown as IProvider
 
       const handler = new ArrayHandler(
         'owners',
@@ -429,23 +442,25 @@ describe(ArrayHandler.name, () => {
         .fill(0)
         .map(() => ChainSpecificAddress.random())
 
-      const provider = mockObject<IProvider>({
+      const provider = {
         blockNumber: 123,
         chain: 'foo',
-        async callMethod<T>(
-          passedAddress: ChainSpecificAddress,
-          _abi: string,
-          data: unknown[],
-        ) {
-          expect(passedAddress).toStrictEqual(address)
-          // simulate random order of responses
-          if (Math.random() > 0.5) {
-            await new Promise((resolve) => setTimeout(resolve, 0))
-          }
-          const index = data[0] as number
-          return owners[index]!.toString() as T
-        },
-      })
+        callMethod: vi.fn(
+          async <T>(
+            passedAddress: ChainSpecificAddress,
+            _abi: string,
+            data: unknown[],
+          ) => {
+            expect(passedAddress).toStrictEqual(address)
+            // simulate random order of responses
+            if (Math.random() > 0.5) {
+              await new Promise((resolve) => setTimeout(resolve, 0))
+            }
+            const index = data[0] as number
+            return owners[index]!.toString() as T
+          },
+        ),
+      } as unknown as IProvider
 
       const handler = new ArrayHandler(
         'owners',
@@ -469,19 +484,21 @@ describe(ArrayHandler.name, () => {
     })
 
     it('resolves the "indices" field', async () => {
-      const provider = mockObject<IProvider>({
+      const provider = {
         blockNumber: 123,
         chain: 'foo',
-        async callMethod<T>(
-          passedAddress: ChainSpecificAddress,
-          _abi: string,
-          data: unknown[],
-        ) {
-          expect(passedAddress).toStrictEqual(address)
-          const index = data[0] as number
-          return owners[index]!.toString() as T
-        },
-      })
+        callMethod: vi.fn(
+          async <T>(
+            passedAddress: ChainSpecificAddress,
+            _abi: string,
+            data: unknown[],
+          ) => {
+            expect(passedAddress).toStrictEqual(address)
+            const index = data[0] as number
+            return owners[index]!.toString() as T
+          },
+        ),
+      } as unknown as IProvider
 
       const handler = new ArrayHandler(
         'owners',
@@ -507,19 +524,21 @@ describe(ArrayHandler.name, () => {
         toFunctionFragment(uint64Method),
       )
       const calledSelectors: bigint[] = []
-      const provider = mockObject<IProvider>({
+      const provider = {
         blockNumber: 123,
         chain: 'foo',
-        async callMethod<T>(
-          passedAddress: ChainSpecificAddress,
-          _abi: string,
-          data: unknown[],
-        ) {
-          expect(passedAddress).toStrictEqual(address)
-          calledSelectors.push(data[0] as bigint)
-          return (data[0] as bigint).toString() as T
-        },
-      })
+        callMethod: vi.fn(
+          async <T>(
+            passedAddress: ChainSpecificAddress,
+            _abi: string,
+            data: unknown[],
+          ) => {
+            expect(passedAddress).toStrictEqual(address)
+            calledSelectors.push(data[0] as bigint)
+            return (data[0] as bigint).toString() as T
+          },
+        ),
+      } as unknown as IProvider
 
       const handler = new ArrayHandler(
         'configs',

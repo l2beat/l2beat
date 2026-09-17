@@ -1,6 +1,5 @@
 import type { Project } from '@l2beat/config'
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it } from 'vitest'
 import type { ProjectChanges } from '~/server/features/projects-change-report/getProjectsChangeReport'
 import { getProjectVerification } from './getIsProjectVerified'
@@ -14,17 +13,17 @@ const stillUnverified = ChainSpecificAddress(
 
 describe(getProjectVerification.name, () => {
   it('filters out contracts that became verified', () => {
-    const project = mockObject<Project<'statuses', 'contracts'>>({
-      statuses: mockObject<Project<'statuses'>['statuses']>({
+    const project = {
+      statuses: {
         unverifiedContracts: [becameVerified, stillUnverified],
-      }),
+      } as unknown as Project<'statuses'>['statuses'],
       contracts: undefined,
-    })
-    const changes = mockObject<ProjectChanges>({
+    } as unknown as Project<'statuses', 'contracts'>
+    const changes = {
       becameVerifiedContracts: {
         ethereum: [ChainSpecificAddress.address(becameVerified)],
       },
-    })
+    } as unknown as ProjectChanges
 
     const result = getProjectVerification(project, changes)
 
@@ -35,17 +34,17 @@ describe(getProjectVerification.name, () => {
   })
 
   it('removes the warning when every contract became verified', () => {
-    const project = mockObject<Project<'statuses', 'contracts'>>({
-      statuses: mockObject<Project<'statuses'>['statuses']>({
+    const project = {
+      statuses: {
         unverifiedContracts: [becameVerified],
-      }),
+      } as unknown as Project<'statuses'>['statuses'],
       contracts: undefined,
-    })
-    const changes = mockObject<ProjectChanges>({
+    } as unknown as Project<'statuses', 'contracts'>
+    const changes = {
       becameVerifiedContracts: {
         ethereum: [ChainSpecificAddress.address(becameVerified)],
       },
-    })
+    } as unknown as ProjectChanges
 
     const result = getProjectVerification(project, changes)
 

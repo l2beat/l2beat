@@ -1,6 +1,5 @@
 import type { IndexerConfigurationRecord } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it } from 'vitest'
 import { getConfigurationsSyncedUntil } from './getConfigurationsSyncedUntil'
 
@@ -14,10 +13,10 @@ describe(getConfigurationsSyncedUntil.name, () => {
 
   it('returns undefined if no lastSyncedTimestamp', () => {
     const result = getConfigurationsSyncedUntil([
-      mockObject<IndexerConfigurationRecord>({
+      {
         currentHeight: null,
         maxHeight: null,
-      }),
+      } as unknown as IndexerConfigurationRecord,
     ])
 
     expect(result).toStrictEqual(undefined)
@@ -25,18 +24,18 @@ describe(getConfigurationsSyncedUntil.name, () => {
 
   it('returns earliest lastSyncedTimestamp of configurations without untilTimestamp', () => {
     const result = getConfigurationsSyncedUntil([
-      mockObject<IndexerConfigurationRecord>({
+      {
         currentHeight: null,
         maxHeight: null,
-      }),
-      mockObject<IndexerConfigurationRecord>({
+      } as unknown as IndexerConfigurationRecord,
+      {
         currentHeight: FROM,
         maxHeight: null,
-      }),
-      mockObject<IndexerConfigurationRecord>({
+      } as unknown as IndexerConfigurationRecord,
+      {
         currentHeight: FROM + 2 * UnixTime.HOUR,
         maxHeight: null,
-      }),
+      } as unknown as IndexerConfigurationRecord,
     ])
 
     expect(result).toStrictEqual(FROM)
@@ -44,22 +43,22 @@ describe(getConfigurationsSyncedUntil.name, () => {
 
   it('returns earliest lastSyncedTimestamp of configurations with untilTimestamp', () => {
     const result = getConfigurationsSyncedUntil([
-      mockObject<IndexerConfigurationRecord>({
+      {
         currentHeight: null,
         maxHeight: null,
-      }),
-      mockObject<IndexerConfigurationRecord>({
+      } as unknown as IndexerConfigurationRecord,
+      {
         currentHeight: FROM + 1 * UnixTime.HOUR,
         maxHeight: FROM + 5 * UnixTime.HOUR,
-      }),
-      mockObject<IndexerConfigurationRecord>({
+      } as unknown as IndexerConfigurationRecord,
+      {
         currentHeight: FROM + 2 * UnixTime.HOUR,
         maxHeight: FROM + 6 * UnixTime.HOUR,
-      }),
-      mockObject<IndexerConfigurationRecord>({
+      } as unknown as IndexerConfigurationRecord,
+      {
         currentHeight: FROM + 4 * UnixTime.HOUR,
         maxHeight: FROM + 6 * UnixTime.HOUR,
-      }),
+      } as unknown as IndexerConfigurationRecord,
     ])
 
     expect(result).toStrictEqual(FROM + 1 * UnixTime.HOUR)

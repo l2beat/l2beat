@@ -1,5 +1,4 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { utils } from 'ethers'
 import { describe, expect, it, vi } from 'vitest'
 import type { BeaconChainClient, RpcClient } from '../../clients'
@@ -16,7 +15,7 @@ describe(EthereumDaProvider.name, () => {
 
       const txHash = '0xtx1'
 
-      const mockRpcClient = mockObject<RpcClient>({
+      const mockRpcClient = {
         getBlock: vi.fn().mockResolvedValue({
           timestamp: UnixTime.fromDate(mockDate),
           number: 1,
@@ -37,10 +36,10 @@ describe(EthereumDaProvider.name, () => {
             topics: ['topic1-1'],
           },
         ]),
-      })
+      } as unknown as RpcClient
 
       const provider = new EthereumDaProvider(
-        mockObject<BeaconChainClient>(),
+        {} as unknown as BeaconChainClient,
         mockRpcClient,
         'ethereum',
       )
@@ -83,11 +82,11 @@ describe(EthereumDaProvider.name, () => {
         const versionedHash1 =
           '0x01' + utils.sha256(kzgCommitment1).substring(4)
 
-        const mockRpcClient = mockObject<RpcClient>({
+        const mockRpcClient = {
           getBlockParentBeaconRoot: vi.fn().mockResolvedValue('blockId'),
-        })
+        } as unknown as RpcClient
 
-        const mockBeaconChainClient = mockObject<BeaconChainClient>({
+        const mockBeaconChainClient = {
           getBlockSidecar: vi.fn().mockResolvedValue([
             {
               kzg_commitment: kzgCommitment1,
@@ -98,7 +97,7 @@ describe(EthereumDaProvider.name, () => {
               data: 'blob2',
             },
           ]),
-        })
+        } as unknown as BeaconChainClient
 
         const provider = new EthereumDaProvider(
           mockBeaconChainClient,
@@ -123,11 +122,11 @@ describe(EthereumDaProvider.name, () => {
         const kzgCommitment1 = generateKzgCommitment()
         const kzgCommitment2 = generateKzgCommitment()
 
-        const mockRpcClient = mockObject<RpcClient>({
+        const mockRpcClient = {
           getBlockParentBeaconRoot: vi.fn().mockResolvedValue('blockId'),
-        })
+        } as unknown as RpcClient
 
-        const mockBeaconChainClient = mockObject<BeaconChainClient>({
+        const mockBeaconChainClient = {
           getBlockSidecar: vi.fn().mockResolvedValue([
             {
               kzg_commitment: kzgCommitment1,
@@ -138,7 +137,7 @@ describe(EthereumDaProvider.name, () => {
               data: 'blob2',
             },
           ]),
-        })
+        } as unknown as BeaconChainClient
 
         const provider = new EthereumDaProvider(
           mockBeaconChainClient,
@@ -158,13 +157,13 @@ describe(EthereumDaProvider.name, () => {
 
   describe(EthereumDaProvider.prototype.getBlockTimestamp.name, () => {
     it('returns the timestamp of the block', async () => {
-      const mockRpcClient = mockObject<RpcClient>({
+      const mockRpcClient = {
         getBlock: vi
           .fn()
           .mockResolvedValue({ timestamp: UnixTime(1_700_000_000) }),
-      })
+      } as unknown as RpcClient
       const provider = new EthereumDaProvider(
-        mockObject<BeaconChainClient>(),
+        {} as unknown as BeaconChainClient,
         mockRpcClient,
         'ethereum',
       )
@@ -182,17 +181,17 @@ describe(EthereumDaProvider.name, () => {
 
   describe(EthereumDaProvider.prototype.getRelevantBlobs.name, () => {
     it('should return empty blobs for type 2 transaction', async () => {
-      const mockRpcClient = mockObject<RpcClient>({
+      const mockRpcClient = {
         getBlockParentBeaconRoot: vi.fn().mockResolvedValue('blockId'),
         getTransaction: vi.fn().mockReturnValue({
           type: '0x2',
           blockNumber: 1,
         }),
-      })
+      } as unknown as RpcClient
 
-      const mockBeaconChainClient = mockObject<BeaconChainClient>({
+      const mockBeaconChainClient = {
         getBlockSidecar: vi.fn().mockResolvedValue([]),
-      })
+      } as unknown as BeaconChainClient
 
       const provider = new EthereumDaProvider(
         mockBeaconChainClient,
@@ -218,16 +217,16 @@ describe(EthereumDaProvider.name, () => {
         data: 'blob2',
       }
 
-      const mockRpcClient = mockObject<RpcClient>({
+      const mockRpcClient = {
         getBlockParentBeaconRoot: vi.fn().mockResolvedValue('blockId'),
         getTransaction: vi.fn().mockReturnValue({
           type: '0x3',
           blockNumber: 1,
           blobVersionedHashes: [versionedHash1, versionedHash2],
         }),
-      })
+      } as unknown as RpcClient
 
-      const mockBeaconChainClient = mockObject<BeaconChainClient>({
+      const mockBeaconChainClient = {
         getBlockSidecar: vi.fn().mockResolvedValue([
           blob1,
           blob2,
@@ -236,7 +235,7 @@ describe(EthereumDaProvider.name, () => {
             data: 'blob3',
           },
         ]),
-      })
+      } as unknown as BeaconChainClient
 
       const provider = new EthereumDaProvider(
         mockBeaconChainClient,
@@ -249,15 +248,15 @@ describe(EthereumDaProvider.name, () => {
     })
 
     it('should throw on missing blobVersionedHashes', async () => {
-      const mockRpcClient = mockObject<RpcClient>({
+      const mockRpcClient = {
         getBlockParentBeaconRoot: vi.fn().mockResolvedValue('blockId'),
         getTransaction: vi.fn().mockReturnValue({
           type: '0x3',
           blockNumber: 1,
         }),
-      })
+      } as unknown as RpcClient
 
-      const mockBeaconChainClient = mockObject<BeaconChainClient>()
+      const mockBeaconChainClient = {} as unknown as BeaconChainClient
 
       const provider = new EthereumDaProvider(
         mockBeaconChainClient,

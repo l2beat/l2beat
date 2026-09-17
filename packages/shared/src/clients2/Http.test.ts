@@ -1,6 +1,5 @@
 import type { Logger } from '@l2beat/backend-tools'
-import { mockObject } from '@l2beat/test-utils'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import type { FetchInit } from '../clients/http/fetchWithTimeout'
 import {
   UNCATEGORIZED_METRICS_LABEL,
@@ -22,7 +21,7 @@ class StubHttp extends Http {
 
 describe(Http.name, () => {
   it('attributes metrics and limiter waits to the active rpc metrics context', async () => {
-    const logger = mockObject<Logger>({ info: () => {} })
+    const logger = { info: vi.fn(() => {}) } as unknown as Logger
     const http = new StubHttp({
       logger,
       metricsEnabled: true,

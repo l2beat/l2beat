@@ -1,5 +1,4 @@
 import { Logger } from '@l2beat/backend-tools'
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 import type { HttpClient } from '../http/HttpClient'
 import { PolkadotRpcClient } from './PolkadotRpcClient'
@@ -12,12 +11,12 @@ describe(PolkadotRpcClient.name, () => {
         header: { number: mockBlockNumber },
       })
 
-      const http = mockObject<HttpClient>({
+      const http = {
         fetch: vi
           .fn()
           .mockResolvedValueOnce({ result: '0x00001' })
           .mockResolvedValueOnce(mockResponse),
-      })
+      } as unknown as HttpClient
 
       const rpc = mockClient({ http, generateId: () => 'unique-id' })
       const result = await rpc.getLatestBlockNumber()
@@ -34,12 +33,12 @@ describe(PolkadotRpcClient.name, () => {
       })
       const mockBlockHash = '0x00001'
 
-      const http = mockObject<HttpClient>({
+      const http = {
         fetch: vi
           .fn()
           .mockResolvedValueOnce({ result: mockBlockHash })
           .mockResolvedValueOnce(mockResponse),
-      })
+      } as unknown as HttpClient
 
       const rpc = mockClient({ http, generateId: () => 'unique-id' })
       const result = await rpc.getBlockWithTransactions(+mockBlockNumber)
@@ -64,12 +63,12 @@ describe(PolkadotRpcClient.name, () => {
       })
       const mockBlockHash = '0x00001'
 
-      const http = mockObject<HttpClient>({
+      const http = {
         fetch: vi
           .fn()
           .mockResolvedValueOnce({ result: mockBlockHash })
           .mockResolvedValueOnce(mockResponse),
-      })
+      } as unknown as HttpClient
 
       const rpc = mockClient({ http, generateId: () => 'unique-id' })
       const result = await rpc.getBlockWithTransactions('latest')
@@ -93,19 +92,19 @@ describe(PolkadotRpcClient.name, () => {
       const mockBlockHash = '0xhash'
       const mockResponse = mockBlockResponse()
 
-      const http = mockObject<HttpClient>({
+      const http = {
         fetch: vi
           .fn()
           .mockResolvedValueOnce({
             result: mockBlockHash,
           })
           .mockResolvedValueOnce(mockResponse),
-      })
+      } as unknown as HttpClient
       const rpc = mockClient({ http, generateId: () => 'unique-id' })
 
       const result = await rpc.getBlock()
 
-      expect(http.fetch.mock.calls[0][1]?.body).toStrictEqual(
+      expect(vi.mocked(http.fetch).mock.calls[0][1]?.body).toStrictEqual(
         JSON.stringify({
           method: 'chain_getBlockHash',
           params: [],
@@ -114,7 +113,7 @@ describe(PolkadotRpcClient.name, () => {
         }),
       )
 
-      expect(http.fetch.mock.calls[1][1]?.body).toStrictEqual(
+      expect(vi.mocked(http.fetch).mock.calls[1][1]?.body).toStrictEqual(
         JSON.stringify({
           method: 'chain_getBlock',
           params: [mockBlockHash],
@@ -131,19 +130,19 @@ describe(PolkadotRpcClient.name, () => {
       const mockBlockNumber = 123
       const mockResponse = mockBlockResponse()
 
-      const http = mockObject<HttpClient>({
+      const http = {
         fetch: vi
           .fn()
           .mockResolvedValueOnce({
             result: mockBlockHash,
           })
           .mockResolvedValueOnce(mockResponse),
-      })
+      } as unknown as HttpClient
       const rpc = mockClient({ http, generateId: () => 'unique-id' })
 
       const result = await rpc.getBlock(mockBlockNumber)
 
-      expect(http.fetch.mock.calls[0][1]?.body).toStrictEqual(
+      expect(vi.mocked(http.fetch).mock.calls[0][1]?.body).toStrictEqual(
         JSON.stringify({
           method: 'chain_getBlockHash',
           params: [mockBlockNumber],
@@ -152,7 +151,7 @@ describe(PolkadotRpcClient.name, () => {
         }),
       )
 
-      expect(http.fetch.mock.calls[1][1]?.body).toStrictEqual(
+      expect(vi.mocked(http.fetch).mock.calls[1][1]?.body).toStrictEqual(
         JSON.stringify({
           method: 'chain_getBlock',
           params: [mockBlockHash],
@@ -167,9 +166,9 @@ describe(PolkadotRpcClient.name, () => {
 
   describe(PolkadotRpcClient.prototype.query.name, () => {
     it('calls http client with correct params and returns data', async () => {
-      const http = mockObject<HttpClient>({
-        fetch: async () => 'data-returned-from-api',
-      })
+      const http = {
+        fetch: vi.fn(async () => 'data-returned-from-api'),
+      } as unknown as HttpClient
 
       const rpc = mockClient({ http, generateId: () => 'unique-id' })
 
@@ -224,7 +223,7 @@ function mockClient(deps: {
   return new PolkadotRpcClient({
     sourceName: 'chain',
     url: deps.url ?? 'API_URL',
-    http: deps.http ?? mockObject<HttpClient>({}),
+    http: deps.http ?? ({} as unknown as HttpClient),
     callsPerMinute: 100_000,
     retryStrategy: 'TEST',
     logger: Logger.SILENT,

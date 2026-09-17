@@ -1,5 +1,4 @@
 import { CoingeckoId, getHourlyTimestamps, UnixTime } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 import type { CoingeckoClient } from '../../clients'
 import {
@@ -16,12 +15,12 @@ describe(CoingeckoQueryService.name, () => {
     CoingeckoQueryService.prototype.getUsdPriceHistoryHourly.name,
     () => {
       it('is called with correct parameters', async () => {
-        const coingeckoClient = mockObject<CoingeckoClient>({
+        const coingeckoClient = {
           getCoinMarketChartRange: vi.fn().mockReturnValue({
             marketCaps: [mock()],
             prices: [mock()],
           }),
-        })
+        } as unknown as CoingeckoClient
         const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
         await coingeckoQueryService.getUsdPriceHistoryHourly(
           CoingeckoId('weth'),
@@ -42,7 +41,7 @@ describe(CoingeckoQueryService.name, () => {
       it('handles regular hours range returned from API', async () => {
         const START = UnixTime.fromDate(new Date('2021-09-07T00:00:00Z'))
 
-        const coingeckoClient = mockObject<CoingeckoClient>({
+        const coingeckoClient = {
           getCoinMarketChartRange: vi.fn().mockReturnValue({
             prices: [
               { date: UnixTime.toDate(START), value: 1200 },
@@ -57,7 +56,7 @@ describe(CoingeckoQueryService.name, () => {
             ],
             marketCaps: [mock(), mock(), mock()],
           }),
-        })
+        } as unknown as CoingeckoClient
         const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
         const prices = await coingeckoQueryService.getUsdPriceHistoryHourly(
           CoingeckoId('weth'),
@@ -74,7 +73,7 @@ describe(CoingeckoQueryService.name, () => {
       it('handles multiple calls to get hourly', async () => {
         const START = UnixTime.fromDate(new Date('2021-09-07T00:00:00Z'))
 
-        const coingeckoClient = mockObject<CoingeckoClient>({
+        const coingeckoClient = {
           getCoinMarketChartRange: vi
             .fn()
             .mockReturnValueOnce({
@@ -103,7 +102,7 @@ describe(CoingeckoQueryService.name, () => {
               ],
               marketCaps: [mock()],
             }),
-        })
+        } as unknown as CoingeckoClient
         const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
         const prices = await coingeckoQueryService.getUsdPriceHistoryHourly(
           CoingeckoId('weth'),
@@ -137,7 +136,7 @@ describe(CoingeckoQueryService.name, () => {
       it('handles duplicates in data returned from API', async () => {
         const START = UnixTime.fromDate(new Date('2021-09-07T00:00:00Z'))
 
-        const coingeckoClient = mockObject<CoingeckoClient>({
+        const coingeckoClient = {
           getCoinMarketChartRange: vi.fn().mockReturnValue({
             prices: [
               { date: UnixTime.toDate(START), value: 1200 },
@@ -165,7 +164,7 @@ describe(CoingeckoQueryService.name, () => {
             ],
             marketCaps: Array(7).fill(mock()),
           }),
-        })
+        } as unknown as CoingeckoClient
         const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
         const prices = await coingeckoQueryService.getUsdPriceHistoryHourly(
           CoingeckoId('weth'),
@@ -182,7 +181,7 @@ describe(CoingeckoQueryService.name, () => {
       it('handles irregular data returned from API', async () => {
         const START = UnixTime.fromDate(new Date('2021-09-07T00:00:00Z'))
 
-        const coingeckoClient = mockObject<CoingeckoClient>({
+        const coingeckoClient = {
           getCoinMarketChartRange: vi.fn().mockReturnValue({
             prices: [
               {
@@ -202,7 +201,7 @@ describe(CoingeckoQueryService.name, () => {
             ],
             marketCaps: Array(3).fill(mock()),
           }),
-        })
+        } as unknown as CoingeckoClient
         const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
         const prices = await coingeckoQueryService.getUsdPriceHistoryHourly(
           CoingeckoId('weth'),
@@ -222,7 +221,7 @@ describe(CoingeckoQueryService.name, () => {
       it('handles unsorted data returned from API', async () => {
         const START = UnixTime.fromDate(new Date('2021-09-07T00:00:00Z'))
 
-        const coingeckoClient = mockObject<CoingeckoClient>({
+        const coingeckoClient = {
           getCoinMarketChartRange: vi.fn().mockReturnValue({
             prices: [
               {
@@ -237,7 +236,7 @@ describe(CoingeckoQueryService.name, () => {
             ],
             marketCaps: Array(3).fill(mock()),
           }),
-        })
+        } as unknown as CoingeckoClient
         const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
         const prices = await coingeckoQueryService.getUsdPriceHistoryHourly(
           CoingeckoId('weth'),
@@ -257,7 +256,7 @@ describe(CoingeckoQueryService.name, () => {
     it('returns circulating supplies', async () => {
       const START = UnixTime.fromDate(new Date('2021-09-07T00:00:00Z'))
 
-      const coingeckoClient = mockObject<CoingeckoClient>({
+      const coingeckoClient = {
         getCoinMarketChartRange: vi.fn().mockReturnValue({
           prices: [
             { date: UnixTime.toDate(START), value: 101.2 },
@@ -282,7 +281,7 @@ describe(CoingeckoQueryService.name, () => {
             },
           ],
         }),
-      })
+      } as unknown as CoingeckoClient
       const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
       const prices = await coingeckoQueryService.getCirculatingSupplies(
         CoingeckoId('weth'),
@@ -441,9 +440,9 @@ describe(CoingeckoQueryService.name, () => {
         { id: 'tether', symbol: 'USDT', name: 'Tether' },
       ]
 
-      const coingeckoClient = mockObject<CoingeckoClient>({
+      const coingeckoClient = {
         getCoinList: vi.fn().mockReturnValue(mockCoinList),
-      })
+      } as unknown as CoingeckoClient
 
       const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
       const result = await coingeckoQueryService.getAllCoingeckoIds()
@@ -720,7 +719,7 @@ function mock(date?: Date, value?: number) {
 }
 
 function supplyClient(start: UnixTime, prices: number[], marketCaps: number[]) {
-  return mockObject<CoingeckoClient>({
+  return {
     getCoinMarketChartRange: vi.fn().mockReturnValue({
       prices: prices.map((value, i) => ({
         date: UnixTime.toDate(start + i * UnixTime.HOUR),
@@ -731,5 +730,5 @@ function supplyClient(start: UnixTime, prices: number[], marketCaps: number[]) {
         value,
       })),
     }),
-  })
+  } as unknown as CoingeckoClient
 }

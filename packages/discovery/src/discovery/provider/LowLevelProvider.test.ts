@@ -1,6 +1,5 @@
 import type { CoingeckoClient } from '@l2beat/shared'
 import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import type { providers } from 'ethers'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import type { IEtherscanClient } from '../../utils/IEtherscanClient'
@@ -19,8 +18,8 @@ function fireImmediately(
 }
 
 describe(LowLevelProvider.name, () => {
-  const ETHERSCAN_PROVIDER = mockObject<IEtherscanClient>()
-  const COINGECKO_CLIENT = mockObject<CoingeckoClient>()
+  const ETHERSCAN_PROVIDER = {} as unknown as IEtherscanClient
+  const COINGECKO_CLIENT = {} as unknown as CoingeckoClient
 
   let originalConsole: {
     log: typeof console.log
@@ -51,9 +50,9 @@ describe(LowLevelProvider.name, () => {
 
   it('returns immediately on success', async () => {
     const bytes = Bytes.randomOfLength(20)
-    const ethersProvider = mockObject<providers.JsonRpcProvider>({
+    const ethersProvider = {
       call: vi.fn().mockReturnValueOnce(bytes.toString()),
-    })
+    } as unknown as providers.JsonRpcProvider
     const provider = new LowLevelProvider(
       ethersProvider,
       ethersProvider,
@@ -68,7 +67,7 @@ describe(LowLevelProvider.name, () => {
 
   it('retries on server error until success', async () => {
     const bytes = Bytes.randomOfLength(20)
-    const ethersProvider = mockObject<providers.JsonRpcProvider>({
+    const ethersProvider = {
       call: vi
         .fn()
         .mockImplementationOnce(() => {
@@ -78,7 +77,7 @@ describe(LowLevelProvider.name, () => {
           throw makeEthersError('random message', { code: SERVER_ERROR })
         })
         .mockReturnValueOnce(bytes.toString()),
-    })
+    } as unknown as providers.JsonRpcProvider
     const provider = new LowLevelProvider(
       ethersProvider,
       ethersProvider,
@@ -94,11 +93,11 @@ describe(LowLevelProvider.name, () => {
   it('retries up to maximum attempts and then throws', async () => {
     const errorMessage = 'test error message string'
     const bytes = Bytes.randomOfLength(20)
-    const ethersProvider = mockObject<providers.JsonRpcProvider>({
+    const ethersProvider = {
       call: vi.fn().mockImplementation(() => {
         throw makeEthersError(errorMessage, { code: SERVER_ERROR })
       }),
-    })
+    } as unknown as providers.JsonRpcProvider
     const provider = new LowLevelProvider(
       ethersProvider,
       ethersProvider,
@@ -121,11 +120,11 @@ describe(LowLevelProvider.name, () => {
   for (const message of outOfGasMessage) {
     it(`does not retry on non-server error [${message}]`, async () => {
       const bytes = Bytes.randomOfLength(20)
-      const ethersProvider = mockObject<providers.JsonRpcProvider>({
+      const ethersProvider = {
         call: vi.fn().mockImplementationOnce(() => {
           throw makeSubServerError(message)
         }),
-      })
+      } as unknown as providers.JsonRpcProvider
       const provider = new LowLevelProvider(
         ethersProvider,
         ethersProvider,
@@ -155,11 +154,11 @@ describe(LowLevelProvider.name, () => {
       url: 'https://',
     })
     const bytes = Bytes.randomOfLength(20)
-    const ethersProvider = mockObject<providers.JsonRpcProvider>({
+    const ethersProvider = {
       call: vi.fn().mockImplementationOnce(() => {
         throw error
       }),
-    })
+    } as unknown as providers.JsonRpcProvider
     const provider = new LowLevelProvider(
       ethersProvider,
       ethersProvider,
@@ -227,14 +226,14 @@ describe(LowLevelProvider.name, () => {
   for (const error of errors) {
     it('does retry on different errors', async () => {
       const bytes = Bytes.randomOfLength(20)
-      const ethersProvider = mockObject<providers.JsonRpcProvider>({
+      const ethersProvider = {
         call: vi
           .fn()
           .mockImplementationOnce(() => {
             throw error
           })
           .mockReturnValueOnce(bytes.toString()),
-      })
+      } as unknown as providers.JsonRpcProvider
       const provider = new LowLevelProvider(
         ethersProvider,
         ethersProvider,

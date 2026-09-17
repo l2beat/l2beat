@@ -1,6 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
-import { mockObject } from '@l2beat/test-utils'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import type { HttpClient } from '../http/HttpClient'
 import {
   STARKEX_BI_API_V2,
@@ -14,9 +13,9 @@ describe(StarkexClient.name, () => {
 
   describe(StarkexClient.prototype.query.name, () => {
     it('constructs correct url and parameters', async () => {
-      const httpClient = mockObject<HttpClient>({
-        fetch: async () => ({ count: 123 }),
-      })
+      const httpClient = {
+        fetch: vi.fn(async () => ({ count: 123 })),
+      } as unknown as HttpClient
       const starkexClient = mockClient({
         apiKey: API_KEY,
         http: httpClient,
@@ -43,9 +42,9 @@ describe(StarkexClient.name, () => {
     it('parses and returns the response', async () => {
       const starkexClient = mockClient({
         apiKey: API_KEY,
-        http: mockObject<HttpClient>({
-          fetch: async () => ({ count: 11 }),
-        }),
+        http: {
+          fetch: vi.fn(async () => ({ count: 11 })),
+        } as unknown as HttpClient,
       })
 
       const response = await starkexClient.query(API_URL, '/', 'foo')
@@ -86,16 +85,16 @@ describe(StarkexClient.name, () => {
         token_id: '_all',
       }
 
-      const httpClient = mockObject<HttpClient>({
-        async fetch(url, init) {
+      const httpClient = {
+        fetch: vi.fn(async (url, init) => {
           expect(url).toStrictEqual(
             STARKEX_BI_API_V2 + '/aggregations/count' + `?key=${API_KEY}`,
           )
           expect(init?.body).toStrictEqual(JSON.stringify(body))
 
           return { count: 45 }
-        },
-      })
+        }),
+      } as unknown as HttpClient
 
       const starkexClient = mockClient({
         apiKey: API_KEY,
@@ -114,16 +113,16 @@ describe(StarkexClient.name, () => {
         product: 'immutable',
       }
 
-      const httpClient = mockObject<HttpClient>({
-        async fetch(url, init) {
+      const httpClient = {
+        fetch: vi.fn(async (url, init) => {
           expect(url).toStrictEqual(
             STARKEX_BI_API_V3 + '/aggregations/count' + `?key=${API_KEY}`,
           )
           expect(init?.body).toStrictEqual(JSON.stringify(body))
 
           return { count: 45 }
-        },
-      })
+        }),
+      } as unknown as HttpClient
 
       const starkexClient = mockClient({
         apiKey: API_KEY,
@@ -134,9 +133,9 @@ describe(StarkexClient.name, () => {
     })
 
     it('returns the count', async () => {
-      const httpClient = mockObject<HttpClient>({
-        fetch: async () => ({ count: 2137 }),
-      })
+      const httpClient = {
+        fetch: vi.fn(async () => ({ count: 2137 })),
+      } as unknown as HttpClient
 
       const starkexClient = mockClient({
         apiKey: API_KEY,
@@ -156,9 +155,9 @@ function mockClient(deps: {
   return new StarkexClient({
     http:
       deps.http ??
-      mockObject<HttpClient>({
-        fetch: async () => ({ count: 123 }),
-      }),
+      ({
+        fetch: vi.fn(async () => ({ count: 123 })),
+      } as unknown as HttpClient),
     logger: deps.logger ?? Logger.SILENT,
     callsPerMinute: 100_000,
     retryStrategy: 'TEST',

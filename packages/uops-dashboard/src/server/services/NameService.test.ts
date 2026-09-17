@@ -1,4 +1,3 @@
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 import type {
   CountedBlock,
@@ -14,16 +13,16 @@ import { NameService } from './NameService'
 describe(NameService.name, () => {
   describe(NameService.prototype.fillNames.name, () => {
     it('should fill method and contract names', async () => {
-      const mockBlock: CountedBlock = mockObject<CountedBlock>({
+      const mockBlock: CountedBlock = {
         transactions: [
-          mockObject<CountedTransaction>({
-            details: mockObject<CountedOperation>(),
-          }),
-          mockObject<CountedTransaction>({
-            details: mockObject<CountedOperation>(),
-          }),
+          {
+            details: {} as unknown as CountedOperation,
+          } as unknown as CountedTransaction,
+          {
+            details: {} as unknown as CountedOperation,
+          } as unknown as CountedTransaction,
         ],
-      })
+      } as unknown as CountedBlock
 
       const nameService = createNameService()
 
@@ -57,40 +56,40 @@ describe(NameService.name, () => {
         IMPLEMENTATIONS: new Map(),
       }
 
-      const mockSignatureClient1 = mockObject<SignatureClient>({
+      const mockSignatureClient1 = {
         getSignature: vi
           .fn()
           .mockResolvedValueOnce('name2')
           .mockResolvedValueOnce(''),
         getName: vi.fn().mockReturnValue('client1'),
-      })
+      } as unknown as SignatureClient
 
-      const mockSignatureClient2 = mockObject<SignatureClient>({
+      const mockSignatureClient2 = {
         getSignature: vi.fn().mockResolvedValueOnce('name3'),
         getName: vi.fn().mockReturnValue('client2'),
-      })
+      } as unknown as SignatureClient
 
-      const mockOperation: CountedOperation = mockObject<CountedOperation>({
+      const mockOperation: CountedOperation = {
         methodSelector: 'selector0',
         methodName: 'root',
         children: [
-          mockObject<CountedOperation>({
+          {
             methodSelector: 'selector1',
             methodName: '',
             children: [],
-          }),
-          mockObject<CountedOperation>({
+          } as unknown as CountedOperation,
+          {
             methodSelector: 'selector2',
             methodName: '',
             children: [],
-          }),
-          mockObject<CountedOperation>({
+          } as unknown as CountedOperation,
+          {
             methodSelector: 'selector3',
             methodName: '',
             children: [],
-          }),
+          } as unknown as CountedOperation,
         ],
-      })
+      } as unknown as CountedOperation
 
       const nameService = createNameService(mockDB, [
         mockSignatureClient1,
@@ -129,26 +128,26 @@ describe(NameService.name, () => {
         IMPLEMENTATIONS: new Map(),
       }
 
-      const mockContractClient = mockObject<ContractClient>({
+      const mockContractClient = {
         getName: vi.fn().mockResolvedValueOnce('name2'),
-      })
+      } as unknown as ContractClient
 
-      const mockOperation: CountedOperation = mockObject<CountedOperation>({
+      const mockOperation: CountedOperation = {
         contractAddress: 'address0',
         contractName: 'root',
         children: [
-          mockObject<CountedOperation>({
+          {
             contractAddress: 'address1',
             contractName: '',
             children: [],
-          }),
-          mockObject<CountedOperation>({
+          } as unknown as CountedOperation,
+          {
             contractAddress: 'address2',
             contractName: '',
             children: [],
-          }),
+          } as unknown as CountedOperation,
         ],
-      })
+      } as unknown as CountedOperation
 
       const nameService = createNameService(mockDB, [], mockContractClient)
 
@@ -180,14 +179,14 @@ describe(NameService.name, () => {
         IMPLEMENTATIONS: new Map([[mockCodeHash, mockImplementationName]]),
       }
 
-      const mockCodeClient = mockObject<RpcCodeClient>({
+      const mockCodeClient = {
         getCodeHash: vi.fn().mockResolvedValueOnce(mockCodeHash),
-      })
+      } as unknown as RpcCodeClient
 
-      const mockTransaction = mockObject<CountedTransaction>({
+      const mockTransaction = {
         type: 'EIP-712',
         from: mockAddress,
-      })
+      } as unknown as CountedTransaction
 
       const nameService = createNameService(
         mockDB,
@@ -220,7 +219,7 @@ function createNameService(
       IMPLEMENTATIONS: new Map(),
     },
     signatureClients ?? [],
-    codeClient ?? mockObject<RpcCodeClient>(),
-    contractClient ?? mockObject<ContractClient>(),
+    codeClient ?? ({} as unknown as RpcCodeClient),
+    contractClient ?? ({} as unknown as ContractClient),
   )
 }

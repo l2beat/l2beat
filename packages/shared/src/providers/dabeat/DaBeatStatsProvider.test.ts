@@ -1,5 +1,4 @@
-import { mockObject } from '@l2beat/test-utils'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import type {
   BeaconChainClient,
   CelestiaRpcClient,
@@ -12,12 +11,12 @@ import { DaBeatStatsProvider } from './DaBeatStatsProvider'
 describe(DaBeatStatsProvider.name, () => {
   describe(DaBeatStatsProvider.prototype.getStats.name, () => {
     it('routes to getEthereumStats for ethereum project', async () => {
-      const mockBeaconChainClient = mockObject<BeaconChainClient>({
-        getValidatorsInfo: async () => ({
+      const mockBeaconChainClient = {
+        getValidatorsInfo: vi.fn(async () => ({
           totalStake: 1000n,
           numberOfValidators: 1,
-        }),
-      })
+        })),
+      } as unknown as BeaconChainClient
 
       const provider = new DaBeatStatsProvider(
         mockBeaconChainClient,
@@ -37,13 +36,13 @@ describe(DaBeatStatsProvider.name, () => {
     })
 
     it('routes to getNearStats for near-da project', async () => {
-      const mockNearClient = mockObject<NearClient>({
-        getValidatorsInfo: async () => ({
+      const mockNearClient = {
+        getValidatorsInfo: vi.fn(async () => ({
           result: {
             current_validators: [{ stake: '500' }, { stake: '300' }],
           },
-        }),
-      })
+        })),
+      } as unknown as NearClient
 
       const provider = new DaBeatStatsProvider(
         undefined,
@@ -63,13 +62,13 @@ describe(DaBeatStatsProvider.name, () => {
     })
 
     it('routes to getCelestiaStats for celestia project', async () => {
-      const mockCelestiaClient = mockObject<CelestiaRpcClient>({
-        getValidatorsInfo: async () => ({
+      const mockCelestiaClient = {
+        getValidatorsInfo: vi.fn(async () => ({
           total: 2,
           count: 2,
           validators: [{ voting_power: 100 }, { voting_power: 200 }],
-        }),
-      })
+        })),
+      } as unknown as CelestiaRpcClient
 
       const provider = new DaBeatStatsProvider(
         undefined,
@@ -89,12 +88,12 @@ describe(DaBeatStatsProvider.name, () => {
     })
 
     it('routes to getAvailStats for avail project', async () => {
-      const mockPolkadotRpcClient = mockObject<PolkadotRpcClient>({
-        getStakingEraOverview: async () => ({
+      const mockPolkadotRpcClient = {
+        getStakingEraOverview: vi.fn(async () => ({
           validator1: { own: 400n, total: 400n },
           validator2: { own: 600n, total: 600n },
-        }),
-      })
+        })),
+      } as unknown as PolkadotRpcClient
 
       const provider = new DaBeatStatsProvider(
         undefined,
@@ -114,14 +113,14 @@ describe(DaBeatStatsProvider.name, () => {
     })
 
     it('routes to getEspressoStats for espresso project', async () => {
-      const mockEspressoClient = mockObject<EspressoClient>({
-        getStakeTable: async () => ({
+      const mockEspressoClient = {
+        getStakeTable: vi.fn(async () => ({
           stake_table: [
             { stake_table_entry: { stake_amount: '1000' } },
             { stake_table_entry: { stake_amount: '2000' } },
           ],
-        }),
-      })
+        })),
+      } as unknown as EspressoClient
 
       const provider = new DaBeatStatsProvider(
         undefined,
@@ -157,12 +156,12 @@ describe(DaBeatStatsProvider.name, () => {
 
   describe(DaBeatStatsProvider.prototype.getEthereumStats.name, () => {
     it('returns correct stats from BeaconChain client', async () => {
-      const mockBeaconChainClient = mockObject<BeaconChainClient>({
-        getValidatorsInfo: async () => ({
+      const mockBeaconChainClient = {
+        getValidatorsInfo: vi.fn(async () => ({
           totalStake: 32000000000000000000000n,
           numberOfValidators: 2,
-        }),
-      })
+        })),
+      } as unknown as BeaconChainClient
 
       const provider = new DaBeatStatsProvider(
         mockBeaconChainClient,
@@ -198,8 +197,8 @@ describe(DaBeatStatsProvider.name, () => {
 
   describe(DaBeatStatsProvider.prototype.getNearStats.name, () => {
     it('returns correct stats from Near client', async () => {
-      const mockNearClient = mockObject<NearClient>({
-        getValidatorsInfo: async () => ({
+      const mockNearClient = {
+        getValidatorsInfo: vi.fn(async () => ({
           result: {
             current_validators: [
               { stake: '1000000000000000000000000' },
@@ -207,8 +206,8 @@ describe(DaBeatStatsProvider.name, () => {
               { stake: '750000000000000000000000' },
             ],
           },
-        }),
-      })
+        })),
+      } as unknown as NearClient
 
       const provider = new DaBeatStatsProvider(
         undefined,
@@ -228,13 +227,13 @@ describe(DaBeatStatsProvider.name, () => {
     })
 
     it('handles empty validators list', async () => {
-      const mockNearClient = mockObject<NearClient>({
-        getValidatorsInfo: async () => ({
+      const mockNearClient = {
+        getValidatorsInfo: vi.fn(async () => ({
           result: {
             current_validators: [],
           },
-        }),
-      })
+        })),
+      } as unknown as NearClient
 
       const provider = new DaBeatStatsProvider(
         undefined,
@@ -270,13 +269,13 @@ describe(DaBeatStatsProvider.name, () => {
 
   describe(DaBeatStatsProvider.prototype.getCelestiaStats.name, () => {
     it('returns correct stats from single page', async () => {
-      const mockCelestiaClient = mockObject<CelestiaRpcClient>({
-        getValidatorsInfo: async () => ({
+      const mockCelestiaClient = {
+        getValidatorsInfo: vi.fn(async () => ({
           total: 2,
           count: 2,
           validators: [{ voting_power: 1000 }, { voting_power: 2000 }],
-        }),
-      })
+        })),
+      } as unknown as CelestiaRpcClient
 
       const provider = new DaBeatStatsProvider(
         undefined,
@@ -297,8 +296,8 @@ describe(DaBeatStatsProvider.name, () => {
 
     it('handles multiple pages correctly', async () => {
       let callCount = 0
-      const mockCelestiaClient = mockObject<CelestiaRpcClient>({
-        getValidatorsInfo: async ({ page, perPage }: any) => {
+      const mockCelestiaClient = {
+        getValidatorsInfo: vi.fn(async ({ page, perPage }: any) => {
           callCount++
           expect(perPage).toStrictEqual(100)
 
@@ -321,8 +320,8 @@ describe(DaBeatStatsProvider.name, () => {
             }
           }
           throw new Error(`Unexpected page: ${page}`)
-        },
-      })
+        }),
+      } as unknown as CelestiaRpcClient
 
       const provider = new DaBeatStatsProvider(
         undefined,
@@ -359,8 +358,8 @@ describe(DaBeatStatsProvider.name, () => {
 
   describe(DaBeatStatsProvider.prototype.getAvailStats.name, () => {
     it('returns correct stats', async () => {
-      const mockPolkadotRpcClient = mockObject<PolkadotRpcClient>({
-        getStakingEraOverview: async () => ({
+      const mockPolkadotRpcClient = {
+        getStakingEraOverview: vi.fn(async () => ({
           validator1: {
             own: 1000000000000000000n,
             total: 1000000000000000000n,
@@ -370,8 +369,8 @@ describe(DaBeatStatsProvider.name, () => {
             total: 2000000000000000000n,
           },
           validator3: { own: 500000000000000000n, total: 500000000000000000n },
-        }),
-      })
+        })),
+      } as unknown as PolkadotRpcClient
 
       const provider = new DaBeatStatsProvider(
         undefined,
@@ -391,11 +390,11 @@ describe(DaBeatStatsProvider.name, () => {
     })
 
     it('propagates client errors', async () => {
-      const mockPolkadotRpcClient = mockObject<PolkadotRpcClient>({
-        getStakingEraOverview: async () => {
+      const mockPolkadotRpcClient = {
+        getStakingEraOverview: vi.fn(async () => {
           throw new Error('Connection failed')
-        },
-      })
+        }),
+      } as unknown as PolkadotRpcClient
 
       const provider = new DaBeatStatsProvider(
         undefined,
@@ -427,16 +426,16 @@ describe(DaBeatStatsProvider.name, () => {
 
   describe(DaBeatStatsProvider.prototype.getEspressoStats.name, () => {
     it('returns correct stats from Espresso client', async () => {
-      const mockEspressoClient = mockObject<EspressoClient>({
-        getStakeTable: async () => ({
+      const mockEspressoClient = {
+        getStakeTable: vi.fn(async () => ({
           stake_table: [
             { stake_table_entry: { stake_amount: '1000' } },
             { stake_table_entry: { stake_amount: '2000' } },
             { stake_table_entry: { stake_amount: '100' } },
             { stake_table_entry: { stake_amount: '3050' } },
           ],
-        }),
-      })
+        })),
+      } as unknown as EspressoClient
 
       const provider = new DaBeatStatsProvider(
         undefined,
@@ -456,11 +455,11 @@ describe(DaBeatStatsProvider.name, () => {
     })
 
     it('handles empty validators list', async () => {
-      const mockEspressoClient = mockObject<EspressoClient>({
-        getStakeTable: async () => ({
+      const mockEspressoClient = {
+        getStakeTable: vi.fn(async () => ({
           stake_table: [],
-        }),
-      })
+        })),
+      } as unknown as EspressoClient
 
       const provider = new DaBeatStatsProvider(
         undefined,

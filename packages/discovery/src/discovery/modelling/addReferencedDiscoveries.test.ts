@@ -3,7 +3,6 @@ import {
   EthereumAddress,
   Hash256,
 } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it, type Mock, vi } from 'vitest'
 import type { ConfigReader } from '../config/ConfigReader'
 import type { DiscoveryOutput, EntryParameters } from '../output/types'
@@ -69,14 +68,14 @@ describe(addReferencedDiscoveries.name, () => {
     const discoveries = new DiscoveryRegistry()
     const fresh = output('abstract', [reference(COUNCIL, 'shared')])
     discoveries.set('abstract', fresh)
-    const broken = mockObject<ConfigReader>({
-      readDiscovery: (name) => {
+    const broken = {
+      readDiscovery: vi.fn((name) => {
         if (name === 'shared') {
           return output('shared', [reference(TIMELOCK, 'missing')])
         }
         throw new Error('missing project')
-      },
-    })
+      }),
+    } as unknown as ConfigReader
 
     expect(() =>
       addReferencedDiscoveries(discoveries, 'abstract', broken),
@@ -90,11 +89,9 @@ describe(addReferencedDiscoveries.name, () => {
     discoveries.set('abstract', output('abstract', [contract(TIMELOCK)]))
     const readDiscovery = vi.fn<ConfigReader['readDiscovery']>()
 
-    addReferencedDiscoveries(
-      discoveries,
-      'abstract',
-      mockObject<ConfigReader>({ readDiscovery }),
-    )
+    addReferencedDiscoveries(discoveries, 'abstract', {
+      readDiscovery,
+    } as unknown as ConfigReader)
 
     expect(readDiscovery).not.toHaveBeenCalled()
     expect(discoveries.getSortedProjects()).toStrictEqual(['abstract'])
@@ -112,11 +109,9 @@ describe(addReferencedDiscoveries.name, () => {
       nested: output('nested', [reference(TIMELOCK, 'abstract')]),
     })
 
-    addReferencedDiscoveries(
-      discoveries,
-      'abstract',
-      mockObject<ConfigReader>({ readDiscovery }),
-    )
+    addReferencedDiscoveries(discoveries, 'abstract', {
+      readDiscovery,
+    } as unknown as ConfigReader)
 
     expect(discoveries.getSortedProjects()).toStrictEqual([
       'abstract',
@@ -129,11 +124,11 @@ describe(addReferencedDiscoveries.name, () => {
 })
 
 function reader(): ConfigReader {
-  return mockObject<ConfigReader>({
+  return {
     readDiscovery: readsProjects({
       shared: output('shared', [contract(COUNCIL)]),
     }),
-  })
+  } as unknown as ConfigReader
 }
 
 /**

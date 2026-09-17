@@ -6,7 +6,6 @@ import type {
   ValueFormula,
 } from '@l2beat/config'
 import { EthereumAddress, TokenId } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it } from 'vitest'
 import { extractAddressesFromTokenConfig } from './extractAddressesFromTokenConfig'
 
@@ -157,29 +156,29 @@ describe(extractAddressesFromTokenConfig.name, () => {
 })
 
 function mockValueFormula(): ValueFormula {
-  return mockObject<ValueFormula>({
+  return {
     type: 'value',
     priceId: '1',
-  })
+  } as unknown as ValueFormula
 }
 
 function mockAmountFormula(amount: Partial<AmountFormula>): AmountFormula {
-  return mockObject<AmountFormula>({
+  return {
     decimals: 18,
     ...amount,
-  })
+  } as unknown as AmountFormula
 }
 
 function mockCalculationFormula(args: Formula[]): CalculationFormula {
-  return mockObject<CalculationFormula>({
+  return {
     type: 'calculation',
     operator: 'sum',
     arguments: args,
-  })
+  } as unknown as CalculationFormula
 }
 
 function mockToken(amount?: CalculationFormula | AmountFormula): TvsToken {
-  return mockObject<TvsToken>({
+  return {
     mode: 'auto',
     id: TokenId('1'),
     priceId: '1',
@@ -189,5 +188,5 @@ function mockToken(amount?: CalculationFormula | AmountFormula): TvsToken {
     source: 'native',
     isAssociated: false,
     amount,
-  })
+  } as unknown as TvsToken
 }

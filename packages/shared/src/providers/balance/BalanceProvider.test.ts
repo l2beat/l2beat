@@ -1,6 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
 import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 import type { RpcClient } from '../../clients'
 import {
@@ -29,16 +28,16 @@ describe(BalanceProvider.name, () => {
 
   describe(BalanceProvider.prototype.getBalances.name, () => {
     it('uses multicall if possible', async () => {
-      const multicallClient = mockObject<MulticallV3Client>({
-        encodeGetEthBalance: (holder: EthereumAddress) => ({
+      const multicallClient = {
+        encodeGetEthBalance: vi.fn((holder: EthereumAddress) => ({
           to: EthereumAddress.ZERO,
           input: Bytes.fromHex(
             multicallInterface.encodeFunctionData('getEthBalance', [holder]),
           ),
-        }),
-      })
-      const rpc = mockObject<RpcClient>({
-        isMulticallDeployed: () => true,
+        })),
+      } as unknown as MulticallV3Client
+      const rpc = {
+        isMulticallDeployed: vi.fn(() => true),
         multicallClient: multicallClient,
         multicall: vi.fn().mockResolvedValueOnce([
           {
@@ -55,10 +54,10 @@ describe(BalanceProvider.name, () => {
           },
         ]),
         chain: CHAIN,
-      })
+      } as unknown as RpcClient
 
       const balanceProvider = new BalanceProvider(
-        [rpc, mockObject<RpcClient>({ chain: 'random' })], // test rpcs filtering
+        [rpc, { chain: 'random' } as unknown as RpcClient], // test rpcs filtering
         Logger.SILENT,
       )
 
@@ -85,18 +84,18 @@ describe(BalanceProvider.name, () => {
     })
 
     it('performs single calls if multicall not deployed', async () => {
-      const rpc = mockObject<RpcClient>({
-        isMulticallDeployed: () => false,
+      const rpc = {
+        isMulticallDeployed: vi.fn(() => false),
         getBalance: vi.fn().mockResolvedValueOnce(Bytes.fromNumber(123_456)),
         call: vi
           .fn()
           .mockResolvedValueOnce(Bytes.fromNumber(654_321))
           .mockResolvedValueOnce(Bytes.fromHex('0x')),
         chain: CHAIN,
-      })
+      } as unknown as RpcClient
 
       const balanceProvider = new BalanceProvider(
-        [rpc, mockObject<RpcClient>({ chain: 'random' })], // test rpcs filtering
+        [rpc, { chain: 'random' } as unknown as RpcClient], // test rpcs filtering
         Logger.SILENT,
       )
 
@@ -127,14 +126,14 @@ describe(BalanceProvider.name, () => {
     })
 
     it('throws when multicall returns empty data for a native balance', async () => {
-      const multicallClient = mockObject<MulticallV3Client>({
-        encodeGetEthBalance: () => ({
+      const multicallClient = {
+        encodeGetEthBalance: vi.fn(() => ({
           to: EthereumAddress.ZERO,
           input: Bytes.fromHex('0x'),
-        }),
-      })
-      const rpc = mockObject<RpcClient>({
-        isMulticallDeployed: () => true,
+        })),
+      } as unknown as MulticallV3Client
+      const rpc = {
+        isMulticallDeployed: vi.fn(() => true),
         multicallClient: multicallClient,
         multicall: vi.fn().mockResolvedValueOnce([
           { success: true, data: Bytes.fromHex('0x') },
@@ -142,7 +141,7 @@ describe(BalanceProvider.name, () => {
           { success: true, data: Bytes.fromNumber(123_456) },
         ]),
         chain: CHAIN,
-      })
+      } as unknown as RpcClient
 
       const balanceProvider = new BalanceProvider([rpc], Logger.SILENT)
 
@@ -152,14 +151,14 @@ describe(BalanceProvider.name, () => {
     })
 
     it('throws when an ERC20 balance call reverts', async () => {
-      const multicallClient = mockObject<MulticallV3Client>({
-        encodeGetEthBalance: () => ({
+      const multicallClient = {
+        encodeGetEthBalance: vi.fn(() => ({
           to: EthereumAddress.ZERO,
           input: Bytes.fromHex('0x'),
-        }),
-      })
-      const rpc = mockObject<RpcClient>({
-        isMulticallDeployed: () => true,
+        })),
+      } as unknown as MulticallV3Client
+      const rpc = {
+        isMulticallDeployed: vi.fn(() => true),
         multicallClient: multicallClient,
         multicall: vi.fn().mockResolvedValueOnce([
           { success: true, data: Bytes.fromNumber(123_456) },
@@ -167,7 +166,7 @@ describe(BalanceProvider.name, () => {
           { success: true, data: Bytes.fromNumber(654_321) },
         ]),
         chain: CHAIN,
-      })
+      } as unknown as RpcClient
 
       const balanceProvider = new BalanceProvider([rpc], Logger.SILENT)
 
@@ -177,25 +176,25 @@ describe(BalanceProvider.name, () => {
     })
 
     it('tries next RPC client if a single call fails', async () => {
-      const failingRpc = mockObject<RpcClient>({
-        isMulticallDeployed: () => false,
+      const failingRpc = {
+        isMulticallDeployed: vi.fn(() => false),
         getBalance: vi.fn().mockRejectedValueOnce(new Error('RPC failure')),
         call: vi
           .fn()
           .mockResolvedValueOnce(Bytes.fromNumber(654_321))
           .mockResolvedValueOnce(Bytes.fromNumber(123_456)),
         chain: CHAIN,
-      })
+      } as unknown as RpcClient
 
-      const workingRpc = mockObject<RpcClient>({
-        isMulticallDeployed: () => false,
+      const workingRpc = {
+        isMulticallDeployed: vi.fn(() => false),
         getBalance: vi.fn().mockResolvedValueOnce(Bytes.fromNumber(123)),
         call: vi
           .fn()
           .mockResolvedValueOnce(Bytes.fromNumber(456))
           .mockResolvedValueOnce(Bytes.fromNumber(789)),
         chain: CHAIN,
-      })
+      } as unknown as RpcClient
 
       const balanceProvider = new BalanceProvider(
         [failingRpc, workingRpc],
@@ -208,35 +207,35 @@ describe(BalanceProvider.name, () => {
     })
 
     it('tries next RPC client if first one fails', async () => {
-      const failingRpc = mockObject<RpcClient>({
-        isMulticallDeployed: () => true,
-        multicallClient: mockObject<MulticallV3Client>({
-          encodeGetEthBalance: () => ({
+      const failingRpc = {
+        isMulticallDeployed: vi.fn(() => true),
+        multicallClient: {
+          encodeGetEthBalance: vi.fn(() => ({
             to: EthereumAddress.ZERO,
             input: Bytes.fromHex('0x'),
-          }),
-        }),
+          })),
+        } as unknown as MulticallV3Client,
         multicall: vi.fn().mockRejectedValueOnce(new Error('RPC failure')),
         chain: CHAIN,
-      })
+      } as unknown as RpcClient
 
-      const workingRpc = mockObject<RpcClient>({
-        isMulticallDeployed: () => true,
-        multicallClient: mockObject<MulticallV3Client>({
-          encodeGetEthBalance: (holder: EthereumAddress) => ({
+      const workingRpc = {
+        isMulticallDeployed: vi.fn(() => true),
+        multicallClient: {
+          encodeGetEthBalance: vi.fn((holder: EthereumAddress) => ({
             to: EthereumAddress.ZERO,
             input: Bytes.fromHex(
               multicallInterface.encodeFunctionData('getEthBalance', [holder]),
             ),
-          }),
-        }),
+          })),
+        } as unknown as MulticallV3Client,
         multicall: vi.fn().mockResolvedValueOnce([
           { success: true, data: Bytes.fromNumber(123) },
           { success: true, data: Bytes.fromNumber(456) },
           { success: true, data: Bytes.fromNumber(789) },
         ]),
         chain: CHAIN,
-      })
+      } as unknown as RpcClient
 
       const balanceProvider = new BalanceProvider(
         [failingRpc, workingRpc],
@@ -252,29 +251,29 @@ describe(BalanceProvider.name, () => {
 
     it('throws error if all RPC clients fail', async () => {
       const error = new Error('RPC failure')
-      const failingRpc1 = mockObject<RpcClient>({
-        isMulticallDeployed: () => true,
-        multicallClient: mockObject<MulticallV3Client>({
-          encodeGetEthBalance: () => ({
+      const failingRpc1 = {
+        isMulticallDeployed: vi.fn(() => true),
+        multicallClient: {
+          encodeGetEthBalance: vi.fn(() => ({
             to: EthereumAddress.ZERO,
             input: Bytes.fromHex('0x'),
-          }),
-        }),
+          })),
+        } as unknown as MulticallV3Client,
         multicall: vi.fn().mockRejectedValueOnce(error),
         chain: CHAIN,
-      })
+      } as unknown as RpcClient
 
-      const failingRpc2 = mockObject<RpcClient>({
-        isMulticallDeployed: () => true,
-        multicallClient: mockObject<MulticallV3Client>({
-          encodeGetEthBalance: () => ({
+      const failingRpc2 = {
+        isMulticallDeployed: vi.fn(() => true),
+        multicallClient: {
+          encodeGetEthBalance: vi.fn(() => ({
             to: EthereumAddress.ZERO,
             input: Bytes.fromHex('0x'),
-          }),
-        }),
+          })),
+        } as unknown as MulticallV3Client,
         multicall: vi.fn().mockRejectedValueOnce(error),
         chain: CHAIN,
-      })
+      } as unknown as RpcClient
 
       const balanceProvider = new BalanceProvider(
         [failingRpc1, failingRpc2],
@@ -290,9 +289,9 @@ describe(BalanceProvider.name, () => {
     })
 
     it('throws error if no RPC client for chain', async () => {
-      const rpc = mockObject<RpcClient>({
+      const rpc = {
         chain: 'other-chain',
-      })
+      } as unknown as RpcClient
 
       const balanceProvider = new BalanceProvider([rpc], Logger.SILENT)
 

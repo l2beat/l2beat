@@ -1,4 +1,3 @@
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it } from 'vitest'
 import type { Node, State } from '../State'
 import {
@@ -62,7 +61,7 @@ describe(reconcileNodeHiddenFields.name, () => {
 
 describe(buildStoredNodeLayout.name, () => {
   it('stores compressed rows next to hidden values', () => {
-    const node = mockObject<Node>({
+    const node = {
       id: 'a',
       hiddenFields: ['owner'],
       compressedRows: ['$members'],
@@ -71,11 +70,12 @@ describe(buildStoredNodeLayout.name, () => {
       name: 'a',
       opened: false,
       subnodes: [],
-    })
+    } as unknown as Node
 
-    const layout = buildStoredNodeLayout(
-      mockObject<State>({ projectId: 'p', nodes: [node] }),
-    )
+    const layout = buildStoredNodeLayout({
+      projectId: 'p',
+      nodes: [node],
+    } as unknown as State)
 
     expect(layout.hiddenFields).toStrictEqual({ a: ['owner'] })
     expect(layout.compressedRows).toStrictEqual({ a: ['$members'] })

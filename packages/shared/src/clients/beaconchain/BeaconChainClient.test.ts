@@ -1,6 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
-import { mockObject } from '@l2beat/test-utils'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import { withServer } from '../../test/withServer'
 import { HttpClient } from '../http/HttpClient'
 import { BeaconChainClient } from './BeaconChainClient'
@@ -16,11 +15,11 @@ describe(BeaconChainClient.name, () => {
           blob,
         },
       ]
-      const http = mockObject<HttpClient>({
-        fetch: async () => ({
+      const http = {
+        fetch: vi.fn(async () => ({
           data: expected,
-        }),
-      })
+        })),
+      } as unknown as HttpClient
 
       const client = mockClient({
         http,
@@ -29,7 +28,7 @@ describe(BeaconChainClient.name, () => {
 
       const result = await client.getBlockSidecar('root')
 
-      expect(http.fetch.mock.calls[0][0]).toStrictEqual(
+      expect(vi.mocked(http.fetch).mock.calls[0][0]).toStrictEqual(
         'example.com/eth/v1/beacon/blob_sidecars/root',
       )
       expect(result).toStrictEqual([
@@ -80,26 +79,26 @@ describe(BeaconChainClient.name, () => {
 
   describe(BeaconChainClient.prototype.call.name, () => {
     it('should call beacon api and return result', async () => {
-      const http = mockObject<HttpClient>({
-        fetch: async () => ({ result: 'result' }),
-      })
+      const http = {
+        fetch: vi.fn(async () => ({ result: 'result' })),
+      } as unknown as HttpClient
       const client = mockClient({ http, beaconApiUrl: 'BEACON_API_URL' })
 
       const result = await client.call('/eth/blob')
 
       expect(result).toStrictEqual({ result: 'result' })
-      expect(http.fetch.mock.calls[0][0]).toStrictEqual(
+      expect(vi.mocked(http.fetch).mock.calls[0][0]).toStrictEqual(
         'BEACON_API_URL/eth/blob',
       )
     })
 
     it('should throw on beacon error', async () => {
-      const http = mockObject<HttpClient>({
-        fetch: async () => ({
+      const http = {
+        fetch: vi.fn(async () => ({
           code: -32000,
           message: 'RPC Error',
-        }),
-      })
+        })),
+      } as unknown as HttpClient
       const client = mockClient({ http })
 
       await expect(client.call('/eth/blob')).rejects.toThrow(
@@ -129,7 +128,7 @@ function mockClient(deps: {
 }) {
   return new BeaconChainClient({
     beaconApiUrl: deps.beaconApiUrl ?? 'BEACON_API_URL',
-    http: deps.http ?? mockObject<HttpClient>({}),
+    http: deps.http ?? ({} as unknown as HttpClient),
     callsPerMinute: 100_000,
     retryStrategy: 'TEST',
     logger: Logger.SILENT,

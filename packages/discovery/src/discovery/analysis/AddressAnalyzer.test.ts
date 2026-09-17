@@ -4,7 +4,6 @@ import {
   Hash256,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 
 import { StructureContract } from '../config/StructureConfig'
@@ -38,33 +37,33 @@ describe(AddressAnalyzer.name, () => {
         sources: [],
       }
 
-      const provider = mockObject<IProvider>({
-        getBytecode: async () => Bytes.EMPTY,
+      const provider = {
+        getBytecode: vi.fn(async () => Bytes.EMPTY),
         chain: 'ethereum',
-      })
+      } as unknown as IProvider
       const addressAnalyzer = new AddressAnalyzer(
-        mockObject<ProxyDetector>({
-          detectProxy: async () => ({
+        {
+          detectProxy: vi.fn(async () => ({
             type: 'EOA',
             values: {},
             deployment: undefined,
             addresses: [],
-          }),
-        }),
-        mockObject<SourceCodeService>({
-          getSources: async () => sources,
-        }),
-        mockObject<HandlerExecutor>({
-          execute: async () => ({
+          })),
+        } as unknown as ProxyDetector,
+        {
+          getSources: vi.fn(async () => sources),
+        } as unknown as SourceCodeService,
+        {
+          execute: vi.fn(async () => ({
             results: [],
             values: {},
             usedTypes: [],
             errors: {},
-          }),
-        }),
-        mockObject<TemplateService>({
-          findMatchingTemplates: () => [],
-        }),
+          })),
+        } as unknown as HandlerExecutor,
+        {
+          findMatchingTemplates: vi.fn(() => []),
+        } as unknown as TemplateService,
       )
 
       const address = ChainSpecificAddress.random()
@@ -132,14 +131,14 @@ describe(AddressAnalyzer.name, () => {
         ],
       }
 
-      const provider = mockObject<IProvider>({
-        getBytecode: async () => Bytes.fromHex('0x1234'),
+      const provider = {
+        getBytecode: vi.fn(async () => Bytes.fromHex('0x1234')),
         chain: 'ethereum',
-      })
+      } as unknown as IProvider
 
       const addressAnalyzer = new AddressAnalyzer(
-        mockObject<ProxyDetector>({
-          detectProxy: async () => ({
+        {
+          detectProxy: vi.fn(async () => ({
             type: 'EIP1967 proxy',
             values: {
               $implementation: implementation.toString(),
@@ -152,22 +151,22 @@ describe(AddressAnalyzer.name, () => {
               transactionHash: Hash256.random(),
             },
             addresses: [],
-          }),
-        }),
-        mockObject<SourceCodeService>({
-          getSources: async () => sources,
-        }),
-        mockObject<HandlerExecutor>({
-          execute: async () => ({
+          })),
+        } as unknown as ProxyDetector,
+        {
+          getSources: vi.fn(async () => sources),
+        } as unknown as SourceCodeService,
+        {
+          execute: vi.fn(async () => ({
             results: [{ field: 'owner', value: owner.toString() }],
             values: { owner: owner.toString() },
             errors: {},
             usedTypes: [],
-          }),
-        }),
-        mockObject<TemplateService>({
-          findMatchingTemplates: () => [],
-        }),
+          })),
+        } as unknown as HandlerExecutor,
+        {
+          findMatchingTemplates: vi.fn(() => []),
+        } as unknown as TemplateService,
       )
 
       const result = await addressAnalyzer.analyze(provider, address, config)
@@ -250,14 +249,14 @@ describe(AddressAnalyzer.name, () => {
         ],
       }
 
-      const provider = mockObject<IProvider>({
-        getBytecode: async () => Bytes.fromHex('0x1234'),
+      const provider = {
+        getBytecode: vi.fn(async () => Bytes.fromHex('0x1234')),
         chain: 'ethereum',
-      })
+      } as unknown as IProvider
 
       const addressAnalyzer = new AddressAnalyzer(
-        mockObject<ProxyDetector>({
-          detectProxy: async () => ({
+        {
+          detectProxy: vi.fn(async () => ({
             type: 'EIP1967 proxy',
             values: {
               $implementation: implementation.toString(),
@@ -270,22 +269,22 @@ describe(AddressAnalyzer.name, () => {
               transactionHash: Hash256.random(),
             },
             addresses: [],
-          }),
-        }),
-        mockObject<SourceCodeService>({
-          getSources: async () => sources,
-        }),
-        mockObject<HandlerExecutor>({
-          execute: async () => ({
+          })),
+        } as unknown as ProxyDetector,
+        {
+          getSources: vi.fn(async () => sources),
+        } as unknown as SourceCodeService,
+        {
+          execute: vi.fn(async () => ({
             results: [{ field: 'owner', value: owner.toString() }],
             values: { owner: owner.toString() },
             usedTypes: [],
             errors: {},
-          }),
-        }),
-        mockObject<TemplateService>({
-          findMatchingTemplates: () => [],
-        }),
+          })),
+        } as unknown as HandlerExecutor,
+        {
+          findMatchingTemplates: vi.fn(() => []),
+        } as unknown as TemplateService,
       )
 
       const result = await addressAnalyzer.analyze(provider, address, config)
@@ -368,15 +367,15 @@ describe(AddressAnalyzer.name, () => {
         ],
       }
 
-      const provider = mockObject<IProvider>({
-        getBytecode: async () => Bytes.fromHex('0x1234'),
+      const provider = {
+        getBytecode: vi.fn(async () => Bytes.fromHex('0x1234')),
         getDeployment: vi.fn().mockResolvedValue(undefined),
         chain: 'ethereum',
-      })
+      } as unknown as IProvider
 
       const addressAnalyzer = new AddressAnalyzer(
-        mockObject<ProxyDetector>({
-          detectProxy: async () => ({
+        {
+          detectProxy: vi.fn(async () => ({
             type: 'EIP1967 proxy',
             values: {
               $implementation: implementation.toString(),
@@ -384,22 +383,22 @@ describe(AddressAnalyzer.name, () => {
             },
             deployment: undefined,
             addresses: [],
-          }),
-        }),
-        mockObject<SourceCodeService>({
-          getSources: async () => sources,
-        }),
-        mockObject<HandlerExecutor>({
-          execute: async () => ({
+          })),
+        } as unknown as ProxyDetector,
+        {
+          getSources: vi.fn(async () => sources),
+        } as unknown as SourceCodeService,
+        {
+          execute: vi.fn(async () => ({
             results: [{ field: 'owner', value: owner.toString() }],
             values: { owner: owner.toString() },
             usedTypes: [],
             errors: {},
-          }),
-        }),
-        mockObject<TemplateService>({
-          findMatchingTemplates: () => [],
-        }),
+          })),
+        } as unknown as HandlerExecutor,
+        {
+          findMatchingTemplates: vi.fn(() => []),
+        } as unknown as TemplateService,
       )
 
       const result = await addressAnalyzer.analyze(provider, address, config)

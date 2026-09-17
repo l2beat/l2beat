@@ -1,7 +1,6 @@
 import { ChainSpecificAddress, EthereumAddress } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { type providers, utils } from 'ethers'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 
 import type { IProvider } from '../../provider/IProvider'
 import { CrossChainAccessControlHandler } from './CrossChainAccessControlHandler'
@@ -75,9 +74,9 @@ describe(CrossChainAccessControlHandler.name, () => {
     const CharlieRaw = ChainSpecificAddress.address(Charlie)
 
     const address = ChainSpecificAddress.random()
-    const provider = mockObject<IProvider>({
+    const provider = {
       chain: 'ethereum',
-      async getLogs() {
+      getLogs: vi.fn(async () => {
         return [
           // Chain 1
           RoleGranted(Chain1Raw, WIZARD_ROLE, AliceRaw),
@@ -89,8 +88,8 @@ describe(CrossChainAccessControlHandler.name, () => {
           RoleGranted(Chain2Raw, WIZARD_ROLE, CharlieRaw),
           RoleGranted(Chain2Raw, WARRIOR_ROLE, AliceRaw),
         ]
-      },
-    })
+      }),
+    } as unknown as IProvider
 
     it('Case 1: both pickChainAddress and pickRoleMembers specified', async () => {
       const handler = new CrossChainAccessControlHandler(
@@ -210,9 +209,9 @@ describe(CrossChainAccessControlHandler.name, () => {
 
   it('no logs', async () => {
     const address = ChainSpecificAddress.random()
-    const provider = mockObject<IProvider>({
+    const provider = {
       chain: 'ethereum',
-      async getLogs(providedAddress, topics) {
+      getLogs: vi.fn(async (providedAddress, topics) => {
         expect(providedAddress).toStrictEqual(address)
         expect(topics).toStrictEqual([
           [
@@ -222,8 +221,8 @@ describe(CrossChainAccessControlHandler.name, () => {
           ],
         ])
         return []
-      },
-    })
+      }),
+    } as unknown as IProvider
 
     const handler = new CrossChainAccessControlHandler(
       'someName',
@@ -242,11 +241,11 @@ describe(CrossChainAccessControlHandler.name, () => {
 
   it('passes relative ignore', async () => {
     const address = ChainSpecificAddress.random()
-    const provider = mockObject<IProvider>({
-      async getLogs() {
+    const provider = {
+      getLogs: vi.fn(async () => {
         return []
-      },
-    })
+      }),
+    } as unknown as IProvider
 
     const handler = new CrossChainAccessControlHandler(
       'someName',
@@ -284,9 +283,9 @@ describe(CrossChainAccessControlHandler.name, () => {
     const Chain2Long = ChainSpecificAddress.fromLong('ethereum', Chain2)
 
     const address = ChainSpecificAddress.random()
-    const provider = mockObject<IProvider>({
+    const provider = {
       chain: 'ethereum',
-      async getLogs() {
+      getLogs: vi.fn(async () => {
         return [
           RoleGranted(Chain1, WARRIOR_ROLE, AliceRaw),
           RoleGranted(Chain1, WARRIOR_ROLE, BobRaw),
@@ -297,8 +296,8 @@ describe(CrossChainAccessControlHandler.name, () => {
           RoleGranted(Chain2, WARRIOR_ROLE, CharlieRaw),
           RoleGranted(Chain1, WARRIOR_ROLE, AliceRaw),
         ]
-      },
-    })
+      }),
+    } as unknown as IProvider
 
     const handler = new CrossChainAccessControlHandler(
       'someName',

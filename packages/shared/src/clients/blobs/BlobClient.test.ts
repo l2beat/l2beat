@@ -1,5 +1,4 @@
 import { Logger } from '@l2beat/backend-tools'
-import { mockObject } from '@l2beat/test-utils'
 import { utils } from 'ethers'
 import { describe, expect, it, vi } from 'vitest'
 import type { HttpClient } from '../http/HttpClient'
@@ -80,12 +79,12 @@ describe(BlobClient.name, () => {
 
   describe(BlobClient.prototype.getRelevantBlobs.name, () => {
     it('should return empty blobs for type 2 transaction', async () => {
-      const rpcClient = mockObject<RpcClient>({
+      const rpcClient = {
         getTransaction: vi.fn().mockReturnValue({
           type: '0x2',
           blockNumber: 1,
         }),
-      })
+      } as unknown as RpcClient
       const client = mockClient({ rpcClient })
 
       const result = await client.getRelevantBlobs('txHash')
@@ -106,13 +105,13 @@ describe(BlobClient.name, () => {
         data: 'blob2',
       }
 
-      const rpcClient = mockObject<RpcClient>({
+      const rpcClient = {
         getTransaction: vi.fn().mockReturnValue({
           type: '0x3',
           blockNumber: 1,
           blobVersionedHashes: [versionedHash1, versionedHash2],
         }),
-      })
+      } as unknown as RpcClient
       const client = mockClient({ rpcClient })
 
       client.getBlockSidecar = async () => [
@@ -129,12 +128,12 @@ describe(BlobClient.name, () => {
     })
 
     it('should throw on missing blobVersionedHashes', async () => {
-      const rpcClient = mockObject<RpcClient>({
+      const rpcClient = {
         getTransaction: vi.fn().mockReturnValue({
           type: '0x3',
           blockNumber: 1,
         }),
-      })
+      } as unknown as RpcClient
       const client = mockClient({ rpcClient })
 
       await expect(client.getRelevantBlobs('txHash')).rejects.toThrow(
@@ -153,14 +152,14 @@ describe(BlobClient.name, () => {
           blob,
         },
       ]
-      const http = mockObject<HttpClient>({
-        fetch: async () => ({
+      const http = {
+        fetch: vi.fn(async () => ({
           data: expected,
-        }),
-      })
-      const rpcClient = mockObject<RpcClient>({
-        getBlockParentBeaconRoot: async () => 'root',
-      })
+        })),
+      } as unknown as HttpClient
+      const rpcClient = {
+        getBlockParentBeaconRoot: vi.fn(async () => 'root'),
+      } as unknown as RpcClient
       const client = mockClient({
         http,
         beaconApiUrl: 'example.com/',
@@ -169,7 +168,7 @@ describe(BlobClient.name, () => {
 
       const result = await client.getBlockSidecar(1)
 
-      expect(http.fetch.mock.calls[0][0]).toStrictEqual(
+      expect(vi.mocked(http.fetch).mock.calls[0][0]).toStrictEqual(
         'example.com/eth/v1/beacon/blob_sidecars/root',
       )
       expect(result).toStrictEqual([
@@ -183,26 +182,26 @@ describe(BlobClient.name, () => {
 
   describe(BlobClient.prototype.call.name, () => {
     it('should call beacon api and return result', async () => {
-      const http = mockObject<HttpClient>({
-        fetch: async () => ({ result: 'result' }),
-      })
+      const http = {
+        fetch: vi.fn(async () => ({ result: 'result' })),
+      } as unknown as HttpClient
       const client = mockClient({ http, beaconApiUrl: 'BEACON_API_URL' })
 
       const result = await client.call('/eth/blob')
 
       expect(result).toStrictEqual({ result: 'result' })
-      expect(http.fetch.mock.calls[0][0]).toStrictEqual(
+      expect(vi.mocked(http.fetch).mock.calls[0][0]).toStrictEqual(
         'BEACON_API_URL/eth/blob',
       )
     })
 
     it('should throw on beacon error', async () => {
-      const http = mockObject<HttpClient>({
-        fetch: async () => ({
+      const http = {
+        fetch: vi.fn(async () => ({
           code: -32000,
           message: 'RPC Error',
-        }),
-      })
+        })),
+      } as unknown as HttpClient
       const client = mockClient({ http })
 
       await expect(client.call('/eth/blob')).rejects.toThrow(
@@ -233,8 +232,8 @@ function mockClient(deps: {
 }) {
   return new BlobClient({
     beaconApiUrl: deps.beaconApiUrl ?? 'BEACON_API_URL',
-    rpcClient: deps.rpcClient ?? mockObject<RpcClient>({}),
-    http: deps.http ?? mockObject<HttpClient>({}),
+    rpcClient: deps.rpcClient ?? ({} as unknown as RpcClient),
+    http: deps.http ?? ({} as unknown as HttpClient),
     callsPerMinute: 100_000,
     retryStrategy: 'TEST',
     logger: Logger.SILENT,

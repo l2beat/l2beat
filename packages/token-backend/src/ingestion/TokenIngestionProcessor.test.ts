@@ -6,7 +6,6 @@ import type {
   TokenIngestionQueueRecord,
 } from '@l2beat/database'
 import { Address32, UnixTime } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 import type { Chain } from '../chains/Chain'
 import type { CoingeckoClient } from '../chains/clients/coingecko/CoingeckoClient'
@@ -22,18 +21,18 @@ describe(TokenIngestionProcessor.name, () => {
       const getByPrimaryKeys = vi.fn().mockResolvedValue([])
 
       const processor = createProcessor({
-        tokenDb: mockObject<TokenDatabase>({
-          deployedToken: mockObject<TokenDatabase['deployedToken']>({
+        tokenDb: {
+          deployedToken: {
             findByChainAndAddress: vi.fn().mockResolvedValue(undefined),
             getByPrimaryKeys,
-          }),
-          chain: mockObject<TokenDatabase['chain']>({
+          } as unknown as TokenDatabase['deployedToken'],
+          chain: {
             getAll: vi.fn().mockResolvedValue([]),
-          }),
-        }),
-        coingeckoClient: mockObject<CoingeckoClient>({
+          } as unknown as TokenDatabase['chain'],
+        } as unknown as TokenDatabase,
+        coingeckoClient: {
           getCoinList: vi.fn().mockResolvedValue([]),
-        }),
+        } as unknown as CoingeckoClient,
       })
 
       const trace = await processor.plan(
@@ -86,20 +85,20 @@ describe(TokenIngestionProcessor.name, () => {
       }
 
       const processor = createProcessor({
-        tokenDb: mockObject<TokenDatabase>({
-          deployedToken: mockObject<TokenDatabase['deployedToken']>({
+        tokenDb: {
+          deployedToken: {
             findByChainAndAddress: vi.fn().mockResolvedValue(existing),
             getByPrimaryKeys: vi.fn().mockResolvedValue([]),
-          }),
-          abstractToken: mockObject<TokenDatabase['abstractToken']>({
+          } as unknown as TokenDatabase['deployedToken'],
+          abstractToken: {
             getByIds: vi
               .fn()
               .mockResolvedValue([abstractTokenRecord('USDC01', 'USDC')]),
             findById: vi
               .fn()
               .mockResolvedValue(abstractTokenRecord('USDC01', 'USDC')),
-          }),
-        }),
+          } as unknown as TokenDatabase['abstractToken'],
+        } as unknown as TokenDatabase,
       })
 
       const trace = await processor.plan(
@@ -128,8 +127,8 @@ describe(TokenIngestionProcessor.name, () => {
       const findByName = vi.fn().mockResolvedValue(undefined)
 
       const processor = createProcessor({
-        db: mockObject<Database>({
-          interopTransfer: mockObject<Database['interopTransfer']>({
+        db: {
+          interopTransfer: {
             findByTransferId: vi.fn().mockResolvedValue(
               transfer({
                 srcChain: address.chain,
@@ -141,10 +140,10 @@ describe(TokenIngestionProcessor.name, () => {
                 bridgeType: 'lockAndMint',
               }),
             ),
-          }),
-        }),
-        tokenDb: mockObject<TokenDatabase>({
-          deployedToken: mockObject<TokenDatabase['deployedToken']>({
+          } as unknown as Database['interopTransfer'],
+        } as unknown as Database,
+        tokenDb: {
+          deployedToken: {
             findByChainAndAddress: vi.fn().mockResolvedValue(undefined),
             getByPrimaryKeys: vi.fn().mockResolvedValue([
               {
@@ -158,14 +157,14 @@ describe(TokenIngestionProcessor.name, () => {
                 metadata: null,
               },
             ]),
-          }),
-          abstractToken: mockObject<TokenDatabase['abstractToken']>({
+          } as unknown as TokenDatabase['deployedToken'],
+          abstractToken: {
             getByIds: vi
               .fn()
               .mockResolvedValue([abstractTokenRecord('USDC01', 'USDC')]),
-          }),
-          chain: mockObject<TokenDatabase['chain']>({ findByName }),
-        }),
+          } as unknown as TokenDatabase['abstractToken'],
+          chain: { findByName } as unknown as TokenDatabase['chain'],
+        } as unknown as TokenDatabase,
         fetchDeployedTokenFacts,
       })
 
@@ -212,13 +211,13 @@ describe(TokenIngestionProcessor.name, () => {
         .mockImplementation(async (id: string) => transfer({ transferId: id }))
 
       const processor = createProcessor({
-        db: mockObject<Database>({
-          interopTransfer: mockObject<Database['interopTransfer']>({
+        db: {
+          interopTransfer: {
             findByTransferId,
-          }),
-        }),
-        tokenDb: mockObject<TokenDatabase>({
-          deployedToken: mockObject<TokenDatabase['deployedToken']>({
+          } as unknown as Database['interopTransfer'],
+        } as unknown as Database,
+        tokenDb: {
+          deployedToken: {
             findByChainAndAddress: vi.fn().mockResolvedValue(undefined),
             getByPrimaryKeys: vi.fn().mockResolvedValue([
               {
@@ -232,16 +231,16 @@ describe(TokenIngestionProcessor.name, () => {
                 metadata: null,
               },
             ]),
-          }),
-          abstractToken: mockObject<TokenDatabase['abstractToken']>({
+          } as unknown as TokenDatabase['deployedToken'],
+          abstractToken: {
             getByIds: vi
               .fn()
               .mockResolvedValue([abstractTokenRecord('USDC01', 'USDC')]),
-          }),
-          chain: mockObject<TokenDatabase['chain']>({
+          } as unknown as TokenDatabase['abstractToken'],
+          chain: {
             findByName: vi.fn().mockResolvedValue(undefined),
-          }),
-        }),
+          } as unknown as TokenDatabase['chain'],
+        } as unknown as TokenDatabase,
       })
 
       const trace = await processor.plan(
@@ -294,13 +293,13 @@ describe(TokenIngestionProcessor.name, () => {
         .mockResolvedValue(transfer({ bridgeType: 'lockAndMint' }))
 
       const processor = createProcessor({
-        db: mockObject<Database>({
-          interopTransfer: mockObject<Database['interopTransfer']>({
+        db: {
+          interopTransfer: {
             findByTransferId,
-          }),
-        }),
-        tokenDb: mockObject<TokenDatabase>({
-          deployedToken: mockObject<TokenDatabase['deployedToken']>({
+          } as unknown as Database['interopTransfer'],
+        } as unknown as Database,
+        tokenDb: {
+          deployedToken: {
             findByChainAndAddress: vi.fn().mockResolvedValue({
               ...address,
               abstractTokenId: null,
@@ -323,13 +322,13 @@ describe(TokenIngestionProcessor.name, () => {
                 metadata: null,
               },
             ]),
-          }),
-          abstractToken: mockObject<TokenDatabase['abstractToken']>({
+          } as unknown as TokenDatabase['deployedToken'],
+          abstractToken: {
             getByIds: vi
               .fn()
               .mockResolvedValue([abstractTokenRecord('USDC01', 'USDC')]),
-          }),
-        }),
+          } as unknown as TokenDatabase['abstractToken'],
+        } as unknown as TokenDatabase,
       })
 
       const trace = await processor.plan(
@@ -371,13 +370,13 @@ describe(TokenIngestionProcessor.name, () => {
         .mockResolvedValue(transfer({ bridgeType: 'lockAndMint' }))
 
       const processor = createProcessor({
-        db: mockObject<Database>({
-          interopTransfer: mockObject<Database['interopTransfer']>({
+        db: {
+          interopTransfer: {
             findByTransferId,
-          }),
-        }),
-        tokenDb: mockObject<TokenDatabase>({
-          deployedToken: mockObject<TokenDatabase['deployedToken']>({
+          } as unknown as Database['interopTransfer'],
+        } as unknown as Database,
+        tokenDb: {
+          deployedToken: {
             findByChainAndAddress: vi.fn().mockResolvedValue(existing),
             getByPrimaryKeys: vi.fn().mockResolvedValue([
               {
@@ -391,13 +390,13 @@ describe(TokenIngestionProcessor.name, () => {
                 metadata: null,
               },
             ]),
-          }),
-          abstractToken: mockObject<TokenDatabase['abstractToken']>({
+          } as unknown as TokenDatabase['deployedToken'],
+          abstractToken: {
             getByIds: vi
               .fn()
               .mockResolvedValue([abstractTokenRecord('USDC01', 'USDC')]),
-          }),
-        }),
+          } as unknown as TokenDatabase['abstractToken'],
+        } as unknown as TokenDatabase,
       })
 
       const trace = await processor.plan(
@@ -425,15 +424,15 @@ describe(TokenIngestionProcessor.name, () => {
       const otherAddress = token('base', '0xbbb')
 
       const processor = createProcessor({
-        db: mockObject<Database>({
-          interopTransfer: mockObject<Database['interopTransfer']>({
+        db: {
+          interopTransfer: {
             findByTransferId: vi
               .fn()
               .mockResolvedValue(transfer({ bridgeType: 'lockAndMint' })),
-          }),
-        }),
-        tokenDb: mockObject<TokenDatabase>({
-          deployedToken: mockObject<TokenDatabase['deployedToken']>({
+          } as unknown as Database['interopTransfer'],
+        } as unknown as Database,
+        tokenDb: {
+          deployedToken: {
             findByChainAndAddress: vi.fn().mockResolvedValue({
               ...address,
               abstractTokenId: null,
@@ -456,13 +455,13 @@ describe(TokenIngestionProcessor.name, () => {
                 metadata: null,
               },
             ]),
-          }),
-          abstractToken: mockObject<TokenDatabase['abstractToken']>({
+          } as unknown as TokenDatabase['deployedToken'],
+          abstractToken: {
             getByIds: vi
               .fn()
               .mockResolvedValue([abstractTokenRecord('USDC01', 'USDC')]),
-          }),
-        }),
+          } as unknown as TokenDatabase['abstractToken'],
+        } as unknown as TokenDatabase,
       })
 
       const trace = await processor.plan(
@@ -493,15 +492,15 @@ describe(TokenIngestionProcessor.name, () => {
       const getCoinMarketChartRange = vi.fn().mockResolvedValue(undefined)
 
       const processor = createProcessor({
-        tokenDb: mockObject<TokenDatabase>({
-          deployedToken: mockObject<TokenDatabase['deployedToken']>({
+        tokenDb: {
+          deployedToken: {
             findByChainAndAddress: vi.fn().mockResolvedValue(undefined),
             getByPrimaryKeys: vi.fn().mockResolvedValue([]),
-          }),
-          abstractToken: mockObject<TokenDatabase['abstractToken']>({
+          } as unknown as TokenDatabase['deployedToken'],
+          abstractToken: {
             findByCoingeckoId: vi.fn().mockResolvedValue(undefined),
-          }),
-          chain: mockObject<TokenDatabase['chain']>({
+          } as unknown as TokenDatabase['abstractToken'],
+          chain: {
             getAll: vi.fn().mockResolvedValue([
               {
                 name: 'ethereum',
@@ -511,9 +510,9 @@ describe(TokenIngestionProcessor.name, () => {
                 apis: null,
               },
             ]),
-          }),
-        }),
-        coingeckoClient: mockObject<CoingeckoClient>({
+          } as unknown as TokenDatabase['chain'],
+        } as unknown as TokenDatabase,
+        coingeckoClient: {
           getCoinList: vi.fn().mockResolvedValue([
             {
               id: 'usd-coin',
@@ -524,7 +523,7 @@ describe(TokenIngestionProcessor.name, () => {
           ]),
           getCoinDataById,
           getCoinMarketChartRange,
-        }),
+        } as unknown as CoingeckoClient,
       })
 
       const trace = await processor.plan(
@@ -576,8 +575,8 @@ describe(TokenIngestionProcessor.name, () => {
       })
 
       const processor = createProcessor({
-        tokenDb: mockObject<TokenDatabase>({
-          chain: mockObject<TokenDatabase['chain']>({
+        tokenDb: {
+          chain: {
             findByName: vi.fn().mockResolvedValue({
               name: 'ethereum',
               chainId: 1,
@@ -585,8 +584,8 @@ describe(TokenIngestionProcessor.name, () => {
               aliases: null,
               apis: null,
             }),
-          }),
-        }),
+          } as unknown as TokenDatabase['chain'],
+        } as unknown as TokenDatabase,
         fetchDeployedTokenFacts,
       })
 
@@ -644,8 +643,8 @@ describe(TokenIngestionProcessor.name, () => {
       })
 
       const processor = createProcessor({
-        tokenDb: mockObject<TokenDatabase>({
-          chain: mockObject<TokenDatabase['chain']>({
+        tokenDb: {
+          chain: {
             findByName: vi.fn().mockResolvedValue({
               name: 'ethereum',
               chainId: 1,
@@ -653,15 +652,15 @@ describe(TokenIngestionProcessor.name, () => {
               aliases: null,
               apis: null,
             }),
-          }),
-          abstractToken: mockObject<TokenDatabase['abstractToken']>({
+          } as unknown as TokenDatabase['chain'],
+          abstractToken: {
             findById: vi.fn().mockResolvedValue(undefined),
-          }),
-        }),
-        coingeckoClient: mockObject<CoingeckoClient>({
+          } as unknown as TokenDatabase['abstractToken'],
+        } as unknown as TokenDatabase,
+        coingeckoClient: {
           getCoinDataById,
           getCoinMarketChartRange,
-        }),
+        } as unknown as CoingeckoClient,
         fetchDeployedTokenFacts: vi.fn().mockResolvedValue({
           isContract: true,
           symbol: 'USDC',
@@ -703,8 +702,8 @@ describe(TokenIngestionProcessor.name, () => {
       const address = token('ethereum', '0xaaa')
 
       const processor = createProcessor({
-        tokenDb: mockObject<TokenDatabase>({
-          chain: mockObject<TokenDatabase['chain']>({
+        tokenDb: {
+          chain: {
             findByName: vi.fn().mockResolvedValue({
               name: 'ethereum',
               chainId: 1,
@@ -712,12 +711,12 @@ describe(TokenIngestionProcessor.name, () => {
               aliases: null,
               apis: null,
             }),
-          }),
-          abstractToken: mockObject<TokenDatabase['abstractToken']>({
+          } as unknown as TokenDatabase['chain'],
+          abstractToken: {
             findById: vi.fn().mockResolvedValue(undefined),
-          }),
-        }),
-        coingeckoClient: mockObject<CoingeckoClient>({
+          } as unknown as TokenDatabase['abstractToken'],
+        } as unknown as TokenDatabase,
+        coingeckoClient: {
           getCoinDataById: vi.fn().mockResolvedValue({
             id: 'ethena-staked-usde',
             symbol: 'susde',
@@ -728,7 +727,7 @@ describe(TokenIngestionProcessor.name, () => {
             prices: [{ date: new Date('2024-01-01T00:00:00Z'), value: 1 }],
             marketCaps: [],
           }),
-        }),
+        } as unknown as CoingeckoClient,
         fetchDeployedTokenFacts: vi.fn().mockResolvedValue({
           isContract: true,
           symbol: 'sUSDe',
@@ -781,8 +780,8 @@ describe(TokenIngestionProcessor.name, () => {
       const address = token('ethereum', '0xaaa')
 
       const processor = createProcessor({
-        tokenDb: mockObject<TokenDatabase>({
-          chain: mockObject<TokenDatabase['chain']>({
+        tokenDb: {
+          chain: {
             findByName: vi.fn().mockResolvedValue({
               name: 'ethereum',
               chainId: 1,
@@ -790,12 +789,12 @@ describe(TokenIngestionProcessor.name, () => {
               aliases: null,
               apis: null,
             }),
-          }),
-          abstractToken: mockObject<TokenDatabase['abstractToken']>({
+          } as unknown as TokenDatabase['chain'],
+          abstractToken: {
             findById: vi.fn().mockResolvedValue(undefined),
-          }),
-        }),
-        coingeckoClient: mockObject<CoingeckoClient>({
+          } as unknown as TokenDatabase['abstractToken'],
+        } as unknown as TokenDatabase,
+        coingeckoClient: {
           getCoinDataById: vi.fn().mockResolvedValue({
             id: 'pepe-coin',
             symbol: '$pepe',
@@ -806,7 +805,7 @@ describe(TokenIngestionProcessor.name, () => {
             prices: [{ date: new Date('2024-01-01T00:00:00Z'), value: 1 }],
             marketCaps: [],
           }),
-        }),
+        } as unknown as CoingeckoClient,
         fetchDeployedTokenFacts: vi.fn().mockResolvedValue({
           isContract: true,
           symbol: 'Pepe',
@@ -858,8 +857,8 @@ describe(TokenIngestionProcessor.name, () => {
       const address = token('ethereum', '0xaaa')
 
       const processor = createProcessor({
-        tokenDb: mockObject<TokenDatabase>({
-          chain: mockObject<TokenDatabase['chain']>({
+        tokenDb: {
+          chain: {
             findByName: vi.fn().mockResolvedValue({
               name: 'ethereum',
               chainId: 1,
@@ -867,12 +866,12 @@ describe(TokenIngestionProcessor.name, () => {
               aliases: null,
               apis: null,
             }),
-          }),
-          abstractToken: mockObject<TokenDatabase['abstractToken']>({
+          } as unknown as TokenDatabase['chain'],
+          abstractToken: {
             findById: vi.fn().mockResolvedValue(undefined),
-          }),
-        }),
-        coingeckoClient: mockObject<CoingeckoClient>({
+          } as unknown as TokenDatabase['abstractToken'],
+        } as unknown as TokenDatabase,
+        coingeckoClient: {
           getCoinDataById: vi.fn().mockResolvedValue({
             id: 'virtu-coin',
             symbol: 'virtu',
@@ -883,7 +882,7 @@ describe(TokenIngestionProcessor.name, () => {
             prices: [{ date: new Date('2024-01-01T00:00:00Z'), value: 1 }],
             marketCaps: [],
           }),
-        }),
+        } as unknown as CoingeckoClient,
         fetchDeployedTokenFacts: vi.fn().mockResolvedValue({
           isContract: true,
           symbol: 'VIRTU ',
@@ -938,8 +937,8 @@ describe(TokenIngestionProcessor.name, () => {
       const address = token('ethereum', '0xaaa')
 
       const processor = createProcessor({
-        tokenDb: mockObject<TokenDatabase>({
-          chain: mockObject<TokenDatabase['chain']>({
+        tokenDb: {
+          chain: {
             findByName: vi.fn().mockResolvedValue({
               name: 'ethereum',
               chainId: 1,
@@ -947,12 +946,12 @@ describe(TokenIngestionProcessor.name, () => {
               aliases: null,
               apis: null,
             }),
-          }),
-          abstractToken: mockObject<TokenDatabase['abstractToken']>({
+          } as unknown as TokenDatabase['chain'],
+          abstractToken: {
             findById: vi.fn().mockResolvedValue(undefined),
-          }),
-        }),
-        coingeckoClient: mockObject<CoingeckoClient>({
+          } as unknown as TokenDatabase['abstractToken'],
+        } as unknown as TokenDatabase,
+        coingeckoClient: {
           getCoinDataById: vi.fn().mockResolvedValue({
             id: 'alchemist',
             symbol: '⚗️',
@@ -963,7 +962,7 @@ describe(TokenIngestionProcessor.name, () => {
             prices: [{ date: new Date('2024-01-01T00:00:00Z'), value: 1 }],
             marketCaps: [],
           }),
-        }),
+        } as unknown as CoingeckoClient,
         fetchDeployedTokenFacts: vi.fn().mockResolvedValue({
           isContract: true,
           symbol: '$',
@@ -1002,8 +1001,8 @@ describe(TokenIngestionProcessor.name, () => {
       const address = token('ethereum', '0xaaa')
 
       const processor = createProcessor({
-        tokenDb: mockObject<TokenDatabase>({
-          chain: mockObject<TokenDatabase['chain']>({
+        tokenDb: {
+          chain: {
             findByName: vi.fn().mockResolvedValue({
               name: 'ethereum',
               chainId: 1,
@@ -1011,12 +1010,12 @@ describe(TokenIngestionProcessor.name, () => {
               aliases: null,
               apis: null,
             }),
-          }),
-          abstractToken: mockObject<TokenDatabase['abstractToken']>({
+          } as unknown as TokenDatabase['chain'],
+          abstractToken: {
             findById: vi.fn().mockResolvedValue(undefined),
-          }),
-        }),
-        coingeckoClient: mockObject<CoingeckoClient>({
+          } as unknown as TokenDatabase['abstractToken'],
+        } as unknown as TokenDatabase,
+        coingeckoClient: {
           getCoinDataById: vi.fn().mockResolvedValue({
             id: 'usd-coin',
             symbol: 'usdc',
@@ -1027,7 +1026,7 @@ describe(TokenIngestionProcessor.name, () => {
             prices: [{ date: new Date('2020-01-01T00:00:00Z'), value: 1 }],
             marketCaps: [],
           }),
-        }),
+        } as unknown as CoingeckoClient,
         fetchDeployedTokenFacts: vi.fn().mockResolvedValue({
           isContract: true,
           symbol: 'DAI',
@@ -1081,8 +1080,8 @@ describe(TokenIngestionProcessor.name, () => {
       const address = token('ethereum', '0xaaa')
 
       const processor = createProcessor({
-        tokenDb: mockObject<TokenDatabase>({
-          chain: mockObject<TokenDatabase['chain']>({
+        tokenDb: {
+          chain: {
             findByName: vi.fn().mockResolvedValue({
               name: 'ethereum',
               chainId: 1,
@@ -1090,8 +1089,8 @@ describe(TokenIngestionProcessor.name, () => {
               aliases: null,
               apis: null,
             }),
-          }),
-        }),
+          } as unknown as TokenDatabase['chain'],
+        } as unknown as TokenDatabase,
         fetchDeployedTokenFacts: vi.fn().mockResolvedValue({
           isContract: true,
           symbol: 'WETH',
@@ -1135,8 +1134,8 @@ describe(TokenIngestionProcessor.name, () => {
       const address = token('ethereum', '0xaaa')
 
       const processor = createProcessor({
-        tokenDb: mockObject<TokenDatabase>({
-          chain: mockObject<TokenDatabase['chain']>({
+        tokenDb: {
+          chain: {
             findByName: vi.fn().mockResolvedValue({
               name: 'ethereum',
               chainId: 1,
@@ -1144,8 +1143,8 @@ describe(TokenIngestionProcessor.name, () => {
               aliases: null,
               apis: null,
             }),
-          }),
-        }),
+          } as unknown as TokenDatabase['chain'],
+        } as unknown as TokenDatabase,
         fetchDeployedTokenFacts: vi.fn().mockResolvedValue({
           isContract: true,
           symbol: 'SUSDE',
@@ -1193,8 +1192,8 @@ describe(TokenIngestionProcessor.name, () => {
       const address = token('ethereum', '0xaaa')
 
       const processor = createProcessor({
-        tokenDb: mockObject<TokenDatabase>({
-          chain: mockObject<TokenDatabase['chain']>({
+        tokenDb: {
+          chain: {
             findByName: vi.fn().mockResolvedValue({
               name: 'ethereum',
               chainId: 1,
@@ -1202,12 +1201,12 @@ describe(TokenIngestionProcessor.name, () => {
               aliases: null,
               apis: null,
             }),
-          }),
-          abstractToken: mockObject<TokenDatabase['abstractToken']>({
+          } as unknown as TokenDatabase['chain'],
+          abstractToken: {
             findById: vi.fn().mockResolvedValue(undefined),
-          }),
-        }),
-        coingeckoClient: mockObject<CoingeckoClient>({
+          } as unknown as TokenDatabase['abstractToken'],
+        } as unknown as TokenDatabase,
+        coingeckoClient: {
           getCoinDataById: vi.fn().mockResolvedValue({
             id: 'usd-coin',
             symbol: 'usdc',
@@ -1218,7 +1217,7 @@ describe(TokenIngestionProcessor.name, () => {
             prices: [{ date: new Date('2020-01-01T00:00:00Z'), value: 1 }],
             marketCaps: [],
           }),
-        }),
+        } as unknown as CoingeckoClient,
         fetchDeployedTokenFacts: vi.fn().mockResolvedValue({
           isContract: true,
           symbol: undefined,
@@ -1260,12 +1259,12 @@ describe(TokenIngestionProcessor.name, () => {
       const address = token('ethereum', '0xaaa')
 
       const processor = createProcessor({
-        tokenDb: mockObject<TokenDatabase>({
-          abstractToken: mockObject<TokenDatabase['abstractToken']>({
+        tokenDb: {
+          abstractToken: {
             findById: vi.fn().mockResolvedValue(undefined),
-          }),
-        }),
-        coingeckoClient: mockObject<CoingeckoClient>({
+          } as unknown as TokenDatabase['abstractToken'],
+        } as unknown as TokenDatabase,
+        coingeckoClient: {
           getCoinDataById: vi.fn().mockResolvedValue({
             id: 'usd-coin',
             symbol: 'usdc',
@@ -1276,7 +1275,7 @@ describe(TokenIngestionProcessor.name, () => {
             prices: [{ date: new Date('2020-01-01T00:00:00Z'), value: 1 }],
             marketCaps: [],
           }),
-        }),
+        } as unknown as CoingeckoClient,
         generateAbstractTokenId: () => 'ABC123',
       })
 
@@ -1326,8 +1325,8 @@ describe(TokenIngestionProcessor.name, () => {
     it('downgrades pending insert to error when facts are missing', async () => {
       const address = token('ethereum', '0xaaa')
       const processor = createProcessor({
-        tokenDb: mockObject<TokenDatabase>({
-          chain: mockObject<TokenDatabase['chain']>({
+        tokenDb: {
+          chain: {
             findByName: vi.fn().mockResolvedValue({
               name: 'ethereum',
               chainId: 1,
@@ -1335,8 +1334,8 @@ describe(TokenIngestionProcessor.name, () => {
               aliases: null,
               apis: null,
             }),
-          }),
-        }),
+          } as unknown as TokenDatabase['chain'],
+        } as unknown as TokenDatabase,
         fetchDeployedTokenFacts: vi.fn().mockResolvedValue({
           isContract: true,
           symbol: 'USDC',
@@ -1379,21 +1378,19 @@ describe(TokenIngestionProcessor.name, () => {
       const remove = vi.fn().mockResolvedValue(1)
 
       const processor = createProcessor({
-        tokenDb: mockObject<TokenDatabase>({
-          transaction: async (callback) => await callback(),
-          deployedToken: mockObject<TokenDatabase['deployedToken']>({
+        tokenDb: {
+          transaction: vi.fn(async (callback) => await callback()),
+          deployedToken: {
             insert,
-          }),
-          tokenDbHistory: mockObject<TokenDatabase['tokenDbHistory']>({
+          } as unknown as TokenDatabase['deployedToken'],
+          tokenDbHistory: {
             insert: vi.fn().mockResolvedValue(undefined),
-          }),
-          tokenIngestionQueue: mockObject<TokenDatabase['tokenIngestionQueue']>(
-            {
-              enqueue,
-              remove,
-            },
-          ),
-        }),
+          } as unknown as TokenDatabase['tokenDbHistory'],
+          tokenIngestionQueue: {
+            enqueue,
+            remove,
+          } as unknown as TokenDatabase['tokenIngestionQueue'],
+        } as unknown as TokenDatabase,
       })
 
       const trace: IngestionTrace = {
@@ -1467,11 +1464,11 @@ describe(TokenIngestionProcessor.name, () => {
           }),
         ])
         const processor = createProcessor({
-          db: mockObject<Database>({
-            interopTransfer: mockObject<Database['interopTransfer']>({
+          db: {
+            interopTransfer: {
               getTokenRoutes,
-            }),
-          }),
+            } as unknown as Database['interopTransfer'],
+          } as unknown as Database,
         })
 
         const first = await processor.getInteropTransferIndex()
@@ -1500,11 +1497,11 @@ describe(TokenIngestionProcessor.name, () => {
             }),
           ])
         const processor = createProcessor({
-          db: mockObject<Database>({
-            interopTransfer: mockObject<Database['interopTransfer']>({
+          db: {
+            interopTransfer: {
               getTokenRoutes,
-            }),
-          }),
+            } as unknown as Database['interopTransfer'],
+          } as unknown as Database,
         })
 
         await processor.getInteropTransferIndex()
@@ -1529,9 +1526,9 @@ function createProcessor(deps: {
   generateAbstractTokenId?: () => string
 }) {
   return new TokenIngestionProcessor({
-    db: deps.db ?? mockObject<Database>({}),
-    tokenDb: deps.tokenDb ?? mockObject<TokenDatabase>({}),
-    coingeckoClient: deps.coingeckoClient ?? mockObject<CoingeckoClient>({}),
+    db: deps.db ?? ({} as unknown as Database),
+    tokenDb: deps.tokenDb ?? ({} as unknown as TokenDatabase),
+    coingeckoClient: deps.coingeckoClient ?? ({} as unknown as CoingeckoClient),
     etherscanApiKey: undefined,
     fetchDeployedTokenFacts: deps.fetchDeployedTokenFacts,
     generateAbstractTokenId: deps.generateAbstractTokenId,

@@ -1,7 +1,6 @@
 import { ChainSpecificAddress, EthereumAddress } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { utils } from 'ethers'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 
 import type { IProvider } from '../../provider/IProvider'
 import { callMethod } from './callMethod'
@@ -16,18 +15,20 @@ describe('callMethod', () => {
       'function testFunction() view returns (address r1, uint64 r2, address r3, uint64 r4)',
     ])
 
-    const provider = mockObject<IProvider>({
-      callMethod: async <T>() =>
-        abi.decodeFunctionResult(
-          'testFunction',
-          abi.encodeFunctionResult('testFunction', [
-            RESULT_VALUE,
-            1234,
-            RESULT_VALUE,
-            5678,
-          ]),
-        ) as T,
-    })
+    const provider = {
+      callMethod: vi.fn(
+        async <T>() =>
+          abi.decodeFunctionResult(
+            'testFunction',
+            abi.encodeFunctionResult('testFunction', [
+              RESULT_VALUE,
+              1234,
+              RESULT_VALUE,
+              5678,
+            ]),
+          ) as T,
+      ),
+    } as unknown as IProvider
 
     const result = await callMethod(
       provider,
@@ -49,13 +50,15 @@ describe('callMethod', () => {
       'function testFunction() view returns (address[])',
     ])
 
-    const provider = mockObject<IProvider>({
-      callMethod: async () =>
-        abi.decodeFunctionResult(
-          'testFunction',
-          abi.encodeFunctionResult('testFunction', [RESULT_VALUES]),
-        )[0],
-    })
+    const provider = {
+      callMethod: vi.fn(
+        async () =>
+          abi.decodeFunctionResult(
+            'testFunction',
+            abi.encodeFunctionResult('testFunction', [RESULT_VALUES]),
+          )[0],
+      ),
+    } as unknown as IProvider
 
     const result = await callMethod(
       provider,
@@ -73,13 +76,15 @@ describe('callMethod', () => {
       'function testFunction() view returns (address)',
     ])
 
-    const provider = mockObject<IProvider>({
-      callMethod: async () =>
-        abi.decodeFunctionResult(
-          'testFunction',
-          abi.encodeFunctionResult('testFunction', [RETURN_VALUE]),
-        )[0],
-    })
+    const provider = {
+      callMethod: vi.fn(
+        async () =>
+          abi.decodeFunctionResult(
+            'testFunction',
+            abi.encodeFunctionResult('testFunction', [RETURN_VALUE]),
+          )[0],
+      ),
+    } as unknown as IProvider
 
     const result = await callMethod(
       provider,

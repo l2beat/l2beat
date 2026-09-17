@@ -6,7 +6,6 @@ import type {
   ProjectPermissions,
 } from '@l2beat/config'
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it } from 'vitest'
 import { linkAddresses } from './linkAddresses'
 
@@ -22,17 +21,17 @@ describe(linkAddresses.name, () => {
   )
 
   describe('contracts', () => {
-    const contracts = mockObject<ProjectContracts>({
+    const contracts = {
       addresses: {
         ethereum: [
-          mockObject<ProjectContract>({
+          {
             address: mockContractAddress,
             name: 'TestContract',
             chain: 'ethereum',
-          }),
+          } as unknown as ProjectContract,
         ],
       },
-    })
+    } as unknown as ProjectContracts
 
     it('should replace known contract address with link', () => {
       const input = `The contract at ${mockContractAddress.toString()} is important.`
@@ -62,22 +61,22 @@ describe(linkAddresses.name, () => {
         '0x9876543210987654321098765432109876543210',
       )
 
-      const contractsWithMultiple = mockObject<ProjectContracts>({
+      const contractsWithMultiple = {
         addresses: {
           ethereum: [
-            mockObject<ProjectContract>({
+            {
               address: mockContractAddress,
               name: 'Contract1',
               chain: 'ethereum',
-            }),
-            mockObject<ProjectContract>({
+            } as unknown as ProjectContract,
+            {
               address: secondAddress,
               name: 'Contract2',
               chain: 'ethereum',
-            }),
+            } as unknown as ProjectContract,
           ],
         },
-      })
+      } as unknown as ProjectContracts
 
       const input = `First: ${mockContractAddress.toString()}, Second: ${secondAddress.toString()}.`
       const output = linkAddresses(input, contractsWithMultiple, undefined)
@@ -87,17 +86,17 @@ describe(linkAddresses.name, () => {
     })
 
     it('should handle contract name with spaces in ID', () => {
-      const contractsWithSpaces = mockObject<ProjectContracts>({
+      const contractsWithSpaces = {
         addresses: {
           ethereum: [
-            mockObject<ProjectContract>({
+            {
               address: mockContractAddress,
               name: 'My Contract Name',
               chain: 'ethereum',
-            }),
+            } as unknown as ProjectContract,
           ],
         },
-      })
+      } as unknown as ProjectContracts
 
       const input = `See ${mockContractAddress.toString()}.`
       const output = linkAddresses(input, contractsWithSpaces, undefined)
@@ -108,23 +107,23 @@ describe(linkAddresses.name, () => {
   })
 
   describe('permissions', () => {
-    const permissions = mockObject<Record<string, ProjectPermissions>>({
+    const permissions = {
       ethereum: {
         roles: [
-          mockObject<ProjectPermission>({
+          {
             id: 'ADI Multisig 2',
             name: 'ADI Multisig 2',
             chain: 'ethereum',
             accounts: [
-              mockObject<ProjectPermissionedAccount>({
+              {
                 address: mockPermissionAddress,
                 name: 'Account Name',
-              }),
+              } as unknown as ProjectPermissionedAccount,
             ],
-          }),
+          } as unknown as ProjectPermission,
         ],
       },
-    })
+    } as unknown as Record<string, ProjectPermissions>
 
     it('should replace known permission address with link', () => {
       const input = `The permission at ${mockPermissionAddress.toString()} is important.`
@@ -144,25 +143,23 @@ describe(linkAddresses.name, () => {
     })
 
     it('should handle actors as well as roles', () => {
-      const permissionsWithActors = mockObject<
-        Record<string, ProjectPermissions>
-      >({
+      const permissionsWithActors = {
         ethereum: {
           actors: [
-            mockObject<ProjectPermission>({
+            {
               id: 'actor-id',
               name: 'Test Actor',
               chain: 'ethereum',
               accounts: [
-                mockObject<ProjectPermissionedAccount>({
+                {
                   address: mockPermissionAddress,
                   name: 'Account Name',
-                }),
+                } as unknown as ProjectPermissionedAccount,
               ],
-            }),
+            } as unknown as ProjectPermission,
           ],
         },
-      })
+      } as unknown as Record<string, ProjectPermissions>
 
       const input = `See ${mockPermissionAddress.toString()}.`
       const output = linkAddresses(input, undefined, permissionsWithActors)
@@ -188,24 +185,24 @@ describe(linkAddresses.name, () => {
       const arbAddress = ChainSpecificAddress(
         'arb1:0x2222222222222222222222222222222222222222',
       )
-      const contracts = mockObject<ProjectContracts>({
+      const contracts = {
         addresses: {
           ethereum: [
-            mockObject<ProjectContract>({
+            {
               address: ethAddress,
               name: 'EthereumContract',
               chain: 'ethereum',
-            }),
+            } as unknown as ProjectContract,
           ],
           arbitrum: [
-            mockObject<ProjectContract>({
+            {
               address: arbAddress,
               name: 'ArbitrumContract',
               chain: 'arbitrum',
-            }),
+            } as unknown as ProjectContract,
           ],
         },
-      })
+      } as unknown as ProjectContracts
 
       const input = `ETH: ${ethAddress.toString()}, ARB: ${arbAddress.toString()}.`
       const output = linkAddresses(input, contracts, undefined)

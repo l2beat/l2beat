@@ -1,4 +1,3 @@
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it } from 'vitest'
 import {
   clearLegacyNodeStoreVersions,
@@ -18,11 +17,11 @@ const USER_PREFERENCES: State['userPreferences'] = {
 
 describe(partializeNodeStore.name, () => {
   it('persists preferences without the graph', () => {
-    const state = mockObject<State>({
+    const state = {
       projectId: 'ccip',
-      nodes: [mockObject<Node>({ id: 'node' })],
+      nodes: [{ id: 'node' } as unknown as Node],
       userPreferences: USER_PREFERENCES,
-    })
+    } as unknown as State
 
     expect(partializeNodeStore(state)).toStrictEqual({
       userPreferences: USER_PREFERENCES,
@@ -52,16 +51,16 @@ describe(migrateNodeStoreState.name, () => {
 
 describe(mergeNodeStoreState.name, () => {
   it('does not hydrate stale nodes or a stale project', () => {
-    const currentState = mockObject<State>({
+    const currentState = {
       projectId: '',
       nodes: [],
       userPreferences: DEFAULT_USER_PREFERENCES,
-    })
+    } as unknown as State
 
     const result = mergeNodeStoreState(
       {
         projectId: 'ccip',
-        nodes: [mockObject<Node>({ id: 'node' })],
+        nodes: [{ id: 'node' } as unknown as Node],
         userPreferences: USER_PREFERENCES,
       },
       currentState,

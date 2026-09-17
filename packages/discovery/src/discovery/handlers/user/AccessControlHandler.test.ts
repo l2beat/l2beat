@@ -1,7 +1,6 @@
 import { ChainSpecificAddress, EthereumAddress } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { type providers, utils } from 'ethers'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 
 import type { IProvider } from '../../provider/IProvider'
 import { AccessControlHandler } from './AccessControlHandler'
@@ -39,9 +38,9 @@ describe(AccessControlHandler.name, () => {
 
   it('no logs', async () => {
     const address = ChainSpecificAddress.random()
-    const provider = mockObject<IProvider>({
+    const provider = {
       chain: 'ethereum',
-      async getLogs(providedAddress, topics) {
+      getLogs: vi.fn(async (providedAddress, topics) => {
         expect(providedAddress).toStrictEqual(address)
         expect(topics).toStrictEqual([
           [
@@ -51,8 +50,8 @@ describe(AccessControlHandler.name, () => {
           ],
         ])
         return []
-      },
-    })
+      }),
+    } as unknown as IProvider
 
     const handler = new AccessControlHandler(
       'someName',
@@ -90,9 +89,9 @@ describe(AccessControlHandler.name, () => {
     const CharlieRaw = ChainSpecificAddress.address(Charlie)
 
     const address = ChainSpecificAddress.random()
-    const provider = mockObject<IProvider>({
+    const provider = {
       chain: 'ethereum',
-      async getLogs() {
+      getLogs: vi.fn(async () => {
         return [
           RoleGranted(WARRIOR_ROLE, AliceRaw),
           RoleGranted(WARRIOR_ROLE, BobRaw),
@@ -110,8 +109,8 @@ describe(AccessControlHandler.name, () => {
           RoleGranted(WARRIOR_ROLE, AliceRaw),
           RoleAdminChanged(ROGUE_ROLE, GOBLIN_ROLE),
         ]
-      },
-    })
+      }),
+    } as unknown as IProvider
 
     const handler = new AccessControlHandler(
       'someName',
@@ -152,11 +151,11 @@ describe(AccessControlHandler.name, () => {
 
   it('passes relative ignore', async () => {
     const address = ChainSpecificAddress.random()
-    const provider = mockObject<IProvider>({
-      async getLogs() {
+    const provider = {
+      getLogs: vi.fn(async () => {
         return []
-      },
-    })
+      }),
+    } as unknown as IProvider
 
     const handler = new AccessControlHandler(
       'someName',
@@ -181,12 +180,12 @@ describe(AccessControlHandler.name, () => {
 
   it('does not include ABI roles which have never been granted by default', async () => {
     const address = ChainSpecificAddress.random()
-    const provider = mockObject<IProvider>({
+    const provider = {
       chain: 'ethereum',
-      async getLogs() {
+      getLogs: vi.fn(async () => {
         return []
-      },
-    })
+      }),
+    } as unknown as IProvider
 
     const handler = new AccessControlHandler(
       'someName',
@@ -209,12 +208,12 @@ describe(AccessControlHandler.name, () => {
 
   it('includes ABI roles which have never been granted when configured', async () => {
     const address = ChainSpecificAddress.random()
-    const provider = mockObject<IProvider>({
+    const provider = {
       chain: 'ethereum',
-      async getLogs() {
+      getLogs: vi.fn(async () => {
         return []
-      },
-    })
+      }),
+    } as unknown as IProvider
 
     const handler = new AccessControlHandler(
       'someName',
@@ -246,12 +245,12 @@ describe(AccessControlHandler.name, () => {
       ['namespaced.WizardRole'],
     )
     const member = EthereumAddress.random()
-    const provider = mockObject<IProvider>({
+    const provider = {
       chain: 'ethereum',
-      async getLogs() {
+      getLogs: vi.fn(async () => {
         return [RoleGranted(customRole, member)]
-      },
-    })
+      }),
+    } as unknown as IProvider
 
     const handler = new AccessControlHandler(
       'someName',
@@ -288,15 +287,15 @@ describe(AccessControlHandler.name, () => {
     const derivedRole = utils.solidityKeccak256(['string'], ['WIZARD_ROLE'])
     const member = EthereumAddress.random()
     const other = EthereumAddress.random()
-    const provider = mockObject<IProvider>({
+    const provider = {
       chain: 'ethereum',
-      async getLogs() {
+      getLogs: vi.fn(async () => {
         return [
           RoleGranted(customRole, member),
           RoleGranted(derivedRole, other),
         ]
-      },
-    })
+      }),
+    } as unknown as IProvider
 
     const handler = new AccessControlHandler(
       'someName',
@@ -333,12 +332,12 @@ describe(AccessControlHandler.name, () => {
     // Regression: keccak256("DEFAULT_ADMIN_ROLE") must not shadow bytes32(0)
     const address = ChainSpecificAddress.random()
     const admin = EthereumAddress.random()
-    const provider = mockObject<IProvider>({
+    const provider = {
       chain: 'ethereum',
-      async getLogs() {
+      getLogs: vi.fn(async () => {
         return [RoleGranted('0x' + '0'.repeat(64), admin)]
-      },
-    })
+      }),
+    } as unknown as IProvider
 
     const handler = new AccessControlHandler(
       'someName',

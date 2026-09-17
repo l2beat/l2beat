@@ -1,4 +1,3 @@
-import { mockObject } from '@l2beat/test-utils'
 import type { jwtVerify } from 'jose'
 import { describe, expect, it } from 'vitest'
 import type { AuthConfig, Config } from '../config/Config'
@@ -6,20 +5,20 @@ import { getSession } from './getSession'
 
 const READ_ONLY_TOKEN = 'read-only-token-abcd-1234'
 
-const mockConfig = mockObject<Config>({
-  auth: mockObject<AuthConfig>({
+const mockConfig = {
+  auth: {
     JWKS: undefined,
     aud: undefined,
     teamDomain: undefined,
-  }),
+  } as unknown as AuthConfig,
   readOnlyAuthToken: READ_ONLY_TOKEN,
-})
+} as unknown as Config
 
 describe(getSession.name, () => {
   it('works as expected when auth is undefined', async () => {
-    const mockNonAuthConfig = mockObject<Config>({
+    const mockNonAuthConfig = {
       auth: false,
-    })
+    } as unknown as Config
 
     const session = await getSession(new Headers(), mockNonAuthConfig)
 

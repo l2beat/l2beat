@@ -1,5 +1,4 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 import type { PolkadotRpcClient } from '../../clients'
 import { AvailDaProvider } from './AvailDaProvider'
@@ -8,12 +7,12 @@ import type { AvailBlob } from './types'
 describe(AvailDaProvider.name, () => {
   describe(AvailDaProvider.prototype.getBlobs.name, () => {
     it('return blobs for given block range', async () => {
-      const mockRpc = mockObject<PolkadotRpcClient>({
+      const mockRpc = {
         getBlock: vi
           .fn()
           .mockResolvedValueOnce(mockBlockResponse([1, 2]))
           .mockResolvedValueOnce(mockBlockResponse([])),
-      })
+      } as unknown as PolkadotRpcClient
 
       const provider = new AvailDaProvider(mockRpc, 'avail')
 
@@ -40,9 +39,9 @@ describe(AvailDaProvider.name, () => {
     })
 
     it('return no blobs if no extrinsics', async () => {
-      const mockRpc = mockObject<PolkadotRpcClient>({
+      const mockRpc = {
         getBlock: vi.fn().mockResolvedValue(mockBlockResponse([1, 2], [])),
-      })
+      } as unknown as PolkadotRpcClient
 
       const provider = new AvailDaProvider(mockRpc, 'avail')
 
@@ -52,9 +51,9 @@ describe(AvailDaProvider.name, () => {
     })
 
     it('return no blobs if no apps', async () => {
-      const mockRpc = mockObject<PolkadotRpcClient>({
+      const mockRpc = {
         getBlock: vi.fn().mockResolvedValue(mockBlockResponse([])),
-      })
+      } as unknown as PolkadotRpcClient
 
       const provider = new AvailDaProvider(mockRpc, 'avail')
 
@@ -64,9 +63,9 @@ describe(AvailDaProvider.name, () => {
     })
 
     it('return 1 blob per id that has an avail extrinsic', async () => {
-      const mockRpc = mockObject<PolkadotRpcClient>({
+      const mockRpc = {
         getBlock: vi.fn().mockResolvedValue(mockRealBlockData()),
-      })
+      } as unknown as PolkadotRpcClient
 
       const provider = new AvailDaProvider(mockRpc, 'avail')
 
@@ -85,7 +84,7 @@ describe(AvailDaProvider.name, () => {
     })
 
     it('return multiple blobs per id that has an avail extrinsic', async () => {
-      const mockRpc = mockObject<PolkadotRpcClient>({
+      const mockRpc = {
         getBlock: vi
           .fn()
           .mockResolvedValue(
@@ -98,7 +97,7 @@ describe(AvailDaProvider.name, () => {
               ],
             ),
           ),
-      })
+      } as unknown as PolkadotRpcClient
 
       const provider = new AvailDaProvider(mockRpc, 'avail')
 
@@ -128,7 +127,7 @@ describe(AvailDaProvider.name, () => {
   describe(AvailDaProvider.prototype.getBlockTimestamp.name, () => {
     it('returns the same timestamp the blobs of that block carry', async () => {
       const provider = new AvailDaProvider(
-        mockObject<PolkadotRpcClient>(),
+        {} as unknown as PolkadotRpcClient,
         'avail',
       )
 

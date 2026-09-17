@@ -1,6 +1,5 @@
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 
 import type { IProvider } from '../../provider/IProvider'
 import { EXEC_REVERT_MSG } from '../utils/callMethod'
@@ -233,20 +232,22 @@ describe(CallHandler.name, () => {
     const address = ChainSpecificAddress.random()
 
     it('calls the method with the provided parameters', async () => {
-      const provider = mockObject<IProvider>({
+      const provider = {
         blockNumber: 123,
         chain: 'foo',
-        async callMethod<T>(
-          passedAddress: ChainSpecificAddress,
-          _abi: string,
-          data: unknown[],
-        ) {
-          expect(passedAddress).toStrictEqual(address)
-          expect(data).toStrictEqual([1, 2])
+        callMethod: vi.fn(
+          async <T>(
+            passedAddress: ChainSpecificAddress,
+            _abi: string,
+            data: unknown[],
+          ) => {
+            expect(passedAddress).toStrictEqual(address)
+            expect(data).toStrictEqual([1, 2])
 
-          return 3 as T
-        },
-      })
+            return 3 as T
+          },
+        ),
+      } as unknown as IProvider
 
       const handler = new CallHandler(
         'add',
@@ -264,20 +265,22 @@ describe(CallHandler.name, () => {
 
     it('calls the method with the provided parameters and address', async () => {
       const inAddress = ChainSpecificAddress.random()
-      const provider = mockObject<IProvider>({
+      const provider = {
         blockNumber: 123,
         chain: 'foo',
-        async callMethod<T>(
-          passedAddress: ChainSpecificAddress,
-          _abi: string,
-          data: unknown[],
-        ) {
-          expect(passedAddress).toStrictEqual(inAddress)
-          expect(data).toStrictEqual([1, 2])
+        callMethod: vi.fn(
+          async <T>(
+            passedAddress: ChainSpecificAddress,
+            _abi: string,
+            data: unknown[],
+          ) => {
+            expect(passedAddress).toStrictEqual(inAddress)
+            expect(data).toStrictEqual([1, 2])
 
-          return 3 as T
-        },
-      })
+            return 3 as T
+          },
+        ),
+      } as unknown as IProvider
 
       const handler = new CallHandler(
         'add',
@@ -299,20 +302,22 @@ describe(CallHandler.name, () => {
     })
 
     it('calls the method with the resolved parameters', async () => {
-      const provider = mockObject<IProvider>({
+      const provider = {
         blockNumber: 123,
         chain: 'foo',
-        async callMethod<T>(
-          passedAddress: ChainSpecificAddress,
-          _abi: string,
-          data: unknown[],
-        ) {
-          expect(passedAddress).toStrictEqual(address)
-          expect(data).toStrictEqual([1, 2])
+        callMethod: vi.fn(
+          async <T>(
+            passedAddress: ChainSpecificAddress,
+            _abi: string,
+            data: unknown[],
+          ) => {
+            expect(passedAddress).toStrictEqual(address)
+            expect(data).toStrictEqual([1, 2])
 
-          return 3 as T
-        },
-      })
+            return 3 as T
+          },
+        ),
+      } as unknown as IProvider
 
       const handler = new CallHandler(
         'add',
@@ -333,20 +338,22 @@ describe(CallHandler.name, () => {
 
     it('calls the method with the provided parameters and address as dependency', async () => {
       const inAddress = ChainSpecificAddress.random()
-      const provider = mockObject<IProvider>({
+      const provider = {
         blockNumber: 123,
         chain: 'foo',
-        async callMethod<T>(
-          passedAddress: ChainSpecificAddress,
-          _abi: string,
-          data: unknown[],
-        ) {
-          expect(passedAddress).toStrictEqual(inAddress)
-          expect(data).toStrictEqual([1, 2])
+        callMethod: vi.fn(
+          async <T>(
+            passedAddress: ChainSpecificAddress,
+            _abi: string,
+            data: unknown[],
+          ) => {
+            expect(passedAddress).toStrictEqual(inAddress)
+            expect(data).toStrictEqual([1, 2])
 
-          return 3 as T
-        },
-      })
+            return 3 as T
+          },
+        ),
+      } as unknown as IProvider
 
       const handler = new CallHandler(
         'add',
@@ -373,20 +380,22 @@ describe(CallHandler.name, () => {
     })
 
     it('calls the method with parameters resolved from a nested reference', async () => {
-      const provider = mockObject<IProvider>({
+      const provider = {
         blockNumber: 123,
         chain: 'foo',
-        async callMethod<T>(
-          passedAddress: ChainSpecificAddress,
-          _abi: string,
-          data: unknown[],
-        ) {
-          expect(passedAddress).toStrictEqual(address)
-          expect(data).toStrictEqual([1, 2])
+        callMethod: vi.fn(
+          async <T>(
+            passedAddress: ChainSpecificAddress,
+            _abi: string,
+            data: unknown[],
+          ) => {
+            expect(passedAddress).toStrictEqual(address)
+            expect(data).toStrictEqual([1, 2])
 
-          return 3 as T
-        },
-      })
+            return 3 as T
+          },
+        ),
+      } as unknown as IProvider
 
       const handler = new CallHandler(
         'add',
@@ -419,20 +428,22 @@ describe(CallHandler.name, () => {
 
     it('calls the address resolved from a nested reference', async () => {
       const inAddress = ChainSpecificAddress.random()
-      const provider = mockObject<IProvider>({
+      const provider = {
         blockNumber: 123,
         chain: 'foo',
-        async callMethod<T>(
-          passedAddress: ChainSpecificAddress,
-          _abi: string,
-          data: unknown[],
-        ) {
-          expect(passedAddress).toStrictEqual(inAddress)
-          expect(data).toStrictEqual([1, 2])
+        callMethod: vi.fn(
+          async <T>(
+            passedAddress: ChainSpecificAddress,
+            _abi: string,
+            data: unknown[],
+          ) => {
+            expect(passedAddress).toStrictEqual(inAddress)
+            expect(data).toStrictEqual([1, 2])
 
-          return 3 as T
-        },
-      })
+            return 3 as T
+          },
+        ),
+      } as unknown as IProvider
 
       const handler = new CallHandler(
         'add',
@@ -459,13 +470,13 @@ describe(CallHandler.name, () => {
     })
 
     it('handles errors', async () => {
-      const provider = mockObject<IProvider>({
+      const provider = {
         blockNumber: 123,
         chain: 'foo',
-        async callMethod() {
+        callMethod: vi.fn(async () => {
           throw new Error('oops')
-        },
-      })
+        }),
+      } as unknown as IProvider
 
       const handler = new CallHandler(
         'add',
@@ -482,13 +493,13 @@ describe(CallHandler.name, () => {
     })
 
     it('passes ignoreRelative', async () => {
-      const provider = mockObject<IProvider>({
+      const provider = {
         blockNumber: 123,
         chain: 'foo',
-        async callMethod<T>() {
+        callMethod: vi.fn(async <T>() => {
           return 3 as T
-        },
-      })
+        }),
+      } as unknown as IProvider
 
       const handler = new CallHandler(
         'add',
@@ -505,13 +516,13 @@ describe(CallHandler.name, () => {
     })
 
     it('should catch revert error', async () => {
-      const provider = mockObject<IProvider>({
+      const provider = {
         blockNumber: 123,
         chain: 'foo',
-        async callMethod() {
+        callMethod: vi.fn(async () => {
           return undefined
-        },
-      })
+        }),
+      } as unknown as IProvider
 
       const handler = new CallHandler(
         'add',
@@ -527,13 +538,13 @@ describe(CallHandler.name, () => {
     })
 
     it('should not catch revert error when expectRevert is false', async () => {
-      const provider = mockObject<IProvider>({
+      const provider = {
         blockNumber: 123,
         chain: 'foo',
-        async callMethod() {
+        callMethod: vi.fn(async () => {
           return undefined
-        },
-      })
+        }),
+      } as unknown as IProvider
 
       const handler = new CallHandler(
         'add',

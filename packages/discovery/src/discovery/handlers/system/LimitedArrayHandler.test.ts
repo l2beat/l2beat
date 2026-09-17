@@ -1,6 +1,5 @@
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 
 import type { IProvider } from '../../provider/IProvider'
 import { LimitedArrayHandler } from './LimitedArrayHandler'
@@ -16,18 +15,16 @@ describe(LimitedArrayHandler.name, () => {
       ChainSpecificAddress.random(),
     ]
 
-    const provider = mockObject<IProvider>({
-      async callMethod<T>(
-        a: ChainSpecificAddress,
-        _abi: string,
-        data: unknown[],
-      ) {
-        expect(a).toStrictEqual(address)
-        const index = data[0] as number
-        expect(data).toStrictEqual([index])
-        return owners[index]!.toString() as T
-      },
-    })
+    const provider = {
+      callMethod: vi.fn(
+        async <T>(a: ChainSpecificAddress, _abi: string, data: unknown[]) => {
+          expect(a).toStrictEqual(address)
+          const index = data[0] as number
+          expect(data).toStrictEqual([index])
+          return owners[index]!.toString() as T
+        },
+      ),
+    } as unknown as IProvider
 
     const handler = new LimitedArrayHandler(method, 3)
     expect(handler.field).toStrictEqual('owners')
@@ -48,23 +45,21 @@ describe(LimitedArrayHandler.name, () => {
       ChainSpecificAddress.random(),
     ]
 
-    const provider = mockObject<IProvider>({
-      async callMethod<T>(
-        a: ChainSpecificAddress,
-        _abi: string,
-        data: unknown[],
-      ) {
-        expect(a).toStrictEqual(address)
+    const provider = {
+      callMethod: vi.fn(
+        async <T>(a: ChainSpecificAddress, _abi: string, data: unknown[]) => {
+          expect(a).toStrictEqual(address)
 
-        const index = data[0] as number
-        expect(data).toStrictEqual([index])
-        if (index === 2) {
-          return undefined as T
-        }
+          const index = data[0] as number
+          expect(data).toStrictEqual([index])
+          if (index === 2) {
+            return undefined as T
+          }
 
-        return owners[index]!.toString() as T
-      },
-    })
+          return owners[index]!.toString() as T
+        },
+      ),
+    } as unknown as IProvider
 
     const handler = new LimitedArrayHandler(method, 3)
     const result = await handler.execute(provider, address)
@@ -82,23 +77,21 @@ describe(LimitedArrayHandler.name, () => {
       ChainSpecificAddress.random(),
     ]
 
-    const provider = mockObject<IProvider>({
-      async callMethod<T>(
-        a: ChainSpecificAddress,
-        _abi: string,
-        data: unknown[],
-      ) {
-        expect(a).toStrictEqual(address)
+    const provider = {
+      callMethod: vi.fn(
+        async <T>(a: ChainSpecificAddress, _abi: string, data: unknown[]) => {
+          expect(a).toStrictEqual(address)
 
-        const index = data[0] as number
-        expect(data).toStrictEqual([index])
-        if (index === 2) {
-          throw 'foo bar'
-        }
+          const index = data[0] as number
+          expect(data).toStrictEqual([index])
+          if (index === 2) {
+            throw 'foo bar'
+          }
 
-        return owners[index]!.toString() as T
-      },
-    })
+          return owners[index]!.toString() as T
+        },
+      ),
+    } as unknown as IProvider
 
     const handler = new LimitedArrayHandler(method, 3)
     const result = await handler.execute(provider, address)
@@ -110,21 +103,19 @@ describe(LimitedArrayHandler.name, () => {
 
   it('rewrites $foo to _$foo', async () => {
     const address = ChainSpecificAddress.random()
-    const provider = mockObject<IProvider>({
-      async callMethod<T>(
-        a: ChainSpecificAddress,
-        _abi: string,
-        data: unknown[],
-      ) {
-        expect(a).toStrictEqual(address)
-        const index = data[0] as number
-        expect(data).toStrictEqual([index])
-        if (index === 1) {
-          return undefined
-        }
-        return 1 as T
-      },
-    })
+    const provider = {
+      callMethod: vi.fn(
+        async <T>(a: ChainSpecificAddress, _abi: string, data: unknown[]) => {
+          expect(a).toStrictEqual(address)
+          const index = data[0] as number
+          expect(data).toStrictEqual([index])
+          if (index === 1) {
+            return undefined
+          }
+          return 1 as T
+        },
+      ),
+    } as unknown as IProvider
 
     const handler = new LimitedArrayHandler(
       'function $foo(uint256 index) view returns (uint)',

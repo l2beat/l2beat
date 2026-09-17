@@ -4,8 +4,7 @@ import type {
   ProjectPermissions,
 } from '@l2beat/config'
 import { assert, ChainSpecificAddress, ProjectId } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import type { ProjectsChangeReport } from '~/server/features/projects-change-report/getProjectsChangeReport'
 import type { ContractUtils } from './getContractUtils'
 import { getPermissionsSection } from './getPermissionsSection'
@@ -18,9 +17,9 @@ const ADDRESS_B = ChainSpecificAddress(
 )
 const PROJECT_ID = ProjectId('test')
 
-const projectsChangeReport = mockObject<ProjectsChangeReport>({
+const projectsChangeReport = {
   projects: {},
-})
+} as unknown as ProjectsChangeReport
 
 describe(getPermissionsSection.name, () => {
   it('groups matching single-contract permissions', () => {
@@ -40,9 +39,9 @@ describe(getPermissionsSection.name, () => {
   })
 
   it('does not group permissions with different usages', () => {
-    const contractUtils = mockObject<ContractUtils>({
-      getChainName: (chain) => chain,
-      getUsedIn: (_chain, address) =>
+    const contractUtils = {
+      getChainName: vi.fn((chain) => chain),
+      getUsedIn: vi.fn((_chain, address) =>
         address === ChainSpecificAddress.address(ADDRESS_A)
           ? [
               {
@@ -56,7 +55,8 @@ describe(getPermissionsSection.name, () => {
               },
             ]
           : [],
-    })
+      ),
+    } as unknown as ContractUtils
 
     const section = getSection(
       [makePermission('first', ADDRESS_A), makePermission('second', ADDRESS_B)],
@@ -81,7 +81,7 @@ describe(getPermissionsSection.name, () => {
   })
 
   it('does not group a permission that recently became verified', () => {
-    const changeReport = mockObject<ProjectsChangeReport>({
+    const changeReport = {
       projects: {
         [PROJECT_ID]: {
           ethereum: {
@@ -92,7 +92,7 @@ describe(getPermissionsSection.name, () => {
           },
         },
       },
-    })
+    } as unknown as ProjectsChangeReport
     const section = getSection(
       [makePermission('first', ADDRESS_A), makePermission('second', ADDRESS_B)],
       defaultContractUtils,
@@ -103,10 +103,10 @@ describe(getPermissionsSection.name, () => {
   })
 })
 
-const defaultContractUtils = mockObject<ContractUtils>({
-  getChainName: (chain) => chain,
-  getUsedIn: () => [],
-})
+const defaultContractUtils = {
+  getChainName: vi.fn((chain) => chain),
+  getUsedIn: vi.fn(() => []),
+} as unknown as ContractUtils
 
 function getSection(
   actors: ProjectPermission[],

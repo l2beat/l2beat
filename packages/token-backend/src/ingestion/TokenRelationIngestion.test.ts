@@ -6,7 +6,6 @@ import type {
   TokenRelationRecord,
 } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 import { TokenRelationIngestion } from './TokenRelationIngestion'
 
@@ -569,16 +568,16 @@ function createIngestion(opts: {
   set?: ReturnType<typeof vi.fn>
   transaction?: ReturnType<typeof vi.fn>
 }) {
-  const db = mockObject<Database>({
-    interopTransfer: mockObject<Database['interopTransfer']>({
+  const db = {
+    interopTransfer: {
       getAfterSerialId:
         opts.getAfterSerialId as Database['interopTransfer']['getAfterSerialId'],
-    }),
-  })
-  const tokenDb = mockObject<TokenDatabase>({
+    } as unknown as Database['interopTransfer'],
+  } as unknown as Database
+  const tokenDb = {
     transaction: (opts.transaction ??
       (async (callback) => await callback())) as TokenDatabase['transaction'],
-    tokenDbSettings: mockObject<TokenDatabase['tokenDbSettings']>({
+    tokenDbSettings: {
       get: vi
         .fn()
         .mockResolvedValue(
@@ -590,8 +589,8 @@ function createIngestion(opts: {
           .mockResolvedValue(
             undefined,
           )) as TokenDatabase['tokenDbSettings']['set'],
-    }),
-    tokenRelation: mockObject<TokenDatabase['tokenRelation']>({
+    } as unknown as TokenDatabase['tokenDbSettings'],
+    tokenRelation: {
       getByPrimaryKeys: vi.fn().mockResolvedValue(opts.existingRelations ?? []),
       insert: (opts.insert ??
         vi
@@ -605,16 +604,16 @@ function createIngestion(opts: {
           .mockResolvedValue(
             1,
           )) as TokenDatabase['tokenRelation']['updateByPrimaryKey'],
-    }),
-    tokenDbHistory: mockObject<TokenDatabase['tokenDbHistory']>({
+    } as unknown as TokenDatabase['tokenRelation'],
+    tokenDbHistory: {
       insert: (opts.historyInsert ??
         vi
           .fn()
           .mockResolvedValue(
             undefined,
           )) as TokenDatabase['tokenDbHistory']['insert'],
-    }),
-  })
+    } as unknown as TokenDatabase['tokenDbHistory'],
+  } as unknown as TokenDatabase
 
   return new TokenRelationIngestion(db, tokenDb, Logger.SILENT)
 }

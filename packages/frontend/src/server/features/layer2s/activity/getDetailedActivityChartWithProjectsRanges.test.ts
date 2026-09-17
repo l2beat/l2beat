@@ -1,7 +1,6 @@
 import type { ActivityRecord, Database } from '@l2beat/database'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import { getActivityChartData } from './getDetailedActivityChartWithProjectsRanges'
 
 const DAY = UnixTime.DAY
@@ -128,9 +127,9 @@ function repositoryMock(
   records: ActivityRecord[],
   sinceTimestamps: Record<string, UnixTime>,
 ): Database['activity'] {
-  return mockObject<Database['activity']>({
-    getByProjectsAndTimeRange: async () => records,
-    getActivityTotalsForProjects: async () =>
+  return {
+    getByProjectsAndTimeRange: vi.fn(async () => records),
+    getActivityTotalsForProjects: vi.fn(async () =>
       Object.fromEntries(
         Object.entries(sinceTimestamps).map(([projectId, sinceTimestamp]) => [
           projectId,
@@ -142,7 +141,8 @@ function repositoryMock(
           },
         ]),
       ),
-  })
+    ),
+  } as unknown as Database['activity']
 }
 
 function record(

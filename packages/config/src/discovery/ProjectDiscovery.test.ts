@@ -4,17 +4,16 @@ import {
   type DiscoveryConfig,
 } from '@l2beat/discovery'
 import { assert, ChainSpecificAddress } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import { contractStub, discoveredJsonStub } from '../test/stubs/discoveredJson'
 import { ProjectDiscovery } from './ProjectDiscovery'
 
 describe(ProjectDiscovery.name, () => {
   const projectName = 'ExampleProject'
-  const configReader = mockObject<ConfigReader>({
-    readConfig: (projectName: string) => mockConfig(projectName),
-    readDiscoveryWithReferences: () => [discoveredJsonStub],
-  })
+  const configReader = {
+    readConfig: vi.fn((projectName: string) => mockConfig(projectName)),
+    readDiscoveryWithReferences: vi.fn(() => [discoveredJsonStub]),
+  } as unknown as ConfigReader
 
   const discovery = new ProjectDiscovery(projectName, configReader)
 
@@ -107,9 +106,9 @@ describe(ProjectDiscovery.name, () => {
     it('renders a shared EOA once using the base project name and permissions', () => {
       const giver = ChainSpecificAddress.from('eth', '0x111')
       const holder = ChainSpecificAddress.from('eth', '0x222')
-      const reader = mockObject<ConfigReader>({
-        readConfig: (name) => mockConfig(name),
-        readDiscoveryWithReferences: () => [
+      const reader = {
+        readConfig: vi.fn((name) => mockConfig(name)),
+        readDiscoveryWithReferences: vi.fn(() => [
           {
             ...discoveredJsonStub,
             entries: [
@@ -127,8 +126,8 @@ describe(ProjectDiscovery.name, () => {
             name: 'shared',
             entries: [{ type: 'EOA', address: holder, name: 'ModuleName' }],
           },
-        ],
-      })
+        ]),
+      } as unknown as ConfigReader
 
       const actors = new ProjectDiscovery(
         'ExampleProject',
@@ -141,15 +140,15 @@ describe(ProjectDiscovery.name, () => {
     })
 
     it('should return empty arrays when no EOAs have permissions', () => {
-      const configReaderEmpty = mockObject<ConfigReader>({
-        readConfig: (projectName: string) => mockConfig(projectName),
-        readDiscoveryWithReferences: () => [
+      const configReaderEmpty = {
+        readConfig: vi.fn((projectName: string) => mockConfig(projectName)),
+        readDiscoveryWithReferences: vi.fn(() => [
           {
             ...discoveredJsonStub,
             entries: discoveredJsonStub.entries.filter((e) => e.type !== 'EOA'),
           },
-        ],
-      })
+        ]),
+      } as unknown as ConfigReader
       const discoveryEmpty = new ProjectDiscovery(
         'EmptyProject',
         configReaderEmpty,
@@ -165,9 +164,9 @@ describe(ProjectDiscovery.name, () => {
     })
 
     it('should handle single EOA with permissions', () => {
-      const configReaderSingle = mockObject<ConfigReader>({
-        readConfig: (projectName: string) => mockConfig(projectName),
-        readDiscoveryWithReferences: () => [
+      const configReaderSingle = {
+        readConfig: vi.fn((projectName: string) => mockConfig(projectName)),
+        readDiscoveryWithReferences: vi.fn(() => [
           {
             ...discoveredJsonStub,
             entries: [
@@ -198,8 +197,8 @@ describe(ProjectDiscovery.name, () => {
               },
             ],
           },
-        ],
-      })
+        ]),
+      } as unknown as ConfigReader
       const discoverySingle = new ProjectDiscovery(
         'SingleProject',
         configReaderSingle,
@@ -215,9 +214,9 @@ describe(ProjectDiscovery.name, () => {
     })
 
     it('should group EOAs with same description but different chains', () => {
-      const configReaderMultiChain = mockObject<ConfigReader>({
-        readConfig: (projectName: string) => mockConfig(projectName),
-        readDiscoveryWithReferences: () => [
+      const configReaderMultiChain = {
+        readConfig: vi.fn((projectName: string) => mockConfig(projectName)),
+        readDiscoveryWithReferences: vi.fn(() => [
           {
             ...discoveredJsonStub,
             entries: [
@@ -288,8 +287,8 @@ describe(ProjectDiscovery.name, () => {
               },
             ],
           },
-        ],
-      })
+        ]),
+      } as unknown as ConfigReader
       const discoveryMultiChain = new ProjectDiscovery(
         'MultiChainProject',
         configReaderMultiChain,

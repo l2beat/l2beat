@@ -1,5 +1,4 @@
 import { Bytes, ChainSpecificAddress } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 import type { IProvider } from '../provider/IProvider'
 import { MANUAL_DETECTORS, ProxyDetector } from './ProxyDetector'
@@ -8,10 +7,10 @@ import type { ProxyDetails } from './types'
 describe(ProxyDetector.name, () => {
   const address = ChainSpecificAddress.random()
   const implementation = ChainSpecificAddress.random()
-  const provider = mockObject<IProvider>({
+  const provider = {
     getBytecode: vi.fn().mockReturnValue(Bytes.fromHex('0xdeadbeeff4')),
     getDeployment: vi.fn().mockReturnValue(undefined),
-  })
+  } as unknown as IProvider
 
   const FIRST_DETAILS: ProxyDetails = {
     type: 'EIP1967 proxy',
@@ -35,10 +34,10 @@ describe(ProxyDetector.name, () => {
       [],
     )
 
-    const provider = mockObject<IProvider>({
+    const provider = {
       getBytecode: vi.fn().mockReturnValue(Bytes.EMPTY),
       getDeployment: vi.fn().mockReturnValue(undefined),
-    })
+    } as unknown as IProvider
     const result = await detector.detectProxy(provider, address)
 
     expect(result).toStrictEqual({
@@ -55,7 +54,7 @@ describe(ProxyDetector.name, () => {
       [],
     )
 
-    const provider = mockObject<IProvider>({
+    const provider = {
       chain: 'ethereum',
       getBytecode: vi
         .fn()
@@ -67,7 +66,7 @@ describe(ProxyDetector.name, () => {
           ),
         ),
       getDeployment: vi.fn().mockReturnValue(undefined),
-    })
+    } as unknown as IProvider
     const result = await detector.detectProxy(provider, address)
 
     expect(result).toStrictEqual({

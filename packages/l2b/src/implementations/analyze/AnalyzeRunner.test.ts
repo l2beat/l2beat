@@ -1,5 +1,4 @@
-import { mockObject } from '@l2beat/test-utils'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import {
   type AnalyzeRunner,
   AnalyzeRunnerUnavailableError,
@@ -71,11 +70,11 @@ describe(runWithSelectedRunner.name, () => {
 })
 
 function runner(name: 'cli' | 'api'): AnalyzeRunner {
-  return mockObject<AnalyzeRunner>({
+  return {
     name,
-    listAnalyzers: async () => ({ result: [] }),
-    runAnalyzer: async () => {
+    listAnalyzers: vi.fn(async () => ({ result: [] })),
+    runAnalyzer: vi.fn(async () => {
       throw new Error('unused')
-    },
-  })
+    }),
+  } as unknown as AnalyzeRunner
 }

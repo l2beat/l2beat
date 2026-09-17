@@ -1,5 +1,4 @@
 import { CoingeckoId, UnixTime } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 import { CoingeckoQueryService, type QueryResultPoint } from '../../services'
 import { CirculatingSupplyProvider } from './CirculatingSupplyProvider'
@@ -20,9 +19,9 @@ describe(CirculatingSupplyProvider.name, () => {
           { timestamp: UnixTime(1700000000), value: 120000000 },
         ]
 
-        const coingeckoQueryService = mockObject<CoingeckoQueryService>({
+        const coingeckoQueryService = {
           getCirculatingSupplies: vi.fn().mockResolvedValueOnce(expectedResult),
-        })
+        } as unknown as CoingeckoQueryService
 
         const provider = new CirculatingSupplyProvider(coingeckoQueryService)
 
@@ -42,9 +41,9 @@ describe(CirculatingSupplyProvider.name, () => {
 
         const error = new Error('API rate limit exceeded')
 
-        const coingeckoQueryService = mockObject<CoingeckoQueryService>({
+        const coingeckoQueryService = {
           getCirculatingSupplies: vi.fn().mockRejectedValueOnce(error),
-        })
+        } as unknown as CoingeckoQueryService
 
         const provider = new CirculatingSupplyProvider(coingeckoQueryService)
 
@@ -71,9 +70,9 @@ describe(CirculatingSupplyProvider.name, () => {
           ['bitcoin', 19000000],
         ])
 
-        const coingeckoQueryService = mockObject<CoingeckoQueryService>({
+        const coingeckoQueryService = {
           getLatestMarketData: vi.fn().mockResolvedValueOnce(marketData),
-        })
+        } as unknown as CoingeckoQueryService
 
         const provider = new CirculatingSupplyProvider(coingeckoQueryService)
 
@@ -91,9 +90,9 @@ describe(CirculatingSupplyProvider.name, () => {
         const marketData = new Map<string, { circulating: number }>()
         const expectedResult = new Map<string, number>()
 
-        const coingeckoQueryService = mockObject<CoingeckoQueryService>({
+        const coingeckoQueryService = {
           getLatestMarketData: vi.fn().mockResolvedValueOnce(marketData),
-        })
+        } as unknown as CoingeckoQueryService
 
         const provider = new CirculatingSupplyProvider(coingeckoQueryService)
 
@@ -107,9 +106,9 @@ describe(CirculatingSupplyProvider.name, () => {
 
         const error = new Error('API rate limit exceeded')
 
-        const coingeckoQueryService = mockObject<CoingeckoQueryService>({
+        const coingeckoQueryService = {
           getLatestMarketData: vi.fn().mockRejectedValueOnce(error),
-        })
+        } as unknown as CoingeckoQueryService
 
         const provider = new CirculatingSupplyProvider(coingeckoQueryService)
 
@@ -126,7 +125,7 @@ describe(CirculatingSupplyProvider.name, () => {
       const to = 1700000000
 
       const provider = new CirculatingSupplyProvider(
-        mockObject<CoingeckoQueryService>({}),
+        {} as unknown as CoingeckoQueryService,
       )
 
       const result = provider.getAdjustedTo(from, to)

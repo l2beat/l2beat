@@ -1,5 +1,4 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 import type { CelestiaRpcClient } from '../../clients'
 import { CelestiaDaProvider } from './CelestiaDaProvider'
@@ -129,14 +128,15 @@ describe(CelestiaDaProvider.name, () => {
     })
 
     it('returns empty array when block has no transactions', async () => {
-      const rpcClientMock = mockObject<CelestiaRpcClient>({
-        getBlockResult: async () => ({
+      const rpcClientMock = {
+        getBlockResult: vi.fn(async () => ({
           height: '100',
           txs_results: null,
-        }),
-        getBlockTimestamp: async () =>
+        })),
+        getBlockTimestamp: vi.fn(async () =>
           UnixTime.fromDate(new Date('2024-01-01T12:00:00Z')),
-      })
+        ),
+      } as unknown as CelestiaRpcClient
       const provider = new CelestiaDaProvider(rpcClientMock, 'celestia')
       const blobs = await provider.getBlobs(1, 1)
 
@@ -144,8 +144,8 @@ describe(CelestiaDaProvider.name, () => {
     })
 
     it('filters out non-blob events', async () => {
-      const rpcClientMock = mockObject<CelestiaRpcClient>({
-        getBlockResult: async () => ({
+      const rpcClientMock = {
+        getBlockResult: vi.fn(async () => ({
           height: '100',
           txs_results: [
             {
@@ -162,10 +162,11 @@ describe(CelestiaDaProvider.name, () => {
               ],
             },
           ],
-        }),
-        getBlockTimestamp: async () =>
+        })),
+        getBlockTimestamp: vi.fn(async () =>
           UnixTime.fromDate(new Date('2024-01-01T12:00:00Z')),
-      })
+        ),
+      } as unknown as CelestiaRpcClient
       const provider = new CelestiaDaProvider(rpcClientMock, 'celestia')
       const blobs = await provider.getBlobs(6515204, 6515204)
 
@@ -175,13 +176,13 @@ describe(CelestiaDaProvider.name, () => {
 
   describe(CelestiaDaProvider.prototype.getBlockTimestamp.name, () => {
     it('returns the timestamp of the block', async () => {
-      const rpcClientMock = mockObject<CelestiaRpcClient>({
+      const rpcClientMock = {
         getBlockTimestamp: vi
           .fn()
           .mockResolvedValue(
             UnixTime.fromDate(new Date('2024-01-01T12:00:00Z')),
           ),
-      })
+      } as unknown as CelestiaRpcClient
       const provider = new CelestiaDaProvider(rpcClientMock, 'celestia')
 
       const timestamp = await provider.getBlockTimestamp(6515203)
@@ -208,8 +209,8 @@ interface BlockData {
 function createMockRpcClient(blockData: BlockData[]) {
   const blockMap = new Map(blockData.map((b) => [b.blockNumber, b]))
 
-  return mockObject<CelestiaRpcClient>({
-    getBlockResult: async (blockNumber: number) => {
+  return {
+    getBlockResult: vi.fn(async (blockNumber: number) => {
       const data = blockMap.get(blockNumber)
       if (!data) {
         throw new Error(`No mock data for block ${blockNumber}`)
@@ -246,13 +247,13 @@ function createMockRpcClient(blockData: BlockData[]) {
           },
         ],
       }
-    },
-    getBlockTimestamp: async (blockNumber: number) => {
+    }),
+    getBlockTimestamp: vi.fn(async (blockNumber: number) => {
       const data = blockMap.get(blockNumber)
       if (!data) {
         throw new Error(`No mock data for block ${blockNumber}`)
       }
       return UnixTime.fromDate(new Date(data.timestamp))
-    },
-  })
+    }),
+  } as unknown as CelestiaRpcClient
 }

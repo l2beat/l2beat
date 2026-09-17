@@ -1,5 +1,4 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 import type { BlockClient, RpcClient } from '../../clients'
 import { BlockProvider } from './BlockProvider'
@@ -7,9 +6,9 @@ import { BlockProvider } from './BlockProvider'
 describe(BlockProvider.name, () => {
   describe(BlockProvider.prototype.getBlockWithTransactions.name, () => {
     it('returns block', async () => {
-      const rpc = mockObject<RpcClient>({
-        getBlockWithTransactions: async () => block(1),
-      })
+      const rpc = {
+        getBlockWithTransactions: vi.fn(async () => block(1)),
+      } as unknown as RpcClient
       const provider = new BlockProvider('chain', [rpc])
 
       const result = await provider.getBlockWithTransactions(1)
@@ -19,15 +18,15 @@ describe(BlockProvider.name, () => {
     })
 
     it('calls other client when there are errors', async () => {
-      const rpc_one = mockObject<RpcClient>({
+      const rpc_one = {
         getBlockWithTransactions: vi.fn().mockRejectedValue(new Error()),
-      })
-      const rpc_two = mockObject<RpcClient>({
+      } as unknown as RpcClient
+      const rpc_two = {
         getBlockWithTransactions: vi.fn().mockRejectedValue(new Error()),
-      })
-      const rpc_three = mockObject<RpcClient>({
-        getBlockWithTransactions: async () => block(1),
-      })
+      } as unknown as RpcClient
+      const rpc_three = {
+        getBlockWithTransactions: vi.fn(async () => block(1)),
+      } as unknown as RpcClient
 
       const provider = new BlockProvider('chain', [rpc_one, rpc_two, rpc_three])
 
@@ -47,15 +46,15 @@ describe(BlockProvider.name, () => {
     })
 
     it('throws when ran out of fallbacks', async () => {
-      const rpc_one = mockObject<RpcClient>({
+      const rpc_one = {
         getBlockWithTransactions: vi.fn().mockRejectedValue(new Error()),
-      })
-      const rpc_two = mockObject<RpcClient>({
+      } as unknown as RpcClient
+      const rpc_two = {
         getBlockWithTransactions: vi.fn().mockRejectedValue(new Error()),
-      })
-      const rpc_three = mockObject<RpcClient>({
+      } as unknown as RpcClient
+      const rpc_three = {
         getBlockWithTransactions: vi.fn().mockRejectedValue(new Error('ERROR')),
-      })
+      } as unknown as RpcClient
 
       const provider = new BlockProvider('chain', [rpc_one, rpc_two, rpc_three])
 
@@ -77,11 +76,11 @@ describe(BlockProvider.name, () => {
 
   describe(BlockProvider.prototype.getBlockNumberAtOrBefore.name, () => {
     it('finds the closest block number to given timestamp', async () => {
-      const client = mockObject<BlockClient>({
-        getLatestBlockNumber: async () => 1000,
+      const client = {
+        getLatestBlockNumber: vi.fn(async () => 1000),
         getBlockTimestamp: undefined,
-        getBlockWithTransactions: async (n: number) => block(n),
-      })
+        getBlockWithTransactions: vi.fn(async (n: number) => block(n)),
+      } as unknown as BlockClient
 
       const provider = new BlockProvider('chain', [client])
 
@@ -95,11 +94,11 @@ describe(BlockProvider.name, () => {
 
     it('probes timestamps without transaction bodies when the client supports it', async () => {
       const getBlockTimestamp = vi.fn(async (n: number) => n * 100)
-      const client = mockObject<BlockClient>({
-        getLatestBlockNumber: async () => 1000,
+      const client = {
+        getLatestBlockNumber: vi.fn(async () => 1000),
         getBlockTimestamp,
         getBlockWithTransactions: vi.fn(),
-      })
+      } as unknown as BlockClient
 
       const provider = new BlockProvider('chain', [client])
 
@@ -113,17 +112,17 @@ describe(BlockProvider.name, () => {
     })
 
     it('calls other client when there are errors', async () => {
-      const client = mockObject<BlockClient>({
-        getLatestBlockNumber: async () => 1000,
+      const client = {
+        getLatestBlockNumber: vi.fn(async () => 1000),
         getBlockTimestamp: undefined,
         getBlockWithTransactions: vi.fn().mockRejectedValue(new Error('error')),
-      })
+      } as unknown as BlockClient
 
-      const client2 = mockObject<BlockClient>({
-        getLatestBlockNumber: async () => 1000,
+      const client2 = {
+        getLatestBlockNumber: vi.fn(async () => 1000),
         getBlockTimestamp: undefined,
-        getBlockWithTransactions: async (n: number) => block(n),
-      })
+        getBlockWithTransactions: vi.fn(async (n: number) => block(n)),
+      } as unknown as BlockClient
 
       const provider = new BlockProvider('chain', [client, client2])
 
@@ -137,11 +136,11 @@ describe(BlockProvider.name, () => {
     })
 
     it('falls back to 0 when start is above client latest', async () => {
-      const client = mockObject<BlockClient>({
-        getLatestBlockNumber: async () => 500,
+      const client = {
+        getLatestBlockNumber: vi.fn(async () => 500),
         getBlockTimestamp: undefined,
-        getBlockWithTransactions: async (n: number) => block(n),
-      })
+        getBlockWithTransactions: vi.fn(async (n: number) => block(n)),
+      } as unknown as BlockClient
 
       const provider = new BlockProvider('chain', [client])
 
@@ -155,15 +154,15 @@ describe(BlockProvider.name, () => {
     })
 
     it('throws error when run out of fallbacks', async () => {
-      const client = mockObject<BlockClient>({
+      const client = {
         getLatestBlockNumber: vi.fn().mockRejectedValue(new Error('1')),
-      })
-      const client2 = mockObject<BlockClient>({
+      } as unknown as BlockClient
+      const client2 = {
         getLatestBlockNumber: vi.fn().mockRejectedValue(new Error('2')),
-      })
-      const client3 = mockObject<BlockClient>({
+      } as unknown as BlockClient
+      const client3 = {
         getLatestBlockNumber: vi.fn().mockRejectedValue(new Error('3')),
-      })
+      } as unknown as BlockClient
 
       const provider = new BlockProvider('chain', [client, client2, client3])
 

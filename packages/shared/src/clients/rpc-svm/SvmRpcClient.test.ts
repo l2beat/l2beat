@@ -1,6 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
 import { UnixTime } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 import type { HttpClient } from '../http/HttpClient'
 import { SvmRpcClient } from './SvmRpcClient'
@@ -22,9 +21,9 @@ describe(SvmRpcClient.name, () => {
         },
       }
 
-      const http = mockObject<HttpClient>({
+      const http = {
         fetch: vi.fn().mockResolvedValueOnce(mockResponse),
-      })
+      } as unknown as HttpClient
 
       const client = mockClient({ http, generateId: () => 'unique-id' })
       const result = await client.getLatestSlotNumber()
@@ -51,9 +50,9 @@ describe(SvmRpcClient.name, () => {
         },
       }
 
-      const http = mockObject<HttpClient>({
+      const http = {
         fetch: vi.fn().mockResolvedValueOnce(mockResponse),
-      })
+      } as unknown as HttpClient
 
       const client = mockClient({ http, generateId: () => 'unique-id' })
       const result = await client.getBlockWithTransactions(123)
@@ -74,9 +73,9 @@ describe(SvmRpcClient.name, () => {
         },
       }
 
-      const http = mockObject<HttpClient>({
+      const http = {
         fetch: vi.fn().mockResolvedValueOnce(mockResponse),
-      })
+      } as unknown as HttpClient
 
       const client = mockClient({ http, generateId: () => 'unique-id' })
       const result = await client.getBlockWithTransactions(123)
@@ -89,12 +88,12 @@ describe(SvmRpcClient.name, () => {
     it('returns the time of nearest non-empty slot', async () => {
       const mockTime = UnixTime.now()
 
-      const http = mockObject<HttpClient>({
+      const http = {
         fetch: vi
           .fn()
           .mockResolvedValueOnce({ result: null })
           .mockResolvedValueOnce({ result: mockTime }),
-      })
+      } as unknown as HttpClient
 
       const client = mockClient({ http, generateId: () => 'unique-id' })
       const result = await client.getSlotTime(123)
@@ -105,7 +104,7 @@ describe(SvmRpcClient.name, () => {
     it('handles skipped slot error and tries previous slot', async () => {
       const mockTime = UnixTime.now()
 
-      const http = mockObject<HttpClient>({
+      const http = {
         fetch: vi
           .fn()
           .mockResolvedValueOnce({
@@ -116,7 +115,7 @@ describe(SvmRpcClient.name, () => {
             },
           })
           .mockResolvedValueOnce({ result: mockTime }),
-      })
+      } as unknown as HttpClient
 
       const client = mockClient({ http, generateId: () => 'unique-id' })
       const result = await client.getSlotTime(123)
@@ -127,9 +126,9 @@ describe(SvmRpcClient.name, () => {
 
   describe(SvmRpcClient.prototype.query.name, () => {
     it('calls http client with correct params and returns data', async () => {
-      const http = mockObject<HttpClient>({
-        fetch: async () => 'data-returned-from-api',
-      })
+      const http = {
+        fetch: vi.fn(async () => 'data-returned-from-api'),
+      } as unknown as HttpClient
 
       const client = mockClient({ http, generateId: () => 'unique-id' })
 
@@ -183,7 +182,7 @@ function mockClient(deps: {
   return new SvmRpcClient({
     sourceName: 'chain',
     url: deps.url ?? 'API_URL',
-    http: deps.http ?? mockObject<HttpClient>({}),
+    http: deps.http ?? ({} as unknown as HttpClient),
     callsPerMinute: 100_000,
     retryStrategy: 'TEST',
     logger: Logger.SILENT,

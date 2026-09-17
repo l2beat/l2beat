@@ -1,7 +1,6 @@
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { utils } from 'ethers'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import type { ContractValue } from '../../output/types'
 import type { IProvider } from '../../provider/IProvider'
 import { ArbitrumScheduledTransactionsHandler } from './ArbitrumScheduledTransactionsHandler'
@@ -38,15 +37,15 @@ describe(ArbitrumScheduledTransactionsHandler.name, () => {
       libraries: {},
     })
     handler.getRetryableTicketMagic = async () => RETRYABLE_TICKET_MAGIC
-    const provider = mockObject<Thenable<IProvider>>({
+    const provider = {
       chain: 'ethereum',
-      getLogs: async () => EXAMPLE_LOGS,
+      getLogs: vi.fn(async () => EXAMPLE_LOGS),
       getSource: mockGetMetadata,
       then: undefined,
-      switchChain: async () => {
+      switchChain: vi.fn(async () => {
         return new Promise((resolve) => resolve(provider))
-      },
-    })
+      }),
+    } as unknown as Thenable<IProvider>
 
     const contractAddress = ChainSpecificAddress.random()
     const response = await handler.execute(
@@ -107,11 +106,11 @@ describe(ArbitrumScheduledTransactionsHandler.name, () => {
     handler.decodeLog = async () => {
       throw new Error('no matching function (sighash 0xec20b526)')
     }
-    const provider = mockObject<Thenable<IProvider>>({
+    const provider = {
       chain: 'ethereum',
-      getLogs: async () => EXAMPLE_LOGS.slice(0, 1),
+      getLogs: vi.fn(async () => EXAMPLE_LOGS.slice(0, 1)),
       then: undefined,
-    })
+    } as unknown as Thenable<IProvider>
 
     // execute() must resolve (not reject) despite the undecodable tx.
     const response = await handler.execute(

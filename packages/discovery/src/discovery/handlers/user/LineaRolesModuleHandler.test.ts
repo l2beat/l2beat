@@ -4,7 +4,6 @@ import {
   ChainSpecificAddress,
   type EthereumAddress,
 } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { type providers, utils } from 'ethers'
 import { describe, expect, it, vi } from 'vitest'
 
@@ -292,11 +291,11 @@ describe(LineaRolesModuleHandler.name, () => {
 
   it('no logs', async () => {
     const address = ChainSpecificAddress.random()
-    const provider = mockObject<IProvider>({
+    const provider = {
       chain: 'ethereum',
       getBytecode: vi.fn().mockResolvedValue(Bytes.fromHex('0xdeadbeef')),
       getDeployment: vi.fn().mockResolvedValue(undefined),
-      async getLogs(providedAddress, topics) {
+      getLogs: vi.fn(async (providedAddress, topics) => {
         expect(providedAddress).toStrictEqual(address)
         expect(topics).toStrictEqual([
           [
@@ -315,8 +314,8 @@ describe(LineaRolesModuleHandler.name, () => {
           ],
         ])
         return []
-      },
-    })
+      }),
+    } as unknown as IProvider
 
     const handler = new LineaRolesModuleHandler(
       'someName',
@@ -356,11 +355,11 @@ describe(LineaRolesModuleHandler.name, () => {
     const FunctionSigA = getFunctionSelector(FunctionA)
     const FunctionSigB = getFunctionSelector(FunctionB)
 
-    const provider = mockObject<IProvider>({
+    const provider = {
       chain: 'ethereum',
       getBytecode: vi.fn().mockResolvedValue(Bytes.fromHex('0xdeadbeef')),
       getDeployment: vi.fn().mockResolvedValue(undefined),
-      async getLogs(providedAddress, topics) {
+      getLogs: vi.fn(async (providedAddress, topics) => {
         expect(providedAddress).toStrictEqual(address)
         expect(topics).toStrictEqual([
           [
@@ -652,7 +651,7 @@ describe(LineaRolesModuleHandler.name, () => {
             }),
           ),
         ]
-      },
+      }),
       getStorageAsAddress: vi
         .fn()
         .mockResolvedValue(ChainSpecificAddress.ZERO('ethereum')),
@@ -664,7 +663,7 @@ describe(LineaRolesModuleHandler.name, () => {
         abi: [FunctionA, FunctionB],
         source: 'name',
       }),
-    })
+    } as unknown as IProvider
 
     const handler = new LineaRolesModuleHandler(
       'someName',
@@ -858,11 +857,11 @@ describe(LineaRolesModuleHandler.name, () => {
 
   it('passes relative ignore', async () => {
     const address = ChainSpecificAddress.random()
-    const provider = mockObject<IProvider>({
-      async getLogs() {
+    const provider = {
+      getLogs: vi.fn(async () => {
         return []
-      },
-    })
+      }),
+    } as unknown as IProvider
 
     const handler = new LineaRolesModuleHandler(
       'someName',

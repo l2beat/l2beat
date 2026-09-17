@@ -1,7 +1,6 @@
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { type providers, utils } from 'ethers'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 
 import type { ContractSource } from '../../../utils/IEtherscanClient'
 import type { IProvider } from '../../provider/IProvider'
@@ -47,11 +46,13 @@ describe(LayerZeroMultisigHandler.name, () => {
 
     const contractAddress = ChainSpecificAddress.random()
 
-    const provider = mockObject<IProvider>({
-      getSource: async () =>
-        ({ constructorArguments: SAMPLE_CONSTRUCROR_ARGS }) as ContractSource,
-      getLogs: async () => [],
-    })
+    const provider = {
+      getSource: vi.fn(
+        async () =>
+          ({ constructorArguments: SAMPLE_CONSTRUCROR_ARGS }) as ContractSource,
+      ),
+      getLogs: vi.fn(async () => []),
+    } as unknown as IProvider
 
     const response = await handler.execute(provider, contractAddress)
 
@@ -96,10 +97,12 @@ describe(LayerZeroMultisigHandler.name, () => {
       ]) as providers.Log
     }
 
-    const provider = mockObject<IProvider>({
-      getSource: async () =>
-        ({ constructorArguments: SAMPLE_CONSTRUCROR_ARGS }) as ContractSource,
-      getLogs: async (_addr: ChainSpecificAddress, topics: string[]) => {
+    const provider = {
+      getSource: vi.fn(
+        async () =>
+          ({ constructorArguments: SAMPLE_CONSTRUCROR_ARGS }) as ContractSource,
+      ),
+      getLogs: vi.fn(async (_addr: ChainSpecificAddress, topics: string[]) => {
         if (topics[0] === abi.getEventTopic('UpdateSigner')) {
           return [
             SignerChanged(
@@ -111,8 +114,8 @@ describe(LayerZeroMultisigHandler.name, () => {
           ]
         }
         return [QuorumChanged(1)]
-      },
-    })
+      }),
+    } as unknown as IProvider
 
     const response = await handler.execute(provider, contractAddress)
 

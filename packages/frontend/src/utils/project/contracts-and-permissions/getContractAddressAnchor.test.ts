@@ -12,8 +12,7 @@ import {
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import type { ProjectsChangeReport } from '~/server/features/projects-change-report/getProjectsChangeReport'
 import {
   createAddressAnchors,
@@ -40,14 +39,14 @@ const historicalEscrowAddress = ChainSpecificAddress(
   'eth:0x5555555555555555555555555555555555555555',
 )
 
-const contractUtils = mockObject<ContractUtils>({
-  getChainName: (chain) => chain,
-  getUsedIn: () => [],
-})
+const contractUtils = {
+  getChainName: vi.fn((chain) => chain),
+  getUsedIn: vi.fn(() => []),
+} as unknown as ContractUtils
 
-const projectsChangeReport = mockObject<ProjectsChangeReport>({
+const projectsChangeReport = {
   projects: {},
-})
+} as unknown as ProjectsChangeReport
 
 describe(createAddressAnchors.name, () => {
   it('creates an anchor only for the first occurrence of an address', () => {

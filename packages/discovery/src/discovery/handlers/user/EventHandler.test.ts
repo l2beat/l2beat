@@ -1,5 +1,4 @@
 import { assert, ChainSpecificAddress } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { type providers, utils } from 'ethers'
 import { describe, expect, it } from 'vitest'
 import type { IProvider } from '../../provider/IProvider'
@@ -80,12 +79,12 @@ describe(EventHandler.name, () => {
   describe('adding and removing events', () => {
     it('handles multiple adds and single remove for the same user', async () => {
       const U1 = ChainSpecificAddress.random()
-      const provider = mockObject<IProvider>({
+      const provider = {
         chain: 'ethereum',
         blockNumber: 123,
         timestamp: 456,
         getLogs: getLogsStub([Add(U1), Add(U1), Remove(U1)]),
-      })
+      } as unknown as IProvider
 
       const handler = new EventHandler(
         'field',
@@ -105,12 +104,12 @@ describe(EventHandler.name, () => {
 
     it('user added, removed, and added again', async () => {
       const U1 = ChainSpecificAddress.random()
-      const provider = mockObject<IProvider>({
+      const provider = {
         chain: 'ethereum',
         blockNumber: 123,
         timestamp: 456,
         getLogs: getLogsStub([Add(U1), Remove(U1), Add(U1)]),
-      })
+      } as unknown as IProvider
 
       const handler = new EventHandler(
         'field',
@@ -131,12 +130,12 @@ describe(EventHandler.name, () => {
     it('two event setting one event unsetting', async () => {
       const U1 = ChainSpecificAddress.random()
       const U2 = ChainSpecificAddress.random()
-      const provider = mockObject<IProvider>({
+      const provider = {
         chain: 'ethereum',
         blockNumber: 123,
         timestamp: 456,
         getLogs: getLogsStub([Add(U1), Add(U2), Remove(U1), Add2(U2)]),
-      })
+      } as unknown as IProvider
 
       const handler = new EventHandler(
         'field',
@@ -157,12 +156,12 @@ describe(EventHandler.name, () => {
     it('one event setting one event unsetting', async () => {
       const U1 = ChainSpecificAddress.random()
       const U2 = ChainSpecificAddress.random()
-      const provider = mockObject<IProvider>({
+      const provider = {
         chain: 'ethereum',
         blockNumber: 123,
         timestamp: 456,
         getLogs: getLogsStub([Add(U1), Add(U2), Remove(U1), Add(U2)]),
-      })
+      } as unknown as IProvider
 
       const handler = new EventHandler(
         'field',
@@ -183,7 +182,7 @@ describe(EventHandler.name, () => {
     it('single event with boolean flag', async () => {
       const U1 = ChainSpecificAddress.random()
       const U2 = ChainSpecificAddress.random()
-      const provider = mockObject<IProvider>({
+      const provider = {
         chain: 'ethereum',
         blockNumber: 123,
         timestamp: 456,
@@ -193,7 +192,7 @@ describe(EventHandler.name, () => {
           Update(U1, false),
           Update(U2, true),
         ]),
-      })
+      } as unknown as IProvider
 
       const handler = new EventHandler(
         'field',
@@ -214,7 +213,7 @@ describe(EventHandler.name, () => {
     it('dedupBy lets dedup by one field while keeping others in the output', async () => {
       const U1 = ChainSpecificAddress.random()
       const U2 = ChainSpecificAddress.random()
-      const provider = mockObject<IProvider>({
+      const provider = {
         chain: 'ethereum',
         blockNumber: 123,
         timestamp: 456,
@@ -223,7 +222,7 @@ describe(EventHandler.name, () => {
           Update(U2, true),
           Update(U1, false),
         ]),
-      })
+      } as unknown as IProvider
 
       const handler = new EventHandler(
         'field',
@@ -249,7 +248,7 @@ describe(EventHandler.name, () => {
       const U1 = ChainSpecificAddress.random()
       const U2 = ChainSpecificAddress.random()
       const U3 = ChainSpecificAddress.random()
-      const provider = mockObject<IProvider>({
+      const provider = {
         chain: 'ethereum',
         blockNumber: 123,
         timestamp: 456,
@@ -258,7 +257,7 @@ describe(EventHandler.name, () => {
           AddMany([U3]),
           RemoveMany([U2, U3]),
         ]),
-      })
+      } as unknown as IProvider
 
       const handler = new EventHandler(
         'field',
@@ -281,7 +280,7 @@ describe(EventHandler.name, () => {
       const U1 = ChainSpecificAddress.random()
       const U2 = ChainSpecificAddress.random()
       const U3 = ChainSpecificAddress.random()
-      const provider = mockObject<IProvider>({
+      const provider = {
         chain: 'ethereum',
         blockNumber: 123,
         timestamp: 456,
@@ -291,7 +290,7 @@ describe(EventHandler.name, () => {
           AddMany([U1, U3]),
           RemoveOne(U2),
         ]),
-      })
+      } as unknown as IProvider
       const handler = new EventHandler(
         'field',
         {
@@ -315,7 +314,7 @@ describe(EventHandler.name, () => {
 
   describe('adding fetch', () => {
     it('multiple events with multiple values, grouped and filtered', async () => {
-      const provider = mockObject<IProvider>({
+      const provider = {
         chain: 'ethereum',
         blockNumber: 123,
         timestamp: 456,
@@ -326,7 +325,7 @@ describe(EventHandler.name, () => {
           CurrentBatchMultichain(4, 1),
           CurrentBatchMultichain(42, 3),
         ]),
-      })
+      } as unknown as IProvider
 
       const handler = new EventHandler(
         'field',
@@ -348,7 +347,7 @@ describe(EventHandler.name, () => {
     })
 
     it('multiple events with no matching filter', async () => {
-      const provider = mockObject<IProvider>({
+      const provider = {
         chain: 'ethereum',
         blockNumber: 123,
         timestamp: 456,
@@ -357,7 +356,7 @@ describe(EventHandler.name, () => {
           CurrentBatch(2),
           CurrentBatch(3),
         ]),
-      })
+      } as unknown as IProvider
 
       const handler = new EventHandler(
         'field',
@@ -375,7 +374,7 @@ describe(EventHandler.name, () => {
     })
 
     it('multiple events with filter', async () => {
-      const provider = mockObject<IProvider>({
+      const provider = {
         chain: 'ethereum',
         blockNumber: 123,
         timestamp: 456,
@@ -384,7 +383,7 @@ describe(EventHandler.name, () => {
           CurrentBatch(2),
           CurrentBatch(3),
         ]),
-      })
+      } as unknown as IProvider
 
       const handler = new EventHandler(
         'field',
@@ -402,12 +401,12 @@ describe(EventHandler.name, () => {
     })
 
     it('multiple events', async () => {
-      const provider = mockObject<IProvider>({
+      const provider = {
         chain: 'ethereum',
         blockNumber: 123,
         timestamp: 456,
         getLogs: getLogsStub([CurrentBatch(1), CurrentBatch(2)]),
-      })
+      } as unknown as IProvider
 
       const handler = new EventHandler(
         'field',
@@ -425,12 +424,12 @@ describe(EventHandler.name, () => {
     })
 
     it('single event', async () => {
-      const provider = mockObject<IProvider>({
+      const provider = {
         chain: 'ethereum',
         blockNumber: 123,
         timestamp: 456,
         getLogs: getLogsStub([CurrentBatch(1)]),
-      })
+      } as unknown as IProvider
 
       const handler = new EventHandler(
         'field',
@@ -448,12 +447,12 @@ describe(EventHandler.name, () => {
     })
 
     it('no events', async () => {
-      const provider = mockObject<IProvider>({
+      const provider = {
         chain: 'ethereum',
         blockNumber: 123,
         timestamp: 456,
         getLogs: getLogsStub([]),
-      })
+      } as unknown as IProvider
 
       const handler = new EventHandler(
         'field',
@@ -471,7 +470,7 @@ describe(EventHandler.name, () => {
 
   describe('setting fetch', () => {
     it('groups with some having no events after filtering', async () => {
-      const provider = mockObject<IProvider>({
+      const provider = {
         chain: 'ethereum',
         blockNumber: 123,
         timestamp: 456,
@@ -479,7 +478,7 @@ describe(EventHandler.name, () => {
           CurrentBatchMultichain(1, 1),
           CurrentBatchMultichain(3, 3),
         ]),
-      })
+      } as unknown as IProvider
 
       const handler = new EventHandler(
         'field',
@@ -504,7 +503,7 @@ describe(EventHandler.name, () => {
       const D1 = `0x${'11'.repeat(32)}`
       const D2 = `0x${'22'.repeat(32)}`
       const D3 = `0x${'33'.repeat(32)}`
-      const provider = mockObject<IProvider>({
+      const provider = {
         chain: 'ethereum',
         blockNumber: 123,
         timestamp: 456,
@@ -513,7 +512,7 @@ describe(EventHandler.name, () => {
           ConfigLike(D2, [2, 100]),
           ConfigLike(D3, [1, 999]),
         ]),
-      })
+      } as unknown as IProvider
 
       const handler = new EventHandler(
         'field',
@@ -536,12 +535,12 @@ describe(EventHandler.name, () => {
     })
 
     it('works on semi-compatible events', async () => {
-      const provider = mockObject<IProvider>({
+      const provider = {
         chain: 'ethereum',
         blockNumber: 123,
         timestamp: 456,
         getLogs: getLogsStub([CurrentBatch(1), CurrentBatchMultichain(2, 3)]),
-      })
+      } as unknown as IProvider
 
       const handler = new EventHandler(
         'field',
@@ -572,7 +571,7 @@ describe(EventHandler.name, () => {
     })
 
     it('multiple events with multiple sources', async () => {
-      const provider = mockObject<IProvider>({
+      const provider = {
         chain: 'ethereum',
         blockNumber: 123,
         timestamp: 456,
@@ -581,7 +580,7 @@ describe(EventHandler.name, () => {
           CurrentBatch(2),
           CurrentBatch2(3),
         ]),
-      })
+      } as unknown as IProvider
 
       const handler = new EventHandler(
         'field',
@@ -599,7 +598,7 @@ describe(EventHandler.name, () => {
     })
 
     it('multiple events with multiple values, grouped and filtered', async () => {
-      const provider = mockObject<IProvider>({
+      const provider = {
         chain: 'ethereum',
         blockNumber: 123,
         timestamp: 456,
@@ -610,7 +609,7 @@ describe(EventHandler.name, () => {
           CurrentBatchMultichain(4, 1),
           CurrentBatchMultichain(42, 3),
         ]),
-      })
+      } as unknown as IProvider
 
       const handler = new EventHandler(
         'field',
@@ -632,7 +631,7 @@ describe(EventHandler.name, () => {
     })
 
     it('multiple events with multiple values, grouped and filtered', async () => {
-      const provider = mockObject<IProvider>({
+      const provider = {
         chain: 'ethereum',
         blockNumber: 123,
         timestamp: 456,
@@ -645,7 +644,7 @@ describe(EventHandler.name, () => {
           CurrentBatchMultichain(42, 3),
           CurrentBatchMultichain(8, 3),
         ]),
-      })
+      } as unknown as IProvider
 
       const handler = new EventHandler(
         'field',
@@ -667,7 +666,7 @@ describe(EventHandler.name, () => {
     })
 
     it('multiple events with multiple values, grouped', async () => {
-      const provider = mockObject<IProvider>({
+      const provider = {
         chain: 'ethereum',
         blockNumber: 123,
         timestamp: 456,
@@ -678,7 +677,7 @@ describe(EventHandler.name, () => {
           CurrentBatchMultichain(4, 1),
           CurrentBatchMultichain(42, 3),
         ]),
-      })
+      } as unknown as IProvider
 
       const handler = new EventHandler(
         'field',
@@ -697,7 +696,7 @@ describe(EventHandler.name, () => {
     })
 
     it('multiple events with multiple values filtered', async () => {
-      const provider = mockObject<IProvider>({
+      const provider = {
         chain: 'ethereum',
         blockNumber: 123,
         timestamp: 456,
@@ -706,7 +705,7 @@ describe(EventHandler.name, () => {
           CurrentBatchMultichain(2, 3),
           CurrentBatchMultichain(3, 2),
         ]),
-      })
+      } as unknown as IProvider
 
       const handler = new EventHandler(
         'field',
@@ -724,7 +723,7 @@ describe(EventHandler.name, () => {
     })
 
     it('multiple events multiple values', async () => {
-      const provider = mockObject<IProvider>({
+      const provider = {
         chain: 'ethereum',
         blockNumber: 123,
         timestamp: 456,
@@ -732,7 +731,7 @@ describe(EventHandler.name, () => {
           CurrentBatchMultichain(1, 1),
           CurrentBatchMultichain(2, 4),
         ]),
-      })
+      } as unknown as IProvider
 
       const handler = new EventHandler(
         'field',
@@ -750,12 +749,12 @@ describe(EventHandler.name, () => {
     })
 
     it('single event multiple values', async () => {
-      const provider = mockObject<IProvider>({
+      const provider = {
         chain: 'ethereum',
         blockNumber: 123,
         timestamp: 456,
         getLogs: getLogsStub([CurrentBatchMultichain(1, 1)]),
-      })
+      } as unknown as IProvider
 
       const handler = new EventHandler(
         'field',
@@ -773,7 +772,7 @@ describe(EventHandler.name, () => {
     })
 
     it('multiple events with no matching filter', async () => {
-      const provider = mockObject<IProvider>({
+      const provider = {
         chain: 'ethereum',
         blockNumber: 123,
         timestamp: 456,
@@ -782,7 +781,7 @@ describe(EventHandler.name, () => {
           CurrentBatch(2),
           CurrentBatch(3),
         ]),
-      })
+      } as unknown as IProvider
 
       const handler = new EventHandler(
         'field',
@@ -800,7 +799,7 @@ describe(EventHandler.name, () => {
     })
 
     it('multiple events with filter', async () => {
-      const provider = mockObject<IProvider>({
+      const provider = {
         chain: 'ethereum',
         blockNumber: 123,
         timestamp: 456,
@@ -809,7 +808,7 @@ describe(EventHandler.name, () => {
           CurrentBatch(2),
           CurrentBatch(3),
         ]),
-      })
+      } as unknown as IProvider
 
       const handler = new EventHandler(
         'field',
@@ -827,12 +826,12 @@ describe(EventHandler.name, () => {
     })
 
     it('multiple events', async () => {
-      const provider = mockObject<IProvider>({
+      const provider = {
         chain: 'ethereum',
         blockNumber: 123,
         timestamp: 456,
         getLogs: getLogsStub([CurrentBatch(1), CurrentBatch(2)]),
-      })
+      } as unknown as IProvider
 
       const handler = new EventHandler(
         'field',
@@ -850,12 +849,12 @@ describe(EventHandler.name, () => {
     })
 
     it('single event', async () => {
-      const provider = mockObject<IProvider>({
+      const provider = {
         chain: 'ethereum',
         blockNumber: 123,
         timestamp: 456,
         getLogs: getLogsStub([CurrentBatch(1)]),
-      })
+      } as unknown as IProvider
 
       const handler = new EventHandler(
         'field',
@@ -873,12 +872,12 @@ describe(EventHandler.name, () => {
     })
 
     it('no events', async () => {
-      const provider = mockObject<IProvider>({
+      const provider = {
         chain: 'ethereum',
         blockNumber: 123,
         timestamp: 456,
         getLogs: getLogsStub([]),
-      })
+      } as unknown as IProvider
 
       const handler = new EventHandler(
         'field',
@@ -898,12 +897,12 @@ describe(EventHandler.name, () => {
 
   describe('errors', () => {
     it('throws error when where clause references invalid parameter', async () => {
-      const provider = mockObject<IProvider>({
+      const provider = {
         chain: 'ethereum',
         blockNumber: 123,
         timestamp: 456,
         getLogs: getLogsStub([CurrentBatch(1)]),
-      })
+      } as unknown as IProvider
       const handler = new EventHandler(
         'field',
         {
@@ -920,12 +919,12 @@ describe(EventHandler.name, () => {
     })
 
     it('throws error when select references invalid parameter', async () => {
-      const provider = mockObject<IProvider>({
+      const provider = {
         chain: 'ethereum',
         blockNumber: 123,
         timestamp: 456,
         getLogs: getLogsStub([CurrentBatch(1)]),
-      })
+      } as unknown as IProvider
       const handler = new EventHandler(
         'field',
         {
@@ -942,12 +941,12 @@ describe(EventHandler.name, () => {
     })
 
     it('throws if event is both adding and removing', async () => {
-      const provider = mockObject<IProvider>({
+      const provider = {
         chain: 'ethereum',
         blockNumber: 123,
         timestamp: 456,
         getLogs: getLogsStub([Update(ADDRESS, true)]),
-      })
+      } as unknown as IProvider
 
       const handler = new EventHandler(
         'field',

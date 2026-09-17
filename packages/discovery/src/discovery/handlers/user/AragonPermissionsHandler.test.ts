@@ -1,7 +1,6 @@
 import { ChainSpecificAddress, type EthereumAddress } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { type providers, utils } from 'ethers'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 
 import type { IProvider } from '../../provider/IProvider'
 import {
@@ -51,9 +50,9 @@ describe(AragonPermissionsHandler.name, () => {
     const bob = ChainSpecificAddress.random()
     const manager = ChainSpecificAddress.random()
 
-    const provider = mockObject<IProvider>({
+    const provider = {
       chain: 'ethereum',
-      async getLogs(providedAddress, topics) {
+      getLogs: vi.fn(async (providedAddress, topics) => {
         expect(providedAddress).toStrictEqual(acl)
         expect(topics).toStrictEqual([
           [
@@ -92,8 +91,8 @@ describe(AragonPermissionsHandler.name, () => {
             ChainSpecificAddress.address(manager),
           ),
         ]
-      },
-    })
+      }),
+    } as unknown as IProvider
 
     const result = await fetchAragonPermissions(provider, acl, app)
 
@@ -111,9 +110,9 @@ describe(AragonPermissionsHandler.name, () => {
     const acl = ChainSpecificAddress.random()
     const member = ChainSpecificAddress.random()
 
-    const provider = mockObject<IProvider>({
+    const provider = {
       chain: 'ethereum',
-      async callMethod<T>(address: ChainSpecificAddress) {
+      callMethod: vi.fn(async <T>(address: ChainSpecificAddress) => {
         if (address === app) {
           return ChainSpecificAddress.address(kernel) as T
         }
@@ -121,8 +120,8 @@ describe(AragonPermissionsHandler.name, () => {
           return ChainSpecificAddress.address(acl) as T
         }
         return undefined
-      },
-      async getLogs() {
+      }),
+      getLogs: vi.fn(async () => {
         return [
           SetPermission(
             ChainSpecificAddress.address(member),
@@ -131,8 +130,8 @@ describe(AragonPermissionsHandler.name, () => {
             true,
           ),
         ]
-      },
-    })
+      }),
+    } as unknown as IProvider
 
     const handler = new AragonPermissionsHandler(
       'aragonPermissions',
@@ -159,9 +158,9 @@ describe(AragonPermissionsHandler.name, () => {
     const kernel = ChainSpecificAddress.random()
     const acl = ChainSpecificAddress.random()
 
-    const provider = mockObject<IProvider>({
+    const provider = {
       chain: 'ethereum',
-      async callMethod<T>(address: ChainSpecificAddress) {
+      callMethod: vi.fn(async <T>(address: ChainSpecificAddress) => {
         if (address === app) {
           return ChainSpecificAddress.address(kernel) as T
         }
@@ -169,11 +168,11 @@ describe(AragonPermissionsHandler.name, () => {
           return ChainSpecificAddress.address(acl) as T
         }
         return undefined
-      },
-      async getLogs() {
+      }),
+      getLogs: vi.fn(async () => {
         return []
-      },
-    })
+      }),
+    } as unknown as IProvider
 
     const handler = new AragonPermissionsHandler(
       'aragonPermissions',

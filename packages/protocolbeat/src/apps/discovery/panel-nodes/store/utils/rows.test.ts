@@ -1,4 +1,3 @@
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it } from 'vitest'
 import type { Field, Node } from '../State'
 import {
@@ -92,10 +91,10 @@ describe(getRowLayout.name, () => {
 
   it('prefers a field label over its path, the way group rows are named', () => {
     const node = makeNode(['group-field:target'])
-    const labelled = mockObject<Node>({
+    const labelled = {
       ...node,
       fields: [{ ...(node.fields[0] as Field), label: 'Member' }],
-    })
+    } as unknown as Node
 
     expect(getRowLayout(labelled).rows[0]?.label).toStrictEqual('Member')
   })
@@ -130,11 +129,11 @@ function makeNode(
   hiddenFields: string[] = [],
   compressedRows: string[] = [],
 ): Node {
-  return mockObject<Node>({
-    fields: names.map((name) =>
-      mockObject<Field>({ name, target: '0x0', label: undefined }),
+  return {
+    fields: names.map(
+      (name) => ({ name, target: '0x0', label: undefined }) as unknown as Field,
     ),
     hiddenFields,
     compressedRows,
-  })
+  } as unknown as Node
 }

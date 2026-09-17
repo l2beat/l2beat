@@ -1,6 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
 import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 import type { HttpClient } from '../http/HttpClient'
 import { MulticallV3Client } from './multicall/MulticallV3Client'
@@ -10,15 +9,15 @@ import type { RpcMetricsRecorder } from './RpcMetricsAggregator'
 describe(RpcClient.name, () => {
   describe(RpcClient.prototype.getLatestBlockNumber.name, () => {
     it('returns number of the block', async () => {
-      const http = mockObject<HttpClient>({
-        fetch: async () => ({ result: '0x64' }),
-      })
+      const http = {
+        fetch: vi.fn(async () => ({ result: '0x64' })),
+      } as unknown as HttpClient
       const rpc = mockClient({ http, generateId: () => 'unique-id' })
 
       const result = await rpc.getLatestBlockNumber()
 
       expect(result).toStrictEqual(100)
-      expect(http.fetch.mock.calls[0][1]?.body).toStrictEqual(
+      expect(vi.mocked(http.fetch).mock.calls[0][1]?.body).toStrictEqual(
         JSON.stringify({
           method: 'eth_blockNumber',
           params: [],
@@ -31,9 +30,9 @@ describe(RpcClient.name, () => {
 
   describe(RpcClient.prototype.getBlock.name, () => {
     it('include tx bodies', async () => {
-      const http = mockObject<HttpClient>({
-        fetch: async () => mockResponse(100),
-      })
+      const http = {
+        fetch: vi.fn(async () => mockResponse(100)),
+      } as unknown as HttpClient
       const rpc = mockClient({ http, generateId: () => 'unique-id' })
 
       const result = await rpc.getBlockWithTransactions(100)
@@ -47,7 +46,7 @@ describe(RpcClient.name, () => {
         parentBeaconBlockRoot: '0x123',
       })
 
-      expect(http.fetch.mock.calls[0][1]?.body).toStrictEqual(
+      expect(vi.mocked(http.fetch).mock.calls[0][1]?.body).toStrictEqual(
         JSON.stringify({
           method: 'eth_getBlockByNumber',
           params: ['0x64', true],
@@ -58,9 +57,9 @@ describe(RpcClient.name, () => {
     })
 
     it('do not include tx bodies', async () => {
-      const http = mockObject<HttpClient>({
-        fetch: async () => mockResponse(100),
-      })
+      const http = {
+        fetch: vi.fn(async () => mockResponse(100)),
+      } as unknown as HttpClient
       const rpc = mockClient({ http, generateId: () => 'unique-id' })
 
       const result = await rpc.getBlock(100, false)
@@ -73,7 +72,7 @@ describe(RpcClient.name, () => {
         parentBeaconBlockRoot: '0x123',
       })
 
-      expect(http.fetch.mock.calls[0][1]?.body).toStrictEqual(
+      expect(vi.mocked(http.fetch).mock.calls[0][1]?.body).toStrictEqual(
         JSON.stringify({
           method: 'eth_getBlockByNumber',
           params: ['0x64', false],
@@ -86,15 +85,15 @@ describe(RpcClient.name, () => {
 
   describe(RpcClient.prototype.getBlockTimestamp.name, () => {
     it('fetches the block without tx bodies and returns its timestamp', async () => {
-      const http = mockObject<HttpClient>({
-        fetch: async () => mockResponse(100),
-      })
+      const http = {
+        fetch: vi.fn(async () => mockResponse(100)),
+      } as unknown as HttpClient
       const rpc = mockClient({ http, generateId: () => 'unique-id' })
 
       const result = await rpc.getBlockTimestamp(100)
 
       expect(result).toStrictEqual(100)
-      expect(http.fetch.mock.calls[0][1]?.body).toStrictEqual(
+      expect(vi.mocked(http.fetch).mock.calls[0][1]?.body).toStrictEqual(
         JSON.stringify({
           method: 'eth_getBlockByNumber',
           params: ['0x64', false],
@@ -107,18 +106,18 @@ describe(RpcClient.name, () => {
 
   describe(RpcClient.prototype.getTransaction.name, () => {
     it('fetches tx from rpc and parses response', async () => {
-      const http = mockObject<HttpClient>({
-        fetch: async () => ({
+      const http = {
+        fetch: vi.fn(async () => ({
           result: mockRawTx('0x1'),
-        }),
-      })
+        })),
+      } as unknown as HttpClient
       const rpc = mockClient({ http, generateId: () => 'unique-id' })
 
       const result = await rpc.getTransaction('0xabcd')
 
       expect(result).toStrictEqual(mockTx('0x1'))
 
-      expect(http.fetch.mock.calls[0][1]?.body).toStrictEqual(
+      expect(vi.mocked(http.fetch).mock.calls[0][1]?.body).toStrictEqual(
         JSON.stringify({
           method: 'eth_getTransactionByHash',
           params: ['0xabcd'],
@@ -131,18 +130,18 @@ describe(RpcClient.name, () => {
 
   describe(RpcClient.prototype.getTransactionReceipt.name, () => {
     it('fetches tx receipt from rpc and parses response', async () => {
-      const http = mockObject<HttpClient>({
-        fetch: async () => ({
+      const http = {
+        fetch: vi.fn(async () => ({
           result: mockReceipt,
-        }),
-      })
+        })),
+      } as unknown as HttpClient
       const rpc = mockClient({ http, generateId: () => 'unique-id' })
 
       const result = await rpc.getTransactionReceipt('0xabcd')
 
       expect(result).toStrictEqual(mockReceipt)
 
-      expect(http.fetch.mock.calls[0][1]?.body).toStrictEqual(
+      expect(vi.mocked(http.fetch).mock.calls[0][1]?.body).toStrictEqual(
         JSON.stringify({
           method: 'eth_getTransactionReceipt',
           params: ['0xabcd'],
@@ -155,16 +154,16 @@ describe(RpcClient.name, () => {
 
   describe(RpcClient.prototype.getBalance.name, () => {
     it('returns balance for given address and block', async () => {
-      const http = mockObject<HttpClient>({
-        fetch: async () => ({ result: '0x7B' }),
-      })
+      const http = {
+        fetch: vi.fn(async () => ({ result: '0x7B' })),
+      } as unknown as HttpClient
       const rpc = mockClient({ http, generateId: () => 'unique-id' })
 
       const address = EthereumAddress.random()
       const result = await rpc.getBalance(address, 'latest')
 
       expect(result).toStrictEqual(BigInt(123))
-      expect(http.fetch.mock.calls[0][1]?.body).toStrictEqual(
+      expect(vi.mocked(http.fetch).mock.calls[0][1]?.body).toStrictEqual(
         JSON.stringify({
           method: 'eth_getBalance',
           params: [address, 'latest'],
@@ -182,8 +181,8 @@ describe(RpcClient.name, () => {
       const mockFromBlock = 100
       const mockToBlock = 200
 
-      const http = mockObject<HttpClient>({
-        fetch: async () => ({
+      const http = {
+        fetch: vi.fn(async () => ({
           result: [
             {
               address: mockAddresses[0],
@@ -196,8 +195,8 @@ describe(RpcClient.name, () => {
               logIndex: '0x12ab',
             },
           ],
-        }),
-      })
+        })),
+      } as unknown as HttpClient
       const rpc = mockClient({ http, generateId: () => 'unique-id' })
 
       const result = await rpc.getLogs(
@@ -220,7 +219,7 @@ describe(RpcClient.name, () => {
         },
       ])
 
-      expect(http.fetch.mock.calls[0][1]?.body).toStrictEqual(
+      expect(vi.mocked(http.fetch).mock.calls[0][1]?.body).toStrictEqual(
         JSON.stringify({
           method: 'eth_getLogs',
           params: [
@@ -244,7 +243,7 @@ describe(RpcClient.name, () => {
       const mockToBlock = 200
       const mockMiddleBlock = 150
 
-      const http = mockObject<HttpClient>({
+      const http = {
         fetch: vi
           .fn()
           .mockResolvedValueOnce({
@@ -282,7 +281,7 @@ describe(RpcClient.name, () => {
               },
             ],
           }),
-      })
+      } as unknown as HttpClient
       const rpc = mockClient({ http, generateId: () => 'unique-id' })
 
       const result = await rpc.getLogs(
@@ -292,7 +291,7 @@ describe(RpcClient.name, () => {
         mockTopics,
       )
 
-      expect(http.fetch.mock.calls[0][1]?.body).toStrictEqual(
+      expect(vi.mocked(http.fetch).mock.calls[0][1]?.body).toStrictEqual(
         JSON.stringify({
           method: 'eth_getLogs',
           params: [
@@ -308,7 +307,7 @@ describe(RpcClient.name, () => {
         }),
       )
 
-      expect(http.fetch.mock.calls[1][1]?.body).toStrictEqual(
+      expect(vi.mocked(http.fetch).mock.calls[1][1]?.body).toStrictEqual(
         JSON.stringify({
           method: 'eth_getLogs',
           params: [
@@ -324,7 +323,7 @@ describe(RpcClient.name, () => {
         }),
       )
 
-      expect(http.fetch.mock.calls[2][1]?.body).toStrictEqual(
+      expect(vi.mocked(http.fetch).mock.calls[2][1]?.body).toStrictEqual(
         JSON.stringify({
           method: 'eth_getLogs',
           params: [
@@ -367,9 +366,9 @@ describe(RpcClient.name, () => {
 
   describe(RpcClient.prototype.call.name, () => {
     it('calls eth_call with correct parameters', async () => {
-      const http = mockObject<HttpClient>({
-        fetch: async () => ({ result: '0x123abc' }),
-      })
+      const http = {
+        fetch: vi.fn(async () => ({ result: '0x123abc' })),
+      } as unknown as HttpClient
       const rpc = mockClient({ http, generateId: () => 'unique-id' })
 
       const result = await rpc.call(
@@ -404,9 +403,9 @@ describe(RpcClient.name, () => {
     })
 
     it('handles numeric block numbers', async () => {
-      const http = mockObject<HttpClient>({
-        fetch: async () => ({ result: '0x1' }),
-      })
+      const http = {
+        fetch: vi.fn(async () => ({ result: '0x1' })),
+      } as unknown as HttpClient
       const rpc = mockClient({ http, generateId: () => 'unique-id' })
 
       await rpc.call(
@@ -438,9 +437,9 @@ describe(RpcClient.name, () => {
     })
 
     it('includes from address if provided', async () => {
-      const http = mockObject<HttpClient>({
-        fetch: async () => ({ result: '0x' }),
-      })
+      const http = {
+        fetch: vi.fn(async () => ({ result: '0x' })),
+      } as unknown as HttpClient
       const rpc = mockClient({ http, generateId: () => 'unique-id' })
 
       await rpc.call(
@@ -472,9 +471,9 @@ describe(RpcClient.name, () => {
     })
 
     it('handles empty response', async () => {
-      const http = mockObject<HttpClient>({
-        fetch: async () => ({ result: '0x' }),
-      })
+      const http = {
+        fetch: vi.fn(async () => ({ result: '0x' })),
+      } as unknown as HttpClient
       const rpc = mockClient({ http })
 
       const result = await rpc.call(
@@ -500,7 +499,7 @@ describe(RpcClient.name, () => {
       const rpc = new RpcClient({
         chain: 'chain',
         url: 'API_URL',
-        http: mockObject<HttpClient>({}),
+        http: {} as unknown as HttpClient,
         callsPerMinute: 100_000,
         retryStrategy: 'TEST',
         logger: Logger.SILENT,
@@ -521,7 +520,7 @@ describe(RpcClient.name, () => {
       const rpc = new RpcClient({
         chain: 'chain',
         url: 'API_URL',
-        http: mockObject<HttpClient>({}),
+        http: {} as unknown as HttpClient,
         callsPerMinute: 100_000,
         retryStrategy: 'TEST',
         logger: Logger.SILENT,
@@ -535,7 +534,7 @@ describe(RpcClient.name, () => {
       const rpc = new RpcClient({
         chain: 'chain',
         url: 'API_URL',
-        http: mockObject<HttpClient>({}),
+        http: {} as unknown as HttpClient,
         callsPerMinute: 100_000,
         retryStrategy: 'TEST',
         logger: Logger.SILENT,
@@ -550,7 +549,7 @@ describe(RpcClient.name, () => {
       const rpc = new RpcClient({
         chain: 'chain',
         url: 'API_URL',
-        http: mockObject<HttpClient>({}),
+        http: {} as unknown as HttpClient,
         callsPerMinute: 100_000,
         retryStrategy: 'TEST',
         logger: Logger.SILENT,
@@ -578,7 +577,7 @@ describe(RpcClient.name, () => {
       const rpc = new RpcClient({
         chain: 'chain',
         url: 'API_URL',
-        http: mockObject<HttpClient>({}),
+        http: {} as unknown as HttpClient,
         callsPerMinute: 100_000,
         retryStrategy: 'TEST',
         logger: Logger.SILENT,
@@ -626,12 +625,12 @@ describe(RpcClient.name, () => {
         .mockReturnValueOnce([{ success: true, data: Bytes.fromHex('0x333') }])
       multicallClient.decode = decodeMock
 
-      const http = mockObject<HttpClient>({
+      const http = {
         fetch: vi
           .fn()
           .mockReturnValueOnce({ result: '0x123456' })
           .mockReturnValueOnce({ result: '0x654321' }),
-      })
+      } as unknown as HttpClient
 
       const rpc = new RpcClient({
         chain: 'chain',
@@ -678,13 +677,13 @@ describe(RpcClient.name, () => {
 
   describe(RpcClient.prototype.batchCall.name, () => {
     it('batches multiple calls correctly and returns results in order', async () => {
-      const http = mockObject<HttpClient>({
-        fetch: async () => [
+      const http = {
+        fetch: vi.fn(async () => [
           { id: '0x1', result: '0x123abc' },
           { id: '0x3', result: '0x789abc' },
           { id: '0x2', result: '0x456def' },
-        ],
-      })
+        ]),
+      } as unknown as HttpClient
 
       const rpc = mockClient({
         http,
@@ -776,9 +775,9 @@ describe(RpcClient.name, () => {
 
   describe(RpcClient.prototype.query.name, () => {
     it('calls http client with correct params and returns data', async () => {
-      const http = mockObject<HttpClient>({
-        fetch: async () => 'data-returned-from-api',
-      })
+      const http = {
+        fetch: vi.fn(async () => 'data-returned-from-api'),
+      } as unknown as HttpClient
 
       const rpc = mockClient({ http, generateId: () => 'unique-id' })
 
@@ -800,9 +799,9 @@ describe(RpcClient.name, () => {
     })
 
     it('records rpc metrics for single queries', async () => {
-      const http = mockObject<HttpClient>({
-        fetch: async () => 'data-returned-from-api',
-      })
+      const http = {
+        fetch: vi.fn(async () => 'data-returned-from-api'),
+      } as unknown as HttpClient
       const rpcMetrics = {
         record: vi
           .fn<RpcMetricsRecorder['record']>()
@@ -834,9 +833,9 @@ describe(RpcClient.name, () => {
         { id: '0x1', result: 'one' },
       ]
 
-      const http = mockObject<HttpClient>({
-        fetch: async () => mockResponse,
-      })
+      const http = {
+        fetch: vi.fn(async () => mockResponse),
+      } as unknown as HttpClient
 
       const rpc = mockClient({
         http,
@@ -873,12 +872,12 @@ describe(RpcClient.name, () => {
     })
 
     it('records rpc metrics for batch queries', async () => {
-      const http = mockObject<HttpClient>({
-        fetch: async () => [
+      const http = {
+        fetch: vi.fn(async () => [
           { id: '0x1', result: 'one' },
           { id: '0x2', result: 'two' },
-        ],
-      })
+        ]),
+      } as unknown as HttpClient
       const rpcMetrics = {
         record: vi
           .fn<RpcMetricsRecorder['record']>()
@@ -940,7 +939,7 @@ function mockClient(deps: {
   return new RpcClient({
     chain: 'chain',
     url: deps.url ?? 'API_URL',
-    http: deps.http ?? mockObject<HttpClient>({}),
+    http: deps.http ?? ({} as unknown as HttpClient),
     callsPerMinute: 100_000,
     retryStrategy: 'TEST',
     logger: Logger.SILENT,

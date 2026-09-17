@@ -1,6 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
 import { ChainSpecificAddress, UnixTime } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 import type { AddressAnalyzer } from '../analysis/AddressAnalyzer'
 import { ConfigRegistry } from '../config/ConfigRegistry'
@@ -33,23 +32,21 @@ describe(DiscoveryEngine.name, () => {
   const strB = B.toString()
   const strC = C.toString()
   const strD = D.toString()
-  const provider = mockObject<AllProviders>({
-    get: vi.fn().mockResolvedValue(
-      mockObject<Thenable<IProvider>>({
-        then: undefined,
-      }),
-    ),
-  })
+  const provider = {
+    get: vi.fn().mockResolvedValue({
+      then: undefined,
+    } as unknown as Thenable<IProvider>),
+  } as unknown as AllProviders
 
   it('can perform a discovery', async () => {
     const config = generateFakeConfig([A], {
       [B.toString()]: StructureContract.parse({ ignoreDiscovery: true }),
     })
 
-    const addressAnalyzer = mockObject<AddressAnalyzer>({
+    const addressAnalyzer = {
       analyze: vi.fn(),
-    })
-    addressAnalyzer.analyze
+    } as unknown as AddressAnalyzer
+    vi.mocked(addressAnalyzer.analyze)
       .mockResolvedValueOnce({
         ...base,
         address: A,

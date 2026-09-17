@@ -1,6 +1,5 @@
 import { ChainSpecificAddress, EthereumAddress } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 
 import type { IProvider } from '../../provider/IProvider'
 import { ManyChainMultiSigHandler } from './ManyChainMultiSigHandler'
@@ -21,10 +20,10 @@ describe(ManyChainMultiSigHandler.name, () => {
     groupQuorums: number[]
     groupParents: number[]
   }) {
-    return mockObject<IProvider>({
+    return {
       chain: 'ethereum',
-      callMethod: async () => config as never,
-    })
+      callMethod: vi.fn(async () => config as never),
+    } as unknown as IProvider
   }
 
   it('returns root-only summary when there are no sub-groups', async () => {

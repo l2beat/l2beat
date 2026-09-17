@@ -1,6 +1,5 @@
 import { RateLimiter } from '@l2beat/backend-tools'
 import { UnixTime } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 import type { HttpClient } from '../http/HttpClient'
 import { BlockIndexerClient } from './BlockIndexerClient'
@@ -21,11 +20,11 @@ describe(BlockIndexerClient.name, () => {
   describe(BlockIndexerClient.prototype.getBlockNumberAtOrBefore.name, () => {
     it('constructs a correct url', async () => {
       const result = 1234
-      const httpClient = mockObject<HttpClient>({
-        async fetch() {
+      const httpClient = {
+        fetch: vi.fn(async () => {
           return { status: '1', message: 'OK', result: `${result}` }
-        },
-      })
+        }),
+      } as unknown as HttpClient
 
       const arbiscanClient = new BlockIndexerClient(httpClient, rate, OPTIONS)
       const blockNumber = await arbiscanClient.getBlockNumberAtOrBefore(
@@ -43,7 +42,7 @@ describe(BlockIndexerClient.name, () => {
       const timestamp = UnixTime.fromDate(new Date('2022-07-19T00:00:00Z'))
 
       const result = 1234
-      const httpClient = mockObject<HttpClient>({
+      const httpClient = {
         fetch: vi
           .fn()
           .mockResolvedValueOnce({
@@ -56,7 +55,7 @@ describe(BlockIndexerClient.name, () => {
             message: 'OK',
             result: `${result}`,
           }),
-      })
+      } as unknown as HttpClient
 
       const arbiscanClient = new BlockIndexerClient(httpClient, rate, OPTIONS)
       const blockNumber =
@@ -87,7 +86,7 @@ describe(BlockIndexerClient.name, () => {
         message: 'NOTOK',
         result: 'Gateway error',
       }
-      const httpClient = mockObject<HttpClient>({
+      const httpClient = {
         fetch: vi
           .fn()
           .mockResolvedValueOnce({
@@ -96,7 +95,7 @@ describe(BlockIndexerClient.name, () => {
             result: 'Error! No closest block found',
           })
           .mockResolvedValueOnce(gatewayError),
-      })
+      } as unknown as HttpClient
 
       const etherscanClient = new BlockIndexerClient(httpClient, rate, OPTIONS)
 
@@ -123,7 +122,7 @@ describe(BlockIndexerClient.name, () => {
       const timestamp = UnixTime.fromDate(new Date('2022-07-19T00:00:00Z'))
 
       const errorString = '{"error":"string error"}'
-      const httpClient = mockObject<HttpClient>({
+      const httpClient = {
         fetch: vi
           .fn()
           .mockResolvedValueOnce({
@@ -134,7 +133,7 @@ describe(BlockIndexerClient.name, () => {
           .mockImplementationOnce(() => {
             throw errorString
           }),
-      })
+      } as unknown as HttpClient
 
       const etherscanClient = new BlockIndexerClient(httpClient, rate, OPTIONS)
 
@@ -160,7 +159,7 @@ describe(BlockIndexerClient.name, () => {
     it('when trying to find a block going backwards if error type is neither string nor object, throws unknown error', async () => {
       const timestamp = UnixTime.fromDate(new Date('2022-07-19T00:00:00Z'))
 
-      const httpClient = mockObject<HttpClient>({
+      const httpClient = {
         fetch: vi
           .fn()
           .mockResolvedValueOnce({
@@ -171,7 +170,7 @@ describe(BlockIndexerClient.name, () => {
           .mockImplementationOnce(() => {
             throw 1234
           }),
-      })
+      } as unknown as HttpClient
 
       const etherscanClient = new BlockIndexerClient(httpClient, rate, OPTIONS)
 
@@ -202,7 +201,7 @@ describe(BlockIndexerClient.name, () => {
         message: 'NOTOK',
         result: 'Error! No closest block found',
       }
-      const httpClient = mockObject<HttpClient>({
+      const httpClient = {
         fetch: vi
           .fn()
           // maximumCallsForBlockTimestamp = 3
@@ -210,7 +209,7 @@ describe(BlockIndexerClient.name, () => {
           .mockResolvedValueOnce(NOT_OK)
           .mockResolvedValueOnce(NOT_OK)
           .mockResolvedValueOnce(NOT_OK),
-      })
+      } as unknown as HttpClient
 
       const etherscanClient = new BlockIndexerClient(httpClient, rate, OPTIONS)
 
@@ -222,28 +221,28 @@ describe(BlockIndexerClient.name, () => {
 
   describe(BlockIndexerClient.prototype.call.name, () => {
     it('constructs a correct url', async () => {
-      const httpClient = mockObject<HttpClient>({
-        async fetch(url) {
+      const httpClient = {
+        fetch: vi.fn(async (url) => {
           expect(url).toStrictEqual(
             `${API_URL}?module=mod&action=act&foo=bar&baz=123&apikey=key&chainId=1`,
           )
           return { status: '1', message: 'OK', result: '' }
-        },
-      })
+        }),
+      } as unknown as HttpClient
 
       const etherscanClient = new BlockIndexerClient(httpClient, rate, OPTIONS)
       await etherscanClient.call('mod', 'act', { foo: 'bar', baz: '123' })
     })
 
     it('does not add api key for blockscout', async () => {
-      const httpClient = mockObject<HttpClient>({
-        async fetch(url) {
+      const httpClient = {
+        fetch: vi.fn(async (url) => {
           expect(url).toStrictEqual(
             `${API_URL}?module=mod&action=act&foo=bar&baz=123`,
           )
           return { status: '1', message: 'OK', result: '' }
-        },
-      })
+        }),
+      } as unknown as HttpClient
 
       const etherscanClient = new BlockIndexerClient(httpClient, rate, {
         type: 'blockscout',
@@ -255,11 +254,11 @@ describe(BlockIndexerClient.name, () => {
 
     it('returns a success response', async () => {
       const response = { status: '1' as const, message: 'OK', result: [1, 2] }
-      const httpClient = mockObject<HttpClient>({
-        async fetch() {
+      const httpClient = {
+        fetch: vi.fn(async () => {
           return response
-        },
-      })
+        }),
+      } as unknown as HttpClient
 
       const etherscanClient = new BlockIndexerClient(httpClient, rate, OPTIONS)
       const result = await etherscanClient.call('mod', 'act', {})
@@ -272,11 +271,11 @@ describe(BlockIndexerClient.name, () => {
         message: 'NOTOK',
         result: 'Oops',
       }
-      const httpClient = mockObject<HttpClient>({
-        async fetch() {
+      const httpClient = {
+        fetch: vi.fn(async () => {
           return response
-        },
-      })
+        }),
+      } as unknown as HttpClient
 
       const etherscanClient = new BlockIndexerClient(httpClient, rate, OPTIONS)
       await expect(etherscanClient.call('mod', 'act', {})).rejects.toThrow(

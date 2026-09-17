@@ -1,5 +1,4 @@
 import { CoingeckoId, UnixTime } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 import { CoingeckoQueryService, type QueryResultPoint } from '../../services'
 import { PriceProvider } from './PriceProvider'
@@ -17,9 +16,9 @@ describe(PriceProvider.name, () => {
         { timestamp: UnixTime(1700000000), value: 500.25 },
       ]
 
-      const coingeckoQueryService = mockObject<CoingeckoQueryService>({
+      const coingeckoQueryService = {
         getUsdPriceHistoryHourly: vi.fn().mockResolvedValueOnce(expectedResult),
-      })
+      } as unknown as CoingeckoQueryService
 
       const provider = new PriceProvider(coingeckoQueryService)
 
@@ -42,9 +41,9 @@ describe(PriceProvider.name, () => {
 
       const error = new Error('API rate limit exceeded')
 
-      const coingeckoQueryService = mockObject<CoingeckoQueryService>({
+      const coingeckoQueryService = {
         getUsdPriceHistoryHourly: vi.fn().mockRejectedValueOnce(error),
-      })
+      } as unknown as CoingeckoQueryService
 
       const provider = new PriceProvider(coingeckoQueryService)
 
@@ -68,9 +67,9 @@ describe(PriceProvider.name, () => {
         ['bitcoin', 30000.75],
       ])
 
-      const coingeckoQueryService = mockObject<CoingeckoQueryService>({
+      const coingeckoQueryService = {
         getLatestMarketData: vi.fn().mockResolvedValueOnce(marketData),
-      })
+      } as unknown as CoingeckoQueryService
 
       const provider = new PriceProvider(coingeckoQueryService)
 
@@ -98,9 +97,9 @@ describe(PriceProvider.name, () => {
         ['unknown-token', 0],
       ])
 
-      const coingeckoQueryService = mockObject<CoingeckoQueryService>({
+      const coingeckoQueryService = {
         getLatestMarketData: vi.fn().mockResolvedValueOnce(marketData),
-      })
+      } as unknown as CoingeckoQueryService
 
       const provider = new PriceProvider(coingeckoQueryService)
 
@@ -113,9 +112,9 @@ describe(PriceProvider.name, () => {
       const coingeckoIds = [CoingeckoId('ethereum'), CoingeckoId('bitcoin')]
       const error = new Error('Failed to fetch latest prices')
 
-      const coingeckoQueryService = mockObject<CoingeckoQueryService>({
+      const coingeckoQueryService = {
         getLatestMarketData: vi.fn().mockRejectedValueOnce(error),
-      })
+      } as unknown as CoingeckoQueryService
 
       const provider = new PriceProvider(coingeckoQueryService)
 
@@ -129,9 +128,9 @@ describe(PriceProvider.name, () => {
       const marketData = new Map()
       const expectedResult = new Map()
 
-      const coingeckoQueryService = mockObject<CoingeckoQueryService>({
+      const coingeckoQueryService = {
         getLatestMarketData: vi.fn().mockResolvedValueOnce(marketData),
-      })
+      } as unknown as CoingeckoQueryService
 
       const provider = new PriceProvider(coingeckoQueryService)
 
@@ -146,7 +145,7 @@ describe(PriceProvider.name, () => {
       const from = 1600000000
       const to = 1700000000
 
-      const provider = new PriceProvider(mockObject<CoingeckoQueryService>({}))
+      const provider = new PriceProvider({} as unknown as CoingeckoQueryService)
 
       const result = provider.getAdjustedTo(from, to)
 
@@ -168,9 +167,9 @@ describe(PriceProvider.name, () => {
         'binancecoin',
       ].map(CoingeckoId)
 
-      const coingeckoQueryService = mockObject<CoingeckoQueryService>({
+      const coingeckoQueryService = {
         getAllCoingeckoIds: vi.fn().mockResolvedValueOnce(expectedResult),
-      })
+      } as unknown as CoingeckoQueryService
 
       const provider = new PriceProvider(coingeckoQueryService)
 
@@ -185,9 +184,9 @@ describe(PriceProvider.name, () => {
     it('propagates errors from CoingeckoQueryService', async () => {
       const error = new Error('Failed to fetch coin list')
 
-      const coingeckoQueryService = mockObject<CoingeckoQueryService>({
+      const coingeckoQueryService = {
         getAllCoingeckoIds: vi.fn().mockRejectedValueOnce(error),
-      })
+      } as unknown as CoingeckoQueryService
 
       const provider = new PriceProvider(coingeckoQueryService)
 

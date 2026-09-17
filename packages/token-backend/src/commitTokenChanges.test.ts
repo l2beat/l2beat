@@ -6,34 +6,33 @@ import type {
   TokenRelationRecord,
 } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 import type { Command } from './commands'
 import { commitTokenChanges } from './commitTokenChanges'
 
 describe(commitTokenChanges.name, () => {
   it('routes each command kind to the matching repository call in order', async () => {
-    const abstractToken = mockObject<TokenDatabase['abstractToken']>({
+    const abstractToken = {
       insert: vi.fn().mockResolvedValue(undefined),
       updateById: vi.fn().mockResolvedValue(undefined),
       deleteById: vi.fn().mockResolvedValue(undefined),
-    })
-    const deployedToken = mockObject<TokenDatabase['deployedToken']>({
+    } as unknown as TokenDatabase['abstractToken']
+    const deployedToken = {
       insert: vi.fn().mockResolvedValue(undefined),
       updateByChainAndAddress: vi.fn().mockResolvedValue(undefined),
       deleteByPrimaryKey: vi.fn().mockResolvedValue(undefined),
-    })
-    const tokenRelation = mockObject<TokenDatabase['tokenRelation']>({
+    } as unknown as TokenDatabase['deployedToken']
+    const tokenRelation = {
       insert: vi.fn().mockResolvedValue(undefined),
       updateByPrimaryKey: vi.fn().mockResolvedValue(undefined),
       deleteByPrimaryKey: vi.fn().mockResolvedValue(undefined),
-    })
-    const tokenDb = mockObject<TokenDatabase>({
+    } as unknown as TokenDatabase['tokenRelation']
+    const tokenDb = {
       abstractToken,
       deployedToken,
       tokenRelation,
       tokenDbHistory: mockHistory(),
-    })
+    } as unknown as TokenDatabase
 
     const abstract = abstractRecord('USDC01', 'USDC')
     const deployed = deployedRecord('ethereum', '0xaaa', 'USDC01')
@@ -121,13 +120,13 @@ describe(commitTokenChanges.name, () => {
   it('passes deployed-token commands through verbatim, including any proof field', async () => {
     const insert = vi.fn().mockResolvedValue(undefined)
     const updateByChainAndAddress = vi.fn().mockResolvedValue(undefined)
-    const tokenDb = mockObject<TokenDatabase>({
-      deployedToken: mockObject<TokenDatabase['deployedToken']>({
+    const tokenDb = {
+      deployedToken: {
         insert,
         updateByChainAndAddress,
-      }),
+      } as unknown as TokenDatabase['deployedToken'],
       tokenDbHistory: mockHistory(),
-    })
+    } as unknown as TokenDatabase
     const deployed: DeployedTokenRecord = {
       ...deployedRecord('ethereum', '0xaaa', 'USDC01'),
       abstractTokenAssignmentProof: { kind: 'manual', user: 'someone@x.io' },
@@ -165,16 +164,18 @@ describe(commitTokenChanges.name, () => {
       )
       const abstract = abstractRecord('USDC01', 'USDC')
       const deployed = deployedRecord('ethereum', '0xaaa', 'USDC01')
-      const tokenDb = mockObject<TokenDatabase>({
-        abstractToken: mockObject<TokenDatabase['abstractToken']>({
+      const tokenDb = {
+        abstractToken: {
           insert: vi.fn().mockResolvedValue(undefined),
           deleteById: vi.fn().mockResolvedValue(undefined),
-        }),
-        deployedToken: mockObject<TokenDatabase['deployedToken']>({
+        } as unknown as TokenDatabase['abstractToken'],
+        deployedToken: {
           updateByChainAndAddress: vi.fn().mockResolvedValue(undefined),
-        }),
-        tokenDbHistory: mockObject<TokenDatabase['tokenDbHistory']>({ insert }),
-      })
+        } as unknown as TokenDatabase['deployedToken'],
+        tokenDbHistory: {
+          insert,
+        } as unknown as TokenDatabase['tokenDbHistory'],
+      } as unknown as TokenDatabase
 
       const commands: Command[] = [
         { type: 'AddAbstractTokenCommand', record: abstract },
@@ -235,15 +236,17 @@ describe(commitTokenChanges.name, () => {
       )
       const abstract = abstractRecord('USDC01', 'USDC')
       const deployed = deployedRecord('ethereum', '0xaaa', 'USDC01')
-      const tokenDb = mockObject<TokenDatabase>({
-        abstractToken: mockObject<TokenDatabase['abstractToken']>({
+      const tokenDb = {
+        abstractToken: {
           insert: vi.fn().mockResolvedValue(undefined),
-        }),
-        deployedToken: mockObject<TokenDatabase['deployedToken']>({
+        } as unknown as TokenDatabase['abstractToken'],
+        deployedToken: {
           insert: vi.fn().mockResolvedValue(undefined),
-        }),
-        tokenDbHistory: mockObject<TokenDatabase['tokenDbHistory']>({ insert }),
-      })
+        } as unknown as TokenDatabase['deployedToken'],
+        tokenDbHistory: {
+          insert,
+        } as unknown as TokenDatabase['tokenDbHistory'],
+      } as unknown as TokenDatabase
 
       await commitTokenChanges(
         tokenDb,
@@ -270,12 +273,14 @@ describe(commitTokenChanges.name, () => {
         () => Promise.resolve(),
       )
       const abstract = abstractRecord('USDC01', 'USDC')
-      const tokenDb = mockObject<TokenDatabase>({
-        abstractToken: mockObject<TokenDatabase['abstractToken']>({
+      const tokenDb = {
+        abstractToken: {
           insert: vi.fn().mockResolvedValue(undefined),
-        }),
-        tokenDbHistory: mockObject<TokenDatabase['tokenDbHistory']>({ insert }),
-      })
+        } as unknown as TokenDatabase['abstractToken'],
+        tokenDbHistory: {
+          insert,
+        } as unknown as TokenDatabase['tokenDbHistory'],
+      } as unknown as TokenDatabase
 
       await commitTokenChanges(
         tokenDb,
@@ -290,9 +295,9 @@ describe(commitTokenChanges.name, () => {
 })
 
 function mockHistory() {
-  return mockObject<TokenDatabase['tokenDbHistory']>({
+  return {
     insert: vi.fn().mockResolvedValue(undefined),
-  })
+  } as unknown as TokenDatabase['tokenDbHistory']
 }
 
 function abstractRecord(id: string, symbol: string): AbstractTokenRecord {

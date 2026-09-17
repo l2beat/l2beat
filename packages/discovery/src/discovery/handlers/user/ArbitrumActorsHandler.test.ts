@@ -1,6 +1,5 @@
 import { ChainSpecificAddress, type Hash256 } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 
 import { DebugTransactionCallResponse } from '../../provider/DebugTransactionTrace'
 import type { IProvider } from '../../provider/IProvider'
@@ -15,14 +14,14 @@ describe(ArbitrumActorsHandler.name, () => {
 
     const contractAddress = ChainSpecificAddress.random()
 
-    const provider = mockObject<IProvider>({
-      getLogs: async () => EXAMPLE_VALIDATORS_LOGS,
-      getDebugTrace: async (transactionHash: Hash256) => {
+    const provider = {
+      getLogs: vi.fn(async () => EXAMPLE_VALIDATORS_LOGS),
+      getDebugTrace: vi.fn(async (transactionHash: Hash256) => {
         return DebugTransactionCallResponse.parse(
           EXAMPLE_VALIDATORS_TRACES[transactionHash.toString()],
         )
-      },
-    })
+      }),
+    } as unknown as IProvider
 
     const response = await handler.execute(provider, contractAddress)
 
@@ -43,14 +42,14 @@ describe(ArbitrumActorsHandler.name, () => {
 
     const contractAddress = ChainSpecificAddress.random()
 
-    const provider = mockObject<IProvider>({
-      getLogs: async () => EXAMPLE_BATCHPOSTERS_LOGS,
-      getDebugTrace: async (transactionHash: Hash256) => {
+    const provider = {
+      getLogs: vi.fn(async () => EXAMPLE_BATCHPOSTERS_LOGS),
+      getDebugTrace: vi.fn(async (transactionHash: Hash256) => {
         return DebugTransactionCallResponse.parse(
           EXAMPLE_BATCHPOSTERS_TRACES[transactionHash.toString()],
         )
-      },
-    })
+      }),
+    } as unknown as IProvider
 
     const response = await handler.execute(provider, contractAddress)
 

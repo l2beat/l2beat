@@ -15,7 +15,6 @@ import {
   SAFE_methods,
 } from '@l2beat/shared/uops'
 import { type Block, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 import type {
   CountedBlock,
@@ -1158,39 +1157,39 @@ describe(RpcCounter.name, () => {
 
   describe(RpcCounter.prototype.checkOperations.name, () => {
     it('should find batch operation for ERC-4337', () => {
-      const mockCountedOperation = mockObject<CountedOperation>({
+      const mockCountedOperation = {
         level: 0,
         contractAddress: ENTRY_POINT_ADDRESS_0_6_0,
         children: [
-          mockObject<CountedOperation>({
+          {
             id: 'id',
             level: 1,
             contractAddress: 'address',
             methodName: 'execute',
             methodSignature: 'executeBatch(address[],bytes[])',
             children: [
-              mockObject<CountedOperation>({
+              {
                 level: 2,
                 contractAddress: 'address',
                 methodName: 'unknown',
                 methodSignature: undefined,
                 children: [],
-              }),
-              mockObject<CountedOperation>({
+              } as unknown as CountedOperation,
+              {
                 level: 2,
                 contractAddress: 'address',
                 methodName: 'unknown',
                 methodSignature: undefined,
                 children: [],
-              }),
+              } as unknown as CountedOperation,
             ],
-          }),
+          } as unknown as CountedOperation,
         ],
-      })
+      } as unknown as CountedOperation
 
-      const mockTx = mockObject<EVMTransaction>({
+      const mockTx = {
         type: '2',
-      })
+      } as unknown as EVMTransaction
 
       const counter = new RpcCounter()
 
@@ -1202,29 +1201,29 @@ describe(RpcCounter.name, () => {
     })
 
     it('should find batch operation for EIP-712', () => {
-      const mockCountedOperation = mockObject<CountedOperation>({
+      const mockCountedOperation = {
         level: 0,
         id: 'id',
         contractAddress: 'address',
         children: [
-          mockObject<CountedOperation>({
+          {
             id: 'id',
             level: 1,
             contractAddress: 'address',
             children: [],
-          }),
-          mockObject<CountedOperation>({
+          } as unknown as CountedOperation,
+          {
             id: 'id',
             level: 1,
             contractAddress: 'address',
             children: [],
-          }),
+          } as unknown as CountedOperation,
         ],
-      })
+      } as unknown as CountedOperation
 
-      const mockTx = mockObject<EVMTransaction>({
+      const mockTx = {
         type: EIP712_TX_TYPE,
-      })
+      } as unknown as EVMTransaction
 
       const counter = new RpcCounter()
 
@@ -1236,24 +1235,24 @@ describe(RpcCounter.name, () => {
     })
 
     it('should find unknown operation', () => {
-      const mockCountedOperation = mockObject<CountedOperation>({
+      const mockCountedOperation = {
         id: 'id',
         level: 0,
         contractAddress: ENTRY_POINT_ADDRESS_0_6_0,
         children: [
-          mockObject<CountedOperation>({
+          {
             level: 1,
             contractAddress: 'address',
             methodName: 'unknown',
             methodSignature: undefined,
             children: [],
-          }),
+          } as unknown as CountedOperation,
         ],
-      })
+      } as unknown as CountedOperation
 
-      const mockTx = mockObject<EVMTransaction>({
+      const mockTx = {
         type: '2',
-      })
+      } as unknown as EVMTransaction
 
       const counter = new RpcCounter()
 
@@ -1267,49 +1266,49 @@ describe(RpcCounter.name, () => {
 
   describe(RpcCounter.prototype.generateSmartAccountUsageForBlock.name, () => {
     it('should generate usage for block', () => {
-      const mockCountedBlock = mockObject<CountedBlock>({
+      const mockCountedBlock = {
         transactions: [
-          mockObject<CountedTransaction>({
-            details: mockObject<CountedOperation>({
+          {
+            details: {
               contractAddress: ENTRY_POINT_ADDRESS_0_6_0,
               children: [
-                mockObject<CountedOperation>({
+                {
                   contractAddress: 'address',
                   methodName: 'execute',
                   methodSignature: 'execute(address,uint256,bytes)',
                   children: [],
-                }),
+                } as unknown as CountedOperation,
               ],
-            }),
-          }),
-          mockObject<CountedTransaction>({
-            details: mockObject<CountedOperation>({
+            } as unknown as CountedOperation,
+          } as unknown as CountedTransaction,
+          {
+            details: {
               contractAddress: ENTRY_POINT_ADDRESS_0_7_0,
               children: [
-                mockObject<CountedOperation>({
+                {
                   contractAddress: 'address',
                   methodName: 'execute',
                   methodSignature: 'execute(address,uint256,bytes)',
                   children: [],
-                }),
+                } as unknown as CountedOperation,
               ],
-            }),
-          }),
-          mockObject<CountedTransaction>({
-            details: mockObject<CountedOperation>({
+            } as unknown as CountedOperation,
+          } as unknown as CountedTransaction,
+          {
+            details: {
               contractAddress: ENTRY_POINT_ADDRESS_0_6_0,
               children: [
-                mockObject<CountedOperation>({
+                {
                   contractAddress: 'address',
                   methodName: 'execute',
                   methodSignature: 'unknown',
                   children: [],
-                }),
+                } as unknown as CountedOperation,
               ],
-            }),
-          }),
+            } as unknown as CountedOperation,
+          } as unknown as CountedTransaction,
         ],
-      })
+      } as unknown as CountedBlock
 
       const counter = new RpcCounter()
 

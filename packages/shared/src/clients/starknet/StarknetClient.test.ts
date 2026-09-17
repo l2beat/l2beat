@@ -1,6 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
 import { type Block, type Transaction, UnixTime } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 import type { HttpClient } from '../http/HttpClient'
 import { StarknetClient } from './StarknetClient'
@@ -30,10 +29,11 @@ describe(StarknetClient.name, () => {
         ],
       }
 
-      const http = mockObject<HttpClient>({
-        fetch: async () =>
+      const http = {
+        fetch: vi.fn(async () =>
           mockStarknetGetBlockWithTxsResponse(mockStarknetBlock),
-      })
+        ),
+      } as unknown as HttpClient
 
       const client = mockClient({ http })
 
@@ -45,9 +45,9 @@ describe(StarknetClient.name, () => {
 
   describe(StarknetClient.prototype.getLatestBlockNumber.name, () => {
     it('returns number of the block', async () => {
-      const http = mockObject<HttpClient>({
-        fetch: async () => mockStarknetGetBlockResponse(100),
-      })
+      const http = {
+        fetch: vi.fn(async () => mockStarknetGetBlockResponse(100)),
+      } as unknown as HttpClient
       const client = mockClient({ http })
 
       const result = await client.getLatestBlockNumber()
@@ -87,7 +87,7 @@ describe(StarknetClient.name, () => {
       }
 
       const rpcResult = ['0x1234', '0x5678']
-      const http = mockObject<HttpClient>()
+      const http = {} as unknown as HttpClient
 
       const client = mockClient({ http })
 
@@ -168,9 +168,9 @@ describe(StarknetClient.name, () => {
 
   describe(StarknetClient.prototype.query.name, () => {
     it('calls http client with correct params and returns data', async () => {
-      const http = mockObject<HttpClient>({
-        fetch: async () => 'data-returned-from-api',
-      })
+      const http = {
+        fetch: vi.fn(async () => 'data-returned-from-api'),
+      } as unknown as HttpClient
 
       const client = mockClient({ http, generateId: () => '1' })
 
@@ -227,7 +227,7 @@ function mockClient(deps: {
   return new StarknetClient({
     url: deps.url ?? 'API_URL',
     generateId: deps.generateId,
-    http: deps.http ?? mockObject<HttpClient>({}),
+    http: deps.http ?? ({} as unknown as HttpClient),
     callsPerMinute: 100_000,
     retryStrategy: 'TEST',
     logger: Logger.SILENT,

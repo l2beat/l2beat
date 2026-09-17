@@ -1,4 +1,4 @@
-import { type MockObject, mockObject } from '@l2beat/test-utils'
+import { mockObject } from '@l2beat/test-utils'
 import { vi } from 'vitest'
 import type { WebSocket } from 'ws'
 
@@ -6,7 +6,7 @@ type WebSocketEvent = 'open' | 'message' | 'close' | 'error'
 
 export class MockWebSocket {
   listeners: { [K in WebSocketEvent]?: Array<(...args: any[]) => void> } = {}
-  mock: MockObject<WebSocket>
+  mock: WebSocket
 
   constructor() {
     this.mock = mockObject<WebSocket>({

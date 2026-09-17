@@ -1,6 +1,5 @@
 import { Logger, type RateLimiter } from '@l2beat/backend-tools'
-import { mockObject } from '@l2beat/test-utils'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import { ClientMetricsAggregator } from './ClientMetricsAggregator'
 
 describe(ClientMetricsAggregator.name, () => {
@@ -34,8 +33,8 @@ describe(ClientMetricsAggregator.name, () => {
   })
 
   it('merges rate limiter statistics, including labels without completed calls', () => {
-    const rateLimiter = mockObject<RateLimiter>({
-      takeStats: () => ({
+    const rateLimiter = {
+      takeStats: vi.fn(() => ({
         labels: {
           a: {
             enqueued: 3,
@@ -55,9 +54,9 @@ describe(ClientMetricsAggregator.name, () => {
         inFlight: 1,
         inFlightMax: 7,
         queueLength: 1,
-      }),
+      })),
       callsPerMinute: 120,
-    })
+    } as unknown as RateLimiter
     const aggregator = new ClientMetricsAggregator({
       logger: Logger.SILENT,
       rateLimiter,

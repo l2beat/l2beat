@@ -1,6 +1,5 @@
 import { ChainSpecificAddress, Hash256 } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import type { ConfigReader } from '../discovery/config/ConfigReader'
 import type { StructureConfig } from '../discovery/config/StructureConfig'
 import type {
@@ -91,14 +90,14 @@ function structure(
 
 function mockConfigReader(discoveries: DiscoveryOutput[]): ConfigReader {
   const byName = new Map(discoveries.map((x) => [x.name, x]))
-  return mockObject<ConfigReader>({
-    readAllDiscoveredProjects: () => discoveries.map((x) => x.name),
-    readDiscovery: (name: string) => {
+  return {
+    readAllDiscoveredProjects: vi.fn(() => discoveries.map((x) => x.name)),
+    readDiscovery: vi.fn((name: string) => {
       const found = byName.get(name)
       if (found === undefined) throw new Error(`Unknown project ${name}`)
       return found
-    },
-  })
+    }),
+  } as unknown as ConfigReader
 }
 
 function discovery(name: string, entries: EntryParameters[]): DiscoveryOutput {

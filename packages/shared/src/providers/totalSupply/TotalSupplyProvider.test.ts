@@ -1,6 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
 import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 import type { RpcClient } from '../../clients'
 import { encodeTotalSupply, TotalSupplyProvider } from './TotalSupplyProvider'
@@ -16,8 +15,8 @@ describe(TotalSupplyProvider.name, () => {
 
   describe(TotalSupplyProvider.prototype.getTotalSupplies.name, () => {
     it('uses multicall if possible', async () => {
-      const rpc = mockObject<RpcClient>({
-        isMulticallDeployed: () => true,
+      const rpc = {
+        isMulticallDeployed: vi.fn(() => true),
         multicall: vi.fn().mockResolvedValueOnce([
           {
             success: true,
@@ -33,10 +32,10 @@ describe(TotalSupplyProvider.name, () => {
           },
         ]),
         chain: CHAIN,
-      })
+      } as unknown as RpcClient
 
       const totalSupplyProvider = new TotalSupplyProvider(
-        [rpc, mockObject<RpcClient>({ chain: 'random' })],
+        [rpc, { chain: 'random' } as unknown as RpcClient],
         Logger.SILENT,
       )
 
@@ -58,18 +57,18 @@ describe(TotalSupplyProvider.name, () => {
     })
 
     it('performs single calls if multicall not deployed', async () => {
-      const rpc = mockObject<RpcClient>({
-        isMulticallDeployed: () => false,
+      const rpc = {
+        isMulticallDeployed: vi.fn(() => false),
         call: vi
           .fn()
           .mockResolvedValueOnce(Bytes.fromNumber(123_456))
           .mockResolvedValueOnce(Bytes.fromNumber(654_321))
           .mockResolvedValueOnce(Bytes.fromHex('0x')),
         chain: CHAIN,
-      })
+      } as unknown as RpcClient
 
       const totalSupplyProvider = new TotalSupplyProvider(
-        [rpc, mockObject<RpcClient>({ chain: 'random' })],
+        [rpc, { chain: 'random' } as unknown as RpcClient],
         Logger.SILENT,
       )
 
@@ -98,15 +97,15 @@ describe(TotalSupplyProvider.name, () => {
     })
 
     it('throws when a totalSupply call reverts', async () => {
-      const rpc = mockObject<RpcClient>({
-        isMulticallDeployed: () => true,
+      const rpc = {
+        isMulticallDeployed: vi.fn(() => true),
         multicall: vi.fn().mockResolvedValueOnce([
           { success: true, data: Bytes.fromNumber(123_456) },
           { success: false, data: Bytes.fromHex('0x') },
           { success: true, data: Bytes.fromNumber(654_321) },
         ]),
         chain: CHAIN,
-      })
+      } as unknown as RpcClient
 
       const totalSupplyProvider = new TotalSupplyProvider([rpc], Logger.SILENT)
 
@@ -116,24 +115,24 @@ describe(TotalSupplyProvider.name, () => {
     })
 
     it('tries next RPC client if a single call fails', async () => {
-      const failingRpc = mockObject<RpcClient>({
-        isMulticallDeployed: () => false,
+      const failingRpc = {
+        isMulticallDeployed: vi.fn(() => false),
         call: vi
           .fn()
           .mockResolvedValueOnce(Bytes.fromNumber(123_456))
           .mockRejectedValueOnce(new Error('RPC failure')),
         chain: CHAIN,
-      })
+      } as unknown as RpcClient
 
-      const workingRpc = mockObject<RpcClient>({
-        isMulticallDeployed: () => false,
+      const workingRpc = {
+        isMulticallDeployed: vi.fn(() => false),
         call: vi
           .fn()
           .mockResolvedValueOnce(Bytes.fromNumber(123))
           .mockResolvedValueOnce(Bytes.fromNumber(456))
           .mockResolvedValueOnce(Bytes.fromNumber(789)),
         chain: CHAIN,
-      })
+      } as unknown as RpcClient
 
       const totalSupplyProvider = new TotalSupplyProvider(
         [failingRpc, workingRpc],
@@ -150,14 +149,14 @@ describe(TotalSupplyProvider.name, () => {
     })
 
     it('tries next RPC client if first one fails', async () => {
-      const failingRpc = mockObject<RpcClient>({
-        isMulticallDeployed: () => true,
+      const failingRpc = {
+        isMulticallDeployed: vi.fn(() => true),
         multicall: vi.fn().mockRejectedValueOnce(new Error('Connection error')),
         chain: CHAIN,
-      })
+      } as unknown as RpcClient
 
-      const workingRpc = mockObject<RpcClient>({
-        isMulticallDeployed: () => true,
+      const workingRpc = {
+        isMulticallDeployed: vi.fn(() => true),
         multicall: vi.fn().mockResolvedValueOnce([
           {
             success: true,
@@ -173,7 +172,7 @@ describe(TotalSupplyProvider.name, () => {
           },
         ]),
         chain: CHAIN,
-      })
+      } as unknown as RpcClient
 
       const totalSupplyProvider = new TotalSupplyProvider(
         [failingRpc, workingRpc],
@@ -193,16 +192,16 @@ describe(TotalSupplyProvider.name, () => {
 
     it('throws error if all RPC clients fail', async () => {
       const error = new Error('All RPCs failed')
-      const rpc1 = mockObject<RpcClient>({
-        isMulticallDeployed: () => true,
+      const rpc1 = {
+        isMulticallDeployed: vi.fn(() => true),
         multicall: vi.fn().mockRejectedValueOnce(error),
         chain: CHAIN,
-      })
-      const rpc2 = mockObject<RpcClient>({
-        isMulticallDeployed: () => true,
+      } as unknown as RpcClient
+      const rpc2 = {
+        isMulticallDeployed: vi.fn(() => true),
         multicall: vi.fn().mockRejectedValueOnce(error),
         chain: CHAIN,
-      })
+      } as unknown as RpcClient
 
       const totalSupplyProvider = new TotalSupplyProvider(
         [rpc1, rpc2],
@@ -216,7 +215,7 @@ describe(TotalSupplyProvider.name, () => {
 
     it('throws error if no RPC client for chain', async () => {
       const totalSupplyProvider = new TotalSupplyProvider(
-        [mockObject<RpcClient>({ chain: 'other-chain' })],
+        [{ chain: 'other-chain' } as unknown as RpcClient],
         Logger.SILENT,
       )
 

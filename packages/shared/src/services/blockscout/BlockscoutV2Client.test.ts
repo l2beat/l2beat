@@ -1,5 +1,4 @@
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 import type { HttpClient } from '../../clients'
 import { BlockscoutV2Client } from './BlockscoutV2Client'
@@ -59,9 +58,9 @@ const responseMock = {
 describe(BlockscoutV2Client.name, () => {
   describe(BlockscoutV2Client.prototype.call.name, () => {
     it('constructs a correct url', async () => {
-      const httpClient = mockObject<HttpClient>({
+      const httpClient = {
         fetch: vi.fn().mockResolvedValue({ status: '1', message: 'OK' }),
-      })
+      } as unknown as HttpClient
 
       const blockscoutClient = new BlockscoutV2Client(httpClient, API_URL)
       await blockscoutClient.call('mod', 'id', 'act', {
@@ -76,9 +75,9 @@ describe(BlockscoutV2Client.name, () => {
     })
 
     it('returns a success response', async () => {
-      const httpClient = mockObject<HttpClient>({
-        fetch: async () => responseMock,
-      })
+      const httpClient = {
+        fetch: vi.fn(async () => responseMock),
+      } as unknown as HttpClient
 
       const blockscoutClient = new BlockscoutV2Client(httpClient, API_URL)
       const result = await blockscoutClient.call('mod', 'id', 'act')
@@ -91,7 +90,7 @@ describe(BlockscoutV2Client.name, () => {
       const address = EthereumAddress.random()
       const callMock = vi.fn().mockResolvedValue(responseMock)
       const blockscoutClient = new BlockscoutV2Client(
-        mockObject<HttpClient>(),
+        {} as unknown as HttpClient,
         API_URL,
       )
       blockscoutClient.call = callMock
@@ -113,7 +112,7 @@ describe(BlockscoutV2Client.name, () => {
       const address = EthereumAddress.random()
       const callMock = vi.fn().mockResolvedValue({})
       const blockscoutClient = new BlockscoutV2Client(
-        mockObject<HttpClient>(),
+        {} as unknown as HttpClient,
         API_URL,
       )
       blockscoutClient.call = callMock

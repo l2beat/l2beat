@@ -1,7 +1,6 @@
 import { Bytes, ChainSpecificAddress } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { utils } from 'ethers'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import type { IProvider } from '../../provider/IProvider'
 import type { HandlerResult } from '../Handler'
 import { StorageHandler, type StorageHandlerDefinition } from './StorageHandler'
@@ -10,17 +9,17 @@ describe(StorageHandler.name, () => {
   describe('return types', () => {
     it('can returns storage as bytes', async () => {
       const address = ChainSpecificAddress.random()
-      const provider = mockObject<IProvider>({
-        async getStorage(passedAddress, slot) {
+      const provider = {
+        getStorage: vi.fn(async (passedAddress, slot) => {
           expect(passedAddress).toStrictEqual(address)
           expect(slot).toStrictEqual(1n)
           return Bytes.fromHex(
             '0x0000000000000000000000000000000000000000000000000000000000000123',
           )
-        },
+        }),
         blockNumber: 123,
         chain: 'foo',
-      })
+      } as unknown as IProvider
 
       const handler = new StorageHandler('someName', {
         type: 'storage',
@@ -39,15 +38,15 @@ describe(StorageHandler.name, () => {
 
     it('can returns storage as number', async () => {
       const address = ChainSpecificAddress.random()
-      const provider = mockObject<IProvider>({
-        async getStorage() {
+      const provider = {
+        getStorage: vi.fn(async () => {
           return Bytes.fromHex(
             '0x0000000000000000000000000000000000000000000000000000000000000123',
           )
-        },
+        }),
         blockNumber: 123,
         chain: 'foo',
-      })
+      } as unknown as IProvider
 
       const handler = new StorageHandler('someName', {
         type: 'storage',
@@ -68,18 +67,18 @@ describe(StorageHandler.name, () => {
       const address = ChainSpecificAddress.random()
       const resultAddress = ChainSpecificAddress.random()
 
-      const provider = mockObject<IProvider>({
-        async getStorage() {
+      const provider = {
+        getStorage: vi.fn(async () => {
           return Bytes.fromHex(
             '0x000000000000000000000000' +
               ChainSpecificAddress.address(resultAddress)
                 .slice(2)
                 .toLowerCase(),
           )
-        },
+        }),
         blockNumber: 123,
         chain: 'foo',
-      })
+      } as unknown as IProvider
 
       const handler = new StorageHandler('someName', {
         type: 'storage',
@@ -98,15 +97,15 @@ describe(StorageHandler.name, () => {
 
     it('can returns storage as uint8', async () => {
       const address = ChainSpecificAddress.random()
-      const provider = mockObject<IProvider>({
-        async getStorage() {
+      const provider = {
+        getStorage: vi.fn(async () => {
           return Bytes.fromHex(
             '0x0000000000000000000000000000000000000000000000000000000000000123',
           )
-        },
+        }),
         blockNumber: 123,
         chain: 'foo',
-      })
+      } as unknown as IProvider
 
       const handler = new StorageHandler('someName', {
         type: 'storage',
@@ -206,14 +205,14 @@ describe(StorageHandler.name, () => {
     }) {
       const handler = new StorageHandler('someName', options.definition)
       let slot: bigint | number | Bytes | undefined
-      const provider = mockObject<IProvider>({
-        async getStorage(_passedAddress, receivedSlot) {
+      const provider = {
+        getStorage: vi.fn(async (_passedAddress, receivedSlot) => {
           slot = receivedSlot
           return Bytes.fromHex('0'.repeat(64))
-        },
+        }),
         blockNumber: 123,
         chain: 'foo',
-      })
+      } as unknown as IProvider
       const result = await handler.execute(
         provider,
         ChainSpecificAddress.random(),
@@ -342,13 +341,13 @@ describe(StorageHandler.name, () => {
       slot: 1,
     })
 
-    const provider = mockObject<IProvider>({
-      async getStorage() {
+    const provider = {
+      getStorage: vi.fn(async () => {
         throw new Error('foo bar')
-      },
+      }),
       blockNumber: 123,
       chain: 'foo',
-    })
+    } as unknown as IProvider
     const address = ChainSpecificAddress.random()
     const result = await handler.execute(provider, address, {})
     expect(result).toStrictEqual({

@@ -1,5 +1,4 @@
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it } from 'vitest'
 import type {
   TechnologyContract,
@@ -219,15 +218,15 @@ function makeTechnologyContract(
   name: string,
   addresses: TechnologyContractAddress[],
 ): TechnologyContract {
-  return mockObject<TechnologyContract>({ name, addresses })
+  return { name, addresses } as unknown as TechnologyContract
 }
 
 function makeContractsSection(
   contracts: TechnologyContract[],
 ): ContractsSection {
-  return mockObject<ContractsSection>({
+  return {
     contracts: { Ethereum: contracts },
-  })
+  } as unknown as ContractsSection
 }
 
 function makePermissionsSection({
@@ -237,9 +236,9 @@ function makePermissionsSection({
   roles?: TechnologyContract[]
   actors?: TechnologyContract[]
 }): PermissionSection {
-  return mockObject<PermissionSection>({
+  return {
     permissionsByChain: {
       Ethereum: { roles, actors },
     },
-  })
+  } as unknown as PermissionSection
 }

@@ -1,8 +1,7 @@
 import type { ConfigReader, DiscoveryOutput } from '@l2beat/discovery'
 import { ChainSpecificAddress, Hash256 } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import mock from 'mock-fs'
-import { afterEach, describe, expect, it } from 'vitest'
+import { afterEach, describe, expect, it, vi } from 'vitest'
 import {
   loadAnalyzerSourceInput,
   loadFlatEntrypointSourceInput,
@@ -176,8 +175,8 @@ function mockFlatSources() {
 }
 
 function configReader() {
-  return mockObject<ConfigReader>({
-    getProjectPath: () => PROJECT_PATH,
-    readDiscovery: () => DISCOVERY,
-  })
+  return {
+    getProjectPath: vi.fn(() => PROJECT_PATH),
+    readDiscovery: vi.fn(() => DISCOVERY),
+  } as unknown as ConfigReader
 }

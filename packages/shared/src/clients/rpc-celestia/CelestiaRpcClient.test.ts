@@ -1,7 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 import { UnixTime } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import type { HttpClient } from '../http/HttpClient'
 import { CelestiaRpcClient } from './CelestiaRpcClient'
 
@@ -9,8 +8,8 @@ describe(CelestiaRpcClient.name, () => {
   describe(CelestiaRpcClient.prototype.getLatestBlockNumber.name, () => {
     it('returns the latest block number', async () => {
       const mockBlockHeight = '12345'
-      const http = mockObject<HttpClient>({
-        fetch: async () => ({
+      const http = {
+        fetch: vi.fn(async () => ({
           result: {
             block: {
               header: {
@@ -19,8 +18,8 @@ describe(CelestiaRpcClient.name, () => {
               },
             },
           },
-        }),
-      })
+        })),
+      } as unknown as HttpClient
       const rpc = mockClient({ http })
 
       const result = await rpc.getLatestBlockNumber()
@@ -38,8 +37,8 @@ describe(CelestiaRpcClient.name, () => {
       const mockBlockHeight = '12345'
       const mockTimestamp = '2024-02-07T10:00:00Z'
 
-      const http = mockObject<HttpClient>({
-        fetch: async () => ({
+      const http = {
+        fetch: vi.fn(async () => ({
           result: {
             block: {
               header: {
@@ -48,8 +47,8 @@ describe(CelestiaRpcClient.name, () => {
               },
             },
           },
-        }),
-      })
+        })),
+      } as unknown as HttpClient
       const rpc = mockClient({ http })
 
       const result = await rpc.getBlockWithTransactions(Number(mockBlockHeight))
@@ -75,8 +74,8 @@ describe(CelestiaRpcClient.name, () => {
       const mockBlockHeight = '12345'
       const mockTimestamp = '2024-02-07T10:00:00Z'
 
-      const http = mockObject<HttpClient>({
-        fetch: async () => ({
+      const http = {
+        fetch: vi.fn(async () => ({
           result: {
             block: {
               header: {
@@ -85,8 +84,8 @@ describe(CelestiaRpcClient.name, () => {
               },
             },
           },
-        }),
-      })
+        })),
+      } as unknown as HttpClient
       const rpc = mockClient({ http })
 
       const result = await rpc.getBlockWithTransactions('latest')
@@ -109,8 +108,8 @@ describe(CelestiaRpcClient.name, () => {
   describe(CelestiaRpcClient.prototype.getBlockTimestamp.name, () => {
     it('returns block timestamp', async () => {
       const mockTimestamp = '2024-02-06T12:00:00Z'
-      const http = mockObject<HttpClient>({
-        fetch: async () => ({
+      const http = {
+        fetch: vi.fn(async () => ({
           result: {
             block: {
               header: {
@@ -119,8 +118,8 @@ describe(CelestiaRpcClient.name, () => {
               },
             },
           },
-        }),
-      })
+        })),
+      } as unknown as HttpClient
       const rpc = mockClient({ http })
 
       const result = await rpc.getBlockTimestamp(100)
@@ -154,14 +153,14 @@ describe(CelestiaRpcClient.name, () => {
         },
       ]
 
-      const http = mockObject<HttpClient>({
-        fetch: async () => ({
+      const http = {
+        fetch: vi.fn(async () => ({
           result: {
             height: '100',
             txs_results: mockResults,
           },
-        }),
-      })
+        })),
+      } as unknown as HttpClient
       const rpc = mockClient({ http })
 
       const result = await rpc.getBlockResult(100)
@@ -182,9 +181,9 @@ describe(CelestiaRpcClient.name, () => {
 
   describe(CelestiaRpcClient.prototype.query.name, () => {
     it('constructs correct URL with params', async () => {
-      const http = mockObject<HttpClient>({
-        fetch: async () => ({ result: 'success' }),
-      })
+      const http = {
+        fetch: vi.fn(async () => ({ result: 'success' })),
+      } as unknown as HttpClient
       const rpc = mockClient({ http })
 
       const result = await rpc.query('test_method', {
@@ -203,9 +202,9 @@ describe(CelestiaRpcClient.name, () => {
     })
 
     it('passes configured timeout', async () => {
-      const http = mockObject<HttpClient>({
-        fetch: async () => ({ result: 'success' }),
-      })
+      const http = {
+        fetch: vi.fn(async () => ({ result: 'success' })),
+      } as unknown as HttpClient
       const rpc = mockClient({ http, timeout: 30_000 })
 
       await rpc.query('test_method', {})
@@ -233,11 +232,11 @@ describe(CelestiaRpcClient.name, () => {
         total: '1',
       }
 
-      const http = mockObject<HttpClient>({
-        fetch: async () => ({
+      const http = {
+        fetch: vi.fn(async () => ({
           result: mockValidatorsResult,
-        }),
-      })
+        })),
+      } as unknown as HttpClient
       const rpc = mockClient({ http })
 
       const result = await rpc.getValidatorsInfo({ page: 1 })
@@ -267,11 +266,11 @@ describe(CelestiaRpcClient.name, () => {
         total: '50',
       }
 
-      const http = mockObject<HttpClient>({
-        fetch: async () => ({
+      const http = {
+        fetch: vi.fn(async () => ({
           result: mockValidatorsResult,
-        }),
-      })
+        })),
+      } as unknown as HttpClient
       const rpc = mockClient({ http })
 
       const result = await rpc.getValidatorsInfo({
@@ -330,7 +329,7 @@ function mockClient(deps: {
   return new CelestiaRpcClient({
     sourceName: 'celestia',
     url: deps.url ?? 'API_URL/',
-    http: deps.http ?? mockObject<HttpClient>({}),
+    http: deps.http ?? ({} as unknown as HttpClient),
     callsPerMinute: 100_000,
     retryStrategy: 'TEST',
     logger: Logger.SILENT,

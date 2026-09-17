@@ -1,5 +1,4 @@
 import { Bytes, ChainSpecificAddress } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 
 import type { IProvider } from '../../provider/IProvider'
@@ -9,7 +8,7 @@ describe(DynamicArrayHandler.name, () => {
   describe('integration', () => {
     it('can return non-empty address array', async () => {
       const address = ChainSpecificAddress.random()
-      const provider = mockObject<IProvider>({
+      const provider = {
         blockNumber: 123,
         chain: 'foo',
         getStorageAsBigint: vi
@@ -43,7 +42,7 @@ describe(DynamicArrayHandler.name, () => {
               '0x000000000000000000000000bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb',
             )
           }),
-      })
+      } as unknown as IProvider
 
       const handler = new DynamicArrayHandler('someName', {
         type: 'dynamicArray',
@@ -64,7 +63,7 @@ describe(DynamicArrayHandler.name, () => {
 
     it('does nothing on empty address array', async () => {
       const address = ChainSpecificAddress.random()
-      const provider = mockObject<IProvider>({
+      const provider = {
         blockNumber: 123,
         chain: 'foo',
         getStorageAsBigint: vi
@@ -74,7 +73,7 @@ describe(DynamicArrayHandler.name, () => {
             expect(slot).toStrictEqual(85n)
             return 0n
           }),
-      })
+      } as unknown as IProvider
 
       const handler = new DynamicArrayHandler('someName', {
         type: 'dynamicArray',
@@ -117,13 +116,13 @@ describe(DynamicArrayHandler.name, () => {
       slot: 85,
     })
 
-    const provider = mockObject<IProvider>({
+    const provider = {
       blockNumber: 123,
       chain: 'foo',
-      async getStorageAsBigint() {
+      getStorageAsBigint: vi.fn(async () => {
         throw new Error('foo bar')
-      },
-    })
+      }),
+    } as unknown as IProvider
     const address = ChainSpecificAddress.random()
     const result = await handler.execute(provider, address, {})
     expect(result).toStrictEqual({

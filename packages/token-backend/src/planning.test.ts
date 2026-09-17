@@ -5,7 +5,6 @@ import type {
   TokenRelationRecord,
 } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 import { generatePlan, Plan } from './planning'
 
@@ -799,8 +798,8 @@ function mockDb(opts: {
       )
     })
 
-  return mockObject<TokenDatabase>({
-    deployedToken: mockObject<TokenDatabase['deployedToken']>({
+  return {
+    deployedToken: {
       findByChainAndAddress: findDeployed,
       getByAbstractTokenId: vi.fn((id: string) =>
         Promise.resolve(
@@ -809,18 +808,18 @@ function mockDb(opts: {
           ),
         ),
       ),
-    }),
-    abstractToken: mockObject<TokenDatabase['abstractToken']>({
+    } as unknown as TokenDatabase['deployedToken'],
+    abstractToken: {
       findById: vi.fn((id: string) =>
         Promise.resolve(
           (opts.abstractTokens ?? []).find((token) => token.id === id),
         ),
       ),
-    }),
-    tokenRelation: mockObject<TokenDatabase['tokenRelation']>({
+    } as unknown as TokenDatabase['abstractToken'],
+    tokenRelation: {
       findByPrimaryKey: vi.fn().mockResolvedValue(opts.existingRelation),
-    }),
-  })
+    } as unknown as TokenDatabase['tokenRelation'],
+  } as unknown as TokenDatabase
 }
 
 function abstractRecord(

@@ -1,4 +1,3 @@
-import { mockObject } from '@l2beat/test-utils'
 import { v } from '@l2beat/validate'
 import type { Application, Request, Response } from 'express'
 import { describe, expect, it, vi } from 'vitest'
@@ -608,28 +607,28 @@ describe(OpenApi.name, () => {
 
 // Helper functions
 function mockApp() {
-  return mockObject<Application>({
+  return {
     get: vi.fn().mockReturnValue(undefined),
-  })
+  } as unknown as Application
 }
 
 function mockRequest(overrides?: {
   params?: Record<string, string>
   query?: Record<string, string>
 }) {
-  return mockObject<Request>({
+  return {
     params: overrides?.params ?? {},
     query: overrides?.query ?? {},
-  })
+  } as unknown as Request
 }
 
 function mockResponse() {
-  const res = mockObject<Response>({
+  const res = {
     status: vi
       .fn()
-      .mockReturnValue(mockObject<Response>({ json: vi.fn((json) => json) })),
+      .mockReturnValue({ json: vi.fn((json) => json) } as unknown as Response),
     json: vi.fn((json) => json),
-  })
+  } as unknown as Response
   return res
 }
 

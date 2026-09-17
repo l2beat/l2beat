@@ -1,7 +1,6 @@
 import { Bytes, ChainSpecificAddress, Hash256 } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { type providers, utils } from 'ethers'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 
 import type { IProvider } from '../../provider/IProvider'
 import { ArbitrumDACKeysetHandler } from './ArbitrumDACKeysetHandler'
@@ -37,8 +36,8 @@ describe(ArbitrumDACKeysetHandler.name, () => {
 
   it('fetches last event and decodes the values correctly', async () => {
     const address = ChainSpecificAddress.random()
-    const provider = mockObject<IProvider>({
-      async getLogs(providedAddress, topics) {
+    const provider = {
+      getLogs: vi.fn(async (providedAddress, topics) => {
         expect(providedAddress).toStrictEqual(address)
         expect(topics).toStrictEqual([[abi.getEventTopic('SetValidKeyset')]])
         return [
@@ -48,8 +47,8 @@ describe(ArbitrumDACKeysetHandler.name, () => {
           SetValidKeyset(2, 6),
           SetValidKeyset(4, 7),
         ]
-      },
-    })
+      }),
+    } as unknown as IProvider
 
     const handler = new ArbitrumDACKeysetHandler('someName', {
       type: 'arbitrumDACKeyset',
@@ -68,13 +67,13 @@ describe(ArbitrumDACKeysetHandler.name, () => {
 
   it('returns zero for no events found', async () => {
     const address = ChainSpecificAddress.random()
-    const provider = mockObject<IProvider>({
-      async getLogs(providedAddress, topics) {
+    const provider = {
+      getLogs: vi.fn(async (providedAddress, topics) => {
         expect(providedAddress).toStrictEqual(address)
         expect(topics).toStrictEqual([[abi.getEventTopic('SetValidKeyset')]])
         return []
-      },
-    })
+      }),
+    } as unknown as IProvider
 
     const handler = new ArbitrumDACKeysetHandler('someName', {
       type: 'arbitrumDACKeyset',

@@ -1,5 +1,4 @@
 import type { ChainRecord, Database, TokenDatabase } from '@l2beat/database'
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 import type { BlockscoutClient } from '../../../chains/clients/blockscout/BlockscoutClient'
 import type { EtherscanClient } from '../../../chains/clients/etherscan/EtherscanClient'
@@ -12,11 +11,11 @@ import { chainsRouter } from './index'
 describe('chainRouter', () => {
   describe('getAll', () => {
     it('returns empty array when no chains exist', async () => {
-      const mockTokenDb = mockObject<TokenDatabase>({
-        chain: mockObject<TokenDatabase['chain']>({
+      const mockTokenDb = {
+        chain: {
           getAll: vi.fn().mockResolvedValue([]),
-        }),
-      })
+        } as unknown as TokenDatabase['chain'],
+      } as unknown as TokenDatabase
 
       const caller = createRouter(mockTokenDb)
       const result = await caller.getAll()
@@ -42,11 +41,11 @@ describe('chainRouter', () => {
         },
       ]
       const mockGetAll = vi.fn().mockResolvedValue(chains)
-      const mockTokenDb = mockObject<TokenDatabase>({
-        chain: mockObject<TokenDatabase['chain']>({
+      const mockTokenDb = {
+        chain: {
           getAll: mockGetAll,
-        }),
-      })
+        } as unknown as TokenDatabase['chain'],
+      } as unknown as TokenDatabase
 
       const caller = createRouter(mockTokenDb)
       const result = await caller.getAll()
@@ -66,11 +65,11 @@ describe('chainRouter', () => {
         apis: [{ type: 'etherscan' }],
       }
       const mockFindByName = vi.fn().mockResolvedValue(chain)
-      const mockTokenDb = mockObject<TokenDatabase>({
-        chain: mockObject<TokenDatabase['chain']>({
+      const mockTokenDb = {
+        chain: {
           findByName: mockFindByName,
-        }),
-      })
+        } as unknown as TokenDatabase['chain'],
+      } as unknown as TokenDatabase
 
       const caller = createRouter(mockTokenDb)
       const result = await caller.getByName('ethereum')
@@ -81,11 +80,11 @@ describe('chainRouter', () => {
 
     it('returns null when chain does not exist', async () => {
       const mockFindByName = vi.fn().mockResolvedValue(undefined)
-      const mockTokenDb = mockObject<TokenDatabase>({
-        chain: mockObject<TokenDatabase['chain']>({
+      const mockTokenDb = {
+        chain: {
           findByName: mockFindByName,
-        }),
-      })
+        } as unknown as TokenDatabase['chain'],
+      } as unknown as TokenDatabase
 
       const caller = createRouter(mockTokenDb)
       const result = await caller.getByName('nonexistent')
@@ -105,11 +104,11 @@ describe('chainRouter', () => {
         apis: [{ type: 'etherscan' }],
       }
       const mockInsert = vi.fn().mockResolvedValue(undefined)
-      const mockTokenDb = mockObject<TokenDatabase>({
-        chain: mockObject<TokenDatabase['chain']>({
+      const mockTokenDb = {
+        chain: {
           insert: mockInsert,
-        }),
-      })
+        } as unknown as TokenDatabase['chain'],
+      } as unknown as TokenDatabase
 
       const caller = createRouter(mockTokenDb)
       const result = await caller.insert(chain)
@@ -127,11 +126,11 @@ describe('chainRouter', () => {
         apis: null,
       }
       const mockInsert = vi.fn().mockResolvedValue(undefined)
-      const mockTokenDb = mockObject<TokenDatabase>({
-        chain: mockObject<TokenDatabase['chain']>({
+      const mockTokenDb = {
+        chain: {
           insert: mockInsert,
-        }),
-      })
+        } as unknown as TokenDatabase['chain'],
+      } as unknown as TokenDatabase
 
       const caller = createRouter(mockTokenDb)
       const result = await caller.insert(chain)
@@ -154,11 +153,11 @@ describe('chainRouter', () => {
         ],
       }
       const mockInsert = vi.fn().mockResolvedValue(undefined)
-      const mockTokenDb = mockObject<TokenDatabase>({
-        chain: mockObject<TokenDatabase['chain']>({
+      const mockTokenDb = {
+        chain: {
           insert: mockInsert,
-        }),
-      })
+        } as unknown as TokenDatabase['chain'],
+      } as unknown as TokenDatabase
 
       const caller = createRouter(mockTokenDb)
       const result = await caller.insert(chain)
@@ -178,11 +177,11 @@ describe('chainRouter', () => {
         apis: [{ type: 'etherscan' }],
       }
       const mockUpdateByName = vi.fn().mockResolvedValue(1)
-      const mockTokenDb = mockObject<TokenDatabase>({
-        chain: mockObject<TokenDatabase['chain']>({
+      const mockTokenDb = {
+        chain: {
           updateByName: mockUpdateByName,
-        }),
-      })
+        } as unknown as TokenDatabase['chain'],
+      } as unknown as TokenDatabase
 
       const caller = createRouter(mockTokenDb)
       const result = await caller.update({
@@ -200,11 +199,11 @@ describe('chainRouter', () => {
         explorerUrl: 'https://updated-explorer.io',
       }
       const mockUpdateByName = vi.fn().mockResolvedValue(1)
-      const mockTokenDb = mockObject<TokenDatabase>({
-        chain: mockObject<TokenDatabase['chain']>({
+      const mockTokenDb = {
+        chain: {
           updateByName: mockUpdateByName,
-        }),
-      })
+        } as unknown as TokenDatabase['chain'],
+      } as unknown as TokenDatabase
 
       const caller = createRouter(mockTokenDb)
       const result = await caller.update({
@@ -224,11 +223,11 @@ describe('chainRouter', () => {
         apis: null,
       }
       const mockUpdateByName = vi.fn().mockResolvedValue(1)
-      const mockTokenDb = mockObject<TokenDatabase>({
-        chain: mockObject<TokenDatabase['chain']>({
+      const mockTokenDb = {
+        chain: {
           updateByName: mockUpdateByName,
-        }),
-      })
+        } as unknown as TokenDatabase['chain'],
+      } as unknown as TokenDatabase
 
       const caller = createRouter(mockTokenDb)
       const result = await caller.update({
@@ -244,11 +243,11 @@ describe('chainRouter', () => {
   describe('delete', () => {
     it('deletes an existing chain', async () => {
       const mockDeleteByName = vi.fn().mockResolvedValue(1)
-      const mockTokenDb = mockObject<TokenDatabase>({
-        chain: mockObject<TokenDatabase['chain']>({
+      const mockTokenDb = {
+        chain: {
           deleteByName: mockDeleteByName,
-        }),
-      })
+        } as unknown as TokenDatabase['chain'],
+      } as unknown as TokenDatabase
 
       const caller = createRouter(mockTokenDb)
       const result = await caller.delete({ name: 'ethereum' })
@@ -261,13 +260,13 @@ describe('chainRouter', () => {
   describe('testApi', () => {
     describe('rpc', () => {
       it('returns success when RPC API is working', async () => {
-        const mockRpcClient = mockObject<RpcClient>({
+        const mockRpcClient = {
           test: vi.fn().mockResolvedValue({ success: true }),
-        })
+        } as unknown as RpcClient
 
-        const mockTokenDb = mockObject<TokenDatabase>({
-          chain: mockObject<TokenDatabase['chain']>({}),
-        })
+        const mockTokenDb = {
+          chain: {} as unknown as TokenDatabase['chain'],
+        } as unknown as TokenDatabase
 
         const caller = createRouter(mockTokenDb, {
           createRpcClient: () => mockRpcClient,
@@ -282,16 +281,16 @@ describe('chainRouter', () => {
       })
 
       it('returns failure when RPC API returns error', async () => {
-        const mockRpcClient = mockObject<RpcClient>({
+        const mockRpcClient = {
           test: vi.fn().mockResolvedValue({
             success: false,
             error: 'Error message',
           }),
-        })
+        } as unknown as RpcClient
 
-        const mockTokenDb = mockObject<TokenDatabase>({
-          chain: mockObject<TokenDatabase['chain']>({}),
-        })
+        const mockTokenDb = {
+          chain: {} as unknown as TokenDatabase['chain'],
+        } as unknown as TokenDatabase
 
         const caller = createRouter(mockTokenDb, {
           createRpcClient: () => mockRpcClient,
@@ -307,13 +306,13 @@ describe('chainRouter', () => {
 
     describe('blockscout', () => {
       it('returns success when Blockscout API is working', async () => {
-        const mockBlockscoutClient = mockObject<BlockscoutClient>({
+        const mockBlockscoutClient = {
           test: vi.fn().mockResolvedValue({ success: true }),
-        })
+        } as unknown as BlockscoutClient
 
-        const mockTokenDb = mockObject<TokenDatabase>({
-          chain: mockObject<TokenDatabase['chain']>({}),
-        })
+        const mockTokenDb = {
+          chain: {} as unknown as TokenDatabase['chain'],
+        } as unknown as TokenDatabase
 
         const caller = createRouter(mockTokenDb, {
           createBlockscoutClient: () => mockBlockscoutClient,
@@ -328,16 +327,16 @@ describe('chainRouter', () => {
       })
 
       it('returns failure when Blockscout API returns error', async () => {
-        const mockBlockscoutClient = mockObject<BlockscoutClient>({
+        const mockBlockscoutClient = {
           test: vi.fn().mockResolvedValue({
             success: false,
             error: 'Error message',
           }),
-        })
+        } as unknown as BlockscoutClient
 
-        const mockTokenDb = mockObject<TokenDatabase>({
-          chain: mockObject<TokenDatabase['chain']>({}),
-        })
+        const mockTokenDb = {
+          chain: {} as unknown as TokenDatabase['chain'],
+        } as unknown as TokenDatabase
 
         const caller = createRouter(mockTokenDb, {
           createBlockscoutClient: () => mockBlockscoutClient,
@@ -353,13 +352,13 @@ describe('chainRouter', () => {
 
     describe('etherscan', () => {
       it('returns success when Etherscan API is working', async () => {
-        const mockEtherscanClient = mockObject<EtherscanClient>({
+        const mockEtherscanClient = {
           test: vi.fn().mockResolvedValue({ success: true }),
-        })
+        } as unknown as EtherscanClient
 
-        const mockTokenDb = mockObject<TokenDatabase>({
-          chain: mockObject<TokenDatabase['chain']>({}),
-        })
+        const mockTokenDb = {
+          chain: {} as unknown as TokenDatabase['chain'],
+        } as unknown as TokenDatabase
 
         const caller = createRouterWithEtherscanKey(
           mockTokenDb,
@@ -378,9 +377,9 @@ describe('chainRouter', () => {
       })
 
       it('returns failure when API key is not configured', async () => {
-        const mockTokenDb = mockObject<TokenDatabase>({
-          chain: mockObject<TokenDatabase['chain']>({}),
-        })
+        const mockTokenDb = {
+          chain: {} as unknown as TokenDatabase['chain'],
+        } as unknown as TokenDatabase
 
         const caller = createRouter(mockTokenDb)
         const result = await caller.testApi({
@@ -395,16 +394,16 @@ describe('chainRouter', () => {
       })
 
       it('returns failure when Etherscan API returns error', async () => {
-        const mockEtherscanClient = mockObject<EtherscanClient>({
+        const mockEtherscanClient = {
           test: vi.fn().mockResolvedValue({
             success: false,
             error: 'Error message',
           }),
-        })
+        } as unknown as EtherscanClient
 
-        const mockTokenDb = mockObject<TokenDatabase>({
-          chain: mockObject<TokenDatabase['chain']>({}),
-        })
+        const mockTokenDb = {
+          chain: {} as unknown as TokenDatabase['chain'],
+        } as unknown as TokenDatabase
 
         const caller = createRouterWithEtherscanKey(
           mockTokenDb,
@@ -448,8 +447,8 @@ function createRouter(
       permissions: ['read', 'write'],
     },
     tokenDb: mockTokenDb,
-    db: mockObject<Database>({}),
-    tokenIngestionProcessor: mockObject<TokenIngestionProcessor>({}),
+    db: {} as unknown as Database,
+    tokenIngestionProcessor: {} as unknown as TokenIngestionProcessor,
   })
 }
 
@@ -478,7 +477,7 @@ function createRouterWithEtherscanKey(
       permissions: ['read', 'write'],
     },
     tokenDb: mockTokenDb,
-    db: mockObject<Database>({}),
-    tokenIngestionProcessor: mockObject<TokenIngestionProcessor>({}),
+    db: {} as unknown as Database,
+    tokenIngestionProcessor: {} as unknown as TokenIngestionProcessor,
   })
 }

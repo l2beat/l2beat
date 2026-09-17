@@ -1,17 +1,16 @@
-import { type MockObject, mockObject } from '@l2beat/test-utils'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { OverwriteCacheWrapper } from './OverwriteCacheWrapper'
 import type { DiscoveryCache } from './provider/DiscoveryCache'
 
 describe('OverwriteCacheWrapper', () => {
-  let cacheMock: MockObject<DiscoveryCache>
+  let cacheMock: DiscoveryCache
   let wrapper: OverwriteCacheWrapper
 
   beforeEach(() => {
-    cacheMock = mockObject<DiscoveryCache>({
+    cacheMock = {
       set: vi.fn().mockResolvedValue(undefined),
       get: vi.fn().mockResolvedValue('some value'),
-    })
+    } as unknown as DiscoveryCache
     wrapper = new OverwriteCacheWrapper(cacheMock)
   })
 
@@ -42,7 +41,7 @@ describe('OverwriteCacheWrapper', () => {
       const value = 'testValue'
       const error = new Error('Cache set failed')
 
-      cacheMock.set.mockRejectedValueOnce(error)
+      vi.mocked(cacheMock.set).mockRejectedValueOnce(error)
 
       await expect(wrapper.set(key, value)).rejects.toThrow('Cache set failed')
     })

@@ -1,4 +1,3 @@
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it } from 'vitest'
 import type { Field } from '../../store/State'
 import { buildFieldTree } from './buildFieldTree'
@@ -151,10 +150,10 @@ describe(buildFieldTree.name, () => {
 })
 
 function field(f: Partial<Field>): Field {
-  return mockObject<Field>({
+  return {
     target: '0x0',
     name: 'change_me',
     label: undefined,
     ...f,
-  })
+  } as unknown as Field
 }

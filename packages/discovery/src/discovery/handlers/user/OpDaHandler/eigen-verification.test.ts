@@ -1,5 +1,4 @@
 import { EthereumAddress, Hash256 } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import type { providers } from 'ethers'
 import { describe, expect, it } from 'vitest'
 import type { Transaction } from '../../../../utils/IEtherscanClient'
@@ -120,11 +119,11 @@ describe(checkForEigenDA.name, () => {
 })
 
 function getProvider(options?: Partial<IProvider>): IProvider {
-  return mockObject<IProvider & { then: undefined }>({
+  return {
     chain: 'ethereum',
     blockNumber: 1,
     // no clue
     then: undefined,
     ...options,
-  })
+  } as unknown as IProvider & { then: undefined }
 }

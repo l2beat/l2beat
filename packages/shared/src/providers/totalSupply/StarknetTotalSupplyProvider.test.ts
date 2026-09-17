@@ -1,5 +1,4 @@
 import { Logger } from '@l2beat/backend-tools'
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 import type { StarknetClient } from '../../clients'
 import {
@@ -14,17 +13,17 @@ describe(StarknetTotalSupplyProvider.name, () => {
 
   describe(StarknetTotalSupplyProvider.prototype.getTotalSupplies.name, () => {
     it('performs call for each address', async () => {
-      const client = mockObject<StarknetClient>({
+      const client = {
         call: vi
           .fn()
           .mockResolvedValueOnce(['0x1'])
           .mockResolvedValueOnce(['0x2'])
           .mockResolvedValueOnce(['0x0']),
         chain: CHAIN,
-      })
+      } as unknown as StarknetClient
 
       const totalSupplyProvider = new StarknetTotalSupplyProvider(
-        [client, mockObject<StarknetClient>({ chain: 'random' })],
+        [client, { chain: 'random' } as unknown as StarknetClient],
         Logger.SILENT,
       )
 
@@ -65,14 +64,14 @@ describe(StarknetTotalSupplyProvider.name, () => {
     })
 
     it('throws if any call fails', async () => {
-      const client = mockObject<StarknetClient>({
+      const client = {
         call: vi
           .fn()
           .mockResolvedValueOnce(['0x1'])
           .mockResolvedValueOnce(['0x2'])
           .mockRejectedValueOnce(new Error('RPC failure')),
         chain: CHAIN,
-      })
+      } as unknown as StarknetClient
 
       const totalSupplyProvider = new StarknetTotalSupplyProvider(
         [client],
@@ -86,7 +85,7 @@ describe(StarknetTotalSupplyProvider.name, () => {
 
     it('throws error if no client for chain', async () => {
       const totalSupplyProvider = new StarknetTotalSupplyProvider(
-        [mockObject<StarknetClient>({ chain: 'other-chain' })],
+        [{ chain: 'other-chain' } as unknown as StarknetClient],
         Logger.SILENT,
       )
 

@@ -1,5 +1,4 @@
 import { Logger } from '@l2beat/backend-tools'
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 import type { HttpClient } from '../http/HttpClient'
 import { AztecRpcClient } from './AztecRpcClient'
@@ -7,9 +6,9 @@ import { AztecRpcClient } from './AztecRpcClient'
 describe(AztecRpcClient.name, () => {
   describe(AztecRpcClient.prototype.getLatestBlockNumber.name, () => {
     it('returns the latest block number', async () => {
-      const http = mockObject<HttpClient>({
+      const http = {
         fetch: vi.fn().mockResolvedValueOnce({ result: 123 }),
-      })
+      } as unknown as HttpClient
       const client = mockClient({ http })
 
       const result = await client.getLatestBlockNumber()
@@ -32,7 +31,7 @@ describe(AztecRpcClient.name, () => {
 
   describe(AztecRpcClient.prototype.getBlocks.name, () => {
     it('returns block timestamps and transaction effect counts', async () => {
-      const http = mockObject<HttpClient>({
+      const http = {
         fetch: vi.fn().mockResolvedValueOnce({
           result: [
             {
@@ -42,7 +41,7 @@ describe(AztecRpcClient.name, () => {
             },
           ],
         }),
-      })
+      } as unknown as HttpClient
       const client = mockClient({ http })
 
       const result = await client.getBlocks(100, 1)
@@ -53,9 +52,9 @@ describe(AztecRpcClient.name, () => {
     })
 
     it('requests blocks with transaction effects included', async () => {
-      const http = mockObject<HttpClient>({
+      const http = {
         fetch: vi.fn().mockResolvedValueOnce({ result: [] }),
-      })
+      } as unknown as HttpClient
       const client = mockClient({ http })
 
       await client.getBlocks(100, 50)
@@ -77,7 +76,7 @@ describe(AztecRpcClient.name, () => {
 
   describe(AztecRpcClient.prototype.getBlockHeaders.name, () => {
     it('returns block headers without transaction effects', async () => {
-      const http = mockObject<HttpClient>({
+      const http = {
         fetch: vi.fn().mockResolvedValueOnce({
           result: [
             {
@@ -86,7 +85,7 @@ describe(AztecRpcClient.name, () => {
             },
           ],
         }),
-      })
+      } as unknown as HttpClient
       const client = mockClient({ http })
 
       const result = await client.getBlockHeaders(100, 1)
@@ -124,7 +123,7 @@ function mockClient(deps: { http?: HttpClient }) {
   return new AztecRpcClient({
     sourceName: 'aztecnetwork',
     url: 'RPC_URL',
-    http: deps.http ?? mockObject<HttpClient>({}),
+    http: deps.http ?? ({} as unknown as HttpClient),
     callsPerMinute: 100_000,
     retryStrategy: 'TEST',
     logger: Logger.SILENT,

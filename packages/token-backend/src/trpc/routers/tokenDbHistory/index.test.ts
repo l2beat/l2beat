@@ -4,7 +4,6 @@ import type {
   TokenDbHistoryEntryRecord,
 } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 import type { TokenIngestionProcessor } from '../../../ingestion/TokenIngestionProcessor'
 import { createCallerFactory } from '../../trpc'
@@ -27,13 +26,13 @@ describe('tokenDbHistoryRouter', () => {
       const getPage = vi.fn().mockResolvedValue(page)
 
       const caller = createCallerFactory(tokenDbHistoryRouter)({
-        db: mockObject<Database>({}),
-        tokenDb: mockObject<TokenDatabase>({
-          tokenDbHistory: mockObject<TokenDatabase['tokenDbHistory']>({
+        db: {} as unknown as Database,
+        tokenDb: {
+          tokenDbHistory: {
             getPage,
-          }),
-        }),
-        tokenIngestionProcessor: mockObject<TokenIngestionProcessor>({}),
+          } as unknown as TokenDatabase['tokenDbHistory'],
+        } as unknown as TokenDatabase,
+        tokenIngestionProcessor: {} as unknown as TokenIngestionProcessor,
         headers: new Headers(),
         session: {
           email: 'dev@l2beat.com',

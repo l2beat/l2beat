@@ -1,7 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 import type { Block } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import type { HttpClient } from '../http/HttpClient'
 import { FuelClient } from './FuelClient'
 import { tai64ToUnix } from './tai64ToUnix'
@@ -28,9 +27,11 @@ describe(FuelClient.name, () => {
         ],
       }
 
-      const http = mockObject<HttpClient>({
-        fetch: async () => mockFuelBlockResponse(mockFuelBlock, mockTia64time),
-      })
+      const http = {
+        fetch: vi.fn(async () =>
+          mockFuelBlockResponse(mockFuelBlock, mockTia64time),
+        ),
+      } as unknown as HttpClient
 
       const client = mockClient({ http })
 
@@ -42,9 +43,9 @@ describe(FuelClient.name, () => {
 
   describe(FuelClient.prototype.getLatestBlockNumber.name, () => {
     it('returns number of the block', async () => {
-      const http = mockObject<HttpClient>({
-        fetch: async () => mockFuelLatestBlockNumberResponse(100),
-      })
+      const http = {
+        fetch: vi.fn(async () => mockFuelLatestBlockNumberResponse(100)),
+      } as unknown as HttpClient
       const client = mockClient({ http })
 
       const result = await client.getLatestBlockNumber()
@@ -55,9 +56,9 @@ describe(FuelClient.name, () => {
 
   describe(FuelClient.prototype.query.name, () => {
     it('calls http client with correct params and returns data', async () => {
-      const http = mockObject<HttpClient>({
-        fetch: async () => 'data-returned-from-api',
-      })
+      const http = {
+        fetch: vi.fn(async () => 'data-returned-from-api'),
+      } as unknown as HttpClient
 
       const client = mockClient({ http })
 
@@ -115,7 +116,7 @@ function mockClient(deps: {
 }) {
   return new FuelClient({
     url: deps.url ?? 'API_URL',
-    http: deps.http ?? mockObject<HttpClient>({}),
+    http: deps.http ?? ({} as unknown as HttpClient),
     callsPerMinute: 100_000,
     retryStrategy: 'TEST',
     logger: Logger.SILENT,

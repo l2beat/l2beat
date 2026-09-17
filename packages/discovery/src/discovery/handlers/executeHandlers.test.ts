@@ -1,6 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
 import { Bytes, ChainSpecificAddress } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 import type { IProvider } from '../provider/IProvider'
 import { executeHandlers } from './executeHandlers'
@@ -13,15 +12,15 @@ import { toFunctionFragment } from './utils/toFunctionFragment'
 
 describe(executeHandlers.name, () => {
   function providerWithStorage(layout: Record<string, number>) {
-    return mockObject<IProvider>({
-      async getStorage(_, slot) {
+    return {
+      getStorage: vi.fn(async (_, slot) => {
         const number = Number(BigInt(slot.toString()))
         const value = layout[number]
         return Bytes.fromHex(value!.toString(16).padStart(64, '0'))
-      },
+      }),
       blockNumber: 123,
       chain: 'foo',
-    })
+    } as unknown as IProvider
   }
 
   it('simple case with no dependencies', async () => {
@@ -152,7 +151,7 @@ describe(executeHandlers.name, () => {
   })
 
   it('unresolvable self', async () => {
-    const provider = mockObject<IProvider>()
+    const provider = {} as unknown as IProvider
     const promise = executeHandlers(
       provider,
       [new StorageHandler('a', { type: 'storage', slot: '{{ a }}' })],
@@ -162,7 +161,7 @@ describe(executeHandlers.name, () => {
   })
 
   it('unresolvable unknown', async () => {
-    const provider = mockObject<IProvider>()
+    const provider = {} as unknown as IProvider
     const promise = executeHandlers(
       provider,
       [new StorageHandler('a', { type: 'storage', slot: '{{ foo }}' })],
@@ -172,7 +171,7 @@ describe(executeHandlers.name, () => {
   })
 
   it('unresolvable cycle', async () => {
-    const provider = mockObject<IProvider>()
+    const provider = {} as unknown as IProvider
     const promise = executeHandlers(
       provider,
       [
@@ -194,7 +193,7 @@ describe(executeHandlers.name, () => {
       }
     }
 
-    const provider = mockObject<IProvider>()
+    const provider = {} as unknown as IProvider
     const values = await executeHandlers(
       provider,
       [new FunkyHandler()],
@@ -207,12 +206,12 @@ describe(executeHandlers.name, () => {
     const ADDRESS = ChainSpecificAddress.random()
     const method = 'function foo() external view returns (uint256)'
     const fragment = toFunctionFragment(method)
-    const provider = mockObject<IProvider>({
+    const provider = {
       getStorage: vi.fn().mockReturnValueOnce(123),
       callMethod: vi.fn().mockReturnValue(0x12345678),
       blockNumber: 123,
       chain: 'foo',
-    })
+    } as unknown as IProvider
     const values = await executeHandlers(
       provider,
       [
@@ -236,11 +235,11 @@ describe(executeHandlers.name, () => {
     const ADDRESS = ChainSpecificAddress.random()
     const method = 'function foo() external view returns (uint256)'
     const fragment = toFunctionFragment(method)
-    const provider = mockObject<IProvider>({
+    const provider = {
       callMethod: vi.fn().mockReturnValueOnce(3).mockReturnValue(0x12345678),
       blockNumber: 123,
       chain: 'foo',
-    })
+    } as unknown as IProvider
     const arrayMethod = 'function bar(uint256) external view returns (uint256)'
     const arrayFragment = getArrayFragment(toFunctionFragment(arrayMethod))
     const values = await executeHandlers(
@@ -276,24 +275,24 @@ describe(executeHandlers.name, () => {
     const REGISTRY = ChainSpecificAddress.random()
     const method = 'function owner() view returns (address)'
     const fragment = toFunctionFragment(method)
-    const provider = mockObject<IProvider>({
+    const provider = {
       blockNumber: 123,
       chain: 'foo',
-      async callMethod<T>(passedAddress: ChainSpecificAddress) {
+      callMethod: vi.fn(async <T>(passedAddress: ChainSpecificAddress) => {
         expect(passedAddress).toStrictEqual(REGISTRY)
         return ADDRESS.toString() as T
-      },
-    })
-    const constructorArgs = mockObject<Handler>({
+      }),
+    } as unknown as IProvider
+    const constructorArgs = {
       field: 'constructorArgs',
       dependencies: [],
-      async execute(): Promise<HandlerResult> {
+      execute: vi.fn(async (): Promise<HandlerResult> => {
         return {
           field: 'constructorArgs',
           value: { _addressesRegistry: REGISTRY.toString() },
         }
-      },
-    })
+      }),
+    } as unknown as Handler
 
     const values = await executeHandlers(
       provider,

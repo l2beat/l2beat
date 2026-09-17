@@ -1,6 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
-import { mockObject } from '@l2beat/test-utils'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import type { HttpClient } from '../http/HttpClient'
 import { EspressoClient } from './EspressoClient'
 
@@ -22,9 +21,9 @@ describe(EspressoClient.name, () => {
         ],
       }
 
-      const http = mockObject<HttpClient>({
-        fetch: async () => mockResponse,
-      })
+      const http = {
+        fetch: vi.fn(async () => mockResponse),
+      } as unknown as HttpClient
       const apiUrl = 'https://example.com'
       const client = mockClient({ http, apiUrl })
 
@@ -41,11 +40,11 @@ describe(EspressoClient.name, () => {
     })
 
     it('throws error on invalid response', async () => {
-      const http = mockObject<HttpClient>({
-        fetch: async () => ({
+      const http = {
+        fetch: vi.fn(async () => ({
           invalid: 'response',
-        }),
-      })
+        })),
+      } as unknown as HttpClient
       const client = mockClient({ http })
 
       await expect(client.getStakeTable()).rejects.toThrow()
@@ -85,7 +84,7 @@ function mockClient(deps: {
   return new EspressoClient({
     sourceName: 'espresso',
     apiUrl: deps.apiUrl ?? 'API_URL',
-    http: deps.http ?? mockObject<HttpClient>({}),
+    http: deps.http ?? ({} as unknown as HttpClient),
     callsPerMinute: 100_000,
     retryStrategy: 'TEST',
     logger: Logger.SILENT,
