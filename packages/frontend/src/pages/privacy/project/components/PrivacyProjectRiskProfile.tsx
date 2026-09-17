@@ -14,19 +14,24 @@ import {
   type TrustedSetupRisk,
   TrustedSetupRiskDot,
 } from '~/pages/zk-catalog/v2/components/TrustedSetupRiskDot'
+import type { PrivacyAdversariesSummary } from '~/server/features/privacy/types'
 import type { PrivacyTrustedSetupSummary } from '~/server/features/privacy/utils/getPrivacyTrustedSetup'
 import { cn } from '~/utils/cn'
+import { PrivacyAdversaryDots } from '../../adversaries/PrivacyAdversaryDots'
 import {
   PrivacyWalkawayTestIcon,
   PrivacyWalkawayTestTooltipContent,
 } from '../../PrivacyWalkawayTestIcon'
 import { PRIVACY_ASSESSMENT } from '../../privacyAssessment'
 import { sentimentToRiskDot } from '../../sentimentToRiskDot'
+import { DotWithLabel } from '../../summary/components/DotWithLabel'
 
 interface Props {
   trustedSetup: PrivacyTrustedSetupSummary
   exitWindow: PrivacyExitWindow
-  privacy: PrivacySummaryValue
+  adversaries: PrivacyAdversariesSummary
+  /** This project's page, which the adversary dots link into. */
+  href: string
   reproducibility: PrivacySummaryValue
   className?: string
 }
@@ -34,7 +39,8 @@ interface Props {
 export function PrivacyProjectRiskProfile({
   trustedSetup,
   exitWindow,
-  privacy,
+  adversaries,
+  href,
   reproducibility,
   className,
 }: Props) {
@@ -60,9 +66,16 @@ export function PrivacyProjectRiskProfile({
         title={PRIVACY_ASSESSMENT.title}
         tooltip={PRIVACY_ASSESSMENT.tooltip}
         value={
-          <RiskValue
-            value={privacy}
-            risk={sentimentToRiskDot(privacy.sentiment)}
+          <DotWithLabel
+            dot={
+              <PrivacyAdversaryDots
+                adversaries={adversaries}
+                size="md"
+                href={href}
+              />
+            }
+            label={adversaries.promiseLabel}
+            className="items-end md:items-start"
           />
         }
       />
