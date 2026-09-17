@@ -35,15 +35,7 @@ export async function getTokensForProject(
     .map((t) => {
       const tokenValue = tokenValuesMap.get(t.id)
       if (!tokenValue) return undefined
-      return {
-        id: t.id,
-        name: t.name,
-        symbol: t.symbol,
-        source: t.source,
-        category: t.category,
-        value: tokenValue.valueForProject,
-        iconUrl: t.iconUrl ?? TOKEN_PLACEHOLDER_ICON_URL,
-      }
+      return toProjectToken(t, tokenValue.valueForProject)
     })
     .filter(notUndefined)
 
@@ -52,11 +44,21 @@ export async function getTokensForProject(
   return projectTokens
 }
 
+// Picks only the fields the page renders. Spreading the config token would
+// also serialize its amount formula, which for some tokens is >100 KB.
+function toProjectToken(t: TvsToken, value: number): ProjectToken {
+  return {
+    id: t.id,
+    name: t.name,
+    symbol: t.symbol,
+    source: t.source,
+    category: t.category,
+    value,
+    iconUrl: t.iconUrl ?? TOKEN_PLACEHOLDER_ICON_URL,
+  }
+}
+
 function getMockTokensForProject(project: Project<never, 'tvsConfig'>) {
   if (!project.tvsConfig) return undefined
-  return project.tvsConfig.map((t) => ({
-    ...t,
-    iconUrl: t.iconUrl ?? TOKEN_PLACEHOLDER_ICON_URL,
-    value: 1000,
-  }))
+  return project.tvsConfig.map((t) => toProjectToken(t, 1000))
 }
