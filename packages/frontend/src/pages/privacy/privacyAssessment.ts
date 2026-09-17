@@ -1,6 +1,5 @@
-import { PRIVACY_ADVERSARIES_TOOLTIP } from './adversaries/privacyAdversaryUi'
-
 export const PRIVACY_ASSESSMENT = {
-  title: 'Privacy against',
-  tooltip: `${PRIVACY_ADVERSARIES_TOOLTIP} Hover a dot for more info.`,
+  title: 'Privacy',
+  tooltip:
+    'What is private and what are the trust assumptions? How is compliance facilitated?',
 } as const

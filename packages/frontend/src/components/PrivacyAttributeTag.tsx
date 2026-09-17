@@ -11,8 +11,6 @@ const ATTRIBUTE_CLASS_NAMES: Record<string, string> = {
   fixedAmounts: 'text-[#452576] bg-[#D8CEFF] border-[#9B86E6]',
   privateAmounts: 'text-[#0F3F3A] bg-[#BFEFE5] border-[#45B8A7]',
   tee: 'text-[#5C3200] bg-[#FFC46B] border-[#D97E00]',
-  stealthAddresses: 'text-[#1F3A5F] bg-[#BFD9FF] border-[#5B8FD9]',
-  bridged: 'text-[#4A2A0A] bg-[#F2D2B0] border-[#C2823B]',
 }
 
 export function PrivacyAttributeTag({

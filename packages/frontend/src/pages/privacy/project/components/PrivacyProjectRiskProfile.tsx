@@ -14,10 +14,8 @@ import {
   type TrustedSetupRisk,
   TrustedSetupRiskDot,
 } from '~/pages/zk-catalog/v2/components/TrustedSetupRiskDot'
-import type { PrivacyAdversariesSummary } from '~/server/features/privacy/types'
 import type { PrivacyTrustedSetupSummary } from '~/server/features/privacy/utils/getPrivacyTrustedSetup'
 import { cn } from '~/utils/cn'
-import { PrivacyAdversaryDots } from '../../adversaries/PrivacyAdversaryDots'
 import {
   PrivacyWalkawayTestIcon,
   PrivacyWalkawayTestTooltipContent,
@@ -28,7 +26,7 @@ import { sentimentToRiskDot } from '../../sentimentToRiskDot'
 interface Props {
   trustedSetup: PrivacyTrustedSetupSummary
   exitWindow: PrivacyExitWindow
-  adversaries: PrivacyAdversariesSummary
+  privacy: PrivacySummaryValue
   reproducibility: PrivacySummaryValue
   className?: string
 }
@@ -36,7 +34,7 @@ interface Props {
 export function PrivacyProjectRiskProfile({
   trustedSetup,
   exitWindow,
-  adversaries,
+  privacy,
   reproducibility,
   className,
 }: Props) {
@@ -62,7 +60,10 @@ export function PrivacyProjectRiskProfile({
         title={PRIVACY_ASSESSMENT.title}
         tooltip={PRIVACY_ASSESSMENT.tooltip}
         value={
-          <PrivacyAdversaryDots adversaries={adversaries} size="md" href="" />
+          <RiskValue
+            value={privacy}
+            risk={sentimentToRiskDot(privacy.sentiment)}
+          />
         }
       />
       <ProjectSummaryStat

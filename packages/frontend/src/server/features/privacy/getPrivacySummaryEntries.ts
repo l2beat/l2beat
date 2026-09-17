@@ -9,11 +9,7 @@ import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { manifest } from '~/utils/Manifest'
 import { get7dTvsBreakdown } from '../layer2s/tvs/get7dTvsBreakdown'
-import {
-  type PrivacyAdversariesSummary,
-  type PrivacyProject,
-  toPrivacyAdversariesSummary,
-} from './types'
+import type { PrivacyProject } from './types'
 import {
   getPrivacyTrustedSetup,
   type PrivacyTrustedSetup,
@@ -39,7 +35,7 @@ export interface PrivacySummaryEntry {
   trustedSetup: PrivacyTrustedSetup
   exitWindow: PrivacyExitWindow
   reproducibility: PrivacySummaryValue
-  adversaries: PrivacyAdversariesSummary
+  privacy: PrivacySummaryValue
   attributes: PrivacyAttribute[]
   quantumResistant?: boolean
 }
@@ -160,7 +156,7 @@ function getPrivacySummaryBaseEntry(
     trustedSetup: getPrivacyTrustedSetup(project.trustedSetups),
     exitWindow: project.privacyInfo.exitWindow,
     reproducibility: project.privacyInfo.reproducibility,
-    adversaries: toPrivacyAdversariesSummary(project.privacyInfo.adversaries),
+    privacy: project.privacyInfo.privacy,
     attributes: project.privacyInfo.attributes ?? [],
     quantumResistant: project.privacyInfo.quantumResistant,
   }

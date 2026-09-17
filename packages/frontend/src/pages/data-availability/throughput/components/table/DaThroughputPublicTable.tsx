@@ -20,7 +20,7 @@ export function DaThroughputPublicTable({ items }: Props) {
     [items, includeL2Only],
   )
 
-  const table = useTable({
+  const table = useTable('DaThroughputPublicTable', {
     columns: publicSystemsColumns,
     data: tableEntries,
     initialState: {
