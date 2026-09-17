@@ -1260,10 +1260,6 @@ importers:
         version: link:../vitest-config
 
   packages/test-utils:
-    dependencies:
-      dotenv:
-        specifier: ^16.3.1
-        version: 16.4.5
     devDependencies:
       '@l2beat/typescript-config':
         specifier: workspace:*

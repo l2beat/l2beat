@@ -1,4 +1,4 @@
-import { postgresHarness } from '@l2beat/test-utils/postgres'
+import { postgresHarness } from './postgresHarness'
 
 /**
  * The Postgres the database suites run against. `database_test` keeps this

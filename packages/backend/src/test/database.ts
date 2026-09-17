@@ -26,7 +26,7 @@ export function describeDatabase(name: string, suite: (db: Database) => void) {
   })
 }
 
-export function mockDatabase(overrides: Partial<Database> = {}) {
+export function mockDatabase(overrides: Partial<Database> = {}): Database {
   return mockObject<Database>({
     transaction: async (fun) => {
       return await fun()
