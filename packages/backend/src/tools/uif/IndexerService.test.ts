@@ -169,22 +169,25 @@ describe(IndexerService.name, () => {
 
     const result = await indexerService.getSavedConfigurations('indexer')
 
-    expect(result).toEqualUnsorted([
-      {
-        id: 'a',
-        currentHeight: null,
-        minHeight: 0,
-        maxHeight: null,
-        properties: JSON.stringify({ a: 1 }),
-      },
-      {
-        id: 'b',
-        currentHeight: null,
-        minHeight: 0,
-        maxHeight: null,
-        properties: JSON.stringify({ b: 1 }),
-      },
-    ])
+    expect(result).toHaveLength(2)
+    expect(result).toStrictEqual(
+      expect.arrayContaining([
+        {
+          id: 'a',
+          currentHeight: null,
+          minHeight: 0,
+          maxHeight: null,
+          properties: JSON.stringify({ a: 1 }),
+        },
+        {
+          id: 'b',
+          currentHeight: null,
+          minHeight: 0,
+          maxHeight: null,
+          properties: JSON.stringify({ b: 1 }),
+        },
+      ]),
+    )
   })
 
   it(

@@ -2019,18 +2019,21 @@ describe('deployedTokensRouter', () => {
       const caller = createRouter(mockTokenDb, mockDb, mockCoingeckoClient)
       const result = await caller.getSuggestionsByCoingeckoId('usd-coin')
 
-      expect(result).toEqualUnsorted([
-        {
-          chain: 'arbitrum',
-          address: '0xaf88d065e77c8cc2239327c5edb3a432268e5831',
-          isInterop: true,
-        },
-        {
-          chain: 'optimism',
-          address: '0x0b2c639c533813f4aa9d7837caf62653d097ff85',
-          isInterop: true,
-        },
-      ])
+      expect(result).toHaveLength(2)
+      expect(result).toStrictEqual(
+        expect.arrayContaining([
+          {
+            chain: 'arbitrum',
+            address: '0xaf88d065e77c8cc2239327c5edb3a432268e5831',
+            isInterop: true,
+          },
+          {
+            chain: 'optimism',
+            address: '0x0b2c639c533813f4aa9d7837caf62653d097ff85',
+            isInterop: true,
+          },
+        ]),
+      )
     })
 
     it('returns empty array when all platforms already have deployed tokens', async () => {

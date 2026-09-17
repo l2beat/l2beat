@@ -457,11 +457,14 @@ describeTokenDatabase(DeployedTokenRepository.name, (db) => {
           },
         ])
 
-        expect(result).toEqualUnsorted([
-          deployedToken1,
-          deployedToken2,
-          deployedToken3,
-        ])
+        expect(result).toHaveLength(3)
+        expect(result).toStrictEqual(
+          expect.arrayContaining([
+            deployedToken1,
+            deployedToken2,
+            deployedToken3,
+          ]),
+        )
       })
 
       it('returns empty array when no deployed tokens match', async () => {
@@ -565,10 +568,13 @@ describeTokenDatabase(DeployedTokenRepository.name, (db) => {
           { chain: 'arbitrum', address: address2 },
         ])
 
-        expect(result).toEqualUnsorted([
-          { ...record1, address: record1.address.toLowerCase() },
-          record2,
-        ])
+        expect(result).toHaveLength(2)
+        expect(result).toStrictEqual(
+          expect.arrayContaining([
+            { ...record1, address: record1.address.toLowerCase() },
+            record2,
+          ]),
+        )
       })
     },
   )

@@ -84,10 +84,11 @@ describeDatabase(PrivacyRelayerActivityRepository.name, (db) => {
           ),
         ).toStrictEqual(2)
 
-        expect(await repository.getAll()).toEqualUnsorted([
-          records[0]!,
-          records[3]!,
-        ])
+        const actual = await repository.getAll()
+        expect(actual).toHaveLength(2)
+        expect(actual).toStrictEqual(
+          expect.arrayContaining([records[0]!, records[3]!]),
+        )
       })
     },
   )

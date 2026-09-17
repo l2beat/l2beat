@@ -26,7 +26,8 @@ describeDatabase(PrivacyFlowEventRepository.name, (db) => {
       expect(inserted).toStrictEqual(2)
 
       const result = await repository.getAll()
-      expect(result).toEqualUnsorted(records)
+      expect(result).toHaveLength(records.length)
+      expect(result).toStrictEqual(expect.arrayContaining(records))
     })
 
     it('handles empty array', async () => {
@@ -51,7 +52,8 @@ describeDatabase(PrivacyFlowEventRepository.name, (db) => {
       expect(inserted).toStrictEqual(1)
 
       const result = await repository.getAll()
-      expect(result).toEqualUnsorted(updatedRecords)
+      expect(result).toHaveLength(updatedRecords.length)
+      expect(result).toStrictEqual(expect.arrayContaining(updatedRecords))
     })
   })
 
@@ -74,19 +76,22 @@ describeDatabase(PrivacyFlowEventRepository.name, (db) => {
           START + UnixTime.DAY,
         )
 
-        expect(result).toEqualUnsorted([
-          {
-            projectId: 'proj-a',
-            bucketId: 'bucket',
-            timestamp: UnixTime.toStartOf(START, 'day'),
-            depositCount: 3,
-            withdrawalCount: 1,
-            depositAmount: 300n,
-            withdrawalAmount: 50n,
-            depositValueUsd: 300,
-            withdrawalValueUsd: 50,
-          },
-        ])
+        expect(result).toHaveLength(1)
+        expect(result).toStrictEqual(
+          expect.arrayContaining([
+            {
+              projectId: 'proj-a',
+              bucketId: 'bucket',
+              timestamp: UnixTime.toStartOf(START, 'day'),
+              depositCount: 3,
+              withdrawalCount: 1,
+              depositAmount: 300n,
+              withdrawalAmount: 50n,
+              depositValueUsd: 300,
+              withdrawalValueUsd: 50,
+            },
+          ]),
+        )
       })
 
       it('returns empty array when no data', async () => {
@@ -130,7 +135,10 @@ describeDatabase(PrivacyFlowEventRepository.name, (db) => {
         expect(deleted).toStrictEqual(2)
 
         const result = await repository.getAll()
-        expect(result).toEqualUnsorted([records[2]!, records[3]!])
+        expect(result).toHaveLength(2)
+        expect(result).toStrictEqual(
+          expect.arrayContaining([records[2]!, records[3]!]),
+        )
       })
     },
   )
@@ -166,7 +174,10 @@ describeDatabase(PrivacyFlowEventRepository.name, (db) => {
         expect(deleted).toStrictEqual(2)
 
         const result = await repository.getAll()
-        expect(result).toEqualUnsorted([records[2]!, records[3]!])
+        expect(result).toHaveLength(2)
+        expect(result).toStrictEqual(
+          expect.arrayContaining([records[2]!, records[3]!]),
+        )
       })
     },
   )
@@ -198,28 +209,31 @@ describeDatabase(PrivacyFlowEventRepository.name, (db) => {
 
         const result = await repository.getBucketTotalsByProjectIds(['proj-a'])
 
-        expect(result).toEqualUnsorted([
-          {
-            projectId: 'proj-a',
-            bucketId: 'bucket',
-            depositCount: 3,
-            withdrawalCount: 1,
-            depositAmount: 300n,
-            withdrawalAmount: 50n,
-            depositValueUsd: 300,
-            withdrawalValueUsd: 50,
-          },
-          {
-            projectId: 'proj-a',
-            bucketId: 'bucket-2',
-            depositCount: 1,
-            withdrawalCount: 0,
-            depositAmount: 300n,
-            withdrawalAmount: 0n,
-            depositValueUsd: 300,
-            withdrawalValueUsd: 0,
-          },
-        ])
+        expect(result).toHaveLength(2)
+        expect(result).toStrictEqual(
+          expect.arrayContaining([
+            {
+              projectId: 'proj-a',
+              bucketId: 'bucket',
+              depositCount: 3,
+              withdrawalCount: 1,
+              depositAmount: 300n,
+              withdrawalAmount: 50n,
+              depositValueUsd: 300,
+              withdrawalValueUsd: 50,
+            },
+            {
+              projectId: 'proj-a',
+              bucketId: 'bucket-2',
+              depositCount: 1,
+              withdrawalCount: 0,
+              depositAmount: 300n,
+              withdrawalAmount: 0n,
+              depositValueUsd: 300,
+              withdrawalValueUsd: 0,
+            },
+          ]),
+        )
       })
 
       it('returns empty array when projectIds is empty', async () => {

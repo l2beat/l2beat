@@ -310,10 +310,13 @@ describeDatabase(InteropPluginSyncStateRepository.name, (db) => {
         expect(updated).toStrictEqual(2)
 
         const pluginA = await repository.findByPluginName('plugin-a')
-        expect(pluginA).toEqualUnsorted([
-          { ...a1, wipeRequired: true },
-          { ...a2, wipeRequired: true },
-        ])
+        expect(pluginA).toHaveLength(2)
+        expect(pluginA).toStrictEqual(
+          expect.arrayContaining([
+            { ...a1, wipeRequired: true },
+            { ...a2, wipeRequired: true },
+          ]),
+        )
         const pluginB = await repository.findByPluginName('plugin-b')
         expect(pluginB).toStrictEqual([b1])
       })
@@ -364,7 +367,8 @@ describeDatabase(InteropPluginSyncStateRepository.name, (db) => {
         await repository.upsert(b1)
 
         const found = await repository.findByPluginName('plugin-a')
-        expect(found).toEqualUnsorted([a1, a2])
+        expect(found).toHaveLength(2)
+        expect(found).toStrictEqual(expect.arrayContaining([a1, a2]))
       })
 
       it('returns empty array when no matching records exist', async () => {
@@ -389,7 +393,8 @@ describeDatabase(InteropPluginSyncStateRepository.name, (db) => {
       await repository.upsert(b1)
 
       const all = await repository.getAll()
-      expect(all).toEqualUnsorted([a1, a2, b1])
+      expect(all).toHaveLength(3)
+      expect(all).toStrictEqual(expect.arrayContaining([a1, a2, b1]))
     })
   })
 
@@ -428,7 +433,8 @@ describeDatabase(InteropPluginSyncStateRepository.name, (db) => {
         expect(deleted).toStrictEqual(1)
 
         const all = await repository.getAll()
-        expect(all).toEqualUnsorted([a1, a2, b1])
+        expect(all).toHaveLength(3)
+        expect(all).toStrictEqual(expect.arrayContaining([a1, a2, b1]))
       })
 
       it('does not delete any records when list is empty', async () => {
@@ -464,7 +470,8 @@ describeDatabase(InteropPluginSyncStateRepository.name, (db) => {
         expect(deleted).toStrictEqual(0)
 
         const all = await repository.getAll()
-        expect(all).toEqualUnsorted([a1, b1])
+        expect(all).toHaveLength(2)
+        expect(all).toStrictEqual(expect.arrayContaining([a1, b1]))
       })
     },
   )
@@ -489,7 +496,8 @@ describeDatabase(InteropPluginSyncStateRepository.name, (db) => {
         expect(deleted).toStrictEqual(2)
 
         const all = await repository.getAll()
-        expect(all).toEqualUnsorted([a1, b1])
+        expect(all).toHaveLength(2)
+        expect(all).toStrictEqual(expect.arrayContaining([a1, b1]))
       })
 
       it('does not delete any records when list is empty', async () => {

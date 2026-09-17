@@ -18,11 +18,14 @@ describeDatabase(ActivityRepository.name, (db) => {
       ])
 
       const results = await repository.getAll()
-      expect(results).toEqualUnsorted([
-        record('a', START, 1, 2, 1, 2),
-        record('a', START + 1 * UnixTime.DAY, 2, 2, 3, 4),
-        record('a', START + 2 * UnixTime.DAY, 4, 5, 5, 6),
-      ])
+      expect(results).toHaveLength(3)
+      expect(results).toStrictEqual(
+        expect.arrayContaining([
+          record('a', START, 1, 2, 1, 2),
+          record('a', START + 1 * UnixTime.DAY, 2, 2, 3, 4),
+          record('a', START + 2 * UnixTime.DAY, 4, 5, 5, 6),
+        ]),
+      )
     })
 
     it('merges on conflict', async () => {
@@ -33,10 +36,13 @@ describeDatabase(ActivityRepository.name, (db) => {
       await repository.upsertMany([record('a', START, 3, 3, 1, 3)])
 
       const results = await repository.getAll()
-      expect(results).toEqualUnsorted([
-        record('a', START, 3, 3, 1, 3),
-        record('a', START + 1 * UnixTime.DAY, 2, 2, 4, 5),
-      ])
+      expect(results).toHaveLength(2)
+      expect(results).toStrictEqual(
+        expect.arrayContaining([
+          record('a', START, 3, 3, 1, 3),
+          record('a', START + 1 * UnixTime.DAY, 2, 2, 4, 5),
+        ]),
+      )
     })
   })
 
@@ -132,10 +138,13 @@ describeDatabase(ActivityRepository.name, (db) => {
 
       const results = await repository.getAll()
 
-      expect(results).toEqualUnsorted([
-        record('a', START),
-        record('a', START + 1 * UnixTime.DAY),
-      ])
+      expect(results).toHaveLength(2)
+      expect(results).toStrictEqual(
+        expect.arrayContaining([
+          record('a', START),
+          record('a', START + 1 * UnixTime.DAY),
+        ]),
+      )
     })
   })
 

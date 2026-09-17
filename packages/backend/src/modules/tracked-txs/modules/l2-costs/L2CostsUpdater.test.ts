@@ -141,7 +141,8 @@ describe(L2CostsUpdater.name, () => {
         },
       ]
 
-      expect(result).toEqualUnsorted(expected)
+      expect(result).toHaveLength(expected.length)
+      expect(result).toStrictEqual(expect.arrayContaining(expected))
     })
 
     it('throws error when blob price is missing for transaction with blob hashes', () => {

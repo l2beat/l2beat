@@ -15,7 +15,10 @@ describe(InMemoryEventDb.name, () => {
     ]
     events.forEach((e) => db.addEvent(e))
 
-    expect(db.getEvents(EventA.type)).toEqualUnsorted([events[0], events[1]])
+    expect(db.getEvents(EventA.type)).toHaveLength(2)
+    expect(db.getEvents(EventA.type)).toStrictEqual(
+      expect.arrayContaining([events[0], events[1]]),
+    )
     expect(db.getEvents(EventB.type)).toStrictEqual([events[2]])
   })
 
@@ -126,7 +129,10 @@ describe(InMemoryEventDb.name, () => {
 
     db.removeExpired(10)
 
-    expect(db.getEvents(EventA.type)).toEqualUnsorted([events[2], events[3]])
+    expect(db.getEvents(EventA.type)).toHaveLength(2)
+    expect(db.getEvents(EventA.type)).toStrictEqual(
+      expect.arrayContaining([events[2], events[3]]),
+    )
   })
 
   it('can remove expired events when only one event exists', () => {
@@ -185,12 +191,10 @@ describe(InMemoryEventDb.name, () => {
     ]
     events.forEach((e) => db.addEvent(e))
 
-    expect(db.getEvents(EventA.type)).toEqualUnsorted([
-      events[0],
-      events[1],
-      events[4],
-      events[5],
-    ])
+    expect(db.getEvents(EventA.type)).toHaveLength(4)
+    expect(db.getEvents(EventA.type)).toStrictEqual(
+      expect.arrayContaining([events[0], events[1], events[4], events[5]]),
+    )
   })
 
   it('maintains the event cap across multiple types', () => {
@@ -205,7 +209,13 @@ describe(InMemoryEventDb.name, () => {
     ]
     events.forEach((e) => db.addEvent(e))
 
-    expect(db.getEvents(EventA.type)).toEqualUnsorted([events[0], events[4]])
-    expect(db.getEvents(EventB.type)).toEqualUnsorted([events[1], events[5]])
+    expect(db.getEvents(EventA.type)).toHaveLength(2)
+    expect(db.getEvents(EventA.type)).toStrictEqual(
+      expect.arrayContaining([events[0], events[4]]),
+    )
+    expect(db.getEvents(EventB.type)).toHaveLength(2)
+    expect(db.getEvents(EventB.type)).toStrictEqual(
+      expect.arrayContaining([events[1], events[5]]),
+    )
   })
 })

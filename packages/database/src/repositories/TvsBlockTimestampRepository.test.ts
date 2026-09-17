@@ -17,7 +17,8 @@ describeDatabase(TvsBlockTimestampRepository.name, (db) => {
       await repository.upsertMany(records)
 
       const result = await repository.getAll()
-      expect(result).toEqualUnsorted(records)
+      expect(result).toHaveLength(records.length)
+      expect(result).toStrictEqual(expect.arrayContaining(records))
     })
 
     it('handles empty array', async () => {
@@ -52,7 +53,8 @@ describeDatabase(TvsBlockTimestampRepository.name, (db) => {
       expect(inserted).toStrictEqual(2)
 
       const result = await repository.getAll()
-      expect(result).toEqualUnsorted(updatedRecords)
+      expect(result).toHaveLength(updatedRecords.length)
+      expect(result).toStrictEqual(expect.arrayContaining(updatedRecords))
     })
   })
 
@@ -107,9 +109,12 @@ describeDatabase(TvsBlockTimestampRepository.name, (db) => {
       expect(deleted).toStrictEqual(3)
 
       const results = await repository.getAll()
-      expect(results).toEqualUnsorted([
-        blockTimestamp('c', 'ethereum', UnixTime(1), 3001),
-      ])
+      expect(results).toHaveLength(1)
+      expect(results).toStrictEqual(
+        expect.arrayContaining([
+          blockTimestamp('c', 'ethereum', UnixTime(1), 3001),
+        ]),
+      )
     })
 
     it('returns 0 for empty ids', async () => {
@@ -121,9 +126,12 @@ describeDatabase(TvsBlockTimestampRepository.name, (db) => {
       expect(deleted).toStrictEqual(0)
 
       const results = await repository.getAll()
-      expect(results).toEqualUnsorted([
-        blockTimestamp('a', 'ethereum', UnixTime(1), 1001),
-      ])
+      expect(results).toHaveLength(1)
+      expect(results).toStrictEqual(
+        expect.arrayContaining([
+          blockTimestamp('a', 'ethereum', UnixTime(1), 1001),
+        ]),
+      )
     })
 
     it('returns 0 when no matching config found', async () => {
@@ -135,9 +143,12 @@ describeDatabase(TvsBlockTimestampRepository.name, (db) => {
       expect(deleted).toStrictEqual(0)
 
       const results = await repository.getAll()
-      expect(results).toEqualUnsorted([
-        blockTimestamp('a', 'ethereum', UnixTime(1), 1001),
-      ])
+      expect(results).toHaveLength(1)
+      expect(results).toStrictEqual(
+        expect.arrayContaining([
+          blockTimestamp('a', 'ethereum', UnixTime(1), 1001),
+        ]),
+      )
     })
   })
 
@@ -161,10 +172,13 @@ describeDatabase(TvsBlockTimestampRepository.name, (db) => {
         expect(deleted).toStrictEqual(2)
 
         const results = await repository.getAll()
-        expect(results).toEqualUnsorted([
-          blockTimestamp('b', 'ethereum', UnixTime(3), 1003),
-          blockTimestamp('c', 'arbitrum', UnixTime(2), 2002),
-        ])
+        expect(results).toHaveLength(2)
+        expect(results).toStrictEqual(
+          expect.arrayContaining([
+            blockTimestamp('b', 'ethereum', UnixTime(3), 1003),
+            blockTimestamp('c', 'arbitrum', UnixTime(2), 2002),
+          ]),
+        )
       })
 
       it('returns 0 if no matching config found', async () => {
@@ -181,9 +195,12 @@ describeDatabase(TvsBlockTimestampRepository.name, (db) => {
         expect(deleted).toStrictEqual(0)
 
         const results = await repository.getAll()
-        expect(results).toEqualUnsorted([
-          blockTimestamp('b', 'ethereum', UnixTime(1), 1001),
-        ])
+        expect(results).toHaveLength(1)
+        expect(results).toStrictEqual(
+          expect.arrayContaining([
+            blockTimestamp('b', 'ethereum', UnixTime(1), 1001),
+          ]),
+        )
       })
     },
   )

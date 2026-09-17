@@ -102,7 +102,8 @@ describeDatabase(InteropPluginSyncedRangeRepository.name, (db) => {
       await repository.upsert(b1)
 
       const all = await repository.getAll()
-      expect(all).toEqualUnsorted([a1, a2, b1])
+      expect(all).toHaveLength(3)
+      expect(all).toStrictEqual(expect.arrayContaining([a1, a2, b1]))
     })
   })
 
@@ -228,7 +229,8 @@ describeDatabase(InteropPluginSyncedRangeRepository.name, (db) => {
         expect(deleted).toStrictEqual(1)
 
         const all = await repository.getAll()
-        expect(all).toEqualUnsorted([a1, a2, b1])
+        expect(all).toHaveLength(3)
+        expect(all).toStrictEqual(expect.arrayContaining([a1, a2, b1]))
       })
 
       it('returns 0 when list is empty', async () => {
@@ -264,7 +266,8 @@ describeDatabase(InteropPluginSyncedRangeRepository.name, (db) => {
         expect(deleted).toStrictEqual(0)
 
         const all = await repository.getAll()
-        expect(all).toEqualUnsorted([a1, b1])
+        expect(all).toHaveLength(2)
+        expect(all).toStrictEqual(expect.arrayContaining([a1, b1]))
       })
     },
   )
@@ -289,7 +292,8 @@ describeDatabase(InteropPluginSyncedRangeRepository.name, (db) => {
         expect(deleted).toStrictEqual(2)
 
         const all = await repository.getAll()
-        expect(all).toEqualUnsorted([a1, b1])
+        expect(all).toHaveLength(2)
+        expect(all).toStrictEqual(expect.arrayContaining([a1, b1]))
       })
 
       it('returns 0 when list is empty', async () => {

@@ -92,7 +92,9 @@ describeDatabase(L2CostRepository.name, (db) => {
       await repository.insertMany(newRow)
 
       const results = await repository.getAll()
-      expect(results).toEqualUnsorted([...DATA, ...newRow])
+      const expected = [...DATA, ...newRow]
+      expect(results).toHaveLength(expected.length)
+      expect(results).toStrictEqual(expect.arrayContaining(expected))
     })
 
     it('empty array not to be rejected', async () => {
@@ -107,7 +109,10 @@ describeDatabase(L2CostRepository.name, (db) => {
         START - 1 * UnixTime.MINUTE,
       ])
 
-      expect(results).toEqualUnsorted([DATA[1]!, DATA[2]!])
+      expect(results).toHaveLength(2)
+      expect(results).toStrictEqual(
+        expect.arrayContaining([DATA[1]!, DATA[2]!]),
+      )
     })
 
     it('should return empty array', async () => {
@@ -145,16 +150,19 @@ describeDatabase(L2CostRepository.name, (db) => {
           START,
         )
 
-        expect(result).toEqualUnsorted([
-          {
-            configurationId: txIdA,
-            totalCostInWei: 300n,
-          },
-          {
-            configurationId: txIdB,
-            totalCostInWei: 400n,
-          },
-        ])
+        expect(result).toHaveLength(2)
+        expect(result).toStrictEqual(
+          expect.arrayContaining([
+            {
+              configurationId: txIdA,
+              totalCostInWei: 300n,
+            },
+            {
+              configurationId: txIdB,
+              totalCostInWei: 400n,
+            },
+          ]),
+        )
       })
 
       it('returns empty array when configIds is empty', async () => {
@@ -173,7 +181,8 @@ describeDatabase(L2CostRepository.name, (db) => {
     it('should return all rows', async () => {
       const results = await repository.getAll()
 
-      expect(results).toEqualUnsorted(DATA)
+      expect(results).toHaveLength(DATA.length)
+      expect(results).toStrictEqual(expect.arrayContaining(DATA))
     })
   })
 
@@ -197,20 +206,23 @@ describeDatabase(L2CostRepository.name, (db) => {
 
         const results = await repository.getLatestTimestampsByConfigId()
 
-        expect(results).toEqualUnsorted([
-          {
-            configurationId: txIdA,
-            latestTimestamp: START + UnixTime.HOUR,
-          },
-          {
-            configurationId: txIdB,
-            latestTimestamp: START - 1 * UnixTime.HOUR,
-          },
-          {
-            configurationId: txIdC,
-            latestTimestamp: START - 2 * UnixTime.HOUR,
-          },
-        ])
+        expect(results).toHaveLength(3)
+        expect(results).toStrictEqual(
+          expect.arrayContaining([
+            {
+              configurationId: txIdA,
+              latestTimestamp: START + UnixTime.HOUR,
+            },
+            {
+              configurationId: txIdB,
+              latestTimestamp: START - 1 * UnixTime.HOUR,
+            },
+            {
+              configurationId: txIdC,
+              latestTimestamp: START - 2 * UnixTime.HOUR,
+            },
+          ]),
+        )
       })
     },
   )
@@ -225,7 +237,8 @@ describeDatabase(L2CostRepository.name, (db) => {
       expect(deleted).toStrictEqual(2)
 
       const results = await repository.getAll()
-      expect(results).toEqualUnsorted([DATA[1]!])
+      expect(results).toHaveLength(1)
+      expect(results).toStrictEqual(expect.arrayContaining([DATA[1]!]))
     })
 
     it('returns 0 for empty ids', async () => {
@@ -233,7 +246,8 @@ describeDatabase(L2CostRepository.name, (db) => {
       expect(deleted).toStrictEqual(0)
 
       const results = await repository.getAll()
-      expect(results).toEqualUnsorted(DATA)
+      expect(results).toHaveLength(DATA.length)
+      expect(results).toStrictEqual(expect.arrayContaining(DATA))
     })
 
     it('returns 0 when no matching config found', async () => {
@@ -241,7 +255,8 @@ describeDatabase(L2CostRepository.name, (db) => {
       expect(deleted).toStrictEqual(0)
 
       const results = await repository.getAll()
-      expect(results).toEqualUnsorted(DATA)
+      expect(results).toHaveLength(DATA.length)
+      expect(results).toStrictEqual(expect.arrayContaining(DATA))
     })
   })
 

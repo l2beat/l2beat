@@ -18,7 +18,8 @@ describeDatabase(TokenValueRepository.name, (db) => {
       expect(inserted).toStrictEqual(2)
 
       const result = await repository.getAll()
-      expect(result).toEqualUnsorted(records)
+      expect(result).toHaveLength(records.length)
+      expect(result).toStrictEqual(expect.arrayContaining(records))
     })
 
     it('handles empty array', async () => {
@@ -67,7 +68,8 @@ describeDatabase(TokenValueRepository.name, (db) => {
       expect(inserted).toStrictEqual(2)
 
       const result = await repository.getAll()
-      expect(result).toEqualUnsorted(updatedRecords)
+      expect(result).toHaveLength(updatedRecords.length)
+      expect(result).toStrictEqual(expect.arrayContaining(updatedRecords))
     })
   })
 
@@ -125,12 +127,24 @@ describeDatabase(TokenValueRepository.name, (db) => {
         UnixTime(200),
       )
 
-      expect(result).toEqualUnsorted([
-        tokenValue('a', 'ethereum', UnixTime(100), 2, 2000, 1600, 1000, 10),
-        tokenValue('a', 'ethereum', UnixTime(150), 3, 3000, 2400, 1500, 10),
-        tokenValue('a', 'ethereum', UnixTime(200), 4, 4000, 3200, 2000, 10),
-        tokenValue('c', 'ethereum', UnixTime(150), 30, 30000, 24000, 15000, 30),
-      ])
+      expect(result).toHaveLength(4)
+      expect(result).toStrictEqual(
+        expect.arrayContaining([
+          tokenValue('a', 'ethereum', UnixTime(100), 2, 2000, 1600, 1000, 10),
+          tokenValue('a', 'ethereum', UnixTime(150), 3, 3000, 2400, 1500, 10),
+          tokenValue('a', 'ethereum', UnixTime(200), 4, 4000, 3200, 2000, 10),
+          tokenValue(
+            'c',
+            'ethereum',
+            UnixTime(150),
+            30,
+            30000,
+            24000,
+            15000,
+            30,
+          ),
+        ]),
+      )
     })
 
     it('returns empty array when no records match the time range', async () => {
@@ -160,10 +174,22 @@ describeDatabase(TokenValueRepository.name, (db) => {
         UnixTime(150),
       )
 
-      expect(result).toEqualUnsorted([
-        tokenValue('a', 'ethereum', UnixTime(150), 3, 3000, 2400, 1500, 10),
-        tokenValue('c', 'ethereum', UnixTime(150), 30, 30000, 24000, 15000, 30),
-      ])
+      expect(result).toHaveLength(2)
+      expect(result).toStrictEqual(
+        expect.arrayContaining([
+          tokenValue('a', 'ethereum', UnixTime(150), 3, 3000, 2400, 1500, 10),
+          tokenValue(
+            'c',
+            'ethereum',
+            UnixTime(150),
+            30,
+            30000,
+            24000,
+            15000,
+            30,
+          ),
+        ]),
+      )
     })
 
     it('returns records from multiple configurations for the same project', async () => {
@@ -173,10 +199,22 @@ describeDatabase(TokenValueRepository.name, (db) => {
         UnixTime(150),
       )
 
-      expect(result).toEqualUnsorted([
-        tokenValue('a', 'ethereum', UnixTime(150), 3, 3000, 2400, 1500, 10),
-        tokenValue('c', 'ethereum', UnixTime(150), 30, 30000, 24000, 15000, 30),
-      ])
+      expect(result).toHaveLength(2)
+      expect(result).toStrictEqual(
+        expect.arrayContaining([
+          tokenValue('a', 'ethereum', UnixTime(150), 3, 3000, 2400, 1500, 10),
+          tokenValue(
+            'c',
+            'ethereum',
+            UnixTime(150),
+            30,
+            30000,
+            24000,
+            15000,
+            30,
+          ),
+        ]),
+      )
     })
 
     it('respects time boundaries exactly', async () => {
@@ -186,11 +224,23 @@ describeDatabase(TokenValueRepository.name, (db) => {
         UnixTime(150),
       )
 
-      expect(result).toEqualUnsorted([
-        tokenValue('a', 'ethereum', UnixTime(100), 2, 2000, 1600, 1000, 10),
-        tokenValue('a', 'ethereum', UnixTime(150), 3, 3000, 2400, 1500, 10),
-        tokenValue('c', 'ethereum', UnixTime(150), 30, 30000, 24000, 15000, 30),
-      ])
+      expect(result).toHaveLength(3)
+      expect(result).toStrictEqual(
+        expect.arrayContaining([
+          tokenValue('a', 'ethereum', UnixTime(100), 2, 2000, 1600, 1000, 10),
+          tokenValue('a', 'ethereum', UnixTime(150), 3, 3000, 2400, 1500, 10),
+          tokenValue(
+            'c',
+            'ethereum',
+            UnixTime(150),
+            30,
+            30000,
+            24000,
+            15000,
+            30,
+          ),
+        ]),
+      )
     })
   })
 
@@ -328,11 +378,14 @@ describeDatabase(TokenValueRepository.name, (db) => {
         UnixTime(180),
       )
 
-      expect(result).toEqualUnsorted([
-        tokenValue('a', 'ethereum', UnixTime(150), 5, 5000, 4000, 2500, 10),
-        tokenValue('b', 'ethereum', UnixTime(180), 8, 8000, 6400, 4000, 10),
-        tokenValue('c', 'ethereum', UnixTime(100), 3, 3000, 2400, 1500, 10),
-      ])
+      expect(result).toHaveLength(3)
+      expect(result).toStrictEqual(
+        expect.arrayContaining([
+          tokenValue('a', 'ethereum', UnixTime(150), 5, 5000, 4000, 2500, 10),
+          tokenValue('b', 'ethereum', UnixTime(180), 8, 8000, 6400, 4000, 10),
+          tokenValue('c', 'ethereum', UnixTime(100), 3, 3000, 2400, 1500, 10),
+        ]),
+      )
     })
 
     it('returns records exactly at the timestamp when available', async () => {
@@ -341,11 +394,14 @@ describeDatabase(TokenValueRepository.name, (db) => {
         UnixTime(100),
       )
 
-      expect(result).toEqualUnsorted([
-        tokenValue('a', 'ethereum', UnixTime(100), 1, 1000, 800, 500, 10),
-        tokenValue('b', 'ethereum', UnixTime(100), 2, 2000, 1600, 1000, 10),
-        tokenValue('c', 'ethereum', UnixTime(100), 3, 3000, 2400, 1500, 10),
-      ])
+      expect(result).toHaveLength(3)
+      expect(result).toStrictEqual(
+        expect.arrayContaining([
+          tokenValue('a', 'ethereum', UnixTime(100), 1, 1000, 800, 500, 10),
+          tokenValue('b', 'ethereum', UnixTime(100), 2, 2000, 1600, 1000, 10),
+          tokenValue('c', 'ethereum', UnixTime(100), 3, 3000, 2400, 1500, 10),
+        ]),
+      )
     })
 
     it('returns records before the timestamp when no exact match', async () => {
@@ -354,11 +410,14 @@ describeDatabase(TokenValueRepository.name, (db) => {
         UnixTime(170),
       )
 
-      expect(result).toEqualUnsorted([
-        tokenValue('a', 'ethereum', UnixTime(150), 5, 5000, 4000, 2500, 10),
-        tokenValue('b', 'ethereum', UnixTime(100), 2, 2000, 1600, 1000, 10),
-        tokenValue('c', 'ethereum', UnixTime(100), 3, 3000, 2400, 1500, 10),
-      ])
+      expect(result).toHaveLength(3)
+      expect(result).toStrictEqual(
+        expect.arrayContaining([
+          tokenValue('a', 'ethereum', UnixTime(150), 5, 5000, 4000, 2500, 10),
+          tokenValue('b', 'ethereum', UnixTime(100), 2, 2000, 1600, 1000, 10),
+          tokenValue('c', 'ethereum', UnixTime(100), 3, 3000, 2400, 1500, 10),
+        ]),
+      )
     })
 
     it('returns empty array when no records before or at timestamp', async () => {
@@ -376,11 +435,14 @@ describeDatabase(TokenValueRepository.name, (db) => {
         UnixTime(250),
       )
 
-      expect(result).toEqualUnsorted([
-        tokenValue('a', 'ethereum', UnixTime(200), 10, 10000, 8000, 5000, 10),
-        tokenValue('b', 'ethereum', UnixTime(180), 8, 8000, 6400, 4000, 10),
-        tokenValue('c', 'ethereum', UnixTime(100), 3, 3000, 2400, 1500, 10),
-      ])
+      expect(result).toHaveLength(3)
+      expect(result).toStrictEqual(
+        expect.arrayContaining([
+          tokenValue('a', 'ethereum', UnixTime(200), 10, 10000, 8000, 5000, 10),
+          tokenValue('b', 'ethereum', UnixTime(180), 8, 8000, 6400, 4000, 10),
+          tokenValue('c', 'ethereum', UnixTime(100), 3, 3000, 2400, 1500, 10),
+        ]),
+      )
     })
   })
 
@@ -404,11 +466,14 @@ describeDatabase(TokenValueRepository.name, (db) => {
     it('returns latest non-zero record for each token at or before timestamp', async () => {
       const result = await repository.getLastNonZeroValue(UnixTime(150))
 
-      expect(result).toEqualUnsorted([
-        tokenValue('a', 'ethereum', UnixTime(150), 5, 5000, 4000, 2500, 10),
-        tokenValue('b', 'ethereum', UnixTime(100), 2, 2000, 1600, 1000, 20),
-        tokenValue('c', 'arbitrum', UnixTime(100), 3, 3000, 2400, 1500, 30),
-      ])
+      expect(result).toHaveLength(3)
+      expect(result).toStrictEqual(
+        expect.arrayContaining([
+          tokenValue('a', 'ethereum', UnixTime(150), 5, 5000, 4000, 2500, 10),
+          tokenValue('b', 'ethereum', UnixTime(100), 2, 2000, 1600, 1000, 20),
+          tokenValue('c', 'arbitrum', UnixTime(100), 3, 3000, 2400, 1500, 30),
+        ]),
+      )
     })
 
     it('returns latest non-zero record for each token of given project at or before timestamp', async () => {
@@ -417,10 +482,13 @@ describeDatabase(TokenValueRepository.name, (db) => {
         'ethereum',
       )
 
-      expect(result).toEqualUnsorted([
-        tokenValue('a', 'ethereum', UnixTime(150), 5, 5000, 4000, 2500, 10),
-        tokenValue('b', 'ethereum', UnixTime(100), 2, 2000, 1600, 1000, 20),
-      ])
+      expect(result).toHaveLength(2)
+      expect(result).toStrictEqual(
+        expect.arrayContaining([
+          tokenValue('a', 'ethereum', UnixTime(150), 5, 5000, 4000, 2500, 10),
+          tokenValue('b', 'ethereum', UnixTime(100), 2, 2000, 1600, 1000, 20),
+        ]),
+      )
     })
   })
 
@@ -441,9 +509,12 @@ describeDatabase(TokenValueRepository.name, (db) => {
       expect(deleted).toStrictEqual(3)
 
       const results = await repository.getAll()
-      expect(results).toEqualUnsorted([
-        tokenValue('c', 'ethereum', UnixTime(1), 3, 3000, 2400, 1500, 40),
-      ])
+      expect(results).toHaveLength(1)
+      expect(results).toStrictEqual(
+        expect.arrayContaining([
+          tokenValue('c', 'ethereum', UnixTime(1), 3, 3000, 2400, 1500, 40),
+        ]),
+      )
     })
 
     it('returns 0 for empty ids', async () => {
@@ -455,9 +526,12 @@ describeDatabase(TokenValueRepository.name, (db) => {
       expect(deleted).toStrictEqual(0)
 
       const results = await repository.getAll()
-      expect(results).toEqualUnsorted([
-        tokenValue('a', 'ethereum', UnixTime(1), 1, 1000, 800, 500, 10),
-      ])
+      expect(results).toHaveLength(1)
+      expect(results).toStrictEqual(
+        expect.arrayContaining([
+          tokenValue('a', 'ethereum', UnixTime(1), 1, 1000, 800, 500, 10),
+        ]),
+      )
     })
 
     it('returns 0 when no matching config found', async () => {
@@ -469,9 +543,12 @@ describeDatabase(TokenValueRepository.name, (db) => {
       expect(deleted).toStrictEqual(0)
 
       const results = await repository.getAll()
-      expect(results).toEqualUnsorted([
-        tokenValue('a', 'ethereum', UnixTime(1), 1, 1000, 800, 500, 10),
-      ])
+      expect(results).toHaveLength(1)
+      expect(results).toStrictEqual(
+        expect.arrayContaining([
+          tokenValue('a', 'ethereum', UnixTime(1), 1, 1000, 800, 500, 10),
+        ]),
+      )
     })
   })
 
@@ -503,11 +580,14 @@ describeDatabase(TokenValueRepository.name, (db) => {
           ['ethereum', 'arbitrum'],
         )
 
-        expect(result).toEqualUnsorted([
-          tokenValue('a', 'ethereum', UnixTime(150), 5, 5000, 4000, 2500, 10),
-          tokenValue('b', 'ethereum', UnixTime(100), 2, 2000, 1600, 1000, 20),
-          tokenValue('c', 'arbitrum', UnixTime(100), 3, 3000, 2400, 1500, 30),
-        ])
+        expect(result).toHaveLength(3)
+        expect(result).toStrictEqual(
+          expect.arrayContaining([
+            tokenValue('a', 'ethereum', UnixTime(150), 5, 5000, 4000, 2500, 10),
+            tokenValue('b', 'ethereum', UnixTime(100), 2, 2000, 1600, 1000, 20),
+            tokenValue('c', 'arbitrum', UnixTime(100), 3, 3000, 2400, 1500, 30),
+          ]),
+        )
       })
 
       it('returns empty array when no projects are provided', async () => {
@@ -541,10 +621,13 @@ describeDatabase(TokenValueRepository.name, (db) => {
         expect(deleted).toStrictEqual(2)
 
         const results = await repository.getAll()
-        expect(results).toEqualUnsorted([
-          tokenValue('b', 'ethereum', UnixTime(3), 3, 3000, 2400, 1500, 30),
-          tokenValue('c', 'arbitrum', UnixTime(2), 1000, 1000, 800, 500, 40),
-        ])
+        expect(results).toHaveLength(2)
+        expect(results).toStrictEqual(
+          expect.arrayContaining([
+            tokenValue('b', 'ethereum', UnixTime(3), 3, 3000, 2400, 1500, 30),
+            tokenValue('c', 'arbitrum', UnixTime(2), 1000, 1000, 800, 500, 40),
+          ]),
+        )
       })
 
       it('returns 0 if no matching config found', async () => {
@@ -561,9 +644,12 @@ describeDatabase(TokenValueRepository.name, (db) => {
         expect(deleted).toStrictEqual(0)
 
         const results = await repository.getAll()
-        expect(results).toEqualUnsorted([
-          tokenValue('b', 'ethereum', UnixTime(1), 1, 1000, 800, 500, 10),
-        ])
+        expect(results).toHaveLength(1)
+        expect(results).toStrictEqual(
+          expect.arrayContaining([
+            tokenValue('b', 'ethereum', UnixTime(1), 1, 1000, 800, 500, 10),
+          ]),
+        )
       })
     },
   )
@@ -898,51 +984,60 @@ describeDatabase(TokenValueRepository.name, (db) => {
             },
           )
 
-          expect(result).toEqualUnsorted([
-            {
-              timestamp: UnixTime(100),
-              value:
-                8000.5 + 16000.25 + 4000.75 + 2400.5 + 800.25 + 4000 + 12000.25,
-              canonical: 8000.5 + 16000.25 + 800.25 + 12000.25,
-              customCanonical: 4000,
-              external: 4000.75,
-              native: 2400.5,
-              ether: 8000.5 + 800.25 + 12000.25,
-              stablecoin: 16000.25 + 4000,
-              btc: 4000.75,
-              rwaRestricted: 0,
-              rwaPublic: 0,
-              other: 2400.5,
-            },
-            {
-              timestamp: UnixTime(200),
-              value: 16000.25 + 8000.5 + 6400.5,
-              canonical: 16000.25,
-              customCanonical: 0,
-              external: 8000.5,
-              native: 6400.5,
-              ether: 16000.25,
-              stablecoin: 0,
-              btc: 0,
-              rwaRestricted: 8000.5,
-              rwaPublic: 6400.5,
-              other: 0,
-            },
-            {
-              timestamp: UnixTime(300),
-              value: 24000.25 + 20000.25,
-              canonical: 24000.25 + 20000.25,
-              customCanonical: 0,
-              external: 0,
-              native: 0,
-              ether: 24000.25 + 20000.25,
-              stablecoin: 0,
-              btc: 0,
-              rwaRestricted: 0,
-              rwaPublic: 0,
-              other: 0,
-            },
-          ])
+          expect(result).toHaveLength(3)
+          expect(result).toStrictEqual(
+            expect.arrayContaining([
+              {
+                timestamp: UnixTime(100),
+                value:
+                  8000.5 +
+                  16000.25 +
+                  4000.75 +
+                  2400.5 +
+                  800.25 +
+                  4000 +
+                  12000.25,
+                canonical: 8000.5 + 16000.25 + 800.25 + 12000.25,
+                customCanonical: 4000,
+                external: 4000.75,
+                native: 2400.5,
+                ether: 8000.5 + 800.25 + 12000.25,
+                stablecoin: 16000.25 + 4000,
+                btc: 4000.75,
+                rwaRestricted: 0,
+                rwaPublic: 0,
+                other: 2400.5,
+              },
+              {
+                timestamp: UnixTime(200),
+                value: 16000.25 + 8000.5 + 6400.5,
+                canonical: 16000.25,
+                customCanonical: 0,
+                external: 8000.5,
+                native: 6400.5,
+                ether: 16000.25,
+                stablecoin: 0,
+                btc: 0,
+                rwaRestricted: 8000.5,
+                rwaPublic: 6400.5,
+                other: 0,
+              },
+              {
+                timestamp: UnixTime(300),
+                value: 24000.25 + 20000.25,
+                canonical: 24000.25 + 20000.25,
+                customCanonical: 0,
+                external: 0,
+                native: 0,
+                ether: 24000.25 + 20000.25,
+                stablecoin: 0,
+                btc: 0,
+                rwaRestricted: 0,
+                rwaPublic: 0,
+                other: 0,
+              },
+            ]),
+          )
         })
 
         it('sums values by timestamp for multiple projects using valueForSummary', async () => {
@@ -957,51 +1052,54 @@ describeDatabase(TokenValueRepository.name, (db) => {
             },
           )
 
-          expect(result).toEqualUnsorted([
-            {
-              timestamp: UnixTime(100),
-              value:
-                5000.25 + 10000.5 + 2500.5 + 1500.75 + 500.5 + 3000 + 7500.75,
-              canonical: 5000.25 + 10000.5 + 500.5 + 7500.75,
-              customCanonical: 3000,
-              external: 2500.5,
-              native: 1500.75,
-              ether: 5000.25 + 500.5 + 7500.75,
-              stablecoin: 10000.5 + 3000,
-              btc: 2500.5,
-              rwaRestricted: 0,
-              rwaPublic: 0,
-              other: 1500.75,
-            },
-            {
-              timestamp: UnixTime(200),
-              value: 10000.5 + 5000.25 + 4000.5,
-              canonical: 10000.5,
-              customCanonical: 0,
-              external: 5000.25,
-              native: 4000.5,
-              ether: 10000.5,
-              stablecoin: 0,
-              btc: 0,
-              rwaRestricted: 5000.25,
-              rwaPublic: 4000.5,
-              other: 0,
-            },
-            {
-              timestamp: UnixTime(300),
-              value: 15000.5 + 12500.75,
-              canonical: 15000.5 + 12500.75,
-              customCanonical: 0,
-              external: 0,
-              native: 0,
-              ether: 15000.5 + 12500.75,
-              stablecoin: 0,
-              btc: 0,
-              rwaRestricted: 0,
-              rwaPublic: 0,
-              other: 0,
-            },
-          ])
+          expect(result).toHaveLength(3)
+          expect(result).toStrictEqual(
+            expect.arrayContaining([
+              {
+                timestamp: UnixTime(100),
+                value:
+                  5000.25 + 10000.5 + 2500.5 + 1500.75 + 500.5 + 3000 + 7500.75,
+                canonical: 5000.25 + 10000.5 + 500.5 + 7500.75,
+                customCanonical: 3000,
+                external: 2500.5,
+                native: 1500.75,
+                ether: 5000.25 + 500.5 + 7500.75,
+                stablecoin: 10000.5 + 3000,
+                btc: 2500.5,
+                rwaRestricted: 0,
+                rwaPublic: 0,
+                other: 1500.75,
+              },
+              {
+                timestamp: UnixTime(200),
+                value: 10000.5 + 5000.25 + 4000.5,
+                canonical: 10000.5,
+                customCanonical: 0,
+                external: 5000.25,
+                native: 4000.5,
+                ether: 10000.5,
+                stablecoin: 0,
+                btc: 0,
+                rwaRestricted: 5000.25,
+                rwaPublic: 4000.5,
+                other: 0,
+              },
+              {
+                timestamp: UnixTime(300),
+                value: 15000.5 + 12500.75,
+                canonical: 15000.5 + 12500.75,
+                customCanonical: 0,
+                external: 0,
+                native: 0,
+                ether: 15000.5 + 12500.75,
+                stablecoin: 0,
+                btc: 0,
+                rwaRestricted: 0,
+                rwaPublic: 0,
+                other: 0,
+              },
+            ]),
+          )
         })
 
         it('filters by time range with fromInclusive', async () => {
@@ -1016,36 +1114,39 @@ describeDatabase(TokenValueRepository.name, (db) => {
             },
           )
 
-          expect(result).toEqualUnsorted([
-            {
-              timestamp: UnixTime(200),
-              value: 16000.25 + 8000.5 + 6400.5,
-              canonical: 16000.25,
-              customCanonical: 0,
-              external: 8000.5,
-              native: 6400.5,
-              ether: 16000.25,
-              stablecoin: 0,
-              btc: 0,
-              rwaRestricted: 8000.5,
-              rwaPublic: 6400.5,
-              other: 0,
-            },
-            {
-              timestamp: UnixTime(300),
-              value: 24000.25 + 20000.25,
-              canonical: 24000.25 + 20000.25,
-              customCanonical: 0,
-              external: 0,
-              native: 0,
-              ether: 24000.25 + 20000.25,
-              stablecoin: 0,
-              btc: 0,
-              rwaRestricted: 0,
-              rwaPublic: 0,
-              other: 0,
-            },
-          ])
+          expect(result).toHaveLength(2)
+          expect(result).toStrictEqual(
+            expect.arrayContaining([
+              {
+                timestamp: UnixTime(200),
+                value: 16000.25 + 8000.5 + 6400.5,
+                canonical: 16000.25,
+                customCanonical: 0,
+                external: 8000.5,
+                native: 6400.5,
+                ether: 16000.25,
+                stablecoin: 0,
+                btc: 0,
+                rwaRestricted: 8000.5,
+                rwaPublic: 6400.5,
+                other: 0,
+              },
+              {
+                timestamp: UnixTime(300),
+                value: 24000.25 + 20000.25,
+                canonical: 24000.25 + 20000.25,
+                customCanonical: 0,
+                external: 0,
+                native: 0,
+                ether: 24000.25 + 20000.25,
+                stablecoin: 0,
+                btc: 0,
+                rwaRestricted: 0,
+                rwaPublic: 0,
+                other: 0,
+              },
+            ]),
+          )
         })
 
         it('filters by time range with toInclusive', async () => {
@@ -1060,37 +1161,46 @@ describeDatabase(TokenValueRepository.name, (db) => {
             },
           )
 
-          expect(result).toEqualUnsorted([
-            {
-              timestamp: UnixTime(100),
-              value:
-                8000.5 + 16000.25 + 4000.75 + 2400.5 + 800.25 + 4000 + 12000.25,
-              canonical: 8000.5 + 16000.25 + 800.25 + 12000.25,
-              customCanonical: 4000,
-              external: 4000.75,
-              native: 2400.5,
-              ether: 8000.5 + 800.25 + 12000.25,
-              stablecoin: 16000.25 + 4000,
-              btc: 4000.75,
-              rwaRestricted: 0,
-              rwaPublic: 0,
-              other: 2400.5,
-            },
-            {
-              timestamp: UnixTime(200),
-              value: 16000.25 + 8000.5 + 6400.5,
-              canonical: 16000.25,
-              customCanonical: 0,
-              external: 8000.5,
-              native: 6400.5,
-              ether: 16000.25,
-              stablecoin: 0,
-              btc: 0,
-              rwaRestricted: 8000.5,
-              rwaPublic: 6400.5,
-              other: 0,
-            },
-          ])
+          expect(result).toHaveLength(2)
+          expect(result).toStrictEqual(
+            expect.arrayContaining([
+              {
+                timestamp: UnixTime(100),
+                value:
+                  8000.5 +
+                  16000.25 +
+                  4000.75 +
+                  2400.5 +
+                  800.25 +
+                  4000 +
+                  12000.25,
+                canonical: 8000.5 + 16000.25 + 800.25 + 12000.25,
+                customCanonical: 4000,
+                external: 4000.75,
+                native: 2400.5,
+                ether: 8000.5 + 800.25 + 12000.25,
+                stablecoin: 16000.25 + 4000,
+                btc: 4000.75,
+                rwaRestricted: 0,
+                rwaPublic: 0,
+                other: 2400.5,
+              },
+              {
+                timestamp: UnixTime(200),
+                value: 16000.25 + 8000.5 + 6400.5,
+                canonical: 16000.25,
+                customCanonical: 0,
+                external: 8000.5,
+                native: 6400.5,
+                ether: 16000.25,
+                stablecoin: 0,
+                btc: 0,
+                rwaRestricted: 8000.5,
+                rwaPublic: 6400.5,
+                other: 0,
+              },
+            ]),
+          )
         })
 
         it('excludes associated tokens when excludeAssociated is true', async () => {
@@ -1105,22 +1215,25 @@ describeDatabase(TokenValueRepository.name, (db) => {
             },
           )
 
-          expect(result).toEqualUnsorted([
-            {
-              timestamp: UnixTime(100),
-              value: 8000.5 + 16000.25 + 4000.75 + 2400.5 + 4000 + 12000.25,
-              canonical: 8000.5 + 16000.25 + 12000.25,
-              customCanonical: 4000,
-              external: 4000.75,
-              native: 2400.5,
-              ether: 8000.5 + 12000.25,
-              stablecoin: 16000.25 + 4000,
-              btc: 4000.75,
-              rwaRestricted: 0,
-              rwaPublic: 0,
-              other: 2400.5,
-            },
-          ])
+          expect(result).toHaveLength(1)
+          expect(result).toStrictEqual(
+            expect.arrayContaining([
+              {
+                timestamp: UnixTime(100),
+                value: 8000.5 + 16000.25 + 4000.75 + 2400.5 + 4000 + 12000.25,
+                canonical: 8000.5 + 16000.25 + 12000.25,
+                customCanonical: 4000,
+                external: 4000.75,
+                native: 2400.5,
+                ether: 8000.5 + 12000.25,
+                stablecoin: 16000.25 + 4000,
+                btc: 4000.75,
+                rwaRestricted: 0,
+                rwaPublic: 0,
+                other: 2400.5,
+              },
+            ]),
+          )
         })
 
         it('returns empty array when projectIds is empty', async () => {
@@ -1165,24 +1278,27 @@ describeDatabase(TokenValueRepository.name, (db) => {
             },
           )
 
-          expect(result).toEqualUnsorted([
-            {
-              timestamp: UnixTime(200),
-              // Token 'a' (ethereum) + Token 'h' (arbitrum, rwaPublic)
-              // Token 'g' (arbitrum, rwaRestricted) should be excluded
-              value: 16000.25 + 6400.5, // 'a' + 'h'
-              canonical: 16000.25, // 'a'
-              customCanonical: 0,
-              external: 0, // 'g' was external but excluded
-              native: 6400.5, // 'h'
-              ether: 16000.25, // 'a'
-              stablecoin: 0,
-              btc: 0,
-              rwaRestricted: 0, // excluded
-              rwaPublic: 6400.5, // 'h'
-              other: 0,
-            },
-          ])
+          expect(result).toHaveLength(1)
+          expect(result).toStrictEqual(
+            expect.arrayContaining([
+              {
+                timestamp: UnixTime(200),
+                // Token 'a' (ethereum) + Token 'h' (arbitrum, rwaPublic)
+                // Token 'g' (arbitrum, rwaRestricted) should be excluded
+                value: 16000.25 + 6400.5, // 'a' + 'h'
+                canonical: 16000.25, // 'a'
+                customCanonical: 0,
+                external: 0, // 'g' was external but excluded
+                native: 6400.5, // 'h'
+                ether: 16000.25, // 'a'
+                stablecoin: 0,
+                btc: 0,
+                rwaRestricted: 0, // excluded
+                rwaPublic: 6400.5, // 'h'
+                other: 0,
+              },
+            ]),
+          )
         })
       },
     )
@@ -1220,70 +1336,73 @@ describeDatabase(TokenValueRepository.name, (db) => {
               },
             )
 
-          expect(result).toEqualUnsorted([
-            {
-              projectId: 'ethereum',
-              timestamp: UnixTime(100),
-              // Only ethereum tokens at timestamp 100
-              value: 8000.5 + 16000.25 + 4000.75 + 2400.5 + 800.25 + 4000,
-              canonical: 8000.5 + 16000.25 + 800.25,
-              customCanonical: 4000,
-              external: 4000.75,
-              native: 2400.5,
-              ether: 8000.5 + 800.25,
-              stablecoin: 16000.25 + 4000,
-              btc: 4000.75,
-              rwaRestricted: 0,
-              rwaPublic: 0,
-              other: 2400.5,
-            },
-            {
-              projectId: 'ethereum',
-              timestamp: UnixTime(200),
-              value: 16000.25,
-              canonical: 16000.25,
-              customCanonical: 0,
-              external: 0,
-              native: 0,
-              ether: 16000.25,
-              stablecoin: 0,
-              btc: 0,
-              rwaRestricted: 0,
-              rwaPublic: 0,
-              other: 0,
-            },
-            {
-              projectId: 'arbitrum',
-              timestamp: UnixTime(200),
-              value: 8000.5 + 6400.5,
-              canonical: 0,
-              customCanonical: 0,
-              external: 8000.5,
-              native: 6400.5,
-              ether: 0,
-              stablecoin: 0,
-              btc: 0,
-              rwaRestricted: 8000.5,
-              rwaPublic: 6400.5,
-              other: 0,
-            },
-            {
-              projectId: 'arbitrum',
-              timestamp: UnixTime(300),
-              // Only arbitrum tokens at timestamp 300 (ethereum range ended at 200)
-              value: 20000.25,
-              canonical: 20000.25,
-              customCanonical: 0,
-              external: 0,
-              native: 0,
-              ether: 20000.25,
-              stablecoin: 0,
-              btc: 0,
-              rwaRestricted: 0,
-              rwaPublic: 0,
-              other: 0,
-            },
-          ])
+          expect(result).toHaveLength(4)
+          expect(result).toStrictEqual(
+            expect.arrayContaining([
+              {
+                projectId: 'ethereum',
+                timestamp: UnixTime(100),
+                // Only ethereum tokens at timestamp 100
+                value: 8000.5 + 16000.25 + 4000.75 + 2400.5 + 800.25 + 4000,
+                canonical: 8000.5 + 16000.25 + 800.25,
+                customCanonical: 4000,
+                external: 4000.75,
+                native: 2400.5,
+                ether: 8000.5 + 800.25,
+                stablecoin: 16000.25 + 4000,
+                btc: 4000.75,
+                rwaRestricted: 0,
+                rwaPublic: 0,
+                other: 2400.5,
+              },
+              {
+                projectId: 'ethereum',
+                timestamp: UnixTime(200),
+                value: 16000.25,
+                canonical: 16000.25,
+                customCanonical: 0,
+                external: 0,
+                native: 0,
+                ether: 16000.25,
+                stablecoin: 0,
+                btc: 0,
+                rwaRestricted: 0,
+                rwaPublic: 0,
+                other: 0,
+              },
+              {
+                projectId: 'arbitrum',
+                timestamp: UnixTime(200),
+                value: 8000.5 + 6400.5,
+                canonical: 0,
+                customCanonical: 0,
+                external: 8000.5,
+                native: 6400.5,
+                ether: 0,
+                stablecoin: 0,
+                btc: 0,
+                rwaRestricted: 8000.5,
+                rwaPublic: 6400.5,
+                other: 0,
+              },
+              {
+                projectId: 'arbitrum',
+                timestamp: UnixTime(300),
+                // Only arbitrum tokens at timestamp 300 (ethereum range ended at 200)
+                value: 20000.25,
+                canonical: 20000.25,
+                customCanonical: 0,
+                external: 0,
+                native: 0,
+                ether: 20000.25,
+                stablecoin: 0,
+                btc: 0,
+                rwaRestricted: 0,
+                rwaPublic: 0,
+                other: 0,
+              },
+            ]),
+          )
         })
 
         it('respects project ranges with no untilTimestamp', async () => {
@@ -1310,56 +1429,59 @@ describeDatabase(TokenValueRepository.name, (db) => {
               },
             )
 
-          expect(result).toEqualUnsorted([
-            {
-              projectId: 'arbitrum',
-              timestamp: UnixTime(100),
-              // Only arbitrum at timestamp 100
-              value: 12000.25,
-              canonical: 12000.25,
-              customCanonical: 0,
-              external: 0,
-              native: 0,
-              ether: 12000.25,
-              stablecoin: 0,
-              btc: 0,
-              rwaRestricted: 0,
-              rwaPublic: 0,
-              other: 0,
-            },
-            {
-              projectId: 'ethereum',
-              timestamp: UnixTime(200),
-              // Only ethereum at timestamp 200 (arbitrum range ended at 100)
-              value: 16000.25,
-              canonical: 16000.25,
-              customCanonical: 0,
-              external: 0,
-              native: 0,
-              ether: 16000.25,
-              stablecoin: 0,
-              btc: 0,
-              rwaRestricted: 0,
-              rwaPublic: 0,
-              other: 0,
-            },
-            {
-              projectId: 'ethereum',
-              timestamp: UnixTime(300),
-              // Only ethereum (no untilTimestamp)
-              value: 24000.25,
-              canonical: 24000.25,
-              customCanonical: 0,
-              external: 0,
-              native: 0,
-              ether: 24000.25,
-              stablecoin: 0,
-              btc: 0,
-              rwaRestricted: 0,
-              rwaPublic: 0,
-              other: 0,
-            },
-          ])
+          expect(result).toHaveLength(3)
+          expect(result).toStrictEqual(
+            expect.arrayContaining([
+              {
+                projectId: 'arbitrum',
+                timestamp: UnixTime(100),
+                // Only arbitrum at timestamp 100
+                value: 12000.25,
+                canonical: 12000.25,
+                customCanonical: 0,
+                external: 0,
+                native: 0,
+                ether: 12000.25,
+                stablecoin: 0,
+                btc: 0,
+                rwaRestricted: 0,
+                rwaPublic: 0,
+                other: 0,
+              },
+              {
+                projectId: 'ethereum',
+                timestamp: UnixTime(200),
+                // Only ethereum at timestamp 200 (arbitrum range ended at 100)
+                value: 16000.25,
+                canonical: 16000.25,
+                customCanonical: 0,
+                external: 0,
+                native: 0,
+                ether: 16000.25,
+                stablecoin: 0,
+                btc: 0,
+                rwaRestricted: 0,
+                rwaPublic: 0,
+                other: 0,
+              },
+              {
+                projectId: 'ethereum',
+                timestamp: UnixTime(300),
+                // Only ethereum (no untilTimestamp)
+                value: 24000.25,
+                canonical: 24000.25,
+                customCanonical: 0,
+                external: 0,
+                native: 0,
+                ether: 24000.25,
+                stablecoin: 0,
+                btc: 0,
+                rwaRestricted: 0,
+                rwaPublic: 0,
+                other: 0,
+              },
+            ]),
+          )
         })
 
         it('filters by global time range with fromInclusive', async () => {
@@ -1384,68 +1506,71 @@ describeDatabase(TokenValueRepository.name, (db) => {
               },
             )
 
-          expect(result).toEqualUnsorted([
-            {
-              projectId: 'ethereum',
-              timestamp: UnixTime(200),
-              value: 16000.25,
-              canonical: 16000.25,
-              customCanonical: 0,
-              external: 0,
-              native: 0,
-              ether: 16000.25,
-              stablecoin: 0,
-              btc: 0,
-              rwaRestricted: 0,
-              rwaPublic: 0,
-              other: 0,
-            },
-            {
-              projectId: 'arbitrum',
-              timestamp: UnixTime(200),
-              value: 8000.5 + 6400.5,
-              canonical: 0,
-              customCanonical: 0,
-              external: 8000.5,
-              native: 6400.5,
-              ether: 0,
-              stablecoin: 0,
-              btc: 0,
-              rwaRestricted: 8000.5,
-              rwaPublic: 6400.5,
-              other: 0,
-            },
-            {
-              projectId: 'ethereum',
-              timestamp: UnixTime(300),
-              value: 24000.25,
-              canonical: 24000.25,
-              customCanonical: 0,
-              external: 0,
-              native: 0,
-              ether: 24000.25,
-              stablecoin: 0,
-              btc: 0,
-              rwaRestricted: 0,
-              rwaPublic: 0,
-              other: 0,
-            },
-            {
-              projectId: 'arbitrum',
-              timestamp: UnixTime(300),
-              value: 20000.25,
-              canonical: 20000.25,
-              customCanonical: 0,
-              external: 0,
-              native: 0,
-              ether: 20000.25,
-              stablecoin: 0,
-              btc: 0,
-              rwaRestricted: 0,
-              rwaPublic: 0,
-              other: 0,
-            },
-          ])
+          expect(result).toHaveLength(4)
+          expect(result).toStrictEqual(
+            expect.arrayContaining([
+              {
+                projectId: 'ethereum',
+                timestamp: UnixTime(200),
+                value: 16000.25,
+                canonical: 16000.25,
+                customCanonical: 0,
+                external: 0,
+                native: 0,
+                ether: 16000.25,
+                stablecoin: 0,
+                btc: 0,
+                rwaRestricted: 0,
+                rwaPublic: 0,
+                other: 0,
+              },
+              {
+                projectId: 'arbitrum',
+                timestamp: UnixTime(200),
+                value: 8000.5 + 6400.5,
+                canonical: 0,
+                customCanonical: 0,
+                external: 8000.5,
+                native: 6400.5,
+                ether: 0,
+                stablecoin: 0,
+                btc: 0,
+                rwaRestricted: 8000.5,
+                rwaPublic: 6400.5,
+                other: 0,
+              },
+              {
+                projectId: 'ethereum',
+                timestamp: UnixTime(300),
+                value: 24000.25,
+                canonical: 24000.25,
+                customCanonical: 0,
+                external: 0,
+                native: 0,
+                ether: 24000.25,
+                stablecoin: 0,
+                btc: 0,
+                rwaRestricted: 0,
+                rwaPublic: 0,
+                other: 0,
+              },
+              {
+                projectId: 'arbitrum',
+                timestamp: UnixTime(300),
+                value: 20000.25,
+                canonical: 20000.25,
+                customCanonical: 0,
+                external: 0,
+                native: 0,
+                ether: 20000.25,
+                stablecoin: 0,
+                btc: 0,
+                rwaRestricted: 0,
+                rwaPublic: 0,
+                other: 0,
+              },
+            ]),
+          )
         })
 
         it('handles non-overlapping project ranges', async () => {
@@ -1472,40 +1597,43 @@ describeDatabase(TokenValueRepository.name, (db) => {
               },
             )
 
-          expect(result).toEqualUnsorted([
-            {
-              projectId: 'ethereum',
-              timestamp: UnixTime(100),
-              // Only ethereum
-              value: 8000.5 + 16000.25 + 4000.75 + 2400.5 + 800.25 + 4000,
-              canonical: 8000.5 + 16000.25 + 800.25,
-              customCanonical: 4000,
-              external: 4000.75,
-              native: 2400.5,
-              ether: 8000.5 + 800.25,
-              stablecoin: 16000.25 + 4000,
-              btc: 4000.75,
-              rwaRestricted: 0,
-              rwaPublic: 0,
-              other: 2400.5,
-            },
-            {
-              projectId: 'arbitrum',
-              timestamp: UnixTime(300),
-              // Only arbitrum
-              value: 20000.25,
-              canonical: 20000.25,
-              customCanonical: 0,
-              external: 0,
-              native: 0,
-              ether: 20000.25,
-              stablecoin: 0,
-              btc: 0,
-              rwaRestricted: 0,
-              rwaPublic: 0,
-              other: 0,
-            },
-          ])
+          expect(result).toHaveLength(2)
+          expect(result).toStrictEqual(
+            expect.arrayContaining([
+              {
+                projectId: 'ethereum',
+                timestamp: UnixTime(100),
+                // Only ethereum
+                value: 8000.5 + 16000.25 + 4000.75 + 2400.5 + 800.25 + 4000,
+                canonical: 8000.5 + 16000.25 + 800.25,
+                customCanonical: 4000,
+                external: 4000.75,
+                native: 2400.5,
+                ether: 8000.5 + 800.25,
+                stablecoin: 16000.25 + 4000,
+                btc: 4000.75,
+                rwaRestricted: 0,
+                rwaPublic: 0,
+                other: 2400.5,
+              },
+              {
+                projectId: 'arbitrum',
+                timestamp: UnixTime(300),
+                // Only arbitrum
+                value: 20000.25,
+                canonical: 20000.25,
+                customCanonical: 0,
+                external: 0,
+                native: 0,
+                ether: 20000.25,
+                stablecoin: 0,
+                btc: 0,
+                rwaRestricted: 0,
+                rwaPublic: 0,
+                other: 0,
+              },
+            ]),
+          )
         })
 
         it('uses valueForSummary when forSummary is true', async () => {
@@ -1527,23 +1655,26 @@ describeDatabase(TokenValueRepository.name, (db) => {
               },
             )
 
-          expect(result).toEqualUnsorted([
-            {
-              projectId: 'ethereum',
-              timestamp: UnixTime(100),
-              value: 5000.25 + 10000.5 + 2500.5 + 1500.75 + 500.5 + 3000,
-              canonical: 5000.25 + 10000.5 + 500.5,
-              customCanonical: 3000,
-              external: 2500.5,
-              native: 1500.75,
-              ether: 5000.25 + 500.5,
-              stablecoin: 10000.5 + 3000,
-              btc: 2500.5,
-              rwaRestricted: 0,
-              rwaPublic: 0,
-              other: 1500.75,
-            },
-          ])
+          expect(result).toHaveLength(1)
+          expect(result).toStrictEqual(
+            expect.arrayContaining([
+              {
+                projectId: 'ethereum',
+                timestamp: UnixTime(100),
+                value: 5000.25 + 10000.5 + 2500.5 + 1500.75 + 500.5 + 3000,
+                canonical: 5000.25 + 10000.5 + 500.5,
+                customCanonical: 3000,
+                external: 2500.5,
+                native: 1500.75,
+                ether: 5000.25 + 500.5,
+                stablecoin: 10000.5 + 3000,
+                btc: 2500.5,
+                rwaRestricted: 0,
+                rwaPublic: 0,
+                other: 1500.75,
+              },
+            ]),
+          )
         })
 
         it('returns empty array when given empty projects array', async () => {
@@ -1603,24 +1734,27 @@ describeDatabase(TokenValueRepository.name, (db) => {
               },
             )
 
-          expect(result).toEqualUnsorted([
-            {
-              projectId: 'ethereum',
-              timestamp: UnixTime(100),
-              // Excludes token 'e' (associated token with valueForProject 800.25)
-              value: 8000.5 + 16000.25 + 4000.75 + 2400.5 + 4000, // a + b + c + d + i
-              canonical: 8000.5 + 16000.25, // a + b
-              customCanonical: 4000, // i
-              external: 4000.75, // c
-              native: 2400.5, // d
-              ether: 8000.5, // a
-              stablecoin: 16000.25 + 4000, // b + i
-              btc: 4000.75, // c
-              rwaRestricted: 0,
-              rwaPublic: 0,
-              other: 2400.5, // d
-            },
-          ])
+          expect(result).toHaveLength(1)
+          expect(result).toStrictEqual(
+            expect.arrayContaining([
+              {
+                projectId: 'ethereum',
+                timestamp: UnixTime(100),
+                // Excludes token 'e' (associated token with valueForProject 800.25)
+                value: 8000.5 + 16000.25 + 4000.75 + 2400.5 + 4000, // a + b + c + d + i
+                canonical: 8000.5 + 16000.25, // a + b
+                customCanonical: 4000, // i
+                external: 4000.75, // c
+                native: 2400.5, // d
+                ether: 8000.5, // a
+                stablecoin: 16000.25 + 4000, // b + i
+                btc: 4000.75, // c
+                rwaRestricted: 0,
+                rwaPublic: 0,
+                other: 2400.5, // d
+              },
+            ]),
+          )
         })
       },
     )
@@ -1968,72 +2102,75 @@ describeDatabase(TokenValueRepository.name, (db) => {
             },
           )
 
-          expect(result).toEqualUnsorted([
-            {
-              timestamp: UnixTime(100),
-              project: 'ethereum',
-              value: 8000.5 + 16000.25 + 4000.75 + 2400.5 + 800.25 + 4000, // a + b + c + d + e + i valueForProject
-              canonical: 8000.5 + 16000.25 + 800.25, // a + b + e
-              customCanonical: 4000, // i
-              external: 4000.75, // c
-              native: 2400.5, // d
-              ether: 8000.5 + 800.25, // a + e
-              stablecoin: 16000.25 + 4000, // b + i
-              btc: 4000.75, // c
-              rwaRestricted: 0,
-              rwaPublic: 0,
-              other: 2400.5, // d
-              associated: 800.25, // e
-            },
-            {
-              timestamp: UnixTime(100),
-              project: 'arbitrum',
-              value: 12000.25, // f valueForProject
-              canonical: 12000.25, // f
-              customCanonical: 0,
-              external: 0,
-              native: 0,
-              ether: 12000.25, // f
-              stablecoin: 0,
-              btc: 0,
-              rwaRestricted: 0,
-              rwaPublic: 0,
-              other: 0,
-              associated: 0,
-            },
-            {
-              timestamp: UnixTime(300),
-              project: 'ethereum',
-              value: 24000.25, // a valueForProject
-              canonical: 24000.25, // a
-              customCanonical: 0,
-              external: 0,
-              native: 0,
-              ether: 24000.25, // a
-              stablecoin: 0,
-              btc: 0,
-              rwaRestricted: 0,
-              rwaPublic: 0,
-              other: 0,
-              associated: 0,
-            },
-            {
-              timestamp: UnixTime(300),
-              project: 'arbitrum',
-              value: 20000.25, // f valueForProject
-              canonical: 20000.25, // f
-              customCanonical: 0,
-              external: 0,
-              native: 0,
-              ether: 20000.25, // f
-              stablecoin: 0,
-              btc: 0,
-              rwaRestricted: 0,
-              rwaPublic: 0,
-              other: 0,
-              associated: 0,
-            },
-          ])
+          expect(result).toHaveLength(4)
+          expect(result).toStrictEqual(
+            expect.arrayContaining([
+              {
+                timestamp: UnixTime(100),
+                project: 'ethereum',
+                value: 8000.5 + 16000.25 + 4000.75 + 2400.5 + 800.25 + 4000, // a + b + c + d + e + i valueForProject
+                canonical: 8000.5 + 16000.25 + 800.25, // a + b + e
+                customCanonical: 4000, // i
+                external: 4000.75, // c
+                native: 2400.5, // d
+                ether: 8000.5 + 800.25, // a + e
+                stablecoin: 16000.25 + 4000, // b + i
+                btc: 4000.75, // c
+                rwaRestricted: 0,
+                rwaPublic: 0,
+                other: 2400.5, // d
+                associated: 800.25, // e
+              },
+              {
+                timestamp: UnixTime(100),
+                project: 'arbitrum',
+                value: 12000.25, // f valueForProject
+                canonical: 12000.25, // f
+                customCanonical: 0,
+                external: 0,
+                native: 0,
+                ether: 12000.25, // f
+                stablecoin: 0,
+                btc: 0,
+                rwaRestricted: 0,
+                rwaPublic: 0,
+                other: 0,
+                associated: 0,
+              },
+              {
+                timestamp: UnixTime(300),
+                project: 'ethereum',
+                value: 24000.25, // a valueForProject
+                canonical: 24000.25, // a
+                customCanonical: 0,
+                external: 0,
+                native: 0,
+                ether: 24000.25, // a
+                stablecoin: 0,
+                btc: 0,
+                rwaRestricted: 0,
+                rwaPublic: 0,
+                other: 0,
+                associated: 0,
+              },
+              {
+                timestamp: UnixTime(300),
+                project: 'arbitrum',
+                value: 20000.25, // f valueForProject
+                canonical: 20000.25, // f
+                customCanonical: 0,
+                external: 0,
+                native: 0,
+                ether: 20000.25, // f
+                stablecoin: 0,
+                btc: 0,
+                rwaRestricted: 0,
+                rwaPublic: 0,
+                other: 0,
+                associated: 0,
+              },
+            ]),
+          )
         })
 
         it('excludes associated tokens when excludeAssociated is true', async () => {
@@ -2047,40 +2184,43 @@ describeDatabase(TokenValueRepository.name, (db) => {
             },
           )
 
-          expect(result).toEqualUnsorted([
-            {
-              timestamp: UnixTime(100),
-              project: 'ethereum',
-              value: 8000.5 + 16000.25 + 4000.75 + 2400.5 + 4000, // a + b + c + d + i (excluding e)
-              canonical: 8000.5 + 16000.25, // a + b (excluding e)
-              customCanonical: 4000, // i
-              external: 4000.75, // c
-              native: 2400.5, // d
-              ether: 8000.5, // a (excluding e)
-              stablecoin: 16000.25 + 4000, // b + i
-              btc: 4000.75, // c
-              rwaRestricted: 0,
-              rwaPublic: 0,
-              other: 2400.5, // d
-              associated: 0, // excluded
-            },
-            {
-              timestamp: UnixTime(100),
-              project: 'arbitrum',
-              value: 12000.25, // f
-              canonical: 12000.25, // f
-              customCanonical: 0,
-              external: 0,
-              native: 0,
-              ether: 12000.25, // f
-              stablecoin: 0,
-              btc: 0,
-              rwaRestricted: 0,
-              rwaPublic: 0,
-              other: 0,
-              associated: 0,
-            },
-          ])
+          expect(result).toHaveLength(2)
+          expect(result).toStrictEqual(
+            expect.arrayContaining([
+              {
+                timestamp: UnixTime(100),
+                project: 'ethereum',
+                value: 8000.5 + 16000.25 + 4000.75 + 2400.5 + 4000, // a + b + c + d + i (excluding e)
+                canonical: 8000.5 + 16000.25, // a + b (excluding e)
+                customCanonical: 4000, // i
+                external: 4000.75, // c
+                native: 2400.5, // d
+                ether: 8000.5, // a (excluding e)
+                stablecoin: 16000.25 + 4000, // b + i
+                btc: 4000.75, // c
+                rwaRestricted: 0,
+                rwaPublic: 0,
+                other: 2400.5, // d
+                associated: 0, // excluded
+              },
+              {
+                timestamp: UnixTime(100),
+                project: 'arbitrum',
+                value: 12000.25, // f
+                canonical: 12000.25, // f
+                customCanonical: 0,
+                external: 0,
+                native: 0,
+                ether: 12000.25, // f
+                stablecoin: 0,
+                btc: 0,
+                rwaRestricted: 0,
+                rwaPublic: 0,
+                other: 0,
+                associated: 0,
+              },
+            ]),
+          )
         })
 
         it('returns empty array when no timestamps match the range', async () => {

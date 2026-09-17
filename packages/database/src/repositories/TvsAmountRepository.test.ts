@@ -18,7 +18,8 @@ describeDatabase(TvsAmountRepository.name, (db) => {
       expect(inserted).toStrictEqual(2)
 
       const result = await repository.getAll()
-      expect(result).toEqualUnsorted(records)
+      expect(result).toHaveLength(records.length)
+      expect(result).toStrictEqual(expect.arrayContaining(records))
     })
 
     it('handles empty array', async () => {
@@ -53,7 +54,8 @@ describeDatabase(TvsAmountRepository.name, (db) => {
       expect(inserted).toStrictEqual(2)
 
       const result = await repository.getAll()
-      expect(result).toEqualUnsorted(updatedRecords)
+      expect(result).toHaveLength(updatedRecords.length)
+      expect(result).toStrictEqual(expect.arrayContaining(updatedRecords))
     })
   })
 
@@ -93,12 +95,15 @@ describeDatabase(TvsAmountRepository.name, (db) => {
         UnixTime(200),
       )
 
-      expect(result).toEqualUnsorted([
-        tvsAmount('a', UnixTime(100), 1n),
-        tvsAmount('b', UnixTime(100), 2n),
-        tvsAmount('a', UnixTime(200), 3n),
-        tvsAmount('b', UnixTime(200), 4n),
-      ])
+      expect(result).toHaveLength(4)
+      expect(result).toStrictEqual(
+        expect.arrayContaining([
+          tvsAmount('a', UnixTime(100), 1n),
+          tvsAmount('b', UnixTime(100), 2n),
+          tvsAmount('a', UnixTime(200), 3n),
+          tvsAmount('b', UnixTime(200), 4n),
+        ]),
+      )
     })
 
     it('returns empty array when no data in range', async () => {
@@ -191,7 +196,10 @@ describeDatabase(TvsAmountRepository.name, (db) => {
       expect(deleted).toStrictEqual(3)
 
       const results = await repository.getAll()
-      expect(results).toEqualUnsorted([tvsAmount('c', UnixTime(1), 4n)])
+      expect(results).toHaveLength(1)
+      expect(results).toStrictEqual(
+        expect.arrayContaining([tvsAmount('c', UnixTime(1), 4n)]),
+      )
     })
 
     it('returns 0 for empty ids', async () => {
@@ -201,7 +209,10 @@ describeDatabase(TvsAmountRepository.name, (db) => {
       expect(deleted).toStrictEqual(0)
 
       const results = await repository.getAll()
-      expect(results).toEqualUnsorted([tvsAmount('a', UnixTime(1), 1n)])
+      expect(results).toHaveLength(1)
+      expect(results).toStrictEqual(
+        expect.arrayContaining([tvsAmount('a', UnixTime(1), 1n)]),
+      )
     })
 
     it('returns 0 when no matching config found', async () => {
@@ -211,7 +222,10 @@ describeDatabase(TvsAmountRepository.name, (db) => {
       expect(deleted).toStrictEqual(0)
 
       const results = await repository.getAll()
-      expect(results).toEqualUnsorted([tvsAmount('a', UnixTime(1), 1n)])
+      expect(results).toHaveLength(1)
+      expect(results).toStrictEqual(
+        expect.arrayContaining([tvsAmount('a', UnixTime(1), 1n)]),
+      )
     })
   })
 
@@ -235,10 +249,13 @@ describeDatabase(TvsAmountRepository.name, (db) => {
       expect(deleted).toStrictEqual(2)
 
       const results = await repository.getAll()
-      expect(results).toEqualUnsorted([
-        tvsAmount('b', UnixTime(3), 3n),
-        tvsAmount('c', UnixTime(2), 4n),
-      ])
+      expect(results).toHaveLength(2)
+      expect(results).toStrictEqual(
+        expect.arrayContaining([
+          tvsAmount('b', UnixTime(3), 3n),
+          tvsAmount('c', UnixTime(2), 4n),
+        ]),
+      )
     })
 
     it('returns 0 if no matching config found', async () => {
@@ -255,7 +272,10 @@ describeDatabase(TvsAmountRepository.name, (db) => {
       expect(deleted).toStrictEqual(0)
 
       const results = await repository.getAll()
-      expect(results).toEqualUnsorted([tvsAmount('b', UnixTime(1), 1n)])
+      expect(results).toHaveLength(1)
+      expect(results).toStrictEqual(
+        expect.arrayContaining([tvsAmount('b', UnixTime(1), 1n)]),
+      )
     })
 
     it('returns 0 for empty configs', async () => {

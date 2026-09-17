@@ -339,28 +339,31 @@ describe(RpcClient.name, () => {
         }),
       )
 
-      expect(result).toEqualUnsorted([
-        {
-          address: mockAddresses[0],
-          topics: mockTopics,
-          blockNumber: mockFromBlock,
-          blockHash: `0x${'0'.repeat(64)}`,
-          transactionHash:
-            '0x4c2480937b375524bc27d0068c82a47d3e4c086fb12d2b3c0ac2222042d0e596',
-          data: '0xdata',
-          logIndex: 0x12ab,
-        },
-        {
-          address: mockAddresses[1],
-          topics: mockTopics,
-          blockNumber: mockFromBlock,
-          blockHash: `0x${'0'.repeat(64)}`,
-          transactionHash:
-            '0x4c2480937b375524bc27d0068c82a47d3e4c086fb12d2b3c0ac2222042d0e596',
-          data: '0xdata',
-          logIndex: 0x34cd,
-        },
-      ])
+      expect(result).toHaveLength(2)
+      expect(result).toStrictEqual(
+        expect.arrayContaining([
+          {
+            address: mockAddresses[0],
+            topics: mockTopics,
+            blockNumber: mockFromBlock,
+            blockHash: `0x${'0'.repeat(64)}`,
+            transactionHash:
+              '0x4c2480937b375524bc27d0068c82a47d3e4c086fb12d2b3c0ac2222042d0e596',
+            data: '0xdata',
+            logIndex: 0x12ab,
+          },
+          {
+            address: mockAddresses[1],
+            topics: mockTopics,
+            blockNumber: mockFromBlock,
+            blockHash: `0x${'0'.repeat(64)}`,
+            transactionHash:
+              '0x4c2480937b375524bc27d0068c82a47d3e4c086fb12d2b3c0ac2222042d0e596',
+            data: '0xdata',
+            logIndex: 0x34cd,
+          },
+        ]),
+      )
     })
   })
 

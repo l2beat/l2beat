@@ -71,18 +71,18 @@ describe(BlobService.name, () => {
       const blobService = new BlobService(mockDb)
       const blobs = await blobService.get('ethereum', 1, 100)
 
-      expect(blobs).toEqualUnsorted(
-        records.map((record) => ({
-          type: 'ethereum',
-          daLayer: record.daLayer,
-          blockTimestamp: record.timestamp,
-          blockNumber: record.blockNumber,
-          size: ETHEREUM_BLOB_SIZE_BYTES,
-          inbox: record.to ?? '',
-          sequencer: record.from,
-          topics: record.topics ?? [],
-        })),
-      )
+      const expected = records.map((record) => ({
+        type: 'ethereum',
+        daLayer: record.daLayer,
+        blockTimestamp: record.timestamp,
+        blockNumber: record.blockNumber,
+        size: ETHEREUM_BLOB_SIZE_BYTES,
+        inbox: record.to ?? '',
+        sequencer: record.from,
+        topics: record.topics ?? [],
+      }))
+      expect(blobs).toHaveLength(expected.length)
+      expect(blobs).toStrictEqual(expect.arrayContaining(expected))
 
       expect(mockBlobRepository.getByBlockRangeInclusive).toHaveBeenCalledWith(
         'ethereum',

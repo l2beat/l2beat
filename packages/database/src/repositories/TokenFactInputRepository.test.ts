@@ -72,7 +72,9 @@ describeDatabase(TokenFactInputRepository.name, (db) => {
       const result = await repository.getAll()
 
       expect(result).toHaveLength(3)
-      expect(result.map(withoutId)).toEqualUnsorted(records)
+      const actual = result.map(withoutId)
+      expect(actual).toHaveLength(records.length)
+      expect(actual).toStrictEqual(expect.arrayContaining(records))
     })
 
     it('handles empty array', async () => {
@@ -97,7 +99,9 @@ describeDatabase(TokenFactInputRepository.name, (db) => {
       const result = await repository.getAll()
 
       expect(result).toHaveLength(1500)
-      expect(result.map(withoutId)).toEqualUnsorted(records)
+      const actual = result.map(withoutId)
+      expect(actual).toHaveLength(records.length)
+      expect(actual).toStrictEqual(expect.arrayContaining(records))
     })
   })
 
@@ -134,7 +138,9 @@ describeDatabase(TokenFactInputRepository.name, (db) => {
       const result = await repository.getByName('same-name')
 
       expect(result).toHaveLength(2)
-      expect(result.map(withoutId)).toEqualUnsorted(matchingRecords)
+      const actual = result.map(withoutId)
+      expect(actual).toHaveLength(matchingRecords.length)
+      expect(actual).toStrictEqual(expect.arrayContaining(matchingRecords))
     })
   })
 

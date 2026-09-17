@@ -30,7 +30,8 @@ describeDatabase(InteropTransferRepository.name, (db) => {
       expect(inserted).toStrictEqual(2)
 
       const result = await repository.getAll()
-      expect(result).toEqualUnsorted(records)
+      expect(result).toHaveLength(records.length)
+      expect(result).toStrictEqual(expect.arrayContaining(records))
     })
 
     it('handles empty array', async () => {
@@ -230,50 +231,53 @@ describeDatabase(InteropTransferRepository.name, (db) => {
 
       const routes = await repository.getTokenRoutes()
 
-      expect(routes).toEqualUnsorted([
-        {
-          plugin: 'plugin1',
-          srcChain: 'ethereum',
-          srcTokenAddress: srcToken,
-          dstChain: 'arbitrum',
-          dstTokenAddress: dstToken,
-          bridgeType: 'lockAndMint',
-          srcWasBurned: false,
-          dstWasMinted: false,
-          transferCount: 4,
-          sampleTransferId: 'transfer2',
-          sampleSrcTxHash: '0xtransfer2src',
-          sampleDstTxHash: '0xtransfer2dst',
-        },
-        {
-          plugin: 'plugin2',
-          srcChain: 'ethereum',
-          srcTokenAddress: srcToken,
-          dstChain: 'arbitrum',
-          dstTokenAddress: dstToken,
-          bridgeType: 'lockAndMint',
-          srcWasBurned: false,
-          dstWasMinted: false,
-          transferCount: 1,
-          sampleTransferId: 'transfer4',
-          sampleSrcTxHash: '0xtransfer4src',
-          sampleDstTxHash: '0xtransfer4dst',
-        },
-        {
-          plugin: 'plugin1',
-          srcChain: 'ethereum',
-          srcTokenAddress: srcToken,
-          dstChain: 'arbitrum',
-          dstTokenAddress: otherDstToken,
-          bridgeType: undefined,
-          srcWasBurned: true,
-          dstWasMinted: true,
-          transferCount: 1,
-          sampleTransferId: 'transfer3',
-          sampleSrcTxHash: '0xtransfer3src',
-          sampleDstTxHash: '0xtransfer3dst',
-        },
-      ])
+      expect(routes).toHaveLength(3)
+      expect(routes).toStrictEqual(
+        expect.arrayContaining([
+          {
+            plugin: 'plugin1',
+            srcChain: 'ethereum',
+            srcTokenAddress: srcToken,
+            dstChain: 'arbitrum',
+            dstTokenAddress: dstToken,
+            bridgeType: 'lockAndMint',
+            srcWasBurned: false,
+            dstWasMinted: false,
+            transferCount: 4,
+            sampleTransferId: 'transfer2',
+            sampleSrcTxHash: '0xtransfer2src',
+            sampleDstTxHash: '0xtransfer2dst',
+          },
+          {
+            plugin: 'plugin2',
+            srcChain: 'ethereum',
+            srcTokenAddress: srcToken,
+            dstChain: 'arbitrum',
+            dstTokenAddress: dstToken,
+            bridgeType: 'lockAndMint',
+            srcWasBurned: false,
+            dstWasMinted: false,
+            transferCount: 1,
+            sampleTransferId: 'transfer4',
+            sampleSrcTxHash: '0xtransfer4src',
+            sampleDstTxHash: '0xtransfer4dst',
+          },
+          {
+            plugin: 'plugin1',
+            srcChain: 'ethereum',
+            srcTokenAddress: srcToken,
+            dstChain: 'arbitrum',
+            dstTokenAddress: otherDstToken,
+            bridgeType: undefined,
+            srcWasBurned: true,
+            dstWasMinted: true,
+            transferCount: 1,
+            sampleTransferId: 'transfer3',
+            sampleSrcTxHash: '0xtransfer3src',
+            sampleDstTxHash: '0xtransfer3dst',
+          },
+        ]),
+      )
     })
 
     it('falls back to a partially hashed sample when no fully hashed transfer exists', async () => {
@@ -379,11 +383,9 @@ describeDatabase(InteropTransferRepository.name, (db) => {
       const result = await repository.getByType('deposit')
 
       expect(result).toHaveLength(3)
-      expect(result.map((r) => r.transferId)).toEqualUnsorted([
-        'msg1',
-        'msg2',
-        'msg4',
-      ])
+      expect([...result.map((r) => r.transferId)].sort()).toStrictEqual(
+        ['msg1', 'msg2', 'msg4'].sort(),
+      )
     })
 
     it('returns transfers ordered by timestamp descending', async () => {
@@ -398,7 +400,9 @@ describeDatabase(InteropTransferRepository.name, (db) => {
       })
 
       expect(result).toHaveLength(2)
-      expect(result.map((r) => r.transferId)).toEqualUnsorted(['msg1', 'msg2'])
+      expect([...result.map((r) => r.transferId)].sort()).toStrictEqual(
+        ['msg1', 'msg2'].sort(),
+      )
     })
 
     it('filters by destination chain when provided', async () => {
@@ -426,7 +430,9 @@ describeDatabase(InteropTransferRepository.name, (db) => {
       })
 
       expect(result).toHaveLength(2)
-      expect(result.map((r) => r.transferId)).toEqualUnsorted(['msg1', 'msg2'])
+      expect([...result.map((r) => r.transferId)].sort()).toStrictEqual(
+        ['msg1', 'msg2'].sort(),
+      )
     })
 
     it('returns empty array when no transfers match type', async () => {
@@ -585,10 +591,9 @@ describeDatabase(InteropTransferRepository.name, (db) => {
 
       const remaining = await repository.getAll()
       expect(remaining).toHaveLength(2)
-      expect(remaining.map((r) => r.transferId)).toEqualUnsorted([
-        'msg3',
-        'msg4',
-      ])
+      expect([...remaining.map((r) => r.transferId)].sort()).toStrictEqual(
+        ['msg3', 'msg4'].sort(),
+      )
     })
   })
 
@@ -642,7 +647,9 @@ describeDatabase(InteropTransferRepository.name, (db) => {
       const result = await repository.getUnprocessed()
 
       expect(result).toHaveLength(2)
-      expect(result.map((r) => r.transferId)).toEqualUnsorted(['msg1', 'msg2'])
+      expect([...result.map((r) => r.transferId)].sort()).toStrictEqual(
+        ['msg1', 'msg2'].sort(),
+      )
       expect(result.every((r) => r.isProcessed === false)).toStrictEqual(true)
     })
 
@@ -710,10 +717,13 @@ describeDatabase(InteropTransferRepository.name, (db) => {
         const batch = await repository.getTokenAddressesAfterSerialId('0')
 
         expect(batch.latestSerialId).not.toStrictEqual(undefined)
-        expect(batch.tokenAddresses).toEqualUnsorted([
-          { chain: 'ethereum', address: '0xaaa' },
-          { chain: 'arbitrum', address: '0xbbb' },
-        ])
+        expect(batch.tokenAddresses).toHaveLength(2)
+        expect(batch.tokenAddresses).toStrictEqual(
+          expect.arrayContaining([
+            { chain: 'ethereum', address: '0xaaa' },
+            { chain: 'arbitrum', address: '0xbbb' },
+          ]),
+        )
       })
 
       it('uses insertion order instead of transfer timestamp', async () => {
@@ -738,10 +748,13 @@ describeDatabase(InteropTransferRepository.name, (db) => {
 
         const batch = await repository.getTokenAddressesAfterSerialId(cursor!)
 
-        expect(batch.tokenAddresses).toEqualUnsorted([
-          { chain: lateArrival.srcChain, address: '0x333' },
-          { chain: lateArrival.dstChain, address: '0x444' },
-        ])
+        expect(batch.tokenAddresses).toHaveLength(2)
+        expect(batch.tokenAddresses).toStrictEqual(
+          expect.arrayContaining([
+            { chain: lateArrival.srcChain, address: '0x333' },
+            { chain: lateArrival.dstChain, address: '0x444' },
+          ]),
+        )
       })
     },
   )
@@ -993,19 +1006,18 @@ describeDatabase(InteropTransferRepository.name, (db) => {
       const result = await repository.getByRange(UnixTime(200), UnixTime(400))
 
       expect(result).toHaveLength(2)
-      expect(result.map((r) => r.transferId)).toEqualUnsorted(['msg3', 'msg4'])
+      expect([...result.map((r) => r.transferId)].sort()).toStrictEqual(
+        ['msg3', 'msg4'].sort(),
+      )
     })
 
     it('includes upper boundary but excludes lower boundary', async () => {
       const result = await repository.getByRange(UnixTime(100), UnixTime(500))
 
       expect(result).toHaveLength(4)
-      expect(result.map((r) => r.transferId)).toEqualUnsorted([
-        'msg2',
-        'msg3',
-        'msg4',
-        'msg5',
-      ])
+      expect([...result.map((r) => r.transferId)].sort()).toStrictEqual(
+        ['msg2', 'msg3', 'msg4', 'msg5'].sort(),
+      )
     })
 
     it('returns empty array when no transfers in range', async () => {
@@ -1445,10 +1457,9 @@ describeDatabase(InteropTransferRepository.name, (db) => {
         const result = await repository.getWithPartialAbstractTokenIds()
 
         expect(result).toHaveLength(2)
-        expect(result.map((r) => r.transferId)).toEqualUnsorted([
-          'msg1',
-          'msg2',
-        ])
+        expect([...result.map((r) => r.transferId)].sort()).toStrictEqual(
+          ['msg1', 'msg2'].sort(),
+        )
         expect(
           result.find((r) => r.transferId === 'msg1')?.srcAbstractTokenId,
         ).toStrictEqual(undefined)
@@ -1583,7 +1594,9 @@ describeDatabase(InteropTransferRepository.name, (db) => {
         { srcTxHash: '0xb', dstTxHash: '0xy' },
       ])
 
-      expect(result.map((r) => r.transferId)).toEqualUnsorted(['msg1', 'msg2'])
+      expect([...result.map((r) => r.transferId)].sort()).toStrictEqual(
+        ['msg1', 'msg2'].sort(),
+      )
     })
 
     it('does not return rows that only cross-match individual hashes', async () => {
@@ -1606,7 +1619,9 @@ describeDatabase(InteropTransferRepository.name, (db) => {
         { srcTxHash: '0xb', dstTxHash: '0xy' },
       ])
 
-      expect(result.map((r) => r.transferId)).toEqualUnsorted(['msg1', 'msg2'])
+      expect([...result.map((r) => r.transferId)].sort()).toStrictEqual(
+        ['msg1', 'msg2'].sort(),
+      )
     })
 
     it('lowercases input tx hashes when matching', async () => {
@@ -1662,7 +1677,9 @@ describeDatabase(InteropTransferRepository.name, (db) => {
           { srcChain: 'ethereum' },
           10,
         )
-        expect(bySrc.map((r) => r.transferId)).toEqualUnsorted(['msg1', 'msg3'])
+        expect([...bySrc.map((r) => r.transferId)].sort()).toStrictEqual(
+          ['msg1', 'msg3'].sort(),
+        )
 
         const byBoth = await repository.getByFinancialsFilter(
           { srcChain: 'ethereum', dstChain: 'arbitrum' },
@@ -1713,10 +1730,9 @@ describeDatabase(InteropTransferRepository.name, (db) => {
           10,
         )
 
-        expect(result.map((r) => r.transferId)).toEqualUnsorted([
-          'msg1',
-          'msg2',
-        ])
+        expect([...result.map((r) => r.transferId)].sort()).toStrictEqual(
+          ['msg1', 'msg2'].sort(),
+        )
       })
 
       it('orders by timestamp and transferId descending and applies limit', async () => {

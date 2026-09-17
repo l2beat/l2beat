@@ -73,7 +73,9 @@ describeDatabase(BlobsRepository.name, (db) => {
       await repository.insertMany(newRows)
 
       const results = await repository.getAll()
-      expect(results).toEqualUnsorted([...DATA, ...newRows])
+      const expected = [...DATA, ...newRows]
+      expect(results).toHaveLength(expected.length)
+      expect(results).toStrictEqual(expect.arrayContaining(expected))
     })
 
     it('empty array', async () => {
@@ -85,11 +87,11 @@ describeDatabase(BlobsRepository.name, (db) => {
     it('should return all rows', async () => {
       const results = await repository.getAll()
 
-      expect(results).toEqualUnsorted(
-        DATA.map((e) => ({
-          ...e,
-        })),
-      )
+      const expected = DATA.map((e) => ({
+        ...e,
+      }))
+      expect(results).toHaveLength(expected.length)
+      expect(results).toStrictEqual(expect.arrayContaining(expected))
     })
   })
 
@@ -101,7 +103,9 @@ describeDatabase(BlobsRepository.name, (db) => {
         3000,
       )
 
-      expect(results).toEqualUnsorted(DATA.slice(1, 3))
+      const expected = DATA.slice(1, 3)
+      expect(results).toHaveLength(expected.length)
+      expect(results).toStrictEqual(expect.arrayContaining(expected))
     })
   })
 
@@ -139,10 +143,13 @@ describeDatabase(BlobsRepository.name, (db) => {
         base + UnixTime.DAY,
       )
 
-      expect(results).toEqualUnsorted([
-        { from: '0xA', to: '0xB', count: 2 },
-        { from: '0xA', to: '0xC', count: 1 },
-      ])
+      expect(results).toHaveLength(2)
+      expect(results).toStrictEqual(
+        expect.arrayContaining([
+          { from: '0xA', to: '0xB', count: 2 },
+          { from: '0xA', to: '0xC', count: 1 },
+        ]),
+      )
     })
 
     it('should filter by timestamp range (inclusive start, exclusive end)', async () => {

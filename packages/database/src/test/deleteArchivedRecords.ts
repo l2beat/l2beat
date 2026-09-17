@@ -14,6 +14,10 @@ interface TestedRepository<T> {
   getAll: () => Promise<T[]>
 }
 
+/** `unknown[]` because `expect.arrayContaining` asks for
+ * `DeeplyAllowMatchers<T>[]`, which an unresolved `T` is not known to satisfy. */
+type Expected = unknown[]
+
 /**
  * Shared test bodies, not a suite of its own: every repository that archives
  * rows gets the same cases. It lives here rather than next to the code under
@@ -37,13 +41,15 @@ export function testDeletingArchivedRecords<T>(
     await repository.deleteHourlyUntil({ from: undefined, to })
     const results = await repository.getAll()
 
-    expect(results).toEqualUnsorted([
+    const expected: Expected = [
       fakeRecord(start),
       fakeRecord(start + 6 * UnixTime.HOUR),
       fakeRecord(start + 12 * UnixTime.HOUR),
       fakeRecord(start + 18 * UnixTime.HOUR),
       fakeRecord(start + 24 * UnixTime.HOUR),
-    ])
+    ]
+    expect(results).toHaveLength(expected.length)
+    expect(results).toStrictEqual(expect.arrayContaining(expected))
   })
 
   it('deletes hourly records from to', async () => {
@@ -60,7 +66,7 @@ export function testDeletingArchivedRecords<T>(
     await repository.deleteHourlyUntil({ from, to })
     const results = await repository.getAll()
 
-    expect(results).toEqualUnsorted([
+    const expected: Expected = [
       fakeRecord(start),
       fakeRecord(start + 1 * UnixTime.HOUR),
       fakeRecord(start + 2 * UnixTime.HOUR),
@@ -71,7 +77,9 @@ export function testDeletingArchivedRecords<T>(
       fakeRecord(start + 12 * UnixTime.HOUR),
       fakeRecord(start + 18 * UnixTime.HOUR),
       fakeRecord(start + 24 * UnixTime.HOUR),
-    ])
+    ]
+    expect(results).toHaveLength(expected.length)
+    expect(results).toStrictEqual(expect.arrayContaining(expected))
   })
 
   it('deletes six hourly records to given date', async () => {
@@ -87,7 +95,7 @@ export function testDeletingArchivedRecords<T>(
     await repository.deleteSixHourlyUntil({ from: undefined, to })
     const results = await repository.getAll()
 
-    expect(results).toEqualUnsorted([
+    const expected: Expected = [
       fakeRecord(start),
       fakeRecord(start + 1 * UnixTime.HOUR),
       fakeRecord(start + 2 * UnixTime.HOUR),
@@ -95,7 +103,9 @@ export function testDeletingArchivedRecords<T>(
       fakeRecord(start + 4 * UnixTime.HOUR),
       fakeRecord(start + 5 * UnixTime.HOUR),
       fakeRecord(start + 7 * UnixTime.HOUR),
-    ])
+    ]
+    expect(results).toHaveLength(expected.length)
+    expect(results).toStrictEqual(expect.arrayContaining(expected))
   })
 
   it('deletes six hourly records from to', async () => {
@@ -112,7 +122,7 @@ export function testDeletingArchivedRecords<T>(
     await repository.deleteSixHourlyUntil({ from, to })
     const results = await repository.getAll()
 
-    expect(results).toEqualUnsorted([
+    const expected: Expected = [
       fakeRecord(start),
       fakeRecord(start + 1 * UnixTime.HOUR),
       fakeRecord(start + 2 * UnixTime.HOUR),
@@ -126,6 +136,8 @@ export function testDeletingArchivedRecords<T>(
       fakeRecord(start + 10 * UnixTime.HOUR),
       fakeRecord(start + 11 * UnixTime.HOUR),
       fakeRecord(start + 13 * UnixTime.HOUR),
-    ])
+    ]
+    expect(results).toHaveLength(expected.length)
+    expect(results).toStrictEqual(expect.arrayContaining(expected))
   })
 }

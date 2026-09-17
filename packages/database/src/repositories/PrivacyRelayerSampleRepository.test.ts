@@ -102,10 +102,11 @@ describeDatabase(PrivacyRelayerSampleRepository.name, (db) => {
           await repository.deleteByConfigInTimeRange(configA, day(1), day(2)),
         ).toStrictEqual(2)
 
-        expect(await repository.getAll()).toEqualUnsorted([
-          records[0]!,
-          records[3]!,
-        ])
+        const actual = await repository.getAll()
+        expect(actual).toHaveLength(2)
+        expect(actual).toStrictEqual(
+          expect.arrayContaining([records[0]!, records[3]!]),
+        )
       })
     },
   )

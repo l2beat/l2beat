@@ -147,7 +147,8 @@ describeTokenDatabase(ChainRepository.name, (db) => {
       await repository.insertMany(records)
 
       const all = await repository.getAll()
-      expect(all).toEqualUnsorted(records)
+      expect(all).toHaveLength(records.length)
+      expect(all).toStrictEqual(expect.arrayContaining(records))
     })
 
     it('inserts multiple chain records with different configurations', async () => {
@@ -175,7 +176,8 @@ describeTokenDatabase(ChainRepository.name, (db) => {
       await repository.insertMany(records)
 
       const all = await repository.getAll()
-      expect(all).toEqualUnsorted(records)
+      expect(all).toHaveLength(records.length)
+      expect(all).toStrictEqual(expect.arrayContaining(records))
     })
 
     it('inserts empty array', async () => {
@@ -220,7 +222,8 @@ describeTokenDatabase(ChainRepository.name, (db) => {
       await repository.insertMany(records)
 
       const all = await repository.getAll()
-      expect(all).toEqualUnsorted(records)
+      expect(all).toHaveLength(records.length)
+      expect(all).toStrictEqual(expect.arrayContaining(records))
     })
 
     it('returns records with correct JSON parsing', async () => {
@@ -439,7 +442,10 @@ describeTokenDatabase(ChainRepository.name, (db) => {
       expect(deleted).toStrictEqual(1)
 
       const all = await repository.getAll()
-      expect(all).toEqualUnsorted([records[0], records[2]])
+      expect(all).toHaveLength(2)
+      expect(all).toStrictEqual(
+        expect.arrayContaining([records[0], records[2]]),
+      )
     })
 
     it('returns 0 when chain does not exist', async () => {

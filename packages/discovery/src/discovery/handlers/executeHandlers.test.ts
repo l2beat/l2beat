@@ -225,10 +225,13 @@ describe(executeHandlers.name, () => {
       ADDRESS,
     )
 
-    expect(values).toEqualUnsorted([
-      { field: 'foo', fragment, value: 0x12345678 },
-      { field: 'a', value: 123, ignoreRelative: undefined },
-    ])
+    expect(values).toHaveLength(2)
+    expect(values).toStrictEqual(
+      expect.arrayContaining([
+        { field: 'foo', fragment, value: 0x12345678 },
+        { field: 'a', value: 123, ignoreRelative: undefined },
+      ]),
+    )
   })
 
   it('handles multicallable handlers with dependencies', async () => {

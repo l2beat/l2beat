@@ -55,7 +55,8 @@ describeDatabase(AggregatedL2CostRepository.name, (db) => {
           [NOW - 7 * UnixTime.HOUR, NOW + 2 * UnixTime.HOUR],
         )
 
-        expect(results).toEqualUnsorted(records)
+        expect(results).toHaveLength(records.length)
+        expect(results).toStrictEqual(expect.arrayContaining(records))
       })
 
       it('should return all rows for given project id and since timestamp with exclusive to', async () => {

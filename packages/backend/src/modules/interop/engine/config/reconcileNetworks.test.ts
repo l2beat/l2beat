@@ -102,13 +102,18 @@ describe(reconcileNetworks.name, () => {
 
     const result = reconcileNetworks(previous, latest)
 
-    expect(result.removed).toEqualUnsorted(['optimism', 'arbitrum'])
-    expect(result.updated).toEqualUnsorted([
-      { chain: 'optimism', rpcUrl: 'https://op.rpc' }, // removed network
-      { chain: 'arbitrum', rpcUrl: 'https://arb.rpc' }, // removed network
-      { chain: 'ethereum', rpcUrl: 'https://eth.rpc', blockNumber: 101 }, // all latest networks
-      { chain: 'base', rpcUrl: 'https://base.rpc' },
-    ])
+    expect([...result.removed].sort()).toStrictEqual(
+      ['optimism', 'arbitrum'].sort(),
+    )
+    expect(result.updated).toHaveLength(4)
+    expect(result.updated).toStrictEqual(
+      expect.arrayContaining([
+        { chain: 'optimism', rpcUrl: 'https://op.rpc' }, // removed network
+        { chain: 'arbitrum', rpcUrl: 'https://arb.rpc' }, // removed network
+        { chain: 'ethereum', rpcUrl: 'https://eth.rpc', blockNumber: 101 }, // all latest networks
+        { chain: 'base', rpcUrl: 'https://base.rpc' },
+      ]),
+    )
   })
 
   it('returns empty updated array when networks are identical', () => {

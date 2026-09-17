@@ -426,12 +426,15 @@ describe(ManagedMultiIndexer.name, () => {
 
       const configurations = await getSavedConfigurations(indexerService)
 
-      expect(configurations).toEqualUnsorted([
-        saved('a', 100, 300, 300),
-        saved('b', 200, 500, 500),
-        saved('c', 400, null, 600),
-        saved('d', 100, null, 600),
-      ])
+      expect(configurations).toHaveLength(4)
+      expect(configurations).toStrictEqual(
+        expect.arrayContaining([
+          saved('a', 100, 300, 300),
+          saved('b', 200, 500, 500),
+          saved('c', 400, null, 600),
+          saved('d', 100, null, 600),
+        ]),
+      )
     })
 
     it('configuration removed', async () => {
@@ -445,10 +448,13 @@ describe(ManagedMultiIndexer.name, () => {
         await db.indexerConfiguration.getConfigurationsWithoutIndexerId(
           INDEXER_ID,
         )
-      expect(before).toEqualUnsorted([
-        saved('a', 400, null, 550),
-        saved('d', 100, null, 550),
-      ])
+      expect(before).toHaveLength(2)
+      expect(before).toStrictEqual(
+        expect.arrayContaining([
+          saved('a', 400, null, 550),
+          saved('d', 100, null, 550),
+        ]),
+      )
 
       await indexer.start()
 
@@ -456,7 +462,10 @@ describe(ManagedMultiIndexer.name, () => {
         await db.indexerConfiguration.getConfigurationsWithoutIndexerId(
           INDEXER_ID,
         )
-      expect(after).toEqualUnsorted([saved('a', 400, null, 550)])
+      expect(after).toHaveLength(1)
+      expect(after).toStrictEqual(
+        expect.arrayContaining([saved('a', 400, null, 550)]),
+      )
 
       expect(indexer.wipeData).toHaveBeenCalledExactlyOnceWith([
         { id: 'd'.repeat(12) },
@@ -474,7 +483,10 @@ describe(ManagedMultiIndexer.name, () => {
         await db.indexerConfiguration.getConfigurationsWithoutIndexerId(
           INDEXER_ID,
         )
-      expect(before).toEqualUnsorted([saved('d', 100, null, 550)])
+      expect(before).toHaveLength(1)
+      expect(before).toStrictEqual(
+        expect.arrayContaining([saved('d', 100, null, 550)]),
+      )
 
       await indexer.start()
 
@@ -482,7 +494,10 @@ describe(ManagedMultiIndexer.name, () => {
         await db.indexerConfiguration.getConfigurationsWithoutIndexerId(
           INDEXER_ID,
         )
-      expect(after).toEqualUnsorted([saved('d', 50, null, null)])
+      expect(after).toHaveLength(1)
+      expect(after).toStrictEqual(
+        expect.arrayContaining([saved('d', 50, null, null)]),
+      )
 
       // remove all data
       expect(indexer.wipeData).toHaveBeenCalledExactlyOnceWith([
@@ -501,7 +516,10 @@ describe(ManagedMultiIndexer.name, () => {
         await db.indexerConfiguration.getConfigurationsWithoutIndexerId(
           INDEXER_ID,
         )
-      expect(before).toEqualUnsorted([saved('d', 100, null, 550)])
+      expect(before).toHaveLength(1)
+      expect(before).toStrictEqual(
+        expect.arrayContaining([saved('d', 100, null, 550)]),
+      )
 
       await indexer.start()
 
@@ -509,7 +527,10 @@ describe(ManagedMultiIndexer.name, () => {
         await db.indexerConfiguration.getConfigurationsWithoutIndexerId(
           INDEXER_ID,
         )
-      expect(after).toEqualUnsorted([saved('d', 150, null, 550)])
+      expect(after).toHaveLength(1)
+      expect(after).toStrictEqual(
+        expect.arrayContaining([saved('d', 150, null, 550)]),
+      )
 
       // remove part of data
       expect(indexer.trimData).toHaveBeenCalledExactlyOnceWith([
@@ -528,7 +549,10 @@ describe(ManagedMultiIndexer.name, () => {
         await db.indexerConfiguration.getConfigurationsWithoutIndexerId(
           INDEXER_ID,
         )
-      expect(before).toEqualUnsorted([saved('d', 100, null, 550)])
+      expect(before).toHaveLength(1)
+      expect(before).toStrictEqual(
+        expect.arrayContaining([saved('d', 100, null, 550)]),
+      )
 
       await indexer.start()
 
@@ -536,7 +560,10 @@ describe(ManagedMultiIndexer.name, () => {
         await db.indexerConfiguration.getConfigurationsWithoutIndexerId(
           INDEXER_ID,
         )
-      expect(after).toEqualUnsorted([saved('d', 1000, null, null)])
+      expect(after).toHaveLength(1)
+      expect(after).toStrictEqual(
+        expect.arrayContaining([saved('d', 1000, null, null)]),
+      )
 
       expect(indexer.trimData).toHaveBeenCalledExactlyOnceWith([
         { id: 'd'.repeat(12), range: [100, 999] },
@@ -554,7 +581,10 @@ describe(ManagedMultiIndexer.name, () => {
         await db.indexerConfiguration.getConfigurationsWithoutIndexerId(
           INDEXER_ID,
         )
-      expect(before).toEqualUnsorted([saved('d', 100, null, 550)])
+      expect(before).toHaveLength(1)
+      expect(before).toStrictEqual(
+        expect.arrayContaining([saved('d', 100, null, 550)]),
+      )
 
       await indexer.start()
 
@@ -562,7 +592,10 @@ describe(ManagedMultiIndexer.name, () => {
         await db.indexerConfiguration.getConfigurationsWithoutIndexerId(
           INDEXER_ID,
         )
-      expect(after).toEqualUnsorted([saved('d', 100, 1000, 550)])
+      expect(after).toHaveLength(1)
+      expect(after).toStrictEqual(
+        expect.arrayContaining([saved('d', 100, 1000, 550)]),
+      )
 
       expect(indexer.trimData).not.toHaveBeenCalled()
       expect(indexer.wipeData).not.toHaveBeenCalled()
@@ -579,7 +612,10 @@ describe(ManagedMultiIndexer.name, () => {
         await db.indexerConfiguration.getConfigurationsWithoutIndexerId(
           INDEXER_ID,
         )
-      expect(before).toEqualUnsorted([saved('d', 100, null, 550)])
+      expect(before).toHaveLength(1)
+      expect(before).toStrictEqual(
+        expect.arrayContaining([saved('d', 100, null, 550)]),
+      )
 
       await indexer.start()
 
@@ -587,7 +623,10 @@ describe(ManagedMultiIndexer.name, () => {
         await db.indexerConfiguration.getConfigurationsWithoutIndexerId(
           INDEXER_ID,
         )
-      expect(after).toEqualUnsorted([saved('d', 100, 200, 200)])
+      expect(after).toHaveLength(1)
+      expect(after).toStrictEqual(
+        expect.arrayContaining([saved('d', 100, 200, 200)]),
+      )
 
       expect(indexer.trimData).toHaveBeenCalledExactlyOnceWith([
         { id: 'd'.repeat(12), range: [201, 550] },
@@ -605,9 +644,12 @@ describe(ManagedMultiIndexer.name, () => {
         await db.indexerConfiguration.getConfigurationsWithoutIndexerId(
           INDEXER_ID,
         )
-      expect(before).toEqualUnsorted([
-        { ...saved('d', 100, null, 550), properties: 'old-props' },
-      ])
+      expect(before).toHaveLength(1)
+      expect(before).toStrictEqual(
+        expect.arrayContaining([
+          { ...saved('d', 100, null, 550), properties: 'old-props' },
+        ]),
+      )
 
       await indexer.start()
 
@@ -615,12 +657,15 @@ describe(ManagedMultiIndexer.name, () => {
         await db.indexerConfiguration.getConfigurationsWithoutIndexerId(
           INDEXER_ID,
         )
-      expect(after).toEqualUnsorted([
-        {
-          ...saved('d', 100, null, 550),
-          properties: JSON.stringify('new-props'),
-        },
-      ])
+      expect(after).toHaveLength(1)
+      expect(after).toStrictEqual(
+        expect.arrayContaining([
+          {
+            ...saved('d', 100, null, 550),
+            properties: JSON.stringify('new-props'),
+          },
+        ]),
+      )
     })
   })
 })

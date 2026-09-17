@@ -20,10 +20,13 @@ describeDatabase(InteropRecentPricesRepository.name, (database) => {
 
       expect(count).toStrictEqual(2)
       const result = await repository.getAll()
-      expect(result).toEqualUnsorted([
-        saved('bitcoin', UnixTime(100), 1000),
-        saved('ethereum', UnixTime(100), 1000),
-      ])
+      expect(result).toHaveLength(2)
+      expect(result).toStrictEqual(
+        expect.arrayContaining([
+          saved('bitcoin', UnixTime(100), 1000),
+          saved('ethereum', UnixTime(100), 1000),
+        ]),
+      )
     })
 
     it('performs batch insert when more than 10,000 records', async () => {
@@ -117,7 +120,10 @@ describeDatabase(InteropRecentPricesRepository.name, (database) => {
       expect(deletedCount).toStrictEqual(3)
 
       const remaining = await repository.getAll()
-      expect(remaining).toEqualUnsorted([saved('bitcoin', UnixTime(300), 1000)])
+      expect(remaining).toHaveLength(1)
+      expect(remaining).toStrictEqual(
+        expect.arrayContaining([saved('bitcoin', UnixTime(300), 1000)]),
+      )
     })
 
     it('returns 0 when no records before timestamp', async () => {
@@ -154,7 +160,10 @@ describeDatabase(InteropRecentPricesRepository.name, (database) => {
       expect(deletedCount).toStrictEqual(3)
 
       const remaining = await repository.getAll()
-      expect(remaining).toEqualUnsorted([saved('bitcoin', UnixTime(100), 1000)])
+      expect(remaining).toHaveLength(1)
+      expect(remaining).toStrictEqual(
+        expect.arrayContaining([saved('bitcoin', UnixTime(100), 1000)]),
+      )
     })
 
     it('returns 0 when no records after timestamp', async () => {

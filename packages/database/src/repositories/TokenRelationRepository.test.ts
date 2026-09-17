@@ -67,7 +67,9 @@ describeTokenDatabase(TokenRelationRepository.name, (db) => {
         await repository.insert(relation)
       }
 
-      expect(await repository.getAll()).toEqualUnsorted(relations)
+      const actual = await repository.getAll()
+      expect(actual).toHaveLength(relations.length)
+      expect(actual).toStrictEqual(expect.arrayContaining(relations))
     })
 
     it('inserts a relation whose endpoints are not catalogued as deployed tokens', async () => {
@@ -103,10 +105,11 @@ describeTokenDatabase(TokenRelationRepository.name, (db) => {
       await repository.insert(lockAndMint)
       await repository.insert(burnAndMint)
 
-      expect(await repository.getAll()).toEqualUnsorted([
-        lockAndMint,
-        burnAndMint,
-      ])
+      const actual = await repository.getAll()
+      expect(actual).toHaveLength(2)
+      expect(actual).toStrictEqual(
+        expect.arrayContaining([lockAndMint, burnAndMint]),
+      )
     })
 
     it('stores one row per pair regardless of the order the endpoints arrive in', async () => {
@@ -321,10 +324,11 @@ describeTokenDatabase(TokenRelationRepository.name, (db) => {
       await repository.insert(onSecondEndpoint)
       await repository.insert(unrelated)
 
-      expect(await repository.getRelationsFor(arbitrumToken)).toEqualUnsorted([
-        onFirstEndpoint,
-        onSecondEndpoint,
-      ])
+      const actual = await repository.getRelationsFor(arbitrumToken)
+      expect(actual).toHaveLength(2)
+      expect(actual).toStrictEqual(
+        expect.arrayContaining([onFirstEndpoint, onSecondEndpoint]),
+      )
     })
   })
 
@@ -483,46 +487,48 @@ describeTokenDatabase(TokenRelationRepository.name, (db) => {
           await repository.insert(relation)
         }
 
-        expect(
-          await repository.getMintingPluginsForMany([
-            {
-              chain: arbitrumToken.chain,
-              address: arbitrumToken.address.toUpperCase(),
-            },
-            optimismToken,
-          ]),
-        ).toEqualUnsorted([
+        const actual = await repository.getMintingPluginsForMany([
           {
-            ...arbitrumToken,
-            plugin: 'canonicalbridge',
-            bridgeType: 'lockAndMint',
-            relatedChain: 'ethereum',
+            chain: arbitrumToken.chain,
+            address: arbitrumToken.address.toUpperCase(),
           },
-          {
-            ...arbitrumToken,
-            plugin: 'superbridge',
-            bridgeType: 'burnAndMint',
-            relatedChain: 'ethereum',
-          },
-          {
-            ...arbitrumToken,
-            plugin: 'superbridge',
-            bridgeType: 'burnAndMint',
-            relatedChain: 'optimism',
-          },
-          {
-            ...optimismToken,
-            plugin: 'escrowbridge',
-            bridgeType: 'lockAndMint',
-            relatedChain: 'arbitrum',
-          },
-          {
-            ...optimismToken,
-            plugin: 'superbridge',
-            bridgeType: 'burnAndMint',
-            relatedChain: 'arbitrum',
-          },
+          optimismToken,
         ])
+        expect(actual).toHaveLength(5)
+        expect(actual).toStrictEqual(
+          expect.arrayContaining([
+            {
+              ...arbitrumToken,
+              plugin: 'canonicalbridge',
+              bridgeType: 'lockAndMint',
+              relatedChain: 'ethereum',
+            },
+            {
+              ...arbitrumToken,
+              plugin: 'superbridge',
+              bridgeType: 'burnAndMint',
+              relatedChain: 'ethereum',
+            },
+            {
+              ...arbitrumToken,
+              plugin: 'superbridge',
+              bridgeType: 'burnAndMint',
+              relatedChain: 'optimism',
+            },
+            {
+              ...optimismToken,
+              plugin: 'escrowbridge',
+              bridgeType: 'lockAndMint',
+              relatedChain: 'arbitrum',
+            },
+            {
+              ...optimismToken,
+              plugin: 'superbridge',
+              bridgeType: 'burnAndMint',
+              relatedChain: 'arbitrum',
+            },
+          ]),
+        )
       })
 
       it('returns an empty list when no tokens are requested', async () => {

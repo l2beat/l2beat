@@ -39,7 +39,8 @@ describeDatabase(SyncMetadataRepository.name, (db) => {
       await repository.upsertMany(records)
 
       const results = await repository.getAll()
-      expect(results).toEqualUnsorted(records)
+      expect(results).toHaveLength(records.length)
+      expect(results).toStrictEqual(expect.arrayContaining(records))
 
       await repository.upsertMany([
         {
@@ -53,24 +54,27 @@ describeDatabase(SyncMetadataRepository.name, (db) => {
       ])
 
       const results2 = await repository.getAll()
-      expect(results2).toEqualUnsorted([
-        {
-          feature: 'l2costs',
-          id: 'base',
-          target: roundedHour,
-          syncedUntil: roundedHour,
-          blockTarget: 100,
-          blockSyncedUntil: 100,
-        },
-        {
-          feature: 'activity',
-          id: 'arbitrum',
-          target: roundedHour + UnixTime.HOUR,
-          syncedUntil: roundedHour,
-          blockTarget: 225,
-          blockSyncedUntil: 200,
-        },
-      ])
+      expect(results2).toHaveLength(2)
+      expect(results2).toStrictEqual(
+        expect.arrayContaining([
+          {
+            feature: 'l2costs',
+            id: 'base',
+            target: roundedHour,
+            syncedUntil: roundedHour,
+            blockTarget: 100,
+            blockSyncedUntil: 100,
+          },
+          {
+            feature: 'activity',
+            id: 'arbitrum',
+            target: roundedHour + UnixTime.HOUR,
+            syncedUntil: roundedHour,
+            blockTarget: 225,
+            blockSyncedUntil: 200,
+          },
+        ]),
+      )
     })
 
     it('should update specified fields', async () => {
@@ -107,16 +111,19 @@ describeDatabase(SyncMetadataRepository.name, (db) => {
       ])
 
       const results2 = await repository.getAll()
-      expect(results2).toEqualUnsorted([
-        {
-          feature: 'activity',
-          id: 'arbitrum',
-          target: roundedHour + UnixTime.HOUR,
-          blockTarget: 110,
-          syncedUntil: roundedHour - UnixTime.HOUR,
-          blockSyncedUntil: 99,
-        },
-      ])
+      expect(results2).toHaveLength(1)
+      expect(results2).toStrictEqual(
+        expect.arrayContaining([
+          {
+            feature: 'activity',
+            id: 'arbitrum',
+            target: roundedHour + UnixTime.HOUR,
+            blockTarget: 110,
+            syncedUntil: roundedHour - UnixTime.HOUR,
+            blockSyncedUntil: 99,
+          },
+        ]),
+      )
     })
 
     it('empty array not to be rejected', async () => {
@@ -155,9 +162,9 @@ describeDatabase(SyncMetadataRepository.name, (db) => {
       await repository.upsertMany(records)
 
       const result = await repository.getByFeature('activity')
-      expect(result).toEqualUnsorted(
-        records.filter((r) => r.feature === 'activity'),
-      )
+      const expected = records.filter((r) => r.feature === 'activity')
+      expect(result).toHaveLength(expected.length)
+      expect(result).toStrictEqual(expect.arrayContaining(expected))
     })
 
     it('returns empty array when no records exist for the feature', async () => {
@@ -264,7 +271,10 @@ describeDatabase(SyncMetadataRepository.name, (db) => {
         'arbitrum',
         'base',
       ])
-      expect(results).toEqualUnsorted([records[0], records[1]])
+      expect(results).toHaveLength(2)
+      expect(results).toStrictEqual(
+        expect.arrayContaining([records[0], records[1]]),
+      )
     })
 
     it('should return empty array for existing feature but non-existing ids', async () => {
@@ -398,40 +408,43 @@ describeDatabase(SyncMetadataRepository.name, (db) => {
       const results = await repository.getAll()
 
       expect(results).toHaveLength(4)
-      expect(results).toEqualUnsorted([
-        {
-          feature: 'activity',
-          id: 'base',
-          target: roundedHour + UnixTime.HOUR,
-          syncedUntil: roundedHour + UnixTime.HOUR,
-          blockTarget: 100,
-          blockSyncedUntil: 100,
-        },
-        {
-          feature: 'activity',
-          id: 'dydx',
-          target: roundedHour + 2 * UnixTime.HOUR,
-          syncedUntil: roundedHour + 2 * UnixTime.HOUR,
-          blockTarget: 200,
-          blockSyncedUntil: 100,
-        },
-        {
-          feature: 'l2costs',
-          id: 'base',
-          target: roundedHour + UnixTime.HOUR,
-          syncedUntil: roundedHour + UnixTime.HOUR,
-          blockTarget: 100,
-          blockSyncedUntil: 100,
-        },
-        {
-          feature: 'activity',
-          id: 'arbitrum',
-          target: roundedHour,
-          syncedUntil: newSyncedUntil,
-          blockTarget: 200,
-          blockSyncedUntil: 100,
-        },
-      ])
+      expect(results).toHaveLength(4)
+      expect(results).toStrictEqual(
+        expect.arrayContaining([
+          {
+            feature: 'activity',
+            id: 'base',
+            target: roundedHour + UnixTime.HOUR,
+            syncedUntil: roundedHour + UnixTime.HOUR,
+            blockTarget: 100,
+            blockSyncedUntil: 100,
+          },
+          {
+            feature: 'activity',
+            id: 'dydx',
+            target: roundedHour + 2 * UnixTime.HOUR,
+            syncedUntil: roundedHour + 2 * UnixTime.HOUR,
+            blockTarget: 200,
+            blockSyncedUntil: 100,
+          },
+          {
+            feature: 'l2costs',
+            id: 'base',
+            target: roundedHour + UnixTime.HOUR,
+            syncedUntil: roundedHour + UnixTime.HOUR,
+            blockTarget: 100,
+            blockSyncedUntil: 100,
+          },
+          {
+            feature: 'activity',
+            id: 'arbitrum',
+            target: roundedHour,
+            syncedUntil: newSyncedUntil,
+            blockTarget: 200,
+            blockSyncedUntil: 100,
+          },
+        ]),
+      )
     })
 
     it('should update syncedUntil and blockSyncedUntil for existing record', async () => {
@@ -483,40 +496,43 @@ describeDatabase(SyncMetadataRepository.name, (db) => {
       const results = await repository.getAll()
 
       expect(results).toHaveLength(4)
-      expect(results).toEqualUnsorted([
-        {
-          feature: 'activity',
-          id: 'base',
-          target: roundedHour + UnixTime.HOUR,
-          syncedUntil: roundedHour + UnixTime.HOUR,
-          blockTarget: 100,
-          blockSyncedUntil: 100,
-        },
-        {
-          feature: 'activity',
-          id: 'dydx',
-          target: roundedHour + 2 * UnixTime.HOUR,
-          syncedUntil: roundedHour + 2 * UnixTime.HOUR,
-          blockTarget: 200,
-          blockSyncedUntil: 100,
-        },
-        {
-          feature: 'l2costs',
-          id: 'base',
-          target: roundedHour + UnixTime.HOUR,
-          syncedUntil: roundedHour + UnixTime.HOUR,
-          blockTarget: 100,
-          blockSyncedUntil: 100,
-        },
-        {
-          feature: 'activity',
-          id: 'arbitrum',
-          target: roundedHour,
-          syncedUntil: newSyncedUntil,
-          blockTarget: 1000,
-          blockSyncedUntil: newBlockSyncedUntil,
-        },
-      ])
+      expect(results).toHaveLength(4)
+      expect(results).toStrictEqual(
+        expect.arrayContaining([
+          {
+            feature: 'activity',
+            id: 'base',
+            target: roundedHour + UnixTime.HOUR,
+            syncedUntil: roundedHour + UnixTime.HOUR,
+            blockTarget: 100,
+            blockSyncedUntil: 100,
+          },
+          {
+            feature: 'activity',
+            id: 'dydx',
+            target: roundedHour + 2 * UnixTime.HOUR,
+            syncedUntil: roundedHour + 2 * UnixTime.HOUR,
+            blockTarget: 200,
+            blockSyncedUntil: 100,
+          },
+          {
+            feature: 'l2costs',
+            id: 'base',
+            target: roundedHour + UnixTime.HOUR,
+            syncedUntil: roundedHour + UnixTime.HOUR,
+            blockTarget: 100,
+            blockSyncedUntil: 100,
+          },
+          {
+            feature: 'activity',
+            id: 'arbitrum',
+            target: roundedHour,
+            syncedUntil: newSyncedUntil,
+            blockTarget: 1000,
+            blockSyncedUntil: newBlockSyncedUntil,
+          },
+        ]),
+      )
     })
 
     it('should not update anything when ids array is empty', async () => {

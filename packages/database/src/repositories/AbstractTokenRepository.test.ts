@@ -197,22 +197,25 @@ describeTokenDatabase(AbstractTokenRepository.name, (db) => {
 
       const result = await repository.getByIds(['TK0001', 'TK0003'])
 
-      expect(result).toEqualUnsorted([
-        {
-          id: 'TK0001',
-          symbol: 'ETH',
-          iconUrl: 'https://example.com/eth.png',
-          issuer: 'ethereum',
-          category: 'ether',
-        },
-        {
-          id: 'TK0003',
-          symbol: 'DAI',
-          iconUrl: null,
-          issuer: null,
-          category: null,
-        },
-      ])
+      expect(result).toHaveLength(2)
+      expect(result).toStrictEqual(
+        expect.arrayContaining([
+          {
+            id: 'TK0001',
+            symbol: 'ETH',
+            iconUrl: 'https://example.com/eth.png',
+            issuer: 'ethereum',
+            category: 'ether',
+          },
+          {
+            id: 'TK0003',
+            symbol: 'DAI',
+            iconUrl: null,
+            issuer: null,
+            category: null,
+          },
+        ]),
+      )
     })
   })
 

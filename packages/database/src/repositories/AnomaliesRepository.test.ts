@@ -58,22 +58,25 @@ describeDatabase(AnomaliesRepository.name, (db) => {
       await repository.upsertMany(newRows)
 
       const results = await repository.getAll()
-      expect(results).toEqualUnsorted([
-        newRows[0]!,
-        {
-          timestamp: START - 2 * UnixTime.HOUR,
-          projectId: PROJECT_B,
-          subtype: 'proofSubmissions',
-          duration: 100,
-        },
-        {
-          timestamp: START - 3 * UnixTime.HOUR,
-          projectId: PROJECT_B,
-          subtype: 'proofSubmissions',
-          duration: 100,
-        },
-        newRows[1]!,
-      ])
+      expect(results).toHaveLength(4)
+      expect(results).toStrictEqual(
+        expect.arrayContaining([
+          newRows[0]!,
+          {
+            timestamp: START - 2 * UnixTime.HOUR,
+            projectId: PROJECT_B,
+            subtype: 'proofSubmissions',
+            duration: 100,
+          },
+          {
+            timestamp: START - 3 * UnixTime.HOUR,
+            projectId: PROJECT_B,
+            subtype: 'proofSubmissions',
+            duration: 100,
+          },
+          newRows[1]!,
+        ]),
+      )
     })
 
     it('empty array', async () => {
@@ -85,11 +88,11 @@ describeDatabase(AnomaliesRepository.name, (db) => {
     it('should return all rows', async () => {
       const results = await repository.getAll()
 
-      expect(results).toEqualUnsorted(
-        DATA.map((e) => ({
-          ...e,
-        })),
-      )
+      const expected = DATA.map((e) => ({
+        ...e,
+      }))
+      expect(results).toHaveLength(expected.length)
+      expect(results).toStrictEqual(expect.arrayContaining(expected))
     })
   })
 
@@ -100,7 +103,9 @@ describeDatabase(AnomaliesRepository.name, (db) => {
         START - 2 * UnixTime.HOUR,
       )
 
-      expect(results).toEqualUnsorted(DATA.slice(1, 2))
+      const expected = DATA.slice(1, 2)
+      expect(results).toHaveLength(expected.length)
+      expect(results).toStrictEqual(expect.arrayContaining(expected))
     })
   })
 
@@ -111,7 +116,9 @@ describeDatabase(AnomaliesRepository.name, (db) => {
         START - 2 * UnixTime.HOUR,
       )
 
-      expect(results).toEqualUnsorted(DATA.slice(1, 2))
+      const expected = DATA.slice(1, 2)
+      expect(results).toHaveLength(expected.length)
+      expect(results).toStrictEqual(expect.arrayContaining(expected))
     })
 
     it('returns empty array when projectIds is empty', async () => {

@@ -22,7 +22,8 @@ describeDatabase(TvsPriceRepository.name, (db) => {
       expect(inserted).toStrictEqual(2)
 
       const result = await repository.getAll()
-      expect(result).toEqualUnsorted(records)
+      expect(result).toHaveLength(records.length)
+      expect(result).toStrictEqual(expect.arrayContaining(records))
     })
 
     it('handles empty array', async () => {
@@ -57,7 +58,8 @@ describeDatabase(TvsPriceRepository.name, (db) => {
       expect(inserted).toStrictEqual(2)
 
       const result = await repository.getAll()
-      expect(result).toEqualUnsorted(updatedRecords)
+      expect(result).toHaveLength(updatedRecords.length)
+      expect(result).toStrictEqual(expect.arrayContaining(updatedRecords))
     })
   })
 
@@ -98,12 +100,15 @@ describeDatabase(TvsPriceRepository.name, (db) => {
         UnixTime(200),
       )
 
-      expect(result).toEqualUnsorted([
-        tvsPrice('a', 'eth', UnixTime(100), 1000.5),
-        tvsPrice('b', 'btc', UnixTime(100), 20000.75),
-        tvsPrice('a', 'eth', UnixTime(200), 1100.25),
-        tvsPrice('b', 'btc', UnixTime(200), 21000.5),
-      ])
+      expect(result).toHaveLength(4)
+      expect(result).toStrictEqual(
+        expect.arrayContaining([
+          tvsPrice('a', 'eth', UnixTime(100), 1000.5),
+          tvsPrice('b', 'btc', UnixTime(100), 20000.75),
+          tvsPrice('a', 'eth', UnixTime(200), 1100.25),
+          tvsPrice('b', 'btc', UnixTime(200), 21000.5),
+        ]),
+      )
     })
 
     it('returns empty array when no data in range', async () => {
@@ -172,11 +177,14 @@ describeDatabase(TvsPriceRepository.name, (db) => {
         UnixTime(200),
       )
 
-      expect(result).toEqualUnsorted([
-        tvsPrice('a', 'eth', UnixTime(100), 1000.5),
-        tvsPrice('c', 'eth', UnixTime(150), 1050.25),
-        tvsPrice('a', 'eth', UnixTime(200), 1100.25),
-      ])
+      expect(result).toHaveLength(3)
+      expect(result).toStrictEqual(
+        expect.arrayContaining([
+          tvsPrice('a', 'eth', UnixTime(100), 1000.5),
+          tvsPrice('c', 'eth', UnixTime(150), 1050.25),
+          tvsPrice('a', 'eth', UnixTime(200), 1100.25),
+        ]),
+      )
     })
 
     it('returns empty array when no data', async () => {
@@ -237,7 +245,10 @@ describeDatabase(TvsPriceRepository.name, (db) => {
       expect(deleted).toStrictEqual(3)
 
       const results = await repository.getAll()
-      expect(results).toEqualUnsorted([tvsPrice('c', 'eth', UnixTime(1), 3000)])
+      expect(results).toHaveLength(1)
+      expect(results).toStrictEqual(
+        expect.arrayContaining([tvsPrice('c', 'eth', UnixTime(1), 3000)]),
+      )
     })
 
     it('returns 0 for empty ids', async () => {
@@ -247,7 +258,10 @@ describeDatabase(TvsPriceRepository.name, (db) => {
       expect(deleted).toStrictEqual(0)
 
       const results = await repository.getAll()
-      expect(results).toEqualUnsorted([tvsPrice('a', 'eth', UnixTime(1), 1000)])
+      expect(results).toHaveLength(1)
+      expect(results).toStrictEqual(
+        expect.arrayContaining([tvsPrice('a', 'eth', UnixTime(1), 1000)]),
+      )
     })
 
     it('returns 0 when no matching config found', async () => {
@@ -257,7 +271,10 @@ describeDatabase(TvsPriceRepository.name, (db) => {
       expect(deleted).toStrictEqual(0)
 
       const results = await repository.getAll()
-      expect(results).toEqualUnsorted([tvsPrice('a', 'eth', UnixTime(1), 1000)])
+      expect(results).toHaveLength(1)
+      expect(results).toStrictEqual(
+        expect.arrayContaining([tvsPrice('a', 'eth', UnixTime(1), 1000)]),
+      )
     })
   })
 
@@ -281,10 +298,13 @@ describeDatabase(TvsPriceRepository.name, (db) => {
       expect(deleted).toStrictEqual(2)
 
       const results = await repository.getAll()
-      expect(results).toEqualUnsorted([
-        tvsPrice('b', 'eth', UnixTime(3), 1200),
-        tvsPrice('c', 'btc', UnixTime(2), 20000),
-      ])
+      expect(results).toHaveLength(2)
+      expect(results).toStrictEqual(
+        expect.arrayContaining([
+          tvsPrice('b', 'eth', UnixTime(3), 1200),
+          tvsPrice('c', 'btc', UnixTime(2), 20000),
+        ]),
+      )
     })
 
     it('returns 0 if no matching config found', async () => {
@@ -301,7 +321,10 @@ describeDatabase(TvsPriceRepository.name, (db) => {
       expect(deleted).toStrictEqual(0)
 
       const results = await repository.getAll()
-      expect(results).toEqualUnsorted([tvsPrice('b', 'eth', UnixTime(1), 1000)])
+      expect(results).toHaveLength(1)
+      expect(results).toStrictEqual(
+        expect.arrayContaining([tvsPrice('b', 'eth', UnixTime(1), 1000)]),
+      )
     })
 
     it('returns 0 for empty configs', async () => {

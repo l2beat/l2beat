@@ -54,11 +54,14 @@ describe(extractAddressesFromTokenConfig.name, () => {
       ],
     })
     const result = extractAddressesFromTokenConfig(token)
-    expect(result).toEqualUnsorted([
-      { address: add1, chain: '1' },
-      { address: add2, chain: '1' },
-      { address: add4, chain: '2' },
-    ])
+    expect(result).toHaveLength(3)
+    expect(result).toStrictEqual(
+      expect.arrayContaining([
+        { address: add1, chain: '1' },
+        { address: add2, chain: '1' },
+        { address: add4, chain: '2' },
+      ]),
+    )
   })
 
   it('should handle calculation with nested calculation', () => {
@@ -95,10 +98,13 @@ describe(extractAddressesFromTokenConfig.name, () => {
       ],
     })
     const result = extractAddressesFromTokenConfig(token)
-    expect(result).toEqualUnsorted([
-      { address: add1, chain: '1' },
-      { address: add3, chain: '1' },
-    ])
+    expect(result).toHaveLength(2)
+    expect(result).toStrictEqual(
+      expect.arrayContaining([
+        { address: add1, chain: '1' },
+        { address: add3, chain: '1' },
+      ]),
+    )
   })
 
   it('should handle a Starknet token balance', () => {

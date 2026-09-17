@@ -31,18 +31,21 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
       ])
 
       const results = await repository.getAll()
-      expect(results).toEqualUnsorted([
-        record('project-a', 'layer-a', 'config-id-1', START, 100n),
-        record('project-b', 'layer-a', 'config-id-2', START, 200n),
-        record('project-c', 'layer-b', 'config-id-3', START, 300n),
-        record(
-          'project-c',
-          'layer-b',
-          'config-id-4',
-          START + 1 * UnixTime.DAY,
-          400n,
-        ),
-      ])
+      expect(results).toHaveLength(4)
+      expect(results).toStrictEqual(
+        expect.arrayContaining([
+          record('project-a', 'layer-a', 'config-id-1', START, 100n),
+          record('project-b', 'layer-a', 'config-id-2', START, 200n),
+          record('project-c', 'layer-b', 'config-id-3', START, 300n),
+          record(
+            'project-c',
+            'layer-b',
+            'config-id-4',
+            START + 1 * UnixTime.DAY,
+            400n,
+          ),
+        ]),
+      )
     })
 
     it('merges on conflict', async () => {
@@ -59,12 +62,15 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
       ])
 
       const results = await repository.getAll()
-      expect(results).toEqualUnsorted([
-        record('project-a', 'layer-a', 'config-id-1', START, 1_000n),
-        record('project-a', 'layer-a', 'config-id-2', START, 1_000n),
-        record('project-b', 'layer-a', 'config-id-3', START, 2_000n),
-        record('project-c', 'layer-b', 'config-id-4', START, 300n),
-      ])
+      expect(results).toHaveLength(4)
+      expect(results).toStrictEqual(
+        expect.arrayContaining([
+          record('project-a', 'layer-a', 'config-id-1', START, 1_000n),
+          record('project-a', 'layer-a', 'config-id-2', START, 1_000n),
+          record('project-b', 'layer-a', 'config-id-3', START, 2_000n),
+          record('project-c', 'layer-b', 'config-id-4', START, 300n),
+        ]),
+      )
     })
 
     it('returns number of processed records', async () => {
@@ -145,23 +151,26 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
           START + 3 * UnixTime.DAY,
         )
 
-        expect(results).toEqualUnsorted([
-          record('project-a', 'layer-a', 'config-id', START, 100n),
-          record(
-            'project-a',
-            'layer-a',
-            'config-id',
-            START + 1 * UnixTime.DAY,
-            200n,
-          ),
-          record(
-            'project-a',
-            'layer-a',
-            'config-id',
-            START + 2 * UnixTime.DAY,
-            300n,
-          ),
-        ])
+        expect(results).toHaveLength(3)
+        expect(results).toStrictEqual(
+          expect.arrayContaining([
+            record('project-a', 'layer-a', 'config-id', START, 100n),
+            record(
+              'project-a',
+              'layer-a',
+              'config-id',
+              START + 1 * UnixTime.DAY,
+              200n,
+            ),
+            record(
+              'project-a',
+              'layer-a',
+              'config-id',
+              START + 2 * UnixTime.DAY,
+              300n,
+            ),
+          ]),
+        )
       })
 
       it('returns empty array when no records exist for DA layer', async () => {
@@ -253,22 +262,25 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
           START + 1 * UnixTime.DAY,
         )
 
-        expect(results).toEqualUnsorted([
-          record(
-            'project-a',
-            'layer-a',
-            'config-id',
-            START + 1 * UnixTime.DAY,
-            200n,
-          ),
-          record(
-            'project-b',
-            'layer-a',
-            'config-id',
-            START + 1 * UnixTime.DAY,
-            300n,
-          ),
-        ])
+        expect(results).toHaveLength(2)
+        expect(results).toStrictEqual(
+          expect.arrayContaining([
+            record(
+              'project-a',
+              'layer-a',
+              'config-id',
+              START + 1 * UnixTime.DAY,
+              200n,
+            ),
+            record(
+              'project-b',
+              'layer-a',
+              'config-id',
+              START + 1 * UnixTime.DAY,
+              300n,
+            ),
+          ]),
+        )
       })
     },
   )
@@ -309,24 +321,27 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
           [START, START + 2 * UnixTime.DAY],
         )
 
-        expect(results).toEqualUnsorted([
-          record('project-a', 'layer-a', 'config-id', START, 100n),
-          record(
-            'project-a',
-            'layer-a',
-            'config-id',
-            START + 1 * UnixTime.DAY,
-            1_000n,
-          ),
-          record('project-b', 'layer-a', 'config-id', START, 200n),
-          record(
-            'project-b',
-            'layer-a',
-            'config-id',
-            START + 1 * UnixTime.DAY,
-            2_000n,
-          ),
-        ])
+        expect(results).toHaveLength(4)
+        expect(results).toStrictEqual(
+          expect.arrayContaining([
+            record('project-a', 'layer-a', 'config-id', START, 100n),
+            record(
+              'project-a',
+              'layer-a',
+              'config-id',
+              START + 1 * UnixTime.DAY,
+              1_000n,
+            ),
+            record('project-b', 'layer-a', 'config-id', START, 200n),
+            record(
+              'project-b',
+              'layer-a',
+              'config-id',
+              START + 1 * UnixTime.DAY,
+              2_000n,
+            ),
+          ]),
+        )
       })
 
       it('allows to query for null from', async () => {
@@ -353,9 +368,12 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
           [null, START + 1 * UnixTime.DAY],
         )
 
-        expect(results).toEqualUnsorted([
-          record('project-a', 'layer-a', 'config-id', START, 100n),
-        ])
+        expect(results).toHaveLength(1)
+        expect(results).toStrictEqual(
+          expect.arrayContaining([
+            record('project-a', 'layer-a', 'config-id', START, 100n),
+          ]),
+        )
       })
 
       it('returns empty array when projectIds is empty', async () => {
@@ -614,22 +632,25 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
           'layer-b',
         ])
 
-        expect(results).toEqualUnsorted([
-          record(
-            'layer-a',
-            'layer-a',
-            'config-id-2',
-            START + 1 * UnixTime.DAY,
-            300n,
-          ),
-          record(
-            'layer-b',
-            'layer-b',
-            'config-id-5',
-            START + 2 * UnixTime.DAY,
-            500n,
-          ),
-        ])
+        expect(results).toHaveLength(2)
+        expect(results).toStrictEqual(
+          expect.arrayContaining([
+            record(
+              'layer-a',
+              'layer-a',
+              'config-id-2',
+              START + 1 * UnixTime.DAY,
+              300n,
+            ),
+            record(
+              'layer-b',
+              'layer-b',
+              'config-id-5',
+              START + 2 * UnixTime.DAY,
+              500n,
+            ),
+          ]),
+        )
       })
 
       it('returns empty array when daLayers array is empty', async () => {
@@ -676,9 +697,12 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
       expect(deleted).toStrictEqual(3)
 
       const results = await repository.getAll()
-      expect(results).toEqualUnsorted([
-        record('project-c', 'layer-a', 'config-id-3', START, 400n),
-      ])
+      expect(results).toHaveLength(1)
+      expect(results).toStrictEqual(
+        expect.arrayContaining([
+          record('project-c', 'layer-a', 'config-id-3', START, 400n),
+        ]),
+      )
     })
 
     it('returns 0 for empty ids', async () => {
@@ -690,9 +714,12 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
       expect(deleted).toStrictEqual(0)
 
       const results = await repository.getAll()
-      expect(results).toEqualUnsorted([
-        record('project-a', 'layer-a', 'config-id-1', START, 100n),
-      ])
+      expect(results).toHaveLength(1)
+      expect(results).toStrictEqual(
+        expect.arrayContaining([
+          record('project-a', 'layer-a', 'config-id-1', START, 100n),
+        ]),
+      )
     })
 
     it('returns 0 when no matching config found', async () => {
@@ -704,9 +731,12 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
       expect(deleted).toStrictEqual(0)
 
       const results = await repository.getAll()
-      expect(results).toEqualUnsorted([
-        record('project-a', 'layer-a', 'config-id-1', START, 100n),
-      ])
+      expect(results).toHaveLength(1)
+      expect(results).toStrictEqual(
+        expect.arrayContaining([
+          record('project-a', 'layer-a', 'config-id-1', START, 100n),
+        ]),
+      )
     })
   })
 
@@ -731,11 +761,14 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
         expect(deleted).toStrictEqual(3)
 
         const results = await repository.getAll()
-        expect(results).toEqualUnsorted([
-          record('project-a', 'layer-a', 'config-id-1', START - 1, 100n),
-          record('project-a', 'layer-a', 'config-id-1', START + 3, 500n),
-          record('project-b', 'layer-a', 'config-id-2', START + 1, 600n),
-        ])
+        expect(results).toHaveLength(3)
+        expect(results).toStrictEqual(
+          expect.arrayContaining([
+            record('project-a', 'layer-a', 'config-id-1', START - 1, 100n),
+            record('project-a', 'layer-a', 'config-id-1', START + 3, 500n),
+            record('project-b', 'layer-a', 'config-id-2', START + 1, 600n),
+          ]),
+        )
       })
 
       it('returns 0 when nothing matches', async () => {
@@ -776,10 +809,13 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
         expect(deletedCount).toStrictEqual(2)
 
         const remainingRecords = await repository.getAll()
-        expect(remainingRecords).toEqualUnsorted([
-          record('project-b', 'layer-a', 'config-id-2', START, 100n),
-          record('project-a', 'layer-a', 'config-id-3', START, 100n),
-        ])
+        expect(remainingRecords).toHaveLength(2)
+        expect(remainingRecords).toStrictEqual(
+          expect.arrayContaining([
+            record('project-b', 'layer-a', 'config-id-2', START, 100n),
+            record('project-a', 'layer-a', 'config-id-3', START, 100n),
+          ]),
+        )
       })
     },
   )
@@ -809,16 +845,19 @@ describeDatabase(DataAvailabilityRepository.name, (db) => {
 
         const results = await repository.getLatestTimestampsByConfigId()
 
-        expect(results).toEqualUnsorted([
-          {
-            configurationId: 'config-id-1',
-            latestTimestamp: START + 1 * UnixTime.DAY,
-          },
-          {
-            configurationId: 'config-id-2',
-            latestTimestamp: START + 2 * UnixTime.DAY,
-          },
-        ])
+        expect(results).toHaveLength(2)
+        expect(results).toStrictEqual(
+          expect.arrayContaining([
+            {
+              configurationId: 'config-id-1',
+              latestTimestamp: START + 1 * UnixTime.DAY,
+            },
+            {
+              configurationId: 'config-id-2',
+              latestTimestamp: START + 2 * UnixTime.DAY,
+            },
+          ]),
+        )
       })
     },
   )

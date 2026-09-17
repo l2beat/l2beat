@@ -32,9 +32,12 @@ describeDatabase(EcosystemTokenRepository.name, (db) => {
       expect(deleted).toStrictEqual(3)
 
       const results = await repository.getAll()
-      expect(results).toEqualUnsorted([
-        ecosystemToken('project-c', 'coingecko-1', 'config-3'),
-      ])
+      expect(results).toHaveLength(1)
+      expect(results).toStrictEqual(
+        expect.arrayContaining([
+          ecosystemToken('project-c', 'coingecko-1', 'config-3'),
+        ]),
+      )
     })
 
     it('returns 0 for empty ids', async () => {
@@ -46,9 +49,12 @@ describeDatabase(EcosystemTokenRepository.name, (db) => {
       expect(deleted).toStrictEqual(0)
 
       const results = await repository.getAll()
-      expect(results).toEqualUnsorted([
-        ecosystemToken('project-a', 'coingecko-1', 'config-1'),
-      ])
+      expect(results).toHaveLength(1)
+      expect(results).toStrictEqual(
+        expect.arrayContaining([
+          ecosystemToken('project-a', 'coingecko-1', 'config-1'),
+        ]),
+      )
     })
 
     it('returns 0 when no matching config found', async () => {
@@ -60,9 +66,12 @@ describeDatabase(EcosystemTokenRepository.name, (db) => {
       expect(deleted).toStrictEqual(0)
 
       const results = await repository.getAll()
-      expect(results).toEqualUnsorted([
-        ecosystemToken('project-a', 'coingecko-1', 'config-1'),
-      ])
+      expect(results).toHaveLength(1)
+      expect(results).toStrictEqual(
+        expect.arrayContaining([
+          ecosystemToken('project-a', 'coingecko-1', 'config-1'),
+        ]),
+      )
     })
   })
 })

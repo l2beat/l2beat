@@ -123,36 +123,39 @@ describe(mapToReferenceNodes.name, () => {
     const entries = [entryA, entryB, entryC, entryD, entryE, entryF, entryG]
 
     const result = mapToReferenceNodes(entries)
-    expect(result).toEqualUnsorted([
-      {
-        address: entryA.address,
-        references: [entryB.address],
-      },
-      {
-        address: entryB.address,
-        references: [entryD.address],
-      },
-      {
-        address: entryC.address,
-        references: [entryD.address],
-      },
-      {
-        address: entryD.address,
-        references: [entryE.address, entryF.address],
-      },
-      {
-        address: entryE.address,
-        references: [],
-      },
-      {
-        address: entryF.address,
-        references: [entryG.address],
-      },
-      {
-        address: entryG.address,
-        references: [],
-      },
-    ])
+    expect(result).toHaveLength(7)
+    expect(result).toStrictEqual(
+      expect.arrayContaining([
+        {
+          address: entryA.address,
+          references: [entryB.address],
+        },
+        {
+          address: entryB.address,
+          references: [entryD.address],
+        },
+        {
+          address: entryC.address,
+          references: [entryD.address],
+        },
+        {
+          address: entryD.address,
+          references: [entryE.address, entryF.address],
+        },
+        {
+          address: entryE.address,
+          references: [],
+        },
+        {
+          address: entryF.address,
+          references: [entryG.address],
+        },
+        {
+          address: entryG.address,
+          references: [],
+        },
+      ]),
+    )
   })
 })
 

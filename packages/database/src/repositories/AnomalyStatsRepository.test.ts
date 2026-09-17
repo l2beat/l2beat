@@ -66,24 +66,27 @@ describeDatabase(AnomalyStatsRepository.name, (db) => {
       await repository.upsertMany(newRows)
 
       const results = await repository.getAll()
-      expect(results).toEqualUnsorted([
-        newRows[0]!,
-        {
-          timestamp: START - 2 * UnixTime.HOUR,
-          projectId: PROJECT_B,
-          subtype: 'proofSubmissions',
-          mean: 20,
-          stdDev: 22,
-        },
-        {
-          timestamp: START - 3 * UnixTime.HOUR,
-          projectId: PROJECT_B,
-          subtype: 'proofSubmissions',
-          mean: 30,
-          stdDev: 33,
-        },
-        newRows[1]!,
-      ])
+      expect(results).toHaveLength(4)
+      expect(results).toStrictEqual(
+        expect.arrayContaining([
+          newRows[0]!,
+          {
+            timestamp: START - 2 * UnixTime.HOUR,
+            projectId: PROJECT_B,
+            subtype: 'proofSubmissions',
+            mean: 20,
+            stdDev: 22,
+          },
+          {
+            timestamp: START - 3 * UnixTime.HOUR,
+            projectId: PROJECT_B,
+            subtype: 'proofSubmissions',
+            mean: 30,
+            stdDev: 33,
+          },
+          newRows[1]!,
+        ]),
+      )
     })
 
     it('empty array', async () => {
@@ -95,11 +98,11 @@ describeDatabase(AnomalyStatsRepository.name, (db) => {
     it('should return all rows', async () => {
       const results = await repository.getAll()
 
-      expect(results).toEqualUnsorted(
-        DATA.map((e) => ({
-          ...e,
-        })),
-      )
+      const expected = DATA.map((e) => ({
+        ...e,
+      }))
+      expect(results).toHaveLength(expected.length)
+      expect(results).toStrictEqual(expect.arrayContaining(expected))
     })
   })
 

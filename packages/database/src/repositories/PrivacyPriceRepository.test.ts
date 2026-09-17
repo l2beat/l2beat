@@ -40,7 +40,8 @@ describeDatabase(PrivacyPriceRepository.name, (db) => {
       await repository.upsertMany(records)
 
       const result = await repository.getAll()
-      expect(result).toEqualUnsorted(records)
+      expect(result).toHaveLength(records.length)
+      expect(result).toStrictEqual(expect.arrayContaining(records))
     })
   })
 
@@ -166,7 +167,10 @@ describeDatabase(PrivacyPriceRepository.name, (db) => {
           UnixTime(2000),
         )
 
-        expect(result).toEqualUnsorted([records[0]!, records[1]!, records[2]!])
+        expect(result).toHaveLength(3)
+        expect(result).toStrictEqual(
+          expect.arrayContaining([records[0]!, records[1]!, records[2]!]),
+        )
       })
 
       it('returns empty array when priceIds is empty', async () => {
@@ -284,14 +288,17 @@ describeDatabase(PrivacyPriceRepository.name, (db) => {
       expect(deleted).toStrictEqual(2)
 
       const remaining = await repository.getAll()
-      expect(remaining).toEqualUnsorted([
-        {
-          configurationId: 'cfg2'.padEnd(12),
-          timestamp: UnixTime(1000),
-          priceUsd: 0.5,
-          priceId: 'usd-coin',
-        },
-      ])
+      expect(remaining).toHaveLength(1)
+      expect(remaining).toStrictEqual(
+        expect.arrayContaining([
+          {
+            configurationId: 'cfg2'.padEnd(12),
+            timestamp: UnixTime(1000),
+            priceUsd: 0.5,
+            priceId: 'usd-coin',
+          },
+        ]),
+      )
     })
   })
 })

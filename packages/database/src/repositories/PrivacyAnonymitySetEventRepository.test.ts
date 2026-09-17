@@ -38,22 +38,25 @@ describeDatabase(PrivacyAnonymitySetEventRepository.name, (db) => {
       START + UnixTime.DAY,
     )
 
-    expect(result).toEqualUnsorted([
-      {
-        projectId: 'project-a',
-        bucketId: 'bucket-a',
-        timestamp: START,
-        sender: 'alice',
-        maximumAmount: 10n,
-      },
-      {
-        projectId: 'project-a',
-        bucketId: 'bucket-a',
-        timestamp: START,
-        sender: 'bob',
-        maximumAmount: 9n,
-      },
-    ])
+    expect(result).toHaveLength(2)
+    expect(result).toStrictEqual(
+      expect.arrayContaining([
+        {
+          projectId: 'project-a',
+          bucketId: 'bucket-a',
+          timestamp: START,
+          sender: 'alice',
+          maximumAmount: 10n,
+        },
+        {
+          projectId: 'project-a',
+          bucketId: 'bucket-a',
+          timestamp: START,
+          sender: 'bob',
+          maximumAmount: 9n,
+        },
+      ]),
+    )
   })
 
   it('trims only the selected configuration and inclusive time range', async () => {
@@ -72,10 +75,14 @@ describeDatabase(PrivacyAnonymitySetEventRepository.name, (db) => {
       ),
     ).toStrictEqual(2)
 
-    expect(await repository.getAll()).toEqualUnsorted([
-      event('aaaaaaaaaaaa', 3, START + 2 * UnixTime.HOUR, 'carol', 1n),
-      event('bbbbbbbbbbbb', 4, START, 'dave', 1n),
-    ])
+    const actual = await repository.getAll()
+    expect(actual).toHaveLength(2)
+    expect(actual).toStrictEqual(
+      expect.arrayContaining([
+        event('aaaaaaaaaaaa', 3, START + 2 * UnixTime.HOUR, 'carol', 1n),
+        event('bbbbbbbbbbbb', 4, START, 'dave', 1n),
+      ]),
+    )
   })
 })
 

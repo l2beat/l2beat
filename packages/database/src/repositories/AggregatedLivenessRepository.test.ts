@@ -115,11 +115,9 @@ describeDatabase(AggregatedLivenessRepository.name, (db) => {
       await repository.upsertMany(newRows)
       const results = await repository.getAll()
 
-      expect(results).toEqualUnsorted([
-        newRows[0],
-        ...DATA.slice(1),
-        newRows[1],
-      ])
+      const expected = [newRows[0], ...DATA.slice(1), newRows[1]]
+      expect(results).toHaveLength(expected.length)
+      expect(results).toStrictEqual(expect.arrayContaining(expected))
     })
 
     it('empty array', async () => {
@@ -158,11 +156,11 @@ describeDatabase(AggregatedLivenessRepository.name, (db) => {
     it('should return all rows', async () => {
       const results = await repository.getAll()
 
-      expect(results).toEqualUnsorted(
-        DATA.map((e) => ({
-          ...e,
-        })),
-      )
+      const expected = DATA.map((e) => ({
+        ...e,
+      }))
+      expect(results).toHaveLength(expected.length)
+      expect(results).toStrictEqual(expect.arrayContaining(expected))
     })
   })
 
@@ -175,29 +173,32 @@ describeDatabase(AggregatedLivenessRepository.name, (db) => {
           START,
         ])
 
-        expect(results).toEqualUnsorted([
-          {
-            projectId: PROJECT_A,
-            subtype: 'batchSubmissions',
-            min: 10,
-            avg: 32, // 1 * 20 + 4 * 30 + 3 * 40 / 1 + 4 + 3 = 32.5 but sql round it down
-            max: 50,
-          },
-          {
-            projectId: PROJECT_A,
-            subtype: 'stateUpdates',
-            min: 30,
-            avg: 43, // 2 * 40 + 1 * 50 / 2 + 1 = 43.(3) but sql round it down
-            max: 60,
-          },
-          {
-            projectId: PROJECT_B,
-            subtype: 'stateUpdates',
-            min: 10,
-            avg: 10,
-            max: 10,
-          },
-        ])
+        expect(results).toHaveLength(3)
+        expect(results).toStrictEqual(
+          expect.arrayContaining([
+            {
+              projectId: PROJECT_A,
+              subtype: 'batchSubmissions',
+              min: 10,
+              avg: 32, // 1 * 20 + 4 * 30 + 3 * 40 / 1 + 4 + 3 = 32.5 but sql round it down
+              max: 50,
+            },
+            {
+              projectId: PROJECT_A,
+              subtype: 'stateUpdates',
+              min: 30,
+              avg: 43, // 2 * 40 + 1 * 50 / 2 + 1 = 43.(3) but sql round it down
+              max: 60,
+            },
+            {
+              projectId: PROJECT_B,
+              subtype: 'stateUpdates',
+              min: 10,
+              avg: 10,
+              max: 10,
+            },
+          ]),
+        )
       })
 
       it('returns aggregates with null from', async () => {
@@ -224,15 +225,18 @@ describeDatabase(AggregatedLivenessRepository.name, (db) => {
         ])
         const results = await repository.getAggregatesByTimeRange([null, START])
 
-        expect(results).toEqualUnsorted([
-          {
-            projectId: PROJECT_A,
-            subtype: 'batchSubmissions',
-            min: 10,
-            avg: 28, // 1 * 20 + 4 * 30/ 1 + 4 = 32.5 but sql round it down
-            max: 40,
-          },
-        ])
+        expect(results).toHaveLength(1)
+        expect(results).toStrictEqual(
+          expect.arrayContaining([
+            {
+              projectId: PROJECT_A,
+              subtype: 'batchSubmissions',
+              min: 10,
+              avg: 28, // 1 * 20 + 4 * 30/ 1 + 4 = 32.5 but sql round it down
+              max: 40,
+            },
+          ]),
+        )
       })
     },
   )
@@ -358,18 +362,21 @@ describeDatabase(AggregatedLivenessRepository.name, (db) => {
           [START - 2 * UnixTime.HOUR, START],
         )
 
-        expect(results).toEqualUnsorted([
-          {
-            projectId: PROJECT_A,
-            subtype: 'batchSubmissions',
-            avg: 32, // 1 * 20 + 4 * 30 + 3 * 40 / 1 + 4 + 3 = 32.5 but sql rounds down
-          },
-          {
-            projectId: PROJECT_A,
-            subtype: 'stateUpdates',
-            avg: 43, // 2 * 40 + 1 * 50 / 2 + 1 = 43.(3) but sql rounds down
-          },
-        ])
+        expect(results).toHaveLength(2)
+        expect(results).toStrictEqual(
+          expect.arrayContaining([
+            {
+              projectId: PROJECT_A,
+              subtype: 'batchSubmissions',
+              avg: 32, // 1 * 20 + 4 * 30 + 3 * 40 / 1 + 4 + 3 = 32.5 but sql rounds down
+            },
+            {
+              projectId: PROJECT_A,
+              subtype: 'stateUpdates',
+              avg: 43, // 2 * 40 + 1 * 50 / 2 + 1 = 43.(3) but sql rounds down
+            },
+          ]),
+        )
       })
 
       it('returns averages when from is null', async () => {
@@ -378,18 +385,21 @@ describeDatabase(AggregatedLivenessRepository.name, (db) => {
           [null, START - 1 * UnixTime.HOUR],
         )
 
-        expect(results).toEqualUnsorted([
-          {
-            projectId: PROJECT_A,
-            subtype: 'batchSubmissions',
-            avg: 37, // 4 * 30 + 3 * 40 + 2 * 50 / 4 + 3 + 2 = 37.2 but sql rounds down
-          },
-          {
-            projectId: PROJECT_A,
-            subtype: 'stateUpdates',
-            avg: 43, // 2 * 40 + 1 * 50 / 2 + 1 = 43.(3) but sql rounds down
-          },
-        ])
+        expect(results).toHaveLength(2)
+        expect(results).toStrictEqual(
+          expect.arrayContaining([
+            {
+              projectId: PROJECT_A,
+              subtype: 'batchSubmissions',
+              avg: 37, // 4 * 30 + 3 * 40 + 2 * 50 / 4 + 3 + 2 = 37.2 but sql rounds down
+            },
+            {
+              projectId: PROJECT_A,
+              subtype: 'stateUpdates',
+              avg: 43, // 2 * 40 + 1 * 50 / 2 + 1 = 43.(3) but sql rounds down
+            },
+          ]),
+        )
       })
 
       it('returns empty array when no records match criteria', async () => {

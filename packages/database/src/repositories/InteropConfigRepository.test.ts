@@ -85,7 +85,10 @@ describeDatabase(InteropConfigRepository.name, (database) => {
       const result = await repository.getAllLatest()
 
       expect(result).toHaveLength(3)
-      expect(result).toEqualUnsorted([record1, record2, record3])
+      expect(result).toHaveLength(3)
+      expect(result).toStrictEqual(
+        expect.arrayContaining([record1, record2, record3]),
+      )
     })
 
     it('returns latest record for each key when multiple versions exist', async () => {
@@ -105,7 +108,10 @@ describeDatabase(InteropConfigRepository.name, (database) => {
       const result = await repository.getAllLatest()
 
       expect(result).toHaveLength(2)
-      expect(result).toEqualUnsorted([newerRecord, otherRecord])
+      expect(result).toHaveLength(2)
+      expect(result).toStrictEqual(
+        expect.arrayContaining([newerRecord, otherRecord]),
+      )
     })
   })
 

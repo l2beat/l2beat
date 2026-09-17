@@ -27,7 +27,8 @@ describeDatabase(IndexerConfigurationRepository.name, (db) => {
 
       const result = await repository.getAll()
 
-      expect(result).toEqualUnsorted(newRecords)
+      expect(result).toHaveLength(newRecords.length)
+      expect(result).toStrictEqual(expect.arrayContaining(newRecords))
     })
 
     describe('updates existing record', () => {
@@ -49,7 +50,10 @@ describeDatabase(IndexerConfigurationRepository.name, (db) => {
           ]
           await repository.upsertMany(recordsPostUpsert)
           const result = await repository.getAll()
-          expect(result).toEqualUnsorted(recordsPostUpsert)
+          expect(result).toHaveLength(recordsPostUpsert.length)
+          expect(result).toStrictEqual(
+            expect.arrayContaining(recordsPostUpsert),
+          )
         })
       }
     })
@@ -63,7 +67,8 @@ describeDatabase(IndexerConfigurationRepository.name, (db) => {
 
       const result = await repository.getAll()
 
-      expect(result).toEqualUnsorted(newRecords)
+      expect(result).toHaveLength(newRecords.length)
+      expect(result).toStrictEqual(expect.arrayContaining(newRecords))
     })
   })
 
@@ -77,7 +82,10 @@ describeDatabase(IndexerConfigurationRepository.name, (db) => {
           CONFIGURATIONS[0]!.id,
           CONFIGURATIONS[2]!.id,
         ])
-        expect(result).toEqualUnsorted([CONFIGURATIONS[0]!, CONFIGURATIONS[2]!])
+        expect(result).toHaveLength(2)
+        expect(result).toStrictEqual(
+          expect.arrayContaining([CONFIGURATIONS[0]!, CONFIGURATIONS[2]!]),
+        )
       })
     },
   )
@@ -89,7 +97,9 @@ describeDatabase(IndexerConfigurationRepository.name, (db) => {
 
     const result = await repository.getByIndexerId('indexer-1')
 
-    expect(result).toEqualUnsorted(records.slice(0, 2))
+    const expected = records.slice(0, 2)
+    expect(result).toHaveLength(expected.length)
+    expect(result).toStrictEqual(expect.arrayContaining(expected))
   })
 
   it(
@@ -104,7 +114,9 @@ describeDatabase(IndexerConfigurationRepository.name, (db) => {
         'indexer-2',
       ])
 
-      expect(result).toEqualUnsorted(records.slice(0, 3))
+      const expected = records.slice(0, 3)
+      expect(result).toHaveLength(expected.length)
+      expect(result).toStrictEqual(expect.arrayContaining(expected))
     },
   )
 
@@ -119,15 +131,15 @@ describeDatabase(IndexerConfigurationRepository.name, (db) => {
       const result =
         await repository.getConfigurationsWithoutIndexerId('indexer-1')
 
-      expect(result).toEqualUnsorted(
-        records.slice(0, 2).map((c) => ({
-          currentHeight: c.currentHeight,
-          maxHeight: c.maxHeight,
-          minHeight: c.minHeight,
-          id: c.id,
-          properties: c.properties,
-        })),
-      )
+      const expected = records.slice(0, 2).map((c) => ({
+        currentHeight: c.currentHeight,
+        maxHeight: c.maxHeight,
+        minHeight: c.minHeight,
+        id: c.id,
+        properties: c.properties,
+      }))
+      expect(result).toHaveLength(expected.length)
+      expect(result).toStrictEqual(expect.arrayContaining(expected))
     },
   )
 
@@ -140,7 +152,9 @@ describeDatabase(IndexerConfigurationRepository.name, (db) => {
 
       const result = await repository.getIdsByIndexer('indexer-1')
 
-      expect(result).toEqualUnsorted(records.slice(0, 2).map((r) => r.id))
+      const expected = records.slice(0, 2).map((r) => r.id)
+      expect(result).toHaveLength(expected.length)
+      expect(result).toStrictEqual(expect.arrayContaining(expected))
     },
   )
 
@@ -162,14 +176,17 @@ describeDatabase(IndexerConfigurationRepository.name, (db) => {
 
       const result = await repository.getAll()
 
-      expect(result).toEqualUnsorted([
-        { ...records[0]!, currentHeight: 100 },
-        { ...records[1]!, currentHeight: 100 },
-        records[2]!,
-        records[3]!,
-        records[4]!,
-        records[5]!,
-      ])
+      expect(result).toHaveLength(6)
+      expect(result).toStrictEqual(
+        expect.arrayContaining([
+          { ...records[0]!, currentHeight: 100 },
+          { ...records[1]!, currentHeight: 100 },
+          records[2]!,
+          records[3]!,
+          records[4]!,
+          records[5]!,
+        ]),
+      )
     },
   )
 
@@ -193,10 +210,13 @@ describeDatabase(IndexerConfigurationRepository.name, (db) => {
 
         const result = await repository.getAll()
 
-        expect(result).toEqualUnsorted([
-          { ...config('c', 1, null, 10), indexerId: 'other' },
-          config('d', 1, null, 10),
-        ])
+        expect(result).toHaveLength(2)
+        expect(result).toStrictEqual(
+          expect.arrayContaining([
+            { ...config('c', 1, null, 10), indexerId: 'other' },
+            config('d', 1, null, 10),
+          ]),
+        )
       })
 
       it('works for bigger query', async () => {
@@ -207,7 +227,8 @@ describeDatabase(IndexerConfigurationRepository.name, (db) => {
 
         const result = await repository.getAll()
 
-        expect(result).toEqualUnsorted([])
+        expect(result).toHaveLength(0)
+        expect(result).toStrictEqual(expect.arrayContaining([]))
       })
     },
   )

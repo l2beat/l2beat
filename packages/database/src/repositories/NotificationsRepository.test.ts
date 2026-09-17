@@ -61,7 +61,9 @@ describeDatabase(NotificationsRepository.name, (db) => {
       await repository.insertMany(newRows)
 
       const results = await repository.getAll()
-      expect(results).toEqualUnsorted([...DATA, ...newRows])
+      const expected = [...DATA, ...newRows]
+      expect(results).toHaveLength(expected.length)
+      expect(results).toStrictEqual(expect.arrayContaining(expected))
     })
 
     it('empty array', async () => {
@@ -73,11 +75,11 @@ describeDatabase(NotificationsRepository.name, (db) => {
     it('should return all rows', async () => {
       const results = await repository.getAll()
 
-      expect(results).toEqualUnsorted(
-        DATA.map((e) => ({
-          ...e,
-        })),
-      )
+      const expected = DATA.map((e) => ({
+        ...e,
+      }))
+      expect(results).toHaveLength(expected.length)
+      expect(results).toStrictEqual(expect.arrayContaining(expected))
     })
   })
 
@@ -85,7 +87,8 @@ describeDatabase(NotificationsRepository.name, (db) => {
     it('should return all rows for related entity', async () => {
       const results = await repository.getByRelatedEntityId('projectA')
 
-      expect(results).toEqualUnsorted([DATA[0]!])
+      expect(results).toHaveLength(1)
+      expect(results).toStrictEqual(expect.arrayContaining([DATA[0]!]))
     })
   })
 

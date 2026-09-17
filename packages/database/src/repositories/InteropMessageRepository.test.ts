@@ -152,7 +152,9 @@ describeDatabase(InteropMessageRepository.name, (database) => {
         { srcTxHash: '0xb', dstTxHash: '0xy' },
       ])
 
-      expect(result.map((r) => r.messageId)).toEqualUnsorted(['msg1', 'msg2'])
+      expect([...result.map((r) => r.messageId)].sort()).toStrictEqual(
+        ['msg1', 'msg2'].sort(),
+      )
     })
 
     it('does not return rows that only cross-match individual hashes', async () => {
@@ -181,7 +183,9 @@ describeDatabase(InteropMessageRepository.name, (database) => {
         { srcTxHash: '0xb', dstTxHash: '0xy' },
       ])
 
-      expect(result.map((r) => r.messageId)).toEqualUnsorted(['msg1', 'msg2'])
+      expect([...result.map((r) => r.messageId)].sort()).toStrictEqual(
+        ['msg1', 'msg2'].sort(),
+      )
     })
 
     it('lowercases input tx hashes when matching', async () => {

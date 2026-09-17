@@ -94,12 +94,14 @@ describeDatabase(RealTimeLivenessRepository.name, (db) => {
       await repository.upsertMany(newRows)
 
       const results = await repository.getAll()
-      expect(results).toEqualUnsorted([
+      const expected = [
         ...DATA.map((e) => ({
           ...e,
         })),
         ...newRows,
-      ])
+      ]
+      expect(results).toHaveLength(expected.length)
+      expect(results).toStrictEqual(expect.arrayContaining(expected))
     })
 
     it('update on conflict', async () => {
@@ -122,7 +124,9 @@ describeDatabase(RealTimeLivenessRepository.name, (db) => {
       await repository.upsertMany(newRows)
 
       const results = await repository.getAll()
-      expect(results).toEqualUnsorted([DATA[0]!, DATA[1]!, ...newRows])
+      const expected = [DATA[0]!, DATA[1]!, ...newRows]
+      expect(results).toHaveLength(expected.length)
+      expect(results).toStrictEqual(expect.arrayContaining(expected))
     })
 
     it('empty array', async () => {
@@ -157,7 +161,9 @@ describeDatabase(RealTimeLivenessRepository.name, (db) => {
       await repository.upsertMany(grouped)
 
       const results = await repository.getAll()
-      expect(results).toEqualUnsorted([...DATA, grouped[1]!, grouped[2]!])
+      const expected = [...DATA, grouped[1]!, grouped[2]!]
+      expect(results).toHaveLength(expected.length)
+      expect(results).toStrictEqual(expect.arrayContaining(expected))
     })
 
     it('replaces a grouped transaction only when an earlier one arrives', async () => {
@@ -186,7 +192,9 @@ describeDatabase(RealTimeLivenessRepository.name, (db) => {
       await repository.upsertMany([later])
 
       const results = await repository.getAll()
-      expect(results).toEqualUnsorted([...DATA, earlier])
+      const expected = [...DATA, earlier]
+      expect(results).toHaveLength(expected.length)
+      expect(results).toStrictEqual(expect.arrayContaining(expected))
     })
   })
 
@@ -194,11 +202,11 @@ describeDatabase(RealTimeLivenessRepository.name, (db) => {
     it('should return all rows', async () => {
       const results = await repository.getAll()
 
-      expect(results).toEqualUnsorted(
-        DATA.map((e) => ({
-          ...e,
-        })),
-      )
+      const expected = DATA.map((e) => ({
+        ...e,
+      }))
+      expect(results).toHaveLength(expected.length)
+      expect(results).toStrictEqual(expect.arrayContaining(expected))
     })
   })
 
@@ -206,7 +214,10 @@ describeDatabase(RealTimeLivenessRepository.name, (db) => {
     it('should return latest records', async () => {
       const results = await repository.getLatestRecords()
 
-      expect(results).toEqualUnsorted([DATA[0]!, DATA[2]!, DATA[3]!])
+      expect(results).toHaveLength(3)
+      expect(results).toStrictEqual(
+        expect.arrayContaining([DATA[0]!, DATA[2]!, DATA[3]!]),
+      )
     })
   })
 

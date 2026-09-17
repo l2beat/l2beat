@@ -102,21 +102,23 @@ describeTokenDatabase(TokenIngestionQueueRepository.name, (db) => {
       const entries = await repository.getByStates(['conflict', 'error'])
 
       expect(entries).toHaveLength(2)
-      expect(
-        entries.map(({ chain, address, state, message }) => ({
-          chain,
-          address,
-          state,
-          message,
-        })),
-      ).toEqualUnsorted([
-        {
-          ...conflict,
-          state: 'conflict',
-          message: 'abstract token mismatch',
-        },
-        { ...error, state: 'error', message: 'RPC failed' },
-      ])
+      const actual = entries.map(({ chain, address, state, message }) => ({
+        chain,
+        address,
+        state,
+        message,
+      }))
+      expect(actual).toHaveLength(2)
+      expect(actual).toStrictEqual(
+        expect.arrayContaining([
+          {
+            ...conflict,
+            state: 'conflict',
+            message: 'abstract token mismatch',
+          },
+          { ...error, state: 'error', message: 'RPC failed' },
+        ]),
+      )
     })
 
     it('escapes NUL bytes in messages before writing them', async () => {
@@ -180,17 +182,19 @@ describeTokenDatabase(TokenIngestionQueueRepository.name, (db) => {
       expect(await repository.retry(error)).toStrictEqual(1)
 
       const entries = await repository.getAll()
-      expect(
-        entries.map(({ chain, address, state, message }) => ({
-          chain,
-          address,
-          state,
-          message,
-        })),
-      ).toEqualUnsorted([
-        { ...conflict, state: 'pending', message: null },
-        { ...error, state: 'pending', message: null },
-      ])
+      const actual = entries.map(({ chain, address, state, message }) => ({
+        chain,
+        address,
+        state,
+        message,
+      }))
+      expect(actual).toHaveLength(2)
+      expect(actual).toStrictEqual(
+        expect.arrayContaining([
+          { ...conflict, state: 'pending', message: null },
+          { ...error, state: 'pending', message: null },
+        ]),
+      )
     })
 
     it('does not touch already pending entries', async () => {

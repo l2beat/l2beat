@@ -25,7 +25,8 @@ describeDatabase(InteropEventRepository.name, (db) => {
       expect(inserted).toStrictEqual(2)
 
       const result = await repository.getAll()
-      expect(result).toEqualUnsorted(records)
+      expect(result).toHaveLength(records.length)
+      expect(result).toStrictEqual(expect.arrayContaining(records))
     })
 
     it('handles empty array', async () => {
@@ -78,7 +79,9 @@ describeDatabase(InteropEventRepository.name, (db) => {
       const result = await repository.getUnmatched()
 
       expect(result).toHaveLength(2)
-      expect(result.map((r) => r.eventId)).toEqualUnsorted(['event1', 'event4'])
+      expect([...result.map((r) => r.eventId)].sort()).toStrictEqual(
+        ['event1', 'event4'].sort(),
+      )
       result.forEach((event) => {
         expect(event.matched).toStrictEqual(false)
         expect(event.unsupported).toStrictEqual(false)
@@ -171,11 +174,9 @@ describeDatabase(InteropEventRepository.name, (db) => {
       const result = await repository.getByType('deposit')
 
       expect(result).toHaveLength(3)
-      expect(result.map((r) => r.eventId)).toEqualUnsorted([
-        'event1',
-        'event2',
-        'event4',
-      ])
+      expect([...result.map((r) => r.eventId)].sort()).toStrictEqual(
+        ['event1', 'event2', 'event4'].sort(),
+      )
     })
 
     it('returns events ordered by timestamp descending', async () => {
@@ -206,7 +207,9 @@ describeDatabase(InteropEventRepository.name, (db) => {
       })
 
       expect(result).toHaveLength(2)
-      expect(result.map((r) => r.eventId)).toEqualUnsorted(['event1', 'event2'])
+      expect([...result.map((r) => r.eventId)].sort()).toStrictEqual(
+        ['event1', 'event2'].sort(),
+      )
     })
 
     it('combines multiple filters', async () => {
@@ -216,7 +219,9 @@ describeDatabase(InteropEventRepository.name, (db) => {
       })
 
       expect(result).toHaveLength(2)
-      expect(result.map((r) => r.eventId)).toEqualUnsorted(['event1', 'event4'])
+      expect([...result.map((r) => r.eventId)].sort()).toStrictEqual(
+        ['event1', 'event4'].sort(),
+      )
     })
 
     it('returns empty array when no events match type', async () => {
@@ -240,11 +245,9 @@ describeDatabase(InteropEventRepository.name, (db) => {
       const result = await repository.getExpired(UnixTime(350))
 
       expect(result).toHaveLength(3)
-      expect(result.map((r) => r.eventId)).toEqualUnsorted([
-        'event1',
-        'event2',
-        'event3',
-      ])
+      expect([...result.map((r) => r.eventId)].sort()).toStrictEqual(
+        ['event1', 'event2', 'event3'].sort(),
+      )
     })
 
     it('returns empty array when no events have expired', async () => {
@@ -310,23 +313,26 @@ describeDatabase(InteropEventRepository.name, (db) => {
           '$dstChain',
         )
 
-        expect(result).toEqualUnsorted([
-          {
-            chain: 'base',
-            isSupported: true,
-            count: 1,
-          },
-          {
-            chain: 'base',
-            isSupported: false,
-            count: 1,
-          },
-          {
-            chain: '(unknown)',
-            isSupported: true,
-            count: 2,
-          },
-        ])
+        expect(result).toHaveLength(3)
+        expect(result).toStrictEqual(
+          expect.arrayContaining([
+            {
+              chain: 'base',
+              isSupported: true,
+              count: 1,
+            },
+            {
+              chain: 'base',
+              isSupported: false,
+              count: 1,
+            },
+            {
+              chain: '(unknown)',
+              isSupported: true,
+              count: 2,
+            },
+          ]),
+        )
       })
 
       it('aggregates by $srcChain', async () => {
@@ -371,18 +377,21 @@ describeDatabase(InteropEventRepository.name, (db) => {
           '$srcChain',
         )
 
-        expect(result).toEqualUnsorted([
-          {
-            chain: 'arbitrum',
-            isSupported: true,
-            count: 2,
-          },
-          {
-            chain: 'base',
-            isSupported: false,
-            count: 1,
-          },
-        ])
+        expect(result).toHaveLength(2)
+        expect(result).toStrictEqual(
+          expect.arrayContaining([
+            {
+              chain: 'arbitrum',
+              isSupported: true,
+              count: 2,
+            },
+            {
+              chain: 'base',
+              isSupported: false,
+              count: 1,
+            },
+          ]),
+        )
       })
     },
   )

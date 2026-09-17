@@ -36,11 +36,13 @@ describe(createInteropProjectResolver.name, () => {
       }),
     ])
 
-    expect(
-      resolve(observation({ plugin: 'ccip', bridgeType: 'burnAndMint' })).map(
-        (p) => p.id,
-      ),
-    ).toEqualUnsorted([ProjectId('first'), ProjectId('second')])
+    const actual = resolve(
+      observation({ plugin: 'ccip', bridgeType: 'burnAndMint' }),
+    ).map((p) => p.id)
+    expect(actual).toHaveLength(2)
+    expect(actual).toStrictEqual(
+      expect.arrayContaining([ProjectId('first'), ProjectId('second')]),
+    )
   })
 
   it('returns nothing for an unknown plugin', () => {

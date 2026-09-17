@@ -95,12 +95,14 @@ describeDatabase(LivenessRepository.name, (db) => {
       await repository.insertMany(newRows)
 
       const results = await repository.getAll()
-      expect(results).toEqualUnsorted([
+      const expected = [
         ...DATA.map((e) => ({
           ...e,
         })),
         ...newRows,
-      ])
+      ]
+      expect(results).toHaveLength(expected.length)
+      expect(results).toStrictEqual(expect.arrayContaining(expected))
     })
 
     it('empty array', async () => {
@@ -135,7 +137,9 @@ describeDatabase(LivenessRepository.name, (db) => {
       await repository.insertMany(grouped)
 
       const results = await repository.getAll()
-      expect(results).toEqualUnsorted([...DATA, grouped[1]!, grouped[2]!])
+      const expected = [...DATA, grouped[1]!, grouped[2]!]
+      expect(results).toHaveLength(expected.length)
+      expect(results).toStrictEqual(expect.arrayContaining(expected))
     })
 
     it('replaces a grouped transaction only when an earlier one arrives', async () => {
@@ -164,7 +168,9 @@ describeDatabase(LivenessRepository.name, (db) => {
       await repository.insertMany([later])
 
       const results = await repository.getAll()
-      expect(results).toEqualUnsorted([...DATA, earlier])
+      const expected = [...DATA, earlier]
+      expect(results).toHaveLength(expected.length)
+      expect(results).toStrictEqual(expect.arrayContaining(expected))
     })
 
     it('stores a record per grouping key for one transaction', async () => {
@@ -182,7 +188,9 @@ describeDatabase(LivenessRepository.name, (db) => {
       await repository.insertMany(grouped)
 
       const results = await repository.getAll()
-      expect(results).toEqualUnsorted([...DATA, ...grouped])
+      const expected = [...DATA, ...grouped]
+      expect(results).toHaveLength(expected.length)
+      expect(results).toStrictEqual(expect.arrayContaining(expected))
     })
 
     it('rejects the same ungrouped transaction twice', async () => {
@@ -215,11 +223,11 @@ describeDatabase(LivenessRepository.name, (db) => {
     it('should return all rows', async () => {
       const results = await repository.getAll()
 
-      expect(results).toEqualUnsorted(
-        DATA.map((e) => ({
-          ...e,
-        })),
-      )
+      const expected = DATA.map((e) => ({
+        ...e,
+      }))
+      expect(results).toHaveLength(expected.length)
+      expect(results).toStrictEqual(expect.arrayContaining(expected))
     })
   })
 
@@ -229,20 +237,23 @@ describeDatabase(LivenessRepository.name, (db) => {
       it('returns latest timestamp for each configuration', async () => {
         const results = await repository.getLatestTimestampsByConfigId()
 
-        expect(results).toEqualUnsorted([
-          {
-            configurationId: txIdA,
-            latestTimestamp: START - 1 * UnixTime.HOUR,
-          },
-          {
-            configurationId: txIdB,
-            latestTimestamp: START - 3 * UnixTime.HOUR,
-          },
-          {
-            configurationId: txIdC,
-            latestTimestamp: START - 3 * UnixTime.HOUR,
-          },
-        ])
+        expect(results).toHaveLength(3)
+        expect(results).toStrictEqual(
+          expect.arrayContaining([
+            {
+              configurationId: txIdA,
+              latestTimestamp: START - 1 * UnixTime.HOUR,
+            },
+            {
+              configurationId: txIdB,
+              latestTimestamp: START - 3 * UnixTime.HOUR,
+            },
+            {
+              configurationId: txIdC,
+              latestTimestamp: START - 3 * UnixTime.HOUR,
+            },
+          ]),
+        )
       })
     },
   )
@@ -257,7 +268,10 @@ describeDatabase(LivenessRepository.name, (db) => {
           START + 0 * UnixTime.HOUR,
         )
 
-        expect(results).toEqualUnsorted([DATA[0]!, DATA[1]!])
+        expect(results).toHaveLength(2)
+        expect(results).toStrictEqual(
+          expect.arrayContaining([DATA[0]!, DATA[1]!]),
+        )
       })
     },
   )
@@ -283,7 +297,10 @@ describeDatabase(LivenessRepository.name, (db) => {
           START - 1 * UnixTime.HOUR,
         )
 
-        expect(results).toEqualUnsorted([DATA[1]!, NEW_DATA[0]!])
+        expect(results).toHaveLength(2)
+        expect(results).toStrictEqual(
+          expect.arrayContaining([DATA[1]!, NEW_DATA[0]!]),
+        )
       })
 
       it('should return rows within given time range, exclusive to', async () => {
@@ -302,7 +319,10 @@ describeDatabase(LivenessRepository.name, (db) => {
           START + 0 * UnixTime.HOUR,
         )
 
-        expect(results).toEqualUnsorted([DATA[0]!, DATA[1]!])
+        expect(results).toHaveLength(2)
+        expect(results).toStrictEqual(
+          expect.arrayContaining([DATA[0]!, DATA[1]!]),
+        )
       })
 
       it('should return record before from for each configuration, desc timestamp', async () => {
@@ -352,11 +372,10 @@ describeDatabase(LivenessRepository.name, (db) => {
           START - 1 * UnixTime.HOUR,
         )
 
-        expect(results).toEqualUnsorted([
-          NEW_DATA[1]!,
-          NEW_DATA[3]!,
-          NEW_DATA[2]!,
-        ])
+        expect(results).toHaveLength(3)
+        expect(results).toStrictEqual(
+          expect.arrayContaining([NEW_DATA[1]!, NEW_DATA[3]!, NEW_DATA[2]!]),
+        )
       })
     },
   )
@@ -381,7 +400,8 @@ describeDatabase(LivenessRepository.name, (db) => {
       expect(deleted).toStrictEqual(3)
 
       const results = await repository.getAll()
-      expect(results).toEqualUnsorted([DATA[3]!])
+      expect(results).toHaveLength(1)
+      expect(results).toStrictEqual(expect.arrayContaining([DATA[3]!]))
     })
 
     it('returns 0 for empty ids', async () => {
@@ -389,7 +409,8 @@ describeDatabase(LivenessRepository.name, (db) => {
       expect(deleted).toStrictEqual(0)
 
       const results = await repository.getAll()
-      expect(results).toEqualUnsorted(DATA)
+      expect(results).toHaveLength(DATA.length)
+      expect(results).toStrictEqual(expect.arrayContaining(DATA))
     })
 
     it('returns 0 when no matching config found', async () => {
@@ -397,7 +418,8 @@ describeDatabase(LivenessRepository.name, (db) => {
       expect(deleted).toStrictEqual(0)
 
       const results = await repository.getAll()
-      expect(results).toEqualUnsorted(DATA)
+      expect(results).toHaveLength(DATA.length)
+      expect(results).toStrictEqual(expect.arrayContaining(DATA))
     })
   })
 

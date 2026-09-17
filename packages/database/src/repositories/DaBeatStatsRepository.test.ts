@@ -65,10 +65,13 @@ describeDatabase(DaBeatStatsRepository.name, (database) => {
       await repository.upsert(saved('C', 3n, 4n, null))
 
       const stakes = await repository.getByIds(['A', 'B'])
-      expect(stakes).toEqualUnsorted([
-        saved('A', 1n, 2n, 3),
-        saved('B', 2n, 3n, null),
-      ])
+      expect(stakes).toHaveLength(2)
+      expect(stakes).toStrictEqual(
+        expect.arrayContaining([
+          saved('A', 1n, 2n, 3),
+          saved('B', 2n, 3n, null),
+        ]),
+      )
     })
   })
 })
