@@ -121,13 +121,13 @@ export function PrivacyProjectPage({
 
                       <div className="mt-6 flex flex-col gap-4 md:mt-4 md:flex-row md:gap-8">
                         <ProjectSummaryStat
-                          title="Deployed on"
-                          tooltip="Chains on which the protocol is deployed."
+                          title="Tracked on"
+                          tooltip="Chains on which the protocol deployment is tracked by L2BEAT."
                           value={
                             <ProjectIconList
-                              projects={entry.deployedOn}
+                              projects={entry.trackedOn}
                               dialog={{
-                                title: 'Deployed on',
+                                title: 'Tracked on',
                                 description: 'Search for chains',
                                 searchPlaceholder:
                                   'Start typing to find chain...',
