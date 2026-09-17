@@ -92,7 +92,7 @@ function RiskValue({
   return (
     <Tooltip>
       <TooltipTrigger
-        className="flex items-center gap-2"
+        className="flex items-center gap-2 text-left"
         aria-label={value.value}
       >
         <TrustedSetupRiskDot risk={risk} size="md" className="shrink-0" />
