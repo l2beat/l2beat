@@ -17,6 +17,7 @@ import {
 } from '../../common'
 import { BADGES } from '../../common/badges'
 import { PRIVACY_ATTRIBUTES } from '../../common/privacyAttributes'
+import { PRIVACY_CATEGORIES } from '../../common/privacyCategories'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import type { ScalingProject } from '../../internalTypes'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
@@ -245,6 +246,7 @@ export const payy: ScalingProject = {
     }),
   },
   privacyInfo: {
+    category: PRIVACY_CATEGORIES.shieldedLedger,
     detailedDescription: readProjectMarkdown('payy', 'detailedDescription'),
     // TODO: privacy flow tracking is not configured yet. Deposits could be
     // tracked via the Rollup's `MintAdded(bytes32 indexed mint_hash, uint256
@@ -276,7 +278,7 @@ export const payy: ScalingProject = {
     },
     attributes: [
       PRIVACY_ATTRIBUTES.zk,
-      PRIVACY_ATTRIBUTES.privateAmounts,
+      PRIVACY_ATTRIBUTES.transfers,
       PRIVACY_ATTRIBUTES.anyAmount,
     ],
     adversaries: payyAdversaries,

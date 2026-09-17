@@ -1,6 +1,7 @@
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { CROP_NOTES } from '../../common/crops'
 import { PRIVACY_ATTRIBUTES } from '../../common/privacyAttributes'
+import { PRIVACY_CATEGORIES } from '../../common/privacyCategories'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { generateDiscoveryDrivenContracts } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
@@ -105,8 +106,8 @@ export const umbra: BaseProject = {
     badges: [],
   },
   privacyInfo: {
+    category: PRIVACY_CATEGORIES.stealthAddress,
     tokens: privacyTokens,
-    summaryTrackedItemName: 'token',
     anonymitySet: {
       type: 'not-applicable',
       description:

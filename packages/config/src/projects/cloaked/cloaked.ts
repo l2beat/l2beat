@@ -1,5 +1,6 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { PRIVACY_ATTRIBUTES } from '../../common/privacyAttributes'
+import { PRIVACY_CATEGORIES } from '../../common/privacyCategories'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { generateDiscoveryDrivenContracts } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
@@ -45,11 +46,11 @@ export const cloaked: BaseProject = {
     badges: [],
   },
   privacyInfo: {
+    category: PRIVACY_CATEGORIES.stealthAddress,
     // Cloaked balances live in arbitrary one-time EOAs and cannot be
     // attributed using public chain data. Its Privacy Pools integration uses
     // pools that L2BEAT tracks on the separate Privacy Pools project page.
     tokens: [],
-    summaryTrackedItemName: 'address',
     exitWindow: {
       value: 'Infinite',
       sentiment: 'good',

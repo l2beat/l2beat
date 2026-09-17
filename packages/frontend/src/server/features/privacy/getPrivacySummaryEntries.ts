@@ -1,5 +1,6 @@
 import type {
   PrivacyAttribute,
+  PrivacyCategory,
   PrivacyExitWindow,
   PrivacySummaryValue,
 } from '@l2beat/config'
@@ -35,7 +36,7 @@ export interface PrivacySummaryEntry {
   totalDeposits?: number
   totalValueDeposited30dUsd?: number
   isUnderReview: boolean
-  summaryTrackedItemName: string
+  category: PrivacyCategory
   trustedSetup: PrivacyTrustedSetup
   exitWindow: PrivacyExitWindow
   reproducibility: PrivacySummaryValue
@@ -155,8 +156,7 @@ function getPrivacySummaryBaseEntry(
     description: project.display.description,
     hasTvl: project.tvsConfig !== undefined,
     isUnderReview: !!project.statuses.reviewStatus,
-    summaryTrackedItemName:
-      project.privacyInfo.summaryTrackedItemName ?? 'pool',
+    category: project.privacyInfo.category,
     trustedSetup: getPrivacyTrustedSetup(project.trustedSetups),
     exitWindow: project.privacyInfo.exitWindow,
     reproducibility: project.privacyInfo.reproducibility,

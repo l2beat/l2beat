@@ -1,4 +1,4 @@
-import { formatCurrency, formatInteger, pluralize } from '@l2beat/shared-pure'
+import { formatCurrency, formatInteger } from '@l2beat/shared-pure'
 import {
   createColumnHelper,
   getCoreRowModel,
@@ -76,12 +76,7 @@ const columns = [
                 <ProjectNameCell project={project} withInfoTooltip />
               </TwoRowCell.First>
               <TwoRowCell.Second>
-                {ctx.row.original.isTracked
-                  ? `${formatInteger(ctx.row.original.poolsTracked)} ${pluralize(
-                      ctx.row.original.poolsTracked,
-                      ctx.row.original.summaryTrackedItemName,
-                    )} tracked`
-                  : 'Not tracked'}
+                {ctx.row.original.category.label}
               </TwoRowCell.Second>
             </TwoRowCell>
           </TableLink>

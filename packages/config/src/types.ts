@@ -1068,7 +1068,8 @@ export interface ProjectPrivacyInfo {
    * mixing kinds within one project is not representable.
    */
   relayerTracking?: ProjectPrivacyRelayerTracking
-  summaryTrackedItemName?: string
+  /** The deployed mechanism. Decides the promised field, not the grade. */
+  category: PrivacyCategory
   anonymitySet?: {
     type: 'not-applicable'
     description: string
@@ -1130,6 +1131,18 @@ export interface PrivacySummaryValue extends TableReadyValue {
 
 export interface PrivacyAttribute {
   id: string
+  label: string
+  description: string
+}
+
+export type PrivacyCategoryId =
+  | 'pool'
+  | 'shieldedLedger'
+  | 'stealthAddress'
+  | 'confidentialAmounts'
+
+export interface PrivacyCategory {
+  id: PrivacyCategoryId
   label: string
   description: string
 }

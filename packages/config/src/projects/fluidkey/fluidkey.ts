@@ -1,5 +1,6 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { PRIVACY_ATTRIBUTES } from '../../common/privacyAttributes'
+import { PRIVACY_CATEGORIES } from '../../common/privacyCategories'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { generateDiscoveryDrivenContracts } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
@@ -45,10 +46,10 @@ export const fluidkey: BaseProject = {
     badges: [],
   },
   privacyInfo: {
+    category: PRIVACY_CATEGORIES.stealthAddress,
     // Balances live in individual stealth Safes. Earn-module events identify
     // only a subset of accounts, not a complete set of Fluidkey balances.
     tokens: [],
-    summaryTrackedItemName: 'address',
     exitWindow: {
       value: 'Infinite',
       sentiment: 'good',

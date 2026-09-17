@@ -1,5 +1,6 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { PRIVACY_ATTRIBUTES } from '../../common/privacyAttributes'
+import { PRIVACY_CATEGORIES } from '../../common/privacyCategories'
 import type { BaseProject, ProjectPrivacyToken } from '../../types'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
 import { strk20Adversaries } from './adversaries'
@@ -122,6 +123,7 @@ export const strk20: BaseProject = {
     badges: [],
   },
   privacyInfo: {
+    category: PRIVACY_CATEGORIES.shieldedLedger,
     tokens: getPrivacyTokens(),
     zkCatalogId: ProjectId('stwo'),
     exitWindow: {

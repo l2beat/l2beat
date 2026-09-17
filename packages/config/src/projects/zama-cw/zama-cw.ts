@@ -6,6 +6,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { PRIVACY_ATTRIBUTES } from '../../common/privacyAttributes'
+import { PRIVACY_CATEGORIES } from '../../common/privacyCategories'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { generateDiscoveryDrivenContracts } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
@@ -186,8 +187,8 @@ export const zamaCw: BaseProject = {
     warnings: [],
   },
   privacyInfo: {
+    category: PRIVACY_CATEGORIES.confidentialAmounts,
     tokens: privacyTokens,
-    summaryTrackedItemName: 'token',
     anonymitySet: {
       type: 'not-applicable',
       description:

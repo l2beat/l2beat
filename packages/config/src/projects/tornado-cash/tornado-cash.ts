@@ -10,6 +10,7 @@ import {
 import { utils } from 'ethers'
 import { CROP_NOTES } from '../../common/crops'
 import { PRIVACY_ATTRIBUTES } from '../../common/privacyAttributes'
+import { PRIVACY_CATEGORIES } from '../../common/privacyCategories'
 import { ZK_CATALOG_ATTESTERS } from '../../common/zkCatalogAttesters'
 import { ZK_CATALOG_TAGS } from '../../common/zkCatalogTags'
 import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
@@ -182,6 +183,7 @@ export const tornadoCash: BaseProject = {
     ],
   },
   privacyInfo: {
+    category: PRIVACY_CATEGORIES.pool,
     tokens: getPrivacyTokens(),
     relayerTracking: {
       type: 'onchainEvents',

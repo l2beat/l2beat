@@ -5,6 +5,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { PRIVACY_ATTRIBUTES } from '../../common/privacyAttributes'
+import { PRIVACY_CATEGORIES } from '../../common/privacyCategories'
 import { ZK_CATALOG_ATTESTERS } from '../../common/zkCatalogAttesters'
 import { ZK_CATALOG_TAGS } from '../../common/zkCatalogTags'
 import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
@@ -303,6 +304,7 @@ export const privacyBoost: BaseProject = {
     ],
   },
   privacyInfo: {
+    category: PRIVACY_CATEGORIES.shieldedLedger,
     tokens: privacyTokens,
     exitWindow: {
       value: 'None',
