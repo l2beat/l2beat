@@ -3,7 +3,6 @@ import { defineVitestConfig } from '@l2beat/vitest-config'
 // biome-ignore lint/style/noDefaultExport: Vitest config uses a default export.
 export default defineVitestConfig({
   test: {
-    setupFiles: ['@l2beat/test-utils/setup'],
     // Nearly every file here imports the whole project graph, so under the
     // preset's isolation the run is mostly that graph being loaded 31 times
     // over. These tests only read that graph and never mutate it, so sharing

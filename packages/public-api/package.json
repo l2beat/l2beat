@@ -31,7 +31,6 @@
     "@types/lodash": "^4.17.4",
     "@types/swagger-ui-express": "^4.1.8",
     "tsx": "^4.9.3",
-    "@l2beat/vitest-config": "workspace:*",
-    "@l2beat/test-utils": "workspace:*"
+    "@l2beat/vitest-config": "workspace:*"
   }
 }

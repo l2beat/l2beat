@@ -50,7 +50,6 @@
     "diff": "^7.0.0",
     "dotenv": "^16.4.5",
     "tsx": "^4.9.3",
-    "@l2beat/vitest-config": "workspace:*",
-    "@l2beat/test-utils": "workspace:*"
+    "@l2beat/vitest-config": "workspace:*"
   }
 }

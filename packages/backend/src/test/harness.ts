@@ -1,5 +1,5 @@
 import { dirname } from 'node:path'
-import { postgresHarness } from '@l2beat/database/test'
+import { postgresHarness } from '@l2beat/database/src/test/postgresHarness'
 
 /**
  * The Postgres backend's suites run against. It is the same server and the

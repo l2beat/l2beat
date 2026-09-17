@@ -9,10 +9,11 @@ import { config as dotenv } from 'dotenv'
  * Runs a package's database suites against one real Postgres without the suites
  * deleting each other's rows.
  *
- * Lives here because the migrations it deploys do. `backend` reaches it through
- * the `@l2beat/database/test` subpath, which resolves to this source file
- * rather than to `dist`: `tsconfig.build.json` keeps `src/test` out of the
- * build, so a test-only entry point must not need it.
+ * Lives here because the migrations it deploys do. `backend` imports this path
+ * directly rather than through an entry point of its own: `tsconfig.build.json`
+ * keeps `src/test` out of `dist`, and declaring `exports` to name a subpath
+ * would put `dist/repositories/*` out of TypeScript's reach, which breaks
+ * declaration emit in every package that infers a type from a repository.
  *
  * Database suites truncate the tables they touch before each test, so a schema
  * may only ever be in use by one test file at a time. Vitest runs files in

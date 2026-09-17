@@ -57,7 +57,6 @@
   "devDependencies": {
     "@l2beat/typescript-config": "workspace:*",
     "tsx": "^4.9.3",
-    "@l2beat/vitest-config": "workspace:*",
-    "@l2beat/test-utils": "workspace:*"
+    "@l2beat/vitest-config": "workspace:*"
   }
 }

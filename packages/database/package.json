@@ -4,14 +4,6 @@
   "version": "0.0.0",
   "main": "./dist/index.js",
   "types": "./dist/index.d.ts",
-  "exports": {
-    ".": {
-      "types": "./dist/index.d.ts",
-      "default": "./dist/index.js"
-    },
-    "./test": "./src/test/postgresHarness.ts",
-    "./package.json": "./package.json"
-  },
   "scripts": {
     "clean": "rm -rf dist *.tsbuildinfo",
     "build": "tsc -p tsconfig.build.json",
@@ -46,7 +38,6 @@
     "prisma-kysely": "^1.8.0",
     "tsx": "^4.9.3",
     "type-fest": "^4.20.0",
-    "@l2beat/vitest-config": "workspace:*",
-    "@l2beat/test-utils": "workspace:*"
+    "@l2beat/vitest-config": "workspace:*"
   }
 }

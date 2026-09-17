@@ -4,6 +4,6 @@ import { defineVitestConfig } from '@l2beat/vitest-config'
 export default defineVitestConfig({
   test: {
     include: ['{src,test}/**/*.test.ts'],
-    setupFiles: ['./src/test/setup.ts', '@l2beat/test-utils/setup'],
+    setupFiles: ['./src/test/setup.ts'],
   },
 })

@@ -56,7 +56,6 @@
     "@types/lodash": "^4.17.12",
     "@types/stream-chain": "^2.1.0",
     "@types/stream-json": "^1.7.7",
-    "@l2beat/vitest-config": "workspace:*",
-    "@l2beat/test-utils": "workspace:*"
+    "@l2beat/vitest-config": "workspace:*"
   }
 }

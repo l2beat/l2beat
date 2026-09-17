@@ -98,8 +98,7 @@
     "tinify": "^1.7.1",
     "tsx": "^4.9.3",
     "vite": "^7.3.1",
-    "@l2beat/vitest-config": "workspace:*",
-    "@l2beat/test-utils": "workspace:*"
+    "@l2beat/vitest-config": "workspace:*"
   },
   "overrides": {
     "react-is": "19.0.0",

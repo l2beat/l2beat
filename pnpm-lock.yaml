@@ -262,9 +262,6 @@ importers:
         specifier: ^8.18.2
         version: 8.18.2
     devDependencies:
-      '@l2beat/test-utils':
-        specifier: workspace:*
-        version: link:../test-utils
       '@l2beat/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
@@ -341,9 +338,6 @@ importers:
         specifier: 11.1.0
         version: 11.1.0
     devDependencies:
-      '@l2beat/test-utils':
-        specifier: workspace:*
-        version: link:../test-utils
       '@l2beat/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
@@ -505,9 +499,6 @@ importers:
       '@l2beat/backend-tools':
         specifier: workspace:*
         version: link:../backend-tools
-      '@l2beat/test-utils':
-        specifier: workspace:*
-        version: link:../test-utils
       '@l2beat/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
@@ -597,9 +588,6 @@ importers:
         specifier: ^8.8.0
         version: 8.13.1
     devDependencies:
-      '@l2beat/test-utils':
-        specifier: workspace:*
-        version: link:../test-utils
       '@l2beat/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
@@ -676,9 +664,6 @@ importers:
         specifier: 5.1.7
         version: 5.1.7(supports-color@8.1.1)
     devDependencies:
-      '@l2beat/test-utils':
-        specifier: workspace:*
-        version: link:../test-utils
       '@l2beat/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
@@ -854,9 +839,6 @@ importers:
         specifier: ^8.18.2
         version: 8.18.2
     devDependencies:
-      '@l2beat/test-utils':
-        specifier: workspace:*
-        version: link:../test-utils
       '@l2beat/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
@@ -999,9 +981,6 @@ importers:
         specifier: ^2.18.6
         version: 2.31.6(typescript@7.0.2)(zod@3.24.1)
     devDependencies:
-      '@l2beat/test-utils':
-        specifier: workspace:*
-        version: link:../test-utils
       '@l2beat/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
@@ -1111,9 +1090,6 @@ importers:
       '@l2beat/discovery':
         specifier: workspace:*
         version: link:../discovery
-      '@l2beat/test-utils':
-        specifier: workspace:*
-        version: link:../test-utils
       '@l2beat/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
@@ -1166,9 +1142,6 @@ importers:
         specifier: ^5.0.1
         version: 5.0.1(express@5.0.1(supports-color@8.1.1))
     devDependencies:
-      '@l2beat/test-utils':
-        specifier: workspace:*
-        version: link:../test-utils
       '@l2beat/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
@@ -1221,9 +1194,6 @@ importers:
         specifier: ^2.21.36
         version: 2.31.6(typescript@7.0.2)(zod@3.24.1)
     devDependencies:
-      '@l2beat/test-utils':
-        specifier: workspace:*
-        version: link:../test-utils
       '@l2beat/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config
@@ -1251,15 +1221,6 @@ importers:
       chalk:
         specifier: ^4.1.2
         version: 4.1.2
-    devDependencies:
-      '@l2beat/typescript-config':
-        specifier: workspace:*
-        version: link:../typescript-config
-      '@l2beat/vitest-config':
-        specifier: workspace:*
-        version: link:../vitest-config
-
-  packages/test-utils:
     devDependencies:
       '@l2beat/typescript-config':
         specifier: workspace:*
@@ -1310,9 +1271,6 @@ importers:
         specifier: ^2.31.6
         version: 2.31.6(typescript@7.0.2)(zod@3.24.1)
     devDependencies:
-      '@l2beat/test-utils':
-        specifier: workspace:*
-        version: link:../test-utils
       '@l2beat/vitest-config':
         specifier: workspace:*
         version: link:../vitest-config
@@ -1617,9 +1575,6 @@ importers:
       '@l2beat/config':
         specifier: workspace:*
         version: link:../config
-      '@l2beat/test-utils':
-        specifier: workspace:*
-        version: link:../test-utils
       '@l2beat/typescript-config':
         specifier: workspace:*
         version: link:../typescript-config

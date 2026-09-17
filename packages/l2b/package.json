@@ -55,7 +55,6 @@
     "@types/readline-sync": "^1.4.8",
     "mock-fs": "^5.2.0",
     "tsx": "^4.9.3",
-    "@l2beat/vitest-config": "workspace:*",
-    "@l2beat/test-utils": "workspace:*"
+    "@l2beat/vitest-config": "workspace:*"
   }
 }

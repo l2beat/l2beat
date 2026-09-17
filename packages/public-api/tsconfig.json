@@ -1,7 +1,7 @@
 {
   "extends": "@l2beat/typescript-config/base",
   "compilerOptions": {
-    "types": ["node", "@l2beat/test-utils"],
+    "types": ["node"],
     "outDir": "build",
     "rootDir": "./src"
   },

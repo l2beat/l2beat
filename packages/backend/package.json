@@ -110,7 +110,6 @@
     "dotenv": "^16.3.1",
     "supertest": "^6.2.3",
     "tsx": "^4.9.3",
-    "@l2beat/vitest-config": "workspace:*",
-    "@l2beat/test-utils": "workspace:*"
+    "@l2beat/vitest-config": "workspace:*"
   }
 }

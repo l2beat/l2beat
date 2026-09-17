@@ -1,7 +1,7 @@
 {
   "extends": "@l2beat/typescript-config/react",
   "compilerOptions": {
-    "types": ["node", "@l2beat/test-utils"]
+    "types": ["node"]
   },
   "exclude": ["vitest.config.ts"]
 }

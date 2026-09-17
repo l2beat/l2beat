@@ -8,7 +8,4 @@ export default defineVitestConfig({
       '@': fileURLToPath(new URL('./src', import.meta.url)),
     },
   },
-  test: {
-    setupFiles: ['@l2beat/test-utils/setup'],
-  },
 })
