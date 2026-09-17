@@ -1,10 +1,10 @@
 import type {
   PrivacyAdversaryId,
-  PrivacyAdversarySentiment,
   PrivacyExposure,
   PrivacyFieldExposure,
+  TableReadyValue,
 } from '@l2beat/config'
-import type { PrivacyAdversarySummaryCell } from '~/server/features/privacy/types'
+import type { PrivacyAdversariesSummary } from '~/server/features/privacy/types'
 
 export const PRIVACY_ADVERSARIES_TOOLTIP =
   'On public blockchains like Ethereum, every address registers its past and future actions publicly. A privacy protocol can at best cut the link between addresses or offer privacy while deposited. The colour says whether a careful user can keep the link, amount or recipient private against that adversary: green yes, yellow only outside supported options or by accepting another leak, red no.'
@@ -49,33 +49,31 @@ export function getPrivacyAdversaryTitle(label: string): string {
 }
 
 /**
- * One colour for all adversaries, for the homepage. The future adversary is
- * left out: it grades a potential post-quantum world, not today's protocol.
- * Any red cell makes the dot red. Otherwise the majority colour wins, and a
- * tie is green.
+ * All adversaries folded into one value: the homepage dot colour and the
+ * summary table sort key. The future adversary is left out: it grades a
+ * potential post-quantum world, not today's protocol. Any red cell makes it
+ * red, otherwise the majority colour wins and a tie is green. Within a colour,
+ * fewer red and yellow cells sort first.
  */
-export function getPrivacyAdversariesMergedSentiment(
-  cells: PrivacyAdversarySummaryCell[],
-): PrivacyAdversarySentiment {
-  const graded = cells.filter((cell) => cell.id !== 'futureAdversary')
-  if (graded.some((cell) => cell.sentiment === 'bad')) return 'bad'
-  const warnings = graded.filter((cell) => cell.sentiment === 'warning').length
-  return warnings > graded.length - warnings ? 'warning' : 'good'
+export function getPrivacyAdversariesTableValue(
+  adversaries: PrivacyAdversariesSummary,
+): TableReadyValue {
+  const graded = adversaries.cells.filter((c) => c.id !== 'futureAdversary')
+  const bad = graded.filter((c) => c.sentiment === 'bad').length
+  const warnings = graded.filter((c) => c.sentiment === 'warning').length
+  return {
+    value: adversaries.promiseLabel,
+    sentiment:
+      bad > 0
+        ? 'bad'
+        : warnings > graded.length - warnings
+          ? 'warning'
+          : 'good',
+    orderHint: -(bad * 10 + warnings),
+  }
 }
 
 /** Anchor of an adversary block inside the project page section. */
 export function getPrivacyAdversaryAnchor(id: PrivacyAdversaryId): string {
   return `privacy-adversaries-${id}`
-}
-
-/** Sort key for the summary table: red cells weigh more than yellow ones. */
-export function getPrivacyAdversaryRank(
-  cells: PrivacyAdversarySummaryCell[],
-): number {
-  let rank = 0
-  for (const cell of cells) {
-    if (cell.sentiment === 'bad') rank += 10
-    if (cell.sentiment === 'warning') rank += 1
-  }
-  return rank
 }

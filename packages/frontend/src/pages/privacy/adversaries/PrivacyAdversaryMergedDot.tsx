@@ -8,7 +8,7 @@ import type { PrivacyAdversariesSummary } from '~/server/features/privacy/types'
 import { PRIVACY_ASSESSMENT } from '../privacyAssessment'
 import { sentimentToRiskDot } from '../sentimentToRiskDot'
 import {
-  getPrivacyAdversariesMergedSentiment,
+  getPrivacyAdversariesTableValue,
   getPrivacyAdversaryTitle,
 } from './privacyAdversaryUi'
 
@@ -18,7 +18,7 @@ export function PrivacyAdversaryMergedDot({
 }: {
   adversaries: PrivacyAdversariesSummary
 }) {
-  const sentiment = getPrivacyAdversariesMergedSentiment(adversaries.cells)
+  const { sentiment } = getPrivacyAdversariesTableValue(adversaries)
   return (
     <Tooltip>
       <TooltipTrigger

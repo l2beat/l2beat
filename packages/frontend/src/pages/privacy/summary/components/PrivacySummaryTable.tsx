@@ -28,7 +28,7 @@ import { TableLink } from '~/components/table/TableLink'
 import { useTable } from '~/hooks/useTable'
 import type { PrivacySummaryEntry } from '~/server/features/privacy/getPrivacySummaryEntries'
 import { PrivacyAdversaryDots } from '../../adversaries/PrivacyAdversaryDots'
-import { getPrivacyAdversaryRank } from '../../adversaries/privacyAdversaryUi'
+import { getPrivacyAdversariesTableValue } from '../../adversaries/privacyAdversaryUi'
 import { PRIVACY_ASSESSMENT } from '../../privacyAssessment'
 import { DotWithLabel } from './DotWithLabel'
 import { PrivacyAssessmentCell } from './PrivacyAssessmentCell'
@@ -161,7 +161,7 @@ const columns = [
     },
   }),
   columnHelper.accessor(
-    (entry) => getPrivacyAdversaryRank(entry.adversaries.cells),
+    (entry) => getPrivacyAdversariesTableValue(entry.adversaries),
     {
       id: 'adversaries',
       header: PRIVACY_ASSESSMENT.title,
@@ -175,6 +175,11 @@ const columns = [
         )
       },
       sortDescFirst: true,
+      sortingFn: (a, b) =>
+        sortTableValues(
+          getPrivacyAdversariesTableValue(a.original.adversaries),
+          getPrivacyAdversariesTableValue(b.original.adversaries),
+        ),
       meta: {
         align: 'center',
         tooltip: PRIVACY_ASSESSMENT.tooltip,

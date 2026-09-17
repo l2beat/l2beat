@@ -115,6 +115,7 @@ export function PrivacyProjectPage({
                         trustedSetup={entry.trustedSetup}
                         exitWindow={entry.exitWindow}
                         adversaries={entry.adversaries}
+                        href={entry.href}
                         reproducibility={entry.reproducibility}
                         className="mt-4"
                       />

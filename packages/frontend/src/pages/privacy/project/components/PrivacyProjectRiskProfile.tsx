@@ -30,6 +30,8 @@ interface Props {
   trustedSetup: PrivacyTrustedSetupSummary
   exitWindow: PrivacyExitWindow
   adversaries: PrivacyAdversariesSummary
+  /** This project's page, which the adversary dots link into. */
+  href: string
   reproducibility: PrivacySummaryValue
   className?: string
 }
@@ -38,6 +40,7 @@ export function PrivacyProjectRiskProfile({
   trustedSetup,
   exitWindow,
   adversaries,
+  href,
   reproducibility,
   className,
 }: Props) {
@@ -68,7 +71,7 @@ export function PrivacyProjectRiskProfile({
               <PrivacyAdversaryDots
                 adversaries={adversaries}
                 size="md"
-                href=""
+                href={href}
               />
             }
             label={adversaries.promiseLabel}
