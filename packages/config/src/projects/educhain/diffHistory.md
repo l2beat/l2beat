@@ -8,18 +8,15 @@ Generated with discovered.json: 0xfa1eb6df8f287c4a6c6db9d0ebd12c648ba796b2
 
 ## Description
 
-Upgrade to the BoLD dispute protocol and ArbOS v51 "Dia" (nitro-contracts v3.1.0). Executed 2026-09-08 by Conduit Multisig 2 via the UpgradeExecutor through Conduit's `BOLDUpgradeAction` `0x3ffd88b35a268bbabd7f24096746a12e16cc408b`, whose verified source matches the v3.1.0 tag. Same implementations as Ethereal. Same action contract as Reya with identical timing parameters and a different stake amount, executed 30 minutes apart.
+Upgrade to the BoLD dispute protocol (nitro-contracts v3.1.0) and ArbOS v51 "Dia", executed by Conduit Multisig 2 via the UpgradeExecutor.
 
-RollupProxy replaced with a new BoLD-enabled contract `0xC92793985e0026583Dc70aBDFBa167b1932b834D` (`isPostBoLD: true`). Assertion-based state management replaces the old node-based system. Validator whitelist remains enabled; validator set reduced from 2 to 1 (`0x92D81CCc…`; EduFastConfirmerMultisig is no longer a validator). Stake unchanged at 0.01 ETH, now held as WETH. `confirmPeriodBlocks` unchanged at 45818 (~6d 8h). `minimumAssertionPeriod` 10 → 75 blocks (2m → 15m). `validatorAfkBlocks` 45818 → 2^50, so the whitelist can no longer be dropped for validator inactivity. `challengeGracePeriodBlocks` 14400 (48h) introduced: after a challenge, the winning edge must have been confirmed for 48h before the assertion can be confirmed. `anyTrustFastConfirmer` carried over (EduFastConfirmerMultisig, a 1/1 Safe owned by the validator EOA) and still fast-confirms every assertion within seconds of creation via `fastConfirmNewAssertion`, which has no validator check.
+RollupProxy replaced by a BoLD rollup (`isPostBoLD: true`). Validator whitelist stays enabled; validators 2 → 1 (EduFastConfirmerMultisig removed). Stake unchanged at 0.01 ETH, now in WETH. `confirmPeriodBlocks` unchanged at 45818. `minimumAssertionPeriod` 10 → 75. `validatorAfkBlocks` 45818 → 2^50. `challengeGracePeriodBlocks` set to 14400. `anyTrustFastConfirmer` carried over (EduFastConfirmerMultisig).
 
-ChallengeManager replaced with EdgeChallengeManager implementing the BoLD multi-level bisection protocol: `challengePeriodBlocks` 45818, block-level edges (height 67M), 1 big-step level (height 524K), small-step edges (height 8.4M), with 0.01 WETH stake for big-step and small-step edges. Only whitelisted validators can open layer-zero edges; bisection and edge confirmation are permissionless.
+ChallengeManager replaced by EdgeChallengeManager: `challengePeriodBlocks` 45818, 1 big-step level, 0.01 WETH stake on big-step and small-step edges.
 
-All core contracts upgraded: Bridge, Inbox, Outbox, RollupEventInbox, SequencerInbox. SequencerInbox gains delay buffer support (`isDelayBufferable: true`, buffer max/threshold 2^50-1, i.e. disabled) and an unset `feeTokenPricer`. `delayBlocks` unchanged at 28800.
-Implementation diffs: [Bridge](https://disco.l2beat.com/diff/arb1:0xdF0eaCC3F37356DF320e5B5db16C7eD7A6b596dd/arb1:0x31127A9c0308d8E3F6db5158a14aD674f22946d7), [Inbox](https://disco.l2beat.com/diff/arb1:0xD87f160f8c414d834cBDd9477c3D8c3ad1802255/arb1:0x08b1395a2Ee51073d6B9ebF9E97FBeb09dcAcAf1), [Outbox](https://disco.l2beat.com/diff/arb1:0x302275067251F5FcdB9359Bda735fD8f7A4A54c0/arb1:0x99761fAc22FcE23498F8004ac4025F822fEdce95), [RollupEventInbox](https://disco.l2beat.com/diff/arb1:0x18FD37A4FB9E1F06d9383958aFd236771F15A8cb/arb1:0x9fD20D42Cf52B1A0dEf8e95AD8d2E92B58ECa51B), [SequencerInbox](https://disco.l2beat.com/diff/arb1:0x7be08B013de2b23a6329De51C4994f841dcE1a10/arb1:0xC08A4543b011fd4f1EfC9e26521F4e157433b3b1).
+Bridge, Inbox, Outbox, RollupEventInbox and SequencerInbox upgraded. SequencerInbox: `isDelayBufferable: true` with buffer at max, `feeTokenPricer` unset.
 
-All four OneStepProvers and OneStepProofEntry replaced with new versions. ValidatorUtils removed (no longer needed in BoLD).
-
-ArbOS wasmModuleRoot updated from v40 (`0xdb698a25…`) to v51 "Dia" (`0x8a7513bf…`, consensus-v51).
+OneStepProvers and OneStepProofEntry replaced. ValidatorUtils removed.
 
 ## Watched changes
 

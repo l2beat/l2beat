@@ -8,18 +8,15 @@ Generated with discovered.json: 0xa742a853b5de0f76e8fe3603cfe7eebc6e577ff0
 
 ## Description
 
-Upgrade to the BoLD dispute protocol and ArbOS v51 "Dia" (nitro-contracts v3.1.0). Executed 2026-09-08 by Conduit Multisig 1 via the UpgradeExecutor through Conduit's `BOLDUpgradeAction` `0x3ffd88b35a268bbabd7f24096746a12e16cc408b`, whose verified source matches the v3.1.0 tag. Same action contract as EDU Chain with identical timing parameters and a different stake amount, executed 30 minutes apart. Rollup logic, EdgeChallengeManager and OneStepProver implementations are the Conduit deployments already used by Corn, Plume, Lasernet, Galxe Gravity, Pepe Unchained and Powerloom; the bridge-side implementations are not used by any other tracked project.
+Upgrade to the BoLD dispute protocol (nitro-contracts v3.1.0) and ArbOS v51 "Dia", executed by Conduit Multisig 1 via the UpgradeExecutor.
 
-RollupProxy replaced with a new BoLD-enabled contract `0xB55002d2795217Fd3B91EcBb3385ba9A231E5327` (`isPostBoLD: true`). Assertion-based state management replaces the old node-based system. Validator whitelist remains enabled with the same single validator (`0x3ec947F2…`). Stake unchanged at 0.1 ETH, now held as WETH. `confirmPeriodBlocks` unchanged at 45818 (~6d 8h). `minimumAssertionPeriod` 10 → 75 blocks (2m → 15m). `validatorAfkBlocks` 45818 → 2^50, so the whitelist can no longer be dropped for validator inactivity. `challengeGracePeriodBlocks` 14400 (48h) introduced: after a challenge, the winning edge must have been confirmed for 48h before the assertion can be confirmed. `anyTrustFastConfirmer` not set (unchanged).
+RollupProxy replaced by a BoLD rollup (`isPostBoLD: true`). Validator whitelist stays enabled, single validator unchanged. Stake unchanged at 0.1 ETH, now in WETH. `confirmPeriodBlocks` unchanged at 45818. `minimumAssertionPeriod` 10 → 75. `validatorAfkBlocks` 45818 → 2^50. `challengeGracePeriodBlocks` set to 14400. `anyTrustFastConfirmer` not set.
 
-ChallengeManager replaced with EdgeChallengeManager implementing the BoLD multi-level bisection protocol: `challengePeriodBlocks` 45818, block-level edges (height 67M), 1 big-step level (height 524K), small-step edges (height 8.4M), with 0.1 WETH stake for big-step and small-step edges. Only whitelisted validators can open layer-zero edges; bisection and edge confirmation are permissionless.
+ChallengeManager replaced by EdgeChallengeManager: `challengePeriodBlocks` 45818, 1 big-step level, 0.1 WETH stake on big-step and small-step edges.
 
-All core contracts upgraded: Bridge, Inbox, Outbox, RollupEventInbox, SequencerInbox. SequencerInbox gains delay buffer support (`isDelayBufferable: true`, buffer max/threshold 2^50-1, i.e. disabled) and an unset `feeTokenPricer`. `delayBlocks` increased from 5760 to 7200 (`delaySeconds` unchanged at 86400); `reader4844` updated to `0xB1F1A77A…`.
-Implementation diffs: [Bridge](https://disco.l2beat.com/diff/eth:0x1c6ACCd9d66f3B993928E7439c9A2d67b94a445F/eth:0x677ECf96DBFeE1deFbDe8D2E905A39f73Aa27B89), [Inbox](https://disco.l2beat.com/diff/eth:0xf3830309BdfADcC7eEEF99C2EeA879D5fA6C756C/eth:0x9C4ce5EF20F831F4e7fEcf58aAA0Cda8d3091c35), [Outbox](https://disco.l2beat.com/diff/eth:0x2a6DD4433ffa96dc1755814FC0d9cc83A5F68DeC/eth:0x186267690cb723d72A7EDBC002476E23D694cB33), [RollupEventInbox](https://disco.l2beat.com/diff/eth:0x13BE515E44Eefaf3eBEFAD684F1FBB574Ac0A494/eth:0x7b6784fbd233EDB47E11eA4e7205fC4229447662), [SequencerInbox](https://disco.l2beat.com/diff/eth:0x734B78823c4d979045EC23F38B54A070df7769FF/eth:0xE4bE5495054fE4fa4Ea5972219484984927681E3).
+Bridge, Inbox, Outbox, RollupEventInbox and SequencerInbox upgraded. SequencerInbox: `isDelayBufferable: true` with buffer at max, `feeTokenPricer` unset, `delayBlocks` 5760 → 7200, `reader4844` replaced.
 
-All four OneStepProvers and OneStepProofEntry replaced with new versions. ValidatorUtils removed (no longer needed in BoLD).
-
-ArbOS wasmModuleRoot updated from v40 (`0xdb698a25…`) to v51 "Dia" (`0x8a7513bf…`, consensus-v51).
+OneStepProvers and OneStepProofEntry replaced. ValidatorUtils removed.
 
 ## Watched changes
 
