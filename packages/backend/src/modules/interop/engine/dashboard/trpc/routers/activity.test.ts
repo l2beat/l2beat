@@ -1,6 +1,5 @@
 import type { Database } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 import { createCallerFactory } from '../../../../../../trpc/init'
 import { createActivityRouter } from './activity'
@@ -28,14 +27,12 @@ describe(createActivityRouter.name, () => {
       .mockResolvedValue(
         Array.from({ length: 14 }, (_, i) => flatHistoryDay(-13 + i)),
       )
-    const db = mockObject<Database>({
-      aggregatedInteropTransfer: mockObject<
-        Database['aggregatedInteropTransfer']
-      >({
+    const db = {
+      aggregatedInteropTransfer: {
         getDailySeries,
-      }),
-      interopTransfer: mockObject<Database['interopTransfer']>({}),
-    })
+      } as unknown as Database['aggregatedInteropTransfer'],
+      interopTransfer: {} as unknown as Database['interopTransfer'],
+    } as unknown as Database
 
     const callerFactory = createCallerFactory(createActivityRouter())
     const caller = callerFactory({
@@ -74,14 +71,12 @@ describe(createActivityRouter.name, () => {
         totalDstValueUsd: 240,
       },
     ])
-    const db = mockObject<Database>({
-      aggregatedInteropTransfer: mockObject<
-        Database['aggregatedInteropTransfer']
-      >({
+    const db = {
+      aggregatedInteropTransfer: {
         getDailySeriesByGroup,
-      }),
-      interopTransfer: mockObject<Database['interopTransfer']>({}),
-    })
+      } as unknown as Database['aggregatedInteropTransfer'],
+      interopTransfer: {} as unknown as Database['interopTransfer'],
+    } as unknown as Database
 
     const callerFactory = createCallerFactory(createActivityRouter())
     const caller = callerFactory({

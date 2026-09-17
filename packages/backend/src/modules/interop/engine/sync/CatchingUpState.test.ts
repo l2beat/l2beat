@@ -2,7 +2,6 @@ import { Logger } from '@l2beat/backend-tools'
 import type { BlockRangeWithTimestamps } from '@l2beat/database'
 import type { RpcBlock, RpcLog, RpcTransaction } from '@l2beat/shared'
 import { assert, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 import type { InteropEvent, LogToCapture } from '../../plugins/types'
 import { CatchingUpState } from './CatchingUpState'
@@ -50,13 +49,11 @@ describe(CatchingUpState.name, () => {
         buildLogQuery: vi.fn().mockReturnValue(makeEmptyLogQuery()),
         saveProducedInteropEvents,
         getLogs,
-        db: mockObject<InteropEventSyncer['db']>({
-          interopPluginSyncState: mockObject<
-            InteropEventSyncer['db']['interopPluginSyncState']
-          >({
+        db: {
+          interopPluginSyncState: {
             clearResyncRequestUnlessWipePending,
-          }),
-        }),
+          } as unknown as InteropEventSyncer['db']['interopPluginSyncState'],
+        } as unknown as InteropEventSyncer['db'],
       })
       const state = new CatchingUpState(syncer, Logger.SILENT)
 
@@ -224,9 +221,9 @@ describe(CatchingUpState.name, () => {
     })
 
     it('captures logs, flattens events and saves them', async () => {
-      const eventA = mockObject<InteropEvent>({})
-      const eventB = mockObject<InteropEvent>({})
-      const eventC = mockObject<InteropEvent>({})
+      const eventA = {} as unknown as InteropEvent
+      const eventB = {} as unknown as InteropEvent
+      const eventC = {} as unknown as InteropEvent
       const captureLog = vi
         .fn()
         .mockReturnValueOnce([eventA])
@@ -584,7 +581,7 @@ describe(CatchingUpState.name, () => {
 function createSyncer(
   overrides: Partial<InteropEventSyncer> = {},
 ): InteropEventSyncer {
-  return mockObject<InteropEventSyncer>({
+  return {
     chain: CHAIN as InteropEventSyncer['chain'],
     cluster: {
       name: CLUSTER_NAME,
@@ -607,15 +604,13 @@ function createSyncer(
     getTransactionByHash: vi.fn().mockResolvedValue(null),
     captureLog: vi.fn().mockReturnValue(undefined),
     saveProducedInteropEvents: vi.fn().mockResolvedValue(undefined),
-    db: mockObject<InteropEventSyncer['db']>({
-      interopPluginSyncState: mockObject<
-        InteropEventSyncer['db']['interopPluginSyncState']
-      >({
+    db: {
+      interopPluginSyncState: {
         clearResyncRequestUnlessWipePending: vi.fn().mockResolvedValue(1),
-      }),
-    }),
+      } as unknown as InteropEventSyncer['db']['interopPluginSyncState'],
+    } as unknown as InteropEventSyncer['db'],
     ...overrides,
-  })
+  } as unknown as InteropEventSyncer
 }
 
 function makeEmptyLogQuery() {

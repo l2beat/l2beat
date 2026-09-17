@@ -9,7 +9,6 @@ import {
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 import type { UpdateMessagesService } from './UpdateMessagesService'
 import {
@@ -21,32 +20,34 @@ import {
 const TIMESTAMP = UnixTime.now()
 
 describe(UpdateNotifier.name, () => {
-  const projectService = mockObject<ProjectService>({
+  const projectService = {
     getProject: vi.fn().mockResolvedValue(undefined),
-  })
+  } as unknown as ProjectService
 
   describe(UpdateNotifier.prototype.handleUpdate.name, () => {
     it('sends notifications about the changes', async () => {
-      const discordClient = mockObject<DiscordClient>({
-        sendMessage: async () => 'message-id',
-      })
+      const discordClient = {
+        sendMessage: vi.fn(async () => 'message-id'),
+      } as unknown as DiscordClient
 
-      const updateNotifierRepository = mockObject<Database['updateNotifier']>({
-        insert: async () => 0,
-        findLatestId: async () => undefined,
-        getNewerThan: async () => [],
-      })
-      updateNotifierRepository.findLatestId.mockResolvedValueOnce(undefined)
-      updateNotifierRepository.findLatestId.mockResolvedValueOnce(0)
+      const updateNotifierRepository = {
+        insert: vi.fn(async () => 0),
+        findLatestId: vi.fn(async () => undefined),
+        getNewerThan: vi.fn(async () => []),
+      } as unknown as Database['updateNotifier']
+      vi.mocked(updateNotifierRepository.findLatestId).mockResolvedValueOnce(
+        undefined,
+      )
+      vi.mocked(updateNotifierRepository.findLatestId).mockResolvedValueOnce(0)
 
-      const updateMessagesService = mockObject<UpdateMessagesService>({
-        storeAndPrune: async () => {},
-      })
+      const updateMessagesService = {
+        storeAndPrune: vi.fn(async () => {}),
+      } as unknown as UpdateMessagesService
 
       const updateNotifier = new UpdateNotifier(
-        mockObject<Database>({
+        {
           updateNotifier: updateNotifierRepository,
-        }),
+        } as unknown as Database,
         discordClient,
         Logger.SILENT,
         updateMessagesService,
@@ -96,26 +97,28 @@ describe(UpdateNotifier.name, () => {
     })
 
     it('sends notifications about the changes with meta', async () => {
-      const discordClient = mockObject<DiscordClient>({
-        sendMessage: async () => 'message-id',
-      })
+      const discordClient = {
+        sendMessage: vi.fn(async () => 'message-id'),
+      } as unknown as DiscordClient
 
-      const updateMessagesService = mockObject<UpdateMessagesService>({
-        storeAndPrune: async () => {},
-      })
+      const updateMessagesService = {
+        storeAndPrune: vi.fn(async () => {}),
+      } as unknown as UpdateMessagesService
 
-      const updateNotifierRepository = mockObject<Database['updateNotifier']>({
-        insert: async () => 0,
-        findLatestId: async () => undefined,
-        getNewerThan: async () => [],
-      })
-      updateNotifierRepository.findLatestId.mockResolvedValueOnce(undefined)
-      updateNotifierRepository.findLatestId.mockResolvedValueOnce(0)
+      const updateNotifierRepository = {
+        insert: vi.fn(async () => 0),
+        findLatestId: vi.fn(async () => undefined),
+        getNewerThan: vi.fn(async () => []),
+      } as unknown as Database['updateNotifier']
+      vi.mocked(updateNotifierRepository.findLatestId).mockResolvedValueOnce(
+        undefined,
+      )
+      vi.mocked(updateNotifierRepository.findLatestId).mockResolvedValueOnce(0)
 
       const updateNotifier = new UpdateNotifier(
-        mockObject<Database>({
+        {
           updateNotifier: updateNotifierRepository,
-        }),
+        } as unknown as Database,
         discordClient,
         Logger.SILENT,
         updateMessagesService,
@@ -175,26 +178,28 @@ describe(UpdateNotifier.name, () => {
     })
 
     it('truncates and sends notifications about the changes', async () => {
-      const discordClient = mockObject<DiscordClient>({
-        sendMessage: async () => 'message-id',
-      })
+      const discordClient = {
+        sendMessage: vi.fn(async () => 'message-id'),
+      } as unknown as DiscordClient
 
-      const updateMessagesService = mockObject<UpdateMessagesService>({
-        storeAndPrune: async () => {},
-      })
+      const updateMessagesService = {
+        storeAndPrune: vi.fn(async () => {}),
+      } as unknown as UpdateMessagesService
 
-      const updateNotifierRepository = mockObject<Database['updateNotifier']>({
-        insert: async () => 0,
-        findLatestId: async () => undefined,
-        getNewerThan: async () => [],
-      })
-      updateNotifierRepository.findLatestId.mockResolvedValueOnce(undefined)
-      updateNotifierRepository.findLatestId.mockResolvedValueOnce(0)
+      const updateNotifierRepository = {
+        insert: vi.fn(async () => 0),
+        findLatestId: vi.fn(async () => undefined),
+        getNewerThan: vi.fn(async () => []),
+      } as unknown as Database['updateNotifier']
+      vi.mocked(updateNotifierRepository.findLatestId).mockResolvedValueOnce(
+        undefined,
+      )
+      vi.mocked(updateNotifierRepository.findLatestId).mockResolvedValueOnce(0)
 
       const updateNotifier = new UpdateNotifier(
-        mockObject<Database>({
+        {
           updateNotifier: updateNotifierRepository,
-        }),
+        } as unknown as Database,
         discordClient,
         Logger.SILENT,
         updateMessagesService,
@@ -250,25 +255,27 @@ describe(UpdateNotifier.name, () => {
     })
 
     it('sends errors only to internal channel', async () => {
-      const discordClient = mockObject<DiscordClient>({
-        sendMessage: async () => 'message-id',
-      })
+      const discordClient = {
+        sendMessage: vi.fn(async () => 'message-id'),
+      } as unknown as DiscordClient
 
-      const updateMessagesService = mockObject<UpdateMessagesService>({
-        storeAndPrune: async () => {},
-      })
+      const updateMessagesService = {
+        storeAndPrune: vi.fn(async () => {}),
+      } as unknown as UpdateMessagesService
 
-      const updateNotifierRepository = mockObject<Database['updateNotifier']>({
-        insert: async () => 0,
-        findLatestId: async () => 0,
-        getNewerThan: async () => [],
-      })
-      updateNotifierRepository.findLatestId.mockResolvedValueOnce(undefined)
+      const updateNotifierRepository = {
+        insert: vi.fn(async () => 0),
+        findLatestId: vi.fn(async () => 0),
+        getNewerThan: vi.fn(async () => []),
+      } as unknown as Database['updateNotifier']
+      vi.mocked(updateNotifierRepository.findLatestId).mockResolvedValueOnce(
+        undefined,
+      )
 
       const updateNotifier = new UpdateNotifier(
-        mockObject<Database>({
+        {
           updateNotifier: updateNotifierRepository,
-        }),
+        } as unknown as Database,
         discordClient,
         Logger.SILENT,
         updateMessagesService,
@@ -317,21 +324,23 @@ describe(UpdateNotifier.name, () => {
     })
 
     it('sends notification about tracked transactions being affected', async () => {
-      const discordClient = mockObject<DiscordClient>({
-        sendMessage: async () => 'message-id',
-      })
+      const discordClient = {
+        sendMessage: vi.fn(async () => 'message-id'),
+      } as unknown as DiscordClient
 
-      const updateNotifierRepository = mockObject<Database['updateNotifier']>({
-        insert: async () => 0,
-        findLatestId: async () => undefined,
-        getNewerThan: async () => [],
-      })
-      updateNotifierRepository.findLatestId.mockResolvedValueOnce(undefined)
-      updateNotifierRepository.findLatestId.mockResolvedValueOnce(0)
+      const updateNotifierRepository = {
+        insert: vi.fn(async () => 0),
+        findLatestId: vi.fn(async () => undefined),
+        getNewerThan: vi.fn(async () => []),
+      } as unknown as Database['updateNotifier']
+      vi.mocked(updateNotifierRepository.findLatestId).mockResolvedValueOnce(
+        undefined,
+      )
+      vi.mocked(updateNotifierRepository.findLatestId).mockResolvedValueOnce(0)
 
-      const updateMessagesService = mockObject<UpdateMessagesService>({
-        storeAndPrune: async () => {},
-      })
+      const updateMessagesService = {
+        storeAndPrune: vi.fn(async () => {}),
+      } as unknown as UpdateMessagesService
 
       // Mock project with trackedTxsConfig
       const mockProject = {
@@ -348,14 +357,14 @@ describe(UpdateNotifier.name, () => {
           },
         ],
       }
-      const mockProjectService = mockObject<ProjectService>({
+      const mockProjectService = {
         getProject: vi.fn().mockResolvedValue(mockProject),
-      })
+      } as unknown as ProjectService
 
       const updateNotifier = new UpdateNotifier(
-        mockObject<Database>({
+        {
           updateNotifier: updateNotifierRepository,
-        }),
+        } as unknown as Database,
         discordClient,
         Logger.SILENT,
         updateMessagesService,
@@ -407,21 +416,23 @@ describe(UpdateNotifier.name, () => {
     })
 
     it('does not include tracked transactions message when contract is not in trackedTxsConfig', async () => {
-      const discordClient = mockObject<DiscordClient>({
-        sendMessage: async () => 'message-id',
-      })
+      const discordClient = {
+        sendMessage: vi.fn(async () => 'message-id'),
+      } as unknown as DiscordClient
 
-      const updateNotifierRepository = mockObject<Database['updateNotifier']>({
-        insert: async () => 0,
-        findLatestId: async () => undefined,
-        getNewerThan: async () => [],
-      })
-      updateNotifierRepository.findLatestId.mockResolvedValueOnce(undefined)
-      updateNotifierRepository.findLatestId.mockResolvedValueOnce(0)
+      const updateNotifierRepository = {
+        insert: vi.fn(async () => 0),
+        findLatestId: vi.fn(async () => undefined),
+        getNewerThan: vi.fn(async () => []),
+      } as unknown as Database['updateNotifier']
+      vi.mocked(updateNotifierRepository.findLatestId).mockResolvedValueOnce(
+        undefined,
+      )
+      vi.mocked(updateNotifierRepository.findLatestId).mockResolvedValueOnce(0)
 
-      const updateMessagesService = mockObject<UpdateMessagesService>({
-        storeAndPrune: async () => {},
-      })
+      const updateMessagesService = {
+        storeAndPrune: vi.fn(async () => {}),
+      } as unknown as UpdateMessagesService
 
       // Mock project with trackedTxsConfig that has a different address
       const mockProject = {
@@ -438,14 +449,14 @@ describe(UpdateNotifier.name, () => {
           },
         ],
       }
-      const mockProjectService = mockObject<ProjectService>({
+      const mockProjectService = {
         getProject: vi.fn().mockResolvedValue(mockProject),
-      })
+      } as unknown as ProjectService
 
       const updateNotifier = new UpdateNotifier(
-        mockObject<Database>({
+        {
           updateNotifier: updateNotifierRepository,
-        }),
+        } as unknown as Database,
         discordClient,
         Logger.SILENT,
         updateMessagesService,
@@ -499,20 +510,20 @@ describe(UpdateNotifier.name, () => {
 
   describe(UpdateNotifier.prototype.sendDailyReminder.name, () => {
     it('sends daily reminder at 9am CET', async () => {
-      const updateNotifierRepository = mockObject<Database['updateNotifier']>({
-        insert: async () => 0,
-      })
+      const updateNotifierRepository = {
+        insert: vi.fn(async () => 0),
+      } as unknown as Database['updateNotifier']
 
-      const updateMessagesService = mockObject<UpdateMessagesService>({
-        storeAndPrune: async () => {},
-      })
+      const updateMessagesService = {
+        storeAndPrune: vi.fn(async () => {}),
+      } as unknown as UpdateMessagesService
 
-      const discordClient = mockObject<DiscordClient>({
-        sendMessage: async () => 'message-id',
-      })
+      const discordClient = {
+        sendMessage: vi.fn(async () => 'message-id'),
+      } as unknown as DiscordClient
 
       const updateNotifier = new UpdateNotifier(
-        mockObject<Database>({ updateNotifier: updateNotifierRepository }),
+        { updateNotifier: updateNotifierRepository } as unknown as Database,
         discordClient,
         Logger.SILENT,
         updateMessagesService,
@@ -563,23 +574,23 @@ describe(UpdateNotifier.name, () => {
         severityCounts: { low: 0, medium: 0, high: 0, unknown: 0 },
       })
 
-      const updateMessagesService = mockObject<UpdateMessagesService>({
-        storeAndPrune: async () => {},
-      })
+      const updateMessagesService = {
+        storeAndPrune: vi.fn(async () => {}),
+      } as unknown as UpdateMessagesService
 
-      const updateNotifierRepository = mockObject<Database['updateNotifier']>({
-        insert: async () => 0,
-      })
+      const updateNotifierRepository = {
+        insert: vi.fn(async () => 0),
+      } as unknown as Database['updateNotifier']
 
-      const discordClient = mockObject<DiscordClient>({
-        sendMessage: async (msg: string) => {
+      const discordClient = {
+        sendMessage: vi.fn(async (msg: string) => {
           expect(msg.length <= DISCORD_MAX_MESSAGE_LENGTH)
           return 'message-id'
-        },
-      })
+        }),
+      } as unknown as DiscordClient
 
       const updateNotifier = new UpdateNotifier(
-        mockObject<Database>({ updateNotifier: updateNotifierRepository }),
+        { updateNotifier: updateNotifierRepository } as unknown as Database,
         discordClient,
         Logger.SILENT,
         updateMessagesService,
@@ -605,18 +616,18 @@ describe(UpdateNotifier.name, () => {
     })
 
     it('does not send daily reminder at other hour', async () => {
-      const discordClient = mockObject<DiscordClient>({
-        sendMessage: async () => 'message-id',
-      })
-      const updateNotifierRepository = mockObject<Database['updateNotifier']>({
-        insert: async () => 0,
-        findLatestId: async () => undefined,
-      })
-      const updateMessagesService = mockObject<UpdateMessagesService>({
-        storeAndPrune: async () => {},
-      })
+      const discordClient = {
+        sendMessage: vi.fn(async () => 'message-id'),
+      } as unknown as DiscordClient
+      const updateNotifierRepository = {
+        insert: vi.fn(async () => 0),
+        findLatestId: vi.fn(async () => undefined),
+      } as unknown as Database['updateNotifier']
+      const updateMessagesService = {
+        storeAndPrune: vi.fn(async () => {}),
+      } as unknown as UpdateMessagesService
       const updateNotifier = new UpdateNotifier(
-        mockObject<Database>({ updateNotifier: updateNotifierRepository }),
+        { updateNotifier: updateNotifierRepository } as unknown as Database,
         discordClient,
         Logger.SILENT,
         updateMessagesService,
@@ -638,18 +649,18 @@ describe(UpdateNotifier.name, () => {
     })
 
     it('includes disabled projects and failed projects in daily reminder', async () => {
-      const discordClient = mockObject<DiscordClient>({
-        sendMessage: async () => 'message-id',
-      })
-      const updateNotifierRepository = mockObject<Database['updateNotifier']>({
-        insert: async () => 0,
-        findLatestId: async () => undefined,
-      })
-      const updateMessagesService = mockObject<UpdateMessagesService>({
-        storeAndPrune: async () => {},
-      })
+      const discordClient = {
+        sendMessage: vi.fn(async () => 'message-id'),
+      } as unknown as DiscordClient
+      const updateNotifierRepository = {
+        insert: vi.fn(async () => 0),
+        findLatestId: vi.fn(async () => undefined),
+      } as unknown as Database['updateNotifier']
+      const updateMessagesService = {
+        storeAndPrune: vi.fn(async () => {}),
+      } as unknown as UpdateMessagesService
       const updateNotifier = new UpdateNotifier(
-        mockObject<Database>({ updateNotifier: updateNotifierRepository }),
+        { updateNotifier: updateNotifierRepository } as unknown as Database,
         discordClient,
         Logger.SILENT,
         updateMessagesService,
@@ -668,7 +679,8 @@ describe(UpdateNotifier.name, () => {
       )
 
       expect(discordClient.sendMessage).toHaveBeenCalledTimes(1)
-      const message = discordClient.sendMessage.mock.calls[0][0] as string
+      const message = vi.mocked(discordClient.sendMessage).mock
+        .calls[0][0] as string
       expect(message).toContain(':warning: Disabled projects: `project-aaa`')
       expect(message).toContain(':warning: Failed projects: `project-bbb`')
     })

@@ -1,7 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 import { mockDatabase } from '../../test/database'
 import type { Clock } from '../../tools/Clock'
@@ -17,7 +16,7 @@ const SAMPLE_DAY = UnixTime.toStartOf(SAMPLE_TIME, 'day')
 
 describe(PrivacyRelayerSampler.name, () => {
   it('observes and saves a sample for the timestamp day', async () => {
-    const provider = mockObject<RailgunBroadcasterProvider>({
+    const provider = {
       observe: vi.fn().mockResolvedValueOnce(
         observations([
           1,
@@ -29,11 +28,11 @@ describe(PrivacyRelayerSampler.name, () => {
           },
         ]),
       ),
-    })
-    const privacyRelayerSample = mockObject<Database['privacyRelayerSample']>({
+    } as unknown as RailgunBroadcasterProvider
+    const privacyRelayerSample = {
       getConfigurationIdsByTimestamp: vi.fn().mockResolvedValueOnce([]),
       upsertMany: vi.fn().mockResolvedValueOnce(1),
-    })
+    } as unknown as Database['privacyRelayerSample']
 
     const sampler = createSampler(provider, privacyRelayerSample)
     await sampler.sample(SAMPLE_TIME)
@@ -57,15 +56,15 @@ describe(PrivacyRelayerSampler.name, () => {
   })
 
   it('skips configurations that already have a sample for the timestamp day', async () => {
-    const provider = mockObject<RailgunBroadcasterProvider>({
+    const provider = {
       observe: vi.fn(),
-    })
-    const privacyRelayerSample = mockObject<Database['privacyRelayerSample']>({
+    } as unknown as RailgunBroadcasterProvider
+    const privacyRelayerSample = {
       getConfigurationIdsByTimestamp: vi
         .fn()
         .mockResolvedValueOnce(['config-1']),
       upsertMany: vi.fn(),
-    })
+    } as unknown as Database['privacyRelayerSample']
 
     const sampler = createSampler(provider, privacyRelayerSample)
     await sampler.sample(SAMPLE_TIME)
@@ -75,13 +74,13 @@ describe(PrivacyRelayerSampler.name, () => {
   })
 
   it('skips configurations that have not started yet', async () => {
-    const provider = mockObject<RailgunBroadcasterProvider>({
+    const provider = {
       observe: vi.fn(),
-    })
-    const privacyRelayerSample = mockObject<Database['privacyRelayerSample']>({
+    } as unknown as RailgunBroadcasterProvider
+    const privacyRelayerSample = {
       getConfigurationIdsByTimestamp: vi.fn(),
       upsertMany: vi.fn(),
-    })
+    } as unknown as Database['privacyRelayerSample']
 
     const sampler = createSampler(provider, privacyRelayerSample, [
       configuration({ sinceTimestamp: SAMPLE_DAY + UnixTime.DAY }),
@@ -96,7 +95,7 @@ describe(PrivacyRelayerSampler.name, () => {
   })
 
   it('does not save when the observation saw no messages', async () => {
-    const provider = mockObject<RailgunBroadcasterProvider>({
+    const provider = {
       observe: vi.fn().mockResolvedValueOnce(
         observations([
           1,
@@ -108,11 +107,11 @@ describe(PrivacyRelayerSampler.name, () => {
           },
         ]),
       ),
-    })
-    const privacyRelayerSample = mockObject<Database['privacyRelayerSample']>({
+    } as unknown as RailgunBroadcasterProvider
+    const privacyRelayerSample = {
       getConfigurationIdsByTimestamp: vi.fn().mockResolvedValueOnce([]),
       upsertMany: vi.fn(),
-    })
+    } as unknown as Database['privacyRelayerSample']
 
     const sampler = createSampler(provider, privacyRelayerSample)
     await sampler.sample(SAMPLE_TIME)
@@ -121,7 +120,7 @@ describe(PrivacyRelayerSampler.name, () => {
   })
 
   it('does not save when received messages cannot be parsed', async () => {
-    const provider = mockObject<RailgunBroadcasterProvider>({
+    const provider = {
       observe: vi.fn().mockResolvedValueOnce(
         observations([
           1,
@@ -133,11 +132,11 @@ describe(PrivacyRelayerSampler.name, () => {
           },
         ]),
       ),
-    })
-    const privacyRelayerSample = mockObject<Database['privacyRelayerSample']>({
+    } as unknown as RailgunBroadcasterProvider
+    const privacyRelayerSample = {
       getConfigurationIdsByTimestamp: vi.fn().mockResolvedValueOnce([]),
       upsertMany: vi.fn(),
-    })
+    } as unknown as Database['privacyRelayerSample']
 
     const sampler = createSampler(provider, privacyRelayerSample)
     await sampler.sample(SAMPLE_TIME)
@@ -146,13 +145,13 @@ describe(PrivacyRelayerSampler.name, () => {
   })
 
   it('does not save when observation transport fails', async () => {
-    const provider = mockObject<RailgunBroadcasterProvider>({
+    const provider = {
       observe: vi.fn().mockRejectedValueOnce(new Error('waku connect timeout')),
-    })
-    const privacyRelayerSample = mockObject<Database['privacyRelayerSample']>({
+    } as unknown as RailgunBroadcasterProvider
+    const privacyRelayerSample = {
       getConfigurationIdsByTimestamp: vi.fn().mockResolvedValueOnce([]),
       upsertMany: vi.fn(),
-    })
+    } as unknown as Database['privacyRelayerSample']
 
     const sampler = createSampler(provider, privacyRelayerSample)
     await sampler.sample(SAMPLE_TIME)
@@ -161,7 +160,7 @@ describe(PrivacyRelayerSampler.name, () => {
   })
 
   it('saves zero when valid messages contain no eligible relayers', async () => {
-    const provider = mockObject<RailgunBroadcasterProvider>({
+    const provider = {
       observe: vi.fn().mockResolvedValueOnce(
         observations([
           1,
@@ -173,11 +172,11 @@ describe(PrivacyRelayerSampler.name, () => {
           },
         ]),
       ),
-    })
-    const privacyRelayerSample = mockObject<Database['privacyRelayerSample']>({
+    } as unknown as RailgunBroadcasterProvider
+    const privacyRelayerSample = {
       getConfigurationIdsByTimestamp: vi.fn().mockResolvedValueOnce([]),
       upsertMany: vi.fn().mockResolvedValueOnce(1),
-    })
+    } as unknown as Database['privacyRelayerSample']
 
     const sampler = createSampler(provider, privacyRelayerSample)
     await sampler.sample(SAMPLE_TIME)
@@ -205,7 +204,7 @@ describe(PrivacyRelayerSampler.name, () => {
         chainId: 137,
       }),
     ]
-    const provider = mockObject<RailgunBroadcasterProvider>({
+    const provider = {
       observe: vi
         .fn()
         .mockResolvedValueOnce(
@@ -214,11 +213,11 @@ describe(PrivacyRelayerSampler.name, () => {
             [137, { uniqueRelayers: 5 }],
           ),
         ),
-    })
-    const privacyRelayerSample = mockObject<Database['privacyRelayerSample']>({
+    } as unknown as RailgunBroadcasterProvider
+    const privacyRelayerSample = {
       getConfigurationIdsByTimestamp: vi.fn().mockResolvedValueOnce([]),
       upsertMany: vi.fn().mockResolvedValueOnce(2),
-    })
+    } as unknown as Database['privacyRelayerSample']
     const sampler = createSampler(
       provider,
       privacyRelayerSample,
@@ -260,7 +259,7 @@ describe(PrivacyRelayerSampler.name, () => {
       configuration(),
       configuration({ id: 'config-137', chain: 'polygonpos', chainId: 137 }),
     ]
-    const provider = mockObject<RailgunBroadcasterProvider>({
+    const provider = {
       observe: vi.fn().mockResolvedValueOnce(
         observations(
           [1, { uniqueRelayers: 10 }],
@@ -275,11 +274,11 @@ describe(PrivacyRelayerSampler.name, () => {
           ],
         ),
       ),
-    })
-    const privacyRelayerSample = mockObject<Database['privacyRelayerSample']>({
+    } as unknown as RailgunBroadcasterProvider
+    const privacyRelayerSample = {
       getConfigurationIdsByTimestamp: vi.fn().mockResolvedValueOnce([]),
       upsertMany: vi.fn().mockResolvedValueOnce(1),
-    })
+    } as unknown as Database['privacyRelayerSample']
     const sampler = createSampler(
       provider,
       privacyRelayerSample,
@@ -303,16 +302,16 @@ describe(PrivacyRelayerSampler.name, () => {
   })
 
   it('samples on start and on each new hour', () => {
-    const clock = mockObject<Clock>({
+    const clock = {
       getLastHour: vi.fn().mockReturnValueOnce(SAMPLE_TIME),
       onNewHour: vi.fn().mockReturnValueOnce(() => {}),
-    })
-    const privacyRelayerSample = mockObject<Database['privacyRelayerSample']>({
+    } as unknown as Clock
+    const privacyRelayerSample = {
       getConfigurationIdsByTimestamp: vi.fn().mockResolvedValue(['config-1']),
       upsertMany: vi.fn(),
-    })
+    } as unknown as Database['privacyRelayerSample']
     const sampler = createSampler(
-      mockObject<RailgunBroadcasterProvider>({ observe: vi.fn() }),
+      { observe: vi.fn() } as unknown as RailgunBroadcasterProvider,
       privacyRelayerSample,
       [configuration()],
       clock,
@@ -352,7 +351,7 @@ function createSampler(
   provider: RailgunBroadcasterProvider,
   privacyRelayerSample: Database['privacyRelayerSample'],
   configurations = [configuration()],
-  clock: Clock = mockObject<Clock>(),
+  clock: Clock = {} as unknown as Clock,
 ) {
   return new PrivacyRelayerSampler(
     {

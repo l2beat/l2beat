@@ -2,7 +2,6 @@ import { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
 import type { TrackedTxConfigEntry } from '@l2beat/shared'
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import type { TrackedTxProject } from '../../config/Config'
 import { mockDatabase } from '../../test/database'
@@ -33,39 +32,39 @@ describe(TrackedTxsIndexer.name, () => {
       const to = 300
 
       const trackedTxResults = getMockTrackedTxResults()
-      const trackedTxsClient = mockObject<TrackedTxsClient>({
-        getData: async () => trackedTxResults,
-      })
-      const l2costsUpdater = mockObject<L2CostsUpdater>({
+      const trackedTxsClient = {
+        getData: vi.fn(async () => trackedTxResults),
+      } as unknown as TrackedTxsClient
+      const l2costsUpdater = {
         type: 'l2costs',
         update: vi.fn(async () => {}),
-      })
-      const livenessUpdater = mockObject<LivenessUpdater>({
+      } as unknown as L2CostsUpdater
+      const livenessUpdater = {
         type: 'liveness',
         update: vi.fn(async () => {}),
-      })
+      } as unknown as LivenessUpdater
 
-      const syncMetadataRepository = mockObject<Database['syncMetadata']>({
+      const syncMetadataRepository = {
         updateSyncedUntil: vi.fn(async () => {}),
-      })
+      } as unknown as Database['syncMetadata']
 
       const indexer = getMockTrackedTxsIndexer({
         updaters: [livenessUpdater, l2costsUpdater],
         syncMetadataRepository,
         trackedTxsClient,
         projects: [
-          mockObject<TrackedTxProject>({
+          {
             id: ProjectId('test1'),
             isArchived: false,
-          }),
-          mockObject<TrackedTxProject>({
+          } as unknown as TrackedTxProject,
+          {
             id: ProjectId('test2'),
             isArchived: false,
-          }),
-          mockObject<TrackedTxProject>({
+          } as unknown as TrackedTxProject,
+          {
             id: ProjectId('test3'),
             isArchived: false,
-          }),
+          } as unknown as TrackedTxProject,
         ],
       })
 
@@ -118,31 +117,31 @@ describe(TrackedTxsIndexer.name, () => {
 
     it('deduplicates l2costs per transaction but passes all liveness results', async () => {
       const [liveness, , l2costs] = getMockTrackedTxResults()
-      const trackedTxsClient = mockObject<TrackedTxsClient>({
-        getData: async () => [
+      const trackedTxsClient = {
+        getData: vi.fn(async () => [
           liveness,
           { ...liveness, gasUsed: 111 },
           l2costs,
           { ...l2costs, gasUsed: 999 },
-        ],
-      })
-      const l2costsUpdater = mockObject<L2CostsUpdater>({
+        ]),
+      } as unknown as TrackedTxsClient
+      const l2costsUpdater = {
         type: 'l2costs',
         update: vi.fn(async () => {}),
-      })
-      const livenessUpdater = mockObject<LivenessUpdater>({
+      } as unknown as L2CostsUpdater
+      const livenessUpdater = {
         type: 'liveness',
         update: vi.fn(async () => {}),
-      })
+      } as unknown as LivenessUpdater
 
       const indexer = getMockTrackedTxsIndexer({
         updaters: [livenessUpdater, l2costsUpdater],
         trackedTxsClient,
         projects: [
-          mockObject<TrackedTxProject>({
+          {
             id: ProjectId('test'),
             isArchived: false,
-          }),
+          } as unknown as TrackedTxProject,
         ],
       })
 
@@ -168,17 +167,17 @@ describe(TrackedTxsIndexer.name, () => {
       const to = UnixTime.fromDate(new Date('2024-01-02T12:00:00Z'))
       const expected = UnixTime.fromDate(new Date('2024-01-02T00:00:00Z'))
 
-      const trackedTxsClient = mockObject<TrackedTxsClient>({
-        getData: async () => [],
-      })
+      const trackedTxsClient = {
+        getData: vi.fn(async () => []),
+      } as unknown as TrackedTxsClient
 
       const indexer = getMockTrackedTxsIndexer({
         trackedTxsClient,
         projects: [
-          mockObject<TrackedTxProject>({
+          {
             id: ProjectId('test'),
             isArchived: false,
-          }),
+          } as unknown as TrackedTxProject,
         ],
       })
 
@@ -208,30 +207,30 @@ describe(TrackedTxsIndexer.name, () => {
       const to = 300
 
       const trackedTxResults = getMockTrackedTxResults()
-      const trackedTxsClient = mockObject<TrackedTxsClient>({
-        getData: async () => trackedTxResults,
-      })
-      const l2costsUpdater = mockObject<L2CostsUpdater>({
+      const trackedTxsClient = {
+        getData: vi.fn(async () => trackedTxResults),
+      } as unknown as TrackedTxsClient
+      const l2costsUpdater = {
         type: 'l2costs',
         update: vi.fn(async () => {}),
-      })
-      const livenessUpdater = mockObject<LivenessUpdater>({
+      } as unknown as L2CostsUpdater
+      const livenessUpdater = {
         type: 'liveness',
         update: vi.fn(async () => {}),
-      })
+      } as unknown as LivenessUpdater
 
       const indexer = getMockTrackedTxsIndexer({
         updaters: [livenessUpdater, l2costsUpdater],
         trackedTxsClient,
         projects: [
-          mockObject<TrackedTxProject>({
+          {
             id: ProjectId('test'),
             isArchived: false,
-          }),
-          mockObject<TrackedTxProject>({
+          } as unknown as TrackedTxProject,
+          {
             id: ProjectId('archived'),
             isArchived: true,
-          }),
+          } as unknown as TrackedTxProject,
         ],
       })
 
@@ -261,23 +260,23 @@ describe(TrackedTxsIndexer.name, () => {
 
   describe(TrackedTxsIndexer.prototype.trimData.name, () => {
     it('removes data for configurations', async () => {
-      const l2CostRepository = mockObject<Database['l2Cost']>({
-        deleteByConfigIds: async () => 0,
-        deleteByConfigInTimeRange: async () => 1,
-      })
-      const livenessRepository = mockObject<Database['liveness']>({
-        deleteByConfigIds: async () => 0,
-        deleteByConfigInTimeRange: async () => 1,
-      })
+      const l2CostRepository = {
+        deleteByConfigIds: vi.fn(async () => 0),
+        deleteByConfigInTimeRange: vi.fn(async () => 1),
+      } as unknown as Database['l2Cost']
+      const livenessRepository = {
+        deleteByConfigIds: vi.fn(async () => 0),
+        deleteByConfigInTimeRange: vi.fn(async () => 1),
+      } as unknown as Database['liveness']
 
       const indexer = getMockTrackedTxsIndexer({
         l2CostRepository,
         livenessRepository,
         projects: [
-          mockObject<TrackedTxProject>({
+          {
             id: ProjectId('test'),
             isArchived: false,
-          }),
+          } as unknown as TrackedTxProject,
         ],
       })
 
@@ -329,28 +328,28 @@ function getMockTrackedTxsIndexer(params: {
   return new TrackedTxsIndexer(
     {
       configurations: configurations ?? [
-        mockObject<Configuration<TrackedTxConfigEntry>>({ id: 'a' }),
+        { id: 'a' } as unknown as Configuration<TrackedTxConfigEntry>,
       ],
       db: mockDatabase({
-        l2Cost: l2CostRepository ?? mockObject<Database['l2Cost']>(),
-        liveness: livenessRepository ?? mockObject<Database['liveness']>(),
+        l2Cost: l2CostRepository ?? ({} as unknown as Database['l2Cost']),
+        liveness: livenessRepository ?? ({} as unknown as Database['liveness']),
         syncMetadata:
           syncMetadataRepository ??
-          mockObject<Database['syncMetadata']>({
+          ({
             updateSyncedUntil: vi.fn(async () => {}),
-          }),
+          } as unknown as Database['syncMetadata']),
       }),
-      indexerService: indexerService ?? mockObject<IndexerService>({}),
-      trackedTxsClient: trackedTxsClient ?? mockObject<TrackedTxsClient>({}),
+      indexerService: indexerService ?? ({} as unknown as IndexerService),
+      trackedTxsClient: trackedTxsClient ?? ({} as unknown as TrackedTxsClient),
       updaters: updaters ?? [
-        mockObject<TxUpdaterInterface<'liveness'>>({
+        {
           type: 'liveness',
-          update: async () => {},
-        }),
-        mockObject<TxUpdaterInterface<'l2costs'>>({
+          update: vi.fn(async () => {}),
+        } as unknown as TxUpdaterInterface<'liveness'>,
+        {
           type: 'l2costs',
-          update: async () => {},
-        }),
+          update: vi.fn(async () => {}),
+        } as unknown as TxUpdaterInterface<'l2costs'>,
       ],
       parents: [],
       serializeConfiguration: () => '',

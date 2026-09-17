@@ -12,7 +12,6 @@ import {
   TokenId,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it } from 'vitest'
 import type { DataStorage } from '../tools/DataStorage'
 import {
@@ -37,29 +36,29 @@ describe(ValueService.name, () => {
 
       const amountConfigId = createAmountConfig(amountFormula).id
 
-      const tvsConfig = mockObject<ProjectTvsConfig>({
+      const tvsConfig = {
         projectId: ProjectId('project'),
         tokens: [
-          mockObject<TvsToken>({
+          {
             id: TokenId('tokenId'),
             priceId,
             amount: amountFormula,
             valueForProject: undefined,
             valueForSummary: undefined,
-          }),
+          } as unknown as TvsToken,
         ],
-      })
+      } as unknown as ProjectTvsConfig
 
       const mockTimestamp = UnixTime.now()
 
-      const mockDataStorage = mockObject<DataStorage>({
+      const mockDataStorage = {
         getAmount: answersById(mockTimestamp, {
           [amountConfigId]: [10000n, 10000n],
         }),
         getPrice: answersById(mockTimestamp, {
           [priceConfigId]: [200, 200],
         }),
-      })
+      } as unknown as DataStorage
 
       const valueService = new ValueService(mockDataStorage, Logger.SILENT)
 
@@ -120,21 +119,21 @@ describe(ValueService.name, () => {
         wBTCBalanceOfEscrowFormula,
       ).id
 
-      const tvsConfig = mockObject<ProjectTvsConfig>({
+      const tvsConfig = {
         projectId: ProjectId('bob'),
         tokens: [
           // WBTC with amount formula as totalSupply on L2
-          mockObject<TvsToken>({
+          {
             id: TokenId('WBTC'),
             priceId: 'price-WBTC',
             amount: wBTCAmountFormula,
             valueForProject: undefined,
             valueForSummary: undefined,
-          }),
+          } as unknown as TvsToken,
           // solvBTC with
           // - amount formula as totalSupply on L2
           // - valueForProject formula as totalSupply of solvBTC on L2 - balance of WBTC locked in solvBTC escrow
-          mockObject<TvsToken>({
+          {
             id: TokenId('solvBTC'),
             priceId: 'price-solvBTC',
             amount: solvBTCAmountFormula,
@@ -155,9 +154,9 @@ describe(ValueService.name, () => {
               ],
             },
             valueForSummary: undefined,
-          }),
+          } as unknown as TvsToken,
         ],
-      })
+      } as unknown as ProjectTvsConfig
 
       const wBTCPriceConfigId = createPriceConfigId('price-WBTC')
 
@@ -165,7 +164,7 @@ describe(ValueService.name, () => {
 
       const mockTimestamp = UnixTime.now()
 
-      const mockDataStorage = mockObject<DataStorage>({
+      const mockDataStorage = {
         getAmount: answersById(mockTimestamp, {
           // totalSupply of WBTC
           [wBTCAmountConfigId]: [10000n, 10000n],
@@ -180,7 +179,7 @@ describe(ValueService.name, () => {
           // price of solvBTC
           [solvBTCPriceConfigId]: [200, 200],
         }),
-      })
+      } as unknown as DataStorage
 
       const valueService = new ValueService(mockDataStorage, Logger.SILENT)
 
@@ -236,29 +235,29 @@ describe(ValueService.name, () => {
         amountFormula.arguments[1] as TotalSupplyAmountFormula,
       ).id
 
-      const tvsConfig = mockObject<ProjectTvsConfig>({
+      const tvsConfig = {
         projectId: ProjectId('project'),
         tokens: [
-          mockObject<TvsToken>({
+          {
             id: TokenId('tokenId'),
             priceId,
             amount: amountFormula,
             valueForProject: undefined,
             valueForSummary: undefined,
-          }),
+          } as unknown as TvsToken,
         ],
-      })
+      } as unknown as ProjectTvsConfig
 
       const mockTimestamp = UnixTime.now()
 
-      const mockDataStorage = mockObject<DataStorage>({
+      const mockDataStorage = {
         getAmount: answersById(mockTimestamp, {
           [amountConfigId]: [10000n, 10000n],
         }),
         getPrice: answersById(mockTimestamp, {
           [priceConfigId]: [200, 200],
         }),
-      })
+      } as unknown as DataStorage
 
       const valueService = new ValueService(mockDataStorage, Logger.SILENT)
 
@@ -307,10 +306,10 @@ describe(ValueService.name, () => {
         amountFormulaNotInRange,
       ).id
 
-      const tvsConfig = mockObject<ProjectTvsConfig>({
+      const tvsConfig = {
         projectId: ProjectId('project'),
         tokens: [
-          mockObject<TvsToken>({
+          {
             id: TokenId('tokenId'),
             priceId,
             amount: {
@@ -320,11 +319,11 @@ describe(ValueService.name, () => {
             },
             valueForProject: undefined,
             valueForSummary: undefined,
-          }),
+          } as unknown as TvsToken,
         ],
-      })
+      } as unknown as ProjectTvsConfig
 
-      const mockDataStorage = mockObject<DataStorage>({
+      const mockDataStorage = {
         getAmount: answersById(mockTimestamp, {
           [amountInRangeConfigId]: [10000n, 10000n],
           [amountNotInRangeConfigId]: [undefined, undefined],
@@ -332,7 +331,7 @@ describe(ValueService.name, () => {
         getPrice: answersById(mockTimestamp, {
           [priceConfigId]: [200, 200],
         }),
-      })
+      } as unknown as DataStorage
 
       const valueService = new ValueService(mockDataStorage, Logger.SILENT)
 
@@ -367,29 +366,29 @@ describe(ValueService.name, () => {
 
       const amountConfigId = createAmountConfig(amountFormula).id
 
-      const tvsConfig = mockObject<ProjectTvsConfig>({
+      const tvsConfig = {
         projectId: ProjectId('project'),
         tokens: [
-          mockObject<TvsToken>({
+          {
             id: TokenId('tokenId'),
             priceId,
             amount: amountFormula,
             valueForProject: undefined,
             valueForSummary: undefined,
-          }),
+          } as unknown as TvsToken,
         ],
-      })
+      } as unknown as ProjectTvsConfig
 
       const mockTimestamp = UnixTime.now()
 
-      const mockDataStorage = mockObject<DataStorage>({
+      const mockDataStorage = {
         getAmount: answersById(mockTimestamp, {
           [amountConfigId]: [10000n],
         }),
         getPrice: answersById(mockTimestamp, {
           [priceConfigId]: [undefined],
         }),
-      })
+      } as unknown as DataStorage
 
       const valueService = new ValueService(mockDataStorage, Logger.SILENT)
 
@@ -412,29 +411,29 @@ describe(ValueService.name, () => {
 
       const amountConfigId = createAmountConfig(amountFormula).id
 
-      const tvsConfig = mockObject<ProjectTvsConfig>({
+      const tvsConfig = {
         projectId: ProjectId('project'),
         tokens: [
-          mockObject<TvsToken>({
+          {
             id: TokenId('tokenId'),
             priceId,
             amount: amountFormula,
             valueForProject: undefined,
             valueForSummary: undefined,
-          }),
+          } as unknown as TvsToken,
         ],
-      })
+      } as unknown as ProjectTvsConfig
 
       const mockTimestamp = UnixTime(200)
 
-      const mockDataStorage = mockObject<DataStorage>({
+      const mockDataStorage = {
         getAmount: answersById(mockTimestamp, {
           [amountConfigId]: [undefined, undefined],
         }),
         getPrice: answersById(mockTimestamp, {
           [priceConfigId]: [100, 100],
         }),
-      })
+      } as unknown as DataStorage
 
       const valueService = new ValueService(mockDataStorage, Logger.SILENT)
 
@@ -470,29 +469,29 @@ describe(ValueService.name, () => {
 
       const totalSupplyConfigId = createAmountConfig(totalSupplyFormula).id
 
-      const tvsConfig = mockObject<ProjectTvsConfig>({
+      const tvsConfig = {
         projectId: ProjectId('project'),
         tokens: [
-          mockObject<TvsToken>({
+          {
             id: TokenId('tokenId'),
             priceId,
             amount: amountFormula,
             valueForProject: undefined,
             valueForSummary: undefined,
-          }),
+          } as unknown as TvsToken,
         ],
-      })
+      } as unknown as ProjectTvsConfig
 
       const mockTimestamp = UnixTime.now()
 
-      const mockDataStorage = mockObject<DataStorage>({
+      const mockDataStorage = {
         getAmount: answersById(mockTimestamp, {
           [totalSupplyConfigId]: [0n, 0n],
         }),
         getPrice: answersById(mockTimestamp, {
           [priceConfigId]: [200, 200],
         }),
-      })
+      } as unknown as DataStorage
 
       const valueService = new ValueService(mockDataStorage, Logger.SILENT)
 
@@ -543,22 +542,22 @@ describe(ValueService.name, () => {
       const totalSupplyConfigId1 = createAmountConfig(totalSupplyFormula1).id
       const totalSupplyConfigId2 = createAmountConfig(totalSupplyFormula2).id
 
-      const tvsConfig = mockObject<ProjectTvsConfig>({
+      const tvsConfig = {
         projectId: ProjectId('project'),
         tokens: [
-          mockObject<TvsToken>({
+          {
             id: TokenId('tokenId'),
             priceId,
             amount: amountFormula,
             valueForProject: undefined,
             valueForSummary: undefined,
-          }),
+          } as unknown as TvsToken,
         ],
-      })
+      } as unknown as ProjectTvsConfig
 
       const mockTimestamp = UnixTime(200) // Earlier than the sinceTimestamp
 
-      const mockDataStorage = mockObject<DataStorage>({
+      const mockDataStorage = {
         getAmount: answersById(mockTimestamp, {
           [totalSupplyConfigId1]: [undefined],
           [totalSupplyConfigId2]: [undefined],
@@ -566,7 +565,7 @@ describe(ValueService.name, () => {
         getPrice: answersById(mockTimestamp, {
           [priceConfigId]: [200],
         }),
-      })
+      } as unknown as DataStorage
 
       const valueService = new ValueService(mockDataStorage, Logger.SILENT)
 

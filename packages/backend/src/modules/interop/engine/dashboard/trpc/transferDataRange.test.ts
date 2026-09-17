@@ -1,13 +1,12 @@
 import type { Database } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 import { resolveInteropTransferTimeRange } from './transferDataRange'
 
 describe(resolveInteropTransferTimeRange.name, () => {
   it('uses a rolling 24-hour window', async () => {
     const range = await resolveInteropTransferTimeRange(
-      mockObject<Database>({}),
+      {} as unknown as Database,
       'last24h',
     )
 
@@ -22,11 +21,11 @@ describe(resolveInteropTransferTimeRange.name, () => {
     const getLatestPromotedTimestamp = vi
       .fn()
       .mockResolvedValue(UnixTime(500_000))
-    const db = mockObject<Database>({
-      interopAggregateStatus: mockObject<Database['interopAggregateStatus']>({
+    const db = {
+      interopAggregateStatus: {
         getLatestPromotedTimestamp,
-      }),
-    })
+      } as unknown as Database['interopAggregateStatus'],
+    } as unknown as Database
 
     const range = await resolveInteropTransferTimeRange(db, 'lastPromoted')
 
@@ -39,7 +38,7 @@ describe(resolveInteropTransferTimeRange.name, () => {
 
   it('leaves the query unbounded only when all retained data is selected', async () => {
     const range = await resolveInteropTransferTimeRange(
-      mockObject<Database>({}),
+      {} as unknown as Database,
       'all',
     )
 
@@ -47,11 +46,11 @@ describe(resolveInteropTransferTimeRange.name, () => {
   })
 
   it('does not turn a missing promoted aggregate into an unbounded query', async () => {
-    const db = mockObject<Database>({
-      interopAggregateStatus: mockObject<Database['interopAggregateStatus']>({
+    const db = {
+      interopAggregateStatus: {
         getLatestPromotedTimestamp: vi.fn().mockResolvedValue(undefined),
-      }),
-    })
+      } as unknown as Database['interopAggregateStatus'],
+    } as unknown as Database
 
     await expect(
       resolveInteropTransferTimeRange(db, 'lastPromoted'),

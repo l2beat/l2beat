@@ -1,7 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 import type { InteropPlugins } from '../../plugins'
 import type { InteropEventStore } from '../capture/InteropEventStore'
@@ -20,34 +19,32 @@ describe(InteropCleanerLoop.name, () => {
       const deleteSyncStateNotInChains = vi.fn().mockResolvedValue(4)
       const deleteSyncedRangeNotInChains = vi.fn().mockResolvedValue(6)
 
-      const store = mockObject<InteropEventStore>({
+      const store = {
         deleteExpired,
-      })
+      } as unknown as InteropEventStore
 
-      const db = mockObject<Database>({
-        interopMessage: mockObject<Database['interopMessage']>({
+      const db = {
+        interopMessage: {
           deleteBefore: deleteMessageBefore,
-        }),
-        interopTransfer: mockObject<Database['interopTransfer']>({
+        } as unknown as Database['interopMessage'],
+        interopTransfer: {
           deleteBefore: deleteTransferBefore,
-        }),
-        interopRecentPrices: mockObject<Database['interopRecentPrices']>({
+        } as unknown as Database['interopTransfer'],
+        interopRecentPrices: {
           deleteBefore: deletePricesBefore,
-        }),
-        interopConfig: mockObject<Database['interopConfig']>({
+        } as unknown as Database['interopRecentPrices'],
+        interopConfig: {
           deleteAllButLatestPerKey: deleteConfigs,
-        }),
-        interopPluginSyncState: mockObject<Database['interopPluginSyncState']>({
+        } as unknown as Database['interopConfig'],
+        interopPluginSyncState: {
           deleteNotInPluginNames: deleteSyncStateNotIn,
           deleteNotInChains: deleteSyncStateNotInChains,
-        }),
-        interopPluginSyncedRange: mockObject<
-          Database['interopPluginSyncedRange']
-        >({
+        } as unknown as Database['interopPluginSyncState'],
+        interopPluginSyncedRange: {
           deleteNotInPluginNames: deleteSyncedRangeNotIn,
           deleteNotInChains: deleteSyncedRangeNotInChains,
-        }),
-      })
+        } as unknown as Database['interopPluginSyncedRange'],
+      } as unknown as Database
 
       const plugins: InteropPlugins = {
         comparePlugins: [],
@@ -100,35 +97,33 @@ describe(InteropCleanerLoop.name, () => {
       const deleteSyncStateNotInChains = vi.fn().mockResolvedValue(0)
       const deleteSyncedRangeNotInChains = vi.fn().mockResolvedValue(0)
 
-      const store = mockObject<InteropEventStore>({
+      const store = {
         deleteExpired: vi.fn().mockResolvedValue(0),
-      })
+      } as unknown as InteropEventStore
 
       const deleteConfigs = vi.fn().mockResolvedValue(0)
-      const db = mockObject<Database>({
-        interopMessage: mockObject<Database['interopMessage']>({
+      const db = {
+        interopMessage: {
           deleteBefore: vi.fn().mockResolvedValue(0),
-        }),
-        interopTransfer: mockObject<Database['interopTransfer']>({
+        } as unknown as Database['interopMessage'],
+        interopTransfer: {
           deleteBefore: vi.fn().mockResolvedValue(0),
-        }),
-        interopRecentPrices: mockObject<Database['interopRecentPrices']>({
+        } as unknown as Database['interopTransfer'],
+        interopRecentPrices: {
           deleteBefore: vi.fn().mockResolvedValue(0),
-        }),
-        interopConfig: mockObject<Database['interopConfig']>({
+        } as unknown as Database['interopRecentPrices'],
+        interopConfig: {
           deleteAllButLatestPerKey: deleteConfigs,
-        }),
-        interopPluginSyncState: mockObject<Database['interopPluginSyncState']>({
+        } as unknown as Database['interopConfig'],
+        interopPluginSyncState: {
           deleteNotInPluginNames: deleteSyncStateNotIn,
           deleteNotInChains: deleteSyncStateNotInChains,
-        }),
-        interopPluginSyncedRange: mockObject<
-          Database['interopPluginSyncedRange']
-        >({
+        } as unknown as Database['interopPluginSyncState'],
+        interopPluginSyncedRange: {
           deleteNotInPluginNames: deleteSyncedRangeNotIn,
           deleteNotInChains: deleteSyncedRangeNotInChains,
-        }),
-      })
+        } as unknown as Database['interopPluginSyncedRange'],
+      } as unknown as Database
 
       const plugins: InteropPlugins = {
         comparePlugins: [],

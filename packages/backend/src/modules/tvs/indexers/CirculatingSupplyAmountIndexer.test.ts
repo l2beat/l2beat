@@ -2,7 +2,6 @@ import { Logger } from '@l2beat/backend-tools'
 import type { Database, TvsAmountRecord } from '@l2beat/database'
 import type { CirculatingSupplyProvider } from '@l2beat/shared'
 import { CoingeckoId, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { mockDatabase } from '../../../test/database'
 import type { IndexerService } from '../../../tools/uif/IndexerService'
@@ -22,24 +21,24 @@ describe(CirculatingSupplyAmountIndexer.name, () => {
         config('config-2', 'bitcoin', 8),
       ]
 
-      const circulatingSupplyProvider = mockObject<CirculatingSupplyProvider>({
+      const circulatingSupplyProvider = {
         getAdjustedTo: vi.fn().mockReturnValueOnce(adjustedTo),
         getCirculatingSupplies: vi
           .fn()
           .mockReturnValueOnce([{ timestamp: UnixTime(150), value: 120000000 }])
           .mockReturnValueOnce([{ timestamp: UnixTime(200), value: 19000000 }]),
-      })
+      } as unknown as CirculatingSupplyProvider
 
-      const syncOptimizer = mockObject<SyncOptimizer>({
+      const syncOptimizer = {
         getTimestampsToSync: vi
           .fn()
           .mockReturnValueOnce([UnixTime(150), UnixTime(200)]),
         shouldTimestampBeSynced: vi.fn().mockReturnValue(true),
-      })
+      } as unknown as SyncOptimizer
 
-      const tvsAmountRepository = mockObject<Database['tvsAmount']>({
+      const tvsAmountRepository = {
         upsertMany: vi.fn().mockReturnValueOnce(undefined),
-      })
+      } as unknown as Database['tvsAmount']
 
       const indexer = new CirculatingSupplyAmountIndexer(
         {
@@ -48,7 +47,7 @@ describe(CirculatingSupplyAmountIndexer.name, () => {
           db: mockDatabase({ tvsAmount: tvsAmountRepository }),
           syncOptimizer,
           parents: [],
-          indexerService: mockObject<IndexerService>({}),
+          indexerService: {} as unknown as IndexerService,
         },
         Logger.SILENT,
       )
@@ -94,25 +93,25 @@ describe(CirculatingSupplyAmountIndexer.name, () => {
       const to = 300
       const adjustedTo = 250
 
-      const circulatingSupplyProvider = mockObject<CirculatingSupplyProvider>({
+      const circulatingSupplyProvider = {
         getAdjustedTo: vi.fn().mockReturnValueOnce(adjustedTo),
         getCirculatingSupplies: vi.fn().mockReturnValueOnce([
           { timestamp: UnixTime(150), value: 120000000 },
           { timestamp: UnixTime(200), value: 125000000 },
         ]),
-      })
+      } as unknown as CirculatingSupplyProvider
 
-      const syncOptimizer = mockObject<SyncOptimizer>({
+      const syncOptimizer = {
         getTimestampsToSync: vi.fn().mockReturnValueOnce([UnixTime(150)]),
         shouldTimestampBeSynced: vi
           .fn()
           .mockReturnValueOnce(true) // For timestamp 150
           .mockReturnValueOnce(false), // For timestamp 200
-      })
+      } as unknown as SyncOptimizer
 
-      const tvsAmountRepository = mockObject<Database['tvsAmount']>({
+      const tvsAmountRepository = {
         upsertMany: vi.fn().mockReturnValueOnce(undefined),
-      })
+      } as unknown as Database['tvsAmount']
 
       const indexer = new CirculatingSupplyAmountIndexer(
         {
@@ -121,7 +120,7 @@ describe(CirculatingSupplyAmountIndexer.name, () => {
           db: mockDatabase({ tvsAmount: tvsAmountRepository }),
           syncOptimizer,
           parents: [],
-          indexerService: mockObject<IndexerService>({}),
+          indexerService: {} as unknown as IndexerService,
         },
         Logger.SILENT,
       )
@@ -150,22 +149,24 @@ describe(CirculatingSupplyAmountIndexer.name, () => {
       const to = 300
       const adjustedTo = 250
 
-      const circulatingSupplyProvider = mockObject<CirculatingSupplyProvider>({
+      const circulatingSupplyProvider = {
         getAdjustedTo: vi.fn().mockReturnValueOnce(adjustedTo),
-      })
+      } as unknown as CirculatingSupplyProvider
 
-      const syncOptimizer = mockObject<SyncOptimizer>({
+      const syncOptimizer = {
         getTimestampsToSync: vi.fn().mockReturnValueOnce([]),
-      })
+      } as unknown as SyncOptimizer
 
       const indexer = new CirculatingSupplyAmountIndexer(
         {
           configurations: [config('config-1', 'ethereum', 18)],
           circulatingSupplyProvider,
-          db: mockDatabase({ tvsAmount: mockObject() }),
+          db: mockDatabase({
+            tvsAmount: {} as unknown as Database['tvsAmount'],
+          }),
           syncOptimizer,
           parents: [],
-          indexerService: mockObject<IndexerService>({}),
+          indexerService: {} as unknown as IndexerService,
         },
         Logger.SILENT,
       )
@@ -191,24 +192,24 @@ describe(CirculatingSupplyAmountIndexer.name, () => {
       const to = 300
       const adjustedTo = 250
 
-      const circulatingSupplyProvider = mockObject<CirculatingSupplyProvider>({
+      const circulatingSupplyProvider = {
         getAdjustedTo: vi.fn().mockReturnValueOnce(adjustedTo),
         getCirculatingSupplies: vi.fn().mockReturnValueOnce([
           { timestamp: UnixTime(150), value: 120000000 },
           { timestamp: UnixTime(200), value: Number.NaN },
         ]),
-      })
+      } as unknown as CirculatingSupplyProvider
 
-      const syncOptimizer = mockObject<SyncOptimizer>({
+      const syncOptimizer = {
         getTimestampsToSync: vi
           .fn()
           .mockReturnValueOnce([UnixTime(150), UnixTime(200)]),
         shouldTimestampBeSynced: vi.fn().mockReturnValue(true),
-      })
+      } as unknown as SyncOptimizer
 
-      const tvsAmountRepository = mockObject<Database['tvsAmount']>({
+      const tvsAmountRepository = {
         upsertMany: vi.fn().mockReturnValueOnce(undefined),
-      })
+      } as unknown as Database['tvsAmount']
 
       const indexer = new CirculatingSupplyAmountIndexer(
         {
@@ -217,7 +218,7 @@ describe(CirculatingSupplyAmountIndexer.name, () => {
           db: mockDatabase({ tvsAmount: tvsAmountRepository }),
           syncOptimizer,
           parents: [],
-          indexerService: mockObject<IndexerService>({}),
+          indexerService: {} as unknown as IndexerService,
         },
         Logger.SILENT,
       )
@@ -246,20 +247,20 @@ describe(CirculatingSupplyAmountIndexer.name, () => {
       const to = 300
       const adjustedTo = 250
 
-      const circulatingSupplyProvider = mockObject<CirculatingSupplyProvider>({
+      const circulatingSupplyProvider = {
         getAdjustedTo: vi.fn().mockReturnValueOnce(adjustedTo),
         getCirculatingSupplies: vi.fn().mockImplementationOnce(() => {
           throw new Error('Insufficient data in response for ethereum')
         }),
-      })
+      } as unknown as CirculatingSupplyProvider
 
-      const syncOptimizer = mockObject<SyncOptimizer>({
+      const syncOptimizer = {
         getTimestampsToSync: vi.fn().mockReturnValueOnce([UnixTime(150)]),
-      })
+      } as unknown as SyncOptimizer
 
-      const tvsAmountRepository = mockObject<Database['tvsAmount']>({
+      const tvsAmountRepository = {
         upsertMany: vi.fn().mockReturnValueOnce(undefined),
-      })
+      } as unknown as Database['tvsAmount']
 
       const indexer = new CirculatingSupplyAmountIndexer(
         {
@@ -268,7 +269,7 @@ describe(CirculatingSupplyAmountIndexer.name, () => {
           db: mockDatabase({ tvsAmount: tvsAmountRepository }),
           syncOptimizer,
           parents: [],
-          indexerService: mockObject<IndexerService>({}),
+          indexerService: {} as unknown as IndexerService,
         },
         Logger.SILENT,
       )
@@ -294,25 +295,27 @@ describe(CirculatingSupplyAmountIndexer.name, () => {
       const to = 300
       const adjustedTo = 250
 
-      const circulatingSupplyProvider = mockObject<CirculatingSupplyProvider>({
+      const circulatingSupplyProvider = {
         getAdjustedTo: vi.fn().mockReturnValueOnce(adjustedTo),
         getCirculatingSupplies: vi.fn().mockImplementationOnce(() => {
           throw new Error('Network error')
         }),
-      })
+      } as unknown as CirculatingSupplyProvider
 
-      const syncOptimizer = mockObject<SyncOptimizer>({
+      const syncOptimizer = {
         getTimestampsToSync: vi.fn().mockReturnValueOnce([UnixTime(150)]),
-      })
+      } as unknown as SyncOptimizer
 
       const indexer = new CirculatingSupplyAmountIndexer(
         {
           configurations: [config('config-1', 'ethereum', 18)],
           circulatingSupplyProvider,
-          db: mockDatabase({ tvsAmount: mockObject() }),
+          db: mockDatabase({
+            tvsAmount: {} as unknown as Database['tvsAmount'],
+          }),
           syncOptimizer,
           parents: [],
-          indexerService: mockObject<IndexerService>({}),
+          indexerService: {} as unknown as IndexerService,
         },
         Logger.SILENT,
       )
@@ -327,18 +330,18 @@ describe(CirculatingSupplyAmountIndexer.name, () => {
 
   describe(CirculatingSupplyAmountIndexer.prototype.trimData.name, () => {
     it('deletes records for configurations in time range', async () => {
-      const tvsAmountRepository = mockObject<Database['tvsAmount']>({
+      const tvsAmountRepository = {
         deleteByConfigs: vi.fn().mockReturnValue(5),
-      })
+      } as unknown as Database['tvsAmount']
 
       const indexer = new CirculatingSupplyAmountIndexer(
         {
           configurations: [config('config-1', 'ethereum', 18)],
-          circulatingSupplyProvider: mockObject<CirculatingSupplyProvider>({}),
+          circulatingSupplyProvider: {} as unknown as CirculatingSupplyProvider,
           db: mockDatabase({ tvsAmount: tvsAmountRepository }),
-          syncOptimizer: mockObject<SyncOptimizer>({}),
+          syncOptimizer: {} as unknown as SyncOptimizer,
           parents: [],
-          indexerService: mockObject<IndexerService>({}),
+          indexerService: {} as unknown as IndexerService,
         },
         Logger.SILENT,
       )

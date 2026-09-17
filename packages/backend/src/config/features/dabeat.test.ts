@@ -1,7 +1,6 @@
 import { Env } from '@l2beat/backend-tools'
 import type { ProjectService } from '@l2beat/config'
 import { ProjectId } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 import { FeatureFlags } from '../FeatureFlags'
 import { getDaBeatConfig } from './dabeat'
@@ -24,9 +23,9 @@ const projects = [
 ]
 
 function mockProjectService(): ProjectService {
-  return mockObject<ProjectService>({
+  return {
     getProjects: vi.fn().mockResolvedValueOnce(projects),
-  })
+  } as unknown as ProjectService
 }
 
 describe(getDaBeatConfig.name, () => {

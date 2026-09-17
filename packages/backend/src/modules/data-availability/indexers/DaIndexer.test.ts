@@ -2,7 +2,6 @@ import { Logger } from '@l2beat/backend-tools'
 import type { DataAvailabilityRecord, Database } from '@l2beat/database'
 import type { DaBlob, DaProvider } from '@l2beat/shared'
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { createHash } from 'crypto'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import type {
@@ -331,7 +330,7 @@ function mockIndexer($: {
   useBlobService?: boolean
   blockTimestamps?: Record<number, number>
 }) {
-  const repository = mockObject<Database['dataAvailability']>({
+  const repository = {
     deleteByConfigIds: vi.fn().mockResolvedValue(10),
     deleteByConfigurationId: vi.fn().mockResolvedValue({}),
     deleteByConfigInTimeRange: vi.fn().mockResolvedValue(5),
@@ -339,31 +338,31 @@ function mockIndexer($: {
     getForDaLayerInTimeRange: vi
       .fn()
       .mockResolvedValue($.previousRecords ?? []),
-  })
+  } as unknown as Database['dataAvailability']
 
-  const indexerService = mockObject<IndexerService>({
+  const indexerService = {
     getSavedConfigurations: vi
       .fn()
       .mockResolvedValue($.savedConfigurations ?? []),
     insertConfigurations: vi.fn().mockResolvedValue(undefined),
     upsertConfigurations: vi.fn().mockResolvedValue(undefined),
     deleteConfigurations: vi.fn().mockResolvedValue(undefined),
-  })
+  } as unknown as IndexerService
 
-  const syncMetadataRepository = mockObject<Database['syncMetadata']>({
+  const syncMetadataRepository = {
     updateSyncedUntil: vi.fn().mockResolvedValue(undefined),
-  })
+  } as unknown as Database['syncMetadata']
 
-  const daService = mockObject<DaService>({
+  const daService = {
     generateRecords: vi.fn().mockReturnValue({
       records: $.generatedRecords ?? [],
       latestTimestamp:
         $.generatedRecords?.[$.generatedRecords.length - 1]?.timestamp ?? 0,
     }),
-  })
+  } as unknown as DaService
 
-  const daProvider = mockObject<DaProvider>({
-    getBlobs: async () => $.blobs ?? [], // Empty response
+  const daProvider = {
+    getBlobs: vi.fn(async () => $.blobs ?? []), // Empty response
     getBlockTimestamp: vi.fn(async (_: string, blockNumber: number) => {
       const timestamp = $.blockTimestamps?.[blockNumber]
       if (timestamp === undefined) {
@@ -371,12 +370,12 @@ function mockIndexer($: {
       }
       return UnixTime(timestamp)
     }),
-  })
+  } as unknown as DaProvider
 
   const blobService = $.useBlobService
-    ? mockObject<BlobService>({
+    ? ({
         get: vi.fn().mockResolvedValue($.blobs ?? []), // Empty response
-      })
+      } as unknown as BlobService)
     : undefined
 
   const indexer = new DaIndexer(

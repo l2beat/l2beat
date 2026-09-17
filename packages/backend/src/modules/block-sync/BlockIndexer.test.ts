@@ -1,7 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 import type { BlockProvider, LogsProvider } from '@l2beat/shared'
 import type { Block, Log } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import type { IndexerService } from '../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../tools/uif/ids'
@@ -81,21 +80,21 @@ describe(BlockIndexer.name, () => {
       const processBlock = vi.fn().mockResolvedValue(undefined)
 
       const indexer = createIndexer({
-        blockProvider: mockObject<BlockProvider>({
+        blockProvider: {
           getBlockWithTransactions: vi
             .fn()
             .mockResolvedValueOnce(block1)
             .mockResolvedValueOnce(block2)
             .mockResolvedValueOnce(block3),
-        }),
-        logsProvider: mockObject<LogsProvider>({
+        } as unknown as BlockProvider,
+        logsProvider: {
           getLogs: vi.fn().mockResolvedValue([log1, log2, log3]),
-        }),
+        } as unknown as LogsProvider,
         blockProcessors: [
-          mockObject<BlockProcessor>({
+          {
             chain: 'ethereum',
             processBlock,
-          }),
+          } as unknown as BlockProcessor,
         ],
         stopBlockIndexerAtTimestampMs: 2_000,
       })
@@ -114,17 +113,17 @@ describe(BlockIndexer.name, () => {
       const processBlock = vi.fn().mockResolvedValue(undefined)
 
       const indexer = createIndexer({
-        blockProvider: mockObject<BlockProvider>({
+        blockProvider: {
           getBlockWithTransactions: vi.fn().mockResolvedValueOnce(block),
-        }),
-        logsProvider: mockObject<LogsProvider>({
+        } as unknown as BlockProvider,
+        logsProvider: {
           getLogs: vi.fn().mockResolvedValue([log]),
-        }),
+        } as unknown as LogsProvider,
         blockProcessors: [
-          mockObject<BlockProcessor>({
+          {
             chain: 'ethereum',
             processBlock,
-          }),
+          } as unknown as BlockProcessor,
         ],
         stopBlockIndexerAtTimestampMs: 2_000,
       })
@@ -140,18 +139,18 @@ describe(BlockIndexer.name, () => {
 function createIndexer(overrides: Partial<BlockIndexerDeps> = {}) {
   const defaults: BlockIndexerDeps = {
     source: 'ethereum',
-    blockProvider: mockObject<BlockProvider>({
+    blockProvider: {
       getBlockWithTransactions: vi.fn(),
-    }),
-    logsProvider: mockObject<LogsProvider>({
+    } as unknown as BlockProvider,
+    logsProvider: {
       getLogs: vi.fn().mockResolvedValue([]),
-    }),
+    } as unknown as LogsProvider,
     blockProcessors: [],
     stopBlockIndexerAtTimestampMs: undefined,
     batchSize: 50,
     minHeight: 1,
     parents: [],
-    indexerService: mockObject<IndexerService>(),
+    indexerService: {} as unknown as IndexerService,
   }
 
   return new BlockIndexer({ ...defaults, ...overrides }, Logger.SILENT)

@@ -1,21 +1,20 @@
 import type { Database, IndexerStateRecord } from '@l2beat/database'
 import type { json } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import { mockDatabase } from '../../test/database'
 import { IndexerService } from './IndexerService'
 
 describe(IndexerService.name, () => {
   it(IndexerService.prototype.getSafeHeight.name, async () => {
     const safeHeight = 123
-    const indexerStateRepository = mockObject<Database['indexerState']>({
-      findByIndexerId: async () => mock({ safeHeight }),
-    })
+    const indexerStateRepository = {
+      findByIndexerId: vi.fn(async () => mock({ safeHeight })),
+    } as unknown as Database['indexerState']
 
     const indexerService = new IndexerService(
       mockDatabase({
         indexerState: indexerStateRepository,
-        indexerConfiguration: mockObject(),
+        indexerConfiguration: {} as unknown as Database['indexerConfiguration'],
       }),
     )
 
@@ -29,14 +28,14 @@ describe(IndexerService.name, () => {
 
   it(IndexerService.prototype.getIndexerState.name, async () => {
     const configHash = '0x123456'
-    const indexerStateRepository = mockObject<Database['indexerState']>({
-      findByIndexerId: async () => mock({ configHash }),
-    })
+    const indexerStateRepository = {
+      findByIndexerId: vi.fn(async () => mock({ configHash })),
+    } as unknown as Database['indexerState']
 
     const indexerService = new IndexerService(
       mockDatabase({
         indexerState: indexerStateRepository,
-        indexerConfiguration: mockObject(),
+        indexerConfiguration: {} as unknown as Database['indexerConfiguration'],
       }),
     )
 
@@ -49,14 +48,14 @@ describe(IndexerService.name, () => {
   })
 
   it(IndexerService.prototype.setSafeHeight.name, async () => {
-    const indexerStateRepository = mockObject<Database['indexerState']>({
-      updateSafeHeight: async () => 1,
-    })
+    const indexerStateRepository = {
+      updateSafeHeight: vi.fn(async () => 1),
+    } as unknown as Database['indexerState']
 
     const indexerService = new IndexerService(
       mockDatabase({
         indexerState: indexerStateRepository,
-        indexerConfiguration: mockObject(),
+        indexerConfiguration: {} as unknown as Database['indexerConfiguration'],
       }),
     )
 
@@ -67,14 +66,14 @@ describe(IndexerService.name, () => {
   })
 
   it(IndexerService.prototype.setInitialState.name, async () => {
-    const indexerStateRepository = mockObject<Database['indexerState']>({
-      upsert: async () => undefined,
-    })
+    const indexerStateRepository = {
+      upsert: vi.fn(async () => undefined),
+    } as unknown as Database['indexerState']
 
     const indexerService = new IndexerService(
       mockDatabase({
         indexerState: indexerStateRepository,
-        indexerConfiguration: mockObject(),
+        indexerConfiguration: {} as unknown as Database['indexerConfiguration'],
       }),
     )
 
@@ -87,15 +86,13 @@ describe(IndexerService.name, () => {
   })
 
   it(IndexerService.prototype.upsertConfigurations.name, async () => {
-    const indexerConfigurationsRepository = mockObject<
-      Database['indexerConfiguration']
-    >({
-      upsertMany: async () => 0,
-    })
+    const indexerConfigurationsRepository = {
+      upsertMany: vi.fn(async () => 0),
+    } as unknown as Database['indexerConfiguration']
 
     const indexerService = new IndexerService(
       mockDatabase({
-        indexerState: mockObject(),
+        indexerState: {} as unknown as Database['indexerState'],
         indexerConfiguration: indexerConfigurationsRepository,
       }),
     )
@@ -144,10 +141,8 @@ describe(IndexerService.name, () => {
   })
 
   it(IndexerService.prototype.getSavedConfigurations.name, async () => {
-    const indexerConfigurationsRepository = mockObject<
-      Database['indexerConfiguration']
-    >({
-      getConfigurationsWithoutIndexerId: async () => [
+    const indexerConfigurationsRepository = {
+      getConfigurationsWithoutIndexerId: vi.fn(async () => [
         {
           id: 'a',
           currentHeight: null,
@@ -162,12 +157,12 @@ describe(IndexerService.name, () => {
           maxHeight: null,
           properties: JSON.stringify({ b: 1 }),
         },
-      ],
-    })
+      ]),
+    } as unknown as Database['indexerConfiguration']
 
     const indexerService = new IndexerService(
       mockDatabase({
-        indexerState: mockObject(),
+        indexerState: {} as unknown as Database['indexerState'],
         indexerConfiguration: indexerConfigurationsRepository,
       }),
     )
@@ -195,15 +190,13 @@ describe(IndexerService.name, () => {
   it(
     IndexerService.prototype.updateConfigurationsCurrentHeight.name,
     async () => {
-      const indexerConfigurationsRepository = mockObject<
-        Database['indexerConfiguration']
-      >({
-        updateCurrentHeights: async () => undefined,
-      })
+      const indexerConfigurationsRepository = {
+        updateCurrentHeights: vi.fn(async () => undefined),
+      } as unknown as Database['indexerConfiguration']
 
       const indexerService = new IndexerService(
         mockDatabase({
-          indexerState: mockObject(),
+          indexerState: {} as unknown as Database['indexerState'],
           indexerConfiguration: indexerConfigurationsRepository,
         }),
       )
@@ -217,16 +210,14 @@ describe(IndexerService.name, () => {
   )
 
   it(IndexerService.prototype.deleteConfigurations.name, async () => {
-    const indexerConfigurationsRepository = mockObject<
-      Database['indexerConfiguration']
-    >({
-      deleteConfigurations: async () => -1,
-      getIdsByIndexer: async () => ['a', 'b', 'c'],
-    })
+    const indexerConfigurationsRepository = {
+      deleteConfigurations: vi.fn(async () => -1),
+      getIdsByIndexer: vi.fn(async () => ['a', 'b', 'c']),
+    } as unknown as Database['indexerConfiguration']
 
     const indexerService = new IndexerService(
       mockDatabase({
-        indexerState: mockObject(),
+        indexerState: {} as unknown as Database['indexerState'],
         indexerConfiguration: indexerConfigurationsRepository,
       }),
     )

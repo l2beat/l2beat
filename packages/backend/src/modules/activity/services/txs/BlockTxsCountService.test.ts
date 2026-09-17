@@ -1,6 +1,5 @@
 import type { Logger } from '@l2beat/backend-tools'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 import { activityRecord } from '../../test/activityRecord'
 import { BlockTxsCountService } from './BlockTxsCountService'
@@ -33,9 +32,9 @@ describe(BlockTxsCountService.name, () => {
           provider: client,
           assessCount: (count) => count,
         },
-        mockObject<Logger>({
-          for: vi.fn().mockReturnValue(mockObject<Logger>()),
-        }),
+        {
+          for: vi.fn().mockReturnValue({} as unknown as Logger),
+        } as unknown as Logger,
       )
 
       const result = await txsCountProvider.getTxsCount(1, 3)
@@ -74,13 +73,11 @@ describe(BlockTxsCountService.name, () => {
           provider: client,
           assessCount,
         },
-        mockObject<Logger>({
-          for: vi.fn().mockReturnValue(
-            mockObject<Logger>({
-              warn: vi.fn(),
-            }),
-          ),
-        }),
+        {
+          for: vi.fn().mockReturnValue({
+            warn: vi.fn(),
+          } as unknown as Logger),
+        } as unknown as Logger,
       )
       const result = await txsCountProvider.getTxsCount(1, 2)
       expect(result).toStrictEqual({
@@ -111,12 +108,12 @@ describe(BlockTxsCountService.name, () => {
       ])
       const assessCount = vi.fn((count) => count - 1)
 
-      const forLogger = mockObject<Logger>({
+      const forLogger = {
         warn: vi.fn().mockReturnValue(undefined),
-      })
-      const logger = mockObject<Logger>({
+      } as unknown as Logger
+      const logger = {
         for: vi.fn().mockReturnValue(forLogger),
-      })
+      } as unknown as Logger
 
       const txsCountProvider = new BlockTxsCountService(
         {
@@ -166,7 +163,7 @@ function mockRpcClient(
     number: number
   }[],
 ) {
-  return mockObject<ActivityBlockProvider>({
+  return {
     getBlocks: vi.fn().mockResolvedValueOnce(
       blocks.map(({ timestamp, count, uopsCount, number }) => ({
         timestamp,
@@ -176,5 +173,5 @@ function mockRpcClient(
       })),
     ),
     chain: 'ethereum',
-  })
+  } as unknown as ActivityBlockProvider
 }

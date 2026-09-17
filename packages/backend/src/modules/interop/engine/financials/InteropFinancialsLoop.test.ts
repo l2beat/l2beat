@@ -5,7 +5,6 @@ import type {
   InteropTransferUpdate,
 } from '@l2beat/database'
 import { Address32, EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import type { TokenDbClient } from '@l2beat/token-backend'
 import { describe, expect, it, vi } from 'vitest'
 import type { InteropTransferAnalyzer } from '../InteropTransferAnalyzer'
@@ -16,7 +15,7 @@ import { getTokenInfos, InteropFinancialsLoop } from './InteropFinancialsLoop'
 describe(getTokenInfos.name, () => {
   it('excludes ignored deployed tokens', async () => {
     const id = DeployedTokenId.from('ethereum', EthereumAddress.random())
-    const tokenDb = mockObject<TokenDbClient>({
+    const tokenDb = {
       deployedTokens: {
         getByChainAndAddress: {
           query: vi.fn().mockResolvedValue([
@@ -37,7 +36,7 @@ describe(getTokenInfos.name, () => {
           ]),
         },
       },
-    } as any)
+    } as unknown as TokenDbClient
 
     const result = await getTokenInfos([id], tokenDb, Logger.SILENT)
 
@@ -48,10 +47,10 @@ describe(getTokenInfos.name, () => {
 describe(InteropFinancialsLoop.name, () => {
   describe(InteropFinancialsLoop.prototype.run.name, () => {
     it('processes transfers with empty financials when no prices are found', async () => {
-      const interopRecentPrices = mockObject<Database['interopRecentPrices']>({
+      const interopRecentPrices = {
         getClosestPricesAtOrBefore: mockPrices(new Map()),
-      })
-      const interopTransfer = mockObject<Database['interopTransfer']>({
+      } as unknown as Database['interopRecentPrices']
+      const interopTransfer = {
         getUnprocessed: vi.fn().mockResolvedValue([
           {
             transferId: 'msg1',
@@ -61,16 +60,16 @@ describe(InteropFinancialsLoop.name, () => {
           },
         ]),
         updateManyFinancials: vi.fn().mockResolvedValue(undefined),
-      })
-      const db = mockObject<Database>({
+      } as unknown as Database['interopTransfer']
+      const db = {
         interopRecentPrices,
         interopTransfer,
-      })
-      const tokenDb = mockObject<TokenDbClient>({
+      } as unknown as Database
+      const tokenDb = {
         deployedTokens: {
           getByChainAndAddress: { query: vi.fn().mockResolvedValue([]) },
         },
-      } as any)
+      } as unknown as TokenDbClient
       const service = new InteropFinancialsLoop(
         [],
         db,
@@ -101,18 +100,17 @@ describe(InteropFinancialsLoop.name, () => {
     })
 
     it('skips when unprocessed length === 0', async () => {
-      const interopRecentPrices = mockObject<Database['interopRecentPrices']>(
-        {},
-      )
-      const interopTransfer = mockObject<Database['interopTransfer']>({
+      const interopRecentPrices =
+        {} as unknown as Database['interopRecentPrices']
+      const interopTransfer = {
         getUnprocessed: vi.fn().mockResolvedValue([]),
-      })
-      const db = mockObject<Database>({
+      } as unknown as Database['interopTransfer']
+      const db = {
         interopRecentPrices,
         interopTransfer,
-      })
+      } as unknown as Database
 
-      const tokenDb = mockObject<TokenDbClient>({} as any)
+      const tokenDb = {} as unknown as TokenDbClient
 
       const service = new InteropFinancialsLoop(
         [],
@@ -182,17 +180,17 @@ describe(InteropFinancialsLoop.name, () => {
         ['token', 50],
       ])
 
-      const interopRecentPrices = mockObject<Database['interopRecentPrices']>({
+      const interopRecentPrices = {
         getClosestPricesAtOrBefore: mockPrices(pricesMap),
-      })
-      const interopTransfer = mockObject<Database['interopTransfer']>({
+      } as unknown as Database['interopRecentPrices']
+      const interopTransfer = {
         getUnprocessed: vi.fn().mockResolvedValue(mockTransfers),
         updateManyFinancials: vi.fn().mockResolvedValue(undefined),
-      })
-      const db = mockObject<Database>({
+      } as unknown as Database['interopTransfer']
+      const db = {
         interopRecentPrices,
         interopTransfer,
-      })
+      } as unknown as Database
 
       const mockTokens = [
         {
@@ -263,9 +261,9 @@ describe(InteropFinancialsLoop.name, () => {
       ]
 
       const mockQuery = vi.fn().mockResolvedValue(mockTokens)
-      const tokenDb = mockObject<TokenDbClient>({
+      const tokenDb = {
         deployedTokens: { getByChainAndAddress: { query: mockQuery } },
-      } as any)
+      } as unknown as TokenDbClient
 
       const service = new InteropFinancialsLoop(
         [
@@ -370,22 +368,22 @@ describe(InteropFinancialsLoop.name, () => {
         dstChain: 'arbitrum',
       })
 
-      const interopRecentPrices = mockObject<Database['interopRecentPrices']>({
+      const interopRecentPrices = {
         getClosestPricesAtOrBefore: mockPrices(new Map([['token', 2]])),
-      })
-      const interopTransfer = mockObject<Database['interopTransfer']>({
+      } as unknown as Database['interopRecentPrices']
+      const interopTransfer = {
         getUnprocessed: vi
           .fn()
           .mockResolvedValueOnce([makeTransfer('msg1'), makeTransfer('msg2')])
           .mockResolvedValueOnce([makeTransfer('msg3')]),
         updateManyFinancials: vi.fn().mockResolvedValue(undefined),
-      })
-      const db = mockObject<Database>({
+      } as unknown as Database['interopTransfer']
+      const db = {
         interopRecentPrices,
         interopTransfer,
-      })
+      } as unknown as Database
 
-      const tokenDb = mockObject<TokenDbClient>({
+      const tokenDb = {
         deployedTokens: {
           getByChainAndAddress: {
             query: vi.fn().mockResolvedValue([
@@ -405,11 +403,11 @@ describe(InteropFinancialsLoop.name, () => {
             ]),
           },
         },
-      } as any)
+      } as unknown as TokenDbClient
 
-      const analyzer = mockObject<InteropTransferAnalyzer>({
+      const analyzer = {
         handleProcessedTransfers: vi.fn().mockReturnValue(undefined),
-      } as any)
+      } as unknown as InteropTransferAnalyzer
 
       const service = new InteropFinancialsLoop(
         [
@@ -429,16 +427,20 @@ describe(InteropFinancialsLoop.name, () => {
       expect(interopTransfer.getUnprocessed).toHaveBeenNthCalledWith(2, 2)
       expect(interopTransfer.updateManyFinancials).toHaveBeenCalledTimes(2)
       expect(
-        interopTransfer.updateManyFinancials.mock.calls[0][0],
+        vi.mocked(interopTransfer.updateManyFinancials).mock.calls[0][0],
       ).toHaveLength(2)
       expect(
-        interopTransfer.updateManyFinancials.mock.calls[1][0],
+        vi.mocked(interopTransfer.updateManyFinancials).mock.calls[1][0],
       ).toStrictEqual([
         { id: 'msg3', update: expect.objectContaining({ srcValueUsd: 2 }) },
       ])
       expect(analyzer.handleProcessedTransfers).toHaveBeenCalledTimes(2)
-      expect(analyzer.handleProcessedTransfers.mock.calls[0][0]).toHaveLength(2)
-      expect(analyzer.handleProcessedTransfers.mock.calls[1][0]).toHaveLength(1)
+      expect(
+        vi.mocked(analyzer.handleProcessedTransfers).mock.calls[0][0],
+      ).toHaveLength(2)
+      expect(
+        vi.mocked(analyzer.handleProcessedTransfers).mock.calls[1][0],
+      ).toHaveLength(1)
     })
 
     it('handles missing price info and logs warnings', async () => {
@@ -464,31 +466,31 @@ describe(InteropFinancialsLoop.name, () => {
         },
       ]
 
-      const interopRecentPrices = mockObject<Database['interopRecentPrices']>({
+      const interopRecentPrices = {
         getClosestPricesAtOrBefore: mockPrices(new Map()),
-      })
-      const interopTransfer = mockObject<Database['interopTransfer']>({
+      } as unknown as Database['interopRecentPrices']
+      const interopTransfer = {
         getUnprocessed: vi.fn().mockResolvedValue(mockTransfers),
         updateManyFinancials: vi.fn().mockResolvedValue(undefined),
-      })
-      const db = mockObject<Database>({
+      } as unknown as Database['interopTransfer']
+      const db = {
         interopRecentPrices,
         interopTransfer,
-      })
+      } as unknown as Database
 
-      const tokenDb = mockObject<TokenDbClient>({
+      const tokenDb = {
         deployedTokens: {
           getByChainAndAddress: { query: vi.fn().mockResolvedValue([]) },
         },
-      } as any)
+      } as unknown as TokenDbClient
 
-      const forLogger = mockObject<Logger>({
+      const forLogger = {
         info: vi.fn().mockReturnValue(undefined),
         warn: vi.fn().mockReturnValue(undefined),
-      })
-      const logger = mockObject<Logger>({
+      } as unknown as Logger
+      const logger = {
         for: vi.fn().mockReturnValue(forLogger),
-      })
+      } as unknown as Logger
 
       const service = new InteropFinancialsLoop(
         [
@@ -533,15 +535,15 @@ describe(InteropFinancialsLoop.name, () => {
         EthereumAddress.random(),
       )
 
-      const interopRecentPrices = mockObject<Database['interopRecentPrices']>({
+      const interopRecentPrices = {
         getClosestPricesAtOrBefore: mockPrices(
           new Map([
             ['unreliable-token', 3000],
             ['reliable-token', 2],
           ]),
         ),
-      })
-      const interopTransfer = mockObject<Database['interopTransfer']>({
+      } as unknown as Database['interopRecentPrices']
+      const interopTransfer = {
         getUnprocessed: vi.fn().mockResolvedValue([
           {
             transferId: 'msg1',
@@ -555,13 +557,13 @@ describe(InteropFinancialsLoop.name, () => {
           },
         ]),
         updateManyFinancials: vi.fn().mockResolvedValue(undefined),
-      })
-      const db = mockObject<Database>({
+      } as unknown as Database['interopTransfer']
+      const db = {
         interopRecentPrices,
         interopTransfer,
-      })
+      } as unknown as Database
 
-      const tokenDb = mockObject<TokenDbClient>({
+      const tokenDb = {
         deployedTokens: {
           getByChainAndAddress: {
             query: vi.fn().mockResolvedValue([
@@ -594,7 +596,7 @@ describe(InteropFinancialsLoop.name, () => {
             ]),
           },
         },
-      } as any)
+      } as unknown as TokenDbClient
 
       const service = new InteropFinancialsLoop(
         [
@@ -634,12 +636,12 @@ describe(InteropFinancialsLoop.name, () => {
         EthereumAddress.random(),
       )
 
-      const interopRecentPrices = mockObject<Database['interopRecentPrices']>({
+      const interopRecentPrices = {
         getClosestPricesAtOrBefore: mockPrices(
           new Map([['mega-token', 1_500_000]]),
         ),
-      })
-      const interopTransfer = mockObject<Database['interopTransfer']>({
+      } as unknown as Database['interopRecentPrices']
+      const interopTransfer = {
         getUnprocessed: vi.fn().mockResolvedValue([
           {
             plugin: 'stargate',
@@ -653,13 +655,13 @@ describe(InteropFinancialsLoop.name, () => {
           },
         ]),
         updateManyFinancials: vi.fn().mockResolvedValue(undefined),
-      })
-      const db = mockObject<Database>({
+      } as unknown as Database['interopTransfer']
+      const db = {
         interopRecentPrices,
         interopTransfer,
-      })
+      } as unknown as Database
 
-      const tokenDb = mockObject<TokenDbClient>({
+      const tokenDb = {
         deployedTokens: {
           getByChainAndAddress: {
             query: vi.fn().mockResolvedValue([
@@ -679,10 +681,10 @@ describe(InteropFinancialsLoop.name, () => {
             ]),
           },
         },
-      } as any)
-      const notifier = mockObject<InteropNotifier>({
+      } as unknown as TokenDbClient
+      const notifier = {
         notifySkippedTransferValuations: vi.fn().mockReturnValue(undefined),
-      })
+      } as unknown as InteropNotifier
 
       const service = new InteropFinancialsLoop(
         [
@@ -747,12 +749,12 @@ describe(InteropFinancialsLoop.name, () => {
         EthereumAddress.random(),
       )
 
-      const interopRecentPrices = mockObject<Database['interopRecentPrices']>({
+      const interopRecentPrices = {
         getClosestPricesAtOrBefore: mockPrices(
           new Map([['whale-token', 20_000]]),
         ),
-      })
-      const interopTransfer = mockObject<Database['interopTransfer']>({
+      } as unknown as Database['interopRecentPrices']
+      const interopTransfer = {
         getUnprocessed: vi.fn().mockResolvedValue([
           {
             plugin: 'stargate',
@@ -766,13 +768,13 @@ describe(InteropFinancialsLoop.name, () => {
           },
         ]),
         updateManyFinancials: vi.fn().mockResolvedValue(undefined),
-      })
-      const db = mockObject<Database>({
+      } as unknown as Database['interopTransfer']
+      const db = {
         interopRecentPrices,
         interopTransfer,
-      })
+      } as unknown as Database
 
-      const tokenDb = mockObject<TokenDbClient>({
+      const tokenDb = {
         deployedTokens: {
           getByChainAndAddress: {
             query: vi.fn().mockResolvedValue([
@@ -792,10 +794,10 @@ describe(InteropFinancialsLoop.name, () => {
             ]),
           },
         },
-      } as any)
-      const notifier = mockObject<InteropNotifier>({
+      } as unknown as TokenDbClient
+      const notifier = {
         notifySkippedTransferValuations: vi.fn().mockReturnValue(undefined),
-      })
+      } as unknown as InteropNotifier
 
       const service = new InteropFinancialsLoop(
         [
@@ -899,19 +901,19 @@ describe(InteropFinancialsLoop.name, () => {
         },
       ]
 
-      const interopRecentPrices = mockObject<Database['interopRecentPrices']>({
+      const interopRecentPrices = {
         getClosestPricesAtOrBefore: mockPrices(new Map([['token', 1]])),
-      })
-      const interopTransfer = mockObject<Database['interopTransfer']>({
+      } as unknown as Database['interopRecentPrices']
+      const interopTransfer = {
         getUnprocessed: vi.fn().mockResolvedValue(mockTransfers),
         updateManyFinancials: vi.fn().mockResolvedValue(undefined),
-      })
-      const db = mockObject<Database>({
+      } as unknown as Database['interopTransfer']
+      const db = {
         interopRecentPrices,
         interopTransfer,
-      })
+      } as unknown as Database
 
-      const tokenDb = mockObject<TokenDbClient>({
+      const tokenDb = {
         deployedTokens: {
           getByChainAndAddress: {
             query: vi.fn().mockResolvedValue([
@@ -944,10 +946,10 @@ describe(InteropFinancialsLoop.name, () => {
             ]),
           },
         },
-      } as any)
-      const analyzer = mockObject<InteropTransferAnalyzer>({
+      } as unknown as TokenDbClient
+      const analyzer = {
         handleProcessedTransfers: vi.fn().mockReturnValue(undefined),
-      } as any)
+      } as unknown as InteropTransferAnalyzer
 
       const service = new InteropFinancialsLoop(
         [
@@ -966,8 +968,8 @@ describe(InteropFinancialsLoop.name, () => {
       await service.run()
 
       expect(analyzer.handleProcessedTransfers).toHaveBeenCalledTimes(1)
-      const processedTransfers =
-        analyzer.handleProcessedTransfers.mock.calls[0][0]
+      const processedTransfers = vi.mocked(analyzer.handleProcessedTransfers)
+        .mock.calls[0][0]
 
       expect(processedTransfers).toHaveLength(2)
       expect(processedTransfers?.[0]?.transferId).toStrictEqual('msg1')
@@ -995,10 +997,10 @@ describe(InteropFinancialsLoop.name, () => {
         EthereumAddress.random(),
       )
 
-      const interopRecentPrices = mockObject<Database['interopRecentPrices']>({
+      const interopRecentPrices = {
         getClosestPricesAtOrBefore: mockPrices(new Map([['token', 1]])),
-      })
-      const interopTransfer = mockObject<Database['interopTransfer']>({
+      } as unknown as Database['interopRecentPrices']
+      const interopTransfer = {
         getUnprocessed: vi.fn().mockResolvedValue([
           {
             plugin: 'plugin-1',
@@ -1014,13 +1016,13 @@ describe(InteropFinancialsLoop.name, () => {
           },
         ]),
         updateManyFinancials: vi.fn().mockResolvedValue(undefined),
-      })
-      const db = mockObject<Database>({
+      } as unknown as Database['interopTransfer']
+      const db = {
         interopRecentPrices,
         interopTransfer,
-      })
+      } as unknown as Database
 
-      const tokenDb = mockObject<TokenDbClient>({
+      const tokenDb = {
         deployedTokens: {
           getByChainAndAddress: {
             query: vi.fn().mockResolvedValue([
@@ -1053,12 +1055,12 @@ describe(InteropFinancialsLoop.name, () => {
             ]),
           },
         },
-      } as any)
-      const analyzer = mockObject<InteropTransferAnalyzer>({
+      } as unknown as TokenDbClient
+      const analyzer = {
         handleProcessedTransfers: vi.fn(() => {
           throw new Error('boom')
         }),
-      } as any)
+      } as unknown as InteropTransferAnalyzer
 
       const service = new InteropFinancialsLoop(
         [

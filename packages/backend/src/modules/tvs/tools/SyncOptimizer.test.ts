@@ -1,15 +1,14 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 
 import type { Clock } from '../../../tools/Clock'
 import { SyncOptimizer } from './SyncOptimizer'
 
 describe(SyncOptimizer.name, () => {
   const LAST_HOUR = UnixTime.fromDate(new Date('2023-05-01T00:00:00Z'))
-  const CLOCK = mockObject<Clock>({
-    getLastHour: () => LAST_HOUR,
-  })
+  const CLOCK = {
+    getLastHour: vi.fn(() => LAST_HOUR),
+  } as unknown as Clock
 
   describe(SyncOptimizer.prototype.shouldTimestampBeSynced.name, () => {
     const syncOptimizer = new SyncOptimizer(CLOCK)
@@ -26,9 +25,9 @@ describe(SyncOptimizer.name, () => {
   })
 
   describe(SyncOptimizer.prototype.getTimestampToSync.name, () => {
-    const clock = mockObject<Clock>({
-      getLastHour: () => LAST_HOUR + 1 * UnixTime.MINUTE,
-    })
+    const clock = {
+      getLastHour: vi.fn(() => LAST_HOUR + 1 * UnixTime.MINUTE),
+    } as unknown as Clock
 
     it('aligns timestamps to hourly, six-hourly, or daily grid from cutoff boundaries', () => {
       const syncOptimizer = new SyncOptimizer(clock)

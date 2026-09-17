@@ -4,7 +4,6 @@ import {
   type TrackedTxLivenessConfig,
 } from '@l2beat/shared'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it } from 'vitest'
 import type { TrackedTxProject } from '../../../../../config/Config'
 import type { SavedConfiguration } from '../../../../../tools/uif/multi/types'
@@ -18,21 +17,24 @@ describe(getActiveConfigurations.name, () => {
       id: ProjectId('foo'),
       isArchived: false,
       configurations: [
-        mockObject<TrackedTxConfigEntry>({
+        {
           id: mockConfigurationId,
           type: 'liveness',
           subtype: 'batchSubmissions',
           untilTimestamp: UnixTime.now(),
-        }),
+        } as unknown as TrackedTxConfigEntry,
       ],
     }
 
     const mockConfigurations = [
-      mockObject<Omit<SavedConfiguration<TrackedTxConfigEntry>, 'properties'>>({
+      {
         id: mockConfigurationId,
         maxHeight: null,
         currentHeight: 1,
-      }),
+      } as unknown as Omit<
+        SavedConfiguration<TrackedTxConfigEntry>,
+        'properties'
+      >,
     ]
 
     const result = getActiveConfigurations(mockedProject, mockConfigurations)

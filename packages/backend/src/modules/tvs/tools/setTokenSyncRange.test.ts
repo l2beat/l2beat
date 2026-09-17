@@ -1,12 +1,11 @@
 import type { AmountFormula, TvsToken } from '@l2beat/config'
 import { assert } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it } from 'vitest'
 import { setTokenSyncRange } from './setTokenSyncRange'
 
 describe(setTokenSyncRange.name, () => {
   it('should set sync range', async () => {
-    const token: TvsToken = mockObject<TvsToken>({
+    const token: TvsToken = {
       amount: mockAmountFormula(20, 40),
       valueForProject: {
         type: 'calculation',
@@ -40,7 +39,7 @@ describe(setTokenSyncRange.name, () => {
           },
         ],
       },
-    })
+    } as unknown as TvsToken
 
     setTokenSyncRange(token, {
       sinceTimestamp: 10,
@@ -97,9 +96,9 @@ function mockAmountFormula(
   sinceTimestamp: number,
   untilTimestamp: number | undefined = undefined,
 ): AmountFormula {
-  return mockObject<AmountFormula>({
+  return {
     type: 'balanceOfEscrow',
     sinceTimestamp,
     untilTimestamp,
-  })
+  } as unknown as AmountFormula
 }

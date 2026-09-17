@@ -1,7 +1,6 @@
 import type { RpcClient } from '@l2beat/shared'
 import { Bytes, EthereumAddress } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import { MulticallClient } from './MulticallClient'
 import {
   decodeMulticallV1,
@@ -50,12 +49,12 @@ describe(MulticallClient.name, () => {
 
   it('falls back to individual requests for old block numbers', async () => {
     const calls: Call[] = []
-    const ethereumClient = mockObject<RpcClient>({
-      async call(parameters, blockTag) {
+    const ethereumClient = {
+      call: vi.fn(async (parameters, blockTag) => {
         calls.push({ to: parameters.to, data: parameters.input, blockTag })
         return parameters.input ?? Bytes.EMPTY
-      },
-    })
+      }),
+    } as unknown as RpcClient
 
     const multicallClient = new MulticallClient(
       ethereumClient,
@@ -85,8 +84,8 @@ describe(MulticallClient.name, () => {
 
   it('uses v1 for blocks without v2', async () => {
     const calls: Call[] = []
-    const ethereumClient = mockObject<RpcClient>({
-      async call(parameters, blockTag) {
+    const ethereumClient = {
+      call: vi.fn(async (parameters, blockTag) => {
         calls.push({ to: parameters.to, data: parameters.input, blockTag })
         return Bytes.fromHex(
           multicallInterface.encodeFunctionResult('aggregate', [
@@ -94,8 +93,8 @@ describe(MulticallClient.name, () => {
             ['0x12', '0x0f00', '0x'],
           ]),
         )
-      },
-    })
+      }),
+    } as unknown as RpcClient
 
     const multicallClient = new MulticallClient(
       ethereumClient,
@@ -132,8 +131,8 @@ describe(MulticallClient.name, () => {
 
   it('uses v2 for new blocks', async () => {
     const calls: Call[] = []
-    const ethereumClient = mockObject<RpcClient>({
-      async call(parameters, blockTag) {
+    const ethereumClient = {
+      call: vi.fn(async (parameters, blockTag) => {
         calls.push({ to: parameters.to, data: parameters.input, blockTag })
         return Bytes.fromHex(
           multicallInterface.encodeFunctionResult('tryAggregate', [
@@ -144,8 +143,8 @@ describe(MulticallClient.name, () => {
             ],
           ]),
         )
-      },
-    })
+      }),
+    } as unknown as RpcClient
 
     const multicallClient = new MulticallClient(
       ethereumClient,
@@ -181,8 +180,8 @@ describe(MulticallClient.name, () => {
 
   it('batches calls', async () => {
     const calls: number[] = []
-    const ethereumClient = mockObject<RpcClient>({
-      async call(parameters) {
+    const ethereumClient = {
+      call: vi.fn(async (parameters) => {
         const callCount: number = multicallInterface.decodeFunctionData(
           'tryAggregate',
           parameters.input?.toString() ?? '',
@@ -193,8 +192,8 @@ describe(MulticallClient.name, () => {
             new Array(callCount).fill(0).map(() => [true, '0x1234']),
           ]),
         )
-      },
-    })
+      }),
+    } as unknown as RpcClient
 
     const multicallClient = new MulticallClient(
       ethereumClient,
@@ -214,7 +213,7 @@ describe(MulticallClient.name, () => {
   })
 
   it('returns multicall address based on block number', () => {
-    const ethereumClient = mockObject<RpcClient>()
+    const ethereumClient = {} as unknown as RpcClient
     const multicallClient = new MulticallClient(
       ethereumClient,
       TEST_MULTICALL_CONFIG,
@@ -227,21 +226,21 @@ describe(MulticallClient.name, () => {
 
   it('configs are correctly sorted in getMulticallAddressAt & isNativeBalanceSupported', () => {
     const entries = [
-      mockObject<MulticallConfigEntry>({
+      {
         sinceBlock: 3,
         address: EthereumAddress('0x' + '3'.toString().repeat(40)),
-      }),
-      mockObject<MulticallConfigEntry>({
+      } as unknown as MulticallConfigEntry,
+      {
         sinceBlock: 1,
         address: EthereumAddress('0x' + '1'.toString().repeat(40)),
-      }),
-      mockObject<MulticallConfigEntry>({
+      } as unknown as MulticallConfigEntry,
+      {
         sinceBlock: 2,
         address: EthereumAddress('0x' + '2'.toString().repeat(40)),
         isNativeBalanceSupported: false,
-      }),
+      } as unknown as MulticallConfigEntry,
     ]
-    const ethereumClient = mockObject<RpcClient>()
+    const ethereumClient = {} as unknown as RpcClient
     const multicallClient = new MulticallClient(ethereumClient, [...entries])
 
     const address = multicallClient.getMulticallAddressAt(3)

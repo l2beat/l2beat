@@ -1,7 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
 import { Address32, UnixTime } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import type { IndexerService } from '../../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../../tools/uif/ids'
@@ -149,7 +148,7 @@ describe(RelayIndexer.name, () => {
           { id: 10, name: 'optimism' },
         ],
         trackedChains: ['ethereum', 'optimism'],
-        interopEventStore: mockObject<InteropEventStore>({ saveNewEvents }),
+        interopEventStore: { saveNewEvents } as unknown as InteropEventStore,
       })
 
       await indexer.update(FROM, FROM + BATCH_SIZE)
@@ -191,9 +190,9 @@ describe(RelayIndexer.name, () => {
 })
 
 function clientReturning(response: GetRequestsResponse) {
-  return mockObject<RelayApiClient>({
+  return {
     getAllRequests: vi.fn().mockResolvedValue(response),
-  })
+  } as unknown as RelayApiClient
 }
 
 function manyInSameSecond(count: number, second: string) {
@@ -215,7 +214,9 @@ function createIndexer(
 ) {
   return new RelayIndexer(
     options.chains ?? [],
-    mockObject<InteropConfigStore>({ get: vi.fn().mockReturnValue(undefined) }),
+    {
+      get: vi.fn().mockReturnValue(undefined),
+    } as unknown as InteropConfigStore,
     options.trackedChains ?? ['ethereum'],
     {
       batchSize: BATCH_SIZE,
@@ -223,10 +224,10 @@ function createIndexer(
       safeTimeOffset: SAFE_TIME_OFFSET,
     },
     relayApiClient,
-    mockObject<Database>(),
-    options.interopEventStore ?? mockObject<InteropEventStore>(),
+    {} as unknown as Database,
+    options.interopEventStore ?? ({} as unknown as InteropEventStore),
     new RelayRootIndexer(Logger.SILENT, SAFE_TIME_OFFSET),
-    mockObject<IndexerService>(),
+    {} as unknown as IndexerService,
     Logger.SILENT,
   )
 }

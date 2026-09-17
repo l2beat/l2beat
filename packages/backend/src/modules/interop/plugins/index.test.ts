@@ -2,7 +2,6 @@ import { Logger } from '@l2beat/backend-tools'
 import { INTEROP_ONE_SIDED_CHAINS, ProjectService } from '@l2beat/config'
 import type { HttpClient, RpcClient } from '@l2beat/shared'
 import { assert } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import type { TokenDbClient } from '@l2beat/token-backend'
 import { beforeAll, describe, expect, it } from 'vitest'
 import type { InteropConfigStore } from '../engine/config/InteropConfigStore'
@@ -20,11 +19,11 @@ describe('Interop Plugins', async () => {
   const plugins = createInteropPlugins({
     chains: [],
     oneSidedChains: [],
-    configs: mockObject<InteropConfigStore>(),
-    httpClient: mockObject<HttpClient>(),
+    configs: {} as unknown as InteropConfigStore,
+    httpClient: {} as unknown as HttpClient,
     logger: Logger.SILENT,
-    rpcClients: [mockObject<RpcClient>({ chain: 'ethereum' })],
-    tokenDbClient: mockObject<TokenDbClient>(),
+    rpcClients: [{ chain: 'ethereum' } as unknown as RpcClient],
+    tokenDbClient: {} as unknown as TokenDbClient,
     configIntervalMs: -1,
   })
 
@@ -90,9 +89,9 @@ describe('Interop Plugins', async () => {
 
   describe('flattenClusters', () => {
     it('flattens plugins and plugin clusters in order', () => {
-      const pluginA = mockObject<InteropPlugin>({ name: 'across' })
-      const pluginB = mockObject<InteropPlugin>({ name: 'celer' })
-      const pluginC = mockObject<InteropPlugin>({ name: 'ccip' })
+      const pluginA = { name: 'across' } as unknown as InteropPlugin
+      const pluginB = { name: 'celer' } as unknown as InteropPlugin
+      const pluginC = { name: 'ccip' } as unknown as InteropPlugin
       const cluster: PluginCluster = {
         name: 'cluster',
         plugins: [pluginB, pluginC],
@@ -105,8 +104,8 @@ describe('Interop Plugins', async () => {
 
   describe('pluginsAsClusters', () => {
     it('wraps single plugins in clusters and preserves cluster objects', () => {
-      const pluginA = mockObject<InteropPlugin>({ name: 'across' })
-      const pluginB = mockObject<InteropPlugin>({ name: 'celer' })
+      const pluginA = { name: 'across' } as unknown as InteropPlugin
+      const pluginB = { name: 'celer' } as unknown as InteropPlugin
       const cluster: PluginCluster = { name: 'cluster', plugins: [pluginB] }
 
       const result = pluginsAsClusters([pluginA, cluster])

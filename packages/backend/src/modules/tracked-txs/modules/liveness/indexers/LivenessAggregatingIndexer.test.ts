@@ -6,7 +6,6 @@ import type {
 } from '@l2beat/database'
 import { createTrackedTxId, type TrackedTxConfigEntry } from '@l2beat/shared'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 import type { TrackedTxProject } from '../../../../../config/Config'
 import type { IndexerService } from '../../../../../tools/uif/IndexerService'
@@ -24,38 +23,38 @@ const MOCK_PROJECTS: TrackedTxProject[] = [
     id: ProjectId('mocked-project'),
     isArchived: false,
     configurations: [
-      mockObject<TrackedTxConfigEntry>({
+      {
         id: MOCK_CONFIGURATION_ID,
         type: 'liveness',
         subtype: MOCK_CONFIGURATION_TYPE,
         untilTimestamp: UnixTime.now(),
         projectId: ProjectId('mocked-project'),
-      }),
+      } as unknown as TrackedTxConfigEntry,
     ],
   },
 ]
 
 const MOCK_CONFIGURATIONS = [
-  mockObject<Omit<SavedConfiguration<TrackedTxConfigEntry>, 'properties'>>({
+  {
     id: MOCK_CONFIGURATION_ID,
     maxHeight: null,
     currentHeight: 1,
-  }),
+  } as unknown as Omit<SavedConfiguration<TrackedTxConfigEntry>, 'properties'>,
 ]
 
 const MOCK_LIVENESS: LivenessRecord[] = [
-  mockObject<LivenessRecord>({
+  {
     configurationId: MOCK_CONFIGURATION_ID,
     timestamp: NOW - 1 * UnixTime.HOUR,
-  }),
-  mockObject<LivenessRecord>({
+  } as unknown as LivenessRecord,
+  {
     configurationId: MOCK_CONFIGURATION_ID,
     timestamp: NOW - 3 * UnixTime.HOUR,
-  }),
-  mockObject<LivenessRecord>({
+  } as unknown as LivenessRecord,
+  {
     configurationId: MOCK_CONFIGURATION_ID,
     timestamp: NOW - 7 * UnixTime.HOUR,
-  }),
+  } as unknown as LivenessRecord,
 ]
 
 describe(LivenessAggregatingIndexer.name, () => {
@@ -209,28 +208,26 @@ describe(LivenessAggregatingIndexer.name, () => {
     })
 
     it('should save data to db', async () => {
-      const mockAggregatedLivenessRepository = mockObject<
-        Database['aggregatedLiveness']
-      >({
+      const mockAggregatedLivenessRepository = {
         upsertMany: vi.fn().mockResolvedValue(1),
-      })
+      } as unknown as Database['aggregatedLiveness']
       const indexer = createIndexer({
         tag: 'update-save-to-db',
         aggregatedLivenessRepository: mockAggregatedLivenessRepository,
       })
       const mockAggregatedLiveness: AggregatedLivenessRecord[] = [
-        mockObject<AggregatedLivenessRecord>({
+        {
           min: 10,
           avg: 20,
           max: 30,
           timestamp: NOW,
-        }),
-        mockObject<AggregatedLivenessRecord>({
+        } as unknown as AggregatedLivenessRecord,
+        {
           min: 20,
           avg: 30,
           max: 40,
           timestamp: NOW,
-        }),
+        } as unknown as AggregatedLivenessRecord,
       ]
       indexer.generateLiveness = vi
         .fn()
@@ -250,9 +247,9 @@ describe(LivenessAggregatingIndexer.name, () => {
 
   describe(LivenessAggregatingIndexer.prototype.invalidate.name, () => {
     it('should return new safeHeight and not delete data', async () => {
-      const livenessRepositoryMock = mockObject<Database['liveness']>({
+      const livenessRepositoryMock = {
         deleteAll: vi.fn().mockResolvedValue(1),
-      })
+      } as unknown as Database['liveness']
 
       const targetHeight = UnixTime.now()
 
@@ -271,15 +268,15 @@ describe(LivenessAggregatingIndexer.name, () => {
 
   describe(LivenessAggregatingIndexer.prototype.generateLiveness.name, () => {
     it('should generate aggregated liveness', async () => {
-      const mockLivenessRepository = mockObject<Database['liveness']>({
+      const mockLivenessRepository = {
         getRecordsInRangeWithLatestBefore: vi
           .fn()
           .mockResolvedValue(MOCK_LIVENESS),
-      })
+      } as unknown as Database['liveness']
 
-      const mockIndexerService = mockObject<IndexerService>({
+      const mockIndexerService = {
         getSavedConfigurations: vi.fn().mockResolvedValue(MOCK_CONFIGURATIONS),
-      })
+      } as unknown as IndexerService
 
       const indexer = createIndexer({
         tag: 'generate-liveness',
@@ -323,15 +320,15 @@ describe(LivenessAggregatingIndexer.name, () => {
     })
 
     it('split time range to hours and get liveness data for each hour', async () => {
-      const mockLivenessRepository = mockObject<Database['liveness']>({
+      const mockLivenessRepository = {
         getRecordsInRangeWithLatestBefore: vi
           .fn()
           .mockResolvedValue(MOCK_LIVENESS),
-      })
+      } as unknown as Database['liveness']
 
-      const mockIndexerService = mockObject<IndexerService>({
+      const mockIndexerService = {
         getSavedConfigurations: vi.fn().mockResolvedValue(MOCK_CONFIGURATIONS),
-      })
+      } as unknown as IndexerService
 
       const indexer = createIndexer({
         tag: 'generate-liveness-time-ranges',
@@ -420,26 +417,26 @@ describe(LivenessAggregatingIndexer.name, () => {
         MOCK_PROJECTS[0].id,
         'batchSubmissions',
         [
-          mockObject<LivenessRecordWithConfig>({
+          {
             configurationId: MOCK_CONFIGURATION_ID,
             timestamp: start + 5 * UnixTime.HOUR,
-          }),
-          mockObject<LivenessRecordWithConfig>({
+          } as unknown as LivenessRecordWithConfig,
+          {
             configurationId: MOCK_CONFIGURATION_ID,
             timestamp: start + 2 * UnixTime.HOUR,
-          }),
-          mockObject<LivenessRecordWithConfig>({
+          } as unknown as LivenessRecordWithConfig,
+          {
             configurationId: MOCK_CONFIGURATION_ID,
             timestamp: start,
-          }),
-          mockObject<LivenessRecordWithConfig>({
+          } as unknown as LivenessRecordWithConfig,
+          {
             configurationId: MOCK_CONFIGURATION_ID,
             timestamp: start - 1 * UnixTime.HOUR,
-          }),
-          mockObject<LivenessRecordWithConfig>({
+          } as unknown as LivenessRecordWithConfig,
+          {
             configurationId: MOCK_CONFIGURATION_ID,
             timestamp: start - 2 * UnixTime.HOUR,
-          }),
+          } as unknown as LivenessRecordWithConfig,
         ],
         start,
       )
@@ -464,18 +461,18 @@ describe(LivenessAggregatingIndexer.name, () => {
         MOCK_PROJECTS[0].id,
         'batchSubmissions',
         [
-          mockObject<LivenessRecordWithConfig>({
+          {
             configurationId: MOCK_CONFIGURATION_ID,
             timestamp: start + 5 * UnixTime.HOUR,
-          }),
-          mockObject<LivenessRecordWithConfig>({
+          } as unknown as LivenessRecordWithConfig,
+          {
             configurationId: MOCK_CONFIGURATION_ID,
             timestamp: start + 2 * UnixTime.HOUR,
-          }),
-          mockObject<LivenessRecordWithConfig>({
+          } as unknown as LivenessRecordWithConfig,
+          {
             configurationId: MOCK_CONFIGURATION_ID,
             timestamp: start,
-          }),
+          } as unknown as LivenessRecordWithConfig,
         ],
         start,
       )
@@ -532,18 +529,19 @@ function createIndexer(options: {
   return new LivenessAggregatingIndexer(
     {
       tags: { tag: options.tag },
-      indexerService: options.indexerService ?? mockObject<IndexerService>(),
+      indexerService:
+        options.indexerService ?? ({} as unknown as IndexerService),
       minHeight: options.minHeight ?? 0,
       parents: [],
-      db: mockObject<Database>({
+      db: {
         liveness:
-          options.livenessRepository ?? mockObject<Database['liveness']>(),
+          options.livenessRepository ?? ({} as unknown as Database['liveness']),
         aggregatedLiveness:
           options.aggregatedLivenessRepository ??
-          mockObject<Database['aggregatedLiveness']>({
+          ({
             upsertMany: vi.fn().mockResolvedValue(1),
-          }),
-      }),
+          } as unknown as Database['aggregatedLiveness']),
+      } as unknown as Database,
       projects: MOCK_PROJECTS,
     },
     Logger.SILENT,

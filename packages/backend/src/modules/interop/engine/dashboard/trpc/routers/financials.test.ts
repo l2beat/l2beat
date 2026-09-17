@@ -1,6 +1,5 @@
 import type { Database, InteropTransferRecord } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 import { createCallerFactory } from '../../../../../../trpc/init'
 import { createFinancialsRouter } from './financials'
@@ -31,7 +30,7 @@ const FILTER_INPUT = {
 describe(createFinancialsRouter.name, () => {
   describe('transfers', () => {
     it('rejects a query without any filter', async () => {
-      const caller = createCaller(mockObject<Database>({}))
+      const caller = createCaller({} as unknown as Database)
 
       await expect(caller.transfers({ transferId: '  ' })).rejects.toThrow(
         'At least one filter is required',
@@ -39,7 +38,7 @@ describe(createFinancialsRouter.name, () => {
     })
 
     it('rejects an inverted time range', async () => {
-      const caller = createCaller(mockObject<Database>({}))
+      const caller = createCaller({} as unknown as Database)
 
       await expect(caller.transfers({ from: 200, to: 100 })).rejects.toThrow()
     })
@@ -56,12 +55,12 @@ describe(createFinancialsRouter.name, () => {
       }
       const getByFilter = vi.fn().mockResolvedValue([record])
       const getStatsByFilter = vi.fn().mockResolvedValue(stats)
-      const db = mockObject<Database>({
-        interopTransfer: mockObject<Database['interopTransfer']>({
+      const db = {
+        interopTransfer: {
           getByFinancialsFilter: getByFilter,
           getFinancialsStatsByFilter: getStatsByFilter,
-        }),
-      })
+        } as unknown as Database['interopTransfer'],
+      } as unknown as Database
 
       const result = await createCaller(db).transfers(FILTER_INPUT)
 
@@ -97,7 +96,7 @@ describe(createFinancialsRouter.name, () => {
 
   describe('reprocess', () => {
     it('rejects a mutation without any filter', async () => {
-      const caller = createCaller(mockObject<Database>({}))
+      const caller = createCaller({} as unknown as Database)
 
       await expect(caller.reprocess({})).rejects.toThrow(
         'At least one filter is required',
@@ -106,11 +105,11 @@ describe(createFinancialsRouter.name, () => {
 
     it('marks transfers matching the normalized filter as unprocessed', async () => {
       const markAsUnprocessedByFilter = vi.fn().mockResolvedValue(42)
-      const db = mockObject<Database>({
-        interopTransfer: mockObject<Database['interopTransfer']>({
+      const db = {
+        interopTransfer: {
           markAsUnprocessedByFinancialsFilter: markAsUnprocessedByFilter,
-        }),
-      })
+        } as unknown as Database['interopTransfer'],
+      } as unknown as Database
 
       const result = await createCaller(db).reprocess(FILTER_INPUT)
 
@@ -124,12 +123,12 @@ describe(createFinancialsRouter.name, () => {
   describe('refresh', () => {
     it('marks all transfers as unprocessed', async () => {
       const markAllAsUnprocessed = vi.fn().mockResolvedValue(42)
-      const interopTransfer = mockObject<Database['interopTransfer']>({
+      const interopTransfer = {
         markAllAsUnprocessed,
-      })
-      const db = mockObject<Database>({
+      } as unknown as Database['interopTransfer']
+      const db = {
         interopTransfer,
-      })
+      } as unknown as Database
 
       const result = await createCaller(db).refresh()
 

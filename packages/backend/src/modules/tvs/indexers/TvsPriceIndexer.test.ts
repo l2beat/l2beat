@@ -2,7 +2,6 @@ import { Logger } from '@l2beat/backend-tools'
 import type { Database, TvsPriceRecord } from '@l2beat/database'
 import type { PriceProvider } from '@l2beat/shared'
 import { CoingeckoId, UnixTime } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { mockDatabase } from '../../../test/database'
 import type { IndexerService } from '../../../tools/uif/IndexerService'
@@ -22,24 +21,24 @@ describe(TvsPriceIndexer.name, () => {
         config('config-2', 'bitcoin'),
       ]
 
-      const priceProvider = mockObject<PriceProvider>({
+      const priceProvider = {
         getAdjustedTo: vi.fn().mockReturnValueOnce(adjustedTo),
         getUsdPriceHistoryHourly: vi
           .fn()
           .mockReturnValueOnce([{ timestamp: UnixTime(150), value: 1500 }])
           .mockReturnValueOnce([{ timestamp: UnixTime(200), value: 2000 }]),
-      })
+      } as unknown as PriceProvider
 
-      const syncOptimizer = mockObject<SyncOptimizer>({
+      const syncOptimizer = {
         getTimestampsToSync: vi
           .fn()
           .mockReturnValueOnce([UnixTime(150), UnixTime(200)]),
         shouldTimestampBeSynced: vi.fn().mockReturnValue(true),
-      })
+      } as unknown as SyncOptimizer
 
-      const tvsPriceRepository = mockObject<Database['tvsPrice']>({
+      const tvsPriceRepository = {
         upsertMany: vi.fn().mockReturnValueOnce(undefined),
-      })
+      } as unknown as Database['tvsPrice']
 
       const indexer = new TvsPriceIndexer(
         {
@@ -48,7 +47,7 @@ describe(TvsPriceIndexer.name, () => {
           db: mockDatabase({ tvsPrice: tvsPriceRepository }),
           syncOptimizer,
           parents: [],
-          indexerService: mockObject<IndexerService>({}),
+          indexerService: {} as unknown as IndexerService,
         },
         Logger.SILENT,
       )
@@ -86,25 +85,25 @@ describe(TvsPriceIndexer.name, () => {
       const to = 300
       const adjustedTo = 250
 
-      const priceProvider = mockObject<PriceProvider>({
+      const priceProvider = {
         getAdjustedTo: vi.fn().mockReturnValueOnce(adjustedTo),
         getUsdPriceHistoryHourly: vi.fn().mockReturnValueOnce([
           { timestamp: UnixTime(150), value: 1500 },
           { timestamp: UnixTime(200), value: 2000 },
         ]),
-      })
+      } as unknown as PriceProvider
 
-      const syncOptimizer = mockObject<SyncOptimizer>({
+      const syncOptimizer = {
         getTimestampsToSync: vi.fn().mockReturnValueOnce([UnixTime(150)]),
         shouldTimestampBeSynced: vi
           .fn()
           .mockReturnValueOnce(true) // For timestamp 150
           .mockReturnValueOnce(false), // For timestamp 200
-      })
+      } as unknown as SyncOptimizer
 
-      const tvsPriceRepository = mockObject<Database['tvsPrice']>({
+      const tvsPriceRepository = {
         upsertMany: vi.fn().mockReturnValueOnce(undefined),
-      })
+      } as unknown as Database['tvsPrice']
 
       const indexer = new TvsPriceIndexer(
         {
@@ -113,7 +112,7 @@ describe(TvsPriceIndexer.name, () => {
           db: mockDatabase({ tvsPrice: tvsPriceRepository }),
           syncOptimizer,
           parents: [],
-          indexerService: mockObject<IndexerService>({}),
+          indexerService: {} as unknown as IndexerService,
         },
         Logger.SILENT,
       )
@@ -138,22 +137,22 @@ describe(TvsPriceIndexer.name, () => {
       const to = 300
       const adjustedTo = 250
 
-      const priceProvider = mockObject<PriceProvider>({
+      const priceProvider = {
         getAdjustedTo: vi.fn().mockReturnValueOnce(adjustedTo),
-      })
+      } as unknown as PriceProvider
 
-      const syncOptimizer = mockObject<SyncOptimizer>({
+      const syncOptimizer = {
         getTimestampsToSync: vi.fn().mockReturnValueOnce([]),
-      })
+      } as unknown as SyncOptimizer
 
       const indexer = new TvsPriceIndexer(
         {
           configurations: [config('config-1', 'ethereum')],
           priceProvider,
-          db: mockDatabase({ tvsPrice: mockObject() }),
+          db: mockDatabase({ tvsPrice: {} as unknown as Database['tvsPrice'] }),
           syncOptimizer,
           parents: [],
-          indexerService: mockObject<IndexerService>({}),
+          indexerService: {} as unknown as IndexerService,
         },
         Logger.SILENT,
       )
@@ -180,20 +179,20 @@ describe(TvsPriceIndexer.name, () => {
       const to = 300
       const adjustedTo = 250
 
-      const priceProvider = mockObject<PriceProvider>({
+      const priceProvider = {
         getAdjustedTo: vi.fn().mockReturnValueOnce(adjustedTo),
         getUsdPriceHistoryHourly: vi.fn().mockImplementationOnce(() => {
           throw new Error('Insufficient data in response for ethereum')
         }),
-      })
+      } as unknown as PriceProvider
 
-      const syncOptimizer = mockObject<SyncOptimizer>({
+      const syncOptimizer = {
         getTimestampsToSync: vi.fn().mockReturnValueOnce([UnixTime(150)]),
-      })
+      } as unknown as SyncOptimizer
 
-      const tvsPriceRepository = mockObject<Database['tvsPrice']>({
+      const tvsPriceRepository = {
         upsertMany: vi.fn().mockReturnValueOnce(undefined),
-      })
+      } as unknown as Database['tvsPrice']
 
       const indexer = new TvsPriceIndexer(
         {
@@ -202,7 +201,7 @@ describe(TvsPriceIndexer.name, () => {
           db: mockDatabase({ tvsPrice: tvsPriceRepository }),
           syncOptimizer,
           parents: [],
-          indexerService: mockObject<IndexerService>({}),
+          indexerService: {} as unknown as IndexerService,
         },
         Logger.SILENT,
       )
@@ -229,25 +228,25 @@ describe(TvsPriceIndexer.name, () => {
       const to = 300
       const adjustedTo = 250
 
-      const priceProvider = mockObject<PriceProvider>({
+      const priceProvider = {
         getAdjustedTo: vi.fn().mockReturnValueOnce(adjustedTo),
         getUsdPriceHistoryHourly: vi.fn().mockImplementationOnce(() => {
           throw new Error('Network error')
         }),
-      })
+      } as unknown as PriceProvider
 
-      const syncOptimizer = mockObject<SyncOptimizer>({
+      const syncOptimizer = {
         getTimestampsToSync: vi.fn().mockReturnValueOnce([UnixTime(150)]),
-      })
+      } as unknown as SyncOptimizer
 
       const indexer = new TvsPriceIndexer(
         {
           configurations: [config('config-1', 'ethereum')],
           priceProvider,
-          db: mockDatabase({ tvsPrice: mockObject() }),
+          db: mockDatabase({ tvsPrice: {} as unknown as Database['tvsPrice'] }),
           syncOptimizer,
           parents: [],
-          indexerService: mockObject<IndexerService>({}),
+          indexerService: {} as unknown as IndexerService,
         },
         Logger.SILENT,
       )
@@ -260,18 +259,18 @@ describe(TvsPriceIndexer.name, () => {
 
   describe(TvsPriceIndexer.prototype.trimData.name, () => {
     it('deletes records for configurations in time range', async () => {
-      const tvsPriceRepository = mockObject<Database['tvsPrice']>({
+      const tvsPriceRepository = {
         deleteByConfigs: vi.fn().mockReturnValue(5),
-      })
+      } as unknown as Database['tvsPrice']
 
       const indexer = new TvsPriceIndexer(
         {
           configurations: [config('config-1', 'ethereum')],
-          priceProvider: mockObject<PriceProvider>({}),
+          priceProvider: {} as unknown as PriceProvider,
           db: mockDatabase({ tvsPrice: tvsPriceRepository }),
-          syncOptimizer: mockObject<SyncOptimizer>({}),
+          syncOptimizer: {} as unknown as SyncOptimizer,
           parents: [],
-          indexerService: mockObject<IndexerService>({}),
+          indexerService: {} as unknown as IndexerService,
         },
         Logger.SILENT,
       )

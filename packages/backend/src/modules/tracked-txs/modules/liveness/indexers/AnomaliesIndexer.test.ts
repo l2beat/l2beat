@@ -7,7 +7,6 @@ import type {
 } from '@l2beat/database'
 import { createTrackedTxId, type TrackedTxConfigEntry } from '@l2beat/shared'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 import type { TrackedTxProject } from '../../../../../config/Config'
 import type { IndexerService } from '../../../../../tools/uif/IndexerService'
@@ -26,22 +25,22 @@ const MOCK_PROJECTS: TrackedTxProject[] = [
     id: ProjectId('mocked-project'),
     isArchived: false,
     configurations: [
-      mockObject<TrackedTxConfigEntry>({
+      {
         id: MOCK_CONFIGURATION_ID,
         type: 'liveness',
         subtype: MOCK_CONFIGURATION_TYPE,
         untilTimestamp: UnixTime.now(),
-      }),
+      } as unknown as TrackedTxConfigEntry,
     ],
   },
 ]
 
 const MOCK_CONFIGURATIONS = [
-  mockObject<Omit<SavedConfiguration<TrackedTxConfigEntry>, 'properties'>>({
+  {
     id: MOCK_CONFIGURATION_ID,
     maxHeight: null,
     currentHeight: 1,
-  }),
+  } as unknown as Omit<SavedConfiguration<TrackedTxConfigEntry>, 'properties'>,
 ]
 
 describe(AnomaliesIndexer.name, () => {
@@ -65,14 +64,14 @@ describe(AnomaliesIndexer.name, () => {
     })
 
     it('should update', async () => {
-      const mockAnomaliesRepository = mockObject<Database['anomalies']>({
+      const mockAnomaliesRepository = {
         deleteAll: vi.fn().mockResolvedValue(0),
         upsertMany: vi.fn().mockResolvedValue(1),
-      })
+      } as unknown as Database['anomalies']
 
-      const mockAnomalyStatsRepository = mockObject<Database['anomalyStats']>({
+      const mockAnomalyStatsRepository = {
         upsertMany: vi.fn().mockResolvedValue(1),
-      })
+      } as unknown as Database['anomalyStats']
 
       const indexer = createIndexer({
         tag: 'update',
@@ -128,14 +127,14 @@ describe(AnomaliesIndexer.name, () => {
     })
 
     it('should adjust and update', async () => {
-      const mockAnomaliesRepository = mockObject<Database['anomalies']>({
+      const mockAnomaliesRepository = {
         deleteAll: vi.fn().mockResolvedValue(0),
         upsertMany: vi.fn().mockResolvedValue(1),
-      })
+      } as unknown as Database['anomalies']
 
-      const mockAnomalyStatsRepository = mockObject<Database['anomalyStats']>({
+      const mockAnomalyStatsRepository = {
         upsertMany: vi.fn().mockResolvedValue(1),
-      })
+      } as unknown as Database['anomalyStats']
 
       const indexer = createIndexer({
         tag: 'adjust-update',
@@ -193,9 +192,9 @@ describe(AnomaliesIndexer.name, () => {
 
   describe(AnomaliesIndexer.prototype.invalidate.name, () => {
     it('should return new safeHeight and not delete data', async () => {
-      const livenessRepositoryMock = mockObject<Database['liveness']>({
+      const livenessRepositoryMock = {
         deleteAll: vi.fn().mockResolvedValue(1),
-      })
+      } as unknown as Database['liveness']
 
       const targetHeight = UnixTime.now()
 
@@ -215,29 +214,29 @@ describe(AnomaliesIndexer.name, () => {
   describe(AnomaliesIndexer.prototype.getAnomalies.name, () => {
     it('should get anomalies', async () => {
       const mockLivenessRecords = [
-        mockObject<LivenessRecord>({
+        {
           configurationId: MOCK_CONFIGURATION_ID,
           timestamp: NOW - 1 * UnixTime.HOUR,
-        }),
-        mockObject<LivenessRecord>({
+        } as unknown as LivenessRecord,
+        {
           configurationId: MOCK_CONFIGURATION_ID,
           timestamp: NOW - 3 * UnixTime.HOUR,
-        }),
-        mockObject<LivenessRecord>({
+        } as unknown as LivenessRecord,
+        {
           configurationId: MOCK_CONFIGURATION_ID,
           timestamp: NOW - 7 * UnixTime.HOUR,
-        }),
+        } as unknown as LivenessRecord,
       ]
 
-      const mockLivenessRepository = mockObject<Database['liveness']>({
+      const mockLivenessRepository = {
         getRecordsInRangeWithLatestBefore: vi
           .fn()
           .mockResolvedValue(mockLivenessRecords),
-      })
+      } as unknown as Database['liveness']
 
-      const mockIndexerService = mockObject<IndexerService>({
+      const mockIndexerService = {
         getSavedConfigurations: vi.fn().mockResolvedValue(MOCK_CONFIGURATIONS),
-      })
+      } as unknown as IndexerService
 
       const indexer = createIndexer({
         tag: 'get-anomalies',
@@ -375,11 +374,12 @@ describe(AnomaliesIndexer.name, () => {
       // Create records that only go back 50 days (less than 2 * SYNC_RANGE = 60 days)
       const records: LivenessRecordWithConfig[] = Array.from({
         length: 100,
-      }).map((_, i) =>
-        mockObject<LivenessRecordWithConfig>({
-          timestamp: lastHour - i * 12 * UnixTime.HOUR, // 12 hours apart = 50 days total
-          subtype: 'batchSubmissions' as const,
-        }),
+      }).map(
+        (_, i) =>
+          ({
+            timestamp: lastHour - i * 12 * UnixTime.HOUR, // 12 hours apart = 50 days total
+            subtype: 'batchSubmissions' as const,
+          }) as unknown as LivenessRecordWithConfig,
       )
 
       const result = indexer.detectAnomalies(
@@ -401,11 +401,12 @@ describe(AnomaliesIndexer.name, () => {
       const lastHour = UnixTime.toStartOf(NOW, 'hour')
       const records: LivenessRecordWithConfig[] = Array.from({
         length: 2000,
-      }).map((_, i) =>
-        mockObject<LivenessRecordWithConfig>({
-          timestamp: lastHour - i * UnixTime.HOUR,
-          subtype: 'batchSubmissions' as const,
-        }),
+      }).map(
+        (_, i) =>
+          ({
+            timestamp: lastHour - i * UnixTime.HOUR,
+            subtype: 'batchSubmissions' as const,
+          }) as unknown as LivenessRecordWithConfig,
       )
 
       const result = indexer.detectAnomalies(
@@ -434,11 +435,12 @@ describe(AnomaliesIndexer.name, () => {
       const lastHour = UnixTime.toStartOf(NOW, 'hour')
       const records: LivenessRecordWithConfig[] = Array.from({
         length: 2000,
-      }).map((_, i) =>
-        mockObject<LivenessRecordWithConfig>({
-          timestamp: lastHour + (-i - anomalyDuration) * UnixTime.HOUR,
-          subtype: 'batchSubmissions' as const,
-        }),
+      }).map(
+        (_, i) =>
+          ({
+            timestamp: lastHour + (-i - anomalyDuration) * UnixTime.HOUR,
+            subtype: 'batchSubmissions' as const,
+          }) as unknown as LivenessRecordWithConfig,
       )
 
       const result = indexer.detectAnomalies(
@@ -480,22 +482,23 @@ function createIndexer(options: {
   return new AnomaliesIndexer(
     {
       tags: { tag: options.tag },
-      indexerService: options.indexerService ?? mockObject<IndexerService>(),
+      indexerService:
+        options.indexerService ?? ({} as unknown as IndexerService),
       minHeight: 0,
       parents: [],
-      db: mockObject<Database>({
+      db: {
         liveness:
-          options.livenessRepository ?? mockObject<Database['liveness']>(),
+          options.livenessRepository ?? ({} as unknown as Database['liveness']),
         anomalies:
           options.anomaliesRepository ??
-          mockObject<Database['anomalies']>({
+          ({
             upsertMany: vi.fn().mockResolvedValue(1),
-          }),
+          } as unknown as Database['anomalies']),
         anomalyStats:
           options.anomalyStatsRepository ??
-          mockObject<Database['anomalyStats']>(),
+          ({} as unknown as Database['anomalyStats']),
         transaction: options.transaction ?? (async (fun) => await fun()),
-      }),
+      } as unknown as Database,
       projects: MOCK_PROJECTS,
     },
     Logger.SILENT,

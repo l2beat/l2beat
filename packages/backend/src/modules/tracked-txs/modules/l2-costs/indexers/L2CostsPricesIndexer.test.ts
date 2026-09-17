@@ -2,7 +2,6 @@ import { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
 import { CoingeckoQueryService } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 import type { IndexerService } from '../../../../../tools/uif/IndexerService'
 import {
@@ -19,14 +18,14 @@ describe(L2CostsPricesIndexer.name, () => {
       const from = NOW - 1 * UnixTime.HOUR
       const to = NOW
 
-      const repository = mockObject<Database['l2CostPrice']>({
+      const repository = {
         insertMany: vi.fn().mockResolvedValue(1),
-      })
+      } as unknown as Database['l2CostPrice']
 
       const indexer = createIndexer({
-        db: mockObject<Database>({
+        db: {
           l2CostPrice: repository,
-        }),
+        } as unknown as Database,
       })
 
       const prices = [{ timestamp: from, priceUsd: 3000 }]
@@ -46,15 +45,15 @@ describe(L2CostsPricesIndexer.name, () => {
       const from = NOW - 1 * UnixTime.HOUR
       const to = NOW
 
-      const repository = mockObject<Database['l2CostPrice']>({
+      const repository = {
         insertMany: vi.fn().mockResolvedValue(0),
-      })
+      } as unknown as Database['l2CostPrice']
 
       const indexer = createIndexer({
         tags: { tag: 'update-nothing-to-save' },
-        db: mockObject<Database>({
+        db: {
           l2CostPrice: repository,
-        }),
+        } as unknown as Database,
       })
 
       const fetchPricesMock = vi.fn().mockResolvedValue([])
@@ -78,15 +77,15 @@ describe(L2CostsPricesIndexer.name, () => {
       const shiftedTo =
         from + CoingeckoQueryService.MAX_DAYS_FOR_ONE_CALL * UnixTime.DAY
 
-      const repository = mockObject<Database['l2CostPrice']>({
+      const repository = {
         insertMany: vi.fn().mockResolvedValue(1),
-      })
+      } as unknown as Database['l2CostPrice']
 
       const indexer = createIndexer({
         tags: { tag: 'update-max-range' },
-        db: mockObject<Database>({
+        db: {
           l2CostPrice: repository,
-        }),
+        } as unknown as Database,
       })
 
       const prices = [{ timestamp: from, priceUsd: 3000 }]
@@ -107,9 +106,9 @@ describe(L2CostsPricesIndexer.name, () => {
       const to = NOW
 
       const prices = [{ timestamp: from, value: 3000 }]
-      const coingeckoQueryServiceMock = mockObject<CoingeckoQueryService>({
+      const coingeckoQueryServiceMock = {
         getUsdPriceHistoryHourly: vi.fn().mockResolvedValue(prices),
-      })
+      } as unknown as CoingeckoQueryService
 
       const indexer = createIndexer({
         tags: { tag: 'fetchPrices' },
@@ -133,15 +132,15 @@ describe(L2CostsPricesIndexer.name, () => {
 
   describe(L2CostsPricesIndexer.prototype.invalidate.name, () => {
     it('deletes records', async () => {
-      const repository = mockObject<Database['l2CostPrice']>({
+      const repository = {
         deleteAfter: vi.fn().mockResolvedValue(NOW),
-      })
+      } as unknown as Database['l2CostPrice']
 
       const indexer = createIndexer({
         tags: { tag: 'invalidate' },
-        db: mockObject<Database>({
+        db: {
           l2CostPrice: repository,
-        }),
+        } as unknown as Database,
       })
 
       const result = await indexer.invalidate(NOW)
@@ -156,17 +155,17 @@ describe(L2CostsPricesIndexer.name, () => {
 function createIndexer(deps?: Partial<L2CostsPricesIndexerDeps>) {
   return new L2CostsPricesIndexer(
     {
-      indexerService: mockObject<IndexerService>(),
+      indexerService: {} as unknown as IndexerService,
       minHeight: 0,
       parents: [],
-      db: mockObject<Database>({
-        l2CostPrice: mockObject<Database['l2CostPrice']>({
+      db: {
+        l2CostPrice: {
           insertMany: vi.fn().mockResolvedValue(1),
-        }),
-      }),
-      coingeckoQueryService: mockObject<CoingeckoQueryService>({
+        } as unknown as Database['l2CostPrice'],
+      } as unknown as Database,
+      coingeckoQueryService: {
         getUsdPriceHistoryHourly: vi.fn().mockResolvedValue([]),
-      }),
+      } as unknown as CoingeckoQueryService,
       ...deps,
     },
     Logger.SILENT,

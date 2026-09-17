@@ -1,5 +1,4 @@
-import { mockObject } from '@l2beat/test-utils'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import type { InteropNotifier } from '../notifications/InteropNotifier'
 import { defineConfig, InteropConfigStore } from './InteropConfigStore'
 import { InteropMonitoringConfigStoreProxy } from './InteropMonitoringConfigStoreProxy'
@@ -8,9 +7,9 @@ const ExampleConfig = defineConfig<{ foo: number }>('example')
 
 describe(InteropMonitoringConfigStoreProxy.name, () => {
   it('stores value and forwards previous/current values to notifier', async () => {
-    const notifier = mockObject<InteropNotifier>({
-      handleConfigChange: () => {},
-    })
+    const notifier = {
+      handleConfigChange: vi.fn(() => {}),
+    } as unknown as InteropNotifier
     const proxy = new InteropMonitoringConfigStoreProxy(
       new InteropConfigStore(undefined),
       notifier,
@@ -28,9 +27,9 @@ describe(InteropMonitoringConfigStoreProxy.name, () => {
   })
 
   it('passes the old value when updating an existing entry', async () => {
-    const notifier = mockObject<InteropNotifier>({
-      handleConfigChange: () => {},
-    })
+    const notifier = {
+      handleConfigChange: vi.fn(() => {}),
+    } as unknown as InteropNotifier
     const proxy = new InteropMonitoringConfigStoreProxy(
       new InteropConfigStore(undefined),
       notifier,

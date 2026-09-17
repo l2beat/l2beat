@@ -1,12 +1,11 @@
 import type { AmountFormula, TvsToken } from '@l2beat/config'
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it } from 'vitest'
 import { getEffectiveConfig } from './getEffectiveConfig'
 
 describe(getEffectiveConfig.name, () => {
   it('should set sinceTimestamp for all amounts', async () => {
     const tokens: TvsToken[] = [
-      mockObject<TvsToken>({
+      {
         amount: mockAmountFormula(0),
         valueForProject: {
           type: 'calculation',
@@ -40,12 +39,12 @@ describe(getEffectiveConfig.name, () => {
             },
           ],
         },
-      }),
-      mockObject<TvsToken>({
+      } as unknown as TvsToken,
+      {
         amount: mockAmountFormula(30),
         valueForProject: undefined,
         valueForSummary: undefined,
-      }),
+      } as unknown as TvsToken,
     ]
 
     const result = getEffectiveConfig(tokens, 10)
@@ -122,17 +121,17 @@ describe(getEffectiveConfig.name, () => {
 
   it('should remove tokens - amount not in range', async () => {
     const tokens: TvsToken[] = [
-      mockObject<TvsToken>({
+      {
         amount: mockAmountFormula(0),
         valueForProject: undefined,
         valueForSummary: undefined,
-      }),
+      } as unknown as TvsToken,
       // amount formula not in range
-      mockObject<TvsToken>({
+      {
         amount: mockAmountFormula(0, 5),
         valueForProject: undefined,
         valueForSummary: undefined,
-      }),
+      } as unknown as TvsToken,
     ]
 
     const result = getEffectiveConfig(tokens, 10)
@@ -155,7 +154,7 @@ describe(getEffectiveConfig.name, () => {
   it('should remove tokens - calculation formula with argument(s) not in range', async () => {
     const tokens: TvsToken[] = [
       // calculation formula with one argument not in range - one argument should be filtered out
-      mockObject<TvsToken>({
+      {
         amount: {
           type: 'calculation',
           operator: 'sum',
@@ -163,9 +162,9 @@ describe(getEffectiveConfig.name, () => {
         },
         valueForProject: undefined,
         valueForSummary: undefined,
-      }),
+      } as unknown as TvsToken,
       // calculation formula with all arguments not in range - entire token should be filtered out
-      mockObject<TvsToken>({
+      {
         amount: {
           type: 'calculation',
           operator: 'sum',
@@ -173,9 +172,9 @@ describe(getEffectiveConfig.name, () => {
         },
         valueForProject: undefined,
         valueForSummary: undefined,
-      }),
+      } as unknown as TvsToken,
       // calculation formula (diff) with one argument not in range - entire token should be filtered out
-      mockObject<TvsToken>({
+      {
         amount: {
           type: 'calculation',
           operator: 'diff',
@@ -183,7 +182,7 @@ describe(getEffectiveConfig.name, () => {
         },
         valueForProject: undefined,
         valueForSummary: undefined,
-      }),
+      } as unknown as TvsToken,
     ]
 
     const result = getEffectiveConfig(tokens, 10)
@@ -214,9 +213,9 @@ function mockAmountFormula(
   sinceTimestamp: number,
   untilTimestamp: number | undefined = undefined,
 ): AmountFormula {
-  return mockObject<AmountFormula>({
+  return {
     type: 'balanceOfEscrow',
     sinceTimestamp,
     untilTimestamp,
-  })
+  } as unknown as AmountFormula
 }

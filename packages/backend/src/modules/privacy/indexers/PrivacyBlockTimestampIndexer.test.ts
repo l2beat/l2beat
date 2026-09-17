@@ -2,7 +2,6 @@ import { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
 import type { BlockTimestampProvider } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { mockDatabase } from '../../../test/database'
 import type { IndexerService } from '../../../tools/uif/IndexerService'
@@ -17,15 +16,13 @@ describe(PrivacyBlockTimestampIndexer.name, () => {
       const from = UnixTime.toStartOf(UnixTime.now(), 'hour')
       const to = from + 5 * UnixTime.HOUR
 
-      const blockTimestampProvider = mockObject<BlockTimestampProvider>({
+      const blockTimestampProvider = {
         getBlockNumberAtOrBefore: vi.fn().mockReturnValueOnce(666),
-      })
+      } as unknown as BlockTimestampProvider
 
-      const privacyBlockTimestampRepository = mockObject<
-        Database['privacyBlockTimestamp']
-      >({
+      const privacyBlockTimestampRepository = {
         upsertMany: vi.fn().mockReturnValueOnce(undefined),
-      })
+      } as unknown as Database['privacyBlockTimestamp']
 
       const indexer = new PrivacyBlockTimestampIndexer(
         {
@@ -35,7 +32,7 @@ describe(PrivacyBlockTimestampIndexer.name, () => {
             privacyBlockTimestamp: privacyBlockTimestampRepository,
           }),
           parents: [],
-          indexerService: mockObject<IndexerService>({}),
+          indexerService: {} as unknown as IndexerService,
         },
         Logger.SILENT,
       )
@@ -69,15 +66,13 @@ describe(PrivacyBlockTimestampIndexer.name, () => {
       const to = hourStart + 5 * UnixTime.HOUR
       const expectedTimestamp = hourStart + UnixTime.HOUR
 
-      const blockTimestampProvider = mockObject<BlockTimestampProvider>({
+      const blockTimestampProvider = {
         getBlockNumberAtOrBefore: vi.fn().mockReturnValueOnce(777),
-      })
+      } as unknown as BlockTimestampProvider
 
-      const privacyBlockTimestampRepository = mockObject<
-        Database['privacyBlockTimestamp']
-      >({
+      const privacyBlockTimestampRepository = {
         upsertMany: vi.fn().mockReturnValueOnce(undefined),
-      })
+      } as unknown as Database['privacyBlockTimestamp']
 
       const indexer = new PrivacyBlockTimestampIndexer(
         {
@@ -87,7 +82,7 @@ describe(PrivacyBlockTimestampIndexer.name, () => {
             privacyBlockTimestamp: privacyBlockTimestampRepository,
           }),
           parents: [],
-          indexerService: mockObject<IndexerService>({}),
+          indexerService: {} as unknown as IndexerService,
         },
         Logger.SILENT,
       )
@@ -109,15 +104,18 @@ describe(PrivacyBlockTimestampIndexer.name, () => {
       const from = hourStart + 120
       const to = hourStart + 30 * 60 // before the next hour boundary
 
-      const blockTimestampProvider = mockObject<BlockTimestampProvider>({})
+      const blockTimestampProvider = {} as unknown as BlockTimestampProvider
 
       const indexer = new PrivacyBlockTimestampIndexer(
         {
           configurations: [config('config-1', 'ethereum')],
           blockTimestampProvider,
-          db: mockDatabase({ privacyBlockTimestamp: mockObject() }),
+          db: mockDatabase({
+            privacyBlockTimestamp:
+              {} as unknown as Database['privacyBlockTimestamp'],
+          }),
           parents: [],
-          indexerService: mockObject<IndexerService>({}),
+          indexerService: {} as unknown as IndexerService,
         },
         Logger.SILENT,
       )
@@ -134,26 +132,24 @@ describe(PrivacyBlockTimestampIndexer.name, () => {
       const from = UnixTime.toStartOf(UnixTime.now(), 'hour')
       const to = from + 5 * UnixTime.HOUR
 
-      const blockTimestampProvider = mockObject<BlockTimestampProvider>({
+      const blockTimestampProvider = {
         getBlockNumberAtOrBefore: vi
           .fn()
           .mockReturnValueOnce(123)
           .mockReturnValueOnce(122),
-      })
+      } as unknown as BlockTimestampProvider
 
       const indexer = new PrivacyBlockTimestampIndexer(
         {
           configurations: [config('config-1', 'ethereum')],
           blockTimestampProvider,
           db: mockDatabase({
-            privacyBlockTimestamp: mockObject<
-              Database['privacyBlockTimestamp']
-            >({
+            privacyBlockTimestamp: {
               upsertMany: vi.fn().mockReturnValue(undefined),
-            }),
+            } as unknown as Database['privacyBlockTimestamp'],
           }),
           parents: [],
-          indexerService: mockObject<IndexerService>({}),
+          indexerService: {} as unknown as IndexerService,
         },
         Logger.SILENT,
       )
@@ -172,24 +168,22 @@ describe(PrivacyBlockTimestampIndexer.name, () => {
 
   describe(PrivacyBlockTimestampIndexer.prototype.trimData.name, () => {
     it('deletes records for configurations in time range', async () => {
-      const privacyBlockTimestampRepository = mockObject<
-        Database['privacyBlockTimestamp']
-      >({
+      const privacyBlockTimestampRepository = {
         deleteByConfigInTimeRange: vi
           .fn()
           .mockReturnValueOnce(3)
           .mockReturnValueOnce(2),
-      })
+      } as unknown as Database['privacyBlockTimestamp']
 
       const indexer = new PrivacyBlockTimestampIndexer(
         {
           configurations: [config('config-1', 'ethereum')],
-          blockTimestampProvider: mockObject<BlockTimestampProvider>({}),
+          blockTimestampProvider: {} as unknown as BlockTimestampProvider,
           db: mockDatabase({
             privacyBlockTimestamp: privacyBlockTimestampRepository,
           }),
           parents: [],
-          indexerService: mockObject<IndexerService>({}),
+          indexerService: {} as unknown as IndexerService,
         },
         Logger.SILENT,
       )
@@ -223,20 +217,18 @@ describe(PrivacyBlockTimestampIndexer.name, () => {
 
   describe(PrivacyBlockTimestampIndexer.prototype.wipeData.name, () => {
     it('deletes all records for the given configurations', async () => {
-      const privacyBlockTimestampRepository = mockObject<
-        Database['privacyBlockTimestamp']
-      >({
+      const privacyBlockTimestampRepository = {
         deleteByConfigIds: vi.fn().mockReturnValue(3),
-      })
+      } as unknown as Database['privacyBlockTimestamp']
       const indexer = new PrivacyBlockTimestampIndexer(
         {
           configurations: [config('config-1', 'ethereum')],
-          blockTimestampProvider: mockObject<BlockTimestampProvider>({}),
+          blockTimestampProvider: {} as unknown as BlockTimestampProvider,
           db: mockDatabase({
             privacyBlockTimestamp: privacyBlockTimestampRepository,
           }),
           parents: [],
-          indexerService: mockObject<IndexerService>({}),
+          indexerService: {} as unknown as IndexerService,
         },
         Logger.SILENT,
       )
@@ -258,10 +250,10 @@ describe(PrivacyBlockTimestampIndexer.name, () => {
               config('config-1', 'ethereum'),
               config('config-2', 'ethereum'),
             ],
-            blockTimestampProvider: mockObject<BlockTimestampProvider>({}),
+            blockTimestampProvider: {} as unknown as BlockTimestampProvider,
             db: mockDatabase(),
             parents: [],
-            indexerService: mockObject<IndexerService>({}),
+            indexerService: {} as unknown as IndexerService,
           },
           Logger.SILENT,
         ),

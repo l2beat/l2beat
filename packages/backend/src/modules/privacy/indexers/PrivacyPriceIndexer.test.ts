@@ -2,7 +2,6 @@ import { Logger } from '@l2beat/backend-tools'
 import type { Database, PrivacyPriceRecord } from '@l2beat/database'
 import type { PriceProvider } from '@l2beat/shared'
 import { CoingeckoId, UnixTime } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { mockDatabase } from '../../../test/database'
 import type { IndexerService } from '../../../tools/uif/IndexerService'
@@ -23,17 +22,17 @@ describe(PrivacyPriceIndexer.name, () => {
         config('config-2', 'bitcoin'),
       ]
 
-      const priceProvider = mockObject<PriceProvider>({
+      const priceProvider = {
         getAdjustedTo: vi.fn().mockReturnValueOnce(adjustedTo),
         getUsdPriceHistoryHourly: vi
           .fn()
           .mockReturnValueOnce([{ timestamp: UnixTime(150), value: 1500 }])
           .mockReturnValueOnce([{ timestamp: UnixTime(200), value: 2000 }]),
-      })
+      } as unknown as PriceProvider
 
-      const privacyPriceRepository = mockObject<Database['privacyPrice']>({
+      const privacyPriceRepository = {
         upsertMany: vi.fn().mockReturnValueOnce(undefined),
-      })
+      } as unknown as Database['privacyPrice']
 
       const indexer = new PrivacyPriceIndexer(
         {
@@ -41,7 +40,7 @@ describe(PrivacyPriceIndexer.name, () => {
           priceProvider,
           db: mockDatabase({ privacyPrice: privacyPriceRepository }),
           parents: [],
-          indexerService: mockObject<IndexerService>({}),
+          indexerService: {} as unknown as IndexerService,
         },
         Logger.SILENT,
       )
@@ -97,16 +96,16 @@ describe(PrivacyPriceIndexer.name, () => {
         config('config-2', 'ethereum'),
       ]
 
-      const priceProvider = mockObject<PriceProvider>({
+      const priceProvider = {
         getAdjustedTo: vi.fn().mockReturnValueOnce(adjustedTo),
         getUsdPriceHistoryHourly: vi
           .fn()
           .mockReturnValueOnce([{ timestamp: UnixTime(150), value: 1500 }]),
-      })
+      } as unknown as PriceProvider
 
-      const privacyPriceRepository = mockObject<Database['privacyPrice']>({
+      const privacyPriceRepository = {
         upsertMany: vi.fn().mockReturnValueOnce(undefined),
-      })
+      } as unknown as Database['privacyPrice']
 
       const indexer = new PrivacyPriceIndexer(
         {
@@ -114,7 +113,7 @@ describe(PrivacyPriceIndexer.name, () => {
           priceProvider,
           db: mockDatabase({ privacyPrice: privacyPriceRepository }),
           parents: [],
-          indexerService: mockObject<IndexerService>({}),
+          indexerService: {} as unknown as IndexerService,
         },
         Logger.SILENT,
       )
@@ -146,16 +145,16 @@ describe(PrivacyPriceIndexer.name, () => {
       const to = 300
       const adjustedTo = 250
 
-      const priceProvider = mockObject<PriceProvider>({
+      const priceProvider = {
         getAdjustedTo: vi.fn().mockReturnValueOnce(adjustedTo),
         getUsdPriceHistoryHourly: vi.fn().mockImplementationOnce(() => {
           throw new Error('Insufficient data in response for ethereum')
         }),
-      })
+      } as unknown as PriceProvider
 
-      const privacyPriceRepository = mockObject<Database['privacyPrice']>({
+      const privacyPriceRepository = {
         upsertMany: vi.fn().mockReturnValueOnce(undefined),
-      })
+      } as unknown as Database['privacyPrice']
 
       const indexer = new PrivacyPriceIndexer(
         {
@@ -163,7 +162,7 @@ describe(PrivacyPriceIndexer.name, () => {
           priceProvider,
           db: mockDatabase({ privacyPrice: privacyPriceRepository }),
           parents: [],
-          indexerService: mockObject<IndexerService>({}),
+          indexerService: {} as unknown as IndexerService,
         },
         Logger.SILENT,
       )
@@ -184,20 +183,22 @@ describe(PrivacyPriceIndexer.name, () => {
       const to = 300
       const adjustedTo = 250
 
-      const priceProvider = mockObject<PriceProvider>({
+      const priceProvider = {
         getAdjustedTo: vi.fn().mockReturnValueOnce(adjustedTo),
         getUsdPriceHistoryHourly: vi.fn().mockImplementationOnce(() => {
           throw new Error('Network error')
         }),
-      })
+      } as unknown as PriceProvider
 
       const indexer = new PrivacyPriceIndexer(
         {
           configurations: [config('config-1', 'ethereum')],
           priceProvider,
-          db: mockDatabase({ privacyPrice: mockObject() }),
+          db: mockDatabase({
+            privacyPrice: {} as unknown as Database['privacyPrice'],
+          }),
           parents: [],
-          indexerService: mockObject<IndexerService>({}),
+          indexerService: {} as unknown as IndexerService,
         },
         Logger.SILENT,
       )
@@ -210,17 +211,17 @@ describe(PrivacyPriceIndexer.name, () => {
 
   describe(PrivacyPriceIndexer.prototype.trimData.name, () => {
     it('deletes records for configurations in time range', async () => {
-      const privacyPriceRepository = mockObject<Database['privacyPrice']>({
+      const privacyPriceRepository = {
         deleteByConfigs: vi.fn().mockReturnValue(5),
-      })
+      } as unknown as Database['privacyPrice']
 
       const indexer = new PrivacyPriceIndexer(
         {
           configurations: [config('config-1', 'ethereum')],
-          priceProvider: mockObject<PriceProvider>({}),
+          priceProvider: {} as unknown as PriceProvider,
           db: mockDatabase({ privacyPrice: privacyPriceRepository }),
           parents: [],
-          indexerService: mockObject<IndexerService>({}),
+          indexerService: {} as unknown as IndexerService,
         },
         Logger.SILENT,
       )
@@ -249,17 +250,17 @@ describe(PrivacyPriceIndexer.name, () => {
     })
 
     it('skips DB call when no configurations are provided', async () => {
-      const privacyPriceRepository = mockObject<Database['privacyPrice']>({
+      const privacyPriceRepository = {
         deleteByConfigs: vi.fn(),
-      })
+      } as unknown as Database['privacyPrice']
 
       const indexer = new PrivacyPriceIndexer(
         {
           configurations: [config('config-1', 'ethereum')],
-          priceProvider: mockObject<PriceProvider>({}),
+          priceProvider: {} as unknown as PriceProvider,
           db: mockDatabase({ privacyPrice: privacyPriceRepository }),
           parents: [],
-          indexerService: mockObject<IndexerService>({}),
+          indexerService: {} as unknown as IndexerService,
         },
         Logger.SILENT,
       )
@@ -272,16 +273,16 @@ describe(PrivacyPriceIndexer.name, () => {
 
   describe(PrivacyPriceIndexer.prototype.wipeData.name, () => {
     it('deletes all records for the given configurations', async () => {
-      const privacyPriceRepository = mockObject<Database['privacyPrice']>({
+      const privacyPriceRepository = {
         deleteByConfigIds: vi.fn().mockReturnValue(5),
-      })
+      } as unknown as Database['privacyPrice']
       const indexer = new PrivacyPriceIndexer(
         {
           configurations: [config('config-1', 'ethereum')],
-          priceProvider: mockObject<PriceProvider>({}),
+          priceProvider: {} as unknown as PriceProvider,
           db: mockDatabase({ privacyPrice: privacyPriceRepository }),
           parents: [],
-          indexerService: mockObject<IndexerService>({}),
+          indexerService: {} as unknown as IndexerService,
         },
         Logger.SILENT,
       )

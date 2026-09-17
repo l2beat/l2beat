@@ -12,7 +12,7 @@ describe(WsBlockNumberIndexer.prototype.start.name, () => {
       'source',
       Logger.SILENT,
       () => {
-        return mockWebSocket.mockObject
+        return mockWebSocket.mock
       },
     )
     await indexer.start()
@@ -20,7 +20,7 @@ describe(WsBlockNumberIndexer.prototype.start.name, () => {
     let blockNumber = 123456
 
     mockWebSocket.simulateOpen()
-    expect(mockWebSocket.mockObject.send).toHaveBeenCalledWith(
+    expect(mockWebSocket.mock.send).toHaveBeenCalledWith(
       JSON.stringify({
         id: 1,
         method: 'eth_subscribe',

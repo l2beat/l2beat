@@ -1,6 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
 import { assert } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 import { TimeLoop } from './TimeLoop'
 
@@ -79,10 +78,10 @@ describe(TimeLoop.name, () => {
     it('logs a named error when run throws', async () => {
       const error = new Error('boom')
       const errorFn = vi.fn().mockReturnValue(undefined)
-      const logger = mockObject<Logger>({
+      const logger = {
         error: errorFn,
         debug: vi.fn().mockReturnValue(undefined),
-      })
+      } as unknown as Logger
 
       const timeLoop = new TestTimeLoop(
         vi.fn().mockRejectedValue(error),

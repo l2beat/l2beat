@@ -2,8 +2,7 @@ import { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
 import type { PriceProvider } from '@l2beat/shared'
 import { CoingeckoId, UnixTime } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
-import { beforeEach, describe, expect, it } from 'vitest'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
 import type { IndexerService } from '../../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../../tools/uif/ids'
 import { InteropRecentPricesIndexer } from './InteropRecentPricesIndexer'
@@ -11,23 +10,25 @@ import { InteropRecentPricesIndexer } from './InteropRecentPricesIndexer'
 describe(InteropRecentPricesIndexer.name, () => {
   describe(InteropRecentPricesIndexer.prototype.update.name, () => {
     it('updates successfully when full hour is in range', async () => {
-      const repository = mockObject<Database['interopRecentPrices']>({
-        insertMany: async () => 0,
-      })
-      const priceProvider = mockObject<PriceProvider>({
-        getAllCoingeckoIds: async () => [
+      const repository = {
+        insertMany: vi.fn(async () => 0),
+      } as unknown as Database['interopRecentPrices']
+      const priceProvider = {
+        getAllCoingeckoIds: vi.fn(async () => [
           CoingeckoId('bitcoin'),
           CoingeckoId('ethereum'),
           CoingeckoId(
             'very-long-token-name-that-exceeds-64-characters-and-should-be-filtered',
           ),
-        ],
-        getLatestPrices: async () =>
-          new Map([
-            ['bitcoin', 50000],
-            ['ethereum', 3000],
-          ]),
-      })
+        ]),
+        getLatestPrices: vi.fn(
+          async () =>
+            new Map([
+              ['bitcoin', 50000],
+              ['ethereum', 3000],
+            ]),
+        ),
+      } as unknown as PriceProvider
       const indexer = mockIndexer(repository, priceProvider)
 
       const from = UnixTime.fromDate(new Date('2025-10-10T13:01:00Z'))
@@ -56,13 +57,13 @@ describe(InteropRecentPricesIndexer.name, () => {
     })
 
     it('skips update when no full hour in range', async () => {
-      const repository = mockObject<Database['interopRecentPrices']>({
-        insertMany: async () => 0,
-      })
-      const priceProvider = mockObject<PriceProvider>({
-        getAllCoingeckoIds: async () => [],
-        getLatestPrices: async () => new Map(),
-      })
+      const repository = {
+        insertMany: vi.fn(async () => 0),
+      } as unknown as Database['interopRecentPrices']
+      const priceProvider = {
+        getAllCoingeckoIds: vi.fn(async () => []),
+        getLatestPrices: vi.fn(async () => new Map()),
+      } as unknown as PriceProvider
       const indexer = mockIndexer(repository, priceProvider)
 
       const from = UnixTime.fromDate(new Date('2025-10-10T13:01:00Z'))
@@ -124,11 +125,11 @@ function mockIndexer(
 ) {
   return new InteropRecentPricesIndexer(
     {
-      db: mockObject<Database>({ interopRecentPrices: repository }),
-      priceProvider: priceProvider ?? mockObject<PriceProvider>({}),
+      db: { interopRecentPrices: repository } as unknown as Database,
+      priceProvider: priceProvider ?? ({} as unknown as PriceProvider),
       parents: [],
       minHeight: 1,
-      indexerService: mockObject<IndexerService>({}),
+      indexerService: {} as unknown as IndexerService,
     },
     Logger.SILENT,
   )

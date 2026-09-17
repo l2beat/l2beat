@@ -8,7 +8,6 @@ import type {
   InteropTransferRecord,
 } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import type { InteropAggregationConfig } from '../../../../config/features/interop'
 import { mockDatabase } from '../../../../test/database'
@@ -139,44 +138,34 @@ describe(InteropAggregatingIndexer.name, () => {
         },
       ]
 
-      const interopTransfer = mockObject<Database['interopTransfer']>({
+      const interopTransfer = {
         getByRange: vi.fn().mockResolvedValue(transfers),
-      })
+      } as unknown as Database['interopTransfer']
 
-      const aggregatedInteropTransfer = mockObject<
-        Database['aggregatedInteropTransfer']
-      >({
+      const aggregatedInteropTransfer = {
         deleteAllButEarliestPerDayBefore: vi.fn().mockResolvedValue(0),
         deleteByTimestamp: vi.fn().mockResolvedValue(0),
         insertMany: vi.fn().mockResolvedValue(1),
-      })
-      const aggregatedInteropToken = mockObject<
-        Database['aggregatedInteropToken']
-      >({
+      } as unknown as Database['aggregatedInteropTransfer']
+      const aggregatedInteropToken = {
         deleteAllButEarliestPerDayBefore: vi.fn().mockResolvedValue(0),
         deleteByTimestamp: vi.fn().mockResolvedValue(0),
         insertMany: vi.fn().mockResolvedValue(1),
-      })
-      const aggregatedInteropDeployedToken = mockObject<
-        Database['aggregatedInteropDeployedToken']
-      >({
+      } as unknown as Database['aggregatedInteropToken']
+      const aggregatedInteropDeployedToken = {
         deleteAllButEarliestPerDayBefore: vi.fn().mockResolvedValue(0),
         deleteByTimestamp: vi.fn().mockResolvedValue(0),
         insertMany: vi.fn().mockResolvedValue(0),
-      })
-      const aggregatedInteropTokensPair = mockObject<
-        Database['aggregatedInteropTokensPair']
-      >({
+      } as unknown as Database['aggregatedInteropDeployedToken']
+      const aggregatedInteropTokensPair = {
         deleteAllButEarliestPerDayBefore: vi.fn().mockResolvedValue(0),
         deleteByTimestamp: vi.fn().mockResolvedValue(0),
         insertMany: vi.fn().mockResolvedValue(1),
-      })
+      } as unknown as Database['aggregatedInteropTokensPair']
 
-      const interopAggregateStatus = mockObject<
-        Database['interopAggregateStatus']
-      >({
+      const interopAggregateStatus = {
         deleteOrphaned: vi.fn().mockResolvedValue(0),
-      })
+      } as unknown as Database['interopAggregateStatus']
 
       const transaction = vi.fn(async (fn: any) => await fn())
 
@@ -189,11 +178,11 @@ describe(InteropAggregatingIndexer.name, () => {
         aggregatedInteropTokensPair,
         interopAggregateStatus,
       })
-      const syncersManager = mockObject<InteropSyncersManager>({
+      const syncersManager = {
         areSyncersFreshEnough: vi.fn().mockResolvedValue(true),
-      })
+      } as unknown as InteropSyncersManager
 
-      const aggregationService = mockObject<InteropAggregationService>({
+      const aggregationService = {
         aggregate: vi.fn().mockReturnValue({
           aggregatedTransfers,
           aggregatedTokens,
@@ -201,7 +190,7 @@ describe(InteropAggregatingIndexer.name, () => {
           aggregatedTokensPairs,
           warnings: [],
         }),
-      })
+      } as unknown as InteropAggregationService
 
       const indexer = new InteropAggregatingIndexer(
         {
@@ -211,7 +200,7 @@ describe(InteropAggregatingIndexer.name, () => {
           syncersManager,
           parents: [],
           promotionService: mockPromotionService(),
-          indexerService: mockObject<IndexerService>({}),
+          indexerService: {} as unknown as IndexerService,
           minHeight: 0,
         },
         Logger.SILENT,
@@ -266,37 +255,29 @@ describe(InteropAggregatingIndexer.name, () => {
     })
 
     it('reconciles promotion and notifies when the snapshot is blocked', async () => {
-      const interopTransfer = mockObject<Database['interopTransfer']>({
+      const interopTransfer = {
         getByRange: vi.fn().mockResolvedValue([]),
-      })
-      const aggregatedInteropTransfer = mockObject<
-        Database['aggregatedInteropTransfer']
-      >({
+      } as unknown as Database['interopTransfer']
+      const aggregatedInteropTransfer = {
         deleteAllButEarliestPerDayBefore: vi.fn().mockResolvedValue(0),
         deleteByTimestamp: vi.fn().mockResolvedValue(0),
         insertMany: vi.fn().mockResolvedValue(0),
-      })
-      const aggregatedInteropToken = mockObject<
-        Database['aggregatedInteropToken']
-      >({
+      } as unknown as Database['aggregatedInteropTransfer']
+      const aggregatedInteropToken = {
         deleteAllButEarliestPerDayBefore: vi.fn().mockResolvedValue(0),
         deleteByTimestamp: vi.fn().mockResolvedValue(0),
         insertMany: vi.fn().mockResolvedValue(0),
-      })
-      const aggregatedInteropDeployedToken = mockObject<
-        Database['aggregatedInteropDeployedToken']
-      >({
+      } as unknown as Database['aggregatedInteropToken']
+      const aggregatedInteropDeployedToken = {
         deleteAllButEarliestPerDayBefore: vi.fn().mockResolvedValue(0),
         deleteByTimestamp: vi.fn().mockResolvedValue(0),
         insertMany: vi.fn().mockResolvedValue(0),
-      })
-      const aggregatedInteropTokensPair = mockObject<
-        Database['aggregatedInteropTokensPair']
-      >({
+      } as unknown as Database['aggregatedInteropDeployedToken']
+      const aggregatedInteropTokensPair = {
         deleteAllButEarliestPerDayBefore: vi.fn().mockResolvedValue(0),
         deleteByTimestamp: vi.fn().mockResolvedValue(0),
         insertMany: vi.fn().mockResolvedValue(0),
-      })
+      } as unknown as Database['aggregatedInteropTokensPair']
 
       const db = mockDatabase({
         transaction: vi.fn(async (fn: any) => await fn()),
@@ -305,14 +286,14 @@ describe(InteropAggregatingIndexer.name, () => {
         aggregatedInteropToken,
         aggregatedInteropDeployedToken,
         aggregatedInteropTokensPair,
-        interopAggregateStatus: mockObject<Database['interopAggregateStatus']>({
+        interopAggregateStatus: {
           deleteOrphaned: vi.fn().mockResolvedValue(0),
-        }),
+        } as unknown as Database['interopAggregateStatus'],
       })
-      const syncersManager = mockObject<InteropSyncersManager>({
+      const syncersManager = {
         areSyncersFreshEnough: vi.fn().mockResolvedValue(true),
-      })
-      const aggregationService = mockObject<InteropAggregationService>({
+      } as unknown as InteropSyncersManager
+      const aggregationService = {
         aggregate: vi.fn().mockReturnValue({
           aggregatedTransfers: [],
           aggregatedTokens: [],
@@ -320,7 +301,7 @@ describe(InteropAggregatingIndexer.name, () => {
           aggregatedTokensPairs: [],
           warnings: [],
         }),
-      })
+      } as unknown as InteropAggregationService
 
       const reasons = [
         {
@@ -334,9 +315,9 @@ describe(InteropAggregatingIndexer.name, () => {
         reasons,
         notify: true,
       })
-      const notifier = mockObject<InteropNotifier>({
+      const notifier = {
         notifyBlockedSnapshot: vi.fn().mockReturnValue(undefined),
-      })
+      } as unknown as InteropNotifier
 
       const indexer = new InteropAggregatingIndexer(
         {
@@ -347,7 +328,7 @@ describe(InteropAggregatingIndexer.name, () => {
           notifier,
           syncersManager,
           parents: [],
-          indexerService: mockObject<IndexerService>({}),
+          indexerService: {} as unknown as IndexerService,
           minHeight: 0,
         },
         Logger.SILENT,
@@ -374,43 +355,33 @@ describe(InteropAggregatingIndexer.name, () => {
         },
       ]
 
-      const interopTransfer = mockObject<Database['interopTransfer']>({
+      const interopTransfer = {
         getByRange: vi.fn().mockResolvedValue(transfers),
-      })
+      } as unknown as Database['interopTransfer']
 
-      const aggregatedInteropTransfer = mockObject<
-        Database['aggregatedInteropTransfer']
-      >({
+      const aggregatedInteropTransfer = {
         deleteAllButEarliestPerDayBefore: vi.fn().mockResolvedValue(0),
         deleteByTimestamp: vi.fn().mockResolvedValue(0),
         insertMany: vi.fn().mockResolvedValue(0),
-      })
-      const aggregatedInteropToken = mockObject<
-        Database['aggregatedInteropToken']
-      >({
+      } as unknown as Database['aggregatedInteropTransfer']
+      const aggregatedInteropToken = {
         deleteAllButEarliestPerDayBefore: vi.fn().mockResolvedValue(0),
         deleteByTimestamp: vi.fn().mockResolvedValue(0),
         insertMany: vi.fn().mockResolvedValue(0),
-      })
-      const aggregatedInteropDeployedToken = mockObject<
-        Database['aggregatedInteropDeployedToken']
-      >({
+      } as unknown as Database['aggregatedInteropToken']
+      const aggregatedInteropDeployedToken = {
         deleteAllButEarliestPerDayBefore: vi.fn().mockResolvedValue(0),
         deleteByTimestamp: vi.fn().mockResolvedValue(0),
         insertMany: vi.fn().mockResolvedValue(0),
-      })
-      const aggregatedInteropTokensPair = mockObject<
-        Database['aggregatedInteropTokensPair']
-      >({
+      } as unknown as Database['aggregatedInteropDeployedToken']
+      const aggregatedInteropTokensPair = {
         deleteAllButEarliestPerDayBefore: vi.fn().mockResolvedValue(0),
         deleteByTimestamp: vi.fn().mockResolvedValue(0),
         insertMany: vi.fn().mockResolvedValue(0),
-      })
-      const interopAggregateStatus = mockObject<
-        Database['interopAggregateStatus']
-      >({
+      } as unknown as Database['aggregatedInteropTokensPair']
+      const interopAggregateStatus = {
         deleteOrphaned: vi.fn().mockResolvedValue(0),
-      })
+      } as unknown as Database['interopAggregateStatus']
 
       const transaction = vi.fn(async (fn: any) => await fn())
 
@@ -423,11 +394,11 @@ describe(InteropAggregatingIndexer.name, () => {
         aggregatedInteropTokensPair,
         interopAggregateStatus,
       })
-      const syncersManager = mockObject<InteropSyncersManager>({
+      const syncersManager = {
         areSyncersFreshEnough: vi.fn().mockResolvedValue(true),
-      })
+      } as unknown as InteropSyncersManager
 
-      const aggregationService = mockObject<InteropAggregationService>({
+      const aggregationService = {
         aggregate: vi.fn().mockReturnValue({
           aggregatedTransfers: [],
           aggregatedTokens: [],
@@ -435,7 +406,7 @@ describe(InteropAggregatingIndexer.name, () => {
           aggregatedTokensPairs: [],
           warnings: [],
         }),
-      })
+      } as unknown as InteropAggregationService
 
       const indexer = new InteropAggregatingIndexer(
         {
@@ -445,7 +416,7 @@ describe(InteropAggregatingIndexer.name, () => {
           syncersManager,
           parents: [],
           promotionService: mockPromotionService(),
-          indexerService: mockObject<IndexerService>({}),
+          indexerService: {} as unknown as IndexerService,
           minHeight: 0,
         },
         Logger.SILENT,
@@ -466,30 +437,24 @@ describe(InteropAggregatingIndexer.name, () => {
     })
 
     it('skips aggregation when syncers captured data is not fresh enough', async () => {
-      const interopTransfer = mockObject<Database['interopTransfer']>({
+      const interopTransfer = {
         getByRange: vi.fn().mockResolvedValue([]),
-      })
-      const aggregatedInteropTransfer = mockObject<
-        Database['aggregatedInteropTransfer']
-      >({
+      } as unknown as Database['interopTransfer']
+      const aggregatedInteropTransfer = {
         deleteAllButEarliestPerDayBefore: vi.fn().mockResolvedValue(0),
         deleteByTimestamp: vi.fn().mockResolvedValue(0),
         insertMany: vi.fn().mockResolvedValue(0),
-      })
-      const aggregatedInteropToken = mockObject<
-        Database['aggregatedInteropToken']
-      >({
+      } as unknown as Database['aggregatedInteropTransfer']
+      const aggregatedInteropToken = {
         deleteAllButEarliestPerDayBefore: vi.fn().mockResolvedValue(0),
         deleteByTimestamp: vi.fn().mockResolvedValue(0),
         insertMany: vi.fn().mockResolvedValue(0),
-      })
-      const aggregatedInteropDeployedToken = mockObject<
-        Database['aggregatedInteropDeployedToken']
-      >({
+      } as unknown as Database['aggregatedInteropToken']
+      const aggregatedInteropDeployedToken = {
         deleteAllButEarliestPerDayBefore: vi.fn().mockResolvedValue(0),
         deleteByTimestamp: vi.fn().mockResolvedValue(0),
         insertMany: vi.fn().mockResolvedValue(0),
-      })
+      } as unknown as Database['aggregatedInteropDeployedToken']
       const transaction = vi.fn(async (fn: any) => await fn())
       const db = mockDatabase({
         transaction,
@@ -498,11 +463,11 @@ describe(InteropAggregatingIndexer.name, () => {
         aggregatedInteropToken,
         aggregatedInteropDeployedToken,
       })
-      const syncersManager = mockObject<InteropSyncersManager>({
+      const syncersManager = {
         areSyncersFreshEnough: vi.fn().mockResolvedValue(false),
-      })
+      } as unknown as InteropSyncersManager
 
-      const aggregationService = mockObject<InteropAggregationService>({
+      const aggregationService = {
         aggregate: vi.fn().mockReturnValue({
           aggregatedTransfers: [],
           aggregatedTokens: [],
@@ -510,7 +475,7 @@ describe(InteropAggregatingIndexer.name, () => {
           aggregatedTokensPairs: [],
           warnings: [],
         }),
-      })
+      } as unknown as InteropAggregationService
 
       const indexer = new InteropAggregatingIndexer(
         {
@@ -520,7 +485,7 @@ describe(InteropAggregatingIndexer.name, () => {
           syncersManager,
           parents: [],
           promotionService: mockPromotionService(),
-          indexerService: mockObject<IndexerService>({}),
+          indexerService: {} as unknown as IndexerService,
           minHeight: 0,
         },
         Logger.SILENT,
@@ -540,42 +505,32 @@ describe(InteropAggregatingIndexer.name, () => {
       const nextFrom = nextTo - UnixTime.DAY
       const transfers: InteropTransferRecord[] = []
 
-      const interopTransfer = mockObject<Database['interopTransfer']>({
+      const interopTransfer = {
         getByRange: vi.fn().mockResolvedValue(transfers),
-      })
-      const aggregatedInteropTransfer = mockObject<
-        Database['aggregatedInteropTransfer']
-      >({
+      } as unknown as Database['interopTransfer']
+      const aggregatedInteropTransfer = {
         deleteAllButEarliestPerDayBefore: vi.fn().mockResolvedValue(0),
         deleteByTimestamp: vi.fn().mockResolvedValue(0),
         insertMany: vi.fn().mockResolvedValue(0),
-      })
-      const aggregatedInteropToken = mockObject<
-        Database['aggregatedInteropToken']
-      >({
+      } as unknown as Database['aggregatedInteropTransfer']
+      const aggregatedInteropToken = {
         deleteAllButEarliestPerDayBefore: vi.fn().mockResolvedValue(0),
         deleteByTimestamp: vi.fn().mockResolvedValue(0),
         insertMany: vi.fn().mockResolvedValue(0),
-      })
-      const aggregatedInteropDeployedToken = mockObject<
-        Database['aggregatedInteropDeployedToken']
-      >({
+      } as unknown as Database['aggregatedInteropToken']
+      const aggregatedInteropDeployedToken = {
         deleteAllButEarliestPerDayBefore: vi.fn().mockResolvedValue(0),
         deleteByTimestamp: vi.fn().mockResolvedValue(0),
         insertMany: vi.fn().mockResolvedValue(0),
-      })
-      const aggregatedInteropTokensPair = mockObject<
-        Database['aggregatedInteropTokensPair']
-      >({
+      } as unknown as Database['aggregatedInteropDeployedToken']
+      const aggregatedInteropTokensPair = {
         deleteAllButEarliestPerDayBefore: vi.fn().mockResolvedValue(0),
         deleteByTimestamp: vi.fn().mockResolvedValue(0),
         insertMany: vi.fn().mockResolvedValue(0),
-      })
-      const interopAggregateStatus = mockObject<
-        Database['interopAggregateStatus']
-      >({
+      } as unknown as Database['aggregatedInteropTokensPair']
+      const interopAggregateStatus = {
         deleteOrphaned: vi.fn().mockResolvedValue(0),
-      })
+      } as unknown as Database['interopAggregateStatus']
 
       const transaction = vi.fn(async (fn: any) => await fn())
       const db = mockDatabase({
@@ -587,14 +542,14 @@ describe(InteropAggregatingIndexer.name, () => {
         aggregatedInteropTokensPair,
         interopAggregateStatus,
       })
-      const syncersManager = mockObject<InteropSyncersManager>({
+      const syncersManager = {
         areSyncersFreshEnough: vi
           .fn()
           .mockResolvedValueOnce(false)
           .mockResolvedValue(true),
-      })
+      } as unknown as InteropSyncersManager
 
-      const aggregationService = mockObject<InteropAggregationService>({
+      const aggregationService = {
         aggregate: vi.fn().mockReturnValue({
           aggregatedTransfers: [],
           aggregatedTokens: [],
@@ -602,7 +557,7 @@ describe(InteropAggregatingIndexer.name, () => {
           aggregatedTokensPairs: [],
           warnings: [],
         }),
-      })
+      } as unknown as InteropAggregationService
 
       const indexer = new InteropAggregatingIndexer(
         {
@@ -612,7 +567,7 @@ describe(InteropAggregatingIndexer.name, () => {
           syncersManager,
           parents: [],
           promotionService: mockPromotionService(),
-          indexerService: mockObject<IndexerService>({}),
+          indexerService: {} as unknown as IndexerService,
           minHeight: 0,
         },
         Logger.SILENT,
@@ -699,11 +654,11 @@ function createTransfer(
 }
 
 function mockPromotionService(result?: ReconcileResult) {
-  return mockObject<InteropPromotionService>({
+  return {
     reconcile: vi
       .fn()
       .mockResolvedValue(
         result ?? { status: 'promoted', reasons: [], notify: false },
       ),
-  })
+  } as unknown as InteropPromotionService
 }

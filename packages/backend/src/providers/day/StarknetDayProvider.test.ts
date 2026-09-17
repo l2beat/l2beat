@@ -1,13 +1,12 @@
 import type { VoyagerClient } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 import { StarknetDayProvider } from './StarknetDayProvider'
 
 describe(StarknetDayProvider.name, () => {
   describe(StarknetDayProvider.prototype.getDailyTxsCount.name, () => {
     it('fetches and filters daily txs within range (from inclusive, to exclusive)', async () => {
-      const voyagerClient = mockObject<VoyagerClient>({
+      const voyagerClient = {
         getDailyTxs: vi.fn().mockResolvedValue({
           [1 * UnixTime.DAY]: 100,
           [2 * UnixTime.DAY]: 200,
@@ -15,7 +14,7 @@ describe(StarknetDayProvider.name, () => {
           [4 * UnixTime.DAY]: 400,
           [5 * UnixTime.DAY]: 500,
         }),
-      })
+      } as unknown as VoyagerClient
 
       const provider = new StarknetDayProvider(voyagerClient)
       const result = await provider.getDailyTxsCount(2, 5)
@@ -29,12 +28,12 @@ describe(StarknetDayProvider.name, () => {
     })
 
     it('returns empty object when no data in range', async () => {
-      const voyagerClient = mockObject<VoyagerClient>({
+      const voyagerClient = {
         getDailyTxs: vi.fn().mockResolvedValue({
           [1 * UnixTime.DAY]: 100,
           [2 * UnixTime.DAY]: 200,
         }),
-      })
+      } as unknown as VoyagerClient
 
       const provider = new StarknetDayProvider(voyagerClient)
       const result = await provider.getDailyTxsCount(5, 10)
@@ -43,9 +42,9 @@ describe(StarknetDayProvider.name, () => {
     })
 
     it('handles empty response from client', async () => {
-      const voyagerClient = mockObject<VoyagerClient>({
+      const voyagerClient = {
         getDailyTxs: vi.fn().mockResolvedValue({}),
-      })
+      } as unknown as VoyagerClient
 
       const provider = new StarknetDayProvider(voyagerClient)
       const result = await provider.getDailyTxsCount(1, 5)
@@ -56,7 +55,7 @@ describe(StarknetDayProvider.name, () => {
 
   describe(StarknetDayProvider.prototype.getDailyUopsCount.name, () => {
     it('fetches and filters daily uops within range (from inclusive, to exclusive)', async () => {
-      const voyagerClient = mockObject<VoyagerClient>({
+      const voyagerClient = {
         getDailyUops: vi.fn().mockResolvedValue({
           [1 * UnixTime.DAY]: 50,
           [2 * UnixTime.DAY]: 150,
@@ -64,7 +63,7 @@ describe(StarknetDayProvider.name, () => {
           [4 * UnixTime.DAY]: 350,
           [5 * UnixTime.DAY]: 450,
         }),
-      })
+      } as unknown as VoyagerClient
 
       const provider = new StarknetDayProvider(voyagerClient)
       const result = await provider.getDailyUopsCount(2, 5)
@@ -78,12 +77,12 @@ describe(StarknetDayProvider.name, () => {
     })
 
     it('returns empty object when no data in range', async () => {
-      const voyagerClient = mockObject<VoyagerClient>({
+      const voyagerClient = {
         getDailyUops: vi.fn().mockResolvedValue({
           [1 * UnixTime.DAY]: 50,
           [2 * UnixTime.DAY]: 150,
         }),
-      })
+      } as unknown as VoyagerClient
 
       const provider = new StarknetDayProvider(voyagerClient)
       const result = await provider.getDailyUopsCount(5, 10)
@@ -92,9 +91,9 @@ describe(StarknetDayProvider.name, () => {
     })
 
     it('handles empty response from client', async () => {
-      const voyagerClient = mockObject<VoyagerClient>({
+      const voyagerClient = {
         getDailyUops: vi.fn().mockResolvedValue({}),
-      })
+      } as unknown as VoyagerClient
 
       const provider = new StarknetDayProvider(voyagerClient)
       const result = await provider.getDailyUopsCount(1, 5)
@@ -105,12 +104,12 @@ describe(StarknetDayProvider.name, () => {
 
   describe('edge cases', () => {
     it('handles single day range', async () => {
-      const voyagerClient = mockObject<VoyagerClient>({
+      const voyagerClient = {
         getDailyTxs: vi.fn().mockResolvedValue({
           [1 * UnixTime.DAY]: 100,
           [2 * UnixTime.DAY]: 200,
         }),
-      })
+      } as unknown as VoyagerClient
 
       const provider = new StarknetDayProvider(voyagerClient)
       const result = await provider.getDailyTxsCount(1, 1)

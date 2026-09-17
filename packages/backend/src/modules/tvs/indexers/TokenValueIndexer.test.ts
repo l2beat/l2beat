@@ -2,7 +2,6 @@ import { Logger } from '@l2beat/backend-tools'
 import type { TvsToken } from '@l2beat/config'
 import type { Database, TokenValueRecord } from '@l2beat/database'
 import { EthereumAddress, TokenId, UnixTime } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { mockDatabase } from '../../../test/database'
 import type { IndexerService } from '../../../tools/uif/IndexerService'
@@ -26,16 +25,16 @@ describe(TokenValueIndexer.name, () => {
 
       const configs = [config(mockToken1), config(mockToken2)]
 
-      const syncOptimizer = mockObject<SyncOptimizer>({
+      const syncOptimizer = {
         getTimestampsToSync: vi.fn().mockReturnValueOnce(timestamps),
-      })
+      } as unknown as SyncOptimizer
 
-      const dbStorage = mockObject<DBStorage>({
+      const dbStorage = {
         preloadPrices: vi.fn().mockReturnValueOnce(undefined),
         preloadAmounts: vi.fn().mockReturnValueOnce(undefined),
-      })
+      } as unknown as DBStorage
 
-      const valueService = mockObject<ValueService>({
+      const valueService = {
         calculate: vi.fn().mockReturnValueOnce([
           { ...value(timestamps[0], project, 'token-1', 100), priceUsd: 10 },
           { ...value(timestamps[0], project, 'token-2', 200), priceUsd: 20 },
@@ -44,15 +43,15 @@ describe(TokenValueIndexer.name, () => {
           { ...value(timestamps[2], project, 'token-1', 180), priceUsd: 10 },
           { ...value(timestamps[2], project, 'token-2', 280), priceUsd: 20 },
         ]),
-      })
+      } as unknown as ValueService
 
-      const tvsTokenValueRepository = mockObject<Database['tvsTokenValue']>({
+      const tvsTokenValueRepository = {
         upsertMany: vi.fn().mockReturnValueOnce(undefined),
-      })
+      } as unknown as Database['tvsTokenValue']
 
-      const syncMetadataRepository = mockObject<Database['syncMetadata']>({
+      const syncMetadataRepository = {
         updateSyncedUntil: vi.fn().mockReturnValueOnce(undefined),
-      })
+      } as unknown as Database['syncMetadata']
 
       const indexer = new TokenValueIndexer(
         {
@@ -67,7 +66,7 @@ describe(TokenValueIndexer.name, () => {
           project,
           maxTimestampsToProcessAtOnce: 10,
           parents: [],
-          indexerService: mockObject<IndexerService>({}),
+          indexerService: {} as unknown as IndexerService,
         },
         Logger.SILENT,
       )
@@ -123,21 +122,21 @@ describe(TokenValueIndexer.name, () => {
       const mockToken = createMockToken('token-1')
       const configs = [config(mockToken)]
 
-      const syncOptimizer = mockObject<SyncOptimizer>({
+      const syncOptimizer = {
         getTimestampsToSync: vi.fn().mockReturnValueOnce(timestamps),
-      })
+      } as unknown as SyncOptimizer
 
       const indexer = new TokenValueIndexer(
         {
           configurations: configs,
           db: mockDatabase({}),
           syncOptimizer,
-          dbStorage: mockObject<DBStorage>({}),
-          valueService: mockObject<ValueService>({}),
+          dbStorage: {} as unknown as DBStorage,
+          valueService: {} as unknown as ValueService,
           project,
           maxTimestampsToProcessAtOnce: 10,
           parents: [],
-          indexerService: mockObject<IndexerService>({}),
+          indexerService: {} as unknown as IndexerService,
         },
         Logger.SILENT,
       )
@@ -156,9 +155,9 @@ describe(TokenValueIndexer.name, () => {
 
   describe(TokenValueIndexer.prototype.trimData.name, () => {
     it('deletes records for configuration in time range', async () => {
-      const tvsTokenValueRepository = mockObject<Database['tvsTokenValue']>({
+      const tvsTokenValueRepository = {
         deleteByConfigInTimeRange: vi.fn().mockReturnValue(1),
-      })
+      } as unknown as Database['tvsTokenValue']
 
       const mockToken = createMockToken('token-1')
       const configs = [config(mockToken)]
@@ -169,13 +168,13 @@ describe(TokenValueIndexer.name, () => {
           db: mockDatabase({
             tvsTokenValue: tvsTokenValueRepository,
           }),
-          syncOptimizer: mockObject<SyncOptimizer>({}),
-          dbStorage: mockObject<DBStorage>({}),
-          valueService: mockObject<ValueService>({}),
+          syncOptimizer: {} as unknown as SyncOptimizer,
+          dbStorage: {} as unknown as DBStorage,
+          valueService: {} as unknown as ValueService,
           project: 'test-project',
           maxTimestampsToProcessAtOnce: 10,
           parents: [],
-          indexerService: mockObject<IndexerService>({}),
+          indexerService: {} as unknown as IndexerService,
         },
         Logger.SILENT,
       )

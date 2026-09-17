@@ -1,4 +1,3 @@
-import { mockObject } from '@l2beat/test-utils'
 import type {
   Configuration,
   TrimRemovalConfiguration,
@@ -13,7 +12,7 @@ export function actual<T>(
 ): Configuration<T> {
   return {
     id,
-    properties: mockObject<T>({ ...properties }),
+    properties: { ...properties } as unknown as T,
     minHeight,
     maxHeight,
   }

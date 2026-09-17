@@ -1,5 +1,4 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it } from 'vitest'
 import type { Interval } from './calculateIntervals'
 import { calculateStats } from './calculateStats'
@@ -10,24 +9,24 @@ describe(calculateStats.name, () => {
     const NOW = UnixTime.now()
     const MOCK_INTERVALS: Interval[] = [
       {
-        record: mockObject<LivenessRecordWithConfig>({
+        record: {
           subtype: 'batchSubmissions',
           timestamp: NOW - 1 * UnixTime.DAY,
-        }),
+        } as unknown as LivenessRecordWithConfig,
         duration: 10,
       },
       {
-        record: mockObject<LivenessRecordWithConfig>({
+        record: {
           subtype: 'batchSubmissions',
           timestamp: NOW - 10 * UnixTime.DAY,
-        }),
+        } as unknown as LivenessRecordWithConfig,
         duration: 20,
       },
       {
-        record: mockObject<LivenessRecordWithConfig>({
+        record: {
           subtype: 'batchSubmissions',
           timestamp: NOW - 40 * UnixTime.DAY,
-        }),
+        } as unknown as LivenessRecordWithConfig,
         duration: 30,
       },
     ]

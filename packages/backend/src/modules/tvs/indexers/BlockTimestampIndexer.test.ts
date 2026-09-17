@@ -2,7 +2,6 @@ import { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
 import type { BlockTimestampProvider } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { mockDatabase } from '../../../test/database'
 import type { IndexerService } from '../../../tools/uif/IndexerService'
@@ -18,19 +17,17 @@ describe(BlockTimestampIndexer.name, () => {
       const from = 100
       const to = 300
       const timestampToSync = UnixTime(200)
-      const syncOptimizer = mockObject<SyncOptimizer>({
+      const syncOptimizer = {
         getTimestampToSync: vi.fn().mockReturnValueOnce(timestampToSync),
-      })
+      } as unknown as SyncOptimizer
 
-      const blockTimestampProvider = mockObject<BlockTimestampProvider>({
+      const blockTimestampProvider = {
         getBlockNumberAtOrBefore: vi.fn().mockReturnValueOnce(666),
-      })
+      } as unknown as BlockTimestampProvider
 
-      const tvsBlockTimestampRepository = mockObject<
-        Database['tvsBlockTimestamp']
-      >({
+      const tvsBlockTimestampRepository = {
         upsertMany: vi.fn().mockReturnValueOnce(undefined),
-      })
+      } as unknown as Database['tvsBlockTimestamp']
 
       const indexer = new BlockTimestampIndexer(
         {
@@ -39,7 +36,7 @@ describe(BlockTimestampIndexer.name, () => {
           db: mockDatabase({ tvsBlockTimestamp: tvsBlockTimestampRepository }),
           syncOptimizer,
           parents: [],
-          indexerService: mockObject<IndexerService>({}),
+          indexerService: {} as unknown as IndexerService,
         },
         Logger.SILENT,
       )
@@ -75,18 +72,20 @@ describe(BlockTimestampIndexer.name, () => {
       const from = 100
       const to = 300
       const timestampToSync = UnixTime(400) // Greater than 'to'
-      const syncOptimizer = mockObject<SyncOptimizer>({
+      const syncOptimizer = {
         getTimestampToSync: vi.fn().mockReturnValueOnce(timestampToSync),
-      })
+      } as unknown as SyncOptimizer
 
       const indexer = new BlockTimestampIndexer(
         {
           configurations: [config('config-1', 'ethereum')],
-          blockTimestampProvider: mockObject<BlockTimestampProvider>({}),
-          db: mockDatabase({ tvsBlockTimestamp: mockObject() }),
+          blockTimestampProvider: {} as unknown as BlockTimestampProvider,
+          db: mockDatabase({
+            tvsBlockTimestamp: {} as unknown as Database['tvsBlockTimestamp'],
+          }),
           syncOptimizer,
           parents: [],
-          indexerService: mockObject<IndexerService>({}),
+          indexerService: {} as unknown as IndexerService,
         },
         Logger.SILENT,
       )
@@ -106,26 +105,28 @@ describe(BlockTimestampIndexer.name, () => {
       const from = 100
       const to = 300
       const timestampToSync = UnixTime(200)
-      const syncOptimizer = mockObject<SyncOptimizer>({
+      const syncOptimizer = {
         getTimestampToSync: vi.fn().mockReturnValue(timestampToSync),
-      })
+      } as unknown as SyncOptimizer
 
       const BLOCK_NUMBER = 123
-      const blockTimestampProvider = mockObject<BlockTimestampProvider>({
+      const blockTimestampProvider = {
         getBlockNumberAtOrBefore: vi
           .fn()
           .mockReturnValueOnce(BLOCK_NUMBER)
           .mockReturnValueOnce(BLOCK_NUMBER - 1),
-      })
+      } as unknown as BlockTimestampProvider
 
       const indexer = new BlockTimestampIndexer(
         {
           configurations: [config('config-1', 'ethereum')],
           blockTimestampProvider,
-          db: mockDatabase({ tvsBlockTimestamp: mockObject() }),
+          db: mockDatabase({
+            tvsBlockTimestamp: {} as unknown as Database['tvsBlockTimestamp'],
+          }),
           syncOptimizer,
           parents: [],
-          indexerService: mockObject<IndexerService>({}),
+          indexerService: {} as unknown as IndexerService,
         },
         Logger.SILENT,
       )
@@ -140,23 +141,21 @@ describe(BlockTimestampIndexer.name, () => {
 
   describe(BlockTimestampIndexer.prototype.trimData.name, () => {
     it('deletes records for configurations in time range', async () => {
-      const tvsBlockTimestampRepository = mockObject<
-        Database['tvsBlockTimestamp']
-      >({
+      const tvsBlockTimestampRepository = {
         deleteByConfigInTimeRange: vi
           .fn()
           .mockReturnValueOnce(3)
           .mockReturnValueOnce(2),
-      })
+      } as unknown as Database['tvsBlockTimestamp']
 
       const indexer = new BlockTimestampIndexer(
         {
           configurations: [config('config-1', 'ethereum')],
-          blockTimestampProvider: mockObject<BlockTimestampProvider>({}),
+          blockTimestampProvider: {} as unknown as BlockTimestampProvider,
           db: mockDatabase({ tvsBlockTimestamp: tvsBlockTimestampRepository }),
-          syncOptimizer: mockObject<SyncOptimizer>({}),
+          syncOptimizer: {} as unknown as SyncOptimizer,
           parents: [],
-          indexerService: mockObject<IndexerService>({}),
+          indexerService: {} as unknown as IndexerService,
         },
         Logger.SILENT,
       )
@@ -197,8 +196,8 @@ describe(BlockTimestampIndexer.name, () => {
   })
 
   it('throws if more than one configuration is provided', () => {
-    const syncOptimizer = mockObject<SyncOptimizer>({})
-    const blockTimestampProvider = mockObject<BlockTimestampProvider>({})
+    const syncOptimizer = {} as unknown as SyncOptimizer
+    const blockTimestampProvider = {} as unknown as BlockTimestampProvider
 
     expect(
       () =>
@@ -212,7 +211,7 @@ describe(BlockTimestampIndexer.name, () => {
             db: mockDatabase(),
             syncOptimizer,
             parents: [],
-            indexerService: mockObject<IndexerService>({}),
+            indexerService: {} as unknown as IndexerService,
           },
           Logger.SILENT,
         ),

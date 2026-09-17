@@ -1,6 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
-import { mockObject } from '@l2beat/test-utils'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 import { describeDatabase, mockDatabase } from '../../../test/database'
 import { IndexerService } from '../IndexerService'
@@ -18,9 +17,9 @@ const common = {
   name: INDEXER_ID,
   parents: [],
   configurations: [actual('a', 100, null)],
-  indexerService: mockObject<IndexerService>({
-    getSavedConfigurations: async () => [saved('a', 100, null, null)],
-  }),
+  indexerService: {
+    getSavedConfigurations: vi.fn(async () => [saved('a', 100, null, null)]),
+  } as unknown as IndexerService,
   serializeConfiguration: SERIALIZE,
   db: mockDatabase(),
 }
@@ -48,7 +47,7 @@ describe(ManagedMultiIndexer.name, () => {
       new TestIndexer(
         {
           ...common,
-          configurations: [mockObject<Configuration<string>>({ id: 'a' })],
+          configurations: [{ id: 'a' } as unknown as Configuration<string>],
         },
         Logger.SILENT,
       )
@@ -57,7 +56,7 @@ describe(ManagedMultiIndexer.name, () => {
           {
             ...common,
             name: 'other-name',
-            configurations: [mockObject<Configuration<string>>({ id: 'a' })],
+            configurations: [{ id: 'a' } as unknown as Configuration<string>],
           },
           Logger.SILENT,
         )
@@ -67,10 +66,12 @@ describe(ManagedMultiIndexer.name, () => {
 
   describe(ManagedMultiIndexer.prototype.initialize.name, () => {
     it('gets previous state and returns safeHeight based on configurations', async () => {
-      const indexerService = mockObject<IndexerService>({
-        getSavedConfigurations: async () => [saved('a', 100, null, 1000)],
-        insertConfigurations: async () => {},
-      })
+      const indexerService = {
+        getSavedConfigurations: vi.fn(async () => [
+          saved('a', 100, null, 1000),
+        ]),
+        insertConfigurations: vi.fn(async () => {}),
+      } as unknown as IndexerService
 
       const indexer = new TestIndexer(
         {
@@ -99,14 +100,14 @@ describe(ManagedMultiIndexer.name, () => {
 
   describe(ManagedMultiIndexer.prototype.updateSavedConfigurations.name, () => {
     it('adds, updates, deletes and trims', async () => {
-      const indexerService = mockObject<IndexerService>({
-        insertConfigurations: async () => {},
-        upsertConfigurations: async () => {},
-        deleteConfigurations: async () => {},
-      })
-      const db = mockObject<Database>({
-        transaction: async (fun) => await fun(),
-      })
+      const indexerService = {
+        insertConfigurations: vi.fn(async () => {}),
+        upsertConfigurations: vi.fn(async () => {}),
+        deleteConfigurations: vi.fn(async () => {}),
+      } as unknown as IndexerService
+      const db = {
+        transaction: vi.fn(async (fun) => await fun()),
+      } as unknown as Database
       const indexer = new TestIndexer(
         { ...common, indexerService, db },
         Logger.SILENT,
@@ -161,9 +162,11 @@ describe(ManagedMultiIndexer.name, () => {
 
   describe(ManagedMultiIndexer.prototype.update.name, () => {
     it('skips if range is empty, returns correct to', async () => {
-      const indexerService = mockObject<IndexerService>({
-        getSavedConfigurations: async () => [saved('a', 100, null, null)],
-      })
+      const indexerService = {
+        getSavedConfigurations: vi.fn(async () => [
+          saved('a', 100, null, null),
+        ]),
+      } as unknown as IndexerService
 
       const indexer = new TestIndexer(
         {
@@ -183,17 +186,17 @@ describe(ManagedMultiIndexer.name, () => {
     })
 
     it('gets configurations from range, updates and saves the state', async () => {
-      const indexerService = mockObject<IndexerService>({
-        getSavedConfigurations: async () => [
+      const indexerService = {
+        getSavedConfigurations: vi.fn(async () => [
           saved('a', 100, null, 1000),
           saved('b', 100, null, 1000),
-        ],
-        updateConfigurationsCurrentHeight: async () => {},
-      })
+        ]),
+        updateConfigurationsCurrentHeight: vi.fn(async () => {}),
+      } as unknown as IndexerService
 
-      const db = mockObject<Database>({
-        transaction: async (fun) => await fun(),
-      })
+      const db = {
+        transaction: vi.fn(async (fun) => await fun()),
+      } as unknown as Database
 
       const indexer = new TestIndexer(
         {
@@ -247,9 +250,9 @@ describe(ManagedMultiIndexer.name, () => {
     let indexer: ManagedMultiIndexer<string>
 
     beforeEach(async () => {
-      const indexerService = mockObject<IndexerService>({
-        getSavedConfigurations: async () => [saved('a', 100, 200, null)],
-      })
+      const indexerService = {
+        getSavedConfigurations: vi.fn(async () => [saved('a', 100, 200, null)]),
+      } as unknown as IndexerService
       indexer = new TestIndexer(
         {
           ...common,
@@ -311,9 +314,9 @@ describe(ManagedMultiIndexer.name, () => {
     ManagedMultiIndexer.prototype.updateConfigurationsCurrentHeight.name,
     () => {
       it('calls indexer service', async () => {
-        const indexerService = mockObject<IndexerService>({
-          updateConfigurationsCurrentHeight: async () => {},
-        })
+        const indexerService = {
+          updateConfigurationsCurrentHeight: vi.fn(async () => {}),
+        } as unknown as IndexerService
 
         const indexer = new TestIndexer(
           { ...common, indexerService },
@@ -340,9 +343,9 @@ describe(ManagedMultiIndexer.name, () => {
   })
 
   it(ManagedMultiIndexer.prototype.setInitialState.name, async () => {
-    const indexerService = mockObject<IndexerService>({
-      setInitialState: async () => {},
-    })
+    const indexerService = {
+      setInitialState: vi.fn(async () => {}),
+    } as unknown as IndexerService
     const indexer = new TestIndexer(
       { ...common, indexerService },
       Logger.SILENT,
@@ -357,9 +360,9 @@ describe(ManagedMultiIndexer.name, () => {
     )
   })
   it(ManagedMultiIndexer.prototype.setSafeHeight.name, async () => {
-    const indexerService = mockObject<IndexerService>({
-      setSafeHeight: async () => {},
-    })
+    const indexerService = {
+      setSafeHeight: vi.fn(async () => {}),
+    } as unknown as IndexerService
     const indexer = new TestIndexer(
       { ...common, indexerService },
       Logger.SILENT,

@@ -1,6 +1,5 @@
 import type { TrackedTxConfigEntry } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it } from 'vitest'
 import type { SavedConfiguration } from '../../../tools/uif/multi/types'
 import { getSyncedUntil } from './getSyncedUntil'
@@ -20,10 +19,10 @@ describe(getSyncedUntil.name, () => {
 
   it('returns undefined if no lastSyncedTimestamp', () => {
     const result = getSyncedUntil([
-      mockObject<Configuration>({
+      {
         currentHeight: null,
         maxHeight: null,
-      }),
+      } as unknown as Configuration,
     ])
 
     expect(result).toStrictEqual(undefined)
@@ -31,18 +30,18 @@ describe(getSyncedUntil.name, () => {
 
   it('returns earliest lastSyncedTimestamp of configurations without untilTimestamp', () => {
     const result = getSyncedUntil([
-      mockObject<Configuration>({
+      {
         currentHeight: null,
         maxHeight: null,
-      }),
-      mockObject<Configuration>({
+      } as unknown as Configuration,
+      {
         currentHeight: FROM,
         maxHeight: null,
-      }),
-      mockObject<Configuration>({
+      } as unknown as Configuration,
+      {
         currentHeight: FROM + 2 * UnixTime.HOUR,
         maxHeight: null,
-      }),
+      } as unknown as Configuration,
     ])
 
     expect(result).toStrictEqual(FROM)
@@ -50,22 +49,22 @@ describe(getSyncedUntil.name, () => {
 
   it('returns earliest lastSyncedTimestamp of configurations with untilTimestamp', () => {
     const result = getSyncedUntil([
-      mockObject<Configuration>({
+      {
         currentHeight: null,
         maxHeight: null,
-      }),
-      mockObject<Configuration>({
+      } as unknown as Configuration,
+      {
         currentHeight: FROM + 1 * UnixTime.HOUR,
         maxHeight: FROM + 5 * UnixTime.HOUR,
-      }),
-      mockObject<Configuration>({
+      } as unknown as Configuration,
+      {
         currentHeight: FROM + 2 * UnixTime.HOUR,
         maxHeight: FROM + 6 * UnixTime.HOUR,
-      }),
-      mockObject<Configuration>({
+      } as unknown as Configuration,
+      {
         currentHeight: FROM + 4 * UnixTime.HOUR,
         maxHeight: FROM + 6 * UnixTime.HOUR,
-      }),
+      } as unknown as Configuration,
     ])
 
     expect(result).toStrictEqual(FROM + 1 * UnixTime.HOUR)

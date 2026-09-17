@@ -2,7 +2,6 @@ import { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
 import type { DaBeatStatsProvider } from '@l2beat/shared'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { mockDatabase } from '../../test/database'
 import type { IndexerService } from '../../tools/uif/IndexerService'
@@ -22,13 +21,13 @@ describe(DaBeatStatsIndexer.name, () => {
       const from = UnixTime.fromDate(new Date('2023-01-01T10:30:00Z'))
       const to = UnixTime.fromDate(new Date('2023-01-01T10:45:00Z'))
 
-      const statsProvider = mockObject<DaBeatStatsProvider>({
+      const statsProvider = {
         getStats: vi.fn(),
-      })
+      } as unknown as DaBeatStatsProvider
 
-      const daBeatStatsRepository = mockObject<Database['daBeatStats']>({
+      const daBeatStatsRepository = {
         upsert: vi.fn(),
-      })
+      } as unknown as Database['daBeatStats']
 
       const indexer = createIndexer({
         statsProvider,
@@ -53,13 +52,13 @@ describe(DaBeatStatsIndexer.name, () => {
         numberOfValidators: 100,
       }
 
-      const statsProvider = mockObject<DaBeatStatsProvider>({
+      const statsProvider = {
         getStats: vi.fn().mockReturnValueOnce(mockStats),
-      })
+      } as unknown as DaBeatStatsProvider
 
-      const daBeatStatsRepository = mockObject<Database['daBeatStats']>({
+      const daBeatStatsRepository = {
         upsert: vi.fn().mockReturnValueOnce(undefined),
-      })
+      } as unknown as Database['daBeatStats']
 
       const indexer = createIndexer({
         projectId,
@@ -81,13 +80,13 @@ describe(DaBeatStatsIndexer.name, () => {
       const from = UnixTime.fromDate(new Date('2023-01-01T10:30:00Z'))
       const to = UnixTime.fromDate(new Date('2023-01-01T10:45:00Z'))
 
-      const statsProvider = mockObject<DaBeatStatsProvider>({
+      const statsProvider = {
         getStats: vi.fn().mockReturnValueOnce(undefined),
-      })
+      } as unknown as DaBeatStatsProvider
 
-      const daBeatStatsRepository = mockObject<Database['daBeatStats']>({
+      const daBeatStatsRepository = {
         upsert: vi.fn(),
-      })
+      } as unknown as Database['daBeatStats']
 
       const indexer = createIndexer({
         statsProvider,
@@ -119,10 +118,10 @@ function createIndexer(
 ): DaBeatStatsIndexer {
   const defaults: DaBeatStatsIndexerDeps = {
     projectId: ProjectId('default-project'),
-    db: mockDatabase({ daBeatStats: mockObject() }),
-    statsProvider: mockObject<DaBeatStatsProvider>(),
+    db: mockDatabase({ daBeatStats: {} as unknown as Database['daBeatStats'] }),
+    statsProvider: {} as unknown as DaBeatStatsProvider,
     parents: [],
-    indexerService: mockObject<IndexerService>(),
+    indexerService: {} as unknown as IndexerService,
     minHeight: 0,
   }
 

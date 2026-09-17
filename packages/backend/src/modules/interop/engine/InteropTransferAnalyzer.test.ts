@@ -1,5 +1,4 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 import {
   InteropTransferAnalyzer,
@@ -9,9 +8,9 @@ import type { InteropNotifier } from './notifications/InteropNotifier'
 
 describe(InteropTransferAnalyzer.name, () => {
   it('notifies only extreme suspicious transfers from the processed batch', () => {
-    const notifier = mockObject<InteropNotifier>({
+    const notifier = {
       notifySuspiciousTransfers: vi.fn().mockReturnValue(undefined),
-    } as any)
+    } as unknown as InteropNotifier
     const analyzer = new InteropTransferAnalyzer(notifier)
 
     analyzer.handleProcessedTransfers(
@@ -36,8 +35,8 @@ describe(InteropTransferAnalyzer.name, () => {
     )
 
     expect(notifier.notifySuspiciousTransfers).toHaveBeenCalledTimes(1)
-    const suspiciousTransfers =
-      notifier.notifySuspiciousTransfers.mock.calls[0][1]
+    const suspiciousTransfers = vi.mocked(notifier.notifySuspiciousTransfers)
+      .mock.calls[0][1]
 
     expect(suspiciousTransfers).toHaveLength(1)
     expect(suspiciousTransfers?.[0]?.transferId).toStrictEqual('msg1')

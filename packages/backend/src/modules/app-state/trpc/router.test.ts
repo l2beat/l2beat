@@ -1,6 +1,5 @@
 import type { Database } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 import { createCallerFactory } from '../../../trpc/init'
 import { createAppStateTrpcRouter } from './router'
@@ -59,9 +58,9 @@ function createCaller(
   const callerFactory = createCallerFactory(createAppStateTrpcRouter())
   return callerFactory({
     headers: new Headers(),
-    db: mockObject<Database>({
-      appState: mockObject<Database['appState']>(appState),
-    }),
+    db: {
+      appState: appState as unknown as Database['appState'],
+    } as unknown as Database,
     session,
   })
 }

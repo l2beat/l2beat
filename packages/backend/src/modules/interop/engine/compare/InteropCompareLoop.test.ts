@@ -1,7 +1,6 @@
 import type { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
 import { Hash256 } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 import { InteropCompareLoop } from './InteropCompareLoop'
 
@@ -28,31 +27,31 @@ describe(InteropCompareLoop.name, () => {
           .mockResolvedValueOnce([unknown[1]]),
       }
 
-      const interopMessage = mockObject<Database['interopMessage']>({
+      const interopMessage = {
         getExistingItems: vi.fn().mockResolvedValue([known[0]]),
-      })
+      } as unknown as Database['interopMessage']
 
-      const interopTransfer = mockObject<Database['interopTransfer']>({
+      const interopTransfer = {
         getExistingItems: vi.fn().mockResolvedValue([known[1]]),
-      })
+      } as unknown as Database['interopTransfer']
 
-      const db = mockObject<Database>({
+      const db = {
         interopMessage,
         interopTransfer,
-      })
+      } as unknown as Database
 
-      const tagLogger = mockObject<Logger>({
+      const tagLogger = {
         debug: vi.fn().mockReturnValue(undefined),
         info: vi.fn().mockReturnValue(undefined),
         warn: vi.fn().mockReturnValue(undefined),
         error: vi.fn().mockReturnValue(undefined),
-      })
-      const forLogger = mockObject<Logger>({
+      } as unknown as Logger
+      const forLogger = {
         tag: vi.fn().mockReturnValue(tagLogger),
-      })
-      const logger = mockObject<Logger>({
+      } as unknown as Logger
+      const logger = {
         for: vi.fn().mockReturnValue(forLogger),
-      })
+      } as unknown as Logger
 
       const comparator = new InteropCompareLoop(db, plugin, logger)
 

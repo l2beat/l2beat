@@ -1,7 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 import type { Database, InteropPluginSyncStateRecord } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 import type { InteropPluginResyncable } from '../../plugins/types'
 import type { InteropEventStore } from '../capture/InteropEventStore'
@@ -19,15 +18,15 @@ describe(InteropDataCleaner.name, () => {
     const updateByPluginName = vi.fn().mockResolvedValue(2)
     const transaction = vi.fn().mockImplementation(async (cb) => await cb())
 
-    const db = mockObject<Database>({
+    const db = {
       transaction,
-      interopMessage: mockObject<Database['interopMessage']>({
+      interopMessage: {
         deleteForPlugin: deleteMessage,
-      }),
-      interopTransfer: mockObject<Database['interopTransfer']>({
+      } as unknown as Database['interopMessage'],
+      interopTransfer: {
         deleteForPlugin: deleteTransfer,
-      }),
-      interopPluginSyncState: mockObject<Database['interopPluginSyncState']>({
+      } as unknown as Database['interopTransfer'],
+      interopPluginSyncState: {
         findByPluginName: vi
           .fn()
           .mockResolvedValue([
@@ -35,11 +34,11 @@ describe(InteropDataCleaner.name, () => {
             makeSyncState('arbitrum', true),
           ]),
         updateByPluginName,
-      }),
-    })
-    const store = mockObject<InteropEventStore>({
+      } as unknown as Database['interopPluginSyncState'],
+    } as unknown as Database
+    const store = {
       deleteAllForPlugin: deleteEvents,
-    })
+    } as unknown as InteropEventStore
 
     const loop = new InteropDataCleaner(
       makeCluster(),
@@ -69,15 +68,15 @@ describe(InteropDataCleaner.name, () => {
     const updateByPluginName = vi.fn().mockResolvedValue(0)
     const transaction = vi.fn().mockImplementation(async (cb) => await cb())
 
-    const db = mockObject<Database>({
+    const db = {
       transaction,
-      interopMessage: mockObject<Database['interopMessage']>({
+      interopMessage: {
         deleteForPlugin: deleteMessage,
-      }),
-      interopTransfer: mockObject<Database['interopTransfer']>({
+      } as unknown as Database['interopMessage'],
+      interopTransfer: {
         deleteForPlugin: deleteTransfer,
-      }),
-      interopPluginSyncState: mockObject<Database['interopPluginSyncState']>({
+      } as unknown as Database['interopTransfer'],
+      interopPluginSyncState: {
         findByPluginName: vi
           .fn()
           .mockResolvedValue([
@@ -85,11 +84,11 @@ describe(InteropDataCleaner.name, () => {
             makeSyncState('arbitrum', true),
           ]),
         updateByPluginName,
-      }),
-    })
-    const store = mockObject<InteropEventStore>({
+      } as unknown as Database['interopPluginSyncState'],
+    } as unknown as Database
+    const store = {
       deleteAllForPlugin: deleteEvents,
-    })
+    } as unknown as InteropEventStore
 
     const loop = new InteropDataCleaner(
       makeCluster(),
@@ -115,15 +114,15 @@ describe(InteropDataCleaner.name, () => {
     const updateByPluginName = vi.fn().mockResolvedValue(0)
     const transaction = vi.fn().mockImplementation(async (cb) => await cb())
 
-    const db = mockObject<Database>({
+    const db = {
       transaction,
-      interopMessage: mockObject<Database['interopMessage']>({
+      interopMessage: {
         deleteForPlugin: deleteMessage,
-      }),
-      interopTransfer: mockObject<Database['interopTransfer']>({
+      } as unknown as Database['interopMessage'],
+      interopTransfer: {
         deleteForPlugin: deleteTransfer,
-      }),
-      interopPluginSyncState: mockObject<Database['interopPluginSyncState']>({
+      } as unknown as Database['interopTransfer'],
+      interopPluginSyncState: {
         findByPluginName: vi
           .fn()
           .mockResolvedValue([
@@ -131,11 +130,11 @@ describe(InteropDataCleaner.name, () => {
             makeSyncState('arbitrum', false),
           ]),
         updateByPluginName,
-      }),
-    })
-    const store = mockObject<InteropEventStore>({
+      } as unknown as Database['interopPluginSyncState'],
+    } as unknown as Database
+    const store = {
       deleteAllForPlugin: deleteEvents,
-    })
+    } as unknown as InteropEventStore
 
     const loop = new InteropDataCleaner(
       makeCluster(),
@@ -174,10 +173,10 @@ function makeSyncer(
   chain: string,
   waitingForWipe: boolean,
 ): InteropEventSyncer {
-  return mockObject<InteropEventSyncer>({
+  return {
     chain: chain as InteropEventSyncer['chain'],
     waitingForWipe,
-  })
+  } as unknown as InteropEventSyncer
 }
 
 function makeSyncState(

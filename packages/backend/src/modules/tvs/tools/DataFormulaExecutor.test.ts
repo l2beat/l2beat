@@ -9,7 +9,6 @@ import type {
   TotalSupplyProvider,
 } from '@l2beat/shared'
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 import type { OnchainAmountConfig } from '../types'
 import { DataFormulaExecutor } from './DataFormulaExecutor'
@@ -67,29 +66,29 @@ describe(DataFormulaExecutor.name, () => {
         [holdersB[2], 300n],
       ])
 
-      const localStorage = mockObject<LocalStorage>({
+      const localStorage = {
         getBlockNumber: vi.fn().mockResolvedValue(blockNumber),
         getAmount: vi.fn().mockResolvedValue(undefined),
         writeAmounts: vi.fn().mockResolvedValue(undefined),
-      })
-      const balanceProvider = mockObject<BalanceProvider>({
+      } as unknown as LocalStorage
+      const balanceProvider = {
         getBalances: vi
           .fn<BalanceProvider['getBalances']>()
           .mockImplementation((queries) =>
             Promise.resolve(queries.map((q) => balances.get(q.holder) ?? 0n)),
           ),
-      })
+      } as unknown as BalanceProvider
 
       const executor = new DataFormulaExecutor(
         localStorage,
         undefined,
-        mockObject<PriceProvider>({}),
-        mockObject<CirculatingSupplyProvider>({}),
+        {} as unknown as PriceProvider,
+        {} as unknown as CirculatingSupplyProvider,
         new Map(),
-        mockObject<BlockTimestampProvider>({}),
-        mockObject<TotalSupplyProvider>({}),
-        mockObject<StarknetTotalSupplyProvider>({}),
-        mockObject<StarknetBalanceProvider>({}),
+        {} as unknown as BlockTimestampProvider,
+        {} as unknown as TotalSupplyProvider,
+        {} as unknown as StarknetTotalSupplyProvider,
+        {} as unknown as StarknetBalanceProvider,
         balanceProvider,
         Logger.SILENT,
       )

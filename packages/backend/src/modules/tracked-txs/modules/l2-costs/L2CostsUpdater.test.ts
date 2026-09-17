@@ -2,7 +2,6 @@ import { Logger } from '@l2beat/backend-tools'
 import type { Database, L2CostRecord } from '@l2beat/database'
 import { createTrackedTxId, type TrackedTxConfigEntry } from '@l2beat/shared'
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 import type { TrackedTxResult } from '../../types/model'
 import { ONE_BLOB_GAS } from '../../utils/const'
@@ -17,7 +16,7 @@ describe(L2CostsUpdater.name, () => {
       const repository = getMockL2CostsRepository()
       const blobPriceProvider = getMockBlobPriceProvider()
       const updater = new L2CostsUpdater(
-        mockObject<Database>({ l2Cost: repository }),
+        { l2Cost: repository } as unknown as Database,
         Logger.SILENT,
         blobPriceProvider,
       )
@@ -34,7 +33,7 @@ describe(L2CostsUpdater.name, () => {
       const blobPricesByBlock = new Map<number, bigint>([[2, 10n]])
       const blobPriceProvider = getMockBlobPriceProvider(blobPricesByBlock)
       const updater = new L2CostsUpdater(
-        mockObject<Database>({ l2Cost: repository }),
+        { l2Cost: repository } as unknown as Database,
         Logger.SILENT,
         blobPriceProvider,
       )
@@ -45,9 +44,8 @@ describe(L2CostsUpdater.name, () => {
         1, 2,
       ])
       expect(repository.insertMany).toHaveBeenCalledTimes(1)
-      const insertedRecords = repository.insertMany.mock.calls[0][0] as
-        | L2CostRecord[]
-        | undefined
+      const insertedRecords = vi.mocked(repository.insertMany).mock
+        .calls[0][0] as L2CostRecord[] | undefined
       expect(insertedRecords).not.toStrictEqual(undefined)
       expect(insertedRecords?.length).toStrictEqual(2)
     })
@@ -70,7 +68,7 @@ describe(L2CostsUpdater.name, () => {
       ])
       const blobPriceProvider = getMockBlobPriceProvider(blobPricesByBlock)
       const updater = new L2CostsUpdater(
-        mockObject<Database>({ l2Cost: repository }),
+        { l2Cost: repository } as unknown as Database,
         Logger.SILENT,
         blobPriceProvider,
       )
@@ -90,7 +88,7 @@ describe(L2CostsUpdater.name, () => {
       const blobPricesByBlock = new Map<number, bigint>()
       const blobPriceProvider = getMockBlobPriceProvider(blobPricesByBlock)
       const updater = new L2CostsUpdater(
-        mockObject<Database>({ l2Cost: repository }),
+        { l2Cost: repository } as unknown as Database,
         Logger.SILENT,
         blobPriceProvider,
       )
@@ -106,7 +104,7 @@ describe(L2CostsUpdater.name, () => {
       const repository = getMockL2CostsRepository()
       const blobPriceProvider = getMockBlobPriceProvider()
       const updater = new L2CostsUpdater(
-        mockObject<Database>({ l2Cost: repository }),
+        { l2Cost: repository } as unknown as Database,
         Logger.SILENT,
         blobPriceProvider,
       )
@@ -150,7 +148,7 @@ describe(L2CostsUpdater.name, () => {
       const repository = getMockL2CostsRepository()
       const blobPriceProvider = getMockBlobPriceProvider()
       const updater = new L2CostsUpdater(
-        mockObject<Database>({ l2Cost: repository }),
+        { l2Cost: repository } as unknown as Database,
         Logger.SILENT,
         blobPriceProvider,
       )
@@ -167,7 +165,7 @@ describe(L2CostsUpdater.name, () => {
       const repository = getMockL2CostsRepository()
       const blobPriceProvider = getMockBlobPriceProvider()
       const updater = new L2CostsUpdater(
-        mockObject<Database>({ l2Cost: repository }),
+        { l2Cost: repository } as unknown as Database,
         Logger.SILENT,
         blobPriceProvider,
       )
@@ -190,7 +188,7 @@ describe(L2CostsUpdater.name, () => {
       const repository = getMockL2CostsRepository()
       const blobPriceProvider = getMockBlobPriceProvider()
       const updater = new L2CostsUpdater(
-        mockObject<Database>({ l2Cost: repository }),
+        { l2Cost: repository } as unknown as Database,
         Logger.SILENT,
         blobPriceProvider,
       )
@@ -210,7 +208,7 @@ describe(L2CostsUpdater.name, () => {
       const repository = getMockL2CostsRepository()
       const blobPriceProvider = getMockBlobPriceProvider()
       const updater = new L2CostsUpdater(
-        mockObject<Database>({ l2Cost: repository }),
+        { l2Cost: repository } as unknown as Database,
         Logger.SILENT,
         blobPriceProvider,
       )
@@ -230,18 +228,18 @@ describe(L2CostsUpdater.name, () => {
 function getMockBlobPriceProvider(
   blobPricesByBlockRange?: Map<number, bigint>,
 ) {
-  return mockObject<BlobPriceProvider>({
+  return {
     getBlobPricesByBlockRange: vi
       .fn()
       .mockResolvedValue(blobPricesByBlockRange ?? new Map()),
-  })
+  } as unknown as BlobPriceProvider
 }
 
 function getMockL2CostsRepository() {
-  return mockObject<Database['l2Cost']>({
-    deleteFromById: async () => 0,
-    insertMany: async () => 0,
-  })
+  return {
+    deleteFromById: vi.fn(async () => 0),
+    insertMany: vi.fn(async () => 0),
+  } as unknown as Database['l2Cost']
 }
 
 function getMockRuntimeConfigurations(): TrackedTxConfigEntry[] {

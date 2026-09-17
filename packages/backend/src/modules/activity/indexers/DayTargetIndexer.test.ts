@@ -1,7 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 import { UnixTime } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import type { Clock } from '../../../tools/Clock'
 import { DayTargetIndexer } from './DayTargetIndexer'
 
@@ -10,10 +9,10 @@ const LAST_HOUR = UnixTime.now() - 1 * UnixTime.HOUR
 describe(DayTargetIndexer.name, () => {
   describe(DayTargetIndexer.prototype.start.name, () => {
     it('calls clock.onNewHour', async () => {
-      const clock = mockObject<Clock>({
-        onNewHour: () => () => {},
-        getLastHour: () => LAST_HOUR,
-      })
+      const clock = {
+        onNewHour: vi.fn(() => () => {}),
+        getLastHour: vi.fn(() => LAST_HOUR),
+      } as unknown as Clock
 
       const indexer = new DayTargetIndexer(Logger.SILENT, clock)
 
@@ -25,9 +24,9 @@ describe(DayTargetIndexer.name, () => {
 
   describe(DayTargetIndexer.prototype.tick.name, () => {
     it('returns the number of day', async () => {
-      const clock = mockObject<Clock>({
-        getLastHour: () => LAST_HOUR,
-      })
+      const clock = {
+        getLastHour: vi.fn(() => LAST_HOUR),
+      } as unknown as Clock
 
       const indexer = new DayTargetIndexer(Logger.SILENT, clock)
 

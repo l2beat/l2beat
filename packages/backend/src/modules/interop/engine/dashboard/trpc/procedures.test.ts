@@ -1,5 +1,4 @@
 import type { Database } from '@l2beat/database'
-import { mockObject } from '@l2beat/test-utils'
 import { TRPCError } from '@trpc/server'
 import { describe, expect, it } from 'vitest'
 import { createCallerFactory } from '../../../../../trpc/init'
@@ -16,7 +15,7 @@ describe('interop trpc auth', () => {
     )
     const caller = callerFactory({
       headers: new Headers(),
-      db: mockObject<Database>({}),
+      db: {} as unknown as Database,
       session: undefined,
     })
 

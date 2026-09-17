@@ -15,7 +15,6 @@ import {
   EthereumAddress,
   type Transaction,
 } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 import { RpcUopsAnalyzer } from './RpcUopsAnalyzer'
 
@@ -23,9 +22,9 @@ describe(RpcUopsAnalyzer.name, () => {
   describe(RpcUopsAnalyzer.prototype.calculateUops.name, () => {
     it('should correctly sum the number of txs and uops', async () => {
       const analyzer = new RpcUopsAnalyzer()
-      const tx1 = mockObject<Transaction>()
-      const tx2 = mockObject<Transaction>()
-      const tx3 = mockObject<Transaction>()
+      const tx1 = {} as unknown as Transaction
+      const tx2 = {} as unknown as Transaction
+      const tx3 = {} as unknown as Transaction
 
       analyzer.mapTransaction = vi
         .fn()
@@ -33,9 +32,9 @@ describe(RpcUopsAnalyzer.name, () => {
         .mockReturnValueOnce(2)
         .mockReturnValueOnce(4)
 
-      const block = mockObject<Block>({
+      const block = {
         transactions: [tx1, tx2, tx3],
-      })
+      } as unknown as Block
 
       const result = analyzer.calculateUops(block)
       expect(result).toStrictEqual(7)

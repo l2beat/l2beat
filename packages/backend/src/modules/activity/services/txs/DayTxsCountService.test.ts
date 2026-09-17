@@ -1,5 +1,4 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 import type { DayProvider } from '../../../../providers/day/DayProviders'
 import { activityRecord } from '../../test/activityRecord'
@@ -175,8 +174,8 @@ function mockProvider(data: {
   txs: Record<number, number>
   uops: Record<number, number>
 }) {
-  return mockObject<DayProvider>({
+  return {
     getDailyTxsCount: vi.fn().mockResolvedValue(data.txs),
     getDailyUopsCount: vi.fn().mockResolvedValue(data.uops),
-  })
+  } as unknown as DayProvider
 }

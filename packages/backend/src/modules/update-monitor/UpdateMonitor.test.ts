@@ -12,7 +12,6 @@ import {
   EthereumAddress,
   Hash256,
 } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import type { Clock } from '../../tools/Clock'
 import type { WorkerPool } from './createWorkers'
@@ -22,7 +21,7 @@ import type { UpdateDiffer } from './UpdateDiffer'
 import { UpdateMonitor } from './UpdateMonitor'
 import type { UpdateNotifier } from './UpdateNotifier'
 
-const instantWorkerPool = mockObject<WorkerPool>({
+const instantWorkerPool = {
   runInPool: vi.fn(async (tasks) => {
     const results = []
     const errors = []
@@ -48,7 +47,7 @@ const instantWorkerPool = mockObject<WorkerPool>({
       timedOut: false,
     }
   }),
-})
+} as unknown as WorkerPool
 
 const PROJECT_A = 'project-a'
 const PROJECT_B = 'project-b'
@@ -124,51 +123,51 @@ const DISCOVERY_RESULT_ARB_2: DiscoveryOutput = {
   usedBlockNumbers: {},
 }
 
-const flatSourcesRepository = mockObject<Database['flatSources']>({
-  upsert: async () => undefined,
-  get: async () => undefined,
-})
+const flatSourcesRepository = {
+  upsert: vi.fn(async () => undefined),
+  get: vi.fn(async () => undefined),
+} as unknown as Database['flatSources']
 
 describe(UpdateMonitor.name, () => {
-  let updateNotifier = mockObject<UpdateNotifier>({})
-  let updateDiffer = mockObject<UpdateDiffer>({})
+  let updateNotifier = {} as unknown as UpdateNotifier
+  let updateDiffer = {} as unknown as UpdateDiffer
   const discoveryOutputCache = new DiscoveryOutputCache()
 
   beforeEach(() => {
-    updateNotifier = mockObject<UpdateNotifier>({
+    updateNotifier = {
       handleUpdate: vi.fn().mockResolvedValue(undefined),
       sendDailyReminder: vi.fn().mockResolvedValue(undefined),
-    })
-    updateDiffer = mockObject<UpdateDiffer>({
+    } as unknown as UpdateNotifier
+    updateDiffer = {
       run: vi.fn().mockResolvedValue(undefined),
-    })
+    } as unknown as UpdateDiffer
   })
 
   describe(UpdateMonitor.prototype.update.name, () => {
     it('iterates over runners and dispatches updates', async () => {
-      const discoveryRunner = mockObject<DiscoveryRunner>({
+      const discoveryRunner = {
         run: vi.fn().mockResolvedValue({
           discovery: DISCOVERY_RESULT,
           flatSources: {},
         }),
-      })
-      const configReader = mockObject<ConfigReader>({
-        readDiscovery: () => ({
+      } as unknown as DiscoveryRunner
+      const configReader = {
+        readDiscovery: vi.fn(() => ({
           ...mockProject,
           entries: COMMITTED,
-        }),
+        })),
 
-        readAllDiscoveredProjects: () => [PROJECT_A],
+        readAllDiscoveredProjects: vi.fn(() => [PROJECT_A]),
         readConfig: vi.fn().mockReturnValue(mockConfig(PROJECT_A)),
-      })
+      } as unknown as ConfigReader
 
-      const updateMonitorRepository = mockObject<Database['updateMonitor']>({
-        findLatest: async () => undefined,
-        upsert: async () => undefined,
-      })
-      const updateDiffRepository = mockObject<Database['updateDiff']>({
-        deleteAll: async () => 0,
-      })
+      const updateMonitorRepository = {
+        findLatest: vi.fn(async () => undefined),
+        upsert: vi.fn(async () => undefined),
+      } as unknown as Database['updateMonitor']
+      const updateDiffRepository = {
+        deleteAll: vi.fn(async () => 0),
+      } as unknown as Database['updateDiff']
       const timestamp = 0
 
       const updateMonitor = new UpdateMonitor(
@@ -176,12 +175,12 @@ describe(UpdateMonitor.name, () => {
         updateNotifier,
         updateDiffer,
         configReader,
-        mockObject<Database>({
+        {
           updateMonitor: updateMonitorRepository,
           flatSources: flatSourcesRepository,
           updateDiff: updateDiffRepository,
-        }),
-        mockObject<Clock>(),
+        } as unknown as Database,
+        {} as unknown as Clock,
         discoveryOutputCache,
         Logger.SILENT,
         false,
@@ -210,7 +209,7 @@ describe(UpdateMonitor.name, () => {
 
     it('does not process archived projects', async () => {
       const processedProjects: string[] = []
-      const discoveryRunner = mockObject<DiscoveryRunner>({
+      const discoveryRunner = {
         run: vi.fn(async (config: ConfigRegistry) => {
           processedProjects.push(config.name)
           return {
@@ -218,22 +217,22 @@ describe(UpdateMonitor.name, () => {
             flatSources: {},
           }
         }),
-      })
+      } as unknown as DiscoveryRunner
       const archivedConfig = new ConfigRegistry({
         name: PROJECT_B,
         initialAddresses: [],
         archived: true,
       })
-      const configReader = mockObject<ConfigReader>({
-        readDiscovery: () => ({
+      const configReader = {
+        readDiscovery: vi.fn(() => ({
           ...mockProject,
           entries: COMMITTED,
-        }),
-        readAllDiscoveredProjects: () => [PROJECT_A, PROJECT_B],
+        })),
+        readAllDiscoveredProjects: vi.fn(() => [PROJECT_A, PROJECT_B]),
         readConfig: vi.fn((name: string) =>
           name === PROJECT_B ? archivedConfig : mockConfig(name),
         ),
-      })
+      } as unknown as ConfigReader
       const timestamp = 0
 
       const updateMonitor = new UpdateMonitor(
@@ -241,17 +240,17 @@ describe(UpdateMonitor.name, () => {
         updateNotifier,
         updateDiffer,
         configReader,
-        mockObject<Database>({
-          updateMonitor: mockObject<Database['updateMonitor']>({
-            findLatest: async () => undefined,
-            upsert: async () => undefined,
-          }),
+        {
+          updateMonitor: {
+            findLatest: vi.fn(async () => undefined),
+            upsert: vi.fn(async () => undefined),
+          } as unknown as Database['updateMonitor'],
           flatSources: flatSourcesRepository,
-          updateDiff: mockObject<Database['updateDiff']>({
-            deleteAll: async () => 0,
-          }),
-        }),
-        mockObject<Clock>(),
+          updateDiff: {
+            deleteAll: vi.fn(async () => 0),
+          } as unknown as Database['updateDiff'],
+        } as unknown as Database,
+        {} as unknown as Clock,
         discoveryOutputCache,
         Logger.SILENT,
         false,
@@ -267,38 +266,38 @@ describe(UpdateMonitor.name, () => {
     // Diffs are written as one snapshot, so they run once every discovery lands.
     it('discovers every project before diffing any of them', async () => {
       const calls: string[] = []
-      const discoveryRunner = mockObject<DiscoveryRunner>({
+      const discoveryRunner = {
         run: vi.fn(async () => {
           calls.push('discover')
           return { discovery: DISCOVERY_RESULT, flatSources: {} }
         }),
-      })
-      updateDiffer = mockObject<UpdateDiffer>({
+      } as unknown as DiscoveryRunner
+      updateDiffer = {
         run: vi.fn(async () => {
           calls.push('diff')
         }),
-      })
+      } as unknown as UpdateDiffer
 
       const updateMonitor = new UpdateMonitor(
         discoveryRunner,
         updateNotifier,
         updateDiffer,
-        mockObject<ConfigReader>({
-          readDiscovery: () => ({ ...mockProject, entries: COMMITTED }),
-          readAllDiscoveredProjects: () => [PROJECT_A, PROJECT_B],
+        {
+          readDiscovery: vi.fn(() => ({ ...mockProject, entries: COMMITTED })),
+          readAllDiscoveredProjects: vi.fn(() => [PROJECT_A, PROJECT_B]),
           readConfig: vi.fn((name: string) => mockConfig(name)),
-        }),
-        mockObject<Database>({
-          updateMonitor: mockObject<Database['updateMonitor']>({
-            findLatest: async () => undefined,
-            upsert: async () => undefined,
-          }),
+        } as unknown as ConfigReader,
+        {
+          updateMonitor: {
+            findLatest: vi.fn(async () => undefined),
+            upsert: vi.fn(async () => undefined),
+          } as unknown as Database['updateMonitor'],
           flatSources: flatSourcesRepository,
-          updateDiff: mockObject<Database['updateDiff']>({
-            deleteAll: async () => 0,
-          }),
-        }),
-        mockObject<Clock>(),
+          updateDiff: {
+            deleteAll: vi.fn(async () => 0),
+          } as unknown as Database['updateDiff'],
+        } as unknown as Database,
+        {} as unknown as Clock,
         discoveryOutputCache,
         Logger.SILENT,
         false,
@@ -319,31 +318,31 @@ describe(UpdateMonitor.name, () => {
         ...mockProject,
         entries: COMMITTED,
       }
-      const configReader = mockObject<ConfigReader>({
-        readDiscovery: () => discoveryB,
-      })
+      const configReader = {
+        readDiscovery: vi.fn(() => discoveryB),
+      } as unknown as ConfigReader
 
-      const discoveryRunner = mockObject<DiscoveryRunner>({
+      const discoveryRunner = {
         run: vi
           .fn()
           .mockResolvedValueOnce({ discovery: discoveryA, flatSources: {} })
           .mockResolvedValueOnce({ discovery: discoveryB, flatSources: {} }),
-      })
+      } as unknown as DiscoveryRunner
 
-      const updateMonitorRepository = mockObject<Database['updateMonitor']>({
-        findLatest: async () => undefined,
-      })
+      const updateMonitorRepository = {
+        findLatest: vi.fn(async () => undefined),
+      } as unknown as Database['updateMonitor']
 
       const updateMonitor = new UpdateMonitor(
         discoveryRunner,
-        mockObject<UpdateNotifier>(),
-        mockObject<UpdateDiffer>(),
+        {} as unknown as UpdateNotifier,
+        {} as unknown as UpdateDiffer,
         configReader,
-        mockObject<Database>({
+        {
           updateMonitor: updateMonitorRepository,
           flatSources: flatSourcesRepository,
-        }),
-        mockObject<Clock>(),
+        } as unknown as Database,
+        {} as unknown as Clock,
         discoveryOutputCache,
         Logger.SILENT,
         false,
@@ -375,27 +374,27 @@ describe(UpdateMonitor.name, () => {
         configHash: hashJsonStable(mockConfig(PROJECT_A).structure),
       }
 
-      const discoveryRunner = mockObject<DiscoveryRunner>({
+      const discoveryRunner = {
         run: vi.fn().mockResolvedValueOnce({
           discovery: dbEntry.discovery,
           flatSources: {},
         }),
-      })
+      } as unknown as DiscoveryRunner
 
-      const updateMonitorRepository = mockObject<Database['updateMonitor']>({
-        findLatest: async () => dbEntry,
-      })
+      const updateMonitorRepository = {
+        findLatest: vi.fn(async () => dbEntry),
+      } as unknown as Database['updateMonitor']
 
       const updateMonitor = new UpdateMonitor(
         discoveryRunner,
-        mockObject<UpdateNotifier>(),
-        mockObject<UpdateDiffer>(),
-        mockObject<ConfigReader>({ readDiscovery: () => committed }),
-        mockObject<Database>({
+        {} as unknown as UpdateNotifier,
+        {} as unknown as UpdateDiffer,
+        { readDiscovery: vi.fn(() => committed) } as unknown as ConfigReader,
+        {
           updateMonitor: updateMonitorRepository,
           flatSources: flatSourcesRepository,
-        }),
-        mockObject<Clock>(),
+        } as unknown as Database,
+        {} as unknown as Clock,
         discoveryOutputCache,
         Logger.SILENT,
         false,
@@ -419,38 +418,38 @@ describe(UpdateMonitor.name, () => {
         entries: DISCOVERY_RESULT.entries,
       }
 
-      const discoveryRunner = mockObject<DiscoveryRunner>({
+      const discoveryRunner = {
         run: vi.fn().mockResolvedValueOnce({
           discovery: committed,
           flatSources: {},
         }),
-      })
+      } as unknown as DiscoveryRunner
 
-      const configReader = mockObject<ConfigReader>({
-        readDiscovery: () => committed,
-      })
+      const configReader = {
+        readDiscovery: vi.fn(() => committed),
+      } as unknown as ConfigReader
 
-      const updateMonitorRepository = mockObject<Database['updateMonitor']>({
-        findLatest: async () => ({
+      const updateMonitorRepository = {
+        findLatest: vi.fn(async () => ({
           ...mockRecord,
           discovery: {
             ...mockProject,
             entries: dbEntry,
           },
           configHash: hashJsonStable(mockConfig(PROJECT_A).structure),
-        }),
-      })
+        })),
+      } as unknown as Database['updateMonitor']
 
       const updateMonitor = new UpdateMonitor(
         discoveryRunner,
-        mockObject<UpdateNotifier>(),
-        mockObject<UpdateDiffer>(),
+        {} as unknown as UpdateNotifier,
+        {} as unknown as UpdateDiffer,
         configReader,
-        mockObject<Database>({
+        {
           updateMonitor: updateMonitorRepository,
           flatSources: flatSourcesRepository,
-        }),
-        mockObject<Clock>(),
+        } as unknown as Database,
+        {} as unknown as Clock,
         discoveryOutputCache,
         Logger.SILENT,
         false,
@@ -477,8 +476,8 @@ describe(UpdateMonitor.name, () => {
       }
       const dbEntry = COMMITTED
 
-      const updateMonitorRepository = mockObject<Database['updateMonitor']>({
-        findLatest: async () => ({
+      const updateMonitorRepository = {
+        findLatest: vi.fn(async () => ({
           ...mockRecord,
           discovery: {
             ...mockProject,
@@ -486,26 +485,26 @@ describe(UpdateMonitor.name, () => {
             timestamp: TIMESTAMP - 1,
           },
           configHash: hashJsonStable(mockConfig(PROJECT_A).structure),
-        }),
-      })
+        })),
+      } as unknown as Database['updateMonitor']
 
-      const discoveryRunner = mockObject<DiscoveryRunner>({
-        run: async () => ({
+      const discoveryRunner = {
+        run: vi.fn(async () => ({
           discovery: mockProject,
           flatSources: {},
-        }),
-      })
+        })),
+      } as unknown as DiscoveryRunner
 
       const updateMonitor = new UpdateMonitor(
         discoveryRunner,
-        mockObject<UpdateNotifier>(),
-        mockObject<UpdateDiffer>(),
-        mockObject<ConfigReader>({ readDiscovery: () => committed }),
-        mockObject<Database>({
+        {} as unknown as UpdateNotifier,
+        {} as unknown as UpdateDiffer,
+        { readDiscovery: vi.fn(() => committed) } as unknown as ConfigReader,
+        {
           updateMonitor: updateMonitorRepository,
           flatSources: flatSourcesRepository,
-        }),
-        mockObject<Clock>(),
+        } as unknown as Database,
+        {} as unknown as Clock,
         discoveryOutputCache,
         Logger.INFO,
         false,
@@ -529,43 +528,43 @@ describe(UpdateMonitor.name, () => {
 
   describe(UpdateMonitor.prototype.generateDailyReminder.name, () => {
     it('does not cross-contaminate between chains', async () => {
-      const runner = mockObject<DiscoveryRunner>({
-        run: async () => {
+      const runner = {
+        run: vi.fn(async () => {
           return { discovery: DISCOVERY_RESULT_ARB_2, flatSources: {} }
-        },
-      })
+        }),
+      } as unknown as DiscoveryRunner
 
       const timestamp = 0
-      const updateMonitorRepository = mockObject<Database['updateMonitor']>({
-        findLatest: async () => undefined,
-        upsert: async () => undefined,
-      })
-      const configReader = mockObject<ConfigReader>({
-        readDiscovery: (name: string) => {
+      const updateMonitorRepository = {
+        findLatest: vi.fn(async () => undefined),
+        upsert: vi.fn(async () => undefined),
+      } as unknown as Database['updateMonitor']
+      const configReader = {
+        readDiscovery: vi.fn((name: string) => {
           if (name === PROJECT_B) {
             return DISCOVERY_RESULT_ETH_2
           }
           return DISCOVERY_RESULT
-        },
+        }),
 
-        readConfig: (name: string) => mockConfig(name),
-        readAllDiscoveredProjects: () => [PROJECT_A, PROJECT_B],
-      })
-      const updateDiffRepository = mockObject<Database['updateDiff']>({
-        deleteAll: async () => 0,
-      })
+        readConfig: vi.fn((name: string) => mockConfig(name)),
+        readAllDiscoveredProjects: vi.fn(() => [PROJECT_A, PROJECT_B]),
+      } as unknown as ConfigReader
+      const updateDiffRepository = {
+        deleteAll: vi.fn(async () => 0),
+      } as unknown as Database['updateDiff']
 
       const updateMonitor = new UpdateMonitor(
         runner,
         updateNotifier,
         updateDiffer,
         configReader,
-        mockObject<Database>({
+        {
           updateMonitor: updateMonitorRepository,
           flatSources: flatSourcesRepository,
           updateDiff: updateDiffRepository,
-        }),
-        mockObject<Clock>(),
+        } as unknown as Database,
+        {} as unknown as Clock,
         discoveryOutputCache,
         Logger.SILENT,
         false,
@@ -586,44 +585,44 @@ describe(UpdateMonitor.name, () => {
     })
 
     it('generates the daily reminder for two different chains', async () => {
-      const discoveryRunner = mockObject<DiscoveryRunner>({
+      const discoveryRunner = {
         run: vi.fn().mockResolvedValue({
           ethereum: {
             discovery: DISCOVERY_RESULT,
             flatSources: {},
           },
         }),
-      })
+      } as unknown as DiscoveryRunner
 
       const timestamp = 0
-      const updateMonitorRepository = mockObject<Database['updateMonitor']>({
-        findLatest: async () => undefined,
-        upsert: async () => undefined,
-      })
-      const configReader = mockObject<ConfigReader>({
-        readDiscovery: () => ({
+      const updateMonitorRepository = {
+        findLatest: vi.fn(async () => undefined),
+        upsert: vi.fn(async () => undefined),
+      } as unknown as Database['updateMonitor']
+      const configReader = {
+        readDiscovery: vi.fn(() => ({
           ...mockProject,
           entries: COMMITTED,
-        }),
+        })),
 
-        readConfig: (name: string) => mockConfig(name),
-        readAllDiscoveredProjects: () => [PROJECT_A],
-      })
-      const updateDiffRepository = mockObject<Database['updateDiff']>({
-        deleteAll: async () => 0,
-      })
+        readConfig: vi.fn((name: string) => mockConfig(name)),
+        readAllDiscoveredProjects: vi.fn(() => [PROJECT_A]),
+      } as unknown as ConfigReader
+      const updateDiffRepository = {
+        deleteAll: vi.fn(async () => 0),
+      } as unknown as Database['updateDiff']
 
       const updateMonitor = new UpdateMonitor(
         discoveryRunner,
         updateNotifier,
         updateDiffer,
         configReader,
-        mockObject<Database>({
+        {
           updateMonitor: updateMonitorRepository,
           flatSources: flatSourcesRepository,
           updateDiff: updateDiffRepository,
-        }),
-        mockObject<Clock>(),
+        } as unknown as Database,
+        {} as unknown as Clock,
         discoveryOutputCache,
         Logger.SILENT,
         false,
@@ -642,44 +641,44 @@ describe(UpdateMonitor.name, () => {
     })
 
     it('does nothing for an empty cache', async () => {
-      const discoveryRunner = mockObject<DiscoveryRunner>({
+      const discoveryRunner = {
         run: vi.fn().mockResolvedValue({
           ethereum: {
             discovery: DISCOVERY_RESULT,
             flatSources: {},
           },
         }),
-      })
+      } as unknown as DiscoveryRunner
 
       const timestamp = 0
-      const updateMonitorRepository = mockObject<Database['updateMonitor']>({
-        findLatest: async () => undefined,
-        upsert: async () => undefined,
-      })
-      const configReader = mockObject<ConfigReader>({
-        readDiscovery: () => ({
+      const updateMonitorRepository = {
+        findLatest: vi.fn(async () => undefined),
+        upsert: vi.fn(async () => undefined),
+      } as unknown as Database['updateMonitor']
+      const configReader = {
+        readDiscovery: vi.fn(() => ({
           ...mockProject,
           entries: COMMITTED,
-        }),
+        })),
 
-        readConfig: (name: string) => mockConfig(name),
-        readAllDiscoveredProjects: () => [PROJECT_A],
-      })
-      const updateDiffRepository = mockObject<Database['updateDiff']>({
-        deleteAll: async () => 0,
-      })
+        readConfig: vi.fn((name: string) => mockConfig(name)),
+        readAllDiscoveredProjects: vi.fn(() => [PROJECT_A]),
+      } as unknown as ConfigReader
+      const updateDiffRepository = {
+        deleteAll: vi.fn(async () => 0),
+      } as unknown as Database['updateDiff']
 
       const updateMonitor = new UpdateMonitor(
         discoveryRunner,
         updateNotifier,
         updateDiffer,
         configReader,
-        mockObject<Database>({
+        {
           updateMonitor: updateMonitorRepository,
           flatSources: flatSourcesRepository,
           updateDiff: updateDiffRepository,
-        }),
-        mockObject<Clock>(),
+        } as unknown as Database,
+        {} as unknown as Clock,
         discoveryOutputCache,
         Logger.SILENT,
         false,

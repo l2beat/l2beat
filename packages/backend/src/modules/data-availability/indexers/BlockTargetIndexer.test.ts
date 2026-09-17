@@ -1,7 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 import type { BlockTimestampProvider } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 import type { Clock } from '../../../tools/Clock'
 import { BlockTargetIndexer } from './BlockTargetIndexer'
@@ -11,14 +10,14 @@ const LAST_HOUR = UnixTime.now() - 1 * UnixTime.HOUR
 describe(BlockTargetIndexer.name, () => {
   describe(BlockTargetIndexer.prototype.start.name, () => {
     it('calls clock.onNewHour', async () => {
-      const clock = mockObject<Clock>({
-        onNewHour: () => () => {},
-        getLastHour: () => LAST_HOUR,
-      })
+      const clock = {
+        onNewHour: vi.fn(() => () => {}),
+        getLastHour: vi.fn(() => LAST_HOUR),
+      } as unknown as Clock
 
-      const blockTimestampProvider = mockObject<BlockTimestampProvider>({
+      const blockTimestampProvider = {
         getBlockNumberAtOrBefore: vi.fn().mockResolvedValue(0),
-      })
+      } as unknown as BlockTimestampProvider
       const indexer = new BlockTargetIndexer(
         Logger.SILENT,
         clock,
@@ -34,14 +33,14 @@ describe(BlockTargetIndexer.name, () => {
 
   describe(BlockTargetIndexer.prototype.tick.name, () => {
     it('returns block number', async () => {
-      const clock = mockObject<Clock>({
-        getLastHour: () => LAST_HOUR,
-      })
+      const clock = {
+        getLastHour: vi.fn(() => LAST_HOUR),
+      } as unknown as Clock
 
       const BLOCK_NUMBER = 123
-      const blockTimestampProvider = mockObject<BlockTimestampProvider>({
+      const blockTimestampProvider = {
         getBlockNumberAtOrBefore: vi.fn().mockResolvedValue(BLOCK_NUMBER),
-      })
+      } as unknown as BlockTimestampProvider
       const indexer = new BlockTargetIndexer(
         Logger.SILENT,
         clock,
@@ -59,17 +58,17 @@ describe(BlockTargetIndexer.name, () => {
     })
 
     it('throws when fetched block number is smaller than previously fetched', async () => {
-      const clock = mockObject<Clock>({
-        getLastHour: () => LAST_HOUR,
-      })
+      const clock = {
+        getLastHour: vi.fn(() => LAST_HOUR),
+      } as unknown as Clock
 
       const BLOCK_NUMBER = 123
-      const blockTimestampProvider = mockObject<BlockTimestampProvider>({
+      const blockTimestampProvider = {
         getBlockNumberAtOrBefore: vi
           .fn()
           .mockResolvedValueOnce(BLOCK_NUMBER)
           .mockResolvedValueOnce(BLOCK_NUMBER - 1),
-      })
+      } as unknown as BlockTimestampProvider
       const indexer = new BlockTargetIndexer(
         Logger.SILENT,
         clock,

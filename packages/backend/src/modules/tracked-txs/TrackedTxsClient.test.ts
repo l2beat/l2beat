@@ -8,7 +8,6 @@ import type {
   TrackedTxTransferConfig,
 } from '@l2beat/shared'
 import { EthereumAddress, ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { readFileSync } from 'fs'
 import { describe, expect, it, vi } from 'vitest'
 import {
@@ -414,12 +413,12 @@ const FUNCTIONS_SQL = getFunctionCallQuery(
 )
 
 function getMockDuneQueryService(responses: unknown[][]) {
-  const service = mockObject<DuneQueryService>({
+  const service = {
     query: vi.fn(),
-  })
+  } as unknown as DuneQueryService
 
   for (const response of responses) {
-    service.query.mockResolvedValueOnce(response)
+    vi.mocked(service.query).mockResolvedValueOnce(response)
   }
 
   return service

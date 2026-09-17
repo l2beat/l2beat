@@ -11,7 +11,6 @@ import {
   type LongChainName,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 import type { ChainApi } from '../../../../config/chain/ChainApi'
 import type { PluginCluster } from '../../plugins'
@@ -625,12 +624,12 @@ function makeManager(params: {
 function mockLogger() {
   const error = vi.fn().mockReturnValue(undefined)
   const warn = vi.fn().mockReturnValue(undefined)
-  const logger: Logger = mockObject<Logger>({
+  const logger: Logger = {
     for: vi.fn().mockImplementation(() => logger),
     tag: vi.fn().mockImplementation(() => logger),
     error,
     warn,
-  })
+  } as unknown as Logger
   return { logger, error, warn }
 }
 
@@ -742,40 +741,40 @@ function makeSyncStateRecord(
 }
 
 function mockStore() {
-  return mockObject<InteropEventStore>({
+  return {
     saveNewEvents: vi.fn().mockResolvedValue(undefined),
     deleteAllForPlugin: vi.fn().mockResolvedValue(undefined),
-  })
+  } as unknown as InteropEventStore
 }
 
 function mockDb(params?: {
   syncedRanges?: InteropPluginSyncedRangeRecord[]
   syncStates?: InteropPluginSyncStateRecord[]
 }): Database {
-  return mockObject<Database>({
+  return {
     transaction: vi.fn().mockImplementation(async (cb) => await cb()),
-    interopPluginSyncedRange: mockObject<Database['interopPluginSyncedRange']>({
+    interopPluginSyncedRange: {
       getAll: vi.fn().mockResolvedValue(params?.syncedRanges ?? []),
       upsert: vi.fn().mockResolvedValue(undefined),
       findByPluginNameAndChain: vi.fn().mockResolvedValue(undefined),
-    }),
-    interopPluginSyncState: mockObject<Database['interopPluginSyncState']>({
+    } as unknown as Database['interopPluginSyncedRange'],
+    interopPluginSyncState: {
       getAll: vi.fn().mockResolvedValue(params?.syncStates ?? []),
       setLastError: vi.fn().mockResolvedValue(undefined),
       findByPluginName: vi.fn().mockResolvedValue([]),
       updateByPluginName: vi.fn().mockResolvedValue(0),
       findByPluginNameAndChain: vi.fn().mockResolvedValue(undefined),
-    }),
-    interopEvent: mockObject<Database['interopEvent']>({
+    } as unknown as Database['interopPluginSyncState'],
+    interopEvent: {
       getOldestEventForPluginAndChain: vi.fn().mockResolvedValue(undefined),
-    }),
-    interopMessage: mockObject<Database['interopMessage']>({
+    } as unknown as Database['interopEvent'],
+    interopMessage: {
       deleteForPlugin: vi.fn().mockResolvedValue(undefined),
-    }),
-    interopTransfer: mockObject<Database['interopTransfer']>({
+    } as unknown as Database['interopMessage'],
+    interopTransfer: {
       deleteForPlugin: vi.fn().mockResolvedValue(undefined),
-    }),
-  })
+    } as unknown as Database['interopTransfer'],
+  } as unknown as Database
 }
 
 function deferred<T>() {

@@ -2,7 +2,6 @@ import { Logger } from '@l2beat/backend-tools'
 import type { InteropPluginName } from '@l2beat/config'
 import type { AbstractTokenRecord, Database } from '@l2beat/database'
 import { ChainSpecificAddress } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import type { TokenDbClient } from '@l2beat/token-backend'
 import { describe, expect, it, vi } from 'vitest'
 import {
@@ -12,6 +11,7 @@ import {
   Result,
 } from '../../plugins/types'
 import { InMemoryEventDb } from '../capture/InMemoryEventDb'
+import type { InteropEventStore } from '../capture/InteropEventStore'
 import { InteropMatchingLoop, match } from './InteropMatchingLoop'
 import { buildTokenMap, type TokenMap } from './TokenMap'
 
@@ -45,9 +45,9 @@ describe(InteropMatchingLoop.name, () => {
           },
         ],
       })
-      const tokenDbClient = mockObject<TokenDbClient>({
+      const tokenDbClient = {
         abstractTokens: { getAllWithDeployedTokens: { query } },
-      } as any)
+      } as unknown as TokenDbClient
 
       const deployedToAbstractMap = await buildTokenMap(tokenDbClient)
 
@@ -68,13 +68,13 @@ describe(InteropMatchingLoop.name, () => {
     it('throws if loading abstract tokens fails', async () => {
       const queryError = new Error('Token DB unavailable')
       const query = vi.fn().mockRejectedValue(queryError)
-      const tokenDbClient = mockObject<TokenDbClient>({
+      const tokenDbClient = {
         abstractTokens: { getAllWithDeployedTokens: { query } },
-      } as any)
+      } as unknown as TokenDbClient
 
       const loop = new InteropMatchingLoop(
-        mockObject({} as any),
-        mockObject<Database>({} as any),
+        {} as unknown as InteropEventStore,
+        {} as unknown as Database,
         tokenDbClient,
         [],
         [],
@@ -142,7 +142,7 @@ describe('match', () => {
       [plugin],
       [],
       Logger.SILENT,
-      mockObject<TokenMap>({}),
+      {} as unknown as TokenMap,
     )
 
     expect(sawEventC).toStrictEqual(true)
@@ -234,7 +234,7 @@ describe('match', () => {
       [plugin],
       ['ethereum'],
       Logger.SILENT,
-      mockObject<TokenMap>({}),
+      {} as unknown as TokenMap,
     )
 
     expect(result.transfers.length).toStrictEqual(1)

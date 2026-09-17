@@ -1,6 +1,5 @@
 import type { Database } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 import { createCallerFactory } from '../../../../../../trpc/init'
 import { createTransfersRouter } from './transfers'
@@ -12,17 +11,15 @@ describe(createTransfersRouter.name, () => {
       .mockResolvedValue(UnixTime(500_000))
     const getStats = vi.fn().mockResolvedValue([])
     const getDetailedStats = vi.fn().mockResolvedValue([])
-    const caller = createCaller(
-      mockObject<Database>({
-        interopAggregateStatus: mockObject<Database['interopAggregateStatus']>({
-          getLatestPromotedTimestamp,
-        }),
-        interopTransfer: mockObject<Database['interopTransfer']>({
-          getStats,
-          getDetailedStats,
-        }),
-      }),
-    )
+    const caller = createCaller({
+      interopAggregateStatus: {
+        getLatestPromotedTimestamp,
+      } as unknown as Database['interopAggregateStatus'],
+      interopTransfer: {
+        getStats,
+        getDetailedStats,
+      } as unknown as Database['interopTransfer'],
+    } as unknown as Database)
 
     await caller.stats({ range: 'lastPromoted' })
 
@@ -36,13 +33,11 @@ describe(createTransfersRouter.name, () => {
 
   it('keeps all retained data explicit for detail queries', async () => {
     const getByType = vi.fn().mockResolvedValue([])
-    const caller = createCaller(
-      mockObject<Database>({
-        interopTransfer: mockObject<Database['interopTransfer']>({
-          getByType,
-        }),
-      }),
-    )
+    const caller = createCaller({
+      interopTransfer: {
+        getByType,
+      } as unknown as Database['interopTransfer'],
+    } as unknown as Database)
 
     await caller.details({ type: 'deposit', range: 'all' })
 

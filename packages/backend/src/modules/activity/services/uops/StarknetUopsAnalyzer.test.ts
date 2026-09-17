@@ -1,5 +1,4 @@
 import type { Block } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it } from 'vitest'
 import { StarknetUopsAnalyzer } from './StarknetUopsAnalyzer'
 
@@ -8,7 +7,7 @@ describe(StarknetUopsAnalyzer.name, () => {
 
   describe(StarknetUopsAnalyzer.prototype.calculateUops.name, () => {
     it('gets the operations count', () => {
-      const block = mockObject<Block>({
+      const block = {
         number: 3001,
         transactions: [
           mockTx('DEPLOY_ACCOUNT'),
@@ -16,7 +15,7 @@ describe(StarknetUopsAnalyzer.name, () => {
           mockTx('INVOKE', ['0x2', '0x12123']),
           mockTx('INVOKE', ['0x3', '0x12123']),
         ],
-      })
+      } as unknown as Block
       const uops = analyzer.calculateUops(block)
 
       expect(uops).toStrictEqual(7)

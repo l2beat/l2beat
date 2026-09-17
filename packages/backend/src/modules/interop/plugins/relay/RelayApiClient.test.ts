@@ -1,12 +1,11 @@
 import { Logger } from '@l2beat/backend-tools'
 import type { HttpClient } from '@l2beat/shared'
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 import { RelayApiClient } from './RelayApiClient'
 
 describe(RelayApiClient.name, () => {
   it('rejects a non-positive rate limit', () => {
-    const httpClient = mockObject<HttpClient>({ fetchRaw: vi.fn() })
+    const httpClient = { fetchRaw: vi.fn() } as unknown as HttpClient
 
     expect(
       () =>
@@ -18,7 +17,7 @@ describe(RelayApiClient.name, () => {
 
   describe(RelayApiClient.prototype.getRequests.name, () => {
     it('calls v3 with an API key and normalizes the indexed fields', async () => {
-      const httpClient = mockObject<HttpClient>({
+      const httpClient = {
         fetchRaw: vi.fn().mockResolvedValue(
           ok(
             page(
@@ -62,7 +61,7 @@ describe(RelayApiClient.name, () => {
             ),
           ),
         ),
-      })
+      } as unknown as HttpClient
       const client = createClient(httpClient)
 
       const result = await client.getRequests({
@@ -81,7 +80,7 @@ describe(RelayApiClient.name, () => {
         updatedAt: '2026-08-24T15:03:00.000Z',
       })
 
-      const [url, init] = httpClient.fetchRaw.mock.calls[0] ?? []
+      const [url, init] = vi.mocked(httpClient.fetchRaw).mock.calls[0] ?? []
       expect(url as string).toContain('/requests/v3?')
       expect(url as string).toContain('startTimestamp=100')
       expect(url as string).toContain('endTimestamp=200')
@@ -91,7 +90,7 @@ describe(RelayApiClient.name, () => {
     it('falls back to the quoted route when actual data is missing', async () => {
       const quotedInput = amount('quoted-in', '0xsource')
       const quotedOutput = amount('quoted-out', '0xdestination')
-      const httpClient = mockObject<HttpClient>({
+      const httpClient = {
         fetchRaw: vi.fn().mockResolvedValue(
           ok(
             page(
@@ -110,7 +109,7 @@ describe(RelayApiClient.name, () => {
             ),
           ),
         ),
-      })
+      } as unknown as HttpClient
 
       const result = await createClient(httpClient).getRequests()
 
@@ -122,10 +121,10 @@ describe(RelayApiClient.name, () => {
 
     it('keeps incomplete actual data and warns instead of merging the quote', async () => {
       const warn = vi.fn().mockReturnValue(undefined)
-      const logger = mockObject<Logger>({
-        for: vi.fn().mockReturnValue(mockObject<Logger>({ warn })),
-      })
-      const httpClient = mockObject<HttpClient>({
+      const logger = {
+        for: vi.fn().mockReturnValue({ warn } as unknown as Logger),
+      } as unknown as Logger
+      const httpClient = {
         fetchRaw: vi.fn().mockResolvedValue(
           ok(
             page(
@@ -149,7 +148,7 @@ describe(RelayApiClient.name, () => {
             ),
           ),
         ),
-      })
+      } as unknown as HttpClient
 
       const result = await createClient(httpClient, logger).getRequests()
 
@@ -171,13 +170,13 @@ describe(RelayApiClient.name, () => {
     })
 
     it('accepts an explicitly null status', async () => {
-      const httpClient = mockObject<HttpClient>({
+      const httpClient = {
         fetchRaw: vi
           .fn()
           .mockResolvedValue(
             ok(page([{ ...request('a'), status: null }], undefined)),
           ),
-      })
+      } as unknown as HttpClient
 
       const result = await createClient(httpClient).getRequests()
 
@@ -187,12 +186,12 @@ describe(RelayApiClient.name, () => {
 
   describe(RelayApiClient.prototype.getAllRequests.name, () => {
     it('paginates until the response is complete', async () => {
-      const httpClient = mockObject<HttpClient>({
+      const httpClient = {
         fetchRaw: vi
           .fn()
           .mockResolvedValueOnce(ok(page([request('a')], 'cursor-1')))
           .mockResolvedValueOnce(ok(page([request('b')], undefined))),
-      })
+      } as unknown as HttpClient
       const client = createClient(httpClient)
 
       const result = await client.getAllRequests({ limit: 500 })
@@ -202,11 +201,11 @@ describe(RelayApiClient.name, () => {
     })
 
     it('reports the cursor when the request limit is reached', async () => {
-      const httpClient = mockObject<HttpClient>({
+      const httpClient = {
         fetchRaw: vi
           .fn()
           .mockResolvedValue(ok(page([request('a')], 'cursor-1'))),
-      })
+      } as unknown as HttpClient
       const client = createClient(httpClient)
 
       const result = await client.getAllRequests({ limit: 1 })
@@ -216,47 +215,49 @@ describe(RelayApiClient.name, () => {
     })
 
     it('always sorts by updatedAt ascending', async () => {
-      const httpClient = mockObject<HttpClient>({
+      const httpClient = {
         fetchRaw: vi
           .fn()
           .mockResolvedValue(ok(page([request('a')], undefined))),
-      })
+      } as unknown as HttpClient
       const client = createClient(httpClient)
 
       await client.getAllRequests({ limit: 500 })
 
-      const url = httpClient.fetchRaw.mock.calls[0][0] as string
+      const url = vi.mocked(httpClient.fetchRaw).mock.calls[0][0] as string
       expect(url).toContain('sortBy=updatedAt')
       expect(url).toContain('sortDirection=asc')
     })
 
     it('retries a rate-limited page at the same cursor', async () => {
-      const httpClient = mockObject<HttpClient>({
+      const httpClient = {
         fetchRaw: vi
           .fn()
           .mockResolvedValueOnce(ok(page([request('a')], 'cursor-1')))
           .mockResolvedValueOnce(httpError(429, 'Too Many Requests'))
           .mockResolvedValueOnce(ok(page([request('b')], undefined))),
-      })
+      } as unknown as HttpClient
       const client = createClient(httpClient)
 
       const result = await client.getAllRequests({ limit: 500 })
 
       expect(result.requests.map((r) => r.id)).toStrictEqual(['a', 'b'])
       expect(httpClient.fetchRaw).toHaveBeenCalledTimes(3)
-      const failedUrl = httpClient.fetchRaw.mock.calls[1][0] as string
-      const retriedUrl = httpClient.fetchRaw.mock.calls[2][0] as string
+      const failedUrl = vi.mocked(httpClient.fetchRaw).mock
+        .calls[1][0] as string
+      const retriedUrl = vi.mocked(httpClient.fetchRaw).mock
+        .calls[2][0] as string
       expect(failedUrl).toStrictEqual(retriedUrl)
       expect(retriedUrl).toContain('continuation=cursor-1')
     })
 
     it('throws a permanent later-page failure instead of returning a partial window', async () => {
-      const httpClient = mockObject<HttpClient>({
+      const httpClient = {
         fetchRaw: vi
           .fn()
           .mockResolvedValueOnce(ok(page([request('a')], 'cursor-1')))
           .mockResolvedValueOnce(httpError(401, 'Unauthorized')),
-      })
+      } as unknown as HttpClient
       const client = createClient(httpClient)
 
       await expect(client.getAllRequests({ limit: 500 })).rejects.toThrow(
@@ -266,12 +267,12 @@ describe(RelayApiClient.name, () => {
     })
 
     it('throws an exhausted transient later-page failure instead of returning a partial window', async () => {
-      const httpClient = mockObject<HttpClient>({
+      const httpClient = {
         fetchRaw: vi
           .fn()
           .mockResolvedValueOnce(ok(page([request('a')], 'cursor-1')))
           .mockRejectedValue(new Error('network timeout')),
-      })
+      } as unknown as HttpClient
       const client = createClient(httpClient)
 
       await expect(client.getAllRequests({ limit: 500 })).rejects.toThrow(
@@ -281,11 +282,11 @@ describe(RelayApiClient.name, () => {
     })
 
     it('rejects an unchanged continuation cursor', async () => {
-      const httpClient = mockObject<HttpClient>({
+      const httpClient = {
         fetchRaw: vi
           .fn()
           .mockResolvedValue(ok(page([request('a')], 'cursor-1'))),
-      })
+      } as unknown as HttpClient
       const client = createClient(httpClient)
 
       await expect(
@@ -295,7 +296,7 @@ describe(RelayApiClient.name, () => {
     })
 
     it('rejects an invalid request limit before calling the API', async () => {
-      const httpClient = mockObject<HttpClient>({ fetchRaw: vi.fn() })
+      const httpClient = { fetchRaw: vi.fn() } as unknown as HttpClient
       const client = createClient(httpClient)
 
       await expect(client.getAllRequests({ limit: 0 })).rejects.toThrow(

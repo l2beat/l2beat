@@ -8,7 +8,6 @@ import type {
   ReceivedPermission,
 } from '@l2beat/discovery'
 import { ChainSpecificAddress, Hash256, UnixTime } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 import type { DiscoveryOutputCache } from './DiscoveryOutputCache'
 import { UpdateDiffer } from './UpdateDiffer'
@@ -159,14 +158,14 @@ describe(UpdateDiffer.name, () => {
 
   describe(UpdateDiffer.prototype.getUpdateDiffs.name, () => {
     it('detects implementation changes', () => {
-      const configReader = mockObject<ConfigReader>({
+      const configReader = {
         readDiscovery: vi.fn().mockReturnValue(mockProject),
-      })
+      } as unknown as ConfigReader
 
       const updateDiffer = new UpdateDiffer(
         configReader,
-        mockObject<Database>({}),
-        mockObject<DiscoveryOutputCache>(),
+        {} as unknown as Database,
+        {} as unknown as DiscoveryOutputCache,
         Logger.SILENT,
       )
       const timestamp = UnixTime.now()
@@ -182,8 +181,8 @@ describe(UpdateDiffer.name, () => {
 
       const result = updateDiffer.getUpdateDiffs(
         [diff],
-        mockObject<EntryParameters[]>(),
-        mockObject<EntryParameters[]>(),
+        {} as unknown as EntryParameters[],
+        {} as unknown as EntryParameters[],
         PROJECT_A,
         timestamp,
         123,
@@ -203,14 +202,14 @@ describe(UpdateDiffer.name, () => {
     })
 
     it('detects high severity field changes', () => {
-      const configReader = mockObject<ConfigReader>({
+      const configReader = {
         readDiscovery: vi.fn().mockReturnValue(mockProject),
-      })
+      } as unknown as ConfigReader
 
       const updateDiffer = new UpdateDiffer(
         configReader,
-        mockObject<Database>({}),
-        mockObject<DiscoveryOutputCache>(),
+        {} as unknown as Database,
+        {} as unknown as DiscoveryOutputCache,
         Logger.SILENT,
       )
       const timestamp = UnixTime.now()
@@ -227,8 +226,8 @@ describe(UpdateDiffer.name, () => {
 
       const result = updateDiffer.getUpdateDiffs(
         [diff],
-        mockObject<EntryParameters[]>(),
-        mockObject<EntryParameters[]>(),
+        {} as unknown as EntryParameters[],
+        {} as unknown as EntryParameters[],
         PROJECT_A,
         timestamp,
         123,
@@ -366,22 +365,22 @@ describe(UpdateDiffer.name, () => {
     for (const [label, field, previous, latest, expected] of upgradeCases) {
       it(`grades an upgrader change: ${label}`, () => {
         const updateDiffer = new UpdateDiffer(
-          mockObject<ConfigReader>({
+          {
             readDiscovery: vi.fn().mockReturnValue(mockProject),
-          }),
-          mockObject<Database>({}),
-          mockObject<DiscoveryOutputCache>(),
+          } as unknown as ConfigReader,
+          {} as unknown as Database,
+          {} as unknown as DiscoveryOutputCache,
           Logger.SILENT,
         )
         const address = ChainSpecificAddress.random()
 
         const asEntries = (names: string[]) => [
-          mockObject<EntryParameters>({
+          {
             address,
-            receivedPermissions: names.map((permission) =>
-              mockObject<ReceivedPermission>({ permission } as never),
+            receivedPermissions: names.map(
+              (permission) => ({ permission }) as unknown as ReceivedPermission,
             ),
-          }),
+          } as unknown as EntryParameters,
         ]
 
         const result = updateDiffer.getUpdateDiffs(
@@ -401,14 +400,14 @@ describe(UpdateDiffer.name, () => {
     }
 
     it('detects upgrade changes', () => {
-      const configReader = mockObject<ConfigReader>({
+      const configReader = {
         readDiscovery: vi.fn().mockReturnValue(mockProject),
-      })
+      } as unknown as ConfigReader
 
       const updateDiffer = new UpdateDiffer(
         configReader,
-        mockObject<Database>({}),
-        mockObject<DiscoveryOutputCache>(),
+        {} as unknown as Database,
+        {} as unknown as DiscoveryOutputCache,
         Logger.SILENT,
       )
       const timestamp = UnixTime.now()
@@ -427,20 +426,20 @@ describe(UpdateDiffer.name, () => {
         ],
       }
 
-      const latestDiscovery = mockObject<DiscoveryOutput>({
+      const latestDiscovery = {
         entries: [
-          mockObject<EntryParameters>({
+          {
             address,
             receivedPermissions: [
-              mockObject<ReceivedPermission>(),
-              mockObject<ReceivedPermission>(),
-              mockObject<ReceivedPermission>({
+              {} as unknown as ReceivedPermission,
+              {} as unknown as ReceivedPermission,
+              {
                 permission: 'upgrade',
-              }),
+              } as unknown as ReceivedPermission,
             ],
-          }),
+          } as unknown as EntryParameters,
         ],
-      })
+      } as unknown as DiscoveryOutput
 
       const result = updateDiffer.getUpdateDiffs(
         [diff],
@@ -467,14 +466,14 @@ describe(UpdateDiffer.name, () => {
 
   describe(UpdateDiffer.prototype.getOnDiskDiscovery.name, () => {
     it('should read config from disk', () => {
-      const configReader = mockObject<ConfigReader>({
+      const configReader = {
         readDiscovery: vi.fn().mockReturnValue(undefined),
-      })
+      } as unknown as ConfigReader
 
       const updateDiffer = new UpdateDiffer(
         configReader,
-        mockObject<Database>({}),
-        mockObject<DiscoveryOutputCache>(),
+        {} as unknown as Database,
+        {} as unknown as DiscoveryOutputCache,
         Logger.SILENT,
       )
 
@@ -492,28 +491,28 @@ function differOver(discoveries: {
   const inserted: UpdateDiffRecord[] = []
   const deleted: string[] = []
   const updateDiffer = new UpdateDiffer(
-    mockObject<ConfigReader>({
-      readDiscovery: (name: string) => {
+    {
+      readDiscovery: vi.fn((name: string) => {
         const found = discoveries.onDisk[name]
         if (found === undefined) throw new Error(`Unknown project ${name}`)
         return found
-      },
-    }),
-    mockObject<Database>({
-      transaction: async (fun) => await fun(),
-      updateDiff: mockObject<Database['updateDiff']>({
-        insertMany: async (records) => {
+      }),
+    } as unknown as ConfigReader,
+    {
+      transaction: vi.fn(async (fun) => await fun()),
+      updateDiff: {
+        insertMany: vi.fn(async (records) => {
           inserted.push(...records)
           return records.length
-        },
-        deleteByProjectAndChain: async (projectId) => {
+        }),
+        deleteByProjectAndChain: vi.fn(async (projectId) => {
           deleted.push(projectId)
-        },
-      }),
-    }),
-    mockObject<DiscoveryOutputCache>({
-      get: (name: string) => discoveries.latest[name],
-    }),
+        }),
+      } as unknown as Database['updateDiff'],
+    } as unknown as Database,
+    {
+      get: vi.fn((name: string) => discoveries.latest[name]),
+    } as unknown as DiscoveryOutputCache,
     Logger.SILENT,
   )
   return Object.assign(updateDiffer, { inserted, deleted })

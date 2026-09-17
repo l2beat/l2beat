@@ -2,7 +2,6 @@ import { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
 import type { EigenApiClient } from '@l2beat/shared'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import type { TimestampDaIndexedConfig } from '../../../../config/Config'
 import { mockDatabase } from '../../../../test/database'
@@ -530,22 +529,22 @@ function mockIndexer($: {
     total_size_mb: number
   }[]
 }) {
-  const repository = mockObject<Database['dataAvailability']>({
+  const repository = {
     deleteByConfigIds: vi.fn().mockResolvedValue(10),
     deleteByConfigurationId: vi.fn().mockResolvedValue(10),
     deleteByConfigInTimeRange: vi.fn().mockResolvedValue(10),
     upsertMany: vi.fn().mockResolvedValue(undefined),
-  })
+  } as unknown as Database['dataAvailability']
 
-  const syncMetadataRepository = mockObject<Database['syncMetadata']>({
+  const syncMetadataRepository = {
     updateSyncedUntil: vi.fn().mockResolvedValue(undefined),
-  })
+  } as unknown as Database['syncMetadata']
 
-  const eigenClient = mockObject<EigenApiClient>({
+  const eigenClient = {
     getByProjectData: vi.fn().mockResolvedValue($.projectData ?? []),
-  })
+  } as unknown as EigenApiClient
 
-  const indexerService = mockObject<IndexerService>({
+  const indexerService = {
     getSavedConfigurations: vi
       .fn()
       .mockResolvedValue($.savedConfigurations ?? []),
@@ -556,7 +555,7 @@ function mockIndexer($: {
     setInitialState: vi.fn().mockResolvedValue(undefined),
     setSafeHeight: vi.fn().mockResolvedValue(undefined),
     getSafeHeight: vi.fn().mockResolvedValue(0),
-  })
+  } as unknown as IndexerService
 
   const db = mockDatabase({
     transaction: vi.fn(async (fun) => await fun()),

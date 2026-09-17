@@ -1,4 +1,3 @@
-import { mockObject } from '@l2beat/test-utils'
 import type { jwtVerify } from 'jose'
 import { describe, expect, it } from 'vitest'
 import type {
@@ -12,14 +11,14 @@ const BACKOFFICE_TOKEN = 'backoffice-token-abcd-1234'
 /** Placeholder JWKS passed to jwtVerify; tests stub jwtVerifyFn so value is unused. */
 const mockJwks = {} as BackofficeZeroTrustAuthConfig['JWKS']
 
-const mockAuth = mockObject<BackofficeAuthConfig>({
-  zeroTrust: mockObject<BackofficeZeroTrustAuthConfig>({
+const mockAuth = {
+  zeroTrust: {
     JWKS: mockJwks,
     aud: 'test-audience',
     teamDomain: 'https://test.cloudflareaccess.com',
-  }),
+  } as unknown as BackofficeZeroTrustAuthConfig,
   authToken: BACKOFFICE_TOKEN,
-})
+} as unknown as BackofficeAuthConfig
 
 describe(getSession.name, () => {
   it('works as expected when auth is disabled', async () => {

@@ -1,6 +1,5 @@
 import type { InteropPluginName } from '@l2beat/config'
 import type { Database } from '@l2beat/database'
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it } from 'vitest'
 import { createCallerFactory } from '../../../../../../trpc/init'
 import { createSummaryRouter } from './summary'
@@ -63,7 +62,7 @@ describe(createSummaryRouter.name, () => {
     )
     const caller = callerFactory({
       headers: new Headers(),
-      db: mockObject<Database>({}),
+      db: {} as unknown as Database,
       session: { email: 'dev@l2beat.com' },
     })
 

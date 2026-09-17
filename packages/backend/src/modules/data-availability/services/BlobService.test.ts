@@ -1,6 +1,5 @@
 import type { BlobRecord, Database } from '@l2beat/database'
 import { ETHEREUM_BLOB_SIZE_BYTES, type EthereumBlob } from '@l2beat/shared'
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 import { mockDatabase } from '../../../test/database'
 import { BlobService } from './BlobService'
@@ -21,9 +20,9 @@ describe(BlobService.name, () => {
         },
       ]
 
-      const mockBlobRepository = mockObject<Database['blobs']>({
+      const mockBlobRepository = {
         insertMany: vi.fn().mockResolvedValue(undefined),
-      })
+      } as unknown as Database['blobs']
 
       const mockDb = mockDatabase({
         blobs: mockBlobRepository,
@@ -61,9 +60,9 @@ describe(BlobService.name, () => {
         },
       ]
 
-      const mockBlobRepository = mockObject<Database['blobs']>({
+      const mockBlobRepository = {
         getByBlockRangeInclusive: vi.fn().mockResolvedValue(records),
-      })
+      } as unknown as Database['blobs']
 
       const mockDb = mockDatabase({
         blobs: mockBlobRepository,
@@ -96,9 +95,9 @@ describe(BlobService.name, () => {
   describe(BlobService.prototype.deleteAfter.name, () => {
     it('should delete blobs', async () => {
       const deletedRecords = 2
-      const mockBlobRepository = mockObject<Database['blobs']>({
+      const mockBlobRepository = {
         deleteAfter: vi.fn().mockResolvedValue(deletedRecords),
-      })
+      } as unknown as Database['blobs']
 
       const mockDb = mockDatabase({
         blobs: mockBlobRepository,

@@ -13,7 +13,6 @@ import {
   type TrackedTxsConfigSubtype,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { utils } from 'ethers'
 import { readFileSync } from 'fs'
 import { describe, expect, it, vi } from 'vitest'
@@ -70,7 +69,7 @@ describe(transformFunctionCallsQueryResult.name, () => {
     const livenessId = createTrackedTxId.random()
     const costsId = createTrackedTxId.random()
     const warn = vi.fn().mockReturnValue(undefined)
-    const logger = mockObject<Logger>({ warn })
+    const logger = { warn } as unknown as Logger
     const common = {
       projectId: ProjectId('project'),
       subtype: 'stateUpdates' as const,

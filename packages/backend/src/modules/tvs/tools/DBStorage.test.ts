@@ -1,7 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 import { DBStorage } from './DBStorage'
 
@@ -40,14 +39,14 @@ describe(DBStorage.name, () => {
         },
       ]
 
-      const tvsPrice = mockObject<Database['tvsPrice']>({
+      const tvsPrice = {
         getPricesInRange: vi.fn().mockResolvedValue(mockPrices),
-      })
+      } as unknown as Database['tvsPrice']
 
       const storage = new DBStorage(
-        mockObject<Database>({
+        {
           tvsPrice,
-        }),
+        } as unknown as Database,
         Logger.SILENT,
       )
 
@@ -74,14 +73,14 @@ describe(DBStorage.name, () => {
       const timestamp = UnixTime(100)
       const configId = 'config1'.repeat(2)
 
-      const tvsPrice = mockObject<Database['tvsPrice']>({
+      const tvsPrice = {
         getPricesInRange: vi.fn().mockResolvedValue([]),
-      })
+      } as unknown as Database['tvsPrice']
 
       const storage = new DBStorage(
-        mockObject<Database>({
+        {
           tvsPrice,
-        }),
+        } as unknown as Database,
         Logger.SILENT,
       )
 
@@ -127,14 +126,14 @@ describe(DBStorage.name, () => {
         },
       ]
 
-      const tvsAmount = mockObject<Database['tvsAmount']>({
+      const tvsAmount = {
         getAmountsInRange: vi.fn().mockResolvedValue(mockAmounts),
-      })
+      } as unknown as Database['tvsAmount']
 
       const storage = new DBStorage(
-        mockObject<Database>({
+        {
           tvsAmount,
-        }),
+        } as unknown as Database,
         Logger.SILENT,
       )
 
@@ -161,14 +160,14 @@ describe(DBStorage.name, () => {
       const timestamp = UnixTime(100)
       const configId = 'config1'.repeat(2)
 
-      const tvsAmount = mockObject<Database['tvsAmount']>({
+      const tvsAmount = {
         getAmountsInRange: vi.fn().mockResolvedValue([]),
-      })
+      } as unknown as Database['tvsAmount']
 
       const storage = new DBStorage(
-        mockObject<Database>({
+        {
           tvsAmount,
-        }),
+        } as unknown as Database,
         Logger.SILENT,
       )
 
@@ -207,14 +206,14 @@ describe(DBStorage.name, () => {
         priceUsd: 900,
       }
 
-      const tvsPrice = mockObject<Database['tvsPrice']>({
+      const tvsPrice = {
         getPrice: vi.fn().mockResolvedValue(dbPrice),
-      })
+      } as unknown as Database['tvsPrice']
 
       const storage = new DBStorage(
-        mockObject<Database>({
+        {
           tvsPrice,
-        }),
+        } as unknown as Database,
         Logger.SILENT,
       )
       ;(storage as any).prices = new Map([[timestamp, new Map()]])
@@ -229,14 +228,14 @@ describe(DBStorage.name, () => {
       const timestamp = UnixTime(100)
       const configId = 'config1'.repeat(2)
 
-      const tvsPrice = mockObject<Database['tvsPrice']>({
+      const tvsPrice = {
         getPrice: vi.fn().mockResolvedValue(undefined),
-      })
+      } as unknown as Database['tvsPrice']
 
       const storage = new DBStorage(
-        mockObject<Database>({
+        {
           tvsPrice,
-        }),
+        } as unknown as Database,
         Logger.SILENT,
         true,
       )
@@ -260,15 +259,15 @@ describe(DBStorage.name, () => {
         priceUsd: 900,
       }
 
-      const tvsPrice = mockObject<Database['tvsPrice']>({
+      const tvsPrice = {
         getPrice: vi.fn().mockResolvedValue(undefined),
         getLatestPriceBefore: vi.fn().mockResolvedValue(fallbackPrice),
-      })
+      } as unknown as Database['tvsPrice']
 
       const storage = new DBStorage(
-        mockObject<Database>({
+        {
           tvsPrice,
-        }),
+        } as unknown as Database,
         Logger.SILENT,
       )
       ;(storage as any).prices = new Map([[timestamp, new Map()]])
@@ -310,14 +309,14 @@ describe(DBStorage.name, () => {
         amount: 200n,
       }
 
-      const tvsAmount = mockObject<Database['tvsAmount']>({
+      const tvsAmount = {
         getAmount: vi.fn().mockResolvedValue(dbAmount),
-      })
+      } as unknown as Database['tvsAmount']
 
       const storage = new DBStorage(
-        mockObject<Database>({
+        {
           tvsAmount,
-        }),
+        } as unknown as Database,
         Logger.SILENT,
       )
       ;(storage as any).amounts = new Map([[timestamp, new Map()]])
@@ -340,15 +339,15 @@ describe(DBStorage.name, () => {
         amount: 200n,
       }
 
-      const tvsAmount = mockObject<Database['tvsAmount']>({
+      const tvsAmount = {
         getAmount: vi.fn().mockResolvedValue(undefined),
         getLatestAmountBefore: vi.fn().mockResolvedValue(fallbackAmount),
-      })
+      } as unknown as Database['tvsAmount']
 
       const storage = new DBStorage(
-        mockObject<Database>({
+        {
           tvsAmount,
-        }),
+        } as unknown as Database,
         Logger.SILENT,
       )
       ;(storage as any).amounts = new Map([[timestamp, new Map()]])

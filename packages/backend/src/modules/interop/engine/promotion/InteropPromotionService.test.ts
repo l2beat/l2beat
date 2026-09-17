@@ -1,7 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 import {
   InteropPromotionService,
@@ -237,9 +236,9 @@ function setup(
   /** Whether the sticky auto write applies; false ⇒ a manual verdict was preserved. */
   upsertAutoApplied = true,
 ) {
-  const statusRepository = mockObject<Database['interopAggregateStatus']>({
+  const statusRepository = {
     upsertAuto: vi.fn().mockResolvedValue(upsertAutoApplied),
-  })
+  } as unknown as Database['interopAggregateStatus']
   const service = new InteropPromotionService({
     statusRepository,
     rules,

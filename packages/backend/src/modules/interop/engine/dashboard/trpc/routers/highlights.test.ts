@@ -6,7 +6,6 @@ import type {
   TokenValueRecord,
 } from '@l2beat/database'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import type { TokenDbClient } from '@l2beat/token-backend'
 import { describe, expect, it, type Mock, vi } from 'vitest'
 import { createCallerFactory } from '../../../../../../trpc/init'
@@ -932,49 +931,47 @@ function createCaller(options: {
   const callerFactory = createCallerFactory(
     createHighlightsRouter({
       chains: options.chains ?? DEFAULT_CHAINS,
-      tokenDbClient: mockObject<TokenDbClient>({
-        abstractTokens: mockObject<TokenDbClient['abstractTokens']>({
-          getById: mockObject<TokenDbClient['abstractTokens']['getById']>({
+      tokenDbClient: {
+        abstractTokens: {
+          getById: {
             query:
               options.getAbstractTokenById ??
               vi.fn().mockResolvedValue(undefined),
-          }),
-        }),
-      }),
+          } as unknown as TokenDbClient['abstractTokens']['getById'],
+        } as unknown as TokenDbClient['abstractTokens'],
+      } as unknown as TokenDbClient,
     }),
   )
   return callerFactory({
     headers: new Headers(),
-    db: mockObject<Database>({
-      aggregatedInteropTransfer: mockObject<
-        Database['aggregatedInteropTransfer']
-      >({
+    db: {
+      aggregatedInteropTransfer: {
         getLatestTimestamp: vi.fn().mockResolvedValue(options.latestTimestamp),
         getMaxTimestampAtOrBefore:
           options.getTransferMaxTimestampAtOrBefore ??
           vi.fn().mockResolvedValue(undefined),
         getByTimestamp:
           options.getTransferByTimestamp ?? vi.fn().mockResolvedValue([]),
-      }),
-      aggregatedInteropToken: mockObject<Database['aggregatedInteropToken']>({
+      } as unknown as Database['aggregatedInteropTransfer'],
+      aggregatedInteropToken: {
         getByTimestamp:
           options.getTokenByTimestamp ?? vi.fn().mockResolvedValue([]),
-      }),
-      activity: mockObject<Database['activity']>({
+      } as unknown as Database['aggregatedInteropToken'],
+      activity: {
         getMaxTimestampAtOrBeforeForProjects:
           options.getActivityMaxTimestampAtOrBeforeForProjects ??
           vi.fn().mockResolvedValue(undefined),
         getByTimestamp:
           options.getActivityByTimestamp ?? vi.fn().mockResolvedValue([]),
-      }),
-      tvsTokenValue: mockObject<Database['tvsTokenValue']>({
+      } as unknown as Database['activity'],
+      tvsTokenValue: {
         getMaxTimestampAtOrBeforeForProjects:
           options.getTvsMaxTimestampAtOrBeforeForProjects ??
           vi.fn().mockResolvedValue(undefined),
         getByTimestamp:
           options.getTvsByTimestamp ?? vi.fn().mockResolvedValue([]),
-      }),
-    }),
+      } as unknown as Database['tvsTokenValue'],
+    } as unknown as Database,
     session: { email: 'dev@l2beat.com' },
   })
 }

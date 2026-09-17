@@ -7,7 +7,6 @@ import type {
   TotalSupplyProvider,
 } from '@l2beat/shared'
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { mockDatabase } from '../../../test/database'
 import type { IndexerService } from '../../../tools/uif/IndexerService'
@@ -50,19 +49,17 @@ describe(OnchainAmountIndexer.name, () => {
         mockTotalSupplyConfig2,
       ]
 
-      const syncOptimizer = mockObject<SyncOptimizer>({
+      const syncOptimizer = {
         getTimestampToSync: vi.fn().mockReturnValueOnce(timestamp),
-      })
+      } as unknown as SyncOptimizer
 
-      const tvsBlockTimestampRepository = mockObject<
-        Database['tvsBlockTimestamp']
-      >({
+      const tvsBlockTimestampRepository = {
         findBlockNumberByChainAndTimestamp: vi
           .fn()
           .mockReturnValueOnce(blockNumber),
-      })
+      } as unknown as Database['tvsBlockTimestamp']
 
-      const balanceProvider = mockObject<BalanceProvider>({
+      const balanceProvider = {
         getBalances: vi
           .fn()
           .mockReturnValueOnce([
@@ -71,26 +68,25 @@ describe(OnchainAmountIndexer.name, () => {
             BigInt(3000),
             BigInt(4000),
           ]),
-      })
+      } as unknown as BalanceProvider
 
-      const totalSupplyProvider = mockObject<TotalSupplyProvider>({
+      const totalSupplyProvider = {
         getTotalSupplies: vi
           .fn()
           .mockReturnValueOnce([BigInt(5000), BigInt(6000)]),
-      })
+      } as unknown as TotalSupplyProvider
 
-      const starknetTotalSupplyProvider =
-        mockObject<StarknetTotalSupplyProvider>({
-          getTotalSupplies: vi.fn(),
-        })
+      const starknetTotalSupplyProvider = {
+        getTotalSupplies: vi.fn(),
+      } as unknown as StarknetTotalSupplyProvider
 
-      const starknetBalanceProvider = mockObject<StarknetBalanceProvider>({
+      const starknetBalanceProvider = {
         getBalances: vi.fn(),
-      })
+      } as unknown as StarknetBalanceProvider
 
-      const tvsAmountRepository = mockObject<Database['tvsAmount']>({
+      const tvsAmountRepository = {
         upsertMany: vi.fn().mockReturnValueOnce(undefined),
-      })
+      } as unknown as Database['tvsAmount']
 
       const indexer = new OnchainAmountIndexer(
         {
@@ -106,7 +102,7 @@ describe(OnchainAmountIndexer.name, () => {
           }),
           syncOptimizer,
           parents: [],
-          indexerService: mockObject<IndexerService>({}),
+          indexerService: {} as unknown as IndexerService,
         },
         Logger.SILENT,
       )
@@ -190,40 +186,37 @@ describe(OnchainAmountIndexer.name, () => {
         mockStarknetBalanceConfig,
       ]
 
-      const syncOptimizer = mockObject<SyncOptimizer>({
+      const syncOptimizer = {
         getTimestampToSync: vi.fn().mockReturnValueOnce(timestamp),
-      })
+      } as unknown as SyncOptimizer
 
-      const tvsBlockTimestampRepository = mockObject<
-        Database['tvsBlockTimestamp']
-      >({
+      const tvsBlockTimestampRepository = {
         findBlockNumberByChainAndTimestamp: vi
           .fn()
           .mockReturnValueOnce(blockNumber),
-      })
+      } as unknown as Database['tvsBlockTimestamp']
 
-      const balanceProvider = mockObject<BalanceProvider>({
+      const balanceProvider = {
         getBalances: vi.fn(),
-      })
+      } as unknown as BalanceProvider
 
-      const totalSupplyProvider = mockObject<TotalSupplyProvider>({
+      const totalSupplyProvider = {
         getTotalSupplies: vi.fn(),
-      })
+      } as unknown as TotalSupplyProvider
 
-      const starknetTotalSupplyProvider =
-        mockObject<StarknetTotalSupplyProvider>({
-          getTotalSupplies: vi
-            .fn()
-            .mockReturnValueOnce([BigInt(1000), BigInt(2000)]),
-        })
+      const starknetTotalSupplyProvider = {
+        getTotalSupplies: vi
+          .fn()
+          .mockReturnValueOnce([BigInt(1000), BigInt(2000)]),
+      } as unknown as StarknetTotalSupplyProvider
 
-      const starknetBalanceProvider = mockObject<StarknetBalanceProvider>({
+      const starknetBalanceProvider = {
         getBalances: vi.fn().mockReturnValueOnce([BigInt(3000)]),
-      })
+      } as unknown as StarknetBalanceProvider
 
-      const tvsAmountRepository = mockObject<Database['tvsAmount']>({
+      const tvsAmountRepository = {
         upsertMany: vi.fn().mockReturnValueOnce(undefined),
-      })
+      } as unknown as Database['tvsAmount']
 
       const indexer = new OnchainAmountIndexer(
         {
@@ -239,7 +232,7 @@ describe(OnchainAmountIndexer.name, () => {
           }),
           syncOptimizer,
           parents: [],
-          indexerService: mockObject<IndexerService>({}),
+          indexerService: {} as unknown as IndexerService,
         },
         Logger.SILENT,
       )
@@ -297,24 +290,23 @@ describe(OnchainAmountIndexer.name, () => {
         EthereumAddress.random(),
       )
 
-      const syncOptimizer = mockObject<SyncOptimizer>({
+      const syncOptimizer = {
         getTimestampToSync: vi.fn().mockReturnValueOnce(timestamp),
-      })
+      } as unknown as SyncOptimizer
 
       const indexer = new OnchainAmountIndexer(
         {
           configurations: [mockEscrowConfig],
           chain: 'ethereum',
-          balanceProvider: mockObject<BalanceProvider>({}),
-          totalSupplyProvider: mockObject<TotalSupplyProvider>({}),
-          starknetTotalSupplyProvider: mockObject<StarknetTotalSupplyProvider>(
-            {},
-          ),
-          starknetBalanceProvider: mockObject<StarknetBalanceProvider>({}),
+          balanceProvider: {} as unknown as BalanceProvider,
+          totalSupplyProvider: {} as unknown as TotalSupplyProvider,
+          starknetTotalSupplyProvider:
+            {} as unknown as StarknetTotalSupplyProvider,
+          starknetBalanceProvider: {} as unknown as StarknetBalanceProvider,
           db: mockDatabase({}),
           syncOptimizer,
           parents: [],
-          indexerService: mockObject<IndexerService>({}),
+          indexerService: {} as unknown as IndexerService,
         },
         Logger.SILENT,
       )
@@ -339,32 +331,29 @@ describe(OnchainAmountIndexer.name, () => {
         EthereumAddress.random(),
       )
 
-      const syncOptimizer = mockObject<SyncOptimizer>({
+      const syncOptimizer = {
         getTimestampToSync: vi.fn().mockReturnValueOnce(timestamp),
-      })
+      } as unknown as SyncOptimizer
 
-      const tvsBlockTimestampRepository = mockObject<
-        Database['tvsBlockTimestamp']
-      >({
+      const tvsBlockTimestampRepository = {
         findBlockNumberByChainAndTimestamp: vi.fn().mockReturnValueOnce(null),
-      })
+      } as unknown as Database['tvsBlockTimestamp']
 
       const indexer = new OnchainAmountIndexer(
         {
           configurations: [mockEscrowConfig],
           chain: 'ethereum',
-          balanceProvider: mockObject<BalanceProvider>({}),
-          totalSupplyProvider: mockObject<TotalSupplyProvider>({}),
-          starknetTotalSupplyProvider: mockObject<StarknetTotalSupplyProvider>(
-            {},
-          ),
-          starknetBalanceProvider: mockObject<StarknetBalanceProvider>({}),
+          balanceProvider: {} as unknown as BalanceProvider,
+          totalSupplyProvider: {} as unknown as TotalSupplyProvider,
+          starknetTotalSupplyProvider:
+            {} as unknown as StarknetTotalSupplyProvider,
+          starknetBalanceProvider: {} as unknown as StarknetBalanceProvider,
           db: mockDatabase({
             tvsBlockTimestamp: tvsBlockTimestampRepository,
           }),
           syncOptimizer,
           parents: [],
-          indexerService: mockObject<IndexerService>({}),
+          indexerService: {} as unknown as IndexerService,
         },
         Logger.SILENT,
       )
@@ -377,9 +366,9 @@ describe(OnchainAmountIndexer.name, () => {
 
   describe(OnchainAmountIndexer.prototype.trimData.name, () => {
     it('deletes records for configurations in time range', async () => {
-      const tvsAmountRepository = mockObject<Database['tvsAmount']>({
+      const tvsAmountRepository = {
         deleteByConfigs: vi.fn().mockReturnValue(5),
-      })
+      } as unknown as Database['tvsAmount']
 
       const mockEscrowConfig = escrow(
         'escrow-config-1',
@@ -396,16 +385,15 @@ describe(OnchainAmountIndexer.name, () => {
         {
           configurations: [mockEscrowConfig, mockTotalSupplyConfig],
           chain: 'ethereum',
-          balanceProvider: mockObject<BalanceProvider>({}),
-          totalSupplyProvider: mockObject<TotalSupplyProvider>({}),
-          starknetTotalSupplyProvider: mockObject<StarknetTotalSupplyProvider>(
-            {},
-          ),
-          starknetBalanceProvider: mockObject<StarknetBalanceProvider>({}),
+          balanceProvider: {} as unknown as BalanceProvider,
+          totalSupplyProvider: {} as unknown as TotalSupplyProvider,
+          starknetTotalSupplyProvider:
+            {} as unknown as StarknetTotalSupplyProvider,
+          starknetBalanceProvider: {} as unknown as StarknetBalanceProvider,
           db: mockDatabase({ tvsAmount: tvsAmountRepository }),
-          syncOptimizer: mockObject<SyncOptimizer>({}),
+          syncOptimizer: {} as unknown as SyncOptimizer,
           parents: [],
-          indexerService: mockObject<IndexerService>({}),
+          indexerService: {} as unknown as IndexerService,
         },
         Logger.SILENT,
       )

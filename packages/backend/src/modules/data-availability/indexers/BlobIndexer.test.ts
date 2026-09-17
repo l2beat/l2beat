@@ -5,7 +5,6 @@ import {
   ETHEREUM_BLOB_SIZE_BYTES,
   type EthereumBlob,
 } from '@l2beat/shared'
-import { mockObject } from '@l2beat/test-utils'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import type { IndexerService } from '../../../tools/uif/IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from '../../../tools/uif/ids'
@@ -121,15 +120,15 @@ function mockIndexer($: {
   indexerService?: IndexerService
   blobs?: DaBlob[]
 }) {
-  const blobService = mockObject<BlobService>({
+  const blobService = {
     get: vi.fn().mockResolvedValue($.blobs ?? []),
     save: vi.fn().mockResolvedValue(undefined),
     deleteAfter: vi.fn().mockResolvedValue({}),
-  })
+  } as unknown as BlobService
 
-  const daProvider = mockObject<DaProvider>({
-    getBlobs: async () => $.blobs ?? [], // Empty response
-  })
+  const daProvider = {
+    getBlobs: vi.fn(async () => $.blobs ?? []), // Empty response
+  } as unknown as DaProvider
 
   const indexer = new BlobIndexer(
     {
@@ -137,7 +136,7 @@ function mockIndexer($: {
       daLayer: DA_LAYER,
       batchSize: $.batchSize ?? 100,
       parents: [],
-      indexerService: $.indexerService ?? mockObject<IndexerService>(),
+      indexerService: $.indexerService ?? ({} as unknown as IndexerService),
       blobService,
       minHeight: 0,
     },

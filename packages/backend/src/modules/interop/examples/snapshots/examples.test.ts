@@ -1,6 +1,5 @@
 import { type Env, Logger } from '@l2beat/backend-tools'
 import type { HttpClient } from '@l2beat/shared'
-import { mockObject } from '@l2beat/test-utils'
 import type { TokenDbClient } from '@l2beat/token-backend'
 import { join } from 'path'
 import { describe, expect, it } from 'vitest'
@@ -56,10 +55,10 @@ describe('interop examples', () => {
           exampleId: example,
           example: definition,
           logger: Logger.ERROR,
-          http: mockObject<HttpClient>({}),
-          tokenDbClient: mockObject<TokenDbClient>({}),
+          http: {} as unknown as HttpClient,
+          tokenDbClient: {} as unknown as TokenDbClient,
           snapshotService,
-          env: mockObject<Env>({}),
+          env: {} as unknown as Env,
           mode: 'replay',
           inputs,
         })

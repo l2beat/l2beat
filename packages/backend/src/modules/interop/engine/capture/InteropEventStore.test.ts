@@ -1,6 +1,5 @@
 import type { Database, InteropEventRecord } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 import {
   createInteropEventType,
@@ -17,10 +16,10 @@ describe(InteropEventStore.name, () => {
     const event = makeEvent(plugin)
     const insertMany = vi.fn().mockResolvedValue(undefined)
     const store = makeStore(plugin, {
-      interopEvent: mockObject<Database['interopEvent']>({
+      interopEvent: {
         insertMany,
         getUnmatched: vi.fn().mockResolvedValue([]),
-      }),
+      } as unknown as Database['interopEvent'],
     })
 
     await store.saveNewEvents([event])
@@ -40,10 +39,10 @@ describe(InteropEventStore.name, () => {
     const plugin = makePlugin()
     const event = makeEvent(plugin)
     const store = makeStore(plugin, {
-      interopEvent: mockObject<Database['interopEvent']>({
+      interopEvent: {
         insertMany: vi.fn().mockResolvedValue(undefined),
         getUnmatched: vi.fn().mockResolvedValue([toRecord(event)]),
-      }),
+      } as unknown as Database['interopEvent'],
     })
 
     await store.start()
@@ -63,14 +62,14 @@ describe(InteropEventStore.name, () => {
     const plugin = makePlugin()
     const event = makeEvent(plugin)
     const store = makeStore(plugin, {
-      interopEvent: mockObject<Database['interopEvent']>({
+      interopEvent: {
         insertMany: vi.fn().mockResolvedValue(undefined),
         getUnmatched: vi
           .fn()
           .mockResolvedValue([
             toRecord(event, { derivedCheckedInHistory: true }),
           ]),
-      }),
+      } as unknown as Database['interopEvent'],
     })
 
     await store.start()
@@ -92,12 +91,12 @@ describe(InteropEventStore.name, () => {
     const plugin = makePlugin()
     const event = makeEvent(plugin)
     const store = makeStore(plugin, {
-      interopEvent: mockObject<Database['interopEvent']>({
+      interopEvent: {
         insertMany: vi.fn().mockResolvedValue(undefined),
         getUnmatched: vi
           .fn()
           .mockResolvedValue([toRecord(event, { derivedFulfilled: true })]),
-      }),
+      } as unknown as Database['interopEvent'],
     })
 
     await store.start()
@@ -111,12 +110,12 @@ describe(InteropEventStore.name, () => {
     const event = makeEvent(plugin)
     const store = makeStore(plugin, {
       transaction: vi.fn().mockImplementation(async (cb) => await cb()),
-      interopEvent: mockObject<Database['interopEvent']>({
+      interopEvent: {
         insertMany: vi.fn().mockResolvedValue(undefined),
         getUnmatched: vi.fn().mockResolvedValue([]),
         updateMatched: vi.fn().mockResolvedValue(undefined),
         updateUnsupported: vi.fn().mockResolvedValue(undefined),
-      }),
+      } as unknown as Database['interopEvent'],
     })
 
     await store.saveNewEvents([event])
@@ -132,11 +131,11 @@ describe(InteropEventStore.name, () => {
     const plugin = makePlugin()
     const event = makeEvent(plugin, { expiresAt: UnixTime(5) })
     const store = makeStore(plugin, {
-      interopEvent: mockObject<Database['interopEvent']>({
+      interopEvent: {
         insertMany: vi.fn().mockResolvedValue(undefined),
         getUnmatched: vi.fn().mockResolvedValue([]),
         deleteExpired: vi.fn().mockResolvedValue(1),
-      }),
+      } as unknown as Database['interopEvent'],
     })
 
     await store.saveNewEvents([event])
@@ -149,11 +148,11 @@ describe(InteropEventStore.name, () => {
     const plugin = makePlugin()
     const event = makeEvent(plugin)
     const store = makeStore(plugin, {
-      interopEvent: mockObject<Database['interopEvent']>({
+      interopEvent: {
         insertMany: vi.fn().mockResolvedValue(undefined),
         getUnmatched: vi.fn().mockResolvedValue([]),
         deleteAllForPlugin: vi.fn().mockResolvedValue(1),
-      }),
+      } as unknown as Database['interopEvent'],
     })
 
     await store.saveNewEvents([event])
@@ -169,10 +168,10 @@ describe(InteropEventStore.name, () => {
     const store = makeStore(
       plugin,
       {
-        interopEvent: mockObject<Database['interopEvent']>({
+        interopEvent: {
           insertMany: vi.fn().mockResolvedValue(undefined),
           getUnmatched: vi.fn().mockResolvedValue([]),
-        }),
+        } as unknown as Database['interopEvent'],
       },
       1,
     )
@@ -195,11 +194,11 @@ describe(InteropEventStore.name, () => {
     const event = makeEvent(plugin)
     const updateDerivedFulfilled = vi.fn().mockResolvedValue(undefined)
     const store = makeStore(plugin, {
-      interopEvent: mockObject<Database['interopEvent']>({
+      interopEvent: {
         insertMany: vi.fn().mockResolvedValue(undefined),
         getUnmatched: vi.fn().mockResolvedValue([]),
         updateDerivedFulfilled,
-      }),
+      } as unknown as Database['interopEvent'],
     })
 
     await store.saveNewEvents([event])
@@ -282,7 +281,7 @@ function toRecord(
 }
 
 function mockDb(overrides: Partial<Database> = {}): Database {
-  return mockObject<Database>({
+  return {
     ...overrides,
-  })
+  } as unknown as Database
 }

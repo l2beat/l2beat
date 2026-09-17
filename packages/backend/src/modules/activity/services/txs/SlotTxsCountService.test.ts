@@ -1,7 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 import type { SvmBlockProvider } from '@l2beat/shared'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 import { activityRecord } from '../../test/activityRecord'
 import { SlotTxsCountService } from './SlotTxsCountService'
@@ -10,7 +9,7 @@ describe(SlotTxsCountService.name, () => {
   describe(SlotTxsCountService.prototype.getTxsCount.name, () => {
     it('should return txs count', async () => {
       const START = UnixTime.now()
-      const mockProvider = mockObject<SvmBlockProvider>({
+      const mockProvider = {
         chain: 'ethereum',
         getBlockWithTransactions: vi
           .fn()
@@ -30,7 +29,7 @@ describe(SlotTxsCountService.name, () => {
             transactionsCount: 2,
             number: 3,
           }),
-      })
+      } as unknown as SvmBlockProvider
 
       const service = new SlotTxsCountService(
         {

@@ -2,7 +2,6 @@ import { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
 import type { BlockTimestampProvider } from '@l2beat/shared'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 import type { ActivityConfigProject } from '../../../config/Config'
 import type { Clock } from '../../../tools/Clock'
@@ -13,23 +12,23 @@ const LAST_HOUR = UnixTime.now() - 1 * UnixTime.HOUR
 describe(BlockTargetIndexer.name, () => {
   describe(BlockTargetIndexer.prototype.start.name, () => {
     it('calls clock.onNewHour', async () => {
-      const clock = mockObject<Clock>({
-        onNewHour: () => () => {},
-        getLastHour: () => LAST_HOUR,
-      })
+      const clock = {
+        onNewHour: vi.fn(() => () => {}),
+        getLastHour: vi.fn(() => LAST_HOUR),
+      } as unknown as Clock
 
-      const blockTimestampProvider = mockObject<BlockTimestampProvider>({
+      const blockTimestampProvider = {
         getBlockNumberAtOrBefore: vi.fn().mockResolvedValue(0),
-      })
+      } as unknown as BlockTimestampProvider
       const indexer = new BlockTargetIndexer(
         Logger.SILENT,
         clock,
         blockTimestampProvider,
         getMockDb(),
-        mockObject<ActivityConfigProject>({
+        {
           id: ProjectId('mock'),
           chainName: 'chain',
-        }),
+        } as unknown as ActivityConfigProject,
       )
 
       await indexer.start()
@@ -40,23 +39,23 @@ describe(BlockTargetIndexer.name, () => {
 
   describe(BlockTargetIndexer.prototype.tick.name, () => {
     it('returns block number', async () => {
-      const clock = mockObject<Clock>({
-        getLastHour: () => LAST_HOUR,
-      })
+      const clock = {
+        getLastHour: vi.fn(() => LAST_HOUR),
+      } as unknown as Clock
 
       const BLOCK_NUMBER = 123
-      const blockTimestampProvider = mockObject<BlockTimestampProvider>({
+      const blockTimestampProvider = {
         getBlockNumberAtOrBefore: vi.fn().mockResolvedValue(BLOCK_NUMBER),
-      })
+      } as unknown as BlockTimestampProvider
       const indexer = new BlockTargetIndexer(
         Logger.SILENT,
         clock,
         blockTimestampProvider,
         getMockDb(),
-        mockObject<ActivityConfigProject>({
+        {
           id: ProjectId('mock'),
           chainName: 'chain',
-        }),
+        } as unknown as ActivityConfigProject,
       )
 
       const result = await indexer.tick()
@@ -69,26 +68,26 @@ describe(BlockTargetIndexer.name, () => {
     })
 
     it('throws when fetched block number is smaller than previously fetched', async () => {
-      const clock = mockObject<Clock>({
-        getLastHour: () => LAST_HOUR,
-      })
+      const clock = {
+        getLastHour: vi.fn(() => LAST_HOUR),
+      } as unknown as Clock
 
       const BLOCK_NUMBER = 123
-      const blockTimestampProvider = mockObject<BlockTimestampProvider>({
+      const blockTimestampProvider = {
         getBlockNumberAtOrBefore: vi
           .fn()
           .mockResolvedValueOnce(BLOCK_NUMBER)
           .mockResolvedValueOnce(BLOCK_NUMBER - 1),
-      })
+      } as unknown as BlockTimestampProvider
       const indexer = new BlockTargetIndexer(
         Logger.SILENT,
         clock,
         blockTimestampProvider,
         getMockDb(),
-        mockObject<ActivityConfigProject>({
+        {
           id: ProjectId('mock'),
           chainName: 'chain',
-        }),
+        } as unknown as ActivityConfigProject,
       )
 
       await indexer.tick()
@@ -98,26 +97,26 @@ describe(BlockTargetIndexer.name, () => {
     })
 
     it('throws when fetched block number is smaller than previously fetched', async () => {
-      const clock = mockObject<Clock>({
-        getLastHour: () => LAST_HOUR,
-      })
+      const clock = {
+        getLastHour: vi.fn(() => LAST_HOUR),
+      } as unknown as Clock
 
       const BLOCK_NUMBER = 123
-      const blockTimestampProvider = mockObject<BlockTimestampProvider>({
+      const blockTimestampProvider = {
         getBlockNumberAtOrBefore: vi
           .fn()
           .mockResolvedValueOnce(BLOCK_NUMBER)
           .mockResolvedValueOnce(BLOCK_NUMBER - 1),
-      })
+      } as unknown as BlockTimestampProvider
       const indexer = new BlockTargetIndexer(
         Logger.SILENT,
         clock,
         blockTimestampProvider,
         getMockDb(),
-        mockObject<ActivityConfigProject>({
+        {
           id: ProjectId('mock'),
           chainName: 'chain',
-        }),
+        } as unknown as ActivityConfigProject,
       )
 
       await indexer.tick()
@@ -127,32 +126,32 @@ describe(BlockTargetIndexer.name, () => {
     })
 
     it('throws when first fetched is smaller than last processed before process restart', async () => {
-      const clock = mockObject<Clock>({
-        getLastHour: () => LAST_HOUR,
+      const clock = {
+        getLastHour: vi.fn(() => LAST_HOUR),
         onNewHour: vi.fn().mockReturnValue(null),
-      })
+      } as unknown as Clock
 
       const BLOCK_NUMBER = 123
 
-      const db = mockObject<Database>({
-        activity: mockObject<Database['activity']>({
-          getLatestProcessedBlock: async () => BLOCK_NUMBER,
-        }),
-      })
+      const db = {
+        activity: {
+          getLatestProcessedBlock: vi.fn(async () => BLOCK_NUMBER),
+        } as unknown as Database['activity'],
+      } as unknown as Database
 
-      const blockTimestampProvider = mockObject<BlockTimestampProvider>({
+      const blockTimestampProvider = {
         getBlockNumberAtOrBefore: vi.fn().mockResolvedValue(BLOCK_NUMBER - 1),
-      })
+      } as unknown as BlockTimestampProvider
 
       const indexer = new BlockTargetIndexer(
         Logger.SILENT,
         clock,
         blockTimestampProvider,
         db,
-        mockObject<ActivityConfigProject>({
+        {
           id: ProjectId('mock'),
           chainName: 'chain',
-        }),
+        } as unknown as ActivityConfigProject,
       )
 
       await expect(async () => await indexer.tick()).rejects.toThrow(
@@ -163,9 +162,9 @@ describe(BlockTargetIndexer.name, () => {
 })
 
 function getMockDb() {
-  return mockObject<Database>({
-    activity: mockObject<Database['activity']>({
-      getLatestProcessedBlock: async () => undefined,
-    }),
-  })
+  return {
+    activity: {
+      getLatestProcessedBlock: vi.fn(async () => undefined),
+    } as unknown as Database['activity'],
+  } as unknown as Database
 }

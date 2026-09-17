@@ -14,7 +14,6 @@ import {
   Hash256,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 import type { DiscoveryOutputCache } from './DiscoveryOutputCache'
 import { UpdateDiffer } from './UpdateDiffer'
@@ -87,11 +86,11 @@ describe('UpdateDiffer upgrader grading', () => {
     for (const [label, before, after, expected] of cases) {
       it(`${label}${reference ? ' with a Reference entry' : ''}`, () => {
         const differ = new UpdateDiffer(
-          mockObject<ConfigReader>({
+          {
             readDiscovery: vi.fn().mockReturnValue({ entries: [] }),
-          }),
-          mockObject<Database>({}),
-          mockObject<DiscoveryOutputCache>({}),
+          } as unknown as ConfigReader,
+          {} as unknown as Database,
+          {} as unknown as DiscoveryOutputCache,
           Logger.SILENT,
         )
         const [previous, latest] = entriesForDiffPair(

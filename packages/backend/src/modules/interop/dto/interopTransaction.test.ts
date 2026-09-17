@@ -1,6 +1,5 @@
 import type { EVMTransaction, RpcTransaction } from '@l2beat/shared'
 import { assert, EthereumAddress, type Transaction } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it } from 'vitest'
 import {
   getInteropTransactionDataCandidates,
@@ -201,7 +200,7 @@ function makeTransaction(overrides: Partial<Transaction> = {}): Transaction {
 function makeEvmTransaction(
   overrides: Partial<EVMTransaction> = {},
 ): EVMTransaction {
-  return mockObject<EVMTransaction>({
+  return {
     hash: HASH_1,
     from: ADDRESS_1,
     to: ADDRESS_2,
@@ -210,7 +209,7 @@ function makeEvmTransaction(
     value: 0n,
     blockNumber: 1,
     ...overrides,
-  })
+  } as unknown as EVMTransaction
 }
 
 function makeRpcTransaction(

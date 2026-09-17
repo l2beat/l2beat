@@ -1,6 +1,5 @@
 import type { Database, InteropTransferRecord } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 import { createCallerFactory } from '../../../../../../trpc/init'
 import { createAggregatesRouter } from './aggregates'
@@ -44,18 +43,16 @@ describe(createAggregatesRouter.name, () => {
       }),
     ]
 
-    const aggregatedInteropTransfer = mockObject<
-      Database['aggregatedInteropTransfer']
-    >({
+    const aggregatedInteropTransfer = {
       getLatestTimestamp: vi.fn().mockResolvedValue(latestTimestamp),
-    })
-    const interopTransfer = mockObject<Database['interopTransfer']>({
+    } as unknown as Database['aggregatedInteropTransfer']
+    const interopTransfer = {
       getByRange: vi.fn().mockResolvedValue(transfers),
-    })
-    const db = mockObject<Database>({
+    } as unknown as Database['interopTransfer']
+    const db = {
       aggregatedInteropTransfer,
       interopTransfer,
-    })
+    } as unknown as Database
 
     const callerFactory = createCallerFactory(
       createAggregatesRouter({
@@ -119,7 +116,7 @@ describe(createAggregatesRouter.name, () => {
   })
 
   it('returns disabled state when aggregation configs are unavailable', async () => {
-    const db = mockObject<Database>({})
+    const db = {} as unknown as Database
 
     const callerFactory = createCallerFactory(
       createAggregatesRouter({

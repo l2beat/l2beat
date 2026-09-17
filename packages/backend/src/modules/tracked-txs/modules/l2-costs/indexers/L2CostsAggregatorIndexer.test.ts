@@ -13,7 +13,6 @@ import {
   ProjectId,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import type { TrackedTxProject } from '../../../../../config/Config'
 import type { IndexerService } from '../../../../../tools/uif/IndexerService'
@@ -108,37 +107,35 @@ describe(L2CostsAggregatorIndexer.name, () => {
         { timestamp: UnixTime.toStartOf(txTime, 'hour'), priceUsd: 2000 },
       ]
 
-      const l2CostsRepositoryMock = mockObject<Database['l2Cost']>({
+      const l2CostsRepositoryMock = {
         getByTimeRange: vi.fn().mockResolvedValue(txs),
-      })
+      } as unknown as Database['l2Cost']
 
-      const l2CostsPricesRepositoryMock = mockObject<Database['l2CostPrice']>({
+      const l2CostsPricesRepositoryMock = {
         getByTimestampRange: vi.fn().mockResolvedValue(ethPrices),
-      })
+      } as unknown as Database['l2CostPrice']
 
-      const indexerConfigurationRepositoryMock = mockObject<
-        Database['indexerConfiguration']
-      >({
+      const indexerConfigurationRepositoryMock = {
         getByConfigurationIds: vi.fn().mockResolvedValue([
-          mockObject<IndexerConfigurationRecord>({
+          {
             id: txs[0].configurationId,
             properties: JSON.stringify({
               projectId: txs[0].projectId,
             }),
-          }),
+          } as unknown as IndexerConfigurationRecord,
         ]),
-      })
+      } as unknown as Database['indexerConfiguration']
 
       const indexer = createIndexer({
         tags: { tag: 'update-correct' },
-        db: mockObject<Database>({
+        db: {
           l2Cost: l2CostsRepositoryMock,
           l2CostPrice: l2CostsPricesRepositoryMock,
           indexerConfiguration: indexerConfigurationRepositoryMock,
-          aggregatedL2Cost: mockObject<Database['aggregatedL2Cost']>({
+          aggregatedL2Cost: {
             upsertMany: vi.fn().mockResolvedValue(1),
-          }),
-        }),
+          } as unknown as Database['aggregatedL2Cost'],
+        } as unknown as Database,
       })
 
       const multipliers: TrackedTxMultiplier[] = [
@@ -346,51 +343,49 @@ describe(L2CostsAggregatorIndexer.name, () => {
         const project2 = ProjectId('project2')
 
         const txs = [
-          mockObject<L2CostRecord>({
+          {
             timestamp: UnixTime(1),
             configurationId: id1,
-          }),
-          mockObject<L2CostRecord>({
+          } as unknown as L2CostRecord,
+          {
             timestamp: UnixTime(2),
             configurationId: id1,
-          }),
-          mockObject<L2CostRecord>({
+          } as unknown as L2CostRecord,
+          {
             timestamp: UnixTime(3),
             configurationId: id2,
-          }),
+          } as unknown as L2CostRecord,
         ]
-        const l2CostsRepositoryMock = mockObject<Database['l2Cost']>({
+        const l2CostsRepositoryMock = {
           getByTimeRange: vi.fn().mockResolvedValue(txs),
-        })
-        const indexerConfigurationRepositoryMock = mockObject<
-          Database['indexerConfiguration']
-        >({
+        } as unknown as Database['l2Cost']
+        const indexerConfigurationRepositoryMock = {
           getByConfigurationIds: vi.fn().mockResolvedValue([
-            mockObject<IndexerConfigurationRecord>({
+            {
               id: id1,
               properties: JSON.stringify({
                 projectId: project1,
               }),
-            }),
-            mockObject<IndexerConfigurationRecord>({
+            } as unknown as IndexerConfigurationRecord,
+            {
               id: id2,
               properties: JSON.stringify({
                 projectId: project2,
               }),
-            }),
+            } as unknown as IndexerConfigurationRecord,
           ]),
-        })
+        } as unknown as Database['indexerConfiguration']
 
         const indexer = createIndexer({
           tags: { tag: 'update-correct' },
-          db: mockObject<Database>({
+          db: {
             l2Cost: l2CostsRepositoryMock,
-            l2CostPrice: mockObject<Database['l2CostPrice']>(),
+            l2CostPrice: {} as unknown as Database['l2CostPrice'],
             indexerConfiguration: indexerConfigurationRepositoryMock,
-            aggregatedL2Cost: mockObject<Database['aggregatedL2Cost']>({
+            aggregatedL2Cost: {
               upsertMany: vi.fn().mockResolvedValue(1),
-            }),
-          }),
+            } as unknown as Database['aggregatedL2Cost'],
+          } as unknown as Database,
         })
 
         const result = await indexer.getL2CostRecordsWithProjectId([
@@ -399,21 +394,21 @@ describe(L2CostsAggregatorIndexer.name, () => {
         ])
 
         expect(result).toStrictEqual([
-          mockObject<ProjectL2Cost>({
+          {
             timestamp: UnixTime(1),
             projectId: project1,
             configurationId: id1,
-          }),
-          mockObject<ProjectL2Cost>({
+          } as unknown as ProjectL2Cost,
+          {
             timestamp: UnixTime(2),
             projectId: project1,
             configurationId: id1,
-          }),
-          mockObject<ProjectL2Cost>({
+          } as unknown as ProjectL2Cost,
+          {
             timestamp: UnixTime(3),
             projectId: project2,
             configurationId: id2,
-          }),
+          } as unknown as ProjectL2Cost,
         ])
       })
     },
@@ -557,17 +552,17 @@ describe(L2CostsAggregatorIndexer.name, () => {
 function createIndexer(deps?: Partial<L2CostsAggregatorIndexerDeps>) {
   return new L2CostsAggregatorIndexer(
     {
-      indexerService: mockObject<IndexerService>(),
+      indexerService: {} as unknown as IndexerService,
       minHeight: 0,
       parents: [],
-      db: mockObject<Database>({
-        l2Cost: mockObject<Database['l2Cost']>(),
-        l2CostPrice: mockObject<Database['l2CostPrice']>(),
-        aggregatedL2Cost: mockObject<Database['aggregatedL2Cost']>({
+      db: {
+        l2Cost: {} as unknown as Database['l2Cost'],
+        l2CostPrice: {} as unknown as Database['l2CostPrice'],
+        aggregatedL2Cost: {
           upsertMany: vi.fn().mockResolvedValue(1),
-        }),
-        indexerConfiguration: mockObject<Database['indexerConfiguration']>(),
-      }),
+        } as unknown as Database['aggregatedL2Cost'],
+        indexerConfiguration: {} as unknown as Database['indexerConfiguration'],
+      } as unknown as Database,
       projects: MOCK_PROJECTS,
       ...deps,
     },

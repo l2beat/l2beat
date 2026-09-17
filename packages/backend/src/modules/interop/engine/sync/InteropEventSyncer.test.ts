@@ -18,7 +18,6 @@ import {
   EthereumAddress,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 import type {
   DataRequest,
@@ -78,14 +77,12 @@ describe(InteropEventSyncer.name, () => {
     it('does not clear errors when checking blockProcessor status', async () => {
       const setLastError = vi.fn().mockResolvedValue(undefined)
       const syncer = createSyncer({
-        db: mockObject<Database>({
-          interopPluginSyncState: mockObject<
-            Database['interopPluginSyncState']
-          >({
+        db: {
+          interopPluginSyncState: {
             setLastError,
             findByPluginNameAndChain: vi.fn().mockResolvedValue(undefined),
-          }),
-        }),
+          } as unknown as Database['interopPluginSyncState'],
+        } as unknown as Database,
       })
       const { state: blockProcessorState } = makeBlockProcessorState()
       syncer.state = blockProcessorState
@@ -228,13 +225,11 @@ describe(InteropEventSyncer.name, () => {
     it('stores last error when state throws', async () => {
       const setLastError = vi.fn().mockResolvedValue(undefined)
       const syncer = createSyncer({
-        db: mockObject<Database>({
-          interopPluginSyncState: mockObject<
-            Database['interopPluginSyncState']
-          >({
+        db: {
+          interopPluginSyncState: {
             setLastError,
-          }),
-        }),
+          } as unknown as Database['interopPluginSyncState'],
+        } as unknown as Database,
       })
       const run = vi.fn().mockImplementation(() => {
         throw new Error('boom')
@@ -256,13 +251,11 @@ describe(InteropEventSyncer.name, () => {
     it('clears a possibly stale stored error once on the first success', async () => {
       const setLastError = vi.fn().mockResolvedValue(undefined)
       const syncer = createSyncer({
-        db: mockObject<Database>({
-          interopPluginSyncState: mockObject<
-            Database['interopPluginSyncState']
-          >({
+        db: {
+          interopPluginSyncState: {
             setLastError,
-          }),
-        }),
+          } as unknown as Database['interopPluginSyncState'],
+        } as unknown as Database,
       })
       const { state: blockProcessorState } = makeBlockProcessorState()
       syncer.state = blockProcessorState
@@ -278,13 +271,11 @@ describe(InteropEventSyncer.name, () => {
     it('clears the stored error once after recovering from a failure', async () => {
       const setLastError = vi.fn().mockResolvedValue(undefined)
       const syncer = createSyncer({
-        db: mockObject<Database>({
-          interopPluginSyncState: mockObject<
-            Database['interopPluginSyncState']
-          >({
+        db: {
+          interopPluginSyncState: {
             setLastError,
-          }),
-        }),
+          } as unknown as Database['interopPluginSyncState'],
+        } as unknown as Database,
       })
       const { state: blockProcessorState, processNewestBlock } =
         makeBlockProcessorState()
@@ -310,13 +301,11 @@ describe(InteropEventSyncer.name, () => {
     it('keeps the stored error when a block processor switches to catching up', async () => {
       const setLastError = vi.fn().mockResolvedValue(undefined)
       const syncer = createSyncer({
-        db: mockObject<Database>({
-          interopPluginSyncState: mockObject<
-            Database['interopPluginSyncState']
-          >({
+        db: {
+          interopPluginSyncState: {
             setLastError,
-          }),
-        }),
+          } as unknown as Database['interopPluginSyncState'],
+        } as unknown as Database,
       })
       const { state: timeLoopState } = makeTimeLoopState()
       const { state: blockProcessorState, processNewestBlock } =
@@ -338,13 +327,11 @@ describe(InteropEventSyncer.name, () => {
     it('clears the stored error only once catch-up returns to following', async () => {
       const setLastError = vi.fn().mockResolvedValue(undefined)
       const syncer = createSyncer({
-        db: mockObject<Database>({
-          interopPluginSyncState: mockObject<
-            Database['interopPluginSyncState']
-          >({
+        db: {
+          interopPluginSyncState: {
             setLastError,
-          }),
-        }),
+          } as unknown as Database['interopPluginSyncState'],
+        } as unknown as Database,
       })
       const { state: blockProcessorState } = makeBlockProcessorState()
       const run = vi.fn<() => Promise<SyncerState>>()
@@ -369,13 +356,11 @@ describe(InteropEventSyncer.name, () => {
     it('keeps the stored error when a status check succeeds', async () => {
       const setLastError = vi.fn().mockResolvedValue(undefined)
       const syncer = createSyncer({
-        db: mockObject<Database>({
-          interopPluginSyncState: mockObject<
-            Database['interopPluginSyncState']
-          >({
+        db: {
+          interopPluginSyncState: {
             setLastError,
-          }),
-        }),
+          } as unknown as Database['interopPluginSyncState'],
+        } as unknown as Database,
       })
       const { state: blockProcessorState, processNewestBlock } =
         makeBlockProcessorState()
@@ -403,7 +388,7 @@ describe(InteropEventSyncer.name, () => {
         }),
       })
 
-      const result = syncer.captureLog(mockObject<LogToCapture>({}))
+      const result = syncer.captureLog({} as unknown as LogToCapture)
 
       expect(capture).toHaveBeenCalled()
       expect(result).toStrictEqual([{ ...event, plugin: 'across' }])
@@ -424,7 +409,7 @@ describe(InteropEventSyncer.name, () => {
         }),
       })
 
-      const result = syncer.captureLog(mockObject<LogToCapture>({}))
+      const result = syncer.captureLog({} as unknown as LogToCapture)
 
       expect(firstCapture).toHaveBeenCalled()
       expect(secondCapture).toHaveBeenCalled()
@@ -444,7 +429,7 @@ describe(InteropEventSyncer.name, () => {
         }),
       })
 
-      const result = syncer.captureLog(mockObject<LogToCapture>({}))
+      const result = syncer.captureLog({} as unknown as LogToCapture)
 
       expect(result).toStrictEqual(undefined)
     })
@@ -455,10 +440,10 @@ describe(InteropEventSyncer.name, () => {
       const event = makeInteropEventNoPlugin()
       const firstCapture = vi.fn().mockReturnValue(undefined)
       const secondCapture = vi.fn().mockReturnValue([event])
-      const txToCapture = mockObject<TxToCapture>({
+      const txToCapture = {
         chain: 'base',
-        tx: mockObject<TxToCapture['tx']>({ hash: '0x123' }),
-      })
+        tx: { hash: '0x123' } as unknown as TxToCapture['tx'],
+      } as unknown as TxToCapture
       const creatorEvent = { ...makeInteropEvent(), plugin: 'wormhole' }
       const getCreatorEvents = vi
         .fn()
@@ -472,11 +457,11 @@ describe(InteropEventSyncer.name, () => {
             makePlugin({ name: 'wormhole', captureTx: secondCapture }),
           ],
         }),
-        store: mockObject<InteropEventStore>({
-          derivedTxStore: mockObject<DerivedTxStore>({
+        store: {
+          derivedTxStore: {
             getCreatorEvents,
-          }),
-        }),
+          } as unknown as DerivedTxStore,
+        } as unknown as InteropEventStore,
       })
 
       const result = syncer.captureTx(txToCapture)
@@ -505,10 +490,10 @@ describe(InteropEventSyncer.name, () => {
       const event = makeInteropEventNoPlugin()
       const firstCapture = vi.fn().mockReturnValue([event])
       const secondCapture = vi.fn().mockReturnValue([event])
-      const txToCapture = mockObject<TxToCapture>({
+      const txToCapture = {
         chain: 'base',
-        tx: mockObject<TxToCapture['tx']>({ hash: '0x123' }),
-      })
+        tx: { hash: '0x123' } as unknown as TxToCapture['tx'],
+      } as unknown as TxToCapture
       const getCreatorEvents = vi.fn().mockReturnValue(undefined)
       const syncer = createSyncer({
         cluster: makeCluster({
@@ -518,11 +503,11 @@ describe(InteropEventSyncer.name, () => {
             makePlugin({ name: 'wormhole', captureTx: secondCapture }),
           ],
         }),
-        store: mockObject<InteropEventStore>({
-          derivedTxStore: mockObject<DerivedTxStore>({
+        store: {
+          derivedTxStore: {
             getCreatorEvents,
-          }),
-        }),
+          } as unknown as DerivedTxStore,
+        } as unknown as InteropEventStore,
       })
 
       const result = syncer.captureTx(txToCapture)
@@ -543,14 +528,14 @@ describe(InteropEventSyncer.name, () => {
           name: 'clusterName',
           plugins: [makePlugin({ name: 'across', captureTx: undefined })],
         }),
-        store: mockObject<InteropEventStore>({
-          derivedTxStore: mockObject<DerivedTxStore>({
+        store: {
+          derivedTxStore: {
             getCreatorEvents,
-          }),
-        }),
+          } as unknown as DerivedTxStore,
+        } as unknown as InteropEventStore,
       })
 
-      const result = syncer.captureTx(mockObject<TxToCapture>({}))
+      const result = syncer.captureTx({} as unknown as TxToCapture)
 
       expect(result).toStrictEqual(undefined)
       expect(getCreatorEvents).not.toHaveBeenCalled()
@@ -569,16 +554,16 @@ describe(InteropEventSyncer.name, () => {
             name: 'clusterName',
             plugins: [makePlugin({ name: 'across', captureTx })],
           }),
-          store: mockObject<InteropEventStore>({
-            derivedTxStore: mockObject<DerivedTxStore>({
+          store: {
+            derivedTxStore: {
               getHashesPendingHistoryCheck: vi.fn().mockReturnValue([txHash]),
               getCreatorEvents: vi.fn().mockReturnValue([makeInteropEvent()]),
               markCheckedInHistory: vi
                 .fn()
                 .mockReturnValue([makeInteropEvent()]),
-            }),
-          }),
-          rpcClient: mockObject<InteropEventSyncer['rpcClient']>({
+            } as unknown as DerivedTxStore,
+          } as unknown as InteropEventStore,
+          rpcClient: {
             getTransactionByHash: vi
               .fn()
               .mockResolvedValue(
@@ -586,7 +571,7 @@ describe(InteropEventSyncer.name, () => {
               ),
             getTransactionReceipt: vi.fn().mockResolvedValue(makeRpcReceipt()),
             getBlockByNumber: vi.fn().mockResolvedValue(makeRpcBlock(9n)),
-          }),
+          } as unknown as InteropEventSyncer['rpcClient'],
         })
 
         const result = await syncer.capturePendingHistoricalTxs(10n)
@@ -610,16 +595,16 @@ describe(InteropEventSyncer.name, () => {
             name: 'clusterName',
             plugins: [makePlugin({ name: 'across', captureTx })],
           }),
-          store: mockObject<InteropEventStore>({
-            derivedTxStore: mockObject<DerivedTxStore>({
+          store: {
+            derivedTxStore: {
               getHashesPendingHistoryCheck: vi.fn().mockReturnValue(['0x123']),
               getCreatorEvents: vi.fn().mockReturnValue([makeInteropEvent()]),
               markCheckedInHistory: vi
                 .fn()
                 .mockReturnValue([makeInteropEvent()]),
-            }),
-          }),
-          rpcClient: mockObject<InteropEventSyncer['rpcClient']>({
+            } as unknown as DerivedTxStore,
+          } as unknown as InteropEventStore,
+          rpcClient: {
             getTransactionByHash: vi
               .fn()
               .mockResolvedValue(
@@ -627,7 +612,7 @@ describe(InteropEventSyncer.name, () => {
               ),
             getTransactionReceipt,
             getBlockByNumber,
-          }),
+          } as unknown as InteropEventSyncer['rpcClient'],
         })
 
         const result = await syncer.capturePendingHistoricalTxs(10n)
@@ -657,23 +642,19 @@ describe(InteropEventSyncer.name, () => {
           name: 'clusterName',
           plugins: [makePlugin({ name: 'across' })],
         }),
-        store: mockObject<InteropEventStore>({
+        store: {
           saveNewEvents,
           updateDerivedFulfilled,
           updateDerivedCheckedInHistory,
-        }),
-        db: mockObject<Database>({
-          interopPluginSyncedRange: mockObject<
-            Database['interopPluginSyncedRange']
-          >({
+        } as unknown as InteropEventStore,
+        db: {
+          interopPluginSyncedRange: {
             upsert,
-          }),
-          interopPluginSyncState: mockObject<
-            Database['interopPluginSyncState']
-          >({
+          } as unknown as Database['interopPluginSyncedRange'],
+          interopPluginSyncState: {
             setLastError,
-          }),
-        }),
+          } as unknown as Database['interopPluginSyncState'],
+        } as unknown as Database,
       })
 
       await syncer.saveProducedInteropEvents(
@@ -705,23 +686,19 @@ describe(InteropEventSyncer.name, () => {
           name: 'clusterName',
           plugins: [makePlugin({ name: 'across' })],
         }),
-        store: mockObject<InteropEventStore>({
+        store: {
           saveNewEvents,
           updateDerivedFulfilled: vi.fn().mockResolvedValue(undefined),
           updateDerivedCheckedInHistory: vi.fn().mockResolvedValue(undefined),
-        }),
-        db: mockObject<Database>({
-          interopPluginSyncedRange: mockObject<
-            Database['interopPluginSyncedRange']
-          >({
+        } as unknown as InteropEventStore,
+        db: {
+          interopPluginSyncedRange: {
             upsert,
-          }),
-          interopPluginSyncState: mockObject<
-            Database['interopPluginSyncState']
-          >({
+          } as unknown as Database['interopPluginSyncedRange'],
+          interopPluginSyncState: {
             setLastError,
-          }),
-        }),
+          } as unknown as Database['interopPluginSyncState'],
+        } as unknown as Database,
       })
 
       // a stored error may exist after start-up, so the first save clears it
@@ -758,18 +735,14 @@ describe(InteropEventSyncer.name, () => {
           name: 'clusterName',
           plugins: [makePlugin({ name: 'across' })],
         }),
-        db: mockObject<Database>({
-          interopPluginSyncedRange: mockObject<
-            Database['interopPluginSyncedRange']
-          >({
+        db: {
+          interopPluginSyncedRange: {
             upsert: vi.fn().mockResolvedValue(undefined),
-          }),
-          interopPluginSyncState: mockObject<
-            Database['interopPluginSyncState']
-          >({
+          } as unknown as Database['interopPluginSyncedRange'],
+          interopPluginSyncState: {
             setLastError,
-          }),
-        }),
+          } as unknown as Database['interopPluginSyncState'],
+        } as unknown as Database,
       })
 
       syncer.failNextCommit = true
@@ -794,13 +767,11 @@ describe(InteropEventSyncer.name, () => {
   describe(InteropEventSyncer.prototype.getResyncState.name, () => {
     it('returns empty resync state when no resync requested', async () => {
       const syncer = createSyncer({
-        db: mockObject<Database>({
-          interopPluginSyncState: mockObject<
-            Database['interopPluginSyncState']
-          >({
+        db: {
+          interopPluginSyncState: {
             findByPluginNameAndChain: vi.fn().mockResolvedValue(undefined),
-          }),
-        }),
+          } as unknown as Database['interopPluginSyncState'],
+        } as unknown as Database,
       })
 
       const result = await syncer.getResyncState()
@@ -813,16 +784,14 @@ describe(InteropEventSyncer.name, () => {
 
     it('returns resync state when present', async () => {
       const syncer = createSyncer({
-        db: mockObject<Database>({
-          interopPluginSyncState: mockObject<
-            Database['interopPluginSyncState']
-          >({
+        db: {
+          interopPluginSyncState: {
             findByPluginNameAndChain: vi.fn().mockResolvedValue({
               resyncRequestedFrom: UnixTime(123),
               wipeRequired: true,
             }),
-          }),
-        }),
+          } as unknown as Database['interopPluginSyncState'],
+        } as unknown as Database,
       })
 
       const result = await syncer.getResyncState()
@@ -1023,16 +992,14 @@ describe(InteropEventSyncer.name, () => {
         .fn()
         .mockResolvedValue(oldestEvent)
       const syncer = createSyncer({
-        db: mockObject<Database>({
-          interopPluginSyncedRange: mockObject<
-            Database['interopPluginSyncedRange']
-          >({
+        db: {
+          interopPluginSyncedRange: {
             findByPluginNameAndChain: vi.fn().mockResolvedValue(lastRange),
-          }),
-          interopEvent: mockObject<Database['interopEvent']>({
+          } as unknown as Database['interopPluginSyncedRange'],
+          interopEvent: {
             getOldestEventForPluginAndChain,
-          }),
-        }),
+          } as unknown as Database['interopEvent'],
+        } as unknown as Database,
       })
 
       const resultRange = await syncer.getLastSyncedRange()
@@ -1059,11 +1026,11 @@ describe(InteropEventSyncer.name, () => {
             makePlugin({ name: 'wormhole' }),
           ],
         }),
-        db: mockObject<Database>({
-          interopEvent: mockObject<Database['interopEvent']>({
+        db: {
+          interopEvent: {
             getOldestEventForPluginAndChain,
-          }),
-        }),
+          } as unknown as Database['interopEvent'],
+        } as unknown as Database,
       })
 
       const resultEvent = await syncer.getOldestEventForPluginAndChain()
@@ -1087,12 +1054,12 @@ describe(InteropEventSyncer.name, () => {
       const transaction = makeRpcTransaction()
       const getTransactionByHash = vi.fn().mockResolvedValue(transaction)
       const syncer = createSyncer({
-        rpcClient: mockObject<InteropEventSyncer['rpcClient']>({
+        rpcClient: {
           getBlockByNumber,
           getLogs,
           getTransactionReceipt,
           getTransactionByHash,
-        }),
+        } as unknown as InteropEventSyncer['rpcClient'],
       })
 
       const block = await syncer.getBlockByNumber(5n)
@@ -1357,53 +1324,53 @@ function makeRpcTransaction(
 }
 
 function mockRpcClient(): InteropEventSyncer['rpcClient'] {
-  return mockObject<InteropEventSyncer['rpcClient']>({
+  return {
     getBlockByNumber: vi.fn().mockResolvedValue(makeRpcBlock(1n)),
     getLogs: vi.fn().mockResolvedValue([]),
     getTransactionReceipt: vi.fn().mockResolvedValue(null),
     getTransactionByHash: vi.fn().mockResolvedValue(null),
-  })
+  } as unknown as InteropEventSyncer['rpcClient']
 }
 
 function mockStore() {
-  return mockObject<InteropEventStore>({
+  return {
     saveNewEvents: vi.fn().mockResolvedValue(undefined),
     updateDerivedFulfilled: vi.fn().mockResolvedValue(undefined),
     updateDerivedCheckedInHistory: vi.fn().mockResolvedValue(undefined),
     deleteAllForPlugin: vi.fn().mockResolvedValue(undefined),
-    derivedTxStore: mockObject<DerivedTxStore>({
+    derivedTxStore: {
       getCreatorEvents: vi.fn().mockReturnValue(undefined),
       getHashesPendingHistoryCheck: vi.fn().mockReturnValue([]),
       markCheckedInHistory: vi.fn().mockReturnValue([]),
-    }),
-  })
+    } as unknown as DerivedTxStore,
+  } as unknown as InteropEventStore
 }
 
 function mockDb(): Database {
-  return mockObject<Database>({
+  return {
     transaction: vi.fn().mockImplementation(async (cb) => await cb()),
-    interopPluginSyncedRange: mockObject<Database['interopPluginSyncedRange']>({
+    interopPluginSyncedRange: {
       findByPluginNameAndChain: vi
         .fn()
         .mockResolvedValue(makeSyncedRangeRecord()),
       upsert: vi.fn().mockResolvedValue(undefined),
-    }),
-    interopPluginSyncState: mockObject<Database['interopPluginSyncState']>({
+    } as unknown as Database['interopPluginSyncedRange'],
+    interopPluginSyncState: {
       setLastError: vi.fn().mockResolvedValue(undefined),
       findByPluginNameAndChain: vi.fn().mockResolvedValue(undefined),
-    }),
-    interopEvent: mockObject<Database['interopEvent']>({
+    } as unknown as Database['interopPluginSyncState'],
+    interopEvent: {
       getOldestEventForPluginAndChain: vi
         .fn()
         .mockResolvedValue(makeInteropEventRecord()),
-    }),
-    interopMessage: mockObject<Database['interopMessage']>({
+    } as unknown as Database['interopEvent'],
+    interopMessage: {
       deleteForPlugin: vi.fn().mockResolvedValue(undefined),
-    }),
-    interopTransfer: mockObject<Database['interopTransfer']>({
+    } as unknown as Database['interopMessage'],
+    interopTransfer: {
       deleteForPlugin: vi.fn().mockResolvedValue(undefined),
-    }),
-  })
+    } as unknown as Database['interopTransfer'],
+  } as unknown as Database
 }
 
 function deferred<T>() {

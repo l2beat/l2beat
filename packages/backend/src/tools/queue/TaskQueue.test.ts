@@ -1,7 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 import type { EventTracker } from '@l2beat/shared'
 import { Retries } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest'
 
 import { TaskQueue } from './TaskQueue'
@@ -62,9 +61,9 @@ describe(TaskQueue.name, () => {
   })
 
   it('can stop on permanent failure', async () => {
-    const eventTracker = mockObject<EventTracker<string>>({
+    const eventTracker = {
       record: vi.fn().mockReturnValue(undefined),
-    })
+    } as unknown as EventTracker<string>
 
     const completed: number[] = []
 
@@ -95,9 +94,9 @@ describe(TaskQueue.name, () => {
   })
 
   it('notifies after configured threshold is reached', async () => {
-    const eventTracker = mockObject<EventTracker<string>>({
+    const eventTracker = {
       record: vi.fn().mockReturnValue(undefined),
-    })
+    } as unknown as EventTracker<string>
 
     const error = new Error('oops')
 
@@ -105,12 +104,12 @@ describe(TaskQueue.name, () => {
       throw error
     }
 
-    const logger = mockObject<Logger>({
-      error: () => undefined,
-      warn: () => undefined,
-      debug: () => undefined,
-      info: () => undefined,
-    })
+    const logger = {
+      error: vi.fn(() => undefined),
+      warn: vi.fn(() => undefined),
+      debug: vi.fn(() => undefined),
+      info: vi.fn(() => undefined),
+    } as unknown as Logger
 
     const queue = new TaskQueue(execute, logger, {
       shouldRetry: Retries.exponentialBackOff({

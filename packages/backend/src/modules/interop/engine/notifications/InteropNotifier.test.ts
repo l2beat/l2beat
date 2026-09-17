@@ -1,22 +1,22 @@
 import { Logger } from '@l2beat/backend-tools'
 import type { DiscordClient } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
-import { describe, expect, it } from 'vitest'
+import { describe, expect, it, vi } from 'vitest'
 import { InteropNotifier } from './InteropNotifier'
 
 describe(InteropNotifier.name, () => {
   it('queues and sends a markdown diff message', async () => {
-    const webhookClient = mockObject<DiscordClient>({
-      sendMessage: async () => '1',
-    })
+    const webhookClient = {
+      sendMessage: vi.fn(async () => '1'),
+    } as unknown as DiscordClient
     const notifier = new InteropNotifier(webhookClient, Logger.SILENT)
 
     notifier.handleConfigChange('ccip', { version: 1 }, { version: 2 })
     await notifier._TEST_ONLY_waitTillEmpty()
 
     expect(webhookClient.sendMessage).toHaveBeenCalledTimes(1)
-    const message = webhookClient.sendMessage.mock.calls[0][0] as string
+    const message = vi.mocked(webhookClient.sendMessage).mock
+      .calls[0][0] as string
 
     expect(message.includes('**ccip** config change')).toStrictEqual(true)
     expect(message.includes('```diff')).toStrictEqual(true)
@@ -26,9 +26,9 @@ describe(InteropNotifier.name, () => {
   })
 
   it('does not send message when diff is empty after undefined normalization', async () => {
-    const webhookClient = mockObject<DiscordClient>({
-      sendMessage: async () => '1',
-    })
+    const webhookClient = {
+      sendMessage: vi.fn(async () => '1'),
+    } as unknown as DiscordClient
     const notifier = new InteropNotifier(webhookClient, Logger.SILENT)
 
     notifier.handleConfigChange(
@@ -43,12 +43,12 @@ describe(InteropNotifier.name, () => {
 
   it('preserves message order in queue', async () => {
     const sent: string[] = []
-    const webhookClient = mockObject<DiscordClient>({
-      sendMessage: async (message) => {
+    const webhookClient = {
+      sendMessage: vi.fn(async (message) => {
         sent.push(message)
         return `${sent.length}`
-      },
-    })
+      }),
+    } as unknown as DiscordClient
     const notifier = new InteropNotifier(webhookClient, Logger.SILENT)
 
     notifier.handleConfigChange('first', { value: 1 }, { value: 2 })
@@ -61,9 +61,9 @@ describe(InteropNotifier.name, () => {
   })
 
   it('queues and sends suspicious transfer notifications', async () => {
-    const webhookClient = mockObject<DiscordClient>({
-      sendMessage: async () => '1',
-    })
+    const webhookClient = {
+      sendMessage: vi.fn(async () => '1'),
+    } as unknown as DiscordClient
     const notifier = new InteropNotifier(webhookClient, Logger.SILENT)
 
     notifier.notifySuspiciousTransfers(UnixTime(2_000_000), [
@@ -92,7 +92,8 @@ describe(InteropNotifier.name, () => {
     await notifier._TEST_ONLY_waitTillEmpty()
 
     expect(webhookClient.sendMessage).toHaveBeenCalledTimes(1)
-    const message = webhookClient.sendMessage.mock.calls[0][0] as string
+    const message = vi.mocked(webhookClient.sendMessage).mock
+      .calls[0][0] as string
 
     expect(message.includes('Interop financials flagged')).toStrictEqual(true)
     expect(
@@ -105,9 +106,9 @@ describe(InteropNotifier.name, () => {
   })
 
   it('adds a backoffice deep-link per suspicious transfer when environment is set', async () => {
-    const webhookClient = mockObject<DiscordClient>({
-      sendMessage: async () => '1',
-    })
+    const webhookClient = {
+      sendMessage: vi.fn(async () => '1'),
+    } as unknown as DiscordClient
     const notifier = new InteropNotifier(webhookClient, Logger.SILENT, {
       backofficeEnvironment: 'staging',
     })
@@ -135,7 +136,8 @@ describe(InteropNotifier.name, () => {
     ])
     await notifier._TEST_ONLY_waitTillEmpty()
 
-    const message = webhookClient.sendMessage.mock.calls[0][0] as string
+    const message = vi.mocked(webhookClient.sendMessage).mock
+      .calls[0][0] as string
     expect(
       message.includes(
         '[↗](https://backoffice.l2beat.com/interop/insights/activity/suspicious-transfers?env=staging#msg%2F1)',
@@ -144,9 +146,9 @@ describe(InteropNotifier.name, () => {
   })
 
   it('does not add a backoffice deep-link when environment is not set', async () => {
-    const webhookClient = mockObject<DiscordClient>({
-      sendMessage: async () => '1',
-    })
+    const webhookClient = {
+      sendMessage: vi.fn(async () => '1'),
+    } as unknown as DiscordClient
     const notifier = new InteropNotifier(webhookClient, Logger.SILENT)
 
     notifier.notifyBlockedSnapshot(UnixTime(2_000_000), [
@@ -154,14 +156,15 @@ describe(InteropNotifier.name, () => {
     ])
     await notifier._TEST_ONLY_waitTillEmpty()
 
-    const message = webhookClient.sendMessage.mock.calls[0][0] as string
+    const message = vi.mocked(webhookClient.sendMessage).mock
+      .calls[0][0] as string
     expect(message).not.toContain('backoffice.l2beat.com')
   })
 
   it('adds a backoffice deep-link to a blocked snapshot when environment is set', async () => {
-    const webhookClient = mockObject<DiscordClient>({
-      sendMessage: async () => '1',
-    })
+    const webhookClient = {
+      sendMessage: vi.fn(async () => '1'),
+    } as unknown as DiscordClient
     const notifier = new InteropNotifier(webhookClient, Logger.SILENT, {
       backofficeEnvironment: 'production',
     })
@@ -171,7 +174,8 @@ describe(InteropNotifier.name, () => {
     ])
     await notifier._TEST_ONLY_waitTillEmpty()
 
-    const message = webhookClient.sendMessage.mock.calls[0][0] as string
+    const message = vi.mocked(webhookClient.sendMessage).mock
+      .calls[0][0] as string
     expect(
       message.includes(
         '[Review in backoffice ↗](https://backoffice.l2beat.com/interop/promotion?env=production#2000000)',
@@ -180,9 +184,9 @@ describe(InteropNotifier.name, () => {
   })
 
   it('queues and sends skipped valuation notifications', async () => {
-    const webhookClient = mockObject<DiscordClient>({
-      sendMessage: async () => '1',
-    })
+    const webhookClient = {
+      sendMessage: vi.fn(async () => '1'),
+    } as unknown as DiscordClient
     const notifier = new InteropNotifier(webhookClient, Logger.SILENT)
 
     notifier.notifySkippedTransferValuations(UnixTime(2_000_000), [
@@ -220,7 +224,8 @@ describe(InteropNotifier.name, () => {
     await notifier._TEST_ONLY_waitTillEmpty()
 
     expect(webhookClient.sendMessage).toHaveBeenCalledTimes(1)
-    const message = webhookClient.sendMessage.mock.calls[0][0] as string
+    const message = vi.mocked(webhookClient.sendMessage).mock
+      .calls[0][0] as string
 
     expect(message.includes('Interop financials skipped')).toStrictEqual(true)
     expect(

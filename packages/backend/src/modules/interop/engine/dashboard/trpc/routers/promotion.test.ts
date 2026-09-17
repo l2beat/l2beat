@@ -1,6 +1,5 @@
 import type { Database } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 import { createCallerFactory } from '../../../../../../trpc/init'
 import { createPromotionRouter } from './promotion'
@@ -9,7 +8,7 @@ describe(createPromotionRouter.name, () => {
   function createCaller(
     interopAggregateStatus: Database['interopAggregateStatus'],
   ) {
-    const db = mockObject<Database>({ interopAggregateStatus })
+    const db = { interopAggregateStatus } as unknown as Database
     const callerFactory = createCallerFactory(createPromotionRouter())
     return callerFactory({
       headers: new Headers(),
@@ -46,9 +45,9 @@ describe(createPromotionRouter.name, () => {
           updatedAt: UnixTime(110),
         },
       ])
-      const caller = createCaller(
-        mockObject<Database['interopAggregateStatus']>({ getRecent }),
-      )
+      const caller = createCaller({
+        getRecent,
+      } as unknown as Database['interopAggregateStatus'])
 
       const result = await caller.listRecent()
 
@@ -85,9 +84,9 @@ describe(createPromotionRouter.name, () => {
   describe('promote', () => {
     it('promotes a blocked snapshot with the operator email', async () => {
       const promoteIfBlocked = vi.fn().mockResolvedValue(true)
-      const caller = createCaller(
-        mockObject<Database['interopAggregateStatus']>({ promoteIfBlocked }),
-      )
+      const caller = createCaller({
+        promoteIfBlocked,
+      } as unknown as Database['interopAggregateStatus'])
 
       const result = await caller.promote({ timestamp: 100 })
 
@@ -100,9 +99,9 @@ describe(createPromotionRouter.name, () => {
 
     it('reports promoted=false when the snapshot was not blocked (no-op)', async () => {
       const promoteIfBlocked = vi.fn().mockResolvedValue(false)
-      const caller = createCaller(
-        mockObject<Database['interopAggregateStatus']>({ promoteIfBlocked }),
-      )
+      const caller = createCaller({
+        promoteIfBlocked,
+      } as unknown as Database['interopAggregateStatus'])
 
       const result = await caller.promote({ timestamp: 100 })
 

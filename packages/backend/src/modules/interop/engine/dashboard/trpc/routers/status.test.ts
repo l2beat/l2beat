@@ -1,5 +1,4 @@
 import type { Database } from '@l2beat/database'
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 import { INDEXER_NAMES } from '../../../../../../tools/uif/indexerIdentity'
 import { createCallerFactory } from '../../../../../../trpc/init'
@@ -46,7 +45,7 @@ describe(createStatusRouter.name, () => {
       safeHeight: 1_700_000_000,
     })
     const caller = createCaller(undefined, {
-      indexerState: mockObject<Database['indexerState']>({ findByIndexerId }),
+      indexerState: { findByIndexerId } as unknown as Database['indexerState'],
     })
 
     const result = await caller.relay()
@@ -59,9 +58,9 @@ describe(createStatusRouter.name, () => {
 
   it('returns no Relay checkpoint before the indexer initializes', async () => {
     const caller = createCaller(undefined, {
-      indexerState: mockObject<Database['indexerState']>({
+      indexerState: {
         findByIndexerId: vi.fn().mockResolvedValue(undefined),
-      }),
+      } as unknown as Database['indexerState'],
     })
 
     const result = await caller.relay()
@@ -76,9 +75,9 @@ describe(createStatusRouter.name, () => {
         getChainsForPlugin: () => ['ethereum', 'arbitrum'],
       },
       {
-        interopPluginSyncState: mockObject<Database['interopPluginSyncState']>({
+        interopPluginSyncState: {
           setResyncRequestedFrom,
-        }),
+        } as unknown as Database['interopPluginSyncState'],
         transaction: async (cb) => await cb(),
       },
     )
@@ -112,9 +111,9 @@ describe(createStatusRouter.name, () => {
         getChainsForPlugin: () => ['ethereum', 'arbitrum'],
       },
       {
-        interopPluginSyncState: mockObject<Database['interopPluginSyncState']>({
+        interopPluginSyncState: {
           upsert,
-        }),
+        } as unknown as Database['interopPluginSyncState'],
         transaction: async (cb) => await cb(),
       },
     )
@@ -180,7 +179,7 @@ function createCaller(
 
   return callerFactory({
     headers: new Headers(),
-    db: mockObject<Database>(db ?? {}),
+    db: (db ?? {}) as unknown as Database,
     session: { email: 'user@example.com' },
   })
 }

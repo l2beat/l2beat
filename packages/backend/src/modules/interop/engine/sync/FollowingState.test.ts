@@ -4,7 +4,6 @@ import type {
   InteropEventRecord,
 } from '@l2beat/database'
 import { type Block, type Log, UnixTime } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 import type {
   InteropEvent,
@@ -18,7 +17,7 @@ import { FollowingState } from './FollowingState'
 import type { InteropEventSyncer } from './InteropEventSyncer'
 
 const BLOCK = makeBlock(100, UnixTime(1_000))
-const LOGS: Log[] = [mockObject<Log>({})]
+const LOGS: Log[] = [{} as unknown as Log]
 
 describe(FollowingState.name, () => {
   describe(FollowingState.prototype.checkStatus.name, () => {
@@ -143,11 +142,11 @@ describe(FollowingState.name, () => {
     })
 
     it('processes the next block when exactly one behind', async () => {
-      const logA = mockObject<LogToCapture>({})
-      const logB = mockObject<LogToCapture>({})
-      const eventA = mockObject<InteropEvent>({})
-      const eventB = mockObject<InteropEvent>({})
-      const eventC = mockObject<InteropEvent>({})
+      const logA = {} as unknown as LogToCapture
+      const logB = {} as unknown as LogToCapture
+      const eventA = {} as unknown as InteropEvent
+      const eventB = {} as unknown as InteropEvent
+      const eventC = {} as unknown as InteropEvent
       const captureLog = vi
         .fn()
         .mockReturnValueOnce([eventA])
@@ -238,7 +237,7 @@ describe(FollowingState.name, () => {
     })
 
     it('saves an empty events list when nothing is captured', async () => {
-      const logA = mockObject<LogToCapture>({})
+      const logA = {} as unknown as LogToCapture
       const saveProducedInteropEvents = vi.fn().mockResolvedValue(undefined)
       const syncer = createSyncer({
         getLastSyncedRange: vi
@@ -269,11 +268,11 @@ describe(FollowingState.name, () => {
     })
 
     it('delegates tx capture to the syncer once per tx', async () => {
-      const txToCapture = mockObject<TxToCapture>({
+      const txToCapture = {
         chain: 'base',
-        tx: mockObject<TxToCapture['tx']>({ hash: '0x123' }),
-      })
-      const txEvent = mockObject<InteropEvent>({})
+        tx: { hash: '0x123' } as unknown as TxToCapture['tx'],
+      } as unknown as TxToCapture
+      const txEvent = {} as unknown as InteropEvent
       const captureTx = vi.fn().mockReturnValueOnce({
         events: [txEvent],
         fulfilledCreatorEvents: [],
@@ -423,15 +422,15 @@ describe(FollowingState.name, () => {
     })
 
     it('captures pending historical txs before processing the current block', async () => {
-      const historicalEvent = mockObject<InteropEvent>({})
-      const txToCapture = mockObject<TxToCapture>({
+      const historicalEvent = {} as unknown as InteropEvent
+      const txToCapture = {
         chain: 'base',
-        tx: mockObject<TxToCapture['tx']>({ hash: '0x123' }),
-      })
-      const txEvent = mockObject<InteropEvent>({})
-      const historicalCreatorEvent = mockObject<InteropEvent>({})
-      const historicalCheckedEvent = mockObject<InteropEvent>({})
-      const txCreatorEvent = mockObject<InteropEvent>({})
+        tx: { hash: '0x123' } as unknown as TxToCapture['tx'],
+      } as unknown as TxToCapture
+      const txEvent = {} as unknown as InteropEvent
+      const historicalCreatorEvent = {} as unknown as InteropEvent
+      const historicalCheckedEvent = {} as unknown as InteropEvent
+      const txCreatorEvent = {} as unknown as InteropEvent
       const capturePendingHistoricalTxs = vi.fn().mockResolvedValue({
         events: [historicalEvent],
         fulfilledCreatorEvents: [historicalCreatorEvent],
@@ -477,18 +476,18 @@ describe(FollowingState.name, () => {
 function createSyncer(
   overrides: Partial<InteropEventSyncer> = {},
 ): InteropEventSyncer {
-  return mockObject<InteropEventSyncer>({
+  return {
     chain: 'ethereum',
     cluster: {
       name: 'mock-cluster',
       plugins: [],
     } as InteropEventSyncer['cluster'],
-    store: mockObject<InteropEventStore>({
-      derivedTxStore: mockObject<DerivedTxStore>({
+    store: {
+      derivedTxStore: {
         get: vi.fn().mockReturnValue([]),
         getCreatorEvents: vi.fn().mockReturnValue(undefined),
-      }),
-    }),
+      } as unknown as DerivedTxStore,
+    } as unknown as InteropEventStore,
     getResyncState: vi.fn().mockResolvedValue({
       resyncFrom: undefined,
       wipeRequired: false,
@@ -507,13 +506,11 @@ function createSyncer(
     }),
     captureTx: vi.fn().mockReturnValue(undefined),
     saveProducedInteropEvents: vi.fn().mockResolvedValue(undefined),
-    blockProcessingStats: mockObject<
-      InteropEventSyncer['blockProcessingStats']
-    >({
+    blockProcessingStats: {
       record: vi.fn().mockReturnValue(undefined),
-    }),
+    } as unknown as InteropEventSyncer['blockProcessingStats'],
     ...overrides,
-  })
+  } as unknown as InteropEventSyncer
 }
 
 function makeBlock(number: number, timestamp: UnixTime): Block {

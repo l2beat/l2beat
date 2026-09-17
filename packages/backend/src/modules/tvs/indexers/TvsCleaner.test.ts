@@ -1,7 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { createTvsCleanerConfigurations } from '../../../config/features/tvs'
 import { mockDatabase } from '../../../test/database'
@@ -18,24 +17,22 @@ describe(TvsCleaner.name, () => {
 
   describe(TvsCleaner.prototype.update.name, () => {
     it('cleans all archived TVS records on the first run', async () => {
-      const tvsTokenValueRepository = mockObject<Database['tvsTokenValue']>({
+      const tvsTokenValueRepository = {
         deleteHourlyUntil: vi.fn().mockResolvedValue(10),
         deleteSixHourlyUntil: vi.fn().mockResolvedValue(5),
-      })
-      const tvsBlockTimestampRepository = mockObject<
-        Database['tvsBlockTimestamp']
-      >({
+      } as unknown as Database['tvsTokenValue']
+      const tvsBlockTimestampRepository = {
         deleteHourlyUntil: vi.fn().mockResolvedValue(4),
         deleteSixHourlyUntil: vi.fn().mockResolvedValue(2),
-      })
-      const tvsAmountRepository = mockObject<Database['tvsAmount']>({
+      } as unknown as Database['tvsBlockTimestamp']
+      const tvsAmountRepository = {
         deleteHourlyUntil: vi.fn().mockResolvedValue(7),
         deleteSixHourlyUntil: vi.fn().mockResolvedValue(3),
-      })
-      const tvsPriceRepository = mockObject<Database['tvsPrice']>({
+      } as unknown as Database['tvsAmount']
+      const tvsPriceRepository = {
         deleteHourlyUntil: vi.fn().mockResolvedValue(8),
         deleteSixHourlyUntil: vi.fn().mockResolvedValue(4),
-      })
+      } as unknown as Database['tvsPrice']
 
       const indexer = await createInitializedIndexer({
         db: mockDatabase({
@@ -72,24 +69,22 @@ describe(TvsCleaner.name, () => {
     })
 
     it('always cleans from the beginning up to the current cutoff', async () => {
-      const tvsTokenValueRepository = mockObject<Database['tvsTokenValue']>({
+      const tvsTokenValueRepository = {
         deleteHourlyUntil: vi.fn().mockResolvedValue(3),
         deleteSixHourlyUntil: vi.fn().mockResolvedValue(2),
-      })
-      const tvsBlockTimestampRepository = mockObject<
-        Database['tvsBlockTimestamp']
-      >({
+      } as unknown as Database['tvsTokenValue']
+      const tvsBlockTimestampRepository = {
         deleteHourlyUntil: vi.fn().mockResolvedValue(1),
         deleteSixHourlyUntil: vi.fn().mockResolvedValue(1),
-      })
-      const tvsAmountRepository = mockObject<Database['tvsAmount']>({
+      } as unknown as Database['tvsBlockTimestamp']
+      const tvsAmountRepository = {
         deleteHourlyUntil: vi.fn().mockResolvedValue(6),
         deleteSixHourlyUntil: vi.fn().mockResolvedValue(4),
-      })
-      const tvsPriceRepository = mockObject<Database['tvsPrice']>({
+      } as unknown as Database['tvsAmount']
+      const tvsPriceRepository = {
         deleteHourlyUntil: vi.fn().mockResolvedValue(5),
         deleteSixHourlyUntil: vi.fn().mockResolvedValue(3),
-      })
+      } as unknown as Database['tvsPrice']
 
       const indexer = await createInitializedIndexer({
         db: mockDatabase({
@@ -141,21 +136,21 @@ describe(TvsCleaner.name, () => {
 function createIndexer(overrides: Partial<TvsCleanerDeps> = {}): TvsCleaner {
   const defaults: TvsCleanerDeps = {
     db: mockDatabase({
-      tvsTokenValue: mockObject(),
-      tvsBlockTimestamp: mockObject(),
-      tvsAmount: mockObject(),
-      tvsPrice: mockObject(),
+      tvsTokenValue: {} as unknown as Database['tvsTokenValue'],
+      tvsBlockTimestamp: {} as unknown as Database['tvsBlockTimestamp'],
+      tvsAmount: {} as unknown as Database['tvsAmount'],
+      tvsPrice: {} as unknown as Database['tvsPrice'],
     }),
     syncOptimizer: testSyncOptimizer(),
     parents: [],
-    indexerService: mockObject<IndexerService>({
+    indexerService: {
       getSavedConfigurations: vi.fn().mockResolvedValue([]),
       insertConfigurations: vi.fn().mockResolvedValue(undefined),
       upsertConfigurations: vi.fn().mockResolvedValue(undefined),
       deleteConfigurations: vi.fn().mockResolvedValue(undefined),
       updateConfigurationsCurrentHeight: vi.fn().mockResolvedValue(undefined),
       setInitialState: vi.fn().mockResolvedValue(undefined),
-    }),
+    } as unknown as IndexerService,
     configurations: createTvsCleanerConfigurations([
       'tvsTokenValue',
       'tvsBlockTimestamp',

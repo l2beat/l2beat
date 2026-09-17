@@ -1,19 +1,18 @@
 import type { StarkexClient } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 import { StarkexDayProvider } from './StarkexDayProvider'
 
 describe(StarkexDayProvider.name, () => {
   describe(StarkexDayProvider.prototype.getDailyTxsCount.name, () => {
     it('fetches and aggregates daily txs for single product', async () => {
-      const starkexClient = mockObject<StarkexClient>({
+      const starkexClient = {
         getDailyCount: vi
           .fn()
           .mockResolvedValueOnce(100) // day 2
           .mockResolvedValueOnce(200) // day 3
           .mockResolvedValueOnce(300), // day 4
-      })
+      } as unknown as StarkexClient
 
       const provider = new StarkexDayProvider(starkexClient, ['product1'])
       const result = await provider.getDailyTxsCount(2, 5)
@@ -42,7 +41,7 @@ describe(StarkexDayProvider.name, () => {
     })
 
     it('fetches and aggregates daily txs for multiple products', async () => {
-      const starkexClient = mockObject<StarkexClient>({
+      const starkexClient = {
         getDailyCount: vi
           .fn()
           // Day 2
@@ -51,7 +50,7 @@ describe(StarkexDayProvider.name, () => {
           // Day 3
           .mockResolvedValueOnce(200) // product1
           .mockResolvedValueOnce(75), // product2
-      })
+      } as unknown as StarkexClient
 
       const provider = new StarkexDayProvider(starkexClient, [
         'product1',
@@ -67,9 +66,9 @@ describe(StarkexDayProvider.name, () => {
     })
 
     it('handles single day range (from inclusive, to exclusive)', async () => {
-      const starkexClient = mockObject<StarkexClient>({
+      const starkexClient = {
         getDailyCount: vi.fn().mockResolvedValue(100),
-      })
+      } as unknown as StarkexClient
 
       const provider = new StarkexDayProvider(starkexClient, ['product1'])
       const result = await provider.getDailyTxsCount(5, 5)
@@ -79,9 +78,9 @@ describe(StarkexDayProvider.name, () => {
     })
 
     it('handles zero counts', async () => {
-      const starkexClient = mockObject<StarkexClient>({
+      const starkexClient = {
         getDailyCount: vi.fn().mockResolvedValue(0),
-      })
+      } as unknown as StarkexClient
 
       const provider = new StarkexDayProvider(starkexClient, ['product1'])
       const result = await provider.getDailyTxsCount(1, 3)
@@ -93,13 +92,13 @@ describe(StarkexDayProvider.name, () => {
     })
 
     it('aggregates correctly with three products', async () => {
-      const starkexClient = mockObject<StarkexClient>({
+      const starkexClient = {
         getDailyCount: vi
           .fn()
           .mockResolvedValueOnce(100) // product1, day 1
           .mockResolvedValueOnce(200) // product2, day 1
           .mockResolvedValueOnce(300), // product3, day 1
-      })
+      } as unknown as StarkexClient
 
       const provider = new StarkexDayProvider(starkexClient, [
         'product1',
@@ -115,7 +114,7 @@ describe(StarkexDayProvider.name, () => {
     })
 
     it('processes multiple days correctly', async () => {
-      const starkexClient = mockObject<StarkexClient>({
+      const starkexClient = {
         getDailyCount: vi
           .fn()
           // Day 1
@@ -127,7 +126,7 @@ describe(StarkexDayProvider.name, () => {
           // Day 3
           .mockResolvedValueOnce(50)
           .mockResolvedValueOnce(60),
-      })
+      } as unknown as StarkexClient
 
       const provider = new StarkexDayProvider(starkexClient, ['p1', 'p2'])
       const result = await provider.getDailyTxsCount(1, 4)
@@ -141,9 +140,9 @@ describe(StarkexDayProvider.name, () => {
     })
 
     it('handles API errors gracefully', async () => {
-      const starkexClient = mockObject<StarkexClient>({
+      const starkexClient = {
         getDailyCount: vi.fn().mockRejectedValueOnce(new Error('API Error')),
-      })
+      } as unknown as StarkexClient
 
       const provider = new StarkexDayProvider(starkexClient, ['product1'])
 
@@ -153,7 +152,7 @@ describe(StarkexDayProvider.name, () => {
 
   describe(StarkexDayProvider.prototype.getDailyUopsCount.name, () => {
     it('returns empty object (API does not expose this metric)', async () => {
-      const starkexClient = mockObject<StarkexClient>({})
+      const starkexClient = {} as unknown as StarkexClient
       const provider = new StarkexDayProvider(starkexClient, ['product1'])
 
       const result = await provider.getDailyUopsCount(1, 10)
@@ -164,9 +163,9 @@ describe(StarkexDayProvider.name, () => {
 
   describe('edge cases', () => {
     it('handles empty products array', async () => {
-      const starkexClient = mockObject<StarkexClient>({
+      const starkexClient = {
         getDailyCount: vi.fn(),
-      })
+      } as unknown as StarkexClient
 
       const provider = new StarkexDayProvider(starkexClient, [])
       const result = await provider.getDailyTxsCount(1, 3)
@@ -179,9 +178,9 @@ describe(StarkexDayProvider.name, () => {
     })
 
     it('handles large day numbers', async () => {
-      const starkexClient = mockObject<StarkexClient>({
+      const starkexClient = {
         getDailyCount: vi.fn().mockResolvedValue(1000),
-      })
+      } as unknown as StarkexClient
 
       const provider = new StarkexDayProvider(starkexClient, ['product1'])
       const largeDay = 1000000
@@ -198,12 +197,12 @@ describe(StarkexDayProvider.name, () => {
 
     it('maintains correct order of calls for multiple products', async () => {
       const calls: string[] = []
-      const starkexClient = mockObject<StarkexClient>({
+      const starkexClient = {
         getDailyCount: vi.fn((day: number, product: string) => {
           calls.push(`day${day}-${product}`)
           return Promise.resolve(1)
         }),
-      })
+      } as unknown as StarkexClient
 
       const provider = new StarkexDayProvider(starkexClient, ['p1', 'p2', 'p3'])
       await provider.getDailyTxsCount(1, 3)

@@ -7,7 +7,6 @@ import {
   TokenId,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 import type { LocalStorage } from '../LocalStorage'
 import { getLegacyConfig } from './getLegacyConfig'
@@ -29,9 +28,9 @@ describe(mapLegacyConfig.name, () => {
 
     const chains = new Map(projectsWithChain.map((p) => [p.name, p]))
 
-    const mockLocalStorage = mockObject<LocalStorage>({
+    const mockLocalStorage = {
       getAddress: vi.fn().mockResolvedValue(undefined),
-    })
+    } as unknown as LocalStorage
 
     const tokens = await ps.getTokens()
     const legacyConfig = getLegacyConfig(arbitrum, tokens)

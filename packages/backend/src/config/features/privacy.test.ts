@@ -9,7 +9,6 @@ import {
   EthereumAddress,
   UnixTime,
 } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 import { PrivacyRelayerSampler } from '../../modules/privacy/PrivacyRelayerSampler'
 import { ERC20_TRANSFER_TOPIC } from '../../modules/privacy/utils/erc20'
@@ -38,9 +37,9 @@ describe(getPrivacyConfig.name, () => {
         })),
       },
     }
-    const projectService = mockObject<ProjectService>({
+    const projectService = {
       getProjects: vi.fn().mockResolvedValueOnce([untrackedProject]),
-    })
+    } as unknown as ProjectService
 
     const config = await getPrivacyConfig(
       projectService,
@@ -69,9 +68,9 @@ describe(getPrivacyConfig.name, () => {
         })),
       },
     }
-    const projectService = mockObject<ProjectService>({
+    const projectService = {
       getProjects: vi.fn().mockResolvedValueOnce([relayerOnlyProject]),
-    })
+    } as unknown as ProjectService
 
     const config = await getPrivacyConfig(
       projectService,
@@ -105,9 +104,9 @@ describe(getPrivacyConfig.name, () => {
         })),
       },
     }
-    const projectService = mockObject<ProjectService>({
+    const projectService = {
       getProjects: vi.fn().mockResolvedValueOnce([wakuOnlyProject]),
-    })
+    } as unknown as ProjectService
 
     const config = await getPrivacyConfig(
       projectService,
@@ -174,7 +173,7 @@ describe(getPrivacyConfig.name, () => {
           },
         ],
       }
-      const projectService = mockObject<ProjectService>({
+      const projectService = {
         getProjects: vi.fn().mockResolvedValueOnce([
           {
             ...project,
@@ -185,7 +184,7 @@ describe(getPrivacyConfig.name, () => {
             },
           },
         ]),
-      })
+      } as unknown as ProjectService
 
       const config = await getPrivacyConfig(
         projectService,

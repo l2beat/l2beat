@@ -1,6 +1,5 @@
 import { createDatabase, type Database } from '@l2beat/database'
-import { mockObject } from '@l2beat/test-utils'
-import { afterAll, describe, it } from 'vitest'
+import { afterAll, describe, it, vi } from 'vitest'
 import { testDatabase } from './harness'
 
 export function describeDatabase(name: string, suite: (db: Database) => void) {
@@ -27,10 +26,10 @@ export function describeDatabase(name: string, suite: (db: Database) => void) {
 }
 
 export function mockDatabase(overrides: Partial<Database> = {}): Database {
-  return mockObject<Database>({
-    transaction: async (fun) => {
+  return {
+    transaction: vi.fn(async (fun) => {
       return await fun()
-    },
+    }),
     ...overrides,
-  })
+  } as unknown as Database
 }

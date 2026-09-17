@@ -8,7 +8,6 @@ import type {
   LogsProvider,
 } from '@l2beat/shared'
 import { EthereumAddress, type Log, UnixTime } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { utils } from 'ethers'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { mockDatabase } from '../../../test/database'
@@ -61,9 +60,9 @@ describe(PrivacyAnonymitySetIndexer.name, () => {
         blobVersionedHashes: undefined,
         blockNumber: log.blockNumber,
       }),
-      repository: mockObject<Database['privacyAnonymitySetEvent']>({
+      repository: {
         upsertMany,
-      }),
+      } as unknown as Database['privacyAnonymitySetEvent'],
     })
 
     const save = await indexer.multiUpdate(from, to, [configuration])
@@ -112,9 +111,9 @@ describe(PrivacyAnonymitySetIndexer.name, () => {
       logs: [log],
       timestamps: new Map([[log.blockNumber, timestamp]]),
       getTransaction,
-      repository: mockObject<Database['privacyAnonymitySetEvent']>({
+      repository: {
         upsertMany,
-      }),
+      } as unknown as Database['privacyAnonymitySetEvent'],
     })
 
     const save = await indexer.multiUpdate(from, to, [configuration])
@@ -148,9 +147,9 @@ describe(PrivacyAnonymitySetIndexer.name, () => {
       logs: [],
       timestamps: new Map(),
       getTransaction: vi.fn(),
-      repository: mockObject<Database['privacyAnonymitySetEvent']>({
+      repository: {
         upsertMany,
-      }),
+      } as unknown as Database['privacyAnonymitySetEvent'],
     })
 
     const save = await indexer.multiUpdate(from, from + 36 * UnixTime.HOUR, [
@@ -175,9 +174,9 @@ describe(PrivacyAnonymitySetIndexer.name, () => {
       logs: [log],
       timestamps: new Map([[log.blockNumber, timestamp]]),
       getTransaction,
-      repository: mockObject<Database['privacyAnonymitySetEvent']>({
+      repository: {
         upsertMany,
-      }),
+      } as unknown as Database['privacyAnonymitySetEvent'],
     })
 
     const save = await indexer.multiUpdate(from, to, [configuration])
@@ -222,9 +221,9 @@ describe(PrivacyAnonymitySetIndexer.name, () => {
       logs,
       timestamps: new Map([[100, timestamp]]),
       getTransaction,
-      repository: mockObject<Database['privacyAnonymitySetEvent']>({
+      repository: {
         upsertMany,
-      }),
+      } as unknown as Database['privacyAnonymitySetEvent'],
     })
 
     const update = indexer.multiUpdate(from, to, [configuration])
@@ -245,11 +244,9 @@ describe(PrivacyAnonymitySetIndexer.name, () => {
       const deleteByConfigIds = vi
         .fn<Database['privacyAnonymitySetEvent']['deleteByConfigIds']>()
         .mockResolvedValue(3)
-      const indexer = makeIdleIndexer(
-        mockObject<Database['privacyAnonymitySetEvent']>({
-          deleteByConfigIds,
-        }),
-      )
+      const indexer = makeIdleIndexer({
+        deleteByConfigIds,
+      } as unknown as Database['privacyAnonymitySetEvent'])
 
       await indexer.wipeData([{ id: 'config-1' }, { id: 'config-2' }])
 
@@ -266,11 +263,9 @@ describe(PrivacyAnonymitySetIndexer.name, () => {
         .fn<Database['privacyAnonymitySetEvent']['deleteByConfigInTimeRange']>()
         .mockResolvedValueOnce(3)
         .mockResolvedValueOnce(0)
-      const indexer = makeIdleIndexer(
-        mockObject<Database['privacyAnonymitySetEvent']>({
-          deleteByConfigInTimeRange,
-        }),
-      )
+      const indexer = makeIdleIndexer({
+        deleteByConfigInTimeRange,
+      } as unknown as Database['privacyAnonymitySetEvent'])
 
       await indexer.trimData([
         { id: 'config-1', range: [100, 200] },
@@ -340,20 +335,20 @@ function makeIndexer({
       chain: 'ethereum',
       configurations: [configuration],
       parents: [],
-      indexerService: mockObject<IndexerService>({}),
-      blockTimestampProvider: mockObject<BlockTimestampProvider>({
+      indexerService: {} as unknown as IndexerService,
+      blockTimestampProvider: {
         getBlockNumberAtOrBefore: vi
           .fn()
           .mockReturnValueOnce(50)
           .mockReturnValueOnce(150),
-      }),
-      blockProvider: mockObject<BlockProvider>({
+      } as unknown as BlockTimestampProvider,
+      blockProvider: {
         getBlockTimestamps: vi.fn().mockReturnValueOnce(timestamps),
-      }),
-      logsProvider: mockObject<LogsProvider>({
+      } as unknown as BlockProvider,
+      logsProvider: {
         getLogs: vi.fn().mockReturnValueOnce(logs),
-      }),
-      rpcClient: mockObject<IRpcClient>({ getTransaction }),
+      } as unknown as LogsProvider,
+      rpcClient: { getTransaction } as unknown as IRpcClient,
       db: mockDatabase({
         privacyAnonymitySetEvent: repository,
       }),

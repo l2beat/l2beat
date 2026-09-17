@@ -1,4 +1,3 @@
-import { mockObject } from '@l2beat/test-utils'
 import { vi } from 'vitest'
 import type { WebSocket } from 'ws'
 
@@ -9,7 +8,7 @@ export class MockWebSocket {
   mock: WebSocket
 
   constructor() {
-    this.mock = mockObject<WebSocket>({
+    this.mock = {
       on: vi.fn((...args: any): WebSocket => {
         const event = args[0] as WebSocketEvent
         const callback = args[1] as (...args: any[]) => void
@@ -22,15 +21,11 @@ export class MockWebSocket {
         return this.mock
       }),
       send: vi.fn(() => {}),
-    })
+    } as unknown as WebSocket
   }
 
   private emit(event: WebSocketEvent, ...args: any[]) {
     this.listeners[event]?.forEach((callback) => callback(...args))
-  }
-
-  get mockObject() {
-    return this.mock
   }
 
   simulateOpen() {

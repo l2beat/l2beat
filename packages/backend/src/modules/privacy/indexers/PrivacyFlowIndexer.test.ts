@@ -3,7 +3,6 @@ import type { PrivacyFlowExtractorConfig } from '@l2beat/config'
 import type { Database } from '@l2beat/database'
 import type { BlockProvider, LogsProvider } from '@l2beat/shared'
 import { EthereumAddress, type Log, UnixTime } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { mockDatabase } from '../../../test/database'
 import type { IndexerService } from '../../../tools/uif/IndexerService'
@@ -52,24 +51,22 @@ describe(PrivacyFlowIndexer.name, () => {
         blockTimestamp,
       }
 
-      const logsProvider = mockObject<LogsProvider>({
+      const logsProvider = {
         getLogs: vi.fn().mockReturnValueOnce([log]),
-      })
+      } as unknown as LogsProvider
 
-      const blockProvider = mockObject<BlockProvider>({
+      const blockProvider = {
         getBlockTimestamps: vi.fn(),
-      })
+      } as unknown as BlockProvider
 
-      const privacyBlockTimestampRepo = mockObject<
-        Database['privacyBlockTimestamp']
-      >({
+      const privacyBlockTimestampRepo = {
         findBlockNumberByChainAndTimestamp: vi
           .fn()
           .mockReturnValueOnce(50)
           .mockReturnValueOnce(150),
-      })
+      } as unknown as Database['privacyBlockTimestamp']
 
-      const privacyPriceRepo = mockObject<Database['privacyPrice']>({
+      const privacyPriceRepo = {
         getPricesByPriceIdsInRange: vi.fn().mockReturnValueOnce([
           {
             priceId: 'ethereum',
@@ -78,11 +75,11 @@ describe(PrivacyFlowIndexer.name, () => {
             configurationId: 'price-1',
           },
         ]),
-      })
+      } as unknown as Database['privacyPrice']
 
-      const privacyFlowEventRepo = mockObject<Database['privacyFlowEvent']>({
+      const privacyFlowEventRepo = {
         upsertMany: vi.fn().mockReturnValueOnce(undefined),
-      })
+      } as unknown as Database['privacyFlowEvent']
 
       const indexer = new PrivacyFlowIndexer(
         {
@@ -96,7 +93,7 @@ describe(PrivacyFlowIndexer.name, () => {
             privacyFlowEvent: privacyFlowEventRepo,
           }),
           parents: [],
-          indexerService: mockObject<IndexerService>({}),
+          indexerService: {} as unknown as IndexerService,
         },
         Logger.SILENT,
       )
@@ -152,36 +149,34 @@ describe(PrivacyFlowIndexer.name, () => {
         }),
       ]
 
-      const logsProvider = mockObject<LogsProvider>({
+      const logsProvider = {
         getLogs: vi.fn().mockReturnValueOnce([]),
-      })
+      } as unknown as LogsProvider
 
-      const privacyBlockTimestampRepo = mockObject<
-        Database['privacyBlockTimestamp']
-      >({
+      const privacyBlockTimestampRepo = {
         findBlockNumberByChainAndTimestamp: vi
           .fn()
           .mockReturnValueOnce(10)
           .mockReturnValueOnce(20),
-      })
+      } as unknown as Database['privacyBlockTimestamp']
 
-      const privacyFlowEventRepo = mockObject<Database['privacyFlowEvent']>({
+      const privacyFlowEventRepo = {
         upsertMany: vi.fn().mockReturnValueOnce(undefined),
-      })
+      } as unknown as Database['privacyFlowEvent']
 
       const indexer = new PrivacyFlowIndexer(
         {
           chain: 'ethereum',
           configurations: configs,
-          blockProvider: mockObject<BlockProvider>({}),
+          blockProvider: {} as unknown as BlockProvider,
           logsProvider,
           db: mockDatabase({
             privacyBlockTimestamp: privacyBlockTimestampRepo,
-            privacyPrice: mockObject(),
+            privacyPrice: {} as unknown as Database['privacyPrice'],
             privacyFlowEvent: privacyFlowEventRepo,
           }),
           parents: [],
-          indexerService: mockObject<IndexerService>({}),
+          indexerService: {} as unknown as IndexerService,
         },
         Logger.SILENT,
       )
@@ -205,26 +200,27 @@ describe(PrivacyFlowIndexer.name, () => {
         fixedAmount: '1',
       })
 
-      const logsProvider = mockObject<LogsProvider>({
+      const logsProvider = {
         getLogs: vi.fn(),
-      })
-      const privacyFlowEventRepo = mockObject<Database['privacyFlowEvent']>({
+      } as unknown as LogsProvider
+      const privacyFlowEventRepo = {
         upsertMany: vi.fn().mockReturnValueOnce(undefined),
-      })
+      } as unknown as Database['privacyFlowEvent']
 
       const indexer = new PrivacyFlowIndexer(
         {
           chain: 'ethereum',
           configurations: [placeholder],
-          blockProvider: mockObject<BlockProvider>({}),
+          blockProvider: {} as unknown as BlockProvider,
           logsProvider,
           db: mockDatabase({
-            privacyBlockTimestamp: mockObject(),
-            privacyPrice: mockObject(),
+            privacyBlockTimestamp:
+              {} as unknown as Database['privacyBlockTimestamp'],
+            privacyPrice: {} as unknown as Database['privacyPrice'],
             privacyFlowEvent: privacyFlowEventRepo,
           }),
           parents: [],
-          indexerService: mockObject<IndexerService>({}),
+          indexerService: {} as unknown as IndexerService,
         },
         Logger.SILENT,
       )
@@ -254,25 +250,23 @@ describe(PrivacyFlowIndexer.name, () => {
         }),
       ]
 
-      const privacyBlockTimestampRepo = mockObject<
-        Database['privacyBlockTimestamp']
-      >({
+      const privacyBlockTimestampRepo = {
         findBlockNumberByChainAndTimestamp: vi.fn().mockReturnValue(undefined),
-      })
+      } as unknown as Database['privacyBlockTimestamp']
 
       const indexer = new PrivacyFlowIndexer(
         {
           chain: 'ethereum',
           configurations: configs,
-          blockProvider: mockObject<BlockProvider>({}),
-          logsProvider: mockObject<LogsProvider>({}),
+          blockProvider: {} as unknown as BlockProvider,
+          logsProvider: {} as unknown as LogsProvider,
           db: mockDatabase({
             privacyBlockTimestamp: privacyBlockTimestampRepo,
-            privacyPrice: mockObject(),
-            privacyFlowEvent: mockObject(),
+            privacyPrice: {} as unknown as Database['privacyPrice'],
+            privacyFlowEvent: {} as unknown as Database['privacyFlowEvent'],
           }),
           parents: [],
-          indexerService: mockObject<IndexerService>({}),
+          indexerService: {} as unknown as IndexerService,
         },
         Logger.SILENT,
       )
@@ -331,29 +325,27 @@ describe(PrivacyFlowIndexer.name, () => {
         },
       ]
 
-      const logsProvider = mockObject<LogsProvider>({
+      const logsProvider = {
         getLogs: vi.fn().mockReturnValueOnce(logs),
-      })
+      } as unknown as LogsProvider
 
-      const blockProvider = mockObject<BlockProvider>({
+      const blockProvider = {
         getBlockTimestamps: vi.fn().mockReturnValueOnce(
           new Map<number, UnixTime>([
             [100, blockTimestamp],
             [200, blockTimestamp],
           ]),
         ),
-      })
+      } as unknown as BlockProvider
 
-      const privacyBlockTimestampRepo = mockObject<
-        Database['privacyBlockTimestamp']
-      >({
+      const privacyBlockTimestampRepo = {
         findBlockNumberByChainAndTimestamp: vi
           .fn()
           .mockReturnValueOnce(50)
           .mockReturnValueOnce(250),
-      })
+      } as unknown as Database['privacyBlockTimestamp']
 
-      const privacyPriceRepo = mockObject<Database['privacyPrice']>({
+      const privacyPriceRepo = {
         getPricesByPriceIdsInRange: vi.fn().mockReturnValueOnce([
           {
             priceId: 'ethereum',
@@ -362,11 +354,11 @@ describe(PrivacyFlowIndexer.name, () => {
             configurationId: 'price-1',
           },
         ]),
-      })
+      } as unknown as Database['privacyPrice']
 
-      const privacyFlowEventRepo = mockObject<Database['privacyFlowEvent']>({
+      const privacyFlowEventRepo = {
         upsertMany: vi.fn().mockReturnValueOnce(undefined),
-      })
+      } as unknown as Database['privacyFlowEvent']
 
       const indexer = new PrivacyFlowIndexer(
         {
@@ -380,7 +372,7 @@ describe(PrivacyFlowIndexer.name, () => {
             privacyFlowEvent: privacyFlowEventRepo,
           }),
           parents: [],
-          indexerService: mockObject<IndexerService>({}),
+          indexerService: {} as unknown as IndexerService,
         },
         Logger.SILENT,
       )
@@ -422,32 +414,30 @@ describe(PrivacyFlowIndexer.name, () => {
         blockTimestamp,
       }
 
-      const logsProvider = mockObject<LogsProvider>({
+      const logsProvider = {
         getLogs: vi.fn().mockReturnValueOnce([mismatchedLog]),
-      })
+      } as unknown as LogsProvider
 
-      const privacyBlockTimestampRepo = mockObject<
-        Database['privacyBlockTimestamp']
-      >({
+      const privacyBlockTimestampRepo = {
         findBlockNumberByChainAndTimestamp: vi
           .fn()
           .mockReturnValueOnce(50)
           .mockReturnValueOnce(150),
-      })
+      } as unknown as Database['privacyBlockTimestamp']
 
-      const privacyPriceRepo = mockObject<Database['privacyPrice']>({
+      const privacyPriceRepo = {
         getPricesByPriceIdsInRange: vi.fn(),
-      })
+      } as unknown as Database['privacyPrice']
 
-      const privacyFlowEventRepo = mockObject<Database['privacyFlowEvent']>({
+      const privacyFlowEventRepo = {
         upsertMany: vi.fn().mockReturnValueOnce(undefined),
-      })
+      } as unknown as Database['privacyFlowEvent']
 
       const indexer = new PrivacyFlowIndexer(
         {
           chain: 'ethereum',
           configurations: configs,
-          blockProvider: mockObject<BlockProvider>({}),
+          blockProvider: {} as unknown as BlockProvider,
           logsProvider,
           db: mockDatabase({
             privacyBlockTimestamp: privacyBlockTimestampRepo,
@@ -455,7 +445,7 @@ describe(PrivacyFlowIndexer.name, () => {
             privacyFlowEvent: privacyFlowEventRepo,
           }),
           parents: [],
-          indexerService: mockObject<IndexerService>({}),
+          indexerService: {} as unknown as IndexerService,
         },
         Logger.SILENT,
       )
@@ -496,20 +486,18 @@ describe(PrivacyFlowIndexer.name, () => {
         blockTimestamp,
       }
 
-      const logsProvider = mockObject<LogsProvider>({
+      const logsProvider = {
         getLogs: vi.fn().mockReturnValueOnce([log]),
-      })
+      } as unknown as LogsProvider
 
-      const privacyBlockTimestampRepo = mockObject<
-        Database['privacyBlockTimestamp']
-      >({
+      const privacyBlockTimestampRepo = {
         findBlockNumberByChainAndTimestamp: vi
           .fn()
           .mockReturnValueOnce(50)
           .mockReturnValueOnce(150),
-      })
+      } as unknown as Database['privacyBlockTimestamp']
 
-      const privacyPriceRepo = mockObject<Database['privacyPrice']>({
+      const privacyPriceRepo = {
         getPricesByPriceIdsInRange: vi.fn().mockReturnValueOnce([
           {
             priceId: 'usdc',
@@ -518,17 +506,17 @@ describe(PrivacyFlowIndexer.name, () => {
             configurationId: 'price-usdc',
           },
         ]),
-      })
+      } as unknown as Database['privacyPrice']
 
-      const privacyFlowEventRepo = mockObject<Database['privacyFlowEvent']>({
+      const privacyFlowEventRepo = {
         upsertMany: vi.fn().mockReturnValueOnce(undefined),
-      })
+      } as unknown as Database['privacyFlowEvent']
 
       const indexer = new PrivacyFlowIndexer(
         {
           chain: 'ethereum',
           configurations: configs,
-          blockProvider: mockObject<BlockProvider>({}),
+          blockProvider: {} as unknown as BlockProvider,
           logsProvider,
           db: mockDatabase({
             privacyBlockTimestamp: privacyBlockTimestampRepo,
@@ -536,7 +524,7 @@ describe(PrivacyFlowIndexer.name, () => {
             privacyFlowEvent: privacyFlowEventRepo,
           }),
           parents: [],
-          indexerService: mockObject<IndexerService>({}),
+          indexerService: {} as unknown as IndexerService,
         },
         Logger.SILENT,
       )
@@ -544,7 +532,7 @@ describe(PrivacyFlowIndexer.name, () => {
       const updateFn = await indexer.multiUpdate(from, to, configs)
       await updateFn()
 
-      const call = privacyFlowEventRepo.upsertMany.mock.calls[0][0]
+      const call = vi.mocked(privacyFlowEventRepo.upsertMany).mock.calls[0][0]
       expect(call?.length).toStrictEqual(1)
       // 2.5 USDC * $1.01
       expect(call?.[0]?.valueUsd).toStrictEqual(2.5 * 1.01)
@@ -578,36 +566,34 @@ describe(PrivacyFlowIndexer.name, () => {
         blockTimestamp,
       }
 
-      const logsProvider = mockObject<LogsProvider>({
+      const logsProvider = {
         getLogs: vi.fn().mockReturnValueOnce([log]),
-      })
+      } as unknown as LogsProvider
 
-      const privacyBlockTimestampRepo = mockObject<
-        Database['privacyBlockTimestamp']
-      >({
+      const privacyBlockTimestampRepo = {
         findBlockNumberByChainAndTimestamp: vi
           .fn()
           .mockReturnValueOnce(50)
           .mockReturnValueOnce(150),
-      })
+      } as unknown as Database['privacyBlockTimestamp']
 
-      const privacyPriceRepo = mockObject<Database['privacyPrice']>({
+      const privacyPriceRepo = {
         getPricesByPriceIdsInRange: vi.fn().mockReturnValueOnce([]),
-      })
+      } as unknown as Database['privacyPrice']
 
       const indexer = new PrivacyFlowIndexer(
         {
           chain: 'ethereum',
           configurations: configs,
-          blockProvider: mockObject<BlockProvider>({}),
+          blockProvider: {} as unknown as BlockProvider,
           logsProvider,
           db: mockDatabase({
             privacyBlockTimestamp: privacyBlockTimestampRepo,
             privacyPrice: privacyPriceRepo,
-            privacyFlowEvent: mockObject(),
+            privacyFlowEvent: {} as unknown as Database['privacyFlowEvent'],
           }),
           parents: [],
-          indexerService: mockObject<IndexerService>({}),
+          indexerService: {} as unknown as IndexerService,
         },
         Logger.SILENT,
       )
@@ -656,32 +642,30 @@ describe(PrivacyFlowIndexer.name, () => {
         blockTimestamp,
       }
 
-      const logsProvider = mockObject<LogsProvider>({
+      const logsProvider = {
         getLogs: vi.fn().mockReturnValueOnce([log]),
-      })
+      } as unknown as LogsProvider
 
-      const privacyBlockTimestampRepo = mockObject<
-        Database['privacyBlockTimestamp']
-      >({
+      const privacyBlockTimestampRepo = {
         findBlockNumberByChainAndTimestamp: vi
           .fn()
           .mockReturnValueOnce(50)
           .mockReturnValueOnce(150),
-      })
+      } as unknown as Database['privacyBlockTimestamp']
 
       const indexer = new PrivacyFlowIndexer(
         {
           chain: 'ethereum',
           configurations: [badConfig],
-          blockProvider: mockObject<BlockProvider>({}),
+          blockProvider: {} as unknown as BlockProvider,
           logsProvider,
           db: mockDatabase({
             privacyBlockTimestamp: privacyBlockTimestampRepo,
-            privacyPrice: mockObject(),
-            privacyFlowEvent: mockObject(),
+            privacyPrice: {} as unknown as Database['privacyPrice'],
+            privacyFlowEvent: {} as unknown as Database['privacyFlowEvent'],
           }),
           parents: [],
-          indexerService: mockObject<IndexerService>({}),
+          indexerService: {} as unknown as IndexerService,
         },
         Logger.SILENT,
       )
@@ -734,20 +718,18 @@ describe(PrivacyFlowIndexer.name, () => {
         blockTimestamp,
       }
 
-      const logsProvider = mockObject<LogsProvider>({
+      const logsProvider = {
         getLogs: vi.fn().mockReturnValueOnce([logA, logB]),
-      })
+      } as unknown as LogsProvider
 
-      const privacyBlockTimestampRepo = mockObject<
-        Database['privacyBlockTimestamp']
-      >({
+      const privacyBlockTimestampRepo = {
         findBlockNumberByChainAndTimestamp: vi
           .fn()
           .mockReturnValueOnce(50)
           .mockReturnValueOnce(200),
-      })
+      } as unknown as Database['privacyBlockTimestamp']
 
-      const privacyPriceRepo = mockObject<Database['privacyPrice']>({
+      const privacyPriceRepo = {
         getPricesByPriceIdsInRange: vi.fn().mockReturnValueOnce([
           {
             priceId: 'ethereum',
@@ -756,17 +738,17 @@ describe(PrivacyFlowIndexer.name, () => {
             configurationId: 'price-1',
           },
         ]),
-      })
+      } as unknown as Database['privacyPrice']
 
-      const privacyFlowEventRepo = mockObject<Database['privacyFlowEvent']>({
+      const privacyFlowEventRepo = {
         upsertMany: vi.fn().mockReturnValueOnce(undefined),
-      })
+      } as unknown as Database['privacyFlowEvent']
 
       const indexer = new PrivacyFlowIndexer(
         {
           chain: 'ethereum',
           configurations: [configA, configB],
-          blockProvider: mockObject<BlockProvider>({}),
+          blockProvider: {} as unknown as BlockProvider,
           logsProvider,
           db: mockDatabase({
             privacyBlockTimestamp: privacyBlockTimestampRepo,
@@ -774,7 +756,7 @@ describe(PrivacyFlowIndexer.name, () => {
             privacyFlowEvent: privacyFlowEventRepo,
           }),
           parents: [],
-          indexerService: mockObject<IndexerService>({}),
+          indexerService: {} as unknown as IndexerService,
         },
         Logger.SILENT,
       )
@@ -782,7 +764,7 @@ describe(PrivacyFlowIndexer.name, () => {
       const updateFn = await indexer.multiUpdate(from, to, [configA, configB])
       await updateFn()
 
-      const getLogsCall = logsProvider.getLogs.mock.calls[0]
+      const getLogsCall = vi.mocked(logsProvider.getLogs).mock.calls[0]
       expect(new Set(getLogsCall?.[2])).toStrictEqual(
         new Set([ADDRESS_A.toString(), ADDRESS_B.toString()]),
       )
@@ -790,7 +772,8 @@ describe(PrivacyFlowIndexer.name, () => {
         new Set([TOPIC_A, TOPIC_B]),
       )
 
-      const records = privacyFlowEventRepo.upsertMany.mock.calls[0][0]
+      const records = vi.mocked(privacyFlowEventRepo.upsertMany).mock
+        .calls[0][0]
       expect(records?.length).toStrictEqual(2)
       expect(records?.map((r) => r.configurationId).sort()).toStrictEqual([
         'config-A',
@@ -840,22 +823,20 @@ describe(PrivacyFlowIndexer.name, () => {
       const depositLog = transferLog(USER, POOL, 10n, '0xtx2', blockTimestamp)
       const withdrawalLog = transferLog(POOL, USER, 7n, '0xtx3', blockTimestamp)
 
-      const logsProvider = mockObject<LogsProvider>({
+      const logsProvider = {
         getLogs: vi
           .fn()
           .mockReturnValueOnce([fixedLog])
           .mockReturnValueOnce([depositLog])
           .mockReturnValueOnce([withdrawalLog]),
-      })
-      const privacyBlockTimestampRepo = mockObject<
-        Database['privacyBlockTimestamp']
-      >({
+      } as unknown as LogsProvider
+      const privacyBlockTimestampRepo = {
         findBlockNumberByChainAndTimestamp: vi
           .fn()
           .mockReturnValueOnce(50)
           .mockReturnValueOnce(150),
-      })
-      const privacyPriceRepo = mockObject<Database['privacyPrice']>({
+      } as unknown as Database['privacyBlockTimestamp']
+      const privacyPriceRepo = {
         getPricesByPriceIdsInRange: vi.fn().mockReturnValueOnce([
           {
             priceId: 'ethereum',
@@ -864,16 +845,16 @@ describe(PrivacyFlowIndexer.name, () => {
             configurationId: 'price-1',
           },
         ]),
-      })
-      const privacyFlowEventRepo = mockObject<Database['privacyFlowEvent']>({
+      } as unknown as Database['privacyPrice']
+      const privacyFlowEventRepo = {
         upsertMany: vi.fn().mockReturnValueOnce(undefined),
-      })
+      } as unknown as Database['privacyFlowEvent']
 
       const indexer = new PrivacyFlowIndexer(
         {
           chain: 'ethereum',
           configurations: configs,
-          blockProvider: mockObject<BlockProvider>({}),
+          blockProvider: {} as unknown as BlockProvider,
           logsProvider,
           db: mockDatabase({
             privacyBlockTimestamp: privacyBlockTimestampRepo,
@@ -881,7 +862,7 @@ describe(PrivacyFlowIndexer.name, () => {
             privacyFlowEvent: privacyFlowEventRepo,
           }),
           parents: [],
-          indexerService: mockObject<IndexerService>({}),
+          indexerService: {} as unknown as IndexerService,
         },
         Logger.SILENT,
       )
@@ -911,7 +892,8 @@ describe(PrivacyFlowIndexer.name, () => {
         [[ERC20_TRANSFER_TOPIC], POOL_TOPIC],
       )
 
-      const records = privacyFlowEventRepo.upsertMany.mock.calls[0][0]
+      const records = vi.mocked(privacyFlowEventRepo.upsertMany).mock
+        .calls[0][0]
       expect(
         records?.map((r) => [r.configurationId, r.direction, r.amount]),
       ).toStrictEqual([
@@ -924,12 +906,12 @@ describe(PrivacyFlowIndexer.name, () => {
 
   describe(PrivacyFlowIndexer.prototype.trimData.name, () => {
     it('deletes records for each configuration in the given time range', async () => {
-      const privacyFlowEventRepo = mockObject<Database['privacyFlowEvent']>({
+      const privacyFlowEventRepo = {
         deleteByConfigInTimeRange: vi
           .fn()
           .mockReturnValueOnce(3)
           .mockReturnValueOnce(0),
-      })
+      } as unknown as Database['privacyFlowEvent']
 
       const placeholder = flowConfig({
         id: 'placeholder',
@@ -944,15 +926,16 @@ describe(PrivacyFlowIndexer.name, () => {
         {
           chain: 'ethereum',
           configurations: [placeholder],
-          blockProvider: mockObject<BlockProvider>({}),
-          logsProvider: mockObject<LogsProvider>({}),
+          blockProvider: {} as unknown as BlockProvider,
+          logsProvider: {} as unknown as LogsProvider,
           db: mockDatabase({
-            privacyBlockTimestamp: mockObject(),
-            privacyPrice: mockObject(),
+            privacyBlockTimestamp:
+              {} as unknown as Database['privacyBlockTimestamp'],
+            privacyPrice: {} as unknown as Database['privacyPrice'],
             privacyFlowEvent: privacyFlowEventRepo,
           }),
           parents: [],
-          indexerService: mockObject<IndexerService>({}),
+          indexerService: {} as unknown as IndexerService,
         },
         Logger.SILENT,
       )
@@ -975,9 +958,9 @@ describe(PrivacyFlowIndexer.name, () => {
 
   describe(PrivacyFlowIndexer.prototype.wipeData.name, () => {
     it('deletes all records for the given configurations', async () => {
-      const privacyFlowEventRepo = mockObject<Database['privacyFlowEvent']>({
+      const privacyFlowEventRepo = {
         deleteByConfigIds: vi.fn().mockReturnValue(3),
-      })
+      } as unknown as Database['privacyFlowEvent']
       const placeholder = flowConfig({
         id: 'placeholder',
         address: ADDRESS_A,
@@ -990,15 +973,16 @@ describe(PrivacyFlowIndexer.name, () => {
         {
           chain: 'ethereum',
           configurations: [placeholder],
-          blockProvider: mockObject<BlockProvider>({}),
-          logsProvider: mockObject<LogsProvider>({}),
+          blockProvider: {} as unknown as BlockProvider,
+          logsProvider: {} as unknown as LogsProvider,
           db: mockDatabase({
-            privacyBlockTimestamp: mockObject(),
-            privacyPrice: mockObject(),
+            privacyBlockTimestamp:
+              {} as unknown as Database['privacyBlockTimestamp'],
+            privacyPrice: {} as unknown as Database['privacyPrice'],
             privacyFlowEvent: privacyFlowEventRepo,
           }),
           parents: [],
-          indexerService: mockObject<IndexerService>({}),
+          indexerService: {} as unknown as IndexerService,
         },
         Logger.SILENT,
       )

@@ -1,6 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
-import { mockObject } from '@l2beat/test-utils'
-import { afterEach, describe, expect, it } from 'vitest'
+import { afterEach, describe, expect, it, vi } from 'vitest'
 
 import type { IndexerService } from './IndexerService'
 import { _TEST_ONLY_resetUniqueIds } from './ids'
@@ -18,7 +17,7 @@ describe(ManagedChildIndexer.name, () => {
     it('constructor throws on duplicate indexer ids', () => {
       const common = {
         parents: [],
-        indexerService: mockObject<IndexerService>(),
+        indexerService: {} as unknown as IndexerService,
         minHeight: 0,
       }
       new TestIndexer({ ...common, name: 'a' }, Logger.SILENT)
@@ -30,12 +29,12 @@ describe(ManagedChildIndexer.name, () => {
 
   describe(ManagedChildIndexer.prototype.initialize.name, () => {
     it('returns safe height', async () => {
-      const indexerService = mockObject<IndexerService>({
-        getIndexerState: async () => ({
+      const indexerService = {
+        getIndexerState: vi.fn(async () => ({
           indexerId: 'indexer',
           safeHeight: 1,
-        }),
-      })
+        })),
+      } as unknown as IndexerService
 
       const indexer = new TestIndexer(
         {
@@ -53,9 +52,9 @@ describe(ManagedChildIndexer.name, () => {
     })
 
     it('returns minHeight - 1 if safeHeight not defined', async () => {
-      const indexerService = mockObject<IndexerService>({
-        getIndexerState: async () => undefined,
-      })
+      const indexerService = {
+        getIndexerState: vi.fn(async () => undefined),
+      } as unknown as IndexerService
 
       const indexer = new TestIndexer(
         {
@@ -73,13 +72,13 @@ describe(ManagedChildIndexer.name, () => {
     })
 
     it('invalidates on config change', async () => {
-      const indexerService = mockObject<IndexerService>({
-        getIndexerState: async () => ({
+      const indexerService = {
+        getIndexerState: vi.fn(async () => ({
           indexerId: 'indexer',
           safeHeight: 111,
           configHash: 'old-hash',
-        }),
-      })
+        })),
+      } as unknown as IndexerService
 
       const minHeight = 100
       const indexer = new TestIndexer(
@@ -103,9 +102,9 @@ describe(ManagedChildIndexer.name, () => {
   })
 
   it(ManagedChildIndexer.prototype.setSafeHeight.name, async () => {
-    const indexerService = mockObject<IndexerService>({
-      setSafeHeight: async () => {},
-    })
+    const indexerService = {
+      setSafeHeight: vi.fn(async () => {}),
+    } as unknown as IndexerService
 
     const indexer = new TestIndexer(
       {

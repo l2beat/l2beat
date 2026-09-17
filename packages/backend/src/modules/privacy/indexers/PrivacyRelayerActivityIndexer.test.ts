@@ -2,7 +2,6 @@ import { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
 import type { BlockProvider, LogsProvider } from '@l2beat/shared'
 import { EthereumAddress, type Log, UnixTime } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { utils } from 'ethers'
 import { describe, expect, it, vi } from 'vitest'
 import { mockDatabase } from '../../../test/database'
@@ -48,25 +47,21 @@ describe(PrivacyRelayerActivityIndexer.name, () => {
       blockTimestamp,
     }
 
-    const logsProvider = mockObject<LogsProvider>({
+    const logsProvider = {
       getLogs: vi.fn().mockReturnValueOnce([log]),
-    })
-    const blockProvider = mockObject<BlockProvider>({
+    } as unknown as LogsProvider
+    const blockProvider = {
       getBlockTimestamps: vi.fn(),
-    })
-    const privacyBlockTimestamp = mockObject<Database['privacyBlockTimestamp']>(
-      {
-        findBlockNumberByChainAndTimestamp: vi
-          .fn()
-          .mockReturnValueOnce(50)
-          .mockReturnValueOnce(150),
-      },
-    )
-    const privacyRelayerActivity = mockObject<
-      Database['privacyRelayerActivity']
-    >({
+    } as unknown as BlockProvider
+    const privacyBlockTimestamp = {
+      findBlockNumberByChainAndTimestamp: vi
+        .fn()
+        .mockReturnValueOnce(50)
+        .mockReturnValueOnce(150),
+    } as unknown as Database['privacyBlockTimestamp']
+    const privacyRelayerActivity = {
       upsertMany: vi.fn().mockReturnValueOnce(undefined),
-    })
+    } as unknown as Database['privacyRelayerActivity']
 
     const indexer = new PrivacyRelayerActivityIndexer(
       {
@@ -79,7 +74,7 @@ describe(PrivacyRelayerActivityIndexer.name, () => {
           privacyRelayerActivity,
         }),
         parents: [],
-        indexerService: mockObject<IndexerService>({}),
+        indexerService: {} as unknown as IndexerService,
       },
       Logger.SILENT,
     )

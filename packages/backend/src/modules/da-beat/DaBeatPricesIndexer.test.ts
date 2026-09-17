@@ -2,7 +2,6 @@ import { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
 import type { PriceProvider } from '@l2beat/shared'
 import { CoingeckoId } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { mockDatabase } from '../../test/database'
 import type { IndexerService } from '../../tools/uif/IndexerService'
@@ -40,13 +39,13 @@ describe(DaBeatPricesIndexer.name, () => {
         [CoingeckoId('bitcoin'), 45000.75],
       ])
 
-      const priceProvider = mockObject<PriceProvider>({
+      const priceProvider = {
         getLatestPrices: vi.fn().mockResolvedValue(pricesMap),
-      })
+      } as unknown as PriceProvider
 
-      const currentPriceRepository = mockObject<Database['currentPrice']>({
+      const currentPriceRepository = {
         upsertMany: vi.fn().mockResolvedValue(undefined),
-      })
+      } as unknown as Database['currentPrice']
 
       const configuration = mockConfiguration(['ethereum', 'bitcoin'])
       const deps = mockIndexerDeps({
@@ -78,13 +77,13 @@ describe(DaBeatPricesIndexer.name, () => {
     it('returns early when no prices found', async () => {
       const emptyPricesMap = new Map()
 
-      const priceProvider = mockObject<PriceProvider>({
+      const priceProvider = {
         getLatestPrices: vi.fn().mockResolvedValue(emptyPricesMap),
-      })
+      } as unknown as PriceProvider
 
-      const currentPriceRepository = mockObject<Database['currentPrice']>({
+      const currentPriceRepository = {
         upsertMany: vi.fn().mockResolvedValue(undefined),
-      })
+      } as unknown as Database['currentPrice']
 
       const configuration = mockConfiguration(['ethereum'])
       const deps = mockIndexerDeps({
@@ -107,11 +106,11 @@ describe(DaBeatPricesIndexer.name, () => {
     })
 
     it('handles price provider errors', async () => {
-      const priceProvider = mockObject<PriceProvider>({
+      const priceProvider = {
         getLatestPrices: vi
           .fn()
           .mockRejectedValue(new Error('Price provider error')),
-      })
+      } as unknown as PriceProvider
 
       const configuration = mockConfiguration(['ethereum'])
       const deps = mockIndexerDeps({
@@ -129,9 +128,9 @@ describe(DaBeatPricesIndexer.name, () => {
 
   describe(DaBeatPricesIndexer.prototype.wipeData.name, () => {
     it('deletes records by coingecko ids', async () => {
-      const currentPriceRepository = mockObject<Database['currentPrice']>({
+      const currentPriceRepository = {
         deleteByCoingeckoIds: vi.fn().mockResolvedValue(5),
-      })
+      } as unknown as Database['currentPrice']
 
       const configuration = mockConfiguration(['ethereum', 'bitcoin'])
       const deps = mockIndexerDeps({
@@ -178,14 +177,14 @@ function mockIndexerDeps(options: MockIndexerDepsOptions = {}): Omit<
 
   return {
     configurations: options.configurations ?? [defaultConfiguration],
-    priceProvider: options.priceProvider ?? mockObject<PriceProvider>(),
+    priceProvider: options.priceProvider ?? ({} as unknown as PriceProvider),
     db: mockDatabase({
       currentPrice:
         options.currentPriceRepository ??
-        mockObject<Database['currentPrice']>(),
+        ({} as unknown as Database['currentPrice']),
     }),
     parents: [],
-    indexerService: mockObject<IndexerService>(),
+    indexerService: {} as unknown as IndexerService,
   }
 }
 

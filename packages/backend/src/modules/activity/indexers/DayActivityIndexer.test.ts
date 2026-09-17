@@ -1,7 +1,6 @@
 import { Logger } from '@l2beat/backend-tools'
 import type { Database } from '@l2beat/database'
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { mockDatabase } from '../../../test/database'
 import type { IndexerService } from '../../../tools/uif/IndexerService'
@@ -18,9 +17,9 @@ describe(DayActivityIndexer.name, () => {
 
   describe(DayActivityIndexer.prototype.update.name, () => {
     it('make update based on batchSize', async () => {
-      const txsCountService = mockObject<TxsCountService>({
+      const txsCountService = {
         getTxsCount: vi.fn().mockResolvedValue([]),
-      })
+      } as unknown as TxsCountService
 
       const indexer = createIndexer({
         txsCountService,
@@ -34,9 +33,9 @@ describe(DayActivityIndexer.name, () => {
     })
 
     it('make update based on batchSize and uncertaintyBuffer', async () => {
-      const txsCountService = mockObject<TxsCountService>({
+      const txsCountService = {
         getTxsCount: vi.fn().mockResolvedValue([]),
-      })
+      } as unknown as TxsCountService
 
       const indexer = createIndexer({
         txsCountService,
@@ -51,25 +50,25 @@ describe(DayActivityIndexer.name, () => {
     })
 
     it('gets blocks counts, saves to db and updates sync metadata', async () => {
-      const activityRepository = mockObject<Database['activity']>({
+      const activityRepository = {
         upsertMany: vi.fn().mockResolvedValue(undefined),
-      })
-      const syncMetadataRepository = mockObject<Database['syncMetadata']>({
+      } as unknown as Database['activity']
+      const syncMetadataRepository = {
         updateSyncedUntil: vi.fn().mockResolvedValue(undefined),
-      })
+      } as unknown as Database['syncMetadata']
       const mockActivityRecords = [
         activityRecord('a', START, 5),
         activityRecord('a', START + 1 * UnixTime.DAY, 4),
         activityRecord('a', START + 2 * UnixTime.DAY, 2),
       ]
 
-      const txsCountService = mockObject<TxsCountService>({
+      const txsCountService = {
         getTxsCount: vi.fn().mockResolvedValue({
           records: mockActivityRecords,
           latestTimestamp:
             mockActivityRecords[mockActivityRecords.length - 1].timestamp,
         }),
-      })
+      } as unknown as TxsCountService
 
       const indexer = createIndexer({
         txsCountService,
@@ -129,20 +128,20 @@ function createIndexer(
   return new DayActivityIndexer(
     {
       parents: [],
-      txsCountService: mockObject<TxsCountService>({
+      txsCountService: {
         getTxsCount: vi.fn().mockResolvedValue([]),
-      }),
+      } as unknown as TxsCountService,
       db: mockDatabase({
-        activity: mockObject<Database['activity']>({
+        activity: {
           getByProjectAndTimeRange: vi.fn().mockResolvedValue([]),
           upsertMany: vi.fn().mockResolvedValue(undefined),
-        }),
-        syncMetadata: mockObject<Database['syncMetadata']>({
+        } as unknown as Database['activity'],
+        syncMetadata: {
           updateSyncedUntil: vi.fn().mockResolvedValue(undefined),
-        }),
+        } as unknown as Database['syncMetadata'],
       }),
       projectId: ProjectId('a'),
-      indexerService: mockObject<IndexerService>({}),
+      indexerService: {} as unknown as IndexerService,
       minHeight: 0,
       batchSize: 1,
       uncertaintyBuffer: 0,

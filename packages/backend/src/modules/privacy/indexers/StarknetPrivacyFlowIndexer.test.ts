@@ -6,7 +6,6 @@ import type {
   StarknetEvent,
 } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 import { mockDatabase } from '../../../test/database'
 import type { IndexerService } from '../../../tools/uif/IndexerService'
@@ -40,7 +39,7 @@ describe(StarknetPrivacyFlowIndexer.name, () => {
         }),
       ]
 
-      const starknetClient = mockObject<StarknetClient>({
+      const starknetClient = {
         getEvents: vi.fn().mockReturnValueOnce([
           event({
             block_number: 100,
@@ -64,8 +63,8 @@ describe(StarknetPrivacyFlowIndexer.name, () => {
             data: ['0xf4240'],
           }),
         ]),
-      })
-      const blockProvider = mockObject<BlockProvider>({
+      } as unknown as StarknetClient
+      const blockProvider = {
         getBlockTimestamps: vi.fn().mockReturnValueOnce(
           new Map([
             [100, timestamp],
@@ -73,16 +72,14 @@ describe(StarknetPrivacyFlowIndexer.name, () => {
             [102, timestamp],
           ]),
         ),
-      })
-      const privacyBlockTimestampRepo = mockObject<
-        Database['privacyBlockTimestamp']
-      >({
+      } as unknown as BlockProvider
+      const privacyBlockTimestampRepo = {
         findBlockNumberByChainAndTimestamp: vi
           .fn()
           .mockReturnValueOnce(50)
           .mockReturnValueOnce(150),
-      })
-      const privacyPriceRepo = mockObject<Database['privacyPrice']>({
+      } as unknown as Database['privacyBlockTimestamp']
+      const privacyPriceRepo = {
         getPricesByPriceIdsInRange: vi.fn().mockReturnValueOnce([
           {
             priceId: 'usd-coin',
@@ -91,10 +88,10 @@ describe(StarknetPrivacyFlowIndexer.name, () => {
             configurationId: 'price-config',
           },
         ]),
-      })
-      const privacyFlowEventRepo = mockObject<Database['privacyFlowEvent']>({
+      } as unknown as Database['privacyPrice']
+      const privacyFlowEventRepo = {
         upsertMany: vi.fn().mockReturnValueOnce(undefined),
-      })
+      } as unknown as Database['privacyFlowEvent']
 
       const indexer = new StarknetPrivacyFlowIndexer(
         {
@@ -108,7 +105,7 @@ describe(StarknetPrivacyFlowIndexer.name, () => {
             privacyFlowEvent: privacyFlowEventRepo,
           }),
           parents: [],
-          indexerService: mockObject<IndexerService>({}),
+          indexerService: {} as unknown as IndexerService,
         },
         Logger.SILENT,
       )

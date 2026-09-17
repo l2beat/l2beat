@@ -1,5 +1,4 @@
 import { UnixTime } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it } from 'vitest'
 import { groupByType } from './groupByType'
 import type { LivenessRecordWithConfig } from './mapToRecordWithConfig'
@@ -9,26 +8,26 @@ describe(groupByType.name, () => {
 
   it('returns grouped by type', () => {
     const records: LivenessRecordWithConfig[] = [
-      mockObject<LivenessRecordWithConfig>({
+      {
         timestamp: NOW - 1 * UnixTime.HOUR,
         subtype: 'batchSubmissions',
-      }),
-      mockObject<LivenessRecordWithConfig>({
+      } as unknown as LivenessRecordWithConfig,
+      {
         timestamp: NOW - 2 * UnixTime.HOUR,
         subtype: 'batchSubmissions',
-      }),
-      mockObject<LivenessRecordWithConfig>({
+      } as unknown as LivenessRecordWithConfig,
+      {
         timestamp: NOW - 2 * UnixTime.HOUR,
         subtype: 'batchSubmissions',
-      }),
-      mockObject<LivenessRecordWithConfig>({
+      } as unknown as LivenessRecordWithConfig,
+      {
         timestamp: NOW - 1 * UnixTime.HOUR,
         subtype: 'stateUpdates',
-      }),
-      mockObject<LivenessRecordWithConfig>({
+      } as unknown as LivenessRecordWithConfig,
+      {
         timestamp: NOW - 2 * UnixTime.HOUR,
         subtype: 'stateUpdates',
-      }),
+      } as unknown as LivenessRecordWithConfig,
     ]
     const result = groupByType(records)
 

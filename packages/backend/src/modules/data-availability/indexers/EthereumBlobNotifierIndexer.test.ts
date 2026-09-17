@@ -3,7 +3,6 @@ import type { EthereumDaTrackingConfig } from '@l2beat/config'
 import type { BlobPairCount, Database } from '@l2beat/database'
 import { DISCORD_MAX_MESSAGE_LENGTH, type DiscordClient } from '@l2beat/shared'
 import { UnixTime } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { beforeEach, describe, expect, it, vi } from 'vitest'
 import { mockDatabase } from '../../../test/database'
 import type { IndexerService } from '../../../tools/uif/IndexerService'
@@ -222,17 +221,17 @@ function config(
 }
 
 function mockBlobsRepository(pairs: BlobPairCount[]) {
-  return mockObject<Database['blobs']>({
+  return {
     getCountPerAddressInbox: vi.fn().mockResolvedValue(pairs),
-  })
+  } as unknown as Database['blobs']
 }
 
 function mockDiscordClient(sendError?: Error) {
-  return mockObject<DiscordClient>({
+  return {
     sendMessage: sendError
       ? vi.fn().mockRejectedValue(sendError)
       : vi.fn().mockResolvedValue('msg-id'),
-  })
+  } as unknown as DiscordClient
 }
 
 function createIndexer($?: {
@@ -248,7 +247,7 @@ function createIndexer($?: {
       configurations: $?.configurations ?? [],
       discordClient: $?.discordClient ?? mockDiscordClient(),
       parents: [],
-      indexerService: mockObject<IndexerService>(),
+      indexerService: {} as unknown as IndexerService,
       minHeight: 0,
     },
     Logger.SILENT,

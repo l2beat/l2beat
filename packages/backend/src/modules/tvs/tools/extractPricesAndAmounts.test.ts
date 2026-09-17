@@ -1,6 +1,5 @@
 import type { TvsToken } from '@l2beat/config'
 import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it } from 'vitest'
 import type { AmountConfig } from '../types'
 import { extractPricesAndAmounts } from './extractPricesAndAmounts'
@@ -16,7 +15,7 @@ describe(extractPricesAndAmounts.name, () => {
       EthereumAddress('0x3333333333333333333333333333333333333333'),
       EthereumAddress('0x2222222222222222222222222222222222222222'),
     ]
-    const token = mockObject<TvsToken>({
+    const token = {
       priceId: 'price-RAIN',
       amount: {
         type: 'balanceOfEscrows',
@@ -28,7 +27,7 @@ describe(extractPricesAndAmounts.name, () => {
       },
       valueForProject: undefined,
       valueForSummary: undefined,
-    })
+    } as unknown as TvsToken
 
     const result = extractPricesAndAmounts([token])
 
@@ -47,7 +46,7 @@ describe(extractPricesAndAmounts.name, () => {
 
   it('should map amount formulas to sync configs', async () => {
     const tokens = [
-      mockObject<TvsToken>({
+      {
         priceId: 'price-ARB',
         amount: {
           type: 'balanceOfEscrow',
@@ -64,8 +63,8 @@ describe(extractPricesAndAmounts.name, () => {
         },
         valueForProject: undefined,
         valueForSummary: undefined,
-      }),
-      mockObject<TvsToken>({
+      } as unknown as TvsToken,
+      {
         priceId: 'price-ARB',
         amount: {
           chain: 'ethereum',
@@ -77,8 +76,8 @@ describe(extractPricesAndAmounts.name, () => {
         },
         valueForProject: undefined,
         valueForSummary: undefined,
-      }),
-      mockObject<TvsToken>({
+      } as unknown as TvsToken,
+      {
         priceId: 'price-ATH',
         amount: {
           type: 'calculation',
@@ -103,7 +102,7 @@ describe(extractPricesAndAmounts.name, () => {
         },
         valueForProject: undefined,
         valueForSummary: undefined,
-      }),
+      } as unknown as TvsToken,
     ]
 
     const result = extractPricesAndAmounts(tokens)
@@ -123,7 +122,7 @@ describe(extractPricesAndAmounts.name, () => {
           sinceTimestamp: UnixTime(100),
           untilTimestamp: UnixTime(200),
         },
-        mockObject<AmountConfig>({
+        {
           id: '4ffda8b9b469',
           chain: 'ethereum',
           address: ADDRESS,
@@ -131,7 +130,7 @@ describe(extractPricesAndAmounts.name, () => {
           type: 'circulatingSupply',
           decimals: 18,
           sinceTimestamp: UnixTime(100),
-        }),
+        } as unknown as AmountConfig,
         {
           id: '9c352c5b1183',
           address: EthereumAddress(
@@ -173,7 +172,7 @@ describe(extractPricesAndAmounts.name, () => {
 
     const tokens = [
       // WBTC with amount formula as totalSupply on L2
-      mockObject<TvsToken>({
+      {
         priceId: 'price-WBTC',
         amount: {
           type: 'totalSupply',
@@ -184,11 +183,11 @@ describe(extractPricesAndAmounts.name, () => {
         },
         valueForProject: undefined,
         valueForSummary: undefined,
-      }),
+      } as unknown as TvsToken,
       // solvBTC with
       // - amount formula as totalSupply on L2
       // - valueForProject formula as totalSupply of solveBTC on L2 - balance of WBTC locked in solvBTC escrow
-      mockObject<TvsToken>({
+      {
         priceId: 'price-SolvBTC',
         amount: {
           type: 'totalSupply',
@@ -227,7 +226,7 @@ describe(extractPricesAndAmounts.name, () => {
           ],
         },
         valueForSummary: undefined,
-      }),
+      } as unknown as TvsToken,
     ]
 
     const result = extractPricesAndAmounts(tokens)
@@ -283,7 +282,7 @@ describe(extractPricesAndAmounts.name, () => {
     )
 
     const tokens = [
-      mockObject<TvsToken>({
+      {
         priceId: 'price-A',
         amount: {
           type: 'totalSupply',
@@ -295,8 +294,8 @@ describe(extractPricesAndAmounts.name, () => {
         },
         valueForProject: undefined,
         valueForSummary: undefined,
-      }),
-      mockObject<TvsToken>({
+      } as unknown as TvsToken,
+      {
         priceId: 'price-A',
         amount: {
           type: 'totalSupply',
@@ -308,8 +307,8 @@ describe(extractPricesAndAmounts.name, () => {
         },
         valueForProject: undefined,
         valueForSummary: undefined,
-      }),
-      mockObject<TvsToken>({
+      } as unknown as TvsToken,
+      {
         priceId: 'price-B',
         amount: {
           type: 'totalSupply',
@@ -321,8 +320,8 @@ describe(extractPricesAndAmounts.name, () => {
         },
         valueForProject: undefined,
         valueForSummary: undefined,
-      }),
-      mockObject<TvsToken>({
+      } as unknown as TvsToken,
+      {
         priceId: 'price-B',
         amount: {
           type: 'totalSupply',
@@ -362,7 +361,7 @@ describe(extractPricesAndAmounts.name, () => {
           ],
         },
         valueForSummary: undefined,
-      }),
+      } as unknown as TvsToken,
     ]
 
     const result = extractPricesAndAmounts(tokens)
@@ -413,7 +412,7 @@ describe(extractPricesAndAmounts.name, () => {
 
     it('clamps sinceTimestamp when token starts before chain', () => {
       const tokens = [
-        mockObject<TvsToken>({
+        {
           priceId: 'price-A',
           amount: {
             type: 'totalSupply',
@@ -424,7 +423,7 @@ describe(extractPricesAndAmounts.name, () => {
           },
           valueForProject: undefined,
           valueForSummary: undefined,
-        }),
+        } as unknown as TvsToken,
       ]
       const { amounts } = extractPricesAndAmounts(tokens, chainRanges)
       expect(getAmount(amounts, 'form').sinceTimestamp).toStrictEqual(
@@ -434,7 +433,7 @@ describe(extractPricesAndAmounts.name, () => {
 
     it('clamps untilTimestamp when token ends after chain', () => {
       const tokens = [
-        mockObject<TvsToken>({
+        {
           priceId: 'price-A',
           amount: {
             type: 'totalSupply',
@@ -446,7 +445,7 @@ describe(extractPricesAndAmounts.name, () => {
           },
           valueForProject: undefined,
           valueForSummary: undefined,
-        }),
+        } as unknown as TvsToken,
       ]
       const { amounts } = extractPricesAndAmounts(tokens, chainRanges)
       expect(getAmount(amounts, 'form').untilTimestamp).toStrictEqual(
@@ -456,7 +455,7 @@ describe(extractPricesAndAmounts.name, () => {
 
     it('leaves token unchanged when within chain range', () => {
       const tokens = [
-        mockObject<TvsToken>({
+        {
           priceId: 'price-A',
           amount: {
             type: 'balanceOfEscrow',
@@ -469,7 +468,7 @@ describe(extractPricesAndAmounts.name, () => {
           },
           valueForProject: undefined,
           valueForSummary: undefined,
-        }),
+        } as unknown as TvsToken,
       ]
       const { amounts } = extractPricesAndAmounts(tokens, chainRanges)
       expect(getAmount(amounts, 'form').sinceTimestamp).toStrictEqual(1200)
@@ -478,7 +477,7 @@ describe(extractPricesAndAmounts.name, () => {
 
     it('skips when chain not in config', () => {
       const tokens = [
-        mockObject<TvsToken>({
+        {
           priceId: 'price-A',
           amount: {
             type: 'totalSupply',
@@ -489,7 +488,7 @@ describe(extractPricesAndAmounts.name, () => {
           },
           valueForProject: undefined,
           valueForSummary: undefined,
-        }),
+        } as unknown as TvsToken,
       ]
       const { amounts } = extractPricesAndAmounts(tokens, chainRanges)
       expect(getAmount(amounts, 'unknown-chain').sinceTimestamp).toStrictEqual(
@@ -499,7 +498,7 @@ describe(extractPricesAndAmounts.name, () => {
 
     it('sets untilTimestamp when token has none', () => {
       const tokens = [
-        mockObject<TvsToken>({
+        {
           priceId: 'price-A',
           amount: {
             type: 'totalSupply',
@@ -510,7 +509,7 @@ describe(extractPricesAndAmounts.name, () => {
           },
           valueForProject: undefined,
           valueForSummary: undefined,
-        }),
+        } as unknown as TvsToken,
       ]
       const { amounts } = extractPricesAndAmounts(tokens, chainRanges)
       expect(getAmount(amounts, 'form').untilTimestamp).toStrictEqual(

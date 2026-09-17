@@ -1,6 +1,5 @@
 import { Logger } from '@l2beat/backend-tools'
 import type { EVMFeeHistory, IRpcClient } from '@l2beat/shared'
-import { mockObject } from '@l2beat/test-utils'
 import { describe, expect, it, vi } from 'vitest'
 import { BlobPriceProvider } from './BlobPriceProvider'
 
@@ -26,9 +25,9 @@ describe(BlobPriceProvider.name, () => {
 
   describe(BlobPriceProvider.prototype.getBlobPricesByBlockRange.name, () => {
     it('throws error when oldestBlock > newestBlock', async () => {
-      const mockRpcClient = mockObject<IRpcClient>({
+      const mockRpcClient = {
         getFeeHistory: vi.fn(),
-      })
+      } as unknown as IRpcClient
       const provider = createProvider(mockRpcClient)
 
       await expect(
@@ -40,9 +39,9 @@ describe(BlobPriceProvider.name, () => {
     })
 
     it('returns empty map when oldestBlock equals newestBlock and no fees', async () => {
-      const mockRpcClient = mockObject<IRpcClient>({
+      const mockRpcClient = {
         getFeeHistory: vi.fn().mockResolvedValue(createFeeHistory(100, [0n])),
-      })
+      } as unknown as IRpcClient
       const provider = createProvider(mockRpcClient)
 
       const result = await provider.getBlobPricesByBlockRange([100, 100])
@@ -52,9 +51,9 @@ describe(BlobPriceProvider.name, () => {
     })
 
     it('returns blob prices for single block range', async () => {
-      const mockRpcClient = mockObject<IRpcClient>({
+      const mockRpcClient = {
         getFeeHistory: vi.fn().mockResolvedValue(createFeeHistory(100, [10n])),
-      })
+      } as unknown as IRpcClient
       const provider = createProvider(mockRpcClient)
 
       const result = await provider.getBlobPricesByBlockRange([100, 100])
@@ -64,11 +63,11 @@ describe(BlobPriceProvider.name, () => {
     })
 
     it('skips zero blob fees', async () => {
-      const mockRpcClient = mockObject<IRpcClient>({
+      const mockRpcClient = {
         getFeeHistory: vi
           .fn()
           .mockResolvedValue(createFeeHistory(100, [0n, 10n, 0n, 20n])),
-      })
+      } as unknown as IRpcClient
       const provider = createProvider(mockRpcClient)
 
       const result = await provider.getBlobPricesByBlockRange([100, 103])
@@ -85,11 +84,11 @@ describe(BlobPriceProvider.name, () => {
       const blobFees = Array.from({ length: 100 }, (_, i) =>
         i % 2 === 0 ? BigInt(i + 1) : 0n,
       )
-      const mockRpcClient = mockObject<IRpcClient>({
+      const mockRpcClient = {
         getFeeHistory: vi
           .fn()
           .mockResolvedValue(createFeeHistory(100, blobFees)),
-      })
+      } as unknown as IRpcClient
       const provider = createProvider(mockRpcClient)
 
       const result = await provider.getBlobPricesByBlockRange([100, 199])
@@ -113,12 +112,12 @@ describe(BlobPriceProvider.name, () => {
         BigInt(i + 1001),
       )
 
-      const mockRpcClient = mockObject<IRpcClient>({
+      const mockRpcClient = {
         getFeeHistory: vi
           .fn()
           .mockResolvedValueOnce(createFeeHistory(100, firstChunkFees))
           .mockResolvedValueOnce(createFeeHistory(50, secondChunkFees)),
-      })
+      } as unknown as IRpcClient
       const provider = createProvider(mockRpcClient)
 
       const result = await provider.getBlobPricesByBlockRange([50, 1099])
@@ -141,11 +140,11 @@ describe(BlobPriceProvider.name, () => {
 
     it('handles exactly 1000 blocks', async () => {
       const blobFees = Array.from({ length: 1000 }, (_, i) => BigInt(i + 1))
-      const mockRpcClient = mockObject<IRpcClient>({
+      const mockRpcClient = {
         getFeeHistory: vi
           .fn()
           .mockResolvedValue(createFeeHistory(100, blobFees)),
-      })
+      } as unknown as IRpcClient
       const provider = createProvider(mockRpcClient)
 
       const result = await provider.getBlobPricesByBlockRange([100, 1099])
@@ -161,13 +160,13 @@ describe(BlobPriceProvider.name, () => {
       const chunk2Fees = Array.from({ length: 1000 }, () => 20n)
       const chunk3Fees = Array.from({ length: 500 }, () => 30n)
 
-      const mockRpcClient = mockObject<IRpcClient>({
+      const mockRpcClient = {
         getFeeHistory: vi
           .fn()
           .mockResolvedValueOnce(createFeeHistory(2000, chunk1Fees))
           .mockResolvedValueOnce(createFeeHistory(1000, chunk2Fees))
           .mockResolvedValueOnce(createFeeHistory(500, chunk3Fees)),
-      })
+      } as unknown as IRpcClient
       const provider = createProvider(mockRpcClient)
 
       const result = await provider.getBlobPricesByBlockRange([500, 2999])
@@ -203,13 +202,13 @@ describe(BlobPriceProvider.name, () => {
 
     it('only includes blocks within requested range', async () => {
       // Request range [100, 105] but feeHistory returns more blocks
-      const mockRpcClient = mockObject<IRpcClient>({
+      const mockRpcClient = {
         getFeeHistory: vi
           .fn()
           .mockResolvedValue(
             createFeeHistory(98, [1n, 2n, 3n, 4n, 5n, 6n, 7n, 8n]),
           ),
-      })
+      } as unknown as IRpcClient
       const provider = createProvider(mockRpcClient)
 
       const result = await provider.getBlobPricesByBlockRange([100, 105])
@@ -228,11 +227,11 @@ describe(BlobPriceProvider.name, () => {
 
     it('handles all zero fees in range', async () => {
       const blobFees = Array.from({ length: 10 }, () => 0n)
-      const mockRpcClient = mockObject<IRpcClient>({
+      const mockRpcClient = {
         getFeeHistory: vi
           .fn()
           .mockResolvedValue(createFeeHistory(100, blobFees)),
-      })
+      } as unknown as IRpcClient
       const provider = createProvider(mockRpcClient)
 
       const result = await provider.getBlobPricesByBlockRange([100, 109])
@@ -242,9 +241,9 @@ describe(BlobPriceProvider.name, () => {
 
     it('propagates errors from RPC client', async () => {
       const error = new Error('RPC error')
-      const mockRpcClient = mockObject<IRpcClient>({
+      const mockRpcClient = {
         getFeeHistory: vi.fn().mockRejectedValue(error),
-      })
+      } as unknown as IRpcClient
       const provider = createProvider(mockRpcClient)
 
       await expect(
@@ -253,12 +252,12 @@ describe(BlobPriceProvider.name, () => {
     })
 
     it('throws error when block number is already set (overlapping ranges)', async () => {
-      const mockRpcClient = mockObject<IRpcClient>({
+      const mockRpcClient = {
         getFeeHistory: vi
           .fn()
           .mockResolvedValueOnce(createFeeHistory(100, [10n, 20n]))
           .mockResolvedValueOnce(createFeeHistory(100, [30n, 40n])), // Overlaps with first response
-      })
+      } as unknown as IRpcClient
       const provider = createProvider(mockRpcClient)
 
       await expect(
