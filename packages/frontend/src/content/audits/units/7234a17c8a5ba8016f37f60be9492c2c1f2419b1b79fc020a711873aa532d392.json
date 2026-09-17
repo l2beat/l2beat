@@ -1,0 +1,646 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "7234a17c8a5ba8016f37f60be9492c2c1f2419b1b79fc020a711873aa532d392",
+  "name": "IL2ERC20Bridge",
+  "kind": "interface",
+  "lines": 70,
+  "source": "interface IL2ERC20Bridge {\n    event WithdrawalInitiated(\n        address indexed _l1Token,\n        address indexed _l2Token,\n        address indexed _from,\n        address _to,\n        uint256 _amount,\n        bytes _data\n    );\n\n    event DepositFinalized(\n        address indexed _l1Token,\n        address indexed _l2Token,\n        address indexed _from,\n        address _to,\n        uint256 _amount,\n        bytes _data\n    );\n\n    event DepositFailed(\n        address indexed _l1Token,\n        address indexed _l2Token,\n        address indexed _from,\n        address _to,\n        uint256 _amount,\n        bytes _data\n    );\n\n    /// @notice Returns the address of the corresponding L1 bridge contract\n    function l1TokenBridge() external returns (address);\n\n    /// @notice Initiates a withdraw of some tokens to the caller's account on L1\n    /// @param l2Token_ Address of L2 token where withdrawal was initiated.\n    /// @param amount_ Amount of the token to withdraw.\n    /// @param l1Gas_ Unused, but included for potential forward compatibility considerations.\n    /// @param data_ Optional data to forward to L1. This data is provided\n    ///     solely as a convenience for external contracts. Aside from enforcing a maximum\n    ///     length, these contracts provide no guarantees about its content.\n    function withdraw(address l2Token_, uint256 amount_, uint32 l1Gas_, bytes calldata data_) external;\n\n    /// @notice Initiates a withdraw of some token to a recipient's account on L1.\n    /// @param l2Token_ Address of L2 token where withdrawal is initiated.\n    /// @param to_ L1 adress to credit the withdrawal to.\n    /// @param amount_ Amount of the token to withdraw.\n    /// @param l1Gas_ Unused, but included for potential forward compatibility considerations.\n    /// @param data_ Optional data to forward to L1. This data is provided\n    ///     solely as a convenience for external contracts. Aside from enforcing a maximum\n    ///     length, these contracts provide no guarantees about its content.\n    function withdrawTo(address l2Token_, address to_, uint256 amount_, uint32 l1Gas_, bytes calldata data_) external;\n\n    /// @notice Completes a deposit from L1 to L2, and credits funds to the recipient's balance of\n    ///     this L2 token. This call will fail if it did not originate from a corresponding deposit\n    ///     in L1StandardTokenBridge.\n    /// @param l1Token_ Address for the l1 token this is called with\n    /// @param l2Token_ Address for the l2 token this is called with\n    /// @param from_ Account to pull the deposit from on L2.\n    /// @param to_ Address to receive the withdrawal at\n    /// @param amount_ Amount of the token to withdraw\n    /// @param data_ Data provider by the sender on L1. This data is provided\n    ///     solely as a convenience for external contracts. Aside from enforcing a maximum\n    ///     length, these contracts provide no guarantees about its content.\n    function finalizeDeposit(\n        address l1Token_,\n        address l2Token_,\n        address from_,\n        address to_,\n        uint256 amount_,\n        bytes calldata data_\n    ) external;\n}",
+  "resolutions": {
+    "ba5b6c9584fb78fd": {
+      "status": "differs",
+      "coveredLines": 62,
+      "match": {
+        "origin": "upstream",
+        "collection": "optimism",
+        "relation": {
+          "type": "fork_of",
+          "repository": "ethereum-optimism/optimism"
+        },
+        "rank": 1,
+        "matchedBy": "name",
+        "auditedName": "IL2ERC20Bridge",
+        "similarity": 0.894,
+        "reportId": "optimism/openzeppelin-bedrock-bridge-2022-05",
+        "repository": "ethereum-optimism/optimistic-specs",
+        "path": "packages/contracts/contracts/L2/messaging/IL2ERC20Bridge.sol",
+        "commit": "0c054885a6fd2011503784464da1e94997251fe3",
+        "commitTimestamp": "2022-04-30T00:17:29Z",
+        "url": "https://github.com/ethereum-optimism/optimistic-specs/blob/0c054885a6fd2011503784464da1e94997251fe3/packages/contracts/contracts/L2/messaging/IL2ERC20Bridge.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "All production contracts reviewed for the majority of the audit. Findings are reported against the later commits; issues no longer relevant after the rewrite were disregarded.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 8,
+        "removed": 8,
+        "ignoredAdded": 27,
+        "ignoredRemoved": 53,
+        "unchanged": 62,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 9,
+            "newStart": 1,
+            "newLines": 4,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "interface IL2ERC20Bridge {"
+              },
+              { "type": "-", "oldLine": 2, "text": "    /**", "ignored": true },
+              { "type": "-", "oldLine": 3, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 4,
+                "text": "     * Events *",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 5, "text": "     *", "ignored": true },
+              { "type": "-", "oldLine": 6, "text": "     */", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 7,
+                "newLine": 2,
+                "text": "    event WithdrawalInitiated("
+              },
+              {
+                "type": " ",
+                "oldLine": 8,
+                "newLine": 3,
+                "text": "        address indexed _l1Token,"
+              },
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 4,
+                "text": "        address indexed _l2Token,"
+              }
+            ]
+          },
+          {
+            "oldStart": 31,
+            "oldLines": 66,
+            "newStart": 26,
+            "newLines": 45,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 31,
+                "newLine": 26,
+                "text": "        bytes _data"
+              },
+              { "type": " ", "oldLine": 32, "newLine": 27, "text": "    );" },
+              { "type": " ", "oldLine": 33, "newLine": 28, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 34,
+                "text": "    /**",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 35, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 36,
+                "text": "     * Public Functions *",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 37, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 38,
+                "text": "     */",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 39, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 40,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 41,
+                "text": "     * @dev get the address of the corresponding L1 bridge contract.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 42,
+                "text": "     * @return Address of the corresponding L1 bridge contract.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 43,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 29,
+                "text": "    /// @notice Returns the address of the corresponding L1 bridge contract",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 44,
+                "newLine": 30,
+                "text": "    function l1TokenBridge() external returns (address);"
+              },
+              { "type": " ", "oldLine": 45, "newLine": 31, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 46,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 47,
+                "text": "     * @dev initiate a withdraw of some tokens to the caller's account on L1",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 48,
+                "text": "     * @param _l2Token Address of L2 token where withdrawal was initiated.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 49,
+                "text": "     * @param _amount Amount of the token to withdraw.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 50,
+                "text": "     * param _l1Gas Unused, but included for potential forward compatibility considerations.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 51,
+                "text": "     * @param _data Optional data to forward to L1. This data is provided",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 52,
+                "text": "     *        solely as a convenience for external contracts. Aside from enforcing a maximum",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 53,
+                "text": "     *        length, these contracts provide no guarantees about its content.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 54,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 55,
+                "text": "    function withdraw(address _l2Token, uint256 _amount, uint32 _l1Gas, bytes calldata _data) external;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 32,
+                "text": "    /// @notice Initiates a withdraw of some tokens to the caller's account on L1",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 33,
+                "text": "    /// @param l2Token_ Address of L2 token where withdrawal was initiated.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 34,
+                "text": "    /// @param amount_ Amount of the token to withdraw.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 35,
+                "text": "    /// @param l1Gas_ Unused, but included for potential forward compatibility considerations.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 36,
+                "text": "    /// @param data_ Optional data to forward to L1. This data is provided",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 37,
+                "text": "    ///     solely as a convenience for external contracts. Aside from enforcing a maximum",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 38,
+                "text": "    ///     length, these contracts provide no guarantees about its content.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 39,
+                "text": "    function withdraw(address l2Token_, uint256 amount_, uint32 l1Gas_, bytes calldata data_) external;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 56, "newLine": 40, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 57,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 58,
+                "text": "     * @dev initiate a withdraw of some token to a recipient's account on L1.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 59,
+                "text": "     * @param _l2Token Address of L2 token where withdrawal is initiated.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 60,
+                "text": "     * @param _to L1 adress to credit the withdrawal to.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 61,
+                "text": "     * @param _amount Amount of the token to withdraw.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 62,
+                "text": "     * param _l1Gas Unused, but included for potential forward compatibility considerations.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 63,
+                "text": "     * @param _data Optional data to forward to L1. This data is provided",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 64,
+                "text": "     *        solely as a convenience for external contracts. Aside from enforcing a maximum",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 65,
+                "text": "     *        length, these contracts provide no guarantees about its content.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 66,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 67,
+                "text": "    function withdrawTo(address _l2Token, address _to, uint256 _amount, uint32 _l1Gas, bytes calldata _data) external;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 41,
+                "text": "    /// @notice Initiates a withdraw of some token to a recipient's account on L1.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 42,
+                "text": "    /// @param l2Token_ Address of L2 token where withdrawal is initiated.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 43,
+                "text": "    /// @param to_ L1 adress to credit the withdrawal to.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 44,
+                "text": "    /// @param amount_ Amount of the token to withdraw.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 45,
+                "text": "    /// @param l1Gas_ Unused, but included for potential forward compatibility considerations.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 46,
+                "text": "    /// @param data_ Optional data to forward to L1. This data is provided",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 47,
+                "text": "    ///     solely as a convenience for external contracts. Aside from enforcing a maximum",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 48,
+                "text": "    ///     length, these contracts provide no guarantees about its content.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 49,
+                "text": "    function withdrawTo(address l2Token_, address to_, uint256 amount_, uint32 l1Gas_, bytes calldata data_) external;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 68, "newLine": 50, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 69,
+                "text": "    /**",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 70, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 71,
+                "text": "     * Cross-chain Functions *",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 72, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 73,
+                "text": "     */",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 74, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 75,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 76,
+                "text": "     * @dev Complete a deposit from L1 to L2, and credits funds to the recipient's balance of this",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 77,
+                "text": "     * L2 token. This call will fail if it did not originate from a corresponding deposit in",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 78,
+                "text": "     * L1StandardTokenBridge.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 79,
+                "text": "     * @param _l1Token Address for the l1 token this is called with",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 80,
+                "text": "     * @param _l2Token Address for the l2 token this is called with",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 81,
+                "text": "     * @param _from Account to pull the deposit from on L2.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 82,
+                "text": "     * @param _to Address to receive the withdrawal at",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 83,
+                "text": "     * @param _amount Amount of the token to withdraw",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 84,
+                "text": "     * @param _data Data provider by the sender on L1. This data is provided",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 85,
+                "text": "     *        solely as a convenience for external contracts. Aside from enforcing a maximum",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 86,
+                "text": "     *        length, these contracts provide no guarantees about its content.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 87,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 51,
+                "text": "    /// @notice Completes a deposit from L1 to L2, and credits funds to the recipient's balance of",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 52,
+                "text": "    ///     this L2 token. This call will fail if it did not originate from a corresponding deposit",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 53,
+                "text": "    ///     in L1StandardTokenBridge.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 54,
+                "text": "    /// @param l1Token_ Address for the l1 token this is called with",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 55,
+                "text": "    /// @param l2Token_ Address for the l2 token this is called with",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 56,
+                "text": "    /// @param from_ Account to pull the deposit from on L2.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 57,
+                "text": "    /// @param to_ Address to receive the withdrawal at",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 58,
+                "text": "    /// @param amount_ Amount of the token to withdraw",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 59,
+                "text": "    /// @param data_ Data provider by the sender on L1. This data is provided",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 60,
+                "text": "    ///     solely as a convenience for external contracts. Aside from enforcing a maximum",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 61,
+                "text": "    ///     length, these contracts provide no guarantees about its content.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 88,
+                "newLine": 62,
+                "text": "    function finalizeDeposit("
+              },
+              {
+                "type": "-",
+                "oldLine": 89,
+                "text": "        address _l1Token,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 90,
+                "text": "        address _l2Token,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 91,
+                "text": "        address _from,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 92,
+                "text": "        address _to,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 93,
+                "text": "        uint256 _amount,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 94,
+                "text": "        bytes calldata _data",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 63,
+                "text": "        address l1Token_,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 64,
+                "text": "        address l2Token_,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 65,
+                "text": "        address from_,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 66,
+                "text": "        address to_,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 67,
+                "text": "        uint256 amount_,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 68,
+                "text": "        bytes calldata data_",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 95,
+                "newLine": 69,
+                "text": "    ) external;"
+              },
+              { "type": " ", "oldLine": 96, "newLine": 70, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

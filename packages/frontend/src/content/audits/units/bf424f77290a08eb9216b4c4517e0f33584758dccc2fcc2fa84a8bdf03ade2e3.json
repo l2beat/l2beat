@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "bf424f77290a08eb9216b4c4517e0f33584758dccc2fcc2fa84a8bdf03ade2e3",
+  "name": "L1FeeVault",
+  "kind": "contract",
+  "lines": 13,
+  "source": "contract L1FeeVault is FeeVault, ISemver {\n    /// @notice Semantic version.\n    /// @custom:semver 1.5.0-beta.2\n    string public constant version = \"1.5.0-beta.2\";\n\n    /// @notice Constructs the L1FeeVault contract.\n    /// @param _recipient           Wallet that will receive the fees.\n    /// @param _minWithdrawalAmount Minimum balance for withdrawals.\n    /// @param _withdrawalNetwork   Network which the recipient will receive fees on.\n    constructor(address _recipient, uint256 _minWithdrawalAmount, WithdrawalNetwork _withdrawalNetwork)\n        FeeVault(_recipient, _minWithdrawalAmount, _withdrawalNetwork)\n    {}\n}",
+  "resolutions": {
+    "1f5c32d18cf7148d": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

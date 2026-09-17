@@ -1,0 +1,339 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "e23ddf05dd14dfc85bda0dc781c7a1c765e86cc6a0c6751c20691e7f8cd968ef",
+  "name": "Proxy",
+  "kind": "abstract",
+  "lines": 57,
+  "source": "abstract contract Proxy {\n    /**\n     * @dev Fallback function.\n     * Implemented entirely in `_fallback`.\n     */\n    fallback() external payable {\n        _fallback();\n    }\n\n    /**\n     * @return The Address of the implementation.\n     */\n    function _implementation() internal view virtual returns (address);\n\n    /**\n     * @dev Delegates execution to an implementation contract.\n     * This is a low level function that doesn't return to its internal call site.\n     * It will return to the external caller whatever the implementation returns.\n     * @param implementation Address to delegate.\n     */\n    function _delegate(address implementation) internal {\n        assembly {\n            // Copy msg.data. We take full control of memory in this inline assembly\n            // block because it will not return to Solidity code. We overwrite the\n            // Solidity scratch pad at memory position 0.\n            calldatacopy(0, 0, calldatasize())\n\n            // Call the implementation.\n            // out and outsize are 0 because we don't know the size yet.\n            let result := delegatecall(gas(), implementation, 0, calldatasize(), 0, 0)\n\n            // Copy the returned data.\n            returndatacopy(0, 0, returndatasize())\n\n            switch result\n            // delegatecall returns 0 on error.\n            case 0 { revert(0, returndatasize()) }\n            default { return(0, returndatasize()) }\n        }\n    }\n\n    /**\n     * @dev Function that is run as the first thing in the fallback function.\n     * Can be redefined in derived contracts to add functionality.\n     * Redefinitions must call super._willFallback().\n     */\n    function _willFallback() internal virtual {}\n\n    /**\n     * @dev fallback implementation.\n     * Extracted to enable manual triggering.\n     */\n    function _fallback() internal {\n        _willFallback();\n        _delegate(_implementation());\n    }\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "differs",
+      "coveredLines": 49,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "Proxy",
+        "similarity": 0.706,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/proxy/Proxy.sol",
+        "commit": "8cb5200797e2ff322d3632be6c9df80e72dd8fed",
+        "commitTimestamp": "2023-08-04T17:04:22Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/8cb5200797e2ff322d3632be6c9df80e72dd8fed/contracts/proxy/Proxy.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Fix review limited to the changes of pull request #4502 (head commit).",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 4
+      },
+      "diff": {
+        "added": 8,
+        "removed": 6,
+        "ignoredAdded": 18,
+        "ignoredRemoved": 13,
+        "unchanged": 49,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 10,
+            "newStart": 1,
+            "newLines": 24,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "abstract contract Proxy {"
+              },
+              { "type": " ", "oldLine": 2, "newLine": 2, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 3,
+                "text": "     * @dev Delegates the current call to `implementation`.",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 4, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 5,
+                "text": "     * This function does not return to its internal call site, it will return directly to the external caller.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "     * @dev Fallback function.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 4,
+                "text": "     * Implemented entirely in `_fallback`.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 6, "newLine": 5, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 7,
+                "text": "    function _delegate(address implementation) internal virtual {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 6,
+                "text": "    fallback() external payable {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 7,
+                "text": "        _fallback();",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 8, "text": "    }", "ignored": false },
+              { "type": "+", "newLine": 9, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 10,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 11,
+                "text": "     * @return The Address of the implementation.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 12,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 13,
+                "text": "    function _implementation() internal view virtual returns (address);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 14, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 15,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 16,
+                "text": "     * @dev Delegates execution to an implementation contract.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 17,
+                "text": "     * This is a low level function that doesn't return to its internal call site.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 18,
+                "text": "     * It will return to the external caller whatever the implementation returns.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 19,
+                "text": "     * @param implementation Address to delegate.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 20,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 21,
+                "text": "    function _delegate(address implementation) internal {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 8,
+                "newLine": 22,
+                "text": "        assembly {"
+              },
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 23,
+                "text": "            // Copy msg.data. We take full control of memory in this inline assembly"
+              },
+              {
+                "type": " ",
+                "oldLine": 10,
+                "newLine": 24,
+                "text": "            // block because it will not return to Solidity code. We overwrite the"
+              }
+            ]
+          },
+          {
+            "oldStart": 26,
+            "oldLines": 25,
+            "newStart": 40,
+            "newLines": 18,
+            "lines": [
+              { "type": " ", "oldLine": 26, "newLine": 40, "text": "    }" },
+              { "type": " ", "oldLine": 27, "newLine": 41, "text": "" },
+              { "type": " ", "oldLine": 28, "newLine": 42, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 29,
+                "text": "     * @dev This is a virtual function that should be overridden so it returns the address to which the fallback function",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 30,
+                "text": "     * and {_fallback} should delegate.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 43,
+                "text": "     * @dev Function that is run as the first thing in the fallback function.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 44,
+                "text": "     * Can be redefined in derived contracts to add functionality.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 45,
+                "text": "     * Redefinitions must call super._willFallback().",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 31, "newLine": 46, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 32,
+                "text": "    function _implementation() internal view virtual returns (address);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 47,
+                "text": "    function _willFallback() internal virtual {}",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 33, "newLine": 48, "text": "" },
+              { "type": " ", "oldLine": 34, "newLine": 49, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 35,
+                "text": "     * @dev Delegates the current call to the address returned by `_implementation()`.",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 36, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 37,
+                "text": "     * This function does not return to its internal call site, it will return directly to the external caller.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 50,
+                "text": "     * @dev fallback implementation.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 51,
+                "text": "     * Extracted to enable manual triggering.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 38, "newLine": 52, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 39,
+                "text": "    function _fallback() internal virtual {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 53,
+                "text": "    function _fallback() internal {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 54,
+                "text": "        _willFallback();",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 40,
+                "newLine": 55,
+                "text": "        _delegate(_implementation());"
+              },
+              { "type": " ", "oldLine": 41, "newLine": 56, "text": "    }" },
+              { "type": "-", "oldLine": 42, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 43,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 44,
+                "text": "     * @dev Fallback function that delegates calls to the address returned by `_implementation()`. Will run if no other",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 45,
+                "text": "     * function in the contract matches the call data.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 46,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 47,
+                "text": "    fallback() external payable virtual {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 48,
+                "text": "        _fallback();",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 49, "text": "    }", "ignored": false },
+              { "type": " ", "oldLine": 50, "newLine": 57, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

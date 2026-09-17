@@ -1,0 +1,106 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "1a5743c3565f1ac3b6d7a95500555d1a90c5df0fe77b0e0773b5543a6c0e51f0",
+  "name": "L1StandardBridge",
+  "kind": "contract",
+  "lines": 297,
+  "source": "contract L1StandardBridge is StandardBridge, ProxyAdminOwnedBase, ReinitializableBase, ISemver {\n    /// @custom:legacy\n    /// @notice Emitted whenever a deposit of ETH from L1 into L2 is initiated.\n    /// @param from      Address of the depositor.\n    /// @param to        Address of the recipient on L2.\n    /// @param amount    Amount of ETH deposited.\n    /// @param extraData Extra data attached to the deposit.\n    event ETHDepositInitiated(address indexed from, address indexed to, uint256 amount, bytes extraData);\n\n    /// @custom:legacy\n    /// @notice Emitted whenever a withdrawal of ETH from L2 to L1 is finalized.\n    /// @param from      Address of the withdrawer.\n    /// @param to        Address of the recipient on L1.\n    /// @param amount    Amount of ETH withdrawn.\n    /// @param extraData Extra data attached to the withdrawal.\n    event ETHWithdrawalFinalized(address indexed from, address indexed to, uint256 amount, bytes extraData);\n\n    /// @custom:legacy\n    /// @notice Emitted whenever an ERC20 deposit is initiated.\n    /// @param l1Token   Address of the token on L1.\n    /// @param l2Token   Address of the corresponding token on L2.\n    /// @param from      Address of the depositor.\n    /// @param to        Address of the recipient on L2.\n    /// @param amount    Amount of the ERC20 deposited.\n    /// @param extraData Extra data attached to the deposit.\n    event ERC20DepositInitiated(\n        address indexed l1Token,\n        address indexed l2Token,\n        address indexed from,\n        address to,\n        uint256 amount,\n        bytes extraData\n    );\n\n    /// @custom:legacy\n    /// @notice Emitted whenever an ERC20 withdrawal is finalized.\n    /// @param l1Token   Address of the token on L1.\n    /// @param l2Token   Address of the corresponding token on L2.\n    /// @param from      Address of the withdrawer.\n    /// @param to        Address of the recipient on L1.\n    /// @param amount    Amount of the ERC20 withdrawn.\n    /// @param extraData Extra data attached to the withdrawal.\n    event ERC20WithdrawalFinalized(\n        address indexed l1Token,\n        address indexed l2Token,\n        address indexed from,\n        address to,\n        uint256 amount,\n        bytes extraData\n    );\n\n    /// @notice Semantic version.\n    /// @custom:semver 2.8.0\n    string public constant version = \"2.8.0\";\n\n    /// @custom:legacy\n    /// @custom:spacer superchainConfig\n    /// @notice Spacer taking up the legacy `superchainConfig` slot.\n    address private spacer_50_0_20;\n\n    /// @custom:legacy\n    /// @custom:spacer systemConfig\n    /// @notice Spacer taking up the legacy `systemConfig` slot.\n    address private spacer_51_0_20;\n\n    /// @notice Address of the SystemConfig contract.\n    ISystemConfig public systemConfig;\n\n    /// @notice Constructs the L1StandardBridge contract.\n    constructor() StandardBridge() ReinitializableBase(3) {\n        _disableInitializers();\n    }\n\n    /// @notice Initializer.\n    /// @param _messenger        Contract for the CrossDomainMessenger on this network.\n    /// @param _systemConfig Contract for the SystemConfig on this network.\n    function initialize(ICrossDomainMessenger _messenger, ISystemConfig _systemConfig)\n        external\n        reinitializer(initVersion())\n    {\n        // Initialization transactions must come from the ProxyAdmin or its owner.\n        _assertOnlyProxyAdminOrProxyAdminOwner();\n\n        // Now perform initialization logic.\n        systemConfig = _systemConfig;\n        __StandardBridge_init({\n            _messenger: _messenger,\n            _otherBridge: StandardBridge(payable(Predeploys.L2_STANDARD_BRIDGE))\n        });\n    }\n\n    /// @inheritdoc StandardBridge\n    function paused() public view override returns (bool) {\n        return systemConfig.paused();\n    }\n\n    /// @notice Returns the SuperchainConfig contract.\n    /// @return ISuperchainConfig The SuperchainConfig contract.\n    function superchainConfig() public view returns (ISuperchainConfig) {\n        return systemConfig.superchainConfig();\n    }\n\n    /// @notice Allows EOAs to bridge ETH by sending directly to the bridge.\n    receive() external payable override onlyEOA {\n        _initiateETHDeposit(msg.sender, msg.sender, RECEIVE_DEFAULT_GAS_LIMIT, bytes(\"\"));\n    }\n\n    /// @inheritdoc StandardBridge\n    function gasPayingToken() internal view override returns (address addr_, uint8 decimals_) {\n        (addr_, decimals_) = systemConfig.gasPayingToken();\n    }\n\n    /// @custom:legacy\n    /// @notice Deposits some amount of ETH into the sender's account on L2.\n    /// @param _minGasLimit Minimum gas limit for the deposit message on L2.\n    /// @param _extraData   Optional data to forward to L2.\n    ///                     Data supplied here will not be used to execute any code on L2 and is\n    ///                     only emitted as extra data for the convenience of off-chain tooling.\n    function depositETH(uint32 _minGasLimit, bytes calldata _extraData) external payable onlyEOA {\n        _initiateETHDeposit(msg.sender, msg.sender, _minGasLimit, _extraData);\n    }\n\n    /// @custom:legacy\n    /// @notice Deposits some amount of ETH into a target account on L2.\n    ///         Note that if ETH is sent to a contract on L2 and the call fails, then that ETH will\n    ///         be locked in the L2StandardBridge. ETH may be recoverable if the call can be\n    ///         successfully replayed by increasing the amount of gas supplied to the call. If the\n    ///         call will fail for any amount of gas, then the ETH will be locked permanently.\n    /// @param _to          Address of the recipient on L2.\n    /// @param _minGasLimit Minimum gas limit for the deposit message on L2.\n    /// @param _extraData   Optional data to forward to L2.\n    ///                     Data supplied here will not be used to execute any code on L2 and is\n    ///                     only emitted as extra data for the convenience of off-chain tooling.\n    function depositETHTo(address _to, uint32 _minGasLimit, bytes calldata _extraData) external payable {\n        _initiateETHDeposit(msg.sender, _to, _minGasLimit, _extraData);\n    }\n\n    /// @custom:legacy\n    /// @notice Deposits some amount of ERC20 tokens into the sender's account on L2.\n    /// @param _l1Token     Address of the L1 token being deposited.\n    /// @param _l2Token     Address of the corresponding token on L2.\n    /// @param _amount      Amount of the ERC20 to deposit.\n    /// @param _minGasLimit Minimum gas limit for the deposit message on L2.\n    /// @param _extraData   Optional data to forward to L2.\n    ///                     Data supplied here will not be used to execute any code on L2 and is\n    ///                     only emitted as extra data for the convenience of off-chain tooling.\n    function depositERC20(\n        address _l1Token,\n        address _l2Token,\n        uint256 _amount,\n        uint32 _minGasLimit,\n        bytes calldata _extraData\n    ) external virtual onlyEOA {\n        _initiateERC20Deposit(_l1Token, _l2Token, msg.sender, msg.sender, _amount, _minGasLimit, _extraData);\n    }\n\n    /// @custom:legacy\n    /// @notice Deposits some amount of ERC20 tokens into a target account on L2.\n    /// @param _l1Token     Address of the L1 token being deposited.\n    /// @param _l2Token     Address of the corresponding token on L2.\n    /// @param _to          Address of the recipient on L2.\n    /// @param _amount      Amount of the ERC20 to deposit.\n    /// @param _minGasLimit Minimum gas limit for the deposit message on L2.\n    /// @param _extraData   Optional data to forward to L2.\n    ///                     Data supplied here will not be used to execute any code on L2 and is\n    ///                     only emitted as extra data for the convenience of off-chain tooling.\n    function depositERC20To(\n        address _l1Token,\n        address _l2Token,\n        address _to,\n        uint256 _amount,\n        uint32 _minGasLimit,\n        bytes calldata _extraData\n    ) external virtual {\n        _initiateERC20Deposit(_l1Token, _l2Token, msg.sender, _to, _amount, _minGasLimit, _extraData);\n    }\n\n    /// @custom:legacy\n    /// @notice Finalizes a withdrawal of ETH from L2.\n    /// @param _from      Address of the withdrawer on L2.\n    /// @param _to        Address of the recipient on L1.\n    /// @param _amount    Amount of ETH to withdraw.\n    /// @param _extraData Optional data forwarded from L2.\n    function finalizeETHWithdrawal(address _from, address _to, uint256 _amount, bytes calldata _extraData)\n        external\n        payable\n    {\n        finalizeBridgeETH(_from, _to, _amount, _extraData);\n    }\n\n    /// @custom:legacy\n    /// @notice Finalizes a withdrawal of ERC20 tokens from L2.\n    /// @param _l1Token   Address of the token on L1.\n    /// @param _l2Token   Address of the corresponding token on L2.\n    /// @param _from      Address of the withdrawer on L2.\n    /// @param _to        Address of the recipient on L1.\n    /// @param _amount    Amount of the ERC20 to withdraw.\n    /// @param _extraData Optional data forwarded from L2.\n    function finalizeERC20Withdrawal(\n        address _l1Token,\n        address _l2Token,\n        address _from,\n        address _to,\n        uint256 _amount,\n        bytes calldata _extraData\n    ) external {\n        finalizeBridgeERC20(_l1Token, _l2Token, _from, _to, _amount, _extraData);\n    }\n\n    /// @custom:legacy\n    /// @notice Retrieves the access of the corresponding L2 bridge contract.\n    /// @return Address of the corresponding L2 bridge contract.\n    function l2TokenBridge() external view returns (address) {\n        return address(otherBridge);\n    }\n\n    /// @notice Internal function for initiating an ETH deposit.\n    /// @param _from        Address of the sender on L1.\n    /// @param _to          Address of the recipient on L2.\n    /// @param _minGasLimit Minimum gas limit for the deposit message on L2.\n    /// @param _extraData   Optional data to forward to L2.\n    function _initiateETHDeposit(address _from, address _to, uint32 _minGasLimit, bytes memory _extraData) internal {\n        _initiateBridgeETH(_from, _to, msg.value, _minGasLimit, _extraData);\n    }\n\n    /// @notice Internal function for initiating an ERC20 deposit.\n    /// @param _l1Token     Address of the L1 token being deposited.\n    /// @param _l2Token     Address of the corresponding token on L2.\n    /// @param _from        Address of the sender on L1.\n    /// @param _to          Address of the recipient on L2.\n    /// @param _amount      Amount of the ERC20 to deposit.\n    /// @param _minGasLimit Minimum gas limit for the deposit message on L2.\n    /// @param _extraData   Optional data to forward to L2.\n    function _initiateERC20Deposit(\n        address _l1Token,\n        address _l2Token,\n        address _from,\n        address _to,\n        uint256 _amount,\n        uint32 _minGasLimit,\n        bytes memory _extraData\n    ) internal {\n        _initiateBridgeERC20(_l1Token, _l2Token, _from, _to, _amount, _minGasLimit, _extraData);\n    }\n\n    /// @inheritdoc StandardBridge\n    /// @notice Emits the legacy ETHDepositInitiated event followed by the ETHBridgeInitiated event.\n    ///         This is necessary for backwards compatibility with the legacy bridge.\n    function _emitETHBridgeInitiated(address _from, address _to, uint256 _amount, bytes memory _extraData)\n        internal\n        override\n    {\n        emit ETHDepositInitiated(_from, _to, _amount, _extraData);\n        super._emitETHBridgeInitiated(_from, _to, _amount, _extraData);\n    }\n\n    /// @inheritdoc StandardBridge\n    /// @notice Emits the legacy ERC20DepositInitiated event followed by the ERC20BridgeInitiated\n    ///         event. This is necessary for backwards compatibility with the legacy bridge.\n    function _emitETHBridgeFinalized(address _from, address _to, uint256 _amount, bytes memory _extraData)\n        internal\n        override\n    {\n        emit ETHWithdrawalFinalized(_from, _to, _amount, _extraData);\n        super._emitETHBridgeFinalized(_from, _to, _amount, _extraData);\n    }\n\n    /// @inheritdoc StandardBridge\n    /// @notice Emits the legacy ERC20WithdrawalFinalized event followed by the ERC20BridgeFinalized\n    ///         event. This is necessary for backwards compatibility with the legacy bridge.\n    function _emitERC20BridgeInitiated(\n        address _localToken,\n        address _remoteToken,\n        address _from,\n        address _to,\n        uint256 _amount,\n        bytes memory _extraData\n    ) internal override {\n        emit ERC20DepositInitiated(_localToken, _remoteToken, _from, _to, _amount, _extraData);\n        super._emitERC20BridgeInitiated(_localToken, _remoteToken, _from, _to, _amount, _extraData);\n    }\n\n    /// @inheritdoc StandardBridge\n    /// @notice Emits the legacy ERC20WithdrawalFinalized event followed by the ERC20BridgeFinalized\n    ///         event. This is necessary for backwards compatibility with the legacy bridge.\n    function _emitERC20BridgeFinalized(\n        address _localToken,\n        address _remoteToken,\n        address _from,\n        address _to,\n        uint256 _amount,\n        bytes memory _extraData\n    ) internal override {\n        emit ERC20WithdrawalFinalized(_localToken, _remoteToken, _from, _to, _amount, _extraData);\n        super._emitERC20BridgeFinalized(_localToken, _remoteToken, _from, _to, _amount, _extraData);\n    }\n}",
+  "resolutions": {
+    "44ad4cf96e2ef6f0": {
+      "status": "differs",
+      "coveredLines": 294,
+      "match": {
+        "origin": "own",
+        "collection": "celo",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "L1StandardBridge",
+        "similarity": 1,
+        "reportId": "celo/hashlock-celo-optimism-superchain-2026-02",
+        "repository": "celo-org/optimism",
+        "path": "packages/contracts-bedrock/src/L1/L1StandardBridge.sol",
+        "commit": "c138180e992f54502a62e3fcf803eb701e38b990",
+        "commitTimestamp": "2026-01-20T14:26:35Z",
+        "url": "https://github.com/celo-org/optimism/blob/c138180e992f54502a62e3fcf803eb701e38b990/packages/contracts-bedrock/src/L1/L1StandardBridge.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "full file in celo-contracts/v5.0.0 line (Celo CGT changes vs op-deployer/v0.5.2)",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 4
+      },
+      "diff": {
+        "added": 3,
+        "removed": 0,
+        "ignoredAdded": 2,
+        "ignoredRemoved": 0,
+        "unchanged": 294,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 105,
+            "oldLines": 6,
+            "newStart": 105,
+            "newLines": 11,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 105,
+                "newLine": 105,
+                "text": "        _initiateETHDeposit(msg.sender, msg.sender, RECEIVE_DEFAULT_GAS_LIMIT, bytes(\"\"));"
+              },
+              { "type": " ", "oldLine": 106, "newLine": 106, "text": "    }" },
+              { "type": " ", "oldLine": 107, "newLine": 107, "text": "" },
+              {
+                "type": "+",
+                "newLine": 108,
+                "text": "    /// @inheritdoc StandardBridge",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 109,
+                "text": "    function gasPayingToken() internal view override returns (address addr_, uint8 decimals_) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 110,
+                "text": "        (addr_, decimals_) = systemConfig.gasPayingToken();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 111,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 112, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 108,
+                "newLine": 113,
+                "text": "    /// @custom:legacy"
+              },
+              {
+                "type": " ",
+                "oldLine": 109,
+                "newLine": 114,
+                "text": "    /// @notice Deposits some amount of ETH into the sender's account on L2."
+              },
+              {
+                "type": " ",
+                "oldLine": 110,
+                "newLine": 115,
+                "text": "    /// @param _minGasLimit Minimum gas limit for the deposit message on L2."
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

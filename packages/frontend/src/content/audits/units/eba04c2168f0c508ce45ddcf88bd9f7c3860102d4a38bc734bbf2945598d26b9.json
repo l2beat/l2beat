@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "eba04c2168f0c508ce45ddcf88bd9f7c3860102d4a38bc734bbf2945598d26b9",
+  "name": "MerkleLib",
+  "kind": "library",
+  "lines": 44,
+  "source": "library MerkleLib {\n    /**\n     * @notice Verifies the membership of a leaf and path against an expected root.\n     * @dev In the case of a mismatched root, and subsequent inability to verify membership, this function throws.\n     * @param _path - The sibling path of the message as a leaf, used to prove message inclusion\n     * @param _leaf - The hash of the message we are trying to prove inclusion for\n     * @param _index - The index of the message inside the L2 to L1 message tree\n     * @param _expectedRoot - The expected root to check the validity of the message and sibling path with.\n     * @notice -\n     * E.g. A sibling path for a leaf at index 3 (L) in a tree of depth 3 (between 5 and 8 leafs) consists of the 3\n     * elements denoted as *'s\n     * d0:                                            [ root ]\n     * d1:                      [ ]                                               [*]\n     * d2:         [*]                      [ ]                       [ ]                     [ ]\n     * d3:   [ ]         [ ]          [*]         [L]           [ ]         [ ]          [ ]        [ ].\n     * And the elements would be ordered as: [ d3_index_2, d2_index_0, d1_index_1 ].\n     */\n    function verifyMembership(bytes32[] calldata _path, bytes32 _leaf, uint256 _index, bytes32 _expectedRoot)\n        internal\n        pure\n    {\n        bytes32 subtreeRoot = _leaf;\n        /// @notice - We use the indexAtHeight to see whether our child of the next subtree is at the left or the right side\n        uint256 indexAtHeight = _index;\n\n        for (uint256 height = 0; height < _path.length; height++) {\n            /// @notice - This affects the way we concatenate our two children to then hash and calculate the root, as any odd\n            /// indexes (index bit-masked with least significant bit) are right-sided children.\n            bool isRight = (indexAtHeight & 1) == 1;\n\n            subtreeRoot = isRight\n                ? Hash.sha256ToField(bytes.concat(_path[height], subtreeRoot))\n                : Hash.sha256ToField(bytes.concat(subtreeRoot, _path[height]));\n            /// @notice - We divide by two here to get the index of the parent of the current subtreeRoot in its own layer\n            indexAtHeight >>= 1;\n        }\n\n        // Security: Ensure the index doesn't have bits set beyond the tree height\n        // This prevents replay attacks where an attacker could use index 8 with path length 2 to walk the same path as\n        // index 0.\n        require(indexAtHeight == 0, Errors.MerkleLib__InvalidIndexForPathLength());\n        require(subtreeRoot == _expectedRoot, Errors.MerkleLib__InvalidRoot(_expectedRoot, subtreeRoot, _leaf, _index));\n    }\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "identical",
+      "coveredLines": 44,
+      "match": {
+        "origin": "own",
+        "collection": "aztecnetwork",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "MerkleLib",
+        "similarity": 1,
+        "reportId": "aztecnetwork/cantina-rollup-contracts-2025-11-12",
+        "repository": "AztecProtocol/aztec-packages",
+        "path": "l1-contracts/src/core/libraries/crypto/MerkleLib.sol",
+        "commit": "e87438b3d3f29beef92ac3bb148597236944d032",
+        "commitTimestamp": "2025-09-12T07:07:47Z",
+        "url": "https://github.com/AztecProtocol/aztec-packages/blob/e87438b3d3f29beef92ac3bb148597236944d032/l1-contracts/src/core/libraries/crypto/MerkleLib.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "remediation review",
+        "coverage": "verified computeRoot removal from PR 16859 (head commit)",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "warnings": []
+    }
+  }
+}

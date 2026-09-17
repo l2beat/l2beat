@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "e9858c318a7b5d8d0ded20f6582cc073da6be5b6a0142d35f07864754fc467f5",
+  "name": "IBridgeManagerEvents",
+  "kind": "interface",
+  "lines": 33,
+  "source": "interface IBridgeManagerEvents {\n    /**\n     * @dev Emitted when new bridge operators are added.\n     */\n    event BridgeOperatorsAdded(bool[] statuses, uint96[] voteWeights, address[] governors, address[] bridgeOperators);\n\n    /**\n     * @dev Emitted when a bridge operator is failed to add.\n     */\n    event BridgeOperatorAddingFailed(address indexed operator);\n\n    /**\n     * @dev Emitted when bridge operators are removed.\n     */\n    event BridgeOperatorsRemoved(bool[] statuses, address[] bridgeOperators);\n\n    /**\n     * @dev Emitted when a bridge operator is failed to remove.\n     */\n    event BridgeOperatorRemovingFailed(address indexed operator);\n\n    /**\n     * @dev Emitted when a bridge operator is updated.\n     */\n    event BridgeOperatorUpdated(\n        address indexed governor, address indexed fromBridgeOperator, address indexed toBridgeOperator\n    );\n\n    /**\n     * @dev Emitted when the minimum number of required governors is updated.\n     */\n    event MinRequiredGovernorUpdated(uint256 min);\n}",
+  "resolutions": {
+    "bb55951394276893": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

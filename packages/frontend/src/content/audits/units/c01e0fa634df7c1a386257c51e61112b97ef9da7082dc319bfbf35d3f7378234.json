@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "c01e0fa634df7c1a386257c51e61112b97ef9da7082dc319bfbf35d3f7378234",
+  "name": "TimelockInterface",
+  "kind": "interface",
+  "lines": 27,
+  "source": "interface TimelockInterface {\n    function delay() external view returns (uint256);\n    function GRACE_PERIOD() external view returns (uint256);\n    function acceptAdmin() external;\n    function queuedTransactions(bytes32 hash) external view returns (bool);\n    function queueTransaction(\n        address target,\n        uint256 value,\n        string calldata signature,\n        bytes calldata data,\n        uint256 eta\n    ) external returns (bytes32);\n    function cancelTransaction(\n        address target,\n        uint256 value,\n        string calldata signature,\n        bytes calldata data,\n        uint256 eta\n    ) external;\n    function executeTransaction(\n        address target,\n        uint256 value,\n        string calldata signature,\n        bytes calldata data,\n        uint256 eta\n    ) external payable returns (bytes memory);\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

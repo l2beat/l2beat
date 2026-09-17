@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "496b6cb44732675d0bac9615d6794a568f942dc92169eb774ee3e4efebeb7928",
+  "name": "IProtocolHandler",
+  "kind": "interface",
+  "lines": 11,
+  "source": "interface IProtocolHandler {\n    /// @notice Called when an Ethscription with this protocol is transferred\n    /// @param ethscriptionId The Ethscription ID (L1 tx hash)\n    /// @param from The address transferring the Ethscription\n    /// @param to The address receiving the Ethscription\n    function onTransfer(bytes32 ethscriptionId, address from, address to) external;\n\n    /// @notice Returns human-readable protocol name\n    /// @return The protocol name (e.g., \"erc-20-fixed-denomination\", \"erc-721-ethscriptions-collection\")\n    function protocolName() external pure returns (string memory);\n}",
+  "resolutions": {
+    "eea968a44e5d263a": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

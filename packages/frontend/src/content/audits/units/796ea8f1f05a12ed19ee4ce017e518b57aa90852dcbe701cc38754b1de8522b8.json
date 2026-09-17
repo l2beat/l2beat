@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "796ea8f1f05a12ed19ee4ce017e518b57aa90852dcbe701cc38754b1de8522b8",
+  "name": "hash.nr",
+  "kind": "program",
+  "lines": 3,
+  "source": "pub trait Hash {\n    fn hash(self) -> Field;\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

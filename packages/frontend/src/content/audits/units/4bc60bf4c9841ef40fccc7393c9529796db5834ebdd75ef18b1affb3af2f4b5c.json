@@ -1,0 +1,903 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "4bc60bf4c9841ef40fccc7393c9529796db5834ebdd75ef18b1affb3af2f4b5c",
+  "name": "IL2ERC1155Gateway",
+  "kind": "interface",
+  "lines": 155,
+  "source": "interface IL2ERC1155Gateway {\n    /**\n     *\n     * Events *\n     *\n     */\n\n    /// @notice Emitted when the ERC1155 NFT is transferred to recipient on layer 2.\n    /// @param l1Token The address of ERC1155 NFT on layer 1.\n    /// @param l2Token The address of ERC1155 NFT on layer 2.\n    /// @param from The address of sender on layer 1.\n    /// @param to The address of recipient on layer 2.\n    /// @param tokenId The token id of the ERC1155 NFT deposited on layer 1.\n    /// @param amount The amount of token deposited.\n    event FinalizeDepositERC1155(\n        address indexed l1Token,\n        address indexed l2Token,\n        address indexed from,\n        address to,\n        uint256 tokenId,\n        uint256 amount\n    );\n\n    /// @notice Emitted when the ERC1155 NFT is batch transferred to recipient on layer 2.\n    /// @param l1Token The address of ERC1155 NFT on layer 1.\n    /// @param l2Token The address of ERC1155 NFT on layer 2.\n    /// @param from The address of sender on layer 1.\n    /// @param to The address of recipient on layer 2.\n    /// @param tokenIds The list of token ids of the ERC1155 NFT deposited on layer 1.\n    /// @param amounts The list of corresponding amounts deposited.\n    event FinalizeBatchDepositERC1155(\n        address indexed l1Token,\n        address indexed l2Token,\n        address indexed from,\n        address to,\n        uint256[] tokenIds,\n        uint256[] amounts\n    );\n\n    /// @notice Emitted when the ERC1155 NFT is transferred to gateway on layer 2.\n    /// @param l1Token The address of ERC1155 NFT on layer 1.\n    /// @param l2Token The address of ERC1155 NFT on layer 2.\n    /// @param from The address of sender on layer 2.\n    /// @param to The address of recipient on layer 1.\n    /// @param tokenId The token id of the ERC1155 NFT to withdraw on layer 2.\n    /// @param amount The amount of token to withdraw.\n    event WithdrawERC1155(\n        address indexed l1Token,\n        address indexed l2Token,\n        address indexed from,\n        address to,\n        uint256 tokenId,\n        uint256 amount\n    );\n\n    /// @notice Emitted when the ERC1155 NFT is batch transferred to gateway on layer 2.\n    /// @param l1Token The address of ERC1155 NFT on layer 1.\n    /// @param l2Token The address of ERC1155 NFT on layer 2.\n    /// @param from The address of sender on layer 2.\n    /// @param to The address of recipient on layer 1.\n    /// @param tokenIds The list of token ids of the ERC1155 NFT to withdraw on layer 2.\n    /// @param amounts The list of corresponding amounts to withdraw.\n    event BatchWithdrawERC1155(\n        address indexed l1Token,\n        address indexed l2Token,\n        address indexed from,\n        address to,\n        uint256[] tokenIds,\n        uint256[] amounts\n    );\n\n    /**\n     *\n     * Public Mutating Functions *\n     *\n     */\n\n    /// @notice Withdraw some ERC1155 NFT to caller's account on layer 1.\n    /// @param token The address of ERC1155 NFT on layer 2.\n    /// @param tokenId The token id to withdraw.\n    /// @param amount The amount of token to withdraw.\n    /// @param gasLimit Unused, but included for potential forward compatibility considerations.\n    function withdrawERC1155(address token, uint256 tokenId, uint256 amount, uint256 gasLimit) external payable;\n\n    /// @notice Withdraw some ERC1155 NFT to caller's account on layer 1.\n    /// @param token The address of ERC1155 NFT on layer 2.\n    /// @param to The address of recipient on layer 1.\n    /// @param tokenId The token id to withdraw.\n    /// @param amount The amount of token to withdraw.\n    /// @param gasLimit Unused, but included for potential forward compatibility considerations.\n    function withdrawERC1155(address token, address to, uint256 tokenId, uint256 amount, uint256 gasLimit)\n        external\n        payable;\n\n    /// @notice Batch withdraw a list of ERC1155 NFT to caller's account on layer 1.\n    /// @param token The address of ERC1155 NFT on layer 2.\n    /// @param tokenIds The list of token ids to withdraw.\n    /// @param amounts The list of corresponding amounts to withdraw.\n    /// @param gasLimit Unused, but included for potential forward compatibility considerations.\n    function batchWithdrawERC1155(address token, uint256[] memory tokenIds, uint256[] memory amounts, uint256 gasLimit)\n        external\n        payable;\n\n    /// @notice Batch withdraw a list of ERC1155 NFT to caller's account on layer 1.\n    /// @param token The address of ERC1155 NFT on layer 2.\n    /// @param to The address of recipient on layer 1.\n    /// @param tokenIds The list of token ids to withdraw.\n    /// @param amounts The list of corresponding amounts to withdraw.\n    /// @param gasLimit Unused, but included for potential forward compatibility considerations.\n    function batchWithdrawERC1155(\n        address token,\n        address to,\n        uint256[] memory tokenIds,\n        uint256[] memory amounts,\n        uint256 gasLimit\n    ) external payable;\n\n    /// @notice Complete ERC1155 deposit from layer 1 to layer 2 and send NFT to recipient's account on layer 2.\n    /// @dev Requirements:\n    ///  - The function should only be called by L2ScrollMessenger.\n    ///  - The function should also only be called by L1ERC1155Gateway on layer 1.\n    /// @param l1Token The address of corresponding layer 1 token.\n    /// @param l2Token The address of corresponding layer 2 token.\n    /// @param from The address of account who deposits the token on layer 1.\n    /// @param to The address of recipient on layer 2 to receive the token.\n    /// @param tokenId The token id to deposit.\n    /// @param amount The amount of token to deposit.\n    function finalizeDepositERC1155(\n        address l1Token,\n        address l2Token,\n        address from,\n        address to,\n        uint256 tokenId,\n        uint256 amount\n    ) external;\n\n    /// @notice Complete ERC1155 deposit from layer 1 to layer 2 and send NFT to recipient's account on layer 2.\n    /// @dev Requirements:\n    ///  - The function should only be called by L2ScrollMessenger.\n    ///  - The function should also only be called by L1ERC1155Gateway on layer 1.\n    /// @param l1Token The address of corresponding layer 1 token.\n    /// @param l2Token The address of corresponding layer 2 token.\n    /// @param from The address of account who deposits the token on layer 1.\n    /// @param to The address of recipient on layer 2 to receive the token.\n    /// @param tokenIds The list of token ids to deposit.\n    /// @param amounts The list of corresponding amounts to deposit.\n    function finalizeBatchDepositERC1155(\n        address l1Token,\n        address l2Token,\n        address from,\n        address to,\n        uint256[] calldata tokenIds,\n        uint256[] calldata amounts\n    ) external;\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "identical",
+      "coveredLines": 155,
+      "match": {
+        "origin": "own",
+        "collection": "scroll",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "IL2ERC1155Gateway",
+        "similarity": 1,
+        "reportId": "scroll/openzeppelin-scroll-layer1-audit-2023-07",
+        "repository": "scroll-tech/scroll",
+        "path": "contracts/src/L2/gateways/IL2ERC1155Gateway.sol",
+        "commit": "3bc8a3f5c6ac816ddffadca41024331dcf4d3064",
+        "commitTimestamp": "2023-05-22T07:41:40Z",
+        "url": "https://github.com/scroll-tech/scroll/blob/3bc8a3f5c6ac816ddffadca41024331dcf4d3064/contracts/src/L2/gateways/IL2ERC1155Gateway.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Full file review at audit commit.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 38,
+        "ignoredRemoved": 38,
+        "unchanged": 155,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 5,
+            "oldLines": 12,
+            "newStart": 5,
+            "newLines": 12,
+            "lines": [
+              { "type": " ", "oldLine": 5, "newLine": 5, "text": "     *" },
+              { "type": " ", "oldLine": 6, "newLine": 6, "text": "     */" },
+              { "type": " ", "oldLine": 7, "newLine": 7, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 8,
+                "text": "    /// @notice Emitted when the ERC1155 NFT is transfered to recipient in layer 2.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 9,
+                "text": "    /// @param l1Token The address of ERC1155 NFT in layer 1.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 10,
+                "text": "    /// @param l2Token The address of ERC1155 NFT in layer 2.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 11,
+                "text": "    /// @param from The address of sender in layer 1.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 12,
+                "text": "    /// @param to The address of recipient in layer 2.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 13,
+                "text": "    /// @param tokenId The token id of the ERC1155 NFT deposited in layer 1.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 8,
+                "text": "    /// @notice Emitted when the ERC1155 NFT is transferred to recipient on layer 2.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 9,
+                "text": "    /// @param l1Token The address of ERC1155 NFT on layer 1.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 10,
+                "text": "    /// @param l2Token The address of ERC1155 NFT on layer 2.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 11,
+                "text": "    /// @param from The address of sender on layer 1.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 12,
+                "text": "    /// @param to The address of recipient on layer 2.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 13,
+                "text": "    /// @param tokenId The token id of the ERC1155 NFT deposited on layer 1.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 14,
+                "newLine": 14,
+                "text": "    /// @param amount The amount of token deposited."
+              },
+              {
+                "type": " ",
+                "oldLine": 15,
+                "newLine": 15,
+                "text": "    event FinalizeDepositERC1155("
+              },
+              {
+                "type": " ",
+                "oldLine": 16,
+                "newLine": 16,
+                "text": "        address indexed l1Token,"
+              }
+            ]
+          },
+          {
+            "oldStart": 21,
+            "oldLines": 12,
+            "newStart": 21,
+            "newLines": 12,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 21,
+                "newLine": 21,
+                "text": "        uint256 amount"
+              },
+              { "type": " ", "oldLine": 22, "newLine": 22, "text": "    );" },
+              { "type": " ", "oldLine": 23, "newLine": 23, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 24,
+                "text": "    /// @notice Emitted when the ERC1155 NFT is batch transfered to recipient in layer 2.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 25,
+                "text": "    /// @param l1Token The address of ERC1155 NFT in layer 1.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 26,
+                "text": "    /// @param l2Token The address of ERC1155 NFT in layer 2.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 27,
+                "text": "    /// @param from The address of sender in layer 1.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 28,
+                "text": "    /// @param to The address of recipient in layer 2.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 29,
+                "text": "    /// @param tokenIds The list of token ids of the ERC1155 NFT deposited in layer 1.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 24,
+                "text": "    /// @notice Emitted when the ERC1155 NFT is batch transferred to recipient on layer 2.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 25,
+                "text": "    /// @param l1Token The address of ERC1155 NFT on layer 1.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 26,
+                "text": "    /// @param l2Token The address of ERC1155 NFT on layer 2.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 27,
+                "text": "    /// @param from The address of sender on layer 1.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 28,
+                "text": "    /// @param to The address of recipient on layer 2.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 29,
+                "text": "    /// @param tokenIds The list of token ids of the ERC1155 NFT deposited on layer 1.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 30,
+                "newLine": 30,
+                "text": "    /// @param amounts The list of corresponding amounts deposited."
+              },
+              {
+                "type": " ",
+                "oldLine": 31,
+                "newLine": 31,
+                "text": "    event FinalizeBatchDepositERC1155("
+              },
+              {
+                "type": " ",
+                "oldLine": 32,
+                "newLine": 32,
+                "text": "        address indexed l1Token,"
+              }
+            ]
+          },
+          {
+            "oldStart": 37,
+            "oldLines": 12,
+            "newStart": 37,
+            "newLines": 12,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 37,
+                "newLine": 37,
+                "text": "        uint256[] amounts"
+              },
+              { "type": " ", "oldLine": 38, "newLine": 38, "text": "    );" },
+              { "type": " ", "oldLine": 39, "newLine": 39, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 40,
+                "text": "    /// @notice Emitted when the ERC1155 NFT is transfered to gateway in layer 2.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 41,
+                "text": "    /// @param l1Token The address of ERC1155 NFT in layer 1.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 42,
+                "text": "    /// @param l2Token The address of ERC1155 NFT in layer 2.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 43,
+                "text": "    /// @param from The address of sender in layer 2.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 44,
+                "text": "    /// @param to The address of recipient in layer 1.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 45,
+                "text": "    /// @param tokenId The token id of the ERC1155 NFT to withdraw in layer 2.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 40,
+                "text": "    /// @notice Emitted when the ERC1155 NFT is transferred to gateway on layer 2.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 41,
+                "text": "    /// @param l1Token The address of ERC1155 NFT on layer 1.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 42,
+                "text": "    /// @param l2Token The address of ERC1155 NFT on layer 2.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 43,
+                "text": "    /// @param from The address of sender on layer 2.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 44,
+                "text": "    /// @param to The address of recipient on layer 1.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 45,
+                "text": "    /// @param tokenId The token id of the ERC1155 NFT to withdraw on layer 2.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 46,
+                "newLine": 46,
+                "text": "    /// @param amount The amount of token to withdraw."
+              },
+              {
+                "type": " ",
+                "oldLine": 47,
+                "newLine": 47,
+                "text": "    event WithdrawERC1155("
+              },
+              {
+                "type": " ",
+                "oldLine": 48,
+                "newLine": 48,
+                "text": "        address indexed l1Token,"
+              }
+            ]
+          },
+          {
+            "oldStart": 53,
+            "oldLines": 12,
+            "newStart": 53,
+            "newLines": 12,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 53,
+                "newLine": 53,
+                "text": "        uint256 amount"
+              },
+              { "type": " ", "oldLine": 54, "newLine": 54, "text": "    );" },
+              { "type": " ", "oldLine": 55, "newLine": 55, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 56,
+                "text": "    /// @notice Emitted when the ERC1155 NFT is batch transfered to gateway in layer 2.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 57,
+                "text": "    /// @param l1Token The address of ERC1155 NFT in layer 1.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 58,
+                "text": "    /// @param l2Token The address of ERC1155 NFT in layer 2.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 59,
+                "text": "    /// @param from The address of sender in layer 2.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 60,
+                "text": "    /// @param to The address of recipient in layer 1.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 61,
+                "text": "    /// @param tokenIds The list of token ids of the ERC1155 NFT to withdraw in layer 2.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 56,
+                "text": "    /// @notice Emitted when the ERC1155 NFT is batch transferred to gateway on layer 2.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 57,
+                "text": "    /// @param l1Token The address of ERC1155 NFT on layer 1.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 58,
+                "text": "    /// @param l2Token The address of ERC1155 NFT on layer 2.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 59,
+                "text": "    /// @param from The address of sender on layer 2.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 60,
+                "text": "    /// @param to The address of recipient on layer 1.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 61,
+                "text": "    /// @param tokenIds The list of token ids of the ERC1155 NFT to withdraw on layer 2.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 62,
+                "newLine": 62,
+                "text": "    /// @param amounts The list of corresponding amounts to withdraw."
+              },
+              {
+                "type": " ",
+                "oldLine": 63,
+                "newLine": 63,
+                "text": "    event BatchWithdrawERC1155("
+              },
+              {
+                "type": " ",
+                "oldLine": 64,
+                "newLine": 64,
+                "text": "        address indexed l1Token,"
+              }
+            ]
+          },
+          {
+            "oldStart": 76,
+            "oldLines": 15,
+            "newStart": 76,
+            "newLines": 15,
+            "lines": [
+              { "type": " ", "oldLine": 76, "newLine": 76, "text": "     */" },
+              { "type": " ", "oldLine": 77, "newLine": 77, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 78,
+                "newLine": 78,
+                "text": "    /// @notice Withdraw some ERC1155 NFT to caller's account on layer 1."
+              },
+              {
+                "type": "-",
+                "oldLine": 79,
+                "text": "    /// @param token The address of ERC1155 NFT in layer 2.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 79,
+                "text": "    /// @param token The address of ERC1155 NFT on layer 2.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 80,
+                "newLine": 80,
+                "text": "    /// @param tokenId The token id to withdraw."
+              },
+              {
+                "type": " ",
+                "oldLine": 81,
+                "newLine": 81,
+                "text": "    /// @param amount The amount of token to withdraw."
+              },
+              {
+                "type": " ",
+                "oldLine": 82,
+                "newLine": 82,
+                "text": "    /// @param gasLimit Unused, but included for potential forward compatibility considerations."
+              },
+              {
+                "type": " ",
+                "oldLine": 83,
+                "newLine": 83,
+                "text": "    function withdrawERC1155(address token, uint256 tokenId, uint256 amount, uint256 gasLimit) external payable;"
+              },
+              { "type": " ", "oldLine": 84, "newLine": 84, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 85,
+                "newLine": 85,
+                "text": "    /// @notice Withdraw some ERC1155 NFT to caller's account on layer 1."
+              },
+              {
+                "type": "-",
+                "oldLine": 86,
+                "text": "    /// @param token The address of ERC1155 NFT in layer 2.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 87,
+                "text": "    /// @param to The address of recipient in layer 1.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 86,
+                "text": "    /// @param token The address of ERC1155 NFT on layer 2.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 87,
+                "text": "    /// @param to The address of recipient on layer 1.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 88,
+                "newLine": 88,
+                "text": "    /// @param tokenId The token id to withdraw."
+              },
+              {
+                "type": " ",
+                "oldLine": 89,
+                "newLine": 89,
+                "text": "    /// @param amount The amount of token to withdraw."
+              },
+              {
+                "type": " ",
+                "oldLine": 90,
+                "newLine": 90,
+                "text": "    /// @param gasLimit Unused, but included for potential forward compatibility considerations."
+              }
+            ]
+          },
+          {
+            "oldStart": 93,
+            "oldLines": 7,
+            "newStart": 93,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 93,
+                "newLine": 93,
+                "text": "        payable;"
+              },
+              { "type": " ", "oldLine": 94, "newLine": 94, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 95,
+                "newLine": 95,
+                "text": "    /// @notice Batch withdraw a list of ERC1155 NFT to caller's account on layer 1."
+              },
+              {
+                "type": "-",
+                "oldLine": 96,
+                "text": "    /// @param token The address of ERC1155 NFT in layer 2.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 96,
+                "text": "    /// @param token The address of ERC1155 NFT on layer 2.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 97,
+                "newLine": 97,
+                "text": "    /// @param tokenIds The list of token ids to withdraw."
+              },
+              {
+                "type": " ",
+                "oldLine": 98,
+                "newLine": 98,
+                "text": "    /// @param amounts The list of corresponding amounts to withdraw."
+              },
+              {
+                "type": " ",
+                "oldLine": 99,
+                "newLine": 99,
+                "text": "    /// @param gasLimit Unused, but included for potential forward compatibility considerations."
+              }
+            ]
+          },
+          {
+            "oldStart": 102,
+            "oldLines": 8,
+            "newStart": 102,
+            "newLines": 8,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 102,
+                "newLine": 102,
+                "text": "        payable;"
+              },
+              { "type": " ", "oldLine": 103, "newLine": 103, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 104,
+                "newLine": 104,
+                "text": "    /// @notice Batch withdraw a list of ERC1155 NFT to caller's account on layer 1."
+              },
+              {
+                "type": "-",
+                "oldLine": 105,
+                "text": "    /// @param token The address of ERC1155 NFT in layer 2.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 106,
+                "text": "    /// @param to The address of recipient in layer 1.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 105,
+                "text": "    /// @param token The address of ERC1155 NFT on layer 2.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 106,
+                "text": "    /// @param to The address of recipient on layer 1.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 107,
+                "newLine": 107,
+                "text": "    /// @param tokenIds The list of token ids to withdraw."
+              },
+              {
+                "type": " ",
+                "oldLine": 108,
+                "newLine": 108,
+                "text": "    /// @param amounts The list of corresponding amounts to withdraw."
+              },
+              {
+                "type": " ",
+                "oldLine": 109,
+                "newLine": 109,
+                "text": "    /// @param gasLimit Unused, but included for potential forward compatibility considerations."
+              }
+            ]
+          },
+          {
+            "oldStart": 115,
+            "oldLines": 14,
+            "newStart": 115,
+            "newLines": 14,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 115,
+                "newLine": 115,
+                "text": "        uint256 gasLimit"
+              },
+              {
+                "type": " ",
+                "oldLine": 116,
+                "newLine": 116,
+                "text": "    ) external payable;"
+              },
+              { "type": " ", "oldLine": 117, "newLine": 117, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 118,
+                "text": "    /// @notice Complete ERC1155 deposit from layer 1 to layer 2 and send NFT to recipient's account in layer 2.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 118,
+                "text": "    /// @notice Complete ERC1155 deposit from layer 1 to layer 2 and send NFT to recipient's account on layer 2.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 119,
+                "newLine": 119,
+                "text": "    /// @dev Requirements:"
+              },
+              {
+                "type": " ",
+                "oldLine": 120,
+                "newLine": 120,
+                "text": "    ///  - The function should only be called by L2ScrollMessenger."
+              },
+              {
+                "type": "-",
+                "oldLine": 121,
+                "text": "    ///  - The function should also only be called by L1ERC1155Gateway in layer 1.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 121,
+                "text": "    ///  - The function should also only be called by L1ERC1155Gateway on layer 1.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 122,
+                "newLine": 122,
+                "text": "    /// @param l1Token The address of corresponding layer 1 token."
+              },
+              {
+                "type": " ",
+                "oldLine": 123,
+                "newLine": 123,
+                "text": "    /// @param l2Token The address of corresponding layer 2 token."
+              },
+              {
+                "type": "-",
+                "oldLine": 124,
+                "text": "    /// @param from The address of account who deposits the token in layer 1.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 125,
+                "text": "    /// @param to The address of recipient in layer 2 to receive the token.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 124,
+                "text": "    /// @param from The address of account who deposits the token on layer 1.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 125,
+                "text": "    /// @param to The address of recipient on layer 2 to receive the token.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 126,
+                "newLine": 126,
+                "text": "    /// @param tokenId The token id to deposit."
+              },
+              {
+                "type": " ",
+                "oldLine": 127,
+                "newLine": 127,
+                "text": "    /// @param amount The amount of token to deposit."
+              },
+              {
+                "type": " ",
+                "oldLine": 128,
+                "newLine": 128,
+                "text": "    function finalizeDepositERC1155("
+              }
+            ]
+          },
+          {
+            "oldStart": 134,
+            "oldLines": 14,
+            "newStart": 134,
+            "newLines": 14,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 134,
+                "newLine": 134,
+                "text": "        uint256 amount"
+              },
+              {
+                "type": " ",
+                "oldLine": 135,
+                "newLine": 135,
+                "text": "    ) external;"
+              },
+              { "type": " ", "oldLine": 136, "newLine": 136, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 137,
+                "text": "    /// @notice Complete ERC1155 deposit from layer 1 to layer 2 and send NFT to recipient's account in layer 2.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 137,
+                "text": "    /// @notice Complete ERC1155 deposit from layer 1 to layer 2 and send NFT to recipient's account on layer 2.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 138,
+                "newLine": 138,
+                "text": "    /// @dev Requirements:"
+              },
+              {
+                "type": " ",
+                "oldLine": 139,
+                "newLine": 139,
+                "text": "    ///  - The function should only be called by L2ScrollMessenger."
+              },
+              {
+                "type": "-",
+                "oldLine": 140,
+                "text": "    ///  - The function should also only be called by L1ERC1155Gateway in layer 1.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 140,
+                "text": "    ///  - The function should also only be called by L1ERC1155Gateway on layer 1.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 141,
+                "newLine": 141,
+                "text": "    /// @param l1Token The address of corresponding layer 1 token."
+              },
+              {
+                "type": " ",
+                "oldLine": 142,
+                "newLine": 142,
+                "text": "    /// @param l2Token The address of corresponding layer 2 token."
+              },
+              {
+                "type": "-",
+                "oldLine": 143,
+                "text": "    /// @param from The address of account who deposits the token in layer 1.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 144,
+                "text": "    /// @param to The address of recipient in layer 2 to receive the token.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 143,
+                "text": "    /// @param from The address of account who deposits the token on layer 1.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 144,
+                "text": "    /// @param to The address of recipient on layer 2 to receive the token.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 145,
+                "newLine": 145,
+                "text": "    /// @param tokenIds The list of token ids to deposit."
+              },
+              {
+                "type": " ",
+                "oldLine": 146,
+                "newLine": 146,
+                "text": "    /// @param amounts The list of corresponding amounts to deposit."
+              },
+              {
+                "type": " ",
+                "oldLine": 147,
+                "newLine": 147,
+                "text": "    function finalizeBatchDepositERC1155("
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

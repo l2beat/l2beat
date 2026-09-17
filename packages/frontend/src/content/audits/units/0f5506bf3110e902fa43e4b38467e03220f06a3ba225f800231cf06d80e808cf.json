@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "0f5506bf3110e902fa43e4b38467e03220f06a3ba225f800231cf06d80e808cf",
+  "name": "FacetSafeModule",
+  "kind": "contract",
+  "lines": 15,
+  "source": "contract FacetSafeModule {\n    address public constant facetProxyAddress = 0xC9F2d55C56Ef9fE4262c4d5b48d8032241AF4d25;\n\n    function sendFacetTransaction(bytes calldata to, uint256 value, uint256 gasLimit, bytes calldata data) external {\n        require(\n            GnosisSafe(msg.sender).execTransactionFromModule(\n                facetProxyAddress,\n                0,\n                abi.encodeWithSelector(FacetSafeProxy.sendFacetTransaction.selector, to, value, gasLimit, data),\n                Enum.Operation.DelegateCall\n            ),\n            \"execTransactionFromModule failed\"\n        );\n    }\n}",
+  "resolutions": {
+    "1daaed8c8125f2b6": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

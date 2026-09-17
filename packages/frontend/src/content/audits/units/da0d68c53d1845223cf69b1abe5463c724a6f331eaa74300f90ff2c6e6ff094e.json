@@ -1,0 +1,572 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "da0d68c53d1845223cf69b1abe5463c724a6f331eaa74300f90ff2c6e6ff094e",
+  "name": "FeeVault",
+  "kind": "abstract",
+  "lines": 94,
+  "source": "abstract contract FeeVault {\n    /// @notice Minimum balance before a withdrawal can be triggered.\n    ///         Use the `minWithdrawalAmount()` getter as this is deprecated\n    ///         and is subject to be removed in the future.\n    /// @custom:legacy\n    uint256 public immutable MIN_WITHDRAWAL_AMOUNT;\n\n    /// @notice Account that will receive the fees. Can be located on L1 or L2.\n    ///         Use the `recipient()` getter as this is deprecated\n    ///         and is subject to be removed in the future.\n    /// @custom:legacy\n    address public immutable RECIPIENT;\n\n    /// @notice Network which the recipient will receive fees on.\n    ///         Use the `withdrawalNetwork()` getter as this is deprecated\n    ///         and is subject to be removed in the future.\n    /// @custom:legacy\n    Types.WithdrawalNetwork public immutable WITHDRAWAL_NETWORK;\n\n    /// @notice The minimum gas limit for the FeeVault withdrawal transaction.\n    uint32 internal constant WITHDRAWAL_MIN_GAS = 400_000;\n\n    /// @notice Total amount of wei processed by the contract.\n    uint256 public totalProcessed;\n\n    /// @notice Reserve extra slots in the storage layout for future upgrades.\n    uint256[48] private __gap;\n\n    /// @notice Emitted each time a withdrawal occurs. This event will be deprecated\n    ///         in favor of the Withdrawal event containing the WithdrawalNetwork parameter.\n    /// @param value Amount that was withdrawn (in wei).\n    /// @param to    Address that the funds were sent to.\n    /// @param from  Address that triggered the withdrawal.\n    event Withdrawal(uint256 value, address to, address from);\n\n    /// @notice Emitted each time a withdrawal occurs.\n    /// @param value             Amount that was withdrawn (in wei).\n    /// @param to                Address that the funds were sent to.\n    /// @param from              Address that triggered the withdrawal.\n    /// @param withdrawalNetwork Network which the to address will receive funds on.\n    event Withdrawal(uint256 value, address to, address from, Types.WithdrawalNetwork withdrawalNetwork);\n\n    /// @param _recipient           Wallet that will receive the fees.\n    /// @param _minWithdrawalAmount Minimum balance for withdrawals.\n    /// @param _withdrawalNetwork   Network which the recipient will receive fees on.\n    constructor(address _recipient, uint256 _minWithdrawalAmount, Types.WithdrawalNetwork _withdrawalNetwork) {\n        RECIPIENT = _recipient;\n        MIN_WITHDRAWAL_AMOUNT = _minWithdrawalAmount;\n        WITHDRAWAL_NETWORK = _withdrawalNetwork;\n    }\n\n    /// @notice Allow the contract to receive ETH.\n    receive() external payable {}\n\n    /// @notice Minimum balance before a withdrawal can be triggered.\n    function minWithdrawalAmount() public view returns (uint256 amount_) {\n        amount_ = MIN_WITHDRAWAL_AMOUNT;\n    }\n\n    /// @notice Account that will receive the fees. Can be located on L1 or L2.\n    function recipient() public view returns (address recipient_) {\n        recipient_ = RECIPIENT;\n    }\n\n    /// @notice Network which the recipient will receive fees on.\n    function withdrawalNetwork() public view returns (Types.WithdrawalNetwork network_) {\n        network_ = WITHDRAWAL_NETWORK;\n    }\n\n    /// @notice Triggers a withdrawal of funds to the fee wallet on L1 or L2.\n    function withdraw() external {\n        require(\n            address(this).balance >= MIN_WITHDRAWAL_AMOUNT,\n            \"FeeVault: withdrawal amount must be greater than minimum withdrawal amount\"\n        );\n\n        uint256 value = address(this).balance;\n        totalProcessed += value;\n\n        emit Withdrawal(value, RECIPIENT, msg.sender);\n        emit Withdrawal(value, RECIPIENT, msg.sender, WITHDRAWAL_NETWORK);\n\n        if (WITHDRAWAL_NETWORK == Types.WithdrawalNetwork.L2) {\n            bool success = SafeCall.send(RECIPIENT, value);\n            require(success, \"FeeVault: failed to send ETH to L2 fee recipient\");\n        } else {\n            IL2ToL1MessagePasser(payable(Predeploys.L2_TO_L1_MESSAGE_PASSER)).initiateWithdrawal{value: value}({\n                _target: RECIPIENT,\n                _gasLimit: WITHDRAWAL_MIN_GAS,\n                _data: hex\"\"\n            });\n        }\n    }\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "differs",
+      "coveredLines": 73,
+      "match": {
+        "origin": "own",
+        "collection": "optimism",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "FeeVault",
+        "similarity": 0.571,
+        "reportId": "optimism/cantina-mcp-l1-2024-02",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts-bedrock/src/universal/FeeVault.sol",
+        "commit": "e6ef3a900c42c8722e72c2e2314027f85d12ced5",
+        "commitTimestamp": "2024-01-22T20:42:47Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/e6ef3a900c42c8722e72c2e2314027f85d12ced5/packages/contracts-bedrock/src/universal/FeeVault.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "diff audit",
+        "coverage": "Review of the MCP L1 (multi-chain prep) upgrade changes; the report declares no file list, this file is recorded because findings locate in it.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 7
+      },
+      "diff": {
+        "added": 21,
+        "removed": 13,
+        "ignoredAdded": 19,
+        "ignoredRemoved": 6,
+        "unchanged": 73,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 27,
+            "newStart": 1,
+            "newLines": 31,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "abstract contract FeeVault {"
+              },
+              {
+                "type": "-",
+                "oldLine": 2,
+                "text": "    /// @notice Enum representing where the FeeVault withdraws funds to.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 3,
+                "text": "    /// @custom:value L1 FeeVault withdraws funds to L1.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 4,
+                "text": "    /// @custom:value L2 FeeVault withdraws funds to L2.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 5,
+                "text": "    enum WithdrawalNetwork {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 6,
+                "text": "        L1,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 7,
+                "text": "        L2",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 8, "text": "    }", "ignored": false },
+              { "type": "-", "oldLine": 9, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 10,
+                "newLine": 2,
+                "text": "    /// @notice Minimum balance before a withdrawal can be triggered."
+              },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "    ///         Use the `minWithdrawalAmount()` getter as this is deprecated",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 4,
+                "text": "    ///         and is subject to be removed in the future.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 5,
+                "text": "    /// @custom:legacy",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 11,
+                "newLine": 6,
+                "text": "    uint256 public immutable MIN_WITHDRAWAL_AMOUNT;"
+              },
+              { "type": " ", "oldLine": 12, "newLine": 7, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 13,
+                "text": "    /// @notice Wallet that will receive the fees.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 8,
+                "text": "    /// @notice Account that will receive the fees. Can be located on L1 or L2.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 9,
+                "text": "    ///         Use the `recipient()` getter as this is deprecated",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 10,
+                "text": "    ///         and is subject to be removed in the future.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 11,
+                "text": "    /// @custom:legacy",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 14,
+                "newLine": 12,
+                "text": "    address public immutable RECIPIENT;"
+              },
+              { "type": " ", "oldLine": 15, "newLine": 13, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 16,
+                "text": "    /// @notice Network which the RECIPIENT will receive fees on.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 17,
+                "text": "    WithdrawalNetwork public immutable WITHDRAWAL_NETWORK;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 14,
+                "text": "    /// @notice Network which the recipient will receive fees on.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 15,
+                "text": "    ///         Use the `withdrawalNetwork()` getter as this is deprecated",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 16,
+                "text": "    ///         and is subject to be removed in the future.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 17,
+                "text": "    /// @custom:legacy",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 18,
+                "text": "    Types.WithdrawalNetwork public immutable WITHDRAWAL_NETWORK;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 18, "newLine": 19, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 19,
+                "newLine": 20,
+                "text": "    /// @notice The minimum gas limit for the FeeVault withdrawal transaction."
+              },
+              {
+                "type": "-",
+                "oldLine": 20,
+                "text": "    uint32 internal constant WITHDRAWAL_MIN_GAS = 35_000;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 21,
+                "text": "    uint32 internal constant WITHDRAWAL_MIN_GAS = 400_000;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 21, "newLine": 22, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 23,
+                "text": "    /// @notice Total amount of wei processed by the contract."
+              },
+              {
+                "type": " ",
+                "oldLine": 23,
+                "newLine": 24,
+                "text": "    uint256 public totalProcessed;"
+              },
+              { "type": " ", "oldLine": 24, "newLine": 25, "text": "" },
+              {
+                "type": "+",
+                "newLine": 26,
+                "text": "    /// @notice Reserve extra slots in the storage layout for future upgrades.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 27,
+                "text": "    uint256[48] private __gap;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 28, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 25,
+                "newLine": 29,
+                "text": "    /// @notice Emitted each time a withdrawal occurs. This event will be deprecated"
+              },
+              {
+                "type": " ",
+                "oldLine": 26,
+                "newLine": 30,
+                "text": "    ///         in favor of the Withdrawal event containing the WithdrawalNetwork parameter."
+              },
+              {
+                "type": " ",
+                "oldLine": 27,
+                "newLine": 31,
+                "text": "    /// @param value Amount that was withdrawn (in wei)."
+              }
+            ]
+          },
+          {
+            "oldStart": 34,
+            "oldLines": 12,
+            "newStart": 38,
+            "newLines": 12,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 34,
+                "newLine": 38,
+                "text": "    /// @param to                Address that the funds were sent to."
+              },
+              {
+                "type": " ",
+                "oldLine": 35,
+                "newLine": 39,
+                "text": "    /// @param from              Address that triggered the withdrawal."
+              },
+              {
+                "type": " ",
+                "oldLine": 36,
+                "newLine": 40,
+                "text": "    /// @param withdrawalNetwork Network which the to address will receive funds on."
+              },
+              {
+                "type": "-",
+                "oldLine": 37,
+                "text": "    event Withdrawal(uint256 value, address to, address from, WithdrawalNetwork withdrawalNetwork);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 41,
+                "text": "    event Withdrawal(uint256 value, address to, address from, Types.WithdrawalNetwork withdrawalNetwork);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 38, "newLine": 42, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 39,
+                "newLine": 43,
+                "text": "    /// @param _recipient           Wallet that will receive the fees."
+              },
+              {
+                "type": " ",
+                "oldLine": 40,
+                "newLine": 44,
+                "text": "    /// @param _minWithdrawalAmount Minimum balance for withdrawals."
+              },
+              {
+                "type": " ",
+                "oldLine": 41,
+                "newLine": 45,
+                "text": "    /// @param _withdrawalNetwork   Network which the recipient will receive fees on."
+              },
+              {
+                "type": "-",
+                "oldLine": 42,
+                "text": "    constructor(address _recipient, uint256 _minWithdrawalAmount, WithdrawalNetwork _withdrawalNetwork) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 46,
+                "text": "    constructor(address _recipient, uint256 _minWithdrawalAmount, Types.WithdrawalNetwork _withdrawalNetwork) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 43,
+                "newLine": 47,
+                "text": "        RECIPIENT = _recipient;"
+              },
+              {
+                "type": " ",
+                "oldLine": 44,
+                "newLine": 48,
+                "text": "        MIN_WITHDRAWAL_AMOUNT = _minWithdrawalAmount;"
+              },
+              {
+                "type": " ",
+                "oldLine": 45,
+                "newLine": 49,
+                "text": "        WITHDRAWAL_NETWORK = _withdrawalNetwork;"
+              }
+            ]
+          },
+          {
+            "oldStart": 48,
+            "oldLines": 6,
+            "newStart": 52,
+            "newLines": 21,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 48,
+                "newLine": 52,
+                "text": "    /// @notice Allow the contract to receive ETH."
+              },
+              {
+                "type": " ",
+                "oldLine": 49,
+                "newLine": 53,
+                "text": "    receive() external payable {}"
+              },
+              { "type": " ", "oldLine": 50, "newLine": 54, "text": "" },
+              {
+                "type": "+",
+                "newLine": 55,
+                "text": "    /// @notice Minimum balance before a withdrawal can be triggered.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 56,
+                "text": "    function minWithdrawalAmount() public view returns (uint256 amount_) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 57,
+                "text": "        amount_ = MIN_WITHDRAWAL_AMOUNT;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 58, "text": "    }", "ignored": false },
+              { "type": "+", "newLine": 59, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 60,
+                "text": "    /// @notice Account that will receive the fees. Can be located on L1 or L2.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 61,
+                "text": "    function recipient() public view returns (address recipient_) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 62,
+                "text": "        recipient_ = RECIPIENT;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 63, "text": "    }", "ignored": false },
+              { "type": "+", "newLine": 64, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 65,
+                "text": "    /// @notice Network which the recipient will receive fees on.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 66,
+                "text": "    function withdrawalNetwork() public view returns (Types.WithdrawalNetwork network_) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 67,
+                "text": "        network_ = WITHDRAWAL_NETWORK;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 68, "text": "    }", "ignored": false },
+              { "type": "+", "newLine": 69, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 51,
+                "newLine": 70,
+                "text": "    /// @notice Triggers a withdrawal of funds to the fee wallet on L1 or L2."
+              },
+              {
+                "type": " ",
+                "oldLine": 52,
+                "newLine": 71,
+                "text": "    function withdraw() external {"
+              },
+              {
+                "type": " ",
+                "oldLine": 53,
+                "newLine": 72,
+                "text": "        require("
+              }
+            ]
+          },
+          {
+            "oldStart": 61,
+            "oldLines": 13,
+            "newStart": 80,
+            "newLines": 15,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 61,
+                "newLine": 80,
+                "text": "        emit Withdrawal(value, RECIPIENT, msg.sender);"
+              },
+              {
+                "type": " ",
+                "oldLine": 62,
+                "newLine": 81,
+                "text": "        emit Withdrawal(value, RECIPIENT, msg.sender, WITHDRAWAL_NETWORK);"
+              },
+              { "type": " ", "oldLine": 63, "newLine": 82, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 64,
+                "text": "        if (WITHDRAWAL_NETWORK == WithdrawalNetwork.L2) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 65,
+                "text": "            (bool success,) = RECIPIENT.call{value: value}(hex\"\");",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 83,
+                "text": "        if (WITHDRAWAL_NETWORK == Types.WithdrawalNetwork.L2) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 84,
+                "text": "            bool success = SafeCall.send(RECIPIENT, value);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 66,
+                "newLine": 85,
+                "text": "            require(success, \"FeeVault: failed to send ETH to L2 fee recipient\");"
+              },
+              {
+                "type": " ",
+                "oldLine": 67,
+                "newLine": 86,
+                "text": "        } else {"
+              },
+              {
+                "type": "-",
+                "oldLine": 68,
+                "text": "            L2StandardBridge(payable(Predeploys.L2_STANDARD_BRIDGE)).bridgeETHTo{value: value}(",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 69,
+                "text": "                RECIPIENT, WITHDRAWAL_MIN_GAS, bytes(\"\")",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 70,
+                "text": "            );",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 87,
+                "text": "            IL2ToL1MessagePasser(payable(Predeploys.L2_TO_L1_MESSAGE_PASSER)).initiateWithdrawal{value: value}({",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 88,
+                "text": "                _target: RECIPIENT,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 89,
+                "text": "                _gasLimit: WITHDRAWAL_MIN_GAS,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 90,
+                "text": "                _data: hex\"\"",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 91,
+                "text": "            });",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 71,
+                "newLine": 92,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 72, "newLine": 93, "text": "    }" },
+              { "type": " ", "oldLine": 73, "newLine": 94, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

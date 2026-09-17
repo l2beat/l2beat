@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "c75084cf7d845d4ea712105b6ee6a163ef72d2bc236e52d0ac9b74fd392cad67",
+  "name": "BridgeManagerQuorum",
+  "kind": "abstract",
+  "lines": 72,
+  "source": "abstract contract BridgeManagerQuorum is IQuorum, IdentityGuard, Initializable, HasContracts {\n    struct BridgeManagerQuorumStorage {\n        uint256 _nonce;\n        uint256 _numerator;\n        uint256 _denominator;\n    }\n\n    // keccak256(abi.encode(uint256(keccak256(\"ronin.storage.BridgeManagerQuorumStorage\")) - 1)) & ~bytes32(uint256(0xff))\n    bytes32 private constant $$_BridgeManagerQuorumStorage =\n        0xf3019750f3837257cd40d215c9cc111e92586d2855a1e7e25d959613ed013f00;\n\n    function __BridgeManagerQuorum_init_unchained(uint256 num, uint256 denom) internal onlyInitializing {\n        BridgeManagerQuorumStorage storage $ = _getBridgeManagerQuorumStorage();\n        $._nonce = 1;\n\n        _setThreshold(num, denom);\n    }\n\n    function _getBridgeManagerQuorumStorage() private pure returns (BridgeManagerQuorumStorage storage $) {\n        assembly {\n            $.slot := $$_BridgeManagerQuorumStorage\n        }\n    }\n\n    /**\n     * @inheritdoc IQuorum\n     */\n    function setThreshold(uint256 num, uint256 denom) external override onlyProxyAdmin {\n        _setThreshold(num, denom);\n    }\n\n    /**\n     * @inheritdoc IQuorum\n     */\n    function getThreshold() public view virtual returns (uint256 num, uint256 denom) {\n        BridgeManagerQuorumStorage storage $ = _getBridgeManagerQuorumStorage();\n        return ($._numerator, $._denominator);\n    }\n\n    /**\n     * @inheritdoc IQuorum\n     */\n    function checkThreshold(uint256 voteWeight) external view virtual returns (bool) {\n        BridgeManagerQuorumStorage storage $ = _getBridgeManagerQuorumStorage();\n\n        return voteWeight * $._denominator >= $._numerator * _totalWeight();\n    }\n\n    /**\n     * @dev Sets threshold and returns the old one.\n     *\n     * Emits the `ThresholdUpdated` event.\n     *\n     */\n    function _setThreshold(uint256 num, uint256 denom) internal virtual {\n        if (num > denom || denom <= 1) {\n            revert ErrInvalidThreshold(msg.sig);\n        }\n\n        BridgeManagerQuorumStorage storage $ = _getBridgeManagerQuorumStorage();\n\n        uint256 prevNum = $._numerator;\n        uint256 prevDenom = $._denominator;\n\n        $._numerator = num;\n        $._denominator = denom;\n\n        emit ThresholdUpdated($._nonce++, num, denom, prevNum, prevDenom);\n    }\n\n    function _totalWeight() internal view virtual returns (uint256);\n}",
+  "resolutions": {
+    "bb55951394276893": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

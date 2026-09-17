@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "5df8c0de924e0fad67ad0dc648eaed923f66c9471299992831ffc3df9b2f6094",
+  "name": "ITornadoTreesV1",
+  "kind": "interface",
+  "lines": 17,
+  "source": "interface ITornadoTreesV1 {\n    function lastProcessedDepositLeaf() external view returns (uint256);\n\n    function lastProcessedWithdrawalLeaf() external view returns (uint256);\n\n    function depositRoot() external view returns (bytes32);\n\n    function withdrawalRoot() external view returns (bytes32);\n\n    function deposits(uint256 i) external view returns (bytes32);\n\n    function withdrawals(uint256 i) external view returns (bytes32);\n\n    function registerDeposit(address instance, bytes32 commitment) external;\n\n    function registerWithdrawal(address instance, bytes32 nullifier) external;\n}",
+  "resolutions": {
+    "f9658cd3a9a22004": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

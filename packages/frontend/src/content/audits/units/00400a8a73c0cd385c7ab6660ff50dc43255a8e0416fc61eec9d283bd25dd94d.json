@@ -1,0 +1,126 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "00400a8a73c0cd385c7ab6660ff50dc43255a8e0416fc61eec9d283bd25dd94d",
+  "name": "GatewayV3",
+  "kind": "abstract",
+  "lines": 122,
+  "source": "abstract contract GatewayV3 is HasProxyAdmin, Pausable, FunctionRestrictable, IQuorum {\n    /**\n     * @dev Error indicating that `_minimumVoteWeight` is returning 0.\n     */\n    error ErrNullMinVoteWeightProvided(bytes4 msgSig);\n\n    uint256 internal _num;\n    uint256 internal _denom;\n\n    address private ______deprecated;\n    uint256 public nonce;\n\n    address public emergencyPauser;\n\n    /**\n     * @dev This empty reserved space is put in place to allow future versions to add new\n     * variables without shifting down storage in the inheritance chain.\n     */\n    uint256[49] private ______gap;\n\n    /**\n     * @dev Grant emergency pauser role for `_addr`.\n     */\n    function setEmergencyPauser(address _addr) external onlyProxyAdmin {\n        emergencyPauser = _addr;\n    }\n\n    /**\n     * @inheritdoc IQuorum\n     */\n    function getThreshold() external view virtual returns (uint256 num_, uint256 denom_) {\n        return (_num, _denom);\n    }\n\n    /**\n     * @inheritdoc IQuorum\n     */\n    function checkThreshold(uint256 _voteWeight) external view virtual returns (bool) {\n        return _voteWeight * _denom >= _num * _getTotalWeight();\n    }\n\n    /**\n     * @inheritdoc IQuorum\n     */\n    function setThreshold(uint256 _numerator, uint256 _denominator) external virtual onlyProxyAdmin {\n        return _setThreshold(_numerator, _denominator);\n    }\n\n    /**\n     * @dev Triggers paused state.\n     */\n    function pause() external {\n        _requireAuth();\n        _pause();\n    }\n\n    /**\n     * @dev Triggers unpaused state.\n     */\n    function unpause() external {\n        _requireAuth();\n        _unpause();\n    }\n\n    /**\n     * @inheritdoc IQuorum\n     */\n    function minimumVoteWeight() public view virtual returns (uint256) {\n        return _minimumVoteWeight(_getTotalWeight());\n    }\n\n    /**\n     * @dev Sets threshold and returns the old one.\n     *\n     * Emits the `ThresholdUpdated` event.\n     *\n     */\n    function _setThreshold(uint256 num, uint256 denom) internal virtual {\n        if (num > denom || denom == 0 || num == 0) {\n            revert ErrInvalidThreshold(msg.sig);\n        }\n\n        uint256 prevNum = _num;\n        uint256 prevDenom = _denom;\n\n        _num = num;\n        _denom = denom;\n\n        unchecked {\n            emit ThresholdUpdated(nonce++, num, denom, prevNum, prevDenom);\n        }\n    }\n\n    /**\n     * @dev Returns minimum vote weight.\n     */\n    function _minimumVoteWeight(uint256 _totalWeight) internal view virtual returns (uint256 minVoteWeight) {\n        minVoteWeight = (_num * _totalWeight + _denom - 1) / _denom;\n        if (minVoteWeight == 0) {\n            revert ErrNullMinVoteWeightProvided(msg.sig);\n        }\n    }\n\n    /**\n     * @dev Internal method to check method caller.\n     *\n     * Requirements:\n     *\n     * - The method caller must be admin or pauser.\n     *\n     */\n    function _requireAuth() internal view override {\n        if (!(msg.sender == _getProxyAdmin() || msg.sender == emergencyPauser)) {\n            revert ErrUnauthorized(msg.sig, RoleAccess.ADMIN);\n        }\n    }\n\n    /**\n     * @dev Returns the total weight.\n     */\n    function _getTotalWeight() internal view virtual returns (uint256);\n}",
+  "resolutions": {
+    "bb55951394276893": {
+      "status": "differs",
+      "coveredLines": 120,
+      "match": {
+        "origin": "own",
+        "collection": "roninnetwork",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "GatewayV3",
+        "similarity": 1,
+        "reportId": "roninnetwork/verichains-ronin-bridge-smart-contracts-2024-08",
+        "repository": "ronin-chain/bridge-contract",
+        "path": "src/extensions/GatewayV3.sol",
+        "commit": "acad51e4d056f173a186ef7e787745f0afecdb84",
+        "commitTimestamp": "2024-08-09T04:46:19Z",
+        "url": "https://github.com/ronin-chain/bridge-contract/blob/acad51e4d056f173a186ef7e787745f0afecdb84/src/extensions/GatewayV3.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "pull request review",
+        "coverage": "Only the PR #58 withdrawal-hardening diff was reviewed (head commit).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 2,
+        "removed": 2,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 120,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 4,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "abstract contract GatewayV3 is HasProxyAdmin, Pausable, IQuorum {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "abstract contract GatewayV3 is HasProxyAdmin, Pausable, FunctionRestrictable, IQuorum {",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 2, "newLine": 2, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "     * @dev Error indicating that `_minimumVoteWeight` is returning 0."
+              },
+              { "type": " ", "oldLine": 4, "newLine": 4, "text": "     */" }
+            ]
+          },
+          {
+            "oldStart": 109,
+            "oldLines": 7,
+            "newStart": 109,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 109,
+                "newLine": 109,
+                "text": "     * - The method caller must be admin or pauser."
+              },
+              { "type": " ", "oldLine": 110, "newLine": 110, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 111,
+                "newLine": 111,
+                "text": "     */"
+              },
+              {
+                "type": "-",
+                "oldLine": 112,
+                "text": "    function _requireAuth() private view {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 112,
+                "text": "    function _requireAuth() internal view override {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 113,
+                "newLine": 113,
+                "text": "        if (!(msg.sender == _getProxyAdmin() || msg.sender == emergencyPauser)) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 114,
+                "newLine": 114,
+                "text": "            revert ErrUnauthorized(msg.sig, RoleAccess.ADMIN);"
+              },
+              {
+                "type": " ",
+                "oldLine": 115,
+                "newLine": 115,
+                "text": "        }"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "733d5135af0daabfe361f5fc866cdc44ae762c2178a84a2c63df50e067d9dc67",
+  "name": "mod.nr",
+  "kind": "program",
+  "lines": 7,
+  "source": "mod private_kernel_reset_hints;\nmod padded_side_effects;\nmod padded_side_effect_amounts;\n\npub use padded_side_effect_amounts::PaddedSideEffectAmounts;\npub use padded_side_effects::PaddedSideEffects;\npub use private_kernel_reset_hints::PrivateKernelResetHints;",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "eff977698384bf245d77c989ebafc7b91e439fb1f38edefd03ab03340a7b55ff",
+  "name": "IL2GatewayRouter",
+  "kind": "interface",
+  "lines": 23,
+  "source": "interface IL2GatewayRouter is IL2ETHGateway, IL2ERC20Gateway {\n    /**\n     *\n     * Events *\n     *\n     */\n\n    /// @notice Emitted when the address of ETH Gateway is updated.\n    /// @param oldETHGateway The address of the old ETH Gateway.\n    /// @param newEthGateway The address of the new ETH Gateway.\n    event SetETHGateway(address indexed oldETHGateway, address indexed newEthGateway);\n\n    /// @notice Emitted when the address of default ERC20 Gateway is updated.\n    /// @param oldDefaultERC20Gateway The address of the old default ERC20 Gateway.\n    /// @param newDefaultERC20Gateway The address of the new default ERC20 Gateway.\n    event SetDefaultERC20Gateway(address indexed oldDefaultERC20Gateway, address indexed newDefaultERC20Gateway);\n\n    /// @notice Emitted when the `gateway` for `token` is updated.\n    /// @param token The address of token updated.\n    /// @param oldGateway The corresponding address of the old gateway.\n    /// @param newGateway The corresponding address of the new gateway.\n    event SetERC20Gateway(address indexed token, address indexed oldGateway, address indexed newGateway);\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

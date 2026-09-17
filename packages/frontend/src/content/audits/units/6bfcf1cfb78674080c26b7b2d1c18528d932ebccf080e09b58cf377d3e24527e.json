@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "6bfcf1cfb78674080c26b7b2d1c18528d932ebccf080e09b58cf377d3e24527e",
+  "name": "mod.nr",
+  "kind": "program",
+  "lines": 2,
+  "source": "pub mod merge_checkpoint_rollups;\npub mod validate_consecutive_checkpoint_rollups;",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

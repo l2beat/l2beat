@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "0ab3ba9386a5e8af8e5cc5f7724947ed28f325e63e9bd407449e3ee3420578f0",
+  "name": "IOwnable",
+  "kind": "interface",
+  "lines": 9,
+  "source": "interface IOwnable {\n    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);\n\n    function owner() external view returns (address);\n    function renounceOwnership() external;\n    function transferOwnership(address newOwner) external; // nosemgrep\n\n    function __constructor__() external;\n}",
+  "resolutions": {
+    "ba5b6c9584fb78fd": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "44ad4cf96e2ef6f0": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "bb55951394276893": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

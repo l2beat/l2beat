@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "dc19dd4210288e84a086566f45bc89f1c8abe8213c32c908a8343f0a8514e9de",
+  "name": "mod.nr",
+  "kind": "program",
+  "lines": 14,
+  "source": "// TODO: Move to types/src/abis/rollup/\nmod public_chonk_verifier_public_inputs;\nmod tx_rollup_public_inputs;\nmod block_rollup_public_inputs;\nmod parity_public_inputs;\nmod checkpoint_rollup_public_inputs;\nmod root_rollup_public_inputs;\n\npub use block_rollup_public_inputs::BlockRollupPublicInputs;\npub use checkpoint_rollup_public_inputs::CheckpointRollupPublicInputs;\npub use parity_public_inputs::ParityPublicInputs;\npub use public_chonk_verifier_public_inputs::PublicChonkVerifierPublicInputs;\npub use root_rollup_public_inputs::RootRollupPublicInputs;\npub use tx_rollup_public_inputs::TxRollupPublicInputs;",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

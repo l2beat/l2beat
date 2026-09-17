@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "8242fcc30bcdac0dd58cbf3d1e4f84661d2ff180dcfa667d428930e0e094dfed",
+  "name": "EIP2612",
+  "kind": "abstract",
+  "lines": 36,
+  "source": "abstract contract EIP2612 is AbstractFiatTokenV2, EIP712Domain {\n    // keccak256(\"Permit(address owner,address spender,uint256 value,uint256 nonce,uint256 deadline)\")\n    bytes32 public constant PERMIT_TYPEHASH = 0x6e71edae12b1b97f4d1f60370fef10105fa2faae0126114a169c64845d6126c9;\n\n    mapping(address => uint256) private _permitNonces;\n\n    /**\n     * @notice Nonces for permit\n     * @param owner Token owner's address (Authorizer)\n     * @return Next nonce\n     */\n    function nonces(address owner) external view returns (uint256) {\n        return _permitNonces[owner];\n    }\n\n    /**\n     * @notice Verify a signed approval permit and execute if valid\n     * @param owner     Token owner's address (Authorizer)\n     * @param spender   Spender's address\n     * @param value     Amount of allowance\n     * @param deadline  The time at which this expires (unix time)\n     * @param v         v of the signature\n     * @param r         r of the signature\n     * @param s         s of the signature\n     */\n    function _permit(address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s)\n        internal\n    {\n        require(deadline >= now, \"FiatTokenV2: permit is expired\");\n\n        bytes memory data = abi.encode(PERMIT_TYPEHASH, owner, spender, value, _permitNonces[owner]++, deadline);\n        require(EIP712.recover(DOMAIN_SEPARATOR, v, r, s, data) == owner, \"EIP2612: invalid signature\");\n\n        _approve(owner, spender, value);\n    }\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

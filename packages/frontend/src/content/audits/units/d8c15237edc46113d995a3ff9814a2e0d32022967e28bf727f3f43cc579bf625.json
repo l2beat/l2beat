@@ -1,0 +1,620 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "d8c15237edc46113d995a3ff9814a2e0d32022967e28bf727f3f43cc579bf625",
+  "name": "GovernorTimelockControlUpgradeableV2",
+  "kind": "abstract",
+  "lines": 171,
+  "source": "abstract contract GovernorTimelockControlUpgradeableV2 is\n    Initializable,\n    IGovernorTimelockUpgradeable,\n    GovernorUpgradeableV2\n{\n    TimelockControllerUpgradeable internal _timelock;\n    mapping(uint256 => bytes32) internal _timelockIds;\n\n    /**\n     * @dev Emitted when the timelock controller used for proposal execution is modified.\n     */\n    event TimelockChange(address oldTimelock, address newTimelock);\n\n    /**\n     * @dev Set the timelock.\n     */\n    function __GovernorTimelockControl_init(TimelockControllerUpgradeable timelockAddress) internal onlyInitializing {\n        __GovernorTimelockControl_init_unchained(timelockAddress);\n    }\n\n    function __GovernorTimelockControl_init_unchained(TimelockControllerUpgradeable timelockAddress)\n        internal\n        onlyInitializing\n    {\n        _updateTimelock(timelockAddress);\n    }\n\n    /**\n     * @dev See {IERC165-supportsInterface}.\n     */\n    function supportsInterface(bytes4 interfaceId)\n        public\n        view\n        virtual\n        override(IERC165Upgradeable, GovernorUpgradeableV2)\n        returns (bool)\n    {\n        return interfaceId == type(IGovernorTimelockUpgradeable).interfaceId || super.supportsInterface(interfaceId);\n    }\n\n    /**\n     * @dev Overridden version of the {Governor-state} function with added support for the `Queued` status.\n     */\n    function state(uint256 proposalId)\n        public\n        view\n        virtual\n        override(IGovernorUpgradeable, GovernorUpgradeableV2)\n        returns (ProposalState)\n    {\n        ProposalState status = super.state(proposalId);\n\n        if (status != ProposalState.Succeeded) {\n            return status;\n        }\n\n        // core tracks execution, so we just have to check if successful proposal have been queued.\n        bytes32 queueid = _timelockIds[proposalId];\n        if (queueid == bytes32(0)) {\n            return status;\n        } else if (_timelock.isOperationDone(queueid)) {\n            return ProposalState.Executed;\n        } else if (_timelock.isOperationPending(queueid)) {\n            return ProposalState.Queued;\n        } else {\n            return ProposalState.Canceled;\n        }\n    }\n\n    /**\n     * @dev Public accessor to check the address of the timelock\n     */\n    function timelock() public view virtual override returns (address) {\n        return address(_timelock);\n    }\n\n    /**\n     * @dev Public accessor to check the eta of a queued proposal\n     */\n    function proposalEta(uint256 proposalId) public view virtual override returns (uint256) {\n        uint256 eta = _timelock.getTimestamp(_timelockIds[proposalId]);\n        return eta == 1 ? 0 : eta; // _DONE_TIMESTAMP (1) should be replaced with a 0 value\n    }\n\n    /**\n     * @dev Function to queue a proposal to the timelock.\n     */\n    function queue(address[] memory targets, uint256[] memory values, bytes[] memory calldatas, bytes32 descriptionHash)\n        public\n        virtual\n        override\n        returns (uint256)\n    {\n        uint256 proposalId = hashProposal(targets, values, calldatas, descriptionHash);\n\n        require(state(proposalId) == ProposalState.Succeeded, \"Governor: proposal not successful\");\n\n        uint256 delay = _timelock.getMinDelay();\n        _timelockIds[proposalId] = _timelock.hashOperationBatch(targets, values, calldatas, 0, descriptionHash);\n        _timelock.scheduleBatch(targets, values, calldatas, 0, descriptionHash, delay);\n\n        emit ProposalQueued(proposalId, block.timestamp + delay);\n\n        return proposalId;\n    }\n\n    /**\n     * @dev Overridden execute function that run the already queued proposal through the timelock.\n     */\n    function _execute(\n        uint256, /* proposalId */\n        address[] memory targets,\n        uint256[] memory values,\n        bytes[] memory calldatas,\n        bytes32 descriptionHash\n    ) internal virtual override {\n        _timelock.executeBatch{value: msg.value}(targets, values, calldatas, 0, descriptionHash);\n    }\n\n    /**\n     * @dev Overridden version of the {Governor-_cancel} function to cancel the timelocked proposal if it as already\n     * been queued.\n     */\n    // This function can reenter through the external call to the timelock, but we assume the timelock is trusted and\n    // well behaved (according to TimelockController) and this will not happen.\n    // slither-disable-next-line reentrancy-no-eth\n    function _cancel(\n        address[] memory targets,\n        uint256[] memory values,\n        bytes[] memory calldatas,\n        bytes32 descriptionHash\n    ) internal virtual override returns (uint256) {\n        uint256 proposalId = super._cancel(targets, values, calldatas, descriptionHash);\n\n        if (_timelockIds[proposalId] != 0) {\n            _timelock.cancel(_timelockIds[proposalId]);\n            delete _timelockIds[proposalId];\n        }\n\n        return proposalId;\n    }\n\n    /**\n     * @dev Address through which the governor executes action. In this case, the timelock.\n     */\n    function _executor() internal view virtual override returns (address) {\n        return address(_timelock);\n    }\n\n    /**\n     * @dev Public endpoint to update the underlying timelock instance. Restricted to the timelock itself, so updates\n     * must be proposed, scheduled, and executed through governance proposals.\n     *\n     * CAUTION: It is not recommended to change the timelock while there are other queued governance proposals.\n     */\n    function updateTimelock(TimelockControllerUpgradeable newTimelock) external virtual onlyGovernance {\n        _updateTimelock(newTimelock);\n    }\n\n    function _updateTimelock(TimelockControllerUpgradeable newTimelock) private {\n        emit TimelockChange(address(_timelock), address(newTimelock));\n        _timelock = newTimelock;\n    }\n\n    /**\n     * @dev This empty reserved space is put in place to allow future versions to add new\n     * variables without shifting down storage in the inheritance chain.\n     * See https://docs.openzeppelin.com/contracts/4.x/upgradeable#storage_gaps\n     */\n    uint256[48] private __gap;\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "differs",
+      "coveredLines": 137,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "similarity",
+        "auditedName": "GovernorTimelockControl",
+        "similarity": 0.667,
+        "reportId": "openzeppelin/formal-verification__fv__reports__2021-10",
+        "repository": "Certora/openzeppelin-contracts",
+        "path": "contracts/governance/extensions/GovernorTimelockControl.sol",
+        "commit": "4088540aef299ea6d2b7f78a72d35af49eec2ff0",
+        "commitTimestamp": "2021-11-08T21:47:21Z",
+        "url": "https://github.com/Certora/openzeppelin-contracts/blob/4088540aef299ea6d2b7f78a72d35af49eec2ff0/contracts/governance/extensions/GovernorTimelockControl.sol",
+        "auditStatus": "partially_audited_with_major_findings",
+        "reviewPhase": "formal verification and manual audit",
+        "coverage": "Formal verification with the Certora Prover of governance properties (proposal state validity and transitions, invocation privileges, vote casting and counting integrity) plus a manual audit; two rules timed out on some methods and reentrancy/multi-iteration loop behavior was not modeled.",
+        "majorFindings": 2,
+        "findingIds": [
+          "Two systems that use the same timelock can attack each other",
+          "Two systems that use the same timelock can not queue the same proposal"
+        ],
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 7
+      },
+      "diff": {
+        "added": 34,
+        "removed": 9,
+        "ignoredAdded": 17,
+        "ignoredRemoved": 5,
+        "unchanged": 137,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 6,
+            "newStart": 1,
+            "newLines": 10,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "abstract contract GovernorTimelockControl is IGovernorTimelock, Governor {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 2,
+                "text": "    TimelockController private _timelock;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 3,
+                "text": "    mapping(uint256 => bytes32) private _timelockIds;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "abstract contract GovernorTimelockControlUpgradeableV2 is",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 2,
+                "text": "    Initializable,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "    IGovernorTimelockUpgradeable,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 4,
+                "text": "    GovernorUpgradeableV2",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 5, "text": "{", "ignored": false },
+              {
+                "type": "+",
+                "newLine": 6,
+                "text": "    TimelockControllerUpgradeable internal _timelock;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 7,
+                "text": "    mapping(uint256 => bytes32) internal _timelockIds;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 4, "newLine": 8, "text": "" },
+              { "type": " ", "oldLine": 5, "newLine": 9, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 6,
+                "newLine": 10,
+                "text": "     * @dev Emitted when the timelock controller used for proposal execution is modified."
+              }
+            ]
+          },
+          {
+            "oldStart": 10,
+            "oldLines": 21,
+            "newStart": 14,
+            "newLines": 40,
+            "lines": [
+              { "type": " ", "oldLine": 10, "newLine": 14, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 11,
+                "newLine": 15,
+                "text": "     * @dev Set the timelock."
+              },
+              { "type": " ", "oldLine": 12, "newLine": 16, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 13,
+                "text": "    constructor(TimelockController timelockAddress) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 17,
+                "text": "    function __GovernorTimelockControl_init(TimelockControllerUpgradeable timelockAddress) internal onlyInitializing {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 18,
+                "text": "        __GovernorTimelockControl_init_unchained(timelockAddress);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 19, "text": "    }", "ignored": false },
+              { "type": "+", "newLine": 20, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 21,
+                "text": "    function __GovernorTimelockControl_init_unchained(TimelockControllerUpgradeable timelockAddress)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 22,
+                "text": "        internal",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 23,
+                "text": "        onlyInitializing",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 24, "text": "    {", "ignored": false },
+              {
+                "type": " ",
+                "oldLine": 14,
+                "newLine": 25,
+                "text": "        _updateTimelock(timelockAddress);"
+              },
+              { "type": " ", "oldLine": 15, "newLine": 26, "text": "    }" },
+              { "type": " ", "oldLine": 16, "newLine": 27, "text": "" },
+              { "type": " ", "oldLine": 17, "newLine": 28, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 18,
+                "newLine": 29,
+                "text": "     * @dev See {IERC165-supportsInterface}."
+              },
+              { "type": " ", "oldLine": 19, "newLine": 30, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 20,
+                "text": "    function supportsInterface(bytes4 interfaceId) public view virtual override(IERC165, Governor) returns (bool) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 21,
+                "text": "        return interfaceId == type(IGovernorTimelock).interfaceId || super.supportsInterface(interfaceId);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 31,
+                "text": "    function supportsInterface(bytes4 interfaceId)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 32,
+                "text": "        public",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 33,
+                "text": "        view",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 34,
+                "text": "        virtual",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 35,
+                "text": "        override(IERC165Upgradeable, GovernorUpgradeableV2)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 36,
+                "text": "        returns (bool)",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 37, "text": "    {", "ignored": false },
+              {
+                "type": "+",
+                "newLine": 38,
+                "text": "        return interfaceId == type(IGovernorTimelockUpgradeable).interfaceId || super.supportsInterface(interfaceId);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 22, "newLine": 39, "text": "    }" },
+              { "type": " ", "oldLine": 23, "newLine": 40, "text": "" },
+              { "type": " ", "oldLine": 24, "newLine": 41, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 25,
+                "text": "     * @dev Overriden version of the {Governor-state} function with added support for the `Queued` status.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 42,
+                "text": "     * @dev Overridden version of the {Governor-state} function with added support for the `Queued` status.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 26, "newLine": 43, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 27,
+                "text": "    function state(uint256 proposalId) public view virtual override(IGovernor, Governor) returns (ProposalState) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 44,
+                "text": "    function state(uint256 proposalId)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 45,
+                "text": "        public",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 46,
+                "text": "        view",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 47,
+                "text": "        virtual",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 48,
+                "text": "        override(IGovernorUpgradeable, GovernorUpgradeableV2)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 49,
+                "text": "        returns (ProposalState)",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 50, "text": "    {", "ignored": false },
+              {
+                "type": " ",
+                "oldLine": 28,
+                "newLine": 51,
+                "text": "        ProposalState status = super.state(proposalId);"
+              },
+              { "type": " ", "oldLine": 29, "newLine": 52, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 30,
+                "newLine": 53,
+                "text": "        if (status != ProposalState.Succeeded) {"
+              }
+            ]
+          },
+          {
+            "oldStart": 37,
+            "oldLines": 8,
+            "newStart": 60,
+            "newLines": 10,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 37,
+                "newLine": 60,
+                "text": "            return status;"
+              },
+              {
+                "type": " ",
+                "oldLine": 38,
+                "newLine": 61,
+                "text": "        } else if (_timelock.isOperationDone(queueid)) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 39,
+                "newLine": 62,
+                "text": "            return ProposalState.Executed;"
+              },
+              {
+                "type": "-",
+                "oldLine": 40,
+                "text": "        } else {",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 63,
+                "text": "        } else if (_timelock.isOperationPending(queueid)) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 41,
+                "newLine": 64,
+                "text": "            return ProposalState.Queued;"
+              },
+              {
+                "type": "+",
+                "newLine": 65,
+                "text": "        } else {",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 66,
+                "text": "            return ProposalState.Canceled;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 42,
+                "newLine": 67,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 43, "newLine": 68, "text": "    }" },
+              { "type": " ", "oldLine": 44, "newLine": 69, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 80,
+            "oldLines": 7,
+            "newStart": 105,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 80, "newLine": 105, "text": "    }" },
+              { "type": " ", "oldLine": 81, "newLine": 106, "text": "" },
+              { "type": " ", "oldLine": 82, "newLine": 107, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 83,
+                "text": "     * @dev Overriden execute function that run the already queued proposal through the timelock.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 108,
+                "text": "     * @dev Overridden execute function that run the already queued proposal through the timelock.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 84, "newLine": 109, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 85,
+                "newLine": 110,
+                "text": "    function _execute("
+              },
+              {
+                "type": " ",
+                "oldLine": 86,
+                "newLine": 111,
+                "text": "        uint256, /* proposalId */"
+              }
+            ]
+          },
+          {
+            "oldStart": 93,
+            "oldLines": 9,
+            "newStart": 118,
+            "newLines": 12,
+            "lines": [
+              { "type": " ", "oldLine": 93, "newLine": 118, "text": "    }" },
+              { "type": " ", "oldLine": 94, "newLine": 119, "text": "" },
+              { "type": " ", "oldLine": 95, "newLine": 120, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 96,
+                "text": "     * @dev Overriden version of the {Governor-_cancel} function to cancel the timelocked proposal if it as already",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 121,
+                "text": "     * @dev Overridden version of the {Governor-_cancel} function to cancel the timelocked proposal if it as already",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 97,
+                "newLine": 122,
+                "text": "     * been queued."
+              },
+              { "type": " ", "oldLine": 98, "newLine": 123, "text": "     */" },
+              {
+                "type": "+",
+                "newLine": 124,
+                "text": "    // This function can reenter through the external call to the timelock, but we assume the timelock is trusted and",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 125,
+                "text": "    // well behaved (according to TimelockController) and this will not happen.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 126,
+                "text": "    // slither-disable-next-line reentrancy-no-eth",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 99,
+                "newLine": 127,
+                "text": "    function _cancel("
+              },
+              {
+                "type": " ",
+                "oldLine": 100,
+                "newLine": 128,
+                "text": "        address[] memory targets,"
+              },
+              {
+                "type": " ",
+                "oldLine": 101,
+                "newLine": 129,
+                "text": "        uint256[] memory values,"
+              }
+            ]
+          },
+          {
+            "oldStart": 121,
+            "oldLines": 14,
+            "newStart": 149,
+            "newLines": 23,
+            "lines": [
+              { "type": " ", "oldLine": 121, "newLine": 149, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 122,
+                "newLine": 150,
+                "text": "    /**"
+              },
+              {
+                "type": " ",
+                "oldLine": 123,
+                "newLine": 151,
+                "text": "     * @dev Public endpoint to update the underlying timelock instance. Restricted to the timelock itself, so updates"
+              },
+              {
+                "type": "-",
+                "oldLine": 124,
+                "text": "     * must be proposed, scheduled and executed using the {Governor} workflow.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 152,
+                "text": "     * must be proposed, scheduled, and executed through governance proposals.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 153,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 154,
+                "text": "     * CAUTION: It is not recommended to change the timelock while there are other queued governance proposals.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 125,
+                "newLine": 155,
+                "text": "     */"
+              },
+              {
+                "type": "-",
+                "oldLine": 126,
+                "text": "    function updateTimelock(TimelockController newTimelock) external virtual onlyGovernance {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 156,
+                "text": "    function updateTimelock(TimelockControllerUpgradeable newTimelock) external virtual onlyGovernance {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 127,
+                "newLine": 157,
+                "text": "        _updateTimelock(newTimelock);"
+              },
+              { "type": " ", "oldLine": 128, "newLine": 158, "text": "    }" },
+              { "type": " ", "oldLine": 129, "newLine": 159, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 130,
+                "text": "    function _updateTimelock(TimelockController newTimelock) private {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 160,
+                "text": "    function _updateTimelock(TimelockControllerUpgradeable newTimelock) private {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 131,
+                "newLine": 161,
+                "text": "        emit TimelockChange(address(_timelock), address(newTimelock));"
+              },
+              {
+                "type": " ",
+                "oldLine": 132,
+                "newLine": 162,
+                "text": "        _timelock = newTimelock;"
+              },
+              { "type": " ", "oldLine": 133, "newLine": 163, "text": "    }" },
+              { "type": "+", "newLine": 164, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 165,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 166,
+                "text": "     * @dev This empty reserved space is put in place to allow future versions to add new",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 167,
+                "text": "     * variables without shifting down storage in the inheritance chain.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 168,
+                "text": "     * See https://docs.openzeppelin.com/contracts/4.x/upgradeable#storage_gaps",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 169,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 170,
+                "text": "    uint256[48] private __gap;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 134, "newLine": 171, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

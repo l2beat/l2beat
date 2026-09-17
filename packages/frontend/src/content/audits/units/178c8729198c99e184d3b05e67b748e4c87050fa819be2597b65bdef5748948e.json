@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "178c8729198c99e184d3b05e67b748e4c87050fa819be2597b65bdef5748948e",
+  "name": "ITornadoInstance",
+  "kind": "interface",
+  "lines": 13,
+  "source": "interface ITornadoInstance {\n    function deposit(bytes32 commitment) external payable;\n\n    function withdraw(\n        bytes calldata proof,\n        bytes32 root,\n        bytes32 nullifierHash,\n        address payable recipient,\n        address payable relayer,\n        uint256 fee,\n        uint256 refund\n    ) external payable;\n}",
+  "resolutions": {
+    "f9658cd3a9a22004": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

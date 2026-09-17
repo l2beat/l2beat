@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "1ed0fd94b01bf161a14e19001bb682496136a5eb99bb264b478e2312719b0b15",
+  "name": "tail_to_public_output_composer.nr",
+  "kind": "program",
+  "lines": 74,
+  "source": "mod split_to_public;\n\npub(crate) use split_to_public::split_to_public;\n\nuse crate::{\n    abis::PaddedSideEffectAmounts,\n    components::{\n        gas_meter::meter_gas_used,\n        private_kernel_circuit_output_composer::PrivateKernelCircuitOutputComposer,\n    },\n};\nuse types::{\n    abis::kernel_circuit_public_inputs::{\n        PrivateKernelCircuitPublicInputs, PrivateToPublicKernelCircuitPublicInputs,\n    },\n    constants::MAX_TX_LIFETIME,\n};\n\npub struct TailToPublicOutputComposer {\n    previous_kernel: PrivateKernelCircuitPublicInputs,\n    padded_side_effect_amounts: PaddedSideEffectAmounts,\n    expiration_timestamp_upper_bound: u64,\n}\n\nimpl TailToPublicOutputComposer {\n    pub unconstrained fn new(\n        previous_kernel: PrivateKernelCircuitPublicInputs,\n        padded_side_effect_amounts: PaddedSideEffectAmounts,\n        expiration_timestamp_upper_bound: u64,\n    ) -> Self {\n        TailToPublicOutputComposer {\n            previous_kernel,\n            padded_side_effect_amounts,\n            expiration_timestamp_upper_bound,\n        }\n    }\n\n    pub unconstrained fn finish(self) -> PrivateToPublicKernelCircuitPublicInputs {\n        let mut output_composer =\n            PrivateKernelCircuitOutputComposer::new_from_previous_kernel(self.previous_kernel);\n        output_composer.sort_ordered_values();\n        let source = output_composer.finish();\n\n        let (non_revertible_accumulated_data, revertible_accumulated_data) = split_to_public(\n            source.end,\n            source.min_revertible_side_effect_counter,\n            self.padded_side_effect_amounts,\n        );\n\n        let gas_used = meter_gas_used(self.previous_kernel, true /* is_for_public */);\n\n        let max_timestamp =\n            source.constants.anchor_block_header.global_variables.timestamp + MAX_TX_LIFETIME;\n        let expiration_timestamp = std::cmp::min(\n            std::cmp::min(\n                source.expiration_timestamp,\n                self.expiration_timestamp_upper_bound,\n            ),\n            max_timestamp,\n        );\n\n        let output = PrivateToPublicKernelCircuitPublicInputs {\n            constants: source.constants.to_tx_constant_data(),\n            non_revertible_accumulated_data,\n            revertible_accumulated_data,\n            public_teardown_call_request: source.public_teardown_call_request,\n            gas_used,\n            fee_payer: source.fee_payer,\n            expiration_timestamp,\n        };\n\n        output\n    }\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

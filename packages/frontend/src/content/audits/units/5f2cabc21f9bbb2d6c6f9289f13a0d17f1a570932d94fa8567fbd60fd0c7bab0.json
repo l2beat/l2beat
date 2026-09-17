@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "5f2cabc21f9bbb2d6c6f9289f13a0d17f1a570932d94fa8567fbd60fd0c7bab0",
+  "name": "SchemaRegistry",
+  "kind": "contract",
+  "lines": 43,
+  "source": "contract SchemaRegistry is ISchemaRegistry, ISemver {\n    error AlreadyExists();\n\n    // The global mapping between schema records and their IDs.\n    mapping(bytes32 uid => SchemaRecord schemaRecord) private _registry;\n\n    // Upgrade forward-compatibility storage gap\n    uint256[MAX_GAP - 1] private __gap;\n\n    /// @notice Semantic version.\n    /// @custom:semver 1.3.1-beta.1\n    string public constant version = \"1.3.1-beta.1\";\n\n    /// @inheritdoc ISchemaRegistry\n    function register(string calldata schema, ISchemaResolver resolver, bool revocable) external returns (bytes32) {\n        SchemaRecord memory schemaRecord =\n            SchemaRecord({uid: EMPTY_UID, schema: schema, resolver: resolver, revocable: revocable});\n\n        bytes32 uid = _getUID(schemaRecord);\n        if (_registry[uid].uid != EMPTY_UID) {\n            revert AlreadyExists();\n        }\n\n        schemaRecord.uid = uid;\n        _registry[uid] = schemaRecord;\n\n        emit Registered(uid, msg.sender, schemaRecord);\n\n        return uid;\n    }\n\n    /// @inheritdoc ISchemaRegistry\n    function getSchema(bytes32 uid) external view returns (SchemaRecord memory) {\n        return _registry[uid];\n    }\n\n    /// @dev Calculates a UID for a given schema.\n    /// @param schemaRecord The input schema.\n    /// @return schema UID.\n    function _getUID(SchemaRecord memory schemaRecord) private pure returns (bytes32) {\n        return keccak256(abi.encodePacked(schemaRecord.schema, schemaRecord.resolver, schemaRecord.revocable));\n    }\n}",
+  "resolutions": {
+    "1f5c32d18cf7148d": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

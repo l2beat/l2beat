@@ -1,0 +1,1360 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "e32cb1581c60a8fa0eb10bcfdeeb08c6c40c81308485319e6740a6b564e90ca8",
+  "name": "Rollup",
+  "kind": "contract",
+  "lines": 689,
+  "source": "contract Rollup is IStaking, IValidatorSelection, IRollup, RollupCore {\n    using TimeLib for Timestamp;\n    using TimeLib for Slot;\n    using TimeLib for Epoch;\n    using PriceLib for EthValue;\n    using CompressedTimeMath for CompressedSlot;\n    using CompressedTimeMath for CompressedTimestamp;\n    using ChainTipsLib for CompressedChainTips;\n\n    constructor(\n        IERC20 _feeAsset,\n        IERC20 _stakingAsset,\n        GSE _gse,\n        IVerifier _epochProofVerifier,\n        address _governance,\n        GenesisState memory _genesisState,\n        RollupConfigInput memory _config\n    ) RollupCore(_feeAsset, _stakingAsset, _gse, _epochProofVerifier, _governance, _genesisState, _config) {}\n\n    /**\n     * @notice  Validate a header for submission\n     *\n     * @dev     This is a convenience function that can be used by the sequencer to validate a \"partial\" header\n     *\n     * @param _header - The header to validate\n     * @param _attestations - The attestations to validate\n     * @param _digest - The digest to validate\n     * @param _blobsHash - The blobs hash for this checkpoint\n     * @param _flags - The flags to validate\n     */\n    function validateHeaderWithAttestations(\n        ProposedHeader calldata _header,\n        CommitteeAttestations memory _attestations,\n        address[] calldata _signers,\n        Signature memory _attestationsAndSignersSignature,\n        bytes32 _digest,\n        bytes32 _blobsHash,\n        CheckpointHeaderValidationFlags memory _flags\n    ) external override(IRollup) {\n        RollupOperationsExtLib.validateHeaderWithAttestations(\n            ValidateHeaderArgs({\n                header: _header,\n                digest: _digest,\n                manaMinFee: getManaMinFeeAt(Timestamp.wrap(block.timestamp), true),\n                blobsHashesCommitment: _blobsHash,\n                flags: _flags\n            }),\n            _attestations,\n            _signers,\n            _attestationsAndSignersSignature\n        );\n    }\n\n    /**\n     * @notice  Get the validator set for the current epoch\n     * @return The validator set for the current epoch\n     */\n    function getCurrentEpochCommittee() external override(IValidatorSelection) returns (address[] memory) {\n        return getEpochCommittee(getCurrentEpoch());\n    }\n\n    /**\n     * @notice  Get the committee for a given timestamp\n     *\n     * @param _ts - The timestamp to get the committee for\n     *\n     * @return The committee for the given timestamp\n     * @custom:reverts Errors.ValidatorSelection__EpochNotStable if the requested epoch is not stable\n     */\n    function getCommitteeAt(Timestamp _ts) external override(IValidatorSelection) returns (address[] memory) {\n        return getEpochCommittee(getEpochAt(_ts));\n    }\n\n    /**\n     * @notice Get the committee commitment a the given timestamp\n     *\n     * @param _ts - The timestamp to get the committee for\n     *\n     * @return The committee commitment for the given timestamp\n     * @return The committee size for the given timestamp\n     * @custom:reverts Errors.ValidatorSelection__EpochNotStable if the requested epoch is not stable\n     */\n    function getCommitteeCommitmentAt(Timestamp _ts)\n        external\n        override(IValidatorSelection)\n        returns (bytes32, uint256)\n    {\n        return ValidatorOperationsExtLib.getCommitteeCommitmentAt(getEpochAt(_ts));\n    }\n\n    /**\n     * @notice Get the committee commitment a the given epoch\n     *\n     * @param _epoch - The epoch to get the committee for\n     *\n     * @return The committee commitment for the given epoch\n     * @return The committee size for the given epoch\n     * @custom:reverts Errors.ValidatorSelection__EpochNotStable if the requested epoch is not stable\n     */\n    function getEpochCommitteeCommitment(Epoch _epoch)\n        external\n        override(IValidatorSelection)\n        returns (bytes32, uint256)\n    {\n        return ValidatorOperationsExtLib.getCommitteeCommitmentAt(_epoch);\n    }\n\n    /**\n     * @notice  Get the proposer for the current slot\n     *\n     * @dev     Calls `getCurrentProposer(uint256)` with the current timestamp\n     *\n     * @return The address of the proposer\n     */\n    function getCurrentProposer() external override(IEmperor) returns (address) {\n        return getProposerAt(Timestamp.wrap(block.timestamp));\n    }\n\n    /**\n     * @notice  Check if msg.sender can propose at a given time\n     *\n     * @param _ts - The timestamp to check\n     * @param _archive - The archive to check (should be the latest archive)\n     * @param _who - The address to check\n     *\n     * @return uint256 - The slot at the given timestamp\n     * @return uint256 - The checkpoint number at the given timestamp\n     * @custom:reverts Errors.ValidatorSelection__EpochNotStable if the requested epoch is not stable\n     */\n    function canProposeAtTime(Timestamp _ts, bytes32 _archive, address _who)\n        external\n        override(IRollup)\n        returns (Slot, uint256)\n    {\n        return ValidatorOperationsExtLib.canProposeAtTime(_ts, _archive, _who);\n    }\n\n    function getTargetCommitteeSize() external view override(IValidatorSelection) returns (uint256) {\n        return ValidatorOperationsExtLib.getTargetCommitteeSize();\n    }\n\n    function getGenesisTime() external view override(IValidatorSelection) returns (Timestamp) {\n        return Timestamp.wrap(TimeLib.getStorage().genesisTime);\n    }\n\n    function getSlotDuration() external view override(IValidatorSelection) returns (uint256) {\n        return TimeLib.getStorage().slotDuration;\n    }\n\n    function getEpochDuration() external view override(IValidatorSelection) returns (uint256) {\n        return TimeLib.getStorage().epochDuration;\n    }\n\n    function getProofSubmissionEpochs() external view override(IRollup) returns (uint256) {\n        return TimeLib.getStorage().proofSubmissionEpochs;\n    }\n\n    function getSlasher() external view override(IStaking) returns (address) {\n        return StakingLib.getStorage().slasher;\n    }\n\n    function getPendingSlasher() external view override(IStaking) returns (address slasher, Timestamp readyAt) {\n        slasher = StakingLib.getStorage().pendingSlasher;\n        readyAt = StakingLib.getStorage().pendingSlasherReadyAt.decompress();\n    }\n\n    function getLegacySlasher() external view override(IStaking) returns (address slasher, Timestamp authorizedUntil) {\n        slasher = StakingLib.getStorage().legacySlasher;\n        authorizedUntil = StakingLib.getStorage().legacySlasherAuthorizedUntil.decompress();\n    }\n\n    function getLocalEjectionThreshold() external view override(IStaking) returns (uint256) {\n        return StakingLib.getStorage().localEjectionThreshold;\n    }\n\n    function getStakingAsset() external view override(IStaking) returns (IERC20) {\n        return StakingLib.getStorage().stakingAsset;\n    }\n\n    function getEjectionThreshold() external view override(IStaking) returns (uint256) {\n        return StakingLib.getStorage().gse.EJECTION_THRESHOLD();\n    }\n\n    function getActivationThreshold() external view override(IStaking) returns (uint256) {\n        return StakingLib.getStorage().gse.ACTIVATION_THRESHOLD();\n    }\n\n    function getExitDelay() external view override(IStaking) returns (Timestamp) {\n        return StakingLib.getStorage().exitDelay.decompress();\n    }\n\n    function getGSE() external view override(IStaking) returns (GSE) {\n        return StakingLib.getStorage().gse;\n    }\n\n    function getManaTarget() external view override(IRollup) returns (uint256) {\n        return RewardExtLib.getManaTarget();\n    }\n\n    function getManaLimit() external view override(IRollup) returns (uint256) {\n        return RewardExtLib.getManaLimit();\n    }\n\n    function getTips() external view override(IRollup) returns (ChainTips memory) {\n        return ChainTipsLib.decompress(STFLib.getStorage().tips);\n    }\n\n    function status(uint256 _myHeaderCheckpointNumber)\n        external\n        view\n        override(IRollup)\n        returns (\n            uint256 provenCheckpointNumber,\n            bytes32 provenArchive,\n            uint256 pendingCheckpointNumber,\n            bytes32 pendingArchive,\n            bytes32 archiveOfMyCheckpoint,\n            Epoch provenEpochNumber\n        )\n    {\n        RollupStore storage rollupStore = STFLib.getStorage();\n        ChainTips memory tips = ChainTipsLib.decompress(rollupStore.tips);\n\n        return (\n            tips.proven,\n            rollupStore.archives[tips.proven],\n            tips.pending,\n            rollupStore.archives[tips.pending],\n            archiveAt(_myHeaderCheckpointNumber),\n            getEpochForCheckpoint(tips.proven)\n        );\n    }\n\n    /**\n     * @notice Returns the computed public inputs for the given epoch proof.\n     *\n     * @dev Useful for debugging and testing. Allows submitter to compare their\n     * own public inputs used for generating the proof vs the ones assembled\n     * by this contract when verifying it.\n     *\n     * @param  _start - The start of the epoch (inclusive)\n     * @param  _end - The end of the epoch (inclusive)\n     * @param  _args - Array of public inputs to the proof (previousArchive, endArchive, endTimestamp, outHash, proverId)\n     */\n    function getEpochProofPublicInputs(\n        uint256 _start,\n        uint256 _end,\n        PublicInputArgs calldata _args,\n        ProposedHeader[] calldata _headers,\n        bytes calldata _blobPublicInputs\n    ) external view override(IRollup) returns (bytes32[] memory) {\n        return RollupOperationsExtLib.getEpochProofPublicInputs(_start, _end, _args, _headers, _blobPublicInputs);\n    }\n\n    /**\n     * @notice  Validate blob transactions against given inputs.\n     * @dev     Only exists here for gas estimation.\n     */\n    function validateBlobs(bytes calldata _blobsInput)\n        external\n        view\n        override(IRollup)\n        returns (bytes32[] memory, bytes32, bytes[] memory)\n    {\n        return RollupOperationsExtLib.validateBlobs(_blobsInput, checkBlob);\n    }\n\n    /**\n     * @notice  Get the current archive root\n     *\n     * @return bytes32 - The current archive root\n     */\n    function archive() external view override(IRollup) returns (bytes32) {\n        RollupStore storage rollupStore = STFLib.getStorage();\n        return rollupStore.archives[rollupStore.tips.getPending()];\n    }\n\n    function getProvenCheckpointNumber() external view override(IRollup) returns (uint256) {\n        return STFLib.getStorage().tips.getProven();\n    }\n\n    function getPendingCheckpointNumber() external view override(IRollup) returns (uint256) {\n        return STFLib.getStorage().tips.getPending();\n    }\n\n    function getCheckpoint(uint256 _checkpointNumber) external view override(IRollup) returns (CheckpointLog memory) {\n        TempCheckpointLog memory tempCheckpointLog = STFLib.getTempCheckpointLog(_checkpointNumber);\n        return CheckpointLog({\n            archive: STFLib.getStorage().archives[_checkpointNumber],\n            headerHash: tempCheckpointLog.headerHash,\n            blobCommitmentsHash: tempCheckpointLog.blobCommitmentsHash,\n            outHash: tempCheckpointLog.outHash,\n            attestationsHash: tempCheckpointLog.attestationsHash,\n            payloadDigest: tempCheckpointLog.payloadDigest,\n            slotNumber: tempCheckpointLog.slotNumber,\n            feeHeader: tempCheckpointLog.feeHeader\n        });\n    }\n\n    function getFeeHeader(uint256 _checkpointNumber) external view override(IRollup) returns (FeeHeader memory) {\n        return FeeHeaderLib.decompress(STFLib.getFeeHeader(_checkpointNumber));\n    }\n\n    function getBlobCommitmentsHash(uint256 _checkpointNumber) external view override(IRollup) returns (bytes32) {\n        return STFLib.getBlobCommitmentsHash(_checkpointNumber);\n    }\n\n    function getCurrentBlobCommitmentsHash() external view override(IRollup) returns (bytes32) {\n        return STFLib.getBlobCommitmentsHash(STFLib.getStorage().tips.getPending());\n    }\n\n    function getConfig(address _attester) external view override(IStaking) returns (AttesterConfig memory) {\n        return ValidatorOperationsExtLib.getConfig(_attester);\n    }\n\n    function getExit(address _attester) external view override(IStaking) returns (Exit memory) {\n        return ValidatorOperationsExtLib.getExit(_attester);\n    }\n\n    function getStatus(address _attester) external view override(IStaking) returns (Status) {\n        return ValidatorOperationsExtLib.getStatus(_attester);\n    }\n\n    function getAttesterView(address _attester) external view override(IStaking) returns (AttesterView memory) {\n        return ValidatorOperationsExtLib.getAttesterView(_attester);\n    }\n\n    function getSharesFor(address _prover) external view override(IRollup) returns (uint256) {\n        return RewardExtLib.getSharesFor(_prover);\n    }\n\n    /**\n     * @notice  Get the sample seed for a given timestamp\n     *\n     * @param _ts - The timestamp to get the sample seed for\n     *\n     * @return The sample seed for the given timestamp\n     * @custom:reverts Errors.ValidatorSelection__EpochNotStable if the requested epoch is not stable\n     */\n    function getSampleSeedAt(Timestamp _ts) external view override(IValidatorSelection) returns (uint256) {\n        return ValidatorOperationsExtLib.getSampleSeedAt(getEpochAt(_ts));\n    }\n\n    /**\n     * @notice  Get the sampling size for a given timestamp\n     *\n     * @param _ts - The timestamp to get the sampling size for\n     *\n     * @return The sampling size for the given timestamp\n     * @custom:reverts Errors.ValidatorSelection__EpochNotStable if the requested epoch is not stable\n     */\n    function getSamplingSizeAt(Timestamp _ts) external view override(IValidatorSelection) returns (uint256) {\n        return ValidatorOperationsExtLib.getSamplingSizeAt(getEpochAt(_ts));\n    }\n\n    function getLagInEpochsForValidatorSet() external view override(IValidatorSelection) returns (uint256) {\n        return ValidatorOperationsExtLib.getLagInEpochsForValidatorSet();\n    }\n\n    function getLagInEpochsForRandao() external view override(IValidatorSelection) returns (uint256) {\n        return ValidatorOperationsExtLib.getLagInEpochsForRandao();\n    }\n\n    /**\n     * @notice  Get the escape hatch contract\n     * @return The escape hatch contract interface, or zero-address if disabled\n     */\n    function getEscapeHatch() external view override(IValidatorSelection) returns (IEscapeHatch) {\n        return ValidatorOperationsExtLib.getEscapeHatch();\n    }\n\n    /**\n     * @notice  Get the escape hatch contract that was active at the start of a given epoch\n     * @param _epoch The epoch to look up the escape hatch for\n     * @return The escape hatch contract interface that was active at the epoch start\n     */\n    function getEscapeHatchForEpoch(Epoch _epoch) external view override(IValidatorSelection) returns (IEscapeHatch) {\n        return ValidatorOperationsExtLib.getEscapeHatchForEpoch(_epoch);\n    }\n\n    /**\n     * @notice  Get the sample seed for the current epoch\n     *\n     * @return The sample seed for the current epoch\n     */\n    function getCurrentSampleSeed() external view override(IValidatorSelection) returns (uint256) {\n        return ValidatorOperationsExtLib.getSampleSeedAt(getCurrentEpoch());\n    }\n\n    /**\n     * @notice  Get the current slot number\n     *\n     * @return The current slot number\n     */\n    function getCurrentSlot() external view override(IEmperor) returns (Slot) {\n        return Timestamp.wrap(block.timestamp).slotFromTimestamp();\n    }\n\n    /**\n     * @notice  Get the timestamp for a given slot\n     *\n     * @param _slotNumber - The slot number to get the timestamp for\n     *\n     * @return The timestamp for the given slot\n     */\n    function getTimestampForSlot(Slot _slotNumber) external view override(IValidatorSelection) returns (Timestamp) {\n        return _slotNumber.toTimestamp();\n    }\n\n    /**\n     * @notice  Get the timestamp for a given epoch\n     *\n     * @param _epoch - The epoch to get the timestamp for\n     *\n     * @return The timestamp for the start of the given epoch\n     */\n    function getTimestampForEpoch(Epoch _epoch) external view override(IValidatorSelection) returns (Timestamp) {\n        return _epoch.toTimestamp();\n    }\n\n    /**\n     * @notice  Computes the slot at a specific time\n     *\n     * @param _ts - The timestamp to compute the slot for\n     *\n     * @return The computed slot\n     */\n    function getSlotAt(Timestamp _ts) external view override(IValidatorSelection) returns (Slot) {\n        return _ts.slotFromTimestamp();\n    }\n\n    /**\n     * @notice  Computes the epoch at a specific slot\n     *\n     * @param _slotNumber - The slot number to compute the epoch for\n     *\n     * @return The computed epoch\n     */\n    function getEpochAtSlot(Slot _slotNumber) external view override(IValidatorSelection) returns (Epoch) {\n        return _slotNumber.epochFromSlot();\n    }\n\n    function getSequencerRewards(address _sequencer) external view override(IRollup) returns (uint256) {\n        return RewardExtLib.getSequencerRewards(_sequencer);\n    }\n\n    function getCollectiveProverRewardsForEpoch(Epoch _epoch) external view override(IRollup) returns (uint256) {\n        return RewardExtLib.getCollectiveProverRewardsForEpoch(_epoch);\n    }\n\n    /**\n     * @notice  Get the rewards for a specific prover for a given epoch\n     *          BEWARE! If the epoch is not past its deadline, this value is the \"current\" value\n     *          and could change if a provers proves a longer series of checkpoints.\n     *\n     * @param _epoch - The epoch to get the rewards for\n     * @param _prover - The prover to get the rewards for\n     *\n     * @return The rewards for the specific prover for the given epoch\n     */\n    function getSpecificProverRewardsForEpoch(Epoch _epoch, address _prover)\n        external\n        view\n        override(IRollup)\n        returns (uint256)\n    {\n        return RewardExtLib.getSpecificProverRewardsForEpoch(_epoch, _prover);\n    }\n\n    function getHasSubmitted(Epoch _epoch, uint256 _length, address _prover)\n        external\n        view\n        override(IRollup)\n        returns (bool)\n    {\n        return RewardExtLib.getHasSubmitted(_epoch, _length, _prover);\n    }\n\n    function getHasClaimed(address _prover, Epoch _epoch) external view override(IRollup) returns (bool) {\n        return RewardExtLib.getHasClaimed(_prover, _epoch);\n    }\n\n    function getProvingCostPerManaInEth() external view override(IRollup) returns (EthValue) {\n        return RewardExtLib.getProvingCostPerMana();\n    }\n\n    function getProvingCostPerManaInFeeAsset() external view override(IRollup) returns (FeeAssetValue) {\n        return RewardExtLib.getProvingCostPerMana().toFeeAsset(getEthPerFeeAsset());\n    }\n\n    function getVersion() external view override(IHaveVersion) returns (uint256) {\n        return STFLib.getStorage().config.version;\n    }\n\n    function getInbox() external view override(IRollup) returns (IInbox) {\n        return STFLib.getStorage().config.inbox;\n    }\n\n    function getOutbox() external view override(IRollup) returns (IOutbox) {\n        return STFLib.getStorage().config.outbox;\n    }\n\n    function getFeeAsset() external view override(IRollup) returns (IERC20) {\n        return STFLib.getStorage().config.feeAsset;\n    }\n\n    function getFeeAssetPortal() external view override(IRollup) returns (IFeeJuicePortal) {\n        return STFLib.getStorage().config.feeAssetPortal;\n    }\n\n    function getVkTreeRoot() external view override(IRollup) returns (bytes32) {\n        return STFLib.getStorage().config.vkTreeRoot;\n    }\n\n    function getProtocolContractsHash() external view override(IRollup) returns (bytes32) {\n        return STFLib.getStorage().config.protocolContractsHash;\n    }\n\n    function getEpochProofVerifier() external view override(IRollup) returns (IVerifier) {\n        return STFLib.getStorage().config.epochProofVerifier;\n    }\n\n    function getRewardDistributor() external view override(IRollup) returns (IRewardDistributor) {\n        return RewardExtLib.getRewardDistributor();\n    }\n\n    function getL1FeesAt(Timestamp _timestamp) external view override(IRollup) returns (L1FeeData memory) {\n        return RewardExtLib.getL1FeesAt(_timestamp);\n    }\n\n    function canPruneAtTime(Timestamp _ts) external view override(IRollup) returns (bool) {\n        return RewardExtLib.canPruneAtTime(_ts);\n    }\n\n    function getRewardConfig() external view override(IRollup) returns (RewardConfig memory) {\n        return RewardExtLib.getRewardConfig();\n    }\n\n    function getCheckpointReward() external view override(IRollup) returns (uint256) {\n        return RewardExtLib.getCheckpointReward();\n    }\n\n    function getAvailableValidatorFlushes() external view override(IStaking) returns (uint256) {\n        return ValidatorOperationsExtLib.getAvailableValidatorFlushes();\n    }\n\n    function getIsBootstrapped() external view override(IStaking) returns (bool) {\n        return StakingLib.getStorage().isBootstrapped;\n    }\n\n    function getEntryQueueAt(uint256 _index) external view override(IStaking) returns (DepositArgs memory) {\n        return ValidatorOperationsExtLib.getEntryQueueAt(_index);\n    }\n\n    function getSlasherExecutionDelay() external pure override(IStaking) returns (uint256) {\n        return StakingLib.SLASHER_EXECUTION_DELAY;\n    }\n\n    function getLegacySlasherDrainWindow() external pure override(IStaking) returns (uint256) {\n        return StakingLib.LEGACY_SLASHER_DRAIN_WINDOW;\n    }\n\n    function getBurnAddress() external pure override(IRollup) returns (address) {\n        return address(bytes20(\"CUAUHXICALLI\"));\n    }\n\n    /**\n     * @notice  Get the validator set for a given epoch\n     *\n     * @dev     Consider removing this to replace with a `size` and individual getter.\n     *\n     * @param _epoch The epoch number to get the validator set for\n     *\n     * @return The validator set for the given epoch\n     */\n    function getEpochCommittee(Epoch _epoch) public override(IValidatorSelection) returns (address[] memory) {\n        return ValidatorOperationsExtLib.getCommitteeAt(_epoch);\n    }\n\n    /**\n     * @notice  Get the proposer for the slot at a specific timestamp\n     *\n     * @dev     This function is very useful for offchain usage, as it easily allow a client to\n     *          determine who will be the proposer at the NEXT ethereum block.\n     *          Should not be trusted when moving beyond the current epoch, since changes to the\n     *          validator set might not be reflected when we actually reach that epoch (more changes\n     *          might have happened).\n     *\n     * @dev     The proposer is selected from the validator set of the current epoch.\n     *\n     * @dev     Should only be access onchain if epoch is setup, otherwise very expensive.\n     *\n     * @dev     A return value of address(0) means that the proposer is \"open\" and can be anyone.\n     *\n     * @dev     If the current epoch is the first epoch, returns address(0)\n     *          If the current epoch is setup, we will return the proposer for the current slot\n     *          If the current epoch is not setup, we will perform a sample as if it was (gas heavy)\n     *\n     * @return The address of the proposer\n     */\n    function getProposerAt(Timestamp _ts) public override(IValidatorSelection) returns (address) {\n        return ValidatorOperationsExtLib.getProposerAt(_ts.slotFromTimestamp());\n    }\n\n    /**\n     * @notice  Get the attester at an index\n     *\n     * @param _index - The index to get the attester for\n     *\n     * @return The attester at the index\n     */\n    function getAttesterAtIndex(uint256 _index) public view override(IStaking) returns (address) {\n        return ValidatorOperationsExtLib.getAttesterAtIndex(_index);\n    }\n\n    /**\n     * @notice  Gets the mana min fee\n     *\n     * @param _inFeeAsset - Whether to return the fee in the fee asset or ETH\n     *\n     * @return The mana min fee\n     */\n    function getManaMinFeeAt(Timestamp _timestamp, bool _inFeeAsset) public view override(IRollup) returns (uint256) {\n        return RewardExtLib.summedMinFee(getManaMinFeeComponentsAt(_timestamp, _inFeeAsset));\n    }\n\n    function getManaMinFeeComponentsAt(Timestamp _timestamp, bool _inFeeAsset)\n        public\n        view\n        override(IRollup)\n        returns (ManaMinFeeComponents memory)\n    {\n        return RewardExtLib.getManaMinFeeComponentsAt(_timestamp, _inFeeAsset);\n    }\n\n    /**\n     * @notice  Gets the fee asset price as eth / fee_asset with 1e12 precision\n     *          Higher value = more expensive fee asset\n     *\n     * @return The fee asset price\n     */\n    function getEthPerFeeAsset() public view override(IRollup) returns (EthPerFeeAssetE12) {\n        return RewardExtLib.getEthPerFeeAssetAtCheckpoint(STFLib.getStorage().tips.getPending());\n    }\n\n    function getEpochForCheckpoint(uint256 _checkpointNumber) public view override(IRollup) returns (Epoch) {\n        return RewardExtLib.getEpochForCheckpoint(_checkpointNumber);\n    }\n\n    /**\n     * @notice  Get the archive root of a specific checkpoint\n     *\n     * @param _checkpointNumber - The checkpoint number to get the archive root of\n     *\n     * @return bytes32 - The archive root of the checkpoint\n     */\n    function archiveAt(uint256 _checkpointNumber) public view override(IRollup) returns (bytes32) {\n        RollupStore storage rollupStore = STFLib.getStorage();\n        return _checkpointNumber <= rollupStore.tips.getPending() ? rollupStore.archives[_checkpointNumber] : bytes32(0);\n    }\n\n    /**\n     * @notice  Computes the epoch at a specific time\n     *\n     * @param _ts - The timestamp to compute the epoch for\n     *\n     * @return The computed epoch\n     */\n    function getEpochAt(Timestamp _ts) public view override(IValidatorSelection) returns (Epoch) {\n        return _ts.epochFromTimestamp();\n    }\n\n    /**\n     * @notice  Get the current epoch number\n     *\n     * @return The current epoch number\n     */\n    function getCurrentEpoch() public view override(IValidatorSelection) returns (Epoch) {\n        return Timestamp.wrap(block.timestamp).epochFromTimestamp();\n    }\n\n    function getNextFlushableEpoch() public view override(IStaking) returns (Epoch) {\n        return ValidatorOperationsExtLib.getNextFlushableEpoch();\n    }\n\n    function getEntryQueueLength() public view override(IStaking) returns (uint256) {\n        return ValidatorOperationsExtLib.getEntryQueueLength();\n    }\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "differs",
+      "coveredLines": 630,
+      "match": {
+        "origin": "own",
+        "collection": "aztecnetwork",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "Rollup",
+        "similarity": 0.881,
+        "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
+        "repository": "AztecProtocol/aztec-packages",
+        "path": "l1-contracts/src/core/Rollup.sol",
+        "commit": "0092f9f01ed88cc3626270e62716d7b722ea1944",
+        "commitTimestamp": "2026-01-06T20:15:15Z",
+        "url": "https://github.com/AztecProtocol/aztec-packages/blob/0092f9f01ed88cc3626270e62716d7b722ea1944/l1-contracts/src/core/Rollup.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "security review",
+        "coverage": "full file",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 59,
+        "removed": 39,
+        "ignoredAdded": 20,
+        "ignoredRemoved": 8,
+        "unchanged": 630,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 41,
+            "oldLines": 7,
+            "newStart": 41,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 41,
+                "newLine": 41,
+                "text": "            ValidateHeaderArgs({"
+              },
+              {
+                "type": " ",
+                "oldLine": 42,
+                "newLine": 42,
+                "text": "                header: _header,"
+              },
+              {
+                "type": " ",
+                "oldLine": 43,
+                "newLine": 43,
+                "text": "                digest: _digest,"
+              },
+              {
+                "type": "-",
+                "oldLine": 44,
+                "text": "                manaBaseFee: getManaBaseFeeAt(Timestamp.wrap(block.timestamp), true),",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 44,
+                "text": "                manaMinFee: getManaMinFeeAt(Timestamp.wrap(block.timestamp), true),",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 45,
+                "newLine": 45,
+                "text": "                blobsHashesCommitment: _blobsHash,"
+              },
+              {
+                "type": " ",
+                "oldLine": 46,
+                "newLine": 46,
+                "text": "                flags: _flags"
+              },
+              {
+                "type": " ",
+                "oldLine": 47,
+                "newLine": 47,
+                "text": "            }),"
+              }
+            ]
+          },
+          {
+            "oldStart": 159,
+            "oldLines": 6,
+            "newStart": 159,
+            "newLines": 16,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 159,
+                "newLine": 159,
+                "text": "        return StakingLib.getStorage().slasher;"
+              },
+              { "type": " ", "oldLine": 160, "newLine": 160, "text": "    }" },
+              { "type": " ", "oldLine": 161, "newLine": 161, "text": "" },
+              {
+                "type": "+",
+                "newLine": 162,
+                "text": "    function getPendingSlasher() external view override(IStaking) returns (address slasher, Timestamp readyAt) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 163,
+                "text": "        slasher = StakingLib.getStorage().pendingSlasher;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 164,
+                "text": "        readyAt = StakingLib.getStorage().pendingSlasherReadyAt.decompress();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 165,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 166, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 167,
+                "text": "    function getLegacySlasher() external view override(IStaking) returns (address slasher, Timestamp authorizedUntil) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 168,
+                "text": "        slasher = StakingLib.getStorage().legacySlasher;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 169,
+                "text": "        authorizedUntil = StakingLib.getStorage().legacySlasherAuthorizedUntil.decompress();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 170,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 171, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 162,
+                "newLine": 172,
+                "text": "    function getLocalEjectionThreshold() external view override(IStaking) returns (uint256) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 163,
+                "newLine": 173,
+                "text": "        return StakingLib.getStorage().localEjectionThreshold;"
+              },
+              { "type": " ", "oldLine": 164, "newLine": 174, "text": "    }" }
+            ]
+          },
+          {
+            "oldStart": 184,
+            "oldLines": 11,
+            "newStart": 194,
+            "newLines": 11,
+            "lines": [
+              { "type": " ", "oldLine": 184, "newLine": 194, "text": "    }" },
+              { "type": " ", "oldLine": 185, "newLine": 195, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 186,
+                "newLine": 196,
+                "text": "    function getManaTarget() external view override(IRollup) returns (uint256) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 187,
+                "text": "        return FeeLib.getManaTarget();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 197,
+                "text": "        return RewardExtLib.getManaTarget();",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 188, "newLine": 198, "text": "    }" },
+              { "type": " ", "oldLine": 189, "newLine": 199, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 190,
+                "newLine": 200,
+                "text": "    function getManaLimit() external view override(IRollup) returns (uint256) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 191,
+                "text": "        return FeeLib.getManaLimit();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 201,
+                "text": "        return RewardExtLib.getManaLimit();",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 192, "newLine": 202, "text": "    }" },
+              { "type": " ", "oldLine": 193, "newLine": 203, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 194,
+                "newLine": 204,
+                "text": "    function getTips() external view override(IRollup) returns (ChainTips memory) {"
+              }
+            ]
+          },
+          {
+            "oldStart": 231,
+            "oldLines": 16,
+            "newStart": 241,
+            "newLines": 15,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 231,
+                "newLine": 241,
+                "text": "     * @param  _start - The start of the epoch (inclusive)"
+              },
+              {
+                "type": " ",
+                "oldLine": 232,
+                "newLine": 242,
+                "text": "     * @param  _end - The end of the epoch (inclusive)"
+              },
+              {
+                "type": " ",
+                "oldLine": 233,
+                "newLine": 243,
+                "text": "     * @param  _args - Array of public inputs to the proof (previousArchive, endArchive, endTimestamp, outHash, proverId)"
+              },
+              {
+                "type": "-",
+                "oldLine": 234,
+                "text": "     * @param  _fees - Array of recipient-value pairs with fees to be distributed for the epoch",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 235,
+                "newLine": 244,
+                "text": "     */"
+              },
+              {
+                "type": " ",
+                "oldLine": 236,
+                "newLine": 245,
+                "text": "    function getEpochProofPublicInputs("
+              },
+              {
+                "type": " ",
+                "oldLine": 237,
+                "newLine": 246,
+                "text": "        uint256 _start,"
+              },
+              {
+                "type": " ",
+                "oldLine": 238,
+                "newLine": 247,
+                "text": "        uint256 _end,"
+              },
+              {
+                "type": " ",
+                "oldLine": 239,
+                "newLine": 248,
+                "text": "        PublicInputArgs calldata _args,"
+              },
+              {
+                "type": "-",
+                "oldLine": 240,
+                "text": "        bytes32[] calldata _fees,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 249,
+                "text": "        ProposedHeader[] calldata _headers,",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 241,
+                "newLine": 250,
+                "text": "        bytes calldata _blobPublicInputs"
+              },
+              {
+                "type": " ",
+                "oldLine": 242,
+                "newLine": 251,
+                "text": "    ) external view override(IRollup) returns (bytes32[] memory) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 243,
+                "text": "        return RollupOperationsExtLib.getEpochProofPublicInputs(_start, _end, _args, _fees, _blobPublicInputs);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 252,
+                "text": "        return RollupOperationsExtLib.getEpochProofPublicInputs(_start, _end, _args, _headers, _blobPublicInputs);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 244, "newLine": 253, "text": "    }" },
+              { "type": " ", "oldLine": 245, "newLine": 254, "text": "" },
+              { "type": " ", "oldLine": 246, "newLine": 255, "text": "    /**" }
+            ]
+          },
+          {
+            "oldStart": 280,
+            "oldLines": 6,
+            "newStart": 289,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 280,
+                "newLine": 289,
+                "text": "            archive: STFLib.getStorage().archives[_checkpointNumber],"
+              },
+              {
+                "type": " ",
+                "oldLine": 281,
+                "newLine": 290,
+                "text": "            headerHash: tempCheckpointLog.headerHash,"
+              },
+              {
+                "type": " ",
+                "oldLine": 282,
+                "newLine": 291,
+                "text": "            blobCommitmentsHash: tempCheckpointLog.blobCommitmentsHash,"
+              },
+              {
+                "type": "+",
+                "newLine": 292,
+                "text": "            outHash: tempCheckpointLog.outHash,",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 283,
+                "newLine": 293,
+                "text": "            attestationsHash: tempCheckpointLog.attestationsHash,"
+              },
+              {
+                "type": " ",
+                "oldLine": 284,
+                "newLine": 294,
+                "text": "            payloadDigest: tempCheckpointLog.payloadDigest,"
+              },
+              {
+                "type": " ",
+                "oldLine": 285,
+                "newLine": 295,
+                "text": "            slotNumber: tempCheckpointLog.slotNumber,"
+              }
+            ]
+          },
+          {
+            "oldStart": 300,
+            "oldLines": 23,
+            "newStart": 310,
+            "newLines": 23,
+            "lines": [
+              { "type": " ", "oldLine": 300, "newLine": 310, "text": "    }" },
+              { "type": " ", "oldLine": 301, "newLine": 311, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 302,
+                "newLine": 312,
+                "text": "    function getConfig(address _attester) external view override(IStaking) returns (AttesterConfig memory) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 303,
+                "text": "        return StakingLib.getConfig(_attester);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 313,
+                "text": "        return ValidatorOperationsExtLib.getConfig(_attester);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 304, "newLine": 314, "text": "    }" },
+              { "type": " ", "oldLine": 305, "newLine": 315, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 306,
+                "newLine": 316,
+                "text": "    function getExit(address _attester) external view override(IStaking) returns (Exit memory) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 307,
+                "text": "        return StakingLib.getExit(_attester);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 317,
+                "text": "        return ValidatorOperationsExtLib.getExit(_attester);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 308, "newLine": 318, "text": "    }" },
+              { "type": " ", "oldLine": 309, "newLine": 319, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 310,
+                "newLine": 320,
+                "text": "    function getStatus(address _attester) external view override(IStaking) returns (Status) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 311,
+                "text": "        return StakingLib.getStatus(_attester);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 321,
+                "text": "        return ValidatorOperationsExtLib.getStatus(_attester);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 312, "newLine": 322, "text": "    }" },
+              { "type": " ", "oldLine": 313, "newLine": 323, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 314,
+                "newLine": 324,
+                "text": "    function getAttesterView(address _attester) external view override(IStaking) returns (AttesterView memory) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 315,
+                "text": "        return StakingLib.getAttesterView(_attester);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 325,
+                "text": "        return ValidatorOperationsExtLib.getAttesterView(_attester);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 316, "newLine": 326, "text": "    }" },
+              { "type": " ", "oldLine": 317, "newLine": 327, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 318,
+                "newLine": 328,
+                "text": "    function getSharesFor(address _prover) external view override(IRollup) returns (uint256) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 319,
+                "text": "        return RewardLib.getSharesFor(_prover);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 329,
+                "text": "        return RewardExtLib.getSharesFor(_prover);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 320, "newLine": 330, "text": "    }" },
+              { "type": " ", "oldLine": 321, "newLine": 331, "text": "" },
+              { "type": " ", "oldLine": 322, "newLine": 332, "text": "    /**" }
+            ]
+          },
+          {
+            "oldStart": 360,
+            "oldLines": 6,
+            "newStart": 370,
+            "newLines": 15,
+            "lines": [
+              { "type": " ", "oldLine": 360, "newLine": 370, "text": "    }" },
+              { "type": " ", "oldLine": 361, "newLine": 371, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 362,
+                "newLine": 372,
+                "text": "    /**"
+              },
+              {
+                "type": "+",
+                "newLine": 373,
+                "text": "     * @notice  Get the escape hatch contract that was active at the start of a given epoch",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 374,
+                "text": "     * @param _epoch The epoch to look up the escape hatch for",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 375,
+                "text": "     * @return The escape hatch contract interface that was active at the epoch start",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 376,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 377,
+                "text": "    function getEscapeHatchForEpoch(Epoch _epoch) external view override(IValidatorSelection) returns (IEscapeHatch) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 378,
+                "text": "        return ValidatorOperationsExtLib.getEscapeHatchForEpoch(_epoch);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 379,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 380, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 381,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 363,
+                "newLine": 382,
+                "text": "     * @notice  Get the sample seed for the current epoch"
+              },
+              { "type": " ", "oldLine": 364, "newLine": 383, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 365,
+                "newLine": 384,
+                "text": "     * @return The sample seed for the current epoch"
+              }
+            ]
+          },
+          {
+            "oldStart": 422,
+            "oldLines": 11,
+            "newStart": 441,
+            "newLines": 11,
+            "lines": [
+              { "type": " ", "oldLine": 422, "newLine": 441, "text": "    }" },
+              { "type": " ", "oldLine": 423, "newLine": 442, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 424,
+                "newLine": 443,
+                "text": "    function getSequencerRewards(address _sequencer) external view override(IRollup) returns (uint256) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 425,
+                "text": "        return RewardLib.getSequencerRewards(_sequencer);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 444,
+                "text": "        return RewardExtLib.getSequencerRewards(_sequencer);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 426, "newLine": 445, "text": "    }" },
+              { "type": " ", "oldLine": 427, "newLine": 446, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 428,
+                "newLine": 447,
+                "text": "    function getCollectiveProverRewardsForEpoch(Epoch _epoch) external view override(IRollup) returns (uint256) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 429,
+                "text": "        return RewardLib.getCollectiveProverRewardsForEpoch(_epoch);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 448,
+                "text": "        return RewardExtLib.getCollectiveProverRewardsForEpoch(_epoch);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 430, "newLine": 449, "text": "    }" },
+              { "type": " ", "oldLine": 431, "newLine": 450, "text": "" },
+              { "type": " ", "oldLine": 432, "newLine": 451, "text": "    /**" }
+            ]
+          },
+          {
+            "oldStart": 445,
+            "oldLines": 7,
+            "newStart": 464,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 445,
+                "newLine": 464,
+                "text": "        override(IRollup)"
+              },
+              {
+                "type": " ",
+                "oldLine": 446,
+                "newLine": 465,
+                "text": "        returns (uint256)"
+              },
+              { "type": " ", "oldLine": 447, "newLine": 466, "text": "    {" },
+              {
+                "type": "-",
+                "oldLine": 448,
+                "text": "        return RewardLib.getSpecificProverRewardsForEpoch(_epoch, _prover);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 467,
+                "text": "        return RewardExtLib.getSpecificProverRewardsForEpoch(_epoch, _prover);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 449, "newLine": 468, "text": "    }" },
+              { "type": " ", "oldLine": 450, "newLine": 469, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 451,
+                "newLine": 470,
+                "text": "    function getHasSubmitted(Epoch _epoch, uint256 _length, address _prover)"
+              }
+            ]
+          },
+          {
+            "oldStart": 454,
+            "oldLines": 19,
+            "newStart": 473,
+            "newLines": 19,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 454,
+                "newLine": 473,
+                "text": "        override(IRollup)"
+              },
+              {
+                "type": " ",
+                "oldLine": 455,
+                "newLine": 474,
+                "text": "        returns (bool)"
+              },
+              { "type": " ", "oldLine": 456, "newLine": 475, "text": "    {" },
+              {
+                "type": "-",
+                "oldLine": 457,
+                "text": "        return RewardLib.getHasSubmitted(_epoch, _length, _prover);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 476,
+                "text": "        return RewardExtLib.getHasSubmitted(_epoch, _length, _prover);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 458, "newLine": 477, "text": "    }" },
+              { "type": " ", "oldLine": 459, "newLine": 478, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 460,
+                "newLine": 479,
+                "text": "    function getHasClaimed(address _prover, Epoch _epoch) external view override(IRollup) returns (bool) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 461,
+                "text": "        return RewardLib.getHasClaimed(_prover, _epoch);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 480,
+                "text": "        return RewardExtLib.getHasClaimed(_prover, _epoch);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 462, "newLine": 481, "text": "    }" },
+              { "type": " ", "oldLine": 463, "newLine": 482, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 464,
+                "newLine": 483,
+                "text": "    function getProvingCostPerManaInEth() external view override(IRollup) returns (EthValue) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 465,
+                "text": "        return FeeLib.getProvingCostPerMana();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 484,
+                "text": "        return RewardExtLib.getProvingCostPerMana();",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 466, "newLine": 485, "text": "    }" },
+              { "type": " ", "oldLine": 467, "newLine": 486, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 468,
+                "newLine": 487,
+                "text": "    function getProvingCostPerManaInFeeAsset() external view override(IRollup) returns (FeeAssetValue) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 469,
+                "text": "        return FeeLib.getProvingCostPerMana().toFeeAsset(getFeeAssetPerEth());",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 488,
+                "text": "        return RewardExtLib.getProvingCostPerMana().toFeeAsset(getEthPerFeeAsset());",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 470, "newLine": 489, "text": "    }" },
+              { "type": " ", "oldLine": 471, "newLine": 490, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 472,
+                "newLine": 491,
+                "text": "    function getVersion() external view override(IHaveVersion) returns (uint256) {"
+              }
+            ]
+          },
+          {
+            "oldStart": 489,
+            "oldLines": 34,
+            "newStart": 508,
+            "newLines": 38,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 489,
+                "newLine": 508,
+                "text": "        return STFLib.getStorage().config.feeAssetPortal;"
+              },
+              { "type": " ", "oldLine": 490, "newLine": 509, "text": "    }" },
+              { "type": " ", "oldLine": 491, "newLine": 510, "text": "" },
+              {
+                "type": "+",
+                "newLine": 511,
+                "text": "    function getVkTreeRoot() external view override(IRollup) returns (bytes32) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 512,
+                "text": "        return STFLib.getStorage().config.vkTreeRoot;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 513, "text": "    }", "ignored": true },
+              { "type": "+", "newLine": 514, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 515,
+                "text": "    function getProtocolContractsHash() external view override(IRollup) returns (bytes32) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 516,
+                "text": "        return STFLib.getStorage().config.protocolContractsHash;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 517, "text": "    }", "ignored": true },
+              { "type": "+", "newLine": 518, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 519,
+                "text": "    function getEpochProofVerifier() external view override(IRollup) returns (IVerifier) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 520,
+                "text": "        return STFLib.getStorage().config.epochProofVerifier;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 521, "text": "    }", "ignored": true },
+              { "type": "+", "newLine": 522, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 492,
+                "newLine": 523,
+                "text": "    function getRewardDistributor() external view override(IRollup) returns (IRewardDistributor) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 493,
+                "text": "        return RewardLib.getStorage().config.rewardDistributor;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 524,
+                "text": "        return RewardExtLib.getRewardDistributor();",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 494, "newLine": 525, "text": "    }" },
+              { "type": " ", "oldLine": 495, "newLine": 526, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 496,
+                "newLine": 527,
+                "text": "    function getL1FeesAt(Timestamp _timestamp) external view override(IRollup) returns (L1FeeData memory) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 497,
+                "text": "        return FeeLib.getL1FeesAt(_timestamp);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 528,
+                "text": "        return RewardExtLib.getL1FeesAt(_timestamp);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 498, "newLine": 529, "text": "    }" },
+              { "type": " ", "oldLine": 499, "newLine": 530, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 500,
+                "newLine": 531,
+                "text": "    function canPruneAtTime(Timestamp _ts) external view override(IRollup) returns (bool) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 501,
+                "text": "        return STFLib.canPruneAtTime(_ts);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 532,
+                "text": "        return RewardExtLib.canPruneAtTime(_ts);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 502, "newLine": 533, "text": "    }" },
+              { "type": " ", "oldLine": 503, "newLine": 534, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 504,
+                "newLine": 535,
+                "text": "    function getRewardConfig() external view override(IRollup) returns (RewardConfig memory) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 505,
+                "text": "        return RewardLib.getStorage().config;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 536,
+                "text": "        return RewardExtLib.getRewardConfig();",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 506, "newLine": 537, "text": "    }" },
+              { "type": " ", "oldLine": 507, "newLine": 538, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 508,
+                "newLine": 539,
+                "text": "    function getCheckpointReward() external view override(IRollup) returns (uint256) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 509,
+                "text": "        return RewardLib.getCheckpointReward();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 540,
+                "text": "        return RewardExtLib.getCheckpointReward();",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 510, "newLine": 541, "text": "    }" },
+              { "type": " ", "oldLine": 511, "newLine": 542, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 512,
+                "text": "    function isRewardsClaimable() external view override(IRollup) returns (bool) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 513,
+                "text": "        return RewardLib.isRewardsClaimable();",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 514, "text": "    }", "ignored": true },
+              { "type": "-", "oldLine": 515, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 516,
+                "text": "    function getEarliestRewardsClaimableTimestamp() external view override(IRollup) returns (Timestamp) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 517,
+                "text": "        return RewardLib.getEarliestRewardsClaimableTimestamp();",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 518, "text": "    }", "ignored": true },
+              { "type": "-", "oldLine": 519, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 520,
+                "newLine": 543,
+                "text": "    function getAvailableValidatorFlushes() external view override(IStaking) returns (uint256) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 521,
+                "newLine": 544,
+                "text": "        return ValidatorOperationsExtLib.getAvailableValidatorFlushes();"
+              },
+              { "type": " ", "oldLine": 522, "newLine": 545, "text": "    }" }
+            ]
+          },
+          {
+            "oldStart": 526,
+            "oldLines": 11,
+            "newStart": 549,
+            "newLines": 19,
+            "lines": [
+              { "type": " ", "oldLine": 526, "newLine": 549, "text": "    }" },
+              { "type": " ", "oldLine": 527, "newLine": 550, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 528,
+                "newLine": 551,
+                "text": "    function getEntryQueueAt(uint256 _index) external view override(IStaking) returns (DepositArgs memory) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 529,
+                "text": "        return StakingLib.getEntryQueueAt(_index);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 552,
+                "text": "        return ValidatorOperationsExtLib.getEntryQueueAt(_index);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 530, "newLine": 553, "text": "    }" },
+              { "type": " ", "oldLine": 531, "newLine": 554, "text": "" },
+              {
+                "type": "+",
+                "newLine": 555,
+                "text": "    function getSlasherExecutionDelay() external pure override(IStaking) returns (uint256) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 556,
+                "text": "        return StakingLib.SLASHER_EXECUTION_DELAY;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 557,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 558, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 559,
+                "text": "    function getLegacySlasherDrainWindow() external pure override(IStaking) returns (uint256) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 560,
+                "text": "        return StakingLib.LEGACY_SLASHER_DRAIN_WINDOW;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 561,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 562, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 532,
+                "newLine": 563,
+                "text": "    function getBurnAddress() external pure override(IRollup) returns (address) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 533,
+                "text": "        return RewardLib.BURN_ADDRESS;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 564,
+                "text": "        return address(bytes20(\"CUAUHXICALLI\"));",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 534, "newLine": 565, "text": "    }" },
+              { "type": " ", "oldLine": 535, "newLine": 566, "text": "" },
+              { "type": " ", "oldLine": 536, "newLine": 567, "text": "    /**" }
+            ]
+          },
+          {
+            "oldStart": 579,
+            "oldLines": 40,
+            "newStart": 610,
+            "newLines": 41,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 579,
+                "newLine": 610,
+                "text": "     * @return The attester at the index"
+              },
+              {
+                "type": " ",
+                "oldLine": 580,
+                "newLine": 611,
+                "text": "     */"
+              },
+              {
+                "type": " ",
+                "oldLine": 581,
+                "newLine": 612,
+                "text": "    function getAttesterAtIndex(uint256 _index) public view override(IStaking) returns (address) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 582,
+                "text": "        return StakingLib.getAttesterAtIndex(_index);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 613,
+                "text": "        return ValidatorOperationsExtLib.getAttesterAtIndex(_index);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 583, "newLine": 614, "text": "    }" },
+              { "type": " ", "oldLine": 584, "newLine": 615, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 585,
+                "newLine": 616,
+                "text": "    /**"
+              },
+              {
+                "type": "-",
+                "oldLine": 586,
+                "text": "     * @notice  Gets the mana base fee",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 617,
+                "text": "     * @notice  Gets the mana min fee",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 587, "newLine": 618, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 588,
+                "newLine": 619,
+                "text": "     * @param _inFeeAsset - Whether to return the fee in the fee asset or ETH"
+              },
+              { "type": " ", "oldLine": 589, "newLine": 620, "text": "     *" },
+              {
+                "type": "-",
+                "oldLine": 590,
+                "text": "     * @return The mana base fee",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 621,
+                "text": "     * @return The mana min fee",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 591,
+                "newLine": 622,
+                "text": "     */"
+              },
+              {
+                "type": "-",
+                "oldLine": 592,
+                "text": "    function getManaBaseFeeAt(Timestamp _timestamp, bool _inFeeAsset) public view override(IRollup) returns (uint256) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 593,
+                "text": "        return FeeLib.summedBaseFee(getManaBaseFeeComponentsAt(_timestamp, _inFeeAsset));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 623,
+                "text": "    function getManaMinFeeAt(Timestamp _timestamp, bool _inFeeAsset) public view override(IRollup) returns (uint256) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 624,
+                "text": "        return RewardExtLib.summedMinFee(getManaMinFeeComponentsAt(_timestamp, _inFeeAsset));",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 594, "newLine": 625, "text": "    }" },
+              { "type": " ", "oldLine": 595, "newLine": 626, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 596,
+                "text": "    function getManaBaseFeeComponentsAt(Timestamp _timestamp, bool _inFeeAsset)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 627,
+                "text": "    function getManaMinFeeComponentsAt(Timestamp _timestamp, bool _inFeeAsset)",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 597,
+                "newLine": 628,
+                "text": "        public"
+              },
+              {
+                "type": " ",
+                "oldLine": 598,
+                "newLine": 629,
+                "text": "        view"
+              },
+              {
+                "type": " ",
+                "oldLine": 599,
+                "newLine": 630,
+                "text": "        override(IRollup)"
+              },
+              {
+                "type": "-",
+                "oldLine": 600,
+                "text": "        returns (ManaBaseFeeComponents memory)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 631,
+                "text": "        returns (ManaMinFeeComponents memory)",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 601, "newLine": 632, "text": "    {" },
+              {
+                "type": "-",
+                "oldLine": 602,
+                "text": "        return ProposeLib.getManaBaseFeeComponentsAt(_timestamp, _inFeeAsset);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 633,
+                "text": "        return RewardExtLib.getManaMinFeeComponentsAt(_timestamp, _inFeeAsset);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 603, "newLine": 634, "text": "    }" },
+              { "type": " ", "oldLine": 604, "newLine": 635, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 605,
+                "newLine": 636,
+                "text": "    /**"
+              },
+              {
+                "type": "-",
+                "oldLine": 606,
+                "text": "     * @notice  Gets the fee asset price as fee_asset / eth with 1e9 precision",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 637,
+                "text": "     * @notice  Gets the fee asset price as eth / fee_asset with 1e12 precision",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 638,
+                "text": "     *          Higher value = more expensive fee asset",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 607, "newLine": 639, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 608,
+                "newLine": 640,
+                "text": "     * @return The fee asset price"
+              },
+              {
+                "type": " ",
+                "oldLine": 609,
+                "newLine": 641,
+                "text": "     */"
+              },
+              {
+                "type": "-",
+                "oldLine": 610,
+                "text": "    function getFeeAssetPerEth() public view override(IRollup) returns (FeeAssetPerEthE9) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 611,
+                "text": "        return FeeLib.getFeeAssetPerEthAtCheckpoint(STFLib.getStorage().tips.getPending());",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 642,
+                "text": "    function getEthPerFeeAsset() public view override(IRollup) returns (EthPerFeeAssetE12) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 643,
+                "text": "        return RewardExtLib.getEthPerFeeAssetAtCheckpoint(STFLib.getStorage().tips.getPending());",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 612, "newLine": 644, "text": "    }" },
+              { "type": " ", "oldLine": 613, "newLine": 645, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 614,
+                "newLine": 646,
+                "text": "    function getEpochForCheckpoint(uint256 _checkpointNumber) public view override(IRollup) returns (Epoch) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 615,
+                "text": "        return STFLib.getEpochForCheckpoint(_checkpointNumber);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 647,
+                "text": "        return RewardExtLib.getEpochForCheckpoint(_checkpointNumber);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 616, "newLine": 648, "text": "    }" },
+              { "type": " ", "oldLine": 617, "newLine": 649, "text": "" },
+              { "type": " ", "oldLine": 618, "newLine": 650, "text": "    /**" }
+            ]
+          },
+          {
+            "oldStart": 648,
+            "oldLines": 10,
+            "newStart": 680,
+            "newLines": 10,
+            "lines": [
+              { "type": " ", "oldLine": 648, "newLine": 680, "text": "    }" },
+              { "type": " ", "oldLine": 649, "newLine": 681, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 650,
+                "newLine": 682,
+                "text": "    function getNextFlushableEpoch() public view override(IStaking) returns (Epoch) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 651,
+                "text": "        return StakingLib.getNextFlushableEpoch();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 683,
+                "text": "        return ValidatorOperationsExtLib.getNextFlushableEpoch();",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 652, "newLine": 684, "text": "    }" },
+              { "type": " ", "oldLine": 653, "newLine": 685, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 654,
+                "newLine": 686,
+                "text": "    function getEntryQueueLength() public view override(IStaking) returns (uint256) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 655,
+                "text": "        return StakingLib.getEntryQueueLength();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 687,
+                "text": "        return ValidatorOperationsExtLib.getEntryQueueLength();",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 656, "newLine": 688, "text": "    }" },
+              { "type": " ", "oldLine": 657, "newLine": 689, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "ed311efb186083e9fe7aeeb611eac37e53af291b12138574246fda45c2d5021a",
+  "name": "MigratorImmutables",
+  "kind": "contract",
+  "lines": 11,
+  "source": "contract MigratorImmutables {\n    /// @notice v3 PositionManager address\n    INonfungiblePositionManager public immutable V3_POSITION_MANAGER;\n    /// @notice v4 PositionManager address\n    IPositionManager public immutable V4_POSITION_MANAGER;\n\n    constructor(MigratorParameters memory params) {\n        V3_POSITION_MANAGER = INonfungiblePositionManager(params.v3PositionManager);\n        V4_POSITION_MANAGER = IPositionManager(params.v4PositionManager);\n    }\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

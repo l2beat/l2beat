@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "64472806059890c4d3b50f0180aebdbed83868fb6ce765113a5efae4499e6e54",
+  "name": "final_blob_batching_challenges.nr",
+  "kind": "program",
+  "lines": 82,
+  "source": "use bignum::{BigNum, BLS12_381_Fr};\nuse types::{\n    constants::BLS12_FR_LIMBS,\n    traits::{Deserialize, Empty, Serialize},\n    utils::{reader::Reader, writer::Writer},\n};\n\n/**\n* Final values z and gamma are injected into each checkpoint root circuit. We ensure they are correct by:\n* - Checking equality in each checkpoint merge circuit and propagating up\n* - Checking final z_acc == z in root circuit\n* - Checking final h(gamma_acc, z) == gamma in root circuit\n*\n*  - z = H(...H(H(z_0, z_1) z_2)..z_n)\n*    - where z_i = H(H(fields of blob_i), C_i),\n*    - used such that p_i(z) = y_i = Blob.evaluationY for all n blob polynomials p_i().\n*  - gamma = H(H(...H(H(y_0, y_1) y_2)..y_n), z)\n*    - used such that y = sum_i { gamma^i * y_i }, and C = sum_i { gamma^i * C_i }\n*      for all blob evaluations y_i (see above) and commitments C_i.\n*\n* Iteratively calculated by BlobAccumulator.accumulate() above. See also precomputeBatchedBlobChallenges() in ts.\n*/\npub struct FinalBlobBatchingChallenges {\n    pub z: Field,\n    pub gamma: BLS12_381_Fr,\n}\n\nimpl Empty for FinalBlobBatchingChallenges {\n    fn empty() -> Self {\n        Self { z: 0, gamma: BLS12_381_Fr::zero() }\n    }\n}\n\nimpl Eq for FinalBlobBatchingChallenges {\n    fn eq(self, other: Self) -> bool {\n        (self.z.eq(other.z)) & (self.gamma.eq(other.gamma))\n    }\n}\n\nimpl Serialize for FinalBlobBatchingChallenges {\n    let N: u32 = BLS12_FR_LIMBS + 1;\n\n    fn serialize(self) -> [Field; Self::N] {\n        let mut writer: Writer<Self::N> = Writer::new();\n        self.stream_serialize(&mut writer);\n        writer.finish()\n    }\n\n    #[inline_always]\n    fn stream_serialize<let K: u32>(self, writer: &mut Writer<K>) {\n        writer.write(self.z);\n        writer.write_array(self.gamma.get_limbs().map(|l| l as Field));\n    }\n}\n\nimpl Deserialize for FinalBlobBatchingChallenges {\n    let N: u32 = BLS12_FR_LIMBS + 1;\n\n    fn deserialize(fields: [Field; Self::N]) -> Self {\n        let mut reader = Reader::new(fields);\n        let result = Self::stream_deserialize(&mut reader);\n        reader.finish();\n        result\n    }\n\n    #[inline_always]\n    fn stream_deserialize<let K: u32>(reader: &mut Reader<K>) -> Self {\n        Self {\n            z: reader.read(),\n            gamma: BLS12_381_Fr::from_limbs(reader.read_array().map(|e| e as u128)),\n        }\n    }\n}\n\n#[test]\nfn serde_test() {\n    let final_blob_batching_challenges =\n        FinalBlobBatchingChallenges { z: 1, gamma: BLS12_381_Fr::from_limbs([2, 3, 4]) };\n    let serialized = final_blob_batching_challenges.serialize();\n    let deserialized = FinalBlobBatchingChallenges::deserialize(serialized);\n    assert_eq(final_blob_batching_challenges, deserialized);\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

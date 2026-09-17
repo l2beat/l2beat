@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "071f5b067bd1b70f3c6d1da5355aab5ff83ad287bb037d2b7686c7ca882970dd",
+  "name": "validate_against_previous_kernel_tests.nr",
+  "kind": "program",
+  "lines": 30,
+  "source": "use crate::tests::private_kernel_inner::TestBuilder;\n\n#[test(should_fail_with = \"anchor block header mismatch\")]\nfn mismatch_header_version() {\n    let mut builder = TestBuilder::new();\n\n    builder.previous_kernel.anchor_block_header.global_variables.version += 1;\n\n    builder.execute_and_fail();\n}\n\n#[test(should_fail_with = \"mismatch tx context\")]\nfn mismatch_chain_id() {\n    let mut builder = TestBuilder::new();\n\n    builder.previous_kernel.tx_context.chain_id += 1;\n\n    builder.execute_and_fail();\n}\n\n// A nested private call must see the same `tx_request_salt` that the Init circuit bound to the transaction request.\n// A malicious prover that picks a different app-visible salt for the nested call must be rejected.\n#[test(should_fail_with = \"mismatch tx_request_salt\")]\nfn mismatch_tx_request_salt() {\n    let mut builder = TestBuilder::new();\n\n    builder.private_call.tx_request_salt += 1;\n\n    builder.execute_and_fail();\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

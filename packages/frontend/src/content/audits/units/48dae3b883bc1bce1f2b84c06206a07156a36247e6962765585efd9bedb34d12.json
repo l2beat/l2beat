@@ -1,0 +1,354 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "48dae3b883bc1bce1f2b84c06206a07156a36247e6962765585efd9bedb34d12",
+  "name": "EOA",
+  "kind": "library",
+  "lines": 20,
+  "source": "library EOA {\n    /// @notice Returns true if sender address is an EOA.\n    /// @return isEOA_ True if the sender address is an EOA.\n    function isSenderEOA() internal view returns (bool isEOA_) {\n        if (msg.sender == tx.origin) {\n            isEOA_ = true;\n        } else if (address(msg.sender).code.length == 23) {\n            // If the sender is not the origin, check for 7702 delegated EOAs.\n            assembly {\n                let ptr := mload(0x40)\n                mstore(0x40, add(ptr, 0x20))\n                extcodecopy(caller(), ptr, 0, 0x20)\n                isEOA_ := eq(shr(232, mload(ptr)), 0xEF0100)\n            }\n        } else {\n            // If more or less than 23 bytes of code, not a 7702 delegated EOA.\n            isEOA_ = false;\n        }\n    }\n}",
+  "resolutions": {
+    "ba5b6c9584fb78fd": {
+      "status": "identical",
+      "coveredLines": 20,
+      "match": {
+        "origin": "upstream",
+        "collection": "optimism",
+        "relation": {
+          "type": "fork_of",
+          "repository": "ethereum-optimism/optimism"
+        },
+        "rank": 1,
+        "matchedBy": "identity",
+        "auditedName": "EOA",
+        "similarity": 1,
+        "reportId": "optimism/cantina-eip7702-2025-02",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts-bedrock/src/libraries/EOA.sol",
+        "commit": "88419adbf689336913a3db7d4c3691b2b0102e75",
+        "commitTimestamp": "2025-03-05T15:37:49Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/88419adbf689336913a3db7d4c3691b2b0102e75/packages/contracts-bedrock/src/libraries/EOA.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Head commit of PR 14608, verified by Cantina as the fix for 3.3.1 (isSenderEOA() checks code size 23).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "warnings": []
+    },
+    "44ad4cf96e2ef6f0": {
+      "status": "identical",
+      "coveredLines": 20,
+      "match": {
+        "origin": "upstream",
+        "collection": "optimism",
+        "relation": {
+          "type": "fork_of",
+          "repository": "ethereum-optimism/optimism"
+        },
+        "rank": 1,
+        "matchedBy": "identity",
+        "auditedName": "EOA",
+        "similarity": 1,
+        "reportId": "optimism/cantina-eip7702-2025-02",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts-bedrock/src/libraries/EOA.sol",
+        "commit": "88419adbf689336913a3db7d4c3691b2b0102e75",
+        "commitTimestamp": "2025-03-05T15:37:49Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/88419adbf689336913a3db7d4c3691b2b0102e75/packages/contracts-bedrock/src/libraries/EOA.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Head commit of PR 14608, verified by Cantina as the fix for 3.3.1 (isSenderEOA() checks code size 23).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "warnings": []
+    },
+    "1daaed8c8125f2b6": {
+      "status": "identical",
+      "coveredLines": 24,
+      "match": {
+        "origin": "upstream",
+        "collection": "optimism",
+        "relation": {
+          "type": "fork_of",
+          "repository": "ethereum-optimism/optimism"
+        },
+        "rank": 1,
+        "matchedBy": "identity",
+        "auditedName": "EOA",
+        "similarity": 1,
+        "reportId": "optimism/cantina-eip7702-2025-02",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts-bedrock/src/libraries/EOA.sol",
+        "commit": "88419adbf689336913a3db7d4c3691b2b0102e75",
+        "commitTimestamp": "2025-03-05T15:37:49Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/88419adbf689336913a3db7d4c3691b2b0102e75/packages/contracts-bedrock/src/libraries/EOA.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Head commit of PR 14608, verified by Cantina as the fix for 3.3.1 (isSenderEOA() checks code size 23).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 8,
+        "ignoredRemoved": 4,
+        "unchanged": 24,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 11,
+            "newStart": 1,
+            "newLines": 15,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "library EOA {"
+              },
+              {
+                "type": "-",
+                "oldLine": 2,
+                "text": "    /// @notice Returns true if sender address is an EOA.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 3,
+                "text": "    /// @return isEOA_ True if the sender address is an EOA.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 2, "text": "    /**", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "     * @notice Returns true if sender address is an EOA.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 4,
+                "text": "     * @dev Checks for regular EOAs and EIP-7702 delegated EOAs",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 5,
+                "text": "     * @return isEOA_ True if the sender address is an EOA.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 6, "text": "     */", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 7,
+                "text": "    function isSenderEOA() internal view returns (bool isEOA_) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 8,
+                "text": "        if (msg.sender == tx.origin) {"
+              },
+              {
+                "type": "+",
+                "newLine": 9,
+                "text": "            // Regular EOA: sender is the transaction origin",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 6,
+                "newLine": 10,
+                "text": "            isEOA_ = true;"
+              },
+              {
+                "type": " ",
+                "oldLine": 7,
+                "newLine": 11,
+                "text": "        } else if (address(msg.sender).code.length == 23) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 8,
+                "text": "            // If the sender is not the origin, check for 7702 delegated EOAs.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 12,
+                "text": "            // Check for EIP-7702 delegated EOAs (23 bytes of code)",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 13,
+                "text": "            assembly {"
+              },
+              {
+                "type": " ",
+                "oldLine": 10,
+                "newLine": 14,
+                "text": "                let ptr := mload(0x40)"
+              },
+              {
+                "type": " ",
+                "oldLine": 11,
+                "newLine": 15,
+                "text": "                mstore(0x40, add(ptr, 0x20))"
+              }
+            ]
+          },
+          {
+            "oldStart": 13,
+            "oldLines": 7,
+            "newStart": 17,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 13,
+                "newLine": 17,
+                "text": "                isEOA_ := eq(shr(232, mload(ptr)), 0xEF0100)"
+              },
+              {
+                "type": " ",
+                "oldLine": 14,
+                "newLine": 18,
+                "text": "            }"
+              },
+              {
+                "type": " ",
+                "oldLine": 15,
+                "newLine": 19,
+                "text": "        } else {"
+              },
+              {
+                "type": "-",
+                "oldLine": 16,
+                "text": "            // If more or less than 23 bytes of code, not a 7702 delegated EOA.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 20,
+                "text": "            // If more or less than 23 bytes of code, not a 7702 delegated EOA",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 17,
+                "newLine": 21,
+                "text": "            isEOA_ = false;"
+              },
+              {
+                "type": " ",
+                "oldLine": 18,
+                "newLine": 22,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 19, "newLine": 23, "text": "    }" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "9fa846564f4071bd": {
+      "status": "identical",
+      "coveredLines": 20,
+      "match": {
+        "origin": "own",
+        "collection": "optimism",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "EOA",
+        "similarity": 1,
+        "reportId": "optimism/cantina-eip7702-2025-02",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts-bedrock/src/libraries/EOA.sol",
+        "commit": "88419adbf689336913a3db7d4c3691b2b0102e75",
+        "commitTimestamp": "2025-03-05T15:37:49Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/88419adbf689336913a3db7d4c3691b2b0102e75/packages/contracts-bedrock/src/libraries/EOA.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Head commit of PR 14608, verified by Cantina as the fix for 3.3.1 (isSenderEOA() checks code size 23).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "warnings": []
+    },
+    "bb55951394276893": {
+      "status": "identical",
+      "coveredLines": 20,
+      "match": {
+        "origin": "stack",
+        "collection": "optimism",
+        "relation": {
+          "type": "template",
+          "template": "opstack/AddressManager"
+        },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "EOA",
+        "similarity": 1,
+        "reportId": "optimism/cantina-eip7702-2025-02",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts-bedrock/src/libraries/EOA.sol",
+        "commit": "88419adbf689336913a3db7d4c3691b2b0102e75",
+        "commitTimestamp": "2025-03-05T15:37:49Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/88419adbf689336913a3db7d4c3691b2b0102e75/packages/contracts-bedrock/src/libraries/EOA.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Head commit of PR 14608, verified by Cantina as the fix for 3.3.1 (isSenderEOA() checks code size 23).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "warnings": []
+    },
+    "1f5c32d18cf7148d": {
+      "status": "identical",
+      "coveredLines": 20,
+      "match": {
+        "origin": "stack",
+        "collection": "optimism",
+        "relation": {
+          "type": "template",
+          "template": "gnosisSafeModules/LivenessGuard"
+        },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "EOA",
+        "similarity": 1,
+        "reportId": "optimism/cantina-eip7702-2025-02",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts-bedrock/src/libraries/EOA.sol",
+        "commit": "88419adbf689336913a3db7d4c3691b2b0102e75",
+        "commitTimestamp": "2025-03-05T15:37:49Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/88419adbf689336913a3db7d4c3691b2b0102e75/packages/contracts-bedrock/src/libraries/EOA.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Head commit of PR 14608, verified by Cantina as the fix for 3.3.1 (isSenderEOA() checks code size 23).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "warnings": []
+    }
+  }
+}

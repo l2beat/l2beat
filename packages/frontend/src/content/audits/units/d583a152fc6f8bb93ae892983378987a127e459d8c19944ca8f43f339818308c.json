@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "d583a152fc6f8bb93ae892983378987a127e459d8c19944ca8f43f339818308c",
+  "name": "VoteStatusConsumer",
+  "kind": "interface",
+  "lines": 9,
+  "source": "interface VoteStatusConsumer {\n    enum VoteStatus {\n        Pending,\n        Approved,\n        Executed,\n        Rejected,\n        Expired\n    }\n}",
+  "resolutions": {
+    "bb55951394276893": {
+      "status": "identical",
+      "coveredLines": 9,
+      "match": {
+        "origin": "own",
+        "collection": "roninnetwork",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "VoteStatusConsumer",
+        "similarity": 1,
+        "reportId": "roninnetwork/beosin-ronin-network-2023-03",
+        "repository": "axieinfinity/ronin-dpos-contracts",
+        "path": "contracts/interfaces/consumers/VoteStatusConsumer.sol",
+        "commit": "66903dbcdfb64964abe16994b4b2e7d5d9057ded",
+        "commitTimestamp": "2023-03-08T05:44:18Z",
+        "url": "https://github.com/axieinfinity/ronin-dpos-contracts/blob/66903dbcdfb64964abe16994b4b2e7d5d9057ded/contracts/interfaces/consumers/VoteStatusConsumer.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "final audited commit",
+        "coverage": "Final audited commit; all consensus-contract findings fixed.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 5
+      },
+      "warnings": []
+    }
+  }
+}

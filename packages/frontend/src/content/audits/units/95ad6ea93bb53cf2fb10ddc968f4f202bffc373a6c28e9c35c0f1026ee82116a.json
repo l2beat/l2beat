@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "95ad6ea93bb53cf2fb10ddc968f4f202bffc373a6c28e9c35c0f1026ee82116a",
+  "name": "CompressedTempCheckpointLogLib",
+  "kind": "library",
+  "lines": 38,
+  "source": "library CompressedTempCheckpointLogLib {\n    using CompressedTimeMath for Slot;\n    using CompressedTimeMath for CompressedSlot;\n    using FeeHeaderLib for FeeHeader;\n    using FeeHeaderLib for CompressedFeeHeader;\n\n    function compress(TempCheckpointLog memory _checkpoint)\n        internal\n        pure\n        returns (CompressedTempCheckpointLog memory)\n    {\n        return CompressedTempCheckpointLog({\n            headerHash: _checkpoint.headerHash,\n            blobCommitmentsHash: _checkpoint.blobCommitmentsHash,\n            outHash: _checkpoint.outHash,\n            attestationsHash: _checkpoint.attestationsHash,\n            payloadDigest: _checkpoint.payloadDigest,\n            slotNumber: _checkpoint.slotNumber.compress(),\n            feeHeader: _checkpoint.feeHeader.compress()\n        });\n    }\n\n    function decompress(CompressedTempCheckpointLog memory _compressedCheckpoint)\n        internal\n        pure\n        returns (TempCheckpointLog memory)\n    {\n        return TempCheckpointLog({\n            headerHash: _compressedCheckpoint.headerHash,\n            blobCommitmentsHash: _compressedCheckpoint.blobCommitmentsHash,\n            outHash: _compressedCheckpoint.outHash,\n            attestationsHash: _compressedCheckpoint.attestationsHash,\n            payloadDigest: _compressedCheckpoint.payloadDigest,\n            slotNumber: _compressedCheckpoint.slotNumber.decompress(),\n            feeHeader: _compressedCheckpoint.feeHeader.decompress()\n        });\n    }\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

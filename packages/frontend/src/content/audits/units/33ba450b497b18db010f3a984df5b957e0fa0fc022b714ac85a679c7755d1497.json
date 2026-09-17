@@ -1,0 +1,267 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "33ba450b497b18db010f3a984df5b957e0fa0fc022b714ac85a679c7755d1497",
+  "name": "StringsUpgradeable",
+  "kind": "library",
+  "lines": 62,
+  "source": "library StringsUpgradeable {\n    bytes16 private constant _SYMBOLS = \"0123456789abcdef\";\n    uint8 private constant _ADDRESS_LENGTH = 20;\n\n    /**\n     * @dev Converts a `uint256` to its ASCII `string` decimal representation.\n     */\n    function toString(uint256 value) internal pure returns (string memory) {\n        unchecked {\n            uint256 length = MathUpgradeable.log10(value) + 1;\n            string memory buffer = new string(length);\n            uint256 ptr;\n            /// @solidity memory-safe-assembly\n            assembly {\n                ptr := add(buffer, add(32, length))\n            }\n            while (true) {\n                ptr--;\n                /// @solidity memory-safe-assembly\n                assembly {\n                    mstore8(ptr, byte(mod(value, 10), _SYMBOLS))\n                }\n                value /= 10;\n                if (value == 0) {\n                    break;\n                }\n            }\n            return buffer;\n        }\n    }\n\n    /**\n     * @dev Converts a `uint256` to its ASCII `string` hexadecimal representation.\n     */\n    function toHexString(uint256 value) internal pure returns (string memory) {\n        unchecked {\n            return toHexString(value, MathUpgradeable.log256(value) + 1);\n        }\n    }\n\n    /**\n     * @dev Converts a `uint256` to its ASCII `string` hexadecimal representation with fixed length.\n     */\n    function toHexString(uint256 value, uint256 length) internal pure returns (string memory) {\n        bytes memory buffer = new bytes(2 * length + 2);\n        buffer[0] = \"0\";\n        buffer[1] = \"x\";\n        for (uint256 i = 2 * length + 1; i > 1; --i) {\n            buffer[i] = _SYMBOLS[value & 0xf];\n            value >>= 4;\n        }\n        require(value == 0, \"Strings: hex length insufficient\");\n        return string(buffer);\n    }\n\n    /**\n     * @dev Converts an `address` with fixed length of 20 bytes to its not checksummed ASCII `string` hexadecimal representation.\n     */\n    function toHexString(address addr) internal pure returns (string memory) {\n        return toHexString(uint256(uint160(addr)), _ADDRESS_LENGTH);\n    }\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "differs",
+      "coveredLines": 59,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "similarity",
+        "auditedName": "Strings",
+        "similarity": 0.856,
+        "reportId": "openzeppelin/contracts__audits__2023-05-v4.9",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/utils/Strings.sol",
+        "commit": "91df66c4a9dfd0425ff923cbeb3a20155f1355ea",
+        "commitTimestamp": "2023-04-21T11:35:07Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/91df66c4a9dfd0425ff923cbeb3a20155f1355ea/contracts/utils/Strings.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Full review of the file as part of the Contracts 4.9 release audit.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 14
+      },
+      "diff": {
+        "added": 3,
+        "removed": 9,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 8,
+        "unchanged": 59,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 4,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "library Strings {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "library StringsUpgradeable {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "    bytes16 private constant _SYMBOLS = \"0123456789abcdef\";"
+              },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "    uint8 private constant _ADDRESS_LENGTH = 20;"
+              },
+              { "type": " ", "oldLine": 4, "newLine": 4, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 7,
+            "oldLines": 7,
+            "newStart": 7,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 7, "newLine": 7, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 8,
+                "newLine": 8,
+                "text": "    function toString(uint256 value) internal pure returns (string memory) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 9,
+                "text": "        unchecked {"
+              },
+              {
+                "type": "-",
+                "oldLine": 10,
+                "text": "            uint256 length = Math.log10(value) + 1;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 10,
+                "text": "            uint256 length = MathUpgradeable.log10(value) + 1;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 11,
+                "newLine": 11,
+                "text": "            string memory buffer = new string(length);"
+              },
+              {
+                "type": " ",
+                "oldLine": 12,
+                "newLine": 12,
+                "text": "            uint256 ptr;"
+              },
+              {
+                "type": " ",
+                "oldLine": 13,
+                "newLine": 13,
+                "text": "            /// @solidity memory-safe-assembly"
+              }
+            ]
+          },
+          {
+            "oldStart": 30,
+            "oldLines": 18,
+            "newStart": 30,
+            "newLines": 11,
+            "lines": [
+              { "type": " ", "oldLine": 30, "newLine": 30, "text": "    }" },
+              { "type": " ", "oldLine": 31, "newLine": 31, "text": "" },
+              { "type": " ", "oldLine": 32, "newLine": 32, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 33,
+                "text": "     * @dev Converts a `int256` to its ASCII `string` decimal representation.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 34,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 35,
+                "text": "    function toString(int256 value) internal pure returns (string memory) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 36,
+                "text": "        return string(abi.encodePacked(value < 0 ? \"-\" : \"\", toString(SignedMath.abs(value))));",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 37, "text": "    }", "ignored": false },
+              { "type": "-", "oldLine": 38, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 39,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 40,
+                "newLine": 33,
+                "text": "     * @dev Converts a `uint256` to its ASCII `string` hexadecimal representation."
+              },
+              { "type": " ", "oldLine": 41, "newLine": 34, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 42,
+                "newLine": 35,
+                "text": "    function toHexString(uint256 value) internal pure returns (string memory) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 43,
+                "newLine": 36,
+                "text": "        unchecked {"
+              },
+              {
+                "type": "-",
+                "oldLine": 44,
+                "text": "            return toHexString(value, Math.log256(value) + 1);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 37,
+                "text": "            return toHexString(value, MathUpgradeable.log256(value) + 1);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 45,
+                "newLine": 38,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 46, "newLine": 39, "text": "    }" },
+              { "type": " ", "oldLine": 47, "newLine": 40, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 66,
+            "oldLines": 11,
+            "newStart": 59,
+            "newLines": 4,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 66,
+                "newLine": 59,
+                "text": "    function toHexString(address addr) internal pure returns (string memory) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 67,
+                "newLine": 60,
+                "text": "        return toHexString(uint256(uint160(addr)), _ADDRESS_LENGTH);"
+              },
+              { "type": " ", "oldLine": 68, "newLine": 61, "text": "    }" },
+              { "type": "-", "oldLine": 69, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 70,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 71,
+                "text": "     * @dev Returns true if the two strings are equal.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 72,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 73,
+                "text": "    function equal(string memory a, string memory b) internal pure returns (bool) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 74,
+                "text": "        return keccak256(bytes(a)) == keccak256(bytes(b));",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 75, "text": "    }", "ignored": false },
+              { "type": " ", "oldLine": 76, "newLine": 62, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

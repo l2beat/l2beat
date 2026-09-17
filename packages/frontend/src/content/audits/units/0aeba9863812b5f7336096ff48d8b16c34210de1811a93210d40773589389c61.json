@@ -1,0 +1,182 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "0aeba9863812b5f7336096ff48d8b16c34210de1811a93210d40773589389c61",
+  "name": "OVM_CrossDomainEnabled",
+  "kind": "contract",
+  "lines": 71,
+  "source": "contract OVM_CrossDomainEnabled {\n    /**\n     *\n     * Variables *\n     *\n     */\n\n    // Messenger contract used to send and recieve messages from the other domain.\n    address public messenger;\n\n    /**\n     *\n     * Constructor *\n     *\n     */\n\n    /**\n     * @param _messenger Address of the CrossDomainMessenger on the current layer.\n     */\n    constructor(address _messenger) {\n        messenger = _messenger;\n    }\n\n    /**\n     *\n     * Function Modifiers *\n     *\n     */\n\n    /**\n     * Enforces that the modified function is only callable by a specific cross-domain account.\n     * @param _sourceDomainAccount The only account on the originating domain which is\n     *  authenticated to call this function.\n     */\n    modifier onlyFromCrossDomainAccount(address _sourceDomainAccount) {\n        require(msg.sender == address(getCrossDomainMessenger()), \"OVM_XCHAIN: messenger contract unauthenticated\");\n\n        require(\n            getCrossDomainMessenger().xDomainMessageSender() == _sourceDomainAccount,\n            \"OVM_XCHAIN: wrong sender of cross-domain message\"\n        );\n\n        _;\n    }\n\n    /**\n     *\n     * Internal Functions *\n     *\n     */\n\n    /**\n     * Gets the messenger, usually from storage. This function is exposed in case a child contract\n     * needs to override.\n     * @return The address of the cross-domain messenger contract which should be used.\n     */\n    function getCrossDomainMessenger() internal virtual returns (iOVM_CrossDomainMessenger) {\n        return iOVM_CrossDomainMessenger(messenger);\n    }\n\n    /**\n     * Sends a message to an account on another domain\n     * @param _crossDomainTarget The intended recipient on the destination domain\n     * @param _message The data to send to the target (usually calldata to a function with\n     *  `onlyFromCrossDomainAccount()`)\n     * @param _gasLimit The gasLimit for the receipt of the message on the target domain.\n     */\n    function sendCrossDomainMessage(address _crossDomainTarget, uint32 _gasLimit, bytes memory _message) internal {\n        getCrossDomainMessenger().sendMessage(_crossDomainTarget, _message, _gasLimit);\n    }\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "differs",
+      "coveredLines": 68,
+      "match": {
+        "origin": "own",
+        "collection": "optimism",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "similarity",
+        "auditedName": "CrossDomainEnabled",
+        "similarity": 0.9,
+        "reportId": "optimism/openzeppelin-bedrock-periphery-2022-09",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts/contracts/libraries/bridge/CrossDomainEnabled.sol",
+        "commit": "93d3bd411a8ae75702539ac9c5fe00bad21d4104",
+        "commitTimestamp": "2022-07-21T16:50:18Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/93d3bd411a8ae75702539ac9c5fe00bad21d4104/packages/contracts/contracts/libraries/bridge/CrossDomainEnabled.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Full review of the listed file at the audited commit. Fix commits live in the inaccessible optimism-audit-fixes repository and are not recorded.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 3,
+        "removed": 3,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 2,
+        "unchanged": 68,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 4,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "contract CrossDomainEnabled {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "contract OVM_CrossDomainEnabled {",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 2, "newLine": 2, "text": "    /**" },
+              { "type": " ", "oldLine": 3, "newLine": 3, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "     * Variables *"
+              }
+            ]
+          },
+          {
+            "oldStart": 54,
+            "oldLines": 12,
+            "newStart": 54,
+            "newLines": 11,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 54,
+                "newLine": 54,
+                "text": "     * needs to override."
+              },
+              {
+                "type": " ",
+                "oldLine": 55,
+                "newLine": 55,
+                "text": "     * @return The address of the cross-domain messenger contract which should be used."
+              },
+              { "type": " ", "oldLine": 56, "newLine": 56, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 57,
+                "text": "    function getCrossDomainMessenger() internal virtual returns (ICrossDomainMessenger) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 58,
+                "text": "        return ICrossDomainMessenger(messenger);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 57,
+                "text": "    function getCrossDomainMessenger() internal virtual returns (iOVM_CrossDomainMessenger) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 58,
+                "text": "        return iOVM_CrossDomainMessenger(messenger);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 59, "newLine": 59, "text": "    }" },
+              { "type": " ", "oldLine": 60, "newLine": 60, "text": "" },
+              { "type": " ", "oldLine": 61, "newLine": 61, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 62,
+                "text": "     * q",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 63,
+                "newLine": 62,
+                "text": "     * Sends a message to an account on another domain"
+              },
+              {
+                "type": " ",
+                "oldLine": 64,
+                "newLine": 63,
+                "text": "     * @param _crossDomainTarget The intended recipient on the destination domain"
+              },
+              {
+                "type": " ",
+                "oldLine": 65,
+                "newLine": 64,
+                "text": "     * @param _message The data to send to the target (usually calldata to a function with"
+              }
+            ]
+          },
+          {
+            "oldStart": 67,
+            "oldLines": 7,
+            "newStart": 66,
+            "newLines": 6,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 67,
+                "newLine": 66,
+                "text": "     * @param _gasLimit The gasLimit for the receipt of the message on the target domain."
+              },
+              { "type": " ", "oldLine": 68, "newLine": 67, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 69,
+                "newLine": 68,
+                "text": "    function sendCrossDomainMessage(address _crossDomainTarget, uint32 _gasLimit, bytes memory _message) internal {"
+              },
+              {
+                "type": "-",
+                "oldLine": 70,
+                "text": "        // slither-disable-next-line reentrancy-events, reentrancy-benign",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 71,
+                "newLine": 69,
+                "text": "        getCrossDomainMessenger().sendMessage(_crossDomainTarget, _message, _gasLimit);"
+              },
+              { "type": " ", "oldLine": 72, "newLine": 70, "text": "    }" },
+              { "type": " ", "oldLine": 73, "newLine": 71, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

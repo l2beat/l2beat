@@ -1,0 +1,134 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "0cdbc1c5900b66898daf63910df8cda901cb6d379036cb9c0efbd423db00341d",
+  "name": "openvm.toml",
+  "kind": "program",
+  "lines": 18,
+  "source": "[app_fri_params.fri_params]\nlog_blowup = 1\nlog_final_poly_len = 0\nnum_queries = 100\ncommit_proof_of_work_bits = 16\nquery_proof_of_work_bits = 16\n\n[app_vm_config.rv32i]\n\n[app_vm_config.rv32m]\n\n[app_vm_config.io]\n\n[app_vm_config.keccak]\n\n[app_vm_config.castf]\n\n[app_vm_config.native]",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "differs",
+      "coveredLines": 16,
+      "match": {
+        "origin": "own",
+        "collection": "scroll",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "openvm.toml",
+        "similarity": 0.8,
+        "reportId": "scroll/trailofbits-scroll-euclid-phase1-2025-04",
+        "repository": "scroll-tech/zkvm-prover",
+        "path": "crates/circuits/bundle-circuit/openvm.toml",
+        "commit": "3f008792538a33271d116f75beab0e137a10f176",
+        "commitTimestamp": "2025-03-17T14:08:53Z",
+        "url": "https://github.com/scroll-tech/zkvm-prover/blob/3f008792538a33271d116f75beab0e137a10f176/crates/circuits/bundle-circuit/openvm.toml",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Head of PR #85 (fix review): TOB-SCREUC-1 resolved via zip_eq in the types crate.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 4
+      },
+      "diff": {
+        "added": 2,
+        "removed": 3,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 1,
+        "unchanged": 16,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 2,
+            "oldLines": 7,
+            "newStart": 2,
+            "newLines": 8,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "log_blowup = 1"
+              },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "log_final_poly_len = 0"
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "num_queries = 100"
+              },
+              {
+                "type": "-",
+                "oldLine": 5,
+                "text": "proof_of_work_bits = 16",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 5,
+                "text": "commit_proof_of_work_bits = 16",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 6,
+                "text": "query_proof_of_work_bits = 16",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 6, "newLine": 7, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 7,
+                "newLine": 8,
+                "text": "[app_vm_config.rv32i]"
+              },
+              { "type": " ", "oldLine": 8, "newLine": 9, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 14,
+            "oldLines": 7,
+            "newStart": 15,
+            "newLines": 4,
+            "lines": [
+              { "type": " ", "oldLine": 14, "newLine": 15, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 15,
+                "newLine": 16,
+                "text": "[app_vm_config.castf]"
+              },
+              { "type": " ", "oldLine": 16, "newLine": 17, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 17,
+                "text": "[app_vm_config.modular]",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 18,
+                "text": "supported_modulus = [\"52435875175126190479447740508185965837690552500527637822603658699938581184513\"]",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 19, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 20,
+                "newLine": 18,
+                "text": "[app_vm_config.native]"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

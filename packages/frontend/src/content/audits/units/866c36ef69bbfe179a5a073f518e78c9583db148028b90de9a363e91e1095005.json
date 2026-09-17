@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "866c36ef69bbfe179a5a073f518e78c9583db148028b90de9a363e91e1095005",
+  "name": "bundle.rs",
+  "kind": "program",
+  "lines": 74,
+  "source": "use openvm_native_recursion::hints::Hintable;\nuse openvm_sdk::StdIn;\nuse scroll_zkvm_types::{\n    bundle::{BundleInfo, BundleWitness},\n    public_inputs::ForkName,\n};\n\nuse crate::{\n    AsRootProof, BatchProof,\n    task::{ProvingTask, guest_version},\n};\n\n/// Message indicating a sanity check failure.\nconst BUNDLE_SANITY_MSG: &str = \"bundle must have at least one batch\";\n\n#[derive(Clone, serde::Deserialize, serde::Serialize)]\npub struct BundleProvingTask {\n    pub batch_proofs: Vec<BatchProof>,\n    /// for sanity check\n    pub bundle_info: Option<BundleInfo>,\n    /// Fork name specify\n    pub fork_name: String,\n}\n\nimpl ProvingTask for BundleProvingTask {\n    fn identifier(&self) -> String {\n        assert!(!self.batch_proofs.is_empty(), \"{BUNDLE_SANITY_MSG}\",);\n\n        let (first, last) = (\n            self.batch_proofs\n                .first()\n                .expect(BUNDLE_SANITY_MSG)\n                .metadata\n                .batch_hash,\n            self.batch_proofs\n                .last()\n                .expect(BUNDLE_SANITY_MSG)\n                .metadata\n                .batch_hash,\n        );\n\n        format!(\"{first}-{last}\")\n    }\n\n    fn fork_name(&self) -> ForkName {\n        ForkName::from(self.fork_name.as_str())\n    }\n\n    fn build_guest_input_inner(&self, stdin: &mut StdIn) -> Result<(), rkyv::rancor::Error> {\n        let witness = BundleWitness {\n            batch_proofs: self.batch_proofs.iter().map(|proof| proof.into()).collect(),\n            batch_infos: self\n                .batch_proofs\n                .iter()\n                .map(|wrapped_proof| wrapped_proof.metadata.batch_info.clone())\n                .collect(),\n            fork_name: ForkName::from(self.fork_name.as_str()),\n        };\n        let serialized = witness.rkyv_serialize(guest_version())?;\n        stdin.write_bytes(&serialized);\n        for batch_proof in &self.batch_proofs {\n            let root_input = &batch_proof.as_root_proof();\n            let streams = if self.fork_name() >= ForkName::Feynman {\n                root_input.proofs[0].write()\n            } else {\n                root_input.write()\n            };\n            for s in &streams {\n                stdin.write_field(s);\n            }\n        }\n        Ok(())\n    }\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

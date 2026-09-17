@@ -1,0 +1,375 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "9ab30330cf8e25ce73a27d8409cc4bc34473a8dba34158c0ddfe44f645f12468",
+  "name": "PauseEnforcer",
+  "kind": "contract",
+  "lines": 138,
+  "source": "contract PauseEnforcer is AccessControlEnumerable {\n    /**\n     * @dev Error thrown when the target is already on paused state.\n     */\n    error ErrTargetIsOnPaused();\n\n    /**\n     * @dev Error thrown when the target is not on paused state.\n     */\n    error ErrTargetIsNotOnPaused();\n\n    /**\n     * @dev Error thrown when the contract is not on emergency pause.\n     */\n    error ErrNotOnEmergencyPause();\n\n    bytes32 public constant SENTRY_ROLE = keccak256(\"SENTRY_ROLE\");\n\n    /// @dev The contract that can be paused or unpaused by the SENTRY_ROLE.\n    IPauseTarget public target;\n    /// @dev Indicating whether or not the target contract is paused in emergency mode.\n    bool public emergency;\n\n    /// @dev Emitted when the emergency pause is triggered by `account`.\n    event EmergencyPaused(address account);\n    /// @dev Emitted when the emergency unpause is triggered by `account`.\n    event EmergencyUnpaused(address account);\n    /// @dev Emitted when the target is changed.\n    event TargetChanged(IPauseTarget target);\n\n    modifier onEmergency() {\n        if (!emergency) {\n            revert ErrNotOnEmergencyPause();\n        }\n\n        _;\n    }\n\n    modifier targetPaused() {\n        if (!target.paused()) {\n            revert ErrTargetIsOnPaused();\n        }\n\n        _;\n    }\n\n    modifier targetNotPaused() {\n        if (target.paused()) {\n            revert ErrTargetIsNotOnPaused();\n        }\n\n        _;\n    }\n\n    constructor(IPauseTarget target_, address[] memory admins, address[] memory sentries) {\n        _changeTarget(target_);\n\n        for (uint256 i; i < sentries.length; ++i) {\n            _grantRole(SENTRY_ROLE, sentries[i]);\n        }\n\n        for (uint256 i; i < admins.length; ++i) {\n            _grantRole(DEFAULT_ADMIN_ROLE, admins[i]);\n        }\n    }\n\n    /**\n     * @dev Grants the SENTRY_ROLE to the specified address.\n     */\n    function grantSentry(address _sentry) external onlyRole(DEFAULT_ADMIN_ROLE) {\n        _grantRole(SENTRY_ROLE, _sentry);\n    }\n\n    /**\n     * @dev Revokes the SENTRY_ROLE from the specified address.\n     */\n    function revokeSentry(address _sentry) external onlyRole(DEFAULT_ADMIN_ROLE) {\n        _revokeRole(SENTRY_ROLE, _sentry);\n    }\n\n    /**\n     * @dev Triggers a pause on the target contract.\n     *\n     * Requirements:\n     * - Only be called by accounts with the SENTRY_ROLE,\n     * - The target contract is not already paused.\n     */\n    function triggerPause() external onlyRole(SENTRY_ROLE) targetNotPaused {\n        emergency = true;\n        target.pause();\n        emit EmergencyPaused(msg.sender);\n    }\n\n    /**\n     * @dev Triggers an unpause on the target contract.\n     *\n     * Requirements:\n     * - Only be called by accounts with the SENTRY_ROLE,\n     * - The target contract is already paused.\n     * - The target contract is paused in emergency mode.\n     */\n    function triggerUnpause() external onlyRole(SENTRY_ROLE) onEmergency targetPaused {\n        emergency = false;\n        target.unpause();\n        emit EmergencyUnpaused(msg.sender);\n    }\n\n    /**\n     * @dev Triggers a restrict a function with one or more standards represented by the bitmap.\n     *\n     * Requirements:\n     * - Only be called by accounts with the SENTRY_ROLE.\n     *\n     * @param fnSig The function signature to restrict.\n     * @param enumBitmap The bitmap of the standard to restrict.\n     */\n    function triggerRestrict(bytes4 fnSig, uint8 enumBitmap) external onlyRole(SENTRY_ROLE) {\n        target.restrict(fnSig, enumBitmap);\n    }\n\n    /**\n     * @dev Setter for `target`.\n     *\n     * Requirements:\n     * - Only admin can call this method.\n     */\n    function changeTarget(IPauseTarget _target) external onlyRole(DEFAULT_ADMIN_ROLE) {\n        _changeTarget(_target);\n    }\n\n    /**\n     * @dev Internal helper for setting value to `target`.\n     */\n    function _changeTarget(IPauseTarget _target) internal {\n        target = _target;\n        emit TargetChanged(_target);\n    }\n}",
+  "resolutions": {
+    "bb55951394276893": {
+      "status": "differs",
+      "coveredLines": 128,
+      "match": {
+        "origin": "own",
+        "collection": "roninnetwork",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "PauseEnforcer",
+        "similarity": 0.86,
+        "reportId": "roninnetwork/verichains-ronin-bridge-smart-contracts-2024-08",
+        "repository": "ronin-chain/bridge-contract",
+        "path": "src/ronin/gateway/PauseEnforcer.sol",
+        "commit": "df1d80e48fa1e0854133775eb94aa5bdb64a2a47",
+        "commitTimestamp": "2024-08-05T09:00:11Z",
+        "url": "https://github.com/ronin-chain/bridge-contract/blob/df1d80e48fa1e0854133775eb94aa5bdb64a2a47/src/ronin/gateway/PauseEnforcer.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Full review of the directory; no findings.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "diff": {
+        "added": 10,
+        "removed": 10,
+        "ignoredAdded": 12,
+        "ignoredRemoved": 6,
+        "unchanged": 128,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 4,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "contract PauseEnforcer is AccessControlEnumerable, Initializable {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "contract PauseEnforcer is AccessControlEnumerable {",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 2, "newLine": 2, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "     * @dev Error thrown when the target is already on paused state."
+              },
+              { "type": " ", "oldLine": 4, "newLine": 4, "text": "     */" }
+            ]
+          },
+          {
+            "oldStart": 21,
+            "oldLines": 7,
+            "newStart": 21,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 21,
+                "newLine": 21,
+                "text": "    /// @dev Indicating whether or not the target contract is paused in emergency mode."
+              },
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 22,
+                "text": "    bool public emergency;"
+              },
+              { "type": " ", "oldLine": 23, "newLine": 23, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 24,
+                "text": "    /// @dev Emitted when the emergency ppause is triggered by `account`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 24,
+                "text": "    /// @dev Emitted when the emergency pause is triggered by `account`.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 25,
+                "newLine": 25,
+                "text": "    event EmergencyPaused(address account);"
+              },
+              {
+                "type": " ",
+                "oldLine": 26,
+                "newLine": 26,
+                "text": "    /// @dev Emitted when the emergency unpause is triggered by `account`."
+              },
+              {
+                "type": " ",
+                "oldLine": 27,
+                "newLine": 27,
+                "text": "    event EmergencyUnpaused(address account);"
+              }
+            ]
+          },
+          {
+            "oldStart": 52,
+            "oldLines": 22,
+            "newStart": 52,
+            "newLines": 15,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 52,
+                "newLine": 52,
+                "text": "        _;"
+              },
+              { "type": " ", "oldLine": 53, "newLine": 53, "text": "    }" },
+              { "type": " ", "oldLine": 54, "newLine": 54, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 55,
+                "text": "    constructor() {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 56,
+                "text": "        _disableInitializers();",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 57, "text": "    }", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 55,
+                "text": "    constructor(IPauseTarget target_, address[] memory admins, address[] memory sentries) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 56,
+                "text": "        _changeTarget(target_);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 58, "newLine": 57, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 59,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 60,
+                "text": "     * @dev Initializes the contract storage.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 61,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 62,
+                "text": "    function initialize(IPauseTarget _target, address _admin, address[] memory _sentries) external initializer {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 63,
+                "text": "        _changeTarget(_target);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 64,
+                "text": "        _setupRole(DEFAULT_ADMIN_ROLE, _admin);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 65,
+                "text": "        for (uint256 _i; _i < _sentries.length;) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 66,
+                "text": "            _grantRole(SENTRY_ROLE, _sentries[_i]);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 58,
+                "text": "        for (uint256 i; i < sentries.length; ++i) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 59,
+                "text": "            _grantRole(SENTRY_ROLE, sentries[i]);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 60,
+                "text": "        }",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 67, "newLine": 61, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 68,
+                "text": "            unchecked {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 69,
+                "text": "                ++_i;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 70,
+                "text": "            }",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 62,
+                "text": "        for (uint256 i; i < admins.length; ++i) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 63,
+                "text": "            _grantRole(DEFAULT_ADMIN_ROLE, admins[i]);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 71,
+                "newLine": 64,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 72, "newLine": 65, "text": "    }" },
+              { "type": " ", "oldLine": 73, "newLine": 66, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 113,
+            "oldLines": 6,
+            "newStart": 106,
+            "newLines": 19,
+            "lines": [
+              { "type": " ", "oldLine": 113, "newLine": 106, "text": "    }" },
+              { "type": " ", "oldLine": 114, "newLine": 107, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 115,
+                "newLine": 108,
+                "text": "    /**"
+              },
+              {
+                "type": "+",
+                "newLine": 109,
+                "text": "     * @dev Triggers a restrict a function with one or more standards represented by the bitmap.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 110,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 111,
+                "text": "     * Requirements:",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 112,
+                "text": "     * - Only be called by accounts with the SENTRY_ROLE.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 113,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 114,
+                "text": "     * @param fnSig The function signature to restrict.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 115,
+                "text": "     * @param enumBitmap The bitmap of the standard to restrict.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 116,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 117,
+                "text": "    function triggerRestrict(bytes4 fnSig, uint8 enumBitmap) external onlyRole(SENTRY_ROLE) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 118,
+                "text": "        target.restrict(fnSig, enumBitmap);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 119,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 120, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 121,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 116,
+                "newLine": 122,
+                "text": "     * @dev Setter for `target`."
+              },
+              { "type": " ", "oldLine": 117, "newLine": 123, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 118,
+                "newLine": 124,
+                "text": "     * Requirements:"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

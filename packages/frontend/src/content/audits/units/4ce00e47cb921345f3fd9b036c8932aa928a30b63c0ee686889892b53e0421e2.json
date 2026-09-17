@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "4ce00e47cb921345f3fd9b036c8932aa928a30b63c0ee686889892b53e0421e2",
+  "name": "INonce",
+  "kind": "interface",
+  "lines": 7,
+  "source": "interface INonce {\n    /// @notice Thrown when a user-provided nonce is not equal to the contract's nonce\n    error InvalidNonce();\n\n    /// @return The contract's nonce\n    function nonce() external view returns (uint256);\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

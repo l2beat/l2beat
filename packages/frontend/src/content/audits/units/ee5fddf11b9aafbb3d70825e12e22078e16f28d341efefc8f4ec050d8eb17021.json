@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "ee5fddf11b9aafbb3d70825e12e22078e16f28d341efefc8f4ec050d8eb17021",
+  "name": "Core",
+  "kind": "abstract",
+  "lines": 4,
+  "source": "abstract contract Core {\n    /// @notice Locked token balance for each account\n    mapping(address => uint256) public lockedBalance;\n}",
+  "resolutions": {
+    "f9658cd3a9a22004": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

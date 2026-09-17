@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "fb4dd7803149e429b5605c732320b0123b726bfff19401112dd926c43de14ff3",
+  "name": "mod.nr",
+  "kind": "program",
+  "lines": 11,
+  "source": "// general util packages/modules are usually bad practice\n// because there is no criteria for what we should not put in here.\n// Reducing the size of this package would be welcome.\n\npub mod arrays;\npub mod for_loop;\npub mod field;\npub mod math;\n\npub use serde::reader;\npub use serde::writer;",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

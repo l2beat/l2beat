@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "a7ab1ce67844df0ea414a08981eb2b9c8faf06e3f2bc4ba25bc8640e9ed06cea",
+  "name": "IERC1271",
+  "kind": "interface",
+  "lines": 8,
+  "source": "interface IERC1271 {\n    /**\n     * @dev Should return whether the signature provided is valid for the provided data\n     * @param hash      Hash of the data to be signed\n     * @param signature Signature byte array associated with _data\n     */\n    function isValidSignature(bytes32 hash, bytes memory signature) external view returns (bytes4 magicValue);\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "2be3d633eaae18a2": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

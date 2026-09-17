@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "5babca54a3fd743dac62c26b96d8ffd44ac634d8a78f80a0c3938487079eb3da",
+  "name": "ProposalLib",
+  "kind": "library",
+  "lines": 102,
+  "source": "library ProposalLib {\n    using CompressedTimeMath for CompressedTimestamp;\n    using CompressedProposalLib for CompressedProposal;\n    /**\n     * @notice Tabulate the votes for a proposal.\n     * @dev This function is used to determine if a proposal has met the acceptance criteria.\n     *\n     * @param _self The proposal to tabulate the votes for.\n     * @param _totalPower The total power (in Governance) at proposal.pendingThrough().\n     * @return The vote tabulation result, and additional information.\n     */\n\n    function voteTabulation(CompressedProposal storage _self, uint256 _totalPower)\n        internal\n        view\n        returns (VoteTabulationReturn, VoteTabulationInfo)\n    {\n        if (_totalPower < _self.minimumVotes) {\n            return (VoteTabulationReturn.Rejected, VoteTabulationInfo.TotalPowerLtMinimum);\n        }\n\n        uint256 votesNeeded = Math.mulDiv(_totalPower, _self.quorum, 1e18, Math.Rounding.Ceil);\n        if (votesNeeded == 0) {\n            return (VoteTabulationReturn.Invalid, VoteTabulationInfo.VotesNeededEqZero);\n        }\n        if (votesNeeded > _totalPower) {\n            return (VoteTabulationReturn.Invalid, VoteTabulationInfo.VotesNeededGtTotalPower);\n        }\n\n        (uint256 yea, uint256 nay) = _self.getVotes();\n        uint256 votesCast = nay + yea;\n        if (votesCast < votesNeeded) {\n            return (VoteTabulationReturn.Rejected, VoteTabulationInfo.VotesCastLtVotesNeeded);\n        }\n\n        // Edge case where all the votes are yea, no need to compute requiredApprovalVotes.\n        // ConfigurationLib enforces that requiredYeaMargin is <= 1e18,\n        // i.e. we cannot require more votes to be yes than total votes.\n        if (yea == votesCast) {\n            return (VoteTabulationReturn.Accepted, VoteTabulationInfo.YeaVotesEqVotesCast);\n        }\n\n        uint256 requiredApprovalVotesFraction = Math.ceilDiv(1e18 + _self.requiredYeaMargin, 2);\n        uint256 requiredApprovalVotes = Math.mulDiv(votesCast, requiredApprovalVotesFraction, 1e18, Math.Rounding.Ceil);\n\n        /*if (requiredApprovalVotes == 0) {\n      // It should be impossible to hit this case as `requiredApprovalVotesFraction` cannot be 0,\n      // and due to rounding up, only way to hit this would be if `votesCast = 0`,\n      // which is already handled as `votesCast >= votesNeeded` and `votesNeeded > 0`.\n      return (VoteTabulationReturn.Invalid, VoteTabulationInfo.YeaLimitEqZero);\n    }*/\n        if (requiredApprovalVotes > votesCast) {\n            return (VoteTabulationReturn.Invalid, VoteTabulationInfo.YeaLimitGtVotesCast);\n        }\n\n        // We want to see that there are MORE votes on yea than needed\n        // We explicitly need MORE to ensure we don't \"tie\".\n        // If we need as many yea as there are votes, we know it is impossible already.\n        // due to the check earlier, that summedBallot.yea == votesCast.\n        if (yea <= requiredApprovalVotes) {\n            return (VoteTabulationReturn.Rejected, VoteTabulationInfo.YeaVotesLeYeaLimit);\n        }\n\n        return (VoteTabulationReturn.Accepted, VoteTabulationInfo.YeaVotesGtYeaLimit);\n    }\n\n    /**\n     * @notice Get when the pending phase ends\n     * @param _compressed Storage pointer to compressed proposal\n     * @return The timestamp when pending phase ends\n     */\n    function pendingThrough(CompressedProposal storage _compressed) internal view returns (Timestamp) {\n        return _compressed.creation.decompress() + _compressed.votingDelay.decompress();\n    }\n\n    /**\n     * @notice Get when the active phase ends\n     * @param _compressed Storage pointer to compressed proposal\n     * @return The timestamp when active phase ends\n     */\n    function activeThrough(CompressedProposal storage _compressed) internal view returns (Timestamp) {\n        return pendingThrough(_compressed) + _compressed.votingDuration.decompress();\n    }\n\n    /**\n     * @notice Get when the queued phase ends\n     * @param _compressed Storage pointer to compressed proposal\n     * @return The timestamp when queued phase ends\n     */\n    function queuedThrough(CompressedProposal storage _compressed) internal view returns (Timestamp) {\n        return activeThrough(_compressed) + _compressed.executionDelay.decompress();\n    }\n\n    /**\n     * @notice Get when the executable phase ends\n     * @param _compressed Storage pointer to compressed proposal\n     * @return The timestamp when executable phase ends\n     */\n    function executableThrough(CompressedProposal storage _compressed) internal view returns (Timestamp) {\n        return queuedThrough(_compressed) + _compressed.gracePeriod.decompress();\n    }\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "identical",
+      "coveredLines": 102,
+      "match": {
+        "origin": "own",
+        "collection": "aztecnetwork",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "ProposalLib",
+        "similarity": 1,
+        "reportId": "aztecnetwork/veridise-governance-2025-10-13",
+        "repository": "AztecProtocol/aztec-packages",
+        "path": "l1-contracts/src/governance/libraries/ProposalLib.sol",
+        "commit": "a310dd929fc136669fd84baa5024d437ac1c9603",
+        "commitTimestamp": "2025-09-25T12:37:48Z",
+        "url": "https://github.com/AztecProtocol/aztec-packages/blob/a310dd929fc136669fd84baa5024d437ac1c9603/l1-contracts/src/governance/libraries/ProposalLib.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "remediation review",
+        "coverage": "confirmed maintainability fixes for V-AZGV-VUL-004 (PR 17248 head commit)",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 4
+      },
+      "warnings": []
+    }
+  }
+}

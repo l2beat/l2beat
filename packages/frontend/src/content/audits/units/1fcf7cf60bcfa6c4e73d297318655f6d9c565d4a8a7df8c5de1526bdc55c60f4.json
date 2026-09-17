@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "1fcf7cf60bcfa6c4e73d297318655f6d9c565d4a8a7df8c5de1526bdc55c60f4",
+  "name": "(file-level declarations)",
+  "kind": "file-level",
+  "lines": 99,
+  "source": "function addTimestamp(Timestamp _a, Timestamp _b) pure returns (Timestamp) {\n    return Timestamp.wrap(Timestamp.unwrap(_a) + Timestamp.unwrap(_b));\n}\nfunction subTimestamp(Timestamp _a, Timestamp _b) pure returns (Timestamp) {\n    return Timestamp.wrap(Timestamp.unwrap(_a) - Timestamp.unwrap(_b));\n}\nfunction ltTimestamp(Timestamp _a, Timestamp _b) pure returns (bool) {\n    return Timestamp.unwrap(_a) < Timestamp.unwrap(_b);\n}\nfunction gtTimestamp(Timestamp _a, Timestamp _b) pure returns (bool) {\n    return Timestamp.unwrap(_a) > Timestamp.unwrap(_b);\n}\nfunction lteTimestamp(Timestamp _a, Timestamp _b) pure returns (bool) {\n    return Timestamp.unwrap(_a) <= Timestamp.unwrap(_b);\n}\nfunction gteTimestamp(Timestamp _a, Timestamp _b) pure returns (bool) {\n    return Timestamp.unwrap(_a) >= Timestamp.unwrap(_b);\n}\nfunction neqTimestamp(Timestamp _a, Timestamp _b) pure returns (bool) {\n    return Timestamp.unwrap(_a) != Timestamp.unwrap(_b);\n}\nfunction eqTimestamp(Timestamp _a, Timestamp _b) pure returns (bool) {\n    return Timestamp.unwrap(_a) == Timestamp.unwrap(_b);\n}\nusing {\n    addTimestamp as +,\n    subTimestamp as -,\n    ltTimestamp as <,\n    gtTimestamp as >,\n    lteTimestamp as <=,\n    gteTimestamp as >=,\n    neqTimestamp as !=,\n    eqTimestamp as ==\n} for Timestamp global;\ntype Timestamp is uint256;\nstruct ProposeWithLockConfiguration {\n    Timestamp lockDelay;\n    uint256 lockAmount;\n}\nstruct Configuration {\n    ProposeWithLockConfiguration proposeConfig;\n    Timestamp votingDelay;\n    Timestamp votingDuration;\n    Timestamp executionDelay;\n    Timestamp gracePeriod;\n    uint256 quorum;\n    uint256 requiredYeaMargin;\n    uint256 minimumVotes;\n}\nenum ProposalState {\n    Pending,\n    Active,\n    Queued,\n    Executable,\n    Rejected,\n    Executed,\n    Droppable,\n    Dropped,\n    Expired\n}\nstruct ProposalConfiguration {\n    Timestamp votingDelay;\n    Timestamp votingDuration;\n    Timestamp executionDelay;\n    Timestamp gracePeriod;\n    uint256 quorum;\n    uint256 requiredYeaMargin;\n    uint256 minimumVotes;\n}\nstruct Ballot {\n    uint256 yea;\n    uint256 nay;\n}\nstruct Proposal {\n    ProposalConfiguration config;\n    ProposalState cachedState;\n    IPayload payload;\n    address proposer;\n    Timestamp creation;\n    Ballot summedBallot;\n}\nstruct Withdrawal {\n    uint256 amount;\n    Timestamp unlocksAt;\n    address recipient;\n    bool claimed;\n}\ntype StakerVersion is uint256;\ntype MilestoneId is uint96;\nenum MilestoneStatus {\n    Pending,\n    Failed,\n    Succeeded\n}\nstruct LockParams {\n    uint256 startTime;\n    uint256 cliffDuration;\n    uint256 lockDuration;\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

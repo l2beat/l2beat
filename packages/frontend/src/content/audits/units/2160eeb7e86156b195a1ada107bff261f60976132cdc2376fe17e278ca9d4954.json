@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "2160eeb7e86156b195a1ada107bff261f60976132cdc2376fe17e278ca9d4954",
+  "name": "ITornadoVault",
+  "kind": "interface",
+  "lines": 3,
+  "source": "interface ITornadoVault {\n    function withdrawTorn(address recipient, uint256 amount) external;\n}",
+  "resolutions": {
+    "f9658cd3a9a22004": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

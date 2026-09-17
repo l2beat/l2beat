@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "48d44ae50a2d405c860801402ef3a82cc3ce6da7df68fd0ac1b75f08f2e52fd1",
+  "name": "GasCompensationVault",
+  "kind": "contract",
+  "lines": 41,
+  "source": "contract GasCompensationVault {\n    using EtherSend for address;\n\n    address private constant GovernanceAddress = 0x5efda50f22d34F262c29268506C5Fa42cB56A1Ce;\n\n    modifier onlyGovernance() {\n        require(msg.sender == GovernanceAddress, \"only gov\");\n        _;\n    }\n\n    /**\n     * @notice function to compensate gas by sending amount eth to a recipient\n     * @param recipient address to receive amount eth\n     * @param gasAmount the amount of gas to be compensated\n     *\n     */\n    function compensateGas(address recipient, uint256 gasAmount) external onlyGovernance {\n        uint256 vaultBalance = address(this).balance;\n        uint256 toCompensate = gasAmount * block.basefee;\n        if (vaultBalance == 0) {\n            return;\n        }\n        payable(recipient).send((toCompensate > vaultBalance) ? vaultBalance : toCompensate);\n    }\n\n    /**\n     * @notice function to withdraw compensate eth back to governance\n     * @param amount the amount of eth to withdraw back to governance\n     *\n     */\n    function withdrawToGovernance(uint256 amount) external onlyGovernance {\n        uint256 vaultBalance = address(this).balance;\n        require(GovernanceAddress.sendEther((amount > vaultBalance) ? vaultBalance : amount), \"pay fail\");\n    }\n\n    /**\n     * @notice receive ether function, does nothing but receive ether\n     *\n     */\n    receive() external payable {}\n}",
+  "resolutions": {
+    "f9658cd3a9a22004": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

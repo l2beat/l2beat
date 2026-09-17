@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "5ffe96dc6848ebcee1dc7ba87e29b0a25ccf18678724fda7c3b9fe8c5d27d18f",
+  "name": "ZkEvmVerifierV1",
+  "kind": "contract",
+  "lines": 60,
+  "source": "contract ZkEvmVerifierV1 is IZkEvmVerifier {\n    /**\n     *\n     * Errors *\n     *\n     */\n\n    /// @dev Thrown when aggregate zk proof verification is failed.\n    error VerificationFailed();\n\n    /**\n     *\n     * Constants *\n     *\n     */\n\n    /// @notice The address of highly optimized plonk verifier contract.\n    address public immutable plonkVerifier;\n\n    /**\n     *\n     * Constructor *\n     *\n     */\n    constructor(address _verifier) {\n        plonkVerifier = _verifier;\n    }\n\n    /**\n     *\n     * Public View Functions *\n     *\n     */\n\n    /// @inheritdoc IZkEvmVerifier\n    function verify(bytes calldata aggrProof, bytes32 publicInputHash) external view override {\n        address _verifier = plonkVerifier;\n        bool success;\n\n        // 1. the first 12 * 32 (0x180) bytes of `aggrProof` is `accumulator`\n        // 2. the rest bytes of `aggrProof` is the actual `batch_aggregated_proof`\n        // 3. each byte of the `public_input_hash` should be converted to a `uint256` and the\n        //    1024 (0x400) bytes should inserted between `accumulator` and `batch_aggregated_proof`.\n        assembly {\n            let p := mload(0x40)\n            calldatacopy(p, aggrProof.offset, 0x180)\n            for { let i := 0 } lt(i, 0x400) { i := add(i, 0x20) } {\n                mstore(add(p, sub(0x560, i)), and(publicInputHash, 0xff))\n                publicInputHash := shr(8, publicInputHash)\n            }\n            calldatacopy(add(p, 0x580), add(aggrProof.offset, 0x180), sub(aggrProof.length, 0x180))\n\n            success := staticcall(gas(), _verifier, p, add(aggrProof.length, 0x400), 0x00, 0x00)\n        }\n\n        if (!success) {\n            revert VerificationFailed();\n        }\n    }\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,270 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "d26f41fc30bc52700eefb1c5ac09ca9b9f341548afc37ecb08bc93957ed43058",
+  "name": "ReentrancyGuard",
+  "kind": "abstract",
+  "lines": 42,
+  "source": "abstract contract ReentrancyGuard {\n    // Booleans are more expensive than uint256 or any type that takes up a full\n    // word because each write operation emits an extra SLOAD to first read the\n    // slot's contents, replace the bits taken up by the boolean, and then write\n    // back. This is the compiler's defense against contract upgrades and\n    // pointer aliasing, and it cannot be disabled.\n\n    // The values being non-zero value makes deployment a bit more expensive,\n    // but in exchange the refund on every call to nonReentrant will be lower in\n    // amount. Since refunds are capped to a percentage of the total\n    // transaction's gas, it is best to keep them low in cases like this one, to\n    // increase the likelihood of the full refund coming into effect.\n    uint256 private constant _NOT_ENTERED = 1;\n    uint256 private constant _ENTERED = 2;\n\n    uint256 private _status;\n\n    constructor() {\n        _status = _NOT_ENTERED;\n    }\n\n    /**\n     * @dev Prevents a contract from calling itself, directly or indirectly.\n     * Calling a `nonReentrant` function from another `nonReentrant`\n     * function is not supported. It is possible to prevent this from happening\n     * by making the `nonReentrant` function external, and making it call a\n     * `private` function that does the actual work.\n     */\n    modifier nonReentrant() {\n        // On the first call to nonReentrant, _notEntered will be true\n        require(_status != _ENTERED, \"ReentrancyGuard: reentrant call\");\n\n        // Any calls to nonReentrant after this point will fail\n        _status = _ENTERED;\n\n        _;\n\n        // By storing the original value once again, a refund is triggered (see\n        // https://eips.ethereum.org/EIPS/eip-2200)\n        _status = _NOT_ENTERED;\n    }\n}",
+  "resolutions": {
+    "eea968a44e5d263a": {
+      "status": "differs",
+      "coveredLines": 41,
+      "match": {
+        "origin": "upstream",
+        "collection": "optimism",
+        "relation": {
+          "type": "fork_of",
+          "repository": "ethereum-optimism/optimism"
+        },
+        "rank": 1,
+        "matchedBy": "similarity",
+        "auditedName": "Lib_ReentrancyGuard",
+        "similarity": 1,
+        "reportId": "optimism/openzeppelin-ovm-rollup-2021-03",
+        "repository": "ben-chain/contracts-v2",
+        "path": "contracts/optimistic-ethereum/libraries/utils/Lib_ReentrancyGuard.sol",
+        "commit": "a935e276f5620b40802b52721e3474232e458f72",
+        "commitTimestamp": "2021-04-12T01:08:09Z",
+        "url": "https://github.com/ben-chain/contracts-v2/blob/a935e276f5620b40802b52721e3474232e458f72/contracts/optimistic-ethereum/libraries/utils/Lib_ReentrancyGuard.sol",
+        "auditStatus": "audited_with_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Second audited commit (last 3 weeks). Same directory scope and exclusions as the first commit; C01 and H01 fixes from the archived repository are contained in this commit, L02/L04/N01 are fixed here per the report.",
+        "majorFindings": 2,
+        "findingIds": ["C02", "C04"],
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "diff": {
+        "added": 1,
+        "removed": 1,
+        "ignoredAdded": 1,
+        "ignoredRemoved": 1,
+        "unchanged": 41,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 4,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "abstract contract Lib_ReentrancyGuard {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "abstract contract ReentrancyGuard {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "    // Booleans are more expensive than uint256 or any type that takes up a full"
+              },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "    // word because each write operation emits an extra SLOAD to first read the"
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "    // slot's contents, replace the bits taken up by the boolean, and then write"
+              }
+            ]
+          },
+          {
+            "oldStart": 23,
+            "oldLines": 7,
+            "newStart": 23,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 23,
+                "newLine": 23,
+                "text": "     * @dev Prevents a contract from calling itself, directly or indirectly."
+              },
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 24,
+                "text": "     * Calling a `nonReentrant` function from another `nonReentrant`"
+              },
+              {
+                "type": " ",
+                "oldLine": 25,
+                "newLine": 25,
+                "text": "     * function is not supported. It is possible to prevent this from happening"
+              },
+              {
+                "type": "-",
+                "oldLine": 26,
+                "text": "     * by making the `nonReentrant` function external, and make it call a",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 26,
+                "text": "     * by making the `nonReentrant` function external, and making it call a",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 27,
+                "newLine": 27,
+                "text": "     * `private` function that does the actual work."
+              },
+              { "type": " ", "oldLine": 28, "newLine": 28, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 29,
+                "newLine": 29,
+                "text": "    modifier nonReentrant() {"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "1daaed8c8125f2b6": {
+      "status": "differs",
+      "coveredLines": 41,
+      "match": {
+        "origin": "upstream",
+        "collection": "optimism",
+        "relation": {
+          "type": "fork_of",
+          "repository": "ethereum-optimism/optimism"
+        },
+        "rank": 1,
+        "matchedBy": "similarity",
+        "auditedName": "Lib_ReentrancyGuard",
+        "similarity": 1,
+        "reportId": "optimism/openzeppelin-ovm-rollup-2021-03",
+        "repository": "ben-chain/contracts-v2",
+        "path": "contracts/optimistic-ethereum/libraries/utils/Lib_ReentrancyGuard.sol",
+        "commit": "a935e276f5620b40802b52721e3474232e458f72",
+        "commitTimestamp": "2021-04-12T01:08:09Z",
+        "url": "https://github.com/ben-chain/contracts-v2/blob/a935e276f5620b40802b52721e3474232e458f72/contracts/optimistic-ethereum/libraries/utils/Lib_ReentrancyGuard.sol",
+        "auditStatus": "audited_with_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Second audited commit (last 3 weeks). Same directory scope and exclusions as the first commit; C01 and H01 fixes from the archived repository are contained in this commit, L02/L04/N01 are fixed here per the report.",
+        "majorFindings": 2,
+        "findingIds": ["C02", "C04"],
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "diff": {
+        "added": 1,
+        "removed": 1,
+        "ignoredAdded": 1,
+        "ignoredRemoved": 1,
+        "unchanged": 41,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 4,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "abstract contract Lib_ReentrancyGuard {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "abstract contract ReentrancyGuard {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "    // Booleans are more expensive than uint256 or any type that takes up a full"
+              },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "    // word because each write operation emits an extra SLOAD to first read the"
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "    // slot's contents, replace the bits taken up by the boolean, and then write"
+              }
+            ]
+          },
+          {
+            "oldStart": 23,
+            "oldLines": 7,
+            "newStart": 23,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 23,
+                "newLine": 23,
+                "text": "     * @dev Prevents a contract from calling itself, directly or indirectly."
+              },
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 24,
+                "text": "     * Calling a `nonReentrant` function from another `nonReentrant`"
+              },
+              {
+                "type": " ",
+                "oldLine": 25,
+                "newLine": 25,
+                "text": "     * function is not supported. It is possible to prevent this from happening"
+              },
+              {
+                "type": "-",
+                "oldLine": 26,
+                "text": "     * by making the `nonReentrant` function external, and make it call a",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 26,
+                "text": "     * by making the `nonReentrant` function external, and making it call a",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 27,
+                "newLine": 27,
+                "text": "     * `private` function that does the actual work."
+              },
+              { "type": " ", "oldLine": 28, "newLine": 28, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 29,
+                "newLine": 29,
+                "text": "    modifier nonReentrant() {"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

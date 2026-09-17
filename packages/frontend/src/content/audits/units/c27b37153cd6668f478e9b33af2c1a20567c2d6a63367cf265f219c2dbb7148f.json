@@ -1,0 +1,164 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "c27b37153cd6668f478e9b33af2c1a20567c2d6a63367cf265f219c2dbb7148f",
+  "name": "IRollupCore",
+  "kind": "interface",
+  "lines": 51,
+  "source": "interface IRollupCore {\n    event CheckpointProposed(\n        uint256 indexed checkpointNumber,\n        bytes32 indexed archive,\n        bytes32[] versionedBlobHashes,\n        bytes32 payloadDigest,\n        bytes32 attestationsHash\n    );\n    event L2ProofVerified(uint256 indexed checkpointNumber, address indexed proverId);\n    event CheckpointInvalidated(uint256 indexed checkpointNumber);\n    event RewardConfigUpdated(MutableRewardConfig rewardConfig);\n    event ManaTargetUpdated(uint256 indexed manaTarget);\n    event PrunedPending(uint256 provenCheckpointNumber, uint256 pendingCheckpointNumber);\n\n    function claimSequencerRewards(address _recipient) external returns (uint256);\n    function claimProverRewards(address _recipient, Epoch[] memory _epochs) external returns (uint256);\n\n    function prune() external;\n    function updateL1GasFeeOracle() external;\n\n    function setProvingCostPerMana(EthValue _provingCostPerMana) external;\n\n    function propose(\n        ProposeArgs calldata _args,\n        CommitteeAttestations memory _attestations,\n        address[] memory _signers,\n        Signature memory _attestationsAndSignersSignature,\n        bytes calldata _blobInput\n    ) external;\n\n    function submitEpochRootProof(SubmitEpochRootProofArgs calldata _args) external;\n\n    function invalidateBadAttestation(\n        uint256 _checkpointNumber,\n        CommitteeAttestations memory _attestations,\n        address[] memory _committee,\n        uint256 _invalidIndex\n    ) external;\n\n    function invalidateInsufficientAttestations(\n        uint256 _checkpointNumber,\n        CommitteeAttestations memory _attestations,\n        address[] memory _committee\n    ) external;\n\n    function setRewardConfig(MutableRewardConfig memory _config) external;\n    function updateManaTarget(uint256 _manaTarget) external;\n\n    // solhint-disable-next-line func-name-mixedcase\n    function L1_BLOCK_AT_GENESIS() external view returns (uint256);\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "differs",
+      "coveredLines": 49,
+      "match": {
+        "origin": "own",
+        "collection": "aztecnetwork",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "IRollupCore",
+        "similarity": 0.946,
+        "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
+        "repository": "AztecProtocol/aztec-packages",
+        "path": "l1-contracts/src/core/interfaces/IRollup.sol",
+        "commit": "0092f9f01ed88cc3626270e62716d7b722ea1944",
+        "commitTimestamp": "2026-01-06T20:15:15Z",
+        "url": "https://github.com/AztecProtocol/aztec-packages/blob/0092f9f01ed88cc3626270e62716d7b722ea1944/l1-contracts/src/core/interfaces/IRollup.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "security review",
+        "coverage": "full file",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 2,
+        "removed": 4,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 49,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 8,
+            "oldLines": 12,
+            "newStart": 8,
+            "newLines": 10,
+            "lines": [
+              { "type": " ", "oldLine": 8, "newLine": 8, "text": "    );" },
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 9,
+                "text": "    event L2ProofVerified(uint256 indexed checkpointNumber, address indexed proverId);"
+              },
+              {
+                "type": " ",
+                "oldLine": 10,
+                "newLine": 10,
+                "text": "    event CheckpointInvalidated(uint256 indexed checkpointNumber);"
+              },
+              {
+                "type": "-",
+                "oldLine": 11,
+                "text": "    event RewardConfigUpdated(RewardConfig rewardConfig);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 11,
+                "text": "    event RewardConfigUpdated(MutableRewardConfig rewardConfig);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 12,
+                "newLine": 12,
+                "text": "    event ManaTargetUpdated(uint256 indexed manaTarget);"
+              },
+              {
+                "type": " ",
+                "oldLine": 13,
+                "newLine": 13,
+                "text": "    event PrunedPending(uint256 provenCheckpointNumber, uint256 pendingCheckpointNumber);"
+              },
+              {
+                "type": "-",
+                "oldLine": 14,
+                "text": "    event RewardsClaimableUpdated(bool isRewardsClaimable);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 15, "newLine": 14, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 16,
+                "text": "    function setRewardsClaimable(bool _isRewardsClaimable) external;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 17,
+                "newLine": 15,
+                "text": "    function claimSequencerRewards(address _recipient) external returns (uint256);"
+              },
+              {
+                "type": " ",
+                "oldLine": 18,
+                "newLine": 16,
+                "text": "    function claimProverRewards(address _recipient, Epoch[] memory _epochs) external returns (uint256);"
+              },
+              { "type": " ", "oldLine": 19, "newLine": 17, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 45,
+            "oldLines": 7,
+            "newStart": 43,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 45,
+                "newLine": 43,
+                "text": "        address[] memory _committee"
+              },
+              {
+                "type": " ",
+                "oldLine": 46,
+                "newLine": 44,
+                "text": "    ) external;"
+              },
+              { "type": " ", "oldLine": 47, "newLine": 45, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 48,
+                "text": "    function setRewardConfig(RewardConfig memory _config) external;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 46,
+                "text": "    function setRewardConfig(MutableRewardConfig memory _config) external;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 49,
+                "newLine": 47,
+                "text": "    function updateManaTarget(uint256 _manaTarget) external;"
+              },
+              { "type": " ", "oldLine": 50, "newLine": 48, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 51,
+                "newLine": 49,
+                "text": "    // solhint-disable-next-line func-name-mixedcase"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

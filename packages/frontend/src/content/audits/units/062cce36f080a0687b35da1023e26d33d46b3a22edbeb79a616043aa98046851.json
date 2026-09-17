@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "062cce36f080a0687b35da1023e26d33d46b3a22edbeb79a616043aa98046851",
+  "name": "UnstructuredStorage",
+  "kind": "library",
+  "lines": 25,
+  "source": "library UnstructuredStorage {\n    function getStorageBool(bytes32 position) internal view returns (bool data) {\n        assembly {\n            data := sload(position)\n        }\n    }\n\n    function getStorageUint256(bytes32 position) internal view returns (uint256 data) {\n        assembly {\n            data := sload(position)\n        }\n    }\n\n    function setStorageBool(bytes32 position, bool data) internal {\n        assembly {\n            sstore(position, data)\n        }\n    }\n\n    function setStorageUint256(bytes32 position, uint256 data) internal {\n        assembly {\n            sstore(position, data)\n        }\n    }\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "1f5c32d18cf7148d": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

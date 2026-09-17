@@ -1,0 +1,326 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "b24dcbf9b155c0b563067bfa0c958e6ed51f89514a8e5a0b089b974cb0808b58",
+  "name": "RiscZeroGroth16Verifier",
+  "kind": "contract",
+  "lines": 129,
+  "source": "contract RiscZeroGroth16Verifier is IRiscZeroVerifier, Groth16Verifier {\n    using ReceiptClaimLib for ReceiptClaim;\n    using OutputLib for Output;\n    using SafeCast for uint256;\n\n    /// @notice Control root hash binding the set of circuits in the RISC Zero system.\n    /// @dev This value controls what set of recursion programs (e.g. lift, join, resolve), and\n    /// therefore what version of the zkVM circuit, will be accepted by this contract. Each\n    /// instance of this verifier contract will accept a single release of the RISC Zero circuits.\n    ///\n    /// New releases of RISC Zero's zkVM require updating these values. These values can be\n    /// calculated from the [risc0 monorepo][1] using: `cargo xtask bootstrap`.\n    ///\n    /// [1]: https://github.com/risc0/risc0\n    bytes16 public immutable CONTROL_ROOT_0;\n    bytes16 public immutable CONTROL_ROOT_1;\n    bytes32 public immutable BN254_CONTROL_ID;\n\n    /// @notice A short key attached to the seal to select the correct verifier implementation.\n    /// @dev The selector is taken from the hash of the verifier parameters including the Groth16\n    ///      verification key and the control IDs that commit to the RISC Zero circuits. If two\n    ///      receipts have different selectors (i.e. different verifier parameters), then it can\n    ///      generally be assumed that they need distinct verifier implementations. This is used as\n    ///      part of the RISC Zero versioning mechanism.\n    ///\n    ///      A selector is not intended to be collision resistant, in that it is possible to find\n    ///      two preimages that result in the same selector. This is acceptable since it's purpose\n    ///      to a route a request among a set of trusted verifiers, and to make errors of sending a\n    ///      receipt to a mismatching verifiers easier to debug. It is analogous to the ABI\n    ///      function selectors.\n    bytes4 public immutable SELECTOR;\n\n    /// @notice Identifier for the Groth16 verification key encoded into the base contract.\n    /// @dev This value is computed at compile time.\n    function verifier_key_digest() internal pure returns (bytes32) {\n        bytes32[] memory ic_digests = new bytes32[](6);\n        ic_digests[0] = sha256(abi.encodePacked(IC0x, IC0y));\n        ic_digests[1] = sha256(abi.encodePacked(IC1x, IC1y));\n        ic_digests[2] = sha256(abi.encodePacked(IC2x, IC2y));\n        ic_digests[3] = sha256(abi.encodePacked(IC3x, IC3y));\n        ic_digests[4] = sha256(abi.encodePacked(IC4x, IC4y));\n        ic_digests[5] = sha256(abi.encodePacked(IC5x, IC5y));\n\n        return sha256(\n            abi.encodePacked(\n                // tag\n                sha256(\"risc0_groth16.VerifyingKey\"),\n                // down\n                sha256(abi.encodePacked(alphax, alphay)),\n                sha256(abi.encodePacked(betax1, betax2, betay1, betay2)),\n                sha256(abi.encodePacked(gammax1, gammax2, gammay1, gammay2)),\n                sha256(abi.encodePacked(deltax1, deltax2, deltay1, deltay2)),\n                StructHash.taggedList(sha256(\"risc0_groth16.VerifyingKey.IC\"), ic_digests),\n                // down length\n                uint16(5) << 8\n            )\n        );\n    }\n\n    constructor(bytes32 control_root, bytes32 bn254_control_id) {\n        (CONTROL_ROOT_0, CONTROL_ROOT_1) = splitDigest(control_root);\n        BN254_CONTROL_ID = bn254_control_id;\n\n        SELECTOR = bytes4(\n            sha256(\n                abi.encodePacked(\n                    // tag\n                    sha256(\"risc0.Groth16ReceiptVerifierParameters\"),\n                    // down\n                    control_root,\n                    reverseByteOrderUint256(uint256(bn254_control_id)),\n                    verifier_key_digest(),\n                    // down length\n                    uint16(3) << 8\n                )\n            )\n        );\n    }\n\n    /// @notice splits a digest into two 128-bit halves to use as public signal inputs.\n    /// @dev RISC Zero's Circom verifier circuit takes each of two hash digests in two 128-bit\n    /// chunks. These values can be derived from the digest by splitting the digest in half and\n    /// then reversing the bytes of each.\n    function splitDigest(bytes32 digest) internal pure returns (bytes16, bytes16) {\n        uint256 reversed = reverseByteOrderUint256(uint256(digest));\n        return (bytes16(uint128(reversed)), bytes16(uint128(reversed >> 128)));\n    }\n\n    /// @inheritdoc IRiscZeroVerifier\n    function verify(bytes calldata seal, bytes32 imageId, bytes32 journalDigest) external view {\n        _verifyIntegrity(seal, ReceiptClaimLib.ok(imageId, journalDigest).digest());\n    }\n\n    /// @inheritdoc IRiscZeroVerifier\n    function verifyIntegrity(Receipt calldata receipt) external view {\n        return _verifyIntegrity(receipt.seal, receipt.claimDigest);\n    }\n\n    /// @notice internal implementation of verifyIntegrity, factored to avoid copying calldata bytes to memory.\n    function _verifyIntegrity(bytes calldata seal, bytes32 claimDigest) internal view {\n        // Check that the seal has a matching selector. Mismatch generally indicates that the\n        // prover and this verifier are using different parameters, and so the verification\n        // will not succeed.\n        if (SELECTOR != bytes4(seal[:4])) {\n            revert SelectorMismatch({received: bytes4(seal[:4]), expected: SELECTOR});\n        }\n\n        // Run the Groth16 verify procedure.\n        (bytes16 claim0, bytes16 claim1) = splitDigest(claimDigest);\n        Seal memory decodedSeal = abi.decode(seal[4:], (Seal));\n        bool verified = this.verifyProof(\n            decodedSeal.a,\n            decodedSeal.b,\n            decodedSeal.c,\n            [\n                uint256(uint128(CONTROL_ROOT_0)),\n                uint256(uint128(CONTROL_ROOT_1)),\n                uint256(uint128(claim0)),\n                uint256(uint128(claim1)),\n                uint256(BN254_CONTROL_ID)\n            ]\n        );\n\n        // Revert is verification failed.\n        if (!verified) {\n            revert VerificationFailed();\n        }\n    }\n}",
+  "resolutions": {
+    "ba5b6c9584fb78fd": {
+      "status": "differs",
+      "coveredLines": 127,
+      "match": {
+        "origin": "own",
+        "collection": "bob",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "RiscZeroGroth16Verifier",
+        "similarity": 1,
+        "reportId": "bob/veridise-kailua-2025-02",
+        "repository": "boundless-xyz/kailua",
+        "path": "crates/contracts/foundry/src/vendor/FlatR0ImportV1.2.0.sol",
+        "commit": "27dec82b67de1051df9258b36f8366ebf308e5bf",
+        "commitTimestamp": "2025-02-06T07:42:16Z",
+        "url": "https://github.com/boundless-xyz/kailua/blob/27dec82b67de1051df9258b36f8366ebf308e5bf/crates/contracts/foundry/src/vendor/FlatR0ImportV1.2.0.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix commit",
+        "coverage": "Confirmed fix commit for V-KLA-VUL-004 (contract nits).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 2,
+        "removed": 3,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 2,
+        "unchanged": 127,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 11,
+            "newStart": 1,
+            "newLines": 8,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "contract RiscZeroGroth16Verifier is IRiscZeroVerifier, IRiscZeroSelectable, Groth16Verifier {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "contract RiscZeroGroth16Verifier is IRiscZeroVerifier, Groth16Verifier {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "    using ReceiptClaimLib for ReceiptClaim;"
+              },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "    using OutputLib for Output;"
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "    using SafeCast for uint256;"
+              },
+              { "type": " ", "oldLine": 5, "newLine": 5, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 6,
+                "text": "    /// Semantic version of the the RISC Zero system of which this contract is part.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 7,
+                "text": "    string public constant VERSION = \"1.2.0\";",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 8, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 6,
+                "text": "    /// @notice Control root hash binding the set of circuits in the RISC Zero system."
+              },
+              {
+                "type": " ",
+                "oldLine": 10,
+                "newLine": 7,
+                "text": "    /// @dev This value controls what set of recursion programs (e.g. lift, join, resolve), and"
+              },
+              {
+                "type": " ",
+                "oldLine": 11,
+                "newLine": 8,
+                "text": "    /// therefore what version of the zkVM circuit, will be accepted by this contract. Each"
+              }
+            ]
+          },
+          {
+            "oldStart": 110,
+            "oldLines": 7,
+            "newStart": 107,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 110, "newLine": 107, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 111,
+                "newLine": 108,
+                "text": "        // Run the Groth16 verify procedure."
+              },
+              {
+                "type": " ",
+                "oldLine": 112,
+                "newLine": 109,
+                "text": "        (bytes16 claim0, bytes16 claim1) = splitDigest(claimDigest);"
+              },
+              {
+                "type": "-",
+                "oldLine": 113,
+                "text": "        Seal_1 memory decodedSeal = abi.decode(seal[4:], (Seal_1));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 110,
+                "text": "        Seal memory decodedSeal = abi.decode(seal[4:], (Seal));",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 114,
+                "newLine": 111,
+                "text": "        bool verified = this.verifyProof("
+              },
+              {
+                "type": " ",
+                "oldLine": 115,
+                "newLine": 112,
+                "text": "            decodedSeal.a,"
+              },
+              {
+                "type": " ",
+                "oldLine": 116,
+                "newLine": 113,
+                "text": "            decodedSeal.b,"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "bb55951394276893": {
+      "status": "differs",
+      "coveredLines": 127,
+      "match": {
+        "origin": "other",
+        "collection": "bob",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "name",
+        "auditedName": "RiscZeroGroth16Verifier",
+        "similarity": 1,
+        "reportId": "bob/veridise-kailua-2025-02",
+        "repository": "boundless-xyz/kailua",
+        "path": "crates/contracts/foundry/src/vendor/FlatR0ImportV1.2.0.sol",
+        "commit": "27dec82b67de1051df9258b36f8366ebf308e5bf",
+        "commitTimestamp": "2025-02-06T07:42:16Z",
+        "url": "https://github.com/boundless-xyz/kailua/blob/27dec82b67de1051df9258b36f8366ebf308e5bf/crates/contracts/foundry/src/vendor/FlatR0ImportV1.2.0.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix commit",
+        "coverage": "Confirmed fix commit for V-KLA-VUL-004 (contract nits).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 2,
+        "removed": 3,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 2,
+        "unchanged": 127,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 11,
+            "newStart": 1,
+            "newLines": 8,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "contract RiscZeroGroth16Verifier is IRiscZeroVerifier, IRiscZeroSelectable, Groth16Verifier {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "contract RiscZeroGroth16Verifier is IRiscZeroVerifier, Groth16Verifier {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "    using ReceiptClaimLib for ReceiptClaim;"
+              },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "    using OutputLib for Output;"
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "    using SafeCast for uint256;"
+              },
+              { "type": " ", "oldLine": 5, "newLine": 5, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 6,
+                "text": "    /// Semantic version of the the RISC Zero system of which this contract is part.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 7,
+                "text": "    string public constant VERSION = \"1.2.0\";",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 8, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 6,
+                "text": "    /// @notice Control root hash binding the set of circuits in the RISC Zero system."
+              },
+              {
+                "type": " ",
+                "oldLine": 10,
+                "newLine": 7,
+                "text": "    /// @dev This value controls what set of recursion programs (e.g. lift, join, resolve), and"
+              },
+              {
+                "type": " ",
+                "oldLine": 11,
+                "newLine": 8,
+                "text": "    /// therefore what version of the zkVM circuit, will be accepted by this contract. Each"
+              }
+            ]
+          },
+          {
+            "oldStart": 110,
+            "oldLines": 7,
+            "newStart": 107,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 110, "newLine": 107, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 111,
+                "newLine": 108,
+                "text": "        // Run the Groth16 verify procedure."
+              },
+              {
+                "type": " ",
+                "oldLine": 112,
+                "newLine": 109,
+                "text": "        (bytes16 claim0, bytes16 claim1) = splitDigest(claimDigest);"
+              },
+              {
+                "type": "-",
+                "oldLine": 113,
+                "text": "        Seal_1 memory decodedSeal = abi.decode(seal[4:], (Seal_1));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 110,
+                "text": "        Seal memory decodedSeal = abi.decode(seal[4:], (Seal));",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 114,
+                "newLine": 111,
+                "text": "        bool verified = this.verifyProof("
+              },
+              {
+                "type": " ",
+                "oldLine": 115,
+                "newLine": 112,
+                "text": "            decodedSeal.a,"
+              },
+              {
+                "type": " ",
+                "oldLine": 116,
+                "newLine": 113,
+                "text": "            decodedSeal.b,"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

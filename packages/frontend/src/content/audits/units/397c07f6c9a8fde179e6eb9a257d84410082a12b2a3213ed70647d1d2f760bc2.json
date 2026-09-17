@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "397c07f6c9a8fde179e6eb9a257d84410082a12b2a3213ed70647d1d2f760bc2",
+  "name": "IERC721Bridge",
+  "kind": "interface",
+  "lines": 42,
+  "source": "interface IERC721Bridge {\n    event ERC721BridgeFinalized(\n        address indexed localToken,\n        address indexed remoteToken,\n        address indexed from,\n        address to,\n        uint256 tokenId,\n        bytes extraData\n    );\n    event ERC721BridgeInitiated(\n        address indexed localToken,\n        address indexed remoteToken,\n        address indexed from,\n        address to,\n        uint256 tokenId,\n        bytes extraData\n    );\n    event Initialized(uint8 version);\n\n    function MESSENGER() external view returns (ICrossDomainMessenger);\n    function OTHER_BRIDGE() external view returns (IERC721Bridge);\n    function bridgeERC721(\n        address _localToken,\n        address _remoteToken,\n        uint256 _tokenId,\n        uint32 _minGasLimit,\n        bytes memory _extraData\n    ) external;\n    function bridgeERC721To(\n        address _localToken,\n        address _remoteToken,\n        address _to,\n        uint256 _tokenId,\n        uint32 _minGasLimit,\n        bytes memory _extraData\n    ) external;\n    function messenger() external view returns (ICrossDomainMessenger);\n    function otherBridge() external view returns (IERC721Bridge);\n    function paused() external view returns (bool);\n\n    function __constructor__() external;\n}",
+  "resolutions": {
+    "ba5b6c9584fb78fd": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "44ad4cf96e2ef6f0": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "bb55951394276893": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

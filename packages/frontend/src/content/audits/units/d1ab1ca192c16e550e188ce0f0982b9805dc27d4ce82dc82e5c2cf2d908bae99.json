@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "d1ab1ca192c16e550e188ce0f0982b9805dc27d4ce82dc82e5c2cf2d908bae99",
+  "name": "HasProxyAdmin",
+  "kind": "abstract",
+  "lines": 22,
+  "source": "abstract contract HasProxyAdmin {\n    // bytes32(uint256(keccak256(\"eip1967.proxy.admin\")) - 1));\n    bytes32 private constant _ADMIN_SLOT = 0xb53127684a568b3173ae13b9f8a6016e243e63b6e8ee1178d6a717850b5d6103;\n\n    modifier onlyProxyAdmin() {\n        _requireProxyAdmin();\n        _;\n    }\n\n    /**\n     * @dev Returns proxy admin.\n     */\n    function _getProxyAdmin() internal view virtual returns (address) {\n        return StorageSlot.getAddressSlot(_ADMIN_SLOT).value;\n    }\n\n    function _requireProxyAdmin() internal view {\n        if (msg.sender != _getProxyAdmin()) {\n            revert ErrUnauthorized(msg.sig, RoleAccess.ADMIN);\n        }\n    }\n}",
+  "resolutions": {
+    "bb55951394276893": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

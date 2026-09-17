@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "ef0eb560d3ae935bdd5fc244f311d1d2646ff864b6354f11a029e50fd4e97987",
+  "name": "IStakingCore",
+  "kind": "interface",
+  "lines": 48,
+  "source": "interface IStakingCore {\n    event SlasherUpdated(address indexed oldSlasher, address indexed newSlasher);\n    event PendingSlasherQueued(address indexed slasher, uint256 readyAt);\n    event PendingSlasherCancelled(address indexed slasher);\n    event LegacySlasherAuthorized(address indexed legacySlasher, uint256 authorizedUntil);\n    event ValidatorQueued(address indexed attester, address indexed withdrawer);\n    event Deposit(\n        address indexed attester,\n        address indexed withdrawer,\n        G1Point publicKeyInG1,\n        G2Point publicKeyInG2,\n        G1Point proofOfPossession,\n        uint256 amount\n    );\n    event FailedDeposit(\n        address indexed attester,\n        address indexed withdrawer,\n        G1Point publicKeyInG1,\n        G2Point publicKeyInG2,\n        G1Point proofOfPossession\n    );\n    event WithdrawInitiated(address indexed attester, address indexed recipient, uint256 amount);\n    event WithdrawFinalized(address indexed attester, address indexed recipient, uint256 amount);\n    event Slashed(address indexed attester, uint256 amount);\n    event StakingQueueConfigUpdated(StakingQueueConfig config);\n\n    function queueSetSlasher(address _slasher) external;\n    function cancelSetSlasher() external;\n    function finalizeSetSlasher() external;\n    function deposit(\n        address _attester,\n        address _withdrawer,\n        G1Point memory _publicKeyInG1,\n        G2Point memory _publicKeyInG2,\n        G1Point memory _proofOfPossession,\n        bool _moveWithLatestRollup\n    ) external;\n    function flushEntryQueue() external;\n    function flushEntryQueue(uint256 _toAdd) external;\n    function initiateWithdraw(address _attester, address _recipient) external returns (bool);\n    function finalizeWithdraw(address _attester) external;\n    function slash(address _attester, uint256 _amount) external returns (bool);\n    function vote(uint256 _proposalId) external;\n    function updateStakingQueueConfig(StakingQueueConfig memory _config) external;\n\n    function getEntryQueueFlushSize() external view returns (uint256);\n    function getActiveAttesterCount() external view returns (uint256);\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

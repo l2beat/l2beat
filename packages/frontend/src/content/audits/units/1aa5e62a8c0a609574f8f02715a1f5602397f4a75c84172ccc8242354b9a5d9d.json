@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "1aa5e62a8c0a609574f8f02715a1f5602397f4a75c84172ccc8242354b9a5d9d",
+  "name": "IOracleSlippage",
+  "kind": "interface",
+  "lines": 21,
+  "source": "interface IOracleSlippage {\n    /// @notice Ensures that the current (synthetic) tick over the path is no worse than\n    /// `maximumTickDivergence` ticks away from the average as of `secondsAgo`\n    /// @param path The path to fetch prices over\n    /// @param maximumTickDivergence The maximum number of ticks that the price can degrade by\n    /// @param secondsAgo The number of seconds ago to compute oracle prices against\n    function checkOracleSlippage(bytes memory path, uint24 maximumTickDivergence, uint32 secondsAgo) external view;\n\n    /// @notice Ensures that the weighted average current (synthetic) tick over the path is no\n    /// worse than `maximumTickDivergence` ticks away from the average as of `secondsAgo`\n    /// @param paths The paths to fetch prices over\n    /// @param amounts The weights for each entry in `paths`\n    /// @param maximumTickDivergence The maximum number of ticks that the price can degrade by\n    /// @param secondsAgo The number of seconds ago to compute oracle prices against\n    function checkOracleSlippage(\n        bytes[] memory paths,\n        uint128[] memory amounts,\n        uint24 maximumTickDivergence,\n        uint32 secondsAgo\n    ) external view;\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

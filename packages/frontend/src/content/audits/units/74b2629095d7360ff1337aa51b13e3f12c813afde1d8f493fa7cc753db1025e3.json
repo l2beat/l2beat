@@ -1,0 +1,119 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "74b2629095d7360ff1337aa51b13e3f12c813afde1d8f493fa7cc753db1025e3",
+  "name": "Semver",
+  "kind": "contract",
+  "lines": 44,
+  "source": "contract Semver {\n    /**\n     * @notice Contract version number (major).\n     */\n    uint256 private immutable MAJOR_VERSION;\n\n    /**\n     * @notice Contract version number (minor).\n     */\n    uint256 private immutable MINOR_VERSION;\n\n    /**\n     * @notice Contract version number (patch).\n     */\n    uint256 private immutable PATCH_VERSION;\n\n    /**\n     * @param _major Version number (major).\n     * @param _minor Version number (minor).\n     * @param _patch Version number (patch).\n     */\n    constructor(uint256 _major, uint256 _minor, uint256 _patch) {\n        MAJOR_VERSION = _major;\n        MINOR_VERSION = _minor;\n        PATCH_VERSION = _patch;\n    }\n\n    /**\n     * @notice Returns the full semver contract version.\n     *\n     * @return Semver contract version as a string.\n     */\n    function version() public view returns (string memory) {\n        return string(\n            abi.encodePacked(\n                Strings.toString(MAJOR_VERSION),\n                \".\",\n                Strings.toString(MINOR_VERSION),\n                \".\",\n                Strings.toString(PATCH_VERSION)\n            )\n        );\n    }\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "identical",
+      "coveredLines": 44,
+      "match": {
+        "origin": "own",
+        "collection": "optimism",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "Semver",
+        "similarity": 1,
+        "reportId": "optimism/openzeppelin-bedrock-periphery-2022-09",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts-bedrock/contracts/universal/Semver.sol",
+        "commit": "93d3bd411a8ae75702539ac9c5fe00bad21d4104",
+        "commitTimestamp": "2022-07-21T16:50:18Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/93d3bd411a8ae75702539ac9c5fe00bad21d4104/packages/contracts-bedrock/contracts/universal/Semver.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Full review of the listed file at the audited commit. Fix commits live in the inaccessible optimism-audit-fixes repository and are not recorded.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 3,
+        "unchanged": 44,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 2,
+            "oldLines": 19,
+            "newStart": 2,
+            "newLines": 16,
+            "lines": [
+              { "type": " ", "oldLine": 2, "newLine": 2, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "     * @notice Contract version number (major)."
+              },
+              { "type": " ", "oldLine": 4, "newLine": 4, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 5,
+                "text": "    // solhint-disable-next-line var-name-mixedcase",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 6,
+                "newLine": 5,
+                "text": "    uint256 private immutable MAJOR_VERSION;"
+              },
+              { "type": " ", "oldLine": 7, "newLine": 6, "text": "" },
+              { "type": " ", "oldLine": 8, "newLine": 7, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 8,
+                "text": "     * @notice Contract version number (minor)."
+              },
+              { "type": " ", "oldLine": 10, "newLine": 9, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 11,
+                "text": "    // solhint-disable-next-line var-name-mixedcase",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 12,
+                "newLine": 10,
+                "text": "    uint256 private immutable MINOR_VERSION;"
+              },
+              { "type": " ", "oldLine": 13, "newLine": 11, "text": "" },
+              { "type": " ", "oldLine": 14, "newLine": 12, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 15,
+                "newLine": 13,
+                "text": "     * @notice Contract version number (patch)."
+              },
+              { "type": " ", "oldLine": 16, "newLine": 14, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 17,
+                "text": "    // solhint-disable-next-line var-name-mixedcase",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 18,
+                "newLine": 15,
+                "text": "    uint256 private immutable PATCH_VERSION;"
+              },
+              { "type": " ", "oldLine": 19, "newLine": 16, "text": "" },
+              { "type": " ", "oldLine": 20, "newLine": 17, "text": "    /**" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "d5a2c557ad27f0b223e16514b8e9d22b69e232c8222769d6d866022d5a691468",
+  "name": "run_bench.sh",
+  "kind": "program",
+  "lines": 16,
+  "source": "#!/usr/bin/env bash\n\ncd $(dirname $0)/..\n\nartifact=$1\nshift\n# rest of $@ args are flags\n\ncircuit_name=$(basename $artifact .json)\n\nmkdir -p ./bench-out\n../../barretenberg/cpp/build/bin/bb gates -b $artifact \"$@\" |\n  jq --arg name $circuit_name '[\n    { name: ($name + \"_opcodes\"), unit: \"opcodes\", value: .functions[0].acir_opcodes },\n    { name: ($name + \"_gates\"), unit: \"gates\", value: .functions[0].circuit_size }\n  ]' > bench-out/$circuit_name.bench.json",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

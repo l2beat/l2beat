@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "12e058b1a8d9108040c9e45349e632e827c1653dad43ea7657076b0c5786a681",
+  "name": "IATPCore",
+  "kind": "interface",
+  "lines": 35,
+  "source": "interface IATPCore {\n    event StakerInitialized(IBaseStaker staker);\n    event StakerUpgraded(StakerVersion version);\n    event StakerOperatorUpdated(address operator);\n    event Claimed(uint256 amount);\n    event ApprovedStaker(uint256 allowance);\n    event Rescued(address asset, address to, uint256 amount);\n    event Revoked(uint256 amount);\n\n    error AlreadyInitialized();\n    error InvalidBeneficiary(address beneficiary);\n    error NotBeneficiary(address caller, address beneficiary);\n    error LockHasEnded();\n    error InvalidTokenAddress(address token);\n    error InvalidRegistry(address registry);\n    error AllocationMustBeGreaterThanZero();\n    error InvalidAsset(address asset);\n    error ExecutionNotAllowedYet(uint256 timestamp, uint256 executeAllowedAt);\n    error NotRevokable();\n    error NotRevoker(address caller, address revoker);\n    error NoClaimable();\n    error LockDurationMustBeGTZero(string variant);\n    error InvalidUpgrade();\n\n    function upgradeStaker(StakerVersion _version) external;\n    function approveStaker(uint256 _allowance) external;\n    function updateStakerOperator(address _operator) external;\n    function claim() external returns (uint256);\n    function rescueFunds(address _asset, address _to) external;\n    function revoke() external returns (uint256);\n    function getClaimable() external view returns (uint256);\n    function getGlobalLock() external view returns (Lock memory);\n    function getBeneficiary() external view returns (address);\n    function getOperator() external view returns (address);\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

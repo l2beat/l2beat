@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "782f5567e63bd9d1f46730e4ac468a57e79eab50cb70301e5e186866209e2b6c",
+  "name": "(file-level declarations)",
+  "kind": "file-level",
+  "lines": 18,
+  "source": "using LPPMetadataLib for LPPMetaData global;\ntype LPPMetaData is bytes32;\nerror PartOffsetOOB();\nerror InsufficientBond();\nerror NotEOA();\nerror InvalidInputSize();\nerror AlreadyInitialized();\nerror NotInitialized();\nerror AlreadyFinalized();\nerror WrongStartingBlock();\nerror TreeSizeOverflow();\nerror InvalidProof();\nerror InvalidPreimage();\nerror StatesNotContiguous();\nerror PostStateMatches();\nerror BadProposal();\nerror ActiveProposal();\nerror BondTransferFailed();",
+  "resolutions": {
+    "ba5b6c9584fb78fd": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "44ad4cf96e2ef6f0": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "bb55951394276893": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

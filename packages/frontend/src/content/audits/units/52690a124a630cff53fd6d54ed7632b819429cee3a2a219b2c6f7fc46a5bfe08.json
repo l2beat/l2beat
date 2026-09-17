@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "52690a124a630cff53fd6d54ed7632b819429cee3a2a219b2c6f7fc46a5bfe08",
+  "name": "lib.nr",
+  "kind": "program",
+  "lines": 5,
+  "source": "pub mod reader;\npub mod writer;\npub mod serialization;\npub mod type_impls;\nmod tests;",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

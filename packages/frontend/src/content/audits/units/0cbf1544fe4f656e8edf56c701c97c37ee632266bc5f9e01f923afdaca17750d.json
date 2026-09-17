@@ -1,0 +1,179 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "0cbf1544fe4f656e8edf56c701c97c37ee632266bc5f9e01f923afdaca17750d",
+  "name": "Cargo.toml",
+  "kind": "program",
+  "lines": 21,
+  "source": "[package]\nname = \"scroll-zkvm-bundle-circuit\"\nedition.workspace = true\nreadme.workspace = true\nrepository.workspace = true\nversion = \"0.5.0\"\n\n[dependencies]\nscroll-zkvm-types-circuit.workspace = true\nscroll-zkvm-types-bundle.workspace = true\n\nopenvm = { workspace = true, features = [\"std\"] }\nopenvm-algebra-guest.workspace = true\nopenvm-keccak256-guest.workspace = true\nopenvm-rv32im-guest.workspace = true\n\nalloy-primitives = { workspace = true }\nrkyv.workspace = true\n\n[features]\ndefault = []",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "differs",
+      "coveredLines": 17,
+      "match": {
+        "origin": "own",
+        "collection": "scroll",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "Cargo.toml",
+        "similarity": 0.765,
+        "reportId": "scroll/trailofbits-scroll-euclid-phase1-2025-04",
+        "repository": "scroll-tech/zkvm-prover",
+        "path": "crates/circuits/bundle-circuit/Cargo.toml",
+        "commit": "3f008792538a33271d116f75beab0e137a10f176",
+        "commitTimestamp": "2025-03-17T14:08:53Z",
+        "url": "https://github.com/scroll-tech/zkvm-prover/blob/3f008792538a33271d116f75beab0e137a10f176/crates/circuits/bundle-circuit/Cargo.toml",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Head of PR #85 (fix review): TOB-SCREUC-1 resolved via zip_eq in the types crate.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 4
+      },
+      "diff": {
+        "added": 4,
+        "removed": 4,
+        "ignoredAdded": 1,
+        "ignoredRemoved": 1,
+        "unchanged": 17,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 3,
+            "oldLines": 19,
+            "newStart": 3,
+            "newLines": 19,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "edition.workspace = true"
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "readme.workspace = true"
+              },
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 5,
+                "text": "repository.workspace = true"
+              },
+              {
+                "type": "-",
+                "oldLine": 6,
+                "text": "version.workspace = true",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 6,
+                "text": "version = \"0.5.0\"",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 7, "newLine": 7, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 8,
+                "newLine": 8,
+                "text": "[dependencies]"
+              },
+              {
+                "type": "-",
+                "oldLine": 9,
+                "text": "scroll-zkvm-circuit-input-types.workspace = true",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 9,
+                "text": "scroll-zkvm-types-circuit.workspace = true",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 10,
+                "text": "scroll-zkvm-types-bundle.workspace = true",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 10, "newLine": 11, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 11,
+                "newLine": 12,
+                "text": "openvm = { workspace = true, features = [\"std\"] }"
+              },
+              {
+                "type": " ",
+                "oldLine": 12,
+                "newLine": 13,
+                "text": "openvm-algebra-guest.workspace = true"
+              },
+              {
+                "type": " ",
+                "oldLine": 13,
+                "newLine": 14,
+                "text": "openvm-keccak256-guest.workspace = true"
+              },
+              {
+                "type": " ",
+                "oldLine": 14,
+                "newLine": 15,
+                "text": "openvm-rv32im-guest.workspace = true"
+              },
+              { "type": " ", "oldLine": 15, "newLine": 16, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 16,
+                "text": "alloy-primitives = { workspace = true, default-features = false, features = [\"std\", \"map-hashbrown\", \"map-fxhash\", \"rkyv\"] }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 17,
+                "text": "alloy-primitives = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 17,
+                "newLine": 18,
+                "text": "rkyv.workspace = true"
+              },
+              { "type": " ", "oldLine": 18, "newLine": 19, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 19,
+                "newLine": 20,
+                "text": "[features]"
+              },
+              {
+                "type": "-",
+                "oldLine": 20,
+                "text": "default = []",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 21,
+                "text": "euclidv2 = [\"scroll-zkvm-circuit-input-types/euclidv2\"]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 21,
+                "text": "default = []",
+                "ignored": true
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

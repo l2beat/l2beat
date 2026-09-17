@@ -1,0 +1,499 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "b455f59cea3329379875603cb120dc689b1a704c9338c75ebdca4bddb97bee02",
+  "name": "ValidatorSelectionLib",
+  "kind": "library",
+  "lines": 640,
+  "source": "library ValidatorSelectionLib {\n    using EnumerableSet for EnumerableSet.AddressSet;\n    using SignatureLib for Signature;\n    using TimeLib for Timestamp;\n    using TimeLib for Epoch;\n    using TimeLib for Slot;\n    using Checkpoints for Checkpoints.Trace224;\n    using Checkpoints for Checkpoints.Trace160;\n    using SafeCast for *;\n    using TransientSlot for *;\n    using SlotDerivation for string;\n    using SlotDerivation for bytes32;\n    using AttestationLib for CommitteeAttestations;\n\n    /**\n     * @dev Stack struct used in verifyAttestations to avoid stack too deep errors\n     *      Used when reconstructing the committee commitment from the attestations\n     * @param index Working index for iteration (unused in current implementation)\n     * @param needed Number of signatures required (2/3 + 1 of committee size)\n     * @param signaturesRecovered Number of valid signatures found\n     * @param reconstructedCommittee Array of committee member addresses reconstructed from attestations\n     */\n    struct VerifyStack {\n        uint256 index;\n        uint256 needed;\n        uint256 signaturesRecovered;\n        address[] reconstructedCommittee;\n    }\n\n    bytes32 private constant VALIDATOR_SELECTION_STORAGE_POSITION = keccak256(\"aztec.validator_selection.storage\");\n    // Namespace for cached proposer computations\n    string private constant PROPOSER_NAMESPACE = \"aztec.validator_selection.transient.proposer\";\n\n    /**\n     * @notice Initializes the validator selection system with target committee size\n     * @dev It is HIGHLY recommended to use lagInEpochsForValidatorSet > lagInEpochsForRandao, to avoid sequencer bias\n     *      but we allow them being equal because it makes test networks faster to kick off.\n     * @dev Sets up the initial configuration and bootstrap seeds for the first two epochs.\n     *      The first two epochs use maximum seed values for startup.\n     * @param _targetCommitteeSize The desired number of validators in each epoch's committee\n     */\n    function initialize(\n        uint256 _targetCommitteeSize,\n        uint256 _lagInEpochsForValidatorSet,\n        uint256 _lagInEpochsForRandao\n    ) internal {\n        require(\n            _lagInEpochsForValidatorSet >= _lagInEpochsForRandao,\n            Errors.ValidatorSelection__InvalidLagInEpochs(_lagInEpochsForValidatorSet, _lagInEpochsForRandao)\n        );\n        ValidatorSelectionStorage storage store = getStorage();\n        store.targetCommitteeSize = _targetCommitteeSize.toUint32();\n        store.lagInEpochsForValidatorSet = _lagInEpochsForValidatorSet.toUint32();\n        store.lagInEpochsForRandao = _lagInEpochsForRandao.toUint32();\n\n        checkpointRandao(Epoch.wrap(0));\n    }\n\n    /**\n     * @notice Sets the escape hatch contract address. One-shot: can only be called once per rollup.\n     * @dev Only callable through RollupCore.setEscapeHatch (owner-gated). Once set, the rollup's\n     *      escape hatch is immutable for the life of the rollup -- there is no replacement path.\n     *      Callers who want no escape hatch should simply never call this function.\n     * @param _escapeHatch The address of the EscapeHatch contract (must be non-zero)\n     */\n    function setEscapeHatch(address _escapeHatch) internal {\n        require(_escapeHatch != address(0), Errors.ValidatorSelection__EscapeHatchCannotBeZero());\n\n        // The registration is one-shot and ungoverned after setup, and an open escape hatch can act\n        // as an alternate proposal route (ProposeLib.propose authorizes the registered escape\n        // hatch's designated proposer during escape-hatch epochs). Pointing at a stranger contract\n        // -- including a hatch wired to a different rollup -- would create a permanent foreign\n        // proposal authority that cannot be replaced. Require the hatch to point back here.\n        address hatchRollup = IEscapeHatch(_escapeHatch).getRollup();\n        require(\n            hatchRollup == address(this),\n            Errors.ValidatorSelection__EscapeHatchRollupMismatch(address(this), hatchRollup)\n        );\n\n        ValidatorSelectionStorage storage store = getStorage();\n        require(store.escapeHatchCheckpoints.length() == 0, Errors.ValidatorSelection__EscapeHatchAlreadySet());\n\n        // Key the checkpoint to the START of the next epoch so the registration never affects\n        // the current epoch. This prevents a same-block action from retroactively classifying\n        // an in-flight epoch as an escape-hatch epoch.\n        Epoch nextEpoch = Timestamp.wrap(block.timestamp).epochFromTimestamp() + Epoch.wrap(1);\n        uint96 nextEpochTs = uint96(Timestamp.unwrap(nextEpoch.toTimestamp()));\n        store.escapeHatchCheckpoints.push(nextEpochTs, uint160(_escapeHatch));\n    }\n\n    /**\n     * @notice Performs epoch setup by sampling the committee and setting future seeds\n     * @dev This function handles the epoch transition by:\n     *      1. Retrieving the sample seed for the current epoch\n     *      2. Setting the sample seed for the next epoch (if not already set)\n     *      3. Sampling and storing the committee for the current epoch (if not already done)\n     *\n     *      This setup ensures that each epoch has a stable committee and that future epochs\n     *      have their randomness seeds prepared in advance.\n     * @param _epochNumber The epoch number to set up\n     * @custom:reverts Errors.ValidatorSelection__EpochNotStable if the requested epoch is not stable\n     */\n    function setupEpoch(Epoch _epochNumber) internal {\n        ValidatorSelectionStorage storage store = getStorage();\n\n        bytes32 committeeCommitment = store.committeeCommitments[_epochNumber];\n        if (committeeCommitment != bytes32(0)) {\n            // We already have the commitment stored for the epoch meaning the epoch has already been setup.\n            return;\n        }\n\n        //################ Seeds ################\n        // Get the sample seed for this current epoch.\n        uint256 sampleSeed = getSampleSeed(_epochNumber);\n\n        // Checkpoint randao for future sampling if required\n        // function handles the case where it is already set\n        checkpointRandao(_epochNumber);\n\n        //################ Committee ################\n        // If the committee is not set for this epoch, we need to sample it\n        address[] memory committee = sampleValidators(_epochNumber, sampleSeed);\n        store.committeeCommitments[_epochNumber] = computeCommitteeCommitment(committee);\n    }\n\n    /**\n     * @notice Verifies that the checkpoint proposal has been signed by the correct proposer\n     * @dev Validates proposer eligibility and signature for checkpoint proposals by:\n     *      1. Attempting to load cached proposer from transient storage\n     *      2. If not cached, reconstructing committee from attestations and verifying against stored commitment\n     *      3. Computing proposer index using epoch, slot, and sample seed\n     *      4. Verifying the proposer has provided a valid signature in the attestations\n     *\n     *      The attestation is checked by reconstructing the committee commitment from the attestations and signers,\n     *      and then ensuring it matches the stored commitment for the epoch.\n     *\n     *      Uses transient storage caching to avoid recomputation within the same transaction. (This caching mechanism is\n     *      commonly used when a proposer signals in governance and submits a proposal within the same transaction - then\n     *      `getProposerAt` function is called).\n     * @param _slot The slot of the checkpoint being proposed\n     * @param _epochNumber The epoch number of the checkpoint\n     * @param _attestations The committee attestations for the checkpoint proposal\n     * @param _signers The addresses of the committee members that signed the attestations. Provided in order to not have\n     * to recover them from their attestations' signatures (and hence save gas). The addresses of the non-signing\n     * committee members are directly included in the attestations.\n     * @param _digest The digest of the checkpoint being proposed\n     * @param _updateCache Flag to identify that the proposer should be written to transient cache.\n     * @custom:reverts Errors.ValidatorSelection__InvalidCommitteeCommitment if reconstructed committee doesn't match\n     * stored commitment\n     * @custom:reverts Errors.ValidatorSelection__MissingProposerSignature if proposer hasn't signed their attestation\n     * @custom:reverts SignatureLib verification errors if proposer signature is invalid\n     * @custom:reverts Errors.ValidatorSelection__EpochNotStable if the requested epoch is not stable\n     */\n    function verifyProposer(\n        Slot _slot,\n        Epoch _epochNumber,\n        CommitteeAttestations memory _attestations,\n        address[] memory _signers,\n        bytes32 _digest,\n        Signature memory _attestationsAndSignersSignature,\n        bool _updateCache\n    ) internal {\n        uint256 proposerIndex;\n        address proposer;\n\n        {\n            // Load the committee commitment for the epoch\n            (bytes32 committeeCommitment, uint256 committeeSize) = getCommitteeCommitmentAt(_epochNumber);\n\n            // If the rollup is *deployed* with a target committee size of 0, we skip the validation.\n            // Note: This generally only happens in test setups; In production, the target committee is non-zero,\n            // and one can see in `sampleValidators` that we will revert if the target committee size is not met.\n            if (committeeSize == 0) {\n                return;\n            }\n\n            // Reconstruct the committee from the attestations and signers\n            address[] memory committee = _attestations.reconstructCommitteeFromSigners(_signers, committeeSize);\n\n            // Check reconstructed committee commitment matches the expected one for the epoch\n            bytes32 reconstructedCommitment = computeCommitteeCommitment(committee);\n            if (reconstructedCommitment != committeeCommitment) {\n                revert Errors.ValidatorSelection__InvalidCommitteeCommitment(\n                    reconstructedCommitment, committeeCommitment\n                );\n            }\n\n            // Get the proposer from the committee based on the epoch, slot, and sample seed\n            uint256 sampleSeed = getSampleSeed(_epochNumber);\n            proposerIndex = computeProposerIndex(_epochNumber, _slot, sampleSeed, committeeSize);\n            proposer = committee[proposerIndex];\n        }\n\n        // We check that the proposer agrees with the proposal by checking that he attested to it. If we fail to get\n        // the proposer's attestation signature or if we fail to verify it, we revert.\n        bool hasProposerSignature = _attestations.isSignature(proposerIndex);\n        if (!hasProposerSignature) {\n            revert Errors.ValidatorSelection__MissingProposerSignature(proposer, proposerIndex);\n        }\n\n        // Check if the signature is correct\n        Signature memory signature = _attestations.getSignature(proposerIndex);\n        SignatureLib.verify(signature, proposer, _digest);\n\n        // Check that the proposer have signed the `_attestations|_signers` data such that invalid `_attestations|_signers`\n        // data can be attributed to the `proposer` specifically.\n        bytes32 attestationsAndSignersDigest = _attestations.getAttestationsAndSignersDigest(_signers);\n        SignatureLib.verify(_attestationsAndSignersSignature, proposer, attestationsAndSignersDigest);\n\n        if (_updateCache) {\n            setCachedProposer(_slot, proposer, proposerIndex);\n        }\n    }\n\n    /**\n     * @notice Verifies committee attestations meet the required threshold and signature validity\n     * @dev Performs attestation validation by:\n     *      1. Retrieving stored committee commitment and target committee size\n     *      2. Computing proposer index for signature verification optimization\n     *      3. Extracting and verifying signatures from packed attestation data\n     *      4. Reconstructing committee addresses from signatures and provided addresses\n     *      5. Validating reconstructed committee matches stored commitment\n     *      6. Ensuring at least 2/3 + 1 committee members provided signatures\n     *\n     *      Each committee attestation is either their:\n     *      - Signature (65 bytes: v, r, s) for attestation\n     *      - Address (20 bytes) for non-signing members\n     *\n     *      Note that providing the addresses of non-signing members allows for reconstructing the committee commitment\n     *      directly from calldata.\n     *\n     *      Skips validation entirely if target committee size is 0 (test configurations).\n     * @param _epochNumber The epoch of the checkpoint\n     * @param _attestations The packed signatures and addresses of committee members\n     * @param _digest The digest of the checkpoint that attestations are signed over\n     * @custom:reverts Errors.ValidatorSelection__InsufficientAttestations if less than 2/3 + 1 signatures provided\n     * @custom:reverts Errors.ValidatorSelection__InvalidCommitteeCommitment if reconstructed committee doesn't match\n     * stored commitment\n     * @custom:reverts Errors.ValidatorSelection__EpochNotStable if the requested epoch is not stable\n     */\n    function verifyAttestations(Epoch _epochNumber, CommitteeAttestations memory _attestations, bytes32 _digest)\n        internal\n    {\n        (bytes32 committeeCommitment, uint256 targetCommitteeSize) = getCommitteeCommitmentAt(_epochNumber);\n\n        // If the rollup is *deployed* with a target committee size of 0, we skip the validation.\n        // Note: This generally only happens in test setups; In production, the target committee is non-zero,\n        // and one can see in `sampleValidators` that we will revert if the target committee size is not met.\n        if (targetCommitteeSize == 0) {\n            return;\n        }\n\n        VerifyStack memory stack = VerifyStack({\n            needed: (targetCommitteeSize << 1) / 3 + 1, // targetCommitteeSize * 2 / 3 + 1, but cheaper\n            index: 0,\n            signaturesRecovered: 0,\n            reconstructedCommittee: new address[](targetCommitteeSize)\n        });\n\n        bytes memory signaturesOrAddresses = _attestations.signaturesOrAddresses;\n        uint256 dataPtr;\n        assembly {\n            dataPtr := add(signaturesOrAddresses, 0x20) // Skip length, cache pointer\n        }\n\n        unchecked {\n            for (uint256 i = 0; i < targetCommitteeSize; ++i) {\n                bool isSignature = _attestations.isSignature(i);\n\n                if (isSignature) {\n                    uint8 v;\n                    bytes32 r;\n                    bytes32 s;\n\n                    assembly {\n                        v := byte(0, mload(dataPtr))\n                        dataPtr := add(dataPtr, 1)\n                        r := mload(dataPtr)\n                        dataPtr := add(dataPtr, 32)\n                        s := mload(dataPtr)\n                        dataPtr := add(dataPtr, 32)\n                    }\n\n                    ++stack.signaturesRecovered;\n                    stack.reconstructedCommittee[i] = ECDSA.recover(_digest, v, r, s);\n                } else {\n                    address addr;\n                    assembly {\n                        addr := shr(96, mload(dataPtr))\n                        dataPtr := add(dataPtr, 20)\n                    }\n                    stack.reconstructedCommittee[i] = addr;\n                }\n            }\n        }\n\n        require(\n            stack.signaturesRecovered >= stack.needed,\n            Errors.ValidatorSelection__InsufficientAttestations(stack.needed, stack.signaturesRecovered)\n        );\n\n        // Check the committee commitment\n        bytes32 reconstructedCommitment = computeCommitteeCommitment(stack.reconstructedCommittee);\n        if (reconstructedCommitment != committeeCommitment) {\n            revert Errors.ValidatorSelection__InvalidCommitteeCommitment(reconstructedCommitment, committeeCommitment);\n        }\n    }\n\n    /**\n     * @notice Caches proposer information in transient storage for the current transaction\n     * @dev Uses EIP-1153 transient storage to cache proposer data, avoiding recomputation within the same transaction.\n     *      Packs proposer address (160 bits) and index (96 bits) into a single 32-byte slot for efficiency.\n     * @param _slot The slot to cache the proposer for\n     * @param _proposer The proposer's address\n     * @param _proposerIndex The proposer's index within the committee\n     * @custom:reverts Errors.ValidatorSelection__ProposerIndexTooLarge if proposer index exceeds uint96 max\n     */\n    function setCachedProposer(Slot _slot, address _proposer, uint256 _proposerIndex) internal {\n        require(_proposerIndex <= type(uint96).max, Errors.ValidatorSelection__ProposerIndexTooLarge(_proposerIndex));\n        bytes32 packed = bytes32(uint256(uint160(_proposer))) | (bytes32(_proposerIndex) << 160);\n        PROPOSER_NAMESPACE.erc7201Slot().deriveMapping(Slot.unwrap(_slot)).asBytes32().tstore(packed);\n    }\n\n    /**\n     * @notice Gets the proposer for a specific slot, using cache or computing if necessary\n     * @dev First checks transient storage cache, then computes proposer if not cached.\n     *      Computation involves sampling validator indices and selecting based on slot.\n     * @param _slot The slot to get the proposer for\n     * @return proposer The address of the proposer for the slot\n     * @return proposerIndex The index of the proposer within the committee, zero address and index if committee size is\n     * 0 (ie test configuration).\n     * @custom:reverts Errors.ValidatorSelection__EpochNotStable if the requested epoch is not stable\n     */\n    function getProposerAt(Slot _slot) internal returns (address, uint256) {\n        (address cachedProposer, uint256 cachedProposerIndex) = getCachedProposer(_slot);\n        if (cachedProposer != address(0)) {\n            return (cachedProposer, cachedProposerIndex);\n        }\n\n        Epoch epochNumber = _slot.epochFromSlot();\n\n        uint256 sampleSeed = getSampleSeed(epochNumber);\n        (uint32 ts, uint256[] memory indices) = sampleValidatorsIndices(epochNumber, sampleSeed);\n        uint256 committeeSize = indices.length;\n        if (committeeSize == 0) {\n            return (address(0), 0);\n        }\n        uint256 proposerIndex = computeProposerIndex(epochNumber, _slot, sampleSeed, committeeSize);\n        return (StakingLib.getAttesterFromIndexAtTime(indices[proposerIndex], Timestamp.wrap(ts)), proposerIndex);\n    }\n\n    /**\n     * @notice Samples validator addresses for a specific epoch using cryptographic randomness\n     * @dev Samples validator indices first, then resolves to addresses at the appropriate timestamp.\n     *      Only used internally for epoch setup - should never be called for past or distant future epochs.\n     * @param _epoch The epoch to sample validators for\n     * @param _seed The cryptographic seed for sampling randomness\n     * @return The array of validator addresses selected for the committee\n     * @custom:reverts Errors.ValidatorSelection__EpochNotStable if the requested epoch is not stable\n     */\n    function sampleValidators(Epoch _epoch, uint256 _seed) internal returns (address[] memory) {\n        (uint32 ts, uint256[] memory indices) = sampleValidatorsIndices(_epoch, _seed);\n        return StakingLib.getAttestersFromIndicesAtTime(Timestamp.wrap(ts), indices);\n    }\n\n    /**\n     * @notice Gets the committee addresses for a specific epoch\n     * @dev Retrieves the sample seed for the epoch and uses it to sample the validator committee.\n     *      This function will trigger committee sampling if not already done for the epoch.\n     * @param _epochNumber The epoch to get the committee for\n     * @return The array of committee member addresses for the epoch\n     * @custom:reverts Errors.ValidatorSelection__EpochNotStable if the requested epoch is not stable\n     */\n    function getCommitteeAt(Epoch _epochNumber) internal returns (address[] memory) {\n        uint256 seed = getSampleSeed(_epochNumber);\n        return sampleValidators(_epochNumber, seed);\n    }\n\n    /**\n     * @notice Gets the committee commitment and size for an epoch\n     * @dev Retrieves the stored committee commitment, or computes it if not yet stored.\n     *      The commitment is a keccak256 hash of the committee member addresses array.\n     * @param _epochNumber The epoch to get the committee commitment for\n     * @return committeeCommitment The keccak256 hash of the committee member addresses\n     * @return committeeSize The target committee size (same for all epochs)\n     * @custom:reverts Errors.ValidatorSelection__EpochNotStable if the requested epoch is not stable\n     */\n    function getCommitteeCommitmentAt(Epoch _epochNumber)\n        internal\n        returns (bytes32 committeeCommitment, uint256 committeeSize)\n    {\n        ValidatorSelectionStorage storage store = getStorage();\n\n        committeeCommitment = store.committeeCommitments[_epochNumber];\n        if (committeeCommitment == 0) {\n            // This is an edge case that can happen if `setupEpoch` has not been called (see documentation of\n            // `RollupCore.setupEpoch` for details), so we compute the commitment again to guarantee that we get a real value.\n            committeeCommitment =\n                computeCommitteeCommitment(sampleValidators(_epochNumber, getSampleSeed(_epochNumber)));\n        }\n\n        return (committeeCommitment, store.targetCommitteeSize);\n    }\n\n    /**\n     * @notice Checkpoints randao value for future usage\n     * @dev Checks if already stored before storing the randao value.\n     * @param _epoch The current epoch\n     */\n    function checkpointRandao(Epoch _epoch) internal {\n        ValidatorSelectionStorage storage store = getStorage();\n\n        // Check if the latest checkpoint is for the next epoch\n        // It should be impossible that zero epoch snapshots exist, as in the genesis state we push the first values\n        // into the store\n        (, uint32 mostRecentTs,) = store.randaos.latestCheckpoint();\n        uint32 ts = Timestamp.unwrap(_epoch.toTimestamp()).toUint32();\n\n        // If the most recently stored epoch is less than the epoch we are querying, then we need to store randao for\n        // later use. We truncate to save storage costs.\n        if (mostRecentTs < ts) {\n            store.randaos.push(ts, uint224(block.prevrandao));\n        }\n    }\n\n    /**\n     * @notice Validates if a specific validator can propose a checkpoint at a given time and chain state\n     * @dev Performs comprehensive validation including:\n     *      - Slot timing (must be after the last checkpoint's slot)\n     *      - Archive consistency (must build on current chain tip)\n     *      - Proposer authorization (must be the designated proposer for the slot)\n     * @param _ts The timestamp of the proposed checkpoint\n     * @param _archive The archive root the checkpoint claims to build on\n     * @param _who The address attempting to propose the checkpoint\n     * @return slot The slot number derived from the timestamp\n     * @return checkpointNumber The next checkpoint number that will be assigned\n     * @custom:reverts Errors.Rollup__SlotAlreadyInChain if trying to propose for a past slot\n     * @custom:reverts Errors.Rollup__InvalidArchive if archive doesn't match current chain tip\n     * @custom:reverts Errors.ValidatorSelection__InvalidProposer if _who is not the designated proposer\n     * @custom:reverts Errors.ValidatorSelection__EpochNotStable if the requested epoch is not stable\n     */\n    function canProposeAtTime(Timestamp _ts, bytes32 _archive, address _who) internal returns (Slot, uint256) {\n        Slot slot = _ts.slotFromTimestamp();\n        RollupStore storage rollupStore = STFLib.getStorage();\n\n        // Pending chain tip\n        uint256 pendingCheckpointNumber = STFLib.getEffectivePendingCheckpointNumber(_ts);\n\n        Slot lastSlot = STFLib.getSlotNumber(pendingCheckpointNumber);\n\n        require(slot > lastSlot, Errors.Rollup__SlotAlreadyInChain(lastSlot, slot));\n\n        // Make sure that the proposer is up to date and on the right chain (ie no reorgs)\n        bytes32 tipArchive = rollupStore.archives[pendingCheckpointNumber];\n        require(tipArchive == _archive, Errors.Rollup__InvalidArchive(tipArchive, _archive));\n\n        (address proposer,) = getProposerAt(slot);\n        require(proposer == _who, Errors.ValidatorSelection__InvalidProposer(proposer, _who));\n\n        return (slot, pendingCheckpointNumber + 1);\n    }\n\n    /**\n     * @notice Retrieves cached proposer information from transient storage\n     * @dev Reads packed proposer data (address + index) from EIP-1153 transient storage.\n     *      Returns zero values if no proposer is cached for the slot.\n     * @param _slot The slot to check for cached proposer\n     * @return proposer The cached proposer address (address(0) if not cached)\n     * @return proposerIndex The cached proposer index (0 if not cached)\n     */\n    function getCachedProposer(Slot _slot) internal view returns (address proposer, uint256 proposerIndex) {\n        bytes32 packed = PROPOSER_NAMESPACE.erc7201Slot().deriveMapping(Slot.unwrap(_slot)).asBytes32().tload();\n        // Extract address from lower 160 bits\n        proposer = address(uint160(uint256(packed)));\n        // Extract uint96 from upper 96 bits\n        proposerIndex = uint256(packed >> 160);\n    }\n\n    /**\n     * @notice Gets the cryptographic sample seed for a stable epoch\n     * @dev Retrieves the randao from the checkpointed randaos mapping using upperLookup.\n     *      Then computes the sample seed using keccak256(epoch, randao)\n     * @param _epoch The epoch to get the sample seed for\n     * @return The sample seed used for validator selection randomness\n     * @custom:reverts Errors.ValidatorSelection__EpochNotStable if the requested epoch is not stable\n     */\n    function getSampleSeed(Epoch _epoch) internal view returns (uint256) {\n        ValidatorSelectionStorage storage store = getStorage();\n        uint32 ts = stableEpochToRandaoSampleTime(_epoch);\n        return uint256(keccak256(abi.encode(_epoch, store.randaos.upperLookup(ts))));\n    }\n\n    /**\n     * @notice Gets the sampling size (attester count) for a stable epoch\n     * @dev Retrieves the number of attesters at the sampling time for the epoch.\n     * @param _epoch The epoch to get the sampling size for\n     * @return The number of attesters available at the epoch's sampling time\n     * @custom:reverts Errors.ValidatorSelection__EpochNotStable if the requested epoch is not stable\n     */\n    function getSamplingSize(Epoch _epoch) internal view returns (uint256) {\n        uint32 ts = stableEpochToValidatorSetSampleTime(_epoch);\n        return StakingLib.getAttesterCountAtTime(Timestamp.wrap(ts));\n    }\n\n    function getLagInEpochsForValidatorSet() internal view returns (uint256) {\n        return getStorage().lagInEpochsForValidatorSet;\n    }\n\n    function getLagInEpochsForRandao() internal view returns (uint256) {\n        return getStorage().lagInEpochsForRandao;\n    }\n\n    /**\n     * @notice Gets the current escape hatch contract (latest checkpoint)\n     * @dev Returns the most recently configured escape hatch, or a zero-address IEscapeHatch if none set\n     * @return The escape hatch contract interface\n     */\n    function getEscapeHatch() internal view returns (IEscapeHatch) {\n        return IEscapeHatch(address(getStorage().escapeHatchCheckpoints.latest()));\n    }\n\n    /**\n     * @notice Gets the escape hatch contract that was active at the start of a given epoch\n     * @dev Uses `upperLookupRecent` to find the most recent checkpoint with key <= epoch start timestamp.\n     *      Changes pushed with `block.timestamp` during epoch N take effect for epoch N+1 (since epoch\n     *      N+1's start timestamp > the push timestamp > epoch N's start timestamp), providing implicit\n     *      epoch-boundary activation.\n     * @param _epoch The epoch to look up the escape hatch for\n     * @return The escape hatch contract interface that was active at the start of the epoch\n     */\n    function getEscapeHatchForEpoch(Epoch _epoch) internal view returns (IEscapeHatch) {\n        uint96 ts = uint96(Timestamp.unwrap(TimeLib.toTimestamp(_epoch)));\n        return IEscapeHatch(address(getStorage().escapeHatchCheckpoints.upperLookupRecent(ts)));\n    }\n\n    /**\n     * @notice Gets the validator selection storage struct using EIP-7201 namespaced storage\n     * @dev Uses assembly to access storage at the predetermined slot to avoid collisions.\n     * @return storageStruct The validator selection storage struct\n     */\n    function getStorage() internal pure returns (ValidatorSelectionStorage storage storageStruct) {\n        bytes32 position = VALIDATOR_SELECTION_STORAGE_POSITION;\n        assembly {\n            storageStruct.slot := position\n        }\n    }\n\n    /**\n     * @notice Computes the committee index of the proposer for a specific slot\n     * @dev Uses keccak256 hash of epoch, slot, and seed to deterministically select a committee member.\n     *      The result is modulo committee size to ensure valid index.\n     *      The result being modulo biased is not a problem here as the validators in the committee were chosen randomly\n     *      and are not ordered.\n     * @param _epoch The epoch containing the slot\n     * @param _slot The specific slot to compute proposer for\n     * @param _seed The epoch's sample seed for randomness\n     * @param _size The size of the committee\n     * @return The index (0 to _size-1) of the committee member who should propose for this slot\n     */\n    function computeProposerIndex(Epoch _epoch, Slot _slot, uint256 _seed, uint256 _size)\n        internal\n        pure\n        returns (uint256)\n    {\n        return uint256(keccak256(abi.encode(_epoch, _slot, _seed))) % _size;\n    }\n\n    /**\n     * @notice Samples validator indices for a specific epoch using cryptographic randomness\n     * @dev Determines sample timestamp, gets validator set size, and uses SampleLib to select committee indices.\n     *      Validates that enough validators are available to meet target committee size.\n     * @param _epoch The epoch to sample validators for\n     * @param _seed The cryptographic seed for sampling randomness\n     * @return sampleTime The timestamp used for validator set sampling\n     * @return indices Array of validator indices selected for the committee\n     * @custom:reverts Errors.ValidatorSelection__InsufficientValidatorSetSize if not enough validators available\n     */\n    function sampleValidatorsIndices(Epoch _epoch, uint256 _seed) private returns (uint32, uint256[] memory) {\n        ValidatorSelectionStorage storage store = getStorage();\n        uint32 ts = stableEpochToValidatorSetSampleTime(_epoch);\n        uint256 validatorSetSize = StakingLib.getAttesterCountAtTime(Timestamp.wrap(ts));\n        uint256 targetCommitteeSize = store.targetCommitteeSize;\n\n        require(\n            validatorSetSize >= targetCommitteeSize,\n            Errors.ValidatorSelection__InsufficientValidatorSetSize(validatorSetSize, targetCommitteeSize)\n        );\n\n        if (targetCommitteeSize == 0) {\n            return (ts, new uint256[](0));\n        }\n\n        return (ts, SampleLib.computeCommittee(targetCommitteeSize, validatorSetSize, _seed));\n    }\n\n    /**\n     * @notice Converts a stable epoch number to the timestamp used for validator set sampling\n     * @dev Calculates the sampling timestamp by:\n     *      1. Taking the epoch start timestamp\n     *      2. Subtracting `lagInEpochsForRandao` full epoch duration to ensure stability\n     *\n     *      This ensures validator set sampling uses stable historical data that won't be\n     *      affected by last-minute changes or L1 reorgs during synchronization.\n     *\n     *      We consider an epoch to be stable when its committee cannot change.\n     * @param _epoch The epoch to calculate sampling time for\n     * @return The Unix timestamp (uint32) to use for validator set sampling\n     * @custom:reverts Errors.ValidatorSelection__EpochNotStable if the requested epoch is not stable\n     */\n    function stableEpochToRandaoSampleTime(Epoch _epoch) private view returns (uint32) {\n        uint32 sub = getStorage().lagInEpochsForRandao * TimeLib.getEpochDurationInSeconds().toUint32();\n        uint32 ts = Timestamp.unwrap(_epoch.toTimestamp()).toUint32() - sub;\n        require(\n            ts <= block.timestamp,\n            Errors.ValidatorSelection__EpochNotStable(uint256(Epoch.unwrap(_epoch)), uint32(block.timestamp))\n        );\n        return ts;\n    }\n\n    function stableEpochToValidatorSetSampleTime(Epoch _epoch) private view returns (uint32) {\n        uint32 sub = getStorage().lagInEpochsForValidatorSet * TimeLib.getEpochDurationInSeconds().toUint32();\n        uint32 ts = Timestamp.unwrap(_epoch.toTimestamp()).toUint32() - sub;\n        require(\n            ts <= block.timestamp,\n            Errors.ValidatorSelection__EpochNotStable(uint256(Epoch.unwrap(_epoch)), uint32(block.timestamp))\n        );\n        return ts;\n    }\n\n    /**\n     * @notice Computes the keccak256 commitment hash for a committee member array\n     * @dev Creates a cryptographic commitment to the committee composition that can be verified later.\n     *      Used to prevent committee substitution attacks during attestation verification.\n     * @param _committee The array of committee member addresses\n     * @return The keccak256 hash of the ABI-encoded committee array\n     */\n    function computeCommitteeCommitment(address[] memory _committee) private pure returns (bytes32) {\n        return keccak256(abi.encode(_committee));\n    }\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "differs",
+      "coveredLines": 627,
+      "match": {
+        "origin": "own",
+        "collection": "aztecnetwork",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "ValidatorSelectionLib",
+        "similarity": 0.998,
+        "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
+        "repository": "AztecProtocol/aztec-packages",
+        "path": "l1-contracts/src/core/libraries/rollup/ValidatorSelectionLib.sol",
+        "commit": "fd98ab2827138ace06840a2375f2783e9f459674",
+        "commitTimestamp": "2026-02-16T12:42:46Z",
+        "url": "https://github.com/AztecProtocol/aztec-packages/blob/fd98ab2827138ace06840a2375f2783e9f459674/l1-contracts/src/core/libraries/rollup/ValidatorSelectionLib.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "remediation review",
+        "coverage": "verified removal of unused proposer-index computation (PR 20423 commit)",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 4
+      },
+      "diff": {
+        "added": 13,
+        "removed": 9,
+        "ignoredAdded": 16,
+        "ignoredRemoved": 8,
+        "unchanged": 627,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 6,
+            "newStart": 1,
+            "newLines": 5,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "library ValidatorSelectionLib {"
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "    using EnumerableSet for EnumerableSet.AddressSet;"
+              },
+              {
+                "type": "-",
+                "oldLine": 3,
+                "text": "    using MessageHashUtils for bytes32;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 3,
+                "text": "    using SignatureLib for Signature;"
+              },
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 4,
+                "text": "    using TimeLib for Timestamp;"
+              },
+              {
+                "type": " ",
+                "oldLine": 6,
+                "newLine": 5,
+                "text": "    using TimeLib for Epoch;"
+              }
+            ]
+          },
+          {
+            "oldStart": 58,
+            "oldLines": 18,
+            "newStart": 57,
+            "newLines": 35,
+            "lines": [
+              { "type": " ", "oldLine": 58, "newLine": 57, "text": "    }" },
+              { "type": " ", "oldLine": 59, "newLine": 58, "text": "" },
+              { "type": " ", "oldLine": 60, "newLine": 59, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 61,
+                "text": "     * @notice Sets the escape hatch contract address",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 62,
+                "text": "     * @dev Only callable through RollupCore.setEscapeHatch (governance-controlled).",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 63,
+                "text": "     *      Set to address(0) to disable escape hatch functionality.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 64,
+                "text": "     * @param _escapeHatch The address of the EscapeHatch contract, or address(0) to disable",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 60,
+                "text": "     * @notice Sets the escape hatch contract address. One-shot: can only be called once per rollup.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 61,
+                "text": "     * @dev Only callable through RollupCore.setEscapeHatch (owner-gated). Once set, the rollup's",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 62,
+                "text": "     *      escape hatch is immutable for the life of the rollup -- there is no replacement path.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 63,
+                "text": "     *      Callers who want no escape hatch should simply never call this function.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 64,
+                "text": "     * @param _escapeHatch The address of the EscapeHatch contract (must be non-zero)",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 65, "newLine": 65, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 66,
+                "text": "    function updateEscapeHatch(address _escapeHatch) internal {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 67,
+                "text": "        // Key the checkpoint to the START of the next epoch so the change never affects",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 68,
+                "text": "        // the current epoch. This prevents a same-block governance action from retroactively",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 69,
+                "text": "        // altering the escape hatch for an epoch where proposals may have already been made.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 66,
+                "text": "    function setEscapeHatch(address _escapeHatch) internal {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 67,
+                "text": "        require(_escapeHatch != address(0), Errors.ValidatorSelection__EscapeHatchCannotBeZero());",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 68, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 69,
+                "text": "        // The registration is one-shot and ungoverned after setup, and an open escape hatch can act",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 70,
+                "text": "        // as an alternate proposal route (ProposeLib.propose authorizes the registered escape",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 71,
+                "text": "        // hatch's designated proposer during escape-hatch epochs). Pointing at a stranger contract",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 72,
+                "text": "        // -- including a hatch wired to a different rollup -- would create a permanent foreign",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 73,
+                "text": "        // proposal authority that cannot be replaced. Require the hatch to point back here.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 74,
+                "text": "        address hatchRollup = IEscapeHatch(_escapeHatch).getRollup();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 75,
+                "text": "        require(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 76,
+                "text": "            hatchRollup == address(this),",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 77,
+                "text": "            Errors.ValidatorSelection__EscapeHatchRollupMismatch(address(this), hatchRollup)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 78,
+                "text": "        );",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 79, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 80,
+                "text": "        ValidatorSelectionStorage storage store = getStorage();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 81,
+                "text": "        require(store.escapeHatchCheckpoints.length() == 0, Errors.ValidatorSelection__EscapeHatchAlreadySet());",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 82, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 83,
+                "text": "        // Key the checkpoint to the START of the next epoch so the registration never affects",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 84,
+                "text": "        // the current epoch. This prevents a same-block action from retroactively classifying",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 85,
+                "text": "        // an in-flight epoch as an escape-hatch epoch.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 70,
+                "newLine": 86,
+                "text": "        Epoch nextEpoch = Timestamp.wrap(block.timestamp).epochFromTimestamp() + Epoch.wrap(1);"
+              },
+              {
+                "type": " ",
+                "oldLine": 71,
+                "newLine": 87,
+                "text": "        uint96 nextEpochTs = uint96(Timestamp.unwrap(nextEpoch.toTimestamp()));"
+              },
+              {
+                "type": "-",
+                "oldLine": 72,
+                "text": "        getStorage().escapeHatchCheckpoints.push(nextEpochTs, uint160(_escapeHatch));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 88,
+                "text": "        store.escapeHatchCheckpoints.push(nextEpochTs, uint160(_escapeHatch));",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 73, "newLine": 89, "text": "    }" },
+              { "type": " ", "oldLine": 74, "newLine": 90, "text": "" },
+              { "type": " ", "oldLine": 75, "newLine": 91, "text": "    /**" }
+            ]
+          },
+          {
+            "oldStart": 183,
+            "oldLines": 14,
+            "newStart": 199,
+            "newLines": 12,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 183,
+                "newLine": 199,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 184, "newLine": 200, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 185,
+                "newLine": 201,
+                "text": "        // Check if the signature is correct"
+              },
+              {
+                "type": "-",
+                "oldLine": 186,
+                "text": "        bytes32 digest = _digest.toEthSignedMessageHash();",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 187,
+                "newLine": 202,
+                "text": "        Signature memory signature = _attestations.getSignature(proposerIndex);"
+              },
+              {
+                "type": "-",
+                "oldLine": 188,
+                "text": "        SignatureLib.verify(signature, proposer, digest);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 203,
+                "text": "        SignatureLib.verify(signature, proposer, _digest);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 189, "newLine": 204, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 190,
+                "newLine": 205,
+                "text": "        // Check that the proposer have signed the `_attestations|_signers` data such that invalid `_attestations|_signers`"
+              },
+              {
+                "type": " ",
+                "oldLine": 191,
+                "newLine": 206,
+                "text": "        // data can be attributed to the `proposer` specifically."
+              },
+              {
+                "type": "-",
+                "oldLine": 192,
+                "text": "        bytes32 attestationsAndSignersDigest =",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 193,
+                "text": "            _attestations.getAttestationsAndSignersDigest(_signers).toEthSignedMessageHash();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 207,
+                "text": "        bytes32 attestationsAndSignersDigest = _attestations.getAttestationsAndSignersDigest(_signers);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 194,
+                "newLine": 208,
+                "text": "        SignatureLib.verify(_attestationsAndSignersSignature, proposer, attestationsAndSignersDigest);"
+              },
+              { "type": " ", "oldLine": 195, "newLine": 209, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 196,
+                "newLine": 210,
+                "text": "        if (_updateCache) {"
+              }
+            ]
+          },
+          {
+            "oldStart": 243,
+            "oldLines": 8,
+            "newStart": 257,
+            "newLines": 6,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 243,
+                "newLine": 257,
+                "text": "            reconstructedCommittee: new address[](targetCommitteeSize)"
+              },
+              {
+                "type": " ",
+                "oldLine": 244,
+                "newLine": 258,
+                "text": "        });"
+              },
+              { "type": " ", "oldLine": 245, "newLine": 259, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 246,
+                "text": "        bytes32 digest = _digest.toEthSignedMessageHash();",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 247, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 248,
+                "newLine": 260,
+                "text": "        bytes memory signaturesOrAddresses = _attestations.signaturesOrAddresses;"
+              },
+              {
+                "type": " ",
+                "oldLine": 249,
+                "newLine": 261,
+                "text": "        uint256 dataPtr;"
+              },
+              {
+                "type": " ",
+                "oldLine": 250,
+                "newLine": 262,
+                "text": "        assembly {"
+              }
+            ]
+          },
+          {
+            "oldStart": 270,
+            "oldLines": 7,
+            "newStart": 282,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 270,
+                "newLine": 282,
+                "text": "                    }"
+              },
+              { "type": " ", "oldLine": 271, "newLine": 283, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 272,
+                "newLine": 284,
+                "text": "                    ++stack.signaturesRecovered;"
+              },
+              {
+                "type": "-",
+                "oldLine": 273,
+                "text": "                    stack.reconstructedCommittee[i] = ECDSA.recover(digest, v, r, s);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 285,
+                "text": "                    stack.reconstructedCommittee[i] = ECDSA.recover(_digest, v, r, s);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 274,
+                "newLine": 286,
+                "text": "                } else {"
+              },
+              {
+                "type": " ",
+                "oldLine": 275,
+                "newLine": 287,
+                "text": "                    address addr;"
+              },
+              {
+                "type": " ",
+                "oldLine": 276,
+                "newLine": 288,
+                "text": "                    assembly {"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

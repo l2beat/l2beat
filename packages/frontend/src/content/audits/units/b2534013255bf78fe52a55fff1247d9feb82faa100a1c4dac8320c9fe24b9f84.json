@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "b2534013255bf78fe52a55fff1247d9feb82faa100a1c4dac8320c9fe24b9f84",
+  "name": "ISubscriber",
+  "kind": "interface",
+  "lines": 30,
+  "source": "interface ISubscriber {\n    /// @notice Called when a position subscribes to this subscriber contract\n    /// @param tokenId the token ID of the position\n    /// @param data additional data passed in by the caller\n    function notifySubscribe(uint256 tokenId, bytes memory data) external;\n\n    /// @notice Called when a position unsubscribes from the subscriber\n    /// @dev This call's gas is capped at `unsubscribeGasLimit` (set at deployment)\n    /// @dev Because of EIP-150, solidity may only allocate 63/64 of gasleft()\n    /// @param tokenId the token ID of the position\n    function notifyUnsubscribe(uint256 tokenId) external;\n\n    /// @notice Called when a position is burned\n    /// @param tokenId the token ID of the position\n    /// @param owner the current owner of the tokenId\n    /// @param info information about the position\n    /// @param liquidity the amount of liquidity decreased in the position, may be 0\n    /// @param feesAccrued the fees accrued by the position if liquidity was decreased\n    function notifyBurn(uint256 tokenId, address owner, PositionInfo info, uint256 liquidity, BalanceDelta feesAccrued)\n        external;\n\n    /// @notice Called when a position modifies its liquidity or collects fees\n    /// @param tokenId the token ID of the position\n    /// @param liquidityChange the change in liquidity on the underlying position\n    /// @param feesAccrued the fees to be collected from the position as a result of the modifyLiquidity call\n    /// @dev Note that feesAccrued can be artificially inflated by a malicious user\n    /// Pools with a single liquidity position can inflate feeGrowthGlobal (and consequently feesAccrued) by donating to themselves;\n    /// atomically donating and collecting fees within the same unlockCallback may further inflate feeGrowthGlobal/feesAccrued\n    function notifyModifyLiquidity(uint256 tokenId, int256 liquidityChange, BalanceDelta feesAccrued) external;\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

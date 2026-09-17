@@ -1,0 +1,3156 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "7e863ce404ddab8769c14e17a2ce62e1a6e3955ff6ddba357403a2adf20925b6",
+  "name": "verify.rs",
+  "kind": "program",
+  "lines": 562,
+  "source": "use std::{borrow::Borrow, path::Path, str::FromStr};\n\nuse anyhow::Result;\nuse num_bigint::BigUint;\nuse p3_baby_bear::BabyBear;\nuse p3_field::{AbstractField, PrimeField};\nuse sp1_core_executor::{subproof::SubproofVerifier, SP1ReduceProof};\nuse sp1_core_machine::cpu::MAX_CPU_LOG_DEGREE;\nuse sp1_primitives::{\n    consts::WORD_SIZE,\n    io::{blake3_hash, SP1PublicValues},\n};\n\nuse sp1_recursion_circuit::machine::RootPublicValues;\nuse sp1_recursion_core::{air::RecursionPublicValues, stark::BabyBearPoseidon2Outer};\nuse sp1_recursion_gnark_ffi::{\n    Groth16Bn254Proof, Groth16Bn254Prover, PlonkBn254Proof, PlonkBn254Prover,\n};\nuse sp1_stark::{\n    air::{PublicValues, POSEIDON_NUM_WORDS, PV_DIGEST_NUM_WORDS},\n    baby_bear_poseidon2::BabyBearPoseidon2,\n    MachineProof, MachineProver, MachineVerificationError, StarkGenericConfig, Word,\n};\nuse thiserror::Error;\n\nuse crate::{\n    components::SP1ProverComponents,\n    utils::{is_recursion_public_values_valid, is_root_public_values_valid},\n    CoreSC, HashableKey, OuterSC, SP1CoreProofData, SP1Prover, SP1VerifyingKey,\n};\n\n#[derive(Error, Debug)]\npub enum PlonkVerificationError {\n    #[error(\n        \"the verifying key does not match the inner plonk bn254 proof's committed verifying key\"\n    )]\n    InvalidVerificationKey,\n    #[error(\n        \"the public values in the sp1 proof do not match the public values in the inner plonk bn254 proof\"\n    )]\n    InvalidPublicValues,\n}\n\n#[derive(Error, Debug)]\npub enum Groth16VerificationError {\n    #[error(\n        \"the verifying key does not match the inner groth16 bn254 proof's committed verifying key\"\n    )]\n    InvalidVerificationKey,\n    #[error(\n        \"the public values in the sp1 proof do not match the public values in the inner groth16 bn254 proof\"\n    )]\n    InvalidPublicValues,\n}\n\nimpl<C: SP1ProverComponents> SP1Prover<C> {\n    /// Verify a core proof by verifying the shards, verifying lookup bus, verifying that the\n    /// shards are contiguous and complete.\n    pub fn verify(\n        &self,\n        proof: &SP1CoreProofData,\n        vk: &SP1VerifyingKey,\n    ) -> Result<(), MachineVerificationError<CoreSC>> {\n        // The proof should not be empty.\n        if proof.0.is_empty() {\n            return Err(MachineVerificationError::EmptyProof);\n        }\n\n        // First shard has a \"CPU\" constraint.\n        //\n        // Check that the first shard has a \"CPU\".\n        // SAFETY: The proof is already checked to not be empty.\n        let first_shard = proof.0.first().unwrap();\n        if !first_shard.contains_cpu() {\n            return Err(MachineVerificationError::MissingCpuInFirstShard);\n        }\n\n        // CPU log degree bound constraints.\n        //\n        // Check that the CPU log degree does not exceed `MAX_CPU_LOG_DEGREE`. This is to ensure\n        // that the lookup argument's multiplicities do not overflow.\n        for shard_proof in proof.0.iter() {\n            if shard_proof.contains_cpu() {\n                let log_degree_cpu = shard_proof.log_degree_cpu();\n                if log_degree_cpu > MAX_CPU_LOG_DEGREE {\n                    return Err(MachineVerificationError::CpuLogDegreeTooLarge(log_degree_cpu));\n                }\n            }\n        }\n\n        // Shard constraints.\n        //\n        // Initialization:\n        // - Shard should start at one.\n        //\n        // Transition:\n        // - Shard should increment by one for each shard.\n        let mut current_shard = BabyBear::zero();\n        for shard_proof in proof.0.iter() {\n            let public_values: &PublicValues<Word<_>, _> =\n                shard_proof.public_values.as_slice().borrow();\n            current_shard += BabyBear::one();\n            if public_values.shard != current_shard {\n                return Err(MachineVerificationError::InvalidPublicValues(\n                    \"shard index should be the previous shard index + 1 and start at 1\",\n                ));\n            }\n        }\n\n        // Execution shard constraints.\n        //\n        // Initialization:\n        // - Execution shard should start at one.\n        //\n        // Transition:\n        // - Execution shard should increment by one for each shard with \"CPU\".\n        // - Execution shard should stay the same for non-CPU shards.\n        // - For the other shards, execution shard does not matter.\n        let mut current_execution_shard = BabyBear::zero();\n        for shard_proof in proof.0.iter() {\n            let public_values: &PublicValues<Word<_>, _> =\n                shard_proof.public_values.as_slice().borrow();\n            if shard_proof.contains_cpu() {\n                current_execution_shard += BabyBear::one();\n                if public_values.execution_shard != current_execution_shard {\n                    return Err(MachineVerificationError::InvalidPublicValues(\n                        \"execution shard index should be the previous execution shard index + 1 if cpu exists and start at 1\",\n                    ));\n                }\n            }\n        }\n\n        // Program counter constraints.\n        //\n        // Initialization:\n        // - `start_pc` should start as `vk.start_pc`.\n        //\n        // Transition:\n        // - `next_pc` of the previous shard should equal `start_pc`.\n        // - If it's not a shard with \"CPU\", then `start_pc` equals `next_pc`.\n        // - If it's a shard with \"CPU\", then `start_pc` should never equal zero.\n        //\n        // Finalization:\n        // - `next_pc` should equal zero.\n        let mut prev_next_pc = BabyBear::zero();\n        for (i, shard_proof) in proof.0.iter().enumerate() {\n            let public_values: &PublicValues<Word<_>, _> =\n                shard_proof.public_values.as_slice().borrow();\n            if i == 0 && public_values.start_pc != vk.vk.pc_start {\n                return Err(MachineVerificationError::InvalidPublicValues(\n                    \"start_pc != vk.start_pc: program counter should start at vk.start_pc\",\n                ));\n            } else if i != 0 && public_values.start_pc != prev_next_pc {\n                return Err(MachineVerificationError::InvalidPublicValues(\n                    \"start_pc != next_pc_prev: start_pc should equal next_pc_prev for all shards\",\n                ));\n            } else if !shard_proof.contains_cpu() && public_values.start_pc != public_values.next_pc\n            {\n                return Err(MachineVerificationError::InvalidPublicValues(\n                    \"start_pc != next_pc: start_pc should equal next_pc for non-cpu shards\",\n                ));\n            } else if shard_proof.contains_cpu() && public_values.start_pc == BabyBear::zero() {\n                return Err(MachineVerificationError::InvalidPublicValues(\n                    \"start_pc == 0: execution should never start at halted state\",\n                ));\n            } else if i == proof.0.len() - 1 && public_values.next_pc != BabyBear::zero() {\n                return Err(MachineVerificationError::InvalidPublicValues(\n                    \"next_pc != 0: execution should have halted\",\n                ));\n            }\n            prev_next_pc = public_values.next_pc;\n        }\n\n        // Exit code constraints.\n        //\n        // - In every shard, the exit code should be zero.\n        for shard_proof in proof.0.iter() {\n            let public_values: &PublicValues<Word<_>, _> =\n                shard_proof.public_values.as_slice().borrow();\n            if public_values.exit_code != BabyBear::zero() {\n                return Err(MachineVerificationError::InvalidPublicValues(\n                    \"exit_code != 0: exit code should be zero for all shards\",\n                ));\n            }\n        }\n\n        // Memory initialization & finalization constraints.\n        //\n        // Initialization:\n        // - `previous_init_addr_bits` should be zero.\n        // - `previous_finalize_addr_bits` should be zero.\n        //\n        // Transition:\n        // - For all shards, `previous_init_addr_bits` should equal `last_init_addr_bits` of the\n        //   previous shard.\n        // - For all shards, `previous_finalize_addr_bits` should equal `last_finalize_addr_bits` of\n        //   the previous shard.\n        // - For shards without \"MemoryInit\", `previous_init_addr_bits` should equal\n        //   `last_init_addr_bits`.\n        // - For shards without \"MemoryFinalize\", `previous_finalize_addr_bits` should equal\n        //   `last_finalize_addr_bits`.\n        let mut last_init_addr_bits_prev = [BabyBear::zero(); 32];\n        let mut last_finalize_addr_bits_prev = [BabyBear::zero(); 32];\n        for shard_proof in proof.0.iter() {\n            let public_values: &PublicValues<Word<_>, _> =\n                shard_proof.public_values.as_slice().borrow();\n            if public_values.previous_init_addr_bits != last_init_addr_bits_prev {\n                return Err(MachineVerificationError::InvalidPublicValues(\n                    \"previous_init_addr_bits != last_init_addr_bits_prev\",\n                ));\n            } else if public_values.previous_finalize_addr_bits != last_finalize_addr_bits_prev {\n                return Err(MachineVerificationError::InvalidPublicValues(\n                    \"last_init_addr_bits != last_finalize_addr_bits_prev\",\n                ));\n            } else if !shard_proof.contains_global_memory_init() &&\n                public_values.previous_init_addr_bits != public_values.last_init_addr_bits\n            {\n                return Err(MachineVerificationError::InvalidPublicValues(\n                    \"previous_init_addr_bits != last_init_addr_bits\",\n                ));\n            } else if !shard_proof.contains_global_memory_finalize() &&\n                public_values.previous_finalize_addr_bits !=\n                    public_values.last_finalize_addr_bits\n            {\n                return Err(MachineVerificationError::InvalidPublicValues(\n                    \"previous_finalize_addr_bits != last_finalize_addr_bits\",\n                ));\n            }\n            last_init_addr_bits_prev = public_values.last_init_addr_bits;\n            last_finalize_addr_bits_prev = public_values.last_finalize_addr_bits;\n        }\n\n        // Digest constraints.\n        //\n        // Initialization:\n        // - `committed_value_digest` should be zero.\n        // - `deferred_proofs_digest` should be zero.\n        //\n        // Transition:\n        // - If `committed_value_digest_prev` is not zero, then `committed_value_digest` should\n        //   equal\n        //  `committed_value_digest_prev`. Otherwise, `committed_value_digest` should equal zero.\n        // - If `deferred_proofs_digest_prev` is not zero, then `deferred_proofs_digest` should\n        //   equal\n        //  `deferred_proofs_digest_prev`. Otherwise, `deferred_proofs_digest` should equal zero.\n        // - If it's not a shard with \"CPU\", then `committed_value_digest` should not change from\n        //   the\n        //  previous shard.\n        // - If it's not a shard with \"CPU\", then `deferred_proofs_digest` should not change from\n        //   the\n        //  previous shard.\n        let zero_committed_value_digest =\n            [Word([BabyBear::zero(); WORD_SIZE]); PV_DIGEST_NUM_WORDS];\n        let zero_deferred_proofs_digest = [BabyBear::zero(); POSEIDON_NUM_WORDS];\n        let mut committed_value_digest_prev = zero_committed_value_digest;\n        let mut deferred_proofs_digest_prev = zero_deferred_proofs_digest;\n        for shard_proof in proof.0.iter() {\n            let public_values: &PublicValues<Word<_>, _> =\n                shard_proof.public_values.as_slice().borrow();\n            if committed_value_digest_prev != zero_committed_value_digest &&\n                public_values.committed_value_digest != committed_value_digest_prev\n            {\n                return Err(MachineVerificationError::InvalidPublicValues(\n                    \"committed_value_digest != committed_value_digest_prev\",\n                ));\n            } else if deferred_proofs_digest_prev != zero_deferred_proofs_digest &&\n                public_values.deferred_proofs_digest != deferred_proofs_digest_prev\n            {\n                return Err(MachineVerificationError::InvalidPublicValues(\n                    \"deferred_proofs_digest != deferred_proofs_digest_prev\",\n                ));\n            } else if !shard_proof.contains_cpu() &&\n                public_values.committed_value_digest != committed_value_digest_prev\n            {\n                return Err(MachineVerificationError::InvalidPublicValues(\n                    \"committed_value_digest != committed_value_digest_prev\",\n                ));\n            } else if !shard_proof.contains_cpu() &&\n                public_values.deferred_proofs_digest != deferred_proofs_digest_prev\n            {\n                return Err(MachineVerificationError::InvalidPublicValues(\n                    \"deferred_proofs_digest != deferred_proofs_digest_prev\",\n                ));\n            }\n            committed_value_digest_prev = public_values.committed_value_digest;\n            deferred_proofs_digest_prev = public_values.deferred_proofs_digest;\n        }\n\n        // Verify that the number of shards is not too large.\n        if proof.0.len() >= 1 << 16 {\n            return Err(MachineVerificationError::TooManyShards);\n        }\n\n        // Verify the shard proof.\n        let mut challenger = self.core_prover.config().challenger();\n        let machine_proof = MachineProof { shard_proofs: proof.0.to_vec() };\n        self.core_prover.machine().verify(&vk.vk, &machine_proof, &mut challenger)?;\n\n        Ok(())\n    }\n\n    /// Verify a compressed proof.\n    pub fn verify_compressed(\n        &self,\n        proof: &SP1ReduceProof<BabyBearPoseidon2>,\n        vk: &SP1VerifyingKey,\n    ) -> Result<(), MachineVerificationError<CoreSC>> {\n        let SP1ReduceProof { vk: compress_vk, proof } = proof;\n        let mut challenger = self.compress_prover.config().challenger();\n        let machine_proof = MachineProof { shard_proofs: vec![proof.clone()] };\n        self.compress_prover.machine().verify(compress_vk, &machine_proof, &mut challenger)?;\n\n        // Validate public values\n        let public_values: &RecursionPublicValues<_> = proof.public_values.as_slice().borrow();\n\n        if !is_recursion_public_values_valid(self.compress_prover.machine().config(), public_values)\n        {\n            return Err(MachineVerificationError::InvalidPublicValues(\n                \"recursion public values are invalid\",\n            ));\n        }\n\n        if public_values.vk_root != self.recursion_vk_root {\n            return Err(MachineVerificationError::InvalidPublicValues(\"vk_root mismatch\"));\n        }\n\n        if self.vk_verification && !self.recursion_vk_map.contains_key(&compress_vk.hash_babybear())\n        {\n            return Err(MachineVerificationError::InvalidVerificationKey);\n        }\n\n        // `is_complete` should be 1. In the reduce program, this ensures that the proof is fully\n        // reduced.\n        if public_values.is_complete != BabyBear::one() {\n            return Err(MachineVerificationError::InvalidPublicValues(\"is_complete is not 1\"));\n        }\n\n        // Verify that the proof is for the sp1 vkey we are expecting.\n        let vkey_hash = vk.hash_babybear();\n        if public_values.sp1_vk_digest != vkey_hash {\n            return Err(MachineVerificationError::InvalidPublicValues(\"sp1 vk hash mismatch\"));\n        }\n\n        Ok(())\n    }\n\n    /// Verify a shrink proof.\n    pub fn verify_shrink(\n        &self,\n        proof: &SP1ReduceProof<BabyBearPoseidon2>,\n        vk: &SP1VerifyingKey,\n    ) -> Result<(), MachineVerificationError<CoreSC>> {\n        let mut challenger = self.shrink_prover.config().challenger();\n        let machine_proof = MachineProof { shard_proofs: vec![proof.proof.clone()] };\n        self.shrink_prover.machine().verify(&proof.vk, &machine_proof, &mut challenger)?;\n\n        // Validate public values\n        let public_values: &RecursionPublicValues<_> =\n            proof.proof.public_values.as_slice().borrow();\n        if !is_recursion_public_values_valid(self.compress_prover.machine().config(), public_values)\n        {\n            return Err(MachineVerificationError::InvalidPublicValues(\n                \"recursion public values are invalid\",\n            ));\n        }\n        if public_values.vk_root != self.recursion_vk_root {\n            return Err(MachineVerificationError::InvalidPublicValues(\"vk_root mismatch\"));\n        }\n\n        if self.vk_verification && !self.recursion_vk_map.contains_key(&proof.vk.hash_babybear()) {\n            return Err(MachineVerificationError::InvalidVerificationKey);\n        }\n\n        // `is_complete` should be 1. In the reduce program, this ensures that the proof is fully\n        // reduced.\n        if public_values.is_complete != BabyBear::one() {\n            return Err(MachineVerificationError::InvalidPublicValues(\"is_complete is not 1\"));\n        }\n\n        // Verify that the proof is for the sp1 vkey we are expecting.\n        let vkey_hash = vk.hash_babybear();\n        if public_values.sp1_vk_digest != vkey_hash {\n            return Err(MachineVerificationError::InvalidPublicValues(\"sp1 vk hash mismatch\"));\n        }\n\n        Ok(())\n    }\n\n    /// Verify a wrap bn254 proof.\n    pub fn verify_wrap_bn254(\n        &self,\n        proof: &SP1ReduceProof<BabyBearPoseidon2Outer>,\n        vk: &SP1VerifyingKey,\n    ) -> Result<(), MachineVerificationError<OuterSC>> {\n        let mut challenger = self.wrap_prover.config().challenger();\n        let machine_proof = MachineProof { shard_proofs: vec![proof.proof.clone()] };\n\n        let wrap_vk = self.wrap_vk.get().expect(\"Wrap verifier key not set\");\n        self.wrap_prover.machine().verify(wrap_vk, &machine_proof, &mut challenger)?;\n\n        // Validate public values\n        let public_values: &RootPublicValues<_> = proof.proof.public_values.as_slice().borrow();\n        if !is_root_public_values_valid(self.shrink_prover.machine().config(), public_values) {\n            return Err(MachineVerificationError::InvalidPublicValues(\n                \"root public values are invalid\",\n            ));\n        }\n\n        // Verify that the proof is for the sp1 vkey we are expecting.\n        let vkey_hash = vk.hash_babybear();\n        if *public_values.sp1_vk_digest() != vkey_hash {\n            return Err(MachineVerificationError::InvalidPublicValues(\"sp1 vk hash mismatch\"));\n        }\n\n        Ok(())\n    }\n\n    /// Verifies a PLONK proof using the circuit artifacts in the build directory.\n    pub fn verify_plonk_bn254(\n        &self,\n        proof: &PlonkBn254Proof,\n        vk: &SP1VerifyingKey,\n        public_values: &SP1PublicValues,\n        build_dir: &Path,\n    ) -> Result<()> {\n        let prover = PlonkBn254Prover::new();\n\n        let vkey_hash = BigUint::from_str(&proof.public_inputs[0])?;\n        let committed_values_digest = BigUint::from_str(&proof.public_inputs[1])?;\n\n        // Verify the proof with the corresponding public inputs.\n        prover.verify(proof, &vkey_hash, &committed_values_digest, build_dir)?;\n\n        verify_plonk_bn254_public_inputs(vk, public_values, &proof.public_inputs)?;\n\n        Ok(())\n    }\n\n    /// Verifies a Groth16 proof using the circuit artifacts in the build directory.\n    pub fn verify_groth16_bn254(\n        &self,\n        proof: &Groth16Bn254Proof,\n        vk: &SP1VerifyingKey,\n        public_values: &SP1PublicValues,\n        build_dir: &Path,\n    ) -> Result<()> {\n        let prover = Groth16Bn254Prover::new();\n\n        let vkey_hash = BigUint::from_str(&proof.public_inputs[0])?;\n        let committed_values_digest = BigUint::from_str(&proof.public_inputs[1])?;\n\n        // Verify the proof with the corresponding public inputs.\n        prover.verify(proof, &vkey_hash, &committed_values_digest, build_dir)?;\n\n        verify_groth16_bn254_public_inputs(vk, public_values, &proof.public_inputs)?;\n\n        Ok(())\n    }\n}\n\n/// Verify the vk_hash and public_values_hash in the public inputs of the PlonkBn254Proof match the\n/// expected values.\npub fn verify_plonk_bn254_public_inputs(\n    vk: &SP1VerifyingKey,\n    public_values: &SP1PublicValues,\n    plonk_bn254_public_inputs: &[String],\n) -> Result<()> {\n    let expected_vk_hash = BigUint::from_str(&plonk_bn254_public_inputs[0])?;\n    let expected_public_values_hash = BigUint::from_str(&plonk_bn254_public_inputs[1])?;\n\n    let vk_hash = vk.hash_bn254().as_canonical_biguint();\n    if vk_hash != expected_vk_hash {\n        return Err(PlonkVerificationError::InvalidVerificationKey.into());\n    }\n\n    verify_public_values(public_values, expected_public_values_hash)?;\n\n    Ok(())\n}\n\n/// Verify the vk_hash and public_values_hash in the public inputs of the Groth16Bn254Proof match\n/// the expected values.\npub fn verify_groth16_bn254_public_inputs(\n    vk: &SP1VerifyingKey,\n    public_values: &SP1PublicValues,\n    groth16_bn254_public_inputs: &[String],\n) -> Result<()> {\n    let expected_vk_hash = BigUint::from_str(&groth16_bn254_public_inputs[0])?;\n    let expected_public_values_hash = BigUint::from_str(&groth16_bn254_public_inputs[1])?;\n\n    let vk_hash = vk.hash_bn254().as_canonical_biguint();\n    if vk_hash != expected_vk_hash {\n        return Err(Groth16VerificationError::InvalidVerificationKey.into());\n    }\n\n    verify_public_values(public_values, expected_public_values_hash)?;\n\n    Ok(())\n}\n\n/// In SP1, a proof's public values can either be hashed with SHA2 or Blake3. In SP1 V4, there is no\n/// metadata attached to the proof about which hasher function was used for public values hashing.\n/// Instead, when verifying the proof, the public values are hashed with SHA2 and Blake3, and\n/// if either matches the `expected_public_values_hash`, the verification is successful.\n///\n/// The security for this verification in SP1 V4 derives from the fact that both SHA2 and Blake3 are\n/// designed to be collision resistant. It is computationally infeasible to find an input i1 for\n/// SHA256 and an input i2 for Blake3 that the same hash value. Doing so would require breaking both\n/// algorithms simultaneously.\nfn verify_public_values(\n    public_values: &SP1PublicValues,\n    expected_public_values_hash: BigUint,\n) -> Result<()> {\n    // First, check if the public values are hashed with SHA256. If that fails, attempt hashing with\n    // Blake3. If neither match, return an error.\n    let sha256_public_values_hash = public_values.hash_bn254();\n    if sha256_public_values_hash != expected_public_values_hash {\n        let blake3_public_values_hash = public_values.hash_bn254_with_fn(blake3_hash);\n        if blake3_public_values_hash != expected_public_values_hash {\n            return Err(Groth16VerificationError::InvalidPublicValues.into());\n        }\n    }\n\n    Ok(())\n}\n\nimpl<C: SP1ProverComponents> SubproofVerifier for SP1Prover<C> {\n    fn verify_deferred_proof(\n        &self,\n        proof: &sp1_core_machine::reduce::SP1ReduceProof<BabyBearPoseidon2>,\n        vk: &sp1_stark::StarkVerifyingKey<BabyBearPoseidon2>,\n        vk_hash: [u32; 8],\n        committed_value_digest: [u32; 8],\n    ) -> Result<(), MachineVerificationError<BabyBearPoseidon2>> {\n        // Check that the vk hash matches the vk hash from the input.\n        if vk.hash_u32() != vk_hash {\n            return Err(MachineVerificationError::InvalidPublicValues(\n                \"vk hash from syscall does not match vkey from input\",\n            ));\n        }\n        // Check that proof is valid.\n        self.verify_compressed(\n            &SP1ReduceProof { vk: proof.vk.clone(), proof: proof.proof.clone() },\n            &SP1VerifyingKey { vk: vk.clone() },\n        )?;\n        // Check that the committed value digest matches the one from syscall\n        let public_values: &RecursionPublicValues<_> =\n            proof.proof.public_values.as_slice().borrow();\n        if public_values.vk_root != self.recursion_vk_root {\n            return Err(MachineVerificationError::InvalidPublicValues(\"vk_root mismatch\"));\n        }\n\n        for (i, word) in public_values.committed_value_digest.iter().enumerate() {\n            if *word != committed_value_digest[i].into() {\n                return Err(MachineVerificationError::InvalidPublicValues(\n                    \"committed_value_digest does not match\",\n                ));\n            }\n        }\n        Ok(())\n    }\n}",
+  "resolutions": {
+    "eea968a44e5d263a": {
+      "status": "differs",
+      "coveredLines": 492,
+      "match": {
+        "origin": "stack",
+        "collection": "sp1",
+        "relation": { "type": "template", "template": "succinct/SP1Verifier" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "verify.rs",
+        "similarity": 0.858,
+        "reportId": "sp1/zellic-sp1-design-review-2024",
+        "repository": "succinctlabs/sp1",
+        "path": "crates/prover/src/verify.rs",
+        "commit": "15be73d3acae3718a0acc529ed566f6a448b1c0e",
+        "commitTimestamp": "2024-11-27T02:59:17Z",
+        "url": "https://github.com/succinctlabs/sp1/blob/15be73d3acae3718a0acc529ed566f6a448b1c0e/crates/prover/src/verify.rs",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "Initial audit",
+        "coverage": "Design-level review only (explicitly not a code audit): RV32IM specification compliance and the register/low-memory aliasing at addresses 0x0-0x1f, focused mostly on load and store instruction behaviour; soundness/completeness of the ZK proofs and circuits and correctness of implementation details were out of scope.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 2
+      },
+      "diff": {
+        "added": 70,
+        "removed": 36,
+        "ignoredAdded": 29,
+        "ignoredRemoved": 5,
+        "unchanged": 492,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 6,
+            "oldLines": 7,
+            "newStart": 6,
+            "newLines": 10,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 6,
+                "newLine": 6,
+                "text": "use p3_field::{AbstractField, PrimeField};"
+              },
+              {
+                "type": " ",
+                "oldLine": 7,
+                "newLine": 7,
+                "text": "use sp1_core_executor::{subproof::SubproofVerifier, SP1ReduceProof};"
+              },
+              {
+                "type": " ",
+                "oldLine": 8,
+                "newLine": 8,
+                "text": "use sp1_core_machine::cpu::MAX_CPU_LOG_DEGREE;"
+              },
+              {
+                "type": "-",
+                "oldLine": 9,
+                "text": "use sp1_primitives::{consts::WORD_SIZE, io::SP1PublicValues};",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 9,
+                "text": "use sp1_primitives::{",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 10,
+                "text": "    consts::WORD_SIZE,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 11,
+                "text": "    io::{blake3_hash, SP1PublicValues},",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 12, "text": "};", "ignored": false },
+              { "type": " ", "oldLine": 10, "newLine": 13, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 11,
+                "newLine": 14,
+                "text": "use sp1_recursion_circuit::machine::RootPublicValues;"
+              },
+              {
+                "type": " ",
+                "oldLine": 12,
+                "newLine": 15,
+                "text": "use sp1_recursion_core::{air::RecursionPublicValues, stark::BabyBearPoseidon2Outer};"
+              }
+            ]
+          },
+          {
+            "oldStart": 22,
+            "oldLines": 7,
+            "newStart": 25,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 22, "newLine": 25, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 23,
+                "newLine": 26,
+                "text": "use crate::{"
+              },
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 27,
+                "text": "    components::SP1ProverComponents,"
+              },
+              {
+                "type": "-",
+                "oldLine": 25,
+                "text": "    utils::{assert_recursion_public_values_valid, assert_root_public_values_valid},",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 28,
+                "text": "    utils::{is_recursion_public_values_valid, is_root_public_values_valid},",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 26,
+                "newLine": 29,
+                "text": "    CoreSC, HashableKey, OuterSC, SP1CoreProofData, SP1Prover, SP1VerifyingKey,"
+              },
+              { "type": " ", "oldLine": 27, "newLine": 30, "text": "};" },
+              { "type": " ", "oldLine": 28, "newLine": 31, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 58,
+            "oldLines": 9,
+            "newStart": 61,
+            "newLines": 15,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 58,
+                "newLine": 61,
+                "text": "        proof: &SP1CoreProofData,"
+              },
+              {
+                "type": " ",
+                "oldLine": 59,
+                "newLine": 62,
+                "text": "        vk: &SP1VerifyingKey,"
+              },
+              {
+                "type": " ",
+                "oldLine": 60,
+                "newLine": 63,
+                "text": "    ) -> Result<(), MachineVerificationError<CoreSC>> {"
+              },
+              {
+                "type": "+",
+                "newLine": 64,
+                "text": "        // The proof should not be empty.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 65,
+                "text": "        if proof.0.is_empty() {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 66,
+                "text": "            return Err(MachineVerificationError::EmptyProof);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 67,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 68, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 61,
+                "newLine": 69,
+                "text": "        // First shard has a \"CPU\" constraint."
+              },
+              {
+                "type": " ",
+                "oldLine": 62,
+                "newLine": 70,
+                "text": "        //"
+              },
+              {
+                "type": "-",
+                "oldLine": 63,
+                "text": "        // Assert that the first shard has a \"CPU\".",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 71,
+                "text": "        // Check that the first shard has a \"CPU\".",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 72,
+                "text": "        // SAFETY: The proof is already checked to not be empty.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 64,
+                "newLine": 73,
+                "text": "        let first_shard = proof.0.first().unwrap();"
+              },
+              {
+                "type": " ",
+                "oldLine": 65,
+                "newLine": 74,
+                "text": "        if !first_shard.contains_cpu() {"
+              },
+              {
+                "type": " ",
+                "oldLine": 66,
+                "newLine": 75,
+                "text": "            return Err(MachineVerificationError::MissingCpuInFirstShard);"
+              }
+            ]
+          },
+          {
+            "oldStart": 68,
+            "oldLines": 7,
+            "newStart": 77,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 68, "newLine": 77, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 69,
+                "newLine": 78,
+                "text": "        // CPU log degree bound constraints."
+              },
+              {
+                "type": " ",
+                "oldLine": 70,
+                "newLine": 79,
+                "text": "        //"
+              },
+              {
+                "type": "-",
+                "oldLine": 71,
+                "text": "        // Assert that the CPU log degree does not exceed `MAX_CPU_LOG_DEGREE`. This is to ensure",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 80,
+                "text": "        // Check that the CPU log degree does not exceed `MAX_CPU_LOG_DEGREE`. This is to ensure",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 72,
+                "newLine": 81,
+                "text": "        // that the lookup argument's multiplicities do not overflow."
+              },
+              {
+                "type": " ",
+                "oldLine": 73,
+                "newLine": 82,
+                "text": "        for shard_proof in proof.0.iter() {"
+              },
+              {
+                "type": " ",
+                "oldLine": 74,
+                "newLine": 83,
+                "text": "            if shard_proof.contains_cpu() {"
+              }
+            ]
+          },
+          {
+            "oldStart": 203,
+            "oldLines": 15,
+            "newStart": 212,
+            "newLines": 15,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 203,
+                "newLine": 212,
+                "text": "                return Err(MachineVerificationError::InvalidPublicValues("
+              },
+              {
+                "type": " ",
+                "oldLine": 204,
+                "newLine": 213,
+                "text": "                    \"last_init_addr_bits != last_finalize_addr_bits_prev\","
+              },
+              {
+                "type": " ",
+                "oldLine": 205,
+                "newLine": 214,
+                "text": "                ));"
+              },
+              {
+                "type": "-",
+                "oldLine": 206,
+                "text": "            } else if !shard_proof.contains_global_memory_init()",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 207,
+                "text": "                && public_values.previous_init_addr_bits != public_values.last_init_addr_bits",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 215,
+                "text": "            } else if !shard_proof.contains_global_memory_init() &&",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 216,
+                "text": "                public_values.previous_init_addr_bits != public_values.last_init_addr_bits",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 208,
+                "newLine": 217,
+                "text": "            {"
+              },
+              {
+                "type": " ",
+                "oldLine": 209,
+                "newLine": 218,
+                "text": "                return Err(MachineVerificationError::InvalidPublicValues("
+              },
+              {
+                "type": " ",
+                "oldLine": 210,
+                "newLine": 219,
+                "text": "                    \"previous_init_addr_bits != last_init_addr_bits\","
+              },
+              {
+                "type": " ",
+                "oldLine": 211,
+                "newLine": 220,
+                "text": "                ));"
+              },
+              {
+                "type": "-",
+                "oldLine": 212,
+                "text": "            } else if !shard_proof.contains_global_memory_finalize()",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 213,
+                "text": "                && public_values.previous_finalize_addr_bits",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 214,
+                "text": "                    != public_values.last_finalize_addr_bits",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 221,
+                "text": "            } else if !shard_proof.contains_global_memory_finalize() &&",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 222,
+                "text": "                public_values.previous_finalize_addr_bits !=",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 223,
+                "text": "                    public_values.last_finalize_addr_bits",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 215,
+                "newLine": 224,
+                "text": "            {"
+              },
+              {
+                "type": " ",
+                "oldLine": 216,
+                "newLine": 225,
+                "text": "                return Err(MachineVerificationError::InvalidPublicValues("
+              },
+              {
+                "type": " ",
+                "oldLine": 217,
+                "newLine": 226,
+                "text": "                    \"previous_finalize_addr_bits != last_finalize_addr_bits\","
+              }
+            ]
+          },
+          {
+            "oldStart": 228,
+            "oldLines": 12,
+            "newStart": 237,
+            "newLines": 14,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 228,
+                "newLine": 237,
+                "text": "        // - `deferred_proofs_digest` should be zero."
+              },
+              {
+                "type": " ",
+                "oldLine": 229,
+                "newLine": 238,
+                "text": "        //"
+              },
+              {
+                "type": " ",
+                "oldLine": 230,
+                "newLine": 239,
+                "text": "        // Transition:"
+              },
+              {
+                "type": "-",
+                "oldLine": 231,
+                "text": "        // - If `committed_value_digest_prev` is not zero, then `committed_value_digest` should equal",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 240,
+                "text": "        // - If `committed_value_digest_prev` is not zero, then `committed_value_digest` should",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 241,
+                "text": "        //   equal",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 232,
+                "newLine": 242,
+                "text": "        //  `committed_value_digest_prev`. Otherwise, `committed_value_digest` should equal zero."
+              },
+              {
+                "type": " ",
+                "oldLine": 233,
+                "newLine": 243,
+                "text": "        // - If `deferred_proofs_digest_prev` is not zero, then `deferred_proofs_digest` should"
+              },
+              {
+                "type": " ",
+                "oldLine": 234,
+                "newLine": 244,
+                "text": "        //   equal"
+              },
+              {
+                "type": " ",
+                "oldLine": 235,
+                "newLine": 245,
+                "text": "        //  `deferred_proofs_digest_prev`. Otherwise, `deferred_proofs_digest` should equal zero."
+              },
+              {
+                "type": "-",
+                "oldLine": 236,
+                "text": "        // - If it's not a shard with \"CPU\", then `committed_value_digest` should not change from the",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 246,
+                "text": "        // - If it's not a shard with \"CPU\", then `committed_value_digest` should not change from",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 247,
+                "text": "        //   the",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 237,
+                "newLine": 248,
+                "text": "        //  previous shard."
+              },
+              {
+                "type": " ",
+                "oldLine": 238,
+                "newLine": 249,
+                "text": "        // - If it's not a shard with \"CPU\", then `deferred_proofs_digest` should not change from"
+              },
+              {
+                "type": " ",
+                "oldLine": 239,
+                "newLine": 250,
+                "text": "        //   the"
+              }
+            ]
+          },
+          {
+            "oldStart": 246,
+            "oldLines": 26,
+            "newStart": 257,
+            "newLines": 26,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 246,
+                "newLine": 257,
+                "text": "        for shard_proof in proof.0.iter() {"
+              },
+              {
+                "type": " ",
+                "oldLine": 247,
+                "newLine": 258,
+                "text": "            let public_values: &PublicValues<Word<_>, _> ="
+              },
+              {
+                "type": " ",
+                "oldLine": 248,
+                "newLine": 259,
+                "text": "                shard_proof.public_values.as_slice().borrow();"
+              },
+              {
+                "type": "-",
+                "oldLine": 249,
+                "text": "            if committed_value_digest_prev != zero_committed_value_digest",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 250,
+                "text": "                && public_values.committed_value_digest != committed_value_digest_prev",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 260,
+                "text": "            if committed_value_digest_prev != zero_committed_value_digest &&",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 261,
+                "text": "                public_values.committed_value_digest != committed_value_digest_prev",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 251,
+                "newLine": 262,
+                "text": "            {"
+              },
+              {
+                "type": " ",
+                "oldLine": 252,
+                "newLine": 263,
+                "text": "                return Err(MachineVerificationError::InvalidPublicValues("
+              },
+              {
+                "type": " ",
+                "oldLine": 253,
+                "newLine": 264,
+                "text": "                    \"committed_value_digest != committed_value_digest_prev\","
+              },
+              {
+                "type": " ",
+                "oldLine": 254,
+                "newLine": 265,
+                "text": "                ));"
+              },
+              {
+                "type": "-",
+                "oldLine": 255,
+                "text": "            } else if deferred_proofs_digest_prev != zero_deferred_proofs_digest",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 256,
+                "text": "                && public_values.deferred_proofs_digest != deferred_proofs_digest_prev",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 266,
+                "text": "            } else if deferred_proofs_digest_prev != zero_deferred_proofs_digest &&",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 267,
+                "text": "                public_values.deferred_proofs_digest != deferred_proofs_digest_prev",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 257,
+                "newLine": 268,
+                "text": "            {"
+              },
+              {
+                "type": " ",
+                "oldLine": 258,
+                "newLine": 269,
+                "text": "                return Err(MachineVerificationError::InvalidPublicValues("
+              },
+              {
+                "type": " ",
+                "oldLine": 259,
+                "newLine": 270,
+                "text": "                    \"deferred_proofs_digest != deferred_proofs_digest_prev\","
+              },
+              {
+                "type": " ",
+                "oldLine": 260,
+                "newLine": 271,
+                "text": "                ));"
+              },
+              {
+                "type": "-",
+                "oldLine": 261,
+                "text": "            } else if !shard_proof.contains_cpu()",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 262,
+                "text": "                && public_values.committed_value_digest != committed_value_digest_prev",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 272,
+                "text": "            } else if !shard_proof.contains_cpu() &&",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 273,
+                "text": "                public_values.committed_value_digest != committed_value_digest_prev",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 263,
+                "newLine": 274,
+                "text": "            {"
+              },
+              {
+                "type": " ",
+                "oldLine": 264,
+                "newLine": 275,
+                "text": "                return Err(MachineVerificationError::InvalidPublicValues("
+              },
+              {
+                "type": " ",
+                "oldLine": 265,
+                "newLine": 276,
+                "text": "                    \"committed_value_digest != committed_value_digest_prev\","
+              },
+              {
+                "type": " ",
+                "oldLine": 266,
+                "newLine": 277,
+                "text": "                ));"
+              },
+              {
+                "type": "-",
+                "oldLine": 267,
+                "text": "            } else if !shard_proof.contains_cpu()",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 268,
+                "text": "                && public_values.deferred_proofs_digest != deferred_proofs_digest_prev",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 278,
+                "text": "            } else if !shard_proof.contains_cpu() &&",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 279,
+                "text": "                public_values.deferred_proofs_digest != deferred_proofs_digest_prev",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 269,
+                "newLine": 280,
+                "text": "            {"
+              },
+              {
+                "type": " ",
+                "oldLine": 270,
+                "newLine": 281,
+                "text": "                return Err(MachineVerificationError::InvalidPublicValues("
+              },
+              {
+                "type": " ",
+                "oldLine": 271,
+                "newLine": 282,
+                "text": "                    \"deferred_proofs_digest != deferred_proofs_digest_prev\","
+              }
+            ]
+          },
+          {
+            "oldStart": 276,
+            "oldLines": 7,
+            "newStart": 287,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 276,
+                "newLine": 287,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 277, "newLine": 288, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 278,
+                "newLine": 289,
+                "text": "        // Verify that the number of shards is not too large."
+              },
+              {
+                "type": "-",
+                "oldLine": 279,
+                "text": "        if proof.0.len() > 1 << 16 {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 290,
+                "text": "        if proof.0.len() >= 1 << 16 {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 280,
+                "newLine": 291,
+                "text": "            return Err(MachineVerificationError::TooManyShards);"
+              },
+              {
+                "type": " ",
+                "oldLine": 281,
+                "newLine": 292,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 282, "newLine": 293, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 301,
+            "oldLines": 12,
+            "newStart": 312,
+            "newLines": 20,
+            "lines": [
+              { "type": " ", "oldLine": 301, "newLine": 312, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 302,
+                "newLine": 313,
+                "text": "        // Validate public values"
+              },
+              {
+                "type": " ",
+                "oldLine": 303,
+                "newLine": 314,
+                "text": "        let public_values: &RecursionPublicValues<_> = proof.public_values.as_slice().borrow();"
+              },
+              {
+                "type": "-",
+                "oldLine": 304,
+                "text": "        assert_recursion_public_values_valid(",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 305,
+                "text": "            self.compress_prover.machine().config(),",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 306,
+                "text": "            public_values,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 307,
+                "text": "        );",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 308, "newLine": 315, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 309,
+                "text": "        if self.vk_verification && !self.allowed_vk_map.contains_key(&compress_vk.hash_babybear()) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 316,
+                "text": "        if !is_recursion_public_values_valid(self.compress_prover.machine().config(), public_values)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 317,
+                "text": "        {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 318,
+                "text": "            return Err(MachineVerificationError::InvalidPublicValues(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 319,
+                "text": "                \"recursion public values are invalid\",",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 320,
+                "text": "            ));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 321,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 322, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 323,
+                "text": "        if public_values.vk_root != self.recursion_vk_root {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 324,
+                "text": "            return Err(MachineVerificationError::InvalidPublicValues(\"vk_root mismatch\"));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 325,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 326, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 327,
+                "text": "        if self.vk_verification && !self.recursion_vk_map.contains_key(&compress_vk.hash_babybear())",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 328,
+                "text": "        {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 310,
+                "newLine": 329,
+                "text": "            return Err(MachineVerificationError::InvalidVerificationKey);"
+              },
+              {
+                "type": " ",
+                "oldLine": 311,
+                "newLine": 330,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 312, "newLine": 331, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 338,
+            "oldLines": 15,
+            "newStart": 357,
+            "newLines": 26,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 338,
+                "newLine": 357,
+                "text": "        // Validate public values"
+              },
+              {
+                "type": " ",
+                "oldLine": 339,
+                "newLine": 358,
+                "text": "        let public_values: &RecursionPublicValues<_> ="
+              },
+              {
+                "type": " ",
+                "oldLine": 340,
+                "newLine": 359,
+                "text": "            proof.proof.public_values.as_slice().borrow();"
+              },
+              {
+                "type": "-",
+                "oldLine": 341,
+                "text": "        assert_recursion_public_values_valid(",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 342,
+                "text": "            self.compress_prover.machine().config(),",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 343,
+                "text": "            public_values,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 344,
+                "text": "        );",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 360,
+                "text": "        if !is_recursion_public_values_valid(self.compress_prover.machine().config(), public_values)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 361,
+                "text": "        {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 362,
+                "text": "            return Err(MachineVerificationError::InvalidPublicValues(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 363,
+                "text": "                \"recursion public values are invalid\",",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 364,
+                "text": "            ));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 365,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 366,
+                "text": "        if public_values.vk_root != self.recursion_vk_root {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 367,
+                "text": "            return Err(MachineVerificationError::InvalidPublicValues(\"vk_root mismatch\"));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 368,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 345, "newLine": 369, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 346,
+                "text": "        if self.vk_verification && !self.allowed_vk_map.contains_key(&proof.vk.hash_babybear()) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 370,
+                "text": "        if self.vk_verification && !self.recursion_vk_map.contains_key(&proof.vk.hash_babybear()) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 347,
+                "newLine": 371,
+                "text": "            return Err(MachineVerificationError::InvalidVerificationKey);"
+              },
+              {
+                "type": " ",
+                "oldLine": 348,
+                "newLine": 372,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 349, "newLine": 373, "text": "" },
+              {
+                "type": "+",
+                "newLine": 374,
+                "text": "        // `is_complete` should be 1. In the reduce program, this ensures that the proof is fully",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 375,
+                "text": "        // reduced.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 376,
+                "text": "        if public_values.is_complete != BabyBear::one() {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 377,
+                "text": "            return Err(MachineVerificationError::InvalidPublicValues(\"is_complete is not 1\"));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 378,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 379, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 350,
+                "newLine": 380,
+                "text": "        // Verify that the proof is for the sp1 vkey we are expecting."
+              },
+              {
+                "type": " ",
+                "oldLine": 351,
+                "newLine": 381,
+                "text": "        let vkey_hash = vk.hash_babybear();"
+              },
+              {
+                "type": " ",
+                "oldLine": 352,
+                "newLine": 382,
+                "text": "        if public_values.sp1_vk_digest != vkey_hash {"
+              }
+            ]
+          },
+          {
+            "oldStart": 370,
+            "oldLines": 7,
+            "newStart": 400,
+            "newLines": 11,
+            "lines": [
+              { "type": " ", "oldLine": 370, "newLine": 400, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 371,
+                "newLine": 401,
+                "text": "        // Validate public values"
+              },
+              {
+                "type": " ",
+                "oldLine": 372,
+                "newLine": 402,
+                "text": "        let public_values: &RootPublicValues<_> = proof.proof.public_values.as_slice().borrow();"
+              },
+              {
+                "type": "-",
+                "oldLine": 373,
+                "text": "        assert_root_public_values_valid(self.shrink_prover.machine().config(), public_values);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 403,
+                "text": "        if !is_root_public_values_valid(self.shrink_prover.machine().config(), public_values) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 404,
+                "text": "            return Err(MachineVerificationError::InvalidPublicValues(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 405,
+                "text": "                \"root public values are invalid\",",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 406,
+                "text": "            ));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 407,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 374, "newLine": 408, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 375,
+                "newLine": 409,
+                "text": "        // Verify that the proof is for the sp1 vkey we are expecting."
+              },
+              {
+                "type": " ",
+                "oldLine": 376,
+                "newLine": 410,
+                "text": "        let vkey_hash = vk.hash_babybear();"
+              }
+            ]
+          },
+          {
+            "oldStart": 395,
+            "oldLines": 7,
+            "newStart": 429,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 395,
+                "newLine": 429,
+                "text": "        let committed_values_digest = BigUint::from_str(&proof.public_inputs[1])?;"
+              },
+              { "type": " ", "oldLine": 396, "newLine": 430, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 397,
+                "newLine": 431,
+                "text": "        // Verify the proof with the corresponding public inputs."
+              },
+              {
+                "type": "-",
+                "oldLine": 398,
+                "text": "        prover.verify(proof, &vkey_hash, &committed_values_digest, build_dir);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 432,
+                "text": "        prover.verify(proof, &vkey_hash, &committed_values_digest, build_dir)?;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 399, "newLine": 433, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 400,
+                "newLine": 434,
+                "text": "        verify_plonk_bn254_public_inputs(vk, public_values, &proof.public_inputs)?;"
+              },
+              { "type": " ", "oldLine": 401, "newLine": 435, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 416,
+            "oldLines": 7,
+            "newStart": 450,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 416,
+                "newLine": 450,
+                "text": "        let committed_values_digest = BigUint::from_str(&proof.public_inputs[1])?;"
+              },
+              { "type": " ", "oldLine": 417, "newLine": 451, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 418,
+                "newLine": 452,
+                "text": "        // Verify the proof with the corresponding public inputs."
+              },
+              {
+                "type": "-",
+                "oldLine": 419,
+                "text": "        prover.verify(proof, &vkey_hash, &committed_values_digest, build_dir);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 453,
+                "text": "        prover.verify(proof, &vkey_hash, &committed_values_digest, build_dir)?;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 420, "newLine": 454, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 421,
+                "newLine": 455,
+                "text": "        verify_groth16_bn254_public_inputs(vk, public_values, &proof.public_inputs)?;"
+              },
+              { "type": " ", "oldLine": 422, "newLine": 456, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 439,
+            "oldLines": 10,
+            "newStart": 473,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 439,
+                "newLine": 473,
+                "text": "        return Err(PlonkVerificationError::InvalidVerificationKey.into());"
+              },
+              { "type": " ", "oldLine": 440, "newLine": 474, "text": "    }" },
+              { "type": " ", "oldLine": 441, "newLine": 475, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 442,
+                "text": "    let public_values_hash = public_values.hash_bn254();",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 443,
+                "text": "    if public_values_hash != expected_public_values_hash {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 444,
+                "text": "        return Err(PlonkVerificationError::InvalidPublicValues.into());",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 445,
+                "text": "    }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 476,
+                "text": "    verify_public_values(public_values, expected_public_values_hash)?;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 446, "newLine": 477, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 447,
+                "newLine": 478,
+                "text": "    Ok(())"
+              },
+              { "type": " ", "oldLine": 448, "newLine": 479, "text": "}" }
+            ]
+          },
+          {
+            "oldStart": 462,
+            "oldLines": 15,
+            "newStart": 493,
+            "newLines": 38,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 462,
+                "newLine": 493,
+                "text": "        return Err(Groth16VerificationError::InvalidVerificationKey.into());"
+              },
+              { "type": " ", "oldLine": 463, "newLine": 494, "text": "    }" },
+              { "type": " ", "oldLine": 464, "newLine": 495, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 465,
+                "text": "    let public_values_hash = public_values.hash_bn254();",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 466,
+                "text": "    if public_values_hash != expected_public_values_hash {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 467,
+                "text": "        return Err(Groth16VerificationError::InvalidPublicValues.into());",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 496,
+                "text": "    verify_public_values(public_values, expected_public_values_hash)?;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 497, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 498,
+                "text": "    Ok(())",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 499, "text": "}", "ignored": false },
+              { "type": "+", "newLine": 500, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 501,
+                "text": "/// In SP1, a proof's public values can either be hashed with SHA2 or Blake3. In SP1 V4, there is no",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 502,
+                "text": "/// metadata attached to the proof about which hasher function was used for public values hashing.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 503,
+                "text": "/// Instead, when verifying the proof, the public values are hashed with SHA2 and Blake3, and",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 504,
+                "text": "/// if either matches the `expected_public_values_hash`, the verification is successful.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 505, "text": "///", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 506,
+                "text": "/// The security for this verification in SP1 V4 derives from the fact that both SHA2 and Blake3 are",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 507,
+                "text": "/// designed to be collision resistant. It is computationally infeasible to find an input i1 for",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 508,
+                "text": "/// SHA256 and an input i2 for Blake3 that the same hash value. Doing so would require breaking both",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 509,
+                "text": "/// algorithms simultaneously.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 510,
+                "text": "fn verify_public_values(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 511,
+                "text": "    public_values: &SP1PublicValues,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 512,
+                "text": "    expected_public_values_hash: BigUint,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 513,
+                "text": ") -> Result<()> {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 514,
+                "text": "    // First, check if the public values are hashed with SHA256. If that fails, attempt hashing with",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 515,
+                "text": "    // Blake3. If neither match, return an error.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 516,
+                "text": "    let sha256_public_values_hash = public_values.hash_bn254();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 517,
+                "text": "    if sha256_public_values_hash != expected_public_values_hash {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 518,
+                "text": "        let blake3_public_values_hash = public_values.hash_bn254_with_fn(blake3_hash);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 519,
+                "text": "        if blake3_public_values_hash != expected_public_values_hash {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 520,
+                "text": "            return Err(Groth16VerificationError::InvalidPublicValues.into());",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 521,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 468, "newLine": 522, "text": "    }" },
+              { "type": " ", "oldLine": 469, "newLine": 523, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 470,
+                "newLine": 524,
+                "text": "    Ok(())"
+              },
+              { "type": " ", "oldLine": 471, "newLine": 525, "text": "}" },
+              { "type": " ", "oldLine": 472, "newLine": 526, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 473,
+                "text": "impl<C: SP1ProverComponents> SubproofVerifier for &SP1Prover<C> {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 527,
+                "text": "impl<C: SP1ProverComponents> SubproofVerifier for SP1Prover<C> {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 474,
+                "newLine": 528,
+                "text": "    fn verify_deferred_proof("
+              },
+              {
+                "type": " ",
+                "oldLine": 475,
+                "newLine": 529,
+                "text": "        &self,"
+              },
+              {
+                "type": " ",
+                "oldLine": 476,
+                "newLine": 530,
+                "text": "        proof: &sp1_core_machine::reduce::SP1ReduceProof<BabyBearPoseidon2>,"
+              }
+            ]
+          },
+          {
+            "oldStart": 492,
+            "oldLines": 6,
+            "newStart": 546,
+            "newLines": 10,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 492,
+                "newLine": 546,
+                "text": "        // Check that the committed value digest matches the one from syscall"
+              },
+              {
+                "type": " ",
+                "oldLine": 493,
+                "newLine": 547,
+                "text": "        let public_values: &RecursionPublicValues<_> ="
+              },
+              {
+                "type": " ",
+                "oldLine": 494,
+                "newLine": 548,
+                "text": "            proof.proof.public_values.as_slice().borrow();"
+              },
+              {
+                "type": "+",
+                "newLine": 549,
+                "text": "        if public_values.vk_root != self.recursion_vk_root {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 550,
+                "text": "            return Err(MachineVerificationError::InvalidPublicValues(\"vk_root mismatch\"));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 551,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 552, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 495,
+                "newLine": 553,
+                "text": "        for (i, word) in public_values.committed_value_digest.iter().enumerate() {"
+              },
+              {
+                "type": " ",
+                "oldLine": 496,
+                "newLine": 554,
+                "text": "            if *word != committed_value_digest[i].into() {"
+              },
+              {
+                "type": " ",
+                "oldLine": 497,
+                "newLine": 555,
+                "text": "                return Err(MachineVerificationError::InvalidPublicValues("
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "1daaed8c8125f2b6": {
+      "status": "differs",
+      "coveredLines": 492,
+      "match": {
+        "origin": "stack",
+        "collection": "sp1",
+        "relation": { "type": "template", "template": "succinct/SP1Verifier" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "verify.rs",
+        "similarity": 0.858,
+        "reportId": "sp1/zellic-sp1-design-review-2024",
+        "repository": "succinctlabs/sp1",
+        "path": "crates/prover/src/verify.rs",
+        "commit": "15be73d3acae3718a0acc529ed566f6a448b1c0e",
+        "commitTimestamp": "2024-11-27T02:59:17Z",
+        "url": "https://github.com/succinctlabs/sp1/blob/15be73d3acae3718a0acc529ed566f6a448b1c0e/crates/prover/src/verify.rs",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "Initial audit",
+        "coverage": "Design-level review only (explicitly not a code audit): RV32IM specification compliance and the register/low-memory aliasing at addresses 0x0-0x1f, focused mostly on load and store instruction behaviour; soundness/completeness of the ZK proofs and circuits and correctness of implementation details were out of scope.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 2
+      },
+      "diff": {
+        "added": 70,
+        "removed": 36,
+        "ignoredAdded": 29,
+        "ignoredRemoved": 5,
+        "unchanged": 492,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 6,
+            "oldLines": 7,
+            "newStart": 6,
+            "newLines": 10,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 6,
+                "newLine": 6,
+                "text": "use p3_field::{AbstractField, PrimeField};"
+              },
+              {
+                "type": " ",
+                "oldLine": 7,
+                "newLine": 7,
+                "text": "use sp1_core_executor::{subproof::SubproofVerifier, SP1ReduceProof};"
+              },
+              {
+                "type": " ",
+                "oldLine": 8,
+                "newLine": 8,
+                "text": "use sp1_core_machine::cpu::MAX_CPU_LOG_DEGREE;"
+              },
+              {
+                "type": "-",
+                "oldLine": 9,
+                "text": "use sp1_primitives::{consts::WORD_SIZE, io::SP1PublicValues};",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 9,
+                "text": "use sp1_primitives::{",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 10,
+                "text": "    consts::WORD_SIZE,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 11,
+                "text": "    io::{blake3_hash, SP1PublicValues},",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 12, "text": "};", "ignored": false },
+              { "type": " ", "oldLine": 10, "newLine": 13, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 11,
+                "newLine": 14,
+                "text": "use sp1_recursion_circuit::machine::RootPublicValues;"
+              },
+              {
+                "type": " ",
+                "oldLine": 12,
+                "newLine": 15,
+                "text": "use sp1_recursion_core::{air::RecursionPublicValues, stark::BabyBearPoseidon2Outer};"
+              }
+            ]
+          },
+          {
+            "oldStart": 22,
+            "oldLines": 7,
+            "newStart": 25,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 22, "newLine": 25, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 23,
+                "newLine": 26,
+                "text": "use crate::{"
+              },
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 27,
+                "text": "    components::SP1ProverComponents,"
+              },
+              {
+                "type": "-",
+                "oldLine": 25,
+                "text": "    utils::{assert_recursion_public_values_valid, assert_root_public_values_valid},",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 28,
+                "text": "    utils::{is_recursion_public_values_valid, is_root_public_values_valid},",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 26,
+                "newLine": 29,
+                "text": "    CoreSC, HashableKey, OuterSC, SP1CoreProofData, SP1Prover, SP1VerifyingKey,"
+              },
+              { "type": " ", "oldLine": 27, "newLine": 30, "text": "};" },
+              { "type": " ", "oldLine": 28, "newLine": 31, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 58,
+            "oldLines": 9,
+            "newStart": 61,
+            "newLines": 15,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 58,
+                "newLine": 61,
+                "text": "        proof: &SP1CoreProofData,"
+              },
+              {
+                "type": " ",
+                "oldLine": 59,
+                "newLine": 62,
+                "text": "        vk: &SP1VerifyingKey,"
+              },
+              {
+                "type": " ",
+                "oldLine": 60,
+                "newLine": 63,
+                "text": "    ) -> Result<(), MachineVerificationError<CoreSC>> {"
+              },
+              {
+                "type": "+",
+                "newLine": 64,
+                "text": "        // The proof should not be empty.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 65,
+                "text": "        if proof.0.is_empty() {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 66,
+                "text": "            return Err(MachineVerificationError::EmptyProof);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 67,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 68, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 61,
+                "newLine": 69,
+                "text": "        // First shard has a \"CPU\" constraint."
+              },
+              {
+                "type": " ",
+                "oldLine": 62,
+                "newLine": 70,
+                "text": "        //"
+              },
+              {
+                "type": "-",
+                "oldLine": 63,
+                "text": "        // Assert that the first shard has a \"CPU\".",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 71,
+                "text": "        // Check that the first shard has a \"CPU\".",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 72,
+                "text": "        // SAFETY: The proof is already checked to not be empty.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 64,
+                "newLine": 73,
+                "text": "        let first_shard = proof.0.first().unwrap();"
+              },
+              {
+                "type": " ",
+                "oldLine": 65,
+                "newLine": 74,
+                "text": "        if !first_shard.contains_cpu() {"
+              },
+              {
+                "type": " ",
+                "oldLine": 66,
+                "newLine": 75,
+                "text": "            return Err(MachineVerificationError::MissingCpuInFirstShard);"
+              }
+            ]
+          },
+          {
+            "oldStart": 68,
+            "oldLines": 7,
+            "newStart": 77,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 68, "newLine": 77, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 69,
+                "newLine": 78,
+                "text": "        // CPU log degree bound constraints."
+              },
+              {
+                "type": " ",
+                "oldLine": 70,
+                "newLine": 79,
+                "text": "        //"
+              },
+              {
+                "type": "-",
+                "oldLine": 71,
+                "text": "        // Assert that the CPU log degree does not exceed `MAX_CPU_LOG_DEGREE`. This is to ensure",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 80,
+                "text": "        // Check that the CPU log degree does not exceed `MAX_CPU_LOG_DEGREE`. This is to ensure",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 72,
+                "newLine": 81,
+                "text": "        // that the lookup argument's multiplicities do not overflow."
+              },
+              {
+                "type": " ",
+                "oldLine": 73,
+                "newLine": 82,
+                "text": "        for shard_proof in proof.0.iter() {"
+              },
+              {
+                "type": " ",
+                "oldLine": 74,
+                "newLine": 83,
+                "text": "            if shard_proof.contains_cpu() {"
+              }
+            ]
+          },
+          {
+            "oldStart": 203,
+            "oldLines": 15,
+            "newStart": 212,
+            "newLines": 15,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 203,
+                "newLine": 212,
+                "text": "                return Err(MachineVerificationError::InvalidPublicValues("
+              },
+              {
+                "type": " ",
+                "oldLine": 204,
+                "newLine": 213,
+                "text": "                    \"last_init_addr_bits != last_finalize_addr_bits_prev\","
+              },
+              {
+                "type": " ",
+                "oldLine": 205,
+                "newLine": 214,
+                "text": "                ));"
+              },
+              {
+                "type": "-",
+                "oldLine": 206,
+                "text": "            } else if !shard_proof.contains_global_memory_init()",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 207,
+                "text": "                && public_values.previous_init_addr_bits != public_values.last_init_addr_bits",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 215,
+                "text": "            } else if !shard_proof.contains_global_memory_init() &&",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 216,
+                "text": "                public_values.previous_init_addr_bits != public_values.last_init_addr_bits",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 208,
+                "newLine": 217,
+                "text": "            {"
+              },
+              {
+                "type": " ",
+                "oldLine": 209,
+                "newLine": 218,
+                "text": "                return Err(MachineVerificationError::InvalidPublicValues("
+              },
+              {
+                "type": " ",
+                "oldLine": 210,
+                "newLine": 219,
+                "text": "                    \"previous_init_addr_bits != last_init_addr_bits\","
+              },
+              {
+                "type": " ",
+                "oldLine": 211,
+                "newLine": 220,
+                "text": "                ));"
+              },
+              {
+                "type": "-",
+                "oldLine": 212,
+                "text": "            } else if !shard_proof.contains_global_memory_finalize()",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 213,
+                "text": "                && public_values.previous_finalize_addr_bits",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 214,
+                "text": "                    != public_values.last_finalize_addr_bits",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 221,
+                "text": "            } else if !shard_proof.contains_global_memory_finalize() &&",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 222,
+                "text": "                public_values.previous_finalize_addr_bits !=",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 223,
+                "text": "                    public_values.last_finalize_addr_bits",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 215,
+                "newLine": 224,
+                "text": "            {"
+              },
+              {
+                "type": " ",
+                "oldLine": 216,
+                "newLine": 225,
+                "text": "                return Err(MachineVerificationError::InvalidPublicValues("
+              },
+              {
+                "type": " ",
+                "oldLine": 217,
+                "newLine": 226,
+                "text": "                    \"previous_finalize_addr_bits != last_finalize_addr_bits\","
+              }
+            ]
+          },
+          {
+            "oldStart": 228,
+            "oldLines": 12,
+            "newStart": 237,
+            "newLines": 14,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 228,
+                "newLine": 237,
+                "text": "        // - `deferred_proofs_digest` should be zero."
+              },
+              {
+                "type": " ",
+                "oldLine": 229,
+                "newLine": 238,
+                "text": "        //"
+              },
+              {
+                "type": " ",
+                "oldLine": 230,
+                "newLine": 239,
+                "text": "        // Transition:"
+              },
+              {
+                "type": "-",
+                "oldLine": 231,
+                "text": "        // - If `committed_value_digest_prev` is not zero, then `committed_value_digest` should equal",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 240,
+                "text": "        // - If `committed_value_digest_prev` is not zero, then `committed_value_digest` should",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 241,
+                "text": "        //   equal",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 232,
+                "newLine": 242,
+                "text": "        //  `committed_value_digest_prev`. Otherwise, `committed_value_digest` should equal zero."
+              },
+              {
+                "type": " ",
+                "oldLine": 233,
+                "newLine": 243,
+                "text": "        // - If `deferred_proofs_digest_prev` is not zero, then `deferred_proofs_digest` should"
+              },
+              {
+                "type": " ",
+                "oldLine": 234,
+                "newLine": 244,
+                "text": "        //   equal"
+              },
+              {
+                "type": " ",
+                "oldLine": 235,
+                "newLine": 245,
+                "text": "        //  `deferred_proofs_digest_prev`. Otherwise, `deferred_proofs_digest` should equal zero."
+              },
+              {
+                "type": "-",
+                "oldLine": 236,
+                "text": "        // - If it's not a shard with \"CPU\", then `committed_value_digest` should not change from the",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 246,
+                "text": "        // - If it's not a shard with \"CPU\", then `committed_value_digest` should not change from",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 247,
+                "text": "        //   the",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 237,
+                "newLine": 248,
+                "text": "        //  previous shard."
+              },
+              {
+                "type": " ",
+                "oldLine": 238,
+                "newLine": 249,
+                "text": "        // - If it's not a shard with \"CPU\", then `deferred_proofs_digest` should not change from"
+              },
+              {
+                "type": " ",
+                "oldLine": 239,
+                "newLine": 250,
+                "text": "        //   the"
+              }
+            ]
+          },
+          {
+            "oldStart": 246,
+            "oldLines": 26,
+            "newStart": 257,
+            "newLines": 26,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 246,
+                "newLine": 257,
+                "text": "        for shard_proof in proof.0.iter() {"
+              },
+              {
+                "type": " ",
+                "oldLine": 247,
+                "newLine": 258,
+                "text": "            let public_values: &PublicValues<Word<_>, _> ="
+              },
+              {
+                "type": " ",
+                "oldLine": 248,
+                "newLine": 259,
+                "text": "                shard_proof.public_values.as_slice().borrow();"
+              },
+              {
+                "type": "-",
+                "oldLine": 249,
+                "text": "            if committed_value_digest_prev != zero_committed_value_digest",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 250,
+                "text": "                && public_values.committed_value_digest != committed_value_digest_prev",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 260,
+                "text": "            if committed_value_digest_prev != zero_committed_value_digest &&",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 261,
+                "text": "                public_values.committed_value_digest != committed_value_digest_prev",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 251,
+                "newLine": 262,
+                "text": "            {"
+              },
+              {
+                "type": " ",
+                "oldLine": 252,
+                "newLine": 263,
+                "text": "                return Err(MachineVerificationError::InvalidPublicValues("
+              },
+              {
+                "type": " ",
+                "oldLine": 253,
+                "newLine": 264,
+                "text": "                    \"committed_value_digest != committed_value_digest_prev\","
+              },
+              {
+                "type": " ",
+                "oldLine": 254,
+                "newLine": 265,
+                "text": "                ));"
+              },
+              {
+                "type": "-",
+                "oldLine": 255,
+                "text": "            } else if deferred_proofs_digest_prev != zero_deferred_proofs_digest",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 256,
+                "text": "                && public_values.deferred_proofs_digest != deferred_proofs_digest_prev",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 266,
+                "text": "            } else if deferred_proofs_digest_prev != zero_deferred_proofs_digest &&",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 267,
+                "text": "                public_values.deferred_proofs_digest != deferred_proofs_digest_prev",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 257,
+                "newLine": 268,
+                "text": "            {"
+              },
+              {
+                "type": " ",
+                "oldLine": 258,
+                "newLine": 269,
+                "text": "                return Err(MachineVerificationError::InvalidPublicValues("
+              },
+              {
+                "type": " ",
+                "oldLine": 259,
+                "newLine": 270,
+                "text": "                    \"deferred_proofs_digest != deferred_proofs_digest_prev\","
+              },
+              {
+                "type": " ",
+                "oldLine": 260,
+                "newLine": 271,
+                "text": "                ));"
+              },
+              {
+                "type": "-",
+                "oldLine": 261,
+                "text": "            } else if !shard_proof.contains_cpu()",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 262,
+                "text": "                && public_values.committed_value_digest != committed_value_digest_prev",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 272,
+                "text": "            } else if !shard_proof.contains_cpu() &&",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 273,
+                "text": "                public_values.committed_value_digest != committed_value_digest_prev",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 263,
+                "newLine": 274,
+                "text": "            {"
+              },
+              {
+                "type": " ",
+                "oldLine": 264,
+                "newLine": 275,
+                "text": "                return Err(MachineVerificationError::InvalidPublicValues("
+              },
+              {
+                "type": " ",
+                "oldLine": 265,
+                "newLine": 276,
+                "text": "                    \"committed_value_digest != committed_value_digest_prev\","
+              },
+              {
+                "type": " ",
+                "oldLine": 266,
+                "newLine": 277,
+                "text": "                ));"
+              },
+              {
+                "type": "-",
+                "oldLine": 267,
+                "text": "            } else if !shard_proof.contains_cpu()",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 268,
+                "text": "                && public_values.deferred_proofs_digest != deferred_proofs_digest_prev",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 278,
+                "text": "            } else if !shard_proof.contains_cpu() &&",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 279,
+                "text": "                public_values.deferred_proofs_digest != deferred_proofs_digest_prev",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 269,
+                "newLine": 280,
+                "text": "            {"
+              },
+              {
+                "type": " ",
+                "oldLine": 270,
+                "newLine": 281,
+                "text": "                return Err(MachineVerificationError::InvalidPublicValues("
+              },
+              {
+                "type": " ",
+                "oldLine": 271,
+                "newLine": 282,
+                "text": "                    \"deferred_proofs_digest != deferred_proofs_digest_prev\","
+              }
+            ]
+          },
+          {
+            "oldStart": 276,
+            "oldLines": 7,
+            "newStart": 287,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 276,
+                "newLine": 287,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 277, "newLine": 288, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 278,
+                "newLine": 289,
+                "text": "        // Verify that the number of shards is not too large."
+              },
+              {
+                "type": "-",
+                "oldLine": 279,
+                "text": "        if proof.0.len() > 1 << 16 {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 290,
+                "text": "        if proof.0.len() >= 1 << 16 {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 280,
+                "newLine": 291,
+                "text": "            return Err(MachineVerificationError::TooManyShards);"
+              },
+              {
+                "type": " ",
+                "oldLine": 281,
+                "newLine": 292,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 282, "newLine": 293, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 301,
+            "oldLines": 12,
+            "newStart": 312,
+            "newLines": 20,
+            "lines": [
+              { "type": " ", "oldLine": 301, "newLine": 312, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 302,
+                "newLine": 313,
+                "text": "        // Validate public values"
+              },
+              {
+                "type": " ",
+                "oldLine": 303,
+                "newLine": 314,
+                "text": "        let public_values: &RecursionPublicValues<_> = proof.public_values.as_slice().borrow();"
+              },
+              {
+                "type": "-",
+                "oldLine": 304,
+                "text": "        assert_recursion_public_values_valid(",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 305,
+                "text": "            self.compress_prover.machine().config(),",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 306,
+                "text": "            public_values,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 307,
+                "text": "        );",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 308, "newLine": 315, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 309,
+                "text": "        if self.vk_verification && !self.allowed_vk_map.contains_key(&compress_vk.hash_babybear()) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 316,
+                "text": "        if !is_recursion_public_values_valid(self.compress_prover.machine().config(), public_values)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 317,
+                "text": "        {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 318,
+                "text": "            return Err(MachineVerificationError::InvalidPublicValues(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 319,
+                "text": "                \"recursion public values are invalid\",",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 320,
+                "text": "            ));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 321,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 322, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 323,
+                "text": "        if public_values.vk_root != self.recursion_vk_root {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 324,
+                "text": "            return Err(MachineVerificationError::InvalidPublicValues(\"vk_root mismatch\"));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 325,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 326, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 327,
+                "text": "        if self.vk_verification && !self.recursion_vk_map.contains_key(&compress_vk.hash_babybear())",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 328,
+                "text": "        {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 310,
+                "newLine": 329,
+                "text": "            return Err(MachineVerificationError::InvalidVerificationKey);"
+              },
+              {
+                "type": " ",
+                "oldLine": 311,
+                "newLine": 330,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 312, "newLine": 331, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 338,
+            "oldLines": 15,
+            "newStart": 357,
+            "newLines": 26,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 338,
+                "newLine": 357,
+                "text": "        // Validate public values"
+              },
+              {
+                "type": " ",
+                "oldLine": 339,
+                "newLine": 358,
+                "text": "        let public_values: &RecursionPublicValues<_> ="
+              },
+              {
+                "type": " ",
+                "oldLine": 340,
+                "newLine": 359,
+                "text": "            proof.proof.public_values.as_slice().borrow();"
+              },
+              {
+                "type": "-",
+                "oldLine": 341,
+                "text": "        assert_recursion_public_values_valid(",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 342,
+                "text": "            self.compress_prover.machine().config(),",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 343,
+                "text": "            public_values,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 344,
+                "text": "        );",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 360,
+                "text": "        if !is_recursion_public_values_valid(self.compress_prover.machine().config(), public_values)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 361,
+                "text": "        {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 362,
+                "text": "            return Err(MachineVerificationError::InvalidPublicValues(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 363,
+                "text": "                \"recursion public values are invalid\",",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 364,
+                "text": "            ));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 365,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 366,
+                "text": "        if public_values.vk_root != self.recursion_vk_root {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 367,
+                "text": "            return Err(MachineVerificationError::InvalidPublicValues(\"vk_root mismatch\"));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 368,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 345, "newLine": 369, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 346,
+                "text": "        if self.vk_verification && !self.allowed_vk_map.contains_key(&proof.vk.hash_babybear()) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 370,
+                "text": "        if self.vk_verification && !self.recursion_vk_map.contains_key(&proof.vk.hash_babybear()) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 347,
+                "newLine": 371,
+                "text": "            return Err(MachineVerificationError::InvalidVerificationKey);"
+              },
+              {
+                "type": " ",
+                "oldLine": 348,
+                "newLine": 372,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 349, "newLine": 373, "text": "" },
+              {
+                "type": "+",
+                "newLine": 374,
+                "text": "        // `is_complete` should be 1. In the reduce program, this ensures that the proof is fully",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 375,
+                "text": "        // reduced.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 376,
+                "text": "        if public_values.is_complete != BabyBear::one() {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 377,
+                "text": "            return Err(MachineVerificationError::InvalidPublicValues(\"is_complete is not 1\"));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 378,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 379, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 350,
+                "newLine": 380,
+                "text": "        // Verify that the proof is for the sp1 vkey we are expecting."
+              },
+              {
+                "type": " ",
+                "oldLine": 351,
+                "newLine": 381,
+                "text": "        let vkey_hash = vk.hash_babybear();"
+              },
+              {
+                "type": " ",
+                "oldLine": 352,
+                "newLine": 382,
+                "text": "        if public_values.sp1_vk_digest != vkey_hash {"
+              }
+            ]
+          },
+          {
+            "oldStart": 370,
+            "oldLines": 7,
+            "newStart": 400,
+            "newLines": 11,
+            "lines": [
+              { "type": " ", "oldLine": 370, "newLine": 400, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 371,
+                "newLine": 401,
+                "text": "        // Validate public values"
+              },
+              {
+                "type": " ",
+                "oldLine": 372,
+                "newLine": 402,
+                "text": "        let public_values: &RootPublicValues<_> = proof.proof.public_values.as_slice().borrow();"
+              },
+              {
+                "type": "-",
+                "oldLine": 373,
+                "text": "        assert_root_public_values_valid(self.shrink_prover.machine().config(), public_values);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 403,
+                "text": "        if !is_root_public_values_valid(self.shrink_prover.machine().config(), public_values) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 404,
+                "text": "            return Err(MachineVerificationError::InvalidPublicValues(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 405,
+                "text": "                \"root public values are invalid\",",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 406,
+                "text": "            ));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 407,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 374, "newLine": 408, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 375,
+                "newLine": 409,
+                "text": "        // Verify that the proof is for the sp1 vkey we are expecting."
+              },
+              {
+                "type": " ",
+                "oldLine": 376,
+                "newLine": 410,
+                "text": "        let vkey_hash = vk.hash_babybear();"
+              }
+            ]
+          },
+          {
+            "oldStart": 395,
+            "oldLines": 7,
+            "newStart": 429,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 395,
+                "newLine": 429,
+                "text": "        let committed_values_digest = BigUint::from_str(&proof.public_inputs[1])?;"
+              },
+              { "type": " ", "oldLine": 396, "newLine": 430, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 397,
+                "newLine": 431,
+                "text": "        // Verify the proof with the corresponding public inputs."
+              },
+              {
+                "type": "-",
+                "oldLine": 398,
+                "text": "        prover.verify(proof, &vkey_hash, &committed_values_digest, build_dir);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 432,
+                "text": "        prover.verify(proof, &vkey_hash, &committed_values_digest, build_dir)?;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 399, "newLine": 433, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 400,
+                "newLine": 434,
+                "text": "        verify_plonk_bn254_public_inputs(vk, public_values, &proof.public_inputs)?;"
+              },
+              { "type": " ", "oldLine": 401, "newLine": 435, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 416,
+            "oldLines": 7,
+            "newStart": 450,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 416,
+                "newLine": 450,
+                "text": "        let committed_values_digest = BigUint::from_str(&proof.public_inputs[1])?;"
+              },
+              { "type": " ", "oldLine": 417, "newLine": 451, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 418,
+                "newLine": 452,
+                "text": "        // Verify the proof with the corresponding public inputs."
+              },
+              {
+                "type": "-",
+                "oldLine": 419,
+                "text": "        prover.verify(proof, &vkey_hash, &committed_values_digest, build_dir);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 453,
+                "text": "        prover.verify(proof, &vkey_hash, &committed_values_digest, build_dir)?;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 420, "newLine": 454, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 421,
+                "newLine": 455,
+                "text": "        verify_groth16_bn254_public_inputs(vk, public_values, &proof.public_inputs)?;"
+              },
+              { "type": " ", "oldLine": 422, "newLine": 456, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 439,
+            "oldLines": 10,
+            "newStart": 473,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 439,
+                "newLine": 473,
+                "text": "        return Err(PlonkVerificationError::InvalidVerificationKey.into());"
+              },
+              { "type": " ", "oldLine": 440, "newLine": 474, "text": "    }" },
+              { "type": " ", "oldLine": 441, "newLine": 475, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 442,
+                "text": "    let public_values_hash = public_values.hash_bn254();",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 443,
+                "text": "    if public_values_hash != expected_public_values_hash {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 444,
+                "text": "        return Err(PlonkVerificationError::InvalidPublicValues.into());",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 445,
+                "text": "    }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 476,
+                "text": "    verify_public_values(public_values, expected_public_values_hash)?;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 446, "newLine": 477, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 447,
+                "newLine": 478,
+                "text": "    Ok(())"
+              },
+              { "type": " ", "oldLine": 448, "newLine": 479, "text": "}" }
+            ]
+          },
+          {
+            "oldStart": 462,
+            "oldLines": 15,
+            "newStart": 493,
+            "newLines": 38,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 462,
+                "newLine": 493,
+                "text": "        return Err(Groth16VerificationError::InvalidVerificationKey.into());"
+              },
+              { "type": " ", "oldLine": 463, "newLine": 494, "text": "    }" },
+              { "type": " ", "oldLine": 464, "newLine": 495, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 465,
+                "text": "    let public_values_hash = public_values.hash_bn254();",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 466,
+                "text": "    if public_values_hash != expected_public_values_hash {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 467,
+                "text": "        return Err(Groth16VerificationError::InvalidPublicValues.into());",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 496,
+                "text": "    verify_public_values(public_values, expected_public_values_hash)?;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 497, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 498,
+                "text": "    Ok(())",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 499, "text": "}", "ignored": false },
+              { "type": "+", "newLine": 500, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 501,
+                "text": "/// In SP1, a proof's public values can either be hashed with SHA2 or Blake3. In SP1 V4, there is no",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 502,
+                "text": "/// metadata attached to the proof about which hasher function was used for public values hashing.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 503,
+                "text": "/// Instead, when verifying the proof, the public values are hashed with SHA2 and Blake3, and",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 504,
+                "text": "/// if either matches the `expected_public_values_hash`, the verification is successful.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 505, "text": "///", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 506,
+                "text": "/// The security for this verification in SP1 V4 derives from the fact that both SHA2 and Blake3 are",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 507,
+                "text": "/// designed to be collision resistant. It is computationally infeasible to find an input i1 for",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 508,
+                "text": "/// SHA256 and an input i2 for Blake3 that the same hash value. Doing so would require breaking both",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 509,
+                "text": "/// algorithms simultaneously.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 510,
+                "text": "fn verify_public_values(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 511,
+                "text": "    public_values: &SP1PublicValues,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 512,
+                "text": "    expected_public_values_hash: BigUint,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 513,
+                "text": ") -> Result<()> {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 514,
+                "text": "    // First, check if the public values are hashed with SHA256. If that fails, attempt hashing with",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 515,
+                "text": "    // Blake3. If neither match, return an error.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 516,
+                "text": "    let sha256_public_values_hash = public_values.hash_bn254();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 517,
+                "text": "    if sha256_public_values_hash != expected_public_values_hash {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 518,
+                "text": "        let blake3_public_values_hash = public_values.hash_bn254_with_fn(blake3_hash);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 519,
+                "text": "        if blake3_public_values_hash != expected_public_values_hash {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 520,
+                "text": "            return Err(Groth16VerificationError::InvalidPublicValues.into());",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 521,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 468, "newLine": 522, "text": "    }" },
+              { "type": " ", "oldLine": 469, "newLine": 523, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 470,
+                "newLine": 524,
+                "text": "    Ok(())"
+              },
+              { "type": " ", "oldLine": 471, "newLine": 525, "text": "}" },
+              { "type": " ", "oldLine": 472, "newLine": 526, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 473,
+                "text": "impl<C: SP1ProverComponents> SubproofVerifier for &SP1Prover<C> {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 527,
+                "text": "impl<C: SP1ProverComponents> SubproofVerifier for SP1Prover<C> {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 474,
+                "newLine": 528,
+                "text": "    fn verify_deferred_proof("
+              },
+              {
+                "type": " ",
+                "oldLine": 475,
+                "newLine": 529,
+                "text": "        &self,"
+              },
+              {
+                "type": " ",
+                "oldLine": 476,
+                "newLine": 530,
+                "text": "        proof: &sp1_core_machine::reduce::SP1ReduceProof<BabyBearPoseidon2>,"
+              }
+            ]
+          },
+          {
+            "oldStart": 492,
+            "oldLines": 6,
+            "newStart": 546,
+            "newLines": 10,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 492,
+                "newLine": 546,
+                "text": "        // Check that the committed value digest matches the one from syscall"
+              },
+              {
+                "type": " ",
+                "oldLine": 493,
+                "newLine": 547,
+                "text": "        let public_values: &RecursionPublicValues<_> ="
+              },
+              {
+                "type": " ",
+                "oldLine": 494,
+                "newLine": 548,
+                "text": "            proof.proof.public_values.as_slice().borrow();"
+              },
+              {
+                "type": "+",
+                "newLine": 549,
+                "text": "        if public_values.vk_root != self.recursion_vk_root {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 550,
+                "text": "            return Err(MachineVerificationError::InvalidPublicValues(\"vk_root mismatch\"));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 551,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 552, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 495,
+                "newLine": 553,
+                "text": "        for (i, word) in public_values.committed_value_digest.iter().enumerate() {"
+              },
+              {
+                "type": " ",
+                "oldLine": 496,
+                "newLine": 554,
+                "text": "            if *word != committed_value_digest[i].into() {"
+              },
+              {
+                "type": " ",
+                "oldLine": 497,
+                "newLine": 555,
+                "text": "                return Err(MachineVerificationError::InvalidPublicValues("
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

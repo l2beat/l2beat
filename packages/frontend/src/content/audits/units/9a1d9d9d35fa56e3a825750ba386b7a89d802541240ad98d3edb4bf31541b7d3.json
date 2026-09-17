@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "9a1d9d9d35fa56e3a825750ba386b7a89d802541240ad98d3edb4bf31541b7d3",
+  "name": "read_request_hints_builder.nr",
+  "kind": "program",
+  "lines": 60,
+  "source": "use crate::reset::read_request::{\n    read_request_action::ReadRequestAction, read_request_hints::ReadRequestHints,\n    validate_pending_read_requests::PendingReadHint,\n    validate_settled_read_requests::SettledReadHint,\n};\nuse types::{merkle_tree::MembershipWitness, traits::Empty};\n\npub struct ReadRequestHintsBuilder<let ReadRequestLen: u32, let PendingHintsLen: u32, let SettledHintsLen: u32, let TreeHeight: u32, SettledReadLeafPreimage> {\n    pub read_request_actions: [ReadRequestAction; ReadRequestLen],\n    pub pending_read_hints: BoundedVec<PendingReadHint, PendingHintsLen>,\n    pub settled_read_hints: BoundedVec<SettledReadHint<TreeHeight, SettledReadLeafPreimage>, SettledHintsLen>,\n}\n\nimpl<let ReadRequestLen: u32, let PendingHintsLen: u32, let SettledHintsLen: u32, let TreeHeight: u32, SettledReadLeafPreimage> ReadRequestHintsBuilder<ReadRequestLen, PendingHintsLen, SettledHintsLen, TreeHeight, SettledReadLeafPreimage>\nwhere\n    SettledReadLeafPreimage: Empty,\n{\n    pub fn new() -> Self {\n        ReadRequestHintsBuilder {\n            read_request_actions: [ReadRequestAction::empty(); ReadRequestLen],\n            pending_read_hints: BoundedVec::from_parts_unchecked(\n                [PendingReadHint::skip(ReadRequestLen); PendingHintsLen],\n                0,\n            ),\n            settled_read_hints: BoundedVec::from_parts_unchecked(\n                [SettledReadHint::skip(ReadRequestLen); SettledHintsLen],\n                0,\n            ),\n        }\n    }\n\n    pub fn add_pending_read_hint(&mut self, read_request_index: u32, pending_value_index: u32) {\n        let hint_index = self.pending_read_hints.len();\n        let hint = PendingReadHint { read_request_index, pending_value_index };\n        self.pending_read_hints.push(hint);\n        self.read_request_actions[read_request_index] = ReadRequestAction::read_pending(hint_index);\n    }\n\n    pub fn add_settled_read_hint(\n        &mut self,\n        read_request_index: u32,\n        membership_witness: MembershipWitness<TreeHeight>,\n        leaf_preimage: SettledReadLeafPreimage,\n    ) {\n        let hint_index = self.settled_read_hints.len();\n        let hint = SettledReadHint { read_request_index, membership_witness, leaf_preimage };\n        self.settled_read_hints.push(hint);\n        self.read_request_actions[read_request_index] = ReadRequestAction::read_settled(hint_index);\n    }\n\n    pub fn to_hints(\n        self,\n    ) -> ReadRequestHints<ReadRequestLen, PendingHintsLen, SettledHintsLen, TreeHeight, SettledReadLeafPreimage> {\n        ReadRequestHints {\n            read_request_actions: self.read_request_actions,\n            pending_read_hints: self.pending_read_hints.storage(),\n            settled_read_hints: self.settled_read_hints.storage(),\n        }\n    }\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

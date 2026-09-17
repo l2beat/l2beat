@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "84519cb5a0859ef9317553c6582f04fe4c9f476069186cea3bbea7d150bb8d76",
+  "name": "IStaking",
+  "kind": "interface",
+  "lines": 23,
+  "source": "interface IStaking is IStakingCore {\n    function getConfig(address _attester) external view returns (AttesterConfig memory);\n    function getExit(address _attester) external view returns (Exit memory);\n    function getAttesterAtIndex(uint256 _index) external view returns (address);\n    function getSlasher() external view returns (address);\n    function getPendingSlasher() external view returns (address slasher, Timestamp readyAt);\n    function getLegacySlasher() external view returns (address slasher, Timestamp authorizedUntil);\n    function getLocalEjectionThreshold() external view returns (uint256);\n    function getSlasherExecutionDelay() external view returns (uint256);\n    function getLegacySlasherDrainWindow() external view returns (uint256);\n    function getStakingAsset() external view returns (IERC20);\n    function getActivationThreshold() external view returns (uint256);\n    function getEjectionThreshold() external view returns (uint256);\n    function getExitDelay() external view returns (Timestamp);\n    function getGSE() external view returns (GSE);\n    function getAttesterView(address _attester) external view returns (AttesterView memory);\n    function getStatus(address _attester) external view returns (Status);\n    function getNextFlushableEpoch() external view returns (Epoch);\n    function getEntryQueueLength() external view returns (uint256);\n    function getEntryQueueAt(uint256 _index) external view returns (DepositArgs memory);\n    function getAvailableValidatorFlushes() external view returns (uint256);\n    function getIsBootstrapped() external view returns (bool);\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

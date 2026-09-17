@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "40f372c939ca010324ad2f04ea25ff29bb20a11434a11b0f12c52e4f7801add5",
+  "name": "IScrollERC1155",
+  "kind": "interface",
+  "lines": 1,
+  "source": "interface IScrollERC1155 is IERC1155, IScrollERC1155Extension {}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

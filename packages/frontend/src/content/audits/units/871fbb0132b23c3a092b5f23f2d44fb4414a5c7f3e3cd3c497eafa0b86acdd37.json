@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "871fbb0132b23c3a092b5f23f2d44fb4414a5c7f3e3cd3c497eafa0b86acdd37",
+  "name": "PositionKey",
+  "kind": "library",
+  "lines": 6,
+  "source": "library PositionKey {\n    /// @dev Returns the key of the position in the core library\n    function compute(address owner, int24 tickLower, int24 tickUpper) internal pure returns (bytes32) {\n        return keccak256(abi.encodePacked(owner, tickLower, tickUpper));\n    }\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

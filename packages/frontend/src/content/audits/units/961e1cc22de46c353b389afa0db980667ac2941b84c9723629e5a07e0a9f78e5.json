@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "961e1cc22de46c353b389afa0db980667ac2941b84c9723629e5a07e0a9f78e5",
+  "name": "FiatTokenV2_1",
+  "kind": "contract",
+  "lines": 26,
+  "source": "contract FiatTokenV2_1 is FiatTokenV2 {\n    /**\n     * @notice Initialize v2.1\n     * @param lostAndFound  The address to which the locked funds are sent\n     */\n    function initializeV2_1(address lostAndFound) external {\n        // solhint-disable-next-line reason-string\n        require(_initializedVersion == 1);\n\n        uint256 lockedAmount = balances[address(this)];\n        if (lockedAmount > 0) {\n            _transfer(address(this), lostAndFound, lockedAmount);\n        }\n        blacklisted[address(this)] = true;\n\n        _initializedVersion = 2;\n    }\n\n    /**\n     * @notice Version string for the EIP712 domain separator\n     * @return Version string\n     */\n    function version() external view returns (string memory) {\n        return \"2\";\n    }\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

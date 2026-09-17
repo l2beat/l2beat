@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "3b56c512ffb61cfe57cc54d03dbf831538c0c10e254655078b611291b8211e77",
+  "name": "mod.nr",
+  "kind": "program",
+  "lines": 15,
+  "source": "pub(crate) mod tx_effect;\npub(crate) mod tx_blob_data;\npub(crate) mod block_blob_data;\npub(crate) mod checkpoint_blob_data;\npub(crate) mod sponge_blob;\n\npub use block_blob_data::{\n    create_block_end_blob_data, create_block_end_marker, create_block_end_state_field,\n};\npub use checkpoint_blob_data::create_checkpoint_end_marker;\npub use sponge_blob::SpongeBlob;\npub use tx_blob_data::{\n    create_tx_start_marker, MAX_TX_BLOB_DATA_SIZE_IN_FIELDS, TxEffectArrayLengths,\n};\npub use tx_effect::TxEffect;",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

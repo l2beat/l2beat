@@ -1,0 +1,224 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "f13531d28a9a5a0923407b7b393851a6326fb35f166f644a091f14140d95be6a",
+  "name": "UUPSUpgradeable",
+  "kind": "abstract",
+  "lines": 129,
+  "source": "abstract contract UUPSUpgradeable is IERC1822Proxiable {\n    /// @custom:oz-upgrades-unsafe-allow state-variable-immutable\n    address private immutable __self = address(this);\n\n    /**\n     * @dev The version of the upgrade interface of the contract. If this getter is missing, both `upgradeTo(address)`\n     * and `upgradeToAndCall(address,bytes)` are present, and `upgradeTo` must be used if no function should be called,\n     * while `upgradeToAndCall` will invoke the `receive` function if the second argument is the empty byte string.\n     * If the getter returns `\"5.0.0\"`, only `upgradeToAndCall(address,bytes)` is present, and the second argument must\n     * be the empty byte string if no function should be called, making it impossible to invoke the `receive` function\n     * during an upgrade.\n     */\n    string public constant UPGRADE_INTERFACE_VERSION = \"5.0.0\";\n\n    /**\n     * @dev The call is from an unauthorized context.\n     */\n    error UUPSUnauthorizedCallContext();\n\n    /**\n     * @dev The storage `slot` is unsupported as a UUID.\n     */\n    error UUPSUnsupportedProxiableUUID(bytes32 slot);\n\n    /**\n     * @dev Check that the execution is being performed through a delegatecall call and that the execution context is\n     * a proxy contract with an implementation (as defined in ERC-1967) pointing to self. This should only be the case\n     * for UUPS and transparent proxies that are using the current contract as their implementation. Execution of a\n     * function through ERC-1167 minimal proxies (clones) would not normally pass this test, but is not guaranteed to\n     * fail.\n     */\n    modifier onlyProxy() {\n        _checkProxy();\n        _;\n    }\n\n    /**\n     * @dev Check that the execution is not being performed through a delegate call. This allows a function to be\n     * callable on the implementing contract but not through proxies.\n     */\n    modifier notDelegated() {\n        _checkNotDelegated();\n        _;\n    }\n\n    /**\n     * @dev Implementation of the ERC-1822 {proxiableUUID} function. This returns the storage slot used by the\n     * implementation. It is used to validate the implementation's compatibility when performing an upgrade.\n     *\n     * IMPORTANT: A proxy pointing at a proxiable contract should not be considered proxiable itself, because this risks\n     * bricking a proxy that upgrades to it, by delegating to itself until out of gas. Thus it is critical that this\n     * function revert if invoked through a proxy. This is guaranteed by the `notDelegated` modifier.\n     */\n    function proxiableUUID() external view virtual notDelegated returns (bytes32) {\n        return ERC1967Utils.IMPLEMENTATION_SLOT;\n    }\n\n    /**\n     * @dev Upgrade the implementation of the proxy to `newImplementation`, and subsequently execute the function call\n     * encoded in `data`.\n     *\n     * Calls {_authorizeUpgrade}.\n     *\n     * Emits an {Upgraded} event.\n     *\n     * @custom:oz-upgrades-unsafe-allow-reachable delegatecall\n     */\n    function upgradeToAndCall(address newImplementation, bytes memory data) public payable virtual onlyProxy {\n        _authorizeUpgrade(newImplementation);\n        _upgradeToAndCallUUPS(newImplementation, data);\n    }\n\n    /**\n     * @dev Reverts if the execution is not performed via delegatecall or the execution\n     * context is not of a proxy with an ERC-1967 compliant implementation pointing to self.\n     * See {_onlyProxy}.\n     */\n    function _checkProxy() internal view virtual {\n        if (\n            address(this) == __self // Must be called through delegatecall\n                || ERC1967Utils.getImplementation() != __self // Must be called through an active proxy\n        ) {\n            revert UUPSUnauthorizedCallContext();\n        }\n    }\n\n    /**\n     * @dev Reverts if the execution is performed via delegatecall.\n     * See {notDelegated}.\n     */\n    function _checkNotDelegated() internal view virtual {\n        if (address(this) != __self) {\n            // Must not be called through delegatecall\n            revert UUPSUnauthorizedCallContext();\n        }\n    }\n\n    /**\n     * @dev Function that should revert when `msg.sender` is not authorized to upgrade the contract. Called by\n     * {upgradeToAndCall}.\n     *\n     * Normally, this function will use an xref:access.adoc[access control] modifier such as {Ownable-onlyOwner}.\n     *\n     * ```solidity\n     * function _authorizeUpgrade(address) internal onlyOwner {}\n     * ```\n     */\n    function _authorizeUpgrade(address newImplementation) internal virtual;\n\n    /**\n     * @dev Performs an implementation upgrade with a security check for UUPS proxies, and additional setup call.\n     *\n     * As a security check, {proxiableUUID} is invoked in the new implementation, and the return value\n     * is expected to be the implementation slot in ERC-1967.\n     *\n     * Emits an {IERC1967-Upgraded} event.\n     */\n    function _upgradeToAndCallUUPS(address newImplementation, bytes memory data) private {\n        try IERC1822Proxiable(newImplementation).proxiableUUID() returns (bytes32 slot) {\n            if (slot != ERC1967Utils.IMPLEMENTATION_SLOT) {\n                revert UUPSUnsupportedProxiableUUID(slot);\n            }\n            ERC1967Utils.upgradeToAndCall(newImplementation, data);\n        } catch {\n            // The implementation is not UUPS\n            revert ERC1967Utils.ERC1967InvalidImplementation(newImplementation);\n        }\n    }\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "library",
+      "coveredLines": 129,
+      "match": {
+        "origin": "library",
+        "collection": "openzeppelin",
+        "relation": { "type": "library" },
+        "rank": 3,
+        "matchedBy": "identity",
+        "auditedName": "UUPSUpgradeable",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/proxy/utils/UUPSUpgradeable.sol",
+        "commit": "8cb5200797e2ff322d3632be6c9df80e72dd8fed",
+        "commitTimestamp": "2023-08-04T17:04:22Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/8cb5200797e2ff322d3632be6c9df80e72dd8fed/contracts/proxy/utils/UUPSUpgradeable.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Fix review limited to the changes of pull request #4502 (head commit).",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 5
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 5,
+        "ignoredRemoved": 5,
+        "unchanged": 129,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 24,
+            "oldLines": 9,
+            "newStart": 24,
+            "newLines": 9,
+            "lines": [
+              { "type": " ", "oldLine": 24, "newLine": 24, "text": "" },
+              { "type": " ", "oldLine": 25, "newLine": 25, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 26,
+                "newLine": 26,
+                "text": "     * @dev Check that the execution is being performed through a delegatecall call and that the execution context is"
+              },
+              {
+                "type": "-",
+                "oldLine": 27,
+                "text": "     * a proxy contract with an implementation (as defined in ERC1967) pointing to self. This should only be the case",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 27,
+                "text": "     * a proxy contract with an implementation (as defined in ERC-1967) pointing to self. This should only be the case",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 28,
+                "newLine": 28,
+                "text": "     * for UUPS and transparent proxies that are using the current contract as their implementation. Execution of a"
+              },
+              {
+                "type": "-",
+                "oldLine": 29,
+                "text": "     * function through ERC1167 minimal proxies (clones) would not normally pass this test, but is not guaranteed to",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 29,
+                "text": "     * function through ERC-1167 minimal proxies (clones) would not normally pass this test, but is not guaranteed to",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 30,
+                "newLine": 30,
+                "text": "     * fail."
+              },
+              { "type": " ", "oldLine": 31, "newLine": 31, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 32,
+                "newLine": 32,
+                "text": "    modifier onlyProxy() {"
+              }
+            ]
+          },
+          {
+            "oldStart": 44,
+            "oldLines": 7,
+            "newStart": 44,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 44, "newLine": 44, "text": "    }" },
+              { "type": " ", "oldLine": 45, "newLine": 45, "text": "" },
+              { "type": " ", "oldLine": 46, "newLine": 46, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 47,
+                "text": "     * @dev Implementation of the ERC1822 {proxiableUUID} function. This returns the storage slot used by the",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 47,
+                "text": "     * @dev Implementation of the ERC-1822 {proxiableUUID} function. This returns the storage slot used by the",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 48,
+                "newLine": 48,
+                "text": "     * implementation. It is used to validate the implementation's compatibility when performing an upgrade."
+              },
+              { "type": " ", "oldLine": 49, "newLine": 49, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 50,
+                "newLine": 50,
+                "text": "     * IMPORTANT: A proxy pointing at a proxiable contract should not be considered proxiable itself, because this risks"
+              }
+            ]
+          },
+          {
+            "oldStart": 72,
+            "oldLines": 7,
+            "newStart": 72,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 72, "newLine": 72, "text": "" },
+              { "type": " ", "oldLine": 73, "newLine": 73, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 74,
+                "newLine": 74,
+                "text": "     * @dev Reverts if the execution is not performed via delegatecall or the execution"
+              },
+              {
+                "type": "-",
+                "oldLine": 75,
+                "text": "     * context is not of a proxy with an ERC1967-compliant implementation pointing to self.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 75,
+                "text": "     * context is not of a proxy with an ERC-1967 compliant implementation pointing to self.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 76,
+                "newLine": 76,
+                "text": "     * See {_onlyProxy}."
+              },
+              { "type": " ", "oldLine": 77, "newLine": 77, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 78,
+                "newLine": 78,
+                "text": "    function _checkProxy() internal view virtual {"
+              }
+            ]
+          },
+          {
+            "oldStart": 111,
+            "oldLines": 7,
+            "newStart": 111,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 111,
+                "newLine": 111,
+                "text": "     * @dev Performs an implementation upgrade with a security check for UUPS proxies, and additional setup call."
+              },
+              { "type": " ", "oldLine": 112, "newLine": 112, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 113,
+                "newLine": 113,
+                "text": "     * As a security check, {proxiableUUID} is invoked in the new implementation, and the return value"
+              },
+              {
+                "type": "-",
+                "oldLine": 114,
+                "text": "     * is expected to be the implementation slot in ERC1967.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 114,
+                "text": "     * is expected to be the implementation slot in ERC-1967.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 115, "newLine": 115, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 116,
+                "newLine": 116,
+                "text": "     * Emits an {IERC1967-Upgraded} event."
+              },
+              { "type": " ", "oldLine": 117, "newLine": 117, "text": "     */" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "f009cd48e5e6e0e86345144ecc80984629e91c05ba56a1a79de5eeac2a15c534",
+  "name": "log_hash.nr",
+  "kind": "program",
+  "lines": 45,
+  "source": "use crate::{\n    address::AztecAddress,\n    constants::LOG_HASH_LENGTH,\n    side_effect::{Counted, Scoped},\n    traits::{Deserialize, Empty, Serialize},\n};\n\n#[derive(Deserialize, Eq, Serialize)]\npub struct LogHash {\n    pub value: Field,\n    pub length: u32,\n}\n\nimpl Empty for LogHash {\n    fn empty() -> Self {\n        LogHash { value: 0, length: 0 }\n    }\n}\n\nimpl LogHash {\n    pub fn count(self, counter: u32) -> Counted<LogHash> {\n        Counted::new(self, counter)\n    }\n\n    pub fn scope(self, contract_address: AztecAddress) -> Scoped<LogHash> {\n        Scoped::new(self, contract_address)\n    }\n}\n\nimpl Scoped<Counted<LogHash>> {\n    pub fn expose_to_public(self) -> Scoped<LogHash> {\n        self.inner.inner.scope(self.contract_address)\n    }\n}\n\n#[test]\nfn test_log_hash_serialization() {\n    let item = LogHash { value: 123, length: 456 };\n\n    // We use the LOG_HASH_LENGTH constant to ensure that there is a match\n    // between the derived trait implementation and the constant\n    let serialized: [Field; LOG_HASH_LENGTH] = item.serialize();\n    let deserialized = LogHash::deserialize(serialized);\n    assert(item.eq(deserialized));\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

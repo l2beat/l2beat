@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "0c6ea96974475ade775d522175aee8db6b60a232ed8fe017831b8e32b8b9ecca",
+  "name": "main.nr",
+  "kind": "program",
+  "lines": 7,
+  "source": "use rollup_lib::checkpoint_root::{\n    checkpoint_padding_rollup, CheckpointPaddingRollupPrivateInputs, CheckpointRollupPublicInputs,\n};\n\nfn main(inputs: CheckpointPaddingRollupPrivateInputs) -> pub CheckpointRollupPublicInputs {\n    checkpoint_padding_rollup::execute(inputs)\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

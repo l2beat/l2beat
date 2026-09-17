@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "021e3cca6daffdfed95c60fec6ebe5ede16cde0050c8c1e8facc529c96c729d1",
+  "name": "IEIP712",
+  "kind": "interface",
+  "lines": 3,
+  "source": "interface IEIP712 {\n    function DOMAIN_SEPARATOR() external view returns (bytes32);\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

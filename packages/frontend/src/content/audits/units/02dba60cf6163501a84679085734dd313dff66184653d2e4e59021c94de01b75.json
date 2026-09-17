@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "02dba60cf6163501a84679085734dd313dff66184653d2e4e59021c94de01b75",
+  "name": "IHasher",
+  "kind": "interface",
+  "lines": 3,
+  "source": "interface IHasher {\n    function MiMCSponge(uint256 in_xL, uint256 in_xR) external pure returns (uint256 xL, uint256 xR);\n}",
+  "resolutions": {
+    "f9658cd3a9a22004": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

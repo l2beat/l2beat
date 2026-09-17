@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "22a1ac4ce3d6b4076d441e1b9b27019e5e51505dc57c576312ac392965046cdc",
+  "name": "private_call_request.nr",
+  "kind": "program",
+  "lines": 50,
+  "source": "use crate::{\n    abis::call_context::CallContext,\n    side_effect::Ordered,\n    traits::{Deserialize, Empty, Serialize},\n};\n\n#[derive(Deserialize, Eq, Serialize)]\npub struct PrivateCallRequest {\n    pub call_context: CallContext,\n    pub args_hash: Field,\n    pub returns_hash: Field,\n    pub start_side_effect_counter: u32,\n    pub end_side_effect_counter: u32,\n}\n\nimpl Ordered for PrivateCallRequest {\n    fn counter(self) -> u32 {\n        self.start_side_effect_counter\n    }\n}\n\nimpl Empty for PrivateCallRequest {\n    fn empty() -> Self {\n        PrivateCallRequest {\n            call_context: CallContext::empty(),\n            args_hash: 0,\n            returns_hash: 0,\n            start_side_effect_counter: 0,\n            end_side_effect_counter: 0,\n        }\n    }\n}\n\nmod test {\n    use crate::{\n        abis::private_call_request::PrivateCallRequest,\n        constants::PRIVATE_CALL_REQUEST_LENGTH,\n        traits::{Deserialize, Empty, Serialize},\n    };\n\n    #[test]\n    fn serialization_of_empty() {\n        let item = PrivateCallRequest::empty();\n        // We use the PRIVATE_CALL_REQUEST_LENGTH constant to ensure that there is a match between the derived trait\n        // implementation and the constant.\n        let serialized: [Field; PRIVATE_CALL_REQUEST_LENGTH] = item.serialize();\n        let deserialized = PrivateCallRequest::deserialize(serialized);\n        assert(item.eq(deserialized));\n    }\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

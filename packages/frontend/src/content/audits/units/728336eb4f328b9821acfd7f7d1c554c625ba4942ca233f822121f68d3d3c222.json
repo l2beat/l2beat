@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "728336eb4f328b9821acfd7f7d1c554c625ba4942ca233f822121f68d3d3c222",
+  "name": "ISynthetixBridgeEscrow",
+  "kind": "interface",
+  "lines": 3,
+  "source": "interface ISynthetixBridgeEscrow {\n    function approveBridge(address _token, address _bridge, uint256 _amount) external;\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

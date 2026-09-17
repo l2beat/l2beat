@@ -1,0 +1,89 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "f67bdde0d7b1dce56b41bb7ab2c4d26f0e2947d9b8be8a1143d53be8d915c265",
+  "name": "TransferHelper",
+  "kind": "library",
+  "lines": 31,
+  "source": "library TransferHelper {\n    function safeApprove(address token, address to, uint256 value) internal {\n        // bytes4(keccak256(bytes('approve(address,uint256)')));\n        (bool success, bytes memory data) = token.call(abi.encodeWithSelector(0x095ea7b3, to, value));\n        require(\n            success && (data.length == 0 || abi.decode(data, (bool))), \"TransferHelper::safeApprove: approve failed\"\n        );\n    }\n\n    function safeTransfer(address token, address to, uint256 value) internal {\n        // bytes4(keccak256(bytes('transfer(address,uint256)')));\n        (bool success, bytes memory data) = token.call(abi.encodeWithSelector(0xa9059cbb, to, value));\n        require(\n            success && (data.length == 0 || abi.decode(data, (bool))), \"TransferHelper::safeTransfer: transfer failed\"\n        );\n    }\n\n    function safeTransferFrom(address token, address from, address to, uint256 value) internal {\n        // bytes4(keccak256(bytes('transferFrom(address,address,uint256)')));\n        (bool success, bytes memory data) = token.call(abi.encodeWithSelector(0x23b872dd, from, to, value));\n        require(\n            success && (data.length == 0 || abi.decode(data, (bool))),\n            \"TransferHelper::transferFrom: transferFrom failed\"\n        );\n    }\n\n    function safeTransferETH(address to, uint256 value) internal {\n        (bool success,) = to.call{value: value}(new bytes(0));\n        require(success, \"TransferHelper::safeTransferETH: ETH transfer failed\");\n    }\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "differs",
+      "coveredLines": 29,
+      "match": {
+        "origin": "other",
+        "collection": "celo",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "name",
+        "auditedName": "TransferHelper",
+        "similarity": 0.986,
+        "reportId": "celo/trail-of-bits-celo-l2-2024-12-19",
+        "repository": "celo-org/celo-monorepo",
+        "path": "packages/protocol/contracts/uniswap/test/libraries/TransferHelper.sol",
+        "commit": "89591e1274adbdabc2c0acc6fd584e0d8c839957",
+        "commitTimestamp": "2024-10-17T11:21:11Z",
+        "url": "https://github.com/celo-org/celo-monorepo/blob/89591e1274adbdabc2c0acc6fd584e0d8c839957/packages/protocol/contracts/uniswap/test/libraries/TransferHelper.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "diff between release/core-contracts/11 and release/core-contracts/12 reviewed manually, dynamically and with static analysis; not a full review of every contract",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 2,
+        "removed": 0,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 2,
+        "unchanged": 29,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 25,
+            "oldLines": 7,
+            "newStart": 25,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 25, "newLine": 25, "text": "    }" },
+              { "type": " ", "oldLine": 26, "newLine": 26, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 27,
+                "newLine": 27,
+                "text": "    function safeTransferETH(address to, uint256 value) internal {"
+              },
+              {
+                "type": "-",
+                "oldLine": 28,
+                "text": "        // (bool success, ) = to.call{value: value}(new bytes(0)); // CHANGED",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 29,
+                "text": "        // require(success, 'TransferHelper::safeTransferETH: ETH transfer failed'); // CHANGED",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 28,
+                "text": "        (bool success,) = to.call{value: value}(new bytes(0));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 29,
+                "text": "        require(success, \"TransferHelper::safeTransferETH: ETH transfer failed\");",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 30, "newLine": 30, "text": "    }" },
+              { "type": " ", "oldLine": 31, "newLine": 31, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

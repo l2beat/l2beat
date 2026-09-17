@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "28bc5036750619f7c5cb7a4ddcd421b91fc7d70acc2bf788baa8b69c0bb289af",
+  "name": "test_value.nr",
+  "kind": "program",
+  "lines": 19,
+  "source": "use types::{side_effect::Ordered, traits::{Deserialize, Empty, Serialize}};\n\n#[derive(Deserialize, Eq, Serialize)]\npub struct TestValue {\n    pub value: Field,\n    pub counter: u32,\n}\n\nimpl Empty for TestValue {\n    fn empty() -> Self {\n        TestValue { value: 0, counter: 0 }\n    }\n}\n\nimpl Ordered for TestValue {\n    fn counter(self) -> u32 {\n        self.counter\n    }\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,40 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "dcdf4b1c3cd126d6d72df909be2203733f8ab1132121f901f06c976f1973144f",
+  "name": "SaferSafes",
+  "kind": "contract",
+  "lines": 44,
+  "source": "contract SaferSafes is LivenessModule2, TimelockGuard, ISemver {\n    /// @notice Semantic version.\n    /// @custom:semver 1.10.1\n    string public constant version = \"1.10.1\";\n\n    /// @notice Error for when the liveness response period is insufficient.\n    error SaferSafes_InsufficientLivenessResponsePeriod();\n\n    /// @notice Internal helper function which can be overriden in a child contract to check if the\n    ///         guard's configuration is valid in the context of other extensions that are enabled\n    ///         on the Safe. This function acts as a FREI-PI invariant check to ensure the\n    ///         resulting config is valid, it MUST be called at the end of any configuration\n    ///         functions in the parent contract.\n    function _checkCombinedConfig(Safe _safe) internal view override(LivenessModule2, TimelockGuard) {\n        // We only need to perform this check if both the guard and the module are enabled on the\n        // Safe\n        if (!(_isGuardEnabled(_safe) && _safe.isModuleEnabled(address(this)))) {\n            return;\n        }\n\n        uint256 timelockDelay = _currentSafeState(_safe).timelockDelay;\n        uint256 livenessResponsePeriod = _livenessSafeConfiguration[_safe].livenessResponsePeriod;\n\n        // If the timelock delay is 0, then the timelock guard is enabled but not configured.\n        // No delay is applied to transactions, so we don't need to perform any further checks.\n        if (timelockDelay == 0) {\n            return;\n        }\n\n        // If the liveness response period is 0, then the liveness module is enabled but not\n        // configured.\n        // Challenging is not possible, so we don't need to perform any further checks.\n        if (livenessResponsePeriod == 0) {\n            return;\n        }\n\n        // The liveness response period must be at least twice the timelock delay, this is\n        // necessary to prevent a situation in which a Safe is not able to respond because there is\n        // insufficient time to respond to a challenge after the timelock delay has expired.\n        if (livenessResponsePeriod < 2 * timelockDelay) {\n            revert SaferSafes_InsufficientLivenessResponsePeriod();\n        }\n    }\n}",
+  "resolutions": {
+    "44ad4cf96e2ef6f0": {
+      "status": "identical",
+      "coveredLines": 44,
+      "match": {
+        "origin": "upstream",
+        "collection": "optimism",
+        "relation": {
+          "type": "fork_of",
+          "repository": "ethereum-optimism/optimism"
+        },
+        "rank": 1,
+        "matchedBy": "identity",
+        "auditedName": "SaferSafes",
+        "similarity": 1,
+        "reportId": "optimism/cantina-u18-2026-01",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts-bedrock/src/safe/SaferSafes.sol",
+        "commit": "87d406db86907833f75d5c8fb26ade3dcb85eb41",
+        "commitTimestamp": "2025-11-24T03:04:45Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/87d406db86907833f75d5c8fb26ade3dcb85eb41/packages/contracts-bedrock/src/safe/SaferSafes.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Full review of the file as listed in the U18 upgrade scope at commit 87d406db (Nov 26 - Dec 3, 2025). No Critical, High or Medium findings in the report.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 4
+      },
+      "warnings": []
+    }
+  }
+}

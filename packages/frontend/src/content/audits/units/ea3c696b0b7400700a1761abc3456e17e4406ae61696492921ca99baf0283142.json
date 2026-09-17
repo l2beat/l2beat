@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "ea3c696b0b7400700a1761abc3456e17e4406ae61696492921ca99baf0283142",
+  "name": "contract_class_function_leaf_preimage.nr",
+  "kind": "program",
+  "lines": 19,
+  "source": "use crate::abis::function_selector::FunctionSelector;\nuse crate::constants::DOM_SEP__PRIVATE_FUNCTION_LEAF;\nuse crate::hash::poseidon2_hash_with_separator;\nuse crate::traits::{Hash, ToField};\n\n// TODO: rename to PrivateFunctionLeafPreimage\npub struct ContractClassFunctionLeafPreimage {\n    pub selector: FunctionSelector,\n    pub vk_hash: Field,\n}\n\nimpl Hash for ContractClassFunctionLeafPreimage {\n    fn hash(self) -> Field {\n        poseidon2_hash_with_separator(\n            [self.selector.to_field(), self.vk_hash],\n            DOM_SEP__PRIVATE_FUNCTION_LEAF,\n        )\n    }\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

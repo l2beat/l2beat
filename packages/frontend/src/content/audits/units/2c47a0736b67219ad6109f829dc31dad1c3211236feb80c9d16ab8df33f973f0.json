@@ -1,0 +1,2102 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "2c47a0736b67219ad6109f829dc31dad1c3211236feb80c9d16ab8df33f973f0",
+  "name": "CrossDomainMessenger",
+  "kind": "abstract",
+  "lines": 360,
+  "source": "abstract contract CrossDomainMessenger is\n    CrossDomainMessengerLegacySpacer0,\n    Initializable,\n    CrossDomainMessengerLegacySpacer1\n{\n    /**\n     * @notice Current message version identifier.\n     */\n    uint16 public constant MESSAGE_VERSION = 1;\n\n    /**\n     * @notice Constant overhead added to the base gas for a message.\n     */\n    uint64 public constant RELAY_CONSTANT_OVERHEAD = 200_000;\n\n    /**\n     * @notice Numerator for dynamic overhead added to the base gas for a message.\n     */\n    uint64 public constant MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR = 64;\n\n    /**\n     * @notice Denominator for dynamic overhead added to the base gas for a message.\n     */\n    uint64 public constant MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR = 63;\n\n    /**\n     * @notice Extra gas added to base gas for each byte of calldata in a message.\n     */\n    uint64 public constant MIN_GAS_CALLDATA_OVERHEAD = 16;\n\n    /**\n     * @notice Gas reserved for performing the external call in `relayMessage`.\n     */\n    uint64 public constant RELAY_CALL_OVERHEAD = 40_000;\n\n    /**\n     * @notice Gas reserved for finalizing the execution of `relayMessage` after the safe call.\n     */\n    uint64 public constant RELAY_RESERVED_GAS = 40_000;\n\n    /**\n     * @notice Gas reserved for the execution between the `hasMinGas` check and the external\n     *         call in `relayMessage`.\n     */\n    uint64 public constant RELAY_GAS_CHECK_BUFFER = 5_000;\n\n    /**\n     * @notice Address of the paired CrossDomainMessenger contract on the other chain.\n     */\n    address public immutable OTHER_MESSENGER;\n\n    /**\n     * @notice Mapping of message hashes to boolean receipt values. Note that a message will only\n     *         be present in this mapping if it has successfully been relayed on this chain, and\n     *         can therefore not be relayed again.\n     */\n    mapping(bytes32 => bool) public successfulMessages;\n\n    /**\n     * @notice Address of the sender of the currently executing message on the other chain. If the\n     *         value of this variable is the default value (0x00000000...dead) then no message is\n     *         currently being executed. Use the xDomainMessageSender getter which will throw an\n     *         error if this is the case.\n     */\n    address internal xDomainMsgSender;\n\n    /**\n     * @notice Nonce for the next message to be sent, without the message version applied. Use the\n     *         messageNonce getter which will insert the message version into the nonce to give you\n     *         the actual nonce to be used for the message.\n     */\n    uint240 internal msgNonce;\n\n    /**\n     * @notice Mapping of message hashes to a boolean if and only if the message has failed to be\n     *         executed at least once. A message will not be present in this mapping if it\n     *         successfully executed on the first attempt.\n     */\n    mapping(bytes32 => bool) public failedMessages;\n\n    /**\n     * @notice Reserve extra slots in the storage layout for future upgrades.\n     *         A gap size of 41 was chosen here, so that the first slot used in a child contract\n     *         would be a multiple of 50.\n     */\n    uint256[42] private __gap;\n\n    /**\n     * @notice Emitted whenever a message is sent to the other chain.\n     *\n     * @param target       Address of the recipient of the message.\n     * @param sender       Address of the sender of the message.\n     * @param message      Message to trigger the recipient address with.\n     * @param messageNonce Unique nonce attached to the message.\n     * @param gasLimit     Minimum gas limit that the message can be executed with.\n     */\n    event SentMessage(address indexed target, address sender, bytes message, uint256 messageNonce, uint256 gasLimit);\n\n    /**\n     * @notice Additional event data to emit, required as of Bedrock. Cannot be merged with the\n     *         SentMessage event without breaking the ABI of this contract, this is good enough.\n     *\n     * @param sender Address of the sender of the message.\n     * @param value  ETH value sent along with the message to the recipient.\n     */\n    event SentMessageExtension1(address indexed sender, uint256 value);\n\n    /**\n     * @notice Emitted whenever a message is successfully relayed on this chain.\n     *\n     * @param msgHash Hash of the message that was relayed.\n     */\n    event RelayedMessage(bytes32 indexed msgHash);\n\n    /**\n     * @notice Emitted whenever a message fails to be relayed on this chain.\n     *\n     * @param msgHash Hash of the message that failed to be relayed.\n     */\n    event FailedRelayedMessage(bytes32 indexed msgHash);\n\n    /**\n     * @param _otherMessenger Address of the messenger on the paired chain.\n     */\n    constructor(address _otherMessenger) {\n        OTHER_MESSENGER = _otherMessenger;\n    }\n\n    /**\n     * @notice Sends a message to some target address on the other chain. Note that if the call\n     *         always reverts, then the message will be unrelayable, and any ETH sent will be\n     *         permanently locked. The same will occur if the target on the other chain is\n     *         considered unsafe (see the _isUnsafeTarget() function).\n     *\n     * @param _target      Target contract or wallet address.\n     * @param _message     Message to trigger the target address with.\n     * @param _minGasLimit Minimum gas limit that the message can be executed with.\n     */\n    function sendMessage(address _target, bytes calldata _message, uint32 _minGasLimit) external payable {\n        // Triggers a message to the other messenger. Note that the amount of gas provided to the\n        // message is the amount of gas requested by the user PLUS the base gas value. We want to\n        // guarantee the property that the call to the target contract will always have at least\n        // the minimum gas limit specified by the user.\n        _sendMessage(\n            OTHER_MESSENGER,\n            baseGas(_message, _minGasLimit),\n            msg.value,\n            abi.encodeWithSelector(\n                this.relayMessage.selector, messageNonce(), msg.sender, _target, msg.value, _minGasLimit, _message\n            )\n        );\n\n        emit SentMessage(_target, msg.sender, _message, messageNonce(), _minGasLimit);\n        emit SentMessageExtension1(msg.sender, msg.value);\n\n        unchecked {\n            ++msgNonce;\n        }\n    }\n\n    /**\n     * @notice Relays a message that was sent by the other CrossDomainMessenger contract. Can only\n     *         be executed via cross-chain call from the other messenger OR if the message was\n     *         already received once and is currently being replayed.\n     *\n     * @param _nonce       Nonce of the message being relayed.\n     * @param _sender      Address of the user who sent the message.\n     * @param _target      Address that the message is targeted at.\n     * @param _value       ETH value to send with the message.\n     * @param _minGasLimit Minimum amount of gas that the message can be executed with.\n     * @param _message     Message to send to the target.\n     */\n    function relayMessage(\n        uint256 _nonce,\n        address _sender,\n        address _target,\n        uint256 _value,\n        uint256 _minGasLimit,\n        bytes calldata _message\n    ) external payable {\n        (, uint16 version) = Encoding.decodeVersionedNonce(_nonce);\n        require(version < 2, \"CrossDomainMessenger: only version 0 or 1 messages are supported at this time\");\n\n        // If the message is version 0, then it's a migrated legacy withdrawal. We therefore need\n        // to check that the legacy version of the message has not already been relayed.\n        if (version == 0) {\n            bytes32 oldHash = Hashing.hashCrossDomainMessageV0(_target, _sender, _message, _nonce);\n            require(successfulMessages[oldHash] == false, \"CrossDomainMessenger: legacy withdrawal already relayed\");\n        }\n\n        // We use the v1 message hash as the unique identifier for the message because it commits\n        // to the value and minimum gas limit of the message.\n        bytes32 versionedHash =\n            Hashing.hashCrossDomainMessageV1(_nonce, _sender, _target, _value, _minGasLimit, _message);\n\n        if (_isOtherMessenger()) {\n            // These properties should always hold when the message is first submitted (as\n            // opposed to being replayed).\n            assert(msg.value == _value);\n            assert(!failedMessages[versionedHash]);\n        } else {\n            require(msg.value == 0, \"CrossDomainMessenger: value must be zero unless message is from a system address\");\n\n            require(failedMessages[versionedHash], \"CrossDomainMessenger: message cannot be replayed\");\n        }\n\n        require(\n            _isUnsafeTarget(_target) == false, \"CrossDomainMessenger: cannot send message to blocked system address\"\n        );\n\n        require(successfulMessages[versionedHash] == false, \"CrossDomainMessenger: message has already been relayed\");\n\n        // If there is not enough gas left to perform the external call and finish the execution,\n        // return early and assign the message to the failedMessages mapping.\n        // We are asserting that we have enough gas to:\n        // 1. Call the target contract (_minGasLimit + RELAY_CALL_OVERHEAD + RELAY_GAS_CHECK_BUFFER)\n        //   1.a. The RELAY_CALL_OVERHEAD is included in `hasMinGas`.\n        // 2. Finish the execution after the external call (RELAY_RESERVED_GAS).\n        //\n        // If `xDomainMsgSender` is not the default L2 sender, this function\n        // is being re-entered. This marks the message as failed to allow it to be replayed.\n        if (\n            !SafeCall.hasMinGas(_minGasLimit, RELAY_RESERVED_GAS + RELAY_GAS_CHECK_BUFFER)\n                || xDomainMsgSender != Constants.DEFAULT_L2_SENDER\n        ) {\n            failedMessages[versionedHash] = true;\n            emit FailedRelayedMessage(versionedHash);\n\n            // Revert in this case if the transaction was triggered by the estimation address. This\n            // should only be possible during gas estimation or we have bigger problems. Reverting\n            // here will make the behavior of gas estimation change such that the gas limit\n            // computed will be the amount required to relay the message, even if that amount is\n            // greater than the minimum gas limit specified by the user.\n            if (tx.origin == Constants.ESTIMATION_ADDRESS) {\n                revert(\"CrossDomainMessenger: failed to relay message\");\n            }\n\n            return;\n        }\n\n        xDomainMsgSender = _sender;\n        bool success = SafeCall.call(_target, gasleft() - RELAY_RESERVED_GAS, _value, _message);\n        xDomainMsgSender = Constants.DEFAULT_L2_SENDER;\n\n        if (success) {\n            successfulMessages[versionedHash] = true;\n            emit RelayedMessage(versionedHash);\n        } else {\n            failedMessages[versionedHash] = true;\n            emit FailedRelayedMessage(versionedHash);\n\n            // Revert in this case if the transaction was triggered by the estimation address. This\n            // should only be possible during gas estimation or we have bigger problems. Reverting\n            // here will make the behavior of gas estimation change such that the gas limit\n            // computed will be the amount required to relay the message, even if that amount is\n            // greater than the minimum gas limit specified by the user.\n            if (tx.origin == Constants.ESTIMATION_ADDRESS) {\n                revert(\"CrossDomainMessenger: failed to relay message\");\n            }\n        }\n    }\n\n    /**\n     * @notice Retrieves the address of the contract or wallet that initiated the currently\n     *         executing message on the other chain. Will throw an error if there is no message\n     *         currently being executed. Allows the recipient of a call to see who triggered it.\n     *\n     * @return Address of the sender of the currently executing message on the other chain.\n     */\n    function xDomainMessageSender() external view returns (address) {\n        require(\n            xDomainMsgSender != Constants.DEFAULT_L2_SENDER, \"CrossDomainMessenger: xDomainMessageSender is not set\"\n        );\n\n        return xDomainMsgSender;\n    }\n\n    /**\n     * @notice Retrieves the next message nonce. Message version will be added to the upper two\n     *         bytes of the message nonce. Message version allows us to treat messages as having\n     *         different structures.\n     *\n     * @return Nonce of the next message to be sent, with added message version.\n     */\n    function messageNonce() public view returns (uint256) {\n        return Encoding.encodeVersionedNonce(msgNonce, MESSAGE_VERSION);\n    }\n\n    /**\n     * @notice Computes the amount of gas required to guarantee that a given message will be\n     *         received on the other chain without running out of gas. Guaranteeing that a message\n     *         will not run out of gas is important because this ensures that a message can always\n     *         be replayed on the other chain if it fails to execute completely.\n     *\n     * @param _message     Message to compute the amount of required gas for.\n     * @param _minGasLimit Minimum desired gas limit when message goes to target.\n     *\n     * @return Amount of gas required to guarantee message receipt.\n     */\n    function baseGas(bytes calldata _message, uint32 _minGasLimit) public pure returns (uint64) {\n        return\n        // Constant overhead\n        RELAY_CONSTANT_OVERHEAD\n        // Calldata overhead\n        + (uint64(_message.length) * MIN_GAS_CALLDATA_OVERHEAD)\n        // Dynamic overhead (EIP-150)\n        + ((_minGasLimit * MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR) / MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR)\n        // Gas reserved for the worst-case cost of 3/5 of the `CALL` opcode's dynamic gas\n        // factors. (Conservative)\n        + RELAY_CALL_OVERHEAD\n        // Relay reserved gas (to ensure execution of `relayMessage` completes after the\n        // subcontext finishes executing) (Conservative)\n        + RELAY_RESERVED_GAS\n        // Gas reserved for the execution between the `hasMinGas` check and the `CALL`\n        // opcode. (Conservative)\n        + RELAY_GAS_CHECK_BUFFER;\n    }\n\n    /**\n     * @notice Intializer.\n     */\n    // solhint-disable-next-line func-name-mixedcase\n    function __CrossDomainMessenger_init() internal onlyInitializing {\n        xDomainMsgSender = Constants.DEFAULT_L2_SENDER;\n    }\n\n    /**\n     * @notice Sends a low-level message to the other messenger. Needs to be implemented by child\n     *         contracts because the logic for this depends on the network where the messenger is\n     *         being deployed.\n     *\n     * @param _to       Recipient of the message on the other chain.\n     * @param _gasLimit Minimum gas limit the message can be executed with.\n     * @param _value    Amount of ETH to send with the message.\n     * @param _data     Message data.\n     */\n    function _sendMessage(address _to, uint64 _gasLimit, uint256 _value, bytes memory _data) internal virtual;\n\n    /**\n     * @notice Checks whether the message is coming from the other messenger. Implemented by child\n     *         contracts because the logic for this depends on the network where the messenger is\n     *         being deployed.\n     *\n     * @return Whether the message is coming from the other messenger.\n     */\n    function _isOtherMessenger() internal view virtual returns (bool);\n\n    /**\n     * @notice Checks whether a given call target is a system address that could cause the\n     *         messenger to peform an unsafe action. This is NOT a mechanism for blocking user\n     *         addresses. This is ONLY used to prevent the execution of messages to specific\n     *         system addresses that could cause security issues, e.g., having the\n     *         CrossDomainMessenger send messages to itself.\n     *\n     * @param _target Address of the contract to check.\n     *\n     * @return Whether or not the address is an unsafe system address.\n     */\n    function _isUnsafeTarget(address _target) internal view virtual returns (bool);\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "differs",
+      "coveredLines": 359,
+      "match": {
+        "origin": "own",
+        "collection": "optimism",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "CrossDomainMessenger",
+        "similarity": 1,
+        "reportId": "optimism/trust-superchainconfig-upgrade-2024-01",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts-bedrock/src/universal/CrossDomainMessenger.sol",
+        "commit": "81b56fee40f96c798174115c375f41c3d2ff9d40",
+        "commitTimestamp": "2024-01-08T19:01:54Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/81b56fee40f96c798174115c375f41c3d2ff9d40/packages/contracts-bedrock/src/universal/CrossDomainMessenger.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Mitigation review commit named by the report.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 11
+      },
+      "diff": {
+        "added": 1,
+        "removed": 8,
+        "ignoredAdded": 162,
+        "ignoredRemoved": 106,
+        "unchanged": 359,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 3,
+            "oldLines": 94,
+            "newStart": 3,
+            "newLines": 139,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "    Initializable,"
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "    CrossDomainMessengerLegacySpacer1"
+              },
+              { "type": " ", "oldLine": 5, "newLine": 5, "text": "{" },
+              {
+                "type": "-",
+                "oldLine": 6,
+                "text": "    /// @notice Current message version identifier.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 6, "text": "    /**", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 7,
+                "text": "     * @notice Current message version identifier.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 8, "text": "     */", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 7,
+                "newLine": 9,
+                "text": "    uint16 public constant MESSAGE_VERSION = 1;"
+              },
+              { "type": " ", "oldLine": 8, "newLine": 10, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 9,
+                "text": "    /// @notice Constant overhead added to the base gas for a message.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 11,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 12,
+                "text": "     * @notice Constant overhead added to the base gas for a message.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 13,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 10,
+                "newLine": 14,
+                "text": "    uint64 public constant RELAY_CONSTANT_OVERHEAD = 200_000;"
+              },
+              { "type": " ", "oldLine": 11, "newLine": 15, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 12,
+                "text": "    /// @notice Numerator for dynamic overhead added to the base gas for a message.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 16,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 17,
+                "text": "     * @notice Numerator for dynamic overhead added to the base gas for a message.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 18,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 13,
+                "newLine": 19,
+                "text": "    uint64 public constant MIN_GAS_DYNAMIC_OVERHEAD_NUMERATOR = 64;"
+              },
+              { "type": " ", "oldLine": 14, "newLine": 20, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 15,
+                "text": "    /// @notice Denominator for dynamic overhead added to the base gas for a message.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 21,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 22,
+                "text": "     * @notice Denominator for dynamic overhead added to the base gas for a message.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 23,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 16,
+                "newLine": 24,
+                "text": "    uint64 public constant MIN_GAS_DYNAMIC_OVERHEAD_DENOMINATOR = 63;"
+              },
+              { "type": " ", "oldLine": 17, "newLine": 25, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 18,
+                "text": "    /// @notice Extra gas added to base gas for each byte of calldata in a message.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 26,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 27,
+                "text": "     * @notice Extra gas added to base gas for each byte of calldata in a message.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 28,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 19,
+                "newLine": 29,
+                "text": "    uint64 public constant MIN_GAS_CALLDATA_OVERHEAD = 16;"
+              },
+              { "type": " ", "oldLine": 20, "newLine": 30, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 21,
+                "text": "    /// @notice Gas reserved for performing the external call in `relayMessage`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 31,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 32,
+                "text": "     * @notice Gas reserved for performing the external call in `relayMessage`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 33,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 34,
+                "text": "    uint64 public constant RELAY_CALL_OVERHEAD = 40_000;"
+              },
+              { "type": " ", "oldLine": 23, "newLine": 35, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 24,
+                "text": "    /// @notice Gas reserved for finalizing the execution of `relayMessage` after the safe call.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 36,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 37,
+                "text": "     * @notice Gas reserved for finalizing the execution of `relayMessage` after the safe call.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 38,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 25,
+                "newLine": 39,
+                "text": "    uint64 public constant RELAY_RESERVED_GAS = 40_000;"
+              },
+              { "type": " ", "oldLine": 26, "newLine": 40, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 27,
+                "text": "    /// @notice Gas reserved for the execution between the `hasMinGas` check and the external",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 28,
+                "text": "    ///         call in `relayMessage`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 41,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 42,
+                "text": "     * @notice Gas reserved for the execution between the `hasMinGas` check and the external",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 43,
+                "text": "     *         call in `relayMessage`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 44,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 29,
+                "newLine": 45,
+                "text": "    uint64 public constant RELAY_GAS_CHECK_BUFFER = 5_000;"
+              },
+              { "type": " ", "oldLine": 30, "newLine": 46, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 31,
+                "text": "    /// @notice Address of the paired CrossDomainMessenger contract on the other chain.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 47,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 48,
+                "text": "     * @notice Address of the paired CrossDomainMessenger contract on the other chain.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 49,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 32,
+                "newLine": 50,
+                "text": "    address public immutable OTHER_MESSENGER;"
+              },
+              { "type": " ", "oldLine": 33, "newLine": 51, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 34,
+                "text": "    /// @notice Mapping of message hashes to boolean receipt values. Note that a message will only",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 35,
+                "text": "    ///         be present in this mapping if it has successfully been relayed on this chain, and",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 36,
+                "text": "    ///         can therefore not be relayed again.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 52,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 53,
+                "text": "     * @notice Mapping of message hashes to boolean receipt values. Note that a message will only",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 54,
+                "text": "     *         be present in this mapping if it has successfully been relayed on this chain, and",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 55,
+                "text": "     *         can therefore not be relayed again.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 56,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 37,
+                "newLine": 57,
+                "text": "    mapping(bytes32 => bool) public successfulMessages;"
+              },
+              { "type": " ", "oldLine": 38, "newLine": 58, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 39,
+                "text": "    /// @notice Address of the sender of the currently executing message on the other chain. If the",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 40,
+                "text": "    ///         value of this variable is the default value (0x00000000...dead) then no message is",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 41,
+                "text": "    ///         currently being executed. Use the xDomainMessageSender getter which will throw an",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 42,
+                "text": "    ///         error if this is the case.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 59,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 60,
+                "text": "     * @notice Address of the sender of the currently executing message on the other chain. If the",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 61,
+                "text": "     *         value of this variable is the default value (0x00000000...dead) then no message is",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 62,
+                "text": "     *         currently being executed. Use the xDomainMessageSender getter which will throw an",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 63,
+                "text": "     *         error if this is the case.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 64,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 43,
+                "newLine": 65,
+                "text": "    address internal xDomainMsgSender;"
+              },
+              { "type": " ", "oldLine": 44, "newLine": 66, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 45,
+                "text": "    /// @notice Nonce for the next message to be sent, without the message version applied. Use the",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 46,
+                "text": "    ///         messageNonce getter which will insert the message version into the nonce to give you",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 47,
+                "text": "    ///         the actual nonce to be used for the message.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 67,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 68,
+                "text": "     * @notice Nonce for the next message to be sent, without the message version applied. Use the",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 69,
+                "text": "     *         messageNonce getter which will insert the message version into the nonce to give you",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 70,
+                "text": "     *         the actual nonce to be used for the message.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 71,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 48,
+                "newLine": 72,
+                "text": "    uint240 internal msgNonce;"
+              },
+              { "type": " ", "oldLine": 49, "newLine": 73, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 50,
+                "text": "    /// @notice Mapping of message hashes to a boolean if and only if the message has failed to be",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 51,
+                "text": "    ///         executed at least once. A message will not be present in this mapping if it",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 52,
+                "text": "    ///         successfully executed on the first attempt.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 74,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 75,
+                "text": "     * @notice Mapping of message hashes to a boolean if and only if the message has failed to be",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 76,
+                "text": "     *         executed at least once. A message will not be present in this mapping if it",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 77,
+                "text": "     *         successfully executed on the first attempt.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 78,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 53,
+                "newLine": 79,
+                "text": "    mapping(bytes32 => bool) public failedMessages;"
+              },
+              { "type": " ", "oldLine": 54, "newLine": 80, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 55,
+                "text": "    /// @notice Reserve extra slots in the storage layout for future upgrades.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 56,
+                "text": "    ///         A gap size of 44 was chosen here, so that the first slot used in a child contract",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 57,
+                "text": "    ///         would be 1 plus a multiple of 50.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 58,
+                "text": "    uint256[44] private __gap;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 81,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 82,
+                "text": "     * @notice Reserve extra slots in the storage layout for future upgrades.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 83,
+                "text": "     *         A gap size of 41 was chosen here, so that the first slot used in a child contract",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 84,
+                "text": "     *         would be a multiple of 50.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 85,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 86,
+                "text": "    uint256[42] private __gap;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 59, "newLine": 87, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 60,
+                "text": "    /// @notice Emitted whenever a message is sent to the other chain.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 61,
+                "text": "    /// @param target       Address of the recipient of the message.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 62,
+                "text": "    /// @param sender       Address of the sender of the message.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 63,
+                "text": "    /// @param message      Message to trigger the recipient address with.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 64,
+                "text": "    /// @param messageNonce Unique nonce attached to the message.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 65,
+                "text": "    /// @param gasLimit     Minimum gas limit that the message can be executed with.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 88,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 89,
+                "text": "     * @notice Emitted whenever a message is sent to the other chain.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 90, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 91,
+                "text": "     * @param target       Address of the recipient of the message.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 92,
+                "text": "     * @param sender       Address of the sender of the message.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 93,
+                "text": "     * @param message      Message to trigger the recipient address with.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 94,
+                "text": "     * @param messageNonce Unique nonce attached to the message.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 95,
+                "text": "     * @param gasLimit     Minimum gas limit that the message can be executed with.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 96,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 66,
+                "newLine": 97,
+                "text": "    event SentMessage(address indexed target, address sender, bytes message, uint256 messageNonce, uint256 gasLimit);"
+              },
+              { "type": " ", "oldLine": 67, "newLine": 98, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 68,
+                "text": "    /// @notice Additional event data to emit, required as of Bedrock. Cannot be merged with the",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 69,
+                "text": "    ///         SentMessage event without breaking the ABI of this contract, this is good enough.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 70,
+                "text": "    /// @param sender Address of the sender of the message.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 71,
+                "text": "    /// @param value  ETH value sent along with the message to the recipient.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 99,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 100,
+                "text": "     * @notice Additional event data to emit, required as of Bedrock. Cannot be merged with the",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 101,
+                "text": "     *         SentMessage event without breaking the ABI of this contract, this is good enough.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 102,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 103,
+                "text": "     * @param sender Address of the sender of the message.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 104,
+                "text": "     * @param value  ETH value sent along with the message to the recipient.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 105,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 72,
+                "newLine": 106,
+                "text": "    event SentMessageExtension1(address indexed sender, uint256 value);"
+              },
+              { "type": " ", "oldLine": 73, "newLine": 107, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 74,
+                "text": "    /// @notice Emitted whenever a message is successfully relayed on this chain.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 75,
+                "text": "    /// @param msgHash Hash of the message that was relayed.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 108,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 109,
+                "text": "     * @notice Emitted whenever a message is successfully relayed on this chain.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 110,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 111,
+                "text": "     * @param msgHash Hash of the message that was relayed.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 112,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 76,
+                "newLine": 113,
+                "text": "    event RelayedMessage(bytes32 indexed msgHash);"
+              },
+              { "type": " ", "oldLine": 77, "newLine": 114, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 78,
+                "text": "    /// @notice Emitted whenever a message fails to be relayed on this chain.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 79,
+                "text": "    /// @param msgHash Hash of the message that failed to be relayed.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 115,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 116,
+                "text": "     * @notice Emitted whenever a message fails to be relayed on this chain.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 117,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 118,
+                "text": "     * @param msgHash Hash of the message that failed to be relayed.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 119,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 80,
+                "newLine": 120,
+                "text": "    event FailedRelayedMessage(bytes32 indexed msgHash);"
+              },
+              { "type": " ", "oldLine": 81, "newLine": 121, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 82,
+                "text": "    /// @param _otherMessenger Address of the messenger on the paired chain.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 122,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 123,
+                "text": "     * @param _otherMessenger Address of the messenger on the paired chain.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 124,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 83,
+                "newLine": 125,
+                "text": "    constructor(address _otherMessenger) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 84,
+                "newLine": 126,
+                "text": "        OTHER_MESSENGER = _otherMessenger;"
+              },
+              { "type": " ", "oldLine": 85, "newLine": 127, "text": "    }" },
+              { "type": " ", "oldLine": 86, "newLine": 128, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 87,
+                "text": "    /// @notice Sends a message to some target address on the other chain. Note that if the call",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 88,
+                "text": "    ///         always reverts, then the message will be unrelayable, and any ETH sent will be",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 89,
+                "text": "    ///         permanently locked. The same will occur if the target on the other chain is",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 90,
+                "text": "    ///         considered unsafe (see the _isUnsafeTarget() function).",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 91,
+                "text": "    /// @param _target      Target contract or wallet address.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 92,
+                "text": "    /// @param _message     Message to trigger the target address with.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 93,
+                "text": "    /// @param _minGasLimit Minimum gas limit that the message can be executed with.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 129,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 130,
+                "text": "     * @notice Sends a message to some target address on the other chain. Note that if the call",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 131,
+                "text": "     *         always reverts, then the message will be unrelayable, and any ETH sent will be",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 132,
+                "text": "     *         permanently locked. The same will occur if the target on the other chain is",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 133,
+                "text": "     *         considered unsafe (see the _isUnsafeTarget() function).",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 134,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 135,
+                "text": "     * @param _target      Target contract or wallet address.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 136,
+                "text": "     * @param _message     Message to trigger the target address with.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 137,
+                "text": "     * @param _minGasLimit Minimum gas limit that the message can be executed with.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 138,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 94,
+                "newLine": 139,
+                "text": "    function sendMessage(address _target, bytes calldata _message, uint32 _minGasLimit) external payable {"
+              },
+              {
+                "type": " ",
+                "oldLine": 95,
+                "newLine": 140,
+                "text": "        // Triggers a message to the other messenger. Note that the amount of gas provided to the"
+              },
+              {
+                "type": " ",
+                "oldLine": 96,
+                "newLine": 141,
+                "text": "        // message is the amount of gas requested by the user PLUS the base gas value. We want to"
+              }
+            ]
+          },
+          {
+            "oldStart": 113,
+            "oldLines": 15,
+            "newStart": 158,
+            "newLines": 18,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 113,
+                "newLine": 158,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 114, "newLine": 159, "text": "    }" },
+              { "type": " ", "oldLine": 115, "newLine": 160, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 116,
+                "text": "    /// @notice Relays a message that was sent by the other CrossDomainMessenger contract. Can only",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 117,
+                "text": "    ///         be executed via cross-chain call from the other messenger OR if the message was",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 118,
+                "text": "    ///         already received once and is currently being replayed.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 119,
+                "text": "    /// @param _nonce       Nonce of the message being relayed.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 120,
+                "text": "    /// @param _sender      Address of the user who sent the message.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 121,
+                "text": "    /// @param _target      Address that the message is targeted at.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 122,
+                "text": "    /// @param _value       ETH value to send with the message.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 123,
+                "text": "    /// @param _minGasLimit Minimum amount of gas that the message can be executed with.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 124,
+                "text": "    /// @param _message     Message to send to the target.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 161,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 162,
+                "text": "     * @notice Relays a message that was sent by the other CrossDomainMessenger contract. Can only",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 163,
+                "text": "     *         be executed via cross-chain call from the other messenger OR if the message was",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 164,
+                "text": "     *         already received once and is currently being replayed.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 165,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 166,
+                "text": "     * @param _nonce       Nonce of the message being relayed.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 167,
+                "text": "     * @param _sender      Address of the user who sent the message.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 168,
+                "text": "     * @param _target      Address that the message is targeted at.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 169,
+                "text": "     * @param _value       ETH value to send with the message.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 170,
+                "text": "     * @param _minGasLimit Minimum amount of gas that the message can be executed with.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 171,
+                "text": "     * @param _message     Message to send to the target.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 172,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 125,
+                "newLine": 173,
+                "text": "    function relayMessage("
+              },
+              {
+                "type": " ",
+                "oldLine": 126,
+                "newLine": 174,
+                "text": "        uint256 _nonce,"
+              },
+              {
+                "type": " ",
+                "oldLine": 127,
+                "newLine": 175,
+                "text": "        address _sender,"
+              }
+            ]
+          },
+          {
+            "oldStart": 130,
+            "oldLines": 10,
+            "newStart": 178,
+            "newLines": 6,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 130,
+                "newLine": 178,
+                "text": "        uint256 _minGasLimit,"
+              },
+              {
+                "type": " ",
+                "oldLine": 131,
+                "newLine": 179,
+                "text": "        bytes calldata _message"
+              },
+              {
+                "type": " ",
+                "oldLine": 132,
+                "newLine": 180,
+                "text": "    ) external payable {"
+              },
+              {
+                "type": "-",
+                "oldLine": 133,
+                "text": "        // On L1 this function will check the Portal for its paused status.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 134,
+                "text": "        // On L2 this function should be a no-op, because paused will always return false.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 135,
+                "text": "        require(paused() == false, \"CrossDomainMessenger: paused\");",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 136, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 137,
+                "newLine": 181,
+                "text": "        (, uint16 version) = Encoding.decodeVersionedNonce(_nonce);"
+              },
+              {
+                "type": " ",
+                "oldLine": 138,
+                "newLine": 182,
+                "text": "        require(version < 2, \"CrossDomainMessenger: only version 0 or 1 messages are supported at this time\");"
+              },
+              { "type": " ", "oldLine": 139, "newLine": 183, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 199,
+            "oldLines": 9,
+            "newStart": 243,
+            "newLines": 6,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 199,
+                "newLine": 243,
+                "text": "        xDomainMsgSender = Constants.DEFAULT_L2_SENDER;"
+              },
+              { "type": " ", "oldLine": 200, "newLine": 244, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 201,
+                "newLine": 245,
+                "text": "        if (success) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 202,
+                "text": "            // This check is identical to one above, but it ensures that the same message cannot be relayed",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 203,
+                "text": "            // twice, and adds a layer of protection against rentrancy.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 204,
+                "text": "            assert(successfulMessages[versionedHash] == false);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 205,
+                "newLine": 246,
+                "text": "            successfulMessages[versionedHash] = true;"
+              },
+              {
+                "type": " ",
+                "oldLine": 206,
+                "newLine": 247,
+                "text": "            emit RelayedMessage(versionedHash);"
+              },
+              {
+                "type": " ",
+                "oldLine": 207,
+                "newLine": 248,
+                "text": "        } else {"
+              }
+            ]
+          },
+          {
+            "oldStart": 219,
+            "oldLines": 10,
+            "newStart": 260,
+            "newLines": 13,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 219,
+                "newLine": 260,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 220, "newLine": 261, "text": "    }" },
+              { "type": " ", "oldLine": 221, "newLine": 262, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 222,
+                "text": "    /// @notice Retrieves the address of the contract or wallet that initiated the currently",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 223,
+                "text": "    ///         executing message on the other chain. Will throw an error if there is no message",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 224,
+                "text": "    ///         currently being executed. Allows the recipient of a call to see who triggered it.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 225,
+                "text": "    /// @return Address of the sender of the currently executing message on the other chain.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 263,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 264,
+                "text": "     * @notice Retrieves the address of the contract or wallet that initiated the currently",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 265,
+                "text": "     *         executing message on the other chain. Will throw an error if there is no message",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 266,
+                "text": "     *         currently being executed. Allows the recipient of a call to see who triggered it.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 267,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 268,
+                "text": "     * @return Address of the sender of the currently executing message on the other chain.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 269,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 226,
+                "newLine": 270,
+                "text": "    function xDomainMessageSender() external view returns (address) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 227,
+                "newLine": 271,
+                "text": "        require("
+              },
+              {
+                "type": " ",
+                "oldLine": 228,
+                "newLine": 272,
+                "text": "            xDomainMsgSender != Constants.DEFAULT_L2_SENDER, \"CrossDomainMessenger: xDomainMessageSender is not set\""
+              }
+            ]
+          },
+          {
+            "oldStart": 231,
+            "oldLines": 21,
+            "newStart": 275,
+            "newLines": 28,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 231,
+                "newLine": 275,
+                "text": "        return xDomainMsgSender;"
+              },
+              { "type": " ", "oldLine": 232, "newLine": 276, "text": "    }" },
+              { "type": " ", "oldLine": 233, "newLine": 277, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 234,
+                "text": "    /// @notice Retrieves the next message nonce. Message version will be added to the upper two",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 235,
+                "text": "    ///         bytes of the message nonce. Message version allows us to treat messages as having",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 236,
+                "text": "    ///         different structures.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 237,
+                "text": "    /// @return Nonce of the next message to be sent, with added message version.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 278,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 279,
+                "text": "     * @notice Retrieves the next message nonce. Message version will be added to the upper two",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 280,
+                "text": "     *         bytes of the message nonce. Message version allows us to treat messages as having",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 281,
+                "text": "     *         different structures.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 282,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 283,
+                "text": "     * @return Nonce of the next message to be sent, with added message version.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 284,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 238,
+                "newLine": 285,
+                "text": "    function messageNonce() public view returns (uint256) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 239,
+                "newLine": 286,
+                "text": "        return Encoding.encodeVersionedNonce(msgNonce, MESSAGE_VERSION);"
+              },
+              { "type": " ", "oldLine": 240, "newLine": 287, "text": "    }" },
+              { "type": " ", "oldLine": 241, "newLine": 288, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 242,
+                "text": "    /// @notice Computes the amount of gas required to guarantee that a given message will be",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 243,
+                "text": "    ///         received on the other chain without running out of gas. Guaranteeing that a message",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 244,
+                "text": "    ///         will not run out of gas is important because this ensures that a message can always",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 245,
+                "text": "    ///         be replayed on the other chain if it fails to execute completely.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 246,
+                "text": "    /// @param _message     Message to compute the amount of required gas for.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 247,
+                "text": "    /// @param _minGasLimit Minimum desired gas limit when message goes to target.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 248,
+                "text": "    /// @return Amount of gas required to guarantee message receipt.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 289,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 290,
+                "text": "     * @notice Computes the amount of gas required to guarantee that a given message will be",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 291,
+                "text": "     *         received on the other chain without running out of gas. Guaranteeing that a message",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 292,
+                "text": "     *         will not run out of gas is important because this ensures that a message can always",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 293,
+                "text": "     *         be replayed on the other chain if it fails to execute completely.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 294,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 295,
+                "text": "     * @param _message     Message to compute the amount of required gas for.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 296,
+                "text": "     * @param _minGasLimit Minimum desired gas limit when message goes to target.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 297,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 298,
+                "text": "     * @return Amount of gas required to guarantee message receipt.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 299,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 249,
+                "newLine": 300,
+                "text": "    function baseGas(bytes calldata _message, uint32 _minGasLimit) public pure returns (uint64) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 250,
+                "newLine": 301,
+                "text": "        return"
+              },
+              {
+                "type": " ",
+                "oldLine": 251,
+                "newLine": 302,
+                "text": "        // Constant overhead"
+              }
+            ]
+          },
+          {
+            "oldStart": 265,
+            "oldLines": 47,
+            "newStart": 316,
+            "newLines": 45,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 265,
+                "newLine": 316,
+                "text": "        + RELAY_GAS_CHECK_BUFFER;"
+              },
+              { "type": " ", "oldLine": 266, "newLine": 317, "text": "    }" },
+              { "type": " ", "oldLine": 267, "newLine": 318, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 268,
+                "text": "    /// @notice Initializer.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 319,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 320,
+                "text": "     * @notice Intializer.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 321,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 269,
+                "newLine": 322,
+                "text": "    // solhint-disable-next-line func-name-mixedcase"
+              },
+              {
+                "type": " ",
+                "oldLine": 270,
+                "newLine": 323,
+                "text": "    function __CrossDomainMessenger_init() internal onlyInitializing {"
+              },
+              {
+                "type": "-",
+                "oldLine": 271,
+                "text": "        // We only want to set the xDomainMsgSender to the default value if it hasn't been initialized yet,",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 272,
+                "text": "        // meaning that this is a fresh contract deployment.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 273,
+                "text": "        // This prevents resetting the xDomainMsgSender to the default value during an upgrade, which would enable",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 274,
+                "text": "        // a reentrant withdrawal to sandwhich the upgrade replay a withdrawal twice.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 275,
+                "text": "        if (xDomainMsgSender == address(0)) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 276,
+                "text": "            xDomainMsgSender = Constants.DEFAULT_L2_SENDER;",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 277,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 324,
+                "text": "        xDomainMsgSender = Constants.DEFAULT_L2_SENDER;",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 278, "newLine": 325, "text": "    }" },
+              { "type": " ", "oldLine": 279, "newLine": 326, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 280,
+                "text": "    /// @notice Sends a low-level message to the other messenger. Needs to be implemented by child",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 281,
+                "text": "    ///         contracts because the logic for this depends on the network where the messenger is",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 282,
+                "text": "    ///         being deployed.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 283,
+                "text": "    /// @param _to       Recipient of the message on the other chain.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 284,
+                "text": "    /// @param _gasLimit Minimum gas limit the message can be executed with.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 285,
+                "text": "    /// @param _value    Amount of ETH to send with the message.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 286,
+                "text": "    /// @param _data     Message data.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 327,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 328,
+                "text": "     * @notice Sends a low-level message to the other messenger. Needs to be implemented by child",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 329,
+                "text": "     *         contracts because the logic for this depends on the network where the messenger is",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 330,
+                "text": "     *         being deployed.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 331,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 332,
+                "text": "     * @param _to       Recipient of the message on the other chain.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 333,
+                "text": "     * @param _gasLimit Minimum gas limit the message can be executed with.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 334,
+                "text": "     * @param _value    Amount of ETH to send with the message.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 335,
+                "text": "     * @param _data     Message data.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 336,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 287,
+                "newLine": 337,
+                "text": "    function _sendMessage(address _to, uint64 _gasLimit, uint256 _value, bytes memory _data) internal virtual;"
+              },
+              { "type": " ", "oldLine": 288, "newLine": 338, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 289,
+                "text": "    /// @notice Checks whether the message is coming from the other messenger. Implemented by child",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 290,
+                "text": "    ///         contracts because the logic for this depends on the network where the messenger is",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 291,
+                "text": "    ///         being deployed.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 292,
+                "text": "    /// @return Whether the message is coming from the other messenger.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 339,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 340,
+                "text": "     * @notice Checks whether the message is coming from the other messenger. Implemented by child",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 341,
+                "text": "     *         contracts because the logic for this depends on the network where the messenger is",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 342,
+                "text": "     *         being deployed.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 343,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 344,
+                "text": "     * @return Whether the message is coming from the other messenger.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 345,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 293,
+                "newLine": 346,
+                "text": "    function _isOtherMessenger() internal view virtual returns (bool);"
+              },
+              { "type": " ", "oldLine": 294, "newLine": 347, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 295,
+                "text": "    /// @notice Checks whether a given call target is a system address that could cause the",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 296,
+                "text": "    ///         messenger to peform an unsafe action. This is NOT a mechanism for blocking user",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 297,
+                "text": "    ///         addresses. This is ONLY used to prevent the execution of messages to specific",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 298,
+                "text": "    ///         system addresses that could cause security issues, e.g., having the",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 299,
+                "text": "    ///         CrossDomainMessenger send messages to itself.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 300,
+                "text": "    /// @param _target Address of the contract to check.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 301,
+                "text": "    /// @return Whether or not the address is an unsafe system address.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 348,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 349,
+                "text": "     * @notice Checks whether a given call target is a system address that could cause the",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 350,
+                "text": "     *         messenger to peform an unsafe action. This is NOT a mechanism for blocking user",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 351,
+                "text": "     *         addresses. This is ONLY used to prevent the execution of messages to specific",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 352,
+                "text": "     *         system addresses that could cause security issues, e.g., having the",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 353,
+                "text": "     *         CrossDomainMessenger send messages to itself.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 354,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 355,
+                "text": "     * @param _target Address of the contract to check.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 356,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 357,
+                "text": "     * @return Whether or not the address is an unsafe system address.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 358,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 302,
+                "newLine": 359,
+                "text": "    function _isUnsafeTarget(address _target) internal view virtual returns (bool);"
+              },
+              { "type": "-", "oldLine": 303, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 304,
+                "text": "    /// @notice This function should return true if the contract is paused.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 305,
+                "text": "    ///         On L1 this function will check the SuperchainConfig for its paused status.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 306,
+                "text": "    ///         On L2 this function should be a no-op.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 307,
+                "text": "    /// @return Whether or not the contract is paused.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 308,
+                "text": "    function paused() public view virtual returns (bool) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 309,
+                "text": "        return false;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 310,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 311, "newLine": 360, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

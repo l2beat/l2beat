@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "6892d5fae2c29236e4dac481fe677a61a90ecca97b167d9bf2bff7dcd00d428d",
+  "name": "Aztec",
+  "kind": "contract",
+  "lines": 15,
+  "source": "contract Aztec is IERC20Mintable, ERC20, Ownable2Step, ERC20Permit {\n    constructor(address _initialOwner) ERC20(\"AZTEC\", \"AZTEC\") Ownable(_initialOwner) ERC20Permit(\"AZTEC\") {}\n\n    /**\n     * @notice  Mint tokens\n     *\n     * @dev Only callable by the owner\n     *\n     * @param _to   The address to mint the tokens to\n     * @param _amount   The amount of tokens to mint\n     */\n    function mint(address _to, uint256 _amount) external override(IERC20Mintable) onlyOwner {\n        _mint(_to, _amount);\n    }\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

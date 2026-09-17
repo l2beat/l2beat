@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "1145185e07cd1a6ca4c996b88f0b7e97b09f97e1ea65c20857111894e6f7aac0",
+  "name": "State",
+  "kind": "abstract",
+  "lines": 172,
+  "source": "abstract contract State is IState {\n    using InternalLeanIMT for LeanIMTData;\n\n    /// @inheritdoc IState\n    uint32 public constant ROOT_HISTORY_SIZE = 64;\n    /// @inheritdoc IState\n    uint32 public constant MAX_TREE_DEPTH = 32;\n\n    /// @inheritdoc IState\n    address public immutable ASSET;\n    /// @inheritdoc IState\n    uint256 public immutable SCOPE;\n    /// @inheritdoc IState\n    IEntrypoint public immutable ENTRYPOINT;\n    /// @inheritdoc IState\n    IVerifier public immutable WITHDRAWAL_VERIFIER;\n    /// @inheritdoc IState\n    IVerifier public immutable RAGEQUIT_VERIFIER;\n\n    /// @inheritdoc IState\n    uint256 public nonce;\n    /// @inheritdoc IState\n    bool public dead;\n\n    /// @inheritdoc IState\n    mapping(uint256 _index => uint256 _root) public roots;\n    /// @inheritdoc IState\n    uint32 public currentRootIndex;\n\n    // @notice The state merkle tree containing all commitments\n    LeanIMTData internal _merkleTree;\n\n    /// @inheritdoc IState\n    mapping(uint256 _nullifierHash => bool _spent) public nullifierHashes;\n    /// @inheritdoc IState\n    mapping(uint256 _label => address _depositooor) public depositors;\n\n    /**\n     * @notice Check the caller is the Entrypoint\n     */\n    modifier onlyEntrypoint() {\n        if (msg.sender != address(ENTRYPOINT)) {\n            revert OnlyEntrypoint();\n        }\n        _;\n    }\n\n    /**\n     * @notice Initialize the state addresses\n     */\n    constructor(address _asset, address _entrypoint, address _withdrawalVerifier, address _ragequitVerifier) {\n        // Sanitize initial addresses\n        if (_asset == address(0)) {\n            revert ZeroAddress();\n        }\n        if (_entrypoint == address(0)) {\n            revert ZeroAddress();\n        }\n        if (_ragequitVerifier == address(0)) {\n            revert ZeroAddress();\n        }\n        if (_withdrawalVerifier == address(0)) {\n            revert ZeroAddress();\n        }\n\n        // Store asset address\n        ASSET = _asset;\n        // Compute SCOPE\n        SCOPE =\n            uint256(keccak256(abi.encodePacked(address(this), block.chainid, _asset))) % Constants.SNARK_SCALAR_FIELD;\n\n        ENTRYPOINT = IEntrypoint(_entrypoint);\n        WITHDRAWAL_VERIFIER = IVerifier(_withdrawalVerifier);\n        RAGEQUIT_VERIFIER = IVerifier(_ragequitVerifier);\n    }\n\n    /*///////////////////////////////////////////////////////////////\n                              VIEWS\n    //////////////////////////////////////////////////////////////*/\n\n    /// @inheritdoc IState\n    function currentRoot() external view returns (uint256 _root) {\n        _root = _merkleTree._root();\n    }\n\n    /// @inheritdoc IState\n    function currentTreeDepth() external view returns (uint256 _depth) {\n        _depth = _merkleTree.depth;\n    }\n\n    /// @inheritdoc IState\n    function currentTreeSize() external view returns (uint256 _size) {\n        _size = _merkleTree.size;\n    }\n\n    /*///////////////////////////////////////////////////////////////\n                        INTERNAL METHODS\n    //////////////////////////////////////////////////////////////*/\n\n    /**\n     * @notice Spends a nullifier hash\n     * @param _nullifierHash The nullifier hash to spend\n     */\n    function _spend(uint256 _nullifierHash) internal {\n        // Check if the nullifier is already spent\n        if (nullifierHashes[_nullifierHash]) {\n            revert NullifierAlreadySpent();\n        }\n\n        // Mark as spent\n        nullifierHashes[_nullifierHash] = true;\n    }\n\n    /**\n     * @notice Insert a leaf into the state\n     * @param _leaf The leaf to insert\n     * @return _updatedRoot The new root after inserting the leaf\n     */\n    function _insert(uint256 _leaf) internal returns (uint256 _updatedRoot) {\n        // Insert leaf in the tree\n        _updatedRoot = _merkleTree._insert(_leaf);\n\n        if (_merkleTree.depth > MAX_TREE_DEPTH) {\n            revert MaxTreeDepthReached();\n        }\n\n        // Calculate the next index\n        uint32 nextIndex = (currentRootIndex + 1) % ROOT_HISTORY_SIZE;\n\n        // Store the root at the next index\n        roots[nextIndex] = _updatedRoot;\n\n        // Update currentRootIndex to point to the latest root\n        currentRootIndex = nextIndex;\n\n        emit LeafInserted(_merkleTree.size, _leaf, _updatedRoot);\n    }\n\n    /**\n     * @notice Returns whether the root is a known root\n     * @dev A circular buffer is used for root storage to decrease the cost of storing new roots\n     * @dev Optimized to start search from most recent roots, improving average case performance\n     * @param _root The root to check\n     * @return Returns true if the root exists in the history, false otherwise\n     */\n    function _isKnownRoot(uint256 _root) internal view returns (bool) {\n        if (_root == 0) {\n            return false;\n        }\n\n        // Start from the most recent root (current index)\n        uint32 _index = currentRootIndex;\n\n        // Check all possible roots in the history\n        for (uint32 _i = 0; _i < ROOT_HISTORY_SIZE; _i++) {\n            if (_root == roots[_index]) {\n                return true;\n            }\n            _index = (_index + ROOT_HISTORY_SIZE - 1) % ROOT_HISTORY_SIZE;\n        }\n        return false;\n    }\n\n    /**\n     * @notice Returns whether a leaf is in the state\n     * @param _leaf The leaf to check\n     * @return Returns true if the leaf exists in the tree, false otherwise\n     */\n    function _isInState(uint256 _leaf) internal view returns (bool) {\n        return _merkleTree._has(_leaf);\n    }\n}",
+  "resolutions": {
+    "cbbcf694abda362c": {
+      "status": "identical",
+      "coveredLines": 172,
+      "match": {
+        "origin": "own",
+        "collection": "privacy-pools",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "State",
+        "similarity": 1,
+        "reportId": "privacy-pools/oxorio-privacy-pools-core-contracts-2025-03",
+        "repository": "0xbow-io/privacy-pools-core",
+        "path": "packages/contracts/src/contracts/State.sol",
+        "commit": "532eaa8ed151f06697249d400926d17adf442d8e",
+        "commitTimestamp": "2025-03-14T12:57:01Z",
+        "url": "https://github.com/0xbow-io/privacy-pools-core/blob/532eaa8ed151f06697249d400926d17adf442d8e/packages/contracts/src/contracts/State.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "final commit",
+        "coverage": "Final audited commit.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 4
+      },
+      "warnings": []
+    }
+  }
+}

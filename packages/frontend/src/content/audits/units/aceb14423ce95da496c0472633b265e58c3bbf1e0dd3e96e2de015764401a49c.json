@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "aceb14423ce95da496c0472633b265e58c3bbf1e0dd3e96e2de015764401a49c",
+  "name": "nullifier.nr",
+  "kind": "program",
+  "lines": 34,
+  "source": "use crate::{side_effect::{Counted, Readable, Scoped}, traits::{Deserialize, Empty, Serialize}};\nuse std::meta::derive;\n\n#[derive(Deserialize, Eq, Serialize)]\npub struct Nullifier {\n    pub value: Field,\n    // A nullifier may track the note hash that it nullifies, to enable squashing. This will be discarded in the\n    // private tail and only the value is sent to public-land.\n    pub note_hash: Field,\n}\n\nimpl Empty for Nullifier {\n    fn empty() -> Self {\n        Nullifier { value: 0, note_hash: 0 }\n    }\n}\n\nimpl Nullifier {\n    pub fn count(self, counter: u32) -> Counted<Nullifier> {\n        Counted::new(self, counter)\n    }\n}\n\nimpl Scoped<Counted<Nullifier>> {\n    pub fn expose_to_public(self) -> Field {\n        self.innermost().value\n    }\n}\n\nimpl Readable for Nullifier {\n    fn assert_match_read_request(self, read_request: Field) {\n        assert_eq(self.value, read_request, \"Value of the nullifier does not match read request\");\n    }\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

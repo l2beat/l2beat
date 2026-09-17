@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "51f65fb84812b63a6b080cf92f0cacb19f346c0539a2f0733a4c4bbd23b725bf",
+  "name": "ERC1155Pausable",
+  "kind": "abstract",
+  "lines": 21,
+  "source": "abstract contract ERC1155Pausable is ERC1155, Pausable {\n    /**\n     * @dev See {ERC1155-_beforeTokenTransfer}.\n     *\n     * Requirements:\n     *\n     * - the contract must not be paused.\n     */\n    function _beforeTokenTransfer(\n        address operator,\n        address from,\n        address to,\n        uint256[] memory ids,\n        uint256[] memory amounts,\n        bytes memory data\n    ) internal virtual override {\n        super._beforeTokenTransfer(operator, from, to, ids, amounts, data);\n\n        require(!paused(), \"ERC1155Pausable: token transfer while paused\");\n    }\n}",
+  "resolutions": {
+    "bb55951394276893": {
+      "status": "library",
+      "coveredLines": 21,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "ERC1155Pausable",
+        "similarity": 1,
+        "reportId": "openzeppelin/formal-verification__fv__reports__2022-05",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/token/ERC1155/extensions/ERC1155Pausable.sol",
+        "commit": "109778c17c7020618ea4e035efb9f0f9b82d43ca",
+        "commitTimestamp": "2022-06-14T18:38:04Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/109778c17c7020618ea4e035efb9f0f9b82d43ca/contracts/token/ERC1155/extensions/ERC1155Pausable.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "formal verification",
+        "coverage": "Certora formal verification of 8 CVL rules on pause/unpause transitions and reverting transfers while paused, using a harness wrapping _pause/_unpause; coverage is limited to the specified properties.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 5
+      },
+      "warnings": []
+    }
+  }
+}

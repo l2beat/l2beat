@@ -1,0 +1,130 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "ba43bd336368e129a171e89d1bb76edcf8dd07e0b74bf88a7dabd00198a9b51f",
+  "name": "DelayedWETH",
+  "kind": "contract",
+  "lines": 106,
+  "source": "contract DelayedWETH is Initializable, ProxyAdminOwnedBase, ReinitializableBase, WETH98, ISemver {\n    /// @notice Represents a withdrawal request.\n    struct WithdrawalRequest {\n        uint256 amount;\n        uint256 timestamp;\n    }\n\n    /// @notice Semantic version.\n    /// @custom:semver 1.5.0\n    string public constant version = \"1.5.0\";\n\n    /// @notice Returns a withdrawal request for the given address.\n    mapping(address => mapping(address => WithdrawalRequest)) public withdrawals;\n\n    /// @notice Withdrawal delay in seconds.\n    uint256 internal immutable DELAY_SECONDS;\n\n    /// @notice Address of the SystemConfig contract.\n    ISystemConfig public systemConfig;\n\n    /// @param _delay The delay for withdrawals in seconds.\n    constructor(uint256 _delay) ReinitializableBase(1) {\n        DELAY_SECONDS = _delay;\n        _disableInitializers();\n    }\n\n    /// @notice Initializes the contract.\n    /// @param _systemConfig Address of the SystemConfig contract.\n    function initialize(ISystemConfig _systemConfig) external reinitializer(initVersion()) {\n        // Initialization transactions must come from the ProxyAdmin or its owner.\n        _assertOnlyProxyAdminOrProxyAdminOwner();\n\n        // Now perform initialization logic.\n        systemConfig = _systemConfig;\n    }\n\n    /// @notice Returns the withdrawal delay in seconds.\n    /// @return The withdrawal delay in seconds.\n    function delay() external view returns (uint256) {\n        return DELAY_SECONDS;\n    }\n\n    /// @notice Returns the SuperchainConfig contract.\n    /// @return ISuperchainConfig The SuperchainConfig contract.\n    function config() public view returns (ISuperchainConfig) {\n        return systemConfig.superchainConfig();\n    }\n\n    /// @notice Unlocks withdrawals for the sender's account, after a time delay.\n    /// @param _guy Sub-account to unlock.\n    /// @param _wad The amount of WETH to unlock.\n    function unlock(address _guy, uint256 _wad) external {\n        // Note that the unlock function can be called by any address, but the actual unlocking capability still only\n        // gives the msg.sender the ability to withdraw from the account. As long as the unlock and withdraw functions\n        // are called with the proper recipient addresses, this will be safe. Could be made safer by having external\n        // accounts execute withdrawals themselves but that would have added extra complexity and made DelayedWETH a\n        // leaky abstraction, so we chose this instead.\n        WithdrawalRequest storage wd = withdrawals[msg.sender][_guy];\n        wd.timestamp = block.timestamp;\n        wd.amount += _wad;\n    }\n\n    /// @notice Withdraws an amount of ETH.\n    /// @param _wad The amount of ETH to withdraw.\n    function withdraw(uint256 _wad) public override {\n        withdraw(msg.sender, _wad);\n    }\n\n    /// @notice Extension to withdrawal, must provide a sub-account to withdraw from.\n    /// @param _guy Sub-account to withdraw from.\n    /// @param _wad The amount of WETH to withdraw.\n    function withdraw(address _guy, uint256 _wad) public {\n        require(!systemConfig.paused(), \"DelayedWETH: contract is paused\");\n        WithdrawalRequest storage wd = withdrawals[msg.sender][_guy];\n        require(wd.amount >= _wad, \"DelayedWETH: insufficient unlocked withdrawal\");\n        require(wd.timestamp > 0, \"DelayedWETH: withdrawal not unlocked\");\n        require(wd.timestamp + DELAY_SECONDS <= block.timestamp, \"DelayedWETH: withdrawal delay not met\");\n        wd.amount -= _wad;\n        super.withdraw(_wad);\n    }\n\n    /// @notice Allows the owner to recover from error cases by pulling ETH out of the contract.\n    /// @param _wad The amount of WETH to recover.\n    function recover(uint256 _wad) external {\n        require(msg.sender == proxyAdminOwner(), \"DelayedWETH: not owner\");\n        uint256 amount = _wad < address(this).balance ? _wad : address(this).balance;\n        (bool success,) = payable(msg.sender).call{value: amount}(hex\"\");\n        require(success, \"DelayedWETH: recover failed\");\n    }\n\n    /// @notice Allows the owner to recover from error cases by pulling all WETH from a specific owner.\n    /// @param _guy The address to recover the WETH from.\n    function hold(address _guy) external {\n        hold(_guy, balanceOf(_guy));\n    }\n\n    /// @notice Allows the owner to recover from error cases by pulling a specific amount of WETH from a specific owner.\n    /// @param _guy The address to recover the WETH from.\n    /// @param _wad The amount of WETH to recover.\n    function hold(address _guy, uint256 _wad) public {\n        require(msg.sender == proxyAdminOwner(), \"DelayedWETH: not owner\");\n        _allowance[_guy][msg.sender] = _wad;\n        emit Approval(_guy, msg.sender, _wad);\n        transferFrom(_guy, msg.sender, _wad);\n    }\n}",
+  "resolutions": {
+    "ba5b6c9584fb78fd": {
+      "status": "identical",
+      "coveredLines": 106,
+      "match": {
+        "origin": "upstream",
+        "collection": "optimism",
+        "relation": {
+          "type": "fork_of",
+          "repository": "ethereum-optimism/optimism"
+        },
+        "rank": 1,
+        "matchedBy": "identity",
+        "auditedName": "DelayedWETH",
+        "similarity": 1,
+        "reportId": "optimism/spearbit-upgrade16-2025-05",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts-bedrock/src/dispute/DelayedWETH.sol",
+        "commit": "54c19f6acb7a6d3505f884bae601733d3d54a3a6",
+        "commitTimestamp": "2025-06-11T23:26:49Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/54c19f6acb7a6d3505f884bae601733d3d54a3a6/packages/contracts-bedrock/src/dispute/DelayedWETH.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "re-audit",
+        "coverage": "Commit stated in the report header (tag op-contracts/v4.0.0, the proposal branch built on 7cd84fed with the PR 15939 audit fixes backported); the final Upgrade 16 state of the file.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 6
+      },
+      "warnings": []
+    },
+    "44ad4cf96e2ef6f0": {
+      "status": "identical",
+      "coveredLines": 106,
+      "match": {
+        "origin": "upstream",
+        "collection": "optimism",
+        "relation": {
+          "type": "fork_of",
+          "repository": "ethereum-optimism/optimism"
+        },
+        "rank": 1,
+        "matchedBy": "identity",
+        "auditedName": "DelayedWETH",
+        "similarity": 1,
+        "reportId": "optimism/spearbit-upgrade16-2025-05",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts-bedrock/src/dispute/DelayedWETH.sol",
+        "commit": "54c19f6acb7a6d3505f884bae601733d3d54a3a6",
+        "commitTimestamp": "2025-06-11T23:26:49Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/54c19f6acb7a6d3505f884bae601733d3d54a3a6/packages/contracts-bedrock/src/dispute/DelayedWETH.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "re-audit",
+        "coverage": "Commit stated in the report header (tag op-contracts/v4.0.0, the proposal branch built on 7cd84fed with the PR 15939 audit fixes backported); the final Upgrade 16 state of the file.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 6
+      },
+      "warnings": []
+    },
+    "bb55951394276893": {
+      "status": "identical",
+      "coveredLines": 106,
+      "match": {
+        "origin": "stack",
+        "collection": "optimism",
+        "relation": {
+          "type": "template",
+          "template": "opstack/AddressManager"
+        },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "DelayedWETH",
+        "similarity": 1,
+        "reportId": "optimism/spearbit-upgrade16-2025-05",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts-bedrock/src/dispute/DelayedWETH.sol",
+        "commit": "54c19f6acb7a6d3505f884bae601733d3d54a3a6",
+        "commitTimestamp": "2025-06-11T23:26:49Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/54c19f6acb7a6d3505f884bae601733d3d54a3a6/packages/contracts-bedrock/src/dispute/DelayedWETH.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "re-audit",
+        "coverage": "Commit stated in the report header (tag op-contracts/v4.0.0, the proposal branch built on 7cd84fed with the PR 15939 audit fixes backported); the final Upgrade 16 state of the file.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 6
+      },
+      "warnings": []
+    },
+    "1f5c32d18cf7148d": {
+      "status": "identical",
+      "coveredLines": 106,
+      "match": {
+        "origin": "stack",
+        "collection": "optimism",
+        "relation": {
+          "type": "template",
+          "template": "gnosisSafeModules/LivenessGuard"
+        },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "DelayedWETH",
+        "similarity": 1,
+        "reportId": "optimism/spearbit-upgrade16-2025-05",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts-bedrock/src/dispute/DelayedWETH.sol",
+        "commit": "54c19f6acb7a6d3505f884bae601733d3d54a3a6",
+        "commitTimestamp": "2025-06-11T23:26:49Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/54c19f6acb7a6d3505f884bae601733d3d54a3a6/packages/contracts-bedrock/src/dispute/DelayedWETH.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "re-audit",
+        "coverage": "Commit stated in the report header (tag op-contracts/v4.0.0, the proposal branch built on 7cd84fed with the PR 15939 audit fixes backported); the final Upgrade 16 state of the file.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 6
+      },
+      "warnings": []
+    }
+  }
+}

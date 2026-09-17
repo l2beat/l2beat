@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "e1be7f93bd9bdd888e741dcf76a48dd523767452203b19e25b8ce4bd974db103",
+  "name": "NetFeeSplitter",
+  "kind": "contract",
+  "lines": 146,
+  "source": "contract NetFeeSplitter is INetFeeSplitter {\n    uint256 internal constant TOTAL_ALLOCATION = 10_000;\n    uint256 private constant MAGNITUDE = 1e30;\n\n    uint256 private _index;\n    mapping(address recipient => uint256 index) private _indexOf;\n    mapping(address recipient => uint256 _earned) private _earned;\n\n    mapping(address recipient => Recipient) public recipients;\n\n    constructor(address[] memory initialRecipients, Recipient[] memory recipientData) {\n        uint256 totalAllocation;\n        uint256 length = initialRecipients.length;\n        if (initialRecipients.length != recipientData.length) {\n            revert InvalidRecipients();\n        }\n        for (uint256 i = 0; i < length; i++) {\n            address recipient = initialRecipients[i];\n            bool duplicateRecipient = false;\n            assembly {\n                duplicateRecipient := tload(recipient)\n                tstore(recipient, 1)\n            }\n            if (duplicateRecipient) {\n                revert DuplicateRecipient();\n            }\n            if (recipientData[i].setter == address(0)) {\n                revert SetterZero();\n            }\n            if (recipient == address(0)) {\n                revert RecipientZero();\n            }\n            if (recipientData[i].allocation == 0) {\n                revert AllocationZero();\n            }\n            recipients[recipient] = recipientData[i];\n            totalAllocation += recipientData[i].allocation;\n        }\n        if (totalAllocation != TOTAL_ALLOCATION) {\n            revert InvalidTotalAllocation();\n        }\n    }\n\n    /// @dev Keep track of incoming fees\n    receive() external payable {\n        _index += (msg.value * MAGNITUDE) / TOTAL_ALLOCATION;\n    }\n\n    /// @inheritdoc INetFeeSplitter\n    function transferAllocation(address oldRecipient, address newRecipient, uint256 allocation) external {\n        if (setterOf(newRecipient) == address(0)) {\n            revert SetterZero();\n        }\n        _transfer(oldRecipient, newRecipient, allocation);\n    }\n\n    /// @inheritdoc INetFeeSplitter\n    function transferAllocationAndSetSetter(\n        address oldRecipient,\n        address newRecipient,\n        address newSetter,\n        uint256 allocation\n    ) external {\n        if (setterOf(newRecipient) != address(0)) {\n            revert SetterAlreadySet();\n        }\n        if (newSetter == address(0)) {\n            revert SetterZero();\n        }\n        recipients[newRecipient] = Recipient(newSetter, 0);\n        emit SetterTransferred(newRecipient, address(0), newSetter);\n        _transfer(oldRecipient, newRecipient, allocation);\n    }\n\n    /// @inheritdoc INetFeeSplitter\n    function transferSetter(address recipient, address newSetter) external {\n        if (newSetter == address(0)) {\n            revert SetterZero();\n        }\n        address currentSetter = setterOf(recipient);\n        if (currentSetter != msg.sender) {\n            revert Unauthorized();\n        }\n        recipients[recipient].setter = newSetter;\n        emit SetterTransferred(recipient, currentSetter, newSetter);\n    }\n\n    /// @inheritdoc INetFeeSplitter\n    function withdrawFees(address to) external returns (uint256 amount) {\n        _updateFees(msg.sender);\n        amount = _earned[msg.sender];\n        if (amount != 0) {\n            _earned[msg.sender] = 0;\n            (bool success,) = to.call{value: amount}(\"\");\n            if (!success) {\n                revert WithdrawalFailed();\n            }\n        }\n        emit Withdrawn(msg.sender, to, amount);\n    }\n\n    /// @inheritdoc INetFeeSplitter\n    function earnedFees(address account) external view returns (uint256) {\n        return _earned[account] + _calculateFees(account);\n    }\n\n    /// @inheritdoc INetFeeSplitter\n    function balanceOf(address recipient) public view returns (uint256) {\n        return recipients[recipient].allocation;\n    }\n\n    /// @inheritdoc INetFeeSplitter\n    function setterOf(address recipient) public view returns (address) {\n        return recipients[recipient].setter;\n    }\n\n    function _transfer(address oldRecipient, address newRecipient, uint256 allocation) private {\n        if (setterOf(oldRecipient) != msg.sender) {\n            revert Unauthorized();\n        }\n        if (newRecipient == address(0)) {\n            revert RecipientZero();\n        }\n        if (allocation == 0) {\n            revert AllocationZero();\n        }\n        if (balanceOf(oldRecipient) < allocation) {\n            revert InsufficientAllocation();\n        }\n        _updateFees(oldRecipient);\n        _updateFees(newRecipient);\n\n        recipients[oldRecipient].allocation -= allocation;\n        recipients[newRecipient].allocation += allocation;\n        emit AllocationTransferred(msg.sender, oldRecipient, newRecipient, allocation);\n    }\n\n    function _updateFees(address account) private {\n        _earned[account] += _calculateFees(account);\n        _indexOf[account] = _index;\n    }\n\n    function _calculateFees(address account) private view returns (uint256) {\n        return (recipients[account].allocation * (_index - _indexOf[account])) / MAGNITUDE;\n    }\n}",
+  "resolutions": {
+    "1f5c32d18cf7148d": {
+      "status": "identical",
+      "coveredLines": 146,
+      "match": {
+        "origin": "own",
+        "collection": "unichain",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "NetFeeSplitter",
+        "similarity": 1,
+        "reportId": "unichain/cantina-unichain-contracts-2024-11",
+        "repository": "Uniswap/unichain-contracts",
+        "path": "src/FeeSplitter/NetFeeSplitter.sol",
+        "commit": "d7db41e68e73bc7e58bfff9cae6f4e8f695030da",
+        "commitTimestamp": "2024-11-01T13:28:26Z",
+        "url": "https://github.com/Uniswap/unichain-contracts/blob/d7db41e68e73bc7e58bfff9cae6f4e8f695030da/src/FeeSplitter/NetFeeSplitter.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix_review",
+        "coverage": "Fix review of src/FeeSplitter/NetFeeSplitter.sol and src/interfaces/FeeSplitter/INetFeeSplitter.sol only (Informational 3.3.1 rename newAdmin to newSetter).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 8
+      },
+      "warnings": []
+    }
+  }
+}

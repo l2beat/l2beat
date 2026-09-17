@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "aae83299956c8e206331ad98dfece0652881071ca2391d84e76cf7e457be8340",
+  "name": "GSEPayload",
+  "kind": "contract",
+  "lines": 96,
+  "source": "contract GSEPayload is IProposerPayload {\n    IPayload public immutable ORIGINAL;\n    IGSE public immutable GSE;\n    IRegistry public immutable REGISTRY;\n\n    constructor(IPayload _originalPayloadProposal, IGSE _gse, IRegistry _registry) {\n        ORIGINAL = _originalPayloadProposal;\n        GSE = _gse;\n        REGISTRY = _registry;\n    }\n\n    function getOriginalPayload() external view override(IProposerPayload) returns (IPayload) {\n        return ORIGINAL;\n    }\n\n    function getURI() external view override(IPayload) returns (string memory) {\n        return ORIGINAL.getURI();\n    }\n\n    /**\n     * @notice called by the Governance contract when executing the proposal.\n     *\n     * Note that this contract simply appends a call to `amIValid` to the original actions.\n     */\n    function getActions() external view override(IPayload) returns (IPayload.Action[] memory) {\n        IPayload.Action[] memory originalActions = ORIGINAL.getActions();\n        IPayload.Action[] memory actions = new IPayload.Action[](originalActions.length + 1);\n\n        for (uint256 i = 0; i < originalActions.length; i++) {\n            actions[i] = originalActions[i];\n        }\n\n        actions[originalActions.length] =\n            IPayload.Action({target: address(this), data: abi.encodeWithSelector(GSEPayload.amIValid.selector)});\n\n        return actions;\n    }\n\n    /**\n     * @notice Validates that the proposal maintains governance system integrity by ensuring\n     *         sufficient stake remains on the active rollup after execution.\n     *\n     * The validation passes when EITHER:\n     * 1. The latest rollup (plus bonus instance) has >2/3 of total stake, OR\n     * 2. A Registry/GSE mismatch is detected (fail-open to prevent governance livelock)\n     *\n     * @dev Beware that the >2/3 support means that 1/3 of the stake can be used to reject proposals.\n     *\n     * @dev The \"bonus instance\" is a special GSE mechanism where attesters automatically\n     *      follow the latest rollup without re-depositing. Their stake counts toward\n     *      the latest rollup's total for this validation.\n     *\n     * @dev LIVELOCK PREVENTION: When canonical != latest, we intentionally return true\n     *      to bypass validation. This mismatch typically indicates the GovernanceProposer\n     *      is still pointing to a stale GSE contract after a rollup upgrade.\n     *\n     *      Why this creates a livelock:\n     *      - The stale GSE tracks an outdated rollup as \"latest\"\n     *      - The Registry correctly identifies the new rollup as canonical\n     *      - Economic incentives drive attesters to follow the canonical (where rewards are)\n     *      - The stale GSE's \"latest\" gradually bleeds stake as rational actors exit\n     *      - While theoretically possible to maintain >2/3 stake, it becomes increasingly\n     *        unlikely as only inattentive or non-reward-seeking attesters remain\n     *      - Proposals keep failing validation, creating a probabilistic livelock where\n     *        progress is technically possible but economically improbable\n     *\n     *      By returning true, we provide an escape hatch that allows governance to\n     *      continue functioning despite the misconfiguration, enabling corrective\n     *      proposals to update the GovernanceProposer's GSE reference.\n     *\n     * @dev This function executes as the final action of the proposal (see getActions).\n     *      It either reverts with an error (proposal invalid) or returns true (proposal valid).\n     *      The boolean return value is effectively ceremonial - only the revert matters.\n     *\n     * @return Always returns true if the proposal is valid; reverts otherwise\n     */\n    function amIValid() external view override(IProposerPayload) returns (bool) {\n        address canonicalRollup = address(REGISTRY.getCanonicalRollup());\n        address latestRollup = GSE.getLatestRollup();\n\n        // Bypass validation on mismatch to prevent economically-driven livelock\n        // In theory, >2/3 stake could remain on the stale rollup, but economic\n        // incentives make this highly unlikely\n        if (canonicalRollup != latestRollup) {\n            return true;\n        }\n\n        // Standard validation: ensure >2/3 of stake remains with the latest rollup\n        uint256 totalSupply = GSE.totalSupply();\n        address bonusInstance = GSE.getBonusInstanceAddress();\n        uint256 effectiveSupplyOfLatestRollup = GSE.supplyOf(latestRollup) + GSE.supplyOf(bonusInstance);\n\n        require(effectiveSupplyOfLatestRollup > totalSupply * 2 / 3, Errors.GovernanceProposer__GSEPayloadInvalid());\n        return true;\n    }\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "identical",
+      "coveredLines": 96,
+      "match": {
+        "origin": "own",
+        "collection": "aztecnetwork",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "GSEPayload",
+        "similarity": 1,
+        "reportId": "aztecnetwork/veridise-governance-2025-10-13",
+        "repository": "AztecProtocol/aztec-packages",
+        "path": "l1-contracts/src/governance/GSEPayload.sol",
+        "commit": "a6eebac31276e7a08525a872d8d364da6d535f86",
+        "commitTimestamp": "2025-08-23T13:12:24Z",
+        "url": "https://github.com/AztecProtocol/aztec-packages/blob/a6eebac31276e7a08525a872d8d364da6d535f86/l1-contracts/src/governance/GSEPayload.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "security review",
+        "coverage": "full file",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 4
+      },
+      "warnings": []
+    }
+  }
+}

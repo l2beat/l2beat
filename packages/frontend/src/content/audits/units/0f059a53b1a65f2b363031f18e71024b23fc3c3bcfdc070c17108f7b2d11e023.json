@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "0f059a53b1a65f2b363031f18e71024b23fc3c3bcfdc070c17108f7b2d11e023",
+  "name": "SafeCast160",
+  "kind": "library",
+  "lines": 13,
+  "source": "library SafeCast160 {\n    /// @notice Thrown when a valude greater than type(uint160).max is cast to uint160\n    error UnsafeCast();\n\n    /// @notice Safely casts uint256 to uint160\n    /// @param value The uint256 to be cast\n    function toUint160(uint256 value) internal pure returns (uint160) {\n        if (value > type(uint160).max) {\n            revert UnsafeCast();\n        }\n        return uint160(value);\n    }\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

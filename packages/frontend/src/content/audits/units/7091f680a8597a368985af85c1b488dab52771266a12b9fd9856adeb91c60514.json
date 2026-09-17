@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "7091f680a8597a368985af85c1b488dab52771266a12b9fd9856adeb91c60514",
+  "name": "mod.nr",
+  "kind": "program",
+  "lines": 11,
+  "source": "pub(crate) mod derived_hints;\npub(crate) mod transient_data_squashing_hint;\npub(crate) mod tests;\npub(crate) mod validate_log_squashing;\npub(crate) mod validate_note_hash_nullifier_squashing;\npub(crate) mod validate_transient_data_squashing_hints;\npub mod squash_transient_data;\npub(crate) mod transient_data_validator;\n\npub use transient_data_squashing_hint::TransientDataSquashingHint;\npub use transient_data_validator::TransientDataValidator;",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

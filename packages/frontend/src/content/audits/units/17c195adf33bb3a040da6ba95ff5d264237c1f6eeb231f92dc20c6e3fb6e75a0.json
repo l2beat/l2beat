@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "17c195adf33bb3a040da6ba95ff5d264237c1f6eeb231f92dc20c6e3fb6e75a0",
+  "name": "main.nr",
+  "kind": "program",
+  "lines": 31,
+  "source": "use private_kernel_lib::{private_kernel_init, PrivateKernelInitCircuitPrivateInputs};\nuse types::{\n    abis::{\n        private_circuit_public_inputs::PrivateCircuitPublicInputs,\n        private_kernel::private_call_data::PrivateCallDataWithoutPublicInputs,\n        protocol_contracts::ProtocolContracts, transaction::tx_request::TxRequest,\n    },\n    PrivateKernelCircuitPublicInputs,\n};\n\n/// Simulated (unconstrained) version of the Private Kernel Init circuit for faster simulation and testing.\n/// Runs the same logic as the constrained circuit but skips proof verification.\nunconstrained fn main(\n    tx_request: TxRequest,\n    vk_tree_root: Field,\n    protocol_contracts: ProtocolContracts,\n    private_call: PrivateCallDataWithoutPublicInputs,\n    app_public_inputs: PrivateCircuitPublicInputs,\n    is_private_only: bool,\n    revertible_counter_hint: u32,\n) -> pub PrivateKernelCircuitPublicInputs {\n    let private_inputs = PrivateKernelInitCircuitPrivateInputs {\n        tx_request,\n        vk_tree_root,\n        protocol_contracts,\n        private_call: private_call.to_private_call_data(app_public_inputs),\n        is_private_only,\n        revertible_counter_hint,\n    };\n    private_kernel_init::execute(private_inputs)\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,508 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "cf00fe9d60bc796506aad38434eec1e6ee7fafbb83ec339cb6f83647c52481ca",
+  "name": "L2ToL1MessagePasser",
+  "kind": "contract",
+  "lines": 96,
+  "source": "contract L2ToL1MessagePasser {\n    /// @notice Struct representing a withdrawal transaction.\n    /// @custom:field nonce    Nonce of the withdrawal transaction\n    /// @custom:field sender   Address of the sender of the transaction.\n    /// @custom:field target   Address of the recipient of the transaction.\n    /// @custom:field value    Value to send to the recipient.\n    /// @custom:field gasLimit Gas limit of the transaction.\n    /// @custom:field data     Data of the transaction.\n    struct WithdrawalTransaction {\n        uint256 nonce;\n        address sender;\n        address target;\n        uint256 value;\n        uint256 gasLimit;\n        bytes data;\n    }\n\n    /// @notice The current message version identifier.\n    uint16 public constant MESSAGE_VERSION = 1;\n\n    /// @notice Includes the message hashes for all withdrawals\n    mapping(bytes32 => bool) public sentMessages;\n\n    /// @notice A unique value hashed with each withdrawal.\n    uint240 internal msgNonce;\n\n    /// @notice Emitted any time a withdrawal is initiated.\n    /// @param nonce          Unique value corresponding to each withdrawal.\n    /// @param sender         The L2 account address which initiated the withdrawal.\n    /// @param target         The L1 account address the call will be send to.\n    /// @param value          The ETH value submitted for withdrawal, to be forwarded to the target.\n    /// @param gasLimit       The minimum amount of gas that must be provided when withdrawing.\n    /// @param data           The data to be forwarded to the target on L1.\n    /// @param withdrawalHash The hash of the withdrawal.\n    event MessagePassed(\n        uint256 indexed nonce,\n        address indexed sender,\n        address indexed target,\n        uint256 value,\n        uint256 gasLimit,\n        bytes data,\n        bytes32 withdrawalHash\n    );\n\n    /// @notice Sends a message from L2 to L1.\n    /// @param _target   Address to call on L1 execution.\n    /// @param _gasLimit Minimum gas limit for executing the message on L1.\n    /// @param _data     Data to forward to L1 target.\n    function initiateWithdrawal(address _target, uint256 _gasLimit, bytes memory _data) public payable {\n        bytes32 withdrawalHash = hashWithdrawal(\n            WithdrawalTransaction({\n                nonce: messageNonce(),\n                sender: msg.sender,\n                target: _target,\n                value: msg.value,\n                gasLimit: _gasLimit,\n                data: _data\n            })\n        );\n\n        sentMessages[withdrawalHash] = true;\n\n        emit MessagePassed(messageNonce(), msg.sender, _target, msg.value, _gasLimit, _data, withdrawalHash);\n\n        unchecked {\n            ++msgNonce;\n        }\n    }\n\n    /// @notice Retrieves the next message nonce. Message version will be added to the upper two\n    ///         bytes of the message nonce. Message version allows us to treat messages as having\n    ///         different structures.\n    /// @return Nonce of the next message to be sent, with added message version.\n    function messageNonce() public view returns (uint256) {\n        return encodeVersionedNonce(msgNonce, MESSAGE_VERSION);\n    }\n\n    /// @notice Derives the withdrawal hash according to the encoding in the L2 Withdrawer contract\n    /// @param _tx Withdrawal transaction to hash.\n    /// @return Hashed withdrawal transaction.\n    function hashWithdrawal(WithdrawalTransaction memory _tx) internal pure returns (bytes32) {\n        return keccak256(abi.encode(_tx.nonce, _tx.sender, _tx.target, _tx.value, _tx.gasLimit, _tx.data));\n    }\n\n    /// @notice Adds a version number into the first two bytes of a message nonce.\n    /// @param _nonce   Message nonce to encode into.\n    /// @param _version Version number to encode into the message nonce.\n    /// @return Message nonce with version encoded into the first two bytes.\n    function encodeVersionedNonce(uint240 _nonce, uint16 _version) internal pure returns (uint256) {\n        uint256 nonce;\n        assembly {\n            nonce := or(shl(240, _version), _nonce)\n        }\n        return nonce;\n    }\n}",
+  "resolutions": {
+    "eea968a44e5d263a": {
+      "status": "differs",
+      "coveredLines": 74,
+      "match": {
+        "origin": "own",
+        "collection": "ethscriptions",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "L2ToL1MessagePasser",
+        "similarity": 0.641,
+        "reportId": "ethscriptions/zellic-facet-bridge-2024-11-04",
+        "repository": "0xFacet/facet-optimism",
+        "path": "packages/contracts-bedrock/src/L2/L2ToL1MessagePasser.sol",
+        "commit": "331bb685d91447e76b79aee34fea5d668a77e925",
+        "commitTimestamp": "2024-10-02T15:07:32Z",
+        "url": "https://github.com/0xFacet/facet-optimism/blob/331bb685d91447e76b79aee34fea5d668a77e925/packages/contracts-bedrock/src/L2/L2ToL1MessagePasser.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "primary review",
+        "coverage": "full file",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 22,
+        "removed": 16,
+        "ignoredAdded": 16,
+        "ignoredRemoved": 14,
+        "unchanged": 74,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 6,
+            "newStart": 1,
+            "newLines": 19,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "contract L2ToL1MessagePasser is ISemver {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 2,
+                "text": "    /// @notice The L1 gas limit set when eth is withdrawn using the receive() function.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 3,
+                "text": "    uint256 internal constant RECEIVE_DEFAULT_GAS_LIMIT = 100_000;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "contract L2ToL1MessagePasser {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 2,
+                "text": "    /// @notice Struct representing a withdrawal transaction.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "    /// @custom:field nonce    Nonce of the withdrawal transaction",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 4,
+                "text": "    /// @custom:field sender   Address of the sender of the transaction.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 5,
+                "text": "    /// @custom:field target   Address of the recipient of the transaction.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 6,
+                "text": "    /// @custom:field value    Value to send to the recipient.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 7,
+                "text": "    /// @custom:field gasLimit Gas limit of the transaction.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 8,
+                "text": "    /// @custom:field data     Data of the transaction.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 9,
+                "text": "    struct WithdrawalTransaction {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 10,
+                "text": "        uint256 nonce;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 11,
+                "text": "        address sender;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 12,
+                "text": "        address target;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 13,
+                "text": "        uint256 value;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 14,
+                "text": "        uint256 gasLimit;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 15,
+                "text": "        bytes data;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 16, "text": "    }", "ignored": false },
+              { "type": " ", "oldLine": 4, "newLine": 17, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 18,
+                "text": "    /// @notice The current message version identifier."
+              },
+              {
+                "type": " ",
+                "oldLine": 6,
+                "newLine": 19,
+                "text": "    uint16 public constant MESSAGE_VERSION = 1;"
+              }
+            ]
+          },
+          {
+            "oldStart": 29,
+            "oldLines": 37,
+            "newStart": 42,
+            "newLines": 13,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 29,
+                "newLine": 42,
+                "text": "        bytes32 withdrawalHash"
+              },
+              { "type": " ", "oldLine": 30, "newLine": 43, "text": "    );" },
+              { "type": " ", "oldLine": 31, "newLine": 44, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 32,
+                "text": "    /// @notice Emitted when the balance of this contract is burned.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 33,
+                "text": "    /// @param amount Amount of ETh that was burned.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 34,
+                "text": "    event WithdrawerBalanceBurnt(uint256 indexed amount);",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 35, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 36,
+                "text": "    /// @custom:semver 1.1.0",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 37,
+                "text": "    string public constant version = \"1.1.0\";",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 38, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 39,
+                "text": "    /// @notice Allows users to withdraw ETH by sending directly to this contract.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 40,
+                "text": "    receive() external payable {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 41,
+                "text": "        initiateWithdrawal(msg.sender, RECEIVE_DEFAULT_GAS_LIMIT, bytes(\"\"));",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 42, "text": "    }", "ignored": false },
+              { "type": "-", "oldLine": 43, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 44,
+                "text": "    /// @notice Removes all ETH held by this contract from the state. Used to prevent the amount of",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 45,
+                "text": "    ///         ETH on L2 inflating when ETH is withdrawn. Currently only way to do this is to",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 46,
+                "text": "    ///         create a contract and self-destruct it to itself. Anyone can call this function. Not",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 47,
+                "text": "    ///         incentivized since this function is very cheap.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 48,
+                "text": "    function burn() external {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 49,
+                "text": "        uint256 balance = address(this).balance;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 50,
+                "text": "        Burn.eth(balance);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 51,
+                "text": "        emit WithdrawerBalanceBurnt(balance);",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 52, "text": "    }", "ignored": false },
+              { "type": "-", "oldLine": 53, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 54,
+                "newLine": 45,
+                "text": "    /// @notice Sends a message from L2 to L1."
+              },
+              {
+                "type": " ",
+                "oldLine": 55,
+                "newLine": 46,
+                "text": "    /// @param _target   Address to call on L1 execution."
+              },
+              {
+                "type": " ",
+                "oldLine": 56,
+                "newLine": 47,
+                "text": "    /// @param _gasLimit Minimum gas limit for executing the message on L1."
+              },
+              {
+                "type": " ",
+                "oldLine": 57,
+                "newLine": 48,
+                "text": "    /// @param _data     Data to forward to L1 target."
+              },
+              {
+                "type": " ",
+                "oldLine": 58,
+                "newLine": 49,
+                "text": "    function initiateWithdrawal(address _target, uint256 _gasLimit, bytes memory _data) public payable {"
+              },
+              {
+                "type": "-",
+                "oldLine": 59,
+                "text": "        require(msg.value == 0, \"L2ToL1MessagePasser: value is not supported for withdrawals\");",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 60, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 61,
+                "text": "        bytes32 withdrawalHash = Hashing.hashWithdrawal(",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 62,
+                "text": "            Types.WithdrawalTransaction({",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 50,
+                "text": "        bytes32 withdrawalHash = hashWithdrawal(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 51,
+                "text": "            WithdrawalTransaction({",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 63,
+                "newLine": 52,
+                "text": "                nonce: messageNonce(),"
+              },
+              {
+                "type": " ",
+                "oldLine": 64,
+                "newLine": 53,
+                "text": "                sender: msg.sender,"
+              },
+              {
+                "type": " ",
+                "oldLine": 65,
+                "newLine": 54,
+                "text": "                target: _target,"
+              }
+            ]
+          },
+          {
+            "oldStart": 83,
+            "oldLines": 6,
+            "newStart": 72,
+            "newLines": 25,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 83,
+                "newLine": 72,
+                "text": "    ///         different structures."
+              },
+              {
+                "type": " ",
+                "oldLine": 84,
+                "newLine": 73,
+                "text": "    /// @return Nonce of the next message to be sent, with added message version."
+              },
+              {
+                "type": " ",
+                "oldLine": 85,
+                "newLine": 74,
+                "text": "    function messageNonce() public view returns (uint256) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 86,
+                "text": "        return Encoding.encodeVersionedNonce(msgNonce, MESSAGE_VERSION);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 75,
+                "text": "        return encodeVersionedNonce(msgNonce, MESSAGE_VERSION);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 87, "newLine": 76, "text": "    }" },
+              { "type": "+", "newLine": 77, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 78,
+                "text": "    /// @notice Derives the withdrawal hash according to the encoding in the L2 Withdrawer contract",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 79,
+                "text": "    /// @param _tx Withdrawal transaction to hash.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 80,
+                "text": "    /// @return Hashed withdrawal transaction.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 81,
+                "text": "    function hashWithdrawal(WithdrawalTransaction memory _tx) internal pure returns (bytes32) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 82,
+                "text": "        return keccak256(abi.encode(_tx.nonce, _tx.sender, _tx.target, _tx.value, _tx.gasLimit, _tx.data));",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 83, "text": "    }", "ignored": false },
+              { "type": "+", "newLine": 84, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 85,
+                "text": "    /// @notice Adds a version number into the first two bytes of a message nonce.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 86,
+                "text": "    /// @param _nonce   Message nonce to encode into.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 87,
+                "text": "    /// @param _version Version number to encode into the message nonce.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 88,
+                "text": "    /// @return Message nonce with version encoded into the first two bytes.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 89,
+                "text": "    function encodeVersionedNonce(uint240 _nonce, uint16 _version) internal pure returns (uint256) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 90,
+                "text": "        uint256 nonce;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 91,
+                "text": "        assembly {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 92,
+                "text": "            nonce := or(shl(240, _version), _nonce)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 93,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 94,
+                "text": "        return nonce;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 95, "text": "    }", "ignored": false },
+              { "type": " ", "oldLine": 88, "newLine": 96, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

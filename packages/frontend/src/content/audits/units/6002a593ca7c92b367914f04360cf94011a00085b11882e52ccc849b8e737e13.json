@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "6002a593ca7c92b367914f04360cf94011a00085b11882e52ccc849b8e737e13",
+  "name": "key_validation_hint.nr",
+  "kind": "program",
+  "lines": 17,
+  "source": "use types::{scalar::Scalar, traits::Empty};\n\npub struct KeyValidationHint {\n    pub sk_m: Scalar,\n}\n\nimpl Empty for KeyValidationHint {\n    fn empty() -> Self {\n        KeyValidationHint { sk_m: Scalar::empty() }\n    }\n}\n\nimpl Eq for KeyValidationHint {\n    fn eq(self, other: Self) -> bool {\n        self.sk_m.eq(other.sk_m)\n    }\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

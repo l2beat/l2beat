@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "6901dd11ea3bc75f7405028d0dad8aedd88b3c8601fb82914ce3b5b2728bf18c",
+  "name": "validate_point.nr",
+  "kind": "program",
+  "lines": 34,
+  "source": "use crate::abis::BLSPoint;\nuse bigcurve::BigCurve;\nuse bignum::{BigNum, fields::bls12_381Fq::BLS12_381_Fq};\n\n/// Validates that if the point is at infinity, it has the canonical x and y coordinates.\npub fn validate_canonical_representation_if_infinity(point: BLSPoint) {\n    if point.is_infinity() {\n        let canonical_point_at_infinity = BLSPoint::point_at_infinity();\n        assert_eq(point.x, canonical_point_at_infinity.x, \"Non canonical x coordinate at infinity\");\n        assert_eq(point.y, canonical_point_at_infinity.y, \"Non canonical y coordinate at infinity\");\n    }\n}\n\n#[test]\nfn should_accept_canonical_point_at_infinity() {\n    let point = BLSPoint { x: BLS12_381_Fq::zero(), y: BLS12_381_Fq::zero(), is_infinity: true };\n    validate_canonical_representation_if_infinity(point);\n}\n\n#[test(should_fail_with = \"Non canonical x coordinate at infinity\")]\nfn should_fail_if_non_canonical_x_coordinate_point_at_infinity() {\n    let x = BLS12_381_Fq::one();\n    let y = BLS12_381_Fq::zero();\n    let point = BLSPoint { x, y, is_infinity: true };\n    validate_canonical_representation_if_infinity(point);\n}\n\n#[test(should_fail_with = \"Non canonical y coordinate at infinity\")]\nfn should_fail_if_non_canonical_y_coordinate_point_at_infinity() {\n    let x = BLS12_381_Fq::zero();\n    let y = BLS12_381_Fq::one();\n    let point = BLSPoint { x, y, is_infinity: true };\n    validate_canonical_representation_if_infinity(point);\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

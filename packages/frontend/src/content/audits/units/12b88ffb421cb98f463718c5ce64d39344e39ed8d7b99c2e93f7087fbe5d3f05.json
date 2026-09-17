@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "12b88ffb421cb98f463718c5ce64d39344e39ed8d7b99c2e93f7087fbe5d3f05",
+  "name": "IProtocolTreasury",
+  "kind": "interface",
+  "lines": 12,
+  "source": "interface IProtocolTreasury {\n    error GateIsClosed(string reason);\n    error ProposalIsAlive();\n    error NoProposalToMark();\n\n    event ProposalMarked(uint256 indexed proposalId);\n\n    function markNext() external;\n    function relay(address target, bytes calldata data, uint256 value) external returns (bytes memory);\n    function getActivationTimestamp() external view returns (uint256);\n    function owner() external view returns (address);\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

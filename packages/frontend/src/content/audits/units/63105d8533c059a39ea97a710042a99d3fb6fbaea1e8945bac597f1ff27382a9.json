@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "63105d8533c059a39ea97a710042a99d3fb6fbaea1e8945bac597f1ff27382a9",
+  "name": "private_validation_requests.nr",
+  "kind": "program",
+  "lines": 28,
+  "source": "use crate::{\n    abis::validation_requests::key_validation_request_and_separator::KeyValidationRequestAndSeparator,\n    constants::{\n        MAX_KEY_VALIDATION_REQUESTS_PER_TX, MAX_NOTE_HASH_READ_REQUESTS_PER_TX,\n        MAX_NULLIFIER_READ_REQUESTS_PER_TX,\n    },\n    side_effect::{Counted, Scoped},\n    traits::Empty,\n    utils::arrays::ClaimedLengthArray,\n};\nuse std::meta::derive;\n\n#[derive(Eq)]\npub struct PrivateValidationRequests {\n    pub note_hash_read_requests: ClaimedLengthArray<Scoped<Counted<Field>>, MAX_NOTE_HASH_READ_REQUESTS_PER_TX>,\n    pub nullifier_read_requests: ClaimedLengthArray<Scoped<Counted<Field>>, MAX_NULLIFIER_READ_REQUESTS_PER_TX>,\n    pub scoped_key_validation_requests_and_separators: ClaimedLengthArray<Scoped<KeyValidationRequestAndSeparator>, MAX_KEY_VALIDATION_REQUESTS_PER_TX>,\n}\n\nimpl Empty for PrivateValidationRequests {\n    fn empty() -> Self {\n        PrivateValidationRequests {\n            note_hash_read_requests: ClaimedLengthArray::empty(),\n            nullifier_read_requests: ClaimedLengthArray::empty(),\n            scoped_key_validation_requests_and_separators: ClaimedLengthArray::empty(),\n        }\n    }\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

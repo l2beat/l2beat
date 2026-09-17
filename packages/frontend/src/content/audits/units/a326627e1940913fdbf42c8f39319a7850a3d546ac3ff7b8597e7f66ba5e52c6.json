@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "a326627e1940913fdbf42c8f39319a7850a3d546ac3ff7b8597e7f66ba5e52c6",
+  "name": "ChainTipsLib",
+  "kind": "library",
+  "lines": 44,
+  "source": "library ChainTipsLib {\n    using SafeCast for uint256;\n\n    uint256 internal constant PENDING_CHECKPOINT_NUMBER_MASK =\n        0xffffffffffffffffffffffffffffffff00000000000000000000000000000000;\n    uint256 internal constant PROVEN_CHECKPOINT_NUMBER_MASK = 0xffffffffffffffffffffffffffffffff;\n\n    function getPending(CompressedChainTips _compressedChainTips) internal pure returns (uint256) {\n        return CompressedChainTips.unwrap(_compressedChainTips) >> 128;\n    }\n\n    function getProven(CompressedChainTips _compressedChainTips) internal pure returns (uint256) {\n        return CompressedChainTips.unwrap(_compressedChainTips) & PROVEN_CHECKPOINT_NUMBER_MASK;\n    }\n\n    function updatePending(CompressedChainTips _compressedChainTips, uint256 _pendingCheckpointNumber)\n        internal\n        pure\n        returns (CompressedChainTips)\n    {\n        uint256 value = CompressedChainTips.unwrap(_compressedChainTips) & ~PENDING_CHECKPOINT_NUMBER_MASK;\n        return CompressedChainTips.wrap(value | (uint256(_pendingCheckpointNumber.toUint128()) << 128));\n    }\n\n    function updateProven(CompressedChainTips _compressedChainTips, uint256 _provenCheckpointNumber)\n        internal\n        pure\n        returns (CompressedChainTips)\n    {\n        uint256 value = CompressedChainTips.unwrap(_compressedChainTips) & ~PROVEN_CHECKPOINT_NUMBER_MASK;\n        return CompressedChainTips.wrap(value | _provenCheckpointNumber.toUint128());\n    }\n\n    function compress(ChainTips memory _chainTips) internal pure returns (CompressedChainTips) {\n        // We are doing cast to uint128 but inside a uint256 to not wreck the shifting.\n        uint256 pending = _chainTips.pending.toUint128();\n        uint256 proven = _chainTips.proven.toUint128();\n        return CompressedChainTips.wrap((pending << 128) | proven);\n    }\n\n    function decompress(CompressedChainTips _compressedChainTips) internal pure returns (ChainTips memory) {\n        return ChainTips({pending: getPending(_compressedChainTips), proven: getProven(_compressedChainTips)});\n    }\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

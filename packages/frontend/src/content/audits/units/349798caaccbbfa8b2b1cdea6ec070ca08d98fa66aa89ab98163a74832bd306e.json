@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "349798caaccbbfa8b2b1cdea6ec070ca08d98fa66aa89ab98163a74832bd306e",
+  "name": "Cargo.toml",
+  "kind": "program",
+  "lines": 29,
+  "source": "[package]\nname = \"op-succinct-range-utils\"\nversion = \"0.1.0\"\nlicense.workspace = true\nedition.workspace = true\nauthors.workspace = true\nhomepage.workspace = true\nrepository.workspace = true\n\n[dependencies]\ntracing.workspace = true\nanyhow.workspace = true\nrkyv.workspace = true\n\n# kona\nkona-proof.workspace = true\n\n# sp1\nsp1-zkvm.workspace = true\n\n# op-succinct\nop-succinct-client-utils.workspace = true\n\n# `tracing-subscriber` feature dependencies\ntracing-subscriber = { workspace = true, optional = true }\n\n[features]\nembedded = [\"sp1-zkvm/embedded\"]\ntracing-subscriber = [\"dep:tracing-subscriber\"]",
+  "resolutions": {
+    "1daaed8c8125f2b6": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

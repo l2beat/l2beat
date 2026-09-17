@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "40a620037d6ea563c2a4fe93a20bc53429f4f1bac3a4ea78498735c1002334be",
+  "name": "lib.rs",
+  "kind": "program",
+  "lines": 63,
+  "source": "use std::sync::Arc;\n\nuse kona_proof::{l1::OracleL1ChainProvider, l2::OracleL2ChainProvider};\nuse op_succinct_client_utils::{\n    boot::BootInfoStruct,\n    witness::{\n        executor::{get_inputs_for_pipeline, WitnessExecutor},\n        preimage_store::PreimageStore,\n        WitnessData,\n    },\n    BlobStore,\n};\n\n/// Sets up tracing for the range program\n#[cfg(feature = \"tracing-subscriber\")]\npub fn setup_tracing() {\n    use anyhow::anyhow;\n    use tracing::Level;\n\n    let subscriber = tracing_subscriber::fmt().with_max_level(Level::INFO).finish();\n    tracing::subscriber::set_global_default(subscriber).map_err(|e| anyhow!(e)).unwrap();\n}\n\npub async fn run_range_program<E, W>(executor: E, witness_data: W)\nwhere\n    E: WitnessExecutor<\n            O = PreimageStore,\n            B = BlobStore,\n            L1 = OracleL1ChainProvider<PreimageStore>,\n            L2 = OracleL2ChainProvider<PreimageStore>,\n        > + Send\n        + Sync,\n    W: WitnessData + Send + Sync,\n{\n    ////////////////////////////////////////////////////////////////\n    //                          PROLOGUE                          //\n    ////////////////////////////////////////////////////////////////\n    let (oracle, beacon) = witness_data.get_oracle_and_blob_provider().await.unwrap();\n\n    let (boot_info, input) = get_inputs_for_pipeline(oracle.clone()).await.unwrap();\n    let boot_info = match input {\n        Some((cursor, l1_provider, l2_provider)) => {\n            let rollup_config = Arc::new(boot_info.rollup_config.clone());\n\n            let pipeline = executor\n                .create_pipeline(\n                    rollup_config,\n                    cursor.clone(),\n                    oracle,\n                    beacon,\n                    l1_provider,\n                    l2_provider.clone(),\n                )\n                .await\n                .unwrap();\n\n            executor.run(boot_info, pipeline, cursor, l2_provider).await.unwrap()\n        }\n        None => boot_info,\n    };\n\n    sp1_zkvm::io::commit(&BootInfoStruct::from(boot_info));\n}",
+  "resolutions": {
+    "1daaed8c8125f2b6": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

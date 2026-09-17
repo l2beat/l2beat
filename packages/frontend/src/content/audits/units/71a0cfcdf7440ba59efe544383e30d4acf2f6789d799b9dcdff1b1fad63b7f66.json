@@ -1,0 +1,141 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "71a0cfcdf7440ba59efe544383e30d4acf2f6789d799b9dcdff1b1fad63b7f66",
+  "name": "IRollupVerifier",
+  "kind": "interface",
+  "lines": 33,
+  "source": "interface IRollupVerifier {\n    /// @notice Verify aggregate zk proof.\n    /// @param batchIndex The batch index to verify.\n    /// @param aggrProof The aggregated proof.\n    /// @param publicInputHash The public input hash.\n    function verifyAggregateProof(uint256 batchIndex, bytes calldata aggrProof, bytes32 publicInputHash)\n        external\n        view;\n\n    /// @notice Verify aggregate zk proof.\n    /// @param version The version of verifier to use.\n    /// @param batchIndex The batch index to verify.\n    /// @param aggrProof The aggregated proof.\n    /// @param publicInputHash The public input hash.\n    function verifyAggregateProof(\n        uint256 version,\n        uint256 batchIndex,\n        bytes calldata aggrProof,\n        bytes32 publicInputHash\n    ) external view;\n\n    /// @notice Verify bundle zk proof.\n    /// @param version The version of verifier to use.\n    /// @param batchIndex The batch index used to select verifier.\n    /// @param bundleProof The aggregated proof.\n    /// @param publicInput The public input.\n    function verifyBundleProof(\n        uint256 version,\n        uint256 batchIndex,\n        bytes calldata bundleProof,\n        bytes calldata publicInput\n    ) external view;\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "differs",
+      "coveredLines": 27,
+      "match": {
+        "origin": "own",
+        "collection": "scroll",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "IRollupVerifier",
+        "similarity": 0.741,
+        "reportId": "scroll/openzeppelin-scroll-eip4844-support-audit-2024-04",
+        "repository": "scroll-tech/scroll",
+        "path": "contracts/src/libraries/verifier/IRollupVerifier.sol",
+        "commit": "5425ce725cc60d154e112610ee380d05e23689e5",
+        "commitTimestamp": "2024-04-10T03:56:26Z",
+        "url": "https://github.com/scroll-tech/scroll/blob/5425ce725cc60d154e112610ee380d05e23689e5/contracts/src/libraries/verifier/IRollupVerifier.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Fix review of L-02, L-03, N-02 and N-06 (docstrings, visibility, comments) in pull request #1256 only.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 6,
+        "removed": 0,
+        "ignoredAdded": 6,
+        "ignoredRemoved": 0,
+        "unchanged": 27,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 18,
+            "oldLines": 4,
+            "newStart": 18,
+            "newLines": 16,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 18,
+                "newLine": 18,
+                "text": "        bytes calldata aggrProof,"
+              },
+              {
+                "type": " ",
+                "oldLine": 19,
+                "newLine": 19,
+                "text": "        bytes32 publicInputHash"
+              },
+              {
+                "type": " ",
+                "oldLine": 20,
+                "newLine": 20,
+                "text": "    ) external view;"
+              },
+              { "type": "+", "newLine": 21, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 22,
+                "text": "    /// @notice Verify bundle zk proof.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 23,
+                "text": "    /// @param version The version of verifier to use.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 24,
+                "text": "    /// @param batchIndex The batch index used to select verifier.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 25,
+                "text": "    /// @param bundleProof The aggregated proof.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 26,
+                "text": "    /// @param publicInput The public input.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 27,
+                "text": "    function verifyBundleProof(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 28,
+                "text": "        uint256 version,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 29,
+                "text": "        uint256 batchIndex,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 30,
+                "text": "        bytes calldata bundleProof,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 31,
+                "text": "        bytes calldata publicInput",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 32,
+                "text": "    ) external view;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 21, "newLine": 33, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

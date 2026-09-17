@@ -10,6 +10,7 @@ import { HomeIcon } from '~/icons/pages/Home'
 import { L2Icon } from '~/icons/pages/L2'
 import { PrivacyIcon } from '~/icons/pages/Privacy'
 import { ZkCatalogIcon } from '~/icons/pages/ZkCatalog'
+import { ShieldIcon } from '~/icons/Shield'
 import { createOrderedSort } from '~/utils/sort'
 
 export const navGroups: NavGroup[] = compact<NavGroup>([
@@ -123,6 +124,15 @@ export const navGroups: NavGroup[] = compact<NavGroup>([
     href: '/privacy',
     icon: (
       <PrivacyIcon className="transition-colors duration-300 group-data-[active=true]:stroke-brand" />
+    ),
+  },
+  {
+    type: 'single',
+    title: 'Audits',
+    match: 'audits',
+    href: '/audits',
+    icon: (
+      <ShieldIcon className="size-5 transition-colors duration-300 group-data-[active=true]:stroke-brand" />
     ),
   },
   env.CLIENT_SIDE_DEFI_ENABLED && {

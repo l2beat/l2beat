@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "5870c523c0357608ad6307c303853d662ab771b384a9d20026a6a591525e4309",
+  "name": "L1Splitter",
+  "kind": "contract",
+  "lines": 86,
+  "source": "contract L1Splitter is IL1Splitter, Ownable2Step {\n    /// @dev The minimum gas limit for the FeeSplitter withdrawal transaction to L1.\n    uint32 internal constant WITHDRAWAL_MIN_GAS = 35_000;\n    uint48 internal constant MIN_DISBURSEMENT_INTERVAL = 10 minutes;\n    uint256 internal constant MIN_WITHDRAWAL_AMOUNT = 0.01 ether;\n\n    /// @inheritdoc IL1Splitter\n    address public l1Recipient;\n    /// @inheritdoc IL1Splitter\n    uint48 public feeDisbursementInterval;\n    /// @inheritdoc IL1Splitter\n    uint48 public lastDisbursementTime;\n    /// @inheritdoc IL1Splitter\n    uint256 public minWithdrawalAmount;\n\n    constructor(address initialOwner, address l1Wallet, uint48 feeDisbursementInterval_, uint256 minWithdrawalAmount_)\n        Ownable(initialOwner)\n    {\n        _updateL1Recipient(l1Wallet);\n        _updateFeeDisbursementInterval(feeDisbursementInterval_);\n        _updateMinWithdrawalAmount(minWithdrawalAmount_);\n    }\n\n    /// @inheritdoc IL1Splitter\n    function withdraw() public virtual returns (uint256 balance) {\n        balance = address(this).balance;\n        if (balance < minWithdrawalAmount) {\n            revert InsufficientWithdrawalAmount();\n        }\n        if (block.timestamp < lastDisbursementTime + feeDisbursementInterval) {\n            revert DisbursementIntervalNotReached();\n        }\n\n        lastDisbursementTime = uint48(block.timestamp);\n\n        address recipient = l1Recipient;\n        IL2StandardBridge(Predeploys.L2_STANDARD_BRIDGE).bridgeETHTo{value: balance}(\n            recipient, WITHDRAWAL_MIN_GAS, bytes(\"\")\n        );\n\n        emit Withdrawal(recipient, balance);\n    }\n\n    /// @inheritdoc IL1Splitter\n    function updateL1Recipient(address newRecipient) public onlyOwner {\n        _updateL1Recipient(newRecipient);\n    }\n\n    /// @inheritdoc IL1Splitter\n    function updateFeeDisbursementInterval(uint48 newInterval) public onlyOwner {\n        _updateFeeDisbursementInterval(newInterval);\n    }\n\n    /// @inheritdoc IL1Splitter\n    function updateMinWithdrawalAmount(uint256 newAmount) public onlyOwner {\n        _updateMinWithdrawalAmount(newAmount);\n    }\n\n    function _updateL1Recipient(address newRecipient) internal {\n        if (newRecipient == address(0)) {\n            revert AddressZero();\n        }\n        emit L1RecipientUpdated(l1Recipient, newRecipient);\n        l1Recipient = newRecipient;\n    }\n\n    function _updateFeeDisbursementInterval(uint48 newInterval) internal {\n        if (newInterval < MIN_DISBURSEMENT_INTERVAL) {\n            revert MinDisbursementInterval();\n        }\n        emit FeeDisbursementIntervalUpdated(feeDisbursementInterval, newInterval);\n        feeDisbursementInterval = newInterval;\n    }\n\n    function _updateMinWithdrawalAmount(uint256 newAmount) internal {\n        if (newAmount < MIN_WITHDRAWAL_AMOUNT) {\n            revert MinWithdrawalAmount();\n        }\n        emit MinWithdrawalAmountUpdated(minWithdrawalAmount, newAmount);\n        minWithdrawalAmount = newAmount;\n    }\n\n    receive() external payable {\n        // receive any ETH sent to this contract\n    }\n}",
+  "resolutions": {
+    "1f5c32d18cf7148d": {
+      "status": "identical",
+      "coveredLines": 86,
+      "match": {
+        "origin": "own",
+        "collection": "unichain",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "L1Splitter",
+        "similarity": 1,
+        "reportId": "unichain/cantina-unichain-contracts-2024-11",
+        "repository": "Uniswap/unichain-contracts",
+        "path": "src/FeeSplitter/L1Splitter.sol",
+        "commit": "d7db41e68e73bc7e58bfff9cae6f4e8f695030da",
+        "commitTimestamp": "2024-11-01T13:28:26Z",
+        "url": "https://github.com/Uniswap/unichain-contracts/blob/d7db41e68e73bc7e58bfff9cae6f4e8f695030da/src/FeeSplitter/L1Splitter.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix_review",
+        "coverage": "Fix review of src/FeeSplitter/NetFeeSplitter.sol and src/interfaces/FeeSplitter/INetFeeSplitter.sol only (Informational 3.3.1 rename newAdmin to newSetter).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 8
+      },
+      "warnings": []
+    }
+  }
+}

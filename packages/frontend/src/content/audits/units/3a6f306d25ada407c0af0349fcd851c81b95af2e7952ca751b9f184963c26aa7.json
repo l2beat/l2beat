@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "3a6f306d25ada407c0af0349fcd851c81b95af2e7952ca751b9f184963c26aa7",
+  "name": "FeeStructsLib",
+  "kind": "library",
+  "lines": 27,
+  "source": "library FeeStructsLib {\n    using SafeCast for uint256;\n\n    uint256 internal constant MASK_56_BITS = 0xFFFFFFFFFFFFFF;\n\n    function getBlobFee(CompressedL1FeeData _compressedL1FeeData) internal pure returns (uint256) {\n        return CompressedL1FeeData.unwrap(_compressedL1FeeData) & MASK_56_BITS;\n    }\n\n    function getBaseFee(CompressedL1FeeData _compressedL1FeeData) internal pure returns (uint256) {\n        return (CompressedL1FeeData.unwrap(_compressedL1FeeData) >> 56) & MASK_56_BITS;\n    }\n\n    function compress(L1FeeData memory _data) internal pure returns (CompressedL1FeeData) {\n        uint256 value = 0;\n        value |= uint256(_data.blobFee.toUint56()) << 0;\n        value |= uint256(_data.baseFee.toUint56()) << 56;\n        return CompressedL1FeeData.wrap(value.toUint112());\n    }\n\n    function decompress(CompressedL1FeeData _data) internal pure returns (L1FeeData memory) {\n        uint256 value = CompressedL1FeeData.unwrap(_data);\n        uint256 blobFee = value & MASK_56_BITS;\n        uint256 baseFee = (value >> 56) & MASK_56_BITS;\n        return L1FeeData({baseFee: uint256(baseFee), blobFee: uint256(blobFee)});\n    }\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "identical",
+      "coveredLines": 27,
+      "match": {
+        "origin": "own",
+        "collection": "aztecnetwork",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "FeeStructsLib",
+        "similarity": 1,
+        "reportId": "aztecnetwork/cantina-rollup-contracts-2025-11-12",
+        "repository": "AztecProtocol/aztec-packages",
+        "path": "l1-contracts/src/core/libraries/compressed-data/fees/FeeStructs.sol",
+        "commit": "44e3f64839b6f60aa4f3443f60fb45fcf744e586",
+        "commitTimestamp": "2025-09-26T07:33:24Z",
+        "url": "https://github.com/AztecProtocol/aztec-packages/blob/44e3f64839b6f60aa4f3443f60fb45fcf744e586/l1-contracts/src/core/libraries/compressed-data/fees/FeeStructs.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "remediation review",
+        "coverage": "verified code-quality fixes from PR 17300 (head commit)",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "warnings": []
+    }
+  }
+}

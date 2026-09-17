@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "8432abea8cc76fd65da3c9166cf094d3452508b80dfb060972963ca205d46174",
+  "name": "IEIP712_v4",
+  "kind": "interface",
+  "lines": 5,
+  "source": "interface IEIP712_v4 {\n    /// @notice Returns the domain separator for the current chain.\n    /// @return bytes32 The domain separator\n    function DOMAIN_SEPARATOR() external view returns (bytes32);\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

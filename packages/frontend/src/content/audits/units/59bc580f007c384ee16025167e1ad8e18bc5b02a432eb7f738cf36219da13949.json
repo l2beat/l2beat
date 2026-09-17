@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "59bc580f007c384ee16025167e1ad8e18bc5b02a432eb7f738cf36219da13949",
+  "name": "IFeeSplitter",
+  "kind": "interface",
+  "lines": 32,
+  "source": "interface IFeeSplitter {\n    /// @notice Emitted when `distributeFees` is called and no fees are collected\n    event NoFeesCollected();\n\n    /// @notice Emitted when `distributeFees` is called and fees are distributed\n    /// @param optimismShare The amount of fees sent to Optimism\n    /// @param l1Fees The amount of fees sent to L1 distributor\n    /// @param netShare The amount of fees sent to the net fee distributor\n    event FeesDistributed(uint256 optimismShare, uint256 l1Fees, uint256 netShare);\n\n    /// @notice Thrown when an address provided in the constructor is zero\n    error AddressZero();\n\n    /// @notice Thrown when a transfer fails\n    error TransferFailed();\n\n    /// @notice Thrown an address other than the fee splitter tries to withdraw fees from vaults\n    error Locked();\n\n    /// @notice Thrown when an address that is not a vault tries to deposit fees\n    error OnlyVaults();\n\n    /// @notice Thrown when a fee vault is configured to withdraw to L2\n    error MustWithdrawToL2();\n\n    /// @notice Thrown when a fee vault is not configured to withdraw to the fee splitter\n    error MustWithdrawToFeeSplitter();\n\n    /// @notice Distributes the fees collected from the fee vaults to their respective destinations\n    /// @return feesDistributed Whether any fees were distributed\n    function distributeFees() external returns (bool feesDistributed);\n}",
+  "resolutions": {
+    "1f5c32d18cf7148d": {
+      "status": "identical",
+      "coveredLines": 32,
+      "match": {
+        "origin": "own",
+        "collection": "unichain",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "IFeeSplitter",
+        "similarity": 1,
+        "reportId": "unichain/cantina-unichain-contracts-2024-11",
+        "repository": "Uniswap/unichain-contracts",
+        "path": "src/interfaces/FeeSplitter/IFeeSplitter.sol",
+        "commit": "d7db41e68e73bc7e58bfff9cae6f4e8f695030da",
+        "commitTimestamp": "2024-11-01T13:28:26Z",
+        "url": "https://github.com/Uniswap/unichain-contracts/blob/d7db41e68e73bc7e58bfff9cae6f4e8f695030da/src/interfaces/FeeSplitter/IFeeSplitter.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix_review",
+        "coverage": "Fix review of src/FeeSplitter/NetFeeSplitter.sol and src/interfaces/FeeSplitter/INetFeeSplitter.sol only (Informational 3.3.1 rename newAdmin to newSetter).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 8
+      },
+      "warnings": []
+    }
+  }
+}

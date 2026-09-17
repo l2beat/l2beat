@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "31b4463fa09a8c3d8f8ec3236c27ca4eb631bff5bfc40ba83968a51a2e1608bc",
+  "name": "mod.nr",
+  "kind": "program",
+  "lines": 29,
+  "source": "pub mod bn254Fq;\npub mod bls12_377Fq;\npub mod bls12_377Fr;\npub mod bls12_381Fr;\npub mod bls12_381Fq;\npub mod ed25519Fq;\npub mod ed25519Fr;\npub mod mnt4_753Fq;\npub mod mnt4_753Fr;\npub mod mnt6_753Fq;\npub mod mnt6_753Fr;\npub mod pallasFq;\npub mod pallasFr;\npub mod secp256k1Fq;\npub mod secp256k1Fr;\npub mod secp256r1Fq;\npub mod secp256r1Fr;\npub mod secp384r1Fq;\npub mod secp384r1Fr;\npub mod vestaFq;\npub mod vestaFr;\npub mod U256;\npub mod U384;\npub mod U512;\npub mod U768;\npub mod U1024;\npub mod U2048;\npub mod U4096;\npub mod U8192;",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

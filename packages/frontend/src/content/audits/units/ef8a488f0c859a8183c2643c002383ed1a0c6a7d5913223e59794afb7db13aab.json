@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "ef8a488f0c859a8183c2643c002383ed1a0c6a7d5913223e59794afb7db13aab",
+  "name": "AddressArrayUtils",
+  "kind": "library",
+  "lines": 65,
+  "source": "library AddressArrayUtils {\n    /**\n     * @dev Error thrown when a duplicated element is detected in an array.\n     * @param msgSig The function signature that invoke the error.\n     */\n    error ErrDuplicated(bytes4 msgSig);\n\n    /**\n     * @dev Returns whether or not there's a duplicate. Runs in O(n^2).\n     * @param A Array to search\n     * @return Returns true if duplicate, false otherwise\n     */\n    function hasDuplicate(address[] memory A) internal pure returns (bool) {\n        if (A.length == 0) {\n            return false;\n        }\n        unchecked {\n            for (uint256 i = 0; i < A.length - 1; i++) {\n                for (uint256 j = i + 1; j < A.length; j++) {\n                    if (A[i] == A[j]) {\n                        return true;\n                    }\n                }\n            }\n        }\n        return false;\n    }\n\n    /**\n     * @dev Returns whether two arrays of addresses are equal or not.\n     */\n    function isEqual(address[] memory _this, address[] memory _other) internal pure returns (bool yes_) {\n        // Hashing two arrays and compare their hash\n        assembly {\n            let _thisHash := keccak256(add(_this, 32), mul(mload(_this), 32))\n            let _otherHash := keccak256(add(_other, 32), mul(mload(_other), 32))\n            yes_ := eq(_thisHash, _otherHash)\n        }\n    }\n\n    /**\n     * @dev Return the concatenated array from a and b.\n     */\n    function extend(address[] memory a, address[] memory b) internal pure returns (address[] memory c) {\n        uint256 lengthA = a.length;\n        uint256 lengthB = b.length;\n        unchecked {\n            c = new address[](lengthA + lengthB);\n        }\n        uint256 i;\n        for (; i < lengthA;) {\n            c[i] = a[i];\n            unchecked {\n                ++i;\n            }\n        }\n        for (uint256 j; j < lengthB;) {\n            c[i] = b[j];\n            unchecked {\n                ++i;\n                ++j;\n            }\n        }\n    }\n}",
+  "resolutions": {
+    "bb55951394276893": {
+      "status": "identical",
+      "coveredLines": 65,
+      "match": {
+        "origin": "own",
+        "collection": "roninnetwork",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "AddressArrayUtils",
+        "similarity": 1,
+        "reportId": "roninnetwork/beosin-ronin-bridge-2023-09",
+        "repository": "axieinfinity/ronin-dpos-contracts",
+        "path": "contracts/libraries/AddressArrayUtils.sol",
+        "commit": "f4deb89ae8cfe97bed7bd429ac6ed9069ca20215",
+        "commitTimestamp": "2023-08-15T07:29:41Z",
+        "url": "https://github.com/axieinfinity/ronin-dpos-contracts/blob/f4deb89ae8cfe97bed7bd429ac6ed9069ca20215/contracts/libraries/AddressArrayUtils.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Full file review at tag v0.6.1-testnet (commit f4deb89a).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 6
+      },
+      "warnings": []
+    }
+  }
+}

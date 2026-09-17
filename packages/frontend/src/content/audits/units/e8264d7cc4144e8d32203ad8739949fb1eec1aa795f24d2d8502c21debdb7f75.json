@@ -1,0 +1,988 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "e8264d7cc4144e8d32203ad8739949fb1eec1aa795f24d2d8502c21debdb7f75",
+  "name": "V3SwapRouter",
+  "kind": "abstract",
+  "lines": 212,
+  "source": "abstract contract V3SwapRouter is IV3SwapRouter, PeripheryPaymentsWithFeeExtended, OracleSlippage {\n    using Path for bytes;\n    using SafeCast for uint256;\n\n    /// @dev Used as the placeholder value for amountInCached, because the computed amount in for an exact output swap\n    /// can never actually be this value\n    uint256 private constant DEFAULT_AMOUNT_IN_CACHED = type(uint256).max;\n\n    /// @dev Transient storage variable used for returning the computed amount in for an exact output swap.\n    uint256 private amountInCached = DEFAULT_AMOUNT_IN_CACHED;\n\n    /// @dev Returns the pool for the given token pair and fee. The pool contract may or may not exist.\n    function getPool(address tokenA, address tokenB, uint24 fee) private view returns (IUniswapV3Pool) {\n        return IUniswapV3Pool(PoolAddress.computeAddress(factory, PoolAddress.getPoolKey(tokenA, tokenB, fee)));\n    }\n\n    struct SwapCallbackData {\n        bytes path;\n        address payer;\n    }\n\n    /// @inheritdoc IUniswapV3SwapCallback\n    function uniswapV3SwapCallback(int256 amount0Delta, int256 amount1Delta, bytes calldata _data) external override {\n        require(amount0Delta > 0 || amount1Delta > 0); // swaps entirely within 0-liquidity regions are not supported\n        SwapCallbackData memory data = abi.decode(_data, (SwapCallbackData));\n        (address tokenIn, address tokenOut, uint24 fee) = data.path.decodeFirstPool();\n        CallbackValidation.verifyCallback(factory, tokenIn, tokenOut, fee);\n\n        (bool isExactInput, uint256 amountToPay) =\n            amount0Delta > 0 ? (tokenIn < tokenOut, uint256(amount0Delta)) : (tokenOut < tokenIn, uint256(amount1Delta));\n\n        if (isExactInput) {\n            pay(tokenIn, data.payer, msg.sender, amountToPay);\n        } else {\n            // either initiate the next swap or pay\n            if (data.path.hasMultiplePools()) {\n                data.path = data.path.skipToken();\n                exactOutputInternal(amountToPay, msg.sender, 0, data);\n            } else {\n                amountInCached = amountToPay;\n                // note that because exact output swaps are executed in reverse order, tokenOut is actually tokenIn\n                pay(tokenOut, data.payer, msg.sender, amountToPay);\n            }\n        }\n    }\n\n    /// @dev Performs a single exact input swap\n    function exactInputInternal(\n        uint256 amountIn,\n        address recipient,\n        uint160 sqrtPriceLimitX96,\n        SwapCallbackData memory data\n    ) private returns (uint256 amountOut) {\n        // find and replace recipient addresses\n        if (recipient == Constants.MSG_SENDER) {\n            recipient = msg.sender;\n        } else if (recipient == Constants.ADDRESS_THIS) {\n            recipient = address(this);\n        }\n\n        (address tokenIn, address tokenOut, uint24 fee) = data.path.decodeFirstPool();\n\n        bool zeroForOne = tokenIn < tokenOut;\n\n        (int256 amount0, int256 amount1) = getPool(tokenIn, tokenOut, fee).swap(\n            recipient,\n            zeroForOne,\n            amountIn.toInt256(),\n            sqrtPriceLimitX96 == 0\n                ? (zeroForOne ? TickMath.MIN_SQRT_RATIO + 1 : TickMath.MAX_SQRT_RATIO - 1)\n                : sqrtPriceLimitX96,\n            abi.encode(data)\n        );\n\n        return uint256(-(zeroForOne ? amount1 : amount0));\n    }\n\n    /// @inheritdoc IV3SwapRouter\n    function exactInputSingle(ExactInputSingleParams memory params)\n        external\n        payable\n        override\n        returns (uint256 amountOut)\n    {\n        // use amountIn == Constants.CONTRACT_BALANCE as a flag to swap the entire balance of the contract\n        bool hasAlreadyPaid;\n        if (params.amountIn == Constants.CONTRACT_BALANCE) {\n            hasAlreadyPaid = true;\n            params.amountIn = IERC20(params.tokenIn).balanceOf(address(this));\n        }\n\n        amountOut = exactInputInternal(\n            params.amountIn,\n            params.recipient,\n            params.sqrtPriceLimitX96,\n            SwapCallbackData({\n                path: abi.encodePacked(params.tokenIn, params.fee, params.tokenOut),\n                payer: hasAlreadyPaid ? address(this) : msg.sender\n            })\n        );\n        require(amountOut >= params.amountOutMinimum, \"Too little received\");\n    }\n\n    /// @inheritdoc IV3SwapRouter\n    function exactInput(ExactInputParams memory params) external payable override returns (uint256 amountOut) {\n        // use amountIn == Constants.CONTRACT_BALANCE as a flag to swap the entire balance of the contract\n        bool hasAlreadyPaid;\n        if (params.amountIn == Constants.CONTRACT_BALANCE) {\n            hasAlreadyPaid = true;\n            (address tokenIn,,) = params.path.decodeFirstPool();\n            params.amountIn = IERC20(tokenIn).balanceOf(address(this));\n        }\n\n        address payer = hasAlreadyPaid ? address(this) : msg.sender;\n\n        while (true) {\n            bool hasMultiplePools = params.path.hasMultiplePools();\n\n            // the outputs of prior swaps become the inputs to subsequent ones\n            params.amountIn = exactInputInternal(\n                params.amountIn,\n                hasMultiplePools ? address(this) : params.recipient, // for intermediate swaps, this contract custodies\n                0,\n                SwapCallbackData({\n                    path: params.path.getFirstPool(), // only the first pool in the path is necessary\n                    payer: payer\n                })\n            );\n\n            // decide whether to continue or terminate\n            if (hasMultiplePools) {\n                payer = address(this);\n                params.path = params.path.skipToken();\n            } else {\n                amountOut = params.amountIn;\n                break;\n            }\n        }\n\n        require(amountOut >= params.amountOutMinimum, \"Too little received\");\n    }\n\n    /// @dev Performs a single exact output swap\n    function exactOutputInternal(\n        uint256 amountOut,\n        address recipient,\n        uint160 sqrtPriceLimitX96,\n        SwapCallbackData memory data\n    ) private returns (uint256 amountIn) {\n        // find and replace recipient addresses\n        if (recipient == Constants.MSG_SENDER) {\n            recipient = msg.sender;\n        } else if (recipient == Constants.ADDRESS_THIS) {\n            recipient = address(this);\n        }\n\n        (address tokenOut, address tokenIn, uint24 fee) = data.path.decodeFirstPool();\n\n        bool zeroForOne = tokenIn < tokenOut;\n\n        (int256 amount0Delta, int256 amount1Delta) = getPool(tokenIn, tokenOut, fee).swap(\n            recipient,\n            zeroForOne,\n            -amountOut.toInt256(),\n            sqrtPriceLimitX96 == 0\n                ? (zeroForOne ? TickMath.MIN_SQRT_RATIO + 1 : TickMath.MAX_SQRT_RATIO - 1)\n                : sqrtPriceLimitX96,\n            abi.encode(data)\n        );\n\n        uint256 amountOutReceived;\n        (amountIn, amountOutReceived) = zeroForOne\n            ? (uint256(amount0Delta), uint256(-amount1Delta))\n            : (uint256(amount1Delta), uint256(-amount0Delta));\n        // it's technically possible to not receive the full output amount,\n        // so if no price limit has been specified, require this possibility away\n        if (sqrtPriceLimitX96 == 0) {\n            require(amountOutReceived == amountOut);\n        }\n    }\n\n    /// @inheritdoc IV3SwapRouter\n    function exactOutputSingle(ExactOutputSingleParams calldata params)\n        external\n        payable\n        override\n        returns (uint256 amountIn)\n    {\n        // avoid an SLOAD by using the swap return data\n        amountIn = exactOutputInternal(\n            params.amountOut,\n            params.recipient,\n            params.sqrtPriceLimitX96,\n            SwapCallbackData({path: abi.encodePacked(params.tokenOut, params.fee, params.tokenIn), payer: msg.sender})\n        );\n\n        require(amountIn <= params.amountInMaximum, \"Too much requested\");\n        // has to be reset even though we don't use it in the single hop case\n        amountInCached = DEFAULT_AMOUNT_IN_CACHED;\n    }\n\n    /// @inheritdoc IV3SwapRouter\n    function exactOutput(ExactOutputParams calldata params) external payable override returns (uint256 amountIn) {\n        exactOutputInternal(\n            params.amountOut, params.recipient, 0, SwapCallbackData({path: params.path, payer: msg.sender})\n        );\n\n        amountIn = amountInCached;\n        require(amountIn <= params.amountInMaximum, \"Too much requested\");\n        amountInCached = DEFAULT_AMOUNT_IN_CACHED;\n    }\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "differs",
+      "coveredLines": 180,
+      "match": {
+        "origin": "own",
+        "collection": "uniswapv3",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "similarity",
+        "auditedName": "SwapRouter",
+        "similarity": 0.837,
+        "reportId": "uniswapv3/abdk-uniswap-v3-periphery-part1-2021-04",
+        "repository": "Uniswap/v3-periphery",
+        "path": "contracts/SwapRouter.sol",
+        "commit": "2353765fe799b987ac5236971398fcb0be2bc5c0",
+        "commitTimestamp": "2021-04-14T16:40:17Z",
+        "url": "https://github.com/Uniswap/v3-periphery/blob/2353765fe799b987ac5236971398fcb0be2bc5c0/contracts/SwapRouter.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "verification of the fix for the Critical exact-input payer finding",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "diff": {
+        "added": 32,
+        "removed": 30,
+        "ignoredAdded": 15,
+        "ignoredRemoved": 8,
+        "unchanged": 180,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 11,
+            "newStart": 1,
+            "newLines": 4,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "contract SwapRouter is",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 2,
+                "text": "    ISwapRouter,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 3,
+                "text": "    PeripheryImmutableState,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 4,
+                "text": "    PeripheryValidation,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 5,
+                "text": "    PeripheryPayments,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 6,
+                "text": "    Multicall,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 7,
+                "text": "    SelfPermit",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 8, "text": "{", "ignored": false },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "abstract contract V3SwapRouter is IV3SwapRouter, PeripheryPaymentsWithFeeExtended, OracleSlippage {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 2,
+                "text": "    using Path for bytes;"
+              },
+              {
+                "type": " ",
+                "oldLine": 10,
+                "newLine": 3,
+                "text": "    using SafeCast for uint256;"
+              },
+              { "type": " ", "oldLine": 11, "newLine": 4, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 16,
+            "oldLines": 8,
+            "newStart": 9,
+            "newLines": 6,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 16,
+                "newLine": 9,
+                "text": "    /// @dev Transient storage variable used for returning the computed amount in for an exact output swap."
+              },
+              {
+                "type": " ",
+                "oldLine": 17,
+                "newLine": 10,
+                "text": "    uint256 private amountInCached = DEFAULT_AMOUNT_IN_CACHED;"
+              },
+              { "type": " ", "oldLine": 18, "newLine": 11, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 19,
+                "text": "    constructor(address _factory, address _WETH9) PeripheryImmutableState(_factory, _WETH9) {}",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 20, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 21,
+                "newLine": 12,
+                "text": "    /// @dev Returns the pool for the given token pair and fee. The pool contract may or may not exist."
+              },
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 13,
+                "text": "    function getPool(address tokenA, address tokenB, uint24 fee) private view returns (IUniswapV3Pool) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 23,
+                "newLine": 14,
+                "text": "        return IUniswapV3Pool(PoolAddress.computeAddress(factory, PoolAddress.getPoolKey(tokenA, tokenB, fee)));"
+              }
+            ]
+          },
+          {
+            "oldStart": 30,
+            "oldLines": 12,
+            "newStart": 21,
+            "newLines": 14,
+            "lines": [
+              { "type": " ", "oldLine": 30, "newLine": 21, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 31,
+                "newLine": 22,
+                "text": "    /// @inheritdoc IUniswapV3SwapCallback"
+              },
+              {
+                "type": " ",
+                "oldLine": 32,
+                "newLine": 23,
+                "text": "    function uniswapV3SwapCallback(int256 amount0Delta, int256 amount1Delta, bytes calldata _data) external override {"
+              },
+              {
+                "type": "+",
+                "newLine": 24,
+                "text": "        require(amount0Delta > 0 || amount1Delta > 0); // swaps entirely within 0-liquidity regions are not supported",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 33,
+                "newLine": 25,
+                "text": "        SwapCallbackData memory data = abi.decode(_data, (SwapCallbackData));"
+              },
+              {
+                "type": " ",
+                "oldLine": 34,
+                "newLine": 26,
+                "text": "        (address tokenIn, address tokenOut, uint24 fee) = data.path.decodeFirstPool();"
+              },
+              {
+                "type": " ",
+                "oldLine": 35,
+                "newLine": 27,
+                "text": "        CallbackValidation.verifyCallback(factory, tokenIn, tokenOut, fee);"
+              },
+              { "type": " ", "oldLine": 36, "newLine": 28, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 37,
+                "newLine": 29,
+                "text": "        (bool isExactInput, uint256 amountToPay) ="
+              },
+              {
+                "type": " ",
+                "oldLine": 38,
+                "newLine": 30,
+                "text": "            amount0Delta > 0 ? (tokenIn < tokenOut, uint256(amount0Delta)) : (tokenOut < tokenIn, uint256(amount1Delta));"
+              },
+              { "type": "+", "newLine": 31, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 39,
+                "newLine": 32,
+                "text": "        if (isExactInput) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 40,
+                "newLine": 33,
+                "text": "            pay(tokenIn, data.payer, msg.sender, amountToPay);"
+              },
+              {
+                "type": " ",
+                "oldLine": 41,
+                "newLine": 34,
+                "text": "        } else {"
+              }
+            ]
+          },
+          {
+            "oldStart": 45,
+            "oldLines": 8,
+            "newStart": 38,
+            "newLines": 8,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 45,
+                "newLine": 38,
+                "text": "                exactOutputInternal(amountToPay, msg.sender, 0, data);"
+              },
+              {
+                "type": " ",
+                "oldLine": 46,
+                "newLine": 39,
+                "text": "            } else {"
+              },
+              {
+                "type": " ",
+                "oldLine": 47,
+                "newLine": 40,
+                "text": "                amountInCached = amountToPay;"
+              },
+              {
+                "type": "-",
+                "oldLine": 48,
+                "text": "                tokenIn = tokenOut; // swap in/out because exact output swaps are reversed",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 49,
+                "text": "                pay(tokenIn, data.payer, msg.sender, amountToPay);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 41,
+                "text": "                // note that because exact output swaps are executed in reverse order, tokenOut is actually tokenIn",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 42,
+                "text": "                pay(tokenOut, data.payer, msg.sender, amountToPay);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 50,
+                "newLine": 43,
+                "text": "            }"
+              },
+              {
+                "type": " ",
+                "oldLine": 51,
+                "newLine": 44,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 52, "newLine": 45, "text": "    }" }
+            ]
+          },
+          {
+            "oldStart": 58,
+            "oldLines": 6,
+            "newStart": 51,
+            "newLines": 13,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 58,
+                "newLine": 51,
+                "text": "        uint160 sqrtPriceLimitX96,"
+              },
+              {
+                "type": " ",
+                "oldLine": 59,
+                "newLine": 52,
+                "text": "        SwapCallbackData memory data"
+              },
+              {
+                "type": " ",
+                "oldLine": 60,
+                "newLine": 53,
+                "text": "    ) private returns (uint256 amountOut) {"
+              },
+              {
+                "type": "+",
+                "newLine": 54,
+                "text": "        // find and replace recipient addresses",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 55,
+                "text": "        if (recipient == Constants.MSG_SENDER) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 56,
+                "text": "            recipient = msg.sender;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 57,
+                "text": "        } else if (recipient == Constants.ADDRESS_THIS) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 58,
+                "text": "            recipient = address(this);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 59,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 60, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 61,
+                "newLine": 61,
+                "text": "        (address tokenIn, address tokenOut, uint24 fee) = data.path.decodeFirstPool();"
+              },
+              { "type": " ", "oldLine": 62, "newLine": 62, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 63,
+                "newLine": 63,
+                "text": "        bool zeroForOne = tokenIn < tokenOut;"
+              }
+            ]
+          },
+          {
+            "oldStart": 75,
+            "oldLines": 33,
+            "newStart": 75,
+            "newLines": 44,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 75,
+                "newLine": 75,
+                "text": "        return uint256(-(zeroForOne ? amount1 : amount0));"
+              },
+              { "type": " ", "oldLine": 76, "newLine": 76, "text": "    }" },
+              { "type": " ", "oldLine": 77, "newLine": 77, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 78,
+                "text": "    /// @inheritdoc ISwapRouter",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 79,
+                "text": "    function exactInputSingle(ExactInputSingleParams calldata params)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 78,
+                "text": "    /// @inheritdoc IV3SwapRouter",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 79,
+                "text": "    function exactInputSingle(ExactInputSingleParams memory params)",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 80,
+                "newLine": 80,
+                "text": "        external"
+              },
+              {
+                "type": " ",
+                "oldLine": 81,
+                "newLine": 81,
+                "text": "        payable"
+              },
+              {
+                "type": " ",
+                "oldLine": 82,
+                "newLine": 82,
+                "text": "        override"
+              },
+              {
+                "type": "-",
+                "oldLine": 83,
+                "text": "        checkDeadline(params.deadline)",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 84,
+                "newLine": 83,
+                "text": "        returns (uint256 amountOut)"
+              },
+              { "type": " ", "oldLine": 85, "newLine": 84, "text": "    {" },
+              {
+                "type": "+",
+                "newLine": 85,
+                "text": "        // use amountIn == Constants.CONTRACT_BALANCE as a flag to swap the entire balance of the contract",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 86,
+                "text": "        bool hasAlreadyPaid;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 87,
+                "text": "        if (params.amountIn == Constants.CONTRACT_BALANCE) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 88,
+                "text": "            hasAlreadyPaid = true;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 89,
+                "text": "            params.amountIn = IERC20(params.tokenIn).balanceOf(address(this));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 90,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 91, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 86,
+                "newLine": 92,
+                "text": "        amountOut = exactInputInternal("
+              },
+              {
+                "type": " ",
+                "oldLine": 87,
+                "newLine": 93,
+                "text": "            params.amountIn,"
+              },
+              {
+                "type": " ",
+                "oldLine": 88,
+                "newLine": 94,
+                "text": "            params.recipient,"
+              },
+              {
+                "type": " ",
+                "oldLine": 89,
+                "newLine": 95,
+                "text": "            params.sqrtPriceLimitX96,"
+              },
+              {
+                "type": "-",
+                "oldLine": 90,
+                "text": "            SwapCallbackData({path: abi.encodePacked(params.tokenIn, params.fee, params.tokenOut), payer: msg.sender})",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 96,
+                "text": "            SwapCallbackData({",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 97,
+                "text": "                path: abi.encodePacked(params.tokenIn, params.fee, params.tokenOut),",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 98,
+                "text": "                payer: hasAlreadyPaid ? address(this) : msg.sender",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 99,
+                "text": "            })",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 91,
+                "newLine": 100,
+                "text": "        );"
+              },
+              {
+                "type": " ",
+                "oldLine": 92,
+                "newLine": 101,
+                "text": "        require(amountOut >= params.amountOutMinimum, \"Too little received\");"
+              },
+              { "type": " ", "oldLine": 93, "newLine": 102, "text": "    }" },
+              { "type": " ", "oldLine": 94, "newLine": 103, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 95,
+                "text": "    /// @inheritdoc ISwapRouter",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 96,
+                "text": "    function exactInput(ExactInputParams memory params)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 97,
+                "text": "        external",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 98,
+                "text": "        payable",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 99,
+                "text": "        override",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 100,
+                "text": "        checkDeadline(params.deadline)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 101,
+                "text": "        returns (uint256 amountOut)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 102,
+                "text": "    {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 103,
+                "text": "        address payer = msg.sender; // msg.sender pays for the first hop",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 104,
+                "text": "    /// @inheritdoc IV3SwapRouter",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 105,
+                "text": "    function exactInput(ExactInputParams memory params) external payable override returns (uint256 amountOut) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 106,
+                "text": "        // use amountIn == Constants.CONTRACT_BALANCE as a flag to swap the entire balance of the contract",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 107,
+                "text": "        bool hasAlreadyPaid;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 108,
+                "text": "        if (params.amountIn == Constants.CONTRACT_BALANCE) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 109,
+                "text": "            hasAlreadyPaid = true;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 110,
+                "text": "            (address tokenIn,,) = params.path.decodeFirstPool();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 111,
+                "text": "            params.amountIn = IERC20(tokenIn).balanceOf(address(this));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 112,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 104, "newLine": 113, "text": "" },
+              {
+                "type": "+",
+                "newLine": 114,
+                "text": "        address payer = hasAlreadyPaid ? address(this) : msg.sender;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 115, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 105,
+                "newLine": 116,
+                "text": "        while (true) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 106,
+                "newLine": 117,
+                "text": "            bool hasMultiplePools = params.path.hasMultiplePools();"
+              },
+              { "type": " ", "oldLine": 107, "newLine": 118, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 118,
+            "oldLines": 7,
+            "newStart": 129,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 118, "newLine": 129, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 119,
+                "newLine": 130,
+                "text": "            // decide whether to continue or terminate"
+              },
+              {
+                "type": " ",
+                "oldLine": 120,
+                "newLine": 131,
+                "text": "            if (hasMultiplePools) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 121,
+                "text": "                payer = address(this); // at this point, the caller has paid",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 132,
+                "text": "                payer = address(this);",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 122,
+                "newLine": 133,
+                "text": "                params.path = params.path.skipToken();"
+              },
+              {
+                "type": " ",
+                "oldLine": 123,
+                "newLine": 134,
+                "text": "            } else {"
+              },
+              {
+                "type": " ",
+                "oldLine": 124,
+                "newLine": 135,
+                "text": "                amountOut = params.amountIn;"
+              }
+            ]
+          },
+          {
+            "oldStart": 136,
+            "oldLines": 6,
+            "newStart": 147,
+            "newLines": 13,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 136,
+                "newLine": 147,
+                "text": "        uint160 sqrtPriceLimitX96,"
+              },
+              {
+                "type": " ",
+                "oldLine": 137,
+                "newLine": 148,
+                "text": "        SwapCallbackData memory data"
+              },
+              {
+                "type": " ",
+                "oldLine": 138,
+                "newLine": 149,
+                "text": "    ) private returns (uint256 amountIn) {"
+              },
+              {
+                "type": "+",
+                "newLine": 150,
+                "text": "        // find and replace recipient addresses",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 151,
+                "text": "        if (recipient == Constants.MSG_SENDER) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 152,
+                "text": "            recipient = msg.sender;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 153,
+                "text": "        } else if (recipient == Constants.ADDRESS_THIS) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 154,
+                "text": "            recipient = address(this);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 155,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 156, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 139,
+                "newLine": 157,
+                "text": "        (address tokenOut, address tokenIn, uint24 fee) = data.path.decodeFirstPool();"
+              },
+              { "type": " ", "oldLine": 140, "newLine": 158, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 141,
+                "newLine": 159,
+                "text": "        bool zeroForOne = tokenIn < tokenOut;"
+              }
+            ]
+          },
+          {
+            "oldStart": 161,
+            "oldLines": 12,
+            "newStart": 179,
+            "newLines": 11,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 161,
+                "newLine": 179,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 162, "newLine": 180, "text": "    }" },
+              { "type": " ", "oldLine": 163, "newLine": 181, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 164,
+                "text": "    /// @inheritdoc ISwapRouter",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 182,
+                "text": "    /// @inheritdoc IV3SwapRouter",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 165,
+                "newLine": 183,
+                "text": "    function exactOutputSingle(ExactOutputSingleParams calldata params)"
+              },
+              {
+                "type": " ",
+                "oldLine": 166,
+                "newLine": 184,
+                "text": "        external"
+              },
+              {
+                "type": " ",
+                "oldLine": 167,
+                "newLine": 185,
+                "text": "        payable"
+              },
+              {
+                "type": " ",
+                "oldLine": 168,
+                "newLine": 186,
+                "text": "        override"
+              },
+              {
+                "type": "-",
+                "oldLine": 169,
+                "text": "        checkDeadline(params.deadline)",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 170,
+                "newLine": 187,
+                "text": "        returns (uint256 amountIn)"
+              },
+              { "type": " ", "oldLine": 171, "newLine": 188, "text": "    {" },
+              {
+                "type": " ",
+                "oldLine": 172,
+                "newLine": 189,
+                "text": "        // avoid an SLOAD by using the swap return data"
+              }
+            ]
+          },
+          {
+            "oldStart": 182,
+            "oldLines": 16,
+            "newStart": 199,
+            "newLines": 8,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 182,
+                "newLine": 199,
+                "text": "        amountInCached = DEFAULT_AMOUNT_IN_CACHED;"
+              },
+              { "type": " ", "oldLine": 183, "newLine": 200, "text": "    }" },
+              { "type": " ", "oldLine": 184, "newLine": 201, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 185,
+                "text": "    /// @inheritdoc ISwapRouter",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 186,
+                "text": "    function exactOutput(ExactOutputParams calldata params)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 187,
+                "text": "        external",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 188,
+                "text": "        payable",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 189,
+                "text": "        override",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 190,
+                "text": "        checkDeadline(params.deadline)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 191,
+                "text": "        returns (uint256 amountIn)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 192,
+                "text": "    {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 193,
+                "text": "        // it's okay that the payer is fixed to msg.sender here, as they're only paying for the \"final\" exact output",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 194,
+                "text": "        // swap, which happens first, and subsequent swaps are paid for within nested callback frames",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 202,
+                "text": "    /// @inheritdoc IV3SwapRouter",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 203,
+                "text": "    function exactOutput(ExactOutputParams calldata params) external payable override returns (uint256 amountIn) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 195,
+                "newLine": 204,
+                "text": "        exactOutputInternal("
+              },
+              {
+                "type": " ",
+                "oldLine": 196,
+                "newLine": 205,
+                "text": "            params.amountOut, params.recipient, 0, SwapCallbackData({path: params.path, payer: msg.sender})"
+              },
+              {
+                "type": " ",
+                "oldLine": 197,
+                "newLine": 206,
+                "text": "        );"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

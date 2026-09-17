@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "4b020a7606d789056044fcaef5a78fc0d5c556ca9160cd18e4a495aa133cb438",
+  "name": "TransparentProxyV2",
+  "kind": "contract",
+  "lines": 35,
+  "source": "contract TransparentProxyV2 is TransparentUpgradeableProxy {\n    /**\n     * @dev Initializes the Proxy contract.\n     * @param logic The address of the logic contract.\n     * @param admin The address of the admin contract.\n     * @param data The initialization data.\n     */\n    constructor(address logic, address admin, bytes memory data)\n        payable\n        TransparentUpgradeableProxy(logic, admin, data)\n    {}\n\n    /**\n     * @dev Calls a function from the current implementation as specified by `data`, which should be an encoded function call.\n     *\n     * Requirements:\n     * - Only the admin can call this function.\n     *\n     * Note: The proxy admin is not allowed to interact with the proxy logic through the fallback function to avoid\n     * triggering some unexpected logic. This is to allow the administrator to explicitly call the proxy, please consider\n     * reviewing the encoded data `_data` and the method which is called before using this.\n     *\n     */\n    function functionDelegateCall(bytes memory data) public payable ifAdmin {\n        address addr = _implementation();\n\n        assembly (\"memory-safe\") {\n            let result := delegatecall(gas(), addr, add(data, 32), mload(data), 0, 0)\n            returndatacopy(0, 0, returndatasize())\n            switch result\n            case 0 { revert(0, returndatasize()) }\n            default { return(0, returndatasize()) }\n        }\n    }\n}",
+  "resolutions": {
+    "bb55951394276893": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "bd7aef53309fe4cfeb6a9924a4f16bf8d4fcb7d75999ae5627398d0be743c1b1",
+  "name": "IL1ChugSplashDeployer",
+  "kind": "interface",
+  "lines": 3,
+  "source": "interface IL1ChugSplashDeployer {\n    function isUpgrading() external view returns (bool);\n}",
+  "resolutions": {
+    "ba5b6c9584fb78fd": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "44ad4cf96e2ef6f0": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "bb55951394276893": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

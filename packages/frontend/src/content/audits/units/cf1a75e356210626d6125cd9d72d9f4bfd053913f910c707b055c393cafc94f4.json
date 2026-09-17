@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "cf1a75e356210626d6125cd9d72d9f4bfd053913f910c707b055c393cafc94f4",
+  "name": "(file-level declarations)",
+  "kind": "file-level",
+  "lines": 4,
+  "source": "struct Receipt {\n    bytes seal;\n    bytes32 claimDigest;\n}",
+  "resolutions": {
+    "ba5b6c9584fb78fd": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "bb55951394276893": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

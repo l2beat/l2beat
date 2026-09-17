@@ -1,0 +1,1041 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "5100f669bca575557e378066e7196783272d19d1d26b4baec70e1e1ee37d2143",
+  "name": "Proposal",
+  "kind": "library",
+  "lines": 147,
+  "source": "library Proposal {\n    /**\n     * @dev Error thrown when there is insufficient gas to execute a function.\n     */\n    error ErrInsufficientGas(bytes32 proposalHash);\n\n    /**\n     * @dev Error thrown when an invalid expiry timestamp is provided.\n     */\n    error ErrInvalidExpiryTimestamp();\n\n    /**\n     * @dev Error thrown when the proposal reverts when execute the internal call no. `callIndex` with revert message is `revertMsg`.\n     */\n    error ErrLooseProposalInternallyRevert(uint256 callIndex, bytes revertMsg);\n\n    struct ProposalDetail {\n        // Nonce to make sure proposals are executed in order\n        uint256 nonce;\n        // Value 0: all chain should run this proposal\n        // Other values: only specific chain has to execute\n        uint256 chainId;\n        uint256 expiryTimestamp;\n        // The address that execute the proposal after the proposal passes.\n        // Leave this address as address(0) to auto-execute by the last valid vote.\n        address executor;\n        address[] targets;\n        uint256[] values;\n        bytes[] calldatas;\n        uint256[] gasAmounts;\n    }\n\n    // keccak256(\"ProposalDetail(uint256 nonce,uint256 chainId,uint256 expiryTimestamp,address executor,address[] targets,uint256[] values,bytes[] calldatas,uint256[] gasAmounts)\");\n    bytes32 internal constant TYPE_HASH = 0x1b59eeec7c321899dc1e7a5b3d876c9a445dffc6d2f96ba842d7489908fdee12;\n\n    /**\n     * @dev Validates the proposal.\n     */\n    function validate(ProposalDetail memory proposal, uint256 maxExpiryDuration) internal view {\n        if (\n            !(\n                proposal.targets.length > 0 && proposal.targets.length == proposal.values.length\n                    && proposal.targets.length == proposal.calldatas.length\n                    && proposal.targets.length == proposal.gasAmounts.length\n            )\n        ) {\n            revert ErrLengthMismatch(msg.sig);\n        }\n\n        if (proposal.expiryTimestamp > block.timestamp + maxExpiryDuration) {\n            revert ErrInvalidExpiryTimestamp();\n        }\n    }\n\n    /**\n     * @dev Returns struct hash of the proposal.\n     */\n    function hash(ProposalDetail memory proposal) internal pure returns (bytes32 digest_) {\n        uint256[] memory values = proposal.values;\n        address[] memory targets = proposal.targets;\n        bytes32[] memory calldataHashList = new bytes32[](proposal.calldatas.length);\n        uint256[] memory gasAmounts = proposal.gasAmounts;\n\n        for (uint256 i; i < calldataHashList.length; ++i) {\n            calldataHashList[i] = keccak256(proposal.calldatas[i]);\n        }\n\n        // return\n        //   keccak256(\n        //     abi.encode(\n        //       TYPE_HASH,\n        //       proposal.nonce,\n        //       proposal.chainId,\n        //       proposal.expiryTimestamp\n        //       proposal.executor\n        //       targetsHash,\n        //       valuesHash,\n        //       calldatasHash,\n        //       gasAmountsHash\n        //     )\n        //   );\n        // /\n        assembly {\n            let ptr := mload(0x40)\n            mstore(ptr, TYPE_HASH)\n            mstore(add(ptr, 0x20), mload(proposal)) // proposal.nonce\n            mstore(add(ptr, 0x40), mload(add(proposal, 0x20))) // proposal.chainId\n            mstore(add(ptr, 0x60), mload(add(proposal, 0x40))) // proposal.expiryTimestamp\n            mstore(add(ptr, 0x80), mload(add(proposal, 0x60))) // proposal.executor\n\n            let arrayHashed\n            arrayHashed := keccak256(add(targets, 32), mul(mload(targets), 32)) // targetsHash\n            mstore(add(ptr, 0xa0), arrayHashed)\n            arrayHashed := keccak256(add(values, 32), mul(mload(values), 32)) // valuesHash\n            mstore(add(ptr, 0xc0), arrayHashed)\n            arrayHashed := keccak256(add(calldataHashList, 32), mul(mload(calldataHashList), 32)) // calldatasHash\n            mstore(add(ptr, 0xe0), arrayHashed)\n            arrayHashed := keccak256(add(gasAmounts, 32), mul(mload(gasAmounts), 32)) // gasAmountsHash\n            mstore(add(ptr, 0x100), arrayHashed)\n            digest_ := keccak256(ptr, 0x120)\n        }\n    }\n\n    /**\n     * @dev Returns whether the proposal is auto-executed on the last valid vote.\n     */\n    function isAutoExecute(ProposalDetail memory proposal) internal pure returns (bool) {\n        return proposal.executor == address(0);\n    }\n\n    /**\n     * @dev Returns whether the proposal is executable for the current chain.\n     *\n     * @notice Does not check whether the call result is successful or not. Please use `execute` instead.\n     *\n     */\n    function executable(ProposalDetail memory proposal) internal view returns (bool result) {\n        return proposal.chainId == 0 || proposal.chainId == block.chainid;\n    }\n\n    /**\n     * @dev Executes the proposal.\n     */\n    function execute(ProposalDetail memory proposal)\n        internal\n        returns (bool[] memory successCalls, bytes[] memory returnDatas)\n    {\n        if (!executable(proposal)) {\n            revert ErrInvalidChainId(msg.sig, proposal.chainId, block.chainid);\n        }\n\n        successCalls = new bool[](proposal.targets.length);\n        returnDatas = new bytes[](proposal.targets.length);\n        for (uint256 i = 0; i < proposal.targets.length; ++i) {\n            if (gasleft() <= proposal.gasAmounts[i]) {\n                revert ErrInsufficientGas(hash(proposal));\n            }\n\n            (successCalls[i], returnDatas[i]) =\n                proposal.targets[i].call{value: proposal.values[i], gas: proposal.gasAmounts[i]}(proposal.calldatas[i]);\n\n            if (!successCalls[i]) {\n                revert ErrLooseProposalInternallyRevert(i, returnDatas[i]);\n            }\n        }\n    }\n}",
+  "resolutions": {
+    "bb55951394276893": {
+      "status": "differs",
+      "coveredLines": 105,
+      "match": {
+        "origin": "own",
+        "collection": "roninnetwork",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "Proposal",
+        "similarity": 0.561,
+        "reportId": "roninnetwork/beosin-ronin-bridge-2023-09",
+        "repository": "axieinfinity/ronin-dpos-contracts",
+        "path": "contracts/libraries/Proposal.sol",
+        "commit": "f4deb89ae8cfe97bed7bd429ac6ed9069ca20215",
+        "commitTimestamp": "2023-08-15T07:29:41Z",
+        "url": "https://github.com/axieinfinity/ronin-dpos-contracts/blob/f4deb89ae8cfe97bed7bd429ac6ed9069ca20215/contracts/libraries/Proposal.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Full file review at tag v0.6.1-testnet (commit f4deb89a).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 8
+      },
+      "diff": {
+        "added": 42,
+        "removed": 41,
+        "ignoredAdded": 21,
+        "ignoredRemoved": 10,
+        "unchanged": 105,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 9,
+            "oldLines": 37,
+            "newStart": 9,
+            "newLines": 45,
+            "lines": [
+              { "type": " ", "oldLine": 9, "newLine": 9, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 10,
+                "newLine": 10,
+                "text": "    error ErrInvalidExpiryTimestamp();"
+              },
+              { "type": " ", "oldLine": 11, "newLine": 11, "text": "" },
+              {
+                "type": "+",
+                "newLine": 12,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 13,
+                "text": "     * @dev Error thrown when the proposal reverts when execute the internal call no. `callIndex` with revert message is `revertMsg`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 14,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 15,
+                "text": "    error ErrLooseProposalInternallyRevert(uint256 callIndex, bytes revertMsg);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 16, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 12,
+                "newLine": 17,
+                "text": "    struct ProposalDetail {"
+              },
+              {
+                "type": " ",
+                "oldLine": 13,
+                "newLine": 18,
+                "text": "        // Nonce to make sure proposals are executed in order"
+              },
+              {
+                "type": " ",
+                "oldLine": 14,
+                "newLine": 19,
+                "text": "        uint256 nonce;"
+              },
+              {
+                "type": " ",
+                "oldLine": 15,
+                "newLine": 20,
+                "text": "        // Value 0: all chain should run this proposal"
+              },
+              {
+                "type": "-",
+                "oldLine": 16,
+                "text": "        // Other values: only specifc chain has to execute",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 21,
+                "text": "        // Other values: only specific chain has to execute",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 17,
+                "newLine": 22,
+                "text": "        uint256 chainId;"
+              },
+              {
+                "type": " ",
+                "oldLine": 18,
+                "newLine": 23,
+                "text": "        uint256 expiryTimestamp;"
+              },
+              {
+                "type": "+",
+                "newLine": 24,
+                "text": "        // The address that execute the proposal after the proposal passes.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 25,
+                "text": "        // Leave this address as address(0) to auto-execute by the last valid vote.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 26,
+                "text": "        address executor;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 19,
+                "newLine": 27,
+                "text": "        address[] targets;"
+              },
+              {
+                "type": " ",
+                "oldLine": 20,
+                "newLine": 28,
+                "text": "        uint256[] values;"
+              },
+              {
+                "type": " ",
+                "oldLine": 21,
+                "newLine": 29,
+                "text": "        bytes[] calldatas;"
+              },
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 30,
+                "text": "        uint256[] gasAmounts;"
+              },
+              { "type": " ", "oldLine": 23, "newLine": 31, "text": "    }" },
+              { "type": " ", "oldLine": 24, "newLine": 32, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 25,
+                "text": "    // keccak256(\"ProposalDetail(uint256 nonce,uint256 chainId,uint256 expiryTimestamp,address[] targets,uint256[] values,bytes[] calldatas,uint256[] gasAmounts)\");",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 26,
+                "text": "    bytes32 public constant TYPE_HASH = 0xd051578048e6ff0bbc9fca3b65a42088dbde10f36ca841de566711087ad9b08a;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 33,
+                "text": "    // keccak256(\"ProposalDetail(uint256 nonce,uint256 chainId,uint256 expiryTimestamp,address executor,address[] targets,uint256[] values,bytes[] calldatas,uint256[] gasAmounts)\");",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 34,
+                "text": "    bytes32 internal constant TYPE_HASH = 0x1b59eeec7c321899dc1e7a5b3d876c9a445dffc6d2f96ba842d7489908fdee12;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 27, "newLine": 35, "text": "" },
+              { "type": " ", "oldLine": 28, "newLine": 36, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 29,
+                "newLine": 37,
+                "text": "     * @dev Validates the proposal."
+              },
+              { "type": " ", "oldLine": 30, "newLine": 38, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 31,
+                "text": "    function validate(ProposalDetail memory _proposal, uint256 _maxExpiryDuration) internal view {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 39,
+                "text": "    function validate(ProposalDetail memory proposal, uint256 maxExpiryDuration) internal view {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 32,
+                "newLine": 40,
+                "text": "        if ("
+              },
+              {
+                "type": " ",
+                "oldLine": 33,
+                "newLine": 41,
+                "text": "            !("
+              },
+              {
+                "type": "-",
+                "oldLine": 34,
+                "text": "                _proposal.targets.length > 0 && _proposal.targets.length == _proposal.values.length",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 35,
+                "text": "                    && _proposal.targets.length == _proposal.calldatas.length",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 36,
+                "text": "                    && _proposal.targets.length == _proposal.gasAmounts.length",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 42,
+                "text": "                proposal.targets.length > 0 && proposal.targets.length == proposal.values.length",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 43,
+                "text": "                    && proposal.targets.length == proposal.calldatas.length",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 44,
+                "text": "                    && proposal.targets.length == proposal.gasAmounts.length",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 37,
+                "newLine": 45,
+                "text": "            )"
+              },
+              {
+                "type": " ",
+                "oldLine": 38,
+                "newLine": 46,
+                "text": "        ) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 39,
+                "newLine": 47,
+                "text": "            revert ErrLengthMismatch(msg.sig);"
+              },
+              {
+                "type": " ",
+                "oldLine": 40,
+                "newLine": 48,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 41, "newLine": 49, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 42,
+                "text": "        if (_proposal.expiryTimestamp > block.timestamp + _maxExpiryDuration) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 50,
+                "text": "        if (proposal.expiryTimestamp > block.timestamp + maxExpiryDuration) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 43,
+                "newLine": 51,
+                "text": "            revert ErrInvalidExpiryTimestamp();"
+              },
+              {
+                "type": " ",
+                "oldLine": 44,
+                "newLine": 52,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 45, "newLine": 53, "text": "    }" }
+            ]
+          },
+          {
+            "oldStart": 47,
+            "oldLines": 88,
+            "newStart": 55,
+            "newLines": 92,
+            "lines": [
+              { "type": " ", "oldLine": 47, "newLine": 55, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 48,
+                "newLine": 56,
+                "text": "     * @dev Returns struct hash of the proposal."
+              },
+              { "type": " ", "oldLine": 49, "newLine": 57, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 50,
+                "text": "    function hash(ProposalDetail memory _proposal) internal pure returns (bytes32 digest_) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 51,
+                "text": "        uint256[] memory _values = _proposal.values;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 52,
+                "text": "        address[] memory _targets = _proposal.targets;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 53,
+                "text": "        bytes32[] memory _calldataHashList = new bytes32[](_proposal.calldatas.length);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 54,
+                "text": "        uint256[] memory _gasAmounts = _proposal.gasAmounts;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 58,
+                "text": "    function hash(ProposalDetail memory proposal) internal pure returns (bytes32 digest_) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 59,
+                "text": "        uint256[] memory values = proposal.values;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 60,
+                "text": "        address[] memory targets = proposal.targets;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 61,
+                "text": "        bytes32[] memory calldataHashList = new bytes32[](proposal.calldatas.length);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 62,
+                "text": "        uint256[] memory gasAmounts = proposal.gasAmounts;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 55, "newLine": 63, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 56,
+                "text": "        for (uint256 _i; _i < _calldataHashList.length;) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 57,
+                "text": "            _calldataHashList[_i] = keccak256(_proposal.calldatas[_i]);",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 58, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 59,
+                "text": "            unchecked {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 60,
+                "text": "                ++_i;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 61,
+                "text": "            }",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 64,
+                "text": "        for (uint256 i; i < calldataHashList.length; ++i) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 65,
+                "text": "            calldataHashList[i] = keccak256(proposal.calldatas[i]);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 62,
+                "newLine": 66,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 63, "newLine": 67, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 64,
+                "newLine": 68,
+                "text": "        // return"
+              },
+              {
+                "type": " ",
+                "oldLine": 65,
+                "newLine": 69,
+                "text": "        //   keccak256("
+              },
+              {
+                "type": " ",
+                "oldLine": 66,
+                "newLine": 70,
+                "text": "        //     abi.encode("
+              },
+              {
+                "type": " ",
+                "oldLine": 67,
+                "newLine": 71,
+                "text": "        //       TYPE_HASH,"
+              },
+              {
+                "type": "-",
+                "oldLine": 68,
+                "text": "        //       _proposal.nonce,",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 69,
+                "text": "        //       _proposal.chainId,",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 70,
+                "text": "        //       _targetsHash,",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 71,
+                "text": "        //       _valuesHash,",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 72,
+                "text": "        //       _calldatasHash,",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 73,
+                "text": "        //       _gasAmountsHash",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 72,
+                "text": "        //       proposal.nonce,",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 73,
+                "text": "        //       proposal.chainId,",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 74,
+                "text": "        //       proposal.expiryTimestamp",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 75,
+                "text": "        //       proposal.executor",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 76,
+                "text": "        //       targetsHash,",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 77,
+                "text": "        //       valuesHash,",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 78,
+                "text": "        //       calldatasHash,",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 79,
+                "text": "        //       gasAmountsHash",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 74,
+                "newLine": 80,
+                "text": "        //     )"
+              },
+              {
+                "type": " ",
+                "oldLine": 75,
+                "newLine": 81,
+                "text": "        //   );"
+              },
+              {
+                "type": " ",
+                "oldLine": 76,
+                "newLine": 82,
+                "text": "        // /"
+              },
+              {
+                "type": " ",
+                "oldLine": 77,
+                "newLine": 83,
+                "text": "        assembly {"
+              },
+              {
+                "type": " ",
+                "oldLine": 78,
+                "newLine": 84,
+                "text": "            let ptr := mload(0x40)"
+              },
+              {
+                "type": " ",
+                "oldLine": 79,
+                "newLine": 85,
+                "text": "            mstore(ptr, TYPE_HASH)"
+              },
+              {
+                "type": "-",
+                "oldLine": 80,
+                "text": "            mstore(add(ptr, 0x20), mload(_proposal)) // _proposal.nonce",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 81,
+                "text": "            mstore(add(ptr, 0x40), mload(add(_proposal, 0x20))) // _proposal.chainId",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 82,
+                "text": "            mstore(add(ptr, 0x60), mload(add(_proposal, 0x40))) // expiry timestamp",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 86,
+                "text": "            mstore(add(ptr, 0x20), mload(proposal)) // proposal.nonce",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 87,
+                "text": "            mstore(add(ptr, 0x40), mload(add(proposal, 0x20))) // proposal.chainId",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 88,
+                "text": "            mstore(add(ptr, 0x60), mload(add(proposal, 0x40))) // proposal.expiryTimestamp",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 89,
+                "text": "            mstore(add(ptr, 0x80), mload(add(proposal, 0x60))) // proposal.executor",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 83, "newLine": 90, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 84,
+                "newLine": 91,
+                "text": "            let arrayHashed"
+              },
+              {
+                "type": "-",
+                "oldLine": 85,
+                "text": "            arrayHashed := keccak256(add(_targets, 32), mul(mload(_targets), 32)) // targetsHash",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 86,
+                "text": "            mstore(add(ptr, 0x80), arrayHashed)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 87,
+                "text": "            arrayHashed := keccak256(add(_values, 32), mul(mload(_values), 32)) // _valuesHash",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 92,
+                "text": "            arrayHashed := keccak256(add(targets, 32), mul(mload(targets), 32)) // targetsHash",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 88,
+                "newLine": 93,
+                "text": "            mstore(add(ptr, 0xa0), arrayHashed)"
+              },
+              {
+                "type": "-",
+                "oldLine": 89,
+                "text": "            arrayHashed := keccak256(add(_calldataHashList, 32), mul(mload(_calldataHashList), 32)) // _calldatasHash",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 94,
+                "text": "            arrayHashed := keccak256(add(values, 32), mul(mload(values), 32)) // valuesHash",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 90,
+                "newLine": 95,
+                "text": "            mstore(add(ptr, 0xc0), arrayHashed)"
+              },
+              {
+                "type": "-",
+                "oldLine": 91,
+                "text": "            arrayHashed := keccak256(add(_gasAmounts, 32), mul(mload(_gasAmounts), 32)) // _gasAmountsHash",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 96,
+                "text": "            arrayHashed := keccak256(add(calldataHashList, 32), mul(mload(calldataHashList), 32)) // calldatasHash",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 92,
+                "newLine": 97,
+                "text": "            mstore(add(ptr, 0xe0), arrayHashed)"
+              },
+              {
+                "type": "-",
+                "oldLine": 93,
+                "text": "            digest_ := keccak256(ptr, 0x100)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 98,
+                "text": "            arrayHashed := keccak256(add(gasAmounts, 32), mul(mload(gasAmounts), 32)) // gasAmountsHash",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 99,
+                "text": "            mstore(add(ptr, 0x100), arrayHashed)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 100,
+                "text": "            digest_ := keccak256(ptr, 0x120)",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 94,
+                "newLine": 101,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 95, "newLine": 102, "text": "    }" },
+              { "type": " ", "oldLine": 96, "newLine": 103, "text": "" },
+              { "type": " ", "oldLine": 97, "newLine": 104, "text": "    /**" },
+              {
+                "type": "+",
+                "newLine": 105,
+                "text": "     * @dev Returns whether the proposal is auto-executed on the last valid vote.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 106,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 107,
+                "text": "    function isAutoExecute(ProposalDetail memory proposal) internal pure returns (bool) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 108,
+                "text": "        return proposal.executor == address(0);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 109, "text": "    }", "ignored": true },
+              { "type": "+", "newLine": 110, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 111,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 98,
+                "newLine": 112,
+                "text": "     * @dev Returns whether the proposal is executable for the current chain."
+              },
+              { "type": " ", "oldLine": 99, "newLine": 113, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 100,
+                "newLine": 114,
+                "text": "     * @notice Does not check whether the call result is successful or not. Please use `execute` instead."
+              },
+              { "type": " ", "oldLine": 101, "newLine": 115, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 102,
+                "newLine": 116,
+                "text": "     */"
+              },
+              {
+                "type": "-",
+                "oldLine": 103,
+                "text": "    function executable(ProposalDetail memory _proposal) internal view returns (bool _result) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 104,
+                "text": "        return _proposal.chainId == 0 || _proposal.chainId == block.chainid;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 117,
+                "text": "    function executable(ProposalDetail memory proposal) internal view returns (bool result) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 118,
+                "text": "        return proposal.chainId == 0 || proposal.chainId == block.chainid;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 105, "newLine": 119, "text": "    }" },
+              { "type": " ", "oldLine": 106, "newLine": 120, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 107,
+                "newLine": 121,
+                "text": "    /**"
+              },
+              {
+                "type": " ",
+                "oldLine": 108,
+                "newLine": 122,
+                "text": "     * @dev Executes the proposal."
+              },
+              {
+                "type": " ",
+                "oldLine": 109,
+                "newLine": 123,
+                "text": "     */"
+              },
+              {
+                "type": "-",
+                "oldLine": 110,
+                "text": "    function execute(ProposalDetail memory _proposal)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 124,
+                "text": "    function execute(ProposalDetail memory proposal)",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 111,
+                "newLine": 125,
+                "text": "        internal"
+              },
+              {
+                "type": "-",
+                "oldLine": 112,
+                "text": "        returns (bool[] memory _successCalls, bytes[] memory _returnDatas)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 126,
+                "text": "        returns (bool[] memory successCalls, bytes[] memory returnDatas)",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 113, "newLine": 127, "text": "    {" },
+              {
+                "type": "-",
+                "oldLine": 114,
+                "text": "        if (!executable(_proposal)) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 115,
+                "text": "            revert ErrInvalidChainId(msg.sig, _proposal.chainId, block.chainid);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 128,
+                "text": "        if (!executable(proposal)) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 129,
+                "text": "            revert ErrInvalidChainId(msg.sig, proposal.chainId, block.chainid);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 116,
+                "newLine": 130,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 117, "newLine": 131, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 118,
+                "text": "        _successCalls = new bool[](_proposal.targets.length);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 119,
+                "text": "        _returnDatas = new bytes[](_proposal.targets.length);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 120,
+                "text": "        for (uint256 _i = 0; _i < _proposal.targets.length;) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 121,
+                "text": "            if (gasleft() <= _proposal.gasAmounts[_i]) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 122,
+                "text": "                revert ErrInsufficientGas(hash(_proposal));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 132,
+                "text": "        successCalls = new bool[](proposal.targets.length);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 133,
+                "text": "        returnDatas = new bytes[](proposal.targets.length);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 134,
+                "text": "        for (uint256 i = 0; i < proposal.targets.length; ++i) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 135,
+                "text": "            if (gasleft() <= proposal.gasAmounts[i]) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 136,
+                "text": "                revert ErrInsufficientGas(hash(proposal));",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 123,
+                "newLine": 137,
+                "text": "            }"
+              },
+              { "type": " ", "oldLine": 124, "newLine": 138, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 125,
+                "text": "            (_successCalls[_i], _returnDatas[_i]) = _proposal.targets[_i].call{",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 126,
+                "text": "                value: _proposal.values[_i],",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 127,
+                "text": "                gas: _proposal.gasAmounts[_i]",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 128,
+                "text": "            }(_proposal.calldatas[_i]);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 139,
+                "text": "            (successCalls[i], returnDatas[i]) =",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 140,
+                "text": "                proposal.targets[i].call{value: proposal.values[i], gas: proposal.gasAmounts[i]}(proposal.calldatas[i]);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 129, "newLine": 141, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 130,
+                "text": "            unchecked {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 131,
+                "text": "                ++_i;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 142,
+                "text": "            if (!successCalls[i]) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 143,
+                "text": "                revert ErrLooseProposalInternallyRevert(i, returnDatas[i]);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 132,
+                "newLine": 144,
+                "text": "            }"
+              },
+              {
+                "type": " ",
+                "oldLine": 133,
+                "newLine": 145,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 134, "newLine": 146, "text": "    }" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

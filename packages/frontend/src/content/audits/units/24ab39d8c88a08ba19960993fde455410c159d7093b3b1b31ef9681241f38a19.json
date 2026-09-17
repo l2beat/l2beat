@@ -1,0 +1,888 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "24ab39d8c88a08ba19960993fde455410c159d7093b3b1b31ef9681241f38a19",
+  "name": "Hashing",
+  "kind": "library",
+  "lines": 103,
+  "source": "library Hashing {\n    /// @notice Computes the hash of the RLP encoded L2 transaction that would be generated when a\n    ///         given deposit is sent to the L2 system. Useful for searching for a deposit in the L2\n    ///         system.\n    /// @param _tx User deposit transaction to hash.\n    /// @return Hash of the RLP encoded L2 deposit transaction.\n    function hashDepositTransaction(Types.UserDepositTransaction memory _tx) internal pure returns (bytes32) {\n        return keccak256(Encoding.encodeDepositTransaction(_tx));\n    }\n\n    /// @notice Computes the deposit transaction's \"source hash\", a value that guarantees the hash\n    ///         of the L2 transaction that corresponds to a deposit is unique and is\n    ///         deterministically generated from L1 transaction data.\n    /// @param _l1BlockHash Hash of the L1 block where the deposit was included.\n    /// @param _logIndex    The index of the log that created the deposit transaction.\n    /// @return Hash of the deposit transaction's \"source hash\".\n    function hashDepositSource(bytes32 _l1BlockHash, uint256 _logIndex) internal pure returns (bytes32) {\n        bytes32 depositId = keccak256(abi.encode(_l1BlockHash, _logIndex));\n        return keccak256(abi.encode(bytes32(0), depositId));\n    }\n\n    /// @notice Hashes the cross domain message based on the version that is encoded into the\n    ///         message nonce.\n    /// @param _nonce    Message nonce with version encoded into the first two bytes.\n    /// @param _sender   Address of the sender of the message.\n    /// @param _target   Address of the target of the message.\n    /// @param _value    ETH value to send to the target.\n    /// @param _gasLimit Gas limit to use for the message.\n    /// @param _data     Data to send with the message.\n    /// @return Hashed cross domain message.\n    function hashCrossDomainMessage(\n        uint256 _nonce,\n        address _sender,\n        address _target,\n        uint256 _value,\n        uint256 _gasLimit,\n        bytes memory _data\n    ) internal pure returns (bytes32) {\n        (, uint16 version) = Encoding.decodeVersionedNonce(_nonce);\n        if (version == 0) {\n            return hashCrossDomainMessageV0(_target, _sender, _data, _nonce);\n        } else if (version == 1) {\n            return hashCrossDomainMessageV1(_nonce, _sender, _target, _value, _gasLimit, _data);\n        } else {\n            revert(\"Hashing: unknown cross domain message version\");\n        }\n    }\n\n    /// @notice Hashes a cross domain message based on the V0 (legacy) encoding.\n    /// @param _target Address of the target of the message.\n    /// @param _sender Address of the sender of the message.\n    /// @param _data   Data to send with the message.\n    /// @param _nonce  Message nonce.\n    /// @return Hashed cross domain message.\n    function hashCrossDomainMessageV0(address _target, address _sender, bytes memory _data, uint256 _nonce)\n        internal\n        pure\n        returns (bytes32)\n    {\n        return keccak256(Encoding.encodeCrossDomainMessageV0(_target, _sender, _data, _nonce));\n    }\n\n    /// @notice Hashes a cross domain message based on the V1 (current) encoding.\n    /// @param _nonce    Message nonce.\n    /// @param _sender   Address of the sender of the message.\n    /// @param _target   Address of the target of the message.\n    /// @param _value    ETH value to send to the target.\n    /// @param _gasLimit Gas limit to use for the message.\n    /// @param _data     Data to send with the message.\n    /// @return Hashed cross domain message.\n    function hashCrossDomainMessageV1(\n        uint256 _nonce,\n        address _sender,\n        address _target,\n        uint256 _value,\n        uint256 _gasLimit,\n        bytes memory _data\n    ) internal pure returns (bytes32) {\n        return keccak256(Encoding.encodeCrossDomainMessageV1(_nonce, _sender, _target, _value, _gasLimit, _data));\n    }\n\n    /// @notice Derives the withdrawal hash according to the encoding in the L2 Withdrawer contract\n    /// @param _tx Withdrawal transaction to hash.\n    /// @return Hashed withdrawal transaction.\n    function hashWithdrawal(Types.WithdrawalTransaction memory _tx) internal pure returns (bytes32) {\n        return keccak256(abi.encode(_tx.nonce, _tx.sender, _tx.target, _tx.value, _tx.gasLimit, _tx.data));\n    }\n\n    /// @notice Hashes the various elements of an output root proof into an output root hash which\n    ///         can be used to check if the proof is valid.\n    /// @param _outputRootProof Output root proof which should hash to an output root.\n    /// @return Hashed output root proof.\n    function hashOutputRootProof(Types.OutputRootProof memory _outputRootProof) internal pure returns (bytes32) {\n        return keccak256(\n            abi.encode(\n                _outputRootProof.version,\n                _outputRootProof.stateRoot,\n                _outputRootProof.messagePasserStorageRoot,\n                _outputRootProof.latestBlockhash\n            )\n        );\n    }\n}",
+  "resolutions": {
+    "1daaed8c8125f2b6": {
+      "status": "identical",
+      "coveredLines": 103,
+      "match": {
+        "origin": "other",
+        "collection": "bob",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "identity",
+        "auditedName": "Hashing",
+        "similarity": 1,
+        "reportId": "bob/veridise-kailua-2025-02",
+        "repository": "boundless-xyz/kailua",
+        "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "commit": "27dec82b67de1051df9258b36f8366ebf308e5bf",
+        "commitTimestamp": "2025-02-06T07:42:16Z",
+        "url": "https://github.com/boundless-xyz/kailua/blob/27dec82b67de1051df9258b36f8366ebf308e5bf/crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix commit",
+        "coverage": "Confirmed fix commit for V-KLA-VUL-004 (contract nits).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "warnings": []
+    },
+    "9fa846564f4071bd": {
+      "status": "identical",
+      "coveredLines": 131,
+      "match": {
+        "origin": "other",
+        "collection": "bob",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "identity",
+        "auditedName": "Hashing",
+        "similarity": 1,
+        "reportId": "bob/veridise-kailua-2025-02",
+        "repository": "boundless-xyz/kailua",
+        "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "commit": "27dec82b67de1051df9258b36f8366ebf308e5bf",
+        "commitTimestamp": "2025-02-06T07:42:16Z",
+        "url": "https://github.com/boundless-xyz/kailua/blob/27dec82b67de1051df9258b36f8366ebf308e5bf/crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix commit",
+        "coverage": "Confirmed fix commit for V-KLA-VUL-004 (contract nits).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 69,
+        "ignoredRemoved": 41,
+        "unchanged": 131,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 33,
+            "newStart": 1,
+            "newLines": 45,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "library Hashing {"
+              },
+              {
+                "type": "-",
+                "oldLine": 2,
+                "text": "    /// @notice Computes the hash of the RLP encoded L2 transaction that would be generated when a",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 3,
+                "text": "    ///         given deposit is sent to the L2 system. Useful for searching for a deposit in the L2",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 4,
+                "text": "    ///         system.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 5,
+                "text": "    /// @param _tx User deposit transaction to hash.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 6,
+                "text": "    /// @return Hash of the RLP encoded L2 deposit transaction.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 2, "text": "    /**", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "     * @notice Computes the hash of the RLP encoded L2 transaction that would be generated when a",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 4,
+                "text": "     *         given deposit is sent to the L2 system. Useful for searching for a deposit in the L2",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 5,
+                "text": "     *         system.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 6, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 7,
+                "text": "     * @param _tx User deposit transaction to hash.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 8, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 9,
+                "text": "     * @return Hash of the RLP encoded L2 deposit transaction.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 10,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 7,
+                "newLine": 11,
+                "text": "    function hashDepositTransaction(Types.UserDepositTransaction memory _tx) internal pure returns (bytes32) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 8,
+                "newLine": 12,
+                "text": "        return keccak256(Encoding.encodeDepositTransaction(_tx));"
+              },
+              { "type": " ", "oldLine": 9, "newLine": 13, "text": "    }" },
+              { "type": " ", "oldLine": 10, "newLine": 14, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 11,
+                "text": "    /// @notice Computes the deposit transaction's \"source hash\", a value that guarantees the hash",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 12,
+                "text": "    ///         of the L2 transaction that corresponds to a deposit is unique and is",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 13,
+                "text": "    ///         deterministically generated from L1 transaction data.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 14,
+                "text": "    /// @param _l1BlockHash Hash of the L1 block where the deposit was included.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 15,
+                "text": "    /// @param _logIndex    The index of the log that created the deposit transaction.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 16,
+                "text": "    /// @return Hash of the deposit transaction's \"source hash\".",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 15,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 16,
+                "text": "     * @notice Computes the deposit transaction's \"source hash\", a value that guarantees the hash",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 17,
+                "text": "     *         of the L2 transaction that corresponds to a deposit is unique and is",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 18,
+                "text": "     *         deterministically generated from L1 transaction data.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 19, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 20,
+                "text": "     * @param _l1BlockHash Hash of the L1 block where the deposit was included.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 21,
+                "text": "     * @param _logIndex    The index of the log that created the deposit transaction.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 22, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 23,
+                "text": "     * @return Hash of the deposit transaction's \"source hash\".",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 24,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 17,
+                "newLine": 25,
+                "text": "    function hashDepositSource(bytes32 _l1BlockHash, uint256 _logIndex) internal pure returns (bytes32) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 18,
+                "newLine": 26,
+                "text": "        bytes32 depositId = keccak256(abi.encode(_l1BlockHash, _logIndex));"
+              },
+              {
+                "type": " ",
+                "oldLine": 19,
+                "newLine": 27,
+                "text": "        return keccak256(abi.encode(bytes32(0), depositId));"
+              },
+              { "type": " ", "oldLine": 20, "newLine": 28, "text": "    }" },
+              { "type": " ", "oldLine": 21, "newLine": 29, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 22,
+                "text": "    /// @notice Hashes the cross domain message based on the version that is encoded into the",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 23,
+                "text": "    ///         message nonce.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 24,
+                "text": "    /// @param _nonce    Message nonce with version encoded into the first two bytes.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 25,
+                "text": "    /// @param _sender   Address of the sender of the message.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 26,
+                "text": "    /// @param _target   Address of the target of the message.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 27,
+                "text": "    /// @param _value    ETH value to send to the target.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 28,
+                "text": "    /// @param _gasLimit Gas limit to use for the message.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 29,
+                "text": "    /// @param _data     Data to send with the message.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 30,
+                "text": "    /// @return Hashed cross domain message.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 30,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 31,
+                "text": "     * @notice Hashes the cross domain message based on the version that is encoded into the",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 32,
+                "text": "     *         message nonce.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 33, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 34,
+                "text": "     * @param _nonce    Message nonce with version encoded into the first two bytes.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 35,
+                "text": "     * @param _sender   Address of the sender of the message.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 36,
+                "text": "     * @param _target   Address of the target of the message.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 37,
+                "text": "     * @param _value    ETH value to send to the target.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 38,
+                "text": "     * @param _gasLimit Gas limit to use for the message.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 39,
+                "text": "     * @param _data     Data to send with the message.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 40, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 41,
+                "text": "     * @return Hashed cross domain message.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 42,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 31,
+                "newLine": 43,
+                "text": "    function hashCrossDomainMessage("
+              },
+              {
+                "type": " ",
+                "oldLine": 32,
+                "newLine": 44,
+                "text": "        uint256 _nonce,"
+              },
+              {
+                "type": " ",
+                "oldLine": 33,
+                "newLine": 45,
+                "text": "        address _sender,"
+              }
+            ]
+          },
+          {
+            "oldStart": 46,
+            "oldLines": 12,
+            "newStart": 58,
+            "newLines": 16,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 46,
+                "newLine": 58,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 47, "newLine": 59, "text": "    }" },
+              { "type": " ", "oldLine": 48, "newLine": 60, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 49,
+                "text": "    /// @notice Hashes a cross domain message based on the V0 (legacy) encoding.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 50,
+                "text": "    /// @param _target Address of the target of the message.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 51,
+                "text": "    /// @param _sender Address of the sender of the message.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 52,
+                "text": "    /// @param _data   Data to send with the message.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 53,
+                "text": "    /// @param _nonce  Message nonce.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 54,
+                "text": "    /// @return Hashed cross domain message.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 61,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 62,
+                "text": "     * @notice Hashes a cross domain message based on the V0 (legacy) encoding.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 63, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 64,
+                "text": "     * @param _target Address of the target of the message.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 65,
+                "text": "     * @param _sender Address of the sender of the message.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 66,
+                "text": "     * @param _data   Data to send with the message.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 67,
+                "text": "     * @param _nonce  Message nonce.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 68, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 69,
+                "text": "     * @return Hashed cross domain message.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 70,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 55,
+                "newLine": 71,
+                "text": "    function hashCrossDomainMessageV0(address _target, address _sender, bytes memory _data, uint256 _nonce)"
+              },
+              {
+                "type": " ",
+                "oldLine": 56,
+                "newLine": 72,
+                "text": "        internal"
+              },
+              {
+                "type": " ",
+                "oldLine": 57,
+                "newLine": 73,
+                "text": "        pure"
+              }
+            ]
+          },
+          {
+            "oldStart": 60,
+            "oldLines": 14,
+            "newStart": 76,
+            "newLines": 18,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 60,
+                "newLine": 76,
+                "text": "        return keccak256(Encoding.encodeCrossDomainMessageV0(_target, _sender, _data, _nonce));"
+              },
+              { "type": " ", "oldLine": 61, "newLine": 77, "text": "    }" },
+              { "type": " ", "oldLine": 62, "newLine": 78, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 63,
+                "text": "    /// @notice Hashes a cross domain message based on the V1 (current) encoding.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 64,
+                "text": "    /// @param _nonce    Message nonce.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 65,
+                "text": "    /// @param _sender   Address of the sender of the message.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 66,
+                "text": "    /// @param _target   Address of the target of the message.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 67,
+                "text": "    /// @param _value    ETH value to send to the target.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 68,
+                "text": "    /// @param _gasLimit Gas limit to use for the message.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 69,
+                "text": "    /// @param _data     Data to send with the message.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 70,
+                "text": "    /// @return Hashed cross domain message.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 79,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 80,
+                "text": "     * @notice Hashes a cross domain message based on the V1 (current) encoding.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 81, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 82,
+                "text": "     * @param _nonce    Message nonce.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 83,
+                "text": "     * @param _sender   Address of the sender of the message.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 84,
+                "text": "     * @param _target   Address of the target of the message.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 85,
+                "text": "     * @param _value    ETH value to send to the target.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 86,
+                "text": "     * @param _gasLimit Gas limit to use for the message.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 87,
+                "text": "     * @param _data     Data to send with the message.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 88, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 89,
+                "text": "     * @return Hashed cross domain message.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 90,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 71,
+                "newLine": 91,
+                "text": "    function hashCrossDomainMessageV1("
+              },
+              {
+                "type": " ",
+                "oldLine": 72,
+                "newLine": 92,
+                "text": "        uint256 _nonce,"
+              },
+              {
+                "type": " ",
+                "oldLine": 73,
+                "newLine": 93,
+                "text": "        address _sender,"
+              }
+            ]
+          },
+          {
+            "oldStart": 79,
+            "oldLines": 17,
+            "newStart": 99,
+            "newLines": 25,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 79,
+                "newLine": 99,
+                "text": "        return keccak256(Encoding.encodeCrossDomainMessageV1(_nonce, _sender, _target, _value, _gasLimit, _data));"
+              },
+              { "type": " ", "oldLine": 80, "newLine": 100, "text": "    }" },
+              { "type": " ", "oldLine": 81, "newLine": 101, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 82,
+                "text": "    /// @notice Derives the withdrawal hash according to the encoding in the L2 Withdrawer contract",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 83,
+                "text": "    /// @param _tx Withdrawal transaction to hash.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 84,
+                "text": "    /// @return Hashed withdrawal transaction.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 102,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 103,
+                "text": "     * @notice Derives the withdrawal hash according to the encoding in the L2 Withdrawer contract",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 104,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 105,
+                "text": "     * @param _tx Withdrawal transaction to hash.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 106,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 107,
+                "text": "     * @return Hashed withdrawal transaction.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 108,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 85,
+                "newLine": 109,
+                "text": "    function hashWithdrawal(Types.WithdrawalTransaction memory _tx) internal pure returns (bytes32) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 86,
+                "newLine": 110,
+                "text": "        return keccak256(abi.encode(_tx.nonce, _tx.sender, _tx.target, _tx.value, _tx.gasLimit, _tx.data));"
+              },
+              { "type": " ", "oldLine": 87, "newLine": 111, "text": "    }" },
+              { "type": " ", "oldLine": 88, "newLine": 112, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 89,
+                "text": "    /// @notice Hashes the various elements of an output root proof into an output root hash which",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 90,
+                "text": "    ///         can be used to check if the proof is valid.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 91,
+                "text": "    /// @param _outputRootProof Output root proof which should hash to an output root.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 92,
+                "text": "    /// @return Hashed output root proof.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 113,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 114,
+                "text": "     * @notice Hashes the various elements of an output root proof into an output root hash which",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 115,
+                "text": "     *         can be used to check if the proof is valid.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 116,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 117,
+                "text": "     * @param _outputRootProof Output root proof which should hash to an output root.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 118,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 119,
+                "text": "     * @return Hashed output root proof.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 120,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 93,
+                "newLine": 121,
+                "text": "    function hashOutputRootProof(Types.OutputRootProof memory _outputRootProof) internal pure returns (bytes32) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 94,
+                "newLine": 122,
+                "text": "        return keccak256("
+              },
+              {
+                "type": " ",
+                "oldLine": 95,
+                "newLine": 123,
+                "text": "            abi.encode("
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "1f5c32d18cf7148d": {
+      "status": "identical",
+      "coveredLines": 103,
+      "match": {
+        "origin": "other",
+        "collection": "bob",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "identity",
+        "auditedName": "Hashing",
+        "similarity": 1,
+        "reportId": "bob/veridise-kailua-2025-02",
+        "repository": "boundless-xyz/kailua",
+        "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "commit": "27dec82b67de1051df9258b36f8366ebf308e5bf",
+        "commitTimestamp": "2025-02-06T07:42:16Z",
+        "url": "https://github.com/boundless-xyz/kailua/blob/27dec82b67de1051df9258b36f8366ebf308e5bf/crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix commit",
+        "coverage": "Confirmed fix commit for V-KLA-VUL-004 (contract nits).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "warnings": []
+    }
+  }
+}

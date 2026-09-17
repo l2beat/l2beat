@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "279b8f8c1af97b2b1803112501fac815bb2093fcd370662f7fc9413eb50a1dad",
+  "name": "prettify_abi_json.sh",
+  "kind": "program",
+  "lines": 28,
+  "source": "#!/usr/bin/env bash\n\n# VSCode is meant to be able to format json for me, but it's not doing it, so here's a script (which admittedly is longer than the underlying `jq` command, but I'm forgetful).\n\n# File: prettify_abi.sh\n# Usage:\n#   ./scripts/prettify_abi_json.sh target/input.json                   -> writes to target/prettified_input.json\n#   ./scripts/prettify_abi_json.sh target/input.json output.json       -> writes to output.json\n\nset -e\n\nif [ \"$#\" -lt 1 ] || [ \"$#\" -gt 2 ]; then\n  echo \"Usage: $0 <input-json-file> [output-json-file]\"\n  exit 1\nfi\n\nINPUT=\"$1\"\n\nif [ \"$#\" -eq 2 ]; then\n  OUTPUT=\"$2\"\nelse\n  DIR=\"$(dirname \"$INPUT\")\"\n  BASENAME=\"$(basename \"$INPUT\")\"\n  OUTPUT=\"${DIR}/prettified_${BASENAME}\"\nfi\n\njq '.' \"$INPUT\" > \"$OUTPUT\"\necho \"Prettified JSON written to $OUTPUT\"",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

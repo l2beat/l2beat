@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "9717f608e4d319e683611ed282487a63ae0e99a561fefc480c7fcbfaf9bae07d",
+  "name": "FacetSafeProxy",
+  "kind": "contract",
+  "lines": 13,
+  "source": "contract FacetSafeProxy {\n    address internal immutable deployedAddress;\n\n    constructor() {\n        deployedAddress = address(this);\n    }\n\n    function sendFacetTransaction(bytes calldata to, uint256 value, uint256 gasLimit, bytes calldata data) external {\n        require(deployedAddress != address(this), \"Only Delegate Call\");\n\n        LibFacet.sendFacetTransaction({to: to, value: value, gasLimit: gasLimit, data: data, mineBoost: bytes(\"\")});\n    }\n}",
+  "resolutions": {
+    "1daaed8c8125f2b6": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

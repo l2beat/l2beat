@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "ae70c7f38b72a0d9d8f792bd99f36b4eb10ce0e6c882f0a7cd95a88b2c395d00",
+  "name": "l2_to_l1_message.nr",
+  "kind": "program",
+  "lines": 54,
+  "source": "use crate::{\n    address::{AztecAddress, EthAddress},\n    side_effect::{Counted, Scoped},\n    traits::{Deserialize, Empty, Serialize},\n};\nuse std::meta::derive;\n\n// Note: Not to be confused with L2ToL1Msg in Solidity\n#[derive(Deserialize, Eq, Serialize)]\npub struct L2ToL1Message {\n    pub recipient: EthAddress,\n    pub content: Field,\n}\n\nimpl Empty for L2ToL1Message {\n    fn empty() -> Self {\n        Self { recipient: EthAddress::empty(), content: 0 }\n    }\n}\n\nimpl L2ToL1Message {\n    pub fn count(self, counter: u32) -> Counted<L2ToL1Message> {\n        Counted::new(self, counter)\n    }\n\n    pub fn scope(self, contract_address: AztecAddress) -> Scoped<L2ToL1Message> {\n        Scoped::new(self, contract_address)\n    }\n}\n\nimpl Scoped<Counted<L2ToL1Message>> {\n    pub fn expose_to_public(self) -> Scoped<L2ToL1Message> {\n        self.innermost().scope(self.contract_address)\n    }\n}\n\nmod tests {\n    use crate::{\n        address::EthAddress,\n        constants::L2_TO_L1_MESSAGE_LENGTH,\n        messaging::l2_to_l1_message::L2ToL1Message,\n        traits::{Deserialize, Serialize},\n    };\n\n    #[test]\n    fn serde() {\n        let message = L2ToL1Message { recipient: EthAddress::from_field(123), content: 456 };\n        // We use the L2_TO_L1_MESSAGE_LENGTH constant to ensure that there is a match\n        // between the derived trait implementation and the constant.\n        let serialized: [Field; L2_TO_L1_MESSAGE_LENGTH] = message.serialize();\n        let deserialized = L2ToL1Message::deserialize(serialized);\n        assert(message.eq(deserialized));\n    }\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

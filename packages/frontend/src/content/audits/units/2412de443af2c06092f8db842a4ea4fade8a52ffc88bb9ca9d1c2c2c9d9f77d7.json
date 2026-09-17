@@ -1,0 +1,144 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "2412de443af2c06092f8db842a4ea4fade8a52ffc88bb9ca9d1c2c2c9d9f77d7",
+  "name": "SignatureChecker",
+  "kind": "library",
+  "lines": 34,
+  "source": "library SignatureChecker {\n    /**\n     * @dev Checks if a signature is valid for a given signer and data hash. If the signer is a smart contract, the\n     * signature is validated against that smart contract using ERC1271, otherwise it's validated using `ECDSA.recover`.\n     *\n     * NOTE: Unlike ECDSA signatures, contract signatures are revocable, and the outcome of this function can thus\n     * change through time. It could return true at block N and false at block N+1 (or the opposite).\n     */\n    function isValidSignatureNow(address signer, bytes32 hash, bytes memory signature) internal view returns (bool) {\n        (address recovered, ECDSA.RecoverError error,) = ECDSA.tryRecover(hash, signature);\n        return (error == ECDSA.RecoverError.NoError && recovered == signer)\n            || isValidERC1271SignatureNow(signer, hash, signature);\n    }\n\n    /**\n     * @dev Checks if a signature is valid for a given signer and data hash. The signature is validated\n     * against the signer smart contract using ERC1271.\n     *\n     * NOTE: Unlike ECDSA signatures, contract signatures are revocable, and the outcome of this function can thus\n     * change through time. It could return true at block N and false at block N+1 (or the opposite).\n     */\n    function isValidERC1271SignatureNow(address signer, bytes32 hash, bytes memory signature)\n        internal\n        view\n        returns (bool)\n    {\n        (bool success, bytes memory result) =\n            signer.staticcall(abi.encodeCall(IERC1271.isValidSignature, (hash, signature)));\n        return (\n            success && result.length >= 32\n                && abi.decode(result, (bytes32)) == bytes32(IERC1271.isValidSignature.selector)\n        );\n    }\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "differs",
+      "coveredLines": 33,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "SignatureChecker",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2023-05-v4.9",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/utils/cryptography/SignatureChecker.sol",
+        "commit": "91df66c4a9dfd0425ff923cbeb3a20155f1355ea",
+        "commitTimestamp": "2023-04-21T11:35:07Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/91df66c4a9dfd0425ff923cbeb3a20155f1355ea/contracts/utils/cryptography/SignatureChecker.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Only the changes to this file between versions 4.8 and 4.9 were reviewed.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 8
+      },
+      "diff": {
+        "added": 1,
+        "removed": 1,
+        "ignoredAdded": 1,
+        "ignoredRemoved": 1,
+        "unchanged": 33,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 7,
+            "oldLines": 7,
+            "newStart": 7,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 7,
+                "newLine": 7,
+                "text": "     * change through time. It could return true at block N and false at block N+1 (or the opposite)."
+              },
+              { "type": " ", "oldLine": 8, "newLine": 8, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 9,
+                "text": "    function isValidSignatureNow(address signer, bytes32 hash, bytes memory signature) internal view returns (bool) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 10,
+                "text": "        (address recovered, ECDSA.RecoverError error) = ECDSA.tryRecover(hash, signature);",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 10,
+                "text": "        (address recovered, ECDSA.RecoverError error,) = ECDSA.tryRecover(hash, signature);",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 11,
+                "newLine": 11,
+                "text": "        return (error == ECDSA.RecoverError.NoError && recovered == signer)"
+              },
+              {
+                "type": " ",
+                "oldLine": 12,
+                "newLine": 12,
+                "text": "            || isValidERC1271SignatureNow(signer, hash, signature);"
+              },
+              { "type": " ", "oldLine": 13, "newLine": 13, "text": "    }" }
+            ]
+          },
+          {
+            "oldStart": 25,
+            "oldLines": 7,
+            "newStart": 25,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 25,
+                "newLine": 25,
+                "text": "        returns (bool)"
+              },
+              { "type": " ", "oldLine": 26, "newLine": 26, "text": "    {" },
+              {
+                "type": " ",
+                "oldLine": 27,
+                "newLine": 27,
+                "text": "        (bool success, bytes memory result) ="
+              },
+              {
+                "type": "-",
+                "oldLine": 28,
+                "text": "            signer.staticcall(abi.encodeWithSelector(IERC1271.isValidSignature.selector, hash, signature));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 28,
+                "text": "            signer.staticcall(abi.encodeCall(IERC1271.isValidSignature, (hash, signature)));",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 29,
+                "newLine": 29,
+                "text": "        return ("
+              },
+              {
+                "type": " ",
+                "oldLine": 30,
+                "newLine": 30,
+                "text": "            success && result.length >= 32"
+              },
+              {
+                "type": " ",
+                "oldLine": 31,
+                "newLine": 31,
+                "text": "                && abi.decode(result, (bytes32)) == bytes32(IERC1271.isValidSignature.selector)"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

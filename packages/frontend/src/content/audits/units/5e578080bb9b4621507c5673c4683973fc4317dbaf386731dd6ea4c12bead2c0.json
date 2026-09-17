@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "5e578080bb9b4621507c5673c4683973fc4317dbaf386731dd6ea4c12bead2c0",
+  "name": "mod.nr",
+  "kind": "program",
+  "lines": 2,
+  "source": "pub(crate) mod hash_to_curve;\npub(crate) mod derive_offset_generators;",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

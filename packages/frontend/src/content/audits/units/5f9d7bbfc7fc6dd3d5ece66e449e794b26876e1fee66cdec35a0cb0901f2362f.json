@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "5f9d7bbfc7fc6dd3d5ece66e449e794b26876e1fee66cdec35a0cb0901f2362f",
+  "name": "KailuaVerifier",
+  "kind": "interface",
+  "lines": 15,
+  "source": "interface KailuaVerifier is ISemver {\n    function faultProofPermitBeneficiary(IKailuaTournament proposalParent, bytes32 proposalSignature)\n        external\n        view\n        returns (address);\n    function verify(\n        address payoutRecipient,\n        bytes32 preconditionHash,\n        bytes32 l1Head,\n        bytes32 agreedL2OutputRoot,\n        bytes32 claimedL2OutputRoot,\n        uint64 claimedL2BlockNumber,\n        bytes calldata encodedSeal\n    ) external view;\n}",
+  "resolutions": {
+    "ba5b6c9584fb78fd": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "bb55951394276893": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

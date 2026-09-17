@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "25ffa431f308eb5a1f5975e90f3ff37a2f1c87b8ecbaedccd9726507cdf9a99b",
+  "name": "scalar.nr",
+  "kind": "program",
+  "lines": 8,
+  "source": "pub use std::embedded_curve_ops::EmbeddedCurveScalar as Scalar;\nuse crate::traits::Empty;\n\nimpl Empty for Scalar {\n    fn empty() -> Self {\n        Self { lo: 0, hi: 0 }\n    }\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

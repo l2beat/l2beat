@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "2c26950d7772b142614e4e283b418509081a0f0b487b3721e37a3d272c72c0c7",
+  "name": "Hasher",
+  "kind": "library",
+  "lines": 3,
+  "source": "library Hasher {\n    function MiMCSponge(uint256 in_xL, uint256 in_xR) public pure returns (uint256 xL, uint256 xR);\n}",
+  "resolutions": {
+    "f9658cd3a9a22004": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "29e84835614c6e3b11dc04c6fb8fcab5a498f9f60c4d7070eb6a0a50d5b6f99f",
+  "name": "batch.rs",
+  "kind": "program",
+  "lines": 37,
+  "source": "use crate::{\n    Error, Prover, ProverType,\n    commitments::batch::{EXE_COMMIT as BATCH_EXE_COMMIT, LEAF_COMMIT as BATCH_LEAF_COMMIT},\n    proof::BatchProofMetadata,\n    task::batch::BatchProvingTask,\n};\n\n/// Prover for [`BatchCircuit`].\npub type BatchProver = Prover<BatchProverType>;\n\npub struct BatchProverType;\n\nimpl ProverType for BatchProverType {\n    const NAME: &'static str = \"batch\";\n\n    const EVM: bool = false;\n\n    const SEGMENT_SIZE: usize = (1 << 22) - 100;\n\n    const EXE_COMMIT: [u32; 8] = BATCH_EXE_COMMIT;\n\n    const LEAF_COMMIT: [u32; 8] = BATCH_LEAF_COMMIT;\n\n    type ProvingTask = BatchProvingTask;\n\n    type ProofMetadata = BatchProofMetadata;\n\n    fn metadata_with_prechecks(task: &Self::ProvingTask) -> Result<Self::ProofMetadata, Error> {\n        let batch_info = task.into();\n        let batch_hash = task.batch_header.batch_hash();\n\n        Ok(BatchProofMetadata {\n            batch_info,\n            batch_hash,\n        })\n    }\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

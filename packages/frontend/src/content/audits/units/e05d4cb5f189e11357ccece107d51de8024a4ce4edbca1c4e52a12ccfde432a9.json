@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "e05d4cb5f189e11357ccece107d51de8024a4ce4edbca1c4e52a12ccfde432a9",
+  "name": "IBooster",
+  "kind": "interface",
+  "lines": 4,
+  "source": "interface IBooster is IBoosterCore {\n    function getConfig() external view returns (RewardBoostConfig memory);\n    function getActivityScore(address _prover) external view returns (ActivityScore memory);\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

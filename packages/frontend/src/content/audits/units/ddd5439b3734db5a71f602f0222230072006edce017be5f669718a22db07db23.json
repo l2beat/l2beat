@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "ddd5439b3734db5a71f602f0222230072006edce017be5f669718a22db07db23",
+  "name": "IUniswapV3PoolImmutables",
+  "kind": "interface",
+  "lines": 30,
+  "source": "interface IUniswapV3PoolImmutables {\n    /// @notice The contract that deployed the pool, which must adhere to the IUniswapV3Factory interface\n    /// @return The contract address\n    function factory() external view returns (address);\n\n    /// @notice The first of the two tokens of the pool, sorted by address\n    /// @return The token contract address\n    function token0() external view returns (address);\n\n    /// @notice The second of the two tokens of the pool, sorted by address\n    /// @return The token contract address\n    function token1() external view returns (address);\n\n    /// @notice The pool's fee in hundredths of a bip, i.e. 1e-6\n    /// @return The fee\n    function fee() external view returns (uint24);\n\n    /// @notice The pool tick spacing\n    /// @dev Ticks can only be used at multiples of this value, minimum of 1 and always positive\n    /// e.g.: a tickSpacing of 3 means ticks can be initialized every 3rd tick, i.e., ..., -6, -3, 0, 3, 6, ...\n    /// This value is an int24 to avoid casting even though it is always positive.\n    /// @return The tick spacing\n    function tickSpacing() external view returns (int24);\n\n    /// @notice The maximum amount of position liquidity that can use any tick in the range\n    /// @dev This parameter is enforced per tick to prevent liquidity from overflowing a uint128 at any point, and\n    /// also prevents out-of-range liquidity from being used to prevent adding in-range liquidity to a pool\n    /// @return The max amount of liquidity per tick\n    function maxLiquidityPerTick() external view returns (uint128);\n}",
+  "resolutions": {
+    "f9658cd3a9a22004": {
+      "status": "identical",
+      "coveredLines": 30,
+      "match": {
+        "origin": "other",
+        "collection": "uniswapv3",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "identity",
+        "auditedName": "IUniswapV3PoolImmutables",
+        "similarity": 1,
+        "reportId": "uniswapv3/abdk-uniswap-v3-core-2021-03",
+        "repository": "Uniswap/v3-core",
+        "path": "contracts/interfaces/pool/IUniswapV3PoolImmutables.sol",
+        "commit": "e8de69a550d579c475f52d59a6fb2f7ef9e7f364",
+        "commitTimestamp": "2021-02-23T16:37:26Z",
+        "url": "https://github.com/Uniswap/v3-core/blob/e8de69a550d579c475f52d59a6fb2f7ef9e7f364/contracts/interfaces/pool/IUniswapV3PoolImmutables.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "full file",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "warnings": []
+    },
+    "2be3d633eaae18a2": {
+      "status": "identical",
+      "coveredLines": 30,
+      "match": {
+        "origin": "own",
+        "collection": "uniswapv3",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "IUniswapV3PoolImmutables",
+        "similarity": 1,
+        "reportId": "uniswapv3/abdk-uniswap-v3-core-2021-03",
+        "repository": "Uniswap/v3-core",
+        "path": "contracts/interfaces/pool/IUniswapV3PoolImmutables.sol",
+        "commit": "e8de69a550d579c475f52d59a6fb2f7ef9e7f364",
+        "commitTimestamp": "2021-02-23T16:37:26Z",
+        "url": "https://github.com/Uniswap/v3-core/blob/e8de69a550d579c475f52d59a6fb2f7ef9e7f364/contracts/interfaces/pool/IUniswapV3PoolImmutables.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "full file",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "warnings": []
+    }
+  }
+}

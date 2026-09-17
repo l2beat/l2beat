@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "e72ae0ec70704e29631c23f431e3c9663d7949c47ff20c45d7c2fc5d791fa1b6",
+  "name": "Initializable",
+  "kind": "contract",
+  "lines": 48,
+  "source": "contract Initializable {\n    /**\n     * @dev Indicates that the contract has been initialized.\n     */\n    bool private initialized;\n\n    /**\n     * @dev Indicates that the contract is in the process of being initialized.\n     */\n    bool private initializing;\n\n    /**\n     * @dev Modifier to use in the initializer function of a contract.\n     */\n    modifier initializer() {\n        require(initializing || isConstructor() || !initialized, \"Contract instance has already been initialized\");\n\n        bool isTopLevelCall = !initializing;\n        if (isTopLevelCall) {\n            initializing = true;\n            initialized = true;\n        }\n\n        _;\n\n        if (isTopLevelCall) {\n            initializing = false;\n        }\n    }\n\n    /// @dev Returns true if and only if the function is running in the constructor\n    function isConstructor() private view returns (bool) {\n        // extcodesize checks the size of the code stored in an address, and\n        // address returns the current address. Since the code is still not\n        // deployed when running a constructor, any checks on its code size will\n        // yield zero, making it an effective way to detect if a contract is\n        // under construction or not.\n        address self = address(this);\n        uint256 cs;\n        assembly {\n            cs := extcodesize(self)\n        }\n        return cs == 0;\n    }\n\n    // Reserved storage space to allow for layout changes in the future.\n    uint256[50] private ______gap;\n}",
+  "resolutions": {
+    "f9658cd3a9a22004": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

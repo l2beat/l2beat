@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "0595b6fcf7c62dcf9f6f971ef6d263ef11ee0813f2933092f119f7f25b6baf34",
+  "name": "mod.nr",
+  "kind": "program",
+  "lines": 5,
+  "source": "mod checkpoint_root_inputs_validator;\nmod checkpoint_rollup_public_inputs_composer;\n\npub use checkpoint_rollup_public_inputs_composer::CheckpointRollupPublicInputsComposer;\npub use checkpoint_root_inputs_validator::CheckpointRootInputsValidator;",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

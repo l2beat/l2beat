@@ -1,0 +1,154 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "84dcd42cb2d720b8d65e0113776353e7173e8d5b3604bcb07ca9d9171f508162",
+  "name": "CrossDomainMessengerLegacySpacer1",
+  "kind": "contract",
+  "lines": 51,
+  "source": "contract CrossDomainMessengerLegacySpacer1 {\n    /// @custom:legacy\n    /// @custom:spacer ContextUpgradable's __gap\n    /// @notice Spacer for backwards compatibility. Comes from OpenZeppelin\n    ///         ContextUpgradable.\n    uint256[50] private spacer_1_0_1600;\n\n    /// @custom:legacy\n    /// @custom:spacer OwnableUpgradeable's _owner\n    /// @notice Spacer for backwards compatibility.\n    ///         Come from OpenZeppelin OwnableUpgradeable.\n    address private spacer_51_0_20;\n\n    /// @custom:legacy\n    /// @custom:spacer OwnableUpgradeable's __gap\n    /// @notice Spacer for backwards compatibility. Comes from OpenZeppelin\n    ///         OwnableUpgradeable.\n    uint256[49] private spacer_52_0_1568;\n\n    /// @custom:legacy\n    /// @custom:spacer PausableUpgradable's _paused\n    /// @notice Spacer for backwards compatibility. Comes from OpenZeppelin\n    ///         PausableUpgradable.\n    bool private spacer_101_0_1;\n\n    /// @custom:legacy\n    /// @custom:spacer PausableUpgradable's __gap\n    /// @notice Spacer for backwards compatibility. Comes from OpenZeppelin\n    ///         PausableUpgradable.\n    uint256[49] private spacer_102_0_1568;\n\n    /// @custom:legacy\n    /// @custom:spacer ReentrancyGuardUpgradeable's `_status` field.\n    /// @notice Spacer for backwards compatibility.\n    uint256 private spacer_151_0_32;\n\n    /// @custom:legacy\n    /// @custom:spacer ReentrancyGuardUpgradeable's __gap\n    /// @notice Spacer for backwards compatibility.\n    uint256[49] private spacer_152_0_1568;\n\n    /// @custom:legacy\n    /// @custom:spacer blockedMessages\n    /// @notice Spacer for backwards compatibility.\n    mapping(bytes32 => bool) private spacer_201_0_32;\n\n    /// @custom:legacy\n    /// @custom:spacer relayedMessages\n    /// @notice Spacer for backwards compatibility.\n    mapping(bytes32 => bool) private spacer_202_0_32;\n}",
+  "resolutions": {
+    "ba5b6c9584fb78fd": {
+      "status": "identical",
+      "coveredLines": 51,
+      "match": {
+        "origin": "upstream",
+        "collection": "optimism",
+        "relation": {
+          "type": "fork_of",
+          "repository": "ethereum-optimism/optimism"
+        },
+        "rank": 1,
+        "matchedBy": "identity",
+        "auditedName": "CrossDomainMessengerLegacySpacer1",
+        "similarity": 1,
+        "reportId": "optimism/cantina-eip7702-2025-02",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts-bedrock/src/universal/CrossDomainMessenger.sol",
+        "commit": "88419adbf689336913a3db7d4c3691b2b0102e75",
+        "commitTimestamp": "2025-03-05T15:37:49Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/88419adbf689336913a3db7d4c3691b2b0102e75/packages/contracts-bedrock/src/universal/CrossDomainMessenger.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Head commit of PR 14608, verified by Cantina as the fix for 3.1.1 (baseGas() updated to the EIP-7623 formula).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 6
+      },
+      "warnings": []
+    },
+    "44ad4cf96e2ef6f0": {
+      "status": "identical",
+      "coveredLines": 51,
+      "match": {
+        "origin": "own",
+        "collection": "celo",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "CrossDomainMessengerLegacySpacer1",
+        "similarity": 1,
+        "reportId": "celo/hashlock-celo-optimism-superchain-2026-02",
+        "repository": "celo-org/optimism",
+        "path": "packages/contracts-bedrock/src/universal/CrossDomainMessenger.sol",
+        "commit": "c138180e992f54502a62e3fcf803eb701e38b990",
+        "commitTimestamp": "2026-01-20T14:26:35Z",
+        "url": "https://github.com/celo-org/optimism/blob/c138180e992f54502a62e3fcf803eb701e38b990/packages/contracts-bedrock/src/universal/CrossDomainMessenger.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "full file in celo-contracts/v5.0.0 line (Celo CGT changes vs op-deployer/v0.5.2)",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 4
+      },
+      "warnings": []
+    },
+    "9fa846564f4071bd": {
+      "status": "identical",
+      "coveredLines": 51,
+      "match": {
+        "origin": "own",
+        "collection": "optimism",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "CrossDomainMessengerLegacySpacer1",
+        "similarity": 1,
+        "reportId": "optimism/cantina-eip7702-2025-02",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts-bedrock/src/universal/CrossDomainMessenger.sol",
+        "commit": "88419adbf689336913a3db7d4c3691b2b0102e75",
+        "commitTimestamp": "2025-03-05T15:37:49Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/88419adbf689336913a3db7d4c3691b2b0102e75/packages/contracts-bedrock/src/universal/CrossDomainMessenger.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Head commit of PR 14608, verified by Cantina as the fix for 3.1.1 (baseGas() updated to the EIP-7623 formula).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 6
+      },
+      "warnings": []
+    },
+    "bb55951394276893": {
+      "status": "identical",
+      "coveredLines": 51,
+      "match": {
+        "origin": "stack",
+        "collection": "optimism",
+        "relation": {
+          "type": "template",
+          "template": "opstack/AddressManager"
+        },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "CrossDomainMessengerLegacySpacer1",
+        "similarity": 1,
+        "reportId": "optimism/cantina-eip7702-2025-02",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts-bedrock/src/universal/CrossDomainMessenger.sol",
+        "commit": "88419adbf689336913a3db7d4c3691b2b0102e75",
+        "commitTimestamp": "2025-03-05T15:37:49Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/88419adbf689336913a3db7d4c3691b2b0102e75/packages/contracts-bedrock/src/universal/CrossDomainMessenger.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Head commit of PR 14608, verified by Cantina as the fix for 3.1.1 (baseGas() updated to the EIP-7623 formula).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 6
+      },
+      "warnings": []
+    },
+    "1f5c32d18cf7148d": {
+      "status": "identical",
+      "coveredLines": 51,
+      "match": {
+        "origin": "stack",
+        "collection": "optimism",
+        "relation": {
+          "type": "template",
+          "template": "gnosisSafeModules/LivenessGuard"
+        },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "CrossDomainMessengerLegacySpacer1",
+        "similarity": 1,
+        "reportId": "optimism/cantina-eip7702-2025-02",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts-bedrock/src/universal/CrossDomainMessenger.sol",
+        "commit": "88419adbf689336913a3db7d4c3691b2b0102e75",
+        "commitTimestamp": "2025-03-05T15:37:49Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/88419adbf689336913a3db7d4c3691b2b0102e75/packages/contracts-bedrock/src/universal/CrossDomainMessenger.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Head commit of PR 14608, verified by Cantina as the fix for 3.1.1 (baseGas() updated to the EIP-7623 formula).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 6
+      },
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "efc6ffe333a70a464d03f83c48cfdb699c3bf40c8e909eb45bcf09cf1f94a85a",
+  "name": "IGSE",
+  "kind": "interface",
+  "lines": 26,
+  "source": "interface IGSE is IGSECore {\n    function getRegistrationDigest(G1Point memory _publicKey) external view returns (G1Point memory);\n    function getDelegatee(address _instance, address _attester) external view returns (address);\n    function getVotingPower(address _attester) external view returns (uint256);\n    function getVotingPowerAt(address _attester, Timestamp _timestamp) external view returns (uint256);\n\n    function getWithdrawer(address _attester) external view returns (address);\n    function balanceOf(address _instance, address _attester) external view returns (uint256);\n    function effectiveBalanceOf(address _instance, address _attester) external view returns (uint256);\n    function supplyOf(address _instance) external view returns (uint256);\n    function totalSupply() external view returns (uint256);\n    function getConfig(address _attester) external view returns (AttesterConfig memory);\n    function getAttesterCountAtTime(address _instance, Timestamp _timestamp) external view returns (uint256);\n\n    function getAttestersFromIndicesAtTime(address _instance, Timestamp _timestamp, uint256[] memory _indices)\n        external\n        view\n        returns (address[] memory);\n    function getG1PublicKeysFromAddresses(address[] memory _attesters) external view returns (G1Point[] memory);\n    function getAttesterFromIndexAtTime(address _instance, uint256 _index, Timestamp _timestamp)\n        external\n        view\n        returns (address);\n    function getPowerUsed(address _delegatee, uint256 _proposalId) external view returns (uint256);\n    function getBonusInstanceAddress() external view returns (address);\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "identical",
+      "coveredLines": 26,
+      "match": {
+        "origin": "own",
+        "collection": "aztecnetwork",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "IGSE",
+        "similarity": 1,
+        "reportId": "aztecnetwork/veridise-governance-2025-10-13",
+        "repository": "AztecProtocol/aztec-packages",
+        "path": "l1-contracts/src/governance/GSE.sol",
+        "commit": "a310dd929fc136669fd84baa5024d437ac1c9603",
+        "commitTimestamp": "2025-09-25T12:37:48Z",
+        "url": "https://github.com/AztecProtocol/aztec-packages/blob/a310dd929fc136669fd84baa5024d437ac1c9603/l1-contracts/src/governance/GSE.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "remediation review",
+        "coverage": "confirmed maintainability fixes for V-AZGV-VUL-004 (PR 17248 head commit)",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 9
+      },
+      "warnings": []
+    }
+  }
+}

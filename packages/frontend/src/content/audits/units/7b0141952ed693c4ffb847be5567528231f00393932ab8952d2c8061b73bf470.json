@@ -1,0 +1,613 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "7b0141952ed693c4ffb847be5567528231f00393932ab8952d2c8061b73bf470",
+  "name": "Predeploys",
+  "kind": "library",
+  "lines": 229,
+  "source": "library Predeploys {\n    /// @notice Number of predeploy-namespace addresses reserved for protocol usage.\n    uint256 internal constant PREDEPLOY_COUNT = 2048;\n\n    /// @custom:legacy\n    /// @notice Address of the LegacyMessagePasser predeploy. Deprecate. Use the updated\n    ///         L2ToL1MessagePasser contract instead.\n    address internal constant LEGACY_MESSAGE_PASSER = 0x4200000000000000000000000000000000000000;\n\n    /// @custom:legacy\n    /// @notice Address of the L1MessageSender predeploy. Deprecated. Use L2CrossDomainMessenger\n    ///         or access tx.origin (or msg.sender) in a L1 to L2 transaction instead.\n    ///         Not embedded into new OP-Stack chains.\n    address internal constant L1_MESSAGE_SENDER = 0x4200000000000000000000000000000000000001;\n\n    /// @custom:legacy\n    /// @notice Address of the DeployerWhitelist predeploy. No longer active.\n    address internal constant DEPLOYER_WHITELIST = 0x4200000000000000000000000000000000000002;\n\n    /// @notice Address of the canonical WETH contract.\n    address internal constant WETH = 0x4200000000000000000000000000000000000006;\n\n    /// @notice Address of the L2CrossDomainMessenger predeploy.\n    address internal constant L2_CROSS_DOMAIN_MESSENGER = 0x4200000000000000000000000000000000000007;\n\n    /// @notice Address of the GasPriceOracle predeploy. Includes fee information\n    ///         and helpers for computing the L1 portion of the transaction fee.\n    address internal constant GAS_PRICE_ORACLE = 0x420000000000000000000000000000000000000F;\n\n    /// @notice Address of the L2StandardBridge predeploy.\n    address internal constant L2_STANDARD_BRIDGE = 0x4200000000000000000000000000000000000010;\n\n    //// @notice Address of the SequencerFeeWallet predeploy.\n    address internal constant SEQUENCER_FEE_WALLET = 0x4200000000000000000000000000000000000011;\n\n    /// @notice Address of the OptimismMintableERC20Factory predeploy.\n    address internal constant OPTIMISM_MINTABLE_ERC20_FACTORY = 0x4200000000000000000000000000000000000012;\n\n    /// @custom:legacy\n    /// @notice Address of the L1BlockNumber predeploy. Deprecated. Use the L1Block predeploy\n    ///         instead, which exposes more information about the L1 state.\n    address internal constant L1_BLOCK_NUMBER = 0x4200000000000000000000000000000000000013;\n\n    /// @notice Address of the L2ERC721Bridge predeploy.\n    address internal constant L2_ERC721_BRIDGE = 0x4200000000000000000000000000000000000014;\n\n    /// @notice Address of the L1Block predeploy.\n    address internal constant L1_BLOCK_ATTRIBUTES = 0x4200000000000000000000000000000000000015;\n\n    /// @notice Address of the L2ToL1MessagePasser predeploy.\n    address internal constant L2_TO_L1_MESSAGE_PASSER = 0x4200000000000000000000000000000000000016;\n\n    /// @notice Address of the OptimismMintableERC721Factory predeploy.\n    address internal constant OPTIMISM_MINTABLE_ERC721_FACTORY = 0x4200000000000000000000000000000000000017;\n\n    /// @notice Address of the ProxyAdmin predeploy.\n    address internal constant PROXY_ADMIN = 0x4200000000000000000000000000000000000018;\n\n    /// @notice Address of the BaseFeeVault predeploy.\n    address internal constant BASE_FEE_VAULT = 0x4200000000000000000000000000000000000019;\n\n    /// @notice Address of the L1FeeVault predeploy.\n    address internal constant L1_FEE_VAULT = 0x420000000000000000000000000000000000001A;\n\n    /// @notice Address of the SchemaRegistry predeploy.\n    address internal constant SCHEMA_REGISTRY = 0x4200000000000000000000000000000000000020;\n\n    /// @notice Address of the EAS predeploy.\n    address internal constant EAS = 0x4200000000000000000000000000000000000021;\n\n    /// @notice Address of the GovernanceToken predeploy.\n    address internal constant GOVERNANCE_TOKEN = 0x4200000000000000000000000000000000000042;\n\n    /// @custom:legacy\n    /// @notice Address of the LegacyERC20ETH predeploy. Deprecated. Balances are migrated to the\n    ///         state trie as of the Bedrock upgrade. Contract has been locked and write functions\n    ///         can no longer be accessed.\n    address internal constant LEGACY_ERC20_ETH = 0xDeadDeAddeAddEAddeadDEaDDEAdDeaDDeAD0000;\n\n    /// @notice Address of the CrossL2Inbox predeploy.\n    address internal constant CROSS_L2_INBOX = 0x4200000000000000000000000000000000000022;\n\n    /// @notice Address of the L2ToL2CrossDomainMessenger predeploy.\n    address internal constant L2_TO_L2_CROSS_DOMAIN_MESSENGER = 0x4200000000000000000000000000000000000023;\n\n    /// @notice Address of the SuperchainWETH predeploy.\n    address internal constant SUPERCHAIN_WETH = 0x4200000000000000000000000000000000000024;\n\n    /// @notice Address of the ETHLiquidity predeploy.\n    address internal constant ETH_LIQUIDITY = 0x4200000000000000000000000000000000000025;\n\n    /// @notice Address of the OptimismSuperchainERC20Factory predeploy.\n    address internal constant OPTIMISM_SUPERCHAIN_ERC20_FACTORY = 0x4200000000000000000000000000000000000026;\n\n    /// @notice Address of the OptimismSuperchainERC20Beacon predeploy.\n    address internal constant OPTIMISM_SUPERCHAIN_ERC20_BEACON = 0x4200000000000000000000000000000000000027;\n\n    // TODO: Precalculate the address of the implementation contract\n    /// @notice Arbitrary address of the OptimismSuperchainERC20 implementation contract.\n    address internal constant OPTIMISM_SUPERCHAIN_ERC20 = 0xB9415c6cA93bdC545D4c5177512FCC22EFa38F28;\n\n    /// @notice Address of the SuperchainTokenBridge predeploy.\n    address internal constant SUPERCHAIN_TOKEN_BRIDGE = 0x4200000000000000000000000000000000000028;\n\n    /// @notice Returns the name of the predeploy at the given address.\n    function getName(address _addr) internal pure returns (string memory out_) {\n        require(isPredeployNamespace(_addr), \"Predeploys: address must be a predeploy\");\n        if (_addr == LEGACY_MESSAGE_PASSER) {\n            return \"LegacyMessagePasser\";\n        }\n        if (_addr == L1_MESSAGE_SENDER) {\n            return \"L1MessageSender\";\n        }\n        if (_addr == DEPLOYER_WHITELIST) {\n            return \"DeployerWhitelist\";\n        }\n        if (_addr == WETH) {\n            return \"WETH\";\n        }\n        if (_addr == L2_CROSS_DOMAIN_MESSENGER) {\n            return \"L2CrossDomainMessenger\";\n        }\n        if (_addr == GAS_PRICE_ORACLE) {\n            return \"GasPriceOracle\";\n        }\n        if (_addr == L2_STANDARD_BRIDGE) {\n            return \"L2StandardBridge\";\n        }\n        if (_addr == SEQUENCER_FEE_WALLET) {\n            return \"SequencerFeeVault\";\n        }\n        if (_addr == OPTIMISM_MINTABLE_ERC20_FACTORY) {\n            return \"OptimismMintableERC20Factory\";\n        }\n        if (_addr == L1_BLOCK_NUMBER) {\n            return \"L1BlockNumber\";\n        }\n        if (_addr == L2_ERC721_BRIDGE) {\n            return \"L2ERC721Bridge\";\n        }\n        if (_addr == L1_BLOCK_ATTRIBUTES) {\n            return \"L1Block\";\n        }\n        if (_addr == L2_TO_L1_MESSAGE_PASSER) {\n            return \"L2ToL1MessagePasser\";\n        }\n        if (_addr == OPTIMISM_MINTABLE_ERC721_FACTORY) {\n            return \"OptimismMintableERC721Factory\";\n        }\n        if (_addr == PROXY_ADMIN) {\n            return \"ProxyAdmin\";\n        }\n        if (_addr == BASE_FEE_VAULT) {\n            return \"BaseFeeVault\";\n        }\n        if (_addr == L1_FEE_VAULT) {\n            return \"L1FeeVault\";\n        }\n        if (_addr == SCHEMA_REGISTRY) {\n            return \"SchemaRegistry\";\n        }\n        if (_addr == EAS) {\n            return \"EAS\";\n        }\n        if (_addr == GOVERNANCE_TOKEN) {\n            return \"GovernanceToken\";\n        }\n        if (_addr == LEGACY_ERC20_ETH) {\n            return \"LegacyERC20ETH\";\n        }\n        if (_addr == CROSS_L2_INBOX) {\n            return \"CrossL2Inbox\";\n        }\n        if (_addr == L2_TO_L2_CROSS_DOMAIN_MESSENGER) {\n            return \"L2ToL2CrossDomainMessenger\";\n        }\n        if (_addr == SUPERCHAIN_WETH) {\n            return \"SuperchainWETH\";\n        }\n        if (_addr == ETH_LIQUIDITY) {\n            return \"ETHLiquidity\";\n        }\n        if (_addr == OPTIMISM_SUPERCHAIN_ERC20_FACTORY) {\n            return \"OptimismSuperchainERC20Factory\";\n        }\n        if (_addr == OPTIMISM_SUPERCHAIN_ERC20_BEACON) {\n            return \"OptimismSuperchainERC20Beacon\";\n        }\n        if (_addr == SUPERCHAIN_TOKEN_BRIDGE) {\n            return \"SuperchainTokenBridge\";\n        }\n        revert(\"Predeploys: unnamed predeploy\");\n    }\n\n    /// @notice Returns true if the predeploy is not proxied.\n    function notProxied(address _addr) internal pure returns (bool) {\n        return _addr == GOVERNANCE_TOKEN || _addr == WETH;\n    }\n\n    /// @notice Returns true if the address is a defined predeploy that is embedded into new OP-Stack chains.\n    function isSupportedPredeploy(address _addr, bool _useInterop) internal pure returns (bool) {\n        return _addr == LEGACY_MESSAGE_PASSER || _addr == DEPLOYER_WHITELIST || _addr == WETH\n            || _addr == L2_CROSS_DOMAIN_MESSENGER || _addr == GAS_PRICE_ORACLE || _addr == L2_STANDARD_BRIDGE\n            || _addr == SEQUENCER_FEE_WALLET || _addr == OPTIMISM_MINTABLE_ERC20_FACTORY || _addr == L1_BLOCK_NUMBER\n            || _addr == L2_ERC721_BRIDGE || _addr == L1_BLOCK_ATTRIBUTES || _addr == L2_TO_L1_MESSAGE_PASSER\n            || _addr == OPTIMISM_MINTABLE_ERC721_FACTORY || _addr == PROXY_ADMIN || _addr == BASE_FEE_VAULT\n            || _addr == L1_FEE_VAULT || _addr == SCHEMA_REGISTRY || _addr == EAS || _addr == GOVERNANCE_TOKEN\n            || (_useInterop && _addr == CROSS_L2_INBOX) || (_useInterop && _addr == L2_TO_L2_CROSS_DOMAIN_MESSENGER)\n            || (_useInterop && _addr == SUPERCHAIN_WETH) || (_useInterop && _addr == ETH_LIQUIDITY)\n            || (_useInterop && _addr == OPTIMISM_SUPERCHAIN_ERC20_FACTORY)\n            || (_useInterop && _addr == OPTIMISM_SUPERCHAIN_ERC20_BEACON)\n            || (_useInterop && _addr == SUPERCHAIN_TOKEN_BRIDGE);\n    }\n\n    function isPredeployNamespace(address _addr) internal pure returns (bool) {\n        return uint160(_addr) >> 11 == uint160(0x4200000000000000000000000000000000000000) >> 11;\n    }\n\n    /// @notice Function to compute the expected address of the predeploy implementation\n    ///         in the genesis state.\n    function predeployToCodeNamespace(address _addr) internal pure returns (address) {\n        require(\n            isPredeployNamespace(_addr), \"Predeploys: can only derive code-namespace address for predeploy addresses\"\n        );\n        return address(\n            uint160(uint256(uint160(_addr)) & 0xffff | uint256(uint160(0xc0D3C0d3C0d3C0D3c0d3C0d3c0D3C0d3c0d30000)))\n        );\n    }\n}",
+  "resolutions": {
+    "1f5c32d18cf7148d": {
+      "status": "differs",
+      "coveredLines": 219,
+      "match": {
+        "origin": "stack",
+        "collection": "optimism",
+        "relation": {
+          "type": "template",
+          "template": "gnosisSafeModules/LivenessGuard"
+        },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "Predeploys",
+        "similarity": 0.887,
+        "reportId": "optimism/cantina-u18-2026-01",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts-bedrock/src/libraries/Predeploys.sol",
+        "commit": "87d406db86907833f75d5c8fb26ade3dcb85eb41",
+        "commitTimestamp": "2025-11-24T03:04:45Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/87d406db86907833f75d5c8fb26ade3dcb85eb41/packages/contracts-bedrock/src/libraries/Predeploys.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Full review of the file as listed in the U18 upgrade scope at commit 87d406db (Nov 26 - Dec 3, 2025). No Critical, High or Medium findings in the report.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 10,
+        "removed": 30,
+        "ignoredAdded": 1,
+        "ignoredRemoved": 9,
+        "unchanged": 219,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 62,
+            "oldLines": 9,
+            "newStart": 62,
+            "newLines": 6,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 62,
+                "newLine": 62,
+                "text": "    /// @notice Address of the L1FeeVault predeploy."
+              },
+              {
+                "type": " ",
+                "oldLine": 63,
+                "newLine": 63,
+                "text": "    address internal constant L1_FEE_VAULT = 0x420000000000000000000000000000000000001A;"
+              },
+              { "type": " ", "oldLine": 64, "newLine": 64, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 65,
+                "text": "    /// @notice Address of the OperatorFeeVault predeploy.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 66,
+                "text": "    address internal constant OPERATOR_FEE_VAULT = 0x420000000000000000000000000000000000001b;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 67, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 68,
+                "newLine": 65,
+                "text": "    /// @notice Address of the SchemaRegistry predeploy."
+              },
+              {
+                "type": " ",
+                "oldLine": 69,
+                "newLine": 66,
+                "text": "    address internal constant SCHEMA_REGISTRY = 0x4200000000000000000000000000000000000020;"
+              },
+              { "type": " ", "oldLine": 70, "newLine": 67, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 86,
+            "oldLines": 8,
+            "newStart": 83,
+            "newLines": 8,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 86,
+                "newLine": 83,
+                "text": "    /// @notice Address of the L2ToL2CrossDomainMessenger predeploy."
+              },
+              {
+                "type": " ",
+                "oldLine": 87,
+                "newLine": 84,
+                "text": "    address internal constant L2_TO_L2_CROSS_DOMAIN_MESSENGER = 0x4200000000000000000000000000000000000023;"
+              },
+              { "type": " ", "oldLine": 88, "newLine": 85, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 89,
+                "text": "    /// @notice Address of the SuperchainETHBridge predeploy.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 90,
+                "text": "    address internal constant SUPERCHAIN_ETH_BRIDGE = 0x4200000000000000000000000000000000000024;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 86,
+                "text": "    /// @notice Address of the SuperchainWETH predeploy.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 87,
+                "text": "    address internal constant SUPERCHAIN_WETH = 0x4200000000000000000000000000000000000024;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 91, "newLine": 88, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 92,
+                "newLine": 89,
+                "text": "    /// @notice Address of the ETHLiquidity predeploy."
+              },
+              {
+                "type": " ",
+                "oldLine": 93,
+                "newLine": 90,
+                "text": "    address internal constant ETH_LIQUIDITY = 0x4200000000000000000000000000000000000025;"
+              }
+            ]
+          },
+          {
+            "oldStart": 105,
+            "oldLines": 15,
+            "newStart": 102,
+            "newLines": 6,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 105,
+                "newLine": 102,
+                "text": "    /// @notice Address of the SuperchainTokenBridge predeploy."
+              },
+              {
+                "type": " ",
+                "oldLine": 106,
+                "newLine": 103,
+                "text": "    address internal constant SUPERCHAIN_TOKEN_BRIDGE = 0x4200000000000000000000000000000000000028;"
+              },
+              { "type": " ", "oldLine": 107, "newLine": 104, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 108,
+                "text": "    /// @notice Address of the NativeAssetLiquidity predeploy.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 109,
+                "text": "    address internal constant NATIVE_ASSET_LIQUIDITY = 0x4200000000000000000000000000000000000029;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 110, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 111,
+                "text": "    /// @notice Address of the LiquidityController predeploy.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 112,
+                "text": "    address internal constant LIQUIDITY_CONTROLLER = 0x420000000000000000000000000000000000002a;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 113, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 114,
+                "text": "    /// @notice Address of the FeeSplitter predeploy.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 115,
+                "text": "    address internal constant FEE_SPLITTER = 0x420000000000000000000000000000000000002B;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 116, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 117,
+                "newLine": 105,
+                "text": "    /// @notice Returns the name of the predeploy at the given address."
+              },
+              {
+                "type": " ",
+                "oldLine": 118,
+                "newLine": 106,
+                "text": "    function getName(address _addr) internal pure returns (string memory out_) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 119,
+                "newLine": 107,
+                "text": "        require(isPredeployNamespace(_addr), \"Predeploys: address must be a predeploy\");"
+              }
+            ]
+          },
+          {
+            "oldStart": 168,
+            "oldLines": 9,
+            "newStart": 156,
+            "newLines": 6,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 168,
+                "newLine": 156,
+                "text": "        if (_addr == L1_FEE_VAULT) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 169,
+                "newLine": 157,
+                "text": "            return \"L1FeeVault\";"
+              },
+              {
+                "type": " ",
+                "oldLine": 170,
+                "newLine": 158,
+                "text": "        }"
+              },
+              {
+                "type": "-",
+                "oldLine": 171,
+                "text": "        if (_addr == OPERATOR_FEE_VAULT) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 172,
+                "text": "            return \"OperatorFeeVault\";",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 173,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 174,
+                "newLine": 159,
+                "text": "        if (_addr == SCHEMA_REGISTRY) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 175,
+                "newLine": 160,
+                "text": "            return \"SchemaRegistry\";"
+              },
+              {
+                "type": " ",
+                "oldLine": 176,
+                "newLine": 161,
+                "text": "        }"
+              }
+            ]
+          },
+          {
+            "oldStart": 189,
+            "oldLines": 8,
+            "newStart": 174,
+            "newLines": 8,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 189,
+                "newLine": 174,
+                "text": "        if (_addr == L2_TO_L2_CROSS_DOMAIN_MESSENGER) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 190,
+                "newLine": 175,
+                "text": "            return \"L2ToL2CrossDomainMessenger\";"
+              },
+              {
+                "type": " ",
+                "oldLine": 191,
+                "newLine": 176,
+                "text": "        }"
+              },
+              {
+                "type": "-",
+                "oldLine": 192,
+                "text": "        if (_addr == SUPERCHAIN_ETH_BRIDGE) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 193,
+                "text": "            return \"SuperchainETHBridge\";",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 177,
+                "text": "        if (_addr == SUPERCHAIN_WETH) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 178,
+                "text": "            return \"SuperchainWETH\";",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 194,
+                "newLine": 179,
+                "text": "        }"
+              },
+              {
+                "type": " ",
+                "oldLine": 195,
+                "newLine": 180,
+                "text": "        if (_addr == ETH_LIQUIDITY) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 196,
+                "newLine": 181,
+                "text": "            return \"ETHLiquidity\";"
+              }
+            ]
+          },
+          {
+            "oldStart": 204,
+            "oldLines": 15,
+            "newStart": 189,
+            "newLines": 6,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 204,
+                "newLine": 189,
+                "text": "        if (_addr == SUPERCHAIN_TOKEN_BRIDGE) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 205,
+                "newLine": 190,
+                "text": "            return \"SuperchainTokenBridge\";"
+              },
+              {
+                "type": " ",
+                "oldLine": 206,
+                "newLine": 191,
+                "text": "        }"
+              },
+              {
+                "type": "-",
+                "oldLine": 207,
+                "text": "        if (_addr == LIQUIDITY_CONTROLLER) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 208,
+                "text": "            return \"LiquidityController\";",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 209,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 210,
+                "text": "        if (_addr == NATIVE_ASSET_LIQUIDITY) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 211,
+                "text": "            return \"NativeAssetLiquidity\";",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 212,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 213,
+                "text": "        if (_addr == FEE_SPLITTER) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 214,
+                "text": "            return \"FeeSplitter\";",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 215,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 216,
+                "newLine": 192,
+                "text": "        revert(\"Predeploys: unnamed predeploy\");"
+              },
+              { "type": " ", "oldLine": 217, "newLine": 193, "text": "    }" },
+              { "type": " ", "oldLine": 218, "newLine": 194, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 222,
+            "oldLines": 22,
+            "newStart": 198,
+            "newLines": 18,
+            "lines": [
+              { "type": " ", "oldLine": 222, "newLine": 198, "text": "    }" },
+              { "type": " ", "oldLine": 223, "newLine": 199, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 224,
+                "newLine": 200,
+                "text": "    /// @notice Returns true if the address is a defined predeploy that is embedded into new OP-Stack chains."
+              },
+              {
+                "type": "-",
+                "oldLine": 225,
+                "text": "    function isSupportedPredeploy(address _addr, uint256 _fork, bool _enableCrossL2Inbox, bool _isCustomGasToken)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 226,
+                "text": "        internal",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 227,
+                "text": "        pure",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 228,
+                "text": "        returns (bool)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 229,
+                "text": "    {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 201,
+                "text": "    function isSupportedPredeploy(address _addr, bool _useInterop) internal pure returns (bool) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 230,
+                "newLine": 202,
+                "text": "        return _addr == LEGACY_MESSAGE_PASSER || _addr == DEPLOYER_WHITELIST || _addr == WETH"
+              },
+              {
+                "type": " ",
+                "oldLine": 231,
+                "newLine": 203,
+                "text": "            || _addr == L2_CROSS_DOMAIN_MESSENGER || _addr == GAS_PRICE_ORACLE || _addr == L2_STANDARD_BRIDGE"
+              },
+              {
+                "type": " ",
+                "oldLine": 232,
+                "newLine": 204,
+                "text": "            || _addr == SEQUENCER_FEE_WALLET || _addr == OPTIMISM_MINTABLE_ERC20_FACTORY || _addr == L1_BLOCK_NUMBER"
+              },
+              {
+                "type": " ",
+                "oldLine": 233,
+                "newLine": 205,
+                "text": "            || _addr == L2_ERC721_BRIDGE || _addr == L1_BLOCK_ATTRIBUTES || _addr == L2_TO_L1_MESSAGE_PASSER"
+              },
+              {
+                "type": " ",
+                "oldLine": 234,
+                "newLine": 206,
+                "text": "            || _addr == OPTIMISM_MINTABLE_ERC721_FACTORY || _addr == PROXY_ADMIN || _addr == BASE_FEE_VAULT"
+              },
+              {
+                "type": "-",
+                "oldLine": 235,
+                "text": "            || _addr == L1_FEE_VAULT || _addr == OPERATOR_FEE_VAULT || _addr == SCHEMA_REGISTRY || _addr == EAS",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 236,
+                "text": "            || _addr == GOVERNANCE_TOKEN || _addr == FEE_SPLITTER",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 237,
+                "text": "            || (_fork >= uint256(Fork.INTEROP) && _enableCrossL2Inbox && _addr == CROSS_L2_INBOX)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 238,
+                "text": "            || (_fork >= uint256(Fork.INTEROP) && _addr == L2_TO_L2_CROSS_DOMAIN_MESSENGER)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 239,
+                "text": "            || (_isCustomGasToken && _addr == LIQUIDITY_CONTROLLER)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 240,
+                "text": "            || (_isCustomGasToken && _addr == NATIVE_ASSET_LIQUIDITY);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 207,
+                "text": "            || _addr == L1_FEE_VAULT || _addr == SCHEMA_REGISTRY || _addr == EAS || _addr == GOVERNANCE_TOKEN",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 208,
+                "text": "            || (_useInterop && _addr == CROSS_L2_INBOX) || (_useInterop && _addr == L2_TO_L2_CROSS_DOMAIN_MESSENGER)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 209,
+                "text": "            || (_useInterop && _addr == SUPERCHAIN_WETH) || (_useInterop && _addr == ETH_LIQUIDITY)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 210,
+                "text": "            || (_useInterop && _addr == OPTIMISM_SUPERCHAIN_ERC20_FACTORY)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 211,
+                "text": "            || (_useInterop && _addr == OPTIMISM_SUPERCHAIN_ERC20_BEACON)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 212,
+                "text": "            || (_useInterop && _addr == SUPERCHAIN_TOKEN_BRIDGE);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 241, "newLine": 213, "text": "    }" },
+              { "type": " ", "oldLine": 242, "newLine": 214, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 243,
+                "newLine": 215,
+                "text": "    function isPredeployNamespace(address _addr) internal pure returns (bool) {"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

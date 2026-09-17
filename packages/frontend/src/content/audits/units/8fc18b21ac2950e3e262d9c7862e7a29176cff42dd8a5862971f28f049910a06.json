@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "8fc18b21ac2950e3e262d9c7862e7a29176cff42dd8a5862971f28f049910a06",
+  "name": "IReleaser",
+  "kind": "interface",
+  "lines": 16,
+  "source": "interface IReleaser is IResourceManager, INonce {\n    /// @notice Thrown when attempting to release too many assets at once\n    error TooManyAssets();\n\n    event Released(uint256 indexed nonce, address indexed recipient, Currency[] assets);\n\n    /// @return Address of the Token Jar contract that will release the assets\n    function TOKEN_JAR() external view returns (ITokenJar);\n\n    /// @notice Releases assets to a specified recipient if the resource threshold is met\n    /// @param _nonce The nonce for the release, must equal to the contract nonce otherwise revert\n    /// @param assets The list of assets (addresses) to release, which may have length limits\n    /// Native tokens (Ether) are represented as the zero address\n    /// @param recipient The address to receive the released assets, paid out by Token Jar\n    function release(uint256 _nonce, Currency[] calldata assets, address recipient) external;\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

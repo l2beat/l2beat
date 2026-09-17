@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "5a89dc7969f36ac8ca67afa15adfd036bb788ad12af61a2ff6987241816ee164",
+  "name": "GasCompensator",
+  "kind": "abstract",
+  "lines": 42,
+  "source": "abstract contract GasCompensator {\n    using SafeMath for uint256;\n\n    /// @notice this vault is necessary for the gas compensation functionality to work\n    IGasCompensationVault public immutable gasCompensationVault;\n\n    constructor(address _gasCompensationVault) public {\n        gasCompensationVault = IGasCompensationVault(_gasCompensationVault);\n    }\n\n    /**\n     * @notice modifier which should compensate gas to account if eligible\n     * @dev Consider reentrancy, repeated calling of the function being compensated, eligibility.\n     * @param account address to be compensated\n     * @param eligible if the account is eligible for compensations or not\n     * @param extra extra amount in gas to be compensated, will be multiplied by basefee\n     *\n     */\n    modifier gasCompensation(address account, bool eligible, uint256 extra) {\n        if (eligible) {\n            uint256 startGas = gasleft();\n            _;\n            uint256 gasToCompensate = startGas.sub(gasleft()).add(extra).add(10e3);\n\n            gasCompensationVault.compensateGas(account, gasToCompensate);\n        } else {\n            _;\n        }\n    }\n\n    /**\n     * @notice inheritable unimplemented function to withdraw ether from the vault\n     *\n     */\n    function withdrawFromHelper(uint256 amount) external virtual;\n\n    /**\n     * @notice inheritable unimplemented function to deposit ether into the vault\n     *\n     */\n    function setGasCompensations(uint256 _gasCompensationsLimit) external virtual;\n}",
+  "resolutions": {
+    "f9658cd3a9a22004": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "6662fc3810938307450afe2f0a087e3acfa80067a3d2d6bd2feb7ff4c02d3294",
+  "name": "block_root_rollup.nr",
+  "kind": "program",
+  "lines": 43,
+  "source": "use crate::{\n    abis::{BlockRollupPublicInputs, TxRollupPublicInputs},\n    block_root::components::{BlockRollupPublicInputsComposer, validate_previous_rollups},\n};\nuse types::{\n    constants::{\n        ARCHIVE_HEIGHT, PRIVATE_TX_BASE_ROLLUP_VK_INDEX, PUBLIC_TX_BASE_ROLLUP_VK_INDEX,\n        TX_MERGE_ROLLUP_VK_INDEX,\n    },\n    proof::proof_data::RollupHonkProofData,\n};\n\nglobal ALLOWED_PREVIOUS_VK_INDICES: [u32; 3] =\n    [TX_MERGE_ROLLUP_VK_INDEX, PRIVATE_TX_BASE_ROLLUP_VK_INDEX, PUBLIC_TX_BASE_ROLLUP_VK_INDEX];\n\npub struct BlockRootRollupPrivateInputs {\n    pub(crate) previous_rollups: [RollupHonkProofData<TxRollupPublicInputs>; 2],\n    // Hint for inserting the new block hash to the last archive.\n    pub(crate) new_archive_sibling_path: [Field; ARCHIVE_HEIGHT],\n}\n\n/// The Block Root Rollup circuit finalizes a block by combining two transaction rollup proofs.\n/// It creates the block header and does not process L1-to-L2 messages.\n/// This variant is used for non-first blocks with multiple transactions.\n///\n/// This circuit:\n/// - Verifies the proofs from two child tx rollups (Tx Base or Tx Merge circuits)\n/// - Validates that the two child rollups are consecutive (end state of left matches start state of right)\n/// - Computes the block header hash and inserts it into the archive tree\n///\n/// The output feeds into a Block Merge circuit if more blocks need to be combined,\n/// or directly into a Checkpoint Root circuit if the checkpoint contains only one or two blocks, or if the other blocks\n/// have already been merged into a tree whose root is this block's left sibling.\n///\n/// VkIndex: BLOCK_ROOT_ROLLUP_VK_INDEX\npub fn execute(inputs: BlockRootRollupPrivateInputs) -> BlockRollupPublicInputs {\n    validate_previous_rollups(inputs.previous_rollups, ALLOWED_PREVIOUS_VK_INDICES);\n\n    let previous_rollups = inputs.previous_rollups.map(|rollup| rollup.public_inputs);\n    BlockRollupPublicInputsComposer::new_from_two_rollups(previous_rollups).finish(\n        inputs.new_archive_sibling_path,\n    )\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

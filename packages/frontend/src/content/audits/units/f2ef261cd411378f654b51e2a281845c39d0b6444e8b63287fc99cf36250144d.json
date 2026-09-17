@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "f2ef261cd411378f654b51e2a281845c39d0b6444e8b63287fc99cf36250144d",
+  "name": "INetFeeSplitter",
+  "kind": "interface",
+  "lines": 103,
+  "source": "interface INetFeeSplitter {\n    /// @notice Recipient data for an individual recipient\n    /// @custom:field setter The setter address managing the recipient\n    /// @custom:field allocation The allocation of the recipient\n    struct Recipient {\n        address setter;\n        uint256 allocation;\n    }\n\n    /// @notice Emitted when a recipient's allocation is transferred\n    /// @param setter The setter address managing the recipient\n    /// @param from The previous recipient address\n    /// @param to The new recipient address\n    /// @param allocation The allocation transferred\n    event AllocationTransferred(address indexed setter, address indexed from, address indexed to, uint256 allocation);\n\n    /// @notice Emitted when a recipient's setter is transferred\n    /// @param recipient The recipient address\n    /// @param previousSetter The previous setter address\n    /// @param newSetter The new setter address\n    event SetterTransferred(address indexed recipient, address indexed previousSetter, address indexed newSetter);\n\n    /// @notice Emitted when fees are withdrawn by recipient\n    /// @param recipient The recipient address\n    /// @param to The address the fees were withdrawn to\n    /// @param amount The amount of fees withdrawn\n    event Withdrawn(address indexed recipient, address indexed to, uint256 amount);\n\n    /// @notice Thrown when the recipients array is not the same length as the recipientData array\n    error InvalidRecipients();\n\n    /// @notice Thrown when a duplicate recipient is added\n    error DuplicateRecipient();\n\n    /// @notice Thrown when an setter address is zero\n    error SetterZero();\n\n    /// @notice Thrown when a recipient already has a setter\n    error SetterAlreadySet();\n\n    /// @notice Thrown when a recipient address is zero\n    error RecipientZero();\n\n    /// @notice Thrown when a recipient allocation is zero or zero allocation is transferred\n    error AllocationZero();\n\n    /// @notice Thrown when the total allocation is not the same as the sum of the recipient balances\n    error InvalidTotalAllocation();\n\n    /// @notice Thrown when the caller is not the setter\n    error Unauthorized();\n\n    /// @notice Thrown when there is insufficient allocation to perform a transfer\n    error InsufficientAllocation();\n\n    /// @notice Thrown when a withdrawal fails\n    error WithdrawalFailed();\n\n    /// @notice Transfers a allocation from one recipient to another\n    /// @param oldRecipient The recipient address to transfer from\n    /// @param newRecipient The recipient address to transfer to\n    /// @param allocation The allocation to transfer\n    /// @dev reverts if the recipient doesn't have a setter\n    function transferAllocation(address oldRecipient, address newRecipient, uint256 allocation) external;\n\n    /// @notice Transfers the allocation of a recipient to another recipient and sets the setter of the recipient\n    /// @param oldRecipient The recipient address to transfer from\n    /// @param newRecipient The recipient address to transfer to\n    /// @param newSetter The new setter address for the recipient\n    /// @param allocation The allocation to transfer\n    /// @dev reverts if the recipient already has a setter\n    function transferAllocationAndSetSetter(\n        address oldRecipient,\n        address newRecipient,\n        address newSetter,\n        uint256 allocation\n    ) external;\n\n    /// @notice Transfers the setter of a recipient to a new setter\n    /// @param recipient The recipient address\n    /// @param newSetter The new setter address\n    function transferSetter(address recipient, address newSetter) external;\n\n    /// @notice Withdraws the fees earned by a recipient\n    /// @param to The address to withdraw the fees to\n    /// @return amount The amount of fees withdrawn\n    function withdrawFees(address to) external returns (uint256 amount);\n\n    /// @notice Calculates the fees earned by a recipient\n    /// @param account The recipient address\n    /// @return amount The amount of fees earned\n    function earnedFees(address account) external view returns (uint256);\n\n    /// @notice Gets the allocation of a recipient\n    /// @param recipient The recipient address\n    /// @return allocation The allocation of the recipient\n    function balanceOf(address recipient) external view returns (uint256);\n\n    /// @notice Gets the setter of a recipient\n    /// @param recipient The recipient address\n    /// @return setter The setter of the recipient\n    function setterOf(address recipient) external view returns (address);\n}",
+  "resolutions": {
+    "1f5c32d18cf7148d": {
+      "status": "identical",
+      "coveredLines": 103,
+      "match": {
+        "origin": "own",
+        "collection": "unichain",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "INetFeeSplitter",
+        "similarity": 1,
+        "reportId": "unichain/cantina-unichain-contracts-2024-11",
+        "repository": "Uniswap/unichain-contracts",
+        "path": "src/interfaces/FeeSplitter/INetFeeSplitter.sol",
+        "commit": "d7db41e68e73bc7e58bfff9cae6f4e8f695030da",
+        "commitTimestamp": "2024-11-01T13:28:26Z",
+        "url": "https://github.com/Uniswap/unichain-contracts/blob/d7db41e68e73bc7e58bfff9cae6f4e8f695030da/src/interfaces/FeeSplitter/INetFeeSplitter.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix_review",
+        "coverage": "Fix review of src/FeeSplitter/NetFeeSplitter.sol and src/interfaces/FeeSplitter/INetFeeSplitter.sol only (Informational 3.3.1 rename newAdmin to newSetter).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 8
+      },
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "a087c40c4981e7e4d40891757c30f60704ec4ea8e67d51758b2fdeb9d2aca3de",
+  "name": "ITornadoProxyV1",
+  "kind": "interface",
+  "lines": 3,
+  "source": "interface ITornadoProxyV1 {\n    function updateInstance(address _instance, bool _update) external;\n}",
+  "resolutions": {
+    "f9658cd3a9a22004": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

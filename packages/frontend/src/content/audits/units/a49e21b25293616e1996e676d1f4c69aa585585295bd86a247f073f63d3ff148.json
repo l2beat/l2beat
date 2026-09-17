@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "a49e21b25293616e1996e676d1f4c69aa585585295bd86a247f073f63d3ff148",
+  "name": "GovernanceToken",
+  "kind": "contract",
+  "lines": 23,
+  "source": "contract GovernanceToken is ERC20Burnable, ERC20Votes, Ownable {\n    /**\n     * @dev Constructor.\n     */\n    constructor() ERC20(\"Optimism\", \"OP\") ERC20Permit(\"Optimism\") {}\n\n    function mint(address _account, uint256 _amount) public onlyOwner {\n        _mint(_account, _amount);\n    }\n\n    // The following functions are overrides required by Solidity.\n    function _afterTokenTransfer(address from, address to, uint256 amount) internal override(ERC20, ERC20Votes) {\n        super._afterTokenTransfer(from, to, amount);\n    }\n\n    function _mint(address to, uint256 amount) internal override(ERC20, ERC20Votes) {\n        super._mint(to, amount);\n    }\n\n    function _burn(address account, uint256 amount) internal override(ERC20, ERC20Votes) {\n        super._burn(account, amount);\n    }\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

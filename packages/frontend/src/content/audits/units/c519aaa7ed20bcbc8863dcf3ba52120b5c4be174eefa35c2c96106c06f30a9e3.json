@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "c519aaa7ed20bcbc8863dcf3ba52120b5c4be174eefa35c2c96106c06f30a9e3",
+  "name": "EthscriptionsProver",
+  "kind": "interface",
+  "lines": 4,
+  "source": "interface EthscriptionsProver {\n    function queueEthscription(bytes32 ethscriptionId) external;\n    function flushAllProofs() external;\n}",
+  "resolutions": {
+    "eea968a44e5d263a": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

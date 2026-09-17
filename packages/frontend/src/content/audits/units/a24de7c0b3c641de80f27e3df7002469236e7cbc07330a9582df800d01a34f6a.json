@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "a24de7c0b3c641de80f27e3df7002469236e7cbc07330a9582df800d01a34f6a",
+  "name": "IOptimismMintableERC20",
+  "kind": "interface",
+  "lines": 9,
+  "source": "interface IOptimismMintableERC20 is IERC165 {\n    function remoteToken() external view returns (address);\n\n    function bridge() external returns (address);\n\n    function mint(address _to, uint256 _amount) external;\n\n    function burn(address _from, uint256 _amount) external;\n}",
+  "resolutions": {
+    "ba5b6c9584fb78fd": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "44ad4cf96e2ef6f0": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "bb55951394276893": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

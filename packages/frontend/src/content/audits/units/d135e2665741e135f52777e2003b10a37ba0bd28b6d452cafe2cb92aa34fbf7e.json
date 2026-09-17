@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "d135e2665741e135f52777e2003b10a37ba0bd28b6d452cafe2cb92aa34fbf7e",
+  "name": "(file-level declarations)",
+  "kind": "file-level",
+  "lines": 1,
+  "source": "type VMStatus is uint8;",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "1f5c32d18cf7148d": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

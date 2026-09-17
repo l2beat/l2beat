@@ -1,0 +1,176 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "fd48d3e726d1ded635b5b6475852a2c0d81dc2ff1e5731e47470b0eee8f8049c",
+  "name": "ProposedHeaderLib",
+  "kind": "library",
+  "lines": 32,
+  "source": "library ProposedHeaderLib {\n    using SafeCast for uint256;\n\n    /**\n     * @notice  Hash the proposed header\n     *\n     * @dev     The hashing here MUST match what is in the checkpoint_header.nr\n     *\n     * @param _header The header to hash\n     *\n     * @return The hash of the header\n     */\n    function hash(ProposedHeader memory _header) internal pure returns (bytes32) {\n        return Hash.sha256ToField(\n            abi.encodePacked(\n                _header.lastArchiveRoot,\n                _header.blockHeadersHash,\n                _header.blobsHash,\n                _header.inHash,\n                _header.outHash,\n                _header.slotNumber,\n                Timestamp.unwrap(_header.timestamp).toUint64(),\n                _header.coinbase,\n                _header.feeRecipient,\n                _header.gasFees.feePerDaGas,\n                _header.gasFees.feePerL2Gas,\n                _header.totalManaUsed,\n                _header.accumulatedFees\n            )\n        );\n    }\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "differs",
+      "coveredLines": 27,
+      "match": {
+        "origin": "own",
+        "collection": "aztecnetwork",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "ProposedHeaderLib",
+        "similarity": 0.878,
+        "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
+        "repository": "AztecProtocol/aztec-packages",
+        "path": "l1-contracts/src/core/libraries/rollup/ProposedHeaderLib.sol",
+        "commit": "0092f9f01ed88cc3626270e62716d7b722ea1944",
+        "commitTimestamp": "2026-01-06T20:15:15Z",
+        "url": "https://github.com/AztecProtocol/aztec-packages/blob/0092f9f01ed88cc3626270e62716d7b722ea1944/l1-contracts/src/core/libraries/rollup/ProposedHeaderLib.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "security review",
+        "coverage": "full file",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 5,
+        "removed": 4,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 27,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 15,
+            "oldLines": 16,
+            "newStart": 15,
+            "newLines": 17,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 15,
+                "newLine": 15,
+                "text": "            abi.encodePacked("
+              },
+              {
+                "type": " ",
+                "oldLine": 16,
+                "newLine": 16,
+                "text": "                _header.lastArchiveRoot,"
+              },
+              {
+                "type": " ",
+                "oldLine": 17,
+                "newLine": 17,
+                "text": "                _header.blockHeadersHash,"
+              },
+              {
+                "type": "-",
+                "oldLine": 18,
+                "text": "                _header.contentCommitment.blobsHash,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 19,
+                "text": "                _header.contentCommitment.inHash,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 20,
+                "text": "                _header.contentCommitment.outHash,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 18,
+                "text": "                _header.blobsHash,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 19,
+                "text": "                _header.inHash,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 20,
+                "text": "                _header.outHash,",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 21,
+                "newLine": 21,
+                "text": "                _header.slotNumber,"
+              },
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 22,
+                "text": "                Timestamp.unwrap(_header.timestamp).toUint64(),"
+              },
+              {
+                "type": " ",
+                "oldLine": 23,
+                "newLine": 23,
+                "text": "                _header.coinbase,"
+              },
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 24,
+                "text": "                _header.feeRecipient,"
+              },
+              {
+                "type": " ",
+                "oldLine": 25,
+                "newLine": 25,
+                "text": "                _header.gasFees.feePerDaGas,"
+              },
+              {
+                "type": " ",
+                "oldLine": 26,
+                "newLine": 26,
+                "text": "                _header.gasFees.feePerL2Gas,"
+              },
+              {
+                "type": "-",
+                "oldLine": 27,
+                "text": "                _header.totalManaUsed",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 27,
+                "text": "                _header.totalManaUsed,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 28,
+                "text": "                _header.accumulatedFees",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 28,
+                "newLine": 29,
+                "text": "            )"
+              },
+              {
+                "type": " ",
+                "oldLine": 29,
+                "newLine": 30,
+                "text": "        );"
+              },
+              { "type": " ", "oldLine": 30, "newLine": 31, "text": "    }" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

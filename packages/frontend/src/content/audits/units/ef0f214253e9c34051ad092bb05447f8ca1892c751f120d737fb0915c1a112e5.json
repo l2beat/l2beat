@@ -1,0 +1,86 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "ef0f214253e9c34051ad092bb05447f8ca1892c751f120d737fb0915c1a112e5",
+  "name": "IERC20Mintable",
+  "kind": "interface",
+  "lines": 3,
+  "source": "interface IERC20Mintable {\n    function mint(address _to, uint256 _amount) external;\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "differs",
+      "coveredLines": 2,
+      "match": {
+        "origin": "own",
+        "collection": "aztecnetwork",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "similarity",
+        "auditedName": "ICoinIssuer",
+        "similarity": 0.683,
+        "reportId": "aztecnetwork/veridise-governance-2025-10-13",
+        "repository": "AztecProtocol/aztec-packages",
+        "path": "l1-contracts/src/governance/interfaces/ICoinIssuer.sol",
+        "commit": "a6eebac31276e7a08525a872d8d364da6d535f86",
+        "commitTimestamp": "2025-08-23T13:12:24Z",
+        "url": "https://github.com/AztecProtocol/aztec-packages/blob/a6eebac31276e7a08525a872d8d364da6d535f86/l1-contracts/src/governance/interfaces/ICoinIssuer.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "security review",
+        "coverage": "full file",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 1,
+        "removed": 3,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 2,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 5,
+            "newStart": 1,
+            "newLines": 3,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "interface ICoinIssuer {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "interface IERC20Mintable {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "    function mint(address _to, uint256 _amount) external;"
+              },
+              {
+                "type": "-",
+                "oldLine": 3,
+                "text": "    function acceptTokenOwnership() external;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 4,
+                "text": "    function mintAvailable() external view returns (uint256);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 5, "newLine": 3, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

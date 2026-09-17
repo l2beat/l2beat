@@ -1,0 +1,1021 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "12f11dff4ae2fb5f0172a047ea321bee0d6077de366a81c1f77e499fb87c6aa9",
+  "name": "StandardBridge",
+  "kind": "abstract",
+  "lines": 608,
+  "source": "abstract contract StandardBridge is Initializable {\n    using SafeERC20 for IERC20;\n\n    /// @notice The L2 gas limit set when eth is depoisited using the receive() function.\n    uint32 internal constant RECEIVE_DEFAULT_GAS_LIMIT = 200_000;\n\n    /// @custom:legacy\n    /// @custom:spacer messenger\n    /// @notice Spacer for backwards compatibility.\n    bytes30 private spacer_0_2_30;\n\n    /// @custom:legacy\n    /// @custom:spacer l2TokenBridge\n    /// @notice Spacer for backwards compatibility.\n    address private spacer_1_0_20;\n\n    /// @notice Mapping that stores deposits for a given pair of local and remote tokens.\n    mapping(address => mapping(address => uint256)) public deposits;\n\n    /// @notice Messenger contract on this domain.\n    /// @custom:network-specific\n    CrossDomainMessenger public messenger;\n\n    /// @notice Corresponding bridge on the other domain.\n    /// @custom:network-specific\n    StandardBridge public otherBridge;\n\n    /// @notice Reserve extra slots (to a total of 50) in the storage layout for future upgrades.\n    ///         A gap size of 45 was chosen here, so that the first slot used in a child contract\n    ///         would be a multiple of 50.\n    uint256[45] private __gap;\n\n    /// @notice Emitted when an ETH bridge is initiated to the other chain.\n    /// @param from      Address of the sender.\n    /// @param to        Address of the receiver.\n    /// @param amount    Amount of ETH sent.\n    /// @param extraData Extra data sent with the transaction.\n    event ETHBridgeInitiated(address indexed from, address indexed to, uint256 amount, bytes extraData);\n\n    /// @notice Emitted when an ETH bridge is finalized on this chain.\n    /// @param from      Address of the sender.\n    /// @param to        Address of the receiver.\n    /// @param amount    Amount of ETH sent.\n    /// @param extraData Extra data sent with the transaction.\n    event ETHBridgeFinalized(address indexed from, address indexed to, uint256 amount, bytes extraData);\n\n    /// @notice Emitted when an ERC20 bridge is initiated to the other chain.\n    /// @param localToken  Address of the ERC20 on this chain.\n    /// @param remoteToken Address of the ERC20 on the remote chain.\n    /// @param from        Address of the sender.\n    /// @param to          Address of the receiver.\n    /// @param amount      Amount of the ERC20 sent.\n    /// @param extraData   Extra data sent with the transaction.\n    event ERC20BridgeInitiated(\n        address indexed localToken,\n        address indexed remoteToken,\n        address indexed from,\n        address to,\n        uint256 amount,\n        bytes extraData\n    );\n\n    event L1ERC20DepositAttempted(\n        bytes32 indexed depositId,\n        address indexed l1Token,\n        address indexed l2Token,\n        address from,\n        address to,\n        uint256 amount,\n        bytes extraData\n    );\n\n    /// @notice Emitted when an ERC20 bridge is finalized on this chain.\n    /// @param localToken  Address of the ERC20 on this chain.\n    /// @param remoteToken Address of the ERC20 on the remote chain.\n    /// @param from        Address of the sender.\n    /// @param to          Address of the receiver.\n    /// @param amount      Amount of the ERC20 sent.\n    /// @param extraData   Extra data sent with the transaction.\n    event ERC20BridgeFinalized(\n        address indexed localToken,\n        address indexed remoteToken,\n        address indexed from,\n        address to,\n        uint256 amount,\n        bytes extraData\n    );\n\n    struct BridgeStorage {\n        mapping(bytes32 => bytes32) depositHashes;\n        mapping(bytes32 => bool) finalizedDeposits;\n        uint256 depositIdNonce;\n    }\n\n    function getDepositHash(bytes32 _depositId) public view onlyOnL1 returns (bytes32) {\n        return s().depositHashes[_depositId];\n    }\n\n    function getFinalizedDeposit(bytes32 _depositId) public view onlyOnL2 returns (bool) {\n        return s().finalizedDeposits[_depositId];\n    }\n\n    function s() internal pure returns (BridgeStorage storage cs) {\n        bytes32 position = keccak256(\"BridgeStorage.contract.storage\");\n        assembly {\n            cs.slot := position\n        }\n    }\n\n    modifier onlyOnL1() {\n        require(onL1(), \"StandardBridge: function can only be called on L1\");\n        _;\n    }\n\n    modifier onlyOnL2() {\n        require(onL2(), \"StandardBridge: function can only be called on L2\");\n        _;\n    }\n\n    function generateDepositId() internal onlyOnL1 returns (bytes32) {\n        s().depositIdNonce++;\n        return keccak256(abi.encode(address(this), msg.sender, s().depositIdNonce));\n    }\n\n    /// @notice Only allow EOAs to call the functions. Note that this is not safe against contracts\n    ///         calling code within their constructors, but also doesn't really matter since we're\n    ///         just trying to prevent users accidentally depositing with smart contract wallets.\n    modifier onlyEOA() {\n        require(!Address.isContract(msg.sender), \"StandardBridge: function can only be called from an EOA\");\n        _;\n    }\n\n    function onL1() internal pure virtual returns (bool);\n\n    function onL2() internal pure returns (bool) {\n        return !onL1();\n    }\n\n    /// @notice Ensures that the caller is a cross-chain message from the other bridge.\n    modifier onlyOtherBridge() {\n        if (onL1()) {\n            require(\n                msg.sender == address(messenger) && messenger.xDomainMessageSender() == address(otherBridge),\n                \"StandardBridge: function can only be called from the L2 bridge\"\n            );\n        } else {\n            require(\n                AddressAliasHelper.undoL1ToL2Alias(msg.sender) == address(otherBridge),\n                \"StandardBridge: function can only be called from the L1 bridge\"\n            );\n        }\n        _;\n    }\n\n    /// @notice Initializer.\n    /// @param _messenger   Contract for CrossDomainMessenger on this network.\n    /// @param _otherBridge Contract for the other StandardBridge contract.\n    function __StandardBridge_init(CrossDomainMessenger _messenger, StandardBridge _otherBridge)\n        internal\n        onlyInitializing\n    {\n        messenger = _messenger;\n        otherBridge = _otherBridge;\n    }\n\n    /// @notice Allows EOAs to bridge ETH by sending directly to the bridge.\n    ///         Must be implemented by contracts that inherit.\n    receive() external payable virtual;\n\n    /// @notice Returns the address of the custom gas token and the token's decimals.\n    function gasPayingToken() internal view virtual returns (address, uint8);\n\n    /// @notice Returns whether the chain uses a custom gas token or not.\n    function isCustomGasToken() internal view returns (bool) {\n        (address token,) = gasPayingToken();\n        return token != Constants.ETHER;\n    }\n\n    /// @notice Getter for messenger contract.\n    ///         Public getter is legacy and will be removed in the future. Use `messenger` instead.\n    /// @return Contract of the messenger on this domain.\n    /// @custom:legacy\n    function MESSENGER() external view returns (CrossDomainMessenger) {\n        return messenger;\n    }\n\n    /// @notice Getter for the other bridge contract.\n    ///         Public getter is legacy and will be removed in the future. Use `otherBridge` instead.\n    /// @return Contract of the bridge on the other network.\n    /// @custom:legacy\n    function OTHER_BRIDGE() external view returns (StandardBridge) {\n        return otherBridge;\n    }\n\n    /// @notice This function should return true if the contract is paused.\n    ///         On L1 this function will check the SuperchainConfig for its paused status.\n    ///         On L2 this function should be a no-op.\n    /// @return Whether or not the contract is paused.\n    function paused() public view virtual returns (bool) {\n        return false;\n    }\n\n    /// @notice Sends ETH to the sender's address on the other chain.\n    /// @param _minGasLimit Minimum amount of gas that the bridge can be relayed with.\n    /// @param _extraData   Extra data to be sent with the transaction. Note that the recipient will\n    ///                     not be triggered with this data, but it will be emitted and can be used\n    ///                     to identify the transaction.\n    function bridgeETH(uint32 _minGasLimit, bytes calldata _extraData) public payable onlyEOA {\n        _initiateBridgeETH(msg.sender, msg.sender, msg.value, _minGasLimit, _extraData);\n    }\n\n    /// @notice Sends ETH to a receiver's address on the other chain. Note that if ETH is sent to a\n    ///         smart contract and the call fails, the ETH will be temporarily locked in the\n    ///         StandardBridge on the other chain until the call is replayed. If the call cannot be\n    ///         replayed with any amount of gas (call always reverts), then the ETH will be\n    ///         permanently locked in the StandardBridge on the other chain. ETH will also\n    ///         be locked if the receiver is the other bridge, because finalizeBridgeETH will revert\n    ///         in that case.\n    /// @param _to          Address of the receiver.\n    /// @param _minGasLimit Minimum amount of gas that the bridge can be relayed with.\n    /// @param _extraData   Extra data to be sent with the transaction. Note that the recipient will\n    ///                     not be triggered with this data, but it will be emitted and can be used\n    ///                     to identify the transaction.\n    function bridgeETHTo(address _to, uint32 _minGasLimit, bytes calldata _extraData) public payable {\n        _initiateBridgeETH(msg.sender, _to, msg.value, _minGasLimit, _extraData);\n    }\n\n    /// @notice Sends ERC20 tokens to the sender's address on the other chain.\n    /// @param _localToken  Address of the ERC20 on this chain.\n    /// @param _remoteToken Address of the corresponding token on the remote chain.\n    /// @param _amount      Amount of local tokens to deposit.\n    /// @param _minGasLimit Minimum amount of gas that the bridge can be relayed with.\n    /// @param _extraData   Extra data to be sent with the transaction. Note that the recipient will\n    ///                     not be triggered with this data, but it will be emitted and can be used\n    ///                     to identify the transaction.\n    function bridgeERC20(\n        address _localToken,\n        address _remoteToken,\n        uint256 _amount,\n        uint32 _minGasLimit,\n        bytes calldata _extraData\n    ) public virtual onlyEOA {\n        _initiateBridgeERC20(_localToken, _remoteToken, msg.sender, msg.sender, _amount, _minGasLimit, _extraData);\n    }\n\n    /// @notice Sends ERC20 tokens to a receiver's address on the other chain.\n    /// @param _localToken  Address of the ERC20 on this chain.\n    /// @param _remoteToken Address of the corresponding token on the remote chain.\n    /// @param _to          Address of the receiver.\n    /// @param _amount      Amount of local tokens to deposit.\n    /// @param _minGasLimit Minimum amount of gas that the bridge can be relayed with.\n    /// @param _extraData   Extra data to be sent with the transaction. Note that the recipient will\n    ///                     not be triggered with this data, but it will be emitted and can be used\n    ///                     to identify the transaction.\n    function bridgeERC20To(\n        address _localToken,\n        address _remoteToken,\n        address _to,\n        uint256 _amount,\n        uint32 _minGasLimit,\n        bytes calldata _extraData\n    ) public virtual {\n        _initiateBridgeERC20(_localToken, _remoteToken, msg.sender, _to, _amount, _minGasLimit, _extraData);\n    }\n\n    /// @notice Finalizes an ETH bridge on this chain. Can only be triggered by the other\n    ///         StandardBridge contract on the remote chain.\n    /// @param _from      Address of the sender.\n    /// @param _to        Address of the receiver.\n    /// @param _amount    Amount of ETH being bridged.\n    /// @param _extraData Extra data to be sent with the transaction. Note that the recipient will\n    ///                   not be triggered with this data, but it will be emitted and can be used\n    ///                   to identify the transaction.\n    function finalizeBridgeETH(address _from, address _to, uint256 _amount, bytes calldata _extraData)\n        public\n        payable\n        onlyOtherBridge\n    {\n        require(paused() == false, \"StandardBridge: paused\");\n        require(isCustomGasToken() == false, \"StandardBridge: cannot bridge ETH with custom gas token\");\n        require(msg.value == _amount, \"StandardBridge: amount sent does not match amount required\");\n        require(_to != address(this), \"StandardBridge: cannot send to self\");\n        require(_to != address(messenger), \"StandardBridge: cannot send to messenger\");\n\n        // Emit the correct events. By default this will be _amount, but child\n        // contracts may override this function in order to emit legacy events as well.\n        _emitETHBridgeFinalized(_from, _to, _amount, _extraData);\n\n        bool success = SafeCall.call(_to, gasleft(), _amount, hex\"\");\n        require(success, \"StandardBridge: ETH transfer failed\");\n    }\n\n    function replayERC20Deposit(\n        bytes32 _depositId,\n        address _l1Token,\n        address _l2Token,\n        address _from,\n        address _to,\n        uint256 _amount,\n        bytes memory _extraData\n    ) public onlyOnL1 {\n        _sendERC20DepositMessage({\n            _depositId: _depositId,\n            _l1Token: _l1Token,\n            _l2Token: _l2Token,\n            _from: _from,\n            _to: _to,\n            _amount: _amount,\n            _extraData: _extraData,\n            _isInitialDeposit: false\n        });\n    }\n\n    function _sendERC20DepositMessage(\n        bytes32 _depositId,\n        address _l1Token,\n        address _l2Token,\n        address _from,\n        address _to,\n        uint256 _amount,\n        bytes memory _extraData,\n        bool _isInitialDeposit\n    ) internal onlyOnL1 {\n        bytes memory payload = abi.encode(_l2Token, _l1Token, _from, _to, _amount, _extraData);\n\n        if (_isInitialDeposit) {\n            s().depositHashes[_depositId] = keccak256(payload);\n        } else {\n            require(s().depositHashes[_depositId] == keccak256(payload), \"StandardBridge: invalid deposit parameters\");\n        }\n\n        LibFacet.sendFacetTransaction({\n            gasLimit: 500_000,\n            to: address(otherBridge),\n            data: abi.encodeWithSelector(\n                this.finalizeBridgeERC20Replayable.selector, _depositId, _l2Token, _l1Token, _from, _to, _amount, _extraData\n            )\n        });\n\n        emit L1ERC20DepositAttempted(_depositId, _l1Token, _l2Token, _from, _to, _amount, _extraData);\n    }\n\n    function finalizeBridgeERC20Replayable(\n        bytes32 _depositId,\n        address _localToken,\n        address _remoteToken,\n        address _from,\n        address _to,\n        uint256 _amount,\n        bytes calldata _extraData\n    ) public onlyOnL2 onlyOtherBridge {\n        bool depositFinalized = s().finalizedDeposits[_depositId];\n        require(!depositFinalized, \"StandardBridge: deposit already finalized\");\n\n        s().finalizedDeposits[_depositId] = true;\n\n        // Call the non-replayable finalizeBridgeERC20 function\n        finalizeBridgeERC20(_localToken, _remoteToken, _from, _to, _amount, _extraData);\n    }\n\n    /// @notice Finalizes an ERC20 bridge on this chain. Can only be triggered by the other\n    ///         StandardBridge contract on the remote chain.\n    /// @param _localToken  Address of the ERC20 on this chain.\n    /// @param _remoteToken Address of the corresponding token on the remote chain.\n    /// @param _from        Address of the sender.\n    /// @param _to          Address of the receiver.\n    /// @param _amount      Amount of the ERC20 being bridged.\n    /// @param _extraData   Extra data to be sent with the transaction. Note that the recipient will\n    ///                     not be triggered with this data, but it will be emitted and can be used\n    ///                     to identify the transaction.\n    function finalizeBridgeERC20(\n        address _localToken,\n        address _remoteToken,\n        address _from,\n        address _to,\n        uint256 _amount,\n        bytes calldata _extraData\n    ) public onlyOtherBridge {\n        require(paused() == false, \"StandardBridge: paused\");\n        if (_isOptimismMintableERC20(_localToken)) {\n            require(\n                _isCorrectTokenPair(_localToken, _remoteToken),\n                \"StandardBridge: wrong remote token for Optimism Mintable ERC20 local token\"\n            );\n\n            OptimismMintableERC20(_localToken).mint(_to, _amount);\n        } else {\n            deposits[_localToken][_remoteToken] = deposits[_localToken][_remoteToken] - _amount;\n            IERC20(_localToken).safeTransfer(_to, _amount);\n        }\n\n        // Emit the correct events. By default this will be ERC20BridgeFinalized, but child\n        // contracts may override this function in order to emit legacy events as well.\n        _emitERC20BridgeFinalized(_localToken, _remoteToken, _from, _to, _amount, _extraData);\n    }\n\n    /// @notice Initiates a bridge of ETH through the CrossDomainMessenger.\n    /// @param _from        Address of the sender.\n    /// @param _to          Address of the receiver.\n    /// @param _amount      Amount of ETH being bridged.\n    /// @param _minGasLimit Minimum amount of gas that the bridge can be relayed with.\n    /// @param _extraData   Extra data to be sent with the transaction. Note that the recipient will\n    ///                     not be triggered with this data, but it will be emitted and can be used\n    ///                     to identify the transaction.\n    function _initiateBridgeETH(\n        address _from,\n        address _to,\n        uint256 _amount,\n        uint32 _minGasLimit,\n        bytes memory _extraData\n    ) internal {\n        require(isCustomGasToken() == false, \"StandardBridge: cannot bridge ETH with custom gas token\");\n        require(msg.value == _amount, \"StandardBridge: bridging ETH must include sufficient ETH value\");\n\n        // Emit the correct events. By default this will be _amount, but child\n        // contracts may override this function in order to emit legacy events as well.\n        _emitETHBridgeInitiated(_from, _to, _amount, _extraData);\n\n        messenger.sendMessage{value: _amount}({\n            _target: address(otherBridge),\n            _message: abi.encodeWithSelector(this.finalizeBridgeETH.selector, _from, _to, _amount, _extraData),\n            _minGasLimit: _minGasLimit\n        });\n    }\n\n    function _initiateBridgeERC20(\n        address _localToken,\n        address _remoteToken,\n        address _from,\n        address _to,\n        uint256 _amount,\n        uint32 _minGasLimit,\n        bytes memory _extraData\n    ) internal {\n        _initiateBridgeERC20({\n            _localToken: _localToken,\n            _remoteToken: _remoteToken,\n            _from: _from,\n            _to: _to,\n            _amount: _amount,\n            _minGasLimit: _minGasLimit,\n            _extraData: _extraData,\n            _performSafeTransferFrom: true,\n            _allowMsgValue: false\n        });\n    }\n\n    /// @notice Sends ERC20 tokens to a receiver's address on the other chain.\n    /// @param _localToken  Address of the ERC20 on this chain.\n    /// @param _remoteToken Address of the corresponding token on the remote chain.\n    /// @param _to          Address of the receiver.\n    /// @param _amount      Amount of local tokens to deposit.\n    /// @param _minGasLimit Minimum amount of gas that the bridge can be relayed with.\n    /// @param _extraData   Extra data to be sent with the transaction. Note that the recipient will\n    ///                     not be triggered with this data, but it will be emitted and can be used\n    ///                     to identify the transaction.\n    function _initiateBridgeERC20(\n        address _localToken,\n        address _remoteToken,\n        address _from,\n        address _to,\n        uint256 _amount,\n        uint32 _minGasLimit,\n        bytes memory _extraData,\n        bool _performSafeTransferFrom,\n        bool _allowMsgValue\n    ) internal virtual {\n        require(msg.value == 0 || _allowMsgValue, \"StandardBridge: cannot send value\");\n\n        if (_isOptimismMintableERC20(_localToken)) {\n            require(\n                _isCorrectTokenPair(_localToken, _remoteToken),\n                \"StandardBridge: wrong remote token for Optimism Mintable ERC20 local token\"\n            );\n\n            OptimismMintableERC20(_localToken).burn(_from, _amount);\n        } else {\n            if (_performSafeTransferFrom) {\n                IERC20(_localToken).safeTransferFrom(_from, address(this), _amount);\n            }\n\n            deposits[_localToken][_remoteToken] = deposits[_localToken][_remoteToken] + _amount;\n        }\n\n        // Emit the correct events. By default this will be ERC20BridgeInitiated, but child\n        // contracts may override this function in order to emit legacy events as well.\n        _emitERC20BridgeInitiated(_localToken, _remoteToken, _from, _to, _amount, _extraData);\n\n        if (onL1()) {\n            bytes32 depositId = generateDepositId();\n\n            _sendERC20DepositMessage({\n                _depositId: depositId,\n                _l1Token: _localToken,\n                _l2Token: _remoteToken,\n                _from: _from,\n                _to: _to,\n                _amount: _amount,\n                _extraData: _extraData,\n                _isInitialDeposit: true\n            });\n        } else {\n            messenger.sendMessage({\n                _target: address(otherBridge),\n                _message: abi.encodeWithSelector(\n                    this.finalizeBridgeERC20.selector,\n                    // Because this call will be executed on the remote chain, we reverse the order of\n                    // the remote and local token addresses relative to their order in the\n                    // finalizeBridgeERC20 function.\n                    _remoteToken,\n                    _localToken,\n                    _from,\n                    _to,\n                    _amount,\n                    _extraData\n                ),\n                _minGasLimit: _minGasLimit\n            });\n        }\n    }\n\n    /// @notice Checks if a given address is an OptimismMintableERC20. Not perfect, but good enough.\n    ///         Just the way we like it.\n    /// @param _token Address of the token to check.\n    /// @return True if the token is an OptimismMintableERC20.\n    function _isOptimismMintableERC20(address _token) internal view returns (bool) {\n        return ERC165Checker.supportsInterface(_token, type(ILegacyMintableERC20).interfaceId)\n            || ERC165Checker.supportsInterface(_token, type(IOptimismMintableERC20).interfaceId);\n    }\n\n    /// @notice Checks if the \"other token\" is the correct pair token for the OptimismMintableERC20.\n    ///         Calls can be saved in the future by combining this logic with\n    ///         `_isOptimismMintableERC20`.\n    /// @param _mintableToken OptimismMintableERC20 to check against.\n    /// @param _otherToken    Pair token to check.\n    /// @return True if the other token is the correct pair token for the OptimismMintableERC20.\n    function _isCorrectTokenPair(address _mintableToken, address _otherToken) internal view returns (bool) {\n        if (ERC165Checker.supportsInterface(_mintableToken, type(ILegacyMintableERC20).interfaceId)) {\n            return _otherToken == ILegacyMintableERC20(_mintableToken).l1Token();\n        } else {\n            return _otherToken == IOptimismMintableERC20(_mintableToken).remoteToken();\n        }\n    }\n\n    /// @notice Emits the ETHBridgeInitiated event and if necessary the appropriate legacy event\n    ///         when an ETH bridge is finalized on this chain.\n    /// @param _from      Address of the sender.\n    /// @param _to        Address of the receiver.\n    /// @param _amount    Amount of ETH sent.\n    /// @param _extraData Extra data sent with the transaction.\n    function _emitETHBridgeInitiated(address _from, address _to, uint256 _amount, bytes memory _extraData)\n        internal\n        virtual\n    {\n        emit ETHBridgeInitiated(_from, _to, _amount, _extraData);\n    }\n\n    /// @notice Emits the ETHBridgeFinalized and if necessary the appropriate legacy event when an\n    ///         ETH bridge is finalized on this chain.\n    /// @param _from      Address of the sender.\n    /// @param _to        Address of the receiver.\n    /// @param _amount    Amount of ETH sent.\n    /// @param _extraData Extra data sent with the transaction.\n    function _emitETHBridgeFinalized(address _from, address _to, uint256 _amount, bytes memory _extraData)\n        internal\n        virtual\n    {\n        emit ETHBridgeFinalized(_from, _to, _amount, _extraData);\n    }\n\n    /// @notice Emits the ERC20BridgeInitiated event and if necessary the appropriate legacy\n    ///         event when an ERC20 bridge is initiated to the other chain.\n    /// @param _localToken  Address of the ERC20 on this chain.\n    /// @param _remoteToken Address of the ERC20 on the remote chain.\n    /// @param _from        Address of the sender.\n    /// @param _to          Address of the receiver.\n    /// @param _amount      Amount of the ERC20 sent.\n    /// @param _extraData   Extra data sent with the transaction.\n    function _emitERC20BridgeInitiated(\n        address _localToken,\n        address _remoteToken,\n        address _from,\n        address _to,\n        uint256 _amount,\n        bytes memory _extraData\n    ) internal virtual {\n        emit ERC20BridgeInitiated(_localToken, _remoteToken, _from, _to, _amount, _extraData);\n    }\n\n    /// @notice Emits the ERC20BridgeFinalized event and if necessary the appropriate legacy\n    ///         event when an ERC20 bridge is initiated to the other chain.\n    /// @param _localToken  Address of the ERC20 on this chain.\n    /// @param _remoteToken Address of the ERC20 on the remote chain.\n    /// @param _from        Address of the sender.\n    /// @param _to          Address of the receiver.\n    /// @param _amount      Amount of the ERC20 sent.\n    /// @param _extraData   Extra data sent with the transaction.\n    function _emitERC20BridgeFinalized(\n        address _localToken,\n        address _remoteToken,\n        address _from,\n        address _to,\n        uint256 _amount,\n        bytes memory _extraData\n    ) internal virtual {\n        emit ERC20BridgeFinalized(_localToken, _remoteToken, _from, _to, _amount, _extraData);\n    }\n}",
+  "resolutions": {
+    "1daaed8c8125f2b6": {
+      "status": "differs",
+      "coveredLines": 543,
+      "match": {
+        "origin": "own",
+        "collection": "facet",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "StandardBridge",
+        "similarity": 0.851,
+        "reportId": "facet/zellic-facet-bridge-2024-11-04",
+        "repository": "0xFacet/facet-optimism",
+        "path": "packages/contracts-bedrock/src/universal/StandardBridge.sol",
+        "commit": "10d1a7971af7c066969038d20661a10474c05d72",
+        "commitTimestamp": "2024-10-17T16:08:45Z",
+        "url": "https://github.com/0xFacet/facet-optimism/blob/10d1a7971af7c066969038d20661a10474c05d72/packages/contracts-bedrock/src/universal/StandardBridge.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "discussion of changes made during the engagement",
+        "coverage": "added argument to _initiateERC20Deposit allowing the transferFrom call to be skipped",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "diff": {
+        "added": 65,
+        "removed": 24,
+        "ignoredAdded": 14,
+        "ignoredRemoved": 10,
+        "unchanged": 543,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 60,
+            "oldLines": 6,
+            "newStart": 60,
+            "newLines": 16,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 60,
+                "newLine": 60,
+                "text": "        bytes extraData"
+              },
+              { "type": " ", "oldLine": 61, "newLine": 61, "text": "    );" },
+              { "type": " ", "oldLine": 62, "newLine": 62, "text": "" },
+              {
+                "type": "+",
+                "newLine": 63,
+                "text": "    event L1ERC20DepositAttempted(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 64,
+                "text": "        bytes32 indexed depositId,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 65,
+                "text": "        address indexed l1Token,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 66,
+                "text": "        address indexed l2Token,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 67,
+                "text": "        address from,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 68,
+                "text": "        address to,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 69,
+                "text": "        uint256 amount,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 70,
+                "text": "        bytes extraData",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 71,
+                "text": "    );",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 72, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 63,
+                "newLine": 73,
+                "text": "    /// @notice Emitted when an ERC20 bridge is finalized on this chain."
+              },
+              {
+                "type": " ",
+                "oldLine": 64,
+                "newLine": 74,
+                "text": "    /// @param localToken  Address of the ERC20 on this chain."
+              },
+              {
+                "type": " ",
+                "oldLine": 65,
+                "newLine": 75,
+                "text": "    /// @param remoteToken Address of the ERC20 on the remote chain."
+              }
+            ]
+          },
+          {
+            "oldStart": 76,
+            "oldLines": 8,
+            "newStart": 86,
+            "newLines": 6,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 76,
+                "newLine": 86,
+                "text": "        bytes extraData"
+              },
+              { "type": " ", "oldLine": 77, "newLine": 87, "text": "    );" },
+              { "type": " ", "oldLine": 78, "newLine": 88, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 79,
+                "text": "    event ERC20DepositReplayed(bytes32 indexed depositId, bytes payload);",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 80, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 81,
+                "newLine": 89,
+                "text": "    struct BridgeStorage {"
+              },
+              {
+                "type": " ",
+                "oldLine": 82,
+                "newLine": 90,
+                "text": "        mapping(bytes32 => bytes32) depositHashes;"
+              },
+              {
+                "type": " ",
+                "oldLine": 83,
+                "newLine": 91,
+                "text": "        mapping(bytes32 => bool) finalizedDeposits;"
+              }
+            ]
+          },
+          {
+            "oldStart": 110,
+            "oldLines": 7,
+            "newStart": 118,
+            "newLines": 8,
+            "lines": [
+              { "type": " ", "oldLine": 110, "newLine": 118, "text": "    }" },
+              { "type": " ", "oldLine": 111, "newLine": 119, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 112,
+                "newLine": 120,
+                "text": "    function generateDepositId() internal onlyOnL1 returns (bytes32) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 113,
+                "text": "        return keccak256(abi.encode(address(this), msg.sender, s().depositIdNonce++));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 121,
+                "text": "        s().depositIdNonce++;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 122,
+                "text": "        return keccak256(abi.encode(address(this), msg.sender, s().depositIdNonce));",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 114, "newLine": 123, "text": "    }" },
+              { "type": " ", "oldLine": 115, "newLine": 124, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 116,
+                "newLine": 125,
+                "text": "    /// @notice Only allow EOAs to call the functions. Note that this is not safe against contracts"
+              }
+            ]
+          },
+          {
+            "oldStart": 281,
+            "oldLines": 41,
+            "newStart": 290,
+            "newLines": 70,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 281,
+                "newLine": 290,
+                "text": "        require(success, \"StandardBridge: ETH transfer failed\");"
+              },
+              { "type": " ", "oldLine": 282, "newLine": 291, "text": "    }" },
+              { "type": " ", "oldLine": 283, "newLine": 292, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 284,
+                "text": "    function replayERC20Deposit(bytes32 _depositId, bytes memory _payload) public onlyOnL1 {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 285,
+                "text": "        bytes32 depositHash = s().depositHashes[_depositId];",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 293,
+                "text": "    function replayERC20Deposit(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 294,
+                "text": "        bytes32 _depositId,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 295,
+                "text": "        address _l1Token,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 296,
+                "text": "        address _l2Token,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 297,
+                "text": "        address _from,",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 298,
+                "text": "        address _to,",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 299,
+                "text": "        uint256 _amount,",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 300,
+                "text": "        bytes memory _extraData",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 301,
+                "text": "    ) public onlyOnL1 {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 302,
+                "text": "        _sendERC20DepositMessage({",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 303,
+                "text": "            _depositId: _depositId,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 304,
+                "text": "            _l1Token: _l1Token,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 305,
+                "text": "            _l2Token: _l2Token,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 306,
+                "text": "            _from: _from,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 307,
+                "text": "            _to: _to,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 308,
+                "text": "            _amount: _amount,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 309,
+                "text": "            _extraData: _extraData,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 310,
+                "text": "            _isInitialDeposit: false",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 311,
+                "text": "        });",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 312,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 286, "newLine": 313, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 287,
+                "text": "        require(_depositId != bytes32(0), \"StandardBridge: deposit not found\");",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 288,
+                "text": "        require(depositHash != bytes32(0), \"StandardBridge: deposit not found\");",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 289,
+                "text": "        require(depositHash == keccak256(_payload), \"StandardBridge: invalid deposit payload\");",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 314,
+                "text": "    function _sendERC20DepositMessage(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 315,
+                "text": "        bytes32 _depositId,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 316,
+                "text": "        address _l1Token,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 317,
+                "text": "        address _l2Token,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 318,
+                "text": "        address _from,",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 319,
+                "text": "        address _to,",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 320,
+                "text": "        uint256 _amount,",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 321,
+                "text": "        bytes memory _extraData,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 322,
+                "text": "        bool _isInitialDeposit",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 323,
+                "text": "    ) internal onlyOnL1 {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 324,
+                "text": "        bytes memory payload = abi.encode(_l2Token, _l1Token, _from, _to, _amount, _extraData);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 290, "newLine": 325, "text": "" },
+              {
+                "type": "+",
+                "newLine": 326,
+                "text": "        if (_isInitialDeposit) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 327,
+                "text": "            s().depositHashes[_depositId] = keccak256(payload);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 328,
+                "text": "        } else {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 329,
+                "text": "            require(s().depositHashes[_depositId] == keccak256(payload), \"StandardBridge: invalid deposit parameters\");",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 330,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 331, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 291,
+                "newLine": 332,
+                "text": "        LibFacet.sendFacetTransaction({"
+              },
+              {
+                "type": " ",
+                "oldLine": 292,
+                "newLine": 333,
+                "text": "            gasLimit: 500_000,"
+              },
+              {
+                "type": " ",
+                "oldLine": 293,
+                "newLine": 334,
+                "text": "            to: address(otherBridge),"
+              },
+              {
+                "type": "-",
+                "oldLine": 294,
+                "text": "            data: abi.encodeWithSelector(this.finalizeBridgeERC20Replayable.selector, _depositId, _payload)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 335,
+                "text": "            data: abi.encodeWithSelector(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 336,
+                "text": "                this.finalizeBridgeERC20Replayable.selector, _depositId, _l2Token, _l1Token, _from, _to, _amount, _extraData",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 337,
+                "text": "            )",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 295,
+                "newLine": 338,
+                "text": "        });"
+              },
+              { "type": " ", "oldLine": 296, "newLine": 339, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 297,
+                "text": "        emit ERC20DepositReplayed(_depositId, _payload);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 340,
+                "text": "        emit L1ERC20DepositAttempted(_depositId, _l1Token, _l2Token, _from, _to, _amount, _extraData);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 298, "newLine": 341, "text": "    }" },
+              { "type": " ", "oldLine": 299, "newLine": 342, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 300,
+                "text": "    function finalizeBridgeERC20Replayable(bytes32 _depositId, bytes calldata finalizeBridgeERC20Data)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 301,
+                "text": "        public",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 302,
+                "text": "        onlyOnL2",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 303,
+                "text": "        onlyOtherBridge",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 304,
+                "text": "    {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 343,
+                "text": "    function finalizeBridgeERC20Replayable(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 344,
+                "text": "        bytes32 _depositId,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 345,
+                "text": "        address _localToken,",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 346,
+                "text": "        address _remoteToken,",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 347,
+                "text": "        address _from,",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 348,
+                "text": "        address _to,",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 349,
+                "text": "        uint256 _amount,",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 350,
+                "text": "        bytes calldata _extraData",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 351,
+                "text": "    ) public onlyOnL2 onlyOtherBridge {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 305,
+                "newLine": 352,
+                "text": "        bool depositFinalized = s().finalizedDeposits[_depositId];"
+              },
+              {
+                "type": " ",
+                "oldLine": 306,
+                "newLine": 353,
+                "text": "        require(!depositFinalized, \"StandardBridge: deposit already finalized\");"
+              },
+              { "type": " ", "oldLine": 307, "newLine": 354, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 308,
+                "newLine": 355,
+                "text": "        s().finalizedDeposits[_depositId] = true;"
+              },
+              { "type": " ", "oldLine": 309, "newLine": 356, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 310,
+                "text": "        (",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 311,
+                "text": "            address _localToken,",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 312,
+                "text": "            address _remoteToken,",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 313,
+                "text": "            address _from,",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 314,
+                "text": "            address _to,",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 315,
+                "text": "            uint256 _amount,",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 316,
+                "text": "            bytes memory _extraData",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 317,
+                "text": "        ) = abi.decode(finalizeBridgeERC20Data, (address, address, address, address, uint256, bytes));",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 318, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 319,
+                "newLine": 357,
+                "text": "        // Call the non-replayable finalizeBridgeERC20 function"
+              },
+              {
+                "type": " ",
+                "oldLine": 320,
+                "newLine": 358,
+                "text": "        finalizeBridgeERC20(_localToken, _remoteToken, _from, _to, _amount, _extraData);"
+              },
+              { "type": " ", "oldLine": 321, "newLine": 359, "text": "    }" }
+            ]
+          },
+          {
+            "oldStart": 336,
+            "oldLines": 7,
+            "newStart": 374,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 336,
+                "newLine": 374,
+                "text": "        address _from,"
+              },
+              {
+                "type": " ",
+                "oldLine": 337,
+                "newLine": 375,
+                "text": "        address _to,"
+              },
+              {
+                "type": " ",
+                "oldLine": 338,
+                "newLine": 376,
+                "text": "        uint256 _amount,"
+              },
+              {
+                "type": "-",
+                "oldLine": 339,
+                "text": "        bytes memory _extraData",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 377,
+                "text": "        bytes calldata _extraData",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 340,
+                "newLine": 378,
+                "text": "    ) public onlyOtherBridge {"
+              },
+              {
+                "type": " ",
+                "oldLine": 341,
+                "newLine": 379,
+                "text": "        require(paused() == false, \"StandardBridge: paused\");"
+              },
+              {
+                "type": " ",
+                "oldLine": 342,
+                "newLine": 380,
+                "text": "        if (_isOptimismMintableERC20(_localToken)) {"
+              }
+            ]
+          },
+          {
+            "oldStart": 402,
+            "oldLines": 7,
+            "newStart": 440,
+            "newLines": 8,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 402,
+                "newLine": 440,
+                "text": "            _amount: _amount,"
+              },
+              {
+                "type": " ",
+                "oldLine": 403,
+                "newLine": 441,
+                "text": "            _minGasLimit: _minGasLimit,"
+              },
+              {
+                "type": " ",
+                "oldLine": 404,
+                "newLine": 442,
+                "text": "            _extraData: _extraData,"
+              },
+              {
+                "type": "-",
+                "oldLine": 405,
+                "text": "            _performSafeTransferFrom: true",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 443,
+                "text": "            _performSafeTransferFrom: true,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 444,
+                "text": "            _allowMsgValue: false",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 406,
+                "newLine": 445,
+                "text": "        });"
+              },
+              { "type": " ", "oldLine": 407, "newLine": 446, "text": "    }" },
+              { "type": " ", "oldLine": 408, "newLine": 447, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 423,
+            "oldLines": 9,
+            "newStart": 462,
+            "newLines": 10,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 423,
+                "newLine": 462,
+                "text": "        uint256 _amount,"
+              },
+              {
+                "type": " ",
+                "oldLine": 424,
+                "newLine": 463,
+                "text": "        uint32 _minGasLimit,"
+              },
+              {
+                "type": " ",
+                "oldLine": 425,
+                "newLine": 464,
+                "text": "        bytes memory _extraData,"
+              },
+              {
+                "type": "-",
+                "oldLine": 426,
+                "text": "        bool _performSafeTransferFrom",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 427,
+                "text": "    ) internal {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 428,
+                "text": "        require(msg.value == 0, \"StandardBridge: cannot send value\");",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 465,
+                "text": "        bool _performSafeTransferFrom,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 466,
+                "text": "        bool _allowMsgValue",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 467,
+                "text": "    ) internal virtual {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 468,
+                "text": "        require(msg.value == 0 || _allowMsgValue, \"StandardBridge: cannot send value\");",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 429, "newLine": 469, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 430,
+                "newLine": 470,
+                "text": "        if (_isOptimismMintableERC20(_localToken)) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 431,
+                "newLine": 471,
+                "text": "            require("
+              }
+            ]
+          },
+          {
+            "oldStart": 449,
+            "oldLines": 11,
+            "newStart": 489,
+            "newLines": 16,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 449,
+                "newLine": 489,
+                "text": "        if (onL1()) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 450,
+                "newLine": 490,
+                "text": "            bytes32 depositId = generateDepositId();"
+              },
+              { "type": " ", "oldLine": 451, "newLine": 491, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 452,
+                "text": "            bytes memory payload = abi.encode(_remoteToken, _localToken, _from, _to, _amount, _extraData);",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 453, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 454,
+                "text": "            s().depositHashes[depositId] = keccak256(payload);",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 455, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 456,
+                "text": "            replayERC20Deposit(depositId, payload);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 492,
+                "text": "            _sendERC20DepositMessage({",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 493,
+                "text": "                _depositId: depositId,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 494,
+                "text": "                _l1Token: _localToken,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 495,
+                "text": "                _l2Token: _remoteToken,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 496,
+                "text": "                _from: _from,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 497,
+                "text": "                _to: _to,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 498,
+                "text": "                _amount: _amount,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 499,
+                "text": "                _extraData: _extraData,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 500,
+                "text": "                _isInitialDeposit: true",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 501,
+                "text": "            });",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 457,
+                "newLine": 502,
+                "text": "        } else {"
+              },
+              {
+                "type": " ",
+                "oldLine": 458,
+                "newLine": 503,
+                "text": "            messenger.sendMessage({"
+              },
+              {
+                "type": " ",
+                "oldLine": 459,
+                "newLine": 504,
+                "text": "                _target: address(otherBridge),"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

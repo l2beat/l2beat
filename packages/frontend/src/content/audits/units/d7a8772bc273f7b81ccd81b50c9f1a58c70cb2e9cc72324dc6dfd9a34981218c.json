@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "d7a8772bc273f7b81ccd81b50c9f1a58c70cb2e9cc72324dc6dfd9a34981218c",
+  "name": "from_field.nr",
+  "kind": "program",
+  "lines": 46,
+  "source": "pub trait FromField {\n    fn from_field(value: Field) -> Self;\n}\n\nimpl FromField for Field {\n    #[inline_always]\n    fn from_field(value: Field) -> Self {\n        value\n    }\n}\n\nimpl FromField for bool {\n    #[inline_always]\n    fn from_field(value: Field) -> Self {\n        value != 0\n    }\n}\nimpl FromField for u8 {\n    #[inline_always]\n    fn from_field(value: Field) -> Self {\n        value as u8\n    }\n}\nimpl FromField for u16 {\n    fn from_field(value: Field) -> Self {\n        value as u16\n    }\n}\nimpl FromField for u32 {\n    #[inline_always]\n    fn from_field(value: Field) -> Self {\n        value as u32\n    }\n}\nimpl FromField for u64 {\n    #[inline_always]\n    fn from_field(value: Field) -> Self {\n        value as u64\n    }\n}\nimpl FromField for u128 {\n    #[inline_always]\n    fn from_field(value: Field) -> Self {\n        value as u128\n    }\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

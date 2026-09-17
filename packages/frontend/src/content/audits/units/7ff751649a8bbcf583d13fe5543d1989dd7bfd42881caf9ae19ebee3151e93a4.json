@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "7ff751649a8bbcf583d13fe5543d1989dd7bfd42881caf9ae19ebee3151e93a4",
+  "name": "IPermit2",
+  "kind": "interface",
+  "lines": 3,
+  "source": "interface IPermit2 is ISignatureTransfer, IAllowanceTransfer {\n// IPermit2 unifies the two interfaces so users have maximal flexibility with their approval.\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,100 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "b27a16080e8bba7b869400a2d0f3b0f763f650457dc9fcdf7f75828b10f879da",
+  "name": "LPPMetadataLib",
+  "kind": "library",
+  "lines": 76,
+  "source": "library LPPMetadataLib {\n    uint256 private constant U64_MASK = 0xFFFFFFFFFFFFFFFF;\n    uint256 private constant U32_MASK = 0xFFFFFFFF;\n\n    function setTimestamp(LPPMetaData _self, uint64 _timestamp) internal pure returns (LPPMetaData self_) {\n        assembly {\n            self_ := or(shl(192, _timestamp), and(_self, not(shl(192, U64_MASK))))\n        }\n    }\n\n    function setPartOffset(LPPMetaData _self, uint32 _partOffset) internal pure returns (LPPMetaData self_) {\n        assembly {\n            self_ := or(shl(160, _partOffset), and(_self, not(shl(160, U32_MASK))))\n        }\n    }\n\n    function setClaimedSize(LPPMetaData _self, uint32 _claimedSize) internal pure returns (LPPMetaData self_) {\n        assembly {\n            self_ := or(shl(128, _claimedSize), and(_self, not(shl(128, U32_MASK))))\n        }\n    }\n\n    function setBlocksProcessed(LPPMetaData _self, uint32 _blocksProcessed) internal pure returns (LPPMetaData self_) {\n        assembly {\n            self_ := or(shl(96, _blocksProcessed), and(_self, not(shl(96, U32_MASK))))\n        }\n    }\n\n    function setBytesProcessed(LPPMetaData _self, uint32 _bytesProcessed) internal pure returns (LPPMetaData self_) {\n        assembly {\n            self_ := or(shl(64, _bytesProcessed), and(_self, not(shl(64, U32_MASK))))\n        }\n    }\n\n    function setCountered(LPPMetaData _self, bool _countered) internal pure returns (LPPMetaData self_) {\n        assembly {\n            self_ := or(_countered, and(_self, not(U64_MASK)))\n        }\n    }\n\n    function timestamp(LPPMetaData _self) internal pure returns (uint64 timestamp_) {\n        assembly {\n            timestamp_ := shr(192, _self)\n        }\n    }\n\n    function partOffset(LPPMetaData _self) internal pure returns (uint64 partOffset_) {\n        assembly {\n            partOffset_ := and(shr(160, _self), U32_MASK)\n        }\n    }\n\n    function claimedSize(LPPMetaData _self) internal pure returns (uint32 claimedSize_) {\n        assembly {\n            claimedSize_ := and(shr(128, _self), U32_MASK)\n        }\n    }\n\n    function blocksProcessed(LPPMetaData _self) internal pure returns (uint32 blocksProcessed_) {\n        assembly {\n            blocksProcessed_ := and(shr(96, _self), U32_MASK)\n        }\n    }\n\n    function bytesProcessed(LPPMetaData _self) internal pure returns (uint32 bytesProcessed_) {\n        assembly {\n            bytesProcessed_ := and(shr(64, _self), U32_MASK)\n        }\n    }\n\n    function countered(LPPMetaData _self) internal pure returns (bool countered_) {\n        assembly {\n            countered_ := and(_self, U64_MASK)\n        }\n    }\n}",
+  "resolutions": {
+    "ba5b6c9584fb78fd": {
+      "status": "identical",
+      "coveredLines": 76,
+      "match": {
+        "origin": "upstream",
+        "collection": "optimism",
+        "relation": {
+          "type": "fork_of",
+          "repository": "ethereum-optimism/optimism"
+        },
+        "rank": 1,
+        "matchedBy": "identity",
+        "auditedName": "LPPMetadataLib",
+        "similarity": 1,
+        "reportId": "optimism/code4rena-superchain-2024-08",
+        "repository": "code-423n4/2024-07-optimism",
+        "path": "packages/contracts-bedrock/src/cannon/libraries/CannonTypes.sol",
+        "commit": "70556044e5e080930f686c4e5acde420104bb2c4",
+        "commitTimestamp": "2024-07-17T15:00:40Z",
+        "url": "https://github.com/code-423n4/2024-07-optimism/blob/70556044e5e080930f686c4e5acde420104bb2c4/packages/contracts-bedrock/src/cannon/libraries/CannonTypes.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Contest scope file (six contracts, 1847 SLOC per the contest README); code links in the report pin this commit of the mirror repository.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "warnings": []
+    },
+    "44ad4cf96e2ef6f0": {
+      "status": "identical",
+      "coveredLines": 76,
+      "match": {
+        "origin": "upstream",
+        "collection": "optimism",
+        "relation": {
+          "type": "fork_of",
+          "repository": "ethereum-optimism/optimism"
+        },
+        "rank": 1,
+        "matchedBy": "identity",
+        "auditedName": "LPPMetadataLib",
+        "similarity": 1,
+        "reportId": "optimism/code4rena-superchain-2024-08",
+        "repository": "code-423n4/2024-07-optimism",
+        "path": "packages/contracts-bedrock/src/cannon/libraries/CannonTypes.sol",
+        "commit": "70556044e5e080930f686c4e5acde420104bb2c4",
+        "commitTimestamp": "2024-07-17T15:00:40Z",
+        "url": "https://github.com/code-423n4/2024-07-optimism/blob/70556044e5e080930f686c4e5acde420104bb2c4/packages/contracts-bedrock/src/cannon/libraries/CannonTypes.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Contest scope file (six contracts, 1847 SLOC per the contest README); code links in the report pin this commit of the mirror repository.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "warnings": []
+    },
+    "bb55951394276893": {
+      "status": "identical",
+      "coveredLines": 76,
+      "match": {
+        "origin": "stack",
+        "collection": "optimism",
+        "relation": {
+          "type": "template",
+          "template": "opstack/AddressManager"
+        },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "LPPMetadataLib",
+        "similarity": 1,
+        "reportId": "optimism/code4rena-superchain-2024-08",
+        "repository": "code-423n4/2024-07-optimism",
+        "path": "packages/contracts-bedrock/src/cannon/libraries/CannonTypes.sol",
+        "commit": "70556044e5e080930f686c4e5acde420104bb2c4",
+        "commitTimestamp": "2024-07-17T15:00:40Z",
+        "url": "https://github.com/code-423n4/2024-07-optimism/blob/70556044e5e080930f686c4e5acde420104bb2c4/packages/contracts-bedrock/src/cannon/libraries/CannonTypes.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Contest scope file (six contracts, 1847 SLOC per the contest README); code links in the report pin this commit of the mirror repository.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "warnings": []
+    }
+  }
+}

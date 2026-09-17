@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "adc681e206e83d0ad2fd1c994dbc0e55746149116b55cb64874ecf609eded1e6",
+  "name": "Comparators",
+  "kind": "library",
+  "lines": 9,
+  "source": "library Comparators {\n    function lt(uint256 a, uint256 b) internal pure returns (bool) {\n        return a < b;\n    }\n\n    function gt(uint256 a, uint256 b) internal pure returns (bool) {\n        return a > b;\n    }\n}",
+  "resolutions": {
+    "eea968a44e5d263a": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

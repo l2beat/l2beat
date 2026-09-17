@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "cc500f3a4c05e60164562fc5969fafca8eaaef3f07866b11fcd058e5c3c11787",
+  "name": "TokenJar",
+  "kind": "contract",
+  "lines": 35,
+  "source": "contract TokenJar is Owned, ITokenJar {\n    /// @inheritdoc ITokenJar\n    address public releaser;\n\n    /// @notice Ensures only the releaser can call the release function\n    modifier onlyReleaser() {\n        require(msg.sender == releaser, Unauthorized());\n        _;\n    }\n\n    /// @dev creates an token jar where the deployer is the initial owner\n    /// during deployment, the deployer SHOULD set the releaser address and\n    /// transfer ownership\n    constructor() Owned(msg.sender) {}\n\n    /// @inheritdoc ITokenJar\n    function release(Currency[] calldata assets, address recipient) external onlyReleaser {\n        Currency asset;\n        uint256 amount;\n        for (uint256 i; i < assets.length; i++) {\n            asset = assets[i];\n            amount = asset.balanceOfSelf();\n            if (amount > 0) {\n                asset.transfer(recipient, amount);\n            }\n        }\n    }\n\n    /// @inheritdoc ITokenJar\n    function setReleaser(address _releaser) external onlyOwner {\n        releaser = _releaser;\n    }\n\n    receive() external payable {}\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

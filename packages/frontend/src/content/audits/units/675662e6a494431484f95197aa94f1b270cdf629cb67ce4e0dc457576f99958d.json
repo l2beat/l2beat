@@ -1,0 +1,434 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "675662e6a494431484f95197aa94f1b270cdf629cb67ce4e0dc457576f99958d",
+  "name": "KailuaTournament",
+  "kind": "abstract",
+  "lines": 640,
+  "source": "abstract contract KailuaTournament is IKailuaTournament, Clone, IDisputeGame {\n    // ------------------------------\n    // Immutable configuration\n    // ------------------------------\n\n    /// @notice The Kailua Treasury Implementation contract address\n    IKailuaTreasury public immutable KAILUA_TREASURY;\n\n    /// @notice The Kailua Verifier contract\n    KailuaVerifier public immutable KAILUA_VERIFIER;\n\n    /// @notice The number of outputs a proposal must publish\n    uint64 public immutable PROPOSAL_OUTPUT_COUNT;\n\n    /// @notice The number of blocks each output must cover\n    uint64 public immutable OUTPUT_BLOCK_SPAN;\n\n    /// @notice The number of blobs a claim must provide\n    uint64 public immutable PROPOSAL_BLOBS;\n\n    /// @notice The game type ID\n    GameType public immutable GAME_TYPE;\n\n    /// @notice The OptimismPortal2 instance\n    IOptimismPortal2 public immutable OPTIMISM_PORTAL;\n\n    /// @notice The DisputeGameFactory instance\n    IDisputeGameFactory public immutable DISPUTE_GAME_FACTORY;\n\n    constructor(\n        IKailuaTreasury _kailuaTreasury,\n        KailuaVerifier _kailuaVerifier,\n        uint64 _proposalOutputCount,\n        uint64 _outputBlockSpan,\n        GameType _gameType,\n        IOptimismPortal2 _optimismPortal\n    ) {\n        KAILUA_TREASURY = _kailuaTreasury;\n        KAILUA_VERIFIER = _kailuaVerifier;\n        PROPOSAL_OUTPUT_COUNT = _proposalOutputCount;\n        OUTPUT_BLOCK_SPAN = _outputBlockSpan;\n        // discard published root commitment in calldata\n        _proposalOutputCount--;\n        PROPOSAL_BLOBS = (_proposalOutputCount / uint64(KailuaKZGLib.FIELD_ELEMENTS_PER_BLOB))\n            + ((_proposalOutputCount % uint64(KailuaKZGLib.FIELD_ELEMENTS_PER_BLOB)) == 0 ? 0 : 1);\n        GAME_TYPE = _gameType;\n        OPTIMISM_PORTAL = _optimismPortal;\n        DISPUTE_GAME_FACTORY = OPTIMISM_PORTAL.disputeGameFactory();\n    }\n\n    function initializeInternal() internal {\n        // INVARIANT: The game must not have already been initialized.\n        if (createdAt.raw() > 0) {\n            revert AlreadyInitialized();\n        }\n\n        // Allow only the treasury to create new games\n        if (gameCreator() != address(KAILUA_TREASURY)) {\n            revert Blacklisted(gameCreator(), address(KAILUA_TREASURY));\n        }\n\n        // Set the game's starting timestamp\n        createdAt = Timestamp.wrap(uint64(block.timestamp));\n\n        // Set the game's index in the factory\n        gameIndex = DISPUTE_GAME_FACTORY.gameCount();\n\n        // Read respected status\n        wasRespectedGameTypeWhenCreated = OPTIMISM_PORTAL.respectedGameType().raw() == GAME_TYPE.raw();\n    }\n\n    // ------------------------------\n    // Game State\n    // ------------------------------\n\n    /// @notice The blob hashes used to create the game\n    Hash[] public proposalBlobHashes;\n\n    /// @notice The game's index in the factory\n    uint256 public gameIndex;\n\n    /// @notice The address of the prover of a proposal signature\n    mapping(bytes32 => address) public prover;\n\n    /// @notice The timestamp of when the first proof for a proposal signature was made\n    mapping(bytes32 => Timestamp) public provenAt;\n\n    /// @notice The current proof status of a proposal signature\n    mapping(bytes32 => ProofStatus) public proofStatus;\n\n    /// @notice The proposals extending this proposal\n    KailuaTournament[] public children;\n\n    /// @notice The first surviving contender\n    uint64 public contenderIndex;\n\n    /// @notice Duplicates of the last surviving contender proposal\n    uint64[] public contenderDuplicates;\n\n    /// @notice The next unprocessed opponent\n    uint64 public opponentIndex;\n\n    /// @notice The signature of the child accepted through a validity proof\n    bytes32 public validChildSignature;\n\n    /// @notice Returns the hash of the output claim and all blob hashes associated with this proposal\n    function signature() public view returns (bytes32 signature_) {\n        // note: the absence of the l1Head in the signature implies that\n        // proofs will eventually demonstrate derivation\n        signature_ = sha256(abi.encodePacked(rootClaim().raw(), proposalBlobHashes));\n    }\n\n    /// @notice Returns whether a child can be considered valid\n    function isViableSignature(bytes32 childSignature) public view returns (bool isViableSignature_) {\n        if (validChildSignature != 0) {\n            isViableSignature_ = childSignature == validChildSignature;\n        } else {\n            isViableSignature_ = proofStatus[childSignature] != ProofStatus.FAULT;\n        }\n    }\n\n    /// @notice Returns the address of the prover of the specified signature or the prover of the valid signature\n    function getPayoutRecipient(bytes32 childSignature) internal view returns (address payoutRecipient) {\n        // The successful exclusive permit owner receives the payout.\n        payoutRecipient = KAILUA_VERIFIER.faultProofPermitBeneficiary(IKailuaTournament(this), childSignature);\n        // If none exists, then the successful fault prover is the recipient.\n        if (payoutRecipient == address(0x0)) {\n            payoutRecipient = prover[childSignature];\n        }\n        // Otherwise, the successful validity prover receives the payout.\n        if (payoutRecipient == address(0x0)) {\n            payoutRecipient = prover[validChildSignature];\n        }\n        // Otherwise the child signature is viable and there is no recipient.\n    }\n\n    /// @notice Returns true iff the child proposal was eliminated\n    function isChildEliminated(KailuaTournament child) internal view returns (bool) {\n        address _proposer = KAILUA_TREASURY.proposerOf(address(child));\n        uint256 eliminationRound = KAILUA_TREASURY.eliminationRound(_proposer);\n        if (eliminationRound == 0 || eliminationRound > child.gameIndex()) {\n            // This proposer has not been eliminated as of their proposal at gameIndex\n            return false;\n        }\n        return true;\n    }\n\n    /// @notice Returns the number of children\n    function childCount() external view returns (uint256 count_) {\n        count_ = children.length;\n    }\n\n    /// @notice Registers a new proposal that extends this one\n    function appendChild() external {\n        // INVARIANT: The calling contract is a newly deployed contract by the dispute game factory\n        if (!KAILUA_TREASURY.isProposing()) {\n            revert UnknownGame();\n        }\n\n        // INVARIANT: The calling KailuaGame contract is not referring to itself as a parent\n        if (msg.sender == address(this)) {\n            revert InvalidParent();\n        }\n\n        // INVARIANT: No longer accept proposals after resolution\n        if (contenderIndex < children.length && children[contenderIndex].status() == GameStatus.DEFENDER_WINS) {\n            revert ClaimAlreadyResolved();\n        }\n\n        // Append new child to children list\n        children.push(KailuaTournament(msg.sender));\n    }\n\n    /// @notice Returns the amount of time left for challenges as of the input timestamp.\n    function getChallengerDuration(uint256 asOfTimestamp) public view virtual returns (Duration duration_);\n\n    /// @notice Returns the earliest time at which this proposal could have been created\n    function minCreationTime() public view virtual returns (Timestamp minCreationTime_);\n\n    /// @notice Returns the parent game contract.\n    function parentGame() public view virtual returns (KailuaTournament parentGame_);\n\n    /// @notice Returns the proposer address\n    function proposer() public view returns (address proposer_) {\n        proposer_ = KAILUA_TREASURY.proposerOf(address(this));\n    }\n\n    /// @notice Verifies that an intermediate output was part of the proposal\n    function verifyIntermediateOutput(\n        uint64 outputNumber,\n        uint256 outputFe,\n        bytes calldata blobCommitment,\n        bytes calldata kzgProof\n    ) external virtual returns (bool success);\n\n    /// @notice Updates the provability of a child signature if not already set\n    function updateProofStatus(address payoutRecipient, bytes32 childSignature, ProofStatus outcome) internal {\n        // INVARIANT: Proofs can only be submitted once\n        if (proofStatus[childSignature] != ProofStatus.NONE) {\n            revert AlreadyProven();\n        }\n\n        // Update proof status\n        proofStatus[childSignature] = outcome;\n\n        // Announce proof status\n        emit Proven(childSignature, outcome);\n\n        // Set the game's prover address\n        prover[childSignature] = payoutRecipient;\n\n        // Set the game's proving timestamp\n        provenAt[childSignature] = Timestamp.wrap(uint64(block.timestamp));\n    }\n\n    // ------------------------------\n    // IDisputeGame implementation\n    // ------------------------------\n\n    /// @inheritdoc IDisputeGame\n    Timestamp public createdAt;\n\n    /// @inheritdoc IDisputeGame\n    Timestamp public resolvedAt;\n\n    /// @inheritdoc IDisputeGame\n    GameStatus public status;\n\n    /// @inheritdoc IDisputeGame\n    function gameType() external view returns (GameType gameType_) {\n        gameType_ = GAME_TYPE;\n    }\n\n    /// @inheritdoc IDisputeGame\n    function gameCreator() public pure returns (address creator_) {\n        creator_ = _getArgAddress(0x00);\n    }\n\n    /// @inheritdoc IDisputeGame\n    function rootClaim() public pure returns (Claim rootClaim_) {\n        rootClaim_ = Claim.wrap(_getArgBytes32(0x14));\n    }\n\n    /// @inheritdoc IDisputeGame\n    function l1Head() public pure returns (Hash l1Head_) {\n        l1Head_ = Hash.wrap(_getArgBytes32(0x34));\n    }\n\n    /// @notice The l2BlockNumber of the claim's output root.\n    function l2BlockNumber() public pure returns (uint256 l2BlockNumber_) {\n        l2BlockNumber_ = uint256(_getArgUint64(0x54));\n    }\n\n    /// @inheritdoc IDisputeGame\n    function l2SequenceNumber() public pure returns (uint256 l2SequenceNumber_) {\n        l2SequenceNumber_ = l2BlockNumber();\n    }\n\n    /// @inheritdoc IDisputeGame\n    function gameData() external view returns (GameType gameType_, Claim rootClaim_, bytes memory extraData_) {\n        gameType_ = GAME_TYPE;\n        rootClaim_ = this.rootClaim();\n        extraData_ = this.extraData();\n    }\n\n    /// @notice True iff the Kailua GameType was respected by OptimismPortal at time of creation\n    bool public wasRespectedGameTypeWhenCreated;\n\n    /// @notice This is a workaround for withdrawal compatibility under op-contracts v5.0.0\n    function anchorStateRegistry() external view returns (address registry_) {\n        registry_ = msg.sender;\n    }\n\n    // ------------------------------\n    // Tournament\n    // ------------------------------\n\n    /// @notice Eliminates children until at least one remains\n    function pruneChildren(uint256 stepLimit) external returns (KailuaTournament) {\n        // INVARIANT: Only finalized proposals may prune tournaments\n        if (status != GameStatus.DEFENDER_WINS) {\n            revert GameNotResolved();\n        }\n\n        // INVARIANT: No tournament to play without at least one child\n        if (children.length == 0) {\n            revert NotProposed();\n        }\n\n        // Resume from prior surviving contender\n        uint64 u = contenderIndex;\n        // Resume from prior unprocessed opponent\n        uint64 v = opponentIndex;\n        // Abort if out of bounds\n        if (u == children.length) {\n            return KailuaTournament(address(0x0));\n        }\n        // Advance v if needed\n        if (v <= u) {\n            // INVARIANT: contenderDuplicates is empty\n            v = u + 1;\n        }\n\n        // Note: u < children.length\n        // Fetch contender details\n        KailuaTournament contender = children[u];\n        bytes32 contenderSignature = contender.signature();\n\n        // Ensure survivor decision finality after resolution\n        if (contender.status() == GameStatus.DEFENDER_WINS) {\n            return contender;\n        }\n\n        // If the contender is invalid then we eliminate it and find the next viable contender using the opponent\n        // pointer. This search could terminate early if the elimination limit is reached.\n        // If the contender is valid and its proposer is not eliminated, this is skipped.\n        if (!isViableSignature(contenderSignature) || isChildEliminated(contender)) {\n            // INVARIANT: If branch entered through isChildEliminated condition, contenderDuplicates is empty\n\n            // Eliminate duplicates\n            address payoutRecipient = getPayoutRecipient(contenderSignature);\n            for (uint256 i = contenderDuplicates.length; i > 0 && stepLimit > 0; (i--, stepLimit--)) {\n                KailuaTournament duplicate = children[contenderDuplicates[i - 1]];\n                if (!isChildEliminated(duplicate)) {\n                    KAILUA_TREASURY.eliminate(address(duplicate), payoutRecipient);\n                }\n                contenderDuplicates.pop();\n            }\n\n            // Abort if elimination allowance exhausted before eliminating all duplicate contenders\n            if (stepLimit == 0) {\n                return KailuaTournament(address(0x0));\n            }\n\n            // Eliminate contender\n            if (!isChildEliminated(contender)) {\n                KAILUA_TREASURY.eliminate(address(contender), payoutRecipient);\n            }\n            stepLimit--;\n\n            // Find next viable contender\n            // INVARIANT: v > max(u, contenderDuplicates);\n            u = v;\n            for (; u < children.length && stepLimit > 0; (u++, stepLimit--)) {\n                // Skip if previously eliminated\n                contender = children[u];\n                if (isChildEliminated(contender)) {\n                    continue;\n                }\n                // Eliminate if faulty\n                contenderSignature = contender.signature();\n                if (!isViableSignature(contenderSignature)) {\n                    // eliminate the unviable contender\n                    KAILUA_TREASURY.eliminate(address(contender), getPayoutRecipient(contenderSignature));\n                    continue;\n                }\n                // Select u as next viable contender\n                break;\n            }\n            // Store contender\n            contenderIndex = u;\n            // Select the next possible opponent\n            v = u + 1;\n        }\n\n        // Eliminate faulty opponents if we've landed on a viable contender\n        if (u < children.length && isViableSignature(children[u].signature())) {\n            // Iterate over opponents to eliminate them\n            for (; v < children.length && stepLimit > 0; (v++, stepLimit--)) {\n                KailuaTournament opponent = children[v];\n                // If the contender hasn't been challenged for as long as the timeout, declare them winner\n                if (contender.getChallengerDuration(opponent.createdAt().raw()).raw() == 0) {\n                    // Note: This implies eliminationLimit > 0\n                    break;\n                }\n                // If the opponent proposer is eliminated, skip\n                if (isChildEliminated(opponent)) {\n                    continue;\n                }\n                // Append contender duplicate\n                bytes32 opponentSignature = opponent.signature();\n                if (opponentSignature == contenderSignature) {\n                    contenderDuplicates.push(v);\n                    continue;\n                }\n                // If there is insufficient proof data, abort\n                // Validity: The contender is the proven child, the opponent must be incorrect\n                // Fault: The contender is not proven faulty, the opponent may (not) be.\n                if (isViableSignature(opponentSignature)) {\n                    revert NotProven();\n                }\n                // eliminate the opponent with the unviable proposal\n                KAILUA_TREASURY.eliminate(address(opponent), getPayoutRecipient(opponentSignature));\n            }\n\n            // INVARIANT: v > u && contender == children[u]\n            // Record incremental opponent elimination progress\n            opponentIndex = v;\n\n            // Return the sole survivor if no more matches can be played\n            if (v == children.length || stepLimit > 0) {\n                return contender;\n            }\n        }\n\n        // No survivor yet\n        return KailuaTournament(address(0x0));\n    }\n\n    // ------------------------------\n    // Validity proving\n    // ------------------------------\n\n    /// @notice Returns the hash of all blob hashes associated with this proposal\n    function blobsHash() public view returns (bytes32 blobsHash_) {\n        blobsHash_ = sha256(abi.encodePacked(proposalBlobHashes));\n    }\n\n    /// @notice Proves that a proposal is valid\n    function proveValidity(address payoutRecipient, address l1HeadSource, uint64 childIndex, bytes calldata encodedSeal)\n        external\n    {\n        KailuaTournament childContract = children[childIndex];\n        // INVARIANT: Can only prove validity of unresolved proposals\n        if (childContract.status() != GameStatus.IN_PROGRESS) {\n            revert GameNotInProgress();\n        }\n\n        // Store validity proof data (deleted on revert)\n        validChildSignature = childContract.signature();\n\n        // INVARIANT: No longer accept proofs after resolution\n        if (contenderIndex < children.length && children[contenderIndex].status() == GameStatus.DEFENDER_WINS) {\n            revert ClaimAlreadyResolved();\n        }\n\n        // Calculate the expected precondition hash if blob data is necessary for proposal\n        bytes32 preconditionHash = bytes32(0x0);\n        if (PROPOSAL_OUTPUT_COUNT > 1) {\n            preconditionHash = sha256(\n                abi.encodePacked(\n                    uint64(l2BlockNumber()),\n                    uint64(PROPOSAL_OUTPUT_COUNT),\n                    uint64(OUTPUT_BLOCK_SPAN),\n                    childContract.blobsHash()\n                )\n            );\n        }\n\n        // update proof status\n        prove(\n            l1HeadSource,\n            payoutRecipient,\n            preconditionHash,\n            rootClaim().raw(),\n            childContract.rootClaim().raw(),\n            PROPOSAL_OUTPUT_COUNT,\n            encodedSeal,\n            validChildSignature,\n            ProofStatus.VALIDITY\n        );\n    }\n\n    // ------------------------------\n    // Fault proving\n    // ------------------------------\n\n    /// @notice Proves that a proposal committed to an incorrect transition\n    function proveOutputFault(\n        // [ payoutRecipient, l1HeadSource ]\n        address[2] calldata prHs,\n        // [ childIndex, outputOffset ]\n        uint64[2] calldata co,\n        bytes calldata encodedSeal,\n        // [ acceptedOutputHash, computedOutputHash ]\n        bytes32[2] memory ac,\n        uint256 proposedOutputFe,\n        bytes[][2] calldata kzgCommitmentsProofs\n    ) external {\n        KailuaTournament childContract = children[co[0]];\n        // INVARIANT: Proofs cannot be submitted unless the child is playing.\n        if (childContract.status() != GameStatus.IN_PROGRESS) {\n            revert GameNotInProgress();\n        }\n\n        // INVARIANT: No longer accept proofs after resolution\n        if (contenderIndex < children.length && children[contenderIndex].status() == GameStatus.DEFENDER_WINS) {\n            revert ClaimAlreadyResolved();\n        }\n\n        // INVARIANT: Proofs can only pertain to intermediate outputs\n        if (co[1] >= PROPOSAL_OUTPUT_COUNT) {\n            revert InvalidDisputedClaimIndex();\n        }\n\n        // Validate the common output root.\n        if (co[1] == 0) {\n            // Note: acceptedOutputHash cannot be a reduced fe because the comparison below will fail\n            // The safe output is the parent game's output when proving the first output\n            require(ac[0] == rootClaim().raw(), \"bad acceptedOutput\");\n        } else {\n            // Note: acceptedOutputHash cannot be a reduced fe because the journal would not be provable\n            // Prove common output publication\n            require(\n                childContract.verifyIntermediateOutput(\n                    co[1] - 1, KailuaKZGLib.hashToFe(ac[0]), kzgCommitmentsProofs[0][0], kzgCommitmentsProofs[1][0]\n                ),\n                \"bad acceptedOutput kzg\"\n            );\n        }\n\n        // Validate the claimed output root.\n        if (co[1] == PROPOSAL_OUTPUT_COUNT - 1) {\n            // INVARIANT: Proofs can only show disparities\n            if (ac[1] == childContract.rootClaim().raw()) {\n                revert NoConflict();\n            }\n        } else {\n            // Note: proposedOutputFe must be a canonical point or point eval precompile call will fail\n            // Prove divergent output publication\n            require(\n                childContract.verifyIntermediateOutput(\n                    co[1],\n                    proposedOutputFe,\n                    kzgCommitmentsProofs[0][kzgCommitmentsProofs[0].length - 1],\n                    kzgCommitmentsProofs[1][kzgCommitmentsProofs[1].length - 1]\n                ),\n                \"bad proposedOutput kzg\"\n            );\n            // INVARIANT: Proofs can only show disparities\n            if (KailuaKZGLib.hashToFe(ac[1]) == proposedOutputFe) {\n                revert NoConflict();\n            }\n        }\n\n        // update proof status\n        prove(\n            prHs[1],\n            prHs[0],\n            bytes32(0),\n            ac[0],\n            ac[1],\n            co[1] + 1,\n            encodedSeal,\n            childContract.signature(),\n            ProofStatus.FAULT\n        );\n    }\n\n    /// @notice Proves that a proposal contains invalid intermediate data\n    function proveTrailFault(\n        address payoutRecipient,\n        uint64[2] calldata co,\n        uint256 proposedOutputFe,\n        bytes calldata blobCommitment,\n        bytes calldata kzgProof\n    ) external {\n        KailuaTournament childContract = children[co[0]];\n        // INVARIANT: Proofs cannot be submitted unless the children are playing.\n        if (childContract.status() != GameStatus.IN_PROGRESS) {\n            revert GameNotInProgress();\n        }\n\n        // INVARIANT: No longer accept proofs after resolution\n        if (contenderIndex < children.length && children[contenderIndex].status() == GameStatus.DEFENDER_WINS) {\n            revert ClaimAlreadyResolved();\n        }\n\n        // INVARIANT: Proofs can only pertain to trail data\n        if (co[1] < PROPOSAL_OUTPUT_COUNT) {\n            revert InvalidDisputedClaimIndex();\n        }\n\n        // We expect all trail data to be zeroed\n        if (proposedOutputFe == 0) {\n            revert NoConflict();\n        }\n\n        // Because the root claim is considered the last published output, we shift the provided  output offset down by\n        // one to correctly point to the target trailing zero output\n        // INVARIANT: The divergence occurs in the last blob\n        uint64 feOffset = co[1] - 1;\n        if (KailuaKZGLib.blobIndex(feOffset) != PROPOSAL_BLOBS - 1) {\n            revert InvalidDataRemainder();\n        }\n\n        // Validate the claimed output root publications\n        // Note: proposedOutputFe must be a canonical field element or point eval precompile call will fail\n        require(\n            childContract.verifyIntermediateOutput(feOffset, proposedOutputFe, blobCommitment, kzgProof),\n            \"bad proposedOutput kzg\"\n        );\n\n        // Update dispute status based on trailing data\n        updateProofStatus(payoutRecipient, childContract.signature(), ProofStatus.FAULT);\n    }\n\n    // ------------------------------\n    // ZK Proving\n    // ------------------------------\n\n    /// @notice Verifies a ZK proof and updates the proof status according to the provided outcome if the proof is valid\n    function prove(\n        address l1HeadSource,\n        address payoutRecipient,\n        bytes32 preconditionHash,\n        bytes32 acceptedOutputHash,\n        bytes32 computedOutputHash,\n        uint64 outputCount,\n        bytes calldata encodedSeal,\n        bytes32 childSignature,\n        ProofStatus outcome\n    ) internal {\n        // Validate the l1Head source\n        if (KAILUA_TREASURY.proposerOf(l1HeadSource) == address(0x0)) {\n            revert UnknownGame();\n        }\n\n        // Revert on proof verification failure\n        KAILUA_VERIFIER.verify(\n            // The address of the recipient of the payout for this proof\n            payoutRecipient,\n            // The blob equivalence precondition hash\n            preconditionHash,\n            // The L1 head hash containing the safe L2 chain data that may reproduce the L2 head hash.\n            KailuaTournament(l1HeadSource).l1Head().raw(),\n            // The accepted output\n            acceptedOutputHash,\n            // The proposed output\n            computedOutputHash,\n            // The claim block number\n            uint64(l2BlockNumber() + outputCount * OUTPUT_BLOCK_SPAN),\n            // The cryptographic proof\n            encodedSeal\n        );\n\n        // Mark the child as proven\n        updateProofStatus(payoutRecipient, childSignature, outcome);\n    }\n}",
+  "resolutions": {
+    "ba5b6c9584fb78fd": {
+      "status": "differs",
+      "coveredLines": 634,
+      "match": {
+        "origin": "own",
+        "collection": "bob",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "KailuaTournament",
+        "similarity": 1,
+        "reportId": "bob/veridise-kailua-2026-02",
+        "repository": "boundless-xyz/kailua",
+        "path": "crates/contracts/foundry/src/KailuaTournament.sol",
+        "commit": "ccf2771857721a9cda5f7943ed7ef1d236c20bbd",
+        "commitTimestamp": "2026-02-06T13:05:10Z",
+        "url": "https://github.com/boundless-xyz/kailua/blob/ccf2771857721a9cda5f7943ed7ef1d236c20bbd/crates/contracts/foundry/src/KailuaTournament.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "diff audit",
+        "coverage": "Veridise review on commit ccf2771 of boundless-xyz/kailua limited to the changes made to this file since commit 7eb9869 (fault proof permit system and its integration). No fixed findings located here; Warnings V-KLA-VUL-004/006 (locked bonds) acknowledged without fix.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 8
+      },
+      "diff": {
+        "added": 6,
+        "removed": 3,
+        "ignoredAdded": 2,
+        "ignoredRemoved": 0,
+        "unchanged": 634,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 22,
+            "oldLines": 10,
+            "newStart": 22,
+            "newLines": 10,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 22,
+                "text": "    GameType public immutable GAME_TYPE;"
+              },
+              { "type": " ", "oldLine": 23, "newLine": 23, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 24,
+                "text": "    /// @notice The OptimismPortal2 instance"
+              },
+              {
+                "type": "-",
+                "oldLine": 25,
+                "text": "    OptimismPortal2 public immutable OPTIMISM_PORTAL;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 25,
+                "text": "    IOptimismPortal2 public immutable OPTIMISM_PORTAL;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 26, "newLine": 26, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 27,
+                "newLine": 27,
+                "text": "    /// @notice The DisputeGameFactory instance"
+              },
+              {
+                "type": "-",
+                "oldLine": 28,
+                "text": "    DisputeGameFactory public immutable DISPUTE_GAME_FACTORY;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 28,
+                "text": "    IDisputeGameFactory public immutable DISPUTE_GAME_FACTORY;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 29, "newLine": 29, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 30,
+                "newLine": 30,
+                "text": "    constructor("
+              },
+              {
+                "type": " ",
+                "oldLine": 31,
+                "newLine": 31,
+                "text": "        IKailuaTreasury _kailuaTreasury,"
+              }
+            ]
+          },
+          {
+            "oldStart": 33,
+            "oldLines": 7,
+            "newStart": 33,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 33,
+                "newLine": 33,
+                "text": "        uint64 _proposalOutputCount,"
+              },
+              {
+                "type": " ",
+                "oldLine": 34,
+                "newLine": 34,
+                "text": "        uint64 _outputBlockSpan,"
+              },
+              {
+                "type": " ",
+                "oldLine": 35,
+                "newLine": 35,
+                "text": "        GameType _gameType,"
+              },
+              {
+                "type": "-",
+                "oldLine": 36,
+                "text": "        OptimismPortal2 _optimismPortal",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 36,
+                "text": "        IOptimismPortal2 _optimismPortal",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 37, "newLine": 37, "text": "    ) {" },
+              {
+                "type": " ",
+                "oldLine": 38,
+                "newLine": 38,
+                "text": "        KAILUA_TREASURY = _kailuaTreasury;"
+              },
+              {
+                "type": " ",
+                "oldLine": 39,
+                "newLine": 39,
+                "text": "        KAILUA_VERIFIER = _kailuaVerifier;"
+              }
+            ]
+          },
+          {
+            "oldStart": 252,
+            "oldLines": 6,
+            "newStart": 252,
+            "newLines": 11,
+            "lines": [
+              { "type": " ", "oldLine": 252, "newLine": 252, "text": "    }" },
+              { "type": " ", "oldLine": 253, "newLine": 253, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 254,
+                "newLine": 254,
+                "text": "    /// @inheritdoc IDisputeGame"
+              },
+              {
+                "type": "+",
+                "newLine": 255,
+                "text": "    function l2SequenceNumber() public pure returns (uint256 l2SequenceNumber_) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 256,
+                "text": "        l2SequenceNumber_ = l2BlockNumber();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 257,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 258, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 259,
+                "text": "    /// @inheritdoc IDisputeGame",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 255,
+                "newLine": 260,
+                "text": "    function gameData() external view returns (GameType gameType_, Claim rootClaim_, bytes memory extraData_) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 256,
+                "newLine": 261,
+                "text": "        gameType_ = GAME_TYPE;"
+              },
+              {
+                "type": " ",
+                "oldLine": 257,
+                "newLine": 262,
+                "text": "        rootClaim_ = this.rootClaim();"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "bb55951394276893": {
+      "status": "differs",
+      "coveredLines": 634,
+      "match": {
+        "origin": "other",
+        "collection": "bob",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "name",
+        "auditedName": "KailuaTournament",
+        "similarity": 1,
+        "reportId": "bob/veridise-kailua-2026-02",
+        "repository": "boundless-xyz/kailua",
+        "path": "crates/contracts/foundry/src/KailuaTournament.sol",
+        "commit": "ccf2771857721a9cda5f7943ed7ef1d236c20bbd",
+        "commitTimestamp": "2026-02-06T13:05:10Z",
+        "url": "https://github.com/boundless-xyz/kailua/blob/ccf2771857721a9cda5f7943ed7ef1d236c20bbd/crates/contracts/foundry/src/KailuaTournament.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "diff audit",
+        "coverage": "Veridise review on commit ccf2771 of boundless-xyz/kailua limited to the changes made to this file since commit 7eb9869 (fault proof permit system and its integration). No fixed findings located here; Warnings V-KLA-VUL-004/006 (locked bonds) acknowledged without fix.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 8
+      },
+      "diff": {
+        "added": 6,
+        "removed": 3,
+        "ignoredAdded": 2,
+        "ignoredRemoved": 0,
+        "unchanged": 634,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 22,
+            "oldLines": 10,
+            "newStart": 22,
+            "newLines": 10,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 22,
+                "text": "    GameType public immutable GAME_TYPE;"
+              },
+              { "type": " ", "oldLine": 23, "newLine": 23, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 24,
+                "text": "    /// @notice The OptimismPortal2 instance"
+              },
+              {
+                "type": "-",
+                "oldLine": 25,
+                "text": "    OptimismPortal2 public immutable OPTIMISM_PORTAL;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 25,
+                "text": "    IOptimismPortal2 public immutable OPTIMISM_PORTAL;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 26, "newLine": 26, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 27,
+                "newLine": 27,
+                "text": "    /// @notice The DisputeGameFactory instance"
+              },
+              {
+                "type": "-",
+                "oldLine": 28,
+                "text": "    DisputeGameFactory public immutable DISPUTE_GAME_FACTORY;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 28,
+                "text": "    IDisputeGameFactory public immutable DISPUTE_GAME_FACTORY;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 29, "newLine": 29, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 30,
+                "newLine": 30,
+                "text": "    constructor("
+              },
+              {
+                "type": " ",
+                "oldLine": 31,
+                "newLine": 31,
+                "text": "        IKailuaTreasury _kailuaTreasury,"
+              }
+            ]
+          },
+          {
+            "oldStart": 33,
+            "oldLines": 7,
+            "newStart": 33,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 33,
+                "newLine": 33,
+                "text": "        uint64 _proposalOutputCount,"
+              },
+              {
+                "type": " ",
+                "oldLine": 34,
+                "newLine": 34,
+                "text": "        uint64 _outputBlockSpan,"
+              },
+              {
+                "type": " ",
+                "oldLine": 35,
+                "newLine": 35,
+                "text": "        GameType _gameType,"
+              },
+              {
+                "type": "-",
+                "oldLine": 36,
+                "text": "        OptimismPortal2 _optimismPortal",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 36,
+                "text": "        IOptimismPortal2 _optimismPortal",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 37, "newLine": 37, "text": "    ) {" },
+              {
+                "type": " ",
+                "oldLine": 38,
+                "newLine": 38,
+                "text": "        KAILUA_TREASURY = _kailuaTreasury;"
+              },
+              {
+                "type": " ",
+                "oldLine": 39,
+                "newLine": 39,
+                "text": "        KAILUA_VERIFIER = _kailuaVerifier;"
+              }
+            ]
+          },
+          {
+            "oldStart": 252,
+            "oldLines": 6,
+            "newStart": 252,
+            "newLines": 11,
+            "lines": [
+              { "type": " ", "oldLine": 252, "newLine": 252, "text": "    }" },
+              { "type": " ", "oldLine": 253, "newLine": 253, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 254,
+                "newLine": 254,
+                "text": "    /// @inheritdoc IDisputeGame"
+              },
+              {
+                "type": "+",
+                "newLine": 255,
+                "text": "    function l2SequenceNumber() public pure returns (uint256 l2SequenceNumber_) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 256,
+                "text": "        l2SequenceNumber_ = l2BlockNumber();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 257,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 258, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 259,
+                "text": "    /// @inheritdoc IDisputeGame",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 255,
+                "newLine": 260,
+                "text": "    function gameData() external view returns (GameType gameType_, Claim rootClaim_, bytes memory extraData_) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 256,
+                "newLine": 261,
+                "text": "        gameType_ = GAME_TYPE;"
+              },
+              {
+                "type": " ",
+                "oldLine": 257,
+                "newLine": 262,
+                "text": "        rootClaim_ = this.rootClaim();"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

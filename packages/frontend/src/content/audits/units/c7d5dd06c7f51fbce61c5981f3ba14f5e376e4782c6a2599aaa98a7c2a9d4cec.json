@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "c7d5dd06c7f51fbce61c5981f3ba14f5e376e4782c6a2599aaa98a7c2a9d4cec",
+  "name": "Nargo.toml",
+  "kind": "program",
+  "lines": 8,
+  "source": "[package]\nname = \"rollup_checkpoint_padding\"\ntype = \"bin\"\nauthors = [\"\"]\ncompiler_version = \">=0.18.0\"\n\n[dependencies]\nrollup_lib = { path = \"../rollup-lib\" }",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

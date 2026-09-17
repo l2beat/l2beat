@@ -1,0 +1,157 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "e3c8cab2e02203d77f2d11dacdf439f8a039bc60205ed40fb4c77ec12dacd214",
+  "name": "ProxyAdminOwnedBase",
+  "kind": "abstract",
+  "lines": 87,
+  "source": "abstract contract ProxyAdminOwnedBase {\n    /// @notice Thrown when the ProxyAdmin owner of the current contract is not the same as the\n    ///         ProxyAdmin owner of the other Proxy address provided.\n    error ProxyAdminOwnedBase_NotSharedProxyAdminOwner();\n\n    /// @notice Thrown when the caller is not the ProxyAdmin owner.\n    error ProxyAdminOwnedBase_NotProxyAdminOwner();\n\n    /// @notice Thrown when the caller is not the ProxyAdmin.\n    error ProxyAdminOwnedBase_NotProxyAdmin();\n\n    /// @notice Thrown when the caller is not the ProxyAdmin owner or the ProxyAdmin.\n    error ProxyAdminOwnedBase_NotProxyAdminOrProxyAdminOwner();\n\n    /// @notice Thrown when the ProxyAdmin owner of the current contract is not found.\n    error ProxyAdminOwnedBase_ProxyAdminNotFound();\n\n    /// @notice Thrown when the current contract is not a ResolvedDelegateProxy.\n    error ProxyAdminOwnedBase_NotResolvedDelegateProxy();\n\n    /// @notice Getter for the owner of the ProxyAdmin.\n    function proxyAdminOwner() public view returns (address) {\n        return proxyAdmin().owner();\n    }\n\n    /// @notice Getter for the ProxyAdmin contract that owns this Proxy contract.\n    function proxyAdmin() public view returns (IProxyAdmin) {\n        // First check for a non-zero address in the reserved slot.\n        address proxyAdminAddress = Storage.getAddress(Constants.PROXY_OWNER_ADDRESS);\n        if (proxyAdminAddress != address(0)) {\n            return IProxyAdmin(proxyAdminAddress);\n        }\n\n        // Otherwise, we'll try to read the AddressManager slot.\n        // First we make sure this is almost certainly a ResolvedDelegateProxy. We only have a\n        // single ResolvedDelegateProxy and it's for the L1CrossDomainMessenger, so we'll check\n        // that the storage slot for the mapping at slot 0 returns the string\n        // \"OVM_L1CrossDomainMessenger\". We need to use Solidity's rules for how strings are stored\n        // in storage slots to do this.\n        if (\n            Storage.getBytes32(keccak256(abi.encode(address(this), uint256(0))))\n                != bytes32(\n                    uint256(bytes32(\"OVM_L1CrossDomainMessenger\")) | uint256(bytes(\"OVM_L1CrossDomainMessenger\").length * 2)\n                )\n        ) {\n            revert ProxyAdminOwnedBase_NotResolvedDelegateProxy();\n        }\n\n        // Ok, now we'll try to read the AddressManager slot.\n        address addressManagerAddress = Storage.getAddress(keccak256(abi.encode(address(this), uint256(1))));\n        if (addressManagerAddress != address(0)) {\n            return IProxyAdmin(IAddressManager(addressManagerAddress).owner());\n        }\n\n        // We should revert here, we couldn't find a non-zero owner address.\n        revert ProxyAdminOwnedBase_ProxyAdminNotFound();\n    }\n\n    /// @notice Reverts if the ProxyAdmin owner of the current contract is not the same as the\n    ///         ProxyAdmin owner of the other Proxy address provided. Useful asserting that both\n    ///         the current contract and the other Proxy share the same security model.+\n    function _assertSharedProxyAdminOwner(address _proxy) internal view {\n        if (proxyAdminOwner() != ProxyAdminOwnedBase(_proxy).proxyAdminOwner()) {\n            revert ProxyAdminOwnedBase_NotSharedProxyAdminOwner();\n        }\n    }\n\n    /// @notice Reverts if the caller is not the ProxyAdmin owner.\n    function _assertOnlyProxyAdminOwner() internal view {\n        if (proxyAdminOwner() != msg.sender) {\n            revert ProxyAdminOwnedBase_NotProxyAdminOwner();\n        }\n    }\n\n    /// @notice Reverts if the caller is not the ProxyAdmin.\n    function _assertOnlyProxyAdmin() internal view {\n        if (address(proxyAdmin()) != msg.sender) {\n            revert ProxyAdminOwnedBase_NotProxyAdmin();\n        }\n    }\n\n    function _assertOnlyProxyAdminOrProxyAdminOwner() internal view {\n        if (address(proxyAdmin()) != msg.sender && proxyAdminOwner() != msg.sender) {\n            revert ProxyAdminOwnedBase_NotProxyAdminOrProxyAdminOwner();\n        }\n    }\n}",
+  "resolutions": {
+    "ba5b6c9584fb78fd": {
+      "status": "identical",
+      "coveredLines": 87,
+      "match": {
+        "origin": "upstream",
+        "collection": "optimism",
+        "relation": {
+          "type": "fork_of",
+          "repository": "ethereum-optimism/optimism"
+        },
+        "rank": 1,
+        "matchedBy": "identity",
+        "auditedName": "ProxyAdminOwnedBase",
+        "similarity": 1,
+        "reportId": "optimism/spearbit-interop-portal-2025-05",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts-bedrock/src/L1/ProxyAdminOwnedBase.sol",
+        "commit": "4fc9181a73795334f0c657a79ea8177b8de1814c",
+        "commitTimestamp": "2025-05-14T18:56:06Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/4fc9181a73795334f0c657a79ea8177b8de1814c/packages/contracts-bedrock/src/L1/ProxyAdminOwnedBase.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Fix commit for 5.3.8 item 10, verified by Spearbit; items 6 and 7 acknowledged.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "warnings": []
+    },
+    "44ad4cf96e2ef6f0": {
+      "status": "identical",
+      "coveredLines": 87,
+      "match": {
+        "origin": "upstream",
+        "collection": "optimism",
+        "relation": {
+          "type": "fork_of",
+          "repository": "ethereum-optimism/optimism"
+        },
+        "rank": 1,
+        "matchedBy": "identity",
+        "auditedName": "ProxyAdminOwnedBase",
+        "similarity": 1,
+        "reportId": "optimism/spearbit-interop-portal-2025-05",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts-bedrock/src/L1/ProxyAdminOwnedBase.sol",
+        "commit": "4fc9181a73795334f0c657a79ea8177b8de1814c",
+        "commitTimestamp": "2025-05-14T18:56:06Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/4fc9181a73795334f0c657a79ea8177b8de1814c/packages/contracts-bedrock/src/L1/ProxyAdminOwnedBase.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Fix commit for 5.3.8 item 10, verified by Spearbit; items 6 and 7 acknowledged.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "warnings": []
+    },
+    "9fa846564f4071bd": {
+      "status": "identical",
+      "coveredLines": 87,
+      "match": {
+        "origin": "own",
+        "collection": "optimism",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "ProxyAdminOwnedBase",
+        "similarity": 1,
+        "reportId": "optimism/spearbit-interop-portal-2025-05",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts-bedrock/src/L1/ProxyAdminOwnedBase.sol",
+        "commit": "4fc9181a73795334f0c657a79ea8177b8de1814c",
+        "commitTimestamp": "2025-05-14T18:56:06Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/4fc9181a73795334f0c657a79ea8177b8de1814c/packages/contracts-bedrock/src/L1/ProxyAdminOwnedBase.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Fix commit for 5.3.8 item 10, verified by Spearbit; items 6 and 7 acknowledged.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "warnings": []
+    },
+    "bb55951394276893": {
+      "status": "identical",
+      "coveredLines": 87,
+      "match": {
+        "origin": "stack",
+        "collection": "optimism",
+        "relation": {
+          "type": "template",
+          "template": "opstack/AddressManager"
+        },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "ProxyAdminOwnedBase",
+        "similarity": 1,
+        "reportId": "optimism/spearbit-interop-portal-2025-05",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts-bedrock/src/L1/ProxyAdminOwnedBase.sol",
+        "commit": "4fc9181a73795334f0c657a79ea8177b8de1814c",
+        "commitTimestamp": "2025-05-14T18:56:06Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/4fc9181a73795334f0c657a79ea8177b8de1814c/packages/contracts-bedrock/src/L1/ProxyAdminOwnedBase.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Fix commit for 5.3.8 item 10, verified by Spearbit; items 6 and 7 acknowledged.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "warnings": []
+    },
+    "1f5c32d18cf7148d": {
+      "status": "identical",
+      "coveredLines": 87,
+      "match": {
+        "origin": "stack",
+        "collection": "optimism",
+        "relation": {
+          "type": "template",
+          "template": "gnosisSafeModules/LivenessGuard"
+        },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "ProxyAdminOwnedBase",
+        "similarity": 1,
+        "reportId": "optimism/spearbit-interop-portal-2025-05",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts-bedrock/src/L1/ProxyAdminOwnedBase.sol",
+        "commit": "4fc9181a73795334f0c657a79ea8177b8de1814c",
+        "commitTimestamp": "2025-05-14T18:56:06Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/4fc9181a73795334f0c657a79ea8177b8de1814c/packages/contracts-bedrock/src/L1/ProxyAdminOwnedBase.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Fix commit for 5.3.8 item 10, verified by Spearbit; items 6 and 7 acknowledged.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "warnings": []
+    }
+  }
+}

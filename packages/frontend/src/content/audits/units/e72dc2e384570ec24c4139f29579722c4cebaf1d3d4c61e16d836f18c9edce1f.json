@@ -1,0 +1,311 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "e72dc2e384570ec24c4139f29579722c4cebaf1d3d4c61e16d836f18c9edce1f",
+  "name": "ERC20PermitUpgradeable",
+  "kind": "abstract",
+  "lines": 69,
+  "source": "abstract contract ERC20PermitUpgradeable is\n    Initializable,\n    ERC20Upgradeable,\n    IERC20Permit,\n    EIP712Upgradeable,\n    NoncesUpgradeable\n{\n    bytes32 private constant PERMIT_TYPEHASH =\n        keccak256(\"Permit(address owner,address spender,uint256 value,uint256 nonce,uint256 deadline)\");\n\n    /**\n     * @dev Permit deadline has expired.\n     */\n    error ERC2612ExpiredSignature(uint256 deadline);\n\n    /**\n     * @dev Mismatched signature.\n     */\n    error ERC2612InvalidSigner(address signer, address owner);\n\n    /**\n     * @dev Initializes the {EIP712} domain separator using the `name` parameter, and setting `version` to `\"1\"`.\n     *\n     * It's a good idea to use the same `name` that is defined as the ERC20 token name.\n     */\n    function __ERC20Permit_init(string memory name) internal onlyInitializing {\n        __EIP712_init_unchained(name, \"1\");\n    }\n\n    function __ERC20Permit_init_unchained(string memory) internal onlyInitializing {}\n\n    /**\n     * @inheritdoc IERC20Permit\n     */\n    function permit(address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s)\n        public\n        virtual\n    {\n        if (block.timestamp > deadline) {\n            revert ERC2612ExpiredSignature(deadline);\n        }\n\n        bytes32 structHash = keccak256(abi.encode(PERMIT_TYPEHASH, owner, spender, value, _useNonce(owner), deadline));\n\n        bytes32 hash = _hashTypedDataV4(structHash);\n\n        address signer = ECDSA.recover(hash, v, r, s);\n        if (signer != owner) {\n            revert ERC2612InvalidSigner(signer, owner);\n        }\n\n        _approve(owner, spender, value);\n    }\n\n    /**\n     * @inheritdoc IERC20Permit\n     */\n    function nonces(address owner) public view virtual override(IERC20Permit, NoncesUpgradeable) returns (uint256) {\n        return super.nonces(owner);\n    }\n\n    /**\n     * @inheritdoc IERC20Permit\n     */\n    // solhint-disable-next-line func-name-mixedcase\n    function DOMAIN_SEPARATOR() external view virtual returns (bytes32) {\n        return _domainSeparatorV4();\n    }\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "differs",
+      "coveredLines": 57,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "similarity",
+        "auditedName": "ERC20Permit",
+        "similarity": 0.687,
+        "reportId": "openzeppelin/contracts__audits__2025-07-v5.4",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/token/ERC20/extensions/ERC20Permit.sol",
+        "commit": "f6fea85717b1a09300c7a783554696a0d6f3df12",
+        "commitTimestamp": "2025-06-13T18:37:42Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/f6fea85717b1a09300c7a783554696a0d6f3df12/contracts/token/ERC20/extensions/ERC20Permit.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Diff-only review of the changes between release v5.3 (e4f7021) and release v5.4; the pre-existing file was not re-audited in full.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 4
+      },
+      "diff": {
+        "added": 12,
+        "removed": 3,
+        "ignoredAdded": 11,
+        "ignoredRemoved": 4,
+        "unchanged": 57,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 10,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "abstract contract ERC20Permit is ERC20, IERC20Permit, EIP712, Nonces {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "abstract contract ERC20PermitUpgradeable is",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 2,
+                "text": "    Initializable,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "    ERC20Upgradeable,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 4,
+                "text": "    IERC20Permit,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 5,
+                "text": "    EIP712Upgradeable,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 6,
+                "text": "    NoncesUpgradeable",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 7, "text": "{", "ignored": false },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 8,
+                "text": "    bytes32 private constant PERMIT_TYPEHASH ="
+              },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 9,
+                "text": "        keccak256(\"Permit(address owner,address spender,uint256 value,uint256 nonce,uint256 deadline)\");"
+              },
+              { "type": " ", "oldLine": 4, "newLine": 10, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 15,
+            "oldLines": 11,
+            "newStart": 21,
+            "newLines": 17,
+            "lines": [
+              { "type": " ", "oldLine": 15, "newLine": 21, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 16,
+                "newLine": 22,
+                "text": "     * @dev Initializes the {EIP712} domain separator using the `name` parameter, and setting `version` to `\"1\"`."
+              },
+              { "type": " ", "oldLine": 17, "newLine": 23, "text": "     *" },
+              {
+                "type": "-",
+                "oldLine": 18,
+                "text": "     * It's a good idea to use the same `name` that is defined as the ERC-20 token name.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 24,
+                "text": "     * It's a good idea to use the same `name` that is defined as the ERC20 token name.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 19, "newLine": 25, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 20,
+                "text": "    constructor(string memory name) EIP712(name, \"1\") {}",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 26,
+                "text": "    function __ERC20Permit_init(string memory name) internal onlyInitializing {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 27,
+                "text": "        __EIP712_init_unchained(name, \"1\");",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 28, "text": "    }", "ignored": false },
+              { "type": " ", "oldLine": 21, "newLine": 29, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 22,
+                "text": "    /// @inheritdoc IERC20Permit",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 30,
+                "text": "    function __ERC20Permit_init_unchained(string memory) internal onlyInitializing {}",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 31, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 32,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 33,
+                "text": "     * @inheritdoc IERC20Permit",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 34,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 23,
+                "newLine": 35,
+                "text": "    function permit(address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s)"
+              },
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 36,
+                "text": "        public"
+              },
+              {
+                "type": " ",
+                "oldLine": 25,
+                "newLine": 37,
+                "text": "        virtual"
+              }
+            ]
+          },
+          {
+            "oldStart": 40,
+            "oldLines": 12,
+            "newStart": 52,
+            "newLines": 16,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 40,
+                "newLine": 52,
+                "text": "        _approve(owner, spender, value);"
+              },
+              { "type": " ", "oldLine": 41, "newLine": 53, "text": "    }" },
+              { "type": " ", "oldLine": 42, "newLine": 54, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 43,
+                "text": "    /// @inheritdoc IERC20Permit",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 44,
+                "text": "    function nonces(address owner) public view virtual override(IERC20Permit, Nonces) returns (uint256) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 55,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 56,
+                "text": "     * @inheritdoc IERC20Permit",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 57,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 58,
+                "text": "    function nonces(address owner) public view virtual override(IERC20Permit, NoncesUpgradeable) returns (uint256) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 45,
+                "newLine": 59,
+                "text": "        return super.nonces(owner);"
+              },
+              { "type": " ", "oldLine": 46, "newLine": 60, "text": "    }" },
+              { "type": " ", "oldLine": 47, "newLine": 61, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 48,
+                "text": "    /// @inheritdoc IERC20Permit",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 62,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 63,
+                "text": "     * @inheritdoc IERC20Permit",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 64,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 49,
+                "newLine": 65,
+                "text": "    // solhint-disable-next-line func-name-mixedcase"
+              },
+              {
+                "type": " ",
+                "oldLine": 50,
+                "newLine": 66,
+                "text": "    function DOMAIN_SEPARATOR() external view virtual returns (bytes32) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 51,
+                "newLine": 67,
+                "text": "        return _domainSeparatorV4();"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

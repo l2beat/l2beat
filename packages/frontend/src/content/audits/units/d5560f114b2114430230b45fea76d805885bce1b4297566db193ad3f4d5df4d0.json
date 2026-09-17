@@ -1,0 +1,621 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "d5560f114b2114430230b45fea76d805885bce1b4297566db193ad3f4d5df4d0",
+  "name": "ECDSA",
+  "kind": "library",
+  "lines": 199,
+  "source": "library ECDSA {\n    enum RecoverError {\n        NoError,\n        InvalidSignature,\n        InvalidSignatureLength,\n        InvalidSignatureS,\n        InvalidSignatureV\n    }\n\n    function _throwError(RecoverError error) private pure {\n        if (error == RecoverError.NoError) {\n            return; // no error: do nothing\n        } else if (error == RecoverError.InvalidSignature) {\n            revert(\"ECDSA: invalid signature\");\n        } else if (error == RecoverError.InvalidSignatureLength) {\n            revert(\"ECDSA: invalid signature length\");\n        } else if (error == RecoverError.InvalidSignatureS) {\n            revert(\"ECDSA: invalid signature 's' value\");\n        } else if (error == RecoverError.InvalidSignatureV) {\n            revert(\"ECDSA: invalid signature 'v' value\");\n        }\n    }\n\n    /**\n     * @dev Returns the address that signed a hashed message (`hash`) with\n     * `signature` or error string. This address can then be used for verification purposes.\n     *\n     * The `ecrecover` EVM opcode allows for malleable (non-unique) signatures:\n     * this function rejects them by requiring the `s` value to be in the lower\n     * half order, and the `v` value to be either 27 or 28.\n     *\n     * IMPORTANT: `hash` _must_ be the result of a hash operation for the\n     * verification to be secure: it is possible to craft signatures that\n     * recover to arbitrary addresses for non-hashed data. A safe way to ensure\n     * this is by receiving a hash of the original message (which may otherwise\n     * be too long), and then calling {toEthSignedMessageHash} on it.\n     *\n     * Documentation for signature generation:\n     * - with https://web3js.readthedocs.io/en/v1.3.4/web3-eth-accounts.html#sign[Web3.js]\n     * - with https://docs.ethers.io/v5/api/signer/#Signer-signMessage[ethers]\n     *\n     * _Available since v4.3._\n     */\n    function tryRecover(bytes32 hash, bytes memory signature) internal pure returns (address, RecoverError) {\n        // Check the signature length\n        // - case 65: r,s,v signature (standard)\n        // - case 64: r,vs signature (cf https://eips.ethereum.org/EIPS/eip-2098) _Available since v4.1._\n        if (signature.length == 65) {\n            bytes32 r;\n            bytes32 s;\n            uint8 v;\n            // ecrecover takes the signature parameters, and the only way to get them\n            // currently is to use assembly.\n            assembly {\n                r := mload(add(signature, 0x20))\n                s := mload(add(signature, 0x40))\n                v := byte(0, mload(add(signature, 0x60)))\n            }\n            return tryRecover(hash, v, r, s);\n        } else if (signature.length == 64) {\n            bytes32 r;\n            bytes32 vs;\n            // ecrecover takes the signature parameters, and the only way to get them\n            // currently is to use assembly.\n            assembly {\n                r := mload(add(signature, 0x20))\n                vs := mload(add(signature, 0x40))\n            }\n            return tryRecover(hash, r, vs);\n        } else {\n            return (address(0), RecoverError.InvalidSignatureLength);\n        }\n    }\n\n    /**\n     * @dev Returns the address that signed a hashed message (`hash`) with\n     * `signature`. This address can then be used for verification purposes.\n     *\n     * The `ecrecover` EVM opcode allows for malleable (non-unique) signatures:\n     * this function rejects them by requiring the `s` value to be in the lower\n     * half order, and the `v` value to be either 27 or 28.\n     *\n     * IMPORTANT: `hash` _must_ be the result of a hash operation for the\n     * verification to be secure: it is possible to craft signatures that\n     * recover to arbitrary addresses for non-hashed data. A safe way to ensure\n     * this is by receiving a hash of the original message (which may otherwise\n     * be too long), and then calling {toEthSignedMessageHash} on it.\n     */\n    function recover(bytes32 hash, bytes memory signature) internal pure returns (address) {\n        (address recovered, RecoverError error) = tryRecover(hash, signature);\n        _throwError(error);\n        return recovered;\n    }\n\n    /**\n     * @dev Overload of {ECDSA-tryRecover} that receives the `r` and `vs` short-signature fields separately.\n     *\n     * See https://eips.ethereum.org/EIPS/eip-2098[EIP-2098 short signatures]\n     *\n     * _Available since v4.3._\n     */\n    function tryRecover(bytes32 hash, bytes32 r, bytes32 vs) internal pure returns (address, RecoverError) {\n        bytes32 s = vs & bytes32(0x7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff);\n        uint8 v = uint8((uint256(vs) >> 255) + 27);\n        return tryRecover(hash, v, r, s);\n    }\n\n    /**\n     * @dev Overload of {ECDSA-recover} that receives the `r and `vs` short-signature fields separately.\n     *\n     * _Available since v4.2._\n     */\n    function recover(bytes32 hash, bytes32 r, bytes32 vs) internal pure returns (address) {\n        (address recovered, RecoverError error) = tryRecover(hash, r, vs);\n        _throwError(error);\n        return recovered;\n    }\n\n    /**\n     * @dev Overload of {ECDSA-tryRecover} that receives the `v`,\n     * `r` and `s` signature fields separately.\n     *\n     * _Available since v4.3._\n     */\n    function tryRecover(bytes32 hash, uint8 v, bytes32 r, bytes32 s) internal pure returns (address, RecoverError) {\n        // EIP-2 still allows signature malleability for ecrecover(). Remove this possibility and make the signature\n        // unique. Appendix F in the Ethereum Yellow paper (https://ethereum.github.io/yellowpaper/paper.pdf), defines\n        // the valid range for s in (301): 0 < s < secp256k1n ÷ 2 + 1, and for v in (302): v ∈ {27, 28}. Most\n        // signatures from current libraries generate a unique signature with an s-value in the lower half order.\n        //\n        // If your library generates malleable signatures, such as s-values in the upper range, calculate a new s-value\n        // with 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141 - s1 and flip v from 27 to 28 or\n        // vice versa. If your library also generates signatures with 0/1 for v instead 27/28, add 27 to v to accept\n        // these malleable signatures as well.\n        if (uint256(s) > 0x7FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF5D576E7357A4501DDFE92F46681B20A0) {\n            return (address(0), RecoverError.InvalidSignatureS);\n        }\n        if (v != 27 && v != 28) {\n            return (address(0), RecoverError.InvalidSignatureV);\n        }\n\n        // If the signature is valid (and not malleable), return the signer address\n        address signer = ecrecover(hash, v, r, s);\n        if (signer == address(0)) {\n            return (address(0), RecoverError.InvalidSignature);\n        }\n\n        return (signer, RecoverError.NoError);\n    }\n\n    /**\n     * @dev Overload of {ECDSA-recover} that receives the `v`,\n     * `r` and `s` signature fields separately.\n     */\n    function recover(bytes32 hash, uint8 v, bytes32 r, bytes32 s) internal pure returns (address) {\n        (address recovered, RecoverError error) = tryRecover(hash, v, r, s);\n        _throwError(error);\n        return recovered;\n    }\n\n    /**\n     * @dev Returns an Ethereum Signed Message, created from a `hash`. This\n     * produces hash corresponding to the one signed with the\n     * https://eth.wiki/json-rpc/API#eth_sign[`eth_sign`]\n     * JSON-RPC method as part of EIP-191.\n     *\n     * See {recover}.\n     */\n    function toEthSignedMessageHash(bytes32 hash) internal pure returns (bytes32) {\n        // 32 is the length in bytes of hash,\n        // enforced by the type signature above\n        return keccak256(abi.encodePacked(\"\\x19Ethereum Signed Message:\\n32\", hash));\n    }\n\n    /**\n     * @dev Returns an Ethereum Signed Message, created from `s`. This\n     * produces hash corresponding to the one signed with the\n     * https://eth.wiki/json-rpc/API#eth_sign[`eth_sign`]\n     * JSON-RPC method as part of EIP-191.\n     *\n     * See {recover}.\n     */\n    function toEthSignedMessageHash(bytes memory s) internal pure returns (bytes32) {\n        return keccak256(abi.encodePacked(\"\\x19Ethereum Signed Message:\\n\", Strings.toString(s.length), s));\n    }\n\n    /**\n     * @dev Returns an Ethereum Signed Typed Data, created from a\n     * `domainSeparator` and a `structHash`. This produces hash corresponding\n     * to the one signed with the\n     * https://eips.ethereum.org/EIPS/eip-712[`eth_signTypedData`]\n     * JSON-RPC method as part of EIP-712.\n     *\n     * See {recover}.\n     */\n    function toTypedDataHash(bytes32 domainSeparator, bytes32 structHash) internal pure returns (bytes32) {\n        return keccak256(abi.encodePacked(\"\\x19\\x01\", domainSeparator, structHash));\n    }\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "differs",
+      "coveredLines": 182,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "ECDSA",
+        "similarity": 0.878,
+        "reportId": "openzeppelin/contracts__audits__2023-05-v4.9",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/utils/cryptography/ECDSA.sol",
+        "commit": "91df66c4a9dfd0425ff923cbeb3a20155f1355ea",
+        "commitTimestamp": "2023-04-21T11:35:07Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/91df66c4a9dfd0425ff923cbeb3a20155f1355ea/contracts/utils/cryptography/ECDSA.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Only the changes to this file between versions 4.8 and 4.9 were reviewed.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 9
+      },
+      "diff": {
+        "added": 17,
+        "removed": 17,
+        "ignoredAdded": 6,
+        "ignoredRemoved": 12,
+        "unchanged": 182,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 4,
+            "oldLines": 8,
+            "newStart": 4,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "        InvalidSignature,"
+              },
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 5,
+                "text": "        InvalidSignatureLength,"
+              },
+              {
+                "type": " ",
+                "oldLine": 6,
+                "newLine": 6,
+                "text": "        InvalidSignatureS,"
+              },
+              {
+                "type": "-",
+                "oldLine": 7,
+                "text": "        InvalidSignatureV // Deprecated in v4.8",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 8, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 7,
+                "text": "        InvalidSignatureV",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 9, "newLine": 8, "text": "    }" },
+              { "type": " ", "oldLine": 10, "newLine": 9, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 11,
+                "newLine": 10,
+                "text": "    function _throwError(RecoverError error) private pure {"
+              }
+            ]
+          },
+          {
+            "oldStart": 17,
+            "oldLines": 6,
+            "newStart": 16,
+            "newLines": 8,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 17,
+                "newLine": 16,
+                "text": "            revert(\"ECDSA: invalid signature length\");"
+              },
+              {
+                "type": " ",
+                "oldLine": 18,
+                "newLine": 17,
+                "text": "        } else if (error == RecoverError.InvalidSignatureS) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 19,
+                "newLine": 18,
+                "text": "            revert(\"ECDSA: invalid signature 's' value\");"
+              },
+              {
+                "type": "+",
+                "newLine": 19,
+                "text": "        } else if (error == RecoverError.InvalidSignatureV) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 20,
+                "text": "            revert(\"ECDSA: invalid signature 'v' value\");",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 20,
+                "newLine": 21,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 21, "newLine": 22, "text": "    }" },
+              { "type": " ", "oldLine": 22, "newLine": 23, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 41,
+            "oldLines": 19,
+            "newStart": 42,
+            "newLines": 31,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 41,
+                "newLine": 42,
+                "text": "     * _Available since v4.3._"
+              },
+              { "type": " ", "oldLine": 42, "newLine": 43, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 43,
+                "newLine": 44,
+                "text": "    function tryRecover(bytes32 hash, bytes memory signature) internal pure returns (address, RecoverError) {"
+              },
+              {
+                "type": "+",
+                "newLine": 45,
+                "text": "        // Check the signature length",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 46,
+                "text": "        // - case 65: r,s,v signature (standard)",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 47,
+                "text": "        // - case 64: r,vs signature (cf https://eips.ethereum.org/EIPS/eip-2098) _Available since v4.1._",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 44,
+                "newLine": 48,
+                "text": "        if (signature.length == 65) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 45,
+                "newLine": 49,
+                "text": "            bytes32 r;"
+              },
+              {
+                "type": " ",
+                "oldLine": 46,
+                "newLine": 50,
+                "text": "            bytes32 s;"
+              },
+              {
+                "type": " ",
+                "oldLine": 47,
+                "newLine": 51,
+                "text": "            uint8 v;"
+              },
+              {
+                "type": " ",
+                "oldLine": 48,
+                "newLine": 52,
+                "text": "            // ecrecover takes the signature parameters, and the only way to get them"
+              },
+              {
+                "type": " ",
+                "oldLine": 49,
+                "newLine": 53,
+                "text": "            // currently is to use assembly."
+              },
+              {
+                "type": "-",
+                "oldLine": 50,
+                "text": "            /// @solidity memory-safe-assembly",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 51,
+                "newLine": 54,
+                "text": "            assembly {"
+              },
+              {
+                "type": " ",
+                "oldLine": 52,
+                "newLine": 55,
+                "text": "                r := mload(add(signature, 0x20))"
+              },
+              {
+                "type": " ",
+                "oldLine": 53,
+                "newLine": 56,
+                "text": "                s := mload(add(signature, 0x40))"
+              },
+              {
+                "type": " ",
+                "oldLine": 54,
+                "newLine": 57,
+                "text": "                v := byte(0, mload(add(signature, 0x60)))"
+              },
+              {
+                "type": " ",
+                "oldLine": 55,
+                "newLine": 58,
+                "text": "            }"
+              },
+              {
+                "type": " ",
+                "oldLine": 56,
+                "newLine": 59,
+                "text": "            return tryRecover(hash, v, r, s);"
+              },
+              {
+                "type": "+",
+                "newLine": 60,
+                "text": "        } else if (signature.length == 64) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 61,
+                "text": "            bytes32 r;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 62,
+                "text": "            bytes32 vs;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 63,
+                "text": "            // ecrecover takes the signature parameters, and the only way to get them",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 64,
+                "text": "            // currently is to use assembly.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 65,
+                "text": "            assembly {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 66,
+                "text": "                r := mload(add(signature, 0x20))",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 67,
+                "text": "                vs := mload(add(signature, 0x40))",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 68,
+                "text": "            }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 69,
+                "text": "            return tryRecover(hash, r, vs);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 57,
+                "newLine": 70,
+                "text": "        } else {"
+              },
+              {
+                "type": " ",
+                "oldLine": 58,
+                "newLine": 71,
+                "text": "            return (address(0), RecoverError.InvalidSignatureLength);"
+              },
+              { "type": " ", "oldLine": 59, "newLine": 72, "text": "        }" }
+            ]
+          },
+          {
+            "oldStart": 122,
+            "oldLines": 6,
+            "newStart": 135,
+            "newLines": 9,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 122,
+                "newLine": 135,
+                "text": "        if (uint256(s) > 0x7FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF5D576E7357A4501DDFE92F46681B20A0) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 123,
+                "newLine": 136,
+                "text": "            return (address(0), RecoverError.InvalidSignatureS);"
+              },
+              {
+                "type": " ",
+                "oldLine": 124,
+                "newLine": 137,
+                "text": "        }"
+              },
+              {
+                "type": "+",
+                "newLine": 138,
+                "text": "        if (v != 27 && v != 28) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 139,
+                "text": "            return (address(0), RecoverError.InvalidSignatureV);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 140,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 125, "newLine": 141, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 126,
+                "newLine": 142,
+                "text": "        // If the signature is valid (and not malleable), return the signer address"
+              },
+              {
+                "type": " ",
+                "oldLine": 127,
+                "newLine": 143,
+                "text": "        address signer = ecrecover(hash, v, r, s);"
+              }
+            ]
+          },
+          {
+            "oldStart": 150,
+            "oldLines": 15,
+            "newStart": 166,
+            "newLines": 10,
+            "lines": [
+              { "type": " ", "oldLine": 150, "newLine": 166, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 151,
+                "newLine": 167,
+                "text": "     * See {recover}."
+              },
+              {
+                "type": " ",
+                "oldLine": 152,
+                "newLine": 168,
+                "text": "     */"
+              },
+              {
+                "type": "-",
+                "oldLine": 153,
+                "text": "    function toEthSignedMessageHash(bytes32 hash) internal pure returns (bytes32 message) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 169,
+                "text": "    function toEthSignedMessageHash(bytes32 hash) internal pure returns (bytes32) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 154,
+                "newLine": 170,
+                "text": "        // 32 is the length in bytes of hash,"
+              },
+              {
+                "type": " ",
+                "oldLine": 155,
+                "newLine": 171,
+                "text": "        // enforced by the type signature above"
+              },
+              {
+                "type": "-",
+                "oldLine": 156,
+                "text": "        /// @solidity memory-safe-assembly",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 157,
+                "text": "        assembly {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 158,
+                "text": "            mstore(0x00, \"\\x19Ethereum Signed Message:\\n32\")",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 159,
+                "text": "            mstore(0x1c, hash)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 160,
+                "text": "            message := keccak256(0x00, 0x3c)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 161,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 172,
+                "text": "        return keccak256(abi.encodePacked(\"\\x19Ethereum Signed Message:\\n32\", hash));",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 162, "newLine": 173, "text": "    }" },
+              { "type": " ", "oldLine": 163, "newLine": 174, "text": "" },
+              { "type": " ", "oldLine": 164, "newLine": 175, "text": "    /**" }
+            ]
+          },
+          {
+            "oldStart": 182,
+            "oldLines": 24,
+            "newStart": 193,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 182, "newLine": 193, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 183,
+                "newLine": 194,
+                "text": "     * See {recover}."
+              },
+              {
+                "type": " ",
+                "oldLine": 184,
+                "newLine": 195,
+                "text": "     */"
+              },
+              {
+                "type": "-",
+                "oldLine": 185,
+                "text": "    function toTypedDataHash(bytes32 domainSeparator, bytes32 structHash) internal pure returns (bytes32 data) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 186,
+                "text": "        /// @solidity memory-safe-assembly",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 187,
+                "text": "        assembly {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 188,
+                "text": "            let ptr := mload(0x40)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 189,
+                "text": "            mstore(ptr, \"\\x19\\x01\")",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 190,
+                "text": "            mstore(add(ptr, 0x02), domainSeparator)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 191,
+                "text": "            mstore(add(ptr, 0x22), structHash)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 192,
+                "text": "            data := keccak256(ptr, 0x42)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 193,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 196,
+                "text": "    function toTypedDataHash(bytes32 domainSeparator, bytes32 structHash) internal pure returns (bytes32) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 197,
+                "text": "        return keccak256(abi.encodePacked(\"\\x19\\x01\", domainSeparator, structHash));",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 194, "newLine": 198, "text": "    }" },
+              { "type": "-", "oldLine": 195, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 196,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 197,
+                "text": "     * @dev Returns an Ethereum Signed Data with intended validator, created from a",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 198,
+                "text": "     * `validator` and `data` according to the version 0 of EIP-191.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 199,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 200,
+                "text": "     * See {recover}.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 201,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 202,
+                "text": "    function toDataWithIntendedValidatorHash(address validator, bytes memory data) internal pure returns (bytes32) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 203,
+                "text": "        return keccak256(abi.encodePacked(\"\\x19\\x00\", validator, data));",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 204,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 205, "newLine": 199, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

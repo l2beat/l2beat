@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "2028e1e8915cd7eff6c8b5c3894b3f62bc518ff45c7d449a8be75fabe0301dac",
+  "name": "IScrollERC721Extension",
+  "kind": "interface",
+  "lines": 18,
+  "source": "interface IScrollERC721Extension {\n    /// @notice Return the address of Gateway the token belongs to.\n    function gateway() external view returns (address);\n\n    /// @notice Return the address of counterpart token.\n    function counterpart() external view returns (address);\n\n    /// @notice Mint some token to recipient's account.\n    /// @dev Gateway Utilities, only gateway contract can call\n    /// @param _to The address of recipient.\n    /// @param _tokenId The token id to mint.\n    function mint(address _to, uint256 _tokenId) external;\n\n    /// @notice Burn some token from account.\n    /// @dev Gateway Utilities, only gateway contract can call\n    /// @param _tokenId The token id to burn.\n    function burn(uint256 _tokenId) external;\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "identical",
+      "coveredLines": 18,
+      "match": {
+        "origin": "own",
+        "collection": "scroll",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "IScrollERC721Extension",
+        "similarity": 1,
+        "reportId": "scroll/openzeppelin-scroll-gasswap-multiverifier-weth-diff-audit-2023-08",
+        "repository": "scroll-tech/scroll",
+        "path": "contracts/src/libraries/token/IScrollERC721Extension.sol",
+        "commit": "2eb458cf4224d82fc56254e91e297a9ed261cefb",
+        "commitTimestamp": "2023-07-25T17:25:27Z",
+        "url": "https://github.com/scroll-tech/scroll/blob/2eb458cf4224d82fc56254e91e297a9ed261cefb/contracts/src/libraries/token/IScrollERC721Extension.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Full file review at audit commit.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "warnings": []
+    }
+  }
+}

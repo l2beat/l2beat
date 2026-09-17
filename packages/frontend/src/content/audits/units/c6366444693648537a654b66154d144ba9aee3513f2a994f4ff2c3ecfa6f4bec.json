@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "c6366444693648537a654b66154d144ba9aee3513f2a994f4ff2c3ecfa6f4bec",
+  "name": "ECRecover",
+  "kind": "library",
+  "lines": 36,
+  "source": "library ECRecover {\n    /**\n     * @notice Recover signer's address from a signed message\n     * @dev Adapted from: https://github.com/OpenZeppelin/openzeppelin-contracts/blob/65e4ffde586ec89af3b7e9140bdc9235d1254853/contracts/cryptography/ECDSA.sol\n     * Modifications: Accept v, r, and s as separate arguments\n     * @param digest    Keccak-256 hash digest of the signed message\n     * @param v         v of the signature\n     * @param r         r of the signature\n     * @param s         s of the signature\n     * @return Signer address\n     */\n    function recover(bytes32 digest, uint8 v, bytes32 r, bytes32 s) internal pure returns (address) {\n        // EIP-2 still allows signature malleability for ecrecover(). Remove this possibility and make the signature\n        // unique. Appendix F in the Ethereum Yellow paper (https://ethereum.github.io/yellowpaper/paper.pdf), defines\n        // the valid range for s in (281): 0 < s < secp256k1n ÷ 2 + 1, and for v in (282): v ∈ {27, 28}. Most\n        // signatures from current libraries generate a unique signature with an s-value in the lower half order.\n        //\n        // If your library generates malleable signatures, such as s-values in the upper range, calculate a new s-value\n        // with 0xFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFFEBAAEDCE6AF48A03BBFD25E8CD0364141 - s1 and flip v from 27 to 28 or\n        // vice versa. If your library also generates signatures with 0/1 for v instead 27/28, add 27 to v to accept\n        // these malleable signatures as well.\n        if (uint256(s) > 0x7FFFFFFFFFFFFFFFFFFFFFFFFFFFFFFF5D576E7357A4501DDFE92F46681B20A0) {\n            revert(\"ECRecover: invalid signature 's' value\");\n        }\n\n        if (v != 27 && v != 28) {\n            revert(\"ECRecover: invalid signature 'v' value\");\n        }\n\n        // If the signature is valid (and not malleable), return the signer address\n        address signer = ecrecover(digest, v, r, s);\n        require(signer != address(0), \"ECRecover: invalid signature\");\n\n        return signer;\n    }\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

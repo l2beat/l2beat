@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "062dc73df49135aff2033e22fd4798d341a200943dd095df9c593a55508955f4",
+  "name": "reset_output_hints.nr",
+  "kind": "program",
+  "lines": 41,
+  "source": "use crate::reset::{squash_transient_data, TransientDataSquashingHint};\nuse types::{\n    abis::{\n        kernel_circuit_public_inputs::PrivateKernelCircuitPublicInputs, note_hash::NoteHash,\n        nullifier::Nullifier, private_log::PrivateLogData,\n    },\n    constants::{MAX_NOTE_HASHES_PER_TX, MAX_NULLIFIERS_PER_TX, MAX_PRIVATE_LOGS_PER_TX},\n    side_effect::{Counted, Scoped},\n    utils::arrays::ClaimedLengthArray,\n};\n\npub struct SquashedOutputArrayHints {\n    // We use the term \"kept\", because \"squashed_note_hashes\" could be misunderstood to incorrectly mean\n    // \"the notes_hashes which were squashed (deleted) from existence\", whereas these arrays represent\n    // the opposite: these are the note_hashes which were NOT deleted; i.e. the note_hashes which were _kept_.\n    pub kept_note_hashes: ClaimedLengthArray<Scoped<Counted<NoteHash>>, MAX_NOTE_HASHES_PER_TX>,\n    pub kept_nullifiers: ClaimedLengthArray<Scoped<Counted<Nullifier>>, MAX_NULLIFIERS_PER_TX>,\n    pub kept_private_logs: ClaimedLengthArray<Scoped<Counted<PrivateLogData>>, MAX_PRIVATE_LOGS_PER_TX>,\n}\n\n// Splice-removes some transient notes, nullifiers, and private logs, from the previous kernel's\n// arrays of new note_hashes, nullifiers, and private logs.\n// transient_data_squashing_hints - dictates the selection of items that will get removed by this\n// iteration of the reset circuit.\npub unconstrained fn generate_squashed_output_array_hints<let TransientDataSquashingHintsLen: u32>(\n    previous_kernel: PrivateKernelCircuitPublicInputs,\n    transient_data_squashing_hints: [TransientDataSquashingHint; TransientDataSquashingHintsLen],\n) -> SquashedOutputArrayHints {\n    // Splice-removes transient items (as opposed to setting items to \"empty\" in-place).\n    // I.e. for each item that is removed, all the rhs items shift one to the left.\n    // We're effectively constructing output lists of the items that will NOT be processed by this reset kernel\n    // iteration, but will instead be propagated to the next kernel iteration.\n    let (kept_note_hashes, kept_nullifiers, kept_private_logs) = squash_transient_data(\n        previous_kernel.end.note_hashes,\n        previous_kernel.end.nullifiers,\n        previous_kernel.end.private_logs,\n        transient_data_squashing_hints,\n    );\n\n    SquashedOutputArrayHints { kept_note_hashes, kept_nullifiers, kept_private_logs }\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "84f98321eaa9b2b6cd17d9fcc93c74ac4edb5a0b203cc10078f937dd392fc0ac",
+  "name": "UniversalRouter",
+  "kind": "contract",
+  "lines": 60,
+  "source": "contract UniversalRouter is IUniversalRouter, Dispatcher {\n    constructor(RouterParameters memory params)\n        UniswapImmutables(\n            UniswapParameters(params.v2Factory, params.v3Factory, params.pairInitCodeHash, params.poolInitCodeHash)\n        )\n        V4SwapRouter(params.v4PoolManager)\n        PaymentsImmutables(PaymentsParameters(params.permit2, params.weth9))\n        MigratorImmutables(MigratorParameters(params.v3NFTPositionManager, params.v4PositionManager))\n    {}\n\n    modifier checkDeadline(uint256 deadline) {\n        if (block.timestamp > deadline) {\n            revert TransactionDeadlinePassed();\n        }\n        _;\n    }\n\n    /// @notice To receive ETH from WETH\n    receive() external payable {\n        if (msg.sender != address(WETH9) && msg.sender != address(poolManager)) {\n            revert InvalidEthSender();\n        }\n    }\n\n    /// @inheritdoc IUniversalRouter\n    function execute(bytes calldata commands, bytes[] calldata inputs, uint256 deadline)\n        external\n        payable\n        checkDeadline(deadline)\n    {\n        execute(commands, inputs);\n    }\n\n    /// @inheritdoc Dispatcher\n    function execute(bytes calldata commands, bytes[] calldata inputs) public payable override isNotLocked {\n        bool success;\n        bytes memory output;\n        uint256 numCommands = commands.length;\n        if (inputs.length != numCommands) {\n            revert LengthMismatch();\n        }\n\n        // loop through all given commands, execute them and pass along outputs as defined\n        for (uint256 commandIndex = 0; commandIndex < numCommands; commandIndex++) {\n            bytes1 command = commands[commandIndex];\n\n            bytes calldata input = inputs[commandIndex];\n\n            (success, output) = dispatch(command, input);\n\n            if (!success && successRequired(command)) {\n                revert ExecutionFailed({commandIndex: commandIndex, message: output});\n            }\n        }\n    }\n\n    function successRequired(bytes1 command) internal pure returns (bool) {\n        return command & Commands.FLAG_ALLOW_REVERT == 0;\n    }\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

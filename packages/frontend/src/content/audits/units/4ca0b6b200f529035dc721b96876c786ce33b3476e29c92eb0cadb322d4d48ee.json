@@ -1,0 +1,299 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "4ca0b6b200f529035dc721b96876c786ce33b3476e29c92eb0cadb322d4d48ee",
+  "name": "L1ERC1155Gateway",
+  "kind": "contract",
+  "lines": 220,
+  "source": "contract L1ERC1155Gateway is ERC1155HolderUpgradeable, ScrollGatewayBase, IL1ERC1155Gateway {\n    /**\n     *\n     * Events *\n     *\n     */\n\n    /// @notice Emitted when token mapping for ERC1155 token is updated.\n    /// @param l1Token The address of ERC1155 token in layer 1.\n    /// @param oldL2Token The address of the old corresponding ERC1155 token in layer 2.\n    /// @param newL2Token The address of the new corresponding ERC1155 token in layer 2.\n    event UpdateTokenMapping(address indexed l1Token, address indexed oldL2Token, address indexed newL2Token);\n\n    /**\n     *\n     * Variables *\n     *\n     */\n\n    /// @notice Mapping from l1 token address to l2 token address for ERC1155 NFT.\n    mapping(address => address) public tokenMapping;\n\n    /**\n     *\n     * Constructor *\n     *\n     */\n\n    /// @notice Constructor for `L1ERC1155Gateway` implementation contract.\n    ///\n    /// @param _counterpart The address of `L1ERC1155Gateway` contract in L2.\n    /// @param _messenger The address of `L1ScrollMessenger` contract in L1.\n    constructor(address _counterpart, address _messenger) ScrollGatewayBase(_counterpart, address(0), _messenger) {\n        _disableInitializers();\n    }\n\n    /// @notice Initialize the storage of L1ERC1155Gateway.\n    /// @param _counterpart The address of L2ERC1155Gateway in L2.\n    /// @param _messenger The address of L1ScrollMessenger in L1.\n    function initialize(address _counterpart, address _messenger) external initializer {\n        ERC1155HolderUpgradeable.__ERC1155Holder_init();\n        ERC1155ReceiverUpgradeable.__ERC1155Receiver_init();\n\n        ScrollGatewayBase._initialize(_counterpart, address(0), _messenger);\n    }\n\n    /**\n     *\n     * Public Mutating Functions *\n     *\n     */\n\n    /// @inheritdoc IL1ERC1155Gateway\n    function depositERC1155(address _token, uint256 _tokenId, uint256 _amount, uint256 _gasLimit)\n        external\n        payable\n        override\n    {\n        _depositERC1155(_token, _msgSender(), _tokenId, _amount, _gasLimit);\n    }\n\n    /// @inheritdoc IL1ERC1155Gateway\n    function depositERC1155(address _token, address _to, uint256 _tokenId, uint256 _amount, uint256 _gasLimit)\n        external\n        payable\n        override\n    {\n        _depositERC1155(_token, _to, _tokenId, _amount, _gasLimit);\n    }\n\n    /// @inheritdoc IL1ERC1155Gateway\n    function batchDepositERC1155(\n        address _token,\n        uint256[] calldata _tokenIds,\n        uint256[] calldata _amounts,\n        uint256 _gasLimit\n    ) external payable override {\n        _batchDepositERC1155(_token, _msgSender(), _tokenIds, _amounts, _gasLimit);\n    }\n\n    /// @inheritdoc IL1ERC1155Gateway\n    function batchDepositERC1155(\n        address _token,\n        address _to,\n        uint256[] calldata _tokenIds,\n        uint256[] calldata _amounts,\n        uint256 _gasLimit\n    ) external payable override {\n        _batchDepositERC1155(_token, _to, _tokenIds, _amounts, _gasLimit);\n    }\n\n    /// @inheritdoc IL1ERC1155Gateway\n    function finalizeWithdrawERC1155(\n        address _l1Token,\n        address _l2Token,\n        address _from,\n        address _to,\n        uint256 _tokenId,\n        uint256 _amount\n    ) external virtual onlyCallByCounterpart nonReentrant {\n        require(_l2Token != address(0), \"token address cannot be 0\");\n        require(_l2Token == tokenMapping[_l1Token], \"l2 token mismatch\");\n\n        IERC1155Upgradeable(_l1Token).safeTransferFrom(address(this), _to, _tokenId, _amount, \"\");\n\n        emit FinalizeWithdrawERC1155(_l1Token, _l2Token, _from, _to, _tokenId, _amount);\n    }\n\n    /// @inheritdoc IL1ERC1155Gateway\n    function finalizeBatchWithdrawERC1155(\n        address _l1Token,\n        address _l2Token,\n        address _from,\n        address _to,\n        uint256[] calldata _tokenIds,\n        uint256[] calldata _amounts\n    ) external virtual onlyCallByCounterpart nonReentrant {\n        require(_l2Token != address(0), \"token address cannot be 0\");\n        require(_l2Token == tokenMapping[_l1Token], \"l2 token mismatch\");\n\n        IERC1155Upgradeable(_l1Token).safeBatchTransferFrom(address(this), _to, _tokenIds, _amounts, \"\");\n\n        emit FinalizeBatchWithdrawERC1155(_l1Token, _l2Token, _from, _to, _tokenIds, _amounts);\n    }\n\n    /**\n     *\n     * Restricted Functions *\n     *\n     */\n\n    /// @notice Update layer 2 to layer 2 token mapping.\n    /// @param _l1Token The address of ERC1155 token on layer 1.\n    /// @param _l2Token The address of corresponding ERC1155 token on layer 2.\n    function updateTokenMapping(address _l1Token, address _l2Token) external onlyOwner {\n        require(_l2Token != address(0), \"token address cannot be 0\");\n\n        address _oldL2Token = tokenMapping[_l1Token];\n        tokenMapping[_l1Token] = _l2Token;\n\n        emit UpdateTokenMapping(_l1Token, _oldL2Token, _l2Token);\n    }\n\n    /**\n     *\n     * Internal Functions *\n     *\n     */\n\n    /// @dev Internal function to deposit ERC1155 NFT to layer 2.\n    /// @param _token The address of ERC1155 NFT on layer 1.\n    /// @param _to The address of recipient on layer 2.\n    /// @param _tokenId The token id to deposit.\n    /// @param _amount The amount of token to deposit.\n    /// @param _gasLimit Estimated gas limit required to complete the deposit on layer 2.\n    function _depositERC1155(address _token, address _to, uint256 _tokenId, uint256 _amount, uint256 _gasLimit)\n        internal\n        virtual\n        nonReentrant\n    {\n        require(_amount > 0, \"deposit zero amount\");\n\n        address _l2Token = tokenMapping[_token];\n        require(_l2Token != address(0), \"no corresponding l2 token\");\n\n        address _sender = _msgSender();\n\n        // 1. transfer token to this contract\n        IERC1155Upgradeable(_token).safeTransferFrom(_sender, address(this), _tokenId, _amount, \"\");\n\n        // 2. Generate message passed to L2ERC1155Gateway.\n        bytes memory _message = abi.encodeCall(\n            IL2ERC1155Gateway.finalizeDepositERC1155, (_token, _l2Token, _sender, _to, _tokenId, _amount)\n        );\n\n        // 3. Send message to L1ScrollMessenger.\n        IL1ScrollMessenger(messenger).sendMessage{value: msg.value}(counterpart, 0, _message, _gasLimit, _sender);\n\n        emit DepositERC1155(_token, _l2Token, _sender, _to, _tokenId, _amount);\n    }\n\n    /// @dev Internal function to batch deposit ERC1155 NFT to layer 2.\n    /// @param _token The address of ERC1155 NFT on layer 1.\n    /// @param _to The address of recipient on layer 2.\n    /// @param _tokenIds The list of token ids to deposit.\n    /// @param _amounts The list of corresponding number of token to deposit.\n    /// @param _gasLimit Estimated gas limit required to complete the deposit on layer 2.\n    function _batchDepositERC1155(\n        address _token,\n        address _to,\n        uint256[] calldata _tokenIds,\n        uint256[] calldata _amounts,\n        uint256 _gasLimit\n    ) internal virtual nonReentrant {\n        require(_tokenIds.length > 0, \"no token to deposit\");\n        require(_tokenIds.length == _amounts.length, \"length mismatch\");\n\n        for (uint256 i = 0; i < _amounts.length; i++) {\n            require(_amounts[i] > 0, \"deposit zero amount\");\n        }\n\n        address _l2Token = tokenMapping[_token];\n        require(_l2Token != address(0), \"no corresponding l2 token\");\n\n        address _sender = _msgSender();\n\n        // 1. transfer token to this contract\n        IERC1155Upgradeable(_token).safeBatchTransferFrom(_sender, address(this), _tokenIds, _amounts, \"\");\n\n        // 2. Generate message passed to L2ERC1155Gateway.\n        bytes memory _message = abi.encodeCall(\n            IL2ERC1155Gateway.finalizeBatchDepositERC1155, (_token, _l2Token, _sender, _to, _tokenIds, _amounts)\n        );\n\n        // 3. Send message to L1ScrollMessenger.\n        IL1ScrollMessenger(messenger).sendMessage{value: msg.value}(counterpart, 0, _message, _gasLimit, _sender);\n\n        emit BatchDepositERC1155(_token, _l2Token, _sender, _to, _tokenIds, _amounts);\n    }\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "differs",
+      "coveredLines": 219,
+      "match": {
+        "origin": "own",
+        "collection": "scroll",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "L1ERC1155Gateway",
+        "similarity": 0.988,
+        "reportId": "scroll/openzeppelin-scroll-bridge-gas-optimizations-audit-2024-02",
+        "repository": "scroll-tech/scroll",
+        "path": "contracts/src/L1/gateways/L1ERC1155Gateway.sol",
+        "commit": "45e1305de5f7a1dc5aadadd7d3bb6726a5dee949",
+        "commitTimestamp": "2024-01-08T03:05:16Z",
+        "url": "https://github.com/scroll-tech/scroll/blob/45e1305de5f7a1dc5aadadd7d3bb6726a5dee949/contracts/src/L1/gateways/L1ERC1155Gateway.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "initial audit (diff)",
+        "coverage": "Diff audit of pull request #1011 (bridge gas optimizations) at its reviewed commit; changes outside the pull request were out of scope.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 6
+      },
+      "diff": {
+        "added": 1,
+        "removed": 17,
+        "ignoredAdded": 2,
+        "ignoredRemoved": 7,
+        "unchanged": 219,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 4,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "contract L1ERC1155Gateway is ERC1155HolderUpgradeable, ScrollGatewayBase, IL1ERC1155Gateway, IMessageDropCallback {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "contract L1ERC1155Gateway is ERC1155HolderUpgradeable, ScrollGatewayBase, IL1ERC1155Gateway {",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 2, "newLine": 2, "text": "    /**" },
+              { "type": " ", "oldLine": 3, "newLine": 3, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "     * Events *"
+              }
+            ]
+          },
+          {
+            "oldStart": 29,
+            "oldLines": 14,
+            "newStart": 29,
+            "newLines": 14,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 29,
+                "newLine": 29,
+                "text": "    /// @notice Constructor for `L1ERC1155Gateway` implementation contract."
+              },
+              { "type": " ", "oldLine": 30, "newLine": 30, "text": "    ///" },
+              {
+                "type": " ",
+                "oldLine": 31,
+                "newLine": 31,
+                "text": "    /// @param _counterpart The address of `L1ERC1155Gateway` contract in L2."
+              },
+              {
+                "type": "-",
+                "oldLine": 32,
+                "text": "    /// @param _messenger The address of `L1ScrollMessenger` contract.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 32,
+                "text": "    /// @param _messenger The address of `L1ScrollMessenger` contract in L1.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 33,
+                "newLine": 33,
+                "text": "    constructor(address _counterpart, address _messenger) ScrollGatewayBase(_counterpart, address(0), _messenger) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 34,
+                "newLine": 34,
+                "text": "        _disableInitializers();"
+              },
+              { "type": " ", "oldLine": 35, "newLine": 35, "text": "    }" },
+              { "type": " ", "oldLine": 36, "newLine": 36, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 37,
+                "newLine": 37,
+                "text": "    /// @notice Initialize the storage of L1ERC1155Gateway."
+              },
+              {
+                "type": " ",
+                "oldLine": 38,
+                "newLine": 38,
+                "text": "    /// @param _counterpart The address of L2ERC1155Gateway in L2."
+              },
+              {
+                "type": "-",
+                "oldLine": 39,
+                "text": "    /// @param _messenger The address of L1ScrollMessenger.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 39,
+                "text": "    /// @param _messenger The address of L1ScrollMessenger in L1.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 40,
+                "newLine": 40,
+                "text": "    function initialize(address _counterpart, address _messenger) external initializer {"
+              },
+              {
+                "type": " ",
+                "oldLine": 41,
+                "newLine": 41,
+                "text": "        ERC1155HolderUpgradeable.__ERC1155Holder_init();"
+              },
+              {
+                "type": " ",
+                "oldLine": 42,
+                "newLine": 42,
+                "text": "        ERC1155ReceiverUpgradeable.__ERC1155Receiver_init();"
+              }
+            ]
+          },
+          {
+            "oldStart": 123,
+            "oldLines": 27,
+            "newStart": 123,
+            "newLines": 6,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 123,
+                "newLine": 123,
+                "text": "        emit FinalizeBatchWithdrawERC1155(_l1Token, _l2Token, _from, _to, _tokenIds, _amounts);"
+              },
+              { "type": " ", "oldLine": 124, "newLine": 124, "text": "    }" },
+              { "type": " ", "oldLine": 125, "newLine": 125, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 126,
+                "text": "    /// @inheritdoc IMessageDropCallback",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 127,
+                "text": "    function onDropMessage(bytes calldata _message) external payable virtual onlyInDropContext nonReentrant {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 128,
+                "text": "        require(msg.value == 0, \"nonzero msg.value\");",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 129, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 130,
+                "text": "        if (bytes4(_message[0:4]) == IL2ERC1155Gateway.finalizeDepositERC1155.selector) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 131,
+                "text": "            (address _token,, address _sender,, uint256 _tokenId, uint256 _amount) =",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 132,
+                "text": "                abi.decode(_message[4:], (address, address, address, address, uint256, uint256));",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 133,
+                "text": "            IERC1155Upgradeable(_token).safeTransferFrom(address(this), _sender, _tokenId, _amount, \"\");",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 134, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 135,
+                "text": "            emit RefundERC1155(_token, _sender, _tokenId, _amount);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 136,
+                "text": "        } else if (bytes4(_message[0:4]) == IL2ERC1155Gateway.finalizeBatchDepositERC1155.selector) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 137,
+                "text": "            (address _token,, address _sender,, uint256[] memory _tokenIds, uint256[] memory _amounts) =",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 138,
+                "text": "                abi.decode(_message[4:], (address, address, address, address, uint256[], uint256[]));",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 139,
+                "text": "            IERC1155Upgradeable(_token).safeBatchTransferFrom(address(this), _sender, _tokenIds, _amounts, \"\");",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 140, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 141,
+                "text": "            emit BatchRefundERC1155(_token, _sender, _tokenIds, _amounts);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 142,
+                "text": "        } else {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 143,
+                "text": "            revert(\"invalid selector\");",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 144,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 145,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 146, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 147,
+                "newLine": 126,
+                "text": "    /**"
+              },
+              { "type": " ", "oldLine": 148, "newLine": 127, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 149,
+                "newLine": 128,
+                "text": "     * Restricted Functions *"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "4260562c5dbb977b2a9871fd0ecc10f623aefd60e32a946ce47099a0e052531f",
+  "name": "StakingQueueLib",
+  "kind": "library",
+  "lines": 46,
+  "source": "library StakingQueueLib {\n    function init(StakingQueue storage self) internal {\n        self.first = 1;\n        self.last = 1;\n    }\n\n    function enqueue(\n        StakingQueue storage self,\n        address _attester,\n        address _withdrawer,\n        G1Point memory _publicKeyInG1,\n        G2Point memory _publicKeyInG2,\n        G1Point memory _proofOfPossession,\n        bool _moveWithLatestRollup\n    ) internal returns (uint256) {\n        uint128 queueLocation = self.last;\n\n        self.validators[queueLocation] = DepositArgs({\n            attester: _attester,\n            withdrawer: _withdrawer,\n            publicKeyInG1: _publicKeyInG1,\n            publicKeyInG2: _publicKeyInG2,\n            proofOfPossession: _proofOfPossession,\n            moveWithLatestRollup: _moveWithLatestRollup\n        });\n        self.last = queueLocation + 1;\n\n        return queueLocation;\n    }\n\n    function dequeue(StakingQueue storage self) internal returns (DepositArgs memory validator) {\n        require(self.last > self.first, Errors.Staking__QueueEmpty());\n\n        validator = self.validators[self.first];\n\n        self.first += 1;\n    }\n\n    function length(StakingQueue storage self) internal view returns (uint256 len) {\n        len = self.last - self.first;\n    }\n\n    function at(StakingQueue storage self, uint256 index) internal view returns (DepositArgs memory validator) {\n        validator = self.validators[self.first + index];\n    }\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "identical",
+      "coveredLines": 46,
+      "match": {
+        "origin": "own",
+        "collection": "aztecnetwork",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "StakingQueueLib",
+        "similarity": 1,
+        "reportId": "aztecnetwork/cantina-rollup-contracts-2025-11-12",
+        "repository": "AztecProtocol/aztec-packages",
+        "path": "l1-contracts/src/core/libraries/StakingQueue.sol",
+        "commit": "44e3f64839b6f60aa4f3443f60fb45fcf744e586",
+        "commitTimestamp": "2025-09-26T07:33:24Z",
+        "url": "https://github.com/AztecProtocol/aztec-packages/blob/44e3f64839b6f60aa4f3443f60fb45fcf744e586/l1-contracts/src/core/libraries/StakingQueue.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "remediation review",
+        "coverage": "verified code-quality fixes from PR 17300 (head commit)",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "warnings": []
+    }
+  }
+}

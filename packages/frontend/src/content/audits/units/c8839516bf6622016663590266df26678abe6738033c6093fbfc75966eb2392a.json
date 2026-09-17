@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "c8839516bf6622016663590266df26678abe6738033c6093fbfc75966eb2392a",
+  "name": "(file-level declarations)",
+  "kind": "file-level",
+  "lines": 7,
+  "source": "uint256 constant LOG_N = 24;\nuint256 constant BATCHED_RELATION_PARTIAL_LENGTH = 8;\nuint256 constant NUMBER_OF_ENTITIES = 41;\nuint256 constant PAIRING_POINTS_SIZE = 8;\nuint256 constant REAL_NUMBER_PUBLIC_INPUTS = 111;\nuint256 constant VK_HASH = 0x2f0ca3e610369fc41f7fb8a69995a96428fbf69d7dffd2b576e63ba4d9511ee1;\nuint256 constant PUBLIC_INPUTS_OFFSET = 5;",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

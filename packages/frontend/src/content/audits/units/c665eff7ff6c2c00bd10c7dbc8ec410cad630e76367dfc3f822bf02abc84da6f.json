@@ -1,0 +1,204 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "c665eff7ff6c2c00bd10c7dbc8ec410cad630e76367dfc3f822bf02abc84da6f",
+  "name": "TornadoTrees",
+  "kind": "contract",
+  "lines": 122,
+  "source": "contract TornadoTrees is ITornadoTrees, EnsResolve {\n    OwnableMerkleTree public immutable depositTree;\n    OwnableMerkleTree public immutable withdrawalTree;\n    IHasher public immutable hasher;\n    address public immutable tornadoProxy;\n\n    bytes32[] public deposits;\n    uint256 public lastProcessedDepositLeaf;\n\n    bytes32[] public withdrawals;\n    uint256 public lastProcessedWithdrawalLeaf;\n\n    event DepositData(address instance, bytes32 indexed hash, uint256 block, uint256 index);\n    event WithdrawalData(address instance, bytes32 indexed hash, uint256 block, uint256 index);\n\n    struct TreeLeaf {\n        address instance;\n        bytes32 hash;\n        uint256 block;\n    }\n\n    modifier onlyTornadoProxy() {\n        require(msg.sender == tornadoProxy, \"Not authorized\");\n        _;\n    }\n\n    constructor(bytes32 _tornadoProxy, bytes32 _hasher2, bytes32 _hasher3, uint32 _levels) public {\n        tornadoProxy = resolve(_tornadoProxy);\n        hasher = IHasher(resolve(_hasher3));\n        depositTree = new OwnableMerkleTree(_levels, IHasher(resolve(_hasher2)));\n        withdrawalTree = new OwnableMerkleTree(_levels, IHasher(resolve(_hasher2)));\n    }\n\n    function registerDeposit(address _instance, bytes32 _commitment) external override onlyTornadoProxy {\n        deposits.push(keccak256(abi.encode(_instance, _commitment, blockNumber())));\n    }\n\n    function registerWithdrawal(address _instance, bytes32 _nullifier) external override onlyTornadoProxy {\n        withdrawals.push(keccak256(abi.encode(_instance, _nullifier, blockNumber())));\n    }\n\n    function updateRoots(TreeLeaf[] calldata _deposits, TreeLeaf[] calldata _withdrawals) external {\n        if (_deposits.length > 0) {\n            updateDepositTree(_deposits);\n        }\n        if (_withdrawals.length > 0) {\n            updateWithdrawalTree(_withdrawals);\n        }\n    }\n\n    function updateDepositTree(TreeLeaf[] calldata _deposits) public {\n        bytes32[] memory leaves = new bytes32[](_deposits.length);\n        uint256 offset = lastProcessedDepositLeaf;\n\n        for (uint256 i = 0; i < _deposits.length; i++) {\n            TreeLeaf memory deposit = _deposits[i];\n            bytes32 leafHash = keccak256(abi.encode(deposit.instance, deposit.hash, deposit.block));\n            require(deposits[offset + i] == leafHash, \"Incorrect deposit\");\n\n            leaves[i] = hasher.poseidon([bytes32(uint256(deposit.instance)), deposit.hash, bytes32(deposit.block)]);\n            delete deposits[offset + i];\n\n            emit DepositData(deposit.instance, deposit.hash, deposit.block, offset + i);\n        }\n\n        lastProcessedDepositLeaf = offset + _deposits.length;\n        depositTree.bulkInsert(leaves);\n    }\n\n    function updateWithdrawalTree(TreeLeaf[] calldata _withdrawals) public {\n        bytes32[] memory leaves = new bytes32[](_withdrawals.length);\n        uint256 offset = lastProcessedWithdrawalLeaf;\n\n        for (uint256 i = 0; i < _withdrawals.length; i++) {\n            TreeLeaf memory withdrawal = _withdrawals[i];\n            bytes32 leafHash = keccak256(abi.encode(withdrawal.instance, withdrawal.hash, withdrawal.block));\n            require(withdrawals[offset + i] == leafHash, \"Incorrect withdrawal\");\n\n            leaves[i] =\n                hasher.poseidon([bytes32(uint256(withdrawal.instance)), withdrawal.hash, bytes32(withdrawal.block)]);\n            delete withdrawals[offset + i];\n\n            emit WithdrawalData(withdrawal.instance, withdrawal.hash, withdrawal.block, offset + i);\n        }\n\n        lastProcessedWithdrawalLeaf = offset + _withdrawals.length;\n        withdrawalTree.bulkInsert(leaves);\n    }\n\n    function validateRoots(bytes32 _depositRoot, bytes32 _withdrawalRoot) public view {\n        require(depositTree.isKnownRoot(_depositRoot), \"Incorrect deposit tree root\");\n        require(withdrawalTree.isKnownRoot(_withdrawalRoot), \"Incorrect withdrawal tree root\");\n    }\n\n    function depositRoot() external view returns (bytes32) {\n        return depositTree.getLastRoot();\n    }\n\n    function withdrawalRoot() external view returns (bytes32) {\n        return withdrawalTree.getLastRoot();\n    }\n\n    function getRegisteredDeposits() external view returns (bytes32[] memory _deposits) {\n        uint256 count = deposits.length - lastProcessedDepositLeaf;\n        _deposits = new bytes32[](count);\n        for (uint256 i = 0; i < count; i++) {\n            _deposits[i] = deposits[lastProcessedDepositLeaf + i];\n        }\n    }\n\n    function getRegisteredWithdrawals() external view returns (bytes32[] memory _withdrawals) {\n        uint256 count = withdrawals.length - lastProcessedWithdrawalLeaf;\n        _withdrawals = new bytes32[](count);\n        for (uint256 i = 0; i < count; i++) {\n            _withdrawals[i] = withdrawals[lastProcessedWithdrawalLeaf + i];\n        }\n    }\n\n    function blockNumber() public view virtual returns (uint256) {\n        return block.number;\n    }\n}",
+  "resolutions": {
+    "f9658cd3a9a22004": {
+      "status": "differs",
+      "coveredLines": 116,
+      "match": {
+        "origin": "own",
+        "collection": "tornado-cash",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "TornadoTrees",
+        "similarity": 0.945,
+        "reportId": "tornado-cash/abdk-tornado-anonymity-mining-recheck-2020-12-22",
+        "repository": "tornadocash/tornado-anonymity-mining",
+        "path": "contracts/TornadoTrees.sol",
+        "commit": "9ec05a681d9699a11733b3163dd44a1e90abc345",
+        "commitTimestamp": "2020-11-02T20:07:53Z",
+        "url": "https://github.com/tornadocash/tornado-anonymity-mining/blob/9ec05a681d9699a11733b3163dd44a1e90abc345/contracts/TornadoTrees.sol",
+        "auditStatus": "audited_with_major_findings",
+        "reviewPhase": "recheck of changed contracts",
+        "coverage": "full file",
+        "majorFindings": 2,
+        "findingIds": ["CVF-31", "CVF-32"],
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 6,
+        "removed": 6,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 116,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 31,
+            "oldLines": 12,
+            "newStart": 31,
+            "newLines": 12,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 31,
+                "newLine": 31,
+                "text": "        withdrawalTree = new OwnableMerkleTree(_levels, IHasher(resolve(_hasher2)));"
+              },
+              { "type": " ", "oldLine": 32, "newLine": 32, "text": "    }" },
+              { "type": " ", "oldLine": 33, "newLine": 33, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 34,
+                "text": "    function registerNewDeposit(address instance, bytes32 commitment) external override onlyTornadoProxy {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 35,
+                "text": "        deposits.push(keccak256(abi.encode(instance, commitment, blockNumber())));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 34,
+                "text": "    function registerDeposit(address _instance, bytes32 _commitment) external override onlyTornadoProxy {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 35,
+                "text": "        deposits.push(keccak256(abi.encode(_instance, _commitment, blockNumber())));",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 36, "newLine": 36, "text": "    }" },
+              { "type": " ", "oldLine": 37, "newLine": 37, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 38,
+                "text": "    function registerNewWithdrawal(address instance, bytes32 nullifier) external override onlyTornadoProxy {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 39,
+                "text": "        withdrawals.push(keccak256(abi.encode(instance, nullifier, blockNumber())));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 38,
+                "text": "    function registerWithdrawal(address _instance, bytes32 _nullifier) external override onlyTornadoProxy {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 39,
+                "text": "        withdrawals.push(keccak256(abi.encode(_instance, _nullifier, blockNumber())));",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 40, "newLine": 40, "text": "    }" },
+              { "type": " ", "oldLine": 41, "newLine": 41, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 42,
+                "newLine": 42,
+                "text": "    function updateRoots(TreeLeaf[] calldata _deposits, TreeLeaf[] calldata _withdrawals) external {"
+              }
+            ]
+          },
+          {
+            "oldStart": 48,
+            "oldLines": 7,
+            "newStart": 48,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 48,
+                "newLine": 48,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 49, "newLine": 49, "text": "    }" },
+              { "type": " ", "oldLine": 50, "newLine": 50, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 51,
+                "text": "    function updateDepositTree(TreeLeaf[] memory _deposits) public {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 51,
+                "text": "    function updateDepositTree(TreeLeaf[] calldata _deposits) public {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 52,
+                "newLine": 52,
+                "text": "        bytes32[] memory leaves = new bytes32[](_deposits.length);"
+              },
+              {
+                "type": " ",
+                "oldLine": 53,
+                "newLine": 53,
+                "text": "        uint256 offset = lastProcessedDepositLeaf;"
+              },
+              { "type": " ", "oldLine": 54, "newLine": 54, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 67,
+            "oldLines": 7,
+            "newStart": 67,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 67,
+                "newLine": 67,
+                "text": "        depositTree.bulkInsert(leaves);"
+              },
+              { "type": " ", "oldLine": 68, "newLine": 68, "text": "    }" },
+              { "type": " ", "oldLine": 69, "newLine": 69, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 70,
+                "text": "    function updateWithdrawalTree(TreeLeaf[] memory _withdrawals) public {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 70,
+                "text": "    function updateWithdrawalTree(TreeLeaf[] calldata _withdrawals) public {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 71,
+                "newLine": 71,
+                "text": "        bytes32[] memory leaves = new bytes32[](_withdrawals.length);"
+              },
+              {
+                "type": " ",
+                "oldLine": 72,
+                "newLine": 72,
+                "text": "        uint256 offset = lastProcessedWithdrawalLeaf;"
+              },
+              { "type": " ", "oldLine": 73, "newLine": 73, "text": "" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

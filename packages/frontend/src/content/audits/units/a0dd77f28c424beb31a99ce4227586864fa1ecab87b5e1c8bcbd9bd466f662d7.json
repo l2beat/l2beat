@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "a0dd77f28c424beb31a99ce4227586864fa1ecab87b5e1c8bcbd9bd466f662d7",
+  "name": "out_hash_tests.nr",
+  "kind": "program",
+  "lines": 52,
+  "source": "use super::TestBuilder;\nuse protocol_test_utils::FixtureBuilder;\nuse types::{constants::MAX_L2_TO_L1_MSGS_PER_TX, merkle_tree::compute_sha_tree_root};\n\n#[test]\nfn empty_l2_to_l1_msgs() {\n    let builder = TestBuilder::new();\n\n    let pi = builder.execute();\n    builder.assert_expected_public_inputs(pi);\n\n    assert_eq(pi.out_hash, 0);\n}\n\n#[test]\nfn max_l2_to_l1_msgs() {\n    let mut builder = TestBuilder::new();\n\n    let mut fixture_builder = FixtureBuilder::new();\n    fixture_builder.append_l2_to_l1_msgs(MAX_L2_TO_L1_MSGS_PER_TX);\n    builder.update_private_tail_accumulated_data(fixture_builder);\n\n    let pi = builder.execute();\n    builder.assert_expected_public_inputs(pi);\n\n    let siloed_l2_to_l1_msgs = builder.get_siloed_l2_to_l1_msgs();\n    let expected_out_hash = compute_sha_tree_root(siloed_l2_to_l1_msgs);\n    assert_eq(pi.out_hash, expected_out_hash);\n}\n\n#[test]\nfn unbalanced_l2_to_l1_msg_tree() {\n    let mut builder = TestBuilder::new();\n\n    let num_l2_to_l1_msgs = 3; // Will create a subtree of 2 and another subtree of 1.\n    let mut fixture_builder = FixtureBuilder::new();\n    fixture_builder.append_l2_to_l1_msgs(num_l2_to_l1_msgs);\n    builder.update_private_tail_accumulated_data(fixture_builder);\n\n    let pi = builder.execute();\n    builder.assert_expected_public_inputs(pi);\n\n    let siloed_l2_to_l1_msgs = builder.get_siloed_l2_to_l1_msgs();\n    let left_subtree_root =\n        compute_sha_tree_root([siloed_l2_to_l1_msgs[0], siloed_l2_to_l1_msgs[1]]);\n    let right_subtree_root = siloed_l2_to_l1_msgs[2];\n    let expected_out_hash = compute_sha_tree_root([left_subtree_root, right_subtree_root]);\n    assert_eq(pi.out_hash, expected_out_hash);\n\n    // This test is added to make sure the `UnbalancedMerkleTree` is used to compute the out hash.\n    // More comprehensive tests for various tree shapes are tested in `UnbalancedMerkleTree`'s tests.\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

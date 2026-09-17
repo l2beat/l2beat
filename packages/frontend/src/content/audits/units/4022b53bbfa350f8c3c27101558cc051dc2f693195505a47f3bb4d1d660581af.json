@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "4022b53bbfa350f8c3c27101558cc051dc2f693195505a47f3bb4d1d660581af",
+  "name": "(file-level declarations)",
+  "kind": "file-level",
+  "lines": 54,
+  "source": "error ErrOnlySelfCall(bytes4 msgSig);\nerror ErrZeroCodeContract(address addr);\nerror ErrZeroAddress(bytes4 msgSig);\nerror ErrAddressIsNotCreatedEOA(address addr, bytes32 codehash);\nerror ErrUnsupportedInterface(bytes4 interfaceId, address addr);\nenum RoleAccess {\n    UNKNOWN, // 0\n    ADMIN, // 1\n    COINBASE, // 2\n    GOVERNOR, // 3\n    CANDIDATE_ADMIN, // 4\n    WITHDRAWAL_MIGRATOR, // 5\n    __DEPRECATED_BRIDGE_OPERATOR, // 6\n    BLOCK_PRODUCER, // 7\n    VALIDATOR_CANDIDATE, // 8\n    CONSENSUS, // 9\n    TREASURY // 10\n\n}\nerror ErrUnauthorized(bytes4 msgSig, RoleAccess expectedRole);\nenum ContractType {\n    UNKNOWN, // 0\n    PAUSE_ENFORCER, // 1\n    BRIDGE, // 2\n    BRIDGE_TRACKING, // 3\n    GOVERNANCE_ADMIN, // 4\n    MAINTENANCE, // 5\n    SLASH_INDICATOR, // 6\n    STAKING_VESTING, // 7\n    VALIDATOR, // 8\n    STAKING, // 9\n    RONIN_TRUSTED_ORGANIZATION, // 10\n    BRIDGE_MANAGER, // 11\n    BRIDGE_SLASH, // 12\n    BRIDGE_REWARD, // 13\n    FAST_FINALITY_TRACKING, // 14\n    PROFILE // 15\n\n}\nerror ErrUnexpectedInternalCall(bytes4 msgSig, ContractType expectedContractType, address actual);\nerror ErrInvalidThreshold(bytes4 msgSig);\nerror ErrLengthMismatch(bytes4 msgSig);\nerror ErrInvalidVoteWeight(bytes4 msgSig);\nerror ErrInvalidChainId(bytes4 msgSig, uint256 actual, uint256 expected);\nerror ErrInvalidProposalNonce(bytes4 msgSig);\nerror ErrAlreadyVoted(address voter);\nerror ErrUnsupportedVoteType(bytes4 msgSig);\nerror ErrInvalidProposal(bytes32 actual, bytes32 expected);\nerror ErrProposalNotApproved();\nerror ErrInvalidExecutor();\nerror ErrInvalidOrder(bytes4 msgSig);\nerror ErrRelayFailed(bytes4 msgSig);\nerror ErrInvalidArguments(bytes4 msgSig);\nerror ErrNonExecutorCannotRelay(address executor, address caller);",
+  "resolutions": {
+    "bb55951394276893": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

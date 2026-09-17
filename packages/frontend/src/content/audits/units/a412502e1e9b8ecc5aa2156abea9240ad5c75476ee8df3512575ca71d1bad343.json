@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "a412502e1e9b8ecc5aa2156abea9240ad5c75476ee8df3512575ca71d1bad343",
+  "name": "IBridgeManagerCallbackRegister",
+  "kind": "interface",
+  "lines": 27,
+  "source": "interface IBridgeManagerCallbackRegister {\n    error ErrExistOneInternalCallFailed(address sender, bytes4 msgSig, bytes callData);\n\n    event CallbackRegistered(address, bool);\n    /**\n     * @dev Emitted when the contract notifies multiple registers with statuses and return data.\n     */\n    event Notified(bytes callData, address[] registers, bool[] statuses, bytes[] returnDatas);\n\n    /**\n     * @dev Retrieves the addresses of registered callbacks.\n     * @return registers An array containing the addresses of registered callbacks.\n     */\n    function getCallbackRegisters() external view returns (address[] memory registers);\n\n    /**\n     * @dev Registers multiple callbacks with the bridge.\n     * @param registers The array of callback addresses to register.\n     */\n    function registerCallbacks(address[] calldata registers) external;\n\n    /**\n     * @dev Unregisters multiple callbacks from the bridge.\n     * @param registers The array of callback addresses to unregister.\n     */\n    function unregisterCallbacks(address[] calldata registers) external;\n}",
+  "resolutions": {
+    "bb55951394276893": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

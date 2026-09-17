@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "44f4ede81a4de6e72c9051d8ea6f6dde142074edea478b152d0fb9cc7d10a0b7",
+  "name": "Hashes",
+  "kind": "library",
+  "lines": 21,
+  "source": "library Hashes {\n    /**\n     * @dev Commutative Keccak256 hash of a sorted pair of bytes32. Frequently used when working with merkle proofs.\n     *\n     * NOTE: Equivalent to the `standardNodeHash` in our https://github.com/OpenZeppelin/merkle-tree[JavaScript library].\n     */\n    function commutativeKeccak256(bytes32 a, bytes32 b) internal pure returns (bytes32) {\n        return a < b ? _efficientKeccak256(a, b) : _efficientKeccak256(b, a);\n    }\n\n    /**\n     * @dev Implementation of keccak256(abi.encode(a, b)) that doesn't allocate or expand memory.\n     */\n    function _efficientKeccak256(bytes32 a, bytes32 b) private pure returns (bytes32 value) {\n        assembly (\"memory-safe\") {\n            mstore(0x00, a)\n            mstore(0x20, b)\n            value := keccak256(0x00, 0x40)\n        }\n    }\n}",
+  "resolutions": {
+    "ba5b6c9584fb78fd": {
+      "status": "library",
+      "coveredLines": 21,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "Hashes",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2024-10-v5.1",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/utils/cryptography/Hashes.sol",
+        "commit": "106a201788c23f8d8419053d05fd250969e7af28",
+        "commitTimestamp": "2024-09-13T18:32:50Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/106a201788c23f8d8419053d05fd250969e7af28/contracts/utils/cryptography/Hashes.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Fix review of pull request #5198 (resolving L-05); only the fix changes to this file were reviewed.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 5
+      },
+      "warnings": []
+    },
+    "bb55951394276893": {
+      "status": "library",
+      "coveredLines": 21,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "Hashes",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2024-10-v5.1",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/utils/cryptography/Hashes.sol",
+        "commit": "106a201788c23f8d8419053d05fd250969e7af28",
+        "commitTimestamp": "2024-09-13T18:32:50Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/106a201788c23f8d8419053d05fd250969e7af28/contracts/utils/cryptography/Hashes.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Fix review of pull request #5198 (resolving L-05); only the fix changes to this file were reviewed.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 5
+      },
+      "warnings": []
+    }
+  }
+}

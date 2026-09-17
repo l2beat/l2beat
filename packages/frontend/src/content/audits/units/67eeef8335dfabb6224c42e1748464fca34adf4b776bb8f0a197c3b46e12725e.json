@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "67eeef8335dfabb6224c42e1748464fca34adf4b776bb8f0a197c3b46e12725e",
+  "name": "L2USDCGateway",
+  "kind": "contract",
+  "lines": 183,
+  "source": "contract L2USDCGateway is L2ERC20Gateway, IUSDCDestinationBridge {\n    using SafeERC20Upgradeable for IERC20Upgradeable;\n\n    /**\n     *\n     * Constants *\n     *\n     */\n\n    /// @notice The address of L1 USDC address.\n    address public immutable l1USDC;\n\n    /// @notice The address of L2 USDC address.\n    address public immutable l2USDC;\n\n    /**\n     *\n     * Variables *\n     *\n     */\n\n    /// @notice The address of caller from Circle.\n    address public circleCaller;\n\n    /// @notice The flag indicates whether USDC deposit is paused.\n    /// @dev This is not necessary to be set `true` since we will set `L1USDCGateway.depositPaused` first.\n    ///      This is kept just in case and will be set after all pending messages are relayed.\n    bool public depositPaused;\n\n    /// @notice The flag indicates whether USDC withdrawal is paused.\n    bool public withdrawPaused;\n\n    /**\n     *\n     * Constructor *\n     *\n     */\n\n    /// @notice Constructor for `L2USDCGateway` implementation contract.\n    ///\n    /// @param _l1USDC The address of USDC in L1.\n    /// @param _l2USDC The address of USDC in L2.\n    /// @param _counterpart The address of `L1USDCGateway` contract in L1.\n    /// @param _router The address of `L2GatewayRouter` contract in L2.\n    /// @param _messenger The address of `L2ScrollMessenger` contract in L2.\n    constructor(address _l1USDC, address _l2USDC, address _counterpart, address _router, address _messenger)\n        ScrollGatewayBase(_counterpart, _router, _messenger)\n    {\n        if (_l1USDC == address(0) || _l2USDC == address(0) || _router == address(0)) {\n            revert ErrorZeroAddress();\n        }\n\n        _disableInitializers();\n\n        l1USDC = _l1USDC;\n        l2USDC = _l2USDC;\n    }\n\n    /// @notice Initialize the storage of `L2USDCGateway`.\n    ///\n    /// @dev The parameters `_counterpart`, `_router` and `_messenger` are no longer used.\n    ///\n    /// @param _counterpart The address of `L1USDCGateway` contract in L1.\n    /// @param _router The address of `L2GatewayRouter` contract in L2.\n    /// @param _messenger The address of `L2ScrollMessenger` contract in L2.\n    function initialize(address _counterpart, address _router, address _messenger) external initializer {\n        ScrollGatewayBase._initialize(_counterpart, _router, _messenger);\n    }\n\n    /**\n     *\n     * Public View Functions *\n     *\n     */\n\n    /// @inheritdoc IL2ERC20Gateway\n    function getL1ERC20Address(address) external view override returns (address) {\n        return l1USDC;\n    }\n\n    /// @inheritdoc IL2ERC20Gateway\n    function getL2ERC20Address(address) public view override returns (address) {\n        return l2USDC;\n    }\n\n    /**\n     *\n     * Public Mutating Functions *\n     *\n     */\n\n    /// @inheritdoc IL2ERC20Gateway\n    function finalizeDepositERC20(\n        address _l1Token,\n        address _l2Token,\n        address _from,\n        address _to,\n        uint256 _amount,\n        bytes calldata _data\n    ) external payable override onlyCallByCounterpart nonReentrant {\n        require(msg.value == 0, \"nonzero msg.value\");\n        require(_l1Token == l1USDC, \"l1 token not USDC\");\n        require(_l2Token == l2USDC, \"l2 token not USDC\");\n        require(!depositPaused, \"deposit paused\");\n\n        require(IFiatToken(_l2Token).mint(_to, _amount), \"mint USDC failed\");\n\n        // disable call for USDC\n        // _doCallback(_to, _data);\n\n        emit FinalizeDepositERC20(_l1Token, _l2Token, _from, _to, _amount, _data);\n    }\n\n    /**\n     *\n     * Public Restricted Functions *\n     *\n     */\n\n    /// @inheritdoc IUSDCDestinationBridge\n    function transferUSDCRoles(address _owner) external {\n        require(_msgSender() == circleCaller, \"only circle caller\");\n\n        OwnableUpgradeable(l2USDC).transferOwnership(_owner);\n    }\n\n    /// @notice Update the Circle EOA address.\n    /// @param _caller The address to update.\n    function updateCircleCaller(address _caller) external onlyOwner {\n        circleCaller = _caller;\n    }\n\n    /// @notice Change the deposit pause status of this contract.\n    /// @param _paused The new status, `true` means paused and `false` means not paused.\n    function pauseDeposit(bool _paused) external onlyOwner {\n        depositPaused = _paused;\n    }\n\n    /// @notice Change the withdraw pause status of this contract.\n    /// @param _paused The new status, `true` means paused and `false` means not paused.\n    function pauseWithdraw(bool _paused) external onlyOwner {\n        withdrawPaused = _paused;\n    }\n\n    /**\n     *\n     * Internal Functions *\n     *\n     */\n\n    /// @inheritdoc L2ERC20Gateway\n    function _withdraw(address _token, address _to, uint256 _amount, bytes memory _data, uint256 _gasLimit)\n        internal\n        virtual\n        override\n        nonReentrant\n    {\n        require(_amount > 0, \"withdraw zero amount\");\n        require(_token == l2USDC, \"only USDC is allowed\");\n        require(!withdrawPaused, \"withdraw paused\");\n\n        // 1. Extract real sender if this call is from L2GatewayRouter.\n        address _from = _msgSender();\n        if (router == _from) {\n            (_from, _data) = abi.decode(_data, (address, bytes));\n        }\n        require(_data.length == 0, \"call is not allowed\");\n\n        // 2. Transfer token into this contract.\n        IERC20Upgradeable(_token).safeTransferFrom(_from, address(this), _amount);\n        IFiatToken(_token).burn(_amount);\n\n        // 3. Generate message passed to L1USDCGateway.\n        address _l1USDC = l1USDC;\n        bytes memory _message =\n            abi.encodeCall(IL1ERC20Gateway.finalizeWithdrawERC20, (_l1USDC, _token, _from, _to, _amount, _data));\n\n        // 4. Send message to L2ScrollMessenger.\n        IL2ScrollMessenger(messenger).sendMessage{value: msg.value}(counterpart, 0, _message, _gasLimit);\n\n        emit WithdrawERC20(_l1USDC, _token, _from, _to, _amount, _data);\n    }\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "identical",
+      "coveredLines": 183,
+      "match": {
+        "origin": "own",
+        "collection": "scroll",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "L2USDCGateway",
+        "similarity": 1,
+        "reportId": "scroll/openzeppelin-scroll-bridge-gas-optimizations-audit-2024-02",
+        "repository": "scroll-tech/scroll",
+        "path": "contracts/src/L2/gateways/usdc/L2USDCGateway.sol",
+        "commit": "45e1305de5f7a1dc5aadadd7d3bb6726a5dee949",
+        "commitTimestamp": "2024-01-08T03:05:16Z",
+        "url": "https://github.com/scroll-tech/scroll/blob/45e1305de5f7a1dc5aadadd7d3bb6726a5dee949/contracts/src/L2/gateways/usdc/L2USDCGateway.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "initial audit (diff)",
+        "coverage": "Diff audit of pull request #1011 (bridge gas optimizations) at its reviewed commit; changes outside the pull request were out of scope.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 9
+      },
+      "warnings": []
+    }
+  }
+}

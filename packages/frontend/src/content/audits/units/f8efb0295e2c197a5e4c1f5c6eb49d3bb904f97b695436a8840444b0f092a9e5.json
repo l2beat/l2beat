@@ -1,0 +1,1537 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "f8efb0295e2c197a5e4c1f5c6eb49d3bb904f97b695436a8840444b0f092a9e5",
+  "name": "IERC20",
+  "kind": "interface",
+  "lines": 70,
+  "source": "interface IERC20 {\n    /**\n     * @dev Returns the amount of tokens in existence.\n     */\n    function totalSupply() external view returns (uint256);\n\n    /**\n     * @dev Returns the amount of tokens owned by `account`.\n     */\n    function balanceOf(address account) external view returns (uint256);\n\n    /**\n     * @dev Moves `amount` tokens from the caller's account to `recipient`.\n     *\n     * Returns a boolean value indicating whether the operation succeeded.\n     *\n     * Emits a {Transfer} event.\n     */\n    function transfer(address recipient, uint256 amount) external returns (bool);\n\n    /**\n     * @dev Returns the remaining number of tokens that `spender` will be\n     * allowed to spend on behalf of `owner` through {transferFrom}. This is\n     * zero by default.\n     *\n     * This value changes when {approve} or {transferFrom} are called.\n     */\n    function allowance(address owner, address spender) external view returns (uint256);\n\n    /**\n     * @dev Sets `amount` as the allowance of `spender` over the caller's tokens.\n     *\n     * Returns a boolean value indicating whether the operation succeeded.\n     *\n     * IMPORTANT: Beware that changing an allowance with this method brings the risk\n     * that someone may use both the old and the new allowance by unfortunate\n     * transaction ordering. One possible solution to mitigate this race\n     * condition is to first reduce the spender's allowance to 0 and set the\n     * desired value afterwards:\n     * https://github.com/ethereum/EIPs/issues/20#issuecomment-263524729\n     *\n     * Emits an {Approval} event.\n     */\n    function approve(address spender, uint256 amount) external returns (bool);\n\n    /**\n     * @dev Moves `amount` tokens from `sender` to `recipient` using the\n     * allowance mechanism. `amount` is then deducted from the caller's\n     * allowance.\n     *\n     * Returns a boolean value indicating whether the operation succeeded.\n     *\n     * Emits a {Transfer} event.\n     */\n    function transferFrom(address sender, address recipient, uint256 amount) external returns (bool);\n\n    /**\n     * @dev Emitted when `value` tokens are moved from one account (`from`) to\n     * another (`to`).\n     *\n     * Note that `value` may be zero.\n     */\n    event Transfer(address indexed from, address indexed to, uint256 value);\n\n    /**\n     * @dev Emitted when the allowance of a `spender` for an `owner` is set by\n     * a call to {approve}. `value` is the new allowance.\n     */\n    event Approval(address indexed owner, address indexed spender, uint256 value);\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "differs",
+      "coveredLines": 66,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "IERC20",
+        "similarity": 0.739,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/token/ERC20/IERC20.sol",
+        "commit": "99a4cfca17279b77ae945b30cf9f7e87b21bf6f8",
+        "commitTimestamp": "2023-06-06T04:08:31Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/99a4cfca17279b77ae945b30cf9f7e87b21bf6f8/contracts/token/ERC20/IERC20.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "audit",
+        "coverage": "Full review of the file at the Phase 1 audit commit.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 4,
+        "removed": 4,
+        "ignoredAdded": 14,
+        "ignoredRemoved": 14,
+        "unchanged": 66,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 19,
+            "newStart": 1,
+            "newLines": 5,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "interface IERC20 {"
+              },
+              { "type": " ", "oldLine": 2, "newLine": 2, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 3,
+                "text": "     * @dev Emitted when `value` tokens are moved from one account (`from`) to",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 4,
+                "text": "     * another (`to`).",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 5, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 6,
+                "text": "     * Note that `value` may be zero.",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 7, "text": "     */", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 8,
+                "text": "    event Transfer(address indexed from, address indexed to, uint256 value);",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 9, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 10,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 11,
+                "text": "     * @dev Emitted when the allowance of a `spender` for an `owner` is set by",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 12,
+                "text": "     * a call to {approve}. `value` is the new allowance.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 13,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 14,
+                "text": "    event Approval(address indexed owner, address indexed spender, uint256 value);",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 15, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 16,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 17,
+                "newLine": 3,
+                "text": "     * @dev Returns the amount of tokens in existence."
+              },
+              { "type": " ", "oldLine": 18, "newLine": 4, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 19,
+                "newLine": 5,
+                "text": "    function totalSupply() external view returns (uint256);"
+              }
+            ]
+          },
+          {
+            "oldStart": 24,
+            "oldLines": 13,
+            "newStart": 10,
+            "newLines": 13,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 10,
+                "text": "    function balanceOf(address account) external view returns (uint256);"
+              },
+              { "type": " ", "oldLine": 25, "newLine": 11, "text": "" },
+              { "type": " ", "oldLine": 26, "newLine": 12, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 27,
+                "text": "     * @dev Moves `amount` tokens from the caller's account to `to`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 13,
+                "text": "     * @dev Moves `amount` tokens from the caller's account to `recipient`.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 28, "newLine": 14, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 29,
+                "newLine": 15,
+                "text": "     * Returns a boolean value indicating whether the operation succeeded."
+              },
+              { "type": " ", "oldLine": 30, "newLine": 16, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 31,
+                "newLine": 17,
+                "text": "     * Emits a {Transfer} event."
+              },
+              { "type": " ", "oldLine": 32, "newLine": 18, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 33,
+                "text": "    function transfer(address to, uint256 amount) external returns (bool);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 19,
+                "text": "    function transfer(address recipient, uint256 amount) external returns (bool);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 34, "newLine": 20, "text": "" },
+              { "type": " ", "oldLine": 35, "newLine": 21, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 36,
+                "newLine": 22,
+                "text": "     * @dev Returns the remaining number of tokens that `spender` will be"
+              }
+            ]
+          },
+          {
+            "oldStart": 58,
+            "oldLines": 7,
+            "newStart": 44,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 58,
+                "newLine": 44,
+                "text": "    function approve(address spender, uint256 amount) external returns (bool);"
+              },
+              { "type": " ", "oldLine": 59, "newLine": 45, "text": "" },
+              { "type": " ", "oldLine": 60, "newLine": 46, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 61,
+                "text": "     * @dev Moves `amount` tokens from `from` to `to` using the",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 47,
+                "text": "     * @dev Moves `amount` tokens from `sender` to `recipient` using the",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 62,
+                "newLine": 48,
+                "text": "     * allowance mechanism. `amount` is then deducted from the caller's"
+              },
+              {
+                "type": " ",
+                "oldLine": 63,
+                "newLine": 49,
+                "text": "     * allowance."
+              },
+              { "type": " ", "oldLine": 64, "newLine": 50, "text": "     *" }
+            ]
+          },
+          {
+            "oldStart": 66,
+            "oldLines": 5,
+            "newStart": 52,
+            "newLines": 19,
+            "lines": [
+              { "type": " ", "oldLine": 66, "newLine": 52, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 67,
+                "newLine": 53,
+                "text": "     * Emits a {Transfer} event."
+              },
+              { "type": " ", "oldLine": 68, "newLine": 54, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 69,
+                "text": "    function transferFrom(address from, address to, uint256 amount) external returns (bool);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 55,
+                "text": "    function transferFrom(address sender, address recipient, uint256 amount) external returns (bool);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 56, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 57,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 58,
+                "text": "     * @dev Emitted when `value` tokens are moved from one account (`from`) to",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 59,
+                "text": "     * another (`to`).",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 60, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 61,
+                "text": "     * Note that `value` may be zero.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 62,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 63,
+                "text": "    event Transfer(address indexed from, address indexed to, uint256 value);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 64, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 65,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 66,
+                "text": "     * @dev Emitted when the allowance of a `spender` for an `owner` is set by",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 67,
+                "text": "     * a call to {approve}. `value` is the new allowance.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 68,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 69,
+                "text": "    event Approval(address indexed owner, address indexed spender, uint256 value);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 70, "newLine": 70, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "f9658cd3a9a22004": {
+      "status": "differs",
+      "coveredLines": 66,
+      "match": {
+        "origin": "library",
+        "collection": "openzeppelin",
+        "relation": { "type": "library" },
+        "rank": 3,
+        "matchedBy": "name",
+        "auditedName": "IERC20",
+        "similarity": 0.739,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/token/ERC20/IERC20.sol",
+        "commit": "99a4cfca17279b77ae945b30cf9f7e87b21bf6f8",
+        "commitTimestamp": "2023-06-06T04:08:31Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/99a4cfca17279b77ae945b30cf9f7e87b21bf6f8/contracts/token/ERC20/IERC20.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "audit",
+        "coverage": "Full review of the file at the Phase 1 audit commit.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 4,
+        "removed": 4,
+        "ignoredAdded": 14,
+        "ignoredRemoved": 14,
+        "unchanged": 66,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 19,
+            "newStart": 1,
+            "newLines": 5,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "interface IERC20 {"
+              },
+              { "type": " ", "oldLine": 2, "newLine": 2, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 3,
+                "text": "     * @dev Emitted when `value` tokens are moved from one account (`from`) to",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 4,
+                "text": "     * another (`to`).",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 5, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 6,
+                "text": "     * Note that `value` may be zero.",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 7, "text": "     */", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 8,
+                "text": "    event Transfer(address indexed from, address indexed to, uint256 value);",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 9, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 10,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 11,
+                "text": "     * @dev Emitted when the allowance of a `spender` for an `owner` is set by",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 12,
+                "text": "     * a call to {approve}. `value` is the new allowance.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 13,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 14,
+                "text": "    event Approval(address indexed owner, address indexed spender, uint256 value);",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 15, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 16,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 17,
+                "newLine": 3,
+                "text": "     * @dev Returns the amount of tokens in existence."
+              },
+              { "type": " ", "oldLine": 18, "newLine": 4, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 19,
+                "newLine": 5,
+                "text": "    function totalSupply() external view returns (uint256);"
+              }
+            ]
+          },
+          {
+            "oldStart": 24,
+            "oldLines": 13,
+            "newStart": 10,
+            "newLines": 13,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 10,
+                "text": "    function balanceOf(address account) external view returns (uint256);"
+              },
+              { "type": " ", "oldLine": 25, "newLine": 11, "text": "" },
+              { "type": " ", "oldLine": 26, "newLine": 12, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 27,
+                "text": "     * @dev Moves `amount` tokens from the caller's account to `to`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 13,
+                "text": "     * @dev Moves `amount` tokens from the caller's account to `recipient`.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 28, "newLine": 14, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 29,
+                "newLine": 15,
+                "text": "     * Returns a boolean value indicating whether the operation succeeded."
+              },
+              { "type": " ", "oldLine": 30, "newLine": 16, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 31,
+                "newLine": 17,
+                "text": "     * Emits a {Transfer} event."
+              },
+              { "type": " ", "oldLine": 32, "newLine": 18, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 33,
+                "text": "    function transfer(address to, uint256 amount) external returns (bool);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 19,
+                "text": "    function transfer(address recipient, uint256 amount) external returns (bool);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 34, "newLine": 20, "text": "" },
+              { "type": " ", "oldLine": 35, "newLine": 21, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 36,
+                "newLine": 22,
+                "text": "     * @dev Returns the remaining number of tokens that `spender` will be"
+              }
+            ]
+          },
+          {
+            "oldStart": 58,
+            "oldLines": 7,
+            "newStart": 44,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 58,
+                "newLine": 44,
+                "text": "    function approve(address spender, uint256 amount) external returns (bool);"
+              },
+              { "type": " ", "oldLine": 59, "newLine": 45, "text": "" },
+              { "type": " ", "oldLine": 60, "newLine": 46, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 61,
+                "text": "     * @dev Moves `amount` tokens from `from` to `to` using the",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 47,
+                "text": "     * @dev Moves `amount` tokens from `sender` to `recipient` using the",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 62,
+                "newLine": 48,
+                "text": "     * allowance mechanism. `amount` is then deducted from the caller's"
+              },
+              {
+                "type": " ",
+                "oldLine": 63,
+                "newLine": 49,
+                "text": "     * allowance."
+              },
+              { "type": " ", "oldLine": 64, "newLine": 50, "text": "     *" }
+            ]
+          },
+          {
+            "oldStart": 66,
+            "oldLines": 5,
+            "newStart": 52,
+            "newLines": 19,
+            "lines": [
+              { "type": " ", "oldLine": 66, "newLine": 52, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 67,
+                "newLine": 53,
+                "text": "     * Emits a {Transfer} event."
+              },
+              { "type": " ", "oldLine": 68, "newLine": 54, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 69,
+                "text": "    function transferFrom(address from, address to, uint256 amount) external returns (bool);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 55,
+                "text": "    function transferFrom(address sender, address recipient, uint256 amount) external returns (bool);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 56, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 57,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 58,
+                "text": "     * @dev Emitted when `value` tokens are moved from one account (`from`) to",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 59,
+                "text": "     * another (`to`).",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 60, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 61,
+                "text": "     * Note that `value` may be zero.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 62,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 63,
+                "text": "    event Transfer(address indexed from, address indexed to, uint256 value);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 64, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 65,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 66,
+                "text": "     * @dev Emitted when the allowance of a `spender` for an `owner` is set by",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 67,
+                "text": "     * a call to {approve}. `value` is the new allowance.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 68,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 69,
+                "text": "    event Approval(address indexed owner, address indexed spender, uint256 value);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 70, "newLine": 70, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "43889a0aeb1d556f": {
+      "status": "differs",
+      "coveredLines": 66,
+      "match": {
+        "origin": "library",
+        "collection": "openzeppelin",
+        "relation": { "type": "library" },
+        "rank": 3,
+        "matchedBy": "name",
+        "auditedName": "IERC20",
+        "similarity": 0.739,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/token/ERC20/IERC20.sol",
+        "commit": "99a4cfca17279b77ae945b30cf9f7e87b21bf6f8",
+        "commitTimestamp": "2023-06-06T04:08:31Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/99a4cfca17279b77ae945b30cf9f7e87b21bf6f8/contracts/token/ERC20/IERC20.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "audit",
+        "coverage": "Full review of the file at the Phase 1 audit commit.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 4,
+        "removed": 4,
+        "ignoredAdded": 14,
+        "ignoredRemoved": 14,
+        "unchanged": 66,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 19,
+            "newStart": 1,
+            "newLines": 5,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "interface IERC20 {"
+              },
+              { "type": " ", "oldLine": 2, "newLine": 2, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 3,
+                "text": "     * @dev Emitted when `value` tokens are moved from one account (`from`) to",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 4,
+                "text": "     * another (`to`).",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 5, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 6,
+                "text": "     * Note that `value` may be zero.",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 7, "text": "     */", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 8,
+                "text": "    event Transfer(address indexed from, address indexed to, uint256 value);",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 9, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 10,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 11,
+                "text": "     * @dev Emitted when the allowance of a `spender` for an `owner` is set by",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 12,
+                "text": "     * a call to {approve}. `value` is the new allowance.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 13,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 14,
+                "text": "    event Approval(address indexed owner, address indexed spender, uint256 value);",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 15, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 16,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 17,
+                "newLine": 3,
+                "text": "     * @dev Returns the amount of tokens in existence."
+              },
+              { "type": " ", "oldLine": 18, "newLine": 4, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 19,
+                "newLine": 5,
+                "text": "    function totalSupply() external view returns (uint256);"
+              }
+            ]
+          },
+          {
+            "oldStart": 24,
+            "oldLines": 13,
+            "newStart": 10,
+            "newLines": 13,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 10,
+                "text": "    function balanceOf(address account) external view returns (uint256);"
+              },
+              { "type": " ", "oldLine": 25, "newLine": 11, "text": "" },
+              { "type": " ", "oldLine": 26, "newLine": 12, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 27,
+                "text": "     * @dev Moves `amount` tokens from the caller's account to `to`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 13,
+                "text": "     * @dev Moves `amount` tokens from the caller's account to `recipient`.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 28, "newLine": 14, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 29,
+                "newLine": 15,
+                "text": "     * Returns a boolean value indicating whether the operation succeeded."
+              },
+              { "type": " ", "oldLine": 30, "newLine": 16, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 31,
+                "newLine": 17,
+                "text": "     * Emits a {Transfer} event."
+              },
+              { "type": " ", "oldLine": 32, "newLine": 18, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 33,
+                "text": "    function transfer(address to, uint256 amount) external returns (bool);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 19,
+                "text": "    function transfer(address recipient, uint256 amount) external returns (bool);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 34, "newLine": 20, "text": "" },
+              { "type": " ", "oldLine": 35, "newLine": 21, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 36,
+                "newLine": 22,
+                "text": "     * @dev Returns the remaining number of tokens that `spender` will be"
+              }
+            ]
+          },
+          {
+            "oldStart": 58,
+            "oldLines": 7,
+            "newStart": 44,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 58,
+                "newLine": 44,
+                "text": "    function approve(address spender, uint256 amount) external returns (bool);"
+              },
+              { "type": " ", "oldLine": 59, "newLine": 45, "text": "" },
+              { "type": " ", "oldLine": 60, "newLine": 46, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 61,
+                "text": "     * @dev Moves `amount` tokens from `from` to `to` using the",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 47,
+                "text": "     * @dev Moves `amount` tokens from `sender` to `recipient` using the",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 62,
+                "newLine": 48,
+                "text": "     * allowance mechanism. `amount` is then deducted from the caller's"
+              },
+              {
+                "type": " ",
+                "oldLine": 63,
+                "newLine": 49,
+                "text": "     * allowance."
+              },
+              { "type": " ", "oldLine": 64, "newLine": 50, "text": "     *" }
+            ]
+          },
+          {
+            "oldStart": 66,
+            "oldLines": 5,
+            "newStart": 52,
+            "newLines": 19,
+            "lines": [
+              { "type": " ", "oldLine": 66, "newLine": 52, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 67,
+                "newLine": 53,
+                "text": "     * Emits a {Transfer} event."
+              },
+              { "type": " ", "oldLine": 68, "newLine": 54, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 69,
+                "text": "    function transferFrom(address from, address to, uint256 amount) external returns (bool);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 55,
+                "text": "    function transferFrom(address sender, address recipient, uint256 amount) external returns (bool);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 56, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 57,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 58,
+                "text": "     * @dev Emitted when `value` tokens are moved from one account (`from`) to",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 59,
+                "text": "     * another (`to`).",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 60, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 61,
+                "text": "     * Note that `value` may be zero.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 62,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 63,
+                "text": "    event Transfer(address indexed from, address indexed to, uint256 value);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 64, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 65,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 66,
+                "text": "     * @dev Emitted when the allowance of a `spender` for an `owner` is set by",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 67,
+                "text": "     * a call to {approve}. `value` is the new allowance.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 68,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 69,
+                "text": "    event Approval(address indexed owner, address indexed spender, uint256 value);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 70, "newLine": 70, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "2be3d633eaae18a2": {
+      "status": "differs",
+      "coveredLines": 68,
+      "match": {
+        "origin": "own",
+        "collection": "uniswapv3",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "similarity",
+        "auditedName": "IERC20Minimal",
+        "similarity": 0.907,
+        "reportId": "uniswapv3/abdk-uniswap-v3-core-2021-03",
+        "repository": "Uniswap/v3-core",
+        "path": "contracts/interfaces/IERC20Minimal.sol",
+        "commit": "e8de69a550d579c475f52d59a6fb2f7ef9e7f364",
+        "commitTimestamp": "2021-02-23T16:37:26Z",
+        "url": "https://github.com/Uniswap/v3-core/blob/e8de69a550d579c475f52d59a6fb2f7ef9e7f364/contracts/interfaces/IERC20Minimal.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "full file",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 2,
+        "removed": 1,
+        "ignoredAdded": 54,
+        "ignoredRemoved": 28,
+        "unchanged": 68,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 43,
+            "newStart": 1,
+            "newLines": 70,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "interface IERC20Minimal {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 2,
+                "text": "    /// @notice Returns the balance of a token",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 3,
+                "text": "    /// @param account The account for which to look up the number of tokens it has, i.e. its balance",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 4,
+                "text": "    /// @return The number of tokens held by the account",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "interface IERC20 {",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 2, "text": "    /**", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "     * @dev Returns the amount of tokens in existence.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 4, "text": "     */", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 5,
+                "text": "    function totalSupply() external view returns (uint256);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 6, "text": "", "ignored": true },
+              { "type": "+", "newLine": 7, "text": "    /**", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 8,
+                "text": "     * @dev Returns the amount of tokens owned by `account`.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 9, "text": "     */", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 10,
+                "text": "    function balanceOf(address account) external view returns (uint256);"
+              },
+              { "type": " ", "oldLine": 6, "newLine": 11, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 7,
+                "text": "    /// @notice Transfers the amount of token from the `msg.sender` to the recipient",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 8,
+                "text": "    /// @param recipient The account that will receive the amount transferred",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 9,
+                "text": "    /// @param amount The number of tokens to send from the sender to the recipient",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 10,
+                "text": "    /// @return Returns true for a successful transfer, false for an unsuccessful transfer",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 12,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 13,
+                "text": "     * @dev Moves `amount` tokens from the caller's account to `recipient`.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 14, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 15,
+                "text": "     * Returns a boolean value indicating whether the operation succeeded.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 16, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 17,
+                "text": "     * Emits a {Transfer} event.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 18,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 11,
+                "newLine": 19,
+                "text": "    function transfer(address recipient, uint256 amount) external returns (bool);"
+              },
+              { "type": " ", "oldLine": 12, "newLine": 20, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 13,
+                "text": "    /// @notice Returns the current allowance given to a spender by an owner",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 14,
+                "text": "    /// @param owner The account of the token owner",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 15,
+                "text": "    /// @param spender The account of the token spender",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 16,
+                "text": "    /// @return The current allowance granted by `owner` to `spender`",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 21,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 22,
+                "text": "     * @dev Returns the remaining number of tokens that `spender` will be",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 23,
+                "text": "     * allowed to spend on behalf of `owner` through {transferFrom}. This is",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 24,
+                "text": "     * zero by default.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 25, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 26,
+                "text": "     * This value changes when {approve} or {transferFrom} are called.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 27,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 17,
+                "newLine": 28,
+                "text": "    function allowance(address owner, address spender) external view returns (uint256);"
+              },
+              { "type": " ", "oldLine": 18, "newLine": 29, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 19,
+                "text": "    /// @notice Sets the allowance of a spender from the `msg.sender` to the value `amount`",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 20,
+                "text": "    /// @param spender The account which will be allowed to spend a given amount of the owners tokens",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 21,
+                "text": "    /// @param amount The amount of tokens allowed to be used by `spender`",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 22,
+                "text": "    /// @return Returns true for a successful approval, false for unsuccessful",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 30,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 31,
+                "text": "     * @dev Sets `amount` as the allowance of `spender` over the caller's tokens.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 32, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 33,
+                "text": "     * Returns a boolean value indicating whether the operation succeeded.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 34, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 35,
+                "text": "     * IMPORTANT: Beware that changing an allowance with this method brings the risk",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 36,
+                "text": "     * that someone may use both the old and the new allowance by unfortunate",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 37,
+                "text": "     * transaction ordering. One possible solution to mitigate this race",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 38,
+                "text": "     * condition is to first reduce the spender's allowance to 0 and set the",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 39,
+                "text": "     * desired value afterwards:",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 40,
+                "text": "     * https://github.com/ethereum/EIPs/issues/20#issuecomment-263524729",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 41, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 42,
+                "text": "     * Emits an {Approval} event.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 43,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 23,
+                "newLine": 44,
+                "text": "    function approve(address spender, uint256 amount) external returns (bool);"
+              },
+              { "type": " ", "oldLine": 24, "newLine": 45, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 25,
+                "text": "    /// @notice Transfers `amount` tokens from `sender` to `recipient` up to the allowance given to the `msg.sender`",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 26,
+                "text": "    /// @param sender The account from which the transfer will be initiated",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 27,
+                "text": "    /// @param recipient The recipient of the transfer",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 28,
+                "text": "    /// @param amount The amount of the transfer",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 29,
+                "text": "    /// @return Returns true for a successful transfer, false for unsuccessful",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 46,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 47,
+                "text": "     * @dev Moves `amount` tokens from `sender` to `recipient` using the",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 48,
+                "text": "     * allowance mechanism. `amount` is then deducted from the caller's",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 49,
+                "text": "     * allowance.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 50, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 51,
+                "text": "     * Returns a boolean value indicating whether the operation succeeded.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 52, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 53,
+                "text": "     * Emits a {Transfer} event.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 54,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 30,
+                "newLine": 55,
+                "text": "    function transferFrom(address sender, address recipient, uint256 amount) external returns (bool);"
+              },
+              { "type": " ", "oldLine": 31, "newLine": 56, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 32,
+                "text": "    /// @notice Event emitted when tokens are transferred from one address to another, either via `#transfer` or `#transferFrom`.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 33,
+                "text": "    /// @param from The account from which the tokens were sent, i.e. the balance decreased",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 34,
+                "text": "    /// @param to The account to which the tokens were sent, i.e. the balance increased",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 35,
+                "text": "    /// @param value The amount of tokens that were transferred",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 57,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 58,
+                "text": "     * @dev Emitted when `value` tokens are moved from one account (`from`) to",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 59,
+                "text": "     * another (`to`).",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 60, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 61,
+                "text": "     * Note that `value` may be zero.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 62,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 36,
+                "newLine": 63,
+                "text": "    event Transfer(address indexed from, address indexed to, uint256 value);"
+              },
+              { "type": " ", "oldLine": 37, "newLine": 64, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 38,
+                "text": "    /// @notice Event emitted when the approval amount for the spender of a given owner's tokens changes.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 39,
+                "text": "    /// @param owner The account that approved spending of its tokens",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 40,
+                "text": "    /// @param spender The account for which the spending allowance was modified",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 41,
+                "text": "    /// @param value The new allowance from the owner to the spender",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 65,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 66,
+                "text": "     * @dev Emitted when the allowance of a `spender` for an `owner` is set by",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 67,
+                "text": "     * a call to {approve}. `value` is the new allowance.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 68,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 42,
+                "newLine": 69,
+                "text": "    event Approval(address indexed owner, address indexed spender, uint256 value);"
+              },
+              { "type": " ", "oldLine": 43, "newLine": 70, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

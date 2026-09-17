@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "e7418e254901c2812ef2b8f9c79fcc81b4f02e2c909cb9bc3f7b436bbc8302b1",
+  "name": "Permit2Payments",
+  "kind": "abstract",
+  "lines": 42,
+  "source": "abstract contract Permit2Payments is Payments {\n    using SafeCast160 for uint256;\n\n    error FromAddressIsNotOwner();\n\n    /// @notice Performs a transferFrom on Permit2\n    /// @param token The token to transfer\n    /// @param from The address to transfer from\n    /// @param to The recipient of the transfer\n    /// @param amount The amount to transfer\n    function permit2TransferFrom(address token, address from, address to, uint160 amount) internal {\n        PERMIT2.transferFrom(from, to, amount, token);\n    }\n\n    /// @notice Performs a batch transferFrom on Permit2\n    /// @param batchDetails An array detailing each of the transfers that should occur\n    /// @param owner The address that should be the owner of all transfers\n    function permit2TransferFrom(IAllowanceTransfer.AllowanceTransferDetails[] calldata batchDetails, address owner)\n        internal\n    {\n        uint256 batchLength = batchDetails.length;\n        for (uint256 i = 0; i < batchLength; ++i) {\n            if (batchDetails[i].from != owner) {\n                revert FromAddressIsNotOwner();\n            }\n        }\n        PERMIT2.transferFrom(batchDetails);\n    }\n\n    /// @notice Either performs a regular payment or transferFrom on Permit2, depending on the payer address\n    /// @param token The token to transfer\n    /// @param payer The address to pay for the transfer\n    /// @param recipient The recipient of the transfer\n    /// @param amount The amount to transfer\n    function payOrPermit2Transfer(address token, address payer, address recipient, uint256 amount) internal {\n        if (payer == address(this)) {\n            pay(token, recipient, amount);\n        } else {\n            permit2TransferFrom(token, payer, recipient, amount.toUint160());\n        }\n    }\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

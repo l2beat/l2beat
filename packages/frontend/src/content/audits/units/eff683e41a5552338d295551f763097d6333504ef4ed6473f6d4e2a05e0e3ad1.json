@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "eff683e41a5552338d295551f763097d6333504ef4ed6473f6d4e2a05e0e3ad1",
+  "name": "GnosisSafeL2",
+  "kind": "contract",
+  "lines": 79,
+  "source": "contract GnosisSafeL2 is GnosisSafe {\n    event SafeMultiSigTransaction(\n        address to,\n        uint256 value,\n        bytes data,\n        Enum.Operation operation,\n        uint256 safeTxGas,\n        uint256 baseGas,\n        uint256 gasPrice,\n        address gasToken,\n        address payable refundReceiver,\n        bytes signatures,\n        // We combine nonce, sender and threshold into one to avoid stack too deep\n        // Dev note: additionalInfo should not contain `bytes`, as this complicates decoding\n        bytes additionalInfo\n    );\n\n    event SafeModuleTransaction(address module, address to, uint256 value, bytes data, Enum.Operation operation);\n\n    /// @dev Allows to execute a Safe transaction confirmed by required number of owners and then pays the account that submitted the transaction.\n    ///      Note: The fees are always transferred, even if the user transaction fails.\n    /// @param to Destination address of Safe transaction.\n    /// @param value Ether value of Safe transaction.\n    /// @param data Data payload of Safe transaction.\n    /// @param operation Operation type of Safe transaction.\n    /// @param safeTxGas Gas that should be used for the Safe transaction.\n    /// @param baseGas Gas costs that are independent of the transaction execution(e.g. base transaction fee, signature check, payment of the refund)\n    /// @param gasPrice Gas price that should be used for the payment calculation.\n    /// @param gasToken Token address (or 0 if ETH) that is used for the payment.\n    /// @param refundReceiver Address of receiver of gas payment (or 0 if tx.origin).\n    /// @param signatures Packed signature data ({bytes32 r}{bytes32 s}{uint8 v})\n    function execTransaction(\n        address to,\n        uint256 value,\n        bytes calldata data,\n        Enum.Operation operation,\n        uint256 safeTxGas,\n        uint256 baseGas,\n        uint256 gasPrice,\n        address gasToken,\n        address payable refundReceiver,\n        bytes memory signatures\n    ) public payable override returns (bool) {\n        bytes memory additionalInfo;\n        {\n            additionalInfo = abi.encode(nonce, msg.sender, threshold);\n        }\n        emit SafeMultiSigTransaction(\n            to,\n            value,\n            data,\n            operation,\n            safeTxGas,\n            baseGas,\n            gasPrice,\n            gasToken,\n            refundReceiver,\n            signatures,\n            additionalInfo\n        );\n        return super.execTransaction(\n            to, value, data, operation, safeTxGas, baseGas, gasPrice, gasToken, refundReceiver, signatures\n        );\n    }\n\n    /// @dev Allows a Module to execute a Safe transaction without any further confirmations.\n    /// @param to Destination address of module transaction.\n    /// @param value Ether value of module transaction.\n    /// @param data Data payload of module transaction.\n    /// @param operation Operation type of module transaction.\n    function execTransactionFromModule(address to, uint256 value, bytes memory data, Enum.Operation operation)\n        public\n        override\n        returns (bool success)\n    {\n        emit SafeModuleTransaction(msg.sender, to, value, data, operation);\n        success = super.execTransactionFromModule(to, value, data, operation);\n    }\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "library",
+      "coveredLines": 79,
+      "match": {
+        "origin": "stack",
+        "collection": "safe",
+        "relation": { "type": "template", "template": "GnosisSafe" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "GnosisSafeL2",
+        "similarity": 1,
+        "reportId": "safe/certora-safe-1-3-0",
+        "repository": "safe-fndn/safe-smart-account",
+        "path": "contracts/GnosisSafeL2.sol",
+        "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
+        "commitTimestamp": "2021-11-17T16:53:12Z",
+        "url": "https://github.com/safe-fndn/safe-smart-account/blob/767ef36bba88bdbc0c9fe3708a4290cabef4c376/contracts/GnosisSafeL2.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "Manual audit",
+        "coverage": "Full manual review of the scoped source.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "warnings": []
+    },
+    "d293c6ecba42b698": {
+      "status": "library",
+      "coveredLines": 79,
+      "match": {
+        "origin": "stack",
+        "collection": "safe",
+        "relation": { "type": "template", "template": "GnosisSafe" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "GnosisSafeL2",
+        "similarity": 1,
+        "reportId": "safe/certora-safe-1-3-0",
+        "repository": "safe-fndn/safe-smart-account",
+        "path": "contracts/GnosisSafeL2.sol",
+        "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
+        "commitTimestamp": "2021-11-17T16:53:12Z",
+        "url": "https://github.com/safe-fndn/safe-smart-account/blob/767ef36bba88bdbc0c9fe3708a4290cabef4c376/contracts/GnosisSafeL2.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "Manual audit",
+        "coverage": "Full manual review of the scoped source.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "warnings": []
+    }
+  }
+}

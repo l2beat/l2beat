@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "28680464b1e19295cd8aba36c5b7e9df91312c8a345ed793f08576045dec5b21",
+  "name": "validate_propagated_split_values_tests.nr",
+  "kind": "program",
+  "lines": 73,
+  "source": "use crate::tests::tail_to_public_validators::TestBuilder;\n\n// Only a few scenarios are tested here for `note_hashes`, `nullifiers`, and `private_logs` to ensure that\n// `assert_split_transformed_arrays_from_sorted_padded_array` is applied to them.\n// More comprehensive tests are covered in `assert_split_transformed_arrays_from_sorted_padded_array.nr`.\n\n#[test(should_fail_with = \"incorrect output note_hashes\")]\nfn mismatch_note_hash_in_output() {\n    let mut builder = TestBuilder::new();\n\n    builder.previous_kernel.append_siloed_note_hashes(1);\n    // Add a different note hash to the output.\n    builder.output.add_siloed_unique_note_hash(99);\n\n    builder.validate();\n}\n\n#[test(should_fail_with = \"incorrect output note_hashes\")]\nfn extra_note_hash_in_output() {\n    let builder = TestBuilder::new();\n\n    let mut output = builder.export_output();\n    // Add an extra note hash to the output.\n    output.revertible_accumulated_data.note_hashes[3] = 99;\n\n    builder.validate_with_output(output);\n}\n\n#[test(should_fail_with = \"incorrect output nullifiers\")]\nfn mismatch_nullifier_in_output() {\n    let mut builder = TestBuilder::new();\n\n    builder.previous_kernel.append_siloed_nullifiers(1);\n    // Add a different nullifier to the output.\n    builder.output.add_siloed_nullifier(99);\n\n    builder.validate();\n}\n\n#[test(should_fail_with = \"num_padded_lt is too large\")]\nfn padded_num_non_revertible_nullifier_too_large() {\n    let mut builder = TestBuilder::new();\n\n    // Set a large padded amount for non-revertible nullifiers.\n    builder.padded_side_effect_amounts.non_revertible_nullifiers = 100;\n\n    builder.validate();\n}\n\n#[test(should_fail_with = \"incorrect output private_logs\")]\nfn mismatch_private_log_in_output() {\n    let mut builder = TestBuilder::new();\n\n    builder.previous_kernel.append_siloed_private_logs_with_lengths([4]);\n    // Add a private log with different length to the output.\n    builder.output.append_siloed_private_logs_with_lengths([5]);\n\n    builder.validate();\n}\n\n#[test(should_fail_with = \"array should be padded with empty items\")]\nfn extra_private_log_in_output() {\n    let mut builder = TestBuilder::new();\n\n    builder.previous_kernel.append_siloed_private_logs_with_lengths([4]);\n    builder.output.append_siloed_private_logs_with_lengths([4]);\n\n    let mut output = builder.export_output();\n    // Add an extra private log to the output.\n    output.non_revertible_accumulated_data.private_logs[2].length = 5;\n\n    builder.validate_with_output(output);\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

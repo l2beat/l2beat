@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "ae9cf3da2b910b36aa9d3fedfdb1764ab2cecd5e37f58e24223e5fc32841f99c",
+  "name": "IBatchTreeUpdateVerifier",
+  "kind": "interface",
+  "lines": 3,
+  "source": "interface IBatchTreeUpdateVerifier {\n    function verifyProof(bytes calldata proof, uint256[1] calldata input) external view returns (bool);\n}",
+  "resolutions": {
+    "f9658cd3a9a22004": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

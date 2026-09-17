@@ -1,0 +1,766 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "fd24fe1c81d3ca9277013075c958550def1503c84477ade81ccd63a768bd4505",
+  "name": "SafeProxy",
+  "kind": "contract",
+  "lines": 32,
+  "source": "contract SafeProxy {\n    // Singleton always needs to be first declared variable, to ensure that it is at the same location in the contracts to which calls are delegated.\n    // To reduce deployment costs this variable is internal and needs to be retrieved via `getStorageAt`\n    address internal singleton;\n\n    /**\n     * @notice Constructor function sets address of singleton contract.\n     * @param _singleton Singleton address.\n     */\n    constructor(address _singleton) {\n        require(_singleton != address(0), \"Invalid singleton address provided\");\n        singleton = _singleton;\n    }\n\n    /// @dev Fallback function forwards all transactions and returns all received return data.\n    fallback() external payable {\n        // solhint-disable-next-line no-inline-assembly\n        assembly {\n            let _singleton := and(sload(0), 0xffffffffffffffffffffffffffffffffffffffff)\n            // 0xa619486e == keccak(\"masterCopy()\"). The value is right padded to 32-bytes with 0s\n            if eq(calldataload(0), 0xa619486e00000000000000000000000000000000000000000000000000000000) {\n                mstore(0, _singleton)\n                return(0, 0x20)\n            }\n            calldatacopy(0, 0, calldatasize())\n            let success := delegatecall(gas(), _singleton, 0, calldatasize(), 0, 0)\n            returndatacopy(0, 0, returndatasize())\n            if eq(success, 0) { revert(0, returndatasize()) }\n            return(0, returndatasize())\n        }\n    }\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "differs",
+      "coveredLines": 31,
+      "match": {
+        "origin": "stack",
+        "collection": "safe",
+        "relation": { "type": "template", "template": "GnosisSafe" },
+        "rank": 2,
+        "matchedBy": "similarity",
+        "auditedName": "GnosisSafeProxy",
+        "similarity": 1,
+        "reportId": "safe/certora-safe-1-3-0",
+        "repository": "safe-fndn/safe-smart-account",
+        "path": "contracts/proxies/GnosisSafeProxy.sol",
+        "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
+        "commitTimestamp": "2021-11-17T16:53:12Z",
+        "url": "https://github.com/safe-fndn/safe-smart-account/blob/767ef36bba88bdbc0c9fe3708a4290cabef4c376/contracts/proxies/GnosisSafeProxy.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "Manual audit",
+        "coverage": "Full manual review of the scoped source.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 1,
+        "removed": 1,
+        "ignoredAdded": 5,
+        "ignoredRemoved": 3,
+        "unchanged": 31,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 10,
+            "newStart": 1,
+            "newLines": 12,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "contract GnosisSafeProxy {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 2,
+                "text": "    // singleton always needs to be first declared variable, to ensure that it is at the same location in the contracts to which calls are delegated.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "contract SafeProxy {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 2,
+                "text": "    // Singleton always needs to be first declared variable, to ensure that it is at the same location in the contracts to which calls are delegated.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "    // To reduce deployment costs this variable is internal and needs to be retrieved via `getStorageAt`"
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "    address internal singleton;"
+              },
+              { "type": " ", "oldLine": 5, "newLine": 5, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 6,
+                "text": "    /// @dev Constructor function sets address of singleton contract.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 7,
+                "text": "    /// @param _singleton Singleton address.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 6, "text": "    /**", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 7,
+                "text": "     * @notice Constructor function sets address of singleton contract.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 8,
+                "text": "     * @param _singleton Singleton address.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 9, "text": "     */", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 8,
+                "newLine": 10,
+                "text": "    constructor(address _singleton) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 11,
+                "text": "        require(_singleton != address(0), \"Invalid singleton address provided\");"
+              },
+              {
+                "type": " ",
+                "oldLine": 10,
+                "newLine": 12,
+                "text": "        singleton = _singleton;"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "ba5b6c9584fb78fd": {
+      "status": "differs",
+      "coveredLines": 31,
+      "match": {
+        "origin": "stack",
+        "collection": "safe",
+        "relation": { "type": "template", "template": "GnosisSafe" },
+        "rank": 2,
+        "matchedBy": "similarity",
+        "auditedName": "GnosisSafeProxy",
+        "similarity": 1,
+        "reportId": "safe/certora-safe-1-3-0",
+        "repository": "safe-fndn/safe-smart-account",
+        "path": "contracts/proxies/GnosisSafeProxy.sol",
+        "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
+        "commitTimestamp": "2021-11-17T16:53:12Z",
+        "url": "https://github.com/safe-fndn/safe-smart-account/blob/767ef36bba88bdbc0c9fe3708a4290cabef4c376/contracts/proxies/GnosisSafeProxy.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "Manual audit",
+        "coverage": "Full manual review of the scoped source.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 1,
+        "removed": 1,
+        "ignoredAdded": 5,
+        "ignoredRemoved": 3,
+        "unchanged": 31,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 10,
+            "newStart": 1,
+            "newLines": 12,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "contract GnosisSafeProxy {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 2,
+                "text": "    // singleton always needs to be first declared variable, to ensure that it is at the same location in the contracts to which calls are delegated.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "contract SafeProxy {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 2,
+                "text": "    // Singleton always needs to be first declared variable, to ensure that it is at the same location in the contracts to which calls are delegated.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "    // To reduce deployment costs this variable is internal and needs to be retrieved via `getStorageAt`"
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "    address internal singleton;"
+              },
+              { "type": " ", "oldLine": 5, "newLine": 5, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 6,
+                "text": "    /// @dev Constructor function sets address of singleton contract.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 7,
+                "text": "    /// @param _singleton Singleton address.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 6, "text": "    /**", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 7,
+                "text": "     * @notice Constructor function sets address of singleton contract.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 8,
+                "text": "     * @param _singleton Singleton address.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 9, "text": "     */", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 8,
+                "newLine": 10,
+                "text": "    constructor(address _singleton) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 11,
+                "text": "        require(_singleton != address(0), \"Invalid singleton address provided\");"
+              },
+              {
+                "type": " ",
+                "oldLine": 10,
+                "newLine": 12,
+                "text": "        singleton = _singleton;"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "44ad4cf96e2ef6f0": {
+      "status": "differs",
+      "coveredLines": 31,
+      "match": {
+        "origin": "stack",
+        "collection": "safe",
+        "relation": { "type": "template", "template": "GnosisSafe" },
+        "rank": 2,
+        "matchedBy": "similarity",
+        "auditedName": "GnosisSafeProxy",
+        "similarity": 1,
+        "reportId": "safe/certora-safe-1-3-0",
+        "repository": "safe-fndn/safe-smart-account",
+        "path": "contracts/proxies/GnosisSafeProxy.sol",
+        "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
+        "commitTimestamp": "2021-11-17T16:53:12Z",
+        "url": "https://github.com/safe-fndn/safe-smart-account/blob/767ef36bba88bdbc0c9fe3708a4290cabef4c376/contracts/proxies/GnosisSafeProxy.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "Manual audit",
+        "coverage": "Full manual review of the scoped source.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 1,
+        "removed": 1,
+        "ignoredAdded": 5,
+        "ignoredRemoved": 3,
+        "unchanged": 31,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 10,
+            "newStart": 1,
+            "newLines": 12,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "contract GnosisSafeProxy {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 2,
+                "text": "    // singleton always needs to be first declared variable, to ensure that it is at the same location in the contracts to which calls are delegated.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "contract SafeProxy {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 2,
+                "text": "    // Singleton always needs to be first declared variable, to ensure that it is at the same location in the contracts to which calls are delegated.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "    // To reduce deployment costs this variable is internal and needs to be retrieved via `getStorageAt`"
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "    address internal singleton;"
+              },
+              { "type": " ", "oldLine": 5, "newLine": 5, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 6,
+                "text": "    /// @dev Constructor function sets address of singleton contract.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 7,
+                "text": "    /// @param _singleton Singleton address.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 6, "text": "    /**", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 7,
+                "text": "     * @notice Constructor function sets address of singleton contract.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 8,
+                "text": "     * @param _singleton Singleton address.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 9, "text": "     */", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 8,
+                "newLine": 10,
+                "text": "    constructor(address _singleton) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 11,
+                "text": "        require(_singleton != address(0), \"Invalid singleton address provided\");"
+              },
+              {
+                "type": " ",
+                "oldLine": 10,
+                "newLine": 12,
+                "text": "        singleton = _singleton;"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "bb55951394276893": {
+      "status": "differs",
+      "coveredLines": 31,
+      "match": {
+        "origin": "stack",
+        "collection": "safe",
+        "relation": { "type": "template", "template": "GnosisSafe" },
+        "rank": 2,
+        "matchedBy": "similarity",
+        "auditedName": "GnosisSafeProxy",
+        "similarity": 1,
+        "reportId": "safe/certora-safe-1-3-0",
+        "repository": "safe-fndn/safe-smart-account",
+        "path": "contracts/proxies/GnosisSafeProxy.sol",
+        "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
+        "commitTimestamp": "2021-11-17T16:53:12Z",
+        "url": "https://github.com/safe-fndn/safe-smart-account/blob/767ef36bba88bdbc0c9fe3708a4290cabef4c376/contracts/proxies/GnosisSafeProxy.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "Manual audit",
+        "coverage": "Full manual review of the scoped source.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 1,
+        "removed": 1,
+        "ignoredAdded": 5,
+        "ignoredRemoved": 3,
+        "unchanged": 31,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 10,
+            "newStart": 1,
+            "newLines": 12,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "contract GnosisSafeProxy {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 2,
+                "text": "    // singleton always needs to be first declared variable, to ensure that it is at the same location in the contracts to which calls are delegated.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "contract SafeProxy {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 2,
+                "text": "    // Singleton always needs to be first declared variable, to ensure that it is at the same location in the contracts to which calls are delegated.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "    // To reduce deployment costs this variable is internal and needs to be retrieved via `getStorageAt`"
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "    address internal singleton;"
+              },
+              { "type": " ", "oldLine": 5, "newLine": 5, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 6,
+                "text": "    /// @dev Constructor function sets address of singleton contract.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 7,
+                "text": "    /// @param _singleton Singleton address.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 6, "text": "    /**", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 7,
+                "text": "     * @notice Constructor function sets address of singleton contract.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 8,
+                "text": "     * @param _singleton Singleton address.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 9, "text": "     */", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 8,
+                "newLine": 10,
+                "text": "    constructor(address _singleton) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 11,
+                "text": "        require(_singleton != address(0), \"Invalid singleton address provided\");"
+              },
+              {
+                "type": " ",
+                "oldLine": 10,
+                "newLine": 12,
+                "text": "        singleton = _singleton;"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "d293c6ecba42b698": {
+      "status": "differs",
+      "coveredLines": 31,
+      "match": {
+        "origin": "stack",
+        "collection": "safe",
+        "relation": { "type": "template", "template": "GnosisSafe" },
+        "rank": 2,
+        "matchedBy": "similarity",
+        "auditedName": "GnosisSafeProxy",
+        "similarity": 1,
+        "reportId": "safe/certora-safe-1-3-0",
+        "repository": "safe-fndn/safe-smart-account",
+        "path": "contracts/proxies/GnosisSafeProxy.sol",
+        "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
+        "commitTimestamp": "2021-11-17T16:53:12Z",
+        "url": "https://github.com/safe-fndn/safe-smart-account/blob/767ef36bba88bdbc0c9fe3708a4290cabef4c376/contracts/proxies/GnosisSafeProxy.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "Manual audit",
+        "coverage": "Full manual review of the scoped source.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 1,
+        "removed": 1,
+        "ignoredAdded": 5,
+        "ignoredRemoved": 3,
+        "unchanged": 31,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 10,
+            "newStart": 1,
+            "newLines": 12,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "contract GnosisSafeProxy {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 2,
+                "text": "    // singleton always needs to be first declared variable, to ensure that it is at the same location in the contracts to which calls are delegated.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "contract SafeProxy {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 2,
+                "text": "    // Singleton always needs to be first declared variable, to ensure that it is at the same location in the contracts to which calls are delegated.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "    // To reduce deployment costs this variable is internal and needs to be retrieved via `getStorageAt`"
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "    address internal singleton;"
+              },
+              { "type": " ", "oldLine": 5, "newLine": 5, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 6,
+                "text": "    /// @dev Constructor function sets address of singleton contract.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 7,
+                "text": "    /// @param _singleton Singleton address.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 6, "text": "    /**", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 7,
+                "text": "     * @notice Constructor function sets address of singleton contract.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 8,
+                "text": "     * @param _singleton Singleton address.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 9, "text": "     */", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 8,
+                "newLine": 10,
+                "text": "    constructor(address _singleton) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 11,
+                "text": "        require(_singleton != address(0), \"Invalid singleton address provided\");"
+              },
+              {
+                "type": " ",
+                "oldLine": 10,
+                "newLine": 12,
+                "text": "        singleton = _singleton;"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "1f5c32d18cf7148d": {
+      "status": "differs",
+      "coveredLines": 31,
+      "match": {
+        "origin": "stack",
+        "collection": "safe",
+        "relation": { "type": "template", "template": "GnosisSafe" },
+        "rank": 2,
+        "matchedBy": "similarity",
+        "auditedName": "GnosisSafeProxy",
+        "similarity": 1,
+        "reportId": "safe/certora-safe-1-3-0",
+        "repository": "safe-fndn/safe-smart-account",
+        "path": "contracts/proxies/GnosisSafeProxy.sol",
+        "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
+        "commitTimestamp": "2021-11-17T16:53:12Z",
+        "url": "https://github.com/safe-fndn/safe-smart-account/blob/767ef36bba88bdbc0c9fe3708a4290cabef4c376/contracts/proxies/GnosisSafeProxy.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "Manual audit",
+        "coverage": "Full manual review of the scoped source.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 1,
+        "removed": 1,
+        "ignoredAdded": 5,
+        "ignoredRemoved": 3,
+        "unchanged": 31,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 10,
+            "newStart": 1,
+            "newLines": 12,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "contract GnosisSafeProxy {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 2,
+                "text": "    // singleton always needs to be first declared variable, to ensure that it is at the same location in the contracts to which calls are delegated.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "contract SafeProxy {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 2,
+                "text": "    // Singleton always needs to be first declared variable, to ensure that it is at the same location in the contracts to which calls are delegated.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "    // To reduce deployment costs this variable is internal and needs to be retrieved via `getStorageAt`"
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "    address internal singleton;"
+              },
+              { "type": " ", "oldLine": 5, "newLine": 5, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 6,
+                "text": "    /// @dev Constructor function sets address of singleton contract.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 7,
+                "text": "    /// @param _singleton Singleton address.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 6, "text": "    /**", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 7,
+                "text": "     * @notice Constructor function sets address of singleton contract.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 8,
+                "text": "     * @param _singleton Singleton address.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 9, "text": "     */", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 8,
+                "newLine": 10,
+                "text": "    constructor(address _singleton) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 11,
+                "text": "        require(_singleton != address(0), \"Invalid singleton address provided\");"
+              },
+              {
+                "type": " ",
+                "oldLine": 10,
+                "newLine": 12,
+                "text": "        singleton = _singleton;"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

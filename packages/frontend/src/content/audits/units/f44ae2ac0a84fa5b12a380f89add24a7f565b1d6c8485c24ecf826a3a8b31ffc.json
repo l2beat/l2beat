@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "f44ae2ac0a84fa5b12a380f89add24a7f565b1d6c8485c24ecf826a3a8b31ffc",
+  "name": "Nargo.toml",
+  "kind": "program",
+  "lines": 8,
+  "source": "[package]\nname = \"bignum\"\ntype = \"lib\"\nauthors = [\"\"]\ncompiler_version = \">=1.0.0\"\n\n[dependencies]\nposeidon = { git = \"https://github.com/noir-lang/poseidon\", tag = \"v0.3.0\" }",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

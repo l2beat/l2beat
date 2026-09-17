@@ -1,0 +1,91 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "a243c82a59ff84d389b8f0e586f928e44d6ade3c19701c23dd19c2c146799aa1",
+  "name": "SelfAuthorized",
+  "kind": "contract",
+  "lines": 6,
+  "source": "contract SelfAuthorized {\n    modifier authorized() {\n        require(msg.sender == address(this), \"Method can only be called from this contract\");\n        _;\n    }\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "library",
+      "coveredLines": 6,
+      "match": {
+        "origin": "stack",
+        "collection": "safe",
+        "relation": { "type": "template", "template": "GnosisSafe" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "SelfAuthorized",
+        "similarity": 1,
+        "reportId": "safe/g0-safe-1-1-1",
+        "repository": "safe-fndn/safe-smart-account",
+        "path": "contracts/common/SelfAuthorized.sol",
+        "commit": "2df0b2e0ad5d0f7ab5423e7f5baa72b2456d32ae",
+        "commitTimestamp": "2019-12-09T21:54:52Z",
+        "url": "https://github.com/safe-fndn/safe-smart-account/blob/2df0b2e0ad5d0f7ab5423e7f5baa72b2456d32ae/contracts/common/SelfAuthorized.sol",
+        "auditStatus": "partially_audited_with_no_major_findings",
+        "reviewPhase": "v1.1.1 review",
+        "coverage": "Review of v1.1.1 changes and the report appendix issues.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 4
+      },
+      "warnings": []
+    },
+    "f9658cd3a9a22004": {
+      "status": "library",
+      "coveredLines": 6,
+      "match": {
+        "origin": "stack",
+        "collection": "safe",
+        "relation": { "type": "template", "template": "GnosisSafe" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "SelfAuthorized",
+        "similarity": 1,
+        "reportId": "safe/g0-safe-1-1-1",
+        "repository": "safe-fndn/safe-smart-account",
+        "path": "contracts/common/SelfAuthorized.sol",
+        "commit": "2df0b2e0ad5d0f7ab5423e7f5baa72b2456d32ae",
+        "commitTimestamp": "2019-12-09T21:54:52Z",
+        "url": "https://github.com/safe-fndn/safe-smart-account/blob/2df0b2e0ad5d0f7ab5423e7f5baa72b2456d32ae/contracts/common/SelfAuthorized.sol",
+        "auditStatus": "partially_audited_with_no_major_findings",
+        "reviewPhase": "v1.1.1 review",
+        "coverage": "Review of v1.1.1 changes and the report appendix issues.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 4
+      },
+      "warnings": []
+    },
+    "1f5c32d18cf7148d": {
+      "status": "library",
+      "coveredLines": 6,
+      "match": {
+        "origin": "stack",
+        "collection": "safe",
+        "relation": { "type": "template", "template": "GnosisSafe" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "SelfAuthorized",
+        "similarity": 1,
+        "reportId": "safe/g0-safe-1-1-1",
+        "repository": "safe-fndn/safe-smart-account",
+        "path": "contracts/common/SelfAuthorized.sol",
+        "commit": "2df0b2e0ad5d0f7ab5423e7f5baa72b2456d32ae",
+        "commitTimestamp": "2019-12-09T21:54:52Z",
+        "url": "https://github.com/safe-fndn/safe-smart-account/blob/2df0b2e0ad5d0f7ab5423e7f5baa72b2456d32ae/contracts/common/SelfAuthorized.sol",
+        "auditStatus": "partially_audited_with_no_major_findings",
+        "reviewPhase": "v1.1.1 review",
+        "coverage": "Review of v1.1.1 changes and the report appendix issues.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 4
+      },
+      "warnings": []
+    }
+  }
+}

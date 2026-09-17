@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "53316dcf68f30a150f66e4c443f89242df9d6e27a52adf8a4dd71519166053da",
+  "name": "mod.nr",
+  "kind": "program",
+  "lines": 7,
+  "source": "mod block_root_rollup_inputs_validator;\nmod block_rollup_public_inputs_composer;\n\npub use block_rollup_public_inputs_composer::BlockRollupPublicInputsComposer;\npub use block_root_rollup_inputs_validator::{\n    validate_l1_to_l2_tree_snapshot_in_constants, validate_parity_root, validate_previous_rollups,\n};",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

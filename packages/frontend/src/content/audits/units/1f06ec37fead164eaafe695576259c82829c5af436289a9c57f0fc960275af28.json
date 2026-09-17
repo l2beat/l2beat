@@ -1,0 +1,38 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "1f06ec37fead164eaafe695576259c82829c5af436289a9c57f0fc960275af28",
+  "name": "Lib_ResolvedDelegateProxy",
+  "kind": "contract",
+  "lines": 56,
+  "source": "contract Lib_ResolvedDelegateProxy {\n    /**\n     *\n     * Variables *\n     *\n     */\n\n    // Using mappings to store fields to avoid overwriting storage slots in the\n    // implementation contract. For example, instead of storing these fields at\n    // storage slot `0` & `1`, they are stored at `keccak256(key + slot)`.\n    // See: https://solidity.readthedocs.io/en/v0.7.0/internals/layout_in_storage.html\n    // NOTE: Do not use this code in your own contract system.\n    //      There is a known flaw in this contract, and we will remove it from the repository\n    //      in the near future. Due to the very limited way that we are using it, this flaw is\n    //      not an issue in our system.\n    mapping(address => string) private implementationName;\n    mapping(address => Lib_AddressManager) private addressManager;\n\n    /**\n     *\n     * Constructor *\n     *\n     */\n\n    /**\n     * @param _libAddressManager Address of the Lib_AddressManager.\n     * @param _implementationName implementationName of the contract to proxy to.\n     */\n    constructor(address _libAddressManager, string memory _implementationName) {\n        addressManager[address(this)] = Lib_AddressManager(_libAddressManager);\n        implementationName[address(this)] = _implementationName;\n    }\n\n    /**\n     *\n     * Fallback Function *\n     *\n     */\n    fallback() external payable {\n        address target = addressManager[address(this)].getAddress((implementationName[address(this)]));\n\n        require(target != address(0), \"Target address must be initialized.\");\n\n        (bool success, bytes memory returndata) = target.delegatecall(msg.data);\n\n        if (success == true) {\n            assembly {\n                return(add(returndata, 0x20), mload(returndata))\n            }\n        } else {\n            assembly {\n                revert(add(returndata, 0x20), mload(returndata))\n            }\n        }\n    }\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "identical",
+      "coveredLines": 56,
+      "match": {
+        "origin": "own",
+        "collection": "optimism",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "Lib_ResolvedDelegateProxy",
+        "similarity": 1,
+        "reportId": "optimism/openzeppelin-ovm-rollup-2021-03",
+        "repository": "ben-chain/contracts-v2",
+        "path": "contracts/optimistic-ethereum/libraries/resolver/Lib_ResolvedDelegateProxy.sol",
+        "commit": "a935e276f5620b40802b52721e3474232e458f72",
+        "commitTimestamp": "2021-04-12T01:08:09Z",
+        "url": "https://github.com/ben-chain/contracts-v2/blob/a935e276f5620b40802b52721e3474232e458f72/contracts/optimistic-ethereum/libraries/resolver/Lib_ResolvedDelegateProxy.sol",
+        "auditStatus": "audited_with_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Second audited commit (last 3 weeks). Same directory scope and exclusions as the first commit; C01 and H01 fixes from the archived repository are contained in this commit, L02/L04/N01 are fixed here per the report.",
+        "majorFindings": 2,
+        "findingIds": ["C02", "C04"],
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "bf164978b1ea8b945bb05f2011a0b4324386708494f705da48e20bf6ea8ee0b7",
+  "name": "mod.nr",
+  "kind": "program",
+  "lines": 14,
+  "source": "use bigcurve::curves::bls12_381::BLS12_381;\n\npub type BLSPoint = BLS12_381;\n\npub(crate) mod batching_blob_commitment;\npub(crate) mod final_blob_batching_challenges;\npub(crate) mod blob_accumulator;\npub(crate) mod final_blob_accumulator;\n\npub use batching_blob_commitment::BatchingBlobCommitment;\npub use blob_accumulator::BlobAccumulator;\npub(crate) use blob_accumulator::BlobAccumulationInputs;\npub use final_blob_accumulator::FinalBlobAccumulator;\npub use final_blob_batching_challenges::FinalBlobBatchingChallenges;",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

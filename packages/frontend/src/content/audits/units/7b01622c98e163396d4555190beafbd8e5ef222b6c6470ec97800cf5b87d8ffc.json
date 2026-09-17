@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "7b01622c98e163396d4555190beafbd8e5ef222b6c6470ec97800cf5b87d8ffc",
+  "name": "batching_blob_commitment.nr",
+  "kind": "program",
+  "lines": 41,
+  "source": "use crate::utils::compress_to_blob_commitment;\nuse super::BLSPoint;\nuse bigcurve::BigCurve;\nuse bignum::{BigNum, BLS12_381_Fq};\nuse types::{\n    constants::BLS12_POINT_COMPRESSED_BYTES,\n    utils::{arrays::subarray, field::field_from_bytes},\n};\n\npub struct BatchingBlobCommitment {\n    pub point: BLSPoint,\n    pub compressed: [u8; BLS12_POINT_COMPRESSED_BYTES],\n}\n\nimpl BatchingBlobCommitment {\n    // The compressed form is a BLS12Fq field encoded as 2 BN254Fr fields.\n    // The first is the first 31 bytes, and the second is the next 17 bytes:\n    pub fn to_compressed_fields(self) -> [Field; 2] {\n        [\n            // field 0 is bytes 0..31\n            field_from_bytes::<31>(subarray(self.compressed, 0), true),\n            // field 1 is bytes 31..48\n            field_from_bytes::<17>(subarray(self.compressed, 31), true),\n        ]\n    }\n\n    // Helper fn largely used in testing to simplify fixtures\n    pub fn from_limbs(x_limbs: [u128; 4], y_limbs: [u128; 4]) -> Self {\n        let x = BLS12_381_Fq::from_limbs(x_limbs);\n        let y = BLS12_381_Fq::from_limbs(y_limbs);\n        let point = BLSPoint { x, y, is_infinity: (x.is_zero()) & (y.is_zero()) };\n        point.validate_on_curve();\n        compress_to_blob_commitment(point)\n    }\n}\n\nimpl Eq for BatchingBlobCommitment {\n    fn eq(self, other: Self) -> bool {\n        (self.point.eq(other.point)) & (self.compressed.eq(other.compressed))\n    }\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

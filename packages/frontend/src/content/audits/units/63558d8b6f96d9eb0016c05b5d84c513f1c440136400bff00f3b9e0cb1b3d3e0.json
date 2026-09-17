@@ -1,0 +1,166 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "63558d8b6f96d9eb0016c05b5d84c513f1c440136400bff00f3b9e0cb1b3d3e0",
+  "name": "ERC165",
+  "kind": "abstract",
+  "lines": 8,
+  "source": "abstract contract ERC165 is IERC165 {\n    /**\n     * @dev See {IERC165-supportsInterface}.\n     */\n    function supportsInterface(bytes4 interfaceId) public view virtual returns (bool) {\n        return interfaceId == type(IERC165).interfaceId;\n    }\n}",
+  "resolutions": {
+    "ba5b6c9584fb78fd": {
+      "status": "library",
+      "coveredLines": 8,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "ERC165",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2025-07-v5.4",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/utils/introspection/ERC165.sol",
+        "commit": "f6fea85717b1a09300c7a783554696a0d6f3df12",
+        "commitTimestamp": "2025-06-13T18:37:42Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/f6fea85717b1a09300c7a783554696a0d6f3df12/contracts/utils/introspection/ERC165.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Diff-only review of the changes between release v5.3 (e4f7021) and release v5.4; the pre-existing file was not re-audited in full.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 4
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 3,
+        "ignoredRemoved": 1,
+        "unchanged": 8,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 5,
+            "newStart": 1,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "abstract contract ERC165 is IERC165 {"
+              },
+              {
+                "type": "-",
+                "oldLine": 2,
+                "text": "    /// @inheritdoc IERC165",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 2, "text": "    /**", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "     * @dev See {IERC165-supportsInterface}.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 4, "text": "     */", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 5,
+                "text": "    function supportsInterface(bytes4 interfaceId) public view virtual returns (bool) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 6,
+                "text": "        return interfaceId == type(IERC165).interfaceId;"
+              },
+              { "type": " ", "oldLine": 5, "newLine": 7, "text": "    }" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "bb55951394276893": {
+      "status": "library",
+      "coveredLines": 8,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "ERC165",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2025-07-v5.4",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/utils/introspection/ERC165.sol",
+        "commit": "f6fea85717b1a09300c7a783554696a0d6f3df12",
+        "commitTimestamp": "2025-06-13T18:37:42Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/f6fea85717b1a09300c7a783554696a0d6f3df12/contracts/utils/introspection/ERC165.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Diff-only review of the changes between release v5.3 (e4f7021) and release v5.4; the pre-existing file was not re-audited in full.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 4
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 3,
+        "ignoredRemoved": 1,
+        "unchanged": 8,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 5,
+            "newStart": 1,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "abstract contract ERC165 is IERC165 {"
+              },
+              {
+                "type": "-",
+                "oldLine": 2,
+                "text": "    /// @inheritdoc IERC165",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 2, "text": "    /**", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "     * @dev See {IERC165-supportsInterface}.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 4, "text": "     */", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 5,
+                "text": "    function supportsInterface(bytes4 interfaceId) public view virtual returns (bool) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 6,
+                "text": "        return interfaceId == type(IERC165).interfaceId;"
+              },
+              { "type": " ", "oldLine": 5, "newLine": 7, "text": "    }" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

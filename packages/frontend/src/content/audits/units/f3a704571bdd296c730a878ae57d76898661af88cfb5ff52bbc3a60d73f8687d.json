@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "f3a704571bdd296c730a878ae57d76898661af88cfb5ff52bbc3a60d73f8687d",
+  "name": "IEscapeHatch",
+  "kind": "interface",
+  "lines": 26,
+  "source": "interface IEscapeHatch is IEscapeHatchCore {\n    function isHatchOpen(Epoch _epoch) external view returns (bool isOpen, address proposer);\n    function getCurrentHatch() external view returns (Hatch);\n    function getHatch(Epoch _epoch) external view returns (Hatch);\n    function getFirstEpoch(Hatch _hatch) external view returns (Epoch);\n    function getDesignatedProposer(Hatch _hatch) external view returns (address);\n    function isHatchPrepared(Hatch _hatch) external view returns (bool);\n    function isHatchValidated(Hatch _hatch) external view returns (bool);\n    function getCandidateInfo(address _candidate) external view returns (CandidateInfo memory);\n    function getCandidateCount() external view returns (uint256);\n    function getCandidateCountForHatch(Hatch _hatch) external view returns (uint256);\n    function getCandidateAtIndex(uint256 _index) external view returns (address);\n    function getCandidateAtIndexForHatch(uint256 _index, Hatch _hatch) external view returns (address);\n    function isCandidate(address _candidate) external view returns (bool);\n    function getSetTimestamp(Hatch _hatch) external view returns (uint32);\n    function getSeedTimestamp(Hatch _hatch) external view returns (uint32);\n    function getRollup() external view returns (address);\n    function getBondToken() external view returns (address);\n    function getBondSize() external view returns (uint96);\n    function getWithdrawalTax() external view returns (uint96);\n    function getFailedHatchPunishment() external view returns (uint96);\n    function getFrequency() external view returns (uint256);\n    function getActiveDuration() external view returns (uint256);\n    function getLagInHatches() external view returns (uint256);\n    function getProposingExitDelay() external view returns (uint256);\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "identical",
+      "coveredLines": 26,
+      "match": {
+        "origin": "own",
+        "collection": "aztecnetwork",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "IEscapeHatch",
+        "similarity": 1,
+        "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
+        "repository": "AztecProtocol/aztec-packages",
+        "path": "l1-contracts/src/core/interfaces/IEscapeHatch.sol",
+        "commit": "0092f9f01ed88cc3626270e62716d7b722ea1944",
+        "commitTimestamp": "2026-01-06T20:15:15Z",
+        "url": "https://github.com/AztecProtocol/aztec-packages/blob/0092f9f01ed88cc3626270e62716d7b722ea1944/l1-contracts/src/core/interfaces/IEscapeHatch.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "security review",
+        "coverage": "full file",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "warnings": []
+    }
+  }
+}

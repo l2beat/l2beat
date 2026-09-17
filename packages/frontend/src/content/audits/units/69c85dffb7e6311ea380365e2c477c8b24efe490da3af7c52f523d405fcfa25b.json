@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "69c85dffb7e6311ea380365e2c477c8b24efe490da3af7c52f523d405fcfa25b",
+  "name": "tail_output_hints.nr",
+  "kind": "program",
+  "lines": 25,
+  "source": "use types::{\n    abis::kernel_circuit_public_inputs::PrivateKernelCircuitPublicInputs,\n    constants::{MAX_CONTRACT_CLASS_LOGS_PER_TX, MAX_L2_TO_L1_MSGS_PER_TX},\n    utils::arrays::{get_order_hints, OrderHint},\n};\n\npub struct TailOutputHints {\n    // L2 to l1 msgs.\n    pub sorted_l2_to_l1_msg_hints: [OrderHint; MAX_L2_TO_L1_MSGS_PER_TX],\n    // Contract class log hashes.\n    pub sorted_contract_class_log_hash_hints: [OrderHint; MAX_CONTRACT_CLASS_LOGS_PER_TX],\n}\n\npub unconstrained fn generate_tail_output_hints(\n    previous_kernel: PrivateKernelCircuitPublicInputs,\n) -> TailOutputHints {\n    // l2_to_l1_msgs\n    let sorted_l2_to_l1_msg_hints = get_order_hints(previous_kernel.end.l2_to_l1_msgs.array);\n\n    // contract_class_logs\n    let sorted_contract_class_log_hash_hints =\n        get_order_hints(previous_kernel.end.contract_class_logs_hashes.array);\n\n    TailOutputHints { sorted_l2_to_l1_msg_hints, sorted_contract_class_log_hash_hints }\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

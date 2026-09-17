@@ -1,0 +1,775 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "6994f746153bc9e98f6d72280a9b6bb52ad7e2290b3225814222b3a8e7459dff",
+  "name": "Miner",
+  "kind": "contract",
+  "lines": 300,
+  "source": "contract Miner is EnsResolve {\n    using SafeMath for uint256;\n\n    IVerifier public rewardVerifier;\n    IVerifier public withdrawVerifier;\n    IVerifier public treeUpdateVerifier;\n    IRewardSwap public immutable rewardSwap;\n    address public immutable governance;\n    TornadoTrees public tornadoTrees;\n\n    mapping(bytes32 => bool) public accountNullifiers;\n    mapping(bytes32 => bool) public rewardNullifiers;\n    mapping(address => uint256) public rates;\n\n    uint256 public accountCount;\n    uint256 public constant ACCOUNT_ROOT_HISTORY_SIZE = 100;\n    bytes32[ACCOUNT_ROOT_HISTORY_SIZE] public accountRoots;\n\n    event NewAccount(bytes32 commitment, bytes32 nullifier, bytes encryptedAccount, uint256 index);\n    event RateChanged(address instance, uint256 value);\n    event VerifiersUpdated(address reward, address withdraw, address treeUpdate);\n\n    struct TreeUpdateArgs {\n        bytes32 oldRoot;\n        bytes32 newRoot;\n        bytes32 leaf;\n        uint256 pathIndices;\n    }\n\n    struct AccountUpdate {\n        bytes32 inputRoot;\n        bytes32 inputNullifierHash;\n        bytes32 outputRoot;\n        uint256 outputPathIndices;\n        bytes32 outputCommitment;\n    }\n\n    struct RewardExtData {\n        address relayer;\n        bytes encryptedAccount;\n    }\n\n    struct RewardArgs {\n        uint256 rate;\n        uint256 fee;\n        address instance;\n        bytes32 rewardNullifier;\n        bytes32 extDataHash;\n        bytes32 depositRoot;\n        bytes32 withdrawalRoot;\n        RewardExtData extData;\n        AccountUpdate account;\n    }\n\n    struct WithdrawExtData {\n        uint256 fee;\n        address recipient;\n        address relayer;\n        bytes encryptedAccount;\n    }\n\n    struct WithdrawArgs {\n        uint256 amount;\n        bytes32 extDataHash;\n        WithdrawExtData extData;\n        AccountUpdate account;\n    }\n\n    struct Rate {\n        bytes32 instance;\n        uint256 value;\n    }\n\n    modifier onlyGovernance() {\n        require(msg.sender == governance, \"Only governance can perform this action\");\n        _;\n    }\n\n    constructor(\n        bytes32 _rewardSwap,\n        bytes32 _governance,\n        bytes32 _tornadoTrees,\n        bytes32[3] memory _verifiers,\n        bytes32 _accountRoot,\n        Rate[] memory _rates\n    ) public {\n        rewardSwap = IRewardSwap(resolve(_rewardSwap));\n        governance = resolve(_governance);\n        tornadoTrees = TornadoTrees(resolve(_tornadoTrees));\n\n        // insert empty tree root without incrementing accountCount counter\n        accountRoots[0] = _accountRoot;\n\n        _setRates(_rates);\n        // prettier-ignore\n        _setVerifiers(\n            [IVerifier(resolve(_verifiers[0])), IVerifier(resolve(_verifiers[1])), IVerifier(resolve(_verifiers[2]))]\n        );\n    }\n\n    function reward(bytes memory _proof, RewardArgs memory _args) public {\n        reward(_proof, _args, new bytes(0), TreeUpdateArgs(0, 0, 0, 0));\n    }\n\n    function batchReward(bytes[] calldata _rewardArgs) external {\n        for (uint256 i = 0; i < _rewardArgs.length; i++) {\n            (bytes memory proof, RewardArgs memory args) = abi.decode(_rewardArgs[i], (bytes, RewardArgs));\n            reward(proof, args);\n        }\n    }\n\n    function reward(\n        bytes memory _proof,\n        RewardArgs memory _args,\n        bytes memory _treeUpdateProof,\n        TreeUpdateArgs memory _treeUpdateArgs\n    ) public {\n        validateAccountUpdate(_args.account, _treeUpdateProof, _treeUpdateArgs);\n        tornadoTrees.validateRoots(_args.depositRoot, _args.withdrawalRoot);\n        require(_args.extDataHash == keccak248(abi.encode(_args.extData)), \"Incorrect external data hash\");\n        require(_args.fee < 2 ** 248, \"Fee value out of range\");\n        require(_args.rate == rates[_args.instance] && _args.rate > 0, \"Invalid reward rate\");\n        require(!rewardNullifiers[_args.rewardNullifier], \"Reward has been already spent\");\n        require(\n            rewardVerifier.verifyProof(\n                _proof,\n                [\n                    uint256(_args.rate),\n                    uint256(_args.fee),\n                    uint256(_args.instance),\n                    uint256(_args.rewardNullifier),\n                    uint256(_args.extDataHash),\n                    uint256(_args.account.inputRoot),\n                    uint256(_args.account.inputNullifierHash),\n                    uint256(_args.account.outputRoot),\n                    uint256(_args.account.outputPathIndices),\n                    uint256(_args.account.outputCommitment),\n                    uint256(_args.depositRoot),\n                    uint256(_args.withdrawalRoot)\n                ]\n            ),\n            \"Invalid reward proof\"\n        );\n\n        accountNullifiers[_args.account.inputNullifierHash] = true;\n        rewardNullifiers[_args.rewardNullifier] = true;\n        insertAccountRoot(\n            _args.account.inputRoot == getLastAccountRoot() ? _args.account.outputRoot : _treeUpdateArgs.newRoot\n        );\n        if (_args.fee > 0) {\n            rewardSwap.swap(_args.extData.relayer, _args.fee);\n        }\n\n        emit NewAccount(\n            _args.account.outputCommitment,\n            _args.account.inputNullifierHash,\n            _args.extData.encryptedAccount,\n            accountCount - 1\n        );\n    }\n\n    function withdraw(bytes memory _proof, WithdrawArgs memory _args) public {\n        withdraw(_proof, _args, new bytes(0), TreeUpdateArgs(0, 0, 0, 0));\n    }\n\n    function withdraw(\n        bytes memory _proof,\n        WithdrawArgs memory _args,\n        bytes memory _treeUpdateProof,\n        TreeUpdateArgs memory _treeUpdateArgs\n    ) public {\n        validateAccountUpdate(_args.account, _treeUpdateProof, _treeUpdateArgs);\n        require(_args.extDataHash == keccak248(abi.encode(_args.extData)), \"Incorrect external data hash\");\n        require(_args.amount < 2 ** 248, \"Amount value out of range\");\n        require(\n            withdrawVerifier.verifyProof(\n                _proof,\n                [\n                    uint256(_args.amount),\n                    uint256(_args.extDataHash),\n                    uint256(_args.account.inputRoot),\n                    uint256(_args.account.inputNullifierHash),\n                    uint256(_args.account.outputRoot),\n                    uint256(_args.account.outputPathIndices),\n                    uint256(_args.account.outputCommitment)\n                ]\n            ),\n            \"Invalid withdrawal proof\"\n        );\n\n        insertAccountRoot(\n            _args.account.inputRoot == getLastAccountRoot() ? _args.account.outputRoot : _treeUpdateArgs.newRoot\n        );\n        accountNullifiers[_args.account.inputNullifierHash] = true;\n        // allow submitting noop withdrawals (amount == 0)\n        uint256 amount = _args.amount.sub(_args.extData.fee, \"Amount should be greater than fee\");\n        if (amount > 0) {\n            rewardSwap.swap(_args.extData.recipient, amount);\n        }\n        // Note. The relayer swap rate always will be worse than estimated\n        if (_args.extData.fee > 0) {\n            rewardSwap.swap(_args.extData.relayer, _args.extData.fee);\n        }\n\n        emit NewAccount(\n            _args.account.outputCommitment,\n            _args.account.inputNullifierHash,\n            _args.extData.encryptedAccount,\n            accountCount - 1\n        );\n    }\n\n    function setRates(Rate[] memory _rates) external onlyGovernance {\n        _setRates(_rates);\n    }\n\n    function setVerifiers(IVerifier[3] calldata _verifiers) external onlyGovernance {\n        _setVerifiers(_verifiers);\n    }\n\n    function setTornadoTreesContract(TornadoTrees _tornadoTrees) external onlyGovernance {\n        tornadoTrees = _tornadoTrees;\n    }\n\n    function setPoolWeight(uint256 _newWeight) external onlyGovernance {\n        rewardSwap.setPoolWeight(_newWeight);\n    }\n\n    // ------VIEW-------\n\n    /**\n     * @dev Whether the root is present in the root history\n     */\n    function isKnownAccountRoot(bytes32 _root, uint256 _index) public view returns (bool) {\n        return _root != 0 && accountRoots[_index % ACCOUNT_ROOT_HISTORY_SIZE] == _root;\n    }\n\n    /**\n     * @dev Returns the last root\n     */\n    function getLastAccountRoot() public view returns (bytes32) {\n        return accountRoots[accountCount % ACCOUNT_ROOT_HISTORY_SIZE];\n    }\n\n    // -----INTERNAL-------\n\n    function keccak248(bytes memory _data) internal pure returns (bytes32) {\n        return keccak256(_data) & 0x00ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff;\n    }\n\n    function validateTreeUpdate(bytes memory _proof, TreeUpdateArgs memory _args, bytes32 _commitment) internal view {\n        require(_proof.length > 0, \"Outdated account merkle root\");\n        require(_args.oldRoot == getLastAccountRoot(), \"Outdated tree update merkle root\");\n        require(_args.leaf == _commitment, \"Incorrect commitment inserted\");\n        require(_args.pathIndices == accountCount, \"Incorrect account insert index\");\n        require(\n            treeUpdateVerifier.verifyProof(\n                _proof,\n                [uint256(_args.oldRoot), uint256(_args.newRoot), uint256(_args.leaf), uint256(_args.pathIndices)]\n            ),\n            \"Invalid tree update proof\"\n        );\n    }\n\n    function validateAccountUpdate(\n        AccountUpdate memory _account,\n        bytes memory _treeUpdateProof,\n        TreeUpdateArgs memory _treeUpdateArgs\n    ) internal view {\n        require(!accountNullifiers[_account.inputNullifierHash], \"Outdated account state\");\n        if (_account.inputRoot != getLastAccountRoot()) {\n            // _account.outputPathIndices (= last tree leaf index) is always equal to root index in the history mapping\n            // because we always generate a new root for each new leaf\n            require(isKnownAccountRoot(_account.inputRoot, _account.outputPathIndices), \"Invalid account root\");\n            validateTreeUpdate(_treeUpdateProof, _treeUpdateArgs, _account.outputCommitment);\n        } else {\n            require(_account.outputPathIndices == accountCount, \"Incorrect account insert index\");\n        }\n    }\n\n    function insertAccountRoot(bytes32 _root) internal {\n        accountRoots[++accountCount % ACCOUNT_ROOT_HISTORY_SIZE] = _root;\n    }\n\n    function _setRates(Rate[] memory _rates) internal {\n        for (uint256 i = 0; i < _rates.length; i++) {\n            require(_rates[i].value < 2 ** 128, \"Incorrect rate\");\n            address instance = resolve(_rates[i].instance);\n            rates[instance] = _rates[i].value;\n            emit RateChanged(instance, _rates[i].value);\n        }\n    }\n\n    function _setVerifiers(IVerifier[3] memory _verifiers) internal {\n        rewardVerifier = _verifiers[0];\n        withdrawVerifier = _verifiers[1];\n        treeUpdateVerifier = _verifiers[2];\n        emit VerifiersUpdated(address(_verifiers[0]), address(_verifiers[1]), address(_verifiers[2]));\n    }\n}",
+  "resolutions": {
+    "f9658cd3a9a22004": {
+      "status": "differs",
+      "coveredLines": 267,
+      "match": {
+        "origin": "own",
+        "collection": "tornado-cash",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "Miner",
+        "similarity": 0.909,
+        "reportId": "tornado-cash/abdk-tornado-anonymity-mining-recheck-2020-12-22",
+        "repository": "tornadocash/tornado-anonymity-mining",
+        "path": "contracts/Miner.sol",
+        "commit": "9ec05a681d9699a11733b3163dd44a1e90abc345",
+        "commitTimestamp": "2020-11-02T20:07:53Z",
+        "url": "https://github.com/tornadocash/tornado-anonymity-mining/blob/9ec05a681d9699a11733b3163dd44a1e90abc345/contracts/Miner.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "recheck of changed contracts",
+        "coverage": "full file",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 5
+      },
+      "diff": {
+        "added": 33,
+        "removed": 22,
+        "ignoredAdded": 3,
+        "ignoredRemoved": 0,
+        "unchanged": 267,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 9,
+            "newStart": 1,
+            "newLines": 9,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "contract Miner is EnsResolve {"
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "    using SafeMath for uint256;"
+              },
+              { "type": " ", "oldLine": 3, "newLine": 3, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 4,
+                "text": "    IVerifier public immutable rewardVerifier;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 5,
+                "text": "    IVerifier public immutable withdrawVerifier;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 6,
+                "text": "    IVerifier public immutable treeUpdateVerifier;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 4,
+                "text": "    IVerifier public rewardVerifier;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 5,
+                "text": "    IVerifier public withdrawVerifier;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 6,
+                "text": "    IVerifier public treeUpdateVerifier;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 7,
+                "newLine": 7,
+                "text": "    IRewardSwap public immutable rewardSwap;"
+              },
+              {
+                "type": " ",
+                "oldLine": 8,
+                "newLine": 8,
+                "text": "    address public immutable governance;"
+              },
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 9,
+                "text": "    TornadoTrees public tornadoTrees;"
+              }
+            ]
+          },
+          {
+            "oldStart": 18,
+            "oldLines": 6,
+            "newStart": 18,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 18, "newLine": 18, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 19,
+                "newLine": 19,
+                "text": "    event NewAccount(bytes32 commitment, bytes32 nullifier, bytes encryptedAccount, uint256 index);"
+              },
+              {
+                "type": " ",
+                "oldLine": 20,
+                "newLine": 20,
+                "text": "    event RateChanged(address instance, uint256 value);"
+              },
+              {
+                "type": "+",
+                "newLine": 21,
+                "text": "    event VerifiersUpdated(address reward, address withdraw, address treeUpdate);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 21, "newLine": 22, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 23,
+                "text": "    struct TreeUpdateArgs {"
+              },
+              {
+                "type": " ",
+                "oldLine": 23,
+                "newLine": 24,
+                "text": "        bytes32 oldRoot;"
+              }
+            ]
+          },
+          {
+            "oldStart": 66,
+            "oldLines": 7,
+            "newStart": 67,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 66, "newLine": 67, "text": "    }" },
+              { "type": " ", "oldLine": 67, "newLine": 68, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 68,
+                "newLine": 69,
+                "text": "    struct Rate {"
+              },
+              {
+                "type": "-",
+                "oldLine": 69,
+                "text": "        address instance;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 70,
+                "text": "        bytes32 instance;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 70,
+                "newLine": 71,
+                "text": "        uint256 value;"
+              },
+              { "type": " ", "oldLine": 71, "newLine": 72, "text": "    }" },
+              { "type": " ", "oldLine": 72, "newLine": 73, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 79,
+            "oldLines": 21,
+            "newStart": 80,
+            "newLines": 22,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 79,
+                "newLine": 80,
+                "text": "        bytes32 _rewardSwap,"
+              },
+              {
+                "type": " ",
+                "oldLine": 80,
+                "newLine": 81,
+                "text": "        bytes32 _governance,"
+              },
+              {
+                "type": " ",
+                "oldLine": 81,
+                "newLine": 82,
+                "text": "        bytes32 _tornadoTrees,"
+              },
+              {
+                "type": "-",
+                "oldLine": 82,
+                "text": "        bytes32[3] memory verifiers,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 83,
+                "text": "        bytes32[3] memory _verifiers,",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 83,
+                "newLine": 84,
+                "text": "        bytes32 _accountRoot,"
+              },
+              {
+                "type": " ",
+                "oldLine": 84,
+                "newLine": 85,
+                "text": "        Rate[] memory _rates"
+              },
+              {
+                "type": " ",
+                "oldLine": 85,
+                "newLine": 86,
+                "text": "    ) public {"
+              },
+              {
+                "type": " ",
+                "oldLine": 86,
+                "newLine": 87,
+                "text": "        rewardSwap = IRewardSwap(resolve(_rewardSwap));"
+              },
+              {
+                "type": " ",
+                "oldLine": 87,
+                "newLine": 88,
+                "text": "        governance = resolve(_governance);"
+              },
+              {
+                "type": " ",
+                "oldLine": 88,
+                "newLine": 89,
+                "text": "        tornadoTrees = TornadoTrees(resolve(_tornadoTrees));"
+              },
+              {
+                "type": "-",
+                "oldLine": 89,
+                "text": "        rewardVerifier = IVerifier(resolve(verifiers[0]));",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 90,
+                "text": "        withdrawVerifier = IVerifier(resolve(verifiers[1]));",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 91,
+                "text": "        treeUpdateVerifier = IVerifier(resolve(verifiers[2]));",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 92, "newLine": 90, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 93,
+                "newLine": 91,
+                "text": "        // insert empty tree root without incrementing accountCount counter"
+              },
+              {
+                "type": " ",
+                "oldLine": 94,
+                "newLine": 92,
+                "text": "        accountRoots[0] = _accountRoot;"
+              },
+              { "type": " ", "oldLine": 95, "newLine": 93, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 96,
+                "newLine": 94,
+                "text": "        _setRates(_rates);"
+              },
+              {
+                "type": "+",
+                "newLine": 95,
+                "text": "        // prettier-ignore",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 96,
+                "text": "        _setVerifiers(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 97,
+                "text": "            [IVerifier(resolve(_verifiers[0])), IVerifier(resolve(_verifiers[1])), IVerifier(resolve(_verifiers[2]))]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 98,
+                "text": "        );",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 97, "newLine": 99, "text": "    }" },
+              { "type": " ", "oldLine": 98, "newLine": 100, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 99,
+                "newLine": 101,
+                "text": "    function reward(bytes memory _proof, RewardArgs memory _args) public {"
+              }
+            ]
+          },
+          {
+            "oldStart": 115,
+            "oldLines": 7,
+            "newStart": 117,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 115,
+                "newLine": 117,
+                "text": "    ) public {"
+              },
+              {
+                "type": " ",
+                "oldLine": 116,
+                "newLine": 118,
+                "text": "        validateAccountUpdate(_args.account, _treeUpdateProof, _treeUpdateArgs);"
+              },
+              {
+                "type": " ",
+                "oldLine": 117,
+                "newLine": 119,
+                "text": "        tornadoTrees.validateRoots(_args.depositRoot, _args.withdrawalRoot);"
+              },
+              {
+                "type": "-",
+                "oldLine": 118,
+                "text": "        require(_args.extDataHash == keccak252(abi.encode(_args.extData)), \"Incorrect external data hash\");",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 120,
+                "text": "        require(_args.extDataHash == keccak248(abi.encode(_args.extData)), \"Incorrect external data hash\");",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 119,
+                "newLine": 121,
+                "text": "        require(_args.fee < 2 ** 248, \"Fee value out of range\");"
+              },
+              {
+                "type": " ",
+                "oldLine": 120,
+                "newLine": 122,
+                "text": "        require(_args.rate == rates[_args.instance] && _args.rate > 0, \"Invalid reward rate\");"
+              },
+              {
+                "type": " ",
+                "oldLine": 121,
+                "newLine": 123,
+                "text": "        require(!rewardNullifiers[_args.rewardNullifier], \"Reward has been already spent\");"
+              }
+            ]
+          },
+          {
+            "oldStart": 168,
+            "oldLines": 7,
+            "newStart": 170,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 168,
+                "newLine": 170,
+                "text": "        TreeUpdateArgs memory _treeUpdateArgs"
+              },
+              {
+                "type": " ",
+                "oldLine": 169,
+                "newLine": 171,
+                "text": "    ) public {"
+              },
+              {
+                "type": " ",
+                "oldLine": 170,
+                "newLine": 172,
+                "text": "        validateAccountUpdate(_args.account, _treeUpdateProof, _treeUpdateArgs);"
+              },
+              {
+                "type": "-",
+                "oldLine": 171,
+                "text": "        require(_args.extDataHash == keccak252(abi.encode(_args.extData)), \"Incorrect external data hash\");",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 173,
+                "text": "        require(_args.extDataHash == keccak248(abi.encode(_args.extData)), \"Incorrect external data hash\");",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 172,
+                "newLine": 174,
+                "text": "        require(_args.amount < 2 ** 248, \"Amount value out of range\");"
+              },
+              {
+                "type": " ",
+                "oldLine": 173,
+                "newLine": 175,
+                "text": "        require("
+              },
+              {
+                "type": " ",
+                "oldLine": 174,
+                "newLine": 176,
+                "text": "            withdrawVerifier.verifyProof("
+              }
+            ]
+          },
+          {
+            "oldStart": 212,
+            "oldLines": 20,
+            "newStart": 214,
+            "newLines": 16,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 212,
+                "newLine": 214,
+                "text": "        _setRates(_rates);"
+              },
+              { "type": " ", "oldLine": 213, "newLine": 215, "text": "    }" },
+              { "type": " ", "oldLine": 214, "newLine": 216, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 215,
+                "text": "    function _setRates(Rate[] memory _rates) internal {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 216,
+                "text": "        for (uint256 i = 0; i < _rates.length; i++) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 217,
+                "text": "            require(_rates[i].value < 2 ** 128, \"Incorrect rate\");",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 218,
+                "text": "            rates[_rates[i].instance] = _rates[i].value;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 219,
+                "text": "            emit RateChanged(_rates[i].instance, _rates[i].value);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 220,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 217,
+                "text": "    function setVerifiers(IVerifier[3] calldata _verifiers) external onlyGovernance {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 218,
+                "text": "        _setVerifiers(_verifiers);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 221, "newLine": 219, "text": "    }" },
+              { "type": " ", "oldLine": 222, "newLine": 220, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 223,
+                "newLine": 221,
+                "text": "    function setTornadoTreesContract(TornadoTrees _tornadoTrees) external onlyGovernance {"
+              },
+              {
+                "type": " ",
+                "oldLine": 224,
+                "newLine": 222,
+                "text": "        tornadoTrees = _tornadoTrees;"
+              },
+              { "type": " ", "oldLine": 225, "newLine": 223, "text": "    }" },
+              { "type": " ", "oldLine": 226, "newLine": 224, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 227,
+                "text": "    function setPoolWeight(uint256 newWeight) external onlyGovernance {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 228,
+                "text": "        rewardSwap.setPoolWeight(newWeight);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 225,
+                "text": "    function setPoolWeight(uint256 _newWeight) external onlyGovernance {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 226,
+                "text": "        rewardSwap.setPoolWeight(_newWeight);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 229, "newLine": 227, "text": "    }" },
+              { "type": " ", "oldLine": 230, "newLine": 228, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 231,
+                "newLine": 229,
+                "text": "    // ------VIEW-------"
+              }
+            ]
+          },
+          {
+            "oldStart": 233,
+            "oldLines": 8,
+            "newStart": 231,
+            "newLines": 8,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 233,
+                "newLine": 231,
+                "text": "    /**"
+              },
+              {
+                "type": " ",
+                "oldLine": 234,
+                "newLine": 232,
+                "text": "     * @dev Whether the root is present in the root history"
+              },
+              {
+                "type": " ",
+                "oldLine": 235,
+                "newLine": 233,
+                "text": "     */"
+              },
+              {
+                "type": "-",
+                "oldLine": 236,
+                "text": "    function isKnownAccountRoot(bytes32 _root, uint256 index) public view returns (bool) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 237,
+                "text": "        return _root != 0 && accountRoots[index % ACCOUNT_ROOT_HISTORY_SIZE] == _root;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 234,
+                "text": "    function isKnownAccountRoot(bytes32 _root, uint256 _index) public view returns (bool) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 235,
+                "text": "        return _root != 0 && accountRoots[_index % ACCOUNT_ROOT_HISTORY_SIZE] == _root;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 238, "newLine": 236, "text": "    }" },
+              { "type": " ", "oldLine": 239, "newLine": 237, "text": "" },
+              { "type": " ", "oldLine": 240, "newLine": 238, "text": "    /**" }
+            ]
+          },
+          {
+            "oldStart": 246,
+            "oldLines": 8,
+            "newStart": 244,
+            "newLines": 8,
+            "lines": [
+              { "type": " ", "oldLine": 246, "newLine": 244, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 247,
+                "newLine": 245,
+                "text": "    // -----INTERNAL-------"
+              },
+              { "type": " ", "oldLine": 248, "newLine": 246, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 249,
+                "text": "    function keccak252(bytes memory data) internal pure returns (bytes32) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 250,
+                "text": "        return keccak256(data) & 0x00ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 247,
+                "text": "    function keccak248(bytes memory _data) internal pure returns (bytes32) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 248,
+                "text": "        return keccak256(_data) & 0x00ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 251, "newLine": 249, "text": "    }" },
+              { "type": " ", "oldLine": 252, "newLine": 250, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 253,
+                "newLine": 251,
+                "text": "    function validateTreeUpdate(bytes memory _proof, TreeUpdateArgs memory _args, bytes32 _commitment) internal view {"
+              }
+            ]
+          },
+          {
+            "oldStart": 283,
+            "oldLines": 4,
+            "newStart": 281,
+            "newLines": 20,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 283,
+                "newLine": 281,
+                "text": "    function insertAccountRoot(bytes32 _root) internal {"
+              },
+              {
+                "type": " ",
+                "oldLine": 284,
+                "newLine": 282,
+                "text": "        accountRoots[++accountCount % ACCOUNT_ROOT_HISTORY_SIZE] = _root;"
+              },
+              { "type": " ", "oldLine": 285, "newLine": 283, "text": "    }" },
+              { "type": "+", "newLine": 284, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 285,
+                "text": "    function _setRates(Rate[] memory _rates) internal {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 286,
+                "text": "        for (uint256 i = 0; i < _rates.length; i++) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 287,
+                "text": "            require(_rates[i].value < 2 ** 128, \"Incorrect rate\");",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 288,
+                "text": "            address instance = resolve(_rates[i].instance);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 289,
+                "text": "            rates[instance] = _rates[i].value;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 290,
+                "text": "            emit RateChanged(instance, _rates[i].value);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 291,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 292,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 293, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 294,
+                "text": "    function _setVerifiers(IVerifier[3] memory _verifiers) internal {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 295,
+                "text": "        rewardVerifier = _verifiers[0];",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 296,
+                "text": "        withdrawVerifier = _verifiers[1];",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 297,
+                "text": "        treeUpdateVerifier = _verifiers[2];",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 298,
+                "text": "        emit VerifiersUpdated(address(_verifiers[0]), address(_verifiers[1]), address(_verifiers[2]));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 299,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 286, "newLine": 300, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "045cad5c196152f44d60f027247c719985e74108aa683e06116b0147caede651",
+  "name": "SafeCast",
+  "kind": "library",
+  "lines": 65,
+  "source": "library SafeCast {\n    using CustomRevert for bytes4;\n\n    error SafeCastOverflow();\n\n    /// @notice Cast a uint256 to a uint160, revert on overflow\n    /// @param x The uint256 to be downcasted\n    /// @return y The downcasted integer, now type uint160\n    function toUint160(uint256 x) internal pure returns (uint160 y) {\n        y = uint160(x);\n        if (y != x) {\n            SafeCastOverflow.selector.revertWith();\n        }\n    }\n\n    /// @notice Cast a uint256 to a uint128, revert on overflow\n    /// @param x The uint256 to be downcasted\n    /// @return y The downcasted integer, now type uint128\n    function toUint128(uint256 x) internal pure returns (uint128 y) {\n        y = uint128(x);\n        if (x != y) {\n            SafeCastOverflow.selector.revertWith();\n        }\n    }\n\n    /// @notice Cast a int128 to a uint128, revert on overflow or underflow\n    /// @param x The int128 to be casted\n    /// @return y The casted integer, now type uint128\n    function toUint128(int128 x) internal pure returns (uint128 y) {\n        if (x < 0) {\n            SafeCastOverflow.selector.revertWith();\n        }\n        y = uint128(x);\n    }\n\n    /// @notice Cast a int256 to a int128, revert on overflow or underflow\n    /// @param x The int256 to be downcasted\n    /// @return y The downcasted integer, now type int128\n    function toInt128(int256 x) internal pure returns (int128 y) {\n        y = int128(x);\n        if (y != x) {\n            SafeCastOverflow.selector.revertWith();\n        }\n    }\n\n    /// @notice Cast a uint256 to a int256, revert on overflow\n    /// @param x The uint256 to be casted\n    /// @return y The casted integer, now type int256\n    function toInt256(uint256 x) internal pure returns (int256 y) {\n        y = int256(x);\n        if (y < 0) {\n            SafeCastOverflow.selector.revertWith();\n        }\n    }\n\n    /// @notice Cast a uint256 to a int128, revert on overflow\n    /// @param x The uint256 to be downcasted\n    /// @return The downcasted integer, now type int128\n    function toInt128(uint256 x) internal pure returns (int128) {\n        if (x >= 1 << 127) {\n            SafeCastOverflow.selector.revertWith();\n        }\n        return int128(int256(x));\n    }\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

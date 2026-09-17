@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "da607e07e828260ac0e226ee01dcd0e14ddeeacd08784bcf4d8b65354e8d0470",
+  "name": "BitMath",
+  "kind": "library",
+  "lines": 43,
+  "source": "library BitMath {\n    /// @notice Returns the index of the most significant bit of the number,\n    ///     where the least significant bit is at index 0 and the most significant bit is at index 255\n    /// @param x the value for which to compute the most significant bit, must be greater than 0\n    /// @return r the index of the most significant bit\n    function mostSignificantBit(uint256 x) internal pure returns (uint8 r) {\n        require(x > 0);\n\n        assembly (\"memory-safe\") {\n            r := shl(7, lt(0xffffffffffffffffffffffffffffffff, x))\n            r := or(r, shl(6, lt(0xffffffffffffffff, shr(r, x))))\n            r := or(r, shl(5, lt(0xffffffff, shr(r, x))))\n            r := or(r, shl(4, lt(0xffff, shr(r, x))))\n            r := or(r, shl(3, lt(0xff, shr(r, x))))\n            // forgefmt: disable-next-item\n            r := or(r, byte(and(0x1f, shr(shr(r, x), 0x8421084210842108cc6318c6db6d54be)),\n                0x0706060506020500060203020504000106050205030304010505030400000000))\n        }\n    }\n\n    /// @notice Returns the index of the least significant bit of the number,\n    ///     where the least significant bit is at index 0 and the most significant bit is at index 255\n    /// @param x the value for which to compute the least significant bit, must be greater than 0\n    /// @return r the index of the least significant bit\n    function leastSignificantBit(uint256 x) internal pure returns (uint8 r) {\n        require(x > 0);\n\n        assembly (\"memory-safe\") {\n            // Isolate the least significant bit.\n            x := and(x, sub(0, x))\n            // For the upper 3 bits of the result, use a De Bruijn-like lookup.\n            // Credit to adhusson: https://blog.adhusson.com/cheap-find-first-set-evm/\n            // forgefmt: disable-next-item\n            r := shl(5, shr(252, shl(shl(2, shr(250, mul(x,\n                0xb6db6db6ddddddddd34d34d349249249210842108c6318c639ce739cffffffff))),\n                0x8040405543005266443200005020610674053026020000107506200176117077)))\n            // For the lower 5 bits of the result, use a De Bruijn lookup.\n            // forgefmt: disable-next-item\n            r := or(r, byte(and(div(0xd76453e0, shr(r, x)), 0x1f),\n                0x001f0d1e100c1d070f090b19131c1706010e11080a1a141802121b1503160405))\n        }\n    }\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

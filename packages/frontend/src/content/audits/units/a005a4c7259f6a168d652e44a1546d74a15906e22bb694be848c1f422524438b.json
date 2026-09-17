@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "a005a4c7259f6a168d652e44a1546d74a15906e22bb694be848c1f422524438b",
+  "name": "IAgoraGovernor",
+  "kind": "abstract",
+  "lines": 17,
+  "source": "abstract contract IAgoraGovernor is IGovernor {\n    function manager() external view virtual returns (address);\n    function admin() external view virtual returns (address);\n    function timelock() external view virtual returns (address);\n\n    function PROPOSAL_TYPES_CONFIGURATOR() external view virtual returns (address);\n\n    function token() external view virtual returns (IVotesUpgradeable);\n\n    function getProposalType(uint256 proposalId) external view virtual returns (uint8);\n\n    function proposalVotes(uint256 proposalId)\n        external\n        view\n        virtual\n        returns (uint256 againstVotes, uint256 forVotes, uint256 abstainVotes);\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

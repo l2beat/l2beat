@@ -1,0 +1,2733 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "e1d1fa6aa750bb00c28394384509264544ec8ebc37fc81007e8e6f3f0f01a7dc",
+  "name": "Dispatcher",
+  "kind": "abstract",
+  "lines": 281,
+  "source": "abstract contract Dispatcher is Payments, V2SwapRouter, V3SwapRouter, V4SwapRouter, V3ToV4Migrator, Lock_1 {\n    using BytesLib for bytes;\n    using CalldataDecoder for bytes;\n\n    error InvalidCommandType(uint256 commandType);\n    error BalanceTooLow();\n\n    /// @notice Executes encoded commands along with provided inputs.\n    /// @param commands A set of concatenated commands, each 1 byte in length\n    /// @param inputs An array of byte strings containing abi encoded inputs for each command\n    function execute(bytes calldata commands, bytes[] calldata inputs) external payable virtual;\n\n    /// @notice Public view function to be used instead of msg.sender, as the contract performs self-reentrancy and at\n    /// times msg.sender == address(this). Instead msgSender() returns the initiator of the lock\n    /// @dev overrides BaseActionsRouter.msgSender in V4Router\n    function msgSender() public view override returns (address) {\n        return _getLocker();\n    }\n\n    /// @notice Decodes and executes the given command with the given inputs\n    /// @param commandType The command type to execute\n    /// @param inputs The inputs to execute the command with\n    /// @dev 2 masks are used to enable use of a nested-if statement in execution for efficiency reasons\n    /// @return success True on success of the command, false on failure\n    /// @return output The outputs or error messages, if any, from the command\n    function dispatch(bytes1 commandType, bytes calldata inputs) internal returns (bool success, bytes memory output) {\n        uint256 command = uint8(commandType & Commands.COMMAND_TYPE_MASK);\n\n        success = true;\n\n        // 0x00 <= command < 0x21\n        if (command < Commands.EXECUTE_SUB_PLAN) {\n            // 0x00 <= command < 0x10\n            if (command < Commands.V4_SWAP) {\n                // 0x00 <= command < 0x08\n                if (command < Commands.V2_SWAP_EXACT_IN) {\n                    if (command == Commands.V3_SWAP_EXACT_IN) {\n                        // equivalent: abi.decode(inputs, (address, uint256, uint256, bytes, bool))\n                        address recipient;\n                        uint256 amountIn;\n                        uint256 amountOutMin;\n                        bool payerIsUser;\n                        assembly {\n                            recipient := calldataload(inputs.offset)\n                            amountIn := calldataload(add(inputs.offset, 0x20))\n                            amountOutMin := calldataload(add(inputs.offset, 0x40))\n                            // 0x60 offset is the path, decoded below\n                            payerIsUser := calldataload(add(inputs.offset, 0x80))\n                        }\n                        bytes calldata path = inputs.toBytes(3);\n                        address payer = payerIsUser ? msgSender() : address(this);\n                        v3SwapExactInput(map(recipient), amountIn, amountOutMin, path, payer);\n                    } else if (command == Commands.V3_SWAP_EXACT_OUT) {\n                        // equivalent: abi.decode(inputs, (address, uint256, uint256, bytes, bool))\n                        address recipient;\n                        uint256 amountOut;\n                        uint256 amountInMax;\n                        bool payerIsUser;\n                        assembly {\n                            recipient := calldataload(inputs.offset)\n                            amountOut := calldataload(add(inputs.offset, 0x20))\n                            amountInMax := calldataload(add(inputs.offset, 0x40))\n                            // 0x60 offset is the path, decoded below\n                            payerIsUser := calldataload(add(inputs.offset, 0x80))\n                        }\n                        bytes calldata path = inputs.toBytes(3);\n                        address payer = payerIsUser ? msgSender() : address(this);\n                        v3SwapExactOutput(map(recipient), amountOut, amountInMax, path, payer);\n                    } else if (command == Commands.PERMIT2_TRANSFER_FROM) {\n                        // equivalent: abi.decode(inputs, (address, address, uint160))\n                        address token;\n                        address recipient;\n                        uint160 amount;\n                        assembly {\n                            token := calldataload(inputs.offset)\n                            recipient := calldataload(add(inputs.offset, 0x20))\n                            amount := calldataload(add(inputs.offset, 0x40))\n                        }\n                        permit2TransferFrom(token, msgSender(), map(recipient), amount);\n                    } else if (command == Commands.PERMIT2_PERMIT_BATCH) {\n                        IAllowanceTransfer.PermitBatch calldata permitBatch;\n                        assembly {\n                            // this is a variable length struct, so calldataload(inputs.offset) contains the\n                            // offset from inputs.offset at which the struct begins\n                            permitBatch := add(inputs.offset, calldataload(inputs.offset))\n                        }\n                        bytes calldata data = inputs.toBytes(1);\n                        (success, output) = address(PERMIT2).call(\n                            abi.encodeWithSignature(\n                                \"permit(address,((address,uint160,uint48,uint48)[],address,uint256),bytes)\",\n                                msgSender(),\n                                permitBatch,\n                                data\n                            )\n                        );\n                    } else if (command == Commands.SWEEP) {\n                        // equivalent:  abi.decode(inputs, (address, address, uint256))\n                        address token;\n                        address recipient;\n                        uint160 amountMin;\n                        assembly {\n                            token := calldataload(inputs.offset)\n                            recipient := calldataload(add(inputs.offset, 0x20))\n                            amountMin := calldataload(add(inputs.offset, 0x40))\n                        }\n                        Payments.sweep(token, map(recipient), amountMin);\n                    } else if (command == Commands.TRANSFER) {\n                        // equivalent:  abi.decode(inputs, (address, address, uint256))\n                        address token;\n                        address recipient;\n                        uint256 value;\n                        assembly {\n                            token := calldataload(inputs.offset)\n                            recipient := calldataload(add(inputs.offset, 0x20))\n                            value := calldataload(add(inputs.offset, 0x40))\n                        }\n                        Payments.pay(token, map(recipient), value);\n                    } else if (command == Commands.PAY_PORTION) {\n                        // equivalent:  abi.decode(inputs, (address, address, uint256))\n                        address token;\n                        address recipient;\n                        uint256 bips;\n                        assembly {\n                            token := calldataload(inputs.offset)\n                            recipient := calldataload(add(inputs.offset, 0x20))\n                            bips := calldataload(add(inputs.offset, 0x40))\n                        }\n                        Payments.payPortion(token, map(recipient), bips);\n                    } else {\n                        // placeholder area for command 0x07\n                        revert InvalidCommandType(command);\n                    }\n                } else {\n                    // 0x08 <= command < 0x10\n                    if (command == Commands.V2_SWAP_EXACT_IN) {\n                        // equivalent: abi.decode(inputs, (address, uint256, uint256, bytes, bool))\n                        address recipient;\n                        uint256 amountIn;\n                        uint256 amountOutMin;\n                        bool payerIsUser;\n                        assembly {\n                            recipient := calldataload(inputs.offset)\n                            amountIn := calldataload(add(inputs.offset, 0x20))\n                            amountOutMin := calldataload(add(inputs.offset, 0x40))\n                            // 0x60 offset is the path, decoded below\n                            payerIsUser := calldataload(add(inputs.offset, 0x80))\n                        }\n                        address[] calldata path = inputs.toAddressArray(3);\n                        address payer = payerIsUser ? msgSender() : address(this);\n                        v2SwapExactInput(map(recipient), amountIn, amountOutMin, path, payer);\n                    } else if (command == Commands.V2_SWAP_EXACT_OUT) {\n                        // equivalent: abi.decode(inputs, (address, uint256, uint256, bytes, bool))\n                        address recipient;\n                        uint256 amountOut;\n                        uint256 amountInMax;\n                        bool payerIsUser;\n                        assembly {\n                            recipient := calldataload(inputs.offset)\n                            amountOut := calldataload(add(inputs.offset, 0x20))\n                            amountInMax := calldataload(add(inputs.offset, 0x40))\n                            // 0x60 offset is the path, decoded below\n                            payerIsUser := calldataload(add(inputs.offset, 0x80))\n                        }\n                        address[] calldata path = inputs.toAddressArray(3);\n                        address payer = payerIsUser ? msgSender() : address(this);\n                        v2SwapExactOutput(map(recipient), amountOut, amountInMax, path, payer);\n                    } else if (command == Commands.PERMIT2_PERMIT) {\n                        // equivalent: abi.decode(inputs, (IAllowanceTransfer.PermitSingle, bytes))\n                        IAllowanceTransfer.PermitSingle calldata permitSingle;\n                        assembly {\n                            permitSingle := inputs.offset\n                        }\n                        bytes calldata data = inputs.toBytes(6); // PermitSingle takes first 6 slots (0..5)\n                        (success, output) = address(PERMIT2).call(\n                            abi.encodeWithSignature(\n                                \"permit(address,((address,uint160,uint48,uint48),address,uint256),bytes)\",\n                                msgSender(),\n                                permitSingle,\n                                data\n                            )\n                        );\n                    } else if (command == Commands.WRAP_ETH) {\n                        // equivalent: abi.decode(inputs, (address, uint256))\n                        address recipient;\n                        uint256 amount;\n                        assembly {\n                            recipient := calldataload(inputs.offset)\n                            amount := calldataload(add(inputs.offset, 0x20))\n                        }\n                        Payments.wrapETH(map(recipient), amount);\n                    } else if (command == Commands.UNWRAP_WETH) {\n                        // equivalent: abi.decode(inputs, (address, uint256))\n                        address recipient;\n                        uint256 amountMin;\n                        assembly {\n                            recipient := calldataload(inputs.offset)\n                            amountMin := calldataload(add(inputs.offset, 0x20))\n                        }\n                        Payments.unwrapWETH9(map(recipient), amountMin);\n                    } else if (command == Commands.PERMIT2_TRANSFER_FROM_BATCH) {\n                        IAllowanceTransfer.AllowanceTransferDetails[] calldata batchDetails;\n                        (uint256 length, uint256 offset) = inputs.toLengthOffset(0);\n                        assembly {\n                            batchDetails.length := length\n                            batchDetails.offset := offset\n                        }\n                        permit2TransferFrom(batchDetails, msgSender());\n                    } else if (command == Commands.BALANCE_CHECK_ERC20) {\n                        // equivalent: abi.decode(inputs, (address, address, uint256))\n                        address owner;\n                        address token;\n                        uint256 minBalance;\n                        assembly {\n                            owner := calldataload(inputs.offset)\n                            token := calldataload(add(inputs.offset, 0x20))\n                            minBalance := calldataload(add(inputs.offset, 0x40))\n                        }\n                        success = (ERC20(token).balanceOf(owner) >= minBalance);\n                        if (!success) {\n                            output = abi.encodePacked(BalanceTooLow.selector);\n                        }\n                    } else {\n                        // placeholder area for command 0x0f\n                        revert InvalidCommandType(command);\n                    }\n                }\n            } else {\n                // 0x10 <= command < 0x21\n                if (command == Commands.V4_SWAP) {\n                    // pass the calldata provided to V4SwapRouter._executeActions (defined in BaseActionsRouter)\n                    _executeActions(inputs);\n                    // This contract MUST be approved to spend the token since its going to be doing the call on the position manager\n                } else if (command == Commands.V3_POSITION_MANAGER_PERMIT) {\n                    _checkV3PermitCall(inputs);\n                    (success, output) = address(V3_POSITION_MANAGER).call(inputs);\n                } else if (command == Commands.V3_POSITION_MANAGER_CALL) {\n                    _checkV3PositionManagerCall(inputs, msgSender());\n                    (success, output) = address(V3_POSITION_MANAGER).call(inputs);\n                } else if (command == Commands.V4_INITIALIZE_POOL) {\n                    PoolKey calldata poolKey;\n                    uint160 sqrtPriceX96;\n                    assembly {\n                        poolKey := inputs.offset\n                        sqrtPriceX96 := calldataload(add(inputs.offset, 0xa0))\n                    }\n                    (success, output) =\n                        address(poolManager).call(abi.encodeCall(IPoolManager.initialize, (poolKey, sqrtPriceX96)));\n                } else if (command == Commands.V4_POSITION_MANAGER_CALL) {\n                    // should only call modifyLiquidities() to mint\n                    _checkV4PositionManagerCall(inputs);\n                    (success, output) = address(V4_POSITION_MANAGER).call{value: address(this).balance}(inputs);\n                } else {\n                    // placeholder area for commands 0x15-0x20\n                    revert InvalidCommandType(command);\n                }\n            }\n        } else {\n            // 0x21 <= command\n            if (command == Commands.EXECUTE_SUB_PLAN) {\n                (bytes calldata _commands, bytes[] calldata _inputs) = inputs.decodeCommandsAndInputs();\n                (success, output) = (address(this)).call(abi.encodeCall(Dispatcher.execute, (_commands, _inputs)));\n            } else {\n                // placeholder area for commands 0x22-0x3f\n                revert InvalidCommandType(command);\n            }\n        }\n    }\n\n    /// @notice Calculates the recipient address for a command\n    /// @param recipient The recipient or recipient-flag for the command\n    /// @return output The resultant recipient for the command\n    function map(address recipient) internal view returns (address) {\n        if (recipient == ActionConstants.MSG_SENDER) {\n            return msgSender();\n        } else if (recipient == ActionConstants.ADDRESS_THIS) {\n            return address(this);\n        } else {\n            return recipient;\n        }\n    }\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "differs",
+      "coveredLines": 209,
+      "match": {
+        "origin": "other",
+        "collection": "roninnetwork",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "name",
+        "auditedName": "Dispatcher",
+        "similarity": 0.713,
+        "reportId": "roninnetwork/code4rena-ronin-katana-v3-2024-10",
+        "repository": "ronin-chain/katana-operation-contracts",
+        "path": "src/aggregate-router/base/Dispatcher.sol",
+        "commit": "27f9d28e00958bf3494fa405a8a5acdcd5ecdc5d",
+        "commitTimestamp": "2024-10-08T04:43:53Z",
+        "url": "https://github.com/ronin-chain/katana-operation-contracts/blob/27f9d28e00958bf3494fa405a8a5acdcd5ecdc5d/src/aggregate-router/base/Dispatcher.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "competitive audit",
+        "coverage": "Full file review at the contest submodule commit listed in the C4 scope table.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 72,
+        "removed": 21,
+        "ignoredAdded": 180,
+        "ignoredRemoved": 158,
+        "unchanged": 209,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 9,
+            "newStart": 1,
+            "newLines": 22,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "abstract contract Dispatcher is Payments, V2SwapRouter, V3SwapRouter, LockAndMsgSender {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "abstract contract Dispatcher is Payments, V2SwapRouter, V3SwapRouter, V4SwapRouter, V3ToV4Migrator, Lock_1 {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "    using BytesLib for bytes;"
+              },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "    using CalldataDecoder for bytes;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 3, "newLine": 4, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 5,
+                "text": "    error InvalidCommandType(uint256 commandType);"
+              },
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 6,
+                "text": "    error BalanceTooLow();"
+              },
+              { "type": " ", "oldLine": 6, "newLine": 7, "text": "" },
+              {
+                "type": "+",
+                "newLine": 8,
+                "text": "    /// @notice Executes encoded commands along with provided inputs.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 9,
+                "text": "    /// @param commands A set of concatenated commands, each 1 byte in length",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 10,
+                "text": "    /// @param inputs An array of byte strings containing abi encoded inputs for each command",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 11,
+                "text": "    function execute(bytes calldata commands, bytes[] calldata inputs) external payable virtual;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 12, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 13,
+                "text": "    /// @notice Public view function to be used instead of msg.sender, as the contract performs self-reentrancy and at",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 14,
+                "text": "    /// times msg.sender == address(this). Instead msgSender() returns the initiator of the lock",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 15,
+                "text": "    /// @dev overrides BaseActionsRouter.msgSender in V4Router",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 16,
+                "text": "    function msgSender() public view override returns (address) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 17,
+                "text": "        return _getLocker();",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 18, "text": "    }", "ignored": false },
+              { "type": "+", "newLine": 19, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 7,
+                "newLine": 20,
+                "text": "    /// @notice Decodes and executes the given command with the given inputs"
+              },
+              {
+                "type": " ",
+                "oldLine": 8,
+                "newLine": 21,
+                "text": "    /// @param commandType The command type to execute"
+              },
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 22,
+                "text": "    /// @param inputs The inputs to execute the command with"
+              }
+            ]
+          },
+          {
+            "oldStart": 15,
+            "oldLines": 194,
+            "newStart": 28,
+            "newLines": 254,
+            "lines": [
+              { "type": " ", "oldLine": 15, "newLine": 28, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 16,
+                "newLine": 29,
+                "text": "        success = true;"
+              },
+              { "type": " ", "oldLine": 17, "newLine": 30, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 18,
+                "text": "        // 0x00 <= command < 0x08",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 19,
+                "text": "        if (command < Commands.FIRST_IF_BOUNDARY) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 20,
+                "text": "            if (command == Commands.V3_SWAP_EXACT_IN) {",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 21,
+                "text": "                // equivalent: abi.decode(inputs, (address, uint256, uint256, bytes, bool))",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 22,
+                "text": "                address recipient;",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 23,
+                "text": "                uint256 amountIn;",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 24,
+                "text": "                uint256 amountOutMin;",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 25,
+                "text": "                bool payerIsUser;",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 26,
+                "text": "                assembly {",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 27,
+                "text": "                    recipient := calldataload(inputs.offset)",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 28,
+                "text": "                    amountIn := calldataload(add(inputs.offset, 0x20))",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 29,
+                "text": "                    amountOutMin := calldataload(add(inputs.offset, 0x40))",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 30,
+                "text": "                    // 0x60 offset is the path, decoded below",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 31,
+                "text": "                    payerIsUser := calldataload(add(inputs.offset, 0x80))",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 31,
+                "text": "        // 0x00 <= command < 0x21",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 32,
+                "text": "        if (command < Commands.EXECUTE_SUB_PLAN) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 33,
+                "text": "            // 0x00 <= command < 0x10",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 34,
+                "text": "            if (command < Commands.V4_SWAP) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 35,
+                "text": "                // 0x00 <= command < 0x08",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 36,
+                "text": "                if (command < Commands.V2_SWAP_EXACT_IN) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 37,
+                "text": "                    if (command == Commands.V3_SWAP_EXACT_IN) {",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 38,
+                "text": "                        // equivalent: abi.decode(inputs, (address, uint256, uint256, bytes, bool))",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 39,
+                "text": "                        address recipient;",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 40,
+                "text": "                        uint256 amountIn;",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 41,
+                "text": "                        uint256 amountOutMin;",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 42,
+                "text": "                        bool payerIsUser;",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 43,
+                "text": "                        assembly {",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 44,
+                "text": "                            recipient := calldataload(inputs.offset)",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 45,
+                "text": "                            amountIn := calldataload(add(inputs.offset, 0x20))",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 46,
+                "text": "                            amountOutMin := calldataload(add(inputs.offset, 0x40))",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 47,
+                "text": "                            // 0x60 offset is the path, decoded below",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 48,
+                "text": "                            payerIsUser := calldataload(add(inputs.offset, 0x80))",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 49,
+                "text": "                        }",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 50,
+                "text": "                        bytes calldata path = inputs.toBytes(3);",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 51,
+                "text": "                        address payer = payerIsUser ? msgSender() : address(this);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 52,
+                "text": "                        v3SwapExactInput(map(recipient), amountIn, amountOutMin, path, payer);",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 53,
+                "text": "                    } else if (command == Commands.V3_SWAP_EXACT_OUT) {",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 54,
+                "text": "                        // equivalent: abi.decode(inputs, (address, uint256, uint256, bytes, bool))",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 55,
+                "text": "                        address recipient;",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 56,
+                "text": "                        uint256 amountOut;",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 57,
+                "text": "                        uint256 amountInMax;",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 58,
+                "text": "                        bool payerIsUser;",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 59,
+                "text": "                        assembly {",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 60,
+                "text": "                            recipient := calldataload(inputs.offset)",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 61,
+                "text": "                            amountOut := calldataload(add(inputs.offset, 0x20))",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 62,
+                "text": "                            amountInMax := calldataload(add(inputs.offset, 0x40))",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 63,
+                "text": "                            // 0x60 offset is the path, decoded below",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 64,
+                "text": "                            payerIsUser := calldataload(add(inputs.offset, 0x80))",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 65,
+                "text": "                        }",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 66,
+                "text": "                        bytes calldata path = inputs.toBytes(3);",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 67,
+                "text": "                        address payer = payerIsUser ? msgSender() : address(this);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 68,
+                "text": "                        v3SwapExactOutput(map(recipient), amountOut, amountInMax, path, payer);",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 69,
+                "text": "                    } else if (command == Commands.PERMIT2_TRANSFER_FROM) {",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 70,
+                "text": "                        // equivalent: abi.decode(inputs, (address, address, uint160))",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 71,
+                "text": "                        address token;",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 72,
+                "text": "                        address recipient;",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 73,
+                "text": "                        uint160 amount;",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 74,
+                "text": "                        assembly {",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 75,
+                "text": "                            token := calldataload(inputs.offset)",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 76,
+                "text": "                            recipient := calldataload(add(inputs.offset, 0x20))",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 77,
+                "text": "                            amount := calldataload(add(inputs.offset, 0x40))",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 78,
+                "text": "                        }",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 79,
+                "text": "                        permit2TransferFrom(token, msgSender(), map(recipient), amount);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 80,
+                "text": "                    } else if (command == Commands.PERMIT2_PERMIT_BATCH) {",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 81,
+                "text": "                        IAllowanceTransfer.PermitBatch calldata permitBatch;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 82,
+                "text": "                        assembly {",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 83,
+                "text": "                            // this is a variable length struct, so calldataload(inputs.offset) contains the",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 84,
+                "text": "                            // offset from inputs.offset at which the struct begins",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 85,
+                "text": "                            permitBatch := add(inputs.offset, calldataload(inputs.offset))",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 86,
+                "text": "                        }",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 87,
+                "text": "                        bytes calldata data = inputs.toBytes(1);",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 88,
+                "text": "                        (success, output) = address(PERMIT2).call(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 89,
+                "text": "                            abi.encodeWithSignature(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 90,
+                "text": "                                \"permit(address,((address,uint160,uint48,uint48)[],address,uint256),bytes)\",",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 91,
+                "text": "                                msgSender(),",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 92,
+                "text": "                                permitBatch,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 93,
+                "text": "                                data",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 94,
+                "text": "                            )",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 95,
+                "text": "                        );",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 96,
+                "text": "                    } else if (command == Commands.SWEEP) {",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 97,
+                "text": "                        // equivalent:  abi.decode(inputs, (address, address, uint256))",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 98,
+                "text": "                        address token;",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 99,
+                "text": "                        address recipient;",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 100,
+                "text": "                        uint160 amountMin;",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 101,
+                "text": "                        assembly {",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 102,
+                "text": "                            token := calldataload(inputs.offset)",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 103,
+                "text": "                            recipient := calldataload(add(inputs.offset, 0x20))",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 104,
+                "text": "                            amountMin := calldataload(add(inputs.offset, 0x40))",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 105,
+                "text": "                        }",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 106,
+                "text": "                        Payments.sweep(token, map(recipient), amountMin);",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 107,
+                "text": "                    } else if (command == Commands.TRANSFER) {",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 108,
+                "text": "                        // equivalent:  abi.decode(inputs, (address, address, uint256))",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 109,
+                "text": "                        address token;",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 110,
+                "text": "                        address recipient;",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 111,
+                "text": "                        uint256 value;",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 112,
+                "text": "                        assembly {",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 113,
+                "text": "                            token := calldataload(inputs.offset)",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 114,
+                "text": "                            recipient := calldataload(add(inputs.offset, 0x20))",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 115,
+                "text": "                            value := calldataload(add(inputs.offset, 0x40))",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 116,
+                "text": "                        }",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 117,
+                "text": "                        Payments.pay(token, map(recipient), value);",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 118,
+                "text": "                    } else if (command == Commands.PAY_PORTION) {",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 119,
+                "text": "                        // equivalent:  abi.decode(inputs, (address, address, uint256))",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 120,
+                "text": "                        address token;",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 121,
+                "text": "                        address recipient;",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 122,
+                "text": "                        uint256 bips;",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 123,
+                "text": "                        assembly {",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 124,
+                "text": "                            token := calldataload(inputs.offset)",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 125,
+                "text": "                            recipient := calldataload(add(inputs.offset, 0x20))",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 126,
+                "text": "                            bips := calldataload(add(inputs.offset, 0x40))",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 127,
+                "text": "                        }",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 128,
+                "text": "                        Payments.payPortion(token, map(recipient), bips);",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 129,
+                "text": "                    } else {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 130,
+                "text": "                        // placeholder area for command 0x07",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 131,
+                "text": "                        revert InvalidCommandType(command);",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 132,
+                "text": "                    }",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 133,
+                "text": "                } else {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 134,
+                "text": "                    // 0x08 <= command < 0x10",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 135,
+                "text": "                    if (command == Commands.V2_SWAP_EXACT_IN) {",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 136,
+                "text": "                        // equivalent: abi.decode(inputs, (address, uint256, uint256, bytes, bool))",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 137,
+                "text": "                        address recipient;",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 138,
+                "text": "                        uint256 amountIn;",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 139,
+                "text": "                        uint256 amountOutMin;",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 140,
+                "text": "                        bool payerIsUser;",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 141,
+                "text": "                        assembly {",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 142,
+                "text": "                            recipient := calldataload(inputs.offset)",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 143,
+                "text": "                            amountIn := calldataload(add(inputs.offset, 0x20))",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 144,
+                "text": "                            amountOutMin := calldataload(add(inputs.offset, 0x40))",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 145,
+                "text": "                            // 0x60 offset is the path, decoded below",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 146,
+                "text": "                            payerIsUser := calldataload(add(inputs.offset, 0x80))",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 147,
+                "text": "                        }",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 148,
+                "text": "                        address[] calldata path = inputs.toAddressArray(3);",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 149,
+                "text": "                        address payer = payerIsUser ? msgSender() : address(this);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 150,
+                "text": "                        v2SwapExactInput(map(recipient), amountIn, amountOutMin, path, payer);",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 151,
+                "text": "                    } else if (command == Commands.V2_SWAP_EXACT_OUT) {",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 152,
+                "text": "                        // equivalent: abi.decode(inputs, (address, uint256, uint256, bytes, bool))",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 153,
+                "text": "                        address recipient;",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 154,
+                "text": "                        uint256 amountOut;",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 155,
+                "text": "                        uint256 amountInMax;",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 156,
+                "text": "                        bool payerIsUser;",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 157,
+                "text": "                        assembly {",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 158,
+                "text": "                            recipient := calldataload(inputs.offset)",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 159,
+                "text": "                            amountOut := calldataload(add(inputs.offset, 0x20))",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 160,
+                "text": "                            amountInMax := calldataload(add(inputs.offset, 0x40))",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 161,
+                "text": "                            // 0x60 offset is the path, decoded below",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 162,
+                "text": "                            payerIsUser := calldataload(add(inputs.offset, 0x80))",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 163,
+                "text": "                        }",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 164,
+                "text": "                        address[] calldata path = inputs.toAddressArray(3);",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 165,
+                "text": "                        address payer = payerIsUser ? msgSender() : address(this);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 166,
+                "text": "                        v2SwapExactOutput(map(recipient), amountOut, amountInMax, path, payer);",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 167,
+                "text": "                    } else if (command == Commands.PERMIT2_PERMIT) {",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 168,
+                "text": "                        // equivalent: abi.decode(inputs, (IAllowanceTransfer.PermitSingle, bytes))",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 169,
+                "text": "                        IAllowanceTransfer.PermitSingle calldata permitSingle;",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 170,
+                "text": "                        assembly {",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 171,
+                "text": "                            permitSingle := inputs.offset",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 172,
+                "text": "                        }",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 173,
+                "text": "                        bytes calldata data = inputs.toBytes(6); // PermitSingle takes first 6 slots (0..5)",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 174,
+                "text": "                        (success, output) = address(PERMIT2).call(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 175,
+                "text": "                            abi.encodeWithSignature(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 176,
+                "text": "                                \"permit(address,((address,uint160,uint48,uint48),address,uint256),bytes)\",",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 177,
+                "text": "                                msgSender(),",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 178,
+                "text": "                                permitSingle,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 179,
+                "text": "                                data",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 180,
+                "text": "                            )",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 181,
+                "text": "                        );",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 182,
+                "text": "                    } else if (command == Commands.WRAP_ETH) {",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 183,
+                "text": "                        // equivalent: abi.decode(inputs, (address, uint256))",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 184,
+                "text": "                        address recipient;",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 185,
+                "text": "                        uint256 amount;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 186,
+                "text": "                        assembly {",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 187,
+                "text": "                            recipient := calldataload(inputs.offset)",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 188,
+                "text": "                            amount := calldataload(add(inputs.offset, 0x20))",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 189,
+                "text": "                        }",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 190,
+                "text": "                        Payments.wrapETH(map(recipient), amount);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 191,
+                "text": "                    } else if (command == Commands.UNWRAP_WETH) {",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 192,
+                "text": "                        // equivalent: abi.decode(inputs, (address, uint256))",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 193,
+                "text": "                        address recipient;",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 194,
+                "text": "                        uint256 amountMin;",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 195,
+                "text": "                        assembly {",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 196,
+                "text": "                            recipient := calldataload(inputs.offset)",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 197,
+                "text": "                            amountMin := calldataload(add(inputs.offset, 0x20))",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 198,
+                "text": "                        }",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 199,
+                "text": "                        Payments.unwrapWETH9(map(recipient), amountMin);",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 200,
+                "text": "                    } else if (command == Commands.PERMIT2_TRANSFER_FROM_BATCH) {",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 201,
+                "text": "                        IAllowanceTransfer.AllowanceTransferDetails[] calldata batchDetails;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 202,
+                "text": "                        (uint256 length, uint256 offset) = inputs.toLengthOffset(0);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 203,
+                "text": "                        assembly {",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 204,
+                "text": "                            batchDetails.length := length",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 205,
+                "text": "                            batchDetails.offset := offset",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 206,
+                "text": "                        }",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 207,
+                "text": "                        permit2TransferFrom(batchDetails, msgSender());",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 208,
+                "text": "                    } else if (command == Commands.BALANCE_CHECK_ERC20) {",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 209,
+                "text": "                        // equivalent: abi.decode(inputs, (address, address, uint256))",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 210,
+                "text": "                        address owner;",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 211,
+                "text": "                        address token;",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 212,
+                "text": "                        uint256 minBalance;",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 213,
+                "text": "                        assembly {",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 214,
+                "text": "                            owner := calldataload(inputs.offset)",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 215,
+                "text": "                            token := calldataload(add(inputs.offset, 0x20))",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 216,
+                "text": "                            minBalance := calldataload(add(inputs.offset, 0x40))",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 217,
+                "text": "                        }",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 218,
+                "text": "                        success = (ERC20(token).balanceOf(owner) >= minBalance);",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 219,
+                "text": "                        if (!success) {",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 220,
+                "text": "                            output = abi.encodePacked(BalanceTooLow.selector);",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 221,
+                "text": "                        }",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 222,
+                "text": "                    } else {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 223,
+                "text": "                        // placeholder area for command 0x0f",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 224,
+                "text": "                        revert InvalidCommandType(command);",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 225,
+                "text": "                    }",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 32,
+                "newLine": 226,
+                "text": "                }"
+              },
+              {
+                "type": "-",
+                "oldLine": 33,
+                "text": "                bytes calldata path = inputs.toBytes(3);",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 34,
+                "text": "                address payer = payerIsUser ? lockedBy : address(this);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 35,
+                "text": "                v3SwapExactInput(map(recipient), amountIn, amountOutMin, path, payer);",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 36,
+                "text": "                checkAuthorizedV3Path(path); // place the check here to avoid stack too deep error",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 37,
+                "text": "            } else if (command == Commands.V3_SWAP_EXACT_OUT) {",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 38,
+                "text": "                // equivalent: abi.decode(inputs, (address, uint256, uint256, bytes, bool))",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 39,
+                "text": "                address recipient;",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 40,
+                "text": "                uint256 amountOut;",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 41,
+                "text": "                uint256 amountInMax;",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 42,
+                "text": "                bool payerIsUser;",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 43,
+                "text": "                assembly {",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 44,
+                "text": "                    recipient := calldataload(inputs.offset)",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 45,
+                "text": "                    amountOut := calldataload(add(inputs.offset, 0x20))",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 46,
+                "text": "                    amountInMax := calldataload(add(inputs.offset, 0x40))",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 47,
+                "text": "                    // 0x60 offset is the path, decoded below",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 48,
+                "text": "                    payerIsUser := calldataload(add(inputs.offset, 0x80))",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 49,
+                "text": "                }",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 50,
+                "text": "                bytes calldata path = inputs.toBytes(3);",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 51,
+                "text": "                address payer = payerIsUser ? lockedBy : address(this);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 52,
+                "text": "                v3SwapExactOutput(map(recipient), amountOut, amountInMax, path, payer);",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 53,
+                "text": "                checkAuthorizedV3Path(path);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 54,
+                "text": "            } else if (command == Commands.PERMIT2_TRANSFER_FROM) {",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 55,
+                "text": "                // equivalent: abi.decode(inputs, (address, address, uint160))",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 56,
+                "text": "                address token;",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 57,
+                "text": "                address recipient;",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 58,
+                "text": "                uint160 amount;",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 59,
+                "text": "                assembly {",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 60,
+                "text": "                    token := calldataload(inputs.offset)",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 61,
+                "text": "                    recipient := calldataload(add(inputs.offset, 0x20))",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 62,
+                "text": "                    amount := calldataload(add(inputs.offset, 0x40))",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 63,
+                "text": "                }",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 64,
+                "text": "                permit2TransferFrom(token, lockedBy, map(recipient), amount);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 65,
+                "text": "            } else if (command == Commands.PERMIT2_PERMIT_BATCH) {",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 66,
+                "text": "                (IAllowanceTransfer.PermitBatch memory permitBatch,) =",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 67,
+                "text": "                    abi.decode(inputs, (IAllowanceTransfer.PermitBatch, bytes));",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 68,
+                "text": "                bytes calldata data = inputs.toBytes(1);",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 69,
+                "text": "                PERMIT2.permit(lockedBy, permitBatch, data);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 70,
+                "text": "            } else if (command == Commands.SWEEP) {",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 71,
+                "text": "                // equivalent:  abi.decode(inputs, (address, address, uint256))",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 72,
+                "text": "                address token;",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 73,
+                "text": "                address recipient;",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 74,
+                "text": "                uint160 amountMin;",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 75,
+                "text": "                assembly {",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 76,
+                "text": "                    token := calldataload(inputs.offset)",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 77,
+                "text": "                    recipient := calldataload(add(inputs.offset, 0x20))",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 78,
+                "text": "                    amountMin := calldataload(add(inputs.offset, 0x40))",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 79,
+                "text": "                }",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 80,
+                "text": "                Payments.sweep(token, map(recipient), amountMin);",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 81,
+                "text": "            } else if (command == Commands.TRANSFER) {",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 82,
+                "text": "                // equivalent:  abi.decode(inputs, (address, address, uint256))",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 83,
+                "text": "                address token;",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 84,
+                "text": "                address recipient;",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 85,
+                "text": "                uint256 value;",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 86,
+                "text": "                assembly {",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 87,
+                "text": "                    token := calldataload(inputs.offset)",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 88,
+                "text": "                    recipient := calldataload(add(inputs.offset, 0x20))",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 89,
+                "text": "                    value := calldataload(add(inputs.offset, 0x40))",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 90,
+                "text": "                }",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 91,
+                "text": "                Payments.pay(token, map(recipient), value);",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 92,
+                "text": "            } else if (command == Commands.PAY_PORTION) {",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 93,
+                "text": "                // equivalent:  abi.decode(inputs, (address, address, uint256))",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 94,
+                "text": "                address token;",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 95,
+                "text": "                address recipient;",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 96,
+                "text": "                uint256 bips;",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 97,
+                "text": "                assembly {",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 98,
+                "text": "                    token := calldataload(inputs.offset)",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 99,
+                "text": "                    recipient := calldataload(add(inputs.offset, 0x20))",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 100,
+                "text": "                    bips := calldataload(add(inputs.offset, 0x40))",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 101,
+                "text": "                }",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 102,
+                "text": "                Payments.payPortion(token, map(recipient), bips);",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 103,
+                "newLine": 227,
+                "text": "            } else {"
+              },
+              {
+                "type": "-",
+                "oldLine": 104,
+                "text": "                // placeholder area for command 0x07",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 105,
+                "text": "                revert InvalidCommandType(command);",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 228,
+                "text": "                // 0x10 <= command < 0x21",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 229,
+                "text": "                if (command == Commands.V4_SWAP) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 230,
+                "text": "                    // pass the calldata provided to V4SwapRouter._executeActions (defined in BaseActionsRouter)",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 231,
+                "text": "                    _executeActions(inputs);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 232,
+                "text": "                    // This contract MUST be approved to spend the token since its going to be doing the call on the position manager",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 233,
+                "text": "                } else if (command == Commands.V3_POSITION_MANAGER_PERMIT) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 234,
+                "text": "                    _checkV3PermitCall(inputs);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 235,
+                "text": "                    (success, output) = address(V3_POSITION_MANAGER).call(inputs);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 236,
+                "text": "                } else if (command == Commands.V3_POSITION_MANAGER_CALL) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 237,
+                "text": "                    _checkV3PositionManagerCall(inputs, msgSender());",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 238,
+                "text": "                    (success, output) = address(V3_POSITION_MANAGER).call(inputs);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 239,
+                "text": "                } else if (command == Commands.V4_INITIALIZE_POOL) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 240,
+                "text": "                    PoolKey calldata poolKey;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 241,
+                "text": "                    uint160 sqrtPriceX96;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 242,
+                "text": "                    assembly {",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 243,
+                "text": "                        poolKey := inputs.offset",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 244,
+                "text": "                        sqrtPriceX96 := calldataload(add(inputs.offset, 0xa0))",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 245,
+                "text": "                    }",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 246,
+                "text": "                    (success, output) =",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 247,
+                "text": "                        address(poolManager).call(abi.encodeCall(IPoolManager.initialize, (poolKey, sqrtPriceX96)));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 248,
+                "text": "                } else if (command == Commands.V4_POSITION_MANAGER_CALL) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 249,
+                "text": "                    // should only call modifyLiquidities() to mint",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 250,
+                "text": "                    _checkV4PositionManagerCall(inputs);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 251,
+                "text": "                    (success, output) = address(V4_POSITION_MANAGER).call{value: address(this).balance}(inputs);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 252,
+                "text": "                } else {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 253,
+                "text": "                    // placeholder area for commands 0x15-0x20",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 254,
+                "text": "                    revert InvalidCommandType(command);",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 255,
+                "text": "                }",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 106,
+                "newLine": 256,
+                "text": "            }"
+              },
+              {
+                "type": "-",
+                "oldLine": 107,
+                "text": "            // 0x08 <= command",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 108,
+                "newLine": 257,
+                "text": "        } else {"
+              },
+              {
+                "type": "-",
+                "oldLine": 109,
+                "text": "            if (command == Commands.V2_SWAP_EXACT_IN) {",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 110,
+                "text": "                // equivalent: abi.decode(inputs, (address, uint256, uint256, bytes, bool))",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 111,
+                "text": "                address recipient;",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 112,
+                "text": "                uint256 amountIn;",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 113,
+                "text": "                uint256 amountOutMin;",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 114,
+                "text": "                bool payerIsUser;",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 115,
+                "text": "                assembly {",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 116,
+                "text": "                    recipient := calldataload(inputs.offset)",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 117,
+                "text": "                    amountIn := calldataload(add(inputs.offset, 0x20))",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 118,
+                "text": "                    amountOutMin := calldataload(add(inputs.offset, 0x40))",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 119,
+                "text": "                    // 0x60 offset is the path, decoded below",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 120,
+                "text": "                    payerIsUser := calldataload(add(inputs.offset, 0x80))",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 121,
+                "text": "                }",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 122,
+                "text": "                address[] calldata path = inputs.toAddressArray(3);",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 123,
+                "text": "                address payer = payerIsUser ? lockedBy : address(this);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 124,
+                "text": "                v2SwapExactInput(map(recipient), amountIn, amountOutMin, path, payer);",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 125,
+                "text": "            } else if (command == Commands.V2_SWAP_EXACT_OUT) {",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 126,
+                "text": "                // equivalent: abi.decode(inputs, (address, uint256, uint256, bytes, bool))",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 127,
+                "text": "                address recipient;",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 128,
+                "text": "                uint256 amountOut;",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 129,
+                "text": "                uint256 amountInMax;",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 130,
+                "text": "                bool payerIsUser;",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 131,
+                "text": "                assembly {",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 132,
+                "text": "                    recipient := calldataload(inputs.offset)",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 133,
+                "text": "                    amountOut := calldataload(add(inputs.offset, 0x20))",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 134,
+                "text": "                    amountInMax := calldataload(add(inputs.offset, 0x40))",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 135,
+                "text": "                    // 0x60 offset is the path, decoded below",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 136,
+                "text": "                    payerIsUser := calldataload(add(inputs.offset, 0x80))",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 137,
+                "text": "                }",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 138,
+                "text": "                address[] calldata path = inputs.toAddressArray(3);",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 139,
+                "text": "                address payer = payerIsUser ? lockedBy : address(this);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 140,
+                "text": "                v2SwapExactOutput(map(recipient), amountOut, amountInMax, path, payer);",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 141,
+                "text": "            } else if (command == Commands.PERMIT2_PERMIT) {",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 142,
+                "text": "                // equivalent: abi.decode(inputs, (IAllowanceTransfer.PermitSingle, bytes))",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 143,
+                "text": "                IAllowanceTransfer.PermitSingle calldata permitSingle;",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 144,
+                "text": "                assembly {",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 145,
+                "text": "                    permitSingle := inputs.offset",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 146,
+                "text": "                }",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 147,
+                "text": "                bytes calldata data = inputs.toBytes(6); // PermitSingle takes first 6 slots (0..5)",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 148,
+                "text": "                PERMIT2.permit(lockedBy, permitSingle, data);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 149,
+                "text": "            } else if (command == Commands.WRAP_ETH) {",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 150,
+                "text": "                // equivalent: abi.decode(inputs, (address, uint256))",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 151,
+                "text": "                address recipient;",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 152,
+                "text": "                uint256 amountMin;",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 153,
+                "text": "                assembly {",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 154,
+                "text": "                    recipient := calldataload(inputs.offset)",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 155,
+                "text": "                    amountMin := calldataload(add(inputs.offset, 0x20))",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 156,
+                "text": "                }",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 157,
+                "text": "                Payments.wrapETH(map(recipient), amountMin);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 158,
+                "text": "            } else if (command == Commands.UNWRAP_WETH) {",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 159,
+                "text": "                // equivalent: abi.decode(inputs, (address, uint256))",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 160,
+                "text": "                address recipient;",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 161,
+                "text": "                uint256 amountMin;",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 162,
+                "text": "                assembly {",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 163,
+                "text": "                    recipient := calldataload(inputs.offset)",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 164,
+                "text": "                    amountMin := calldataload(add(inputs.offset, 0x20))",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 165,
+                "text": "                }",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 166,
+                "text": "                Payments.unwrapWETH9(map(recipient), amountMin);",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 167,
+                "text": "            } else if (command == Commands.PERMIT2_TRANSFER_FROM_BATCH) {",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 168,
+                "text": "                (IAllowanceTransfer.AllowanceTransferDetails[] memory batchDetails) =",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 169,
+                "text": "                    abi.decode(inputs, (IAllowanceTransfer.AllowanceTransferDetails[]));",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 170,
+                "text": "                permit2TransferFrom(batchDetails, lockedBy);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 171,
+                "text": "            } else if (command == Commands.BALANCE_CHECK_ERC20) {",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 172,
+                "text": "                // equivalent: abi.decode(inputs, (address, address, uint256))",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 173,
+                "text": "                address owner;",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 174,
+                "text": "                address token;",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 175,
+                "text": "                uint256 minBalance;",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 176,
+                "text": "                assembly {",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 177,
+                "text": "                    owner := calldataload(inputs.offset)",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 178,
+                "text": "                    token := calldataload(add(inputs.offset, 0x20))",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 179,
+                "text": "                    minBalance := calldataload(add(inputs.offset, 0x40))",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 180,
+                "text": "                }",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 181,
+                "text": "                success = (ERC20(token).balanceOf(owner) >= minBalance);",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 182,
+                "text": "                if (!success) {",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 183,
+                "text": "                    output = abi.encodePacked(BalanceTooLow.selector);",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 184,
+                "text": "                }",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 258,
+                "text": "            // 0x21 <= command",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 259,
+                "text": "            if (command == Commands.EXECUTE_SUB_PLAN) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 260,
+                "text": "                (bytes calldata _commands, bytes[] calldata _inputs) = inputs.decodeCommandsAndInputs();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 261,
+                "text": "                (success, output) = (address(this)).call(abi.encodeCall(Dispatcher.execute, (_commands, _inputs)));",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 185,
+                "newLine": 262,
+                "text": "            } else {"
+              },
+              {
+                "type": "-",
+                "oldLine": 186,
+                "text": "                // placeholder area for command 0x0f-0x3f",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 263,
+                "text": "                // placeholder area for commands 0x22-0x3f",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 187,
+                "newLine": 264,
+                "text": "                revert InvalidCommandType(command);"
+              },
+              {
+                "type": " ",
+                "oldLine": 188,
+                "newLine": 265,
+                "text": "            }"
+              },
+              {
+                "type": " ",
+                "oldLine": 189,
+                "newLine": 266,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 190, "newLine": 267, "text": "    }" },
+              { "type": " ", "oldLine": 191, "newLine": 268, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 192,
+                "text": "    /// @notice Executes encoded commands along with provided inputs.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 193,
+                "text": "    /// @param commands A set of concatenated commands, each 1 byte in length",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 194,
+                "text": "    /// @param inputs An array of byte strings containing abi encoded inputs for each command",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 195,
+                "text": "    function execute(bytes calldata commands, bytes[] calldata inputs) external payable virtual;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 196, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 197,
+                "text": "    /// @notice Helper function to extract `value` and `data` parameters from input bytes string",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 198,
+                "text": "    /// @dev The helper assumes that `value` is the first parameter, and `data` is the second",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 199,
+                "text": "    /// @param inputs The bytes string beginning with value and data parameters",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 200,
+                "text": "    /// @return value The 256 bit integer value",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 201,
+                "text": "    /// @return data The data bytes string",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 202,
+                "text": "    function getValueAndData(bytes calldata inputs) internal pure returns (uint256 value, bytes calldata data) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 203,
+                "text": "        assembly {",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 204,
+                "text": "            value := calldataload(inputs.offset)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 269,
+                "text": "    /// @notice Calculates the recipient address for a command",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 270,
+                "text": "    /// @param recipient The recipient or recipient-flag for the command",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 271,
+                "text": "    /// @return output The resultant recipient for the command",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 272,
+                "text": "    function map(address recipient) internal view returns (address) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 273,
+                "text": "        if (recipient == ActionConstants.MSG_SENDER) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 274,
+                "text": "            return msgSender();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 275,
+                "text": "        } else if (recipient == ActionConstants.ADDRESS_THIS) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 276,
+                "text": "            return address(this);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 277,
+                "text": "        } else {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 278,
+                "text": "            return recipient;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 205,
+                "newLine": 279,
+                "text": "        }"
+              },
+              {
+                "type": "-",
+                "oldLine": 206,
+                "text": "        data = inputs.toBytes(1);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 207, "newLine": 280, "text": "    }" },
+              { "type": " ", "oldLine": 208, "newLine": 281, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "d7e1143eaa2ad25315c325693018cd3938038d3e6260dd02002e9288ad8aa745",
+  "name": "(file-level declarations)",
+  "kind": "file-level",
+  "lines": 7,
+  "source": "type StakerVersion is uint256;\nstruct Lock {\n    uint256 startTime;\n    uint256 cliff;\n    uint256 endTime;\n    uint256 allocation;\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

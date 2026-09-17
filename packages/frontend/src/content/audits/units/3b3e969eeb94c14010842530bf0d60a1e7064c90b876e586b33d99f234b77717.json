@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "3b3e969eeb94c14010842530bf0d60a1e7064c90b876e586b33d99f234b77717",
+  "name": "IUniswapV3Pool",
+  "kind": "interface",
+  "lines": 8,
+  "source": "interface IUniswapV3Pool is\n    IUniswapV3PoolImmutables,\n    IUniswapV3PoolState,\n    IUniswapV3PoolDerivedState,\n    IUniswapV3PoolActions,\n    IUniswapV3PoolOwnerActions,\n    IUniswapV3PoolEvents\n{}",
+  "resolutions": {
+    "f9658cd3a9a22004": {
+      "status": "identical",
+      "coveredLines": 8,
+      "match": {
+        "origin": "other",
+        "collection": "uniswapv3",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "identity",
+        "auditedName": "IUniswapV3Pool",
+        "similarity": 1,
+        "reportId": "uniswapv3/abdk-uniswap-v3-core-2021-03",
+        "repository": "Uniswap/v3-core",
+        "path": "contracts/interfaces/IUniswapV3Pool.sol",
+        "commit": "e8de69a550d579c475f52d59a6fb2f7ef9e7f364",
+        "commitTimestamp": "2021-02-23T16:37:26Z",
+        "url": "https://github.com/Uniswap/v3-core/blob/e8de69a550d579c475f52d59a6fb2f7ef9e7f364/contracts/interfaces/IUniswapV3Pool.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "full file",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "warnings": []
+    },
+    "2be3d633eaae18a2": {
+      "status": "identical",
+      "coveredLines": 8,
+      "match": {
+        "origin": "own",
+        "collection": "uniswapv3",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "IUniswapV3Pool",
+        "similarity": 1,
+        "reportId": "uniswapv3/abdk-uniswap-v3-core-2021-03",
+        "repository": "Uniswap/v3-core",
+        "path": "contracts/interfaces/IUniswapV3Pool.sol",
+        "commit": "e8de69a550d579c475f52d59a6fb2f7ef9e7f364",
+        "commitTimestamp": "2021-02-23T16:37:26Z",
+        "url": "https://github.com/Uniswap/v3-core/blob/e8de69a550d579c475f52d59a6fb2f7ef9e7f364/contracts/interfaces/IUniswapV3Pool.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "full file",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "warnings": []
+    }
+  }
+}

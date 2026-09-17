@@ -1,0 +1,131 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "b05dca2cf3e0c9c75f1c9d64022a9ec6c90c604cbf32b1a970a0fa2ff1d6ae21",
+  "name": "PaymentsImmutables",
+  "kind": "contract",
+  "lines": 12,
+  "source": "contract PaymentsImmutables {\n    /// @notice WETH9 address\n    IWETH9 internal immutable WETH9;\n\n    /// @notice Permit2 address\n    IPermit2 internal immutable PERMIT2;\n\n    constructor(PaymentsParameters memory params) {\n        WETH9 = IWETH9(params.weth9);\n        PERMIT2 = IPermit2(params.permit2);\n    }\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "differs",
+      "coveredLines": 10,
+      "match": {
+        "origin": "other",
+        "collection": "roninnetwork",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "name",
+        "auditedName": "PaymentsImmutables",
+        "similarity": 0.817,
+        "reportId": "roninnetwork/code4rena-ronin-katana-v3-2024-10",
+        "repository": "ronin-chain/katana-operation-contracts",
+        "path": "src/aggregate-router/modules/PaymentsImmutables.sol",
+        "commit": "27f9d28e00958bf3494fa405a8a5acdcd5ecdc5d",
+        "commitTimestamp": "2024-10-08T04:43:53Z",
+        "url": "https://github.com/ronin-chain/katana-operation-contracts/blob/27f9d28e00958bf3494fa405a8a5acdcd5ecdc5d/src/aggregate-router/modules/PaymentsImmutables.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "competitive audit",
+        "coverage": "Full file review at the contest submodule commit listed in the C4 scope table.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 2,
+        "removed": 2,
+        "ignoredAdded": 2,
+        "ignoredRemoved": 2,
+        "unchanged": 10,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 12,
+            "newStart": 1,
+            "newLines": 12,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "contract PaymentsImmutables {"
+              },
+              {
+                "type": "-",
+                "oldLine": 2,
+                "text": "    /// @dev WETH9 address",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 2,
+                "text": "    /// @notice WETH9 address",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "    IWETH9 internal immutable WETH9;"
+              },
+              { "type": " ", "oldLine": 4, "newLine": 4, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 5,
+                "text": "    /// @dev Permit2 address",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 6,
+                "text": "    IAllowanceTransfer internal immutable PERMIT2;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 5,
+                "text": "    /// @notice Permit2 address",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 6,
+                "text": "    IPermit2 internal immutable PERMIT2;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 7, "newLine": 7, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 8,
+                "newLine": 8,
+                "text": "    constructor(PaymentsParameters memory params) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 9,
+                "text": "        WETH9 = IWETH9(params.weth9);"
+              },
+              {
+                "type": "-",
+                "oldLine": 10,
+                "text": "        PERMIT2 = IAllowanceTransfer(params.permit2);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 10,
+                "text": "        PERMIT2 = IPermit2(params.permit2);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 11, "newLine": 11, "text": "    }" },
+              { "type": " ", "oldLine": 12, "newLine": 12, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

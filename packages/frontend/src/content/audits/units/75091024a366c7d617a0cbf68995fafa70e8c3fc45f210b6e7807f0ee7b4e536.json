@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "75091024a366c7d617a0cbf68995fafa70e8c3fc45f210b6e7807f0ee7b4e536",
+  "name": "(file-level declarations)",
+  "kind": "file-level",
+  "lines": 15,
+  "source": "function greaterThan(Currency currency, Currency other) pure returns (bool) {\n    return Currency.unwrap(currency) > Currency.unwrap(other);\n}\nfunction lessThan(Currency currency, Currency other) pure returns (bool) {\n    return Currency.unwrap(currency) < Currency.unwrap(other);\n}\nfunction greaterThanOrEqualTo(Currency currency, Currency other) pure returns (bool) {\n    return Currency.unwrap(currency) >= Currency.unwrap(other);\n}\nfunction equals(Currency currency, Currency other) pure returns (bool) {\n    return Currency.unwrap(currency) == Currency.unwrap(other);\n}\nusing {greaterThan as >, lessThan as <, greaterThanOrEqualTo as >=, equals as ==} for Currency global;\nusing CurrencyLibrary for Currency global;\ntype Currency is address;",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

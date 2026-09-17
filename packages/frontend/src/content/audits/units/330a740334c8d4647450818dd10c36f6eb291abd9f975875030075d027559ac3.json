@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "330a740334c8d4647450818dd10c36f6eb291abd9f975875030075d027559ac3",
+  "name": "L1Block",
+  "kind": "interface",
+  "lines": 6,
+  "source": "interface L1Block {\n    function DEPOSITOR_ACCOUNT() external pure returns (address addr_);\n    function number() external view returns (uint64);\n    function timestamp() external view returns (uint64);\n    function hash() external view returns (bytes32);\n}",
+  "resolutions": {
+    "eea968a44e5d263a": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "84ec60e45c5856627b7017619689760417b2f88609e1e77ac438e435c9e1c87a",
+  "name": "Nargo.toml",
+  "kind": "program",
+  "lines": 8,
+  "source": "[package]\nname = \"hiding_kernel_to_rollup\"\ntype = \"bin\"\nauthors = [\"\"]\n\n[dependencies]\nprivate_kernel_lib = { path = \"../private-kernel-lib\" }\ntypes = { path = \"../types\" }",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

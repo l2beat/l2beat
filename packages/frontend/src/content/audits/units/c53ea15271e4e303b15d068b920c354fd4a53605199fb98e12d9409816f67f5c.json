@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "c53ea15271e4e303b15d068b920c354fd4a53605199fb98e12d9409816f67f5c",
+  "name": "AdminUpgradeableProxy",
+  "kind": "contract",
+  "lines": 15,
+  "source": "contract AdminUpgradeableProxy is TransparentUpgradeableProxy {\n    /**\n     * @dev Initializes an upgradeable proxy backed by the implementation at `_logic`.\n     */\n    constructor(address _logic, address _admin, bytes memory _data)\n        public\n        payable\n        TransparentUpgradeableProxy(_logic, _admin, _data)\n    {}\n\n    /**\n     * @dev Override to allow admin access the fallback function.\n     */\n    function _beforeFallback() internal override {}\n}",
+  "resolutions": {
+    "f9658cd3a9a22004": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "759f0e294591f4738ddad7dbee0e952ed6eab5e99974f885728f08351ca420b3",
+  "name": "LibFacet",
+  "kind": "library",
+  "lines": 76,
+  "source": "library LibFacet {\n    using LibRLP for LibRLP.List;\n\n    address constant facetInboxAddress = 0x00000000000000000000000000000000000FacE7;\n    bytes32 constant facetEventSignature = 0x00000000000000000000000000000000000000000000000000000000000face7;\n    uint8 constant facetTxType = 0x46;\n\n    function sendFacetTransaction(uint256 gasLimit, bytes memory data) internal {\n        sendFacetTransaction({to: bytes(\"\"), value: 0, gasLimit: gasLimit, data: data, mineBoost: bytes(\"\")});\n    }\n\n    function sendFacetTransaction(address to, uint256 gasLimit, bytes memory data) internal {\n        sendFacetTransaction({to: abi.encodePacked(to), value: 0, gasLimit: gasLimit, data: data, mineBoost: bytes(\"\")});\n    }\n\n    function prepareFacetTransaction(\n        uint256 chainId,\n        bytes memory to,\n        uint256 value,\n        uint256 gasLimit,\n        bytes memory data,\n        bytes memory mineBoost\n    ) internal pure returns (bytes memory) {\n        LibRLP.List memory list;\n\n        list.p(chainId);\n        list.p(to);\n        list.p(value);\n        list.p(gasLimit);\n        list.p(data);\n        list.p(mineBoost);\n        return abi.encodePacked(facetTxType, list.encode());\n    }\n\n    function prepareFacetTransaction(\n        bytes memory to,\n        uint256 value,\n        uint256 gasLimit,\n        bytes memory data,\n        bytes memory mineBoost\n    ) internal view returns (bytes memory) {\n        uint256 chainId;\n\n        if (block.chainid == 1) {\n            chainId = 0xface7;\n        } else if (block.chainid == 11155111) {\n            chainId = 0xface7a;\n        } else {\n            revert(\"Unsupported chainId\");\n        }\n\n        return prepareFacetTransaction({\n            chainId: chainId,\n            to: to,\n            value: value,\n            gasLimit: gasLimit,\n            data: data,\n            mineBoost: mineBoost\n        });\n    }\n\n    function sendFacetTransaction(\n        bytes memory to,\n        uint256 value,\n        uint256 gasLimit,\n        bytes memory data,\n        bytes memory mineBoost\n    ) internal {\n        bytes memory payload =\n            prepareFacetTransaction({to: to, value: value, gasLimit: gasLimit, data: data, mineBoost: mineBoost});\n\n        assembly {\n            log1(add(payload, 32), mload(payload), facetEventSignature)\n        }\n    }\n}",
+  "resolutions": {
+    "1daaed8c8125f2b6": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

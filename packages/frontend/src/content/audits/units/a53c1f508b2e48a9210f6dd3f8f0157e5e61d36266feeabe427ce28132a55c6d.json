@@ -1,0 +1,155 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "a53c1f508b2e48a9210f6dd3f8f0157e5e61d36266feeabe427ce28132a55c6d",
+  "name": "IMainchainGatewayV3",
+  "kind": "interface",
+  "lines": 146,
+  "source": "interface IMainchainGatewayV3 is SignatureConsumer, MappedTokenConsumer {\n    /**\n     * @dev Error indicating that a query was made for an approved withdrawal.\n     */\n    error ErrQueryForApprovedWithdrawal();\n\n    /**\n     * @dev Error indicating that the daily withdrawal limit has been reached.\n     */\n    error ErrReachedDailyWithdrawalLimit();\n\n    /**\n     * @dev Error indicating that a query was made for a processed withdrawal.\n     */\n    error ErrQueryForProcessedWithdrawal();\n\n    /**\n     * @dev Error indicating that a query was made for insufficient vote weight.\n     */\n    error ErrQueryForInsufficientVoteWeight();\n\n    /**\n     * @dev Error indicating that the recovered signer from the signature has invalid vote weight.\n     */\n    error ErrInvalidSigner(address signer, uint256 weight, Signature sig);\n\n    /**\n     * @dev Error indicating that the total weight provided is null.\n     */\n    error ErrNullTotalWeightProvided(bytes4 msgSig);\n\n    /// @dev Emitted when the deposit is requested\n    event DepositRequested(bytes32 receiptHash, Transfer.Receipt receipt);\n    /// @dev Emitted when the assets are withdrawn\n    event Withdrew(bytes32 receiptHash, Transfer.Receipt receipt);\n    /// @dev Emitted when the tokens are mapped\n    event TokenMapped(address[] mainchainTokens, address[] roninTokens, TokenStandard[] standards);\n    /// @dev Emitted when the wrapped native token contract is updated\n    event WrappedNativeTokenContractUpdated(IWETH weth);\n    /// @dev Emitted when the withdrawal is locked\n    event WithdrawalLocked(bytes32 receiptHash, Transfer.Receipt receipt);\n    /// @dev Emitted when the withdrawal is unlocked\n    event WithdrawalUnlocked(bytes32 receiptHash, Transfer.Receipt receipt);\n\n    /**\n     * @dev Returns the WETH address.\n     */\n    function wrappedNativeToken() external view returns (IWETH);\n\n    /**\n     * @dev Returns the domain separator.\n     */\n    function DOMAIN_SEPARATOR() external view returns (bytes32);\n\n    /**\n     * @dev Returns deposit count.\n     */\n    function depositCount() external view returns (uint256);\n\n    /**\n     * @dev Sets the wrapped native token contract.\n     *\n     * Requirements:\n     * - The method caller is admin.\n     *\n     * Emits the `WrappedNativeTokenContractUpdated` event.\n     *\n     */\n    function setWrappedNativeTokenContract(IWETH _wrappedToken) external;\n\n    /**\n     * @dev Returns whether the withdrawal is locked.\n     */\n    function withdrawalLocked(uint256 withdrawalId) external view returns (bool);\n\n    /**\n     * @dev Returns the withdrawal hash.\n     */\n    function withdrawalHash(uint256 withdrawalId) external view returns (bytes32);\n\n    /**\n     * @dev Locks the assets and request deposit.\n     */\n    function requestDepositFor(Transfer.Request calldata _request) external payable;\n\n    /**\n     * @dev Withdraws based on the receipt and the validator signatures.\n     * Returns whether the withdrawal is locked.\n     *\n     * Emits the `Withdrew` once the assets are released.\n     *\n     */\n    function submitWithdrawal(Transfer.Receipt memory _receipt, Signature[] memory _signatures)\n        external\n        returns (bool _locked);\n\n    /**\n     * @dev Approves a specific withdrawal.\n     *\n     * Requirements:\n     * - The method caller is a validator.\n     *\n     * Emits the `Withdrew` once the assets are released.\n     *\n     */\n    function unlockWithdrawal(Transfer.Receipt calldata _receipt) external;\n\n    /**\n     * @dev Maps mainchain tokens to Ronin network.\n     *\n     * Requirement:\n     * - The method caller is admin.\n     * - The arrays have the same length and its length larger than 0.\n     *\n     * Emits the `TokenMapped` event.\n     *\n     */\n    function mapTokens(\n        address[] calldata _mainchainTokens,\n        address[] calldata _roninTokens,\n        TokenStandard[] calldata _standards\n    ) external;\n\n    /**\n     * @dev Maps mainchain tokens to Ronin network and sets thresholds.\n     *\n     * Requirement:\n     * - The method caller is admin.\n     * - The arrays have the same length and its length larger than 0.\n     *\n     * Emits the `TokenMapped` event.\n     *\n     */\n    function mapTokensAndThresholds(\n        address[] calldata _mainchainTokens,\n        address[] calldata _roninTokens,\n        TokenStandard[] calldata _standards,\n        uint256[][4] calldata _thresholds\n    ) external;\n\n    /**\n     * @dev Returns token address on Ronin network.\n     * Note: Reverts for unsupported token.\n     */\n    function getRoninToken(address _mainchainToken) external view returns (MappedToken memory _token);\n}",
+  "resolutions": {
+    "bb55951394276893": {
+      "status": "differs",
+      "coveredLines": 145,
+      "match": {
+        "origin": "own",
+        "collection": "roninnetwork",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "IMainchainGatewayV3",
+        "similarity": 1,
+        "reportId": "roninnetwork/verichains-ronin-bridge-smart-contracts-2024-08",
+        "repository": "ronin-chain/bridge-contract",
+        "path": "src/interfaces/IMainchainGatewayV3.sol",
+        "commit": "acad51e4d056f173a186ef7e787745f0afecdb84",
+        "commitTimestamp": "2024-08-09T04:46:19Z",
+        "url": "https://github.com/ronin-chain/bridge-contract/blob/acad51e4d056f173a186ef7e787745f0afecdb84/src/interfaces/IMainchainGatewayV3.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "pull request review",
+        "coverage": "Only the PR #58 withdrawal-hardening diff was reviewed (head commit).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 1,
+        "removed": 1,
+        "ignoredAdded": 4,
+        "ignoredRemoved": 4,
+        "unchanged": 145,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 43,
+            "oldLines": 6,
+            "newStart": 43,
+            "newLines": 11,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 43,
+                "newLine": 43,
+                "text": "    event WithdrawalUnlocked(bytes32 receiptHash, Transfer.Receipt receipt);"
+              },
+              { "type": " ", "oldLine": 44, "newLine": 44, "text": "" },
+              { "type": " ", "oldLine": 45, "newLine": 45, "text": "    /**" },
+              {
+                "type": "+",
+                "newLine": 46,
+                "text": "     * @dev Returns the WETH address.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 47,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 48,
+                "text": "    function wrappedNativeToken() external view returns (IWETH);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 49, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 50,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 46,
+                "newLine": 51,
+                "text": "     * @dev Returns the domain separator."
+              },
+              { "type": " ", "oldLine": 47, "newLine": 52, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 48,
+                "newLine": 53,
+                "text": "    function DOMAIN_SEPARATOR() external view returns (bytes32);"
+              }
+            ]
+          },
+          {
+            "oldStart": 79,
+            "oldLines": 11,
+            "newStart": 84,
+            "newLines": 6,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 79,
+                "newLine": 84,
+                "text": "    function requestDepositFor(Transfer.Request calldata _request) external payable;"
+              },
+              { "type": " ", "oldLine": 80, "newLine": 85, "text": "" },
+              { "type": " ", "oldLine": 81, "newLine": 86, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 82,
+                "text": "     * @dev Locks the assets and request deposit for batch.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 83,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 84,
+                "text": "    function requestDepositForBatch(Transfer.Request[] calldata requests) external payable;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 85, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 86,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 87,
+                "newLine": 87,
+                "text": "     * @dev Withdraws based on the receipt and the validator signatures."
+              },
+              {
+                "type": " ",
+                "oldLine": 88,
+                "newLine": 88,
+                "text": "     * Returns whether the withdrawal is locked."
+              },
+              { "type": " ", "oldLine": 89, "newLine": 89, "text": "     *" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,81 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "de3e54c71fff193fa9fb19e4058b408295ec20e4bdc58064b6311f9cb5cca9c8",
+  "name": "IFiatToken",
+  "kind": "interface",
+  "lines": 18,
+  "source": "interface IFiatToken {\n    /**\n     * @notice Function to mint tokens\n     * @param _to The address that will receive the minted tokens.\n     * @param _amount The amount of tokens to mint. Must be less than or equal\n     * to the minterAllowance of the caller.\n     * @return A boolean that indicates if the operation was successful.\n     */\n    function mint(address _to, uint256 _amount) external returns (bool);\n\n    /**\n     * @notice allows a minter to burn some of its own tokens\n     * Validates that caller is a minter and that sender is not blacklisted\n     * amount is less than or equal to the minter's account balance\n     * @param _amount uint256 the amount of tokens to be burned\n     */\n    function burn(uint256 _amount) external;\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "differs",
+      "coveredLines": 17,
+      "match": {
+        "origin": "own",
+        "collection": "scroll",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "IFiatToken",
+        "similarity": 0.817,
+        "reportId": "scroll/openzeppelin-scroll-gasswap-multiverifier-weth-diff-audit-2023-08",
+        "repository": "scroll-tech/scroll",
+        "path": "contracts/src/interfaces/IFiatToken.sol",
+        "commit": "2eb458cf4224d82fc56254e91e297a9ed261cefb",
+        "commitTimestamp": "2023-07-25T17:25:27Z",
+        "url": "https://github.com/scroll-tech/scroll/blob/2eb458cf4224d82fc56254e91e297a9ed261cefb/contracts/src/interfaces/IFiatToken.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Full file review at audit commit.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 1,
+        "removed": 1,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 17,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 14,
+            "oldLines": 5,
+            "newStart": 14,
+            "newLines": 5,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 14,
+                "newLine": 14,
+                "text": "     * amount is less than or equal to the minter's account balance"
+              },
+              {
+                "type": " ",
+                "oldLine": 15,
+                "newLine": 15,
+                "text": "     * @param _amount uint256 the amount of tokens to be burned"
+              },
+              { "type": " ", "oldLine": 16, "newLine": 16, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 17,
+                "text": "    function burn(uint256 _amount) external returns (bool);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 17,
+                "text": "    function burn(uint256 _amount) external;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 18, "newLine": 18, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

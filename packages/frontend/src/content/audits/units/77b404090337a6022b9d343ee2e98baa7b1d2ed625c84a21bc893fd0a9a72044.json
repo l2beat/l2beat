@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "77b404090337a6022b9d343ee2e98baa7b1d2ed625c84a21bc893fd0a9a72044",
+  "name": "IPrivacyPoolSimple",
+  "kind": "interface",
+  "lines": 15,
+  "source": "interface IPrivacyPoolSimple is IPrivacyPool {\n    /*///////////////////////////////////////////////////////////////\n                              ERRORS\n    //////////////////////////////////////////////////////////////*/\n\n    /**\n     * @notice Thrown when sending less amount of native asset than required\n     */\n    error InsufficientValue();\n\n    /**\n     * @notice Thrown when failing to send native asset to an account\n     */\n    error FailedToSendNativeAsset();\n}",
+  "resolutions": {
+    "cbbcf694abda362c": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "696f763fb17228ac1ee5ea28732413d428d751306522311915ea78e4e352ab88",
+  "name": "mod.nr",
+  "kind": "program",
+  "lines": 15,
+  "source": "pub(crate) mod components;\npub mod block_root_first_rollup;\npub mod block_root_single_tx_first_rollup;\npub mod block_root_empty_tx_first_rollup;\npub mod block_root_rollup;\npub mod block_root_single_tx_rollup;\nmod tests;\n\n// Re-exports\npub use crate::abis::BlockRollupPublicInputs;\npub use block_root_empty_tx_first_rollup::BlockRootEmptyTxFirstRollupPrivateInputs;\npub use block_root_first_rollup::BlockRootFirstRollupPrivateInputs;\npub use block_root_rollup::BlockRootRollupPrivateInputs;\npub use block_root_single_tx_first_rollup::BlockRootSingleTxFirstRollupPrivateInputs;\npub use block_root_single_tx_rollup::BlockRootSingleTxRollupPrivateInputs;",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

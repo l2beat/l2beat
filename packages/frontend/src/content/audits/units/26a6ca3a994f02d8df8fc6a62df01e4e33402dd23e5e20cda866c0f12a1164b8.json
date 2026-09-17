@@ -1,0 +1,348 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "26a6ca3a994f02d8df8fc6a62df01e4e33402dd23e5e20cda866c0f12a1164b8",
+  "name": "Payments",
+  "kind": "abstract",
+  "lines": 98,
+  "source": "abstract contract Payments is PaymentsImmutables {\n    using SafeTransferLib for ERC20;\n    using SafeTransferLib for address;\n    using BipsLibrary for uint256;\n\n    error InsufficientToken();\n    error InsufficientETH();\n\n    /// @notice Pays an amount of ETH or ERC20 to a recipient\n    /// @param token The token to pay (can be ETH using Constants.ETH)\n    /// @param recipient The address that will receive the payment\n    /// @param value The amount to pay\n    function pay(address token, address recipient, uint256 value) internal {\n        if (token == Constants.ETH) {\n            recipient.safeTransferETH(value);\n        } else {\n            if (value == ActionConstants.CONTRACT_BALANCE) {\n                value = ERC20(token).balanceOf(address(this));\n            }\n\n            ERC20(token).safeTransfer(recipient, value);\n        }\n    }\n\n    /// @notice Pays a proportion of the contract's ETH or ERC20 to a recipient\n    /// @param token The token to pay (can be ETH using Constants.ETH)\n    /// @param recipient The address that will receive payment\n    /// @param bips Portion in bips of whole balance of the contract\n    function payPortion(address token, address recipient, uint256 bips) internal {\n        if (token == Constants.ETH) {\n            uint256 balance = address(this).balance;\n            uint256 amount = balance.calculatePortion(bips);\n            recipient.safeTransferETH(amount);\n        } else {\n            uint256 balance = ERC20(token).balanceOf(address(this));\n            uint256 amount = balance.calculatePortion(bips);\n            ERC20(token).safeTransfer(recipient, amount);\n        }\n    }\n\n    /// @notice Sweeps all of the contract's ERC20 or ETH to an address\n    /// @param token The token to sweep (can be ETH using Constants.ETH)\n    /// @param recipient The address that will receive payment\n    /// @param amountMinimum The minimum desired amount\n    function sweep(address token, address recipient, uint256 amountMinimum) internal {\n        uint256 balance;\n        if (token == Constants.ETH) {\n            balance = address(this).balance;\n            if (balance < amountMinimum) {\n                revert InsufficientETH();\n            }\n            if (balance > 0) {\n                recipient.safeTransferETH(balance);\n            }\n        } else {\n            balance = ERC20(token).balanceOf(address(this));\n            if (balance < amountMinimum) {\n                revert InsufficientToken();\n            }\n            if (balance > 0) {\n                ERC20(token).safeTransfer(recipient, balance);\n            }\n        }\n    }\n\n    /// @notice Wraps an amount of ETH into WETH\n    /// @param recipient The recipient of the WETH\n    /// @param amount The amount to wrap (can be CONTRACT_BALANCE)\n    function wrapETH(address recipient, uint256 amount) internal {\n        if (amount == ActionConstants.CONTRACT_BALANCE) {\n            amount = address(this).balance;\n        } else if (amount > address(this).balance) {\n            revert InsufficientETH();\n        }\n        if (amount > 0) {\n            WETH9.deposit{value: amount}();\n            if (recipient != address(this)) {\n                WETH9.transfer(recipient, amount);\n            }\n        }\n    }\n\n    /// @notice Unwraps all of the contract's WETH into ETH\n    /// @param recipient The recipient of the ETH\n    /// @param amountMinimum The minimum amount of ETH desired\n    function unwrapWETH9(address recipient, uint256 amountMinimum) internal {\n        uint256 value = WETH9.balanceOf(address(this));\n        if (value < amountMinimum) {\n            revert InsufficientETH();\n        }\n        if (value > 0) {\n            WETH9.withdraw(value);\n            if (recipient != address(this)) {\n                recipient.safeTransferETH(value);\n            }\n        }\n    }\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "differs",
+      "coveredLines": 93,
+      "match": {
+        "origin": "other",
+        "collection": "roninnetwork",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "name",
+        "auditedName": "Payments",
+        "similarity": 0.919,
+        "reportId": "roninnetwork/code4rena-ronin-katana-v3-2024-10",
+        "repository": "ronin-chain/katana-operation-contracts",
+        "path": "src/aggregate-router/modules/Payments.sol",
+        "commit": "27f9d28e00958bf3494fa405a8a5acdcd5ecdc5d",
+        "commitTimestamp": "2024-10-08T04:43:53Z",
+        "url": "https://github.com/ronin-chain/katana-operation-contracts/blob/27f9d28e00958bf3494fa405a8a5acdcd5ecdc5d/src/aggregate-router/modules/Payments.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "competitive audit",
+        "coverage": "Full file review at the contest submodule commit listed in the C4 scope table.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 5,
+        "removed": 10,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 1,
+        "unchanged": 93,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 14,
+            "newStart": 1,
+            "newLines": 11,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "abstract contract Payments is PaymentsImmutables {"
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "    using SafeTransferLib for ERC20;"
+              },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "    using SafeTransferLib for address;"
+              },
+              {
+                "type": "+",
+                "newLine": 4,
+                "text": "    using BipsLibrary for uint256;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 4, "newLine": 5, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 6,
+                "text": "    error InsufficientToken();"
+              },
+              {
+                "type": " ",
+                "oldLine": 6,
+                "newLine": 7,
+                "text": "    error InsufficientETH();"
+              },
+              {
+                "type": "-",
+                "oldLine": 7,
+                "text": "    error InvalidBips();",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 8,
+                "text": "    error InvalidSpender();",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 9, "newLine": 8, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 10,
+                "text": "    uint256 internal constant FEE_BIPS_BASE = 10_000;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 11, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 12,
+                "newLine": 9,
+                "text": "    /// @notice Pays an amount of ETH or ERC20 to a recipient"
+              },
+              {
+                "type": " ",
+                "oldLine": 13,
+                "newLine": 10,
+                "text": "    /// @param token The token to pay (can be ETH using Constants.ETH)"
+              },
+              {
+                "type": " ",
+                "oldLine": 14,
+                "newLine": 11,
+                "text": "    /// @param recipient The address that will receive the payment"
+              }
+            ]
+          },
+          {
+            "oldStart": 17,
+            "oldLines": 7,
+            "newStart": 14,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 17,
+                "newLine": 14,
+                "text": "        if (token == Constants.ETH) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 18,
+                "newLine": 15,
+                "text": "            recipient.safeTransferETH(value);"
+              },
+              {
+                "type": " ",
+                "oldLine": 19,
+                "newLine": 16,
+                "text": "        } else {"
+              },
+              {
+                "type": "-",
+                "oldLine": 20,
+                "text": "            if (value == Constants.CONTRACT_BALANCE) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 17,
+                "text": "            if (value == ActionConstants.CONTRACT_BALANCE) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 21,
+                "newLine": 18,
+                "text": "                value = ERC20(token).balanceOf(address(this));"
+              },
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 19,
+                "text": "            }"
+              },
+              { "type": " ", "oldLine": 23, "newLine": 20, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 30,
+            "oldLines": 16,
+            "newStart": 27,
+            "newLines": 13,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 30,
+                "newLine": 27,
+                "text": "    /// @param recipient The address that will receive payment"
+              },
+              {
+                "type": " ",
+                "oldLine": 31,
+                "newLine": 28,
+                "text": "    /// @param bips Portion in bips of whole balance of the contract"
+              },
+              {
+                "type": " ",
+                "oldLine": 32,
+                "newLine": 29,
+                "text": "    function payPortion(address token, address recipient, uint256 bips) internal {"
+              },
+              {
+                "type": "-",
+                "oldLine": 33,
+                "text": "        if (bips == 0 || bips > FEE_BIPS_BASE) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 34,
+                "text": "            revert InvalidBips();",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 35,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 36,
+                "newLine": 30,
+                "text": "        if (token == Constants.ETH) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 37,
+                "newLine": 31,
+                "text": "            uint256 balance = address(this).balance;"
+              },
+              {
+                "type": "-",
+                "oldLine": 38,
+                "text": "            uint256 amount = (balance * bips) / FEE_BIPS_BASE;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 32,
+                "text": "            uint256 amount = balance.calculatePortion(bips);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 39,
+                "newLine": 33,
+                "text": "            recipient.safeTransferETH(amount);"
+              },
+              {
+                "type": " ",
+                "oldLine": 40,
+                "newLine": 34,
+                "text": "        } else {"
+              },
+              {
+                "type": " ",
+                "oldLine": 41,
+                "newLine": 35,
+                "text": "            uint256 balance = ERC20(token).balanceOf(address(this));"
+              },
+              {
+                "type": "-",
+                "oldLine": 42,
+                "text": "            uint256 amount = (balance * bips) / FEE_BIPS_BASE;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 36,
+                "text": "            uint256 amount = balance.calculatePortion(bips);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 43,
+                "newLine": 37,
+                "text": "            ERC20(token).safeTransfer(recipient, amount);"
+              },
+              {
+                "type": " ",
+                "oldLine": 44,
+                "newLine": 38,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 45, "newLine": 39, "text": "    }" }
+            ]
+          },
+          {
+            "oldStart": 73,
+            "oldLines": 7,
+            "newStart": 67,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 73,
+                "newLine": 67,
+                "text": "    /// @param recipient The recipient of the WETH"
+              },
+              {
+                "type": " ",
+                "oldLine": 74,
+                "newLine": 68,
+                "text": "    /// @param amount The amount to wrap (can be CONTRACT_BALANCE)"
+              },
+              {
+                "type": " ",
+                "oldLine": 75,
+                "newLine": 69,
+                "text": "    function wrapETH(address recipient, uint256 amount) internal {"
+              },
+              {
+                "type": "-",
+                "oldLine": 76,
+                "text": "        if (amount == Constants.CONTRACT_BALANCE) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 70,
+                "text": "        if (amount == ActionConstants.CONTRACT_BALANCE) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 77,
+                "newLine": 71,
+                "text": "            amount = address(this).balance;"
+              },
+              {
+                "type": " ",
+                "oldLine": 78,
+                "newLine": 72,
+                "text": "        } else if (amount > address(this).balance) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 79,
+                "newLine": 73,
+                "text": "            revert InsufficientETH();"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

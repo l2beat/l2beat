@@ -1,0 +1,222 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "9134fec0cc2aa51801a902ff7f50b254c320811f16db281a6af04a6d6e3b03e6",
+  "name": "L2GatewayRouter",
+  "kind": "contract",
+  "lines": 185,
+  "source": "contract L2GatewayRouter is OwnableUpgradeable, IL2GatewayRouter {\n    /**\n     *\n     * Variables *\n     *\n     */\n\n    /// @notice The address of L2ETHGateway.\n    address public ethGateway;\n\n    /// @notice The addess of default L2 ERC20 gateway, normally the L2StandardERC20Gateway contract.\n    address public defaultERC20Gateway;\n\n    /// @notice Mapping from L2 ERC20 token address to corresponding L2ERC20Gateway.\n    // solhint-disable-next-line var-name-mixedcase\n    mapping(address => address) public ERC20Gateway;\n\n    /**\n     *\n     * Constructor *\n     *\n     */\n    constructor() {\n        _disableInitializers();\n    }\n\n    function initialize(address _ethGateway, address _defaultERC20Gateway) external initializer {\n        OwnableUpgradeable.__Ownable_init();\n\n        // it can be zero during initialization\n        if (_defaultERC20Gateway != address(0)) {\n            defaultERC20Gateway = _defaultERC20Gateway;\n            emit SetDefaultERC20Gateway(address(0), _defaultERC20Gateway);\n        }\n\n        // it can be zero during initialization\n        if (_ethGateway != address(0)) {\n            ethGateway = _ethGateway;\n            emit SetETHGateway(address(0), _ethGateway);\n        }\n    }\n\n    /**\n     *\n     * Public View Functions *\n     *\n     */\n\n    /// @inheritdoc IL2ERC20Gateway\n    function getL2ERC20Address(address) external pure override returns (address) {\n        revert(\"unsupported\");\n    }\n\n    /// @inheritdoc IL2ERC20Gateway\n    function getL1ERC20Address(address _l2Address) external view override returns (address) {\n        address _gateway = getERC20Gateway(_l2Address);\n        if (_gateway == address(0)) {\n            return address(0);\n        }\n\n        return IL2ERC20Gateway(_gateway).getL1ERC20Address(_l2Address);\n    }\n\n    /// @notice Return the corresponding gateway address for given token address.\n    /// @param _token The address of token to query.\n    function getERC20Gateway(address _token) public view returns (address) {\n        address _gateway = ERC20Gateway[_token];\n        if (_gateway == address(0)) {\n            _gateway = defaultERC20Gateway;\n        }\n        return _gateway;\n    }\n\n    /**\n     *\n     * Public Mutating Functions *\n     *\n     */\n\n    /// @inheritdoc IL2ERC20Gateway\n    function withdrawERC20(address _token, uint256 _amount, uint256 _gasLimit) external payable override {\n        withdrawERC20AndCall(_token, _msgSender(), _amount, new bytes(0), _gasLimit);\n    }\n\n    /// @inheritdoc IL2ERC20Gateway\n    function withdrawERC20(address _token, address _to, uint256 _amount, uint256 _gasLimit) external payable override {\n        withdrawERC20AndCall(_token, _to, _amount, new bytes(0), _gasLimit);\n    }\n\n    /// @inheritdoc IL2ERC20Gateway\n    function withdrawERC20AndCall(address _token, address _to, uint256 _amount, bytes memory _data, uint256 _gasLimit)\n        public\n        payable\n        override\n    {\n        address _gateway = getERC20Gateway(_token);\n        require(_gateway != address(0), \"no gateway available\");\n\n        // encode msg.sender with _data\n        bytes memory _routerData = abi.encode(_msgSender(), _data);\n\n        IL2ERC20Gateway(_gateway).withdrawERC20AndCall{value: msg.value}(_token, _to, _amount, _routerData, _gasLimit);\n    }\n\n    /// @inheritdoc IL2ETHGateway\n    function withdrawETH(uint256 _amount, uint256 _gasLimit) external payable override {\n        withdrawETHAndCall(_msgSender(), _amount, new bytes(0), _gasLimit);\n    }\n\n    /// @inheritdoc IL2ETHGateway\n    function withdrawETH(address _to, uint256 _amount, uint256 _gasLimit) external payable override {\n        withdrawETHAndCall(_to, _amount, new bytes(0), _gasLimit);\n    }\n\n    /// @inheritdoc IL2ETHGateway\n    function withdrawETHAndCall(address _to, uint256 _amount, bytes memory _data, uint256 _gasLimit)\n        public\n        payable\n        override\n    {\n        address _gateway = ethGateway;\n        require(_gateway != address(0), \"eth gateway available\");\n\n        // encode msg.sender with _data\n        bytes memory _routerData = abi.encode(_msgSender(), _data);\n\n        IL2ETHGateway(_gateway).withdrawETHAndCall{value: msg.value}(_to, _amount, _routerData, _gasLimit);\n    }\n\n    /// @inheritdoc IL2ETHGateway\n    function finalizeDepositETH(address, address, uint256, bytes calldata) external payable virtual override {\n        revert(\"should never be called\");\n    }\n\n    /// @inheritdoc IL2ERC20Gateway\n    function finalizeDepositERC20(address, address, address, address, uint256, bytes calldata)\n        external\n        payable\n        virtual\n        override\n    {\n        revert(\"should never be called\");\n    }\n\n    /**\n     *\n     * Restricted Functions *\n     *\n     */\n\n    /// @notice Update the address of ETH gateway contract.\n    /// @dev This function should only be called by contract owner.\n    /// @param _newEthGateway The address to update.\n    function setETHGateway(address _newEthGateway) external onlyOwner {\n        address _oldEthGateway = ethGateway;\n        ethGateway = _newEthGateway;\n\n        emit SetETHGateway(_oldEthGateway, _newEthGateway);\n    }\n\n    /// @notice Update the address of default ERC20 gateway contract.\n    /// @dev This function should only be called by contract owner.\n    /// @param _newDefaultERC20Gateway The address to update.\n    function setDefaultERC20Gateway(address _newDefaultERC20Gateway) external onlyOwner {\n        address _oldDefaultERC20Gateway = defaultERC20Gateway;\n        defaultERC20Gateway = _newDefaultERC20Gateway;\n\n        emit SetDefaultERC20Gateway(_oldDefaultERC20Gateway, _newDefaultERC20Gateway);\n    }\n\n    /// @notice Update the mapping from token address to gateway address.\n    /// @dev This function should only be called by contract owner.\n    /// @param _tokens The list of addresses of tokens to update.\n    /// @param _gateways The list of addresses of gateways to update.\n    function setERC20Gateway(address[] memory _tokens, address[] memory _gateways) external onlyOwner {\n        require(_tokens.length == _gateways.length, \"length mismatch\");\n\n        for (uint256 i = 0; i < _tokens.length; i++) {\n            address _oldGateway = ERC20Gateway[_tokens[i]];\n            ERC20Gateway[_tokens[i]] = _gateways[i];\n\n            emit SetERC20Gateway(_tokens[i], _oldGateway, _gateways[i]);\n        }\n    }\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "identical",
+      "coveredLines": 185,
+      "match": {
+        "origin": "own",
+        "collection": "scroll",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "L2GatewayRouter",
+        "similarity": 1,
+        "reportId": "scroll/openzeppelin-scroll-bridge-gas-optimizations-audit-2024-02",
+        "repository": "scroll-tech/scroll",
+        "path": "contracts/src/L2/gateways/L2GatewayRouter.sol",
+        "commit": "888c3d26b34f217877628b1208ea3473d9836600",
+        "commitTimestamp": "2024-02-06T03:57:55Z",
+        "url": "https://github.com/scroll-tech/scroll/blob/888c3d26b34f217877628b1208ea3473d9836600/contracts/src/L2/gateways/L2GatewayRouter.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Fix review of H-01 in pull request #1093: ETH deposits/withdrawals routed through the ETH gateways again instead of bypassing them.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 6
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 10,
+        "ignoredRemoved": 3,
+        "unchanged": 185,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 148,
+            "oldLines": 7,
+            "newStart": 148,
+            "newLines": 9,
+            "lines": [
+              { "type": " ", "oldLine": 148, "newLine": 148, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 149,
+                "newLine": 149,
+                "text": "     */"
+              },
+              { "type": " ", "oldLine": 150, "newLine": 150, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 151,
+                "text": "    /// @inheritdoc IL2GatewayRouter",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 151,
+                "text": "    /// @notice Update the address of ETH gateway contract.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 152,
+                "text": "    /// @dev This function should only be called by contract owner.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 153,
+                "text": "    /// @param _newEthGateway The address to update.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 152,
+                "newLine": 154,
+                "text": "    function setETHGateway(address _newEthGateway) external onlyOwner {"
+              },
+              {
+                "type": " ",
+                "oldLine": 153,
+                "newLine": 155,
+                "text": "        address _oldEthGateway = ethGateway;"
+              },
+              {
+                "type": " ",
+                "oldLine": 154,
+                "newLine": 156,
+                "text": "        ethGateway = _newEthGateway;"
+              }
+            ]
+          },
+          {
+            "oldStart": 156,
+            "oldLines": 7,
+            "newStart": 158,
+            "newLines": 9,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 156,
+                "newLine": 158,
+                "text": "        emit SetETHGateway(_oldEthGateway, _newEthGateway);"
+              },
+              { "type": " ", "oldLine": 157, "newLine": 159, "text": "    }" },
+              { "type": " ", "oldLine": 158, "newLine": 160, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 159,
+                "text": "    /// @inheritdoc IL2GatewayRouter",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 161,
+                "text": "    /// @notice Update the address of default ERC20 gateway contract.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 162,
+                "text": "    /// @dev This function should only be called by contract owner.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 163,
+                "text": "    /// @param _newDefaultERC20Gateway The address to update.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 160,
+                "newLine": 164,
+                "text": "    function setDefaultERC20Gateway(address _newDefaultERC20Gateway) external onlyOwner {"
+              },
+              {
+                "type": " ",
+                "oldLine": 161,
+                "newLine": 165,
+                "text": "        address _oldDefaultERC20Gateway = defaultERC20Gateway;"
+              },
+              {
+                "type": " ",
+                "oldLine": 162,
+                "newLine": 166,
+                "text": "        defaultERC20Gateway = _newDefaultERC20Gateway;"
+              }
+            ]
+          },
+          {
+            "oldStart": 164,
+            "oldLines": 7,
+            "newStart": 168,
+            "newLines": 10,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 164,
+                "newLine": 168,
+                "text": "        emit SetDefaultERC20Gateway(_oldDefaultERC20Gateway, _newDefaultERC20Gateway);"
+              },
+              { "type": " ", "oldLine": 165, "newLine": 169, "text": "    }" },
+              { "type": " ", "oldLine": 166, "newLine": 170, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 167,
+                "text": "    /// @inheritdoc IL2GatewayRouter",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 171,
+                "text": "    /// @notice Update the mapping from token address to gateway address.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 172,
+                "text": "    /// @dev This function should only be called by contract owner.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 173,
+                "text": "    /// @param _tokens The list of addresses of tokens to update.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 174,
+                "text": "    /// @param _gateways The list of addresses of gateways to update.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 168,
+                "newLine": 175,
+                "text": "    function setERC20Gateway(address[] memory _tokens, address[] memory _gateways) external onlyOwner {"
+              },
+              {
+                "type": " ",
+                "oldLine": 169,
+                "newLine": 176,
+                "text": "        require(_tokens.length == _gateways.length, \"length mismatch\");"
+              },
+              { "type": " ", "oldLine": 170, "newLine": 177, "text": "" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

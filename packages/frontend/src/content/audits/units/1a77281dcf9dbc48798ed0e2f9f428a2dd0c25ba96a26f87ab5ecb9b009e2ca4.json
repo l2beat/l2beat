@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "1a77281dcf9dbc48798ed0e2f9f428a2dd0c25ba96a26f87ab5ecb9b009e2ca4",
+  "name": "ERC165Upgradeable",
+  "kind": "abstract",
+  "lines": 12,
+  "source": "abstract contract ERC165Upgradeable is Initializable, IERC165 {\n    function __ERC165_init() internal onlyInitializing {}\n\n    function __ERC165_init_unchained() internal onlyInitializing {}\n    /**\n     * @dev See {IERC165-supportsInterface}.\n     */\n\n    function supportsInterface(bytes4 interfaceId) public view virtual returns (bool) {\n        return interfaceId == type(IERC165).interfaceId;\n    }\n}",
+  "resolutions": {
+    "eea968a44e5d263a": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "cbbcf694abda362c": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "d293c6ecba42b698": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

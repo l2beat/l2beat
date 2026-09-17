@@ -1,0 +1,179 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "3274ab090e1032da1b9f5174df7107928a325f59a6dec27cb52efa32d38282cc",
+  "name": "ScrollStandardERC20",
+  "kind": "contract",
+  "lines": 67,
+  "source": "contract ScrollStandardERC20 is ERC20PermitUpgradeable, IScrollERC20Upgradeable {\n    /// @inheritdoc IScrollERC20Upgradeable\n    address public override gateway;\n\n    /// @inheritdoc IScrollERC20Upgradeable\n    address public override counterpart;\n\n    uint8 private decimals_;\n\n    modifier onlyGateway() {\n        require(gateway == _msgSender(), \"Only Gateway\");\n        _;\n    }\n\n    constructor() {\n        _disableInitializers();\n    }\n\n    function initialize(\n        string memory _name,\n        string memory _symbol,\n        uint8 _decimals,\n        address _gateway,\n        address _counterpart\n    ) external initializer {\n        __ERC20Permit_init(_name);\n        __ERC20_init(_name, _symbol);\n\n        decimals_ = _decimals;\n        gateway = _gateway;\n        counterpart = _counterpart;\n    }\n\n    function decimals() public view override returns (uint8) {\n        return decimals_;\n    }\n\n    /// @dev ERC677 Standard, see https://github.com/ethereum/EIPs/issues/677\n    /// Defi can use this method to transfer L1/L2 token to L2/L1,\n    /// and deposit to L2/L1 contract in one transaction\n    function transferAndCall(address receiver, uint256 amount, bytes calldata data) external returns (bool success) {\n        ERC20Upgradeable.transfer(receiver, amount);\n        if (isContract(receiver)) {\n            contractFallback(receiver, amount, data);\n        }\n        return true;\n    }\n\n    function contractFallback(address to, uint256 value, bytes memory data) private {\n        IERC677Receiver receiver = IERC677Receiver(to);\n        receiver.onTokenTransfer(_msgSender(), value, data);\n    }\n\n    function isContract(address _addr) private view returns (bool hasCode) {\n        hasCode = _addr.code.length > 0;\n    }\n\n    /// @inheritdoc IScrollERC20Upgradeable\n    function mint(address _to, uint256 _amount) external onlyGateway {\n        _mint(_to, _amount);\n    }\n\n    /// @inheritdoc IScrollERC20Upgradeable\n    function burn(address _from, uint256 _amount) external onlyGateway {\n        _burn(_from, _amount);\n    }\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "differs",
+      "coveredLines": 64,
+      "match": {
+        "origin": "own",
+        "collection": "scroll",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "ScrollStandardERC20",
+        "similarity": 0.971,
+        "reportId": "scroll/openzeppelin-scroll-layer1-audit-2023-07",
+        "repository": "scroll-tech/scroll",
+        "path": "contracts/src/libraries/token/ScrollStandardERC20.sol",
+        "commit": "d1b77199a9306a051569c69ff8f55a4f48cc2f1e",
+        "commitTimestamp": "2023-07-12T12:33:13Z",
+        "url": "https://github.com/scroll-tech/scroll/blob/d1b77199a9306a051569c69ff8f55a4f48cc2f1e/contracts/src/libraries/token/ScrollStandardERC20.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "PR #639 fix of L-02 (initializers disabled in implementation). Only the fix was reviewed in context; develop branch changed between audit start and fix review.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 3,
+        "removed": 7,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 1,
+        "unchanged": 64,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 8,
+            "oldLines": 7,
+            "newStart": 8,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 8,
+                "newLine": 8,
+                "text": "    uint8 private decimals_;"
+              },
+              { "type": " ", "oldLine": 9, "newLine": 9, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 10,
+                "newLine": 10,
+                "text": "    modifier onlyGateway() {"
+              },
+              {
+                "type": "-",
+                "oldLine": 11,
+                "text": "        require(gateway == msg.sender, \"Only Gateway\");",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 11,
+                "text": "        require(gateway == _msgSender(), \"Only Gateway\");",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 12,
+                "newLine": 12,
+                "text": "        _;"
+              },
+              { "type": " ", "oldLine": 13, "newLine": 13, "text": "    }" },
+              { "type": " ", "oldLine": 14, "newLine": 14, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 48,
+            "oldLines": 16,
+            "newStart": 48,
+            "newLines": 11,
+            "lines": [
+              { "type": " ", "oldLine": 48, "newLine": 48, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 49,
+                "newLine": 49,
+                "text": "    function contractFallback(address to, uint256 value, bytes memory data) private {"
+              },
+              {
+                "type": " ",
+                "oldLine": 50,
+                "newLine": 50,
+                "text": "        IERC677Receiver receiver = IERC677Receiver(to);"
+              },
+              {
+                "type": "-",
+                "oldLine": 51,
+                "text": "        receiver.onTokenTransfer(msg.sender, value, data);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 51,
+                "text": "        receiver.onTokenTransfer(_msgSender(), value, data);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 52, "newLine": 52, "text": "    }" },
+              { "type": " ", "oldLine": 53, "newLine": 53, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 54,
+                "newLine": 54,
+                "text": "    function isContract(address _addr) private view returns (bool hasCode) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 55,
+                "text": "        uint256 length;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 56,
+                "text": "        // solhint-disable-next-line no-inline-assembly",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 57,
+                "text": "        assembly {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 58,
+                "text": "            length := extcodesize(_addr)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 59,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 60,
+                "text": "        return length > 0;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 55,
+                "text": "        hasCode = _addr.code.length > 0;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 61, "newLine": 56, "text": "    }" },
+              { "type": " ", "oldLine": 62, "newLine": 57, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 63,
+                "newLine": 58,
+                "text": "    /// @inheritdoc IScrollERC20Upgradeable"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

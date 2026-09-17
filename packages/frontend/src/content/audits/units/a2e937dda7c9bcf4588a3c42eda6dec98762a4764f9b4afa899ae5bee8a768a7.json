@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "a2e937dda7c9bcf4588a3c42eda6dec98762a4764f9b4afa899ae5bee8a768a7",
+  "name": "ActionConstants",
+  "kind": "library",
+  "lines": 14,
+  "source": "library ActionConstants {\n    /// @notice used to signal that an action should use the input value of the open delta on the pool manager\n    /// or of the balance that the contract holds\n    uint128 internal constant OPEN_DELTA = 0;\n    /// @notice used to signal that an action should use the contract's entire balance of a currency\n    /// This value is equivalent to 1<<255, i.e. a singular 1 in the most significant bit.\n    uint256 internal constant CONTRACT_BALANCE = 0x8000000000000000000000000000000000000000000000000000000000000000;\n\n    /// @notice used to signal that the recipient of an action should be the msgSender\n    address internal constant MSG_SENDER = address(1);\n\n    /// @notice used to signal that the recipient of an action should be the address(this)\n    address internal constant ADDRESS_THIS = address(2);\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

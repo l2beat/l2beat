@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "352608a0b2eb62139f77e9ff5608a81d02b45383573e8397ae86c249960fbfd2",
+  "name": "Cargo.toml",
+  "kind": "program",
+  "lines": 37,
+  "source": "[package]\nname = \"scroll-zkvm-prover\"\nedition.workspace = true\nreadme.workspace = true\nrepository.workspace = true\nversion.workspace = true\n\n[dependencies]\nscroll-zkvm-types.workspace = true\nscroll-zkvm-verifier.workspace = true\n\nrkyv.workspace = true\nbincode_v1.workspace = true\ntracing.workspace = true\nopenvm-circuit = { workspace = true }\nopenvm-native-circuit = { workspace = true, default-features = false }\nopenvm-native-recursion = { workspace = true }\nopenvm-sdk = { workspace = true }\nopenvm-stark-sdk = { workspace = true, default-features = false }\n\nbase64 = \"0.22\"\neyre.workspace = true\ngit-version = \"0.3.5\"\nhex.workspace = true\nserde = \"1.0\"\nserde_json = \"1.0\"\nserde_stacker = \"0.1\"\nthiserror.workspace = true\ntoml = \"0.8\"\n\ncudarc = { version = \"0.9\", optional = true }\n\n[dev-dependencies]\n\n[features]\ndefault = []\ncuda = [\"openvm-sdk/cuda\", \"dep:cudarc\"]",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

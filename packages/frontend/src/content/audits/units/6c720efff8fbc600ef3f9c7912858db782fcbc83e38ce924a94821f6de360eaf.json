@@ -1,0 +1,1302 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "6c720efff8fbc600ef3f9c7912858db782fcbc83e38ce924a94821f6de360eaf",
+  "name": "ResolvedDelegateProxy",
+  "kind": "contract",
+  "lines": 50,
+  "source": "contract ResolvedDelegateProxy {\n    /**\n     * @notice Mapping used to store the implementation name that corresponds to this contract. A\n     *         mapping was originally used as a way to bypass the same issue normally solved by\n     *         storing the implementation address in a specific storage slot that does not conflict\n     *         with any other storage slot. Generally NOT a safe solution but works as long as the\n     *         implementation does not also keep a mapping in the first storage slot.\n     */\n    mapping(address => string) private implementationName;\n\n    /**\n     * @notice Mapping used to store the address of the AddressManager contract where the\n     *         implementation address will be resolved from. Same concept here as with the above\n     *         mapping. Also generally unsafe but fine if the implementation doesn't keep a mapping\n     *         in the second storage slot.\n     */\n    mapping(address => AddressManager) private addressManager;\n\n    /**\n     * @param _addressManager  Address of the AddressManager.\n     * @param _implementationName implementationName of the contract to proxy to.\n     */\n    constructor(AddressManager _addressManager, string memory _implementationName) {\n        addressManager[address(this)] = _addressManager;\n        implementationName[address(this)] = _implementationName;\n    }\n\n    /**\n     * @notice Fallback, performs a delegatecall to the resolved implementation address.\n     */\n    // solhint-disable-next-line no-complex-fallback\n    fallback() external payable {\n        address target = addressManager[address(this)].getAddress((implementationName[address(this)]));\n\n        require(target != address(0), \"ResolvedDelegateProxy: target address must be initialized\");\n\n        // slither-disable-next-line controlled-delegatecall\n        (bool success, bytes memory returndata) = target.delegatecall(msg.data);\n\n        if (success == true) {\n            assembly {\n                return(add(returndata, 0x20), mload(returndata))\n            }\n        } else {\n            assembly {\n                revert(add(returndata, 0x20), mload(returndata))\n            }\n        }\n    }\n}",
+  "resolutions": {
+    "ba5b6c9584fb78fd": {
+      "status": "differs",
+      "coveredLines": 46,
+      "match": {
+        "origin": "upstream",
+        "collection": "optimism",
+        "relation": {
+          "type": "fork_of",
+          "repository": "ethereum-optimism/optimism"
+        },
+        "rank": 1,
+        "matchedBy": "similarity",
+        "auditedName": "Lib_ResolvedDelegateProxy",
+        "similarity": 0.735,
+        "reportId": "optimism/openzeppelin-ovm-rollup-2021-03",
+        "repository": "ben-chain/contracts-v2",
+        "path": "contracts/optimistic-ethereum/libraries/resolver/Lib_ResolvedDelegateProxy.sol",
+        "commit": "a935e276f5620b40802b52721e3474232e458f72",
+        "commitTimestamp": "2021-04-12T01:08:09Z",
+        "url": "https://github.com/ben-chain/contracts-v2/blob/a935e276f5620b40802b52721e3474232e458f72/contracts/optimistic-ethereum/libraries/resolver/Lib_ResolvedDelegateProxy.sol",
+        "auditStatus": "audited_with_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Second audited commit (last 3 weeks). Same directory scope and exclusions as the first commit; C01 and H01 fixes from the archived repository are contained in this commit, L02/L04/N01 are fixed here per the report.",
+        "majorFindings": 2,
+        "findingIds": ["C02", "C04"],
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "diff": {
+        "added": 4,
+        "removed": 4,
+        "ignoredAdded": 14,
+        "ignoredRemoved": 20,
+        "unchanged": 46,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 46,
+            "newStart": 1,
+            "newLines": 40,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "contract Lib_ResolvedDelegateProxy {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "contract ResolvedDelegateProxy {",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 2, "newLine": 2, "text": "    /**" },
+              { "type": "-", "oldLine": 3, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 4,
+                "text": "     * Variables *",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 5, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "     * @notice Mapping used to store the implementation name that corresponds to this contract. A",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 4,
+                "text": "     *         mapping was originally used as a way to bypass the same issue normally solved by",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 5,
+                "text": "     *         storing the implementation address in a specific storage slot that does not conflict",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 6,
+                "text": "     *         with any other storage slot. Generally NOT a safe solution but works as long as the",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 7,
+                "text": "     *         implementation does not also keep a mapping in the first storage slot.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 6, "newLine": 8, "text": "     */" },
+              { "type": "-", "oldLine": 7, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 8,
+                "text": "    // Using mappings to store fields to avoid overwriting storage slots in the",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 9,
+                "text": "    // implementation contract. For example, instead of storing these fields at",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 10,
+                "text": "    // storage slot `0` & `1`, they are stored at `keccak256(key + slot)`.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 11,
+                "text": "    // See: https://solidity.readthedocs.io/en/v0.7.0/internals/layout_in_storage.html",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 12,
+                "text": "    // NOTE: Do not use this code in your own contract system.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 13,
+                "text": "    //      There is a known flaw in this contract, and we will remove it from the repository",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 14,
+                "text": "    //      in the near future. Due to the very limited way that we are using it, this flaw is",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 15,
+                "text": "    //      not an issue in our system.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 16,
+                "newLine": 9,
+                "text": "    mapping(address => string) private implementationName;"
+              },
+              {
+                "type": "-",
+                "oldLine": 17,
+                "text": "    mapping(address => Lib_AddressManager) private addressManager;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 18, "newLine": 10, "text": "" },
+              { "type": " ", "oldLine": 19, "newLine": 11, "text": "    /**" },
+              { "type": "-", "oldLine": 20, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 21,
+                "text": "     * Constructor *",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 22, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 12,
+                "text": "     * @notice Mapping used to store the address of the AddressManager contract where the",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 13,
+                "text": "     *         implementation address will be resolved from. Same concept here as with the above",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 14,
+                "text": "     *         mapping. Also generally unsafe but fine if the implementation doesn't keep a mapping",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 15,
+                "text": "     *         in the second storage slot.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 23, "newLine": 16, "text": "     */" },
+              {
+                "type": "+",
+                "newLine": 17,
+                "text": "    mapping(address => AddressManager) private addressManager;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 24, "newLine": 18, "text": "" },
+              { "type": " ", "oldLine": 25, "newLine": 19, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 26,
+                "text": "     * @param _libAddressManager Address of the Lib_AddressManager.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 20,
+                "text": "     * @param _addressManager  Address of the AddressManager.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 27,
+                "newLine": 21,
+                "text": "     * @param _implementationName implementationName of the contract to proxy to."
+              },
+              { "type": " ", "oldLine": 28, "newLine": 22, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 29,
+                "text": "    constructor(address _libAddressManager, string memory _implementationName) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 30,
+                "text": "        addressManager[address(this)] = Lib_AddressManager(_libAddressManager);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 23,
+                "text": "    constructor(AddressManager _addressManager, string memory _implementationName) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 24,
+                "text": "        addressManager[address(this)] = _addressManager;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 31,
+                "newLine": 25,
+                "text": "        implementationName[address(this)] = _implementationName;"
+              },
+              { "type": " ", "oldLine": 32, "newLine": 26, "text": "    }" },
+              { "type": " ", "oldLine": 33, "newLine": 27, "text": "" },
+              { "type": " ", "oldLine": 34, "newLine": 28, "text": "    /**" },
+              { "type": "-", "oldLine": 35, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 36,
+                "text": "     * Fallback Function *",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 37, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 29,
+                "text": "     * @notice Fallback, performs a delegatecall to the resolved implementation address.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 38, "newLine": 30, "text": "     */" },
+              {
+                "type": "+",
+                "newLine": 31,
+                "text": "    // solhint-disable-next-line no-complex-fallback",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 39,
+                "newLine": 32,
+                "text": "    fallback() external payable {"
+              },
+              {
+                "type": " ",
+                "oldLine": 40,
+                "newLine": 33,
+                "text": "        address target = addressManager[address(this)].getAddress((implementationName[address(this)]));"
+              },
+              { "type": " ", "oldLine": 41, "newLine": 34, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 42,
+                "text": "        require(target != address(0), \"Target address must be initialized.\");",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 35,
+                "text": "        require(target != address(0), \"ResolvedDelegateProxy: target address must be initialized\");",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 43, "newLine": 36, "text": "" },
+              {
+                "type": "+",
+                "newLine": 37,
+                "text": "        // slither-disable-next-line controlled-delegatecall",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 44,
+                "newLine": 38,
+                "text": "        (bool success, bytes memory returndata) = target.delegatecall(msg.data);"
+              },
+              { "type": " ", "oldLine": 45, "newLine": 39, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 46,
+                "newLine": 40,
+                "text": "        if (success == true) {"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "44ad4cf96e2ef6f0": {
+      "status": "differs",
+      "coveredLines": 46,
+      "match": {
+        "origin": "upstream",
+        "collection": "optimism",
+        "relation": {
+          "type": "fork_of",
+          "repository": "ethereum-optimism/optimism"
+        },
+        "rank": 1,
+        "matchedBy": "similarity",
+        "auditedName": "Lib_ResolvedDelegateProxy",
+        "similarity": 0.735,
+        "reportId": "optimism/openzeppelin-ovm-rollup-2021-03",
+        "repository": "ben-chain/contracts-v2",
+        "path": "contracts/optimistic-ethereum/libraries/resolver/Lib_ResolvedDelegateProxy.sol",
+        "commit": "a935e276f5620b40802b52721e3474232e458f72",
+        "commitTimestamp": "2021-04-12T01:08:09Z",
+        "url": "https://github.com/ben-chain/contracts-v2/blob/a935e276f5620b40802b52721e3474232e458f72/contracts/optimistic-ethereum/libraries/resolver/Lib_ResolvedDelegateProxy.sol",
+        "auditStatus": "audited_with_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Second audited commit (last 3 weeks). Same directory scope and exclusions as the first commit; C01 and H01 fixes from the archived repository are contained in this commit, L02/L04/N01 are fixed here per the report.",
+        "majorFindings": 2,
+        "findingIds": ["C02", "C04"],
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "diff": {
+        "added": 4,
+        "removed": 4,
+        "ignoredAdded": 14,
+        "ignoredRemoved": 20,
+        "unchanged": 46,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 46,
+            "newStart": 1,
+            "newLines": 40,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "contract Lib_ResolvedDelegateProxy {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "contract ResolvedDelegateProxy {",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 2, "newLine": 2, "text": "    /**" },
+              { "type": "-", "oldLine": 3, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 4,
+                "text": "     * Variables *",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 5, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "     * @notice Mapping used to store the implementation name that corresponds to this contract. A",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 4,
+                "text": "     *         mapping was originally used as a way to bypass the same issue normally solved by",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 5,
+                "text": "     *         storing the implementation address in a specific storage slot that does not conflict",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 6,
+                "text": "     *         with any other storage slot. Generally NOT a safe solution but works as long as the",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 7,
+                "text": "     *         implementation does not also keep a mapping in the first storage slot.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 6, "newLine": 8, "text": "     */" },
+              { "type": "-", "oldLine": 7, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 8,
+                "text": "    // Using mappings to store fields to avoid overwriting storage slots in the",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 9,
+                "text": "    // implementation contract. For example, instead of storing these fields at",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 10,
+                "text": "    // storage slot `0` & `1`, they are stored at `keccak256(key + slot)`.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 11,
+                "text": "    // See: https://solidity.readthedocs.io/en/v0.7.0/internals/layout_in_storage.html",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 12,
+                "text": "    // NOTE: Do not use this code in your own contract system.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 13,
+                "text": "    //      There is a known flaw in this contract, and we will remove it from the repository",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 14,
+                "text": "    //      in the near future. Due to the very limited way that we are using it, this flaw is",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 15,
+                "text": "    //      not an issue in our system.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 16,
+                "newLine": 9,
+                "text": "    mapping(address => string) private implementationName;"
+              },
+              {
+                "type": "-",
+                "oldLine": 17,
+                "text": "    mapping(address => Lib_AddressManager) private addressManager;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 18, "newLine": 10, "text": "" },
+              { "type": " ", "oldLine": 19, "newLine": 11, "text": "    /**" },
+              { "type": "-", "oldLine": 20, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 21,
+                "text": "     * Constructor *",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 22, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 12,
+                "text": "     * @notice Mapping used to store the address of the AddressManager contract where the",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 13,
+                "text": "     *         implementation address will be resolved from. Same concept here as with the above",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 14,
+                "text": "     *         mapping. Also generally unsafe but fine if the implementation doesn't keep a mapping",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 15,
+                "text": "     *         in the second storage slot.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 23, "newLine": 16, "text": "     */" },
+              {
+                "type": "+",
+                "newLine": 17,
+                "text": "    mapping(address => AddressManager) private addressManager;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 24, "newLine": 18, "text": "" },
+              { "type": " ", "oldLine": 25, "newLine": 19, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 26,
+                "text": "     * @param _libAddressManager Address of the Lib_AddressManager.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 20,
+                "text": "     * @param _addressManager  Address of the AddressManager.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 27,
+                "newLine": 21,
+                "text": "     * @param _implementationName implementationName of the contract to proxy to."
+              },
+              { "type": " ", "oldLine": 28, "newLine": 22, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 29,
+                "text": "    constructor(address _libAddressManager, string memory _implementationName) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 30,
+                "text": "        addressManager[address(this)] = Lib_AddressManager(_libAddressManager);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 23,
+                "text": "    constructor(AddressManager _addressManager, string memory _implementationName) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 24,
+                "text": "        addressManager[address(this)] = _addressManager;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 31,
+                "newLine": 25,
+                "text": "        implementationName[address(this)] = _implementationName;"
+              },
+              { "type": " ", "oldLine": 32, "newLine": 26, "text": "    }" },
+              { "type": " ", "oldLine": 33, "newLine": 27, "text": "" },
+              { "type": " ", "oldLine": 34, "newLine": 28, "text": "    /**" },
+              { "type": "-", "oldLine": 35, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 36,
+                "text": "     * Fallback Function *",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 37, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 29,
+                "text": "     * @notice Fallback, performs a delegatecall to the resolved implementation address.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 38, "newLine": 30, "text": "     */" },
+              {
+                "type": "+",
+                "newLine": 31,
+                "text": "    // solhint-disable-next-line no-complex-fallback",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 39,
+                "newLine": 32,
+                "text": "    fallback() external payable {"
+              },
+              {
+                "type": " ",
+                "oldLine": 40,
+                "newLine": 33,
+                "text": "        address target = addressManager[address(this)].getAddress((implementationName[address(this)]));"
+              },
+              { "type": " ", "oldLine": 41, "newLine": 34, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 42,
+                "text": "        require(target != address(0), \"Target address must be initialized.\");",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 35,
+                "text": "        require(target != address(0), \"ResolvedDelegateProxy: target address must be initialized\");",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 43, "newLine": 36, "text": "" },
+              {
+                "type": "+",
+                "newLine": 37,
+                "text": "        // slither-disable-next-line controlled-delegatecall",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 44,
+                "newLine": 38,
+                "text": "        (bool success, bytes memory returndata) = target.delegatecall(msg.data);"
+              },
+              { "type": " ", "oldLine": 45, "newLine": 39, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 46,
+                "newLine": 40,
+                "text": "        if (success == true) {"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "bb55951394276893": {
+      "status": "differs",
+      "coveredLines": 46,
+      "match": {
+        "origin": "stack",
+        "collection": "optimism",
+        "relation": {
+          "type": "template",
+          "template": "opstack/AddressManager"
+        },
+        "rank": 2,
+        "matchedBy": "similarity",
+        "auditedName": "Lib_ResolvedDelegateProxy",
+        "similarity": 0.735,
+        "reportId": "optimism/openzeppelin-ovm-rollup-2021-03",
+        "repository": "ben-chain/contracts-v2",
+        "path": "contracts/optimistic-ethereum/libraries/resolver/Lib_ResolvedDelegateProxy.sol",
+        "commit": "a935e276f5620b40802b52721e3474232e458f72",
+        "commitTimestamp": "2021-04-12T01:08:09Z",
+        "url": "https://github.com/ben-chain/contracts-v2/blob/a935e276f5620b40802b52721e3474232e458f72/contracts/optimistic-ethereum/libraries/resolver/Lib_ResolvedDelegateProxy.sol",
+        "auditStatus": "audited_with_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Second audited commit (last 3 weeks). Same directory scope and exclusions as the first commit; C01 and H01 fixes from the archived repository are contained in this commit, L02/L04/N01 are fixed here per the report.",
+        "majorFindings": 2,
+        "findingIds": ["C02", "C04"],
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "diff": {
+        "added": 4,
+        "removed": 4,
+        "ignoredAdded": 14,
+        "ignoredRemoved": 20,
+        "unchanged": 46,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 46,
+            "newStart": 1,
+            "newLines": 40,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "contract Lib_ResolvedDelegateProxy {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "contract ResolvedDelegateProxy {",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 2, "newLine": 2, "text": "    /**" },
+              { "type": "-", "oldLine": 3, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 4,
+                "text": "     * Variables *",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 5, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "     * @notice Mapping used to store the implementation name that corresponds to this contract. A",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 4,
+                "text": "     *         mapping was originally used as a way to bypass the same issue normally solved by",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 5,
+                "text": "     *         storing the implementation address in a specific storage slot that does not conflict",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 6,
+                "text": "     *         with any other storage slot. Generally NOT a safe solution but works as long as the",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 7,
+                "text": "     *         implementation does not also keep a mapping in the first storage slot.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 6, "newLine": 8, "text": "     */" },
+              { "type": "-", "oldLine": 7, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 8,
+                "text": "    // Using mappings to store fields to avoid overwriting storage slots in the",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 9,
+                "text": "    // implementation contract. For example, instead of storing these fields at",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 10,
+                "text": "    // storage slot `0` & `1`, they are stored at `keccak256(key + slot)`.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 11,
+                "text": "    // See: https://solidity.readthedocs.io/en/v0.7.0/internals/layout_in_storage.html",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 12,
+                "text": "    // NOTE: Do not use this code in your own contract system.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 13,
+                "text": "    //      There is a known flaw in this contract, and we will remove it from the repository",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 14,
+                "text": "    //      in the near future. Due to the very limited way that we are using it, this flaw is",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 15,
+                "text": "    //      not an issue in our system.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 16,
+                "newLine": 9,
+                "text": "    mapping(address => string) private implementationName;"
+              },
+              {
+                "type": "-",
+                "oldLine": 17,
+                "text": "    mapping(address => Lib_AddressManager) private addressManager;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 18, "newLine": 10, "text": "" },
+              { "type": " ", "oldLine": 19, "newLine": 11, "text": "    /**" },
+              { "type": "-", "oldLine": 20, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 21,
+                "text": "     * Constructor *",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 22, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 12,
+                "text": "     * @notice Mapping used to store the address of the AddressManager contract where the",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 13,
+                "text": "     *         implementation address will be resolved from. Same concept here as with the above",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 14,
+                "text": "     *         mapping. Also generally unsafe but fine if the implementation doesn't keep a mapping",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 15,
+                "text": "     *         in the second storage slot.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 23, "newLine": 16, "text": "     */" },
+              {
+                "type": "+",
+                "newLine": 17,
+                "text": "    mapping(address => AddressManager) private addressManager;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 24, "newLine": 18, "text": "" },
+              { "type": " ", "oldLine": 25, "newLine": 19, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 26,
+                "text": "     * @param _libAddressManager Address of the Lib_AddressManager.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 20,
+                "text": "     * @param _addressManager  Address of the AddressManager.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 27,
+                "newLine": 21,
+                "text": "     * @param _implementationName implementationName of the contract to proxy to."
+              },
+              { "type": " ", "oldLine": 28, "newLine": 22, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 29,
+                "text": "    constructor(address _libAddressManager, string memory _implementationName) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 30,
+                "text": "        addressManager[address(this)] = Lib_AddressManager(_libAddressManager);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 23,
+                "text": "    constructor(AddressManager _addressManager, string memory _implementationName) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 24,
+                "text": "        addressManager[address(this)] = _addressManager;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 31,
+                "newLine": 25,
+                "text": "        implementationName[address(this)] = _implementationName;"
+              },
+              { "type": " ", "oldLine": 32, "newLine": 26, "text": "    }" },
+              { "type": " ", "oldLine": 33, "newLine": 27, "text": "" },
+              { "type": " ", "oldLine": 34, "newLine": 28, "text": "    /**" },
+              { "type": "-", "oldLine": 35, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 36,
+                "text": "     * Fallback Function *",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 37, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 29,
+                "text": "     * @notice Fallback, performs a delegatecall to the resolved implementation address.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 38, "newLine": 30, "text": "     */" },
+              {
+                "type": "+",
+                "newLine": 31,
+                "text": "    // solhint-disable-next-line no-complex-fallback",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 39,
+                "newLine": 32,
+                "text": "    fallback() external payable {"
+              },
+              {
+                "type": " ",
+                "oldLine": 40,
+                "newLine": 33,
+                "text": "        address target = addressManager[address(this)].getAddress((implementationName[address(this)]));"
+              },
+              { "type": " ", "oldLine": 41, "newLine": 34, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 42,
+                "text": "        require(target != address(0), \"Target address must be initialized.\");",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 35,
+                "text": "        require(target != address(0), \"ResolvedDelegateProxy: target address must be initialized\");",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 43, "newLine": 36, "text": "" },
+              {
+                "type": "+",
+                "newLine": 37,
+                "text": "        // slither-disable-next-line controlled-delegatecall",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 44,
+                "newLine": 38,
+                "text": "        (bool success, bytes memory returndata) = target.delegatecall(msg.data);"
+              },
+              { "type": " ", "oldLine": 45, "newLine": 39, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 46,
+                "newLine": 40,
+                "text": "        if (success == true) {"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "1f5c32d18cf7148d": {
+      "status": "differs",
+      "coveredLines": 46,
+      "match": {
+        "origin": "stack",
+        "collection": "optimism",
+        "relation": {
+          "type": "template",
+          "template": "gnosisSafeModules/LivenessGuard"
+        },
+        "rank": 2,
+        "matchedBy": "similarity",
+        "auditedName": "Lib_ResolvedDelegateProxy",
+        "similarity": 0.735,
+        "reportId": "optimism/openzeppelin-ovm-rollup-2021-03",
+        "repository": "ben-chain/contracts-v2",
+        "path": "contracts/optimistic-ethereum/libraries/resolver/Lib_ResolvedDelegateProxy.sol",
+        "commit": "a935e276f5620b40802b52721e3474232e458f72",
+        "commitTimestamp": "2021-04-12T01:08:09Z",
+        "url": "https://github.com/ben-chain/contracts-v2/blob/a935e276f5620b40802b52721e3474232e458f72/contracts/optimistic-ethereum/libraries/resolver/Lib_ResolvedDelegateProxy.sol",
+        "auditStatus": "audited_with_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Second audited commit (last 3 weeks). Same directory scope and exclusions as the first commit; C01 and H01 fixes from the archived repository are contained in this commit, L02/L04/N01 are fixed here per the report.",
+        "majorFindings": 2,
+        "findingIds": ["C02", "C04"],
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "diff": {
+        "added": 4,
+        "removed": 4,
+        "ignoredAdded": 14,
+        "ignoredRemoved": 20,
+        "unchanged": 46,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 46,
+            "newStart": 1,
+            "newLines": 40,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "contract Lib_ResolvedDelegateProxy {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "contract ResolvedDelegateProxy {",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 2, "newLine": 2, "text": "    /**" },
+              { "type": "-", "oldLine": 3, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 4,
+                "text": "     * Variables *",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 5, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "     * @notice Mapping used to store the implementation name that corresponds to this contract. A",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 4,
+                "text": "     *         mapping was originally used as a way to bypass the same issue normally solved by",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 5,
+                "text": "     *         storing the implementation address in a specific storage slot that does not conflict",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 6,
+                "text": "     *         with any other storage slot. Generally NOT a safe solution but works as long as the",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 7,
+                "text": "     *         implementation does not also keep a mapping in the first storage slot.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 6, "newLine": 8, "text": "     */" },
+              { "type": "-", "oldLine": 7, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 8,
+                "text": "    // Using mappings to store fields to avoid overwriting storage slots in the",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 9,
+                "text": "    // implementation contract. For example, instead of storing these fields at",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 10,
+                "text": "    // storage slot `0` & `1`, they are stored at `keccak256(key + slot)`.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 11,
+                "text": "    // See: https://solidity.readthedocs.io/en/v0.7.0/internals/layout_in_storage.html",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 12,
+                "text": "    // NOTE: Do not use this code in your own contract system.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 13,
+                "text": "    //      There is a known flaw in this contract, and we will remove it from the repository",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 14,
+                "text": "    //      in the near future. Due to the very limited way that we are using it, this flaw is",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 15,
+                "text": "    //      not an issue in our system.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 16,
+                "newLine": 9,
+                "text": "    mapping(address => string) private implementationName;"
+              },
+              {
+                "type": "-",
+                "oldLine": 17,
+                "text": "    mapping(address => Lib_AddressManager) private addressManager;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 18, "newLine": 10, "text": "" },
+              { "type": " ", "oldLine": 19, "newLine": 11, "text": "    /**" },
+              { "type": "-", "oldLine": 20, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 21,
+                "text": "     * Constructor *",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 22, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 12,
+                "text": "     * @notice Mapping used to store the address of the AddressManager contract where the",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 13,
+                "text": "     *         implementation address will be resolved from. Same concept here as with the above",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 14,
+                "text": "     *         mapping. Also generally unsafe but fine if the implementation doesn't keep a mapping",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 15,
+                "text": "     *         in the second storage slot.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 23, "newLine": 16, "text": "     */" },
+              {
+                "type": "+",
+                "newLine": 17,
+                "text": "    mapping(address => AddressManager) private addressManager;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 24, "newLine": 18, "text": "" },
+              { "type": " ", "oldLine": 25, "newLine": 19, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 26,
+                "text": "     * @param _libAddressManager Address of the Lib_AddressManager.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 20,
+                "text": "     * @param _addressManager  Address of the AddressManager.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 27,
+                "newLine": 21,
+                "text": "     * @param _implementationName implementationName of the contract to proxy to."
+              },
+              { "type": " ", "oldLine": 28, "newLine": 22, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 29,
+                "text": "    constructor(address _libAddressManager, string memory _implementationName) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 30,
+                "text": "        addressManager[address(this)] = Lib_AddressManager(_libAddressManager);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 23,
+                "text": "    constructor(AddressManager _addressManager, string memory _implementationName) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 24,
+                "text": "        addressManager[address(this)] = _addressManager;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 31,
+                "newLine": 25,
+                "text": "        implementationName[address(this)] = _implementationName;"
+              },
+              { "type": " ", "oldLine": 32, "newLine": 26, "text": "    }" },
+              { "type": " ", "oldLine": 33, "newLine": 27, "text": "" },
+              { "type": " ", "oldLine": 34, "newLine": 28, "text": "    /**" },
+              { "type": "-", "oldLine": 35, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 36,
+                "text": "     * Fallback Function *",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 37, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 29,
+                "text": "     * @notice Fallback, performs a delegatecall to the resolved implementation address.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 38, "newLine": 30, "text": "     */" },
+              {
+                "type": "+",
+                "newLine": 31,
+                "text": "    // solhint-disable-next-line no-complex-fallback",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 39,
+                "newLine": 32,
+                "text": "    fallback() external payable {"
+              },
+              {
+                "type": " ",
+                "oldLine": 40,
+                "newLine": 33,
+                "text": "        address target = addressManager[address(this)].getAddress((implementationName[address(this)]));"
+              },
+              { "type": " ", "oldLine": 41, "newLine": 34, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 42,
+                "text": "        require(target != address(0), \"Target address must be initialized.\");",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 35,
+                "text": "        require(target != address(0), \"ResolvedDelegateProxy: target address must be initialized\");",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 43, "newLine": 36, "text": "" },
+              {
+                "type": "+",
+                "newLine": 37,
+                "text": "        // slither-disable-next-line controlled-delegatecall",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 44,
+                "newLine": 38,
+                "text": "        (bool success, bytes memory returndata) = target.delegatecall(msg.data);"
+              },
+              { "type": " ", "oldLine": 45, "newLine": 39, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 46,
+                "newLine": 40,
+                "text": "        if (success == true) {"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

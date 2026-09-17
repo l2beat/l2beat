@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "3c7d4947c8c44fc08a8fa552b1c7446fba29b608547641c2935ddd2f076834a0",
+  "name": "RollupOperationsExtLib",
+  "kind": "library",
+  "lines": 66,
+  "source": "library RollupOperationsExtLib {\n    using TimeLib for Timestamp;\n    using TimeLib for Slot;\n    using AttestationLib for CommitteeAttestations;\n\n    function submitEpochRootProof(SubmitEpochRootProofArgs calldata _args) external {\n        EpochProofLib.submitEpochRootProof(_args);\n    }\n\n    function validateHeaderWithAttestations(\n        ValidateHeaderArgs calldata _args,\n        CommitteeAttestations calldata _attestations,\n        address[] calldata _signers,\n        Signature calldata _attestationsAndSignersSignature\n    ) external {\n        ProposeLib.validateHeader(_args);\n        if (_attestations.isEmpty()) {\n            return; // No attestations to validate\n        }\n\n        Slot slot = _args.header.slotNumber;\n        Epoch epoch = slot.epochFromSlot();\n        ValidatorSelectionLib.verifyAttestations(epoch, _attestations, _args.digest);\n        ValidatorSelectionLib.verifyProposer(\n            slot, epoch, _attestations, _signers, _args.digest, _attestationsAndSignersSignature, false\n        );\n    }\n\n    function propose(\n        ProposeArgs calldata _args,\n        CommitteeAttestations memory _attestations,\n        address[] calldata _signers,\n        Signature calldata _attestationsAndSignersSignature,\n        bytes calldata _blobInput,\n        bool _checkBlob\n    ) external {\n        ProposeLib.propose(_args, _attestations, _signers, _attestationsAndSignersSignature, _blobInput, _checkBlob);\n    }\n\n    function prune() external {\n        require(STFLib.canPruneAtTime(Timestamp.wrap(block.timestamp)), Errors.Rollup__NothingToPrune());\n        STFLib.prune();\n    }\n\n    function getEpochProofPublicInputs(\n        uint256 _start,\n        uint256 _end,\n        PublicInputArgs calldata _args,\n        ProposedHeader[] calldata _headers,\n        bytes calldata _blobPublicInputs\n    ) external view returns (bytes32[] memory) {\n        return EpochProofLib.getEpochProofPublicInputs(_start, _end, _args, _headers, _blobPublicInputs);\n    }\n\n    function validateBlobs(bytes calldata _blobsInput, bool _checkBlob)\n        external\n        view\n        returns (bytes32[] memory blobHashes, bytes32 blobsHashesCommitment, bytes[] memory blobCommitments)\n    {\n        return BlobLib_1.validateBlobs(_blobsInput, _checkBlob);\n    }\n\n    function getBlobBaseFee() external view returns (uint256) {\n        return BlobLib_1.getBlobBaseFee();\n    }\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

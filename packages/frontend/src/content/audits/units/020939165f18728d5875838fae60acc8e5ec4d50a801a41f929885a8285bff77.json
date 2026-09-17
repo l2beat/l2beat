@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "020939165f18728d5875838fae60acc8e5ec4d50a801a41f929885a8285bff77",
+  "name": "IUniswapV3PoolOwnerActions",
+  "kind": "interface",
+  "lines": 16,
+  "source": "interface IUniswapV3PoolOwnerActions {\n    /// @notice Set the denominator of the protocol's % share of the fees\n    /// @param feeProtocol0 new protocol fee for token0 of the pool\n    /// @param feeProtocol1 new protocol fee for token1 of the pool\n    function setFeeProtocol(uint8 feeProtocol0, uint8 feeProtocol1) external;\n\n    /// @notice Collect the protocol fee accrued to the pool\n    /// @param recipient The address to which collected protocol fees should be sent\n    /// @param amount0Requested The maximum amount of token0 to send, can be 0 to collect fees in only token1\n    /// @param amount1Requested The maximum amount of token1 to send, can be 0 to collect fees in only token0\n    /// @return amount0 The protocol fee collected in token0\n    /// @return amount1 The protocol fee collected in token1\n    function collectProtocol(address recipient, uint128 amount0Requested, uint128 amount1Requested)\n        external\n        returns (uint128 amount0, uint128 amount1);\n}",
+  "resolutions": {
+    "f9658cd3a9a22004": {
+      "status": "identical",
+      "coveredLines": 16,
+      "match": {
+        "origin": "other",
+        "collection": "uniswapv3",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "identity",
+        "auditedName": "IUniswapV3PoolOwnerActions",
+        "similarity": 1,
+        "reportId": "uniswapv3/abdk-uniswap-v3-core-2021-03",
+        "repository": "Uniswap/v3-core",
+        "path": "contracts/interfaces/pool/IUniswapV3PoolOwnerActions.sol",
+        "commit": "e8de69a550d579c475f52d59a6fb2f7ef9e7f364",
+        "commitTimestamp": "2021-02-23T16:37:26Z",
+        "url": "https://github.com/Uniswap/v3-core/blob/e8de69a550d579c475f52d59a6fb2f7ef9e7f364/contracts/interfaces/pool/IUniswapV3PoolOwnerActions.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "full file",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "warnings": []
+    },
+    "2be3d633eaae18a2": {
+      "status": "identical",
+      "coveredLines": 16,
+      "match": {
+        "origin": "own",
+        "collection": "uniswapv3",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "IUniswapV3PoolOwnerActions",
+        "similarity": 1,
+        "reportId": "uniswapv3/abdk-uniswap-v3-core-2021-03",
+        "repository": "Uniswap/v3-core",
+        "path": "contracts/interfaces/pool/IUniswapV3PoolOwnerActions.sol",
+        "commit": "e8de69a550d579c475f52d59a6fb2f7ef9e7f364",
+        "commitTimestamp": "2021-02-23T16:37:26Z",
+        "url": "https://github.com/Uniswap/v3-core/blob/e8de69a550d579c475f52d59a6fb2f7ef9e7f364/contracts/interfaces/pool/IUniswapV3PoolOwnerActions.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "full file",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "warnings": []
+    }
+  }
+}

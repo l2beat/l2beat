@@ -1,0 +1,508 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "a5349ede879c1fd2251c7f0d87a992378c63406c405dce845816787701bfaf65",
+  "name": "ModuleManager",
+  "kind": "abstract",
+  "lines": 180,
+  "source": "abstract contract ModuleManager is SelfAuthorized, Executor {\n    event EnabledModule(address indexed module);\n    event DisabledModule(address indexed module);\n    event ExecutionFromModuleSuccess(address indexed module);\n    event ExecutionFromModuleFailure(address indexed module);\n\n    address internal constant SENTINEL_MODULES = address(0x1);\n\n    mapping(address => address) internal modules;\n\n    /**\n     * @notice Setup function sets the initial storage of the contract.\n     *         Optionally executes a delegate call to another contract to setup the modules.\n     * @param to Optional destination address of call to execute.\n     * @param data Optional data of call to execute.\n     */\n    function setupModules(address to, bytes memory data) internal {\n        require(modules[SENTINEL_MODULES] == address(0), \"GS100\");\n        modules[SENTINEL_MODULES] = SENTINEL_MODULES;\n        if (to != address(0)) {\n            require(isContract(to), \"GS002\");\n            // Setup has to complete successfully or transaction fails.\n            require(execute(to, 0, data, Enum.Operation.DelegateCall, type(uint256).max), \"GS000\");\n        }\n    }\n\n    /**\n     * @notice Enables the module `module` for the Safe.\n     * @dev This can only be done via a Safe transaction.\n     * @param module Module to be whitelisted.\n     */\n    function enableModule(address module) public authorized {\n        // Module address cannot be null or sentinel.\n        require(module != address(0) && module != SENTINEL_MODULES, \"GS101\");\n        // Module cannot be added twice.\n        require(modules[module] == address(0), \"GS102\");\n        modules[module] = modules[SENTINEL_MODULES];\n        modules[SENTINEL_MODULES] = module;\n        emit EnabledModule(module);\n    }\n\n    /**\n     * @notice Disables the module `module` for the Safe.\n     * @dev This can only be done via a Safe transaction.\n     * @param prevModule Previous module in the modules linked list.\n     * @param module Module to be removed.\n     */\n    function disableModule(address prevModule, address module) public authorized {\n        // Validate module address and check that it corresponds to module index.\n        require(module != address(0) && module != SENTINEL_MODULES, \"GS101\");\n        require(modules[prevModule] == module, \"GS103\");\n        modules[prevModule] = modules[module];\n        modules[module] = address(0);\n        emit DisabledModule(module);\n    }\n\n    /**\n     * @notice Execute `operation` (0: Call, 1: DelegateCall) to `to` with `value` (Native Token)\n     * @dev Function is virtual to allow overriding for L2 singleton to emit an event for indexing.\n     * @param to Destination address of module transaction.\n     * @param value Ether value of module transaction.\n     * @param data Data payload of module transaction.\n     * @param operation Operation type of module transaction.\n     * @return success Boolean flag indicating if the call succeeded.\n     */\n    function execTransactionFromModule(address to, uint256 value, bytes memory data, Enum.Operation operation)\n        public\n        virtual\n        returns (bool success)\n    {\n        // Only whitelisted modules are allowed.\n        require(msg.sender != SENTINEL_MODULES && modules[msg.sender] != address(0), \"GS104\");\n        // Execute transaction without further confirmations.\n        success = execute(to, value, data, operation, type(uint256).max);\n        if (success) {\n            emit ExecutionFromModuleSuccess(msg.sender);\n        } else {\n            emit ExecutionFromModuleFailure(msg.sender);\n        }\n    }\n\n    /**\n     * @notice Execute `operation` (0: Call, 1: DelegateCall) to `to` with `value` (Native Token) and return data\n     * @param to Destination address of module transaction.\n     * @param value Ether value of module transaction.\n     * @param data Data payload of module transaction.\n     * @param operation Operation type of module transaction.\n     * @return success Boolean flag indicating if the call succeeded.\n     * @return returnData Data returned by the call.\n     */\n    function execTransactionFromModuleReturnData(address to, uint256 value, bytes memory data, Enum.Operation operation)\n        public\n        returns (bool success, bytes memory returnData)\n    {\n        success = execTransactionFromModule(to, value, data, operation);\n        // solhint-disable-next-line no-inline-assembly\n        assembly {\n            // Load free memory location\n            let ptr := mload(0x40)\n            // We allocate memory for the return data by setting the free memory location to\n            // current free memory location + data size + 32 bytes for data size value\n            mstore(0x40, add(ptr, add(returndatasize(), 0x20)))\n            // Store the size\n            mstore(ptr, returndatasize())\n            // Store the data\n            returndatacopy(add(ptr, 0x20), 0, returndatasize())\n            // Point the return data to the correct memory location\n            returnData := ptr\n        }\n    }\n\n    /**\n     * @notice Returns if an module is enabled\n     * @return True if the module is enabled\n     */\n    function isModuleEnabled(address module) public view returns (bool) {\n        return SENTINEL_MODULES != module && modules[module] != address(0);\n    }\n\n    /**\n     * @notice Returns an array of modules.\n     *         If all entries fit into a single page, the next pointer will be 0x1.\n     *         If another page is present, next will be the last element of the returned array.\n     * @param start Start of the page. Has to be a module or start pointer (0x1 address)\n     * @param pageSize Maximum number of modules that should be returned. Has to be > 0\n     * @return array Array of modules.\n     * @return next Start of the next page.\n     */\n    function getModulesPaginated(address start, uint256 pageSize)\n        external\n        view\n        returns (address[] memory array, address next)\n    {\n        require(start == SENTINEL_MODULES || isModuleEnabled(start), \"GS105\");\n        require(pageSize > 0, \"GS106\");\n        // Init array with max page size\n        array = new address[](pageSize);\n\n        // Populate return array\n        uint256 moduleCount = 0;\n        next = modules[start];\n        while (next != address(0) && next != SENTINEL_MODULES && moduleCount < pageSize) {\n            array[moduleCount] = next;\n            next = modules[next];\n            moduleCount++;\n        }\n\n        /**\n         * Because of the argument validation, we can assume that the loop will always iterate over the valid module list values\n         *       and the `next` variable will either be an enabled module or a sentinel address (signalling the end).\n         *\n         *       If we haven't reached the end inside the loop, we need to set the next pointer to the last element of the modules array\n         *       because the `next` variable (which is a module by itself) acting as a pointer to the start of the next page is neither\n         *       included to the current page, nor will it be included in the next one if you pass it as a start.\n         */\n        if (next != SENTINEL_MODULES) {\n            next = array[moduleCount - 1];\n        }\n        // Set correct size of returned array\n        // solhint-disable-next-line no-inline-assembly\n        assembly {\n            mstore(array, moduleCount)\n        }\n    }\n\n    /**\n     * @notice Returns true if `account` is a contract.\n     * @dev This function will return false if invoked during the constructor of a contract,\n     *      as the code is not actually created until after the constructor finishes.\n     * @param account The address being queried\n     */\n    function isContract(address account) internal view returns (bool) {\n        uint256 size;\n        // solhint-disable-next-line no-inline-assembly\n        assembly {\n            size := extcodesize(account)\n        }\n        return size > 0;\n    }\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "differs",
+      "coveredLines": 179,
+      "match": {
+        "origin": "stack",
+        "collection": "safe",
+        "relation": { "type": "template", "template": "GnosisSafe" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "ModuleManager",
+        "similarity": 1,
+        "reportId": "safe/nethermind-safe-1-3-0",
+        "repository": "safe-fndn/safe-smart-account",
+        "path": "contracts/base/ModuleManager.sol",
+        "commit": "e870f514ad34cd9654c72174d6d4a839e3c6639f",
+        "commitTimestamp": "2023-04-26T13:40:04Z",
+        "url": "https://github.com/safe-fndn/safe-smart-account/blob/e870f514ad34cd9654c72174d6d4a839e3c6639f/contracts/base/ModuleManager.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "Remediation release",
+        "coverage": "The report states its two findings were addressed in v1.4.0; review is limited to those fixes.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 8
+      },
+      "diff": {
+        "added": 1,
+        "removed": 1,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 179,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 20,
+            "oldLines": 7,
+            "newStart": 20,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 20,
+                "newLine": 20,
+                "text": "        if (to != address(0)) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 21,
+                "newLine": 21,
+                "text": "            require(isContract(to), \"GS002\");"
+              },
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 22,
+                "text": "            // Setup has to complete successfully or transaction fails."
+              },
+              {
+                "type": "-",
+                "oldLine": 23,
+                "text": "            require(execute(to, 0, data, Enum.Operation.DelegateCall, gasleft()), \"GS000\");",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 23,
+                "text": "            require(execute(to, 0, data, Enum.Operation.DelegateCall, type(uint256).max), \"GS000\");",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 24,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 25, "newLine": 25, "text": "    }" },
+              { "type": " ", "oldLine": 26, "newLine": 26, "text": "" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "ba5b6c9584fb78fd": {
+      "status": "differs",
+      "coveredLines": 179,
+      "match": {
+        "origin": "own",
+        "collection": "bob",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "ModuleManager",
+        "similarity": 1,
+        "reportId": "bob/veridise-kailua-2025-02",
+        "repository": "boundless-xyz/kailua",
+        "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "commit": "27dec82b67de1051df9258b36f8366ebf308e5bf",
+        "commitTimestamp": "2025-02-06T07:42:16Z",
+        "url": "https://github.com/boundless-xyz/kailua/blob/27dec82b67de1051df9258b36f8366ebf308e5bf/crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix commit",
+        "coverage": "Confirmed fix commit for V-KLA-VUL-004 (contract nits).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 1,
+        "removed": 1,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 179,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 20,
+            "oldLines": 7,
+            "newStart": 20,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 20,
+                "newLine": 20,
+                "text": "        if (to != address(0)) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 21,
+                "newLine": 21,
+                "text": "            require(isContract(to), \"GS002\");"
+              },
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 22,
+                "text": "            // Setup has to complete successfully or transaction fails."
+              },
+              {
+                "type": "-",
+                "oldLine": 23,
+                "text": "            require(execute(to, 0, data, Enum.Operation.DelegateCall, gasleft()), \"GS000\");",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 23,
+                "text": "            require(execute(to, 0, data, Enum.Operation.DelegateCall, type(uint256).max), \"GS000\");",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 24,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 25, "newLine": 25, "text": "    }" },
+              { "type": " ", "oldLine": 26, "newLine": 26, "text": "" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "44ad4cf96e2ef6f0": {
+      "status": "differs",
+      "coveredLines": 179,
+      "match": {
+        "origin": "stack",
+        "collection": "safe",
+        "relation": { "type": "template", "template": "GnosisSafe" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "ModuleManager",
+        "similarity": 1,
+        "reportId": "safe/nethermind-safe-1-3-0",
+        "repository": "safe-fndn/safe-smart-account",
+        "path": "contracts/base/ModuleManager.sol",
+        "commit": "e870f514ad34cd9654c72174d6d4a839e3c6639f",
+        "commitTimestamp": "2023-04-26T13:40:04Z",
+        "url": "https://github.com/safe-fndn/safe-smart-account/blob/e870f514ad34cd9654c72174d6d4a839e3c6639f/contracts/base/ModuleManager.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "Remediation release",
+        "coverage": "The report states its two findings were addressed in v1.4.0; review is limited to those fixes.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 8
+      },
+      "diff": {
+        "added": 1,
+        "removed": 1,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 179,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 20,
+            "oldLines": 7,
+            "newStart": 20,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 20,
+                "newLine": 20,
+                "text": "        if (to != address(0)) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 21,
+                "newLine": 21,
+                "text": "            require(isContract(to), \"GS002\");"
+              },
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 22,
+                "text": "            // Setup has to complete successfully or transaction fails."
+              },
+              {
+                "type": "-",
+                "oldLine": 23,
+                "text": "            require(execute(to, 0, data, Enum.Operation.DelegateCall, gasleft()), \"GS000\");",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 23,
+                "text": "            require(execute(to, 0, data, Enum.Operation.DelegateCall, type(uint256).max), \"GS000\");",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 24,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 25, "newLine": 25, "text": "    }" },
+              { "type": " ", "oldLine": 26, "newLine": 26, "text": "" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "bb55951394276893": {
+      "status": "differs",
+      "coveredLines": 179,
+      "match": {
+        "origin": "stack",
+        "collection": "safe",
+        "relation": { "type": "template", "template": "GnosisSafe" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "ModuleManager",
+        "similarity": 1,
+        "reportId": "safe/nethermind-safe-1-3-0",
+        "repository": "safe-fndn/safe-smart-account",
+        "path": "contracts/base/ModuleManager.sol",
+        "commit": "e870f514ad34cd9654c72174d6d4a839e3c6639f",
+        "commitTimestamp": "2023-04-26T13:40:04Z",
+        "url": "https://github.com/safe-fndn/safe-smart-account/blob/e870f514ad34cd9654c72174d6d4a839e3c6639f/contracts/base/ModuleManager.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "Remediation release",
+        "coverage": "The report states its two findings were addressed in v1.4.0; review is limited to those fixes.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 8
+      },
+      "diff": {
+        "added": 1,
+        "removed": 1,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 179,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 20,
+            "oldLines": 7,
+            "newStart": 20,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 20,
+                "newLine": 20,
+                "text": "        if (to != address(0)) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 21,
+                "newLine": 21,
+                "text": "            require(isContract(to), \"GS002\");"
+              },
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 22,
+                "text": "            // Setup has to complete successfully or transaction fails."
+              },
+              {
+                "type": "-",
+                "oldLine": 23,
+                "text": "            require(execute(to, 0, data, Enum.Operation.DelegateCall, gasleft()), \"GS000\");",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 23,
+                "text": "            require(execute(to, 0, data, Enum.Operation.DelegateCall, type(uint256).max), \"GS000\");",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 24,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 25, "newLine": 25, "text": "    }" },
+              { "type": " ", "oldLine": 26, "newLine": 26, "text": "" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "d293c6ecba42b698": {
+      "status": "differs",
+      "coveredLines": 179,
+      "match": {
+        "origin": "stack",
+        "collection": "safe",
+        "relation": { "type": "template", "template": "GnosisSafe" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "ModuleManager",
+        "similarity": 1,
+        "reportId": "safe/nethermind-safe-1-3-0",
+        "repository": "safe-fndn/safe-smart-account",
+        "path": "contracts/base/ModuleManager.sol",
+        "commit": "e870f514ad34cd9654c72174d6d4a839e3c6639f",
+        "commitTimestamp": "2023-04-26T13:40:04Z",
+        "url": "https://github.com/safe-fndn/safe-smart-account/blob/e870f514ad34cd9654c72174d6d4a839e3c6639f/contracts/base/ModuleManager.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "Remediation release",
+        "coverage": "The report states its two findings were addressed in v1.4.0; review is limited to those fixes.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 8
+      },
+      "diff": {
+        "added": 1,
+        "removed": 1,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 179,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 20,
+            "oldLines": 7,
+            "newStart": 20,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 20,
+                "newLine": 20,
+                "text": "        if (to != address(0)) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 21,
+                "newLine": 21,
+                "text": "            require(isContract(to), \"GS002\");"
+              },
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 22,
+                "text": "            // Setup has to complete successfully or transaction fails."
+              },
+              {
+                "type": "-",
+                "oldLine": 23,
+                "text": "            require(execute(to, 0, data, Enum.Operation.DelegateCall, gasleft()), \"GS000\");",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 23,
+                "text": "            require(execute(to, 0, data, Enum.Operation.DelegateCall, type(uint256).max), \"GS000\");",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 24,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 25, "newLine": 25, "text": "    }" },
+              { "type": " ", "oldLine": 26, "newLine": 26, "text": "" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "1f5c32d18cf7148d": {
+      "status": "differs",
+      "coveredLines": 179,
+      "match": {
+        "origin": "stack",
+        "collection": "safe",
+        "relation": { "type": "template", "template": "GnosisSafe" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "ModuleManager",
+        "similarity": 1,
+        "reportId": "safe/nethermind-safe-1-3-0",
+        "repository": "safe-fndn/safe-smart-account",
+        "path": "contracts/base/ModuleManager.sol",
+        "commit": "e870f514ad34cd9654c72174d6d4a839e3c6639f",
+        "commitTimestamp": "2023-04-26T13:40:04Z",
+        "url": "https://github.com/safe-fndn/safe-smart-account/blob/e870f514ad34cd9654c72174d6d4a839e3c6639f/contracts/base/ModuleManager.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "Remediation release",
+        "coverage": "The report states its two findings were addressed in v1.4.0; review is limited to those fixes.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 8
+      },
+      "diff": {
+        "added": 1,
+        "removed": 1,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 179,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 20,
+            "oldLines": 7,
+            "newStart": 20,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 20,
+                "newLine": 20,
+                "text": "        if (to != address(0)) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 21,
+                "newLine": 21,
+                "text": "            require(isContract(to), \"GS002\");"
+              },
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 22,
+                "text": "            // Setup has to complete successfully or transaction fails."
+              },
+              {
+                "type": "-",
+                "oldLine": 23,
+                "text": "            require(execute(to, 0, data, Enum.Operation.DelegateCall, gasleft()), \"GS000\");",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 23,
+                "text": "            require(execute(to, 0, data, Enum.Operation.DelegateCall, type(uint256).max), \"GS000\");",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 24,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 25, "newLine": 25, "text": "    }" },
+              { "type": " ", "oldLine": 26, "newLine": 26, "text": "" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

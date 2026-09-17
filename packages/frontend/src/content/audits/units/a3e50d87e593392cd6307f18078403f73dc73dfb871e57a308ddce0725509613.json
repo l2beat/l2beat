@@ -1,0 +1,1121 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "a3e50d87e593392cd6307f18078403f73dc73dfb871e57a308ddce0725509613",
+  "name": "OPSuccinctFaultDisputeGame",
+  "kind": "contract",
+  "lines": 675,
+  "source": "contract OPSuccinctFaultDisputeGame is Clone, ISemver, IDisputeGame {\n    ////////////////////////////////////////////////////////////////\n    //                         Enums                              //\n    ////////////////////////////////////////////////////////////////\n\n    enum ProposalStatus {\n        // The initial state of a new proposal.\n        Unchallenged,\n        // A proposal that has been challenged but not yet proven.\n        Challenged,\n        // An unchallenged proposal that has been proven valid with a verified proof.\n        UnchallengedAndValidProofProvided,\n        // A challenged proposal that has been proven valid with a verified proof.\n        ChallengedAndValidProofProvided,\n        // The final state after resolution, either GameStatus.CHALLENGER_WINS or GameStatus.DEFENDER_WINS.\n        Resolved\n    }\n\n    ////////////////////////////////////////////////////////////////\n    //                         Structs                            //\n    ////////////////////////////////////////////////////////////////\n\n    /// @notice The `ClaimData` struct represents the data associated with a Claim.\n    struct ClaimData {\n        uint32 parentIndex;\n        address counteredBy;\n        address prover;\n        Claim claim;\n        ProposalStatus status;\n        Timestamp deadline;\n    }\n\n    ////////////////////////////////////////////////////////////////\n    //                         Events                             //\n    ////////////////////////////////////////////////////////////////\n\n    /// @notice Emitted when the game is challenged.\n    /// @param challenger The address of the challenger.\n    event Challenged(address indexed challenger);\n\n    /// @notice Emitted when the game is proved.\n    /// @param prover The address of the prover.\n    event Proved(address indexed prover);\n\n    /// @notice Emitted when the game is closed.\n    event GameClosed(BondDistributionMode bondDistributionMode);\n\n    ////////////////////////////////////////////////////////////////\n    //                         State Vars                         //\n    ////////////////////////////////////////////////////////////////\n\n    /// @notice The maximum duration allowed for a challenger to challenge a game.\n    Duration internal immutable MAX_CHALLENGE_DURATION;\n\n    /// @notice The maximum duration allowed for a proposer to prove against a challenge.\n    Duration internal immutable MAX_PROVE_DURATION;\n\n    /// @notice The game type ID.\n    GameType internal immutable GAME_TYPE;\n\n    /// @notice The dispute game factory.\n    IDisputeGameFactory internal immutable DISPUTE_GAME_FACTORY;\n\n    /// @notice The SP1 verifier.\n    ISP1Verifier internal immutable SP1_VERIFIER;\n\n    /// @notice The rollup config hash.\n    bytes32 internal immutable ROLLUP_CONFIG_HASH;\n\n    /// @notice The vkey for the aggregation program.\n    bytes32 internal immutable AGGREGATION_VKEY;\n\n    /// @notice The 32 byte commitment to the BabyBear representation of the verification key of the range SP1 program. Specifically,\n    /// this verification is the output of converting the [u32; 8] range BabyBear verification key to a [u8; 32] array.\n    bytes32 internal immutable RANGE_VKEY_COMMITMENT;\n\n    /// @notice The challenger bond for the game. This is the amount of the bond that the\n    ///         challenger has to bond to challenge. The prover will receive this bond if they\n    ///         provide a valid proof in response to a challenge.\n    uint256 internal immutable CHALLENGER_BOND;\n\n    /// @notice The anchor state registry.\n    IAnchorStateRegistry internal immutable ANCHOR_STATE_REGISTRY;\n\n    /// @notice The access manager.\n    AccessManager internal immutable ACCESS_MANAGER;\n\n    /// @notice Semantic version.\n    /// @custom:semver 2.0.0\n    string public constant version = \"2.0.0\";\n\n    /// @notice The starting timestamp of the game.\n    Timestamp public createdAt;\n\n    /// @notice The timestamp of the game's global resolution.\n    Timestamp public resolvedAt;\n\n    /// @notice The current status of the game.\n    GameStatus public status;\n\n    /// @notice Flag for the `initialize` function to prevent re-initialization.\n    bool internal initialized;\n\n    /// @notice The claim made by the proposer.\n    ClaimData public claimData;\n\n    /// @notice Credited balances for winning participants.\n    mapping(address => uint256) public normalModeCredit;\n\n    /// @notice A mapping of each claimant's refund mode credit.\n    mapping(address => uint256) public refundModeCredit;\n\n    /// @notice The starting output root of the game that is proven from in case of a challenge.\n    /// @dev This should match the claim root of the parent game.\n    Proposal public startingOutputRoot;\n\n    /// @notice A boolean for whether or not the game type was respected when the game was created.\n    bool public wasRespectedGameTypeWhenCreated;\n\n    /// @notice The bond distribution mode of the game.\n    BondDistributionMode public bondDistributionMode;\n\n    /// @param _maxChallengeDuration The maximum duration allowed for a challenger to challenge a game.\n    /// @param _maxProveDuration The maximum duration allowed for a proposer to prove against a challenge.\n    /// @param _disputeGameFactory The factory that creates the dispute games.\n    /// @param _sp1Verifier The address of the SP1 verifier that verifies the proof for the aggregation program.\n    /// @param _rollupConfigHash The rollup config hash for the L2 network.\n    /// @param _aggregationVkey The vkey for the aggregation program.\n    /// @param _rangeVkeyCommitment The commitment to the range vkey.\n    /// @param _challengerBond The bond amount that must be submitted by the challenger.\n    /// @param _anchorStateRegistry The anchor state registry for the L2 network.\n    constructor(\n        Duration _maxChallengeDuration,\n        Duration _maxProveDuration,\n        IDisputeGameFactory _disputeGameFactory,\n        ISP1Verifier _sp1Verifier,\n        bytes32 _rollupConfigHash,\n        bytes32 _aggregationVkey,\n        bytes32 _rangeVkeyCommitment,\n        uint256 _challengerBond,\n        IAnchorStateRegistry _anchorStateRegistry,\n        AccessManager _accessManager\n    ) {\n        // Set up initial game state.\n        GAME_TYPE = GameType.wrap(OP_SUCCINCT_FAULT_DISPUTE_GAME_TYPE);\n        MAX_CHALLENGE_DURATION = _maxChallengeDuration;\n        MAX_PROVE_DURATION = _maxProveDuration;\n        DISPUTE_GAME_FACTORY = _disputeGameFactory;\n        SP1_VERIFIER = _sp1Verifier;\n        ROLLUP_CONFIG_HASH = _rollupConfigHash;\n        AGGREGATION_VKEY = _aggregationVkey;\n        RANGE_VKEY_COMMITMENT = _rangeVkeyCommitment;\n        CHALLENGER_BOND = _challengerBond;\n        ANCHOR_STATE_REGISTRY = _anchorStateRegistry;\n        ACCESS_MANAGER = _accessManager;\n    }\n\n    /// @notice Initializes the contract.\n    /// @dev This function may only be called once.\n    function initialize() external payable virtual {\n        // SAFETY: Any revert in this function will bubble up to the DisputeGameFactory and\n        // prevent the game from being created.\n        //\n        // Implicit assumptions:\n        // - The `gameStatus` state variable defaults to 0, which is `GameStatus.IN_PROGRESS`\n        // - The dispute game factory will enforce the required bond to initialize the game.\n        //\n        // Explicit checks:\n        // - The game must not have already been initialized.\n        // - An output root cannot be proposed at or before the starting block number.\n\n        // INVARIANT: The game must not have already been initialized.\n        if (initialized) {\n            revert AlreadyInitialized();\n        }\n\n        // INVARIANT: The game can only be initialized by the dispute game factory.\n        if (address(DISPUTE_GAME_FACTORY) != msg.sender) {\n            revert IncorrectDisputeGameFactory();\n        }\n\n        // INVARIANT: The proposer must be whitelisted.\n        if (!ACCESS_MANAGER.isAllowedProposer(gameCreator())) {\n            revert BadAuth();\n        }\n\n        // Revert if the calldata size is not the expected length.\n        //\n        // This is to prevent adding extra or omitting bytes from to `extraData` that result in a different game UUID\n        // in the factory, but are not used by the game, which would allow for multiple dispute games for the same\n        // output proposal to be created.\n        //\n        // Expected length: 0x7E\n        // - 0x04 selector\n        // - 0x14 creator address\n        // - 0x20 root claim\n        // - 0x20 l1 head\n        // - 0x20 extraData (l2BlockNumber)\n        // - 0x04 extraData (parentIndex)\n        // - 0x02 CWIA bytes\n        assembly {\n            if iszero(eq(calldatasize(), 0x7E)) {\n                // Store the selector for `BadExtraData()` & revert\n                mstore(0x00, 0x9824bdab)\n                revert(0x1C, 0x04)\n            }\n        }\n\n        // The first game is initialized with a parent index of uint32.max\n        if (parentIndex() != type(uint32).max) {\n            // For subsequent games, get the parent game's information\n            (,, IDisputeGame proxy) = DISPUTE_GAME_FACTORY.gameAtIndex(parentIndex());\n\n            // We perform a subset of AnchorStateRegistry.isGameProper() checks plus isGameRespected():\n            // 1. isGameRespected(): Verifies the parent game was respected when it was created.\n            //    There's only one respected game type in an AnchorStateRegistry at a time.\n            // 2. isGameRetired(): Ensures the game hasn't been retroactively marked as retired.\n            // 3. isGameBlacklisted(): Confirms the parent game isn't blacklisted.\n            // Note: isGameRegistered() check is skipped since the parent game is coming directly from factory.\n            if (\n                !ANCHOR_STATE_REGISTRY.isGameRespected(proxy) || ANCHOR_STATE_REGISTRY.isGameBlacklisted(proxy)\n                    || ANCHOR_STATE_REGISTRY.isGameRetired(proxy)\n            ) {\n                revert InvalidParentGame();\n            }\n\n            startingOutputRoot = Proposal({\n                l2SequenceNumber: OPSuccinctFaultDisputeGame(address(proxy)).l2SequenceNumber(),\n                root: Hash.wrap(OPSuccinctFaultDisputeGame(address(proxy)).rootClaim().raw())\n            });\n\n            // INVARIANT: The parent game must be a valid game.\n            if (proxy.status() == GameStatus.CHALLENGER_WINS) {\n                revert InvalidParentGame();\n            }\n\n            // INVARIANT: The parent game's L2 block must be ahead of the anchor. This prevents\n            // duplicate games (same startingOutputRoot via parent index vs uint32.max) and ensures\n            // that after a game type switch, proposals resume from the anchor rather than a stale parent.\n            (, uint256 anchorL2SeqNum) = ANCHOR_STATE_REGISTRY.getAnchorRoot();\n            if (startingOutputRoot.l2SequenceNumber <= anchorL2SeqNum) {\n                revert InvalidParentGame();\n            }\n        } else {\n            // When there is no parent game, start from the current anchor root. This allows\n            // resuming from the latest anchor after game type switches (e.g., retirement recovery).\n            (Hash anchorRoot, uint256 anchorL2SeqNum) = ANCHOR_STATE_REGISTRY.getAnchorRoot();\n            startingOutputRoot = Proposal({root: anchorRoot, l2SequenceNumber: anchorL2SeqNum});\n        }\n\n        // Do not allow the game to be initialized if the root claim corresponds to a block at or before the\n        // configured starting block number.\n        if (l2SequenceNumber() <= startingOutputRoot.l2SequenceNumber) {\n            revert UnexpectedRootClaim(rootClaim());\n        }\n\n        // Set the root claim\n        claimData = ClaimData({\n            parentIndex: parentIndex(),\n            counteredBy: address(0),\n            prover: address(0),\n            claim: rootClaim(),\n            status: ProposalStatus.Unchallenged,\n            deadline: Timestamp.wrap(uint64(block.timestamp + MAX_CHALLENGE_DURATION.raw()))\n        });\n\n        // Set the game as initialized.\n        initialized = true;\n\n        // Deposit the bond.\n        refundModeCredit[gameCreator()] += msg.value;\n\n        // Set the game's starting timestamp\n        createdAt = Timestamp.wrap(uint64(block.timestamp));\n\n        // Set whether the game type was respected when the game was created.\n        wasRespectedGameTypeWhenCreated =\n            GameType.unwrap(ANCHOR_STATE_REGISTRY.respectedGameType()) == GameType.unwrap(GAME_TYPE);\n    }\n\n    /// @notice The L2 sequence number (block number) for which this game is proposing an output root.\n    function l2SequenceNumber() public pure returns (uint256 l2SequenceNumber_) {\n        l2SequenceNumber_ = _getArgUint256(0x54);\n    }\n\n    /// @notice The L2 block number for which this game is proposing an output root.\n    /// @dev Alias for l2SequenceNumber() for backward compatibility.\n    function l2BlockNumber() public pure returns (uint256 l2BlockNumber_) {\n        l2BlockNumber_ = l2SequenceNumber();\n    }\n\n    /// @notice The parent index of the game.\n    function parentIndex() public pure returns (uint32 parentIndex_) {\n        parentIndex_ = _getArgUint32(0x74);\n    }\n\n    /// @notice Only the starting block number of the game.\n    function startingBlockNumber() external view returns (uint256 startingBlockNumber_) {\n        startingBlockNumber_ = startingOutputRoot.l2SequenceNumber;\n    }\n\n    /// @notice Starting output root of the game.\n    function startingRootHash() external view returns (Hash startingRootHash_) {\n        startingRootHash_ = startingOutputRoot.root;\n    }\n\n    ////////////////////////////////////////////////////////////////\n    //                    `IDisputeGame` impl                     //\n    ////////////////////////////////////////////////////////////////\n\n    /// @notice Challenges the game.\n    function challenge() external payable returns (ProposalStatus) {\n        // INVARIANT: Can only challenge a game that has not been challenged yet.\n        if (claimData.status != ProposalStatus.Unchallenged) {\n            revert ClaimAlreadyChallenged();\n        }\n\n        // INVARIANT: The challenger must be whitelisted.\n        if (!ACCESS_MANAGER.isAllowedChallenger(msg.sender)) {\n            revert BadAuth();\n        }\n\n        // INVARIANT: Cannot challenge if the game is over.\n        if (gameOver()) {\n            revert GameOver();\n        }\n\n        // If the required bond is not met, revert.\n        if (msg.value != CHALLENGER_BOND) {\n            revert IncorrectBondAmount();\n        }\n\n        // Update the counteredBy address\n        claimData.counteredBy = msg.sender;\n\n        // Update the status of the proposal\n        claimData.status = ProposalStatus.Challenged;\n\n        // Update the clock to the current block timestamp, which marks the start of the challenge.\n        claimData.deadline = Timestamp.wrap(uint64(block.timestamp + MAX_PROVE_DURATION.raw()));\n\n        // Deposit the bond.\n        refundModeCredit[msg.sender] += msg.value;\n\n        emit Challenged(claimData.counteredBy);\n\n        return claimData.status;\n    }\n\n    /// @notice Proves the game.\n    /// @param proofBytes The proof bytes to validate the claim.\n    function prove(bytes calldata proofBytes) external returns (ProposalStatus) {\n        // INVARIANT: Cannot prove if the game is over.\n        if (gameOver()) {\n            revert GameOver();\n        }\n\n        // Decode the public values to check the claim root\n        AggregationOutputs memory publicValues = AggregationOutputs({\n            l1Head: Hash.unwrap(l1Head()),\n            l2PreRoot: Hash.unwrap(startingOutputRoot.root),\n            claimRoot: rootClaim().raw(),\n            claimBlockNum: l2SequenceNumber(),\n            rollupConfigHash: ROLLUP_CONFIG_HASH,\n            rangeVkeyCommitment: RANGE_VKEY_COMMITMENT,\n            proverAddress: msg.sender\n        });\n\n        // Verify the proof. Reverts if the proof is invalid.\n        SP1_VERIFIER.verifyProof(AGGREGATION_VKEY, abi.encode(publicValues), proofBytes);\n\n        // Update the prover address\n        claimData.prover = msg.sender;\n\n        // Update the status of the proposal\n        if (claimData.counteredBy == address(0)) {\n            claimData.status = ProposalStatus.UnchallengedAndValidProofProvided;\n        } else {\n            claimData.status = ProposalStatus.ChallengedAndValidProofProvided;\n        }\n\n        emit Proved(claimData.prover);\n\n        return claimData.status;\n    }\n\n    /// @notice Returns the status of the parent game.\n    /// @dev If the parent game index is `uint32.max`, then the parent game's status is considered as `DEFENDER_WINS`.\n    function getParentGameStatus() private view returns (GameStatus) {\n        if (parentIndex() != type(uint32).max) {\n            (,, IDisputeGame parentGame) = DISPUTE_GAME_FACTORY.gameAtIndex(parentIndex());\n            return parentGame.status();\n        } else {\n            // If this is the first dispute game (i.e. parent game index is `uint32.max`), then the\n            // parent game's status is considered as `DEFENDER_WINS`.\n            return GameStatus.DEFENDER_WINS;\n        }\n    }\n\n    /// @notice Resolves the game after the clock expires.\n    ///         `DEFENDER_WINS` when no one has challenged the proposer's claim and `MAX_CHALLENGE_DURATION` has passed\n    ///         or there is a challenge but the prover has provided a valid proof within the `MAX_PROVE_DURATION`.\n    ///         `CHALLENGER_WINS` when the proposer's claim has been challenged, but the proposer has not proven\n    ///         its claim within the `MAX_PROVE_DURATION`.\n    function resolve() external returns (GameStatus) {\n        // INVARIANT: Resolution cannot occur if the game has already been resolved.\n        if (status != GameStatus.IN_PROGRESS) {\n            revert ClaimAlreadyResolved();\n        }\n\n        // INVARIANT: Cannot resolve a game if the parent game has not been resolved.\n        GameStatus parentGameStatus = getParentGameStatus();\n        if (parentGameStatus == GameStatus.IN_PROGRESS) {\n            revert ParentGameNotResolved();\n        }\n\n        // INVARIANT: If the parent game's claim is invalid, then the current game's claim is invalid.\n        if (parentGameStatus == GameStatus.CHALLENGER_WINS) {\n            // Parent game is invalid so this game is invalid too. Therefore the challenger wins and gets all bonds.\n            // If the game has not been challenged then there will not be any challenger address and the bond is burned.\n            status = GameStatus.CHALLENGER_WINS;\n            normalModeCredit[claimData.counteredBy] = address(this).balance;\n        } else {\n            // INVARIANT: Game must be completed either by clock expiration or valid proof.\n            if (!gameOver()) {\n                revert GameNotOver();\n            }\n\n            // Determine status based on claim status.\n            if (claimData.status == ProposalStatus.Unchallenged) {\n                // Claim is unchallenged, defender wins, game creator gets everything.\n                status = GameStatus.DEFENDER_WINS;\n                normalModeCredit[gameCreator()] = address(this).balance;\n            } else if (claimData.status == ProposalStatus.Challenged) {\n                // Claim is challenged, challenger wins, challenger wins everything\n                status = GameStatus.CHALLENGER_WINS;\n                normalModeCredit[claimData.counteredBy] = address(this).balance;\n            } else if (claimData.status == ProposalStatus.UnchallengedAndValidProofProvided) {\n                // Claim is unchallenged but a valid proof was provided, defender wins, game\n                // creator gets everything. Note that the prover does not receive any reward in\n                // this particular case.\n                status = GameStatus.DEFENDER_WINS;\n                normalModeCredit[gameCreator()] = address(this).balance;\n            } else if (claimData.status == ProposalStatus.ChallengedAndValidProofProvided) {\n                // Claim is challenged but a valid proof was provided, defender wins, prover gets\n                // the challenger's bond and the game creator gets everything else.\n                status = GameStatus.DEFENDER_WINS;\n\n                // If the prover is same as the proposer, the proposer takes the entire bond.\n                if (claimData.prover == gameCreator()) {\n                    normalModeCredit[claimData.prover] = address(this).balance;\n                }\n                // If the prover is different from the proposer, the proposer gets the initial bond back,\n                // and the prover gets the challenger's bond.\n                else {\n                    normalModeCredit[claimData.prover] = CHALLENGER_BOND;\n                    normalModeCredit[gameCreator()] = address(this).balance - CHALLENGER_BOND;\n                }\n            } else {\n                // This edge case shouldn't be reached, sanity check just in case.\n                revert InvalidProposalStatus();\n            }\n        }\n\n        // Mark the game as resolved.\n        claimData.status = ProposalStatus.Resolved;\n        resolvedAt = Timestamp.wrap(uint64(block.timestamp));\n        emit Resolved(status);\n\n        return status;\n    }\n\n    /// @notice Claim the credit belonging to the recipient address. Reverts if the game isn't\n    ///         finalized, if the recipient has no credit to claim, or if the bond transfer\n    ///         fails. If the game is finalized but no bond has been paid out yet, this method\n    ///         will determine the bond distribution mode and also try to update anchor game.\n    /// @param _recipient The owner and recipient of the credit.\n    function claimCredit(address _recipient) external {\n        // Close out the game and determine the bond distribution mode if not already set.\n        // We call this as part of claim credit to reduce the number of additional calls that a\n        // Challenger needs to make to this contract.\n        closeGame();\n\n        // Fetch the recipient's credit balance based on the bond distribution mode.\n        uint256 recipientCredit;\n        if (bondDistributionMode == BondDistributionMode.REFUND) {\n            recipientCredit = refundModeCredit[_recipient];\n        } else if (bondDistributionMode == BondDistributionMode.NORMAL) {\n            recipientCredit = normalModeCredit[_recipient];\n        } else {\n            // We shouldn't get here, but sanity check just in case.\n            revert InvalidBondDistributionMode();\n        }\n\n        // Revert if the recipient has no credit to claim.\n        if (recipientCredit == 0) {\n            revert NoCreditToClaim();\n        }\n\n        // Set the recipient's credit balances to 0.\n        refundModeCredit[_recipient] = 0;\n        normalModeCredit[_recipient] = 0;\n\n        // Transfer the credit to the recipient.\n        (bool success,) = _recipient.call{value: recipientCredit}(hex\"\");\n        if (!success) {\n            revert BondTransferFailed();\n        }\n    }\n\n    /// @notice Closes out the game, determines the bond distribution mode, attempts to register\n    ///         the game as the anchor game, and emits an event.\n    function closeGame() public {\n        // If the bond distribution mode has already been determined, we can return early.\n        if (bondDistributionMode == BondDistributionMode.REFUND || bondDistributionMode == BondDistributionMode.NORMAL)\n        {\n            // We can't revert or we'd break claimCredit().\n            return;\n        } else if (bondDistributionMode != BondDistributionMode.UNDECIDED) {\n            // We shouldn't get here, but sanity check just in case.\n            revert InvalidBondDistributionMode();\n        }\n\n        // Game must be finalized according to the AnchorStateRegistry.\n        bool finalized = ANCHOR_STATE_REGISTRY.isGameFinalized(IDisputeGame(address(this)));\n        if (!finalized) {\n            revert GameNotFinalized();\n        }\n\n        // Try to update the anchor game first. Won't always succeed because delays can lead\n        // to situations in which this game might not be eligible to be a new anchor game.\n        try ANCHOR_STATE_REGISTRY.setAnchorState(IDisputeGame(address(this))) {} catch {}\n\n        // Check if the game is a proper game, which will determine the bond distribution mode.\n        bool properGame = ANCHOR_STATE_REGISTRY.isGameProper(IDisputeGame(address(this)));\n\n        // If the game is a proper game, the bonds should be distributed normally. Otherwise, go\n        // into refund mode and distribute bonds back to their original depositors.\n        if (properGame) {\n            bondDistributionMode = BondDistributionMode.NORMAL;\n        } else {\n            bondDistributionMode = BondDistributionMode.REFUND;\n        }\n\n        // Emit an event to signal that the game has been closed.\n        emit GameClosed(bondDistributionMode);\n    }\n\n    /// @notice Determines if the game is finished.\n    /// @return gameOver_ True if the game is either expired or proven.\n    function gameOver() public view returns (bool gameOver_) {\n        gameOver_ = claimData.deadline.raw() < uint64(block.timestamp) || claimData.prover != address(0);\n    }\n\n    /// @notice Getter for the game type.\n    /// @dev The reference impl should be entirely different depending on the type (fault, validity)\n    ///      i.e. The game type should indicate the security model.\n    /// @return gameType_ The type of proof system being used.\n    function gameType() public view returns (GameType gameType_) {\n        gameType_ = GAME_TYPE;\n    }\n\n    /// @notice Getter for the creator of the dispute game.\n    /// @dev `clones-with-immutable-args` argument #1\n    /// @return creator_ The creator of the dispute game.\n    function gameCreator() public pure returns (address creator_) {\n        creator_ = _getArgAddress(0x00);\n    }\n\n    /// @notice Getter for the root claim.\n    /// @dev `clones-with-immutable-args` argument #2\n    /// @return rootClaim_ The root claim of the DisputeGame.\n    function rootClaim() public pure returns (Claim rootClaim_) {\n        rootClaim_ = Claim.wrap(_getArgBytes32(0x14));\n    }\n\n    /// @notice Getter for the parent hash of the L1 block when the dispute game was created.\n    /// @dev `clones-with-immutable-args` argument #3\n    /// @return l1Head_ The parent hash of the L1 block when the dispute game was created.\n    function l1Head() public pure returns (Hash l1Head_) {\n        l1Head_ = Hash.wrap(_getArgBytes32(0x34));\n    }\n\n    /// @notice Getter for the extra data.\n    /// @dev `clones-with-immutable-args` argument #4\n    /// @return extraData_ Any extra data supplied to the dispute game contract by the creator.\n    function extraData() public pure returns (bytes memory extraData_) {\n        // The extra data starts at the second word within the cwia calldata and\n        // is 36 bytes long. 32 bytes are for the l2BlockNumber, 4 bytes are for the parentIndex.\n        extraData_ = _getArgBytes(0x54, 0x24);\n    }\n\n    /// @notice A compliant implementation of this interface should return the components of the\n    ///         game UUID's preimage provided in the cwia payload. The preimage of the UUID is\n    ///         constructed as `keccak256(gameType . rootClaim . extraData)` where `.` denotes\n    ///         concatenation.\n    /// @return gameType_ The type of proof system being used.\n    /// @return rootClaim_ The root claim of the DisputeGame.\n    /// @return extraData_ Any extra data supplied to the dispute game contract by the creator.\n    function gameData() external view returns (GameType gameType_, Claim rootClaim_, bytes memory extraData_) {\n        gameType_ = gameType();\n        rootClaim_ = rootClaim();\n        extraData_ = extraData();\n    }\n\n    ////////////////////////////////////////////////////////////////\n    //                       MISC EXTERNAL                        //\n    ////////////////////////////////////////////////////////////////\n\n    /// @notice Returns the credit balance of a given recipient.\n    /// @param _recipient The recipient of the credit.\n    /// @return credit_ The credit balance of the recipient.\n    function credit(address _recipient) external view returns (uint256 credit_) {\n        if (bondDistributionMode == BondDistributionMode.REFUND) {\n            credit_ = refundModeCredit[_recipient];\n        } else {\n            // Always return normal credit balance by default unless in refund mode.\n            credit_ = normalModeCredit[_recipient];\n        }\n    }\n\n    ////////////////////////////////////////////////////////////////\n    //                     IMMUTABLE GETTERS                      //\n    ////////////////////////////////////////////////////////////////\n\n    /// @notice Returns the max challenge duration.\n    function maxChallengeDuration() external view returns (Duration maxChallengeDuration_) {\n        maxChallengeDuration_ = MAX_CHALLENGE_DURATION;\n    }\n\n    /// @notice Returns the max prove duration.\n    function maxProveDuration() external view returns (Duration maxProveDuration_) {\n        maxProveDuration_ = MAX_PROVE_DURATION;\n    }\n\n    /// @notice Returns the dispute game factory.\n    function disputeGameFactory() external view returns (IDisputeGameFactory disputeGameFactory_) {\n        disputeGameFactory_ = DISPUTE_GAME_FACTORY;\n    }\n\n    /// @notice Returns the SP1 verifier contract.\n    function sp1Verifier() external view returns (ISP1Verifier verifier_) {\n        verifier_ = SP1_VERIFIER;\n    }\n\n    /// @notice Returns the rollup config hash.\n    function rollupConfigHash() external view returns (bytes32 rollupConfigHash_) {\n        rollupConfigHash_ = ROLLUP_CONFIG_HASH;\n    }\n\n    /// @notice Returns the aggregation vkey.\n    function aggregationVkey() external view returns (bytes32 aggregationVkey_) {\n        aggregationVkey_ = AGGREGATION_VKEY;\n    }\n\n    /// @notice Returns the range vkey commitment.\n    function rangeVkeyCommitment() external view returns (bytes32 rangeVkeyCommitment_) {\n        rangeVkeyCommitment_ = RANGE_VKEY_COMMITMENT;\n    }\n\n    /// @notice Returns the challenger bond amount.\n    function challengerBond() external view returns (uint256 challengerBond_) {\n        challengerBond_ = CHALLENGER_BOND;\n    }\n\n    /// @notice Returns the anchor state registry contract.\n    function anchorStateRegistry() external view returns (IAnchorStateRegistry registry_) {\n        registry_ = ANCHOR_STATE_REGISTRY;\n    }\n\n    /// @notice Returns the access manager contract.\n    function accessManager() external view returns (AccessManager accessManager_) {\n        accessManager_ = ACCESS_MANAGER;\n    }\n}",
+  "resolutions": {
+    "44ad4cf96e2ef6f0": {
+      "status": "differs",
+      "coveredLines": 657,
+      "match": {
+        "origin": "upstream",
+        "collection": "optimism",
+        "relation": {
+          "type": "fork_of",
+          "repository": "ethereum-optimism/optimism"
+        },
+        "rank": 1,
+        "matchedBy": "name",
+        "auditedName": "OPSuccinctFaultDisputeGame",
+        "similarity": 1,
+        "reportId": "optimism/cantina-u18-2026-01",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts-bedrock/src/dispute/zk/OPSuccinctFaultDisputeGame.sol",
+        "commit": "87d406db86907833f75d5c8fb26ade3dcb85eb41",
+        "commitTimestamp": "2025-11-24T03:04:45Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/87d406db86907833f75d5c8fb26ade3dcb85eb41/packages/contracts-bedrock/src/dispute/zk/OPSuccinctFaultDisputeGame.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Full review of the file as listed in the U18 upgrade scope at commit 87d406db (Nov 26 - Dec 3, 2025). No Critical, High or Medium findings in the report.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 18,
+        "removed": 11,
+        "ignoredAdded": 16,
+        "ignoredRemoved": 21,
+        "unchanged": 657,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 50,
+            "oldLines": 56,
+            "newStart": 50,
+            "newLines": 44,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 50,
+                "newLine": 50,
+                "text": "    ////////////////////////////////////////////////////////////////"
+              },
+              { "type": " ", "oldLine": 51, "newLine": 51, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 52,
+                "newLine": 52,
+                "text": "    /// @notice The maximum duration allowed for a challenger to challenge a game."
+              },
+              {
+                "type": "-",
+                "oldLine": 53,
+                "text": "    // nosemgrep: sol-safety-no-immutable-variables",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 54,
+                "newLine": 53,
+                "text": "    Duration internal immutable MAX_CHALLENGE_DURATION;"
+              },
+              { "type": " ", "oldLine": 55, "newLine": 54, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 56,
+                "newLine": 55,
+                "text": "    /// @notice The maximum duration allowed for a proposer to prove against a challenge."
+              },
+              {
+                "type": "-",
+                "oldLine": 57,
+                "text": "    // nosemgrep: sol-safety-no-immutable-variables",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 58,
+                "newLine": 56,
+                "text": "    Duration internal immutable MAX_PROVE_DURATION;"
+              },
+              { "type": " ", "oldLine": 59, "newLine": 57, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 60,
+                "newLine": 58,
+                "text": "    /// @notice The game type ID."
+              },
+              {
+                "type": "-",
+                "oldLine": 61,
+                "text": "    // nosemgrep: sol-safety-no-immutable-variables",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 62,
+                "newLine": 59,
+                "text": "    GameType internal immutable GAME_TYPE;"
+              },
+              { "type": " ", "oldLine": 63, "newLine": 60, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 64,
+                "newLine": 61,
+                "text": "    /// @notice The dispute game factory."
+              },
+              {
+                "type": "-",
+                "oldLine": 65,
+                "text": "    // nosemgrep: sol-safety-no-immutable-variables",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 66,
+                "newLine": 62,
+                "text": "    IDisputeGameFactory internal immutable DISPUTE_GAME_FACTORY;"
+              },
+              { "type": " ", "oldLine": 67, "newLine": 63, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 68,
+                "newLine": 64,
+                "text": "    /// @notice The SP1 verifier."
+              },
+              {
+                "type": "-",
+                "oldLine": 69,
+                "text": "    // nosemgrep: sol-safety-no-immutable-variables",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 70,
+                "newLine": 65,
+                "text": "    ISP1Verifier internal immutable SP1_VERIFIER;"
+              },
+              { "type": " ", "oldLine": 71, "newLine": 66, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 72,
+                "newLine": 67,
+                "text": "    /// @notice The rollup config hash."
+              },
+              {
+                "type": "-",
+                "oldLine": 73,
+                "text": "    // nosemgrep: sol-safety-no-immutable-variables",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 74,
+                "newLine": 68,
+                "text": "    bytes32 internal immutable ROLLUP_CONFIG_HASH;"
+              },
+              { "type": " ", "oldLine": 75, "newLine": 69, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 76,
+                "newLine": 70,
+                "text": "    /// @notice The vkey for the aggregation program."
+              },
+              {
+                "type": "-",
+                "oldLine": 77,
+                "text": "    // nosemgrep: sol-safety-no-immutable-variables",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 78,
+                "newLine": 71,
+                "text": "    bytes32 internal immutable AGGREGATION_VKEY;"
+              },
+              { "type": " ", "oldLine": 79, "newLine": 72, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 80,
+                "text": "    /// @notice The 32 byte commitment to the BabyBear representation of the verification key of the range SP1 program.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 81,
+                "text": "    /// Specifically,",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 73,
+                "text": "    /// @notice The 32 byte commitment to the BabyBear representation of the verification key of the range SP1 program. Specifically,",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 82,
+                "newLine": 74,
+                "text": "    /// this verification is the output of converting the [u32; 8] range BabyBear verification key to a [u8; 32] array."
+              },
+              {
+                "type": "-",
+                "oldLine": 83,
+                "text": "    // nosemgrep: sol-safety-no-immutable-variables",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 84,
+                "newLine": 75,
+                "text": "    bytes32 internal immutable RANGE_VKEY_COMMITMENT;"
+              },
+              { "type": " ", "oldLine": 85, "newLine": 76, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 86,
+                "newLine": 77,
+                "text": "    /// @notice The challenger bond for the game. This is the amount of the bond that the"
+              },
+              {
+                "type": " ",
+                "oldLine": 87,
+                "newLine": 78,
+                "text": "    ///         challenger has to bond to challenge. The prover will receive this bond if they"
+              },
+              {
+                "type": " ",
+                "oldLine": 88,
+                "newLine": 79,
+                "text": "    ///         provide a valid proof in response to a challenge."
+              },
+              {
+                "type": "-",
+                "oldLine": 89,
+                "text": "    // nosemgrep: sol-safety-no-immutable-variables",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 90,
+                "newLine": 80,
+                "text": "    uint256 internal immutable CHALLENGER_BOND;"
+              },
+              { "type": " ", "oldLine": 91, "newLine": 81, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 92,
+                "newLine": 82,
+                "text": "    /// @notice The anchor state registry."
+              },
+              {
+                "type": "-",
+                "oldLine": 93,
+                "text": "    // nosemgrep: sol-safety-no-immutable-variables",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 94,
+                "newLine": 83,
+                "text": "    IAnchorStateRegistry internal immutable ANCHOR_STATE_REGISTRY;"
+              },
+              { "type": " ", "oldLine": 95, "newLine": 84, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 96,
+                "newLine": 85,
+                "text": "    /// @notice The access manager."
+              },
+              {
+                "type": "-",
+                "oldLine": 97,
+                "text": "    // nosemgrep: sol-safety-no-immutable-variables",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 98,
+                "newLine": 86,
+                "text": "    AccessManager internal immutable ACCESS_MANAGER;"
+              },
+              { "type": " ", "oldLine": 99, "newLine": 87, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 100,
+                "newLine": 88,
+                "text": "    /// @notice Semantic version."
+              },
+              {
+                "type": "-",
+                "oldLine": 101,
+                "text": "    /// @custom:semver 0.0.0",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 102,
+                "text": "    string public constant version = \"0.0.0\";",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 89,
+                "text": "    /// @custom:semver 2.0.0",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 90,
+                "text": "    string public constant version = \"2.0.0\";",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 103, "newLine": 91, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 104,
+                "newLine": 92,
+                "text": "    /// @notice The starting timestamp of the game."
+              },
+              {
+                "type": " ",
+                "oldLine": 105,
+                "newLine": 93,
+                "text": "    Timestamp public createdAt;"
+              }
+            ]
+          },
+          {
+            "oldStart": 124,
+            "oldLines": 7,
+            "newStart": 112,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 124, "newLine": 112, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 125,
+                "newLine": 113,
+                "text": "    /// @notice The starting output root of the game that is proven from in case of a challenge."
+              },
+              {
+                "type": " ",
+                "oldLine": 126,
+                "newLine": 114,
+                "text": "    /// @dev This should match the claim root of the parent game."
+              },
+              {
+                "type": "-",
+                "oldLine": 127,
+                "text": "    Proposal public startingProposal;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 115,
+                "text": "    Proposal public startingOutputRoot;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 128, "newLine": 116, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 129,
+                "newLine": 117,
+                "text": "    /// @notice A boolean for whether or not the game type was respected when the game was created."
+              },
+              {
+                "type": " ",
+                "oldLine": 130,
+                "newLine": 118,
+                "text": "    bool public wasRespectedGameTypeWhenCreated;"
+              }
+            ]
+          },
+          {
+            "oldStart": 207,
+            "oldLines": 7,
+            "newStart": 195,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 207,
+                "newLine": 195,
+                "text": "        // - 0x14 creator address"
+              },
+              {
+                "type": " ",
+                "oldLine": 208,
+                "newLine": 196,
+                "text": "        // - 0x20 root claim"
+              },
+              {
+                "type": " ",
+                "oldLine": 209,
+                "newLine": 197,
+                "text": "        // - 0x20 l1 head"
+              },
+              {
+                "type": "-",
+                "oldLine": 210,
+                "text": "        // - 0x20 extraData (l2SequenceNumber)",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 198,
+                "text": "        // - 0x20 extraData (l2BlockNumber)",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 211,
+                "newLine": 199,
+                "text": "        // - 0x04 extraData (parentIndex)"
+              },
+              {
+                "type": " ",
+                "oldLine": 212,
+                "newLine": 200,
+                "text": "        // - 0x02 CWIA bytes"
+              },
+              {
+                "type": " ",
+                "oldLine": 213,
+                "newLine": 201,
+                "text": "        assembly {"
+              }
+            ]
+          },
+          {
+            "oldStart": 236,
+            "oldLines": 7,
+            "newStart": 224,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 236,
+                "newLine": 224,
+                "text": "                revert InvalidParentGame();"
+              },
+              {
+                "type": " ",
+                "oldLine": 237,
+                "newLine": 225,
+                "text": "            }"
+              },
+              { "type": " ", "oldLine": 238, "newLine": 226, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 239,
+                "text": "            startingProposal = Proposal({",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 227,
+                "text": "            startingOutputRoot = Proposal({",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 240,
+                "newLine": 228,
+                "text": "                l2SequenceNumber: OPSuccinctFaultDisputeGame(address(proxy)).l2SequenceNumber(),"
+              },
+              {
+                "type": " ",
+                "oldLine": 241,
+                "newLine": 229,
+                "text": "                root: Hash.wrap(OPSuccinctFaultDisputeGame(address(proxy)).rootClaim().raw())"
+              },
+              {
+                "type": " ",
+                "oldLine": 242,
+                "newLine": 230,
+                "text": "            });"
+              }
+            ]
+          },
+          {
+            "oldStart": 245,
+            "oldLines": 15,
+            "newStart": 233,
+            "newLines": 24,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 245,
+                "newLine": 233,
+                "text": "            if (proxy.status() == GameStatus.CHALLENGER_WINS) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 246,
+                "newLine": 234,
+                "text": "                revert InvalidParentGame();"
+              },
+              {
+                "type": " ",
+                "oldLine": 247,
+                "newLine": 235,
+                "text": "            }"
+              },
+              { "type": "+", "newLine": 236, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 237,
+                "text": "            // INVARIANT: The parent game's L2 block must be ahead of the anchor. This prevents",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 238,
+                "text": "            // duplicate games (same startingOutputRoot via parent index vs uint32.max) and ensures",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 239,
+                "text": "            // that after a game type switch, proposals resume from the anchor rather than a stale parent.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 240,
+                "text": "            (, uint256 anchorL2SeqNum) = ANCHOR_STATE_REGISTRY.getAnchorRoot();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 241,
+                "text": "            if (startingOutputRoot.l2SequenceNumber <= anchorL2SeqNum) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 242,
+                "text": "                revert InvalidParentGame();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 243,
+                "text": "            }",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 248,
+                "newLine": 244,
+                "text": "        } else {"
+              },
+              {
+                "type": "-",
+                "oldLine": 249,
+                "text": "            // When there is no parent game, the starting output root is the anchor state for the game type.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 250,
+                "text": "            (startingProposal.root, startingProposal.l2SequenceNumber) =",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 251,
+                "text": "                IAnchorStateRegistry(ANCHOR_STATE_REGISTRY).anchors(GAME_TYPE);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 245,
+                "text": "            // When there is no parent game, start from the current anchor root. This allows",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 246,
+                "text": "            // resuming from the latest anchor after game type switches (e.g., retirement recovery).",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 247,
+                "text": "            (Hash anchorRoot, uint256 anchorL2SeqNum) = ANCHOR_STATE_REGISTRY.getAnchorRoot();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 248,
+                "text": "            startingOutputRoot = Proposal({root: anchorRoot, l2SequenceNumber: anchorL2SeqNum});",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 252,
+                "newLine": 249,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 253, "newLine": 250, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 254,
+                "newLine": 251,
+                "text": "        // Do not allow the game to be initialized if the root claim corresponds to a block at or before the"
+              },
+              {
+                "type": " ",
+                "oldLine": 255,
+                "newLine": 252,
+                "text": "        // configured starting block number."
+              },
+              {
+                "type": "-",
+                "oldLine": 256,
+                "text": "        if (l2SequenceNumber() <= startingProposal.l2SequenceNumber) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 253,
+                "text": "        if (l2SequenceNumber() <= startingOutputRoot.l2SequenceNumber) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 257,
+                "newLine": 254,
+                "text": "            revert UnexpectedRootClaim(rootClaim());"
+              },
+              {
+                "type": " ",
+                "oldLine": 258,
+                "newLine": 255,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 259, "newLine": 256, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 281,
+            "oldLines": 11,
+            "newStart": 278,
+            "newLines": 17,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 281,
+                "newLine": 278,
+                "text": "            GameType.unwrap(ANCHOR_STATE_REGISTRY.respectedGameType()) == GameType.unwrap(GAME_TYPE);"
+              },
+              { "type": " ", "oldLine": 282, "newLine": 279, "text": "    }" },
+              { "type": " ", "oldLine": 283, "newLine": 280, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 284,
+                "text": "    /// @notice The L2 block number for which this game is proposing an output root.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 281,
+                "text": "    /// @notice The L2 sequence number (block number) for which this game is proposing an output root.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 285,
+                "newLine": 282,
+                "text": "    function l2SequenceNumber() public pure returns (uint256 l2SequenceNumber_) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 286,
+                "newLine": 283,
+                "text": "        l2SequenceNumber_ = _getArgUint256(0x54);"
+              },
+              { "type": " ", "oldLine": 287, "newLine": 284, "text": "    }" },
+              { "type": " ", "oldLine": 288, "newLine": 285, "text": "" },
+              {
+                "type": "+",
+                "newLine": 286,
+                "text": "    /// @notice The L2 block number for which this game is proposing an output root.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 287,
+                "text": "    /// @dev Alias for l2SequenceNumber() for backward compatibility.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 288,
+                "text": "    function l2BlockNumber() public pure returns (uint256 l2BlockNumber_) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 289,
+                "text": "        l2BlockNumber_ = l2SequenceNumber();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 290,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 291, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 289,
+                "newLine": 292,
+                "text": "    /// @notice The parent index of the game."
+              },
+              {
+                "type": " ",
+                "oldLine": 290,
+                "newLine": 293,
+                "text": "    function parentIndex() public pure returns (uint32 parentIndex_) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 291,
+                "newLine": 294,
+                "text": "        parentIndex_ = _getArgUint32(0x74);"
+              }
+            ]
+          },
+          {
+            "oldStart": 293,
+            "oldLines": 12,
+            "newStart": 296,
+            "newLines": 12,
+            "lines": [
+              { "type": " ", "oldLine": 293, "newLine": 296, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 294,
+                "newLine": 297,
+                "text": "    /// @notice Only the starting block number of the game."
+              },
+              {
+                "type": " ",
+                "oldLine": 295,
+                "newLine": 298,
+                "text": "    function startingBlockNumber() external view returns (uint256 startingBlockNumber_) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 296,
+                "text": "        startingBlockNumber_ = startingProposal.l2SequenceNumber;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 299,
+                "text": "        startingBlockNumber_ = startingOutputRoot.l2SequenceNumber;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 297, "newLine": 300, "text": "    }" },
+              { "type": " ", "oldLine": 298, "newLine": 301, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 299,
+                "newLine": 302,
+                "text": "    /// @notice Starting output root of the game."
+              },
+              {
+                "type": " ",
+                "oldLine": 300,
+                "newLine": 303,
+                "text": "    function startingRootHash() external view returns (Hash startingRootHash_) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 301,
+                "text": "        startingRootHash_ = startingProposal.root;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 304,
+                "text": "        startingRootHash_ = startingOutputRoot.root;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 302, "newLine": 305, "text": "    }" },
+              { "type": " ", "oldLine": 303, "newLine": 306, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 304,
+                "newLine": 307,
+                "text": "    ////////////////////////////////////////////////////////////////"
+              }
+            ]
+          },
+          {
+            "oldStart": 345,
+            "oldLines": 8,
+            "newStart": 348,
+            "newLines": 8,
+            "lines": [
+              { "type": " ", "oldLine": 345, "newLine": 348, "text": "    }" },
+              { "type": " ", "oldLine": 346, "newLine": 349, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 347,
+                "newLine": 350,
+                "text": "    /// @notice Proves the game."
+              },
+              {
+                "type": "-",
+                "oldLine": 348,
+                "text": "    /// @param _proofBytes The proof bytes to validate the claim.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 349,
+                "text": "    function prove(bytes calldata _proofBytes) external returns (ProposalStatus) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 351,
+                "text": "    /// @param proofBytes The proof bytes to validate the claim.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 352,
+                "text": "    function prove(bytes calldata proofBytes) external returns (ProposalStatus) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 350,
+                "newLine": 353,
+                "text": "        // INVARIANT: Cannot prove if the game is over."
+              },
+              {
+                "type": " ",
+                "oldLine": 351,
+                "newLine": 354,
+                "text": "        if (gameOver()) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 352,
+                "newLine": 355,
+                "text": "            revert GameOver();"
+              }
+            ]
+          },
+          {
+            "oldStart": 355,
+            "oldLines": 7,
+            "newStart": 358,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 355,
+                "newLine": 358,
+                "text": "        // Decode the public values to check the claim root"
+              },
+              {
+                "type": " ",
+                "oldLine": 356,
+                "newLine": 359,
+                "text": "        AggregationOutputs memory publicValues = AggregationOutputs({"
+              },
+              {
+                "type": " ",
+                "oldLine": 357,
+                "newLine": 360,
+                "text": "            l1Head: Hash.unwrap(l1Head()),"
+              },
+              {
+                "type": "-",
+                "oldLine": 358,
+                "text": "            l2PreRoot: Hash.unwrap(startingProposal.root),",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 361,
+                "text": "            l2PreRoot: Hash.unwrap(startingOutputRoot.root),",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 359,
+                "newLine": 362,
+                "text": "            claimRoot: rootClaim().raw(),"
+              },
+              {
+                "type": " ",
+                "oldLine": 360,
+                "newLine": 363,
+                "text": "            claimBlockNum: l2SequenceNumber(),"
+              },
+              {
+                "type": " ",
+                "oldLine": 361,
+                "newLine": 364,
+                "text": "            rollupConfigHash: ROLLUP_CONFIG_HASH,"
+              }
+            ]
+          },
+          {
+            "oldStart": 364,
+            "oldLines": 7,
+            "newStart": 367,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 364,
+                "newLine": 367,
+                "text": "        });"
+              },
+              { "type": " ", "oldLine": 365, "newLine": 368, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 366,
+                "newLine": 369,
+                "text": "        // Verify the proof. Reverts if the proof is invalid."
+              },
+              {
+                "type": "-",
+                "oldLine": 367,
+                "text": "        SP1_VERIFIER.verifyProof(AGGREGATION_VKEY, abi.encode(publicValues), _proofBytes);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 370,
+                "text": "        SP1_VERIFIER.verifyProof(AGGREGATION_VKEY, abi.encode(publicValues), proofBytes);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 368, "newLine": 371, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 369,
+                "newLine": 372,
+                "text": "        // Update the prover address"
+              },
+              {
+                "type": " ",
+                "oldLine": 370,
+                "newLine": 373,
+                "text": "        claimData.prover = msg.sender;"
+              }
+            ]
+          },
+          {
+            "oldStart": 400,
+            "oldLines": 7,
+            "newStart": 403,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 400,
+                "newLine": 403,
+                "text": "    ///         `CHALLENGER_WINS` when the proposer's claim has been challenged, but the proposer has not proven"
+              },
+              {
+                "type": " ",
+                "oldLine": 401,
+                "newLine": 404,
+                "text": "    ///         its claim within the `MAX_PROVE_DURATION`."
+              },
+              {
+                "type": " ",
+                "oldLine": 402,
+                "newLine": 405,
+                "text": "    function resolve() external returns (GameStatus) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 403,
+                "text": "        // INVARIANT: Resolution cannot occur unless the game has already been resolved.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 406,
+                "text": "        // INVARIANT: Resolution cannot occur if the game has already been resolved.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 404,
+                "newLine": 407,
+                "text": "        if (status != GameStatus.IN_PROGRESS) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 405,
+                "newLine": 408,
+                "text": "            revert ClaimAlreadyResolved();"
+              },
+              {
+                "type": " ",
+                "oldLine": 406,
+                "newLine": 409,
+                "text": "        }"
+              }
+            ]
+          },
+          {
+            "oldStart": 526,
+            "oldLines": 7,
+            "newStart": 529,
+            "newLines": 6,
+            "lines": [
+              { "type": " ", "oldLine": 526, "newLine": 529, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 527,
+                "newLine": 530,
+                "text": "        // Try to update the anchor game first. Won't always succeed because delays can lead"
+              },
+              {
+                "type": " ",
+                "oldLine": 528,
+                "newLine": 531,
+                "text": "        // to situations in which this game might not be eligible to be a new anchor game."
+              },
+              {
+                "type": "-",
+                "oldLine": 529,
+                "text": "        // nosemgrep: sol-safety-trycatch-eip150",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 530,
+                "newLine": 532,
+                "text": "        try ANCHOR_STATE_REGISTRY.setAnchorState(IDisputeGame(address(this))) {} catch {}"
+              },
+              { "type": " ", "oldLine": 531, "newLine": 533, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 532,
+                "newLine": 534,
+                "text": "        // Check if the game is a proper game, which will determine the bond distribution mode."
+              }
+            ]
+          },
+          {
+            "oldStart": 584,
+            "oldLines": 7,
+            "newStart": 586,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 584,
+                "newLine": 586,
+                "text": "    /// @return extraData_ Any extra data supplied to the dispute game contract by the creator."
+              },
+              {
+                "type": " ",
+                "oldLine": 585,
+                "newLine": 587,
+                "text": "    function extraData() public pure returns (bytes memory extraData_) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 586,
+                "newLine": 588,
+                "text": "        // The extra data starts at the second word within the cwia calldata and"
+              },
+              {
+                "type": "-",
+                "oldLine": 587,
+                "text": "        // is 36 bytes long. 32 bytes are for the l2SequenceNumber, 4 bytes are for the parentIndex.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 589,
+                "text": "        // is 36 bytes long. 32 bytes are for the l2BlockNumber, 4 bytes are for the parentIndex.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 588,
+                "newLine": 590,
+                "text": "        extraData_ = _getArgBytes(0x54, 0x24);"
+              },
+              { "type": " ", "oldLine": 589, "newLine": 591, "text": "    }" },
+              { "type": " ", "oldLine": 590, "newLine": 592, "text": "" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

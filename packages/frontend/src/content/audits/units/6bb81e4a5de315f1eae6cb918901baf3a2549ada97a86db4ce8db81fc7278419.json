@@ -1,0 +1,2722 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "6bb81e4a5de315f1eae6cb918901baf3a2549ada97a86db4ce8db81fc7278419",
+  "name": "ECDSA",
+  "kind": "library",
+  "lines": 388,
+  "source": "library ECDSA {\n    /*´:°•.°+.*•´.*:˚.°*.˚•´.°:°•.°•.*•´.*:˚.°*.˚•´.°:°•.°+.*•´.*:*/\n    /*                         CONSTANTS                          */\n    /*.•°:°.´+˚.*°.˚:*.´•*.+°.•°:´*.´•*.•°.•°:°.´:•˚°.*°.˚:*.´+°.•*/\n\n    /// @dev The order of the secp256k1 elliptic curve.\n    uint256 internal constant N = 0xfffffffffffffffffffffffffffffffebaaedce6af48a03bbfd25e8cd0364141;\n\n    /// @dev `N/2 + 1`. Used for checking the malleability of the signature.\n    uint256 private constant _HALF_N_PLUS_1 = 0x7fffffffffffffffffffffffffffffff5d576e7357a4501ddfe92f46681b20a1;\n\n    /*´:°•.°+.*•´.*:˚.°*.˚•´.°:°•.°•.*•´.*:˚.°*.˚•´.°:°•.°+.*•´.*:*/\n    /*                        CUSTOM ERRORS                       */\n    /*.•°:°.´+˚.*°.˚:*.´•*.+°.•°:´*.´•*.•°.•°:°.´:•˚°.*°.˚:*.´+°.•*/\n\n    /// @dev The signature is invalid.\n    error InvalidSignature();\n\n    /*´:°•.°+.*•´.*:˚.°*.˚•´.°:°•.°•.*•´.*:˚.°*.˚•´.°:°•.°+.*•´.*:*/\n    /*                    RECOVERY OPERATIONS                     */\n    /*.•°:°.´+˚.*°.˚:*.´•*.+°.•°:´*.´•*.•°.•°:°.´:•˚°.*°.˚:*.´+°.•*/\n\n    /// @dev Recovers the signer's address from a message digest `hash`, and the `signature`.\n    function recover(bytes32 hash, bytes memory signature) internal view returns (address result) {\n        /// @solidity memory-safe-assembly\n        assembly {\n            for { let m := mload(0x40) } 1 {\n                mstore(0x00, 0x8baa579f) // `InvalidSignature()`.\n                revert(0x1c, 0x04)\n            } {\n                switch mload(signature)\n                case 64 {\n                    let vs := mload(add(signature, 0x40))\n                    mstore(0x20, add(shr(255, vs), 27)) // `v`.\n                    mstore(0x60, shr(1, shl(1, vs))) // `s`.\n                }\n                case 65 {\n                    mstore(0x20, byte(0, mload(add(signature, 0x60)))) // `v`.\n                    mstore(0x60, mload(add(signature, 0x40))) // `s`.\n                }\n                default { continue }\n                mstore(0x00, hash)\n                mstore(0x40, mload(add(signature, 0x20))) // `r`.\n                result := mload(staticcall(gas(), 1, 0x00, 0x80, 0x01, 0x20))\n                mstore(0x60, 0) // Restore the zero slot.\n                mstore(0x40, m) // Restore the free memory pointer.\n                // `returndatasize()` will be `0x20` upon success, and `0x00` otherwise.\n                if returndatasize() { break }\n            }\n        }\n    }\n\n    /// @dev Recovers the signer's address from a message digest `hash`, and the `signature`.\n    function recoverCalldata(bytes32 hash, bytes calldata signature) internal view returns (address result) {\n        /// @solidity memory-safe-assembly\n        assembly {\n            for { let m := mload(0x40) } 1 {\n                mstore(0x00, 0x8baa579f) // `InvalidSignature()`.\n                revert(0x1c, 0x04)\n            } {\n                switch signature.length\n                case 64 {\n                    let vs := calldataload(add(signature.offset, 0x20))\n                    mstore(0x20, add(shr(255, vs), 27)) // `v`.\n                    mstore(0x40, calldataload(signature.offset)) // `r`.\n                    mstore(0x60, shr(1, shl(1, vs))) // `s`.\n                }\n                case 65 {\n                    mstore(0x20, byte(0, calldataload(add(signature.offset, 0x40)))) // `v`.\n                    calldatacopy(0x40, signature.offset, 0x40) // Copy `r` and `s`.\n                }\n                default { continue }\n                mstore(0x00, hash)\n                result := mload(staticcall(gas(), 1, 0x00, 0x80, 0x01, 0x20))\n                mstore(0x60, 0) // Restore the zero slot.\n                mstore(0x40, m) // Restore the free memory pointer.\n                // `returndatasize()` will be `0x20` upon success, and `0x00` otherwise.\n                if returndatasize() { break }\n            }\n        }\n    }\n\n    /// @dev Recovers the signer's address from a message digest `hash`,\n    /// and the EIP-2098 short form signature defined by `r` and `vs`.\n    function recover(bytes32 hash, bytes32 r, bytes32 vs) internal view returns (address result) {\n        /// @solidity memory-safe-assembly\n        assembly {\n            let m := mload(0x40) // Cache the free memory pointer.\n            mstore(0x00, hash)\n            mstore(0x20, add(shr(255, vs), 27)) // `v`.\n            mstore(0x40, r)\n            mstore(0x60, shr(1, shl(1, vs))) // `s`.\n            result := mload(staticcall(gas(), 1, 0x00, 0x80, 0x01, 0x20))\n            // `returndatasize()` will be `0x20` upon success, and `0x00` otherwise.\n            if iszero(returndatasize()) {\n                mstore(0x00, 0x8baa579f) // `InvalidSignature()`.\n                revert(0x1c, 0x04)\n            }\n            mstore(0x60, 0) // Restore the zero slot.\n            mstore(0x40, m) // Restore the free memory pointer.\n        }\n    }\n\n    /// @dev Recovers the signer's address from a message digest `hash`,\n    /// and the signature defined by `v`, `r`, `s`.\n    function recover(bytes32 hash, uint8 v, bytes32 r, bytes32 s) internal view returns (address result) {\n        /// @solidity memory-safe-assembly\n        assembly {\n            let m := mload(0x40) // Cache the free memory pointer.\n            mstore(0x00, hash)\n            mstore(0x20, and(v, 0xff))\n            mstore(0x40, r)\n            mstore(0x60, s)\n            result := mload(staticcall(gas(), 1, 0x00, 0x80, 0x01, 0x20))\n            // `returndatasize()` will be `0x20` upon success, and `0x00` otherwise.\n            if iszero(returndatasize()) {\n                mstore(0x00, 0x8baa579f) // `InvalidSignature()`.\n                revert(0x1c, 0x04)\n            }\n            mstore(0x60, 0) // Restore the zero slot.\n            mstore(0x40, m) // Restore the free memory pointer.\n        }\n    }\n\n    /*´:°•.°+.*•´.*:˚.°*.˚•´.°:°•.°•.*•´.*:˚.°*.˚•´.°:°•.°+.*•´.*:*/\n    /*                   TRY-RECOVER OPERATIONS                   */\n    /*.•°:°.´+˚.*°.˚:*.´•*.+°.•°:´*.´•*.•°.•°:°.´:•˚°.*°.˚:*.´+°.•*/\n\n    // WARNING!\n    // These functions will NOT revert upon recovery failure.\n    // Instead, they will return the zero address upon recovery failure.\n    // It is critical that the returned address is NEVER compared against\n    // a zero address (e.g. an uninitialized address variable).\n\n    /// @dev Recovers the signer's address from a message digest `hash`, and the `signature`.\n    function tryRecover(bytes32 hash, bytes memory signature) internal view returns (address result) {\n        /// @solidity memory-safe-assembly\n        assembly {\n            for { let m := mload(0x40) } 1 {} {\n                switch mload(signature)\n                case 64 {\n                    let vs := mload(add(signature, 0x40))\n                    mstore(0x20, add(shr(255, vs), 27)) // `v`.\n                    mstore(0x60, shr(1, shl(1, vs))) // `s`.\n                }\n                case 65 {\n                    mstore(0x20, byte(0, mload(add(signature, 0x60)))) // `v`.\n                    mstore(0x60, mload(add(signature, 0x40))) // `s`.\n                }\n                default { break }\n                mstore(0x00, hash)\n                mstore(0x40, mload(add(signature, 0x20))) // `r`.\n                pop(staticcall(gas(), 1, 0x00, 0x80, 0x40, 0x20))\n                mstore(0x60, 0) // Restore the zero slot.\n                // `returndatasize()` will be `0x20` upon success, and `0x00` otherwise.\n                result := mload(xor(0x60, returndatasize()))\n                mstore(0x40, m) // Restore the free memory pointer.\n                break\n            }\n        }\n    }\n\n    /// @dev Recovers the signer's address from a message digest `hash`, and the `signature`.\n    function tryRecoverCalldata(bytes32 hash, bytes calldata signature) internal view returns (address result) {\n        /// @solidity memory-safe-assembly\n        assembly {\n            for { let m := mload(0x40) } 1 {} {\n                switch signature.length\n                case 64 {\n                    let vs := calldataload(add(signature.offset, 0x20))\n                    mstore(0x20, add(shr(255, vs), 27)) // `v`.\n                    mstore(0x40, calldataload(signature.offset)) // `r`.\n                    mstore(0x60, shr(1, shl(1, vs))) // `s`.\n                }\n                case 65 {\n                    mstore(0x20, byte(0, calldataload(add(signature.offset, 0x40)))) // `v`.\n                    calldatacopy(0x40, signature.offset, 0x40) // Copy `r` and `s`.\n                }\n                default { break }\n                mstore(0x00, hash)\n                pop(staticcall(gas(), 1, 0x00, 0x80, 0x40, 0x20))\n                mstore(0x60, 0) // Restore the zero slot.\n                // `returndatasize()` will be `0x20` upon success, and `0x00` otherwise.\n                result := mload(xor(0x60, returndatasize()))\n                mstore(0x40, m) // Restore the free memory pointer.\n                break\n            }\n        }\n    }\n\n    /// @dev Recovers the signer's address from a message digest `hash`,\n    /// and the EIP-2098 short form signature defined by `r` and `vs`.\n    function tryRecover(bytes32 hash, bytes32 r, bytes32 vs) internal view returns (address result) {\n        /// @solidity memory-safe-assembly\n        assembly {\n            let m := mload(0x40) // Cache the free memory pointer.\n            mstore(0x00, hash)\n            mstore(0x20, add(shr(255, vs), 27)) // `v`.\n            mstore(0x40, r)\n            mstore(0x60, shr(1, shl(1, vs))) // `s`.\n            pop(staticcall(gas(), 1, 0x00, 0x80, 0x40, 0x20))\n            mstore(0x60, 0) // Restore the zero slot.\n            // `returndatasize()` will be `0x20` upon success, and `0x00` otherwise.\n            result := mload(xor(0x60, returndatasize()))\n            mstore(0x40, m) // Restore the free memory pointer.\n        }\n    }\n\n    /// @dev Recovers the signer's address from a message digest `hash`,\n    /// and the signature defined by `v`, `r`, `s`.\n    function tryRecover(bytes32 hash, uint8 v, bytes32 r, bytes32 s) internal view returns (address result) {\n        /// @solidity memory-safe-assembly\n        assembly {\n            let m := mload(0x40) // Cache the free memory pointer.\n            mstore(0x00, hash)\n            mstore(0x20, and(v, 0xff))\n            mstore(0x40, r)\n            mstore(0x60, s)\n            pop(staticcall(gas(), 1, 0x00, 0x80, 0x40, 0x20))\n            mstore(0x60, 0) // Restore the zero slot.\n            // `returndatasize()` will be `0x20` upon success, and `0x00` otherwise.\n            result := mload(xor(0x60, returndatasize()))\n            mstore(0x40, m) // Restore the free memory pointer.\n        }\n    }\n\n    /*´:°•.°+.*•´.*:˚.°*.˚•´.°:°•.°•.*•´.*:˚.°*.˚•´.°:°•.°+.*•´.*:*/\n    /*                     HASHING OPERATIONS                     */\n    /*.•°:°.´+˚.*°.˚:*.´•*.+°.•°:´*.´•*.•°.•°:°.´:•˚°.*°.˚:*.´+°.•*/\n\n    /// @dev Returns an Ethereum Signed Message, created from a `hash`.\n    /// This produces a hash corresponding to the one signed with the\n    /// [`eth_sign`](https://ethereum.org/en/developers/docs/apis/json-rpc/#eth_sign)\n    /// JSON-RPC method as part of EIP-191.\n    function toEthSignedMessageHash(bytes32 hash) internal pure returns (bytes32 result) {\n        /// @solidity memory-safe-assembly\n        assembly {\n            mstore(0x20, hash) // Store into scratch space for keccak256.\n            mstore(0x00, \"\\x00\\x00\\x00\\x00\\x19Ethereum Signed Message:\\n32\") // 28 bytes.\n            result := keccak256(0x04, 0x3c) // `32 * 2 - (32 - 28) = 60 = 0x3c`.\n        }\n    }\n\n    /// @dev Returns an Ethereum Signed Message, created from `s`.\n    /// This produces a hash corresponding to the one signed with the\n    /// [`eth_sign`](https://ethereum.org/en/developers/docs/apis/json-rpc/#eth_sign)\n    /// JSON-RPC method as part of EIP-191.\n    /// Note: Supports lengths of `s` up to 999999 bytes.\n    function toEthSignedMessageHash(bytes memory s) internal pure returns (bytes32 result) {\n        /// @solidity memory-safe-assembly\n        assembly {\n            let sLength := mload(s)\n            let o := 0x20\n            mstore(o, \"\\x19Ethereum Signed Message:\\n\") // 26 bytes, zero-right-padded.\n            mstore(0x00, 0x00)\n            // Convert the `s.length` to ASCII decimal representation: `base10(s.length)`.\n            for { let temp := sLength } 1 {} {\n                o := sub(o, 1)\n                mstore8(o, add(48, mod(temp, 10)))\n                temp := div(temp, 10)\n                if iszero(temp) { break }\n            }\n            let n := sub(0x3a, o) // Header length: `26 + 32 - o`.\n            // Throw an out-of-offset error (consumes all gas) if the header exceeds 32 bytes.\n            returndatacopy(returndatasize(), returndatasize(), gt(n, 0x20))\n            mstore(s, or(mload(0x00), mload(n))) // Temporarily store the header.\n            result := keccak256(add(s, sub(0x20, n)), add(n, sLength))\n            mstore(s, sLength) // Restore the length.\n        }\n    }\n\n    /*´:°•.°+.*•´.*:˚.°*.˚•´.°:°•.°•.*•´.*:˚.°*.˚•´.°:°•.°+.*•´.*:*/\n    /*                  CANONICAL HASH FUNCTIONS                  */\n    /*.•°:°.´+˚.*°.˚:*.´•*.+°.•°:´*.´•*.•°.•°:°.´:•˚°.*°.˚:*.´+°.•*/\n\n    // The following functions returns the hash of the signature in it's canonicalized format,\n    // which is the 65-byte `abi.encodePacked(r, s, uint8(v))`, where `v` is either 27 or 28.\n    // If `s` is greater than `N / 2` then it will be converted to `N - s`\n    // and the `v` value will be flipped.\n    // If the signature has an invalid length, or if `v` is invalid,\n    // a uniquely corrupt hash will be returned.\n    // These functions are useful for \"poor-mans-VRF\".\n\n    /// @dev Returns the canonical hash of `signature`.\n    function canonicalHash(bytes memory signature) internal pure returns (bytes32 result) {\n        // @solidity memory-safe-assembly\n        assembly {\n            let l := mload(signature)\n            for {} 1 {} {\n                mstore(0x00, mload(add(signature, 0x20))) // `r`.\n                let s := mload(add(signature, 0x40))\n                let v := mload(add(signature, 0x41))\n                if eq(l, 64) {\n                    v := add(shr(255, s), 27)\n                    s := shr(1, shl(1, s))\n                }\n                if iszero(lt(s, _HALF_N_PLUS_1)) {\n                    v := xor(v, 7)\n                    s := sub(N, s)\n                }\n                mstore(0x21, v)\n                mstore(0x20, s)\n                result := keccak256(0x00, 0x41)\n                mstore(0x21, 0) // Restore the overwritten part of the free memory pointer.\n                break\n            }\n\n            // If the length is neither 64 nor 65, return a uniquely corrupted hash.\n            if iszero(lt(sub(l, 64), 2)) {\n                // `bytes4(keccak256(\"InvalidSignatureLength\"))`.\n                result := xor(keccak256(add(signature, 0x20), l), 0xd62f1ab2)\n            }\n        }\n    }\n\n    /// @dev Returns the canonical hash of `signature`.\n    function canonicalHashCalldata(bytes calldata signature) internal pure returns (bytes32 result) {\n        // @solidity memory-safe-assembly\n        assembly {\n            for {} 1 {} {\n                mstore(0x00, calldataload(signature.offset)) // `r`.\n                let s := calldataload(add(signature.offset, 0x20))\n                let v := calldataload(add(signature.offset, 0x21))\n                if eq(signature.length, 64) {\n                    v := add(shr(255, s), 27)\n                    s := shr(1, shl(1, s))\n                }\n                if iszero(lt(s, _HALF_N_PLUS_1)) {\n                    v := xor(v, 7)\n                    s := sub(N, s)\n                }\n                mstore(0x21, v)\n                mstore(0x20, s)\n                result := keccak256(0x00, 0x41)\n                mstore(0x21, 0) // Restore the overwritten part of the free memory pointer.\n                break\n            }\n            // If the length is neither 64 nor 65, return a uniquely corrupted hash.\n            if iszero(lt(sub(signature.length, 64), 2)) {\n                calldatacopy(mload(0x40), signature.offset, signature.length)\n                // `bytes4(keccak256(\"InvalidSignatureLength\"))`.\n                result := xor(keccak256(mload(0x40), signature.length), 0xd62f1ab2)\n            }\n        }\n    }\n\n    /// @dev Returns the canonical hash of `signature`.\n    function canonicalHash(bytes32 r, bytes32 vs) internal pure returns (bytes32 result) {\n        // @solidity memory-safe-assembly\n        assembly {\n            mstore(0x00, r) // `r`.\n            let v := add(shr(255, vs), 27)\n            let s := shr(1, shl(1, vs))\n            mstore(0x21, v)\n            mstore(0x20, s)\n            result := keccak256(0x00, 0x41)\n            mstore(0x21, 0) // Restore the overwritten part of the free memory pointer.\n        }\n    }\n\n    /// @dev Returns the canonical hash of `signature`.\n    function canonicalHash(uint8 v, bytes32 r, bytes32 s) internal pure returns (bytes32 result) {\n        // @solidity memory-safe-assembly\n        assembly {\n            mstore(0x00, r) // `r`.\n            if iszero(lt(s, _HALF_N_PLUS_1)) {\n                v := xor(v, 7)\n                s := sub(N, s)\n            }\n            mstore(0x21, v)\n            mstore(0x20, s)\n            result := keccak256(0x00, 0x41)\n            mstore(0x21, 0) // Restore the overwritten part of the free memory pointer.\n        }\n    }\n\n    /*´:°•.°+.*•´.*:˚.°*.˚•´.°:°•.°•.*•´.*:˚.°*.˚•´.°:°•.°+.*•´.*:*/\n    /*                   EMPTY CALLDATA HELPERS                   */\n    /*.•°:°.´+˚.*°.˚:*.´•*.+°.•°:´*.´•*.•°.•°:°.´:•˚°.*°.˚:*.´+°.•*/\n\n    /// @dev Returns an empty calldata bytes.\n    function emptySignature() internal pure returns (bytes calldata signature) {\n        /// @solidity memory-safe-assembly\n        assembly {\n            signature.length := 0\n        }\n    }\n}",
+  "resolutions": {
+    "1daaed8c8125f2b6": {
+      "status": "differs",
+      "coveredLines": 252,
+      "match": {
+        "origin": "library",
+        "collection": "solady",
+        "relation": { "type": "library" },
+        "rank": 3,
+        "matchedBy": "name",
+        "auditedName": "ECDSA",
+        "similarity": 0.612,
+        "reportId": "solady/cantina-solady-report",
+        "repository": "Vectorized/solady",
+        "path": "src/utils/ECDSA.sol",
+        "commit": "96af34cd3dca7ac3b9d337939dcfe61c88f7c24c",
+        "commitTimestamp": "2023-09-10T20:21:42Z",
+        "url": "https://github.com/Vectorized/solady/blob/96af34cd3dca7ac3b9d337939dcfe61c88f7c24c/src/utils/ECDSA.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "Remediation review",
+        "coverage": "Review of the fix for finding 4.5.5 (PR 573); not a full re-audit.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 136,
+        "removed": 92,
+        "ignoredAdded": 71,
+        "ignoredRemoved": 63,
+        "unchanged": 252,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 5,
+            "newStart": 1,
+            "newLines": 15,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "library ECDSA {"
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "    /*´:°•.°+.*•´.*:˚.°*.˚•´.°:°•.°•.*•´.*:˚.°*.˚•´.°:°•.°+.*•´.*:*/"
+              },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "    /*                         CONSTANTS                          */",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 4,
+                "text": "    /*.•°:°.´+˚.*°.˚:*.´•*.+°.•°:´*.´•*.•°.•°:°.´:•˚°.*°.˚:*.´+°.•*/",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 5, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 6,
+                "text": "    /// @dev The order of the secp256k1 elliptic curve.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 7,
+                "text": "    uint256 internal constant N = 0xfffffffffffffffffffffffffffffffebaaedce6af48a03bbfd25e8cd0364141;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 8, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 9,
+                "text": "    /// @dev `N/2 + 1`. Used for checking the malleability of the signature.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 10,
+                "text": "    uint256 private constant _HALF_N_PLUS_1 = 0x7fffffffffffffffffffffffffffffff5d576e7357a4501ddfe92f46681b20a1;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 11, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 12,
+                "text": "    /*´:°•.°+.*•´.*:˚.°*.˚•´.°:°•.°•.*•´.*:˚.°*.˚•´.°:°•.°+.*•´.*:*/",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 13,
+                "text": "    /*                        CUSTOM ERRORS                       */"
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 14,
+                "text": "    /*.•°:°.´+˚.*°.˚:*.´•*.+°.•°:´*.´•*.•°.•°:°.´:•˚°.*°.˚:*.´+°.•*/"
+              },
+              { "type": " ", "oldLine": 5, "newLine": 15, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 10,
+            "oldLines": 84,
+            "newStart": 20,
+            "newLines": 68,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 10,
+                "newLine": 20,
+                "text": "    /*                    RECOVERY OPERATIONS                     */"
+              },
+              {
+                "type": " ",
+                "oldLine": 11,
+                "newLine": 21,
+                "text": "    /*.•°:°.´+˚.*°.˚:*.´•*.+°.•°:´*.´•*.•°.•°:°.´:•˚°.*°.˚:*.´+°.•*/"
+              },
+              { "type": " ", "oldLine": 12, "newLine": 22, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 13,
+                "text": "    // Note: as of Solady version 0.0.68, these functions will",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 14,
+                "text": "    // revert upon recovery failure for more safety by default.",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 15, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 16,
+                "text": "    /// @dev Recovers the signer's address from a message digest `hash`,",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 17,
+                "text": "    /// and the `signature`.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 18,
+                "text": "    ///",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 19,
+                "text": "    /// This function does NOT accept EIP-2098 short form signatures.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 20,
+                "text": "    /// Use `recover(bytes32 hash, bytes32 r, bytes32 vs)` for EIP-2098",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 21,
+                "text": "    /// short form signatures instead.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 23,
+                "text": "    /// @dev Recovers the signer's address from a message digest `hash`, and the `signature`.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 24,
+                "text": "    function recover(bytes32 hash, bytes memory signature) internal view returns (address result) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 23,
+                "newLine": 25,
+                "text": "        /// @solidity memory-safe-assembly"
+              },
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 26,
+                "text": "        assembly {"
+              },
+              {
+                "type": "-",
+                "oldLine": 25,
+                "text": "            let m := mload(0x40) // Cache the free memory pointer.",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 26,
+                "text": "            let signatureLength := mload(signature)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 27,
+                "text": "            mstore(0x00, hash)",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 28,
+                "text": "            mstore(0x20, byte(0, mload(add(signature, 0x60)))) // `v`.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 29,
+                "text": "            mstore(0x40, mload(add(signature, 0x20))) // `r`.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 30,
+                "text": "            mstore(0x60, mload(add(signature, 0x40))) // `s`.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 31,
+                "text": "            result :=",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 32,
+                "text": "                mload(",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 33,
+                "text": "                    staticcall(",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 34,
+                "text": "                        gas(), // Amount of gas left for the transaction.",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 35,
+                "text": "                        eq(signatureLength, 65), // Address of `ecrecover`.",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 36,
+                "text": "                        0x00, // Start of input.",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 37,
+                "text": "                        0x80, // Size of input.",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 38,
+                "text": "                        0x01, // Start of output.",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 39,
+                "text": "                        0x20 // Size of output.",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 40,
+                "text": "                    )",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 41,
+                "text": "                )",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 42,
+                "text": "            // `returndatasize()` will be `0x20` upon success, and `0x00` otherwise.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 43,
+                "text": "            if iszero(returndatasize()) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 27,
+                "text": "            for { let m := mload(0x40) } 1 {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 44,
+                "newLine": 28,
+                "text": "                mstore(0x00, 0x8baa579f) // `InvalidSignature()`."
+              },
+              {
+                "type": " ",
+                "oldLine": 45,
+                "newLine": 29,
+                "text": "                revert(0x1c, 0x04)"
+              },
+              {
+                "type": "+",
+                "newLine": 30,
+                "text": "            } {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 31,
+                "text": "                switch mload(signature)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 32,
+                "text": "                case 64 {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 33,
+                "text": "                    let vs := mload(add(signature, 0x40))",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 34,
+                "text": "                    mstore(0x20, add(shr(255, vs), 27)) // `v`.",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 35,
+                "text": "                    mstore(0x60, shr(1, shl(1, vs))) // `s`.",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 36,
+                "text": "                }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 37,
+                "text": "                case 65 {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 38,
+                "text": "                    mstore(0x20, byte(0, mload(add(signature, 0x60)))) // `v`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 39,
+                "text": "                    mstore(0x60, mload(add(signature, 0x40))) // `s`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 40,
+                "text": "                }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 41,
+                "text": "                default { continue }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 42,
+                "text": "                mstore(0x00, hash)",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 43,
+                "text": "                mstore(0x40, mload(add(signature, 0x20))) // `r`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 44,
+                "text": "                result := mload(staticcall(gas(), 1, 0x00, 0x80, 0x01, 0x20))",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 45,
+                "text": "                mstore(0x60, 0) // Restore the zero slot.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 46,
+                "text": "                mstore(0x40, m) // Restore the free memory pointer.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 47,
+                "text": "                // `returndatasize()` will be `0x20` upon success, and `0x00` otherwise.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 48,
+                "text": "                if returndatasize() { break }",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 46,
+                "newLine": 49,
+                "text": "            }"
+              },
+              {
+                "type": "-",
+                "oldLine": 47,
+                "text": "            mstore(0x60, 0) // Restore the zero slot.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 48,
+                "text": "            mstore(0x40, m) // Restore the free memory pointer.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 49,
+                "newLine": 50,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 50, "newLine": 51, "text": "    }" },
+              { "type": " ", "oldLine": 51, "newLine": 52, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 52,
+                "text": "    /// @dev Recovers the signer's address from a message digest `hash`,",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 53,
+                "text": "    /// and the `signature`.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 54,
+                "text": "    ///",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 55,
+                "text": "    /// This function does NOT accept EIP-2098 short form signatures.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 56,
+                "text": "    /// Use `recover(bytes32 hash, bytes32 r, bytes32 vs)` for EIP-2098",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 57,
+                "text": "    /// short form signatures instead.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 53,
+                "text": "    /// @dev Recovers the signer's address from a message digest `hash`, and the `signature`.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 58,
+                "newLine": 54,
+                "text": "    function recoverCalldata(bytes32 hash, bytes calldata signature) internal view returns (address result) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 59,
+                "newLine": 55,
+                "text": "        /// @solidity memory-safe-assembly"
+              },
+              {
+                "type": " ",
+                "oldLine": 60,
+                "newLine": 56,
+                "text": "        assembly {"
+              },
+              {
+                "type": "-",
+                "oldLine": 61,
+                "text": "            let m := mload(0x40) // Cache the free memory pointer.",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 62,
+                "text": "            mstore(0x00, hash)",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 63,
+                "text": "            mstore(0x20, byte(0, calldataload(add(signature.offset, 0x40)))) // `v`.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 64,
+                "text": "            calldatacopy(0x40, signature.offset, 0x40) // Copy `r` and `s`.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 65,
+                "text": "            result :=",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 66,
+                "text": "                mload(",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 67,
+                "text": "                    staticcall(",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 68,
+                "text": "                        gas(), // Amount of gas left for the transaction.",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 69,
+                "text": "                        eq(signature.length, 65), // Address of `ecrecover`.",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 70,
+                "text": "                        0x00, // Start of input.",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 71,
+                "text": "                        0x80, // Size of input.",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 72,
+                "text": "                        0x01, // Start of output.",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 73,
+                "text": "                        0x20 // Size of output.",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 74,
+                "text": "                    )",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 75,
+                "text": "                )",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 76,
+                "text": "            // `returndatasize()` will be `0x20` upon success, and `0x00` otherwise.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 77,
+                "text": "            if iszero(returndatasize()) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 57,
+                "text": "            for { let m := mload(0x40) } 1 {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 78,
+                "newLine": 58,
+                "text": "                mstore(0x00, 0x8baa579f) // `InvalidSignature()`."
+              },
+              {
+                "type": " ",
+                "oldLine": 79,
+                "newLine": 59,
+                "text": "                revert(0x1c, 0x04)"
+              },
+              {
+                "type": "+",
+                "newLine": 60,
+                "text": "            } {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 61,
+                "text": "                switch signature.length",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 62,
+                "text": "                case 64 {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 63,
+                "text": "                    let vs := calldataload(add(signature.offset, 0x20))",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 64,
+                "text": "                    mstore(0x20, add(shr(255, vs), 27)) // `v`.",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 65,
+                "text": "                    mstore(0x40, calldataload(signature.offset)) // `r`.",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 66,
+                "text": "                    mstore(0x60, shr(1, shl(1, vs))) // `s`.",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 67,
+                "text": "                }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 68,
+                "text": "                case 65 {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 69,
+                "text": "                    mstore(0x20, byte(0, calldataload(add(signature.offset, 0x40)))) // `v`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 70,
+                "text": "                    calldatacopy(0x40, signature.offset, 0x40) // Copy `r` and `s`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 71,
+                "text": "                }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 72,
+                "text": "                default { continue }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 73,
+                "text": "                mstore(0x00, hash)",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 74,
+                "text": "                result := mload(staticcall(gas(), 1, 0x00, 0x80, 0x01, 0x20))",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 75,
+                "text": "                mstore(0x60, 0) // Restore the zero slot.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 76,
+                "text": "                mstore(0x40, m) // Restore the free memory pointer.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 77,
+                "text": "                // `returndatasize()` will be `0x20` upon success, and `0x00` otherwise.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 78,
+                "text": "                if returndatasize() { break }",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 80,
+                "newLine": 79,
+                "text": "            }"
+              },
+              {
+                "type": "-",
+                "oldLine": 81,
+                "text": "            mstore(0x60, 0) // Restore the zero slot.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 82,
+                "text": "            mstore(0x40, m) // Restore the free memory pointer.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 83,
+                "newLine": 80,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 84, "newLine": 81, "text": "    }" },
+              { "type": " ", "oldLine": 85, "newLine": 82, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 86,
+                "newLine": 83,
+                "text": "    /// @dev Recovers the signer's address from a message digest `hash`,"
+              },
+              {
+                "type": " ",
+                "oldLine": 87,
+                "newLine": 84,
+                "text": "    /// and the EIP-2098 short form signature defined by `r` and `vs`."
+              },
+              {
+                "type": "-",
+                "oldLine": 88,
+                "text": "    ///",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 89,
+                "text": "    /// This function only accepts EIP-2098 short form signatures.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 90,
+                "text": "    /// See: https://eips.ethereum.org/EIPS/eip-2098",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 91,
+                "newLine": 85,
+                "text": "    function recover(bytes32 hash, bytes32 r, bytes32 vs) internal view returns (address result) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 92,
+                "newLine": 86,
+                "text": "        /// @solidity memory-safe-assembly"
+              },
+              {
+                "type": " ",
+                "oldLine": 93,
+                "newLine": 87,
+                "text": "        assembly {"
+              }
+            ]
+          },
+          {
+            "oldStart": 96,
+            "oldLines": 17,
+            "newStart": 90,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 96,
+                "newLine": 90,
+                "text": "            mstore(0x20, add(shr(255, vs), 27)) // `v`."
+              },
+              {
+                "type": " ",
+                "oldLine": 97,
+                "newLine": 91,
+                "text": "            mstore(0x40, r)"
+              },
+              {
+                "type": " ",
+                "oldLine": 98,
+                "newLine": 92,
+                "text": "            mstore(0x60, shr(1, shl(1, vs))) // `s`."
+              },
+              {
+                "type": "-",
+                "oldLine": 99,
+                "text": "            result :=",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 100,
+                "text": "                mload(",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 101,
+                "text": "                    staticcall(",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 102,
+                "text": "                        gas(), // Amount of gas left for the transaction.",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 103,
+                "text": "                        1, // Address of `ecrecover`.",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 104,
+                "text": "                        0x00, // Start of input.",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 105,
+                "text": "                        0x80, // Size of input.",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 106,
+                "text": "                        0x01, // Start of output.",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 107,
+                "text": "                        0x20 // Size of output.",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 108,
+                "text": "                    )",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 109,
+                "text": "                )",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 93,
+                "text": "            result := mload(staticcall(gas(), 1, 0x00, 0x80, 0x01, 0x20))",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 110,
+                "newLine": 94,
+                "text": "            // `returndatasize()` will be `0x20` upon success, and `0x00` otherwise."
+              },
+              {
+                "type": " ",
+                "oldLine": 111,
+                "newLine": 95,
+                "text": "            if iszero(returndatasize()) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 112,
+                "newLine": 96,
+                "text": "                mstore(0x00, 0x8baa579f) // `InvalidSignature()`."
+              }
+            ]
+          },
+          {
+            "oldStart": 127,
+            "oldLines": 17,
+            "newStart": 111,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 127,
+                "newLine": 111,
+                "text": "            mstore(0x20, and(v, 0xff))"
+              },
+              {
+                "type": " ",
+                "oldLine": 128,
+                "newLine": 112,
+                "text": "            mstore(0x40, r)"
+              },
+              {
+                "type": " ",
+                "oldLine": 129,
+                "newLine": 113,
+                "text": "            mstore(0x60, s)"
+              },
+              {
+                "type": "-",
+                "oldLine": 130,
+                "text": "            result :=",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 131,
+                "text": "                mload(",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 132,
+                "text": "                    staticcall(",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 133,
+                "text": "                        gas(), // Amount of gas left for the transaction.",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 134,
+                "text": "                        1, // Address of `ecrecover`.",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 135,
+                "text": "                        0x00, // Start of input.",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 136,
+                "text": "                        0x80, // Size of input.",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 137,
+                "text": "                        0x01, // Start of output.",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 138,
+                "text": "                        0x20 // Size of output.",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 139,
+                "text": "                    )",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 140,
+                "text": "                )",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 114,
+                "text": "            result := mload(staticcall(gas(), 1, 0x00, 0x80, 0x01, 0x20))",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 141,
+                "newLine": 115,
+                "text": "            // `returndatasize()` will be `0x20` upon success, and `0x00` otherwise."
+              },
+              {
+                "type": " ",
+                "oldLine": 142,
+                "newLine": 116,
+                "text": "            if iszero(returndatasize()) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 143,
+                "newLine": 117,
+                "text": "                mstore(0x00, 0x8baa579f) // `InvalidSignature()`."
+              }
+            ]
+          },
+          {
+            "oldStart": 158,
+            "oldLines": 73,
+            "newStart": 132,
+            "newLines": 64,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 158,
+                "newLine": 132,
+                "text": "    // It is critical that the returned address is NEVER compared against"
+              },
+              {
+                "type": " ",
+                "oldLine": 159,
+                "newLine": 133,
+                "text": "    // a zero address (e.g. an uninitialized address variable)."
+              },
+              { "type": " ", "oldLine": 160, "newLine": 134, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 161,
+                "text": "    /// @dev Recovers the signer's address from a message digest `hash`,",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 162,
+                "text": "    /// and the `signature`.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 163,
+                "text": "    ///",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 164,
+                "text": "    /// This function does NOT accept EIP-2098 short form signatures.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 165,
+                "text": "    /// Use `recover(bytes32 hash, bytes32 r, bytes32 vs)` for EIP-2098",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 166,
+                "text": "    /// short form signatures instead.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 135,
+                "text": "    /// @dev Recovers the signer's address from a message digest `hash`, and the `signature`.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 167,
+                "newLine": 136,
+                "text": "    function tryRecover(bytes32 hash, bytes memory signature) internal view returns (address result) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 168,
+                "newLine": 137,
+                "text": "        /// @solidity memory-safe-assembly"
+              },
+              {
+                "type": " ",
+                "oldLine": 169,
+                "newLine": 138,
+                "text": "        assembly {"
+              },
+              {
+                "type": "-",
+                "oldLine": 170,
+                "text": "            let m := mload(0x40) // Cache the free memory pointer.",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 171,
+                "text": "            let signatureLength := mload(signature)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 172,
+                "text": "            mstore(0x00, hash)",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 173,
+                "text": "            mstore(0x20, byte(0, mload(add(signature, 0x60)))) // `v`.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 174,
+                "text": "            mstore(0x40, mload(add(signature, 0x20))) // `r`.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 175,
+                "text": "            mstore(0x60, mload(add(signature, 0x40))) // `s`.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 176,
+                "text": "            pop(",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 177,
+                "text": "                staticcall(",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 178,
+                "text": "                    gas(), // Amount of gas left for the transaction.",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 179,
+                "text": "                    eq(signatureLength, 65), // Address of `ecrecover`.",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 180,
+                "text": "                    0x00, // Start of input.",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 181,
+                "text": "                    0x80, // Size of input.",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 182,
+                "text": "                    0x40, // Start of output.",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 183,
+                "text": "                    0x20 // Size of output.",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 184,
+                "text": "                )",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 185,
+                "text": "            )",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 186,
+                "text": "            mstore(0x60, 0) // Restore the zero slot.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 187,
+                "text": "            // `returndatasize()` will be `0x20` upon success, and `0x00` otherwise.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 188,
+                "text": "            result := mload(xor(0x60, returndatasize()))",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 189,
+                "text": "            mstore(0x40, m) // Restore the free memory pointer.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 139,
+                "text": "            for { let m := mload(0x40) } 1 {} {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 140,
+                "text": "                switch mload(signature)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 141,
+                "text": "                case 64 {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 142,
+                "text": "                    let vs := mload(add(signature, 0x40))",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 143,
+                "text": "                    mstore(0x20, add(shr(255, vs), 27)) // `v`.",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 144,
+                "text": "                    mstore(0x60, shr(1, shl(1, vs))) // `s`.",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 145,
+                "text": "                }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 146,
+                "text": "                case 65 {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 147,
+                "text": "                    mstore(0x20, byte(0, mload(add(signature, 0x60)))) // `v`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 148,
+                "text": "                    mstore(0x60, mload(add(signature, 0x40))) // `s`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 149,
+                "text": "                }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 150,
+                "text": "                default { break }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 151,
+                "text": "                mstore(0x00, hash)",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 152,
+                "text": "                mstore(0x40, mload(add(signature, 0x20))) // `r`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 153,
+                "text": "                pop(staticcall(gas(), 1, 0x00, 0x80, 0x40, 0x20))",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 154,
+                "text": "                mstore(0x60, 0) // Restore the zero slot.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 155,
+                "text": "                // `returndatasize()` will be `0x20` upon success, and `0x00` otherwise.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 156,
+                "text": "                result := mload(xor(0x60, returndatasize()))",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 157,
+                "text": "                mstore(0x40, m) // Restore the free memory pointer.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 158,
+                "text": "                break",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 159,
+                "text": "            }",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 190,
+                "newLine": 160,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 191, "newLine": 161, "text": "    }" },
+              { "type": " ", "oldLine": 192, "newLine": 162, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 193,
+                "text": "    /// @dev Recovers the signer's address from a message digest `hash`,",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 194,
+                "text": "    /// and the `signature`.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 195,
+                "text": "    ///",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 196,
+                "text": "    /// This function does NOT accept EIP-2098 short form signatures.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 197,
+                "text": "    /// Use `recover(bytes32 hash, bytes32 r, bytes32 vs)` for EIP-2098",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 198,
+                "text": "    /// short form signatures instead.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 163,
+                "text": "    /// @dev Recovers the signer's address from a message digest `hash`, and the `signature`.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 199,
+                "newLine": 164,
+                "text": "    function tryRecoverCalldata(bytes32 hash, bytes calldata signature) internal view returns (address result) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 200,
+                "newLine": 165,
+                "text": "        /// @solidity memory-safe-assembly"
+              },
+              {
+                "type": " ",
+                "oldLine": 201,
+                "newLine": 166,
+                "text": "        assembly {"
+              },
+              {
+                "type": "-",
+                "oldLine": 202,
+                "text": "            let m := mload(0x40) // Cache the free memory pointer.",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 203,
+                "text": "            mstore(0x00, hash)",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 204,
+                "text": "            mstore(0x20, byte(0, calldataload(add(signature.offset, 0x40)))) // `v`.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 205,
+                "text": "            calldatacopy(0x40, signature.offset, 0x40) // Copy `r` and `s`.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 206,
+                "text": "            pop(",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 207,
+                "text": "                staticcall(",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 208,
+                "text": "                    gas(), // Amount of gas left for the transaction.",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 209,
+                "text": "                    eq(signature.length, 65), // Address of `ecrecover`.",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 210,
+                "text": "                    0x00, // Start of input.",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 211,
+                "text": "                    0x80, // Size of input.",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 212,
+                "text": "                    0x40, // Start of output.",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 213,
+                "text": "                    0x20 // Size of output.",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 214,
+                "text": "                )",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 215,
+                "text": "            )",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 216,
+                "text": "            mstore(0x60, 0) // Restore the zero slot.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 217,
+                "text": "            // `returndatasize()` will be `0x20` upon success, and `0x00` otherwise.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 218,
+                "text": "            result := mload(xor(0x60, returndatasize()))",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 219,
+                "text": "            mstore(0x40, m) // Restore the free memory pointer.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 167,
+                "text": "            for { let m := mload(0x40) } 1 {} {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 168,
+                "text": "                switch signature.length",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 169,
+                "text": "                case 64 {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 170,
+                "text": "                    let vs := calldataload(add(signature.offset, 0x20))",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 171,
+                "text": "                    mstore(0x20, add(shr(255, vs), 27)) // `v`.",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 172,
+                "text": "                    mstore(0x40, calldataload(signature.offset)) // `r`.",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 173,
+                "text": "                    mstore(0x60, shr(1, shl(1, vs))) // `s`.",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 174,
+                "text": "                }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 175,
+                "text": "                case 65 {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 176,
+                "text": "                    mstore(0x20, byte(0, calldataload(add(signature.offset, 0x40)))) // `v`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 177,
+                "text": "                    calldatacopy(0x40, signature.offset, 0x40) // Copy `r` and `s`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 178,
+                "text": "                }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 179,
+                "text": "                default { break }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 180,
+                "text": "                mstore(0x00, hash)",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 181,
+                "text": "                pop(staticcall(gas(), 1, 0x00, 0x80, 0x40, 0x20))",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 182,
+                "text": "                mstore(0x60, 0) // Restore the zero slot.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 183,
+                "text": "                // `returndatasize()` will be `0x20` upon success, and `0x00` otherwise.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 184,
+                "text": "                result := mload(xor(0x60, returndatasize()))",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 185,
+                "text": "                mstore(0x40, m) // Restore the free memory pointer.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 186,
+                "text": "                break",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 187,
+                "text": "            }",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 220,
+                "newLine": 188,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 221, "newLine": 189, "text": "    }" },
+              { "type": " ", "oldLine": 222, "newLine": 190, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 223,
+                "newLine": 191,
+                "text": "    /// @dev Recovers the signer's address from a message digest `hash`,"
+              },
+              {
+                "type": " ",
+                "oldLine": 224,
+                "newLine": 192,
+                "text": "    /// and the EIP-2098 short form signature defined by `r` and `vs`."
+              },
+              {
+                "type": "-",
+                "oldLine": 225,
+                "text": "    ///",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 226,
+                "text": "    /// This function only accepts EIP-2098 short form signatures.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 227,
+                "text": "    /// See: https://eips.ethereum.org/EIPS/eip-2098",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 228,
+                "newLine": 193,
+                "text": "    function tryRecover(bytes32 hash, bytes32 r, bytes32 vs) internal view returns (address result) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 229,
+                "newLine": 194,
+                "text": "        /// @solidity memory-safe-assembly"
+              },
+              {
+                "type": " ",
+                "oldLine": 230,
+                "newLine": 195,
+                "text": "        assembly {"
+              }
+            ]
+          },
+          {
+            "oldStart": 233,
+            "oldLines": 16,
+            "newStart": 198,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 233,
+                "newLine": 198,
+                "text": "            mstore(0x20, add(shr(255, vs), 27)) // `v`."
+              },
+              {
+                "type": " ",
+                "oldLine": 234,
+                "newLine": 199,
+                "text": "            mstore(0x40, r)"
+              },
+              {
+                "type": " ",
+                "oldLine": 235,
+                "newLine": 200,
+                "text": "            mstore(0x60, shr(1, shl(1, vs))) // `s`."
+              },
+              {
+                "type": "-",
+                "oldLine": 236,
+                "text": "            pop(",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 237,
+                "text": "                staticcall(",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 238,
+                "text": "                    gas(), // Amount of gas left for the transaction.",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 239,
+                "text": "                    1, // Address of `ecrecover`.",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 240,
+                "text": "                    0x00, // Start of input.",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 241,
+                "text": "                    0x80, // Size of input.",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 242,
+                "text": "                    0x40, // Start of output.",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 243,
+                "text": "                    0x20 // Size of output.",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 244,
+                "text": "                )",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 245,
+                "text": "            )",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 201,
+                "text": "            pop(staticcall(gas(), 1, 0x00, 0x80, 0x40, 0x20))",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 246,
+                "newLine": 202,
+                "text": "            mstore(0x60, 0) // Restore the zero slot."
+              },
+              {
+                "type": " ",
+                "oldLine": 247,
+                "newLine": 203,
+                "text": "            // `returndatasize()` will be `0x20` upon success, and `0x00` otherwise."
+              },
+              {
+                "type": " ",
+                "oldLine": 248,
+                "newLine": 204,
+                "text": "            result := mload(xor(0x60, returndatasize()))"
+              }
+            ]
+          },
+          {
+            "oldStart": 260,
+            "oldLines": 16,
+            "newStart": 216,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 260,
+                "newLine": 216,
+                "text": "            mstore(0x20, and(v, 0xff))"
+              },
+              {
+                "type": " ",
+                "oldLine": 261,
+                "newLine": 217,
+                "text": "            mstore(0x40, r)"
+              },
+              {
+                "type": " ",
+                "oldLine": 262,
+                "newLine": 218,
+                "text": "            mstore(0x60, s)"
+              },
+              {
+                "type": "-",
+                "oldLine": 263,
+                "text": "            pop(",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 264,
+                "text": "                staticcall(",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 265,
+                "text": "                    gas(), // Amount of gas left for the transaction.",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 266,
+                "text": "                    1, // Address of `ecrecover`.",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 267,
+                "text": "                    0x00, // Start of input.",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 268,
+                "text": "                    0x80, // Size of input.",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 269,
+                "text": "                    0x40, // Start of output.",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 270,
+                "text": "                    0x20 // Size of output.",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 271,
+                "text": "                )",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 272,
+                "text": "            )",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 219,
+                "text": "            pop(staticcall(gas(), 1, 0x00, 0x80, 0x40, 0x20))",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 273,
+                "newLine": 220,
+                "text": "            mstore(0x60, 0) // Restore the zero slot."
+              },
+              {
+                "type": " ",
+                "oldLine": 274,
+                "newLine": 221,
+                "text": "            // `returndatasize()` will be `0x20` upon success, and `0x00` otherwise."
+              },
+              {
+                "type": " ",
+                "oldLine": 275,
+                "newLine": 222,
+                "text": "            result := mload(xor(0x60, returndatasize()))"
+              }
+            ]
+          },
+          {
+            "oldStart": 283,
+            "oldLines": 7,
+            "newStart": 230,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 283, "newLine": 230, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 284,
+                "newLine": 231,
+                "text": "    /// @dev Returns an Ethereum Signed Message, created from a `hash`."
+              },
+              {
+                "type": " ",
+                "oldLine": 285,
+                "newLine": 232,
+                "text": "    /// This produces a hash corresponding to the one signed with the"
+              },
+              {
+                "type": "-",
+                "oldLine": 286,
+                "text": "    /// [`eth_sign`](https://eth.wiki/json-rpc/API#eth_sign)",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 233,
+                "text": "    /// [`eth_sign`](https://ethereum.org/en/developers/docs/apis/json-rpc/#eth_sign)",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 287,
+                "newLine": 234,
+                "text": "    /// JSON-RPC method as part of EIP-191."
+              },
+              {
+                "type": " ",
+                "oldLine": 288,
+                "newLine": 235,
+                "text": "    function toEthSignedMessageHash(bytes32 hash) internal pure returns (bytes32 result) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 289,
+                "newLine": 236,
+                "text": "        /// @solidity memory-safe-assembly"
+              }
+            ]
+          },
+          {
+            "oldStart": 296,
+            "oldLines": 7,
+            "newStart": 243,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 296, "newLine": 243, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 297,
+                "newLine": 244,
+                "text": "    /// @dev Returns an Ethereum Signed Message, created from `s`."
+              },
+              {
+                "type": " ",
+                "oldLine": 298,
+                "newLine": 245,
+                "text": "    /// This produces a hash corresponding to the one signed with the"
+              },
+              {
+                "type": "-",
+                "oldLine": 299,
+                "text": "    /// [`eth_sign`](https://eth.wiki/json-rpc/API#eth_sign)",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 246,
+                "text": "    /// [`eth_sign`](https://ethereum.org/en/developers/docs/apis/json-rpc/#eth_sign)",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 300,
+                "newLine": 247,
+                "text": "    /// JSON-RPC method as part of EIP-191."
+              },
+              {
+                "type": " ",
+                "oldLine": 301,
+                "newLine": 248,
+                "text": "    /// Note: Supports lengths of `s` up to 999999 bytes."
+              },
+              {
+                "type": " ",
+                "oldLine": 302,
+                "newLine": 249,
+                "text": "    function toEthSignedMessageHash(bytes memory s) internal pure returns (bytes32 result) {"
+              }
+            ]
+          },
+          {
+            "oldStart": 323,
+            "oldLines": 6,
+            "newStart": 270,
+            "newLines": 111,
+            "lines": [
+              { "type": " ", "oldLine": 323, "newLine": 270, "text": "    }" },
+              { "type": " ", "oldLine": 324, "newLine": 271, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 325,
+                "newLine": 272,
+                "text": "    /*´:°•.°+.*•´.*:˚.°*.˚•´.°:°•.°•.*•´.*:˚.°*.˚•´.°:°•.°+.*•´.*:*/"
+              },
+              {
+                "type": "+",
+                "newLine": 273,
+                "text": "    /*                  CANONICAL HASH FUNCTIONS                  */",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 274,
+                "text": "    /*.•°:°.´+˚.*°.˚:*.´•*.+°.•°:´*.´•*.•°.•°:°.´:•˚°.*°.˚:*.´+°.•*/",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 275, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 276,
+                "text": "    // The following functions returns the hash of the signature in it's canonicalized format,",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 277,
+                "text": "    // which is the 65-byte `abi.encodePacked(r, s, uint8(v))`, where `v` is either 27 or 28.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 278,
+                "text": "    // If `s` is greater than `N / 2` then it will be converted to `N - s`",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 279,
+                "text": "    // and the `v` value will be flipped.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 280,
+                "text": "    // If the signature has an invalid length, or if `v` is invalid,",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 281,
+                "text": "    // a uniquely corrupt hash will be returned.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 282,
+                "text": "    // These functions are useful for \"poor-mans-VRF\".",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 283, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 284,
+                "text": "    /// @dev Returns the canonical hash of `signature`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 285,
+                "text": "    function canonicalHash(bytes memory signature) internal pure returns (bytes32 result) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 286,
+                "text": "        // @solidity memory-safe-assembly",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 287,
+                "text": "        assembly {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 288,
+                "text": "            let l := mload(signature)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 289,
+                "text": "            for {} 1 {} {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 290,
+                "text": "                mstore(0x00, mload(add(signature, 0x20))) // `r`.",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 291,
+                "text": "                let s := mload(add(signature, 0x40))",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 292,
+                "text": "                let v := mload(add(signature, 0x41))",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 293,
+                "text": "                if eq(l, 64) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 294,
+                "text": "                    v := add(shr(255, s), 27)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 295,
+                "text": "                    s := shr(1, shl(1, s))",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 296,
+                "text": "                }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 297,
+                "text": "                if iszero(lt(s, _HALF_N_PLUS_1)) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 298,
+                "text": "                    v := xor(v, 7)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 299,
+                "text": "                    s := sub(N, s)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 300,
+                "text": "                }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 301,
+                "text": "                mstore(0x21, v)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 302,
+                "text": "                mstore(0x20, s)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 303,
+                "text": "                result := keccak256(0x00, 0x41)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 304,
+                "text": "                mstore(0x21, 0) // Restore the overwritten part of the free memory pointer.",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 305,
+                "text": "                break",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 306,
+                "text": "            }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 307, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 308,
+                "text": "            // If the length is neither 64 nor 65, return a uniquely corrupted hash.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 309,
+                "text": "            if iszero(lt(sub(l, 64), 2)) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 310,
+                "text": "                // `bytes4(keccak256(\"InvalidSignatureLength\"))`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 311,
+                "text": "                result := xor(keccak256(add(signature, 0x20), l), 0xd62f1ab2)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 312,
+                "text": "            }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 313,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 314,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 315, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 316,
+                "text": "    /// @dev Returns the canonical hash of `signature`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 317,
+                "text": "    function canonicalHashCalldata(bytes calldata signature) internal pure returns (bytes32 result) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 318,
+                "text": "        // @solidity memory-safe-assembly",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 319,
+                "text": "        assembly {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 320,
+                "text": "            for {} 1 {} {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 321,
+                "text": "                mstore(0x00, calldataload(signature.offset)) // `r`.",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 322,
+                "text": "                let s := calldataload(add(signature.offset, 0x20))",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 323,
+                "text": "                let v := calldataload(add(signature.offset, 0x21))",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 324,
+                "text": "                if eq(signature.length, 64) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 325,
+                "text": "                    v := add(shr(255, s), 27)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 326,
+                "text": "                    s := shr(1, shl(1, s))",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 327,
+                "text": "                }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 328,
+                "text": "                if iszero(lt(s, _HALF_N_PLUS_1)) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 329,
+                "text": "                    v := xor(v, 7)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 330,
+                "text": "                    s := sub(N, s)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 331,
+                "text": "                }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 332,
+                "text": "                mstore(0x21, v)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 333,
+                "text": "                mstore(0x20, s)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 334,
+                "text": "                result := keccak256(0x00, 0x41)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 335,
+                "text": "                mstore(0x21, 0) // Restore the overwritten part of the free memory pointer.",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 336,
+                "text": "                break",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 337,
+                "text": "            }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 338,
+                "text": "            // If the length is neither 64 nor 65, return a uniquely corrupted hash.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 339,
+                "text": "            if iszero(lt(sub(signature.length, 64), 2)) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 340,
+                "text": "                calldatacopy(mload(0x40), signature.offset, signature.length)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 341,
+                "text": "                // `bytes4(keccak256(\"InvalidSignatureLength\"))`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 342,
+                "text": "                result := xor(keccak256(mload(0x40), signature.length), 0xd62f1ab2)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 343,
+                "text": "            }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 344,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 345,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 346, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 347,
+                "text": "    /// @dev Returns the canonical hash of `signature`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 348,
+                "text": "    function canonicalHash(bytes32 r, bytes32 vs) internal pure returns (bytes32 result) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 349,
+                "text": "        // @solidity memory-safe-assembly",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 350,
+                "text": "        assembly {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 351,
+                "text": "            mstore(0x00, r) // `r`.",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 352,
+                "text": "            let v := add(shr(255, vs), 27)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 353,
+                "text": "            let s := shr(1, shl(1, vs))",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 354,
+                "text": "            mstore(0x21, v)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 355,
+                "text": "            mstore(0x20, s)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 356,
+                "text": "            result := keccak256(0x00, 0x41)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 357,
+                "text": "            mstore(0x21, 0) // Restore the overwritten part of the free memory pointer.",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 358,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 359,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 360, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 361,
+                "text": "    /// @dev Returns the canonical hash of `signature`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 362,
+                "text": "    function canonicalHash(uint8 v, bytes32 r, bytes32 s) internal pure returns (bytes32 result) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 363,
+                "text": "        // @solidity memory-safe-assembly",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 364,
+                "text": "        assembly {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 365,
+                "text": "            mstore(0x00, r) // `r`.",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 366,
+                "text": "            if iszero(lt(s, _HALF_N_PLUS_1)) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 367,
+                "text": "                v := xor(v, 7)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 368,
+                "text": "                s := sub(N, s)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 369,
+                "text": "            }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 370,
+                "text": "            mstore(0x21, v)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 371,
+                "text": "            mstore(0x20, s)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 372,
+                "text": "            result := keccak256(0x00, 0x41)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 373,
+                "text": "            mstore(0x21, 0) // Restore the overwritten part of the free memory pointer.",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 374,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 375,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 376, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 377,
+                "text": "    /*´:°•.°+.*•´.*:˚.°*.˚•´.°:°•.°•.*•´.*:˚.°*.˚•´.°:°•.°+.*•´.*:*/",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 326,
+                "newLine": 378,
+                "text": "    /*                   EMPTY CALLDATA HELPERS                   */"
+              },
+              {
+                "type": " ",
+                "oldLine": 327,
+                "newLine": 379,
+                "text": "    /*.•°:°.´+˚.*°.˚:*.´•*.+°.•°:´*.´•*.•°.•°:°.´:•˚°.*°.˚:*.´+°.•*/"
+              },
+              { "type": " ", "oldLine": 328, "newLine": 380, "text": "" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

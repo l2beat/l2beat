@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "4dbf144c10ae84da0335f47beb6d5b19bb2211e7639c1d580348db7348319d40",
+  "name": "ChainId",
+  "kind": "library",
+  "lines": 9,
+  "source": "library ChainId {\n    /// @dev Gets the current chain ID\n    /// @return chainId The current chain ID\n    function get() internal pure returns (uint256 chainId) {\n        assembly {\n            chainId := chainid()\n        }\n    }\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

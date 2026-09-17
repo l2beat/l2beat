@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "095f8cbc6fe9e309243224ae616fa80596e9012f41d8315b757e8f4a2bf83f22",
+  "name": "ENSNamehash",
+  "kind": "library",
+  "lines": 30,
+  "source": "library ENSNamehash {\n    function namehash(bytes memory domain) internal pure returns (bytes32) {\n        return namehash(domain, 0);\n    }\n\n    function namehash(bytes memory domain, uint256 i) internal pure returns (bytes32) {\n        if (domain.length <= i) {\n            return 0x0000000000000000000000000000000000000000000000000000000000000000;\n        }\n\n        uint256 len = labelLength(domain, i);\n\n        return keccak256(abi.encodePacked(namehash(domain, i + len + 1), keccak(domain, i, len)));\n    }\n\n    function labelLength(bytes memory domain, uint256 i) private pure returns (uint256) {\n        uint256 len;\n        while (i + len != domain.length && domain[i + len] != 0x2e) {\n            len++;\n        }\n        return len;\n    }\n\n    function keccak(bytes memory data, uint256 offset, uint256 len) private pure returns (bytes32 ret) {\n        require(offset + len <= data.length);\n        assembly {\n            ret := keccak256(add(add(data, 32), offset), len)\n        }\n    }\n}",
+  "resolutions": {
+    "f9658cd3a9a22004": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

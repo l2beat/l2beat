@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "514a83cb9b827844acfb513b550a9c6f17c8961559096c0e1db4468235f998ed",
+  "name": "(file-level declarations)",
+  "kind": "file-level",
+  "lines": 38,
+  "source": "enum GameStatus {\n    // The game is currently in progress, and has not been resolved.\n    IN_PROGRESS,\n    // The game has concluded, and the `rootClaim` was challenged successfully.\n    CHALLENGER_WINS,\n    // The game has concluded, and the `rootClaim` could not be contested.\n    DEFENDER_WINS\n}\nusing LibTimestamp for Timestamp global;\ntype Timestamp is uint64;\nusing LibGameType for GameType global;\ntype GameType is uint32;\nusing LibPosition for Position global;\ntype Position is uint128;\nusing LibHash for Hash global;\ntype Hash is bytes32;\nusing LibClaim for Claim global;\ntype Claim is bytes32;\nusing LibDuration for Duration global;\ntype Duration is uint64;\nusing LibClock for Clock global;\ntype Clock is uint128;\nusing LPPMetadataLib for LPPMetaData global;\ntype LPPMetaData is bytes32;\nenum BondDistributionMode {\n    // Bond distribution strategy has not been chosen.\n    UNDECIDED,\n    // Bonds should be distributed as normal.\n    NORMAL,\n    // Bonds should be refunded to claimants.\n    REFUND\n}\nusing LibGameId for GameId global;\ntype GameId is bytes32;\nstruct Proposal {\n    Hash root;\n    uint256 l2SequenceNumber;\n}",
+  "resolutions": {
+    "ba5b6c9584fb78fd": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "44ad4cf96e2ef6f0": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "9aea43f856d42ecedc8cc9df2664a5a6f973e6b1e0533bcdef2c3b4552b1d256",
+  "name": "IPoolInitializer_v4",
+  "kind": "interface",
+  "lines": 8,
+  "source": "interface IPoolInitializer_v4 {\n    /// @notice Initialize a Uniswap v4 Pool\n    /// @dev If the pool is already initialized, this function will not revert and just return type(int24).max\n    /// @param key The PoolKey of the pool to initialize\n    /// @param sqrtPriceX96 The initial starting price of the pool, expressed as a sqrtPriceX96\n    /// @return The current tick of the pool, or type(int24).max if the pool creation failed, or the pool already existed\n    function initializePool(PoolKey calldata key, uint160 sqrtPriceX96) external payable returns (int24);\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

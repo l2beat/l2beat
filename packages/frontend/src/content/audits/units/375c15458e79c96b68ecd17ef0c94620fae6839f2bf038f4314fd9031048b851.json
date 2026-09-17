@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "375c15458e79c96b68ecd17ef0c94620fae6839f2bf038f4314fd9031048b851",
+  "name": "CrossDomainEnabled",
+  "kind": "contract",
+  "lines": 34,
+  "source": "contract CrossDomainEnabled {\n    /// @notice Messenger contract used to send and receive messages from the other domain\n    ICrossDomainMessenger public immutable messenger;\n\n    /// @param messenger_ Address of the CrossDomainMessenger on the current layer\n    constructor(address messenger_) {\n        messenger = ICrossDomainMessenger(messenger_);\n    }\n\n    /// @dev Sends a message to an account on another domain\n    /// @param crossDomainTarget_ Intended recipient on the destination domain\n    /// @param message_ Data to send to the target (usually calldata to a function with\n    ///     `onlyFromCrossDomainAccount()`)\n    /// @param gasLimit_ gasLimit for the receipt of the message on the target domain.\n    function sendCrossDomainMessage(address crossDomainTarget_, uint32 gasLimit_, bytes memory message_) internal {\n        messenger.sendMessage(crossDomainTarget_, message_, gasLimit_);\n    }\n\n    /// @dev Enforces that the modified function is only callable by a specific cross-domain account\n    /// @param sourceDomainAccount_ The only account on the originating domain which is\n    ///     authenticated to call this function\n    modifier onlyFromCrossDomainAccount(address sourceDomainAccount_) {\n        if (msg.sender != address(messenger)) {\n            revert ErrorUnauthorizedMessenger();\n        }\n        if (messenger.xDomainMessageSender() != sourceDomainAccount_) {\n            revert ErrorWrongCrossDomainSender();\n        }\n        _;\n    }\n\n    error ErrorUnauthorizedMessenger();\n    error ErrorWrongCrossDomainSender();\n}",
+  "resolutions": {
+    "ba5b6c9584fb78fd": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "871b9e5b75667f4409cc9abd144e0a7585b41a4b54115d217239b7364f811442",
+  "name": "IDisputeGameFactory",
+  "kind": "interface",
+  "lines": 55,
+  "source": "interface IDisputeGameFactory is IProxyAdminOwnedBase, IReinitializableBase {\n    struct GameSearchResult {\n        uint256 index;\n        GameId metadata;\n        Timestamp timestamp;\n        Claim rootClaim;\n        bytes extraData;\n    }\n\n    error GameAlreadyExists(Hash uuid);\n    error IncorrectBondAmount();\n    error NoImplementation(GameType gameType);\n\n    event DisputeGameCreated(address indexed disputeProxy, GameType indexed gameType, Claim indexed rootClaim);\n    event ImplementationSet(address indexed impl, GameType indexed gameType);\n    event ImplementationArgsSet(GameType indexed gameType, bytes args);\n    event InitBondUpdated(GameType indexed gameType, uint256 indexed newBond);\n    event Initialized(uint8 version);\n    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);\n\n    function create(GameType _gameType, Claim _rootClaim, bytes memory _extraData)\n        external\n        payable\n        returns (IDisputeGame proxy_);\n    function findLatestGames(GameType _gameType, uint256 _start, uint256 _n)\n        external\n        view\n        returns (GameSearchResult[] memory games_);\n    function gameAtIndex(uint256 _index)\n        external\n        view\n        returns (GameType gameType_, Timestamp timestamp_, IDisputeGame proxy_);\n    function gameCount() external view returns (uint256 gameCount_);\n    function gameArgs(GameType) external view returns (bytes memory);\n    function gameImpls(GameType) external view returns (IDisputeGame);\n    function games(GameType _gameType, Claim _rootClaim, bytes memory _extraData)\n        external\n        view\n        returns (IDisputeGame proxy_, Timestamp timestamp_);\n    function getGameUUID(GameType _gameType, Claim _rootClaim, bytes memory _extraData)\n        external\n        pure\n        returns (Hash uuid_);\n    function initBonds(GameType) external view returns (uint256);\n    function initialize(address _owner) external;\n    function owner() external view returns (address);\n    function renounceOwnership() external;\n    function setImplementation(GameType _gameType, IDisputeGame _impl) external;\n    function setImplementation(GameType _gameType, IDisputeGame _impl, bytes calldata _args) external;\n    function setInitBond(GameType _gameType, uint256 _initBond) external;\n    function transferOwnership(address newOwner) external; // nosemgrep\n    function version() external view returns (string memory);\n\n    function __constructor__() external;\n}",
+  "resolutions": {
+    "ba5b6c9584fb78fd": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "44ad4cf96e2ef6f0": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "bb55951394276893": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

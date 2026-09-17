@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "7ed80ee683d6807f8997a68ce9a21b306eb48627439d838f3626e9b8160ae3ab",
+  "name": "IUSDCDestinationBridge",
+  "kind": "interface",
+  "lines": 6,
+  "source": "interface IUSDCDestinationBridge {\n    /**\n     * @notice Called by Circle, this transfers FiatToken roles to the designated owner.\n     */\n    function transferUSDCRoles(address owner) external;\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "identical",
+      "coveredLines": 6,
+      "match": {
+        "origin": "own",
+        "collection": "scroll",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "IUSDCDestinationBridge",
+        "similarity": 1,
+        "reportId": "scroll/openzeppelin-scroll-usdc-gateway-audit-2023-09",
+        "repository": "scroll-tech/scroll",
+        "path": "contracts/src/interfaces/IUSDCDestinationBridge.sol",
+        "commit": "30fa5e65ef577acbde630baa982e1752b2095a60",
+        "commitTimestamp": "2023-09-11T12:44:53Z",
+        "url": "https://github.com/scroll-tech/scroll/blob/30fa5e65ef577acbde630baa982e1752b2095a60/contracts/src/interfaces/IUSDCDestinationBridge.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Fix review of L-03 (missing docstrings) in pull request #940 only.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "warnings": []
+    }
+  }
+}

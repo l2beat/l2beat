@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "53e656208df4b6bc70bbf4530b3bf303a7c0553a04e9d045ce1d147566c19b67",
+  "name": "VotingModule",
+  "kind": "interface",
+  "lines": 9,
+  "source": "interface VotingModule {\n    function propose(uint256 proposalId, bytes calldata proposalData, bytes32 descriptionHash) external;\n    function _countVote(uint256 proposalId, address account, uint8 support, uint256 weight, bytes calldata params)\n        external;\n    function _formatExecuteParams(uint256 proposalId, bytes calldata proposalData)\n        external\n        returns (address[] memory targets, uint256[] memory values, bytes[] memory calldatas);\n    function _voteSucceeded(uint256) external view returns (bool);\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "55c412cf72d96d6a02afe663973808381c9f2710ebd639f6bc12a806996aecbd",
+  "name": "mod.nr",
+  "kind": "program",
+  "lines": 61,
+  "source": "// Tests for public-bound terminal tail validation helpers.\n\nmod output_composition_tests;\nmod previous_kernel_validation_tests;\nmod tail_to_public_output_validator;\n\nuse crate::abis::PaddedSideEffectAmounts;\nuse crate::components::{\n    previous_kernel_for_tail_validator::validate_previous_kernel_for_tail,\n    tail_to_public_finalize::tail_to_public_finalize,\n};\nuse protocol_test_utils::FixtureBuilder;\nuse types::{\n    abis::{gas::Gas, kernel_circuit_public_inputs::PrivateToPublicKernelCircuitPublicInputs},\n    address::AztecAddress,\n    constants::PRIVATE_KERNEL_INNER_VK_INDEX,\n    traits::{Empty, FromField},\n};\n\npub struct TestBuilder {\n    pub previous_kernel: FixtureBuilder,\n    pub padded_side_effect_amounts: PaddedSideEffectAmounts,\n    pub expiration_timestamp_upper_bound: u64,\n    // Used by tail_to_public_output_validator/* tests to construct an expected output and\n    // drive `TailToPublicOutputValidator` directly.\n    pub output: FixtureBuilder,\n}\n\nimpl TestBuilder {\n    pub fn new() -> Self {\n        let mut previous_kernel = FixtureBuilder::new().in_vk_tree(PRIVATE_KERNEL_INNER_VK_INDEX);\n        previous_kernel.tx_context.gas_settings.gas_limits = Gas::new(1_000_000_000, 1_000_000_000);\n        previous_kernel.append_siloed_nullifiers(1);\n        previous_kernel.claimed_first_nullifier =\n            previous_kernel.nullifiers.get(0).innermost().value;\n        previous_kernel.set_fee_payer(AztecAddress::from_field(234234));\n        previous_kernel.end_setup();\n        previous_kernel.append_public_call_requests(1);\n\n        let padded_side_effect_amounts = PaddedSideEffectAmounts::empty();\n\n        let output = previous_kernel;\n\n        TestBuilder {\n            previous_kernel,\n            padded_side_effect_amounts,\n            expiration_timestamp_upper_bound: previous_kernel.expiration_timestamp,\n            output,\n        }\n    }\n\n    pub fn execute(self) -> PrivateToPublicKernelCircuitPublicInputs {\n        let previous_kernel_pi = self.previous_kernel.to_private_kernel_circuit_public_inputs();\n        validate_previous_kernel_for_tail(previous_kernel_pi, true /* is_for_public */);\n        tail_to_public_finalize(\n            previous_kernel_pi,\n            self.padded_side_effect_amounts,\n            self.expiration_timestamp_upper_bound,\n        )\n    }\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "98192cbf0326698ffb69d9dcd8f720fa16cdcc834dc2f11e98f4c3c24af9568d",
+  "name": "IProxyAdminOwnedBase",
+  "kind": "interface",
+  "lines": 11,
+  "source": "interface IProxyAdminOwnedBase {\n    error ProxyAdminOwnedBase_NotSharedProxyAdminOwner();\n    error ProxyAdminOwnedBase_NotProxyAdminOwner();\n    error ProxyAdminOwnedBase_NotProxyAdmin();\n    error ProxyAdminOwnedBase_NotProxyAdminOrProxyAdminOwner();\n    error ProxyAdminOwnedBase_ProxyAdminNotFound();\n    error ProxyAdminOwnedBase_NotResolvedDelegateProxy();\n\n    function proxyAdmin() external view returns (IProxyAdmin);\n    function proxyAdminOwner() external view returns (address);\n}",
+  "resolutions": {
+    "ba5b6c9584fb78fd": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "44ad4cf96e2ef6f0": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "bb55951394276893": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

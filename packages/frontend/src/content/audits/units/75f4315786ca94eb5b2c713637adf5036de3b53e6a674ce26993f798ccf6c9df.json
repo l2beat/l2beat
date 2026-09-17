@@ -1,0 +1,88 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "75f4315786ca94eb5b2c713637adf5036de3b53e6a674ce26993f798ccf6c9df",
+  "name": "IVerifier",
+  "kind": "interface",
+  "lines": 3,
+  "source": "interface IVerifier {\n    function verifyProof(bytes calldata _proof, uint256[6] calldata _input) external returns (bool);\n}",
+  "resolutions": {
+    "f9658cd3a9a22004": {
+      "status": "differs",
+      "coveredLines": 2,
+      "match": {
+        "origin": "own",
+        "collection": "tornado-cash",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "IVerifier",
+        "similarity": 0.583,
+        "reportId": "tornado-cash/abdk-tornado-anonymity-mining-recheck-2020-12-22",
+        "repository": "tornadocash/tornado-anonymity-mining",
+        "path": "contracts/interfaces/IVerifier.sol",
+        "commit": "9ec05a681d9699a11733b3163dd44a1e90abc345",
+        "commitTimestamp": "2020-11-02T20:07:53Z",
+        "url": "https://github.com/tornadocash/tornado-anonymity-mining/blob/9ec05a681d9699a11733b3163dd44a1e90abc345/contracts/interfaces/IVerifier.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "recheck of changed contracts",
+        "coverage": "full file",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 1,
+        "removed": 3,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 2,
+        "unchanged": 2,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 7,
+            "newStart": 1,
+            "newLines": 3,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "interface IVerifier {"
+              },
+              {
+                "type": "-",
+                "oldLine": 2,
+                "text": "    function verifyProof(bytes calldata proof, uint256[4] calldata input) external view returns (bool);",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 3, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 4,
+                "text": "    function verifyProof(bytes calldata proof, uint256[7] calldata input) external view returns (bool);",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 5, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 6,
+                "text": "    function verifyProof(bytes calldata proof, uint256[12] calldata input) external view returns (bool);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 2,
+                "text": "    function verifyProof(bytes calldata _proof, uint256[6] calldata _input) external returns (bool);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 7, "newLine": 3, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

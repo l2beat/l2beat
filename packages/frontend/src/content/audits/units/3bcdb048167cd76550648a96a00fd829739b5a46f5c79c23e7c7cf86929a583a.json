@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "3bcdb048167cd76550648a96a00fd829739b5a46f5c79c23e7c7cf86929a583a",
+  "name": "Nargo.toml",
+  "kind": "program",
+  "lines": 12,
+  "source": "[package]\nname = \"rollup_lib\"\ntype = \"lib\"\nauthors = [\"\"]\ncompiler_version = \">=0.18.0\"\n\n[dependencies]\nbignum = { path = \"../bignum\" }\nbigcurve = { path = \"../bigcurve\" }\ntypes = { path = \"../types\" }\nprotocol_test_utils = { path = \"../protocol-test-utils\" }\nblob = { path = \"../blob\" }",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,177 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "cdba4dfdffc74d09b02ce07ce38ffa82c6ec5f34a7f65364267a4ba01ab3a12c",
+  "name": "PauseController",
+  "kind": "contract",
+  "lines": 182,
+  "source": "contract PauseController is OwnableUpgradeable {\n    /**\n     *\n     * Events *\n     *\n     */\n\n    /// @notice Emitted when a component is paused.\n    /// @param component The component that is paused.\n    event Pause(address indexed component);\n\n    /// @notice Emitted when a component is unpaused.\n    /// @param component The component that is unpaused.\n    event Unpause(address indexed component);\n\n    /// @notice Emitted when the pause cooldown period of a component is reset.\n    /// @param component The component that has its pause cooldown period reset.\n    event ResetPauseCooldownPeriod(address indexed component);\n\n    /// @notice Emitted when the pause cooldown period is updated.\n    /// @param oldPauseCooldownPeriod The old pause cooldown period.\n    /// @param newPauseCooldownPeriod The new pause cooldown period.\n    event UpdatePauseCooldownPeriod(uint256 oldPauseCooldownPeriod, uint256 newPauseCooldownPeriod);\n\n    /**\n     *\n     * Errors *\n     *\n     */\n\n    /// @dev Thrown when the cooldown period is not passed.\n    error ErrorCooldownPeriodNotPassed();\n\n    /// @dev Thrown when the component is already paused.\n    error ErrorComponentAlreadyPaused();\n\n    /// @dev Thrown when the component is not paused.\n    error ErrorComponentNotPaused();\n\n    /// @dev Thrown when the execution of `ScrollOwner` contract fails.\n    error ErrorExecutePauseFailed();\n\n    /// @dev Thrown when the execution of `ScrollOwner` contract fails.\n    error ErrorExecuteUnpauseFailed();\n\n    /**\n     *\n     * Constants *\n     *\n     */\n\n    /// @notice The role for pause controller in `ScrollOwner` contract.\n    bytes32 public constant PAUSE_CONTROLLER_ROLE = keccak256(\"PAUSE_CONTROLLER_ROLE\");\n\n    /**\n     *\n     * Immutable Variables *\n     *\n     */\n\n    /// @notice The address of the ScrollOwner contract.\n    address public immutable SCROLL_OWNER;\n\n    /**\n     *\n     * Storage Variables *\n     *\n     */\n\n    /// @notice The pause cooldown period. That is the minimum time between two consecutive pauses.\n    uint256 public pauseCooldownPeriod;\n\n    /// @notice The last unpause time of each component.\n    mapping(address => uint256) private lastUnpauseTime;\n\n    /**\n     *\n     * Constructor *\n     *\n     */\n    constructor(address _scrollOwner) {\n        SCROLL_OWNER = _scrollOwner;\n\n        _disableInitializers();\n    }\n\n    function initialize(uint256 _pauseCooldownPeriod) external initializer {\n        __Ownable_init();\n\n        _updatePauseCooldownPeriod(_pauseCooldownPeriod);\n    }\n\n    /**\n     *\n     * Public View Functions *\n     *\n     */\n\n    /// @notice Get the last unpause timestamp of a component.\n    /// @param component The component to get the last unpause timestamp.\n    /// @return The last unpause timestamp of the component.\n    function getLastUnpauseTime(IPausable component) external view returns (uint256) {\n        return lastUnpauseTime[address(component)];\n    }\n\n    /**\n     *\n     * Restricted Functions *\n     *\n     */\n\n    /// @notice Pause a component.\n    /// @param component The component to pause.\n    function pause(IPausable component) external onlyOwner {\n        if (component.paused()) {\n            revert ErrorComponentAlreadyPaused();\n        }\n\n        if (lastUnpauseTime[address(component)] + pauseCooldownPeriod >= block.timestamp) {\n            revert ErrorCooldownPeriodNotPassed();\n        }\n\n        ScrollOwner(payable(SCROLL_OWNER)).execute(\n            address(component), 0, abi.encodeWithSelector(IPausable.setPause.selector, true), PAUSE_CONTROLLER_ROLE\n        );\n\n        if (!component.paused()) {\n            revert ErrorExecutePauseFailed();\n        }\n\n        emit Pause(address(component));\n    }\n\n    /// @notice Unpause a component.\n    /// @param component The component to unpause.\n    function unpause(IPausable component) external onlyOwner {\n        if (!component.paused()) {\n            revert ErrorComponentNotPaused();\n        }\n\n        ScrollOwner(payable(SCROLL_OWNER)).execute(\n            address(component), 0, abi.encodeWithSelector(IPausable.setPause.selector, false), PAUSE_CONTROLLER_ROLE\n        );\n\n        lastUnpauseTime[address(component)] = block.timestamp;\n\n        if (component.paused()) {\n            revert ErrorExecuteUnpauseFailed();\n        }\n\n        emit Unpause(address(component));\n    }\n\n    /// @notice Reset the pause cooldown period of a component.\n    /// @param component The component to reset the pause cooldown period.\n    function resetPauseCooldownPeriod(IPausable component) external onlyOwner {\n        lastUnpauseTime[address(component)] = 0;\n\n        emit ResetPauseCooldownPeriod(address(component));\n    }\n\n    /// @notice Set the pause cooldown period.\n    /// @param newPauseCooldownPeriod The new pause cooldown period.\n    function updatePauseCooldownPeriod(uint256 newPauseCooldownPeriod) external onlyOwner {\n        _updatePauseCooldownPeriod(newPauseCooldownPeriod);\n    }\n\n    /**\n     *\n     * Internal Functions *\n     *\n     */\n\n    /// @dev Internal function to set the pause cooldown period.\n    /// @param newPauseCooldownPeriod The new pause cooldown period.\n    function _updatePauseCooldownPeriod(uint256 newPauseCooldownPeriod) internal {\n        uint256 oldPauseCooldownPeriod = pauseCooldownPeriod;\n        pauseCooldownPeriod = newPauseCooldownPeriod;\n\n        emit UpdatePauseCooldownPeriod(oldPauseCooldownPeriod, newPauseCooldownPeriod);\n    }\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "differs",
+      "coveredLines": 177,
+      "match": {
+        "origin": "own",
+        "collection": "scroll",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "PauseController",
+        "similarity": 0.98,
+        "reportId": "scroll/trailofbits-scroll-feynman-upgrade",
+        "repository": "scroll-tech/scroll-contracts",
+        "path": "src/misc/PauseController.sol",
+        "commit": "00e2a897db429eb4bc3918d1e40b410a68fb6eac",
+        "commitTimestamp": "2025-06-26T17:12:11Z",
+        "url": "https://github.com/scroll-tech/scroll-contracts/blob/00e2a897db429eb4bc3918d1e40b410a68fb6eac/src/misc/PauseController.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Diff review 8e6a02b120d3a997f7c8e948b62bfb0e5b3ac185..00e2a897 (v2.0.0...feat-feynman-contract-changes) of Feynman upgrade changes only. Access control, pause/unpause.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 5,
+        "removed": 0,
+        "ignoredAdded": 7,
+        "ignoredRemoved": 0,
+        "unchanged": 177,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 13,
+            "oldLines": 6,
+            "newStart": 13,
+            "newLines": 10,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 13,
+                "newLine": 13,
+                "text": "    /// @param component The component that is unpaused."
+              },
+              {
+                "type": " ",
+                "oldLine": 14,
+                "newLine": 14,
+                "text": "    event Unpause(address indexed component);"
+              },
+              { "type": " ", "oldLine": 15, "newLine": 15, "text": "" },
+              {
+                "type": "+",
+                "newLine": 16,
+                "text": "    /// @notice Emitted when the pause cooldown period of a component is reset.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 17,
+                "text": "    /// @param component The component that has its pause cooldown period reset.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 18,
+                "text": "    event ResetPauseCooldownPeriod(address indexed component);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 19, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 16,
+                "newLine": 20,
+                "text": "    /// @notice Emitted when the pause cooldown period is updated."
+              },
+              {
+                "type": " ",
+                "oldLine": 17,
+                "newLine": 21,
+                "text": "    /// @param oldPauseCooldownPeriod The old pause cooldown period."
+              },
+              {
+                "type": " ",
+                "oldLine": 18,
+                "newLine": 22,
+                "text": "    /// @param newPauseCooldownPeriod The new pause cooldown period."
+              }
+            ]
+          },
+          {
+            "oldStart": 147,
+            "oldLines": 6,
+            "newStart": 151,
+            "newLines": 14,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 147,
+                "newLine": 151,
+                "text": "        emit Unpause(address(component));"
+              },
+              { "type": " ", "oldLine": 148, "newLine": 152, "text": "    }" },
+              { "type": " ", "oldLine": 149, "newLine": 153, "text": "" },
+              {
+                "type": "+",
+                "newLine": 154,
+                "text": "    /// @notice Reset the pause cooldown period of a component.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 155,
+                "text": "    /// @param component The component to reset the pause cooldown period.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 156,
+                "text": "    function resetPauseCooldownPeriod(IPausable component) external onlyOwner {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 157,
+                "text": "        lastUnpauseTime[address(component)] = 0;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 158, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 159,
+                "text": "        emit ResetPauseCooldownPeriod(address(component));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 160,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 161, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 150,
+                "newLine": 162,
+                "text": "    /// @notice Set the pause cooldown period."
+              },
+              {
+                "type": " ",
+                "oldLine": 151,
+                "newLine": 163,
+                "text": "    /// @param newPauseCooldownPeriod The new pause cooldown period."
+              },
+              {
+                "type": " ",
+                "oldLine": 152,
+                "newLine": 164,
+                "text": "    function updatePauseCooldownPeriod(uint256 newPauseCooldownPeriod) external onlyOwner {"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

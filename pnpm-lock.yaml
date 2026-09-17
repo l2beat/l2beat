@@ -169,6 +169,34 @@ importers:
         specifier: workspace:*
         version: link:../typescript-config
 
+  packages/audit-diff:
+    dependencies:
+      '@l2beat/config':
+        specifier: workspace:*
+        version: link:../config
+      '@l2beat/shared-pure':
+        specifier: workspace:*
+        version: link:../shared-pure
+      '@l2beat/validate':
+        specifier: workspace:*
+        version: link:../validate
+      '@mradomski/fast-solidity-parser':
+        specifier: 0.1.6
+        version: 0.1.6
+      diff:
+        specifier: ^7.0.0
+        version: 7.0.0
+    devDependencies:
+      '@l2beat/typescript-config':
+        specifier: workspace:*
+        version: link:../typescript-config
+      '@types/diff':
+        specifier: ^7.0.2
+        version: 7.0.2
+      tsx:
+        specifier: ^4.9.3
+        version: 4.19.2
+
   packages/backend:
     dependencies:
       '@koa/router':
@@ -312,7 +340,7 @@ importers:
         version: 2.0.16
       cmd-ts:
         specifier: ^0.13.0
-        version: 0.13.0(supports-color@8.1.1)
+        version: 0.13.0(supports-color@10.2.2)
       dotenv:
         specifier: ^16.3.1
         version: 16.4.5
@@ -494,7 +522,7 @@ importers:
         version: 4.17.21
       sqlite3:
         specifier: 5.1.7
-        version: 5.1.7(supports-color@8.1.1)
+        version: 5.1.7(supports-color@10.2.2)
     devDependencies:
       '@l2beat/backend-tools':
         specifier: workspace:*
@@ -599,7 +627,7 @@ importers:
         version: 5.22.0
       prisma-kysely:
         specifier: ^1.8.0
-        version: 1.8.0(encoding@0.1.13)(supports-color@8.1.1)
+        version: 1.8.0(encoding@0.1.13)(supports-color@10.2.2)
       tsx:
         specifier: ^4.9.3
         version: 4.19.2
@@ -635,7 +663,7 @@ importers:
         version: 0.6.0
       cmd-ts:
         specifier: ^0.13.0
-        version: 0.13.0(supports-color@8.1.1)
+        version: 0.13.0(supports-color@10.2.2)
       ethers:
         specifier: ^5.7.2
         version: 5.7.2
@@ -653,7 +681,7 @@ importers:
         version: 5.0.10
       sqlite3:
         specifier: 5.1.7
-        version: 5.1.7(supports-color@8.1.1)
+        version: 5.1.7(supports-color@10.2.2)
     devDependencies:
       '@l2beat/typescript-config':
         specifier: workspace:*
@@ -673,6 +701,9 @@ importers:
 
   packages/frontend:
     dependencies:
+      '@l2beat/audit-diff':
+        specifier: workspace:*
+        version: link:../audit-diff
       '@l2beat/backend-tools':
         specifier: workspace:*
         version: link:../backend-tools
@@ -777,7 +808,7 @@ importers:
         version: 8.6.0(react@19.0.0)
       express:
         specifier: ^5.0.0
-        version: 5.0.1(supports-color@8.1.1)
+        version: 5.0.1(supports-color@10.2.2)
       fuzzysort:
         specifier: ^3.1.0
         version: 3.1.0
@@ -901,7 +932,7 @@ importers:
         version: 1.5.1
       '@ethereum-sourcify/compilers':
         specifier: ^1.1.1
-        version: 1.1.1(debug@4.4.0(supports-color@8.1.1))
+        version: 1.1.1(debug@4.4.0(supports-color@10.2.2))
       '@ethereum-sourcify/compilers-types':
         specifier: ^1.2.0
         version: 1.2.0
@@ -937,7 +968,7 @@ importers:
         version: 4.1.2
       cmd-ts:
         specifier: ^0.13.0
-        version: 0.13.0(supports-color@8.1.1)
+        version: 0.13.0(supports-color@10.2.2)
       dotenv:
         specifier: ^16.4.5
         version: 16.4.5
@@ -946,7 +977,7 @@ importers:
         version: 5.7.2
       express:
         specifier: ^4.21.1
-        version: 4.21.1(supports-color@8.1.1)
+        version: 4.21.1(supports-color@10.2.2)
       fflate:
         specifier: ^0.7.4
         version: 0.7.4
@@ -1128,13 +1159,13 @@ importers:
         version: link:../validate
       express:
         specifier: ^5.0.0
-        version: 5.0.1(supports-color@8.1.1)
+        version: 5.0.1(supports-color@10.2.2)
       lodash:
         specifier: ^4.17.21
         version: 4.17.21
       swagger-ui-express:
         specifier: ^5.0.1
-        version: 5.0.1(express@5.0.1(supports-color@8.1.1))
+        version: 5.0.1(express@5.0.1(supports-color@10.2.2))
     devDependencies:
       '@l2beat/typescript-config':
         specifier: workspace:*
@@ -1165,7 +1196,7 @@ importers:
         version: link:../validate
       '@polkadot/api':
         specifier: ^12.4.2
-        version: 12.4.2(supports-color@8.1.1)
+        version: 12.4.2(supports-color@10.2.2)
       ethers:
         specifier: ^5.7.2
         version: 5.7.2
@@ -1245,7 +1276,7 @@ importers:
         version: 17.2.3
       express:
         specifier: ^5.1.0
-        version: 5.1.0(supports-color@8.1.1)
+        version: 5.1.0(supports-color@10.2.2)
       fuzzysort:
         specifier: 3.1.0
         version: 3.1.0
@@ -1482,7 +1513,7 @@ importers:
         version: 2.8.5
       express:
         specifier: ^5.0.0
-        version: 5.0.1(supports-color@8.1.1)
+        version: 5.0.1(supports-color@10.2.2)
       viem:
         specifier: ^2.8.14
         version: 2.31.6(typescript@7.0.2)(zod@3.24.1)
@@ -10334,10 +10365,10 @@ snapshots:
 
   '@ethereum-sourcify/compilers-types@1.2.0': {}
 
-  '@ethereum-sourcify/compilers@1.1.1(debug@4.4.0(supports-color@8.1.1))':
+  '@ethereum-sourcify/compilers@1.1.1(debug@4.4.0(supports-color@10.2.2))':
     dependencies:
       semver: 7.7.4
-      solc: 0.8.34(debug@4.4.0(supports-color@8.1.1))
+      solc: 0.8.34(debug@4.4.0(supports-color@10.2.2))
     transitivePeerDependencies:
       - debug
 
@@ -11269,10 +11300,10 @@ snapshots:
   '@polkadot-api/utils@0.1.0':
     optional: true
 
-  '@polkadot/api-augment@12.4.2(supports-color@8.1.1)':
+  '@polkadot/api-augment@12.4.2(supports-color@10.2.2)':
     dependencies:
-      '@polkadot/api-base': 12.4.2(supports-color@8.1.1)
-      '@polkadot/rpc-augment': 12.4.2(supports-color@8.1.1)
+      '@polkadot/api-base': 12.4.2(supports-color@10.2.2)
+      '@polkadot/rpc-augment': 12.4.2(supports-color@10.2.2)
       '@polkadot/types': 12.4.2
       '@polkadot/types-augment': 12.4.2
       '@polkadot/types-codec': 12.4.2
@@ -11283,9 +11314,9 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-  '@polkadot/api-base@12.4.2(supports-color@8.1.1)':
+  '@polkadot/api-base@12.4.2(supports-color@10.2.2)':
     dependencies:
-      '@polkadot/rpc-core': 12.4.2(supports-color@8.1.1)
+      '@polkadot/rpc-core': 12.4.2(supports-color@10.2.2)
       '@polkadot/types': 12.4.2
       '@polkadot/util': 13.2.2
       rxjs: 7.8.1
@@ -11295,12 +11326,12 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-  '@polkadot/api-derive@12.4.2(supports-color@8.1.1)':
+  '@polkadot/api-derive@12.4.2(supports-color@10.2.2)':
     dependencies:
-      '@polkadot/api': 12.4.2(supports-color@8.1.1)
-      '@polkadot/api-augment': 12.4.2(supports-color@8.1.1)
-      '@polkadot/api-base': 12.4.2(supports-color@8.1.1)
-      '@polkadot/rpc-core': 12.4.2(supports-color@8.1.1)
+      '@polkadot/api': 12.4.2(supports-color@10.2.2)
+      '@polkadot/api-augment': 12.4.2(supports-color@10.2.2)
+      '@polkadot/api-base': 12.4.2(supports-color@10.2.2)
+      '@polkadot/rpc-core': 12.4.2(supports-color@10.2.2)
       '@polkadot/types': 12.4.2
       '@polkadot/types-codec': 12.4.2
       '@polkadot/util': 13.2.2
@@ -11312,15 +11343,15 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-  '@polkadot/api@12.4.2(supports-color@8.1.1)':
+  '@polkadot/api@12.4.2(supports-color@10.2.2)':
     dependencies:
-      '@polkadot/api-augment': 12.4.2(supports-color@8.1.1)
-      '@polkadot/api-base': 12.4.2(supports-color@8.1.1)
-      '@polkadot/api-derive': 12.4.2(supports-color@8.1.1)
+      '@polkadot/api-augment': 12.4.2(supports-color@10.2.2)
+      '@polkadot/api-base': 12.4.2(supports-color@10.2.2)
+      '@polkadot/api-derive': 12.4.2(supports-color@10.2.2)
       '@polkadot/keyring': 13.2.2(@polkadot/util-crypto@13.2.2(@polkadot/util@13.2.2))(@polkadot/util@13.2.2)
-      '@polkadot/rpc-augment': 12.4.2(supports-color@8.1.1)
-      '@polkadot/rpc-core': 12.4.2(supports-color@8.1.1)
-      '@polkadot/rpc-provider': 12.4.2(supports-color@8.1.1)
+      '@polkadot/rpc-augment': 12.4.2(supports-color@10.2.2)
+      '@polkadot/rpc-core': 12.4.2(supports-color@10.2.2)
+      '@polkadot/rpc-provider': 12.4.2(supports-color@10.2.2)
       '@polkadot/types': 12.4.2
       '@polkadot/types-augment': 12.4.2
       '@polkadot/types-codec': 12.4.2
@@ -11348,9 +11379,9 @@ snapshots:
       '@substrate/ss58-registry': 1.51.0
       tslib: 2.8.1
 
-  '@polkadot/rpc-augment@12.4.2(supports-color@8.1.1)':
+  '@polkadot/rpc-augment@12.4.2(supports-color@10.2.2)':
     dependencies:
-      '@polkadot/rpc-core': 12.4.2(supports-color@8.1.1)
+      '@polkadot/rpc-core': 12.4.2(supports-color@10.2.2)
       '@polkadot/types': 12.4.2
       '@polkadot/types-codec': 12.4.2
       '@polkadot/util': 13.2.2
@@ -11360,10 +11391,10 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-  '@polkadot/rpc-core@12.4.2(supports-color@8.1.1)':
+  '@polkadot/rpc-core@12.4.2(supports-color@10.2.2)':
     dependencies:
-      '@polkadot/rpc-augment': 12.4.2(supports-color@8.1.1)
-      '@polkadot/rpc-provider': 12.4.2(supports-color@8.1.1)
+      '@polkadot/rpc-augment': 12.4.2(supports-color@10.2.2)
+      '@polkadot/rpc-provider': 12.4.2(supports-color@10.2.2)
       '@polkadot/types': 12.4.2
       '@polkadot/util': 13.2.2
       rxjs: 7.8.1
@@ -11373,7 +11404,7 @@ snapshots:
       - supports-color
       - utf-8-validate
 
-  '@polkadot/rpc-provider@12.4.2(supports-color@8.1.1)':
+  '@polkadot/rpc-provider@12.4.2(supports-color@10.2.2)':
     dependencies:
       '@polkadot/keyring': 13.2.2(@polkadot/util-crypto@13.2.2(@polkadot/util@13.2.2))(@polkadot/util@13.2.2)
       '@polkadot/types': 12.4.2
@@ -11385,7 +11416,7 @@ snapshots:
       '@polkadot/x-ws': 13.2.2
       eventemitter3: 5.0.1
       mock-socket: 9.3.1
-      nock: 13.5.5(supports-color@8.1.1)
+      nock: 13.5.5(supports-color@10.2.2)
       tslib: 2.8.1
     optionalDependencies:
       '@substrate/connect': 0.8.11
@@ -11562,10 +11593,10 @@ snapshots:
 
   '@prisma/debug@5.22.0': {}
 
-  '@prisma/debug@5.3.1(supports-color@8.1.1)':
+  '@prisma/debug@5.3.1(supports-color@10.2.2)':
     dependencies:
       '@types/debug': 4.1.8
-      debug: 4.3.4(supports-color@8.1.1)
+      debug: 4.3.4(supports-color@10.2.2)
       strip-ansi: 6.0.1
     transitivePeerDependencies:
       - supports-color
@@ -11587,10 +11618,10 @@ snapshots:
       '@prisma/engines-version': 5.22.0-44.605197351a3c8bdd595af2d2a9bc3025bca48ea2
       '@prisma/get-platform': 5.22.0
 
-  '@prisma/fetch-engine@5.3.1(encoding@0.1.13)(supports-color@8.1.1)':
+  '@prisma/fetch-engine@5.3.1(encoding@0.1.13)(supports-color@10.2.2)':
     dependencies:
-      '@prisma/debug': 5.3.1(supports-color@8.1.1)
-      '@prisma/get-platform': 5.3.1(supports-color@8.1.1)
+      '@prisma/debug': 5.3.1(supports-color@10.2.2)
+      '@prisma/get-platform': 5.3.1(supports-color@10.2.2)
       execa: 5.1.1
       find-cache-dir: 3.3.2
       fs-extra: 11.1.1
@@ -11610,9 +11641,9 @@ snapshots:
       - encoding
       - supports-color
 
-  '@prisma/generator-helper@5.3.1(supports-color@8.1.1)':
+  '@prisma/generator-helper@5.3.1(supports-color@10.2.2)':
     dependencies:
-      '@prisma/debug': 5.3.1(supports-color@8.1.1)
+      '@prisma/debug': 5.3.1(supports-color@10.2.2)
       '@types/cross-spawn': 6.0.2
       cross-spawn: 7.0.3
       kleur: 4.1.5
@@ -11623,9 +11654,9 @@ snapshots:
     dependencies:
       '@prisma/debug': 5.22.0
 
-  '@prisma/get-platform@5.3.1(supports-color@8.1.1)':
+  '@prisma/get-platform@5.3.1(supports-color@10.2.2)':
     dependencies:
-      '@prisma/debug': 5.3.1(supports-color@8.1.1)
+      '@prisma/debug': 5.3.1(supports-color@10.2.2)
       escape-string-regexp: 4.0.0
       execa: 5.1.1
       fs-jetpack: 5.1.0
@@ -11638,15 +11669,15 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@prisma/internals@5.3.1(encoding@0.1.13)(supports-color@8.1.1)':
+  '@prisma/internals@5.3.1(encoding@0.1.13)(supports-color@10.2.2)':
     dependencies:
       '@antfu/ni': 0.21.8
       '@opentelemetry/api': 1.4.1
-      '@prisma/debug': 5.3.1(supports-color@8.1.1)
+      '@prisma/debug': 5.3.1(supports-color@10.2.2)
       '@prisma/engines': 5.3.1
-      '@prisma/fetch-engine': 5.3.1(encoding@0.1.13)(supports-color@8.1.1)
-      '@prisma/generator-helper': 5.3.1(supports-color@8.1.1)
-      '@prisma/get-platform': 5.3.1(supports-color@8.1.1)
+      '@prisma/fetch-engine': 5.3.1(encoding@0.1.13)(supports-color@10.2.2)
+      '@prisma/generator-helper': 5.3.1(supports-color@10.2.2)
+      '@prisma/get-platform': 5.3.1(supports-color@10.2.2)
       '@prisma/prisma-schema-wasm': 5.3.1-2.61e140623197a131c2a6189271ffee05a7aa9a59
       archiver: 5.3.2
       arg: 5.0.2
@@ -13611,7 +13642,7 @@ snapshots:
       '@noble/hashes': 1.8.0
       '@waku/interfaces': 0.0.34
       chai: 4.5.0
-      debug: 4.4.0(supports-color@8.1.1)
+      debug: 4.4.0(supports-color@10.2.2)
       uint8arrays: 5.1.1
     transitivePeerDependencies:
       - supports-color
@@ -13657,6 +13688,13 @@ snapshots:
   aes-js@3.0.0: {}
 
   after-all-results@2.0.0: {}
+
+  agent-base@6.0.2(supports-color@10.2.2):
+    dependencies:
+      debug: 4.4.0(supports-color@10.2.2)
+    transitivePeerDependencies:
+      - supports-color
+    optional: true
 
   agent-base@6.0.2(supports-color@8.1.1):
     dependencies:
@@ -14162,6 +14200,15 @@ snapshots:
 
   cluster-key-slot@1.1.2: {}
 
+  cmd-ts@0.13.0(supports-color@10.2.2):
+    dependencies:
+      chalk: 4.1.2
+      debug: 4.4.0(supports-color@10.2.2)
+      didyoumean: 1.2.2
+      strip-ansi: 6.0.1
+    transitivePeerDependencies:
+      - supports-color
+
   cmd-ts@0.13.0(supports-color@8.1.1):
     dependencies:
       chalk: 4.1.2
@@ -14549,23 +14596,35 @@ snapshots:
 
   debounce@2.1.0: {}
 
+  debug@2.6.9(supports-color@10.2.2):
+    dependencies:
+      ms: 2.0.0
+    optionalDependencies:
+      supports-color: 10.2.2
+
   debug@2.6.9(supports-color@8.1.1):
     dependencies:
       ms: 2.0.0
     optionalDependencies:
       supports-color: 8.1.1
 
-  debug@4.3.4(supports-color@8.1.1):
+  debug@4.3.4(supports-color@10.2.2):
     dependencies:
       ms: 2.1.2
     optionalDependencies:
-      supports-color: 8.1.1
+      supports-color: 10.2.2
 
   debug@4.3.6(supports-color@8.1.1):
     dependencies:
       ms: 2.1.2
     optionalDependencies:
       supports-color: 8.1.1
+
+  debug@4.4.0(supports-color@10.2.2):
+    dependencies:
+      ms: 2.1.3
+    optionalDependencies:
+      supports-color: 10.2.2
 
   debug@4.4.0(supports-color@8.1.1):
     dependencies:
@@ -15045,7 +15104,7 @@ snapshots:
 
   expand-template@2.0.3: {}
 
-  express@4.21.1(supports-color@8.1.1):
+  express@4.21.1(supports-color@10.2.2):
     dependencies:
       accepts: 1.3.8
       array-flatten: 1.1.1
@@ -15072,7 +15131,7 @@ snapshots:
       range-parser: 1.2.1
       safe-buffer: 5.2.1
       send: 0.19.0(supports-color@8.1.1)
-      serve-static: 1.16.2(supports-color@8.1.1)
+      serve-static: 1.16.2(supports-color@10.2.2)
       setprototypeof: 1.2.0
       statuses: 2.0.1
       type-is: 1.6.18
@@ -15081,7 +15140,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  express@5.0.1(supports-color@8.1.1):
+  express@5.0.1(supports-color@10.2.2):
     dependencies:
       accepts: 2.0.0
       body-parser: 2.1.0(supports-color@8.1.1)
@@ -15109,7 +15168,7 @@ snapshots:
       router: 2.1.0
       safe-buffer: 5.2.1
       send: 1.1.0(supports-color@8.1.1)
-      serve-static: 2.1.0(supports-color@8.1.1)
+      serve-static: 2.1.0(supports-color@10.2.2)
       setprototypeof: 1.2.0
       statuses: 2.0.1
       type-is: 2.0.0
@@ -15118,7 +15177,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  express@5.1.0(supports-color@8.1.1):
+  express@5.1.0(supports-color@10.2.2):
     dependencies:
       accepts: 2.0.0
       body-parser: 2.2.0(supports-color@8.1.1)
@@ -15130,7 +15189,7 @@ snapshots:
       encodeurl: 2.0.0
       escape-html: 1.0.3
       etag: 1.8.1
-      finalhandler: 2.1.0(supports-color@8.1.1)
+      finalhandler: 2.1.0(supports-color@10.2.2)
       fresh: 2.0.0
       http-errors: 2.0.0
       merge-descriptors: 2.0.0
@@ -15142,8 +15201,8 @@ snapshots:
       qs: 6.14.0
       range-parser: 1.2.1
       router: 2.2.0(supports-color@8.1.1)
-      send: 1.2.0(supports-color@8.1.1)
-      serve-static: 2.2.0(supports-color@8.1.1)
+      send: 1.2.0(supports-color@10.2.2)
+      serve-static: 2.2.0(supports-color@10.2.2)
       statuses: 2.0.1
       type-is: 2.0.1
       vary: 1.1.2
@@ -15207,6 +15266,17 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
+  finalhandler@2.1.0(supports-color@10.2.2):
+    dependencies:
+      debug: 4.4.0(supports-color@10.2.2)
+      encodeurl: 2.0.0
+      escape-html: 1.0.3
+      on-finished: 2.4.1
+      parseurl: 1.3.3
+      statuses: 2.0.1
+    transitivePeerDependencies:
+      - supports-color
+
   finalhandler@2.1.0(supports-color@8.1.1):
     dependencies:
       debug: 4.4.0(supports-color@8.1.1)
@@ -15266,9 +15336,9 @@ snapshots:
       flowbite-datepicker: 1.3.0
       mini-svg-data-uri: 1.4.4
 
-  follow-redirects@1.16.0(debug@4.4.0(supports-color@8.1.1)):
+  follow-redirects@1.16.0(debug@4.4.0(supports-color@10.2.2)):
     optionalDependencies:
-      debug: 4.4.0(supports-color@8.1.1)
+      debug: 4.4.0(supports-color@10.2.2)
 
   foreground-child@3.3.0:
     dependencies:
@@ -15563,9 +15633,9 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  https-proxy-agent@5.0.1(supports-color@8.1.1):
+  https-proxy-agent@5.0.1(supports-color@10.2.2):
     dependencies:
-      agent-base: 6.0.2(supports-color@8.1.1)
+      agent-base: 6.0.2(supports-color@10.2.2)
       debug: 4.4.0(supports-color@8.1.1)
     transitivePeerDependencies:
       - supports-color
@@ -16147,13 +16217,13 @@ snapshots:
   make-error@1.3.6:
     optional: true
 
-  make-fetch-happen@9.1.0(supports-color@8.1.1):
+  make-fetch-happen@9.1.0(supports-color@10.2.2):
     dependencies:
       agentkeepalive: 4.6.0
       cacache: 15.3.0
       http-cache-semantics: 4.1.1
       http-proxy-agent: 4.0.1(supports-color@8.1.1)
-      https-proxy-agent: 5.0.1(supports-color@8.1.1)
+      https-proxy-agent: 5.0.1(supports-color@10.2.2)
       is-lambda: 1.0.1
       lru-cache: 6.0.0
       minipass: 3.3.6
@@ -16163,7 +16233,7 @@ snapshots:
       minipass-pipeline: 1.2.4
       negotiator: 0.6.4
       promise-retry: 2.0.1
-      socks-proxy-agent: 6.2.1(supports-color@8.1.1)
+      socks-proxy-agent: 6.2.1(supports-color@10.2.2)
       ssri: 8.0.1
     transitivePeerDependencies:
       - bluebird
@@ -16440,6 +16510,14 @@ snapshots:
       - '@babel/core'
       - babel-plugin-macros
 
+  nock@13.5.5(supports-color@10.2.2):
+    dependencies:
+      debug: 4.4.0(supports-color@10.2.2)
+      json-stringify-safe: 5.0.1
+      propagate: 2.0.1
+    transitivePeerDependencies:
+      - supports-color
+
   nock@13.5.5(supports-color@8.1.1):
     dependencies:
       debug: 4.4.0(supports-color@8.1.1)
@@ -16481,12 +16559,12 @@ snapshots:
       detect-libc: 2.0.4
     optional: true
 
-  node-gyp@8.4.1(supports-color@8.1.1):
+  node-gyp@8.4.1(supports-color@10.2.2):
     dependencies:
       env-paths: 2.2.1
       glob: 7.2.3
       graceful-fs: 4.2.11
-      make-fetch-happen: 9.1.0(supports-color@8.1.1)
+      make-fetch-happen: 9.1.0(supports-color@10.2.2)
       nopt: 5.0.0
       npmlog: 6.0.2
       rimraf: 3.0.2
@@ -16906,11 +16984,11 @@ snapshots:
       tar-fs: 2.1.2
       tunnel-agent: 0.6.0
 
-  prisma-kysely@1.8.0(encoding@0.1.13)(supports-color@8.1.1):
+  prisma-kysely@1.8.0(encoding@0.1.13)(supports-color@10.2.2):
     dependencies:
       '@mrleebo/prisma-ast': 0.7.0
-      '@prisma/generator-helper': 5.3.1(supports-color@8.1.1)
-      '@prisma/internals': 5.3.1(encoding@0.1.13)(supports-color@8.1.1)
+      '@prisma/generator-helper': 5.3.1(supports-color@10.2.2)
+      '@prisma/internals': 5.3.1(encoding@0.1.13)(supports-color@10.2.2)
       typescript: 5.9.3
       zod: 3.23.8
     transitivePeerDependencies:
@@ -17435,9 +17513,9 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  send@1.2.0(supports-color@8.1.1):
+  send@1.2.0(supports-color@10.2.2):
     dependencies:
-      debug: 4.4.0(supports-color@8.1.1)
+      debug: 4.4.0(supports-color@10.2.2)
       encodeurl: 2.0.0
       escape-html: 1.0.3
       etag: 1.8.1
@@ -17455,30 +17533,30 @@ snapshots:
     dependencies:
       randombytes: 2.1.0
 
-  serve-static@1.16.2(supports-color@8.1.1):
+  serve-static@1.16.2(supports-color@10.2.2):
     dependencies:
       encodeurl: 2.0.0
       escape-html: 1.0.3
       parseurl: 1.3.3
-      send: 0.19.0(supports-color@8.1.1)
+      send: 0.19.0(supports-color@10.2.2)
     transitivePeerDependencies:
       - supports-color
 
-  serve-static@2.1.0(supports-color@8.1.1):
+  serve-static@2.1.0(supports-color@10.2.2):
     dependencies:
       encodeurl: 2.0.0
       escape-html: 1.0.3
       parseurl: 1.3.3
-      send: 1.2.0(supports-color@8.1.1)
+      send: 1.2.0(supports-color@10.2.2)
     transitivePeerDependencies:
       - supports-color
 
-  serve-static@2.2.0(supports-color@8.1.1):
+  serve-static@2.2.0(supports-color@10.2.2):
     dependencies:
       encodeurl: 2.0.0
       escape-html: 1.0.3
       parseurl: 1.3.3
-      send: 1.2.0(supports-color@8.1.1)
+      send: 1.2.0(supports-color@10.2.2)
     transitivePeerDependencies:
       - supports-color
 
@@ -17639,9 +17717,9 @@ snapshots:
       - utf-8-validate
     optional: true
 
-  socks-proxy-agent@6.2.1(supports-color@8.1.1):
+  socks-proxy-agent@6.2.1(supports-color@10.2.2):
     dependencies:
-      agent-base: 6.0.2(supports-color@8.1.1)
+      agent-base: 6.0.2(supports-color@10.2.2)
       debug: 4.4.0(supports-color@8.1.1)
       socks: 2.8.4
     transitivePeerDependencies:
@@ -17654,11 +17732,11 @@ snapshots:
       smart-buffer: 4.2.0
     optional: true
 
-  solc@0.8.34(debug@4.4.0(supports-color@8.1.1)):
+  solc@0.8.34(debug@4.4.0(supports-color@10.2.2)):
     dependencies:
       command-exists: 1.2.9
       commander: 8.3.0
-      follow-redirects: 1.16.0(debug@4.4.0(supports-color@8.1.1))
+      follow-redirects: 1.16.0(debug@4.4.0(supports-color@10.2.2))
       js-sha3: 0.8.0
       memorystream: 0.3.1
       semver: 5.7.2
@@ -17713,14 +17791,14 @@ snapshots:
 
   sql-summary@1.0.1: {}
 
-  sqlite3@5.1.7(supports-color@8.1.1):
+  sqlite3@5.1.7(supports-color@10.2.2):
     dependencies:
       bindings: 1.5.0
       node-addon-api: 7.1.1
       prebuild-install: 7.1.3
       tar: 6.2.1
     optionalDependencies:
-      node-gyp: 8.4.1(supports-color@8.1.1)
+      node-gyp: 8.4.1(supports-color@10.2.2)
     transitivePeerDependencies:
       - bluebird
       - supports-color
@@ -17848,9 +17926,9 @@ snapshots:
     dependencies:
       '@scarf/scarf': 1.4.0
 
-  swagger-ui-express@5.0.1(express@5.0.1(supports-color@8.1.1)):
+  swagger-ui-express@5.0.1(express@5.0.1(supports-color@10.2.2)):
     dependencies:
-      express: 5.0.1(supports-color@8.1.1)
+      express: 5.0.1(supports-color@10.2.2)
       swagger-ui-dist: 5.29.1
 
   tabbable@6.2.0: {}

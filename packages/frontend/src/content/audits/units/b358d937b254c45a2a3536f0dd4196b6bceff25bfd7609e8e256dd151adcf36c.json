@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "b358d937b254c45a2a3536f0dd4196b6bceff25bfd7609e8e256dd151adcf36c",
+  "name": "IUnlockCallback",
+  "kind": "interface",
+  "lines": 6,
+  "source": "interface IUnlockCallback {\n    /// @notice Called by the pool manager on `msg.sender` when the manager is unlocked\n    /// @param data The data that was passed to the call to unlock\n    /// @return Any data that you want to be returned from the unlock call\n    function unlockCallback(bytes calldata data) external returns (bytes memory);\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

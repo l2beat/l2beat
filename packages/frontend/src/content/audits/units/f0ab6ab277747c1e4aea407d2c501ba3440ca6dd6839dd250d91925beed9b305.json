@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "f0ab6ab277747c1e4aea407d2c501ba3440ca6dd6839dd250d91925beed9b305",
+  "name": "block_root_single_tx_rollup.nr",
+  "kind": "program",
+  "lines": 38,
+  "source": "use crate::{\n    abis::{BlockRollupPublicInputs, TxRollupPublicInputs},\n    block_root::components::{BlockRollupPublicInputsComposer, validate_previous_rollups},\n};\nuse types::{\n    constants::{ARCHIVE_HEIGHT, PRIVATE_TX_BASE_ROLLUP_VK_INDEX, PUBLIC_TX_BASE_ROLLUP_VK_INDEX},\n    proof::proof_data::RollupHonkProofData,\n};\n\n// TX_MERGE_ROLLUP_VK_INDEX is not allowed if there is only one previous rollup.\nglobal ALLOWED_PREVIOUS_VK_INDICES: [u32; 2] =\n    [PRIVATE_TX_BASE_ROLLUP_VK_INDEX, PUBLIC_TX_BASE_ROLLUP_VK_INDEX];\n\npub struct BlockRootSingleTxRollupPrivateInputs {\n    pub(crate) previous_rollup: RollupHonkProofData<TxRollupPublicInputs>,\n    // Hint for inserting the new block hash to the last archive.\n    pub(crate) new_archive_sibling_path: [Field; ARCHIVE_HEIGHT],\n}\n\n/// The Block Root Single Tx Rollup circuit finalizes a block containing exactly one transaction.\n/// It creates the block header and does not process L1-to-L2 messages.\n/// This variant is used for non-first blocks with only one transaction.\n///\n/// This circuit:\n/// - Verifies the proof from a single tx rollup (Private Tx Base or Public Tx Base circuit)\n/// - Computes the block header hash and inserts it into the archive tree\n///\n/// The output feeds into a Block Merge circuit if more blocks need to be combined,\n/// or directly into a Checkpoint Root circuit if the checkpoint contains only one or two blocks, or if the other blocks\n/// have already been merged into a tree whose root is this block's left sibling.\n///\n/// VkIndex: BLOCK_ROOT_SINGLE_TX_ROLLUP_VK_INDEX\npub fn execute(inputs: BlockRootSingleTxRollupPrivateInputs) -> BlockRollupPublicInputs {\n    validate_previous_rollups([inputs.previous_rollup], ALLOWED_PREVIOUS_VK_INDICES);\n\n    BlockRollupPublicInputsComposer::new_from_single_rollup(inputs.previous_rollup.public_inputs)\n        .finish(inputs.new_archive_sibling_path)\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

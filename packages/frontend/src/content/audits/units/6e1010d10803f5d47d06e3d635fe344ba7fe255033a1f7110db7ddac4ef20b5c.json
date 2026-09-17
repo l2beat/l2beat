@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "6e1010d10803f5d47d06e3d635fe344ba7fe255033a1f7110db7ddac4ef20b5c",
+  "name": "tail_output_composer.nr",
+  "kind": "program",
+  "lines": 74,
+  "source": "use crate::components::{\n    gas_meter::meter_gas_used,\n    private_kernel_circuit_output_composer::PrivateKernelCircuitOutputComposer,\n};\nuse types::{\n    abis::{\n        accumulated_data::{\n            private_accumulated_data::PrivateAccumulatedData,\n            private_to_rollup_accumulated_data::PrivateToRollupAccumulatedData,\n        },\n        kernel_circuit_public_inputs::{\n            PrivateKernelCircuitPublicInputs, PrivateToRollupKernelCircuitPublicInputs,\n        },\n    },\n    constants::MAX_TX_LIFETIME,\n    traits::Empty,\n};\n\npub struct TailOutputComposer {\n    previous_kernel: PrivateKernelCircuitPublicInputs,\n    expiration_timestamp_upper_bound: u64,\n}\n\nimpl TailOutputComposer {\n    pub unconstrained fn new(\n        previous_kernel: PrivateKernelCircuitPublicInputs,\n        expiration_timestamp_upper_bound: u64,\n    ) -> Self {\n        TailOutputComposer { previous_kernel, expiration_timestamp_upper_bound }\n    }\n\n    pub unconstrained fn finish(self) -> PrivateToRollupKernelCircuitPublicInputs {\n        let mut output_composer =\n            PrivateKernelCircuitOutputComposer::new_from_previous_kernel(self.previous_kernel);\n        output_composer.sort_ordered_values();\n        let source = output_composer.finish();\n\n        let end = self.build_private_to_rollup_accumulated_data(source.end);\n\n        let gas_used = meter_gas_used(self.previous_kernel, false /* is_for_public */);\n\n        let max_timestamp =\n            source.constants.anchor_block_header.global_variables.timestamp + MAX_TX_LIFETIME;\n        let expiration_timestamp = std::cmp::min(\n            std::cmp::min(\n                source.expiration_timestamp,\n                self.expiration_timestamp_upper_bound,\n            ),\n            max_timestamp,\n        );\n\n        PrivateToRollupKernelCircuitPublicInputs {\n            constants: source.constants.to_tx_constant_data(),\n            end,\n            gas_used,\n            fee_payer: source.fee_payer,\n            expiration_timestamp,\n        }\n    }\n\n    unconstrained fn build_private_to_rollup_accumulated_data(\n        _self: Self,\n        source: PrivateAccumulatedData,\n    ) -> PrivateToRollupAccumulatedData {\n        let mut data = PrivateToRollupAccumulatedData::empty();\n        data.note_hashes = source.note_hashes.array.map(|n| n.expose_to_public());\n        data.nullifiers = source.nullifiers.array.map(|n| n.expose_to_public());\n        data.l2_to_l1_msgs = source.l2_to_l1_msgs.array.map(|m| m.expose_to_public());\n        data.private_logs = source.private_logs.array.map(|l| l.expose_to_public());\n        data.contract_class_logs_hashes =\n            source.contract_class_logs_hashes.array.map(|l| l.expose_to_public());\n        data\n    }\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

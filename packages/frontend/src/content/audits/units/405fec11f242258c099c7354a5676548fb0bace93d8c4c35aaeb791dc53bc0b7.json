@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "405fec11f242258c099c7354a5676548fb0bace93d8c4c35aaeb791dc53bc0b7",
+  "name": "EtherSend",
+  "kind": "library",
+  "lines": 13,
+  "source": "library EtherSend {\n    /**\n     * @notice function to transfer ether via filling the value field of a call\n     * @dev DICLAIMER: you must handle the possibility of reentrancy when using this function!!!\n     * @param to address to be transferred to\n     * @param amount amount to be transferred\n     * @return success true if transfer successful\n     *\n     */\n    function sendEther(address to, uint256 amount) internal returns (bool success) {\n        (success,) = payable(to).call{value: amount}(\"\");\n    }\n}",
+  "resolutions": {
+    "f9658cd3a9a22004": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

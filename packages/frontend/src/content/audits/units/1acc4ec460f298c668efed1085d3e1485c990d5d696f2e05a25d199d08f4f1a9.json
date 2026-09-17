@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "1acc4ec460f298c668efed1085d3e1485c990d5d696f2e05a25d199d08f4f1a9",
+  "name": "ISuperchainConfig",
+  "kind": "interface",
+  "lines": 31,
+  "source": "interface ISuperchainConfig is IProxyAdminOwnedBase {\n    enum UpdateType {\n        GUARDIAN\n    }\n\n    event ConfigUpdate(UpdateType indexed updateType, bytes data);\n    event Initialized(uint8 version);\n    event Paused(address identifier);\n    event Unpaused(address identifier);\n\n    error SuperchainConfig_OnlyGuardian();\n    error SuperchainConfig_AlreadyPaused(address identifier);\n    error SuperchainConfig_NotAlreadyPaused(address identifier);\n    error ReinitializableBase_ZeroInitVersion();\n\n    function guardian() external view returns (address);\n    function initialize(address _guardian) external;\n    function pause(address _identifier) external;\n    function unpause(address _identifier) external;\n    function pausable(address _identifier) external view returns (bool);\n    function paused() external view returns (bool);\n    function paused(address _identifier) external view returns (bool);\n    function expiration(address _identifier) external view returns (uint256);\n    function extend(address _identifier) external;\n    function version() external view returns (string memory);\n    function pauseTimestamps(address) external view returns (uint256);\n    function pauseExpiry() external view returns (uint256);\n    function initVersion() external view returns (uint8);\n\n    function __constructor__() external;\n}",
+  "resolutions": {
+    "ba5b6c9584fb78fd": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "44ad4cf96e2ef6f0": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "bb55951394276893": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "1e56e53df63c4ff3162ecd928681109574ee2f548aa33bd87a0bcedaec53841a",
+  "name": "SignatureVerification",
+  "kind": "library",
+  "lines": 48,
+  "source": "library SignatureVerification {\n    /// @notice Thrown when the passed in signature is not a valid length\n    error InvalidSignatureLength();\n\n    /// @notice Thrown when the recovered signer is equal to the zero address\n    error InvalidSignature();\n\n    /// @notice Thrown when the recovered signer does not equal the claimedSigner\n    error InvalidSigner();\n\n    /// @notice Thrown when the recovered contract signature is incorrect\n    error InvalidContractSignature();\n\n    bytes32 constant UPPER_BIT_MASK = (0x7fffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff);\n\n    function verify(bytes calldata signature, bytes32 hash, address claimedSigner) internal view {\n        bytes32 r;\n        bytes32 s;\n        uint8 v;\n\n        if (claimedSigner.code.length == 0) {\n            if (signature.length == 65) {\n                (r, s) = abi.decode(signature, (bytes32, bytes32));\n                v = uint8(signature[64]);\n            } else if (signature.length == 64) {\n                // EIP-2098\n                bytes32 vs;\n                (r, vs) = abi.decode(signature, (bytes32, bytes32));\n                s = vs & UPPER_BIT_MASK;\n                v = uint8(uint256(vs >> 255)) + 27;\n            } else {\n                revert InvalidSignatureLength();\n            }\n            address signer = ecrecover(hash, v, r, s);\n            if (signer == address(0)) {\n                revert InvalidSignature();\n            }\n            if (signer != claimedSigner) {\n                revert InvalidSigner();\n            }\n        } else {\n            bytes4 magicValue = IERC1271(claimedSigner).isValidSignature(hash, signature);\n            if (magicValue != IERC1271.isValidSignature.selector) {\n                revert InvalidContractSignature();\n            }\n        }\n    }\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "58f443710cc904a1a48a17feed64bba9a3ed3387bd5bbe418f30d536e2dfe62e",
+  "name": "Nargo.toml",
+  "kind": "program",
+  "lines": 8,
+  "source": "[package]\nname = \"rollup_checkpoint_merge\"\ntype = \"bin\"\nauthors = [\"\"]\ncompiler_version = \">=0.18.0\"\n\n[dependencies]\nrollup_lib = { path = \"../rollup-lib\" }",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

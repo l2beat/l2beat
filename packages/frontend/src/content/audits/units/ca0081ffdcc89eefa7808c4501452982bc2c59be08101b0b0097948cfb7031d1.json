@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "ca0081ffdcc89eefa7808c4501452982bc2c59be08101b0b0097948cfb7031d1",
+  "name": "mod.nr",
+  "kind": "program",
+  "lines": 13,
+  "source": "pub mod counted;\npub mod scoped;\n\npub use counted::Counted;\npub use scoped::Scoped;\n\npub trait Ordered {\n    fn counter(self) -> u32;\n}\n\npub trait Readable {\n    fn assert_match_read_request(self, read_request: Field);\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

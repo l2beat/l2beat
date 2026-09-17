@@ -1,0 +1,280 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "0b2f00054b5ed08e896e37bac514c8223b336d45cc477882878fe3cc0f24590b",
+  "name": "main.rs",
+  "kind": "program",
+  "lines": 38,
+  "source": "use scroll_zkvm_types_circuit::{AggCircuit, Circuit};\n\nmod circuit;\n\ntype C = circuit::BundleCircuit;\n\n// TODO: feature handling for feynman to use bundle info v3.\n\nopenvm::entry!(main);\n\nmod child_commitments;\n\nfn main() {\n    // Read witness bytes from openvm StdIn.\n    let witness_bytes = C::read_witness_bytes();\n\n    // Deserialize witness bytes to the witness data type.\n    let witness = C::deserialize_witness(&witness_bytes);\n\n    // Verify the root proofs being aggregated in the circuit.\n    let agg_proofs = C::verify_proofs(&witness);\n\n    // Get the public-input values of the proofs being aggregated from witness.\n    let agg_pis = C::aggregated_public_inputs(&witness);\n\n    // Derive the digests of the public-input values of the proofs being aggregated.\n    let agg_pi_hashes = C::aggregated_pi_hashes(&agg_proofs);\n\n    // Validate that the pi hashes derived from the stark proofs are in fact the digests of the\n    // public-input values of the previous circuit layer.\n    C::validate_aggregated_pi(&agg_pis, &agg_pi_hashes);\n\n    // Validate the witness for the current circuit layer.\n    let public_inputs = C::validate(witness);\n\n    // Reveal the public input values of the current circuit layer.\n    C::reveal_pi(&public_inputs);\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "differs",
+      "coveredLines": 34,
+      "match": {
+        "origin": "own",
+        "collection": "scroll",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "main.rs",
+        "similarity": 0.688,
+        "reportId": "scroll/trailofbits-scroll-euclid-phase2-2025-04",
+        "repository": "scroll-tech/zkvm-prover",
+        "path": "crates/circuits/bundle-circuit/src/main.rs",
+        "commit": "c5781b608438b3dedccf468d696d99ecf27a110f",
+        "commitTimestamp": "2025-03-06T10:44:37Z",
+        "url": "https://github.com/scroll-tech/zkvm-prover/blob/c5781b608438b3dedccf468d696d99ecf27a110f/crates/circuits/bundle-circuit/src/main.rs",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Manual soundness/correctness review of the bundle circuit.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 4
+      },
+      "diff": {
+        "added": 4,
+        "removed": 6,
+        "ignoredAdded": 7,
+        "ignoredRemoved": 6,
+        "unchanged": 34,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 39,
+            "newStart": 1,
+            "newLines": 38,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "use scroll_zkvm_circuit_input_types::{AggCircuit, Circuit};",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "use scroll_zkvm_types_circuit::{AggCircuit, Circuit};",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 2, "newLine": 2, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "mod circuit;"
+              },
+              {
+                "type": "-",
+                "oldLine": 4,
+                "text": "use circuit::BundleCircuit as C;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 5, "newLine": 4, "text": "" },
+              {
+                "type": "+",
+                "newLine": 5,
+                "text": "type C = circuit::BundleCircuit;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 6, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 7,
+                "text": "// TODO: feature handling for feynman to use bundle info v3.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 8, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 6,
+                "newLine": 9,
+                "text": "openvm::entry!(main);"
+              },
+              { "type": " ", "oldLine": 7, "newLine": 10, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 8,
+                "text": "#[rustfmt::skip]",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 11,
+                "text": "mod child_commitments;"
+              },
+              { "type": " ", "oldLine": 10, "newLine": 12, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 11,
+                "newLine": 13,
+                "text": "fn main() {"
+              },
+              {
+                "type": "-",
+                "oldLine": 12,
+                "text": "    // Setup openvm extensions for the circuit.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 13,
+                "text": "    C::setup();",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 14, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 15,
+                "newLine": 14,
+                "text": "    // Read witness bytes from openvm StdIn."
+              },
+              {
+                "type": " ",
+                "oldLine": 16,
+                "newLine": 15,
+                "text": "    let witness_bytes = C::read_witness_bytes();"
+              },
+              { "type": " ", "oldLine": 17, "newLine": 16, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 18,
+                "newLine": 17,
+                "text": "    // Deserialize witness bytes to the witness data type."
+              },
+              {
+                "type": " ",
+                "oldLine": 19,
+                "newLine": 18,
+                "text": "    let witness = C::deserialize_witness(&witness_bytes);"
+              },
+              { "type": " ", "oldLine": 20, "newLine": 19, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 21,
+                "text": "    // Verify the root proofs being aggregated in this circuit.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 22,
+                "text": "    let agg_proofs = C::verify_proofs(witness);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 20,
+                "text": "    // Verify the root proofs being aggregated in the circuit.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 21,
+                "text": "    let agg_proofs = C::verify_proofs(&witness);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 23, "newLine": 22, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 24,
+                "text": "    // Get the public-input values of the aggregated proofs from witness.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 25,
+                "text": "    let agg_pis = C::aggregated_public_inputs(witness);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 23,
+                "text": "    // Get the public-input values of the proofs being aggregated from witness.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 24,
+                "text": "    let agg_pis = C::aggregated_public_inputs(&witness);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 26, "newLine": 25, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 27,
+                "newLine": 26,
+                "text": "    // Derive the digests of the public-input values of the proofs being aggregated."
+              },
+              {
+                "type": " ",
+                "oldLine": 28,
+                "newLine": 27,
+                "text": "    let agg_pi_hashes = C::aggregated_pi_hashes(&agg_proofs);"
+              },
+              { "type": " ", "oldLine": 29, "newLine": 28, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 30,
+                "text": "    // Validate that the pi hashes derived from the root proofs are in fact the digests of the",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 29,
+                "text": "    // Validate that the pi hashes derived from the stark proofs are in fact the digests of the",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 31,
+                "newLine": 30,
+                "text": "    // public-input values of the previous circuit layer."
+              },
+              {
+                "type": " ",
+                "oldLine": 32,
+                "newLine": 31,
+                "text": "    C::validate_aggregated_pi(&agg_pis, &agg_pi_hashes);"
+              },
+              { "type": " ", "oldLine": 33, "newLine": 32, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 34,
+                "newLine": 33,
+                "text": "    // Validate the witness for the current circuit layer."
+              },
+              {
+                "type": " ",
+                "oldLine": 35,
+                "newLine": 34,
+                "text": "    let public_inputs = C::validate(witness);"
+              },
+              { "type": " ", "oldLine": 36, "newLine": 35, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 37,
+                "text": "    // Reveal the public-input values of the current circuit layer.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 36,
+                "text": "    // Reveal the public input values of the current circuit layer.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 38,
+                "newLine": 37,
+                "text": "    C::reveal_pi(&public_inputs);"
+              },
+              { "type": " ", "oldLine": 39, "newLine": 38, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

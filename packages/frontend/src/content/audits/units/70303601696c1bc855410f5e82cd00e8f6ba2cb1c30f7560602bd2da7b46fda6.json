@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "70303601696c1bc855410f5e82cd00e8f6ba2cb1c30f7560602bd2da7b46fda6",
+  "name": "ITornadoTrees",
+  "kind": "interface",
+  "lines": 5,
+  "source": "interface ITornadoTrees {\n    function registerDeposit(address instance, bytes32 commitment) external;\n\n    function registerWithdrawal(address instance, bytes32 nullifier) external;\n}",
+  "resolutions": {
+    "f9658cd3a9a22004": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

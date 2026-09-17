@@ -1,0 +1,269 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "96bc42cbc0e7aeadd952670f01f64d370f9d0cf0985f5a0395375a9459fa31ba",
+  "name": "L1WETHGateway",
+  "kind": "contract",
+  "lines": 127,
+  "source": "contract L1WETHGateway is L1ERC20Gateway {\n    /**\n     *\n     * Constants *\n     *\n     */\n\n    /// @notice The address of L2 WETH address.\n    address public immutable l2WETH;\n\n    /// @notice The address of L1 WETH address.\n    // solhint-disable-next-line var-name-mixedcase\n    address public immutable WETH;\n\n    /**\n     *\n     * Constructor *\n     *\n     */\n\n    /// @notice Constructor for `L1WETHGateway` implementation contract.\n    ///\n    /// @param _WETH The address of WETH in L1.\n    /// @param _l2WETH The address of WETH in L2.\n    /// @param _counterpart The address of `L2WETHGateway` contract in L2.\n    /// @param _router The address of `L1GatewayRouter` contract in L1.\n    /// @param _messenger The address of `L1ScrollMessenger` contract in L1.\n    constructor(address _WETH, address _l2WETH, address _counterpart, address _router, address _messenger)\n        ScrollGatewayBase(_counterpart, _router, _messenger)\n    {\n        if (_WETH == address(0) || _l2WETH == address(0) || _router == address(0)) {\n            revert ErrorZeroAddress();\n        }\n\n        _disableInitializers();\n\n        WETH = _WETH;\n        l2WETH = _l2WETH;\n    }\n\n    /// @notice Initialize the storage of L1WETHGateway.\n    ///\n    /// @dev The parameters `_counterpart`, `_router` and `_messenger` are no longer used.\n    ///\n    /// @param _counterpart The address of L2ETHGateway in L2.\n    /// @param _router The address of L1GatewayRouter in L1.\n    /// @param _messenger The address of L1ScrollMessenger in L1.\n    function initialize(address _counterpart, address _router, address _messenger) external initializer {\n        ScrollGatewayBase._initialize(_counterpart, _router, _messenger);\n    }\n\n    receive() external payable {\n        require(_msgSender() == WETH, \"only WETH\");\n    }\n\n    /**\n     *\n     * Public View Functions *\n     *\n     */\n\n    /// @inheritdoc IL1ERC20Gateway\n    function getL2ERC20Address(address) public view override returns (address) {\n        return l2WETH;\n    }\n\n    /**\n     *\n     * Internal Functions *\n     *\n     */\n\n    /// @inheritdoc L1ERC20Gateway\n    function _beforeFinalizeWithdrawERC20(\n        address _l1Token,\n        address _l2Token,\n        address,\n        address,\n        uint256 _amount,\n        bytes calldata\n    ) internal virtual override {\n        require(_l1Token == WETH, \"l1 token not WETH\");\n        require(_l2Token == l2WETH, \"l2 token not WETH\");\n        require(_amount == msg.value, \"msg.value mismatch\");\n\n        // deposit to WETH token is safe.\n        // slither-disable-next-line arbitrary-send-eth\n        IWETH(_l1Token).deposit{value: _amount}();\n    }\n\n    /// @inheritdoc L1ERC20Gateway\n    function _beforeDropMessage(address _token, address, uint256 _amount) internal virtual override {\n        require(_token == WETH, \"token not WETH\");\n        require(_amount == msg.value, \"msg.value mismatch\");\n\n        // deposit to WETH token is safe.\n        // slither-disable-next-line arbitrary-send-eth\n        IWETH(_token).deposit{value: _amount}();\n    }\n\n    /// @inheritdoc L1ERC20Gateway\n    function _deposit(address _token, address _to, uint256 _amount, bytes memory _data, uint256 _gasLimit)\n        internal\n        virtual\n        override\n        nonReentrant\n    {\n        require(_amount > 0, \"deposit zero amount\");\n        require(_token == WETH, \"only WETH is allowed\");\n\n        // 1. Transfer token into this contract.\n        address _from;\n        (_from, _amount, _data) = _transferERC20In(_token, _amount, _data);\n        IWETH(_token).withdraw(_amount);\n\n        // 2. Generate message passed to L2WETHGateway.\n        bytes memory _message =\n            abi.encodeCall(IL2ERC20Gateway.finalizeDepositERC20, (_token, l2WETH, _from, _to, _amount, _data));\n\n        // 3. Send message to L1ScrollMessenger.\n        IL1ScrollMessenger(messenger).sendMessage{value: _amount + msg.value}(\n            counterpart, _amount, _message, _gasLimit, _from\n        );\n\n        emit DepositERC20(_token, l2WETH, _from, _to, _amount, _data);\n    }\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "identical",
+      "coveredLines": 127,
+      "match": {
+        "origin": "own",
+        "collection": "scroll",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "L1WETHGateway",
+        "similarity": 1,
+        "reportId": "scroll/openzeppelin-scroll-bridge-gas-optimizations-audit-2024-02",
+        "repository": "scroll-tech/scroll",
+        "path": "contracts/src/L1/gateways/L1WETHGateway.sol",
+        "commit": "45e1305de5f7a1dc5aadadd7d3bb6726a5dee949",
+        "commitTimestamp": "2024-01-08T03:05:16Z",
+        "url": "https://github.com/scroll-tech/scroll/blob/45e1305de5f7a1dc5aadadd7d3bb6726a5dee949/contracts/src/L1/gateways/L1WETHGateway.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "initial audit (diff)",
+        "coverage": "Diff audit of pull request #1011 (bridge gas optimizations) at its reviewed commit; changes outside the pull request were out of scope.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 6
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 11,
+        "ignoredRemoved": 4,
+        "unchanged": 127,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 23,
+            "oldLines": 8,
+            "newStart": 23,
+            "newLines": 8,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 23,
+                "newLine": 23,
+                "text": "    /// @param _WETH The address of WETH in L1."
+              },
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 24,
+                "text": "    /// @param _l2WETH The address of WETH in L2."
+              },
+              {
+                "type": " ",
+                "oldLine": 25,
+                "newLine": 25,
+                "text": "    /// @param _counterpart The address of `L2WETHGateway` contract in L2."
+              },
+              {
+                "type": "-",
+                "oldLine": 26,
+                "text": "    /// @param _router The address of `L1GatewayRouter` contract.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 27,
+                "text": "    /// @param _messenger The address of `L1ScrollMessenger` contract.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 26,
+                "text": "    /// @param _router The address of `L1GatewayRouter` contract in L1.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 27,
+                "text": "    /// @param _messenger The address of `L1ScrollMessenger` contract in L1.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 28,
+                "newLine": 28,
+                "text": "    constructor(address _WETH, address _l2WETH, address _counterpart, address _router, address _messenger)"
+              },
+              {
+                "type": " ",
+                "oldLine": 29,
+                "newLine": 29,
+                "text": "        ScrollGatewayBase(_counterpart, _router, _messenger)"
+              },
+              { "type": " ", "oldLine": 30, "newLine": 30, "text": "    {" }
+            ]
+          },
+          {
+            "oldStart": 39,
+            "oldLines": 9,
+            "newStart": 39,
+            "newLines": 12,
+            "lines": [
+              { "type": " ", "oldLine": 39, "newLine": 39, "text": "    }" },
+              { "type": " ", "oldLine": 40, "newLine": 40, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 41,
+                "newLine": 41,
+                "text": "    /// @notice Initialize the storage of L1WETHGateway."
+              },
+              {
+                "type": "+",
+                "newLine": 42,
+                "text": "    ///",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 43,
+                "text": "    /// @dev The parameters `_counterpart`, `_router` and `_messenger` are no longer used.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 44,
+                "text": "    ///",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 42,
+                "newLine": 45,
+                "text": "    /// @param _counterpart The address of L2ETHGateway in L2."
+              },
+              {
+                "type": "-",
+                "oldLine": 43,
+                "text": "    /// @param _router The address of L1GatewayRouter.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 44,
+                "text": "    /// @param _messenger The address of L1ScrollMessenger.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 46,
+                "text": "    /// @param _router The address of L1GatewayRouter in L1.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 47,
+                "text": "    /// @param _messenger The address of L1ScrollMessenger in L1.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 45,
+                "newLine": 48,
+                "text": "    function initialize(address _counterpart, address _router, address _messenger) external initializer {"
+              },
+              {
+                "type": " ",
+                "oldLine": 46,
+                "newLine": 49,
+                "text": "        ScrollGatewayBase._initialize(_counterpart, _router, _messenger);"
+              },
+              { "type": " ", "oldLine": 47, "newLine": 50, "text": "    }" }
+            ]
+          },
+          {
+            "oldStart": 80,
+            "oldLines": 6,
+            "newStart": 83,
+            "newLines": 8,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 80,
+                "newLine": 83,
+                "text": "        require(_l2Token == l2WETH, \"l2 token not WETH\");"
+              },
+              {
+                "type": " ",
+                "oldLine": 81,
+                "newLine": 84,
+                "text": "        require(_amount == msg.value, \"msg.value mismatch\");"
+              },
+              { "type": " ", "oldLine": 82, "newLine": 85, "text": "" },
+              {
+                "type": "+",
+                "newLine": 86,
+                "text": "        // deposit to WETH token is safe.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 87,
+                "text": "        // slither-disable-next-line arbitrary-send-eth",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 83,
+                "newLine": 88,
+                "text": "        IWETH(_l1Token).deposit{value: _amount}();"
+              },
+              { "type": " ", "oldLine": 84, "newLine": 89, "text": "    }" },
+              { "type": " ", "oldLine": 85, "newLine": 90, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 88,
+            "oldLines": 6,
+            "newStart": 93,
+            "newLines": 8,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 88,
+                "newLine": 93,
+                "text": "        require(_token == WETH, \"token not WETH\");"
+              },
+              {
+                "type": " ",
+                "oldLine": 89,
+                "newLine": 94,
+                "text": "        require(_amount == msg.value, \"msg.value mismatch\");"
+              },
+              { "type": " ", "oldLine": 90, "newLine": 95, "text": "" },
+              {
+                "type": "+",
+                "newLine": 96,
+                "text": "        // deposit to WETH token is safe.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 97,
+                "text": "        // slither-disable-next-line arbitrary-send-eth",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 91,
+                "newLine": 98,
+                "text": "        IWETH(_token).deposit{value: _amount}();"
+              },
+              { "type": " ", "oldLine": 92, "newLine": 99, "text": "    }" },
+              { "type": " ", "oldLine": 93, "newLine": 100, "text": "" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

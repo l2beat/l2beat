@@ -1,0 +1,979 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "705affcc4433f9b26691f04be66ff228d494cdc1763721c00b6237e98a4e5081",
+  "name": "IGovernorUpgradeable",
+  "kind": "abstract",
+  "lines": 264,
+  "source": "abstract contract IGovernorUpgradeable is Initializable, IERC165Upgradeable {\n    function __IGovernor_init() internal onlyInitializing {}\n\n    function __IGovernor_init_unchained() internal onlyInitializing {}\n\n    enum ProposalState {\n        Pending,\n        Active,\n        Canceled,\n        Defeated,\n        Succeeded,\n        Queued,\n        Expired,\n        Executed\n    }\n\n    /**\n     * @dev Emitted when a proposal is created.\n     */\n    event ProposalCreated(\n        uint256 proposalId,\n        address proposer,\n        address[] targets,\n        uint256[] values,\n        string[] signatures,\n        bytes[] calldatas,\n        uint256 startBlock,\n        uint256 endBlock,\n        string description\n    );\n\n    /**\n     * @dev Emitted when a proposal is canceled.\n     */\n    event ProposalCanceled(uint256 proposalId);\n\n    /**\n     * @dev Emitted when a proposal is executed.\n     */\n    event ProposalExecuted(uint256 proposalId);\n\n    /**\n     * @dev Emitted when a vote is cast without params.\n     *\n     * Note: `support` values should be seen as buckets. Their interpretation depends on the voting module used.\n     */\n    event VoteCast(address indexed voter, uint256 proposalId, uint8 support, uint256 weight, string reason);\n\n    /**\n     * @dev Emitted when a vote is cast with params.\n     *\n     * Note: `support` values should be seen as buckets. Their interpretation depends on the voting module used.\n     * `params` are additional encoded parameters. Their intepepretation also depends on the voting module used.\n     */\n    event VoteCastWithParams(\n        address indexed voter, uint256 proposalId, uint8 support, uint256 weight, string reason, bytes params\n    );\n\n    /**\n     * @notice module:core\n     * @dev Name of the governor instance (used in building the ERC712 domain separator).\n     */\n    function name() public view virtual returns (string memory);\n\n    /**\n     * @notice module:core\n     * @dev Version of the governor instance (used in building the ERC712 domain separator). Default: \"1\"\n     */\n    function version() public view virtual returns (string memory);\n\n    /**\n     * @notice module:voting\n     * @dev A description of the possible `support` values for {castVote} and the way these votes are counted, meant to\n     * be consumed by UIs to show correct vote options and interpret the results. The string is a URL-encoded sequence of\n     * key-value pairs that each describe one aspect, for example `support=bravo&quorum=for,abstain`.\n     *\n     * There are 2 standard keys: `support` and `quorum`.\n     *\n     * - `support=bravo` refers to the vote options 0 = Against, 1 = For, 2 = Abstain, as in `GovernorBravo`.\n     * - `quorum=bravo` means that only For votes are counted towards quorum.\n     * - `quorum=for,abstain` means that both For and Abstain votes are counted towards quorum.\n     *\n     * If a counting module makes use of encoded `params`, it should  include this under a `params` key with a unique\n     * name that describes the behavior. For example:\n     *\n     * - `params=fractional` might refer to a scheme where votes are divided fractionally between for/against/abstain.\n     * - `params=erc721` might refer to a scheme where specific NFTs are delegated to vote.\n     *\n     * NOTE: The string can be decoded by the standard\n     * https://developer.mozilla.org/en-US/docs/Web/API/URLSearchParams[`URLSearchParams`]\n     * JavaScript class.\n     */\n    // solhint-disable-next-line func-name-mixedcase\n    function COUNTING_MODE() public pure virtual returns (string memory);\n\n    /**\n     * @notice module:core\n     * @dev Hashing function used to (re)build the proposal id from the proposal details..\n     */\n    function hashProposal(\n        address[] memory targets,\n        uint256[] memory values,\n        bytes[] memory calldatas,\n        bytes32 descriptionHash\n    ) public pure virtual returns (uint256);\n\n    /**\n     * @notice module:core\n     * @dev Current state of a proposal, following Compound's convention\n     */\n    function state(uint256 proposalId) public view virtual returns (ProposalState);\n\n    /**\n     * @notice module:core\n     * @dev Block number used to retrieve user's votes and quorum. As per Compound's Comp and OpenZeppelin's\n     * ERC20Votes, the snapshot is performed at the end of this block. Hence, voting for this proposal starts at the\n     * beginning of the following block.\n     */\n    function proposalSnapshot(uint256 proposalId) public view virtual returns (uint256);\n\n    /**\n     * @notice module:core\n     * @dev Block number at which votes close. Votes close at the end of this block, so it is possible to cast a vote\n     * during this block.\n     */\n    function proposalDeadline(uint256 proposalId) public view virtual returns (uint256);\n\n    /**\n     * @notice module:user-config\n     * @dev Delay, in number of block, between the proposal is created and the vote starts. This can be increassed to\n     * leave time for users to buy voting power, or delegate it, before the voting of a proposal starts.\n     */\n    function votingDelay() public view virtual returns (uint256);\n\n    /**\n     * @notice module:user-config\n     * @dev Delay, in number of blocks, between the vote start and vote ends.\n     *\n     * NOTE: The {votingDelay} can delay the start of the vote. This must be considered when setting the voting\n     * duration compared to the voting delay.\n     */\n    function votingPeriod() public view virtual returns (uint256);\n\n    /**\n     * @notice module:user-config\n     * @dev Minimum number of cast voted required for a proposal to be successful.\n     *\n     * Note: The `blockNumber` parameter corresponds to the snapshot used for counting vote. This allows to scale the\n     * quorum depending on values such as the totalSupply of a token at this block (see {ERC20Votes}).\n     */\n    function quorum(uint256 blockNumber) public view virtual returns (uint256);\n\n    /**\n     * @notice module:reputation\n     * @dev Voting power of an `account` at a specific `blockNumber`.\n     *\n     * Note: this can be implemented in a number of ways, for example by reading the delegated balance from one (or\n     * multiple), {ERC20Votes} tokens.\n     */\n    function getVotes(address account, uint256 blockNumber) public view virtual returns (uint256);\n\n    /**\n     * @notice module:reputation\n     * @dev Voting power of an `account` at a specific `blockNumber` given additional encoded parameters.\n     */\n    function getVotesWithParams(address account, uint256 blockNumber, bytes memory params)\n        public\n        view\n        virtual\n        returns (uint256);\n\n    /**\n     * @notice module:voting\n     * @dev Returns whether `account` has cast a vote on `proposalId`.\n     */\n    function hasVoted(uint256 proposalId, address account) public view virtual returns (bool);\n\n    /**\n     * @dev Create a new proposal. Vote start {IGovernor-votingDelay} blocks after the proposal is created and ends\n     * {IGovernor-votingPeriod} blocks after the voting starts.\n     *\n     * Emits a {ProposalCreated} event.\n     */\n    function propose(\n        address[] memory targets,\n        uint256[] memory values,\n        bytes[] memory calldatas,\n        string memory description\n    ) public virtual returns (uint256 proposalId);\n\n    /**\n     * @dev Execute a successful proposal. This requires the quorum to be reached, the vote to be successful, and the\n     * deadline to be reached.\n     *\n     * Emits a {ProposalExecuted} event.\n     *\n     * Note: some module can modify the requirements for execution, for example by adding an additional timelock.\n     */\n    function execute(\n        address[] memory targets,\n        uint256[] memory values,\n        bytes[] memory calldatas,\n        bytes32 descriptionHash\n    ) public payable virtual returns (uint256 proposalId);\n\n    /**\n     * @dev Cast a vote\n     *\n     * Emits a {VoteCast} event.\n     */\n    function castVote(uint256 proposalId, uint8 support) public virtual returns (uint256 balance);\n\n    /**\n     * @dev Cast a vote with a reason\n     *\n     * Emits a {VoteCast} event.\n     */\n    function castVoteWithReason(uint256 proposalId, uint8 support, string calldata reason)\n        public\n        virtual\n        returns (uint256 balance);\n\n    /**\n     * @dev Cast a vote with a reason and additional encoded parameters\n     *\n     * Emits a {VoteCast} or {VoteCastWithParams} event depending on the length of params.\n     */\n    function castVoteWithReasonAndParams(uint256 proposalId, uint8 support, string calldata reason, bytes memory params)\n        public\n        virtual\n        returns (uint256 balance);\n\n    /**\n     * @dev Cast a vote using the user's cryptographic signature.\n     *\n     * Emits a {VoteCast} event.\n     */\n    function castVoteBySig(uint256 proposalId, uint8 support, uint8 v, bytes32 r, bytes32 s)\n        public\n        virtual\n        returns (uint256 balance);\n\n    /**\n     * @dev Cast a vote with a reason and additional encoded parameters using the user's cryptographic signature.\n     *\n     * Emits a {VoteCast} or {VoteCastWithParams} event depending on the length of params.\n     */\n    function castVoteWithReasonAndParamsBySig(\n        uint256 proposalId,\n        uint8 support,\n        string calldata reason,\n        bytes memory params,\n        uint8 v,\n        bytes32 r,\n        bytes32 s\n    ) public virtual returns (uint256 balance);\n\n    /**\n     * @dev This empty reserved space is put in place to allow future versions to add new\n     * variables without shifting down storage in the inheritance chain.\n     * See https://docs.openzeppelin.com/contracts/4.x/upgradeable#storage_gaps\n     */\n    uint256[50] private __gap;\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "differs",
+      "coveredLines": 254,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "similarity",
+        "auditedName": "IGovernor",
+        "similarity": 0.87,
+        "reportId": "openzeppelin/contracts__audits__2023-05-v4.9",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/governance/IGovernor.sol",
+        "commit": "ca822213f2275a14c26167bd387ac3522da67fe9",
+        "commitTimestamp": "2023-03-26T17:23:13Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/ca822213f2275a14c26167bd387ac3522da67fe9/contracts/governance/IGovernor.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Full review of the file as part of the Contracts 4.9 release audit.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 6
+      },
+      "diff": {
+        "added": 10,
+        "removed": 15,
+        "ignoredAdded": 23,
+        "ignoredRemoved": 37,
+        "unchanged": 254,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 8,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "abstract contract IGovernor is IERC165, IERC6372 {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "abstract contract IGovernorUpgradeable is Initializable, IERC165Upgradeable {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 2,
+                "text": "    function __IGovernor_init() internal onlyInitializing {}",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 3, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 4,
+                "text": "    function __IGovernor_init_unchained() internal onlyInitializing {}",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 5, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 6,
+                "text": "    enum ProposalState {"
+              },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 7,
+                "text": "        Pending,"
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 8,
+                "text": "        Active,"
+              }
+            ]
+          },
+          {
+            "oldStart": 20,
+            "oldLines": 8,
+            "newStart": 24,
+            "newLines": 8,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 20,
+                "newLine": 24,
+                "text": "        uint256[] values,"
+              },
+              {
+                "type": " ",
+                "oldLine": 21,
+                "newLine": 25,
+                "text": "        string[] signatures,"
+              },
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 26,
+                "text": "        bytes[] calldatas,"
+              },
+              {
+                "type": "-",
+                "oldLine": 23,
+                "text": "        uint256 voteStart,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 24,
+                "text": "        uint256 voteEnd,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 27,
+                "text": "        uint256 startBlock,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 28,
+                "text": "        uint256 endBlock,",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 25,
+                "newLine": 29,
+                "text": "        string description"
+              },
+              { "type": " ", "oldLine": 26, "newLine": 30, "text": "    );" },
+              { "type": " ", "oldLine": 27, "newLine": 31, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 46,
+            "oldLines": 7,
+            "newStart": 50,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 46,
+                "newLine": 50,
+                "text": "     * @dev Emitted when a vote is cast with params."
+              },
+              { "type": " ", "oldLine": 47, "newLine": 51, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 48,
+                "newLine": 52,
+                "text": "     * Note: `support` values should be seen as buckets. Their interpretation depends on the voting module used."
+              },
+              {
+                "type": "-",
+                "oldLine": 49,
+                "text": "     * `params` are additional encoded parameters. Their interpepretation also depends on the voting module used.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 53,
+                "text": "     * `params` are additional encoded parameters. Their intepepretation also depends on the voting module used.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 50, "newLine": 54, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 51,
+                "newLine": 55,
+                "text": "    event VoteCastWithParams("
+              },
+              {
+                "type": " ",
+                "oldLine": 52,
+                "newLine": 56,
+                "text": "        address indexed voter, uint256 proposalId, uint8 support, uint256 weight, string reason, bytes params"
+              }
+            ]
+          },
+          {
+            "oldStart": 65,
+            "oldLines": 19,
+            "newStart": 69,
+            "newLines": 6,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 65,
+                "newLine": 69,
+                "text": "    function version() public view virtual returns (string memory);"
+              },
+              { "type": " ", "oldLine": 66, "newLine": 70, "text": "" },
+              { "type": " ", "oldLine": 67, "newLine": 71, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 68,
+                "text": "     * @notice module:core",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 69,
+                "text": "     * @dev See {IERC6372}",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 70,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 71,
+                "text": "    function clock() public view virtual override returns (uint48);",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 72, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 73,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 74,
+                "text": "     * @notice module:core",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 75,
+                "text": "     * @dev See EIP-6372.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 76,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 77,
+                "text": "    // solhint-disable-next-line func-name-mixedcase",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 78,
+                "text": "    function CLOCK_MODE() public view virtual override returns (string memory);",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 79, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 80,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 81,
+                "newLine": 72,
+                "text": "     * @notice module:voting"
+              },
+              {
+                "type": " ",
+                "oldLine": 82,
+                "newLine": 73,
+                "text": "     * @dev A description of the possible `support` values for {castVote} and the way these votes are counted, meant to"
+              },
+              {
+                "type": " ",
+                "oldLine": 83,
+                "newLine": 74,
+                "text": "     * be consumed by UIs to show correct vote options and interpret the results. The string is a URL-encoded sequence of"
+              }
+            ]
+          },
+          {
+            "oldStart": 100,
+            "oldLines": 7,
+            "newStart": 91,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 100,
+                "newLine": 91,
+                "text": "     * JavaScript class."
+              },
+              { "type": " ", "oldLine": 101, "newLine": 92, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 102,
+                "newLine": 93,
+                "text": "    // solhint-disable-next-line func-name-mixedcase"
+              },
+              {
+                "type": "-",
+                "oldLine": 103,
+                "text": "    function COUNTING_MODE() public view virtual returns (string memory);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 94,
+                "text": "    function COUNTING_MODE() public pure virtual returns (string memory);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 104, "newLine": 95, "text": "" },
+              { "type": " ", "oldLine": 105, "newLine": 96, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 106,
+                "newLine": 97,
+                "text": "     * @notice module:core"
+              }
+            ]
+          },
+          {
+            "oldStart": 121,
+            "oldLines": 33,
+            "newStart": 112,
+            "newLines": 29,
+            "lines": [
+              { "type": " ", "oldLine": 121, "newLine": 112, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 122,
+                "newLine": 113,
+                "text": "    /**"
+              },
+              {
+                "type": " ",
+                "oldLine": 123,
+                "newLine": 114,
+                "text": "     * @notice module:core"
+              },
+              {
+                "type": "-",
+                "oldLine": 124,
+                "text": "     * @dev Timepoint used to retrieve user's votes and quorum. If using block number (as per Compound's Comp), the",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 125,
+                "text": "     * snapshot is performed at the end of this block. Hence, voting for this proposal starts at the beginning of the",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 126,
+                "text": "     * following block.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 115,
+                "text": "     * @dev Block number used to retrieve user's votes and quorum. As per Compound's Comp and OpenZeppelin's",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 116,
+                "text": "     * ERC20Votes, the snapshot is performed at the end of this block. Hence, voting for this proposal starts at the",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 117,
+                "text": "     * beginning of the following block.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 127,
+                "newLine": 118,
+                "text": "     */"
+              },
+              {
+                "type": " ",
+                "oldLine": 128,
+                "newLine": 119,
+                "text": "    function proposalSnapshot(uint256 proposalId) public view virtual returns (uint256);"
+              },
+              { "type": " ", "oldLine": 129, "newLine": 120, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 130,
+                "newLine": 121,
+                "text": "    /**"
+              },
+              {
+                "type": " ",
+                "oldLine": 131,
+                "newLine": 122,
+                "text": "     * @notice module:core"
+              },
+              {
+                "type": "-",
+                "oldLine": 132,
+                "text": "     * @dev Timepoint at which votes close. If using block number, votes close at the end of this block, so it is",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 133,
+                "text": "     * possible to cast a vote during this block.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 123,
+                "text": "     * @dev Block number at which votes close. Votes close at the end of this block, so it is possible to cast a vote",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 124,
+                "text": "     * during this block.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 134,
+                "newLine": 125,
+                "text": "     */"
+              },
+              {
+                "type": " ",
+                "oldLine": 135,
+                "newLine": 126,
+                "text": "    function proposalDeadline(uint256 proposalId) public view virtual returns (uint256);"
+              },
+              { "type": " ", "oldLine": 136, "newLine": 127, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 137,
+                "newLine": 128,
+                "text": "    /**"
+              },
+              {
+                "type": " ",
+                "oldLine": 138,
+                "newLine": 129,
+                "text": "     * @notice module:user-config"
+              },
+              {
+                "type": "-",
+                "oldLine": 139,
+                "text": "     * @dev Delay, between the proposal is created and the vote starts. The unit this duration is expressed in depends",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 140,
+                "text": "     * on the clock (see EIP-6372) this contract uses.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 141,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 142,
+                "text": "     * This can be increased to leave time for users to buy voting power, or delegate it, before the voting of a",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 143,
+                "text": "     * proposal starts.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 130,
+                "text": "     * @dev Delay, in number of block, between the proposal is created and the vote starts. This can be increassed to",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 131,
+                "text": "     * leave time for users to buy voting power, or delegate it, before the voting of a proposal starts.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 144,
+                "newLine": 132,
+                "text": "     */"
+              },
+              {
+                "type": " ",
+                "oldLine": 145,
+                "newLine": 133,
+                "text": "    function votingDelay() public view virtual returns (uint256);"
+              },
+              { "type": " ", "oldLine": 146, "newLine": 134, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 147,
+                "newLine": 135,
+                "text": "    /**"
+              },
+              {
+                "type": " ",
+                "oldLine": 148,
+                "newLine": 136,
+                "text": "     * @notice module:user-config"
+              },
+              {
+                "type": "-",
+                "oldLine": 149,
+                "text": "     * @dev Delay, between the vote start and vote ends. The unit this duration is expressed in depends on the clock",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 150,
+                "text": "     * (see EIP-6372) this contract uses.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 137,
+                "text": "     * @dev Delay, in number of blocks, between the vote start and vote ends.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 151, "newLine": 138, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 152,
+                "newLine": 139,
+                "text": "     * NOTE: The {votingDelay} can delay the start of the vote. This must be considered when setting the voting"
+              },
+              {
+                "type": " ",
+                "oldLine": 153,
+                "newLine": 140,
+                "text": "     * duration compared to the voting delay."
+              }
+            ]
+          },
+          {
+            "oldStart": 158,
+            "oldLines": 25,
+            "newStart": 145,
+            "newLines": 25,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 158,
+                "newLine": 145,
+                "text": "     * @notice module:user-config"
+              },
+              {
+                "type": " ",
+                "oldLine": 159,
+                "newLine": 146,
+                "text": "     * @dev Minimum number of cast voted required for a proposal to be successful."
+              },
+              { "type": " ", "oldLine": 160, "newLine": 147, "text": "     *" },
+              {
+                "type": "-",
+                "oldLine": 161,
+                "text": "     * NOTE: The `timepoint` parameter corresponds to the snapshot used for counting vote. This allows to scale the",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 162,
+                "text": "     * quorum depending on values such as the totalSupply of a token at this timepoint (see {ERC20Votes}).",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 148,
+                "text": "     * Note: The `blockNumber` parameter corresponds to the snapshot used for counting vote. This allows to scale the",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 149,
+                "text": "     * quorum depending on values such as the totalSupply of a token at this block (see {ERC20Votes}).",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 163,
+                "newLine": 150,
+                "text": "     */"
+              },
+              {
+                "type": "-",
+                "oldLine": 164,
+                "text": "    function quorum(uint256 timepoint) public view virtual returns (uint256);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 151,
+                "text": "    function quorum(uint256 blockNumber) public view virtual returns (uint256);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 165, "newLine": 152, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 166,
+                "newLine": 153,
+                "text": "    /**"
+              },
+              {
+                "type": " ",
+                "oldLine": 167,
+                "newLine": 154,
+                "text": "     * @notice module:reputation"
+              },
+              {
+                "type": "-",
+                "oldLine": 168,
+                "text": "     * @dev Voting power of an `account` at a specific `timepoint`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 155,
+                "text": "     * @dev Voting power of an `account` at a specific `blockNumber`.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 169, "newLine": 156, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 170,
+                "newLine": 157,
+                "text": "     * Note: this can be implemented in a number of ways, for example by reading the delegated balance from one (or"
+              },
+              {
+                "type": " ",
+                "oldLine": 171,
+                "newLine": 158,
+                "text": "     * multiple), {ERC20Votes} tokens."
+              },
+              {
+                "type": " ",
+                "oldLine": 172,
+                "newLine": 159,
+                "text": "     */"
+              },
+              {
+                "type": "-",
+                "oldLine": 173,
+                "text": "    function getVotes(address account, uint256 timepoint) public view virtual returns (uint256);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 160,
+                "text": "    function getVotes(address account, uint256 blockNumber) public view virtual returns (uint256);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 174, "newLine": 161, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 175,
+                "newLine": 162,
+                "text": "    /**"
+              },
+              {
+                "type": " ",
+                "oldLine": 176,
+                "newLine": 163,
+                "text": "     * @notice module:reputation"
+              },
+              {
+                "type": "-",
+                "oldLine": 177,
+                "text": "     * @dev Voting power of an `account` at a specific `timepoint` given additional encoded parameters.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 164,
+                "text": "     * @dev Voting power of an `account` at a specific `blockNumber` given additional encoded parameters.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 178,
+                "newLine": 165,
+                "text": "     */"
+              },
+              {
+                "type": "-",
+                "oldLine": 179,
+                "text": "    function getVotesWithParams(address account, uint256 timepoint, bytes memory params)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 166,
+                "text": "    function getVotesWithParams(address account, uint256 blockNumber, bytes memory params)",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 180,
+                "newLine": 167,
+                "text": "        public"
+              },
+              {
+                "type": " ",
+                "oldLine": 181,
+                "newLine": 168,
+                "text": "        view"
+              },
+              {
+                "type": " ",
+                "oldLine": 182,
+                "newLine": 169,
+                "text": "        virtual"
+              }
+            ]
+          },
+          {
+            "oldStart": 189,
+            "oldLines": 8,
+            "newStart": 176,
+            "newLines": 8,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 189,
+                "newLine": 176,
+                "text": "    function hasVoted(uint256 proposalId, address account) public view virtual returns (bool);"
+              },
+              { "type": " ", "oldLine": 190, "newLine": 177, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 191,
+                "newLine": 178,
+                "text": "    /**"
+              },
+              {
+                "type": "-",
+                "oldLine": 192,
+                "text": "     * @dev Create a new proposal. Vote start after a delay specified by {IGovernor-votingDelay} and lasts for a",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 193,
+                "text": "     * duration specified by {IGovernor-votingPeriod}.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 179,
+                "text": "     * @dev Create a new proposal. Vote start {IGovernor-votingDelay} blocks after the proposal is created and ends",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 180,
+                "text": "     * {IGovernor-votingPeriod} blocks after the voting starts.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 194, "newLine": 181, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 195,
+                "newLine": 182,
+                "text": "     * Emits a {ProposalCreated} event."
+              },
+              { "type": " ", "oldLine": 196, "newLine": 183, "text": "     */" }
+            ]
+          },
+          {
+            "oldStart": 217,
+            "oldLines": 19,
+            "newStart": 204,
+            "newLines": 6,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 217,
+                "newLine": 204,
+                "text": "    ) public payable virtual returns (uint256 proposalId);"
+              },
+              { "type": " ", "oldLine": 218, "newLine": 205, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 219,
+                "newLine": 206,
+                "text": "    /**"
+              },
+              {
+                "type": "-",
+                "oldLine": 220,
+                "text": "     * @dev Cancel a proposal. A proposal is cancellable by the proposer, but only while it is Pending state, i.e.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 221,
+                "text": "     * before the vote starts.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 222,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 223,
+                "text": "     * Emits a {ProposalCanceled} event.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 224,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 225,
+                "text": "    function cancel(",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 226,
+                "text": "        address[] memory targets,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 227,
+                "text": "        uint256[] memory values,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 228,
+                "text": "        bytes[] memory calldatas,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 229,
+                "text": "        bytes32 descriptionHash",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 230,
+                "text": "    ) public virtual returns (uint256 proposalId);",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 231, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 232,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 233,
+                "newLine": 207,
+                "text": "     * @dev Cast a vote"
+              },
+              { "type": " ", "oldLine": 234, "newLine": 208, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 235,
+                "newLine": 209,
+                "text": "     * Emits a {VoteCast} event."
+              }
+            ]
+          },
+          {
+            "oldStart": 280,
+            "oldLines": 4,
+            "newStart": 254,
+            "newLines": 11,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 280,
+                "newLine": 254,
+                "text": "        bytes32 r,"
+              },
+              {
+                "type": " ",
+                "oldLine": 281,
+                "newLine": 255,
+                "text": "        bytes32 s"
+              },
+              {
+                "type": " ",
+                "oldLine": 282,
+                "newLine": 256,
+                "text": "    ) public virtual returns (uint256 balance);"
+              },
+              { "type": "+", "newLine": 257, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 258,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 259,
+                "text": "     * @dev This empty reserved space is put in place to allow future versions to add new",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 260,
+                "text": "     * variables without shifting down storage in the inheritance chain.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 261,
+                "text": "     * See https://docs.openzeppelin.com/contracts/4.x/upgradeable#storage_gaps",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 262,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 263,
+                "text": "    uint256[50] private __gap;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 283, "newLine": 264, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

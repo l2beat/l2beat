@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "5775c19ff02e55e1e858876f26e6b46045d3d4ae30f32028c79a293bd0668f26",
+  "name": "function_data.nr",
+  "kind": "program",
+  "lines": 32,
+  "source": "use crate::{abis::function_selector::FunctionSelector, traits::{Deserialize, Empty, Serialize}};\nuse std::meta::derive;\n\n#[derive(Deserialize, Eq, Serialize)]\npub struct FunctionData {\n    pub selector: FunctionSelector,\n    pub is_private: bool,\n}\n\nimpl Empty for FunctionData {\n    fn empty() -> Self {\n        FunctionData { selector: FunctionSelector::empty(), is_private: false }\n    }\n}\n\nmod test {\n    use crate::{\n        abis::function_data::FunctionData,\n        constants::FUNCTION_DATA_LENGTH,\n        traits::{Deserialize, Empty, Serialize},\n    };\n\n    #[test]\n    fn serialization_of_empty() {\n        let data = FunctionData::empty();\n        // We use the FUNCTION_DATA_LENGTH constant to ensure that there is a match between the derived trait\n        // implementation and the constant.\n        let serialized: [Field; FUNCTION_DATA_LENGTH] = data.serialize();\n        let deserialized = FunctionData::deserialize(serialized);\n        assert(data.eq(deserialized));\n    }\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

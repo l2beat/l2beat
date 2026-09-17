@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "ebf9ab214f2e9b9683c5d3054e798f817a6880833e12558461ee25cdcc0bc796",
+  "name": "find_oom_shapes.rs",
+  "kind": "program",
+  "lines": 64,
+  "source": "#![allow(clippy::print_stdout)]\n\nuse std::{collections::BTreeMap, path::PathBuf};\n\nuse clap::Parser;\nuse sp1_core_executor::{rv32im_costs, RiscvAirId};\nuse sp1_core_machine::utils::setup_logger;\nuse sp1_stark::shape::Shape;\n\n#[derive(Parser, Debug)]\n#[command(author, version, about, long_about = None)]\nstruct Args {\n    #[arg(short, long)]\n    maximal_shapes_json: Option<PathBuf>,\n    #[arg(short, long)]\n    small_shapes_json: Option<PathBuf>,\n    #[arg(short, long)]\n    lde_threshold_bytes: usize,\n}\n\nfn main() {\n    // Setup logger.\n    setup_logger();\n\n    // Parse arguments.\n    let args = Args::parse();\n\n    // Load the costs.\n    let costs = rv32im_costs();\n\n    if let Some(maximal_shapes_json) = args.maximal_shapes_json {\n        // Load the maximal shapes, indexed by log shard size.\n        let maximal_shapes: BTreeMap<usize, Vec<Shape<RiscvAirId>>> = serde_json::from_slice(\n            &std::fs::read(&maximal_shapes_json).expect(\"failed to read maximal shapes\"),\n        )\n        .expect(\"failed to deserialize maximal shapes\");\n\n        // For each maximal shape, check if it is OOM.\n        for (_, shapes) in maximal_shapes.iter() {\n            for shape in shapes.iter() {\n                let lde_size = shape.estimate_lde_size(&costs);\n                if lde_size > args.lde_threshold_bytes {\n                    println!(\"maximal shape: {:?}, lde_size: {}\", shape, lde_size);\n                }\n            }\n        }\n    }\n\n    if let Some(small_shapes_json) = args.small_shapes_json {\n        // Load the small shapes.\n        let small_shapes: Vec<Shape<RiscvAirId>> = serde_json::from_slice(\n            &std::fs::read(&small_shapes_json).expect(\"failed to read small shapes\"),\n        )\n        .expect(\"failed to deserialize small shapes\");\n\n        // For each small shape, check if it is OOM.\n        for shape in small_shapes.iter() {\n            let lde_size = shape.estimate_lde_size(&costs);\n            if lde_size > args.lde_threshold_bytes {\n                println!(\"small shape: {:?}, lde_size: {}\", shape, lde_size);\n            }\n        }\n    }\n}",
+  "resolutions": {
+    "eea968a44e5d263a": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "1daaed8c8125f2b6": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

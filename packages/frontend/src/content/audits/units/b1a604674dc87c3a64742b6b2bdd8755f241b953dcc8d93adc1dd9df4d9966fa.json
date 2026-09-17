@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "b1a604674dc87c3a64742b6b2bdd8755f241b953dcc8d93adc1dd9df4d9966fa",
+  "name": "ERC20Permit",
+  "kind": "abstract",
+  "lines": 82,
+  "source": "abstract contract ERC20Permit is ERC20 {\n    mapping(address => uint256) private _nonces;\n\n    bytes32 private constant _PERMIT_TYPEHASH =\n        keccak256(\"Permit(address owner,address spender,uint256 value,uint256 nonce,uint256 deadline)\");\n\n    // Mapping of ChainID to domain separators. This is a very gas efficient way\n    // to not recalculate the domain separator on every call, while still\n    // automatically detecting ChainID changes.\n    mapping(uint256 => bytes32) private _domainSeparators;\n\n    constructor() internal {\n        _updateDomainSeparator();\n    }\n\n    /**\n     * @dev See {IERC2612Permit-permit}.\n     *\n     * If https://eips.ethereum.org/EIPS/eip-1344[ChainID] ever changes, the\n     * EIP712 Domain Separator is automatically recalculated.\n     */\n    function permit(address owner, address spender, uint256 amount, uint256 deadline, uint8 v, bytes32 r, bytes32 s)\n        public\n    {\n        require(blockTimestamp() <= deadline, \"ERC20Permit: expired deadline\");\n\n        bytes32 hashStruct = keccak256(abi.encode(_PERMIT_TYPEHASH, owner, spender, amount, _nonces[owner], deadline));\n\n        bytes32 hash = keccak256(abi.encodePacked(uint16(0x1901), _domainSeparator(), hashStruct));\n\n        address signer = ECDSA.recover(hash, v, r, s);\n        require(signer == owner, \"ERC20Permit: invalid signature\");\n\n        _nonces[owner]++;\n        _approve(owner, spender, amount);\n    }\n\n    /**\n     * @dev See {IERC2612Permit-nonces}.\n     */\n    function nonces(address owner) public view returns (uint256) {\n        return _nonces[owner];\n    }\n\n    function _updateDomainSeparator() private returns (bytes32) {\n        uint256 _chainID = chainID();\n\n        bytes32 newDomainSeparator = keccak256(\n            abi.encode(\n                keccak256(\"EIP712Domain(string name,string version,uint256 chainId,address verifyingContract)\"),\n                keccak256(bytes(name())),\n                keccak256(bytes(\"1\")), // Version\n                _chainID,\n                address(this)\n            )\n        );\n\n        _domainSeparators[_chainID] = newDomainSeparator;\n\n        return newDomainSeparator;\n    }\n\n    // Returns the domain separator, updating it if chainID changes\n    function _domainSeparator() private returns (bytes32) {\n        bytes32 domainSeparator = _domainSeparators[chainID()];\n        if (domainSeparator != 0x00) {\n            return domainSeparator;\n        } else {\n            return _updateDomainSeparator();\n        }\n    }\n\n    function chainID() public view virtual returns (uint256 _chainID) {\n        assembly {\n            _chainID := chainid()\n        }\n    }\n\n    function blockTimestamp() public view virtual returns (uint256) {\n        return block.timestamp;\n    }\n}",
+  "resolutions": {
+    "f9658cd3a9a22004": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

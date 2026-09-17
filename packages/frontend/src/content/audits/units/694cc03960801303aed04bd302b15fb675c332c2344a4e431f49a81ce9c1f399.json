@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "694cc03960801303aed04bd302b15fb675c332c2344a4e431f49a81ce9c1f399",
+  "name": "Escrow",
+  "kind": "contract",
+  "lines": 44,
+  "source": "contract Escrow {\n    // --- storage variables ---\n\n    mapping(address => uint256) public wards;\n\n    // --- events ---\n\n    event Rely(address indexed usr);\n    event Deny(address indexed usr);\n    event Approve(address indexed token, address indexed spender, uint256 value);\n\n    // --- modifiers ---\n\n    modifier auth() {\n        require(wards[msg.sender] == 1, \"Escrow/not-authorized\");\n        _;\n    }\n\n    // --- constructor ---\n\n    constructor() {\n        wards[msg.sender] = 1;\n        emit Rely(msg.sender);\n    }\n\n    // --- administration ---\n\n    function rely(address usr) external auth {\n        wards[usr] = 1;\n        emit Rely(usr);\n    }\n\n    function deny(address usr) external auth {\n        wards[usr] = 0;\n        emit Deny(usr);\n    }\n\n    // --- approve ---\n\n    function approve(address token, address spender, uint256 value) external auth {\n        GemLike(token).approve(spender, value);\n        emit Approve(token, spender, value);\n    }\n}",
+  "resolutions": {
+    "1f5c32d18cf7148d": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

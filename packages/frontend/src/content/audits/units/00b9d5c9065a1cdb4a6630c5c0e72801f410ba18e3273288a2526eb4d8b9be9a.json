@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "00b9d5c9065a1cdb4a6630c5c0e72801f410ba18e3273288a2526eb4d8b9be9a",
+  "name": "PathKeyLibrary",
+  "kind": "library",
+  "lines": 19,
+  "source": "library PathKeyLibrary {\n    /// @notice Get the pool and swap direction for a given PathKey\n    /// @param params the given PathKey\n    /// @param currencyIn the input currency\n    /// @return poolKey the pool key of the swap\n    /// @return zeroForOne the direction of the swap, true if currency0 is being swapped for currency1\n    function getPoolAndSwapDirection(PathKey calldata params, Currency currencyIn)\n        internal\n        pure\n        returns (PoolKey memory poolKey, bool zeroForOne)\n    {\n        Currency currencyOut = params.intermediateCurrency;\n        (Currency currency0, Currency currency1) =\n            currencyIn < currencyOut ? (currencyIn, currencyOut) : (currencyOut, currencyIn);\n\n        zeroForOne = currencyIn == currency0;\n        poolKey = PoolKey(currency0, currency1, params.fee, params.tickSpacing, params.hooks);\n    }\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

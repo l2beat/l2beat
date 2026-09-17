@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "2f871b3d5362428181af49139fdb09ef9e260693fb351182079d24b32e7840c8",
+  "name": "IPrivacyPoolComplex",
+  "kind": "interface",
+  "lines": 15,
+  "source": "interface IPrivacyPoolComplex is IPrivacyPool {\n    /*///////////////////////////////////////////////////////////////\n                              ERRORS\n    //////////////////////////////////////////////////////////////*/\n\n    /**\n     * @notice Thrown when sending sending any amount of native asset\n     */\n    error NativeAssetNotAccepted();\n\n    /**\n     * @notice Thrown when trying to set up a complex pool with the native asset\n     */\n    error NativeAssetNotSupported();\n}",
+  "resolutions": {
+    "cbbcf694abda362c": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

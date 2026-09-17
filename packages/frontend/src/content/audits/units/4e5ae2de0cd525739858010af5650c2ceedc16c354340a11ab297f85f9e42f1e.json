@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "4e5ae2de0cd525739858010af5650c2ceedc16c354340a11ab297f85f9e42f1e",
+  "name": "mod.nr",
+  "kind": "program",
+  "lines": 54,
+  "source": "mod private_call_data;\nmod output_composition_tests;\nmod proof_and_vk_tests;\n\nuse crate::private_kernel_inner::{self, PrivateKernelInnerCircuitPrivateInputs};\nuse protocol_test_utils::FixtureBuilder;\nuse types::{\n    abis::kernel_circuit_public_inputs::PrivateKernelCircuitPublicInputs,\n    constants::PRIVATE_KERNEL_INIT_VK_INDEX,\n};\n\nstruct TestBuilder {\n    previous_kernel: FixtureBuilder,\n    private_call: FixtureBuilder,\n}\n\nimpl TestBuilder {\n    pub fn new() -> Self {\n        let mut previous_kernel = FixtureBuilder::new_from_counter(135)\n            .in_vk_tree(PRIVATE_KERNEL_INIT_VK_INDEX)\n            .as_parent_contract();\n        previous_kernel.compute_update_tree_and_hints();\n\n        let mut private_call = FixtureBuilder::new_from_counter(2468);\n        private_call.compute_update_tree_and_hints();\n        private_call.anchor_block_header = previous_kernel.anchor_block_header;\n\n        TestBuilder { previous_kernel, private_call }\n    }\n\n    pub fn new_static_call() -> Self {\n        let mut builder = TestBuilder::new();\n        let _ = builder.private_call.is_static_call();\n        builder\n    }\n\n    pub fn execute(self) -> PrivateKernelCircuitPublicInputs {\n        let private_call = self.private_call.to_private_call_data();\n        let private_call_request = self.private_call.to_private_call_request();\n\n        let mut previous_kernel_builder = self.previous_kernel;\n        previous_kernel_builder.private_call_requests.push(private_call_request);\n        let previous_kernel = previous_kernel_builder.to_private_kernel_data();\n\n        let private_inputs =\n            PrivateKernelInnerCircuitPrivateInputs { previous_kernel, private_call };\n\n        private_kernel_inner::execute(private_inputs)\n    }\n\n    pub fn execute_and_fail(self) {\n        let _ = self.execute();\n    }\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

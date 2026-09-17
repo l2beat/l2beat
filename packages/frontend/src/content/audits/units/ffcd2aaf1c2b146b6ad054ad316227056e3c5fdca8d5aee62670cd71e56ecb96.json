@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "ffcd2aaf1c2b146b6ad054ad316227056e3c5fdca8d5aee62670cd71e56ecb96",
+  "name": "L2ETHGateway",
+  "kind": "contract",
+  "lines": 110,
+  "source": "contract L2ETHGateway is ScrollGatewayBase, IL2ETHGateway {\n    /**\n     *\n     * Constructor *\n     *\n     */\n\n    /// @notice Constructor for `L2ETHGateway` implementation contract.\n    ///\n    /// @param _counterpart The address of `L1ETHGateway` contract in L1.\n    /// @param _router The address of `L1GatewayRouter` contract.\n    /// @param _messenger The address of `L1ScrollMessenger` contract.\n    constructor(address _counterpart, address _router, address _messenger)\n        ScrollGatewayBase(_counterpart, _router, _messenger)\n    {\n        if (_router == address(0)) {\n            revert ErrorZeroAddress();\n        }\n\n        _disableInitializers();\n    }\n\n    /// @notice Initialize the storage of L2ETHGateway.\n    ///\n    /// @dev The parameters `_counterpart`, `_router` and `_messenger` are no longer used.\n    ///\n    /// @param _counterpart The address of L1ETHGateway in L1.\n    /// @param _router The address of L2GatewayRouter in L2.\n    /// @param _messenger The address of L2ScrollMessenger in L2.\n    function initialize(address _counterpart, address _router, address _messenger) external initializer {\n        ScrollGatewayBase._initialize(_counterpart, _router, _messenger);\n    }\n\n    /**\n     *\n     * Public Mutating Functions *\n     *\n     */\n\n    /// @inheritdoc IL2ETHGateway\n    function withdrawETH(uint256 _amount, uint256 _gasLimit) external payable override {\n        _withdraw(_msgSender(), _amount, new bytes(0), _gasLimit);\n    }\n\n    /// @inheritdoc IL2ETHGateway\n    function withdrawETH(address _to, uint256 _amount, uint256 _gasLimit) public payable override {\n        _withdraw(_to, _amount, new bytes(0), _gasLimit);\n    }\n\n    /// @inheritdoc IL2ETHGateway\n    function withdrawETHAndCall(address _to, uint256 _amount, bytes memory _data, uint256 _gasLimit)\n        public\n        payable\n        override\n    {\n        _withdraw(_to, _amount, _data, _gasLimit);\n    }\n\n    /// @inheritdoc IL2ETHGateway\n    function finalizeDepositETH(address _from, address _to, uint256 _amount, bytes calldata _data)\n        external\n        payable\n        override\n        onlyCallByCounterpart\n        nonReentrant\n    {\n        require(msg.value == _amount, \"msg.value mismatch\");\n\n        // solhint-disable-next-line avoid-low-level-calls\n        (bool _success,) = _to.call{value: _amount}(\"\");\n        require(_success, \"ETH transfer failed\");\n\n        _doCallback(_to, _data);\n\n        emit FinalizeDepositETH(_from, _to, _amount, _data);\n    }\n\n    /**\n     *\n     * Internal Functions *\n     *\n     */\n\n    /// @dev The internal ETH withdraw implementation.\n    /// @param _to The address of recipient's account on L1.\n    /// @param _amount The amount of ETH to be withdrawn.\n    /// @param _data Optional data to forward to recipient's account.\n    /// @param _gasLimit Optional gas limit to complete the deposit on L1.\n    function _withdraw(address _to, uint256 _amount, bytes memory _data, uint256 _gasLimit)\n        internal\n        virtual\n        nonReentrant\n    {\n        require(msg.value > 0, \"withdraw zero eth\");\n\n        // 1. Extract real sender if this call is from L1GatewayRouter.\n        address _from = _msgSender();\n\n        if (router == _from) {\n            (_from, _data) = abi.decode(_data, (address, bytes));\n        }\n\n        // @note no rate limit here, since ETH is limited in messenger\n\n        bytes memory _message = abi.encodeCall(IL1ETHGateway.finalizeWithdrawETH, (_from, _to, _amount, _data));\n        IL2ScrollMessenger(messenger).sendMessage{value: msg.value}(counterpart, _amount, _message, _gasLimit);\n\n        emit WithdrawETH(_from, _to, _amount, _data);\n    }\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "identical",
+      "coveredLines": 110,
+      "match": {
+        "origin": "own",
+        "collection": "scroll",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "L2ETHGateway",
+        "similarity": 1,
+        "reportId": "scroll/openzeppelin-scroll-bridge-gas-optimizations-audit-2024-02",
+        "repository": "scroll-tech/scroll",
+        "path": "contracts/src/L2/gateways/L2ETHGateway.sol",
+        "commit": "888c3d26b34f217877628b1208ea3473d9836600",
+        "commitTimestamp": "2024-02-06T03:57:55Z",
+        "url": "https://github.com/scroll-tech/scroll/blob/888c3d26b34f217877628b1208ea3473d9836600/contracts/src/L2/gateways/L2ETHGateway.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Fix review of H-01 in pull request #1093: ETH deposits/withdrawals routed through the ETH gateways again instead of bypassing them.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 8
+      },
+      "warnings": []
+    }
+  }
+}

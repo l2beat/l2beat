@@ -1,0 +1,338 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "f2a865f8ec15b127ffc32ca153c043424b0fd9b7300df681496676cfa2e76e89",
+  "name": "Checkpoints",
+  "kind": "library",
+  "lines": 606,
+  "source": "library Checkpoints {\n    /**\n     * @dev A value was attempted to be inserted on a past checkpoint.\n     */\n    error CheckpointUnorderedInsertion();\n\n    struct Trace224 {\n        Checkpoint224[] _checkpoints;\n    }\n\n    struct Checkpoint224 {\n        uint32 _key;\n        uint224 _value;\n    }\n\n    /**\n     * @dev Pushes a (`key`, `value`) pair into a Trace224 so that it is stored as the checkpoint.\n     *\n     * Returns previous value and new value.\n     *\n     * IMPORTANT: Never accept `key` as a user input, since an arbitrary `type(uint32).max` key set will disable the\n     * library.\n     */\n    function push(Trace224 storage self, uint32 key, uint224 value)\n        internal\n        returns (uint224 oldValue, uint224 newValue)\n    {\n        return _insert(self._checkpoints, key, value);\n    }\n\n    /**\n     * @dev Returns the value in the first (oldest) checkpoint with key greater or equal than the search key, or zero if\n     * there is none.\n     */\n    function lowerLookup(Trace224 storage self, uint32 key) internal view returns (uint224) {\n        uint256 len = self._checkpoints.length;\n        uint256 pos = _lowerBinaryLookup(self._checkpoints, key, 0, len);\n        return pos == len ? 0 : _unsafeAccess(self._checkpoints, pos)._value;\n    }\n\n    /**\n     * @dev Returns the value in the last (most recent) checkpoint with key lower or equal than the search key, or zero\n     * if there is none.\n     */\n    function upperLookup(Trace224 storage self, uint32 key) internal view returns (uint224) {\n        uint256 len = self._checkpoints.length;\n        uint256 pos = _upperBinaryLookup(self._checkpoints, key, 0, len);\n        return pos == 0 ? 0 : _unsafeAccess(self._checkpoints, pos - 1)._value;\n    }\n\n    /**\n     * @dev Returns the value in the last (most recent) checkpoint with key lower or equal than the search key, or zero\n     * if there is none.\n     *\n     * NOTE: This is a variant of {upperLookup} that is optimised to find \"recent\" checkpoint (checkpoints with high\n     * keys).\n     */\n    function upperLookupRecent(Trace224 storage self, uint32 key) internal view returns (uint224) {\n        uint256 len = self._checkpoints.length;\n\n        uint256 low = 0;\n        uint256 high = len;\n\n        if (len > 5) {\n            uint256 mid = len - Math.sqrt(len);\n            if (key < _unsafeAccess(self._checkpoints, mid)._key) {\n                high = mid;\n            } else {\n                low = mid + 1;\n            }\n        }\n\n        uint256 pos = _upperBinaryLookup(self._checkpoints, key, low, high);\n\n        return pos == 0 ? 0 : _unsafeAccess(self._checkpoints, pos - 1)._value;\n    }\n\n    /**\n     * @dev Returns the value in the most recent checkpoint, or zero if there are no checkpoints.\n     */\n    function latest(Trace224 storage self) internal view returns (uint224) {\n        uint256 pos = self._checkpoints.length;\n        return pos == 0 ? 0 : _unsafeAccess(self._checkpoints, pos - 1)._value;\n    }\n\n    /**\n     * @dev Returns whether there is a checkpoint in the structure (i.e. it is not empty), and if so the key and value\n     * in the most recent checkpoint.\n     */\n    function latestCheckpoint(Trace224 storage self) internal view returns (bool exists, uint32 _key, uint224 _value) {\n        uint256 pos = self._checkpoints.length;\n        if (pos == 0) {\n            return (false, 0, 0);\n        } else {\n            Checkpoint224 storage ckpt = _unsafeAccess(self._checkpoints, pos - 1);\n            return (true, ckpt._key, ckpt._value);\n        }\n    }\n\n    /**\n     * @dev Returns the number of checkpoints.\n     */\n    function length(Trace224 storage self) internal view returns (uint256) {\n        return self._checkpoints.length;\n    }\n\n    /**\n     * @dev Returns checkpoint at given position.\n     */\n    function at(Trace224 storage self, uint32 pos) internal view returns (Checkpoint224 memory) {\n        return self._checkpoints[pos];\n    }\n\n    /**\n     * @dev Pushes a (`key`, `value`) pair into an ordered list of checkpoints, either by inserting a new checkpoint,\n     * or by updating the last one.\n     */\n    function _insert(Checkpoint224[] storage self, uint32 key, uint224 value)\n        private\n        returns (uint224 oldValue, uint224 newValue)\n    {\n        uint256 pos = self.length;\n\n        if (pos > 0) {\n            Checkpoint224 storage last = _unsafeAccess(self, pos - 1);\n            uint32 lastKey = last._key;\n            uint224 lastValue = last._value;\n\n            // Checkpoint keys must be non-decreasing.\n            if (lastKey > key) {\n                revert CheckpointUnorderedInsertion();\n            }\n\n            // Update or push new checkpoint\n            if (lastKey == key) {\n                last._value = value;\n            } else {\n                self.push(Checkpoint224({_key: key, _value: value}));\n            }\n            return (lastValue, value);\n        } else {\n            self.push(Checkpoint224({_key: key, _value: value}));\n            return (0, value);\n        }\n    }\n\n    /**\n     * @dev Return the index of the first (oldest) checkpoint with key strictly bigger than the search key, or `high`\n     * if there is none. `low` and `high` define a section where to do the search, with inclusive `low` and exclusive\n     * `high`.\n     *\n     * WARNING: `high` should not be greater than the array's length.\n     */\n    function _upperBinaryLookup(Checkpoint224[] storage self, uint32 key, uint256 low, uint256 high)\n        private\n        view\n        returns (uint256)\n    {\n        while (low < high) {\n            uint256 mid = Math.average(low, high);\n            if (_unsafeAccess(self, mid)._key > key) {\n                high = mid;\n            } else {\n                low = mid + 1;\n            }\n        }\n        return high;\n    }\n\n    /**\n     * @dev Return the index of the first (oldest) checkpoint with key greater or equal than the search key, or `high`\n     * if there is none. `low` and `high` define a section where to do the search, with inclusive `low` and exclusive\n     * `high`.\n     *\n     * WARNING: `high` should not be greater than the array's length.\n     */\n    function _lowerBinaryLookup(Checkpoint224[] storage self, uint32 key, uint256 low, uint256 high)\n        private\n        view\n        returns (uint256)\n    {\n        while (low < high) {\n            uint256 mid = Math.average(low, high);\n            if (_unsafeAccess(self, mid)._key < key) {\n                low = mid + 1;\n            } else {\n                high = mid;\n            }\n        }\n        return high;\n    }\n\n    /**\n     * @dev Access an element of the array without performing bounds check. The position is assumed to be within bounds.\n     */\n    function _unsafeAccess(Checkpoint224[] storage self, uint256 pos)\n        private\n        pure\n        returns (Checkpoint224 storage result)\n    {\n        assembly {\n            mstore(0, self.slot)\n            result.slot := add(keccak256(0, 0x20), pos)\n        }\n    }\n\n    struct Trace208 {\n        Checkpoint208[] _checkpoints;\n    }\n\n    struct Checkpoint208 {\n        uint48 _key;\n        uint208 _value;\n    }\n\n    /**\n     * @dev Pushes a (`key`, `value`) pair into a Trace208 so that it is stored as the checkpoint.\n     *\n     * Returns previous value and new value.\n     *\n     * IMPORTANT: Never accept `key` as a user input, since an arbitrary `type(uint48).max` key set will disable the\n     * library.\n     */\n    function push(Trace208 storage self, uint48 key, uint208 value)\n        internal\n        returns (uint208 oldValue, uint208 newValue)\n    {\n        return _insert(self._checkpoints, key, value);\n    }\n\n    /**\n     * @dev Returns the value in the first (oldest) checkpoint with key greater or equal than the search key, or zero if\n     * there is none.\n     */\n    function lowerLookup(Trace208 storage self, uint48 key) internal view returns (uint208) {\n        uint256 len = self._checkpoints.length;\n        uint256 pos = _lowerBinaryLookup(self._checkpoints, key, 0, len);\n        return pos == len ? 0 : _unsafeAccess(self._checkpoints, pos)._value;\n    }\n\n    /**\n     * @dev Returns the value in the last (most recent) checkpoint with key lower or equal than the search key, or zero\n     * if there is none.\n     */\n    function upperLookup(Trace208 storage self, uint48 key) internal view returns (uint208) {\n        uint256 len = self._checkpoints.length;\n        uint256 pos = _upperBinaryLookup(self._checkpoints, key, 0, len);\n        return pos == 0 ? 0 : _unsafeAccess(self._checkpoints, pos - 1)._value;\n    }\n\n    /**\n     * @dev Returns the value in the last (most recent) checkpoint with key lower or equal than the search key, or zero\n     * if there is none.\n     *\n     * NOTE: This is a variant of {upperLookup} that is optimised to find \"recent\" checkpoint (checkpoints with high\n     * keys).\n     */\n    function upperLookupRecent(Trace208 storage self, uint48 key) internal view returns (uint208) {\n        uint256 len = self._checkpoints.length;\n\n        uint256 low = 0;\n        uint256 high = len;\n\n        if (len > 5) {\n            uint256 mid = len - Math.sqrt(len);\n            if (key < _unsafeAccess(self._checkpoints, mid)._key) {\n                high = mid;\n            } else {\n                low = mid + 1;\n            }\n        }\n\n        uint256 pos = _upperBinaryLookup(self._checkpoints, key, low, high);\n\n        return pos == 0 ? 0 : _unsafeAccess(self._checkpoints, pos - 1)._value;\n    }\n\n    /**\n     * @dev Returns the value in the most recent checkpoint, or zero if there are no checkpoints.\n     */\n    function latest(Trace208 storage self) internal view returns (uint208) {\n        uint256 pos = self._checkpoints.length;\n        return pos == 0 ? 0 : _unsafeAccess(self._checkpoints, pos - 1)._value;\n    }\n\n    /**\n     * @dev Returns whether there is a checkpoint in the structure (i.e. it is not empty), and if so the key and value\n     * in the most recent checkpoint.\n     */\n    function latestCheckpoint(Trace208 storage self) internal view returns (bool exists, uint48 _key, uint208 _value) {\n        uint256 pos = self._checkpoints.length;\n        if (pos == 0) {\n            return (false, 0, 0);\n        } else {\n            Checkpoint208 storage ckpt = _unsafeAccess(self._checkpoints, pos - 1);\n            return (true, ckpt._key, ckpt._value);\n        }\n    }\n\n    /**\n     * @dev Returns the number of checkpoints.\n     */\n    function length(Trace208 storage self) internal view returns (uint256) {\n        return self._checkpoints.length;\n    }\n\n    /**\n     * @dev Returns checkpoint at given position.\n     */\n    function at(Trace208 storage self, uint32 pos) internal view returns (Checkpoint208 memory) {\n        return self._checkpoints[pos];\n    }\n\n    /**\n     * @dev Pushes a (`key`, `value`) pair into an ordered list of checkpoints, either by inserting a new checkpoint,\n     * or by updating the last one.\n     */\n    function _insert(Checkpoint208[] storage self, uint48 key, uint208 value)\n        private\n        returns (uint208 oldValue, uint208 newValue)\n    {\n        uint256 pos = self.length;\n\n        if (pos > 0) {\n            Checkpoint208 storage last = _unsafeAccess(self, pos - 1);\n            uint48 lastKey = last._key;\n            uint208 lastValue = last._value;\n\n            // Checkpoint keys must be non-decreasing.\n            if (lastKey > key) {\n                revert CheckpointUnorderedInsertion();\n            }\n\n            // Update or push new checkpoint\n            if (lastKey == key) {\n                last._value = value;\n            } else {\n                self.push(Checkpoint208({_key: key, _value: value}));\n            }\n            return (lastValue, value);\n        } else {\n            self.push(Checkpoint208({_key: key, _value: value}));\n            return (0, value);\n        }\n    }\n\n    /**\n     * @dev Return the index of the first (oldest) checkpoint with key strictly bigger than the search key, or `high`\n     * if there is none. `low` and `high` define a section where to do the search, with inclusive `low` and exclusive\n     * `high`.\n     *\n     * WARNING: `high` should not be greater than the array's length.\n     */\n    function _upperBinaryLookup(Checkpoint208[] storage self, uint48 key, uint256 low, uint256 high)\n        private\n        view\n        returns (uint256)\n    {\n        while (low < high) {\n            uint256 mid = Math.average(low, high);\n            if (_unsafeAccess(self, mid)._key > key) {\n                high = mid;\n            } else {\n                low = mid + 1;\n            }\n        }\n        return high;\n    }\n\n    /**\n     * @dev Return the index of the first (oldest) checkpoint with key greater or equal than the search key, or `high`\n     * if there is none. `low` and `high` define a section where to do the search, with inclusive `low` and exclusive\n     * `high`.\n     *\n     * WARNING: `high` should not be greater than the array's length.\n     */\n    function _lowerBinaryLookup(Checkpoint208[] storage self, uint48 key, uint256 low, uint256 high)\n        private\n        view\n        returns (uint256)\n    {\n        while (low < high) {\n            uint256 mid = Math.average(low, high);\n            if (_unsafeAccess(self, mid)._key < key) {\n                low = mid + 1;\n            } else {\n                high = mid;\n            }\n        }\n        return high;\n    }\n\n    /**\n     * @dev Access an element of the array without performing bounds check. The position is assumed to be within bounds.\n     */\n    function _unsafeAccess(Checkpoint208[] storage self, uint256 pos)\n        private\n        pure\n        returns (Checkpoint208 storage result)\n    {\n        assembly {\n            mstore(0, self.slot)\n            result.slot := add(keccak256(0, 0x20), pos)\n        }\n    }\n\n    struct Trace160 {\n        Checkpoint160[] _checkpoints;\n    }\n\n    struct Checkpoint160 {\n        uint96 _key;\n        uint160 _value;\n    }\n\n    /**\n     * @dev Pushes a (`key`, `value`) pair into a Trace160 so that it is stored as the checkpoint.\n     *\n     * Returns previous value and new value.\n     *\n     * IMPORTANT: Never accept `key` as a user input, since an arbitrary `type(uint96).max` key set will disable the\n     * library.\n     */\n    function push(Trace160 storage self, uint96 key, uint160 value)\n        internal\n        returns (uint160 oldValue, uint160 newValue)\n    {\n        return _insert(self._checkpoints, key, value);\n    }\n\n    /**\n     * @dev Returns the value in the first (oldest) checkpoint with key greater or equal than the search key, or zero if\n     * there is none.\n     */\n    function lowerLookup(Trace160 storage self, uint96 key) internal view returns (uint160) {\n        uint256 len = self._checkpoints.length;\n        uint256 pos = _lowerBinaryLookup(self._checkpoints, key, 0, len);\n        return pos == len ? 0 : _unsafeAccess(self._checkpoints, pos)._value;\n    }\n\n    /**\n     * @dev Returns the value in the last (most recent) checkpoint with key lower or equal than the search key, or zero\n     * if there is none.\n     */\n    function upperLookup(Trace160 storage self, uint96 key) internal view returns (uint160) {\n        uint256 len = self._checkpoints.length;\n        uint256 pos = _upperBinaryLookup(self._checkpoints, key, 0, len);\n        return pos == 0 ? 0 : _unsafeAccess(self._checkpoints, pos - 1)._value;\n    }\n\n    /**\n     * @dev Returns the value in the last (most recent) checkpoint with key lower or equal than the search key, or zero\n     * if there is none.\n     *\n     * NOTE: This is a variant of {upperLookup} that is optimised to find \"recent\" checkpoint (checkpoints with high\n     * keys).\n     */\n    function upperLookupRecent(Trace160 storage self, uint96 key) internal view returns (uint160) {\n        uint256 len = self._checkpoints.length;\n\n        uint256 low = 0;\n        uint256 high = len;\n\n        if (len > 5) {\n            uint256 mid = len - Math.sqrt(len);\n            if (key < _unsafeAccess(self._checkpoints, mid)._key) {\n                high = mid;\n            } else {\n                low = mid + 1;\n            }\n        }\n\n        uint256 pos = _upperBinaryLookup(self._checkpoints, key, low, high);\n\n        return pos == 0 ? 0 : _unsafeAccess(self._checkpoints, pos - 1)._value;\n    }\n\n    /**\n     * @dev Returns the value in the most recent checkpoint, or zero if there are no checkpoints.\n     */\n    function latest(Trace160 storage self) internal view returns (uint160) {\n        uint256 pos = self._checkpoints.length;\n        return pos == 0 ? 0 : _unsafeAccess(self._checkpoints, pos - 1)._value;\n    }\n\n    /**\n     * @dev Returns whether there is a checkpoint in the structure (i.e. it is not empty), and if so the key and value\n     * in the most recent checkpoint.\n     */\n    function latestCheckpoint(Trace160 storage self) internal view returns (bool exists, uint96 _key, uint160 _value) {\n        uint256 pos = self._checkpoints.length;\n        if (pos == 0) {\n            return (false, 0, 0);\n        } else {\n            Checkpoint160 storage ckpt = _unsafeAccess(self._checkpoints, pos - 1);\n            return (true, ckpt._key, ckpt._value);\n        }\n    }\n\n    /**\n     * @dev Returns the number of checkpoints.\n     */\n    function length(Trace160 storage self) internal view returns (uint256) {\n        return self._checkpoints.length;\n    }\n\n    /**\n     * @dev Returns checkpoint at given position.\n     */\n    function at(Trace160 storage self, uint32 pos) internal view returns (Checkpoint160 memory) {\n        return self._checkpoints[pos];\n    }\n\n    /**\n     * @dev Pushes a (`key`, `value`) pair into an ordered list of checkpoints, either by inserting a new checkpoint,\n     * or by updating the last one.\n     */\n    function _insert(Checkpoint160[] storage self, uint96 key, uint160 value)\n        private\n        returns (uint160 oldValue, uint160 newValue)\n    {\n        uint256 pos = self.length;\n\n        if (pos > 0) {\n            Checkpoint160 storage last = _unsafeAccess(self, pos - 1);\n            uint96 lastKey = last._key;\n            uint160 lastValue = last._value;\n\n            // Checkpoint keys must be non-decreasing.\n            if (lastKey > key) {\n                revert CheckpointUnorderedInsertion();\n            }\n\n            // Update or push new checkpoint\n            if (lastKey == key) {\n                last._value = value;\n            } else {\n                self.push(Checkpoint160({_key: key, _value: value}));\n            }\n            return (lastValue, value);\n        } else {\n            self.push(Checkpoint160({_key: key, _value: value}));\n            return (0, value);\n        }\n    }\n\n    /**\n     * @dev Return the index of the first (oldest) checkpoint with key strictly bigger than the search key, or `high`\n     * if there is none. `low` and `high` define a section where to do the search, with inclusive `low` and exclusive\n     * `high`.\n     *\n     * WARNING: `high` should not be greater than the array's length.\n     */\n    function _upperBinaryLookup(Checkpoint160[] storage self, uint96 key, uint256 low, uint256 high)\n        private\n        view\n        returns (uint256)\n    {\n        while (low < high) {\n            uint256 mid = Math.average(low, high);\n            if (_unsafeAccess(self, mid)._key > key) {\n                high = mid;\n            } else {\n                low = mid + 1;\n            }\n        }\n        return high;\n    }\n\n    /**\n     * @dev Return the index of the first (oldest) checkpoint with key greater or equal than the search key, or `high`\n     * if there is none. `low` and `high` define a section where to do the search, with inclusive `low` and exclusive\n     * `high`.\n     *\n     * WARNING: `high` should not be greater than the array's length.\n     */\n    function _lowerBinaryLookup(Checkpoint160[] storage self, uint96 key, uint256 low, uint256 high)\n        private\n        view\n        returns (uint256)\n    {\n        while (low < high) {\n            uint256 mid = Math.average(low, high);\n            if (_unsafeAccess(self, mid)._key < key) {\n                low = mid + 1;\n            } else {\n                high = mid;\n            }\n        }\n        return high;\n    }\n\n    /**\n     * @dev Access an element of the array without performing bounds check. The position is assumed to be within bounds.\n     */\n    function _unsafeAccess(Checkpoint160[] storage self, uint256 pos)\n        private\n        pure\n        returns (Checkpoint160 storage result)\n    {\n        assembly {\n            mstore(0, self.slot)\n            result.slot := add(keccak256(0, 0x20), pos)\n        }\n    }\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "differs",
+      "coveredLines": 603,
+      "match": {
+        "origin": "library",
+        "collection": "openzeppelin",
+        "relation": { "type": "library" },
+        "rank": 3,
+        "matchedBy": "name",
+        "auditedName": "Checkpoints",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2024-10-v5.1",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/utils/structs/Checkpoints.sol",
+        "commit": "9756730617a2b27ea205c273dc947a9368fa5f6c",
+        "commitTimestamp": "2024-09-18T17:28:19Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/9756730617a2b27ea205c273dc947a9368fa5f6c/contracts/utils/structs/Checkpoints.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Fix review of pull request #5177 (resolving N-05); only the fix changes to this file were reviewed.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 14
+      },
+      "diff": {
+        "added": 3,
+        "removed": 3,
+        "ignoredAdded": 3,
+        "ignoredRemoved": 3,
+        "unchanged": 603,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 98,
+            "oldLines": 7,
+            "newStart": 98,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 98, "newLine": 98, "text": "    }" },
+              { "type": " ", "oldLine": 99, "newLine": 99, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 100,
+                "newLine": 100,
+                "text": "    /**"
+              },
+              {
+                "type": "-",
+                "oldLine": 101,
+                "text": "     * @dev Returns the number of checkpoint.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 101,
+                "text": "     * @dev Returns the number of checkpoints.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 102,
+                "newLine": 102,
+                "text": "     */"
+              },
+              {
+                "type": " ",
+                "oldLine": 103,
+                "newLine": 103,
+                "text": "    function length(Trace224 storage self) internal view returns (uint256) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 104,
+                "newLine": 104,
+                "text": "        return self._checkpoints.length;"
+              }
+            ]
+          },
+          {
+            "oldStart": 133,
+            "oldLines": 7,
+            "newStart": 133,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 133, "newLine": 133, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 134,
+                "newLine": 134,
+                "text": "            // Update or push new checkpoint"
+              },
+              {
+                "type": " ",
+                "oldLine": 135,
+                "newLine": 135,
+                "text": "            if (lastKey == key) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 136,
+                "text": "                _unsafeAccess(self, pos - 1)._value = value;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 136,
+                "text": "                last._value = value;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 137,
+                "newLine": 137,
+                "text": "            } else {"
+              },
+              {
+                "type": " ",
+                "oldLine": 138,
+                "newLine": 138,
+                "text": "                self.push(Checkpoint224({_key: key, _value: value}));"
+              },
+              {
+                "type": " ",
+                "oldLine": 139,
+                "newLine": 139,
+                "text": "            }"
+              }
+            ]
+          },
+          {
+            "oldStart": 298,
+            "oldLines": 7,
+            "newStart": 298,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 298, "newLine": 298, "text": "    }" },
+              { "type": " ", "oldLine": 299, "newLine": 299, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 300,
+                "newLine": 300,
+                "text": "    /**"
+              },
+              {
+                "type": "-",
+                "oldLine": 301,
+                "text": "     * @dev Returns the number of checkpoint.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 301,
+                "text": "     * @dev Returns the number of checkpoints.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 302,
+                "newLine": 302,
+                "text": "     */"
+              },
+              {
+                "type": " ",
+                "oldLine": 303,
+                "newLine": 303,
+                "text": "    function length(Trace208 storage self) internal view returns (uint256) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 304,
+                "newLine": 304,
+                "text": "        return self._checkpoints.length;"
+              }
+            ]
+          },
+          {
+            "oldStart": 333,
+            "oldLines": 7,
+            "newStart": 333,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 333, "newLine": 333, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 334,
+                "newLine": 334,
+                "text": "            // Update or push new checkpoint"
+              },
+              {
+                "type": " ",
+                "oldLine": 335,
+                "newLine": 335,
+                "text": "            if (lastKey == key) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 336,
+                "text": "                _unsafeAccess(self, pos - 1)._value = value;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 336,
+                "text": "                last._value = value;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 337,
+                "newLine": 337,
+                "text": "            } else {"
+              },
+              {
+                "type": " ",
+                "oldLine": 338,
+                "newLine": 338,
+                "text": "                self.push(Checkpoint208({_key: key, _value: value}));"
+              },
+              {
+                "type": " ",
+                "oldLine": 339,
+                "newLine": 339,
+                "text": "            }"
+              }
+            ]
+          },
+          {
+            "oldStart": 498,
+            "oldLines": 7,
+            "newStart": 498,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 498, "newLine": 498, "text": "    }" },
+              { "type": " ", "oldLine": 499, "newLine": 499, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 500,
+                "newLine": 500,
+                "text": "    /**"
+              },
+              {
+                "type": "-",
+                "oldLine": 501,
+                "text": "     * @dev Returns the number of checkpoint.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 501,
+                "text": "     * @dev Returns the number of checkpoints.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 502,
+                "newLine": 502,
+                "text": "     */"
+              },
+              {
+                "type": " ",
+                "oldLine": 503,
+                "newLine": 503,
+                "text": "    function length(Trace160 storage self) internal view returns (uint256) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 504,
+                "newLine": 504,
+                "text": "        return self._checkpoints.length;"
+              }
+            ]
+          },
+          {
+            "oldStart": 533,
+            "oldLines": 7,
+            "newStart": 533,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 533, "newLine": 533, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 534,
+                "newLine": 534,
+                "text": "            // Update or push new checkpoint"
+              },
+              {
+                "type": " ",
+                "oldLine": 535,
+                "newLine": 535,
+                "text": "            if (lastKey == key) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 536,
+                "text": "                _unsafeAccess(self, pos - 1)._value = value;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 536,
+                "text": "                last._value = value;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 537,
+                "newLine": 537,
+                "text": "            } else {"
+              },
+              {
+                "type": " ",
+                "oldLine": 538,
+                "newLine": 538,
+                "text": "                self.push(Checkpoint160({_key: key, _value: value}));"
+              },
+              {
+                "type": " ",
+                "oldLine": 539,
+                "newLine": 539,
+                "text": "            }"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

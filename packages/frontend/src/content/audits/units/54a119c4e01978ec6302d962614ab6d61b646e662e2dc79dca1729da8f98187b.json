@@ -1,0 +1,153 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "54a119c4e01978ec6302d962614ab6d61b646e662e2dc79dca1729da8f98187b",
+  "name": "IERC20PermitUpgradeable",
+  "kind": "interface",
+  "lines": 40,
+  "source": "interface IERC20PermitUpgradeable {\n    /**\n     * @dev Sets `value` as the allowance of `spender` over ``owner``'s tokens,\n     * given ``owner``'s signed approval.\n     *\n     * IMPORTANT: The same issues {IERC20-approve} has related to transaction\n     * ordering also apply here.\n     *\n     * Emits an {Approval} event.\n     *\n     * Requirements:\n     *\n     * - `spender` cannot be the zero address.\n     * - `deadline` must be a timestamp in the future.\n     * - `v`, `r` and `s` must be a valid `secp256k1` signature from `owner`\n     * over the EIP712-formatted function arguments.\n     * - the signature must use ``owner``'s current nonce (see {nonces}).\n     *\n     * For more information on the signature format, see the\n     * https://eips.ethereum.org/EIPS/eip-2612#specification[relevant EIP\n     * section].\n     */\n    function permit(address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s)\n        external;\n\n    /**\n     * @dev Returns the current nonce for `owner`. This value must be\n     * included whenever a signature is generated for {permit}.\n     *\n     * Every successful call to {permit} increases ``owner``'s nonce by one. This\n     * prevents a signature from being used multiple times.\n     */\n    function nonces(address owner) external view returns (uint256);\n\n    /**\n     * @dev Returns the domain separator used in the encoding of the signature for {permit}, as defined by {EIP712}.\n     */\n    // solhint-disable-next-line func-name-mixedcase\n    function DOMAIN_SEPARATOR() external view returns (bytes32);\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "differs",
+      "coveredLines": 39,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "similarity",
+        "auditedName": "IERC20Permit",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2026-02-v5.6",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/token/ERC20/extensions/IERC20Permit.sol",
+        "commit": "5fd1781b1454fd1ef8e722282f86f9293cacf256",
+        "commitTimestamp": "2026-02-27T15:00:00Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/5fd1781b1454fd1ef8e722282f86f9293cacf256/contracts/token/ERC20/extensions/IERC20Permit.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Review of the fixes to the audit findings; the report states this commit reflects the final state of the audited codebase including all implemented resolutions.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 1,
+        "removed": 1,
+        "ignoredAdded": 1,
+        "ignoredRemoved": 3,
+        "unchanged": 39,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 10,
+            "newStart": 1,
+            "newLines": 10,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "interface IERC20Permit {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "interface IERC20PermitUpgradeable {",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 2, "newLine": 2, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "     * @dev Sets `value` as the allowance of `spender` over ``owner``'s tokens,"
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "     * given ``owner``'s signed approval."
+              },
+              { "type": " ", "oldLine": 5, "newLine": 5, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 6,
+                "newLine": 6,
+                "text": "     * IMPORTANT: The same issues {IERC20-approve} has related to transaction"
+              },
+              {
+                "type": "-",
+                "oldLine": 7,
+                "text": "     * ordering also applies here.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 7,
+                "text": "     * ordering also apply here.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 8, "newLine": 8, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 9,
+                "text": "     * Emits an {Approval} event."
+              },
+              { "type": " ", "oldLine": 10, "newLine": 10, "text": "     *" }
+            ]
+          },
+          {
+            "oldStart": 19,
+            "oldLines": 8,
+            "newStart": 19,
+            "newLines": 6,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 19,
+                "newLine": 19,
+                "text": "     * For more information on the signature format, see the"
+              },
+              {
+                "type": " ",
+                "oldLine": 20,
+                "newLine": 20,
+                "text": "     * https://eips.ethereum.org/EIPS/eip-2612#specification[relevant EIP"
+              },
+              {
+                "type": " ",
+                "oldLine": 21,
+                "newLine": 21,
+                "text": "     * section]."
+              },
+              { "type": "-", "oldLine": 22, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 23,
+                "text": "     * CAUTION: See Security Considerations above.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 24, "newLine": 22, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 25,
+                "newLine": 23,
+                "text": "    function permit(address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s)"
+              },
+              {
+                "type": " ",
+                "oldLine": 26,
+                "newLine": 24,
+                "text": "        external;"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

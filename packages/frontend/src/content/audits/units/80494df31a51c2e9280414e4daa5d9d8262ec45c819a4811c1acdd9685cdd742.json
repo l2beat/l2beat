@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "80494df31a51c2e9280414e4daa5d9d8262ec45c819a4811c1acdd9685cdd742",
+  "name": "BridgeableTokens",
+  "kind": "contract",
+  "lines": 42,
+  "source": "contract BridgeableTokens {\n    /// @notice Address of the bridged token in the L1 chain\n    address public immutable l1Token;\n\n    /// @notice Address of the token minted on the L2 chain when token bridged\n    address public immutable l2Token;\n\n    /// @param l1Token_ Address of the bridged token in the L1 chain\n    /// @param l2Token_ Address of the token minted on the L2 chain when token bridged\n    constructor(address l1Token_, address l2Token_) {\n        l1Token = l1Token_;\n        l2Token = l2Token_;\n    }\n\n    /// @dev Validates that passed l1Token_ is supported by the bridge\n    modifier onlySupportedL1Token(address l1Token_) {\n        if (l1Token_ != l1Token) {\n            revert ErrorUnsupportedL1Token();\n        }\n        _;\n    }\n\n    /// @dev Validates that passed l2Token_ is supported by the bridge\n    modifier onlySupportedL2Token(address l2Token_) {\n        if (l2Token_ != l2Token) {\n            revert ErrorUnsupportedL2Token();\n        }\n        _;\n    }\n\n    /// @dev validates that account_ is not zero address\n    modifier onlyNonZeroAccount(address account_) {\n        if (account_ == address(0)) {\n            revert ErrorAccountIsZeroAddress();\n        }\n        _;\n    }\n\n    error ErrorUnsupportedL1Token();\n    error ErrorUnsupportedL2Token();\n    error ErrorAccountIsZeroAddress();\n}",
+  "resolutions": {
+    "ba5b6c9584fb78fd": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

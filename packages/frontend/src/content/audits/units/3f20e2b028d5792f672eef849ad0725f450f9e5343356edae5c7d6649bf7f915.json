@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "3f20e2b028d5792f672eef849ad0725f450f9e5343356edae5c7d6649bf7f915",
+  "name": "TornadoCash_Eth_01",
+  "kind": "contract",
+  "lines": 39,
+  "source": "contract TornadoCash_Eth_01 is ETHTornado {\n    bool public isMigrated = false;\n\n    constructor(IVerifier _verifier, uint256 _denomination, uint32 _merkleTreeHeight, address _operator)\n        public\n        ETHTornado(_verifier, _denomination, _merkleTreeHeight, _operator)\n    {}\n\n    /**\n     * @dev Migrate state from old v1 tornado.cash instance to this contract.\n     * @dev only applies to eth 0.1 deposits\n     * @param _commitments deposited commitments from previous contract\n     * @param _nullifierHashes spent nullifiers from previous contract\n     */\n    function migrateState(bytes32[] calldata _commitments, bytes32[] calldata _nullifierHashes) external onlyOperator {\n        require(!isMigrated, \"Migration is disabled\");\n        for (uint32 i = 0; i < _commitments.length; i++) {\n            commitments[_commitments[i]] = true;\n            emit Deposit(_commitments[i], nextIndex + i, block.timestamp);\n        }\n\n        nextIndex += uint32(_commitments.length);\n\n        for (uint256 i = 0; i < _nullifierHashes.length; i++) {\n            nullifierHashes[_nullifierHashes[i]] = true;\n            emit Withdrawal(address(0), _nullifierHashes[i], address(0), 0);\n        }\n    }\n\n    function initializeTreeForMigration(bytes32[] calldata _filledSubtrees, bytes32 _root) external onlyOperator {\n        require(!isMigrated, \"already migrated\");\n        filledSubtrees = _filledSubtrees;\n        roots[0] = _root;\n    }\n\n    function finishMigration() external payable onlyOperator {\n        isMigrated = true;\n    }\n}",
+  "resolutions": {
+    "f9658cd3a9a22004": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

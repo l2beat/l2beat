@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "2de60550cc494e1f341baca39a932e73b70bb8d29cfd5c79c9ce374862ca104f",
+  "name": "UniswapImmutables",
+  "kind": "contract",
+  "lines": 20,
+  "source": "contract UniswapImmutables {\n    /// @notice The address of UniswapV2Factory\n    address internal immutable UNISWAP_V2_FACTORY;\n\n    /// @notice The UniswapV2Pair initcodehash\n    bytes32 internal immutable UNISWAP_V2_PAIR_INIT_CODE_HASH;\n\n    /// @notice The address of UniswapV3Factory\n    address internal immutable UNISWAP_V3_FACTORY;\n\n    /// @notice The UniswapV3Pool initcodehash\n    bytes32 internal immutable UNISWAP_V3_POOL_INIT_CODE_HASH;\n\n    constructor(UniswapParameters memory params) {\n        UNISWAP_V2_FACTORY = params.v2Factory;\n        UNISWAP_V2_PAIR_INIT_CODE_HASH = params.pairInitCodeHash;\n        UNISWAP_V3_FACTORY = params.v3Factory;\n        UNISWAP_V3_POOL_INIT_CODE_HASH = params.poolInitCodeHash;\n    }\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

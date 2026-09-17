@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "34ff4debdaf3e2f41101dac1285023bfc2a0eaa78e5ecd68e734e60387377623",
+  "name": "tail_to_public_finalize.nr",
+  "kind": "program",
+  "lines": 55,
+  "source": "use crate::{\n    abis::PaddedSideEffectAmounts,\n    components::{\n        tail_to_public_output_composer::TailToPublicOutputComposer,\n        tail_to_public_output_validator::TailToPublicOutputValidator,\n    },\n};\nuse types::abis::kernel_circuit_public_inputs::{\n    PrivateKernelCircuitPublicInputs, PrivateToPublicKernelCircuitPublicInputs,\n};\n\nunconstrained fn generate_tail_to_public_output(\n    previous_kernel_public_inputs: PrivateKernelCircuitPublicInputs,\n    padded_side_effect_amounts: PaddedSideEffectAmounts,\n    expiration_timestamp_upper_bound: u64,\n) -> PrivateToPublicKernelCircuitPublicInputs {\n    TailToPublicOutputComposer::new(\n        previous_kernel_public_inputs,\n        padded_side_effect_amounts,\n        expiration_timestamp_upper_bound,\n    )\n        .finish()\n}\n\n/// Composes and validates public-bound terminal public inputs. The caller must recursively verify the\n/// predecessor and run `validate_previous_kernel_for_tail`.\n///\n/// TODO(https://github.com/AztecProtocol/aztec-packages-private/issues/147): duplicate output\n/// composition and validation overlap with the reset path; fold together.\npub(crate) fn tail_to_public_finalize(\n    previous_kernel_public_inputs: PrivateKernelCircuitPublicInputs,\n    padded_side_effect_amounts: PaddedSideEffectAmounts,\n    expiration_timestamp_upper_bound: u64,\n) -> PrivateToPublicKernelCircuitPublicInputs {\n    // Safety: the output is validated below by TailToPublicOutputValidator.\n    let output = unsafe {\n        generate_tail_to_public_output(\n            previous_kernel_public_inputs,\n            padded_side_effect_amounts,\n            expiration_timestamp_upper_bound,\n        )\n    };\n\n    if ::types::validate::should_validate_output() {\n        TailToPublicOutputValidator::new(\n            output,\n            previous_kernel_public_inputs,\n            padded_side_effect_amounts,\n            expiration_timestamp_upper_bound,\n        )\n            .validate();\n    }\n\n    output\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

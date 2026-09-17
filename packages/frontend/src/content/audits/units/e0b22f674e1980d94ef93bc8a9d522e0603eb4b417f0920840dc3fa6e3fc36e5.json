@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "e0b22f674e1980d94ef93bc8a9d522e0603eb4b417f0920840dc3fa6e3fc36e5",
+  "name": "IGasToken",
+  "kind": "interface",
+  "lines": 10,
+  "source": "interface IGasToken {\n    /// @notice Getter for the ERC20 token address that is used to pay for gas and its decimals.\n    function gasPayingToken() external view returns (address, uint8);\n    /// @notice Returns the gas token name.\n    function gasPayingTokenName() external view returns (string memory);\n    /// @notice Returns the gas token symbol.\n    function gasPayingTokenSymbol() external view returns (string memory);\n    /// @notice Returns true if the network uses a custom gas token.\n    function isCustomGasToken() external view returns (bool);\n}",
+  "resolutions": {
+    "44ad4cf96e2ef6f0": {
+      "status": "identical",
+      "coveredLines": 10,
+      "match": {
+        "origin": "other",
+        "collection": "ethscriptions",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "identity",
+        "auditedName": "IGasToken",
+        "similarity": 1,
+        "reportId": "ethscriptions/zellic-facet-bridge-2024-11-04",
+        "repository": "0xFacet/facet-optimism",
+        "path": "packages/contracts-bedrock/src/libraries/GasPayingToken.sol",
+        "commit": "331bb685d91447e76b79aee34fea5d668a77e925",
+        "commitTimestamp": "2024-10-02T15:07:32Z",
+        "url": "https://github.com/0xFacet/facet-optimism/blob/331bb685d91447e76b79aee34fea5d668a77e925/packages/contracts-bedrock/src/libraries/GasPayingToken.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "primary review",
+        "coverage": "full file",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "warnings": []
+    }
+  }
+}

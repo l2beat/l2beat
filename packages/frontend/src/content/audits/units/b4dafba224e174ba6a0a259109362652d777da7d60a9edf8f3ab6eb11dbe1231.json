@@ -1,0 +1,184 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "b4dafba224e174ba6a0a259109362652d777da7d60a9edf8f3ab6eb11dbe1231",
+  "name": "AddressAliasHelper",
+  "kind": "library",
+  "lines": 24,
+  "source": "library AddressAliasHelper {\n    /// @dev The offset added to the address in L1.\n    uint160 internal constant OFFSET = uint160(0x1111000000000000000000000000000000001111);\n\n    /// @notice Utility function that converts the address in the L1 that submitted a tx to\n    /// the inbox to the msg.sender viewed in the L2\n    /// @param l1Address the address in the L1 that triggered the tx to L2\n    /// @return l2Address L2 address as viewed in msg.sender\n    function applyL1ToL2Alias(address l1Address) internal pure returns (address l2Address) {\n        unchecked {\n            l2Address = address(uint160(l1Address) + OFFSET);\n        }\n    }\n\n    /// @notice Utility function that converts the msg.sender viewed in the L2 to the\n    /// address in the L1 that submitted a tx to the inbox\n    /// @param l2Address L2 address as viewed in msg.sender\n    /// @return l1Address the address in the L1 that triggered the tx to L2\n    function undoL1ToL2Alias(address l2Address) internal pure returns (address l1Address) {\n        unchecked {\n            l1Address = address(uint160(l2Address) - OFFSET);\n        }\n    }\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "differs",
+      "coveredLines": 21,
+      "match": {
+        "origin": "own",
+        "collection": "scroll",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "AddressAliasHelper",
+        "similarity": 0.788,
+        "reportId": "scroll/openzeppelin-scroll-layer1-audit-2023-07",
+        "repository": "scroll-tech/scroll",
+        "path": "contracts/src/libraries/common/AddressAliasHelper.sol",
+        "commit": "3bc8a3f5c6ac816ddffadca41024331dcf4d3064",
+        "commitTimestamp": "2023-05-22T07:41:40Z",
+        "url": "https://github.com/scroll-tech/scroll/blob/3bc8a3f5c6ac816ddffadca41024331dcf4d3064/contracts/src/libraries/common/AddressAliasHelper.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Full file review at audit commit.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "diff": {
+        "added": 3,
+        "removed": 3,
+        "ignoredAdded": 1,
+        "ignoredRemoved": 0,
+        "unchanged": 21,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 5,
+            "newStart": 1,
+            "newLines": 6,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "library AddressAliasHelper {"
+              },
+              {
+                "type": "-",
+                "oldLine": 2,
+                "text": "    uint160 constant offset = uint160(0x1111000000000000000000000000000000001111);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 2,
+                "text": "    /// @dev The offset added to the address in L1.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "    uint160 internal constant OFFSET = uint160(0x1111000000000000000000000000000000001111);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 3, "newLine": 4, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 5,
+                "text": "    /// @notice Utility function that converts the address in the L1 that submitted a tx to"
+              },
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 6,
+                "text": "    /// the inbox to the msg.sender viewed in the L2"
+              }
+            ]
+          },
+          {
+            "oldStart": 7,
+            "oldLines": 7,
+            "newStart": 8,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 7,
+                "newLine": 8,
+                "text": "    /// @return l2Address L2 address as viewed in msg.sender"
+              },
+              {
+                "type": " ",
+                "oldLine": 8,
+                "newLine": 9,
+                "text": "    function applyL1ToL2Alias(address l1Address) internal pure returns (address l2Address) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 10,
+                "text": "        unchecked {"
+              },
+              {
+                "type": "-",
+                "oldLine": 10,
+                "text": "            l2Address = address(uint160(l1Address) + offset);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 11,
+                "text": "            l2Address = address(uint160(l1Address) + OFFSET);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 11,
+                "newLine": 12,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 12, "newLine": 13, "text": "    }" },
+              { "type": " ", "oldLine": 13, "newLine": 14, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 17,
+            "oldLines": 7,
+            "newStart": 18,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 17,
+                "newLine": 18,
+                "text": "    /// @return l1Address the address in the L1 that triggered the tx to L2"
+              },
+              {
+                "type": " ",
+                "oldLine": 18,
+                "newLine": 19,
+                "text": "    function undoL1ToL2Alias(address l2Address) internal pure returns (address l1Address) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 19,
+                "newLine": 20,
+                "text": "        unchecked {"
+              },
+              {
+                "type": "-",
+                "oldLine": 20,
+                "text": "            l1Address = address(uint160(l2Address) - offset);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 21,
+                "text": "            l1Address = address(uint160(l2Address) - OFFSET);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 21,
+                "newLine": 22,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 22, "newLine": 23, "text": "    }" },
+              { "type": " ", "oldLine": 23, "newLine": 24, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

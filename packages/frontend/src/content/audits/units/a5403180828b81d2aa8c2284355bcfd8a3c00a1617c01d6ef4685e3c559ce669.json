@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "a5403180828b81d2aa8c2284355bcfd8a3c00a1617c01d6ef4685e3c559ce669",
+  "name": "(file-level declarations)",
+  "kind": "file-level",
+  "lines": 64,
+  "source": "enum GameStatus {\n    // The game is currently in progress, and has not been resolved.\n    IN_PROGRESS,\n    // The game has concluded, and the `rootClaim` was challenged successfully.\n    CHALLENGER_WINS,\n    // The game has concluded, and the `rootClaim` could not be contested.\n    DEFENDER_WINS\n}\nusing LibTimestamp for Timestamp global;\ntype Timestamp is uint64;\nusing LibGameType for GameType global;\ntype GameType is uint32;\nusing LibPosition for Position global;\ntype Position is uint128;\nusing LibHash for Hash global;\ntype Hash is bytes32;\nusing LibClaim for Claim global;\ntype Claim is bytes32;\nenum BondDistributionMode {\n    // Bond distribution strategy has not been chosen.\n    UNDECIDED,\n    // Bonds should be distributed as normal.\n    NORMAL,\n    // Bonds should be refunded to claimants.\n    REFUND\n}\nusing LibDuration for Duration global;\ntype Duration is uint64;\nusing LibGameId for GameId global;\ntype GameId is bytes32;\nusing LibClock for Clock global;\ntype Clock is uint128;\nusing LPPMetadataLib for LPPMetaData global;\ntype LPPMetaData is bytes32;\nstruct Proposal {\n    Hash root;\n    uint256 l2SequenceNumber;\n}\nuint32 constant OP_SUCCINCT_FAULT_DISPUTE_GAME_TYPE = 42;\nerror AlreadyInitialized();\nerror IncorrectDisputeGameFactory();\nerror BadAuth();\nerror InvalidParentGame();\nerror UnexpectedRootClaim(Claim rootClaim);\nerror ClaimAlreadyChallenged();\nerror GameOver();\nerror IncorrectBondAmount();\nstruct AggregationOutputs {\n    bytes32 l1Head;\n    bytes32 l2PreRoot;\n    bytes32 claimRoot;\n    uint256 claimBlockNum;\n    bytes32 rollupConfigHash;\n    bytes32 rangeVkeyCommitment;\n    address proverAddress;\n}\nerror ClaimAlreadyResolved();\nerror ParentGameNotResolved();\nerror GameNotOver();\nerror InvalidProposalStatus();\nerror InvalidBondDistributionMode();\nerror NoCreditToClaim();\nerror BondTransferFailed();\nerror GameNotFinalized();",
+  "resolutions": {
+    "44ad4cf96e2ef6f0": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

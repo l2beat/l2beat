@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "77a76660d37cd4d3299283e4783754f32e111d1028f04f09803d8e7f805bda18",
+  "name": "IImmutableState",
+  "kind": "interface",
+  "lines": 7,
+  "source": "interface IImmutableState {\n    /// @return Returns the address of the Uniswap V2 factory\n    function factoryV2() external view returns (address);\n\n    /// @return Returns the address of Uniswap V3 NFT position manager\n    function positionManager() external view returns (address);\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "0a64a120ec61d63f5583d55ed253f1614c71b1c26918d74d74691d95ac8ef14b",
+  "name": "cTornado",
+  "kind": "contract",
+  "lines": 22,
+  "source": "contract cTornado is ERC20Tornado {\n    address public immutable governance = 0x5efda50f22d34F262c29268506C5Fa42cB56A1Ce;\n    IERC20 public immutable comp;\n\n    constructor(\n        IERC20 _comp,\n        IVerifier _verifier,\n        IHasher _hasher,\n        uint256 _denomination,\n        uint32 _merkleTreeHeight,\n        IERC20 _token\n    ) ERC20Tornado(_verifier, _hasher, _denomination, _merkleTreeHeight, _token) {\n        require(address(_comp) != address(0), \"Invalid COMP token address\");\n        comp = _comp;\n    }\n\n    /// @dev Moves earned yield of the COMP token to the tornado governance contract\n    /// To make it work you might need to call `comptroller.claimComp(cPoolAddress)` first\n    function claimComp() external {\n        comp.transfer(governance, comp.balanceOf(address(this)));\n    }\n}",
+  "resolutions": {
+    "f9658cd3a9a22004": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

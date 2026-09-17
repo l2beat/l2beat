@@ -1,0 +1,116 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "47005ffef6f75897603bd5b2d1aaf0c36f9097d1aecdf1a0090ff6ffb16fcd02",
+  "name": "L2ERC20Gateway",
+  "kind": "abstract",
+  "lines": 44,
+  "source": "abstract contract L2ERC20Gateway is ScrollGatewayBase, IL2ERC20Gateway {\n    /**\n     *\n     * Variables *\n     *\n     */\n\n    /// @dev The storage slots for future usage.\n    uint256[50] private __gap;\n\n    /**\n     *\n     * Public Mutating Functions *\n     *\n     */\n\n    /// @inheritdoc IL2ERC20Gateway\n    function withdrawERC20(address _token, uint256 _amount, uint256 _gasLimit) external payable override {\n        _withdraw(_token, _msgSender(), _amount, new bytes(0), _gasLimit);\n    }\n\n    /// @inheritdoc IL2ERC20Gateway\n    function withdrawERC20(address _token, address _to, uint256 _amount, uint256 _gasLimit) external payable override {\n        _withdraw(_token, _to, _amount, new bytes(0), _gasLimit);\n    }\n\n    /// @inheritdoc IL2ERC20Gateway\n    function withdrawERC20AndCall(address _token, address _to, uint256 _amount, bytes calldata _data, uint256 _gasLimit)\n        external\n        payable\n        override\n    {\n        _withdraw(_token, _to, _amount, _data, _gasLimit);\n    }\n\n    /**\n     *\n     * Internal Functions *\n     *\n     */\n    function _withdraw(address _token, address _to, uint256 _amount, bytes memory _data, uint256 _gasLimit)\n        internal\n        virtual;\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "differs",
+      "coveredLines": 42,
+      "match": {
+        "origin": "own",
+        "collection": "scroll",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "L2ERC20Gateway",
+        "similarity": 0.95,
+        "reportId": "scroll/openzeppelin-scroll-layer2-audit-2023-07",
+        "repository": "scroll-tech/scroll",
+        "path": "contracts/src/L2/gateways/L2ERC20Gateway.sol",
+        "commit": "23958838c51170ca7e680ff405f3c68dfee4e7b9",
+        "commitTimestamp": "2023-07-10T05:25:06Z",
+        "url": "https://github.com/scroll-tech/scroll/blob/23958838c51170ca7e680ff405f3c68dfee4e7b9/contracts/src/L2/gateways/L2ERC20Gateway.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "PR #618 fix of M-03 (storage gap added). Only the fix was reviewed in context; develop branch changed between audit start and fix review.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 2,
+        "removed": 2,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 42,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 4,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "abstract contract L2ERC20Gateway is IL2ERC20Gateway {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "abstract contract L2ERC20Gateway is ScrollGatewayBase, IL2ERC20Gateway {",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 2, "newLine": 2, "text": "    /**" },
+              { "type": " ", "oldLine": 3, "newLine": 3, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "     * Variables *"
+              }
+            ]
+          },
+          {
+            "oldStart": 16,
+            "oldLines": 7,
+            "newStart": 16,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 16, "newLine": 16, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 17,
+                "newLine": 17,
+                "text": "    /// @inheritdoc IL2ERC20Gateway"
+              },
+              {
+                "type": " ",
+                "oldLine": 18,
+                "newLine": 18,
+                "text": "    function withdrawERC20(address _token, uint256 _amount, uint256 _gasLimit) external payable override {"
+              },
+              {
+                "type": "-",
+                "oldLine": 19,
+                "text": "        _withdraw(_token, msg.sender, _amount, new bytes(0), _gasLimit);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 19,
+                "text": "        _withdraw(_token, _msgSender(), _amount, new bytes(0), _gasLimit);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 20, "newLine": 20, "text": "    }" },
+              { "type": " ", "oldLine": 21, "newLine": 21, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 22,
+                "text": "    /// @inheritdoc IL2ERC20Gateway"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

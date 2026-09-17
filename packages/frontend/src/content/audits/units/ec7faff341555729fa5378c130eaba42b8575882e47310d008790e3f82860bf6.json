@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "ec7faff341555729fa5378c130eaba42b8575882e47310d008790e3f82860bf6",
+  "name": "private_accumulated_data.nr",
+  "kind": "program",
+  "lines": 44,
+  "source": "use crate::{\n    abis::{\n        log_hash::LogHash, note_hash::NoteHash, nullifier::Nullifier,\n        private_call_request::PrivateCallRequest, private_log::PrivateLogData,\n        public_call_request::PublicCallRequest,\n    },\n    messaging::l2_to_l1_message::L2ToL1Message,\n    side_effect::{Counted, Scoped},\n    traits::Empty,\n};\nuse crate::constants::{\n    MAX_CONTRACT_CLASS_LOGS_PER_TX, MAX_ENQUEUED_CALLS_PER_TX, MAX_L2_TO_L1_MSGS_PER_TX,\n    MAX_NOTE_HASHES_PER_TX, MAX_NULLIFIERS_PER_TX, MAX_PRIVATE_CALL_STACK_LENGTH_PER_TX,\n    MAX_PRIVATE_LOGS_PER_TX,\n};\nuse crate::utils::arrays::ClaimedLengthArray;\nuse std::meta::derive;\n\n#[derive(Eq)]\npub struct PrivateAccumulatedData {\n    pub note_hashes: ClaimedLengthArray<Scoped<Counted<NoteHash>>, MAX_NOTE_HASHES_PER_TX>,\n    pub nullifiers: ClaimedLengthArray<Scoped<Counted<Nullifier>>, MAX_NULLIFIERS_PER_TX>,\n    pub l2_to_l1_msgs: ClaimedLengthArray<Scoped<Counted<L2ToL1Message>>, MAX_L2_TO_L1_MSGS_PER_TX>,\n\n    pub private_logs: ClaimedLengthArray<Scoped<Counted<PrivateLogData>>, MAX_PRIVATE_LOGS_PER_TX>,\n    pub contract_class_logs_hashes: ClaimedLengthArray<Scoped<Counted<LogHash>>, MAX_CONTRACT_CLASS_LOGS_PER_TX>,\n\n    pub public_call_requests: ClaimedLengthArray<Counted<PublicCallRequest>, MAX_ENQUEUED_CALLS_PER_TX>,\n    pub private_call_stack: ClaimedLengthArray<PrivateCallRequest, MAX_PRIVATE_CALL_STACK_LENGTH_PER_TX>,\n}\n\nimpl Empty for PrivateAccumulatedData {\n    fn empty() -> Self {\n        PrivateAccumulatedData {\n            note_hashes: ClaimedLengthArray::empty(),\n            nullifiers: ClaimedLengthArray::empty(),\n            l2_to_l1_msgs: ClaimedLengthArray::empty(),\n            private_logs: ClaimedLengthArray::empty(),\n            contract_class_logs_hashes: ClaimedLengthArray::empty(),\n            public_call_requests: ClaimedLengthArray::empty(),\n            private_call_stack: ClaimedLengthArray::empty(),\n        }\n    }\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

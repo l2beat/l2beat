@@ -1,0 +1,88 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "a343a3630da7bdc0a7351a68c315cf07b5c882fa70613ea30b690c00d33b7e9a",
+  "name": "HasContracts",
+  "kind": "abstract",
+  "lines": 62,
+  "source": "abstract contract HasContracts is HasProxyAdmin, IHasContracts, IdentityGuard {\n    /// @dev value is equal to keccak256(\"@ronin.dpos.collections.HasContracts.slot\") - 1\n    bytes32 private constant _STORAGE_SLOT = 0xdea3103d22025c269050bea94c0c84688877f12fa22b7e6d2d5d78a9a49aa1cb;\n\n    /**\n     * @dev Modifier to restrict access to functions only to contracts with a specific role.\n     * @param contractType The contract type that allowed to call\n     */\n    modifier onlyContract(ContractType contractType) virtual {\n        _requireContract(contractType);\n        _;\n    }\n\n    /**\n     * @inheritdoc IHasContracts\n     */\n    function setContract(ContractType contractType, address addr) external virtual onlyProxyAdmin {\n        _requireHasCode(addr);\n        _setContract(contractType, addr);\n    }\n\n    /**\n     * @inheritdoc IHasContracts\n     */\n    function getContract(ContractType contractType) public view returns (address contract_) {\n        contract_ = _getContractMap()[uint8(contractType)];\n        if (contract_ == address(0)) {\n            revert ErrContractTypeNotFound(contractType);\n        }\n    }\n\n    /**\n     * @dev Internal function to set the address of a contract with a specific role.\n     * @param contractType The contract type of the contract to set.\n     * @param addr The address of the contract to set.\n     */\n    function _setContract(ContractType contractType, address addr) internal virtual {\n        _getContractMap()[uint8(contractType)] = addr;\n        emit ContractUpdated(contractType, addr);\n    }\n\n    /**\n     * @dev Internal function to access the mapping of contract addresses with roles.\n     * @return contracts_ The mapping of contract addresses with roles.\n     */\n    function _getContractMap() private pure returns (mapping(uint8 => address) storage contracts_) {\n        assembly {\n            contracts_.slot := _STORAGE_SLOT\n        }\n    }\n\n    /**\n     * @dev Internal function to check if the calling contract has a specific role.\n     * @param contractType The contract type that the calling contract must have.\n     * @dev Throws an error if the calling contract does not have the specified role.\n     */\n    function _requireContract(ContractType contractType) private view {\n        if (msg.sender != getContract(contractType)) {\n            revert ErrUnexpectedInternalCall(msg.sig, contractType, msg.sender);\n        }\n    }\n}",
+  "resolutions": {
+    "bb55951394276893": {
+      "status": "differs",
+      "coveredLines": 61,
+      "match": {
+        "origin": "own",
+        "collection": "roninnetwork",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "HasContracts",
+        "similarity": 1,
+        "reportId": "roninnetwork/beosin-ronin-bridge-2023-09",
+        "repository": "axieinfinity/ronin-dpos-contracts",
+        "path": "contracts/extensions/collections/HasContracts.sol",
+        "commit": "f4deb89ae8cfe97bed7bd429ac6ed9069ca20215",
+        "commitTimestamp": "2023-08-15T07:29:41Z",
+        "url": "https://github.com/axieinfinity/ronin-dpos-contracts/blob/f4deb89ae8cfe97bed7bd429ac6ed9069ca20215/contracts/extensions/collections/HasContracts.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Full file review at tag v0.6.1-testnet (commit f4deb89a).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 1,
+        "removed": 1,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 61,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 14,
+            "oldLines": 7,
+            "newStart": 14,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 14, "newLine": 14, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 15,
+                "newLine": 15,
+                "text": "     * @inheritdoc IHasContracts"
+              },
+              { "type": " ", "oldLine": 16, "newLine": 16, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 17,
+                "text": "    function setContract(ContractType contractType, address addr) external virtual onlyAdmin {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 17,
+                "text": "    function setContract(ContractType contractType, address addr) external virtual onlyProxyAdmin {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 18,
+                "newLine": 18,
+                "text": "        _requireHasCode(addr);"
+              },
+              {
+                "type": " ",
+                "oldLine": 19,
+                "newLine": 19,
+                "text": "        _setContract(contractType, addr);"
+              },
+              { "type": " ", "oldLine": 20, "newLine": 20, "text": "    }" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

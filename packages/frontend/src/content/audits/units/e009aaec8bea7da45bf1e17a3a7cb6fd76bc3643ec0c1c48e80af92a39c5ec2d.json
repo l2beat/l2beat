@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "e009aaec8bea7da45bf1e17a3a7cb6fd76bc3643ec0c1c48e80af92a39c5ec2d",
+  "name": "update_leaf.nr",
+  "kind": "program",
+  "lines": 52,
+  "source": "use crate::merkle_tree::{merkle_hash, merkle_tree::sibling_index, MerkleTree};\n\nimpl<let N: u32> MerkleTree<N> {\n    /// This function is intended for testing purposes only. It is neither optimized nor audited.\n    pub fn update_leaf_unsafe<let TreeHeight: u32>(&mut self, index: u32, value: Field) {\n        self.update_leaf_unsafe_with_hasher::<TreeHeight>(index, value, merkle_hash);\n    }\n\n    /// This function is intended for testing purposes only. It is neither optimized nor audited.\n    pub fn update_leaf_unsafe_with_hasher<let TreeHeight: u32>(\n        &mut self,\n        index: u32,\n        value: Field,\n        hasher: fn(Field, Field) -> Field,\n    ) {\n        assert(index < N, \"index must be less than the number of leaves\");\n\n        self.leaves[index] = value;\n\n        let mut sibling_idx = sibling_index(index);\n        let (mut left_node, mut right_node) = if index % 2 == 0 {\n            (value, self.leaves[sibling_idx])\n        } else {\n            (self.leaves[sibling_idx], value)\n        };\n\n        let mut current_width: u32 = N / 2;\n        let mut layer_offset: u32 = 0;\n        let mut node_index: u32 = index / 2 + layer_offset;\n        for _ in 0..TreeHeight {\n            self.nodes[node_index] = hasher(left_node, right_node);\n            sibling_idx = sibling_index(node_index);\n            let (left_index, right_index) = if node_index % 2 == 0 {\n                (node_index, sibling_idx)\n            } else {\n                (sibling_idx, node_index)\n            };\n            left_node = self.nodes[left_index];\n            right_node = if right_index == N - 1 {\n                0\n            } else {\n                self.nodes[right_index]\n            };\n\n            let current_index_at_layer = node_index - layer_offset;\n\n            layer_offset += current_width;\n            node_index = (current_index_at_layer / 2) + layer_offset;\n            current_width = current_width / 2;\n        }\n    }\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

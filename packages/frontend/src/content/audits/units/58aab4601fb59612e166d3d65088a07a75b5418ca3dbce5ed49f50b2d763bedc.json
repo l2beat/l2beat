@@ -1,0 +1,93 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "58aab4601fb59612e166d3d65088a07a75b5418ca3dbce5ed49f50b2d763bedc",
+  "name": "IWETH9",
+  "kind": "interface",
+  "lines": 7,
+  "source": "interface IWETH9 is IERC20 {\n    /// @notice Deposit ether to get wrapped ether\n    function deposit() external payable;\n\n    /// @notice Withdraw wrapped ether to get ether\n    function withdraw(uint256) external;\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "differs",
+      "coveredLines": 6,
+      "match": {
+        "origin": "other",
+        "collection": "aztecnetwork",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "name",
+        "auditedName": "IWETH9",
+        "similarity": 0.817,
+        "reportId": "aztecnetwork/solidified-aztec-aave-bridge-2022-05-18",
+        "repository": "AztecProtocol/aztec-connect-bridges",
+        "path": "src/bridges/aave/imports/interfaces/IWETH9.sol",
+        "commit": "4a377651457e9ecf8c811e28b6a2570ef202f146",
+        "commitTimestamp": "2022-05-17T11:53:37Z",
+        "url": "https://github.com/AztecProtocol/aztec-connect-bridges/blob/4a377651457e9ecf8c811e28b6a2570ef202f146/src/bridges/aave/imports/interfaces/IWETH9.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "full directory",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 1,
+        "removed": 1,
+        "ignoredAdded": 2,
+        "ignoredRemoved": 0,
+        "unchanged": 6,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 5,
+            "newStart": 1,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "interface IWETH9 is IERC20 {"
+              },
+              {
+                "type": "+",
+                "newLine": 2,
+                "text": "    /// @notice Deposit ether to get wrapped ether",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 3,
+                "text": "    function deposit() external payable;"
+              },
+              { "type": " ", "oldLine": 3, "newLine": 4, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 4,
+                "text": "    function withdraw(uint256 amount) external;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 5,
+                "text": "    /// @notice Withdraw wrapped ether to get ether",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 6,
+                "text": "    function withdraw(uint256) external;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 5, "newLine": 7, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "3256fd8f57f63f7b67ff73baea2ca40389d91d1b89c21b0e35b24a0e93ee6661",
+  "name": "Permit2",
+  "kind": "contract",
+  "lines": 3,
+  "source": "contract Permit2 is SignatureTransfer, AllowanceTransfer {\n// Permit2 unifies the two contracts so users have maximal flexibility with their approval.\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

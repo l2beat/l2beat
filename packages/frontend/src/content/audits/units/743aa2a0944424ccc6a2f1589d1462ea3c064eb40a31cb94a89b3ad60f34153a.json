@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "743aa2a0944424ccc6a2f1589d1462ea3c064eb40a31cb94a89b3ad60f34153a",
+  "name": "IExttload",
+  "kind": "interface",
+  "lines": 11,
+  "source": "interface IExttload {\n    /// @notice Called by external contracts to access transient storage of the contract\n    /// @param slot Key of slot to tload\n    /// @return value The value of the slot as bytes32\n    function exttload(bytes32 slot) external view returns (bytes32 value);\n\n    /// @notice Called by external contracts to access sparse transient pool state\n    /// @param slots List of slots to tload\n    /// @return values List of loaded values\n    function exttload(bytes32[] calldata slots) external view returns (bytes32[] memory values);\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

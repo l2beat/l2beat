@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "950af59f8eaa1f640df310760109f80423d8bbd6c14bf94781baf89f5a84525b",
+  "name": "Path",
+  "kind": "library",
+  "lines": 47,
+  "source": "library Path {\n    using BytesLib for bytes;\n\n    /// @dev The length of the bytes encoded address\n    uint256 private constant ADDR_SIZE = 20;\n    /// @dev The length of the bytes encoded fee\n    uint256 private constant FEE_SIZE = 3;\n\n    /// @dev The offset of a single token address and pool fee\n    uint256 private constant NEXT_OFFSET = ADDR_SIZE + FEE_SIZE;\n    /// @dev The offset of an encoded pool key\n    uint256 private constant POP_OFFSET = NEXT_OFFSET + ADDR_SIZE;\n    /// @dev The minimum length of an encoding that contains 2 or more pools\n    uint256 private constant MULTIPLE_POOLS_MIN_LENGTH = POP_OFFSET + NEXT_OFFSET;\n\n    /// @notice Returns true iff the path contains two or more pools\n    /// @param path The encoded swap path\n    /// @return True if path contains two or more pools, otherwise false\n    function hasMultiplePools(bytes memory path) internal pure returns (bool) {\n        return path.length >= MULTIPLE_POOLS_MIN_LENGTH;\n    }\n\n    /// @notice Decodes the first pool in path\n    /// @param path The bytes encoded swap path\n    /// @return tokenA The first token of the given pool\n    /// @return tokenB The second token of the given pool\n    /// @return fee The fee level of the pool\n    function decodeFirstPool(bytes memory path) internal pure returns (address tokenA, address tokenB, uint24 fee) {\n        tokenA = path.toAddress(0);\n        fee = path.toUint24(ADDR_SIZE);\n        tokenB = path.toAddress(NEXT_OFFSET);\n    }\n\n    /// @notice Gets the segment corresponding to the first pool in the path\n    /// @param path The bytes encoded swap path\n    /// @return The segment containing all data necessary to target the first pool in the path\n    function getFirstPool(bytes memory path) internal pure returns (bytes memory) {\n        return path.slice(0, POP_OFFSET);\n    }\n\n    /// @notice Skips a token + fee element from the buffer and returns the remainder\n    /// @param path The swap path\n    /// @return The remaining token + fee elements in the path\n    function skipToken(bytes memory path) internal pure returns (bytes memory) {\n        return path.slice(NEXT_OFFSET, path.length - NEXT_OFFSET);\n    }\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

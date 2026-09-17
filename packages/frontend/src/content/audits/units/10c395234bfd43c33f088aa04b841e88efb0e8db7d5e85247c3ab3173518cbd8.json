@@ -1,0 +1,153 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "10c395234bfd43c33f088aa04b841e88efb0e8db7d5e85247c3ab3173518cbd8",
+  "name": "ERC1155HolderUpgradeable",
+  "kind": "contract",
+  "lines": 30,
+  "source": "contract ERC1155HolderUpgradeable is Initializable, ERC1155ReceiverUpgradeable {\n    function __ERC1155Holder_init() internal onlyInitializing {}\n\n    function __ERC1155Holder_init_unchained() internal onlyInitializing {}\n\n    function onERC1155Received(address, address, uint256, uint256, bytes memory)\n        public\n        virtual\n        override\n        returns (bytes4)\n    {\n        return this.onERC1155Received.selector;\n    }\n\n    function onERC1155BatchReceived(address, address, uint256[] memory, uint256[] memory, bytes memory)\n        public\n        virtual\n        override\n        returns (bytes4)\n    {\n        return this.onERC1155BatchReceived.selector;\n    }\n\n    /**\n     * @dev This empty reserved space is put in place to allow future versions to add new\n     * variables without shifting down storage in the inheritance chain.\n     * See https://docs.openzeppelin.com/contracts/4.x/upgradeable#storage_gaps\n     */\n    uint256[50] private __gap;\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "differs",
+      "coveredLines": 26,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "similarity",
+        "auditedName": "ERC1155Holder",
+        "similarity": 0.737,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/token/ERC1155/utils/ERC1155Holder.sol",
+        "commit": "b0c5d1e476e1d6c8a3eaa11b17c01ff5824d5950",
+        "commitTimestamp": "2023-06-14T18:39:21Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/b0c5d1e476e1d6c8a3eaa11b17c01ff5824d5950/contracts/token/ERC1155/utils/ERC1155Holder.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Fix review limited to the changes of pull request #4010 (head commit).",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 5
+      },
+      "diff": {
+        "added": 4,
+        "removed": 1,
+        "ignoredAdded": 8,
+        "ignoredRemoved": 0,
+        "unchanged": 26,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 8,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "abstract contract ERC1155Holder is ERC1155Receiver {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "contract ERC1155HolderUpgradeable is Initializable, ERC1155ReceiverUpgradeable {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 2,
+                "text": "    function __ERC1155Holder_init() internal onlyInitializing {}",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 3, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 4,
+                "text": "    function __ERC1155Holder_init_unchained() internal onlyInitializing {}",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 5, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 6,
+                "text": "    function onERC1155Received(address, address, uint256, uint256, bytes memory)"
+              },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 7,
+                "text": "        public"
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 8,
+                "text": "        virtual"
+              }
+            ]
+          },
+          {
+            "oldStart": 16,
+            "oldLines": 4,
+            "newStart": 20,
+            "newLines": 11,
+            "lines": [
+              { "type": " ", "oldLine": 16, "newLine": 20, "text": "    {" },
+              {
+                "type": " ",
+                "oldLine": 17,
+                "newLine": 21,
+                "text": "        return this.onERC1155BatchReceived.selector;"
+              },
+              { "type": " ", "oldLine": 18, "newLine": 22, "text": "    }" },
+              { "type": "+", "newLine": 23, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 24,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 25,
+                "text": "     * @dev This empty reserved space is put in place to allow future versions to add new",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 26,
+                "text": "     * variables without shifting down storage in the inheritance chain.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 27,
+                "text": "     * See https://docs.openzeppelin.com/contracts/4.x/upgradeable#storage_gaps",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 28,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 29,
+                "text": "    uint256[50] private __gap;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 19, "newLine": 30, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

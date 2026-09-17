@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "5f1558b7a54cf1dff8d23ddd9a582db11dc80875742291b45111d0899aaf5d0b",
+  "name": "IMulticall",
+  "kind": "interface",
+  "lines": 7,
+  "source": "interface IMulticall {\n    /// @notice Call multiple functions in the current contract and return the data from all of them if they all succeed\n    /// @dev The `msg.value` should not be trusted for any method callable from multicall.\n    /// @param data The encoded function data for each of the calls to make to this contract\n    /// @return results The results from each of the calls passed in via data\n    function multicall(bytes[] calldata data) external payable returns (bytes[] memory results);\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

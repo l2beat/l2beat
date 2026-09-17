@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "fbe152dbf4c4fa0fa55ae48b839672fb25c1c425ac70b6dc6370144b1ab4384f",
+  "name": "CallbackValidation",
+  "kind": "library",
+  "lines": 28,
+  "source": "library CallbackValidation {\n    /// @notice Returns the address of a valid Uniswap V3 Pool\n    /// @param factory The contract address of the Uniswap V3 factory\n    /// @param tokenA The contract address of either token0 or token1\n    /// @param tokenB The contract address of the other token\n    /// @param fee The fee collected upon every swap in the pool, denominated in hundredths of a bip\n    /// @return pool The V3 pool contract address\n    function verifyCallback(address factory, address tokenA, address tokenB, uint24 fee)\n        internal\n        view\n        returns (IUniswapV3Pool pool)\n    {\n        return verifyCallback(factory, PoolAddress.getPoolKey(tokenA, tokenB, fee));\n    }\n\n    /// @notice Returns the address of a valid Uniswap V3 Pool\n    /// @param factory The contract address of the Uniswap V3 factory\n    /// @param poolKey The identifying key of the V3 pool\n    /// @return pool The V3 pool contract address\n    function verifyCallback(address factory, PoolAddress.PoolKey memory poolKey)\n        internal\n        view\n        returns (IUniswapV3Pool pool)\n    {\n        pool = IUniswapV3Pool(PoolAddress.computeAddress(factory, poolKey));\n        require(msg.sender == address(pool));\n    }\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

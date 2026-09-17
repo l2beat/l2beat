@@ -1,0 +1,64 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "fdea1480c27fd0719731c95fcecbc692cee88409b8226fe7298c21b0c1196b05",
+  "name": "Errors",
+  "kind": "library",
+  "lines": 21,
+  "source": "library Errors {\n    /**\n     * @dev The ETH balance of the account is not enough to perform the operation.\n     */\n    error InsufficientBalance(uint256 balance, uint256 needed);\n\n    /**\n     * @dev A call to an address target failed. The target may have reverted.\n     */\n    error FailedCall();\n\n    /**\n     * @dev The deployment failed.\n     */\n    error FailedDeployment();\n\n    /**\n     * @dev A necessary precompile is missing.\n     */\n    error MissingPrecompile(address);\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "library",
+      "coveredLines": 21,
+      "match": {
+        "origin": "library",
+        "collection": "openzeppelin",
+        "relation": { "type": "library" },
+        "rank": 3,
+        "matchedBy": "identity",
+        "auditedName": "Errors",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2024-10-v5.1",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/utils/Errors.sol",
+        "commit": "aba9ff61ac6d610eab12b1528c6f22f98dbb4dd3",
+        "commitTimestamp": "2024-07-24T08:37:16Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/aba9ff61ac6d610eab12b1528c6f22f98dbb4dd3/contracts/utils/Errors.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit - phase 2",
+        "coverage": "Phase 2 full review of this contract newly introduced in the v5.1 release.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "warnings": []
+    },
+    "cbbcf694abda362c": {
+      "status": "library",
+      "coveredLines": 21,
+      "match": {
+        "origin": "library",
+        "collection": "openzeppelin",
+        "relation": { "type": "library" },
+        "rank": 3,
+        "matchedBy": "identity",
+        "auditedName": "Errors",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2024-10-v5.1",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/utils/Errors.sol",
+        "commit": "aba9ff61ac6d610eab12b1528c6f22f98dbb4dd3",
+        "commitTimestamp": "2024-07-24T08:37:16Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/aba9ff61ac6d610eab12b1528c6f22f98dbb4dd3/contracts/utils/Errors.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit - phase 2",
+        "coverage": "Phase 2 full review of this contract newly introduced in the v5.1 release.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "warnings": []
+    }
+  }
+}

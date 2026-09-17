@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "f136a1ce09af0ff7113b2a2955703d4e2deba1e4de8f441399f8bd1f2b9549d8",
+  "name": "MintManager",
+  "kind": "contract",
+  "lines": 67,
+  "source": "contract MintManager is Ownable {\n    /**\n     * @notice The GovernanceToken that the MintManager can mint tokens\n     */\n    GovernanceToken public immutable governanceToken;\n\n    /**\n     * @notice The amount of tokens that can be minted per year. The value is a fixed\n     *          point number with 4 decimals.\n     */\n    uint256 public constant MINT_CAP = 20; // 2%\n\n    /**\n     * @notice The number of decimals for the MINT_CAP.\n     */\n    uint256 public constant DENOMINATOR = 1000;\n\n    /**\n     * @notice The amount of time that must pass before the MINT_CAP number of tokens can\n     *         be minted again.\n     */\n    uint256 public constant MINT_PERIOD = 365 days;\n\n    /**\n     * @notice Tracks the time of last mint\n     */\n    uint256 public mintPermittedAfter;\n\n    /**\n     * @param _upgrader        The owner of this contract\n     * @param _governanceToken The governance token this contract can mint\n     *                         tokens of\n     */\n    constructor(address _upgrader, address _governanceToken) {\n        transferOwnership(_upgrader);\n        governanceToken = GovernanceToken(_governanceToken);\n    }\n\n    /**\n     * @notice Only the token owner is allowed to mint a certain amount of OP per year.\n     *\n     * @param _account Address to mint new tokens to.\n     * @param _amount  Amount of tokens to be minted.\n     */\n    function mint(address _account, uint256 _amount) public onlyOwner {\n        if (mintPermittedAfter > 0) {\n            require(mintPermittedAfter <= block.timestamp, \"OP: minting not permitted yet\");\n\n            require(_amount <= (governanceToken.totalSupply() * MINT_CAP) / DENOMINATOR, \"OP: mint amount exceeds cap\");\n        }\n\n        mintPermittedAfter = block.timestamp + MINT_PERIOD;\n\n        governanceToken.mint(_account, _amount);\n    }\n\n    /**\n     * @notice Upgrade the owner of the governance token to a new MintManager.\n     *\n     * @param _newMintManager The MintManager to upgrade to\n     */\n    function upgrade(address _newMintManager) public onlyOwner {\n        require(_newMintManager != address(0), \"OP: Mint manager cannot be empty\");\n\n        governanceToken.transferOwnership(_newMintManager);\n    }\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

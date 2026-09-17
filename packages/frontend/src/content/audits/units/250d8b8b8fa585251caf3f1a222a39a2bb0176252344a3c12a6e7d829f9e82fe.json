@@ -1,0 +1,276 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "250d8b8b8fa585251caf3f1a222a39a2bb0176252344a3c12a6e7d829f9e82fe",
+  "name": "ReentrancyGuardUpgradeable",
+  "kind": "abstract",
+  "lines": 67,
+  "source": "abstract contract ReentrancyGuardUpgradeable is Initializable {\n    // Booleans are more expensive than uint256 or any type that takes up a full\n    // word because each write operation emits an extra SLOAD to first read the\n    // slot's contents, replace the bits taken up by the boolean, and then write\n    // back. This is the compiler's defense against contract upgrades and\n    // pointer aliasing, and it cannot be disabled.\n\n    // The values being non-zero value makes deployment a bit more expensive,\n    // but in exchange the refund on every call to nonReentrant will be lower in\n    // amount. Since refunds are capped to a percentage of the total\n    // transaction's gas, it is best to keep them low in cases like this one, to\n    // increase the likelihood of the full refund coming into effect.\n    uint256 private constant _NOT_ENTERED = 1;\n    uint256 private constant _ENTERED = 2;\n\n    uint256 private _status;\n\n    function __ReentrancyGuard_init() internal onlyInitializing {\n        __ReentrancyGuard_init_unchained();\n    }\n\n    function __ReentrancyGuard_init_unchained() internal onlyInitializing {\n        _status = _NOT_ENTERED;\n    }\n\n    /**\n     * @dev Prevents a contract from calling itself, directly or indirectly.\n     * Calling a `nonReentrant` function from another `nonReentrant`\n     * function is not supported. It is possible to prevent this from happening\n     * by making the `nonReentrant` function external, and making it call a\n     * `private` function that does the actual work.\n     */\n    modifier nonReentrant() {\n        _nonReentrantBefore();\n        _;\n        _nonReentrantAfter();\n    }\n\n    function _nonReentrantBefore() private {\n        // On the first call to nonReentrant, _status will be _NOT_ENTERED\n        require(_status != _ENTERED, \"ReentrancyGuard: reentrant call\");\n\n        // Any calls to nonReentrant after this point will fail\n        _status = _ENTERED;\n    }\n\n    function _nonReentrantAfter() private {\n        // By storing the original value once again, a refund is triggered (see\n        // https://eips.ethereum.org/EIPS/eip-2200)\n        _status = _NOT_ENTERED;\n    }\n\n    /**\n     * @dev Returns true if the reentrancy guard is currently set to \"entered\", which indicates there is a\n     * `nonReentrant` function in the call stack.\n     */\n    function _reentrancyGuardEntered() internal view returns (bool) {\n        return _status == _ENTERED;\n    }\n\n    /**\n     * @dev This empty reserved space is put in place to allow future versions to add new\n     * variables without shifting down storage in the inheritance chain.\n     * See https://docs.openzeppelin.com/contracts/4.x/upgradeable#storage_gaps\n     */\n    uint256[49] private __gap;\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "differs",
+      "coveredLines": 60,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "similarity",
+        "auditedName": "ReentrancyGuard",
+        "similarity": 0.678,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/security/ReentrancyGuard.sol",
+        "commit": "adbb8c9d27e77452bc2253397908d3d044808e62",
+        "commitTimestamp": "2023-08-16T05:33:49Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/adbb8c9d27e77452bc2253397908d3d044808e62/contracts/security/ReentrancyGuard.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "audit",
+        "coverage": "Full review of the file at the Phase 5 audit commit.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 5
+      },
+      "diff": {
+        "added": 7,
+        "removed": 6,
+        "ignoredAdded": 6,
+        "ignoredRemoved": 3,
+        "unchanged": 60,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 4,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "abstract contract ReentrancyGuard {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "abstract contract ReentrancyGuardUpgradeable is Initializable {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "    // Booleans are more expensive than uint256 or any type that takes up a full"
+              },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "    // word because each write operation emits an extra SLOAD to first read the"
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "    // slot's contents, replace the bits taken up by the boolean, and then write"
+              }
+            ]
+          },
+          {
+            "oldStart": 15,
+            "oldLines": 12,
+            "newStart": 15,
+            "newLines": 11,
+            "lines": [
+              { "type": " ", "oldLine": 15, "newLine": 15, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 16,
+                "newLine": 16,
+                "text": "    uint256 private _status;"
+              },
+              { "type": " ", "oldLine": 17, "newLine": 17, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 18,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 19,
+                "text": "     * @dev Unauthorized reentrant call.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 20,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 21,
+                "text": "    error ReentrancyGuardReentrantCall();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 18,
+                "text": "    function __ReentrancyGuard_init() internal onlyInitializing {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 19,
+                "text": "        __ReentrancyGuard_init_unchained();",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 20, "text": "    }", "ignored": false },
+              { "type": " ", "oldLine": 22, "newLine": 21, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 23,
+                "text": "    constructor() {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 22,
+                "text": "    function __ReentrancyGuard_init_unchained() internal onlyInitializing {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 23,
+                "text": "        _status = _NOT_ENTERED;"
+              },
+              { "type": " ", "oldLine": 25, "newLine": 24, "text": "    }" },
+              { "type": " ", "oldLine": 26, "newLine": 25, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 39,
+            "oldLines": 9,
+            "newStart": 38,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 39, "newLine": 38, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 40,
+                "newLine": 39,
+                "text": "    function _nonReentrantBefore() private {"
+              },
+              {
+                "type": " ",
+                "oldLine": 41,
+                "newLine": 40,
+                "text": "        // On the first call to nonReentrant, _status will be _NOT_ENTERED"
+              },
+              {
+                "type": "-",
+                "oldLine": 42,
+                "text": "        if (_status == _ENTERED) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 43,
+                "text": "            revert ReentrancyGuardReentrantCall();",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 44,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 41,
+                "text": "        require(_status != _ENTERED, \"ReentrancyGuard: reentrant call\");",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 45, "newLine": 42, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 46,
+                "newLine": 43,
+                "text": "        // Any calls to nonReentrant after this point will fail"
+              },
+              {
+                "type": " ",
+                "oldLine": 47,
+                "newLine": 44,
+                "text": "        _status = _ENTERED;"
+              }
+            ]
+          },
+          {
+            "oldStart": 60,
+            "oldLines": 4,
+            "newStart": 57,
+            "newLines": 11,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 60,
+                "newLine": 57,
+                "text": "    function _reentrancyGuardEntered() internal view returns (bool) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 61,
+                "newLine": 58,
+                "text": "        return _status == _ENTERED;"
+              },
+              { "type": " ", "oldLine": 62, "newLine": 59, "text": "    }" },
+              { "type": "+", "newLine": 60, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 61,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 62,
+                "text": "     * @dev This empty reserved space is put in place to allow future versions to add new",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 63,
+                "text": "     * variables without shifting down storage in the inheritance chain.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 64,
+                "text": "     * See https://docs.openzeppelin.com/contracts/4.x/upgradeable#storage_gaps",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 65,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 66,
+                "text": "    uint256[49] private __gap;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 63, "newLine": 67, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

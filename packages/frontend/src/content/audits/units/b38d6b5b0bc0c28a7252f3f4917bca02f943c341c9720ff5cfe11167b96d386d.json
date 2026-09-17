@@ -1,0 +1,414 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "b38d6b5b0bc0c28a7252f3f4917bca02f943c341c9720ff5cfe11167b96d386d",
+  "name": "Pausable",
+  "kind": "abstract",
+  "lines": 75,
+  "source": "abstract contract Pausable is Context {\n    /**\n     * @dev Emitted when the pause is triggered by `account`.\n     */\n    event Paused(address account);\n\n    /**\n     * @dev Emitted when the pause is lifted by `account`.\n     */\n    event Unpaused(address account);\n\n    bool private _paused;\n\n    /**\n     * @dev Initializes the contract in unpaused state.\n     */\n    constructor() internal {\n        _paused = false;\n    }\n\n    /**\n     * @dev Returns true if the contract is paused, and false otherwise.\n     */\n    function paused() public view virtual returns (bool) {\n        return _paused;\n    }\n\n    /**\n     * @dev Modifier to make a function callable only when the contract is not paused.\n     *\n     * Requirements:\n     *\n     * - The contract must not be paused.\n     */\n    modifier whenNotPaused() {\n        require(!paused(), \"Pausable: paused\");\n        _;\n    }\n\n    /**\n     * @dev Modifier to make a function callable only when the contract is paused.\n     *\n     * Requirements:\n     *\n     * - The contract must be paused.\n     */\n    modifier whenPaused() {\n        require(paused(), \"Pausable: not paused\");\n        _;\n    }\n\n    /**\n     * @dev Triggers stopped state.\n     *\n     * Requirements:\n     *\n     * - The contract must not be paused.\n     */\n    function _pause() internal virtual whenNotPaused {\n        _paused = true;\n        emit Paused(_msgSender());\n    }\n\n    /**\n     * @dev Returns to normal state.\n     *\n     * Requirements:\n     *\n     * - The contract must be paused.\n     */\n    function _unpause() internal virtual whenPaused {\n        _paused = false;\n        emit Unpaused(_msgSender());\n    }\n}",
+  "resolutions": {
+    "f9658cd3a9a22004": {
+      "status": "differs",
+      "coveredLines": 68,
+      "match": {
+        "origin": "library",
+        "collection": "openzeppelin",
+        "relation": { "type": "library" },
+        "rank": 3,
+        "matchedBy": "name",
+        "auditedName": "Pausable",
+        "similarity": 0.685,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/security/Pausable.sol",
+        "commit": "b027c3541c03348767b62d45721eaa7d50f02b65",
+        "commitTimestamp": "2023-07-19T19:13:00Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/b027c3541c03348767b62d45721eaa7d50f02b65/contracts/security/Pausable.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "audit",
+        "coverage": "Full review of the file at the Phase 3 audit commit.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 6
+      },
+      "diff": {
+        "added": 7,
+        "removed": 19,
+        "ignoredAdded": 3,
+        "ignoredRemoved": 19,
+        "unchanged": 68,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 6,
+            "newStart": 1,
+            "newLines": 4,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "abstract contract Pausable is Context {"
+              },
+              {
+                "type": "-",
+                "oldLine": 2,
+                "text": "    bool private _paused;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 3, "text": "", "ignored": true },
+              { "type": " ", "oldLine": 4, "newLine": 2, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 3,
+                "text": "     * @dev Emitted when the pause is triggered by `account`."
+              },
+              { "type": " ", "oldLine": 6, "newLine": 4, "text": "     */" }
+            ]
+          },
+          {
+            "oldStart": 11,
+            "oldLines": 21,
+            "newStart": 9,
+            "newLines": 20,
+            "lines": [
+              { "type": " ", "oldLine": 11, "newLine": 9, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 12,
+                "newLine": 10,
+                "text": "    event Unpaused(address account);"
+              },
+              { "type": " ", "oldLine": 13, "newLine": 11, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 14,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 15,
+                "text": "     * @dev The operation failed because the contract is paused.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 16,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 17,
+                "text": "    error EnforcedPause();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 12,
+                "text": "    bool private _paused;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 18, "newLine": 13, "text": "" },
+              { "type": " ", "oldLine": 19, "newLine": 14, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 20,
+                "text": "     * @dev The operation failed because the contract is not paused.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 15,
+                "text": "     * @dev Initializes the contract in unpaused state.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 21, "newLine": 16, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 22,
+                "text": "    error ExpectedPause();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 17,
+                "text": "    constructor() internal {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 18,
+                "text": "        _paused = false;",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 19, "text": "    }", "ignored": false },
+              { "type": " ", "oldLine": 23, "newLine": 20, "text": "" },
+              { "type": " ", "oldLine": 24, "newLine": 21, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 25,
+                "text": "     * @dev Initializes the contract in unpaused state.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 22,
+                "text": "     * @dev Returns true if the contract is paused, and false otherwise.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 26, "newLine": 23, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 27,
+                "text": "    constructor() {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 28,
+                "text": "        _paused = false;",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 24,
+                "text": "    function paused() public view virtual returns (bool) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 25,
+                "text": "        return _paused;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 29, "newLine": 26, "text": "    }" },
+              { "type": " ", "oldLine": 30, "newLine": 27, "text": "" },
+              { "type": " ", "oldLine": 31, "newLine": 28, "text": "    /**" }
+            ]
+          },
+          {
+            "oldStart": 36,
+            "oldLines": 7,
+            "newStart": 33,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 36,
+                "newLine": 33,
+                "text": "     * - The contract must not be paused."
+              },
+              { "type": " ", "oldLine": 37, "newLine": 34, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 38,
+                "newLine": 35,
+                "text": "    modifier whenNotPaused() {"
+              },
+              {
+                "type": "-",
+                "oldLine": 39,
+                "text": "        _requireNotPaused();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 36,
+                "text": "        require(!paused(), \"Pausable: paused\");",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 40,
+                "newLine": 37,
+                "text": "        _;"
+              },
+              { "type": " ", "oldLine": 41, "newLine": 38, "text": "    }" },
+              { "type": " ", "oldLine": 42, "newLine": 39, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 48,
+            "oldLines": 36,
+            "newStart": 45,
+            "newLines": 11,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 48,
+                "newLine": 45,
+                "text": "     * - The contract must be paused."
+              },
+              { "type": " ", "oldLine": 49, "newLine": 46, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 50,
+                "newLine": 47,
+                "text": "    modifier whenPaused() {"
+              },
+              {
+                "type": "-",
+                "oldLine": 51,
+                "text": "        _requirePaused();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 48,
+                "text": "        require(paused(), \"Pausable: not paused\");",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 52,
+                "newLine": 49,
+                "text": "        _;"
+              },
+              { "type": " ", "oldLine": 53, "newLine": 50, "text": "    }" },
+              { "type": " ", "oldLine": 54, "newLine": 51, "text": "" },
+              { "type": " ", "oldLine": 55, "newLine": 52, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 56,
+                "text": "     * @dev Returns true if the contract is paused, and false otherwise.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 57,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 58,
+                "text": "    function paused() public view virtual returns (bool) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 59,
+                "text": "        return _paused;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 60, "text": "    }", "ignored": false },
+              { "type": "-", "oldLine": 61, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 62,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 63,
+                "text": "     * @dev Throws if the contract is paused.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 64,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 65,
+                "text": "    function _requireNotPaused() internal view virtual {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 66,
+                "text": "        if (paused()) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 67,
+                "text": "            revert EnforcedPause();",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 68,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 69, "text": "    }", "ignored": false },
+              { "type": "-", "oldLine": 70, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 71,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 72,
+                "text": "     * @dev Throws if the contract is not paused.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 73,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 74,
+                "text": "    function _requirePaused() internal view virtual {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 75,
+                "text": "        if (!paused()) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 76,
+                "text": "            revert ExpectedPause();",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 77,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 78, "text": "    }", "ignored": false },
+              { "type": "-", "oldLine": 79, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 80,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 81,
+                "newLine": 53,
+                "text": "     * @dev Triggers stopped state."
+              },
+              { "type": " ", "oldLine": 82, "newLine": 54, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 83,
+                "newLine": 55,
+                "text": "     * Requirements:"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

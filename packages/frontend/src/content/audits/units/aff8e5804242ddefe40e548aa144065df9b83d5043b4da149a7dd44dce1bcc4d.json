@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "aff8e5804242ddefe40e548aa144065df9b83d5043b4da149a7dd44dce1bcc4d",
+  "name": "Lock_1",
+  "kind": "contract",
+  "lines": 26,
+  "source": "contract Lock_1 {\n    /// @notice Thrown when attempting to reenter a locked function from an external caller\n    error ContractLocked();\n\n    /// @notice Modifier enforcing a reentrancy lock that allows self-reentrancy\n    /// @dev If the contract is not locked, use msg.sender as the locker\n    modifier isNotLocked() {\n        // Apply a reentrancy lock for all external callers\n        if (msg.sender != address(this)) {\n            if (Locker.isLocked()) {\n                revert ContractLocked();\n            }\n            Locker.set(msg.sender);\n            _;\n            Locker.set(address(0));\n        } else {\n            // The contract is allowed to reenter itself, so the lock is not checked\n            _;\n        }\n    }\n\n    /// @notice return the current locker of the contract\n    function _getLocker() internal view returns (address) {\n        return Locker.get();\n    }\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

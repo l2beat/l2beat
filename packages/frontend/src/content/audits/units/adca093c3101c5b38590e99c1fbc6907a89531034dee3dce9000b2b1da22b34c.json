@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "adca093c3101c5b38590e99c1fbc6907a89531034dee3dce9000b2b1da22b34c",
+  "name": "L2ToL1MessagePasser",
+  "kind": "interface",
+  "lines": 3,
+  "source": "interface L2ToL1MessagePasser {\n    function initiateWithdrawal(address _target, uint256 _gasLimit, bytes calldata _data) external payable;\n}",
+  "resolutions": {
+    "eea968a44e5d263a": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "0e65120eb85f428e7f940edffae3714742f7b8cdc4b2e7e3fae6bbaaf71c311a",
+  "name": "IRewardDistributor",
+  "kind": "interface",
+  "lines": 24,
+  "source": "interface IRewardDistributor {\n    /// @notice Emitted when a funder earmarks ASSET for a specific recipient via `subsidizeAddress`.\n    event Subsidized(address indexed funder, address indexed recipient, uint256 amount);\n\n    /// @notice Emitted whenever `claim` or `recoverFrom` debits the distributor.\n    /// @dev `implicitAmountUsed` is the share drawn from the canonical-rollup implicit pool,\n    ///      `earmarkedAmountUsed` is the share drawn from `from`'s earmarked balance, and the two\n    ///      always sum to `amount`. Lets a log-only indexer reconstruct bucket-by-bucket history\n    ///      without polling storage at every block.\n    event Distributed(\n        address indexed from,\n        address indexed to,\n        uint256 amount,\n        uint256 implicitAmountUsed,\n        uint256 earmarkedAmountUsed\n    );\n\n    function claim(address _to, uint256 _amount) external;\n    function recoverFrom(address _from, address _to, uint256 _amount) external;\n    function recoverWrongAsset(address _asset, address _to, uint256 _amount) external;\n    function subsidizeAddress(address _recipient, uint256 _amount) external;\n    function canonicalRollup() external view returns (address);\n    function availableTo(address _recipient) external view returns (uint256);\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

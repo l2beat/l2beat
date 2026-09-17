@@ -1,0 +1,214 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "6debc9992be908d441f599a0564a1181c86901ff52ce4f52bb1ed3c18886f45e",
+  "name": "MerkleTreeWithHistory",
+  "kind": "contract",
+  "lines": 134,
+  "source": "contract MerkleTreeWithHistory {\n    uint256 public constant FIELD_SIZE = 21888242871839275222246405745257275088548364400416034343698204186575808495617;\n    uint256 public constant ZERO_VALUE = 21663839004416932945382355908790599225266501822907911457504978515578255421292; // = keccak256(\"tornado\") % FIELD_SIZE\n\n    uint32 public immutable levels;\n    IHasher public hasher; // todo immutable\n\n    bytes32[] public filledSubtrees;\n    bytes32[] public zeros;\n    uint32 public currentRootIndex = 0;\n    uint32 public nextIndex = 0;\n    uint32 public constant ROOT_HISTORY_SIZE = 10;\n    bytes32[ROOT_HISTORY_SIZE] public roots;\n\n    constructor(uint32 _treeLevels, IHasher _hasher) public {\n        require(_treeLevels > 0, \"_treeLevels should be greater than zero\");\n        require(_treeLevels < 32, \"_treeLevels should be less than 32\");\n        levels = _treeLevels;\n        hasher = _hasher;\n\n        bytes32 currentZero = bytes32(ZERO_VALUE);\n        zeros.push(currentZero);\n        filledSubtrees.push(currentZero);\n\n        for (uint32 i = 1; i < _treeLevels; i++) {\n            currentZero = hashLeftRight(currentZero, currentZero);\n            zeros.push(currentZero);\n            filledSubtrees.push(currentZero);\n        }\n\n        filledSubtrees.push(hashLeftRight(currentZero, currentZero));\n        roots[0] = filledSubtrees[_treeLevels];\n    }\n\n    /**\n     * @dev Hash 2 tree leaves, returns poseidon(_left, _right)\n     */\n    function hashLeftRight(bytes32 _left, bytes32 _right) public view returns (bytes32) {\n        return hasher.poseidon([_left, _right]);\n    }\n\n    function _insert(bytes32 _leaf) internal returns (uint32 index) {\n        uint32 currentIndex = nextIndex;\n        require(currentIndex != uint32(2) ** levels, \"Merkle tree is full. No more leaves can be added\");\n        nextIndex = currentIndex + 1;\n        bytes32 currentLevelHash = _leaf;\n        bytes32 left;\n        bytes32 right;\n\n        for (uint32 i = 0; i < levels; i++) {\n            if (currentIndex % 2 == 0) {\n                left = currentLevelHash;\n                right = zeros[i];\n                filledSubtrees[i] = currentLevelHash;\n            } else {\n                left = filledSubtrees[i];\n                right = currentLevelHash;\n            }\n\n            currentLevelHash = hashLeftRight(left, right);\n            currentIndex /= 2;\n        }\n\n        currentRootIndex = (currentRootIndex + 1) % ROOT_HISTORY_SIZE;\n        roots[currentRootIndex] = currentLevelHash;\n        return nextIndex - 1;\n    }\n\n    function _bulkInsert(bytes32[] memory _leaves) internal {\n        uint32 insertIndex = nextIndex;\n        require(\n            insertIndex + _leaves.length <= uint32(2) ** levels,\n            \"Merkle doesn't have enough capacity to add specified leaves\"\n        );\n\n        bytes32[] memory subtrees = new bytes32[](levels);\n        bool[] memory modifiedSubtrees = new bool[](levels);\n        for (uint32 j = 0; j < _leaves.length - 1; j++) {\n            uint256 index = insertIndex + j;\n            bytes32 currentLevelHash = _leaves[j];\n\n            for (uint32 i = 0;; i++) {\n                if (index % 2 == 0) {\n                    modifiedSubtrees[i] = true;\n                    subtrees[i] = currentLevelHash;\n                    break;\n                }\n\n                if (subtrees[i] == bytes32(0)) {\n                    subtrees[i] = filledSubtrees[i];\n                }\n                currentLevelHash = hashLeftRight(subtrees[i], currentLevelHash);\n                index /= 2;\n            }\n        }\n\n        for (uint32 i = 0; i < levels; i++) {\n            // using local map to save on gas on writes if elements were not modified\n            if (modifiedSubtrees[i]) {\n                filledSubtrees[i] = subtrees[i];\n            }\n        }\n\n        nextIndex = uint32(insertIndex + _leaves.length - 1);\n        _insert(_leaves[_leaves.length - 1]);\n    }\n\n    /**\n     * @dev Whether the root is present in the root history\n     */\n    function isKnownRoot(bytes32 _root) public view returns (bool) {\n        if (_root == 0) {\n            return false;\n        }\n        uint32 i = currentRootIndex;\n        do {\n            if (_root == roots[i]) {\n                return true;\n            }\n            if (i == 0) {\n                i = ROOT_HISTORY_SIZE;\n            }\n            i--;\n        } while (i != currentRootIndex);\n        return false;\n    }\n\n    /**\n     * @dev Returns the last root\n     */\n    function getLastRoot() public view returns (bytes32) {\n        return roots[currentRootIndex];\n    }\n}",
+  "resolutions": {
+    "f9658cd3a9a22004": {
+      "status": "differs",
+      "coveredLines": 128,
+      "match": {
+        "origin": "own",
+        "collection": "tornado-cash",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "MerkleTreeWithHistory",
+        "similarity": 1,
+        "reportId": "tornado-cash/abdk-tornado-anonymity-mining-recheck-2020-12-22",
+        "repository": "tornadocash/tornado-anonymity-mining",
+        "path": "contracts/utils/MerkleTreeWithHistory.sol",
+        "commit": "9ec05a681d9699a11733b3163dd44a1e90abc345",
+        "commitTimestamp": "2020-11-02T20:07:53Z",
+        "url": "https://github.com/tornadocash/tornado-anonymity-mining/blob/9ec05a681d9699a11733b3163dd44a1e90abc345/contracts/utils/MerkleTreeWithHistory.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "recheck of changed contracts",
+        "coverage": "full file",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 6,
+        "removed": 3,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 128,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 69,
+            "oldLines": 23,
+            "newStart": 69,
+            "newLines": 26,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 69,
+                "newLine": 69,
+                "text": "    function _bulkInsert(bytes32[] memory _leaves) internal {"
+              },
+              {
+                "type": " ",
+                "oldLine": 70,
+                "newLine": 70,
+                "text": "        uint32 insertIndex = nextIndex;"
+              },
+              {
+                "type": " ",
+                "oldLine": 71,
+                "newLine": 71,
+                "text": "        require("
+              },
+              {
+                "type": "-",
+                "oldLine": 72,
+                "text": "            insertIndex + _leaves.length < uint32(2) ** levels,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 72,
+                "text": "            insertIndex + _leaves.length <= uint32(2) ** levels,",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 73,
+                "newLine": 73,
+                "text": "            \"Merkle doesn't have enough capacity to add specified leaves\""
+              },
+              {
+                "type": " ",
+                "oldLine": 74,
+                "newLine": 74,
+                "text": "        );"
+              },
+              { "type": " ", "oldLine": 75, "newLine": 75, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 76,
+                "text": "        bytes32[] memory subtrees = filledSubtrees;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 76,
+                "text": "        bytes32[] memory subtrees = new bytes32[](levels);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 77,
+                "newLine": 77,
+                "text": "        bool[] memory modifiedSubtrees = new bool[](levels);"
+              },
+              {
+                "type": " ",
+                "oldLine": 78,
+                "newLine": 78,
+                "text": "        for (uint32 j = 0; j < _leaves.length - 1; j++) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 79,
+                "newLine": 79,
+                "text": "            uint256 index = insertIndex + j;"
+              },
+              {
+                "type": " ",
+                "oldLine": 80,
+                "newLine": 80,
+                "text": "            bytes32 currentLevelHash = _leaves[j];"
+              },
+              { "type": " ", "oldLine": 81, "newLine": 81, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 82,
+                "text": "            for (uint32 i = 0; i < levels; i++) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 82,
+                "text": "            for (uint32 i = 0;; i++) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 83,
+                "newLine": 83,
+                "text": "                if (index % 2 == 0) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 84,
+                "newLine": 84,
+                "text": "                    modifiedSubtrees[i] = true;"
+              },
+              {
+                "type": " ",
+                "oldLine": 85,
+                "newLine": 85,
+                "text": "                    subtrees[i] = currentLevelHash;"
+              },
+              {
+                "type": " ",
+                "oldLine": 86,
+                "newLine": 86,
+                "text": "                    break;"
+              },
+              {
+                "type": " ",
+                "oldLine": 87,
+                "newLine": 87,
+                "text": "                }"
+              },
+              { "type": " ", "oldLine": 88, "newLine": 88, "text": "" },
+              {
+                "type": "+",
+                "newLine": 89,
+                "text": "                if (subtrees[i] == bytes32(0)) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 90,
+                "text": "                    subtrees[i] = filledSubtrees[i];",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 91,
+                "text": "                }",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 89,
+                "newLine": 92,
+                "text": "                currentLevelHash = hashLeftRight(subtrees[i], currentLevelHash);"
+              },
+              {
+                "type": " ",
+                "oldLine": 90,
+                "newLine": 93,
+                "text": "                index /= 2;"
+              },
+              {
+                "type": " ",
+                "oldLine": 91,
+                "newLine": 94,
+                "text": "            }"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

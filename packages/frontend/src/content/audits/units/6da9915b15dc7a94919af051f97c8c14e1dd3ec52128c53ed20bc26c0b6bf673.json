@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "6da9915b15dc7a94919af051f97c8c14e1dd3ec52128c53ed20bc26c0b6bf673",
+  "name": "parity_base_tests.nr",
+  "kind": "program",
+  "lines": 21,
+  "source": "use crate::parity::parity_base::{self, ParityBasePrivateInputs};\nuse types::constants::NUM_MSGS_PER_BASE_PARITY;\n\n#[test]\nfn public_inputs_match_expected() {\n    let mut msgs = [0; NUM_MSGS_PER_BASE_PARITY];\n    for i in 0..NUM_MSGS_PER_BASE_PARITY {\n        msgs[i] = i as Field;\n    }\n    let private_inputs = ParityBasePrivateInputs { msgs, vk_tree_root: 42, prover_id: 7 };\n    let public_inputs = parity_base::execute(private_inputs);\n\n    let expected_sha_root = 0x279d4d4dd5bcb9b1a4e742640588b917102f9f8bc97a6c95706ca4e7a8a76b;\n    let expected_converted_root =\n        0x24425e91123ffa26018e970b92316101d503c5937f145d69569ac907d0bd36ec;\n\n    assert_eq(public_inputs.sha_root, expected_sha_root);\n    assert_eq(public_inputs.converted_root, expected_converted_root);\n    assert_eq(public_inputs.vk_tree_root, 42);\n    assert_eq(public_inputs.prover_id, 7);\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

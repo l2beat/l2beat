@@ -1,0 +1,202 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "2de1e74e900be69e58d5d6292fdddce6f36428b221828a29fcbf458fbdbe6915",
+  "name": "build_groth16_bn254.rs",
+  "kind": "program",
+  "lines": 18,
+  "source": "use std::path::PathBuf;\n\nuse clap::Parser;\nuse sp1_core_machine::utils::setup_logger;\nuse sp1_prover::build::build_groth16_bn254_artifacts_with_dummy;\n\n#[derive(Parser, Debug)]\n#[command(author, version, about, long_about = None)]\nstruct Args {\n    #[arg(short, long)]\n    build_dir: PathBuf,\n}\n\npub fn main() {\n    setup_logger();\n    let args = Args::parse();\n    build_groth16_bn254_artifacts_with_dummy(args.build_dir);\n}",
+  "resolutions": {
+    "eea968a44e5d263a": {
+      "status": "differs",
+      "coveredLines": 16,
+      "match": {
+        "origin": "stack",
+        "collection": "sp1",
+        "relation": { "type": "template", "template": "succinct/SP1Verifier" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "build_groth16_bn254.rs",
+        "similarity": 0.867,
+        "reportId": "sp1/zellic-sp1-design-review-2024",
+        "repository": "succinctlabs/sp1",
+        "path": "crates/prover/scripts/build_groth16_bn254.rs",
+        "commit": "15be73d3acae3718a0acc529ed566f6a448b1c0e",
+        "commitTimestamp": "2024-11-27T02:59:17Z",
+        "url": "https://github.com/succinctlabs/sp1/blob/15be73d3acae3718a0acc529ed566f6a448b1c0e/crates/prover/scripts/build_groth16_bn254.rs",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "Initial audit",
+        "coverage": "Design-level review only (explicitly not a code audit): RV32IM specification compliance and the register/low-memory aliasing at addresses 0x0-0x1f, focused mostly on load and store instruction behaviour; soundness/completeness of the ZK proofs and circuits and correctness of implementation details were out of scope.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 2,
+        "removed": 2,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 16,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 5,
+            "oldLines": 9,
+            "newStart": 5,
+            "newLines": 9,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 5,
+                "text": "use sp1_prover::build::build_groth16_bn254_artifacts_with_dummy;"
+              },
+              { "type": " ", "oldLine": 6, "newLine": 6, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 7,
+                "newLine": 7,
+                "text": "#[derive(Parser, Debug)]"
+              },
+              {
+                "type": "-",
+                "oldLine": 8,
+                "text": "#[clap(author, version, about, long_about = None)]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 8,
+                "text": "#[command(author, version, about, long_about = None)]",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 9,
+                "text": "struct Args {"
+              },
+              {
+                "type": "-",
+                "oldLine": 10,
+                "text": "    #[clap(short, long)]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 10,
+                "text": "    #[arg(short, long)]",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 11,
+                "newLine": 11,
+                "text": "    build_dir: PathBuf,"
+              },
+              { "type": " ", "oldLine": 12, "newLine": 12, "text": "}" },
+              { "type": " ", "oldLine": 13, "newLine": 13, "text": "" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "1daaed8c8125f2b6": {
+      "status": "differs",
+      "coveredLines": 16,
+      "match": {
+        "origin": "stack",
+        "collection": "sp1",
+        "relation": { "type": "template", "template": "succinct/SP1Verifier" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "build_groth16_bn254.rs",
+        "similarity": 0.867,
+        "reportId": "sp1/zellic-sp1-design-review-2024",
+        "repository": "succinctlabs/sp1",
+        "path": "crates/prover/scripts/build_groth16_bn254.rs",
+        "commit": "15be73d3acae3718a0acc529ed566f6a448b1c0e",
+        "commitTimestamp": "2024-11-27T02:59:17Z",
+        "url": "https://github.com/succinctlabs/sp1/blob/15be73d3acae3718a0acc529ed566f6a448b1c0e/crates/prover/scripts/build_groth16_bn254.rs",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "Initial audit",
+        "coverage": "Design-level review only (explicitly not a code audit): RV32IM specification compliance and the register/low-memory aliasing at addresses 0x0-0x1f, focused mostly on load and store instruction behaviour; soundness/completeness of the ZK proofs and circuits and correctness of implementation details were out of scope.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 2,
+        "removed": 2,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 16,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 5,
+            "oldLines": 9,
+            "newStart": 5,
+            "newLines": 9,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 5,
+                "text": "use sp1_prover::build::build_groth16_bn254_artifacts_with_dummy;"
+              },
+              { "type": " ", "oldLine": 6, "newLine": 6, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 7,
+                "newLine": 7,
+                "text": "#[derive(Parser, Debug)]"
+              },
+              {
+                "type": "-",
+                "oldLine": 8,
+                "text": "#[clap(author, version, about, long_about = None)]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 8,
+                "text": "#[command(author, version, about, long_about = None)]",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 9,
+                "text": "struct Args {"
+              },
+              {
+                "type": "-",
+                "oldLine": 10,
+                "text": "    #[clap(short, long)]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 10,
+                "text": "    #[arg(short, long)]",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 11,
+                "newLine": 11,
+                "text": "    build_dir: PathBuf,"
+              },
+              { "type": " ", "oldLine": 12, "newLine": 12, "text": "}" },
+              { "type": " ", "oldLine": 13, "newLine": 13, "text": "" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

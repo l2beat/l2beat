@@ -1,0 +1,1449 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "06d52ddeec41607c1fb6fa14538c1df24b619cadaa3cc07c21cdaea373e232e2",
+  "name": "ProposeLib",
+  "kind": "library",
+  "lines": 293,
+  "source": "library ProposeLib {\n    using TimeLib for Timestamp;\n    using TimeLib for Slot;\n    using TimeLib for Epoch;\n    using CompressedTimeMath for CompressedSlot;\n    using ChainTipsLib for CompressedChainTips;\n\n    /**\n     * @notice  Publishes a new checkpoint to the pending chain.\n     * @dev     Handles a proposed checkpoint, validates it, and updates rollup state adding it to the pending chain.\n     *          Orchestrates blob validation, header validation, proposer verification, fee calculations, and state\n     *          transitions. Automatically prunes unproven checkpoints if the proof submission window has passed.\n     *\n     *          Validations performed:\n     *          - Blob commitments against provided blob data: Errors.Rollup__InvalidBlobHash,\n     *            Errors.Rollup__InvalidBlobProof\n     *          - Checkpoint header validations (see validateHeader function for details)\n     *          - Proposer signature is valid for designated slot proposer:\n     *            Errors.ValidatorSelection__MissingProposerSignature\n     *          - Inbox hash matches expected value: Errors.Rollup__InvalidInHash\n     *          - Archive root is within the scalar field: Errors.Rollup__FieldElementOutOfRange\n     *\n     *          Validations NOT performed:\n     *          - Committee attestations (only proposer signature verified)\n     *          - Transaction validity and state root computation (done at proof submission via a validity proof)\n     *\n     *          State changes:\n     *          - Increment pending checkpoint number\n     *          - Store archive root for the new checkpoint number\n     *          - Store checkpoint metadata in circular storage (TempCheckpointLog)\n     *          - Update L1 gas fee oracle\n     *          - Consume inbox messages\n     *          - Setup epoch for validator selection (first block of the epoch)\n     *\n     * @param _args - The arguments to propose the checkpoint\n     * @param _attestations - Committee attestations in a packed format:\n     *        - Contains an array of length equal to the committee size\n     *        - At position `i`: if committee member `i` attested, contains their signature over the digest;\n     *          if not, contains their address\n     *        - Includes a bitmap indicating whether position `i` contains a signature (true) or address (false)\n     *        - This format allows reconstructing the committee commitment (hash of all committee addresses)\n     *          by either recovering addresses from signatures or using the addresses\n     * @param _signers - Addresses of the signers in the attestations:\n     *        - Must match the addresses that would be recovered from signatures in _attestations\n     *        - Same length as the number of signatures in _attestations\n     *        - Used to verify that the proposer is one of the committee members by allowing cheap reconstruction of the\n     *          commitment\n     *        - Allows computing committee commitment without expensive signature recovery onchain thus saving gas\n     *        - Nodes must validate actual signatures offchain when downloading checkpoints\n     * @param _blobsInput - The bytes to verify our input blob commitments match real blobs:\n     *        - input[:1] - num blobs in checkpoint\n     *        - input[1:] - blob commitments (48 bytes * num blobs in checkpoint)\n     * @param _checkBlob - Whether to skip blob related checks. Hardcoded to true in RollupCore, exists only to be\n     *          overridden in tests\n     */\n    function propose(\n        ProposeArgs calldata _args,\n        CommitteeAttestations memory _attestations,\n        address[] memory _signers,\n        Signature calldata _attestationsAndSignersSignature,\n        bytes calldata _blobsInput,\n        bool _checkBlob\n    ) internal {\n        // Prune unproven checkpoints if the proof submission window has passed\n        if (STFLib.canPruneAtTime(Timestamp.wrap(block.timestamp))) {\n            STFLib.prune();\n        }\n\n        // Keep intermediate values in memory to avoid stack too deep errors\n        InterimProposeValues memory v;\n\n        FeeLib.updateL1GasFeeOracle();\n\n        // Validate blob commitments against actual blob data and extract hashes\n        // TODO(#13430): The below blobsHashesCommitment known as blobsHash elsewhere in the code. The name is confusingly\n        // similar to blobCommitmentsHash, see comment in BlobLib.sol -> validateBlobs().\n        (v.blobHashes, v.blobsHashesCommitment, v.blobCommitments) = BlobLib_1.validateBlobs(_blobsInput, _checkBlob);\n\n        v.header = _args.header;\n\n        // The new checkpoint archive root is not part of the header, so it is range-checked here rather than in\n        // validateHeader.\n        FieldLib.requireValidFieldElement(_args.archive);\n\n        // Compute header hash for computing the payload digest\n        v.headerHash = ProposedHeaderLib.hash(v.header);\n\n        // Compute current epoch and check escape hatch BEFORE setupEpoch.\n        // Uses epoch-stable lookup so mid-epoch governance changes don't affect current epoch proposals.\n        v.currentEpoch = Timestamp.wrap(block.timestamp).epochFromTimestamp();\n        v.escapeHatch = ValidatorSelectionLib.getEscapeHatchForEpoch(v.currentEpoch);\n        if (address(v.escapeHatch) != address(0)) {\n            (v.isEscapeHatch, v.escapeHatchProposer) = v.escapeHatch.isHatchOpen(v.currentEpoch);\n        }\n\n        // Setup epoch by sampling the committee for the current epoch and setting the seed for the one after the next.\n        // This is a no-op if the epoch is already set up, so it only gets executed by the first checkpoint of the epoch.\n        // Skip during escape hatch to allow proposals even with insufficient validators for committee formation.\n        if (!v.isEscapeHatch) {\n            ValidatorSelectionLib.setupEpoch(v.currentEpoch);\n        }\n\n        // Calculate mana min fee components for header validation\n        ManaMinFeeComponents memory components = getManaMinFeeComponentsAt(Timestamp.wrap(block.timestamp), true);\n\n        // Create payload digest signed by the committee members\n        v.payloadDigest =\n            digest(ProposePayload({archive: _args.archive, oracleInput: _args.oracleInput, headerHash: v.headerHash}));\n\n        // Validate checkpoint header\n        validateHeader(\n            ValidateHeaderArgs({\n                header: v.header,\n                digest: v.payloadDigest,\n                manaMinFee: FeeLib.summedMinFee(components),\n                blobsHashesCommitment: v.blobsHashesCommitment,\n                flags: CheckpointHeaderValidationFlags({ignoreDA: false})\n            })\n        );\n\n        RollupStore storage rollupStore = STFLib.getStorage();\n\n        if (v.isEscapeHatch) {\n            // During escape hatch, only the designated proposer can propose\n            require(\n                msg.sender == v.escapeHatchProposer,\n                Errors.Rollup__InvalidEscapeHatchProposer(v.escapeHatchProposer, msg.sender)\n            );\n        } else {\n            // Verify that the proposer is the correct one for this slot by checking their signature in the attestations\n            ValidatorSelectionLib.verifyProposer(\n                v.header.slotNumber,\n                v.currentEpoch,\n                _attestations,\n                _signers,\n                v.payloadDigest,\n                _attestationsAndSignersSignature,\n                true\n            );\n        }\n        CompressedChainTips tips = rollupStore.tips;\n\n        // Increment checkpoint number and update chain tips\n        uint256 checkpointNumber = tips.getPending() + 1;\n        tips = tips.updatePending(checkpointNumber);\n\n        // Calculate accumulated blob commitments hash for this checkpoint\n        // Blob commitments are collected and proven per root rollup proof (per epoch),\n        // so we need to know whether we are at the epoch start:\n        v.isFirstCheckpointOfEpoch =\n            v.currentEpoch > STFLib.getEpochForCheckpoint(checkpointNumber - 1) || checkpointNumber == 1;\n        bytes32 blobCommitmentsHash = BlobLib_1.calculateBlobCommitmentsHash(\n            STFLib.getBlobCommitmentsHash(checkpointNumber - 1), v.blobCommitments, v.isFirstCheckpointOfEpoch\n        );\n\n        // Compute fee header for checkpoint metadata\n        FeeHeader memory feeHeader = FeeLib.computeFeeHeader(\n            checkpointNumber,\n            _args.oracleInput.feeAssetPriceModifier,\n            v.header.totalManaUsed,\n            components.congestionCost,\n            components.proverCost\n        );\n\n        // Hash attestations for storage in checkpoint log\n        // Compute attestationsHash from the attestations\n        v.attestationsHash = keccak256(abi.encode(_attestations));\n\n        // Commit state changes: update chain tips and store checkpoint data\n        rollupStore.tips = tips;\n        rollupStore.archives[checkpointNumber] = _args.archive;\n        STFLib.addTempCheckpointLog(\n            TempCheckpointLog({\n                headerHash: v.headerHash,\n                blobCommitmentsHash: blobCommitmentsHash,\n                outHash: v.header.outHash,\n                attestationsHash: v.attestationsHash,\n                payloadDigest: v.payloadDigest,\n                slotNumber: v.header.slotNumber,\n                feeHeader: feeHeader\n            })\n        );\n\n        // Consume pending L1->L2 messages and validate against header commitment\n        // @note  The checkpoint number here will always be >=1 as the genesis checkpoint is at 0\n        v.inHash = rollupStore.config.inbox.consume(checkpointNumber);\n        require(v.header.inHash == v.inHash, Errors.Rollup__InvalidInHash(v.inHash, v.header.inHash));\n\n        {\n            bytes32 archive = _args.archive;\n            if (v.isEscapeHatch) {\n                v.escapeHatch.updateSubmittedArchive(v.escapeHatchProposer, uint128(checkpointNumber), archive);\n            }\n\n            // Emit event for external listeners. Nodes rely on this event to update their state.\n            emit IRollupCore.CheckpointProposed(\n                checkpointNumber, archive, v.blobHashes, v.payloadDigest, v.attestationsHash\n            );\n        }\n    }\n\n    /**\n     * @notice Validates a proposed checkpoint header against chain state and constraints\n     * @dev Called internally from propose() and externally from RollupCore.validateHeaderWithAttestations()\n     *      for proposers to check header validity before submitting transactions\n     *\n     *      Header validations performed:\n     *      - Fr-encoded header fields are within the scalar field: Errors.Rollup__FieldElementOutOfRange\n     *      - Coinbase address is non-zero: Errors.Rollup__InvalidCoinbase\n     *      - Mana usage within limits: Errors.Rollup__ManaLimitExceeded\n     *      - Builds on correct parent checkpoint (archive root check): Errors.Rollup__InvalidArchive\n     *      - Slot number greater than last checkpoint's slot: Errors.Rollup__SlotAlreadyInChain\n     *      - Slot number matches current timestamp slot: Errors.HeaderLib__InvalidSlotNumber\n     *      - Timestamp matches slot-derived timestamp: Errors.Rollup__InvalidTimestamp\n     *      - Timestamp not in future: Errors.Rollup__TimestampInFuture\n     *      - Blob hashes match commitment (unless DA checks ignored): Errors.Rollup__UnavailableTxs\n     *      - DA fee is zero: Errors.Rollup__NonZeroDaFee\n     *      - L2 gas fee matches computed mana min fee: Errors.Rollup__InvalidManaMinFee\n     *\n     * @param _args Validation arguments including header, digest, mana min fee, and flags\n     */\n    function validateHeader(ValidateHeaderArgs memory _args) internal view {\n        // Check that header fields that map to an Fr are within range.\n        FieldLib.requireValidFieldElement(_args.header.blockHeadersHash);\n        FieldLib.requireValidFieldElement(_args.header.outHash);\n        FieldLib.requireValidFieldElement(_args.header.feeRecipient);\n        FieldLib.requireValidFieldElement(bytes32(_args.header.accumulatedFees));\n\n        require(_args.header.coinbase != address(0), Errors.Rollup__InvalidCoinbase());\n        require(_args.header.totalManaUsed <= FeeLib.getManaLimit(), Errors.Rollup__ManaLimitExceeded());\n\n        Timestamp currentTime = Timestamp.wrap(block.timestamp);\n        RollupStore storage rollupStore = STFLib.getStorage();\n\n        uint256 pendingCheckpointNumber = STFLib.getEffectivePendingCheckpointNumber(currentTime);\n\n        bytes32 tipArchive = rollupStore.archives[pendingCheckpointNumber];\n        require(\n            tipArchive == _args.header.lastArchiveRoot,\n            Errors.Rollup__InvalidArchive(tipArchive, _args.header.lastArchiveRoot)\n        );\n\n        Slot slot = _args.header.slotNumber;\n        Slot lastSlot = STFLib.getSlotNumber(pendingCheckpointNumber);\n        require(slot > lastSlot, Errors.Rollup__SlotAlreadyInChain(lastSlot, slot));\n\n        Slot currentSlot = currentTime.slotFromTimestamp();\n        require(slot == currentSlot, Errors.HeaderLib__InvalidSlotNumber(currentSlot, slot));\n\n        Timestamp timestamp = TimeLib.toTimestamp(slot);\n        require(_args.header.timestamp == timestamp, Errors.Rollup__InvalidTimestamp(timestamp, _args.header.timestamp));\n\n        require(timestamp <= currentTime, Errors.Rollup__TimestampInFuture(currentTime, timestamp));\n\n        require(\n            _args.flags.ignoreDA || _args.header.blobsHash == _args.blobsHashesCommitment,\n            Errors.Rollup__UnavailableTxs(_args.header.blobsHash)\n        );\n\n        require(_args.header.gasFees.feePerDaGas == 0, Errors.Rollup__NonZeroDaFee());\n        require(\n            _args.header.gasFees.feePerL2Gas == _args.manaMinFee,\n            Errors.Rollup__InvalidManaMinFee(_args.manaMinFee, _args.header.gasFees.feePerL2Gas)\n        );\n    }\n\n    /**\n     * @notice  Gets the mana min fee components\n     *          For more context, consult:\n     *          https://github.com/AztecProtocol/engineering-designs/blob/main/in-progress/8757-fees/design.md\n     *\n     * @param _timestamp - The timestamp of the checkpoint\n     * @param _inFeeAsset - Whether to return the fee in the fee asset or ETH\n     *\n     * @return The mana min fee components\n     */\n    function getManaMinFeeComponentsAt(Timestamp _timestamp, bool _inFeeAsset)\n        internal\n        view\n        returns (ManaMinFeeComponents memory)\n    {\n        uint256 checkpointOfInterest = STFLib.getEffectivePendingCheckpointNumber(_timestamp);\n        return FeeLib.getManaMinFeeComponentsAt(checkpointOfInterest, _timestamp, _inFeeAsset);\n    }\n\n    function digest(ProposePayload memory _args) internal view returns (bytes32) {\n        return digest(_args, address(this));\n    }\n\n    function digest(ProposePayload memory _args, address _verifyingContract) internal view returns (bytes32) {\n        return CoordinationSignatureLib.checkpointAttestationDigest(keccak256(abi.encode(_args)), _verifyingContract);\n    }\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "differs",
+      "coveredLines": 265,
+      "match": {
+        "origin": "own",
+        "collection": "aztecnetwork",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "ProposeLib",
+        "similarity": 0.806,
+        "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
+        "repository": "AztecProtocol/aztec-packages",
+        "path": "l1-contracts/src/core/libraries/rollup/ProposeLib.sol",
+        "commit": "0092f9f01ed88cc3626270e62716d7b722ea1944",
+        "commitTimestamp": "2026-01-06T20:15:15Z",
+        "url": "https://github.com/AztecProtocol/aztec-packages/blob/0092f9f01ed88cc3626270e62716d7b722ea1944/l1-contracts/src/core/libraries/rollup/ProposeLib.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "security review",
+        "coverage": "full file",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 28,
+        "removed": 34,
+        "ignoredAdded": 35,
+        "ignoredRemoved": 41,
+        "unchanged": 265,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 11,
+            "oldLines": 18,
+            "newStart": 11,
+            "newLines": 14,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 11,
+                "newLine": 11,
+                "text": "     *          Orchestrates blob validation, header validation, proposer verification, fee calculations, and state"
+              },
+              {
+                "type": " ",
+                "oldLine": 12,
+                "newLine": 12,
+                "text": "     *          transitions. Automatically prunes unproven checkpoints if the proof submission window has passed."
+              },
+              { "type": " ", "oldLine": 13, "newLine": 13, "text": "     *" },
+              {
+                "type": "-",
+                "oldLine": 14,
+                "text": "     *          Note that some validations and processes are disabled if the chain is configured to run without",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 15,
+                "text": "     *          transactions, such as during ignition phase:",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 16,
+                "text": "     *          - No fee header computation or L1 gas fee oracle update",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 17,
+                "text": "     *          - No inbox message consumption or outbox message insertion",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 18, "text": "     *", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 19,
+                "newLine": 14,
+                "text": "     *          Validations performed:"
+              },
+              {
+                "type": " ",
+                "oldLine": 20,
+                "newLine": 15,
+                "text": "     *          - Blob commitments against provided blob data: Errors.Rollup__InvalidBlobHash,"
+              },
+              {
+                "type": " ",
+                "oldLine": 21,
+                "newLine": 16,
+                "text": "     *            Errors.Rollup__InvalidBlobProof"
+              },
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 17,
+                "text": "     *          - Checkpoint header validations (see validateHeader function for details)"
+              },
+              {
+                "type": " ",
+                "oldLine": 23,
+                "newLine": 18,
+                "text": "     *          - Proposer signature is valid for designated slot proposer:"
+              },
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 19,
+                "text": "     *            Errors.ValidatorSelection__MissingProposerSignature"
+              },
+              {
+                "type": "-",
+                "oldLine": 25,
+                "text": "     *          - Inbox hash matches expected value (when txs enabled): Errors.Rollup__InvalidInHash",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 20,
+                "text": "     *          - Inbox hash matches expected value: Errors.Rollup__InvalidInHash",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 21,
+                "text": "     *          - Archive root is within the scalar field: Errors.Rollup__FieldElementOutOfRange",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 26, "newLine": 22, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 27,
+                "newLine": 23,
+                "text": "     *          Validations NOT performed:"
+              },
+              {
+                "type": " ",
+                "oldLine": 28,
+                "newLine": 24,
+                "text": "     *          - Committee attestations (only proposer signature verified)"
+              }
+            ]
+          },
+          {
+            "oldStart": 32,
+            "oldLines": 10,
+            "newStart": 28,
+            "newLines": 9,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 32,
+                "newLine": 28,
+                "text": "     *          - Increment pending checkpoint number"
+              },
+              {
+                "type": " ",
+                "oldLine": 33,
+                "newLine": 29,
+                "text": "     *          - Store archive root for the new checkpoint number"
+              },
+              {
+                "type": " ",
+                "oldLine": 34,
+                "newLine": 30,
+                "text": "     *          - Store checkpoint metadata in circular storage (TempCheckpointLog)"
+              },
+              {
+                "type": "-",
+                "oldLine": 35,
+                "text": "     *          - Update L1 gas fee oracle (when txs enabled)",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 36,
+                "text": "     *          - Consume inbox messages (when txs enabled)",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 37,
+                "text": "     *          - Insert outbox messages (when txs enabled)",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 38,
+                "text": "     *          - Setup epoch for validator selection (first checkpoint of the epoch)",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 31,
+                "text": "     *          - Update L1 gas fee oracle",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 32,
+                "text": "     *          - Consume inbox messages",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 33,
+                "text": "     *          - Setup epoch for validator selection (first block of the epoch)",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 39, "newLine": 34, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 40,
+                "newLine": 35,
+                "text": "     * @param _args - The arguments to propose the checkpoint"
+              },
+              {
+                "type": " ",
+                "oldLine": 41,
+                "newLine": 36,
+                "text": "     * @param _attestations - Committee attestations in a packed format:"
+              }
+            ]
+          },
+          {
+            "oldStart": 74,
+            "oldLines": 36,
+            "newStart": 69,
+            "newLines": 40,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 74,
+                "newLine": 69,
+                "text": "        // Keep intermediate values in memory to avoid stack too deep errors"
+              },
+              {
+                "type": " ",
+                "oldLine": 75,
+                "newLine": 70,
+                "text": "        InterimProposeValues memory v;"
+              },
+              { "type": " ", "oldLine": 76, "newLine": 71, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 77,
+                "text": "        // Transactions are disabled during ignition phase",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 78,
+                "text": "        v.isTxsEnabled = FeeLib.isTxsEnabled();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 72,
+                "text": "        FeeLib.updateL1GasFeeOracle();",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 79, "newLine": 73, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 80,
+                "text": "        // Since ignition have no transactions, we need not waste gas updating pricing oracle.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 81,
+                "text": "        if (v.isTxsEnabled) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 82,
+                "text": "            FeeLib.updateL1GasFeeOracle();",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 83,
+                "text": "        }",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 84, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 85,
+                "newLine": 74,
+                "text": "        // Validate blob commitments against actual blob data and extract hashes"
+              },
+              {
+                "type": " ",
+                "oldLine": 86,
+                "newLine": 75,
+                "text": "        // TODO(#13430): The below blobsHashesCommitment known as blobsHash elsewhere in the code. The name is confusingly"
+              },
+              {
+                "type": " ",
+                "oldLine": 87,
+                "newLine": 76,
+                "text": "        // similar to blobCommitmentsHash, see comment in BlobLib.sol -> validateBlobs()."
+              },
+              {
+                "type": "-",
+                "oldLine": 88,
+                "text": "        (v.blobHashes, v.blobsHashesCommitment, v.blobCommitments) = BlobLib.validateBlobs(_blobsInput, _checkBlob);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 77,
+                "text": "        (v.blobHashes, v.blobsHashesCommitment, v.blobCommitments) = BlobLib_1.validateBlobs(_blobsInput, _checkBlob);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 89, "newLine": 78, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 90,
+                "newLine": 79,
+                "text": "        v.header = _args.header;"
+              },
+              { "type": " ", "oldLine": 91, "newLine": 80, "text": "" },
+              {
+                "type": "+",
+                "newLine": 81,
+                "text": "        // The new checkpoint archive root is not part of the header, so it is range-checked here rather than in",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 82,
+                "text": "        // validateHeader.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 83,
+                "text": "        FieldLib.requireValidFieldElement(_args.archive);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 84, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 92,
+                "newLine": 85,
+                "text": "        // Compute header hash for computing the payload digest"
+              },
+              {
+                "type": " ",
+                "oldLine": 93,
+                "newLine": 86,
+                "text": "        v.headerHash = ProposedHeaderLib.hash(v.header);"
+              },
+              { "type": " ", "oldLine": 94, "newLine": 87, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 95,
+                "text": "        // Setup epoch by sampling the committee for the current epoch and setting the seed for the one after the next.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 96,
+                "text": "        // This is a no-op if the epoch is already set up, so it only gets executed by the first checkpoint of the epoch.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 88,
+                "text": "        // Compute current epoch and check escape hatch BEFORE setupEpoch.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 89,
+                "text": "        // Uses epoch-stable lookup so mid-epoch governance changes don't affect current epoch proposals.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 97,
+                "newLine": 90,
+                "text": "        v.currentEpoch = Timestamp.wrap(block.timestamp).epochFromTimestamp();"
+              },
+              {
+                "type": "-",
+                "oldLine": 98,
+                "text": "        ValidatorSelectionLib.setupEpoch(v.currentEpoch);",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 91,
+                "text": "        v.escapeHatch = ValidatorSelectionLib.getEscapeHatchForEpoch(v.currentEpoch);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 92,
+                "text": "        if (address(v.escapeHatch) != address(0)) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 93,
+                "text": "            (v.isEscapeHatch, v.escapeHatchProposer) = v.escapeHatch.isHatchOpen(v.currentEpoch);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 94,
+                "text": "        }",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 99, "newLine": 95, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 100,
+                "text": "        // Calculate mana base fee components for header validation",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 101,
+                "text": "        ManaBaseFeeComponents memory components;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 102,
+                "text": "        if (v.isTxsEnabled) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 103,
+                "text": "            // Since ignition have no transactions, we need not waste gas computing the fee components",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 104,
+                "text": "            components = getManaBaseFeeComponentsAt(Timestamp.wrap(block.timestamp), true);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 96,
+                "text": "        // Setup epoch by sampling the committee for the current epoch and setting the seed for the one after the next.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 97,
+                "text": "        // This is a no-op if the epoch is already set up, so it only gets executed by the first checkpoint of the epoch.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 98,
+                "text": "        // Skip during escape hatch to allow proposals even with insufficient validators for committee formation.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 99,
+                "text": "        if (!v.isEscapeHatch) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 100,
+                "text": "            ValidatorSelectionLib.setupEpoch(v.currentEpoch);",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 105,
+                "newLine": 101,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 106, "newLine": 102, "text": "" },
+              {
+                "type": "+",
+                "newLine": 103,
+                "text": "        // Calculate mana min fee components for header validation",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 104,
+                "text": "        ManaMinFeeComponents memory components = getManaMinFeeComponentsAt(Timestamp.wrap(block.timestamp), true);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 105, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 107,
+                "newLine": 106,
+                "text": "        // Create payload digest signed by the committee members"
+              },
+              {
+                "type": " ",
+                "oldLine": 108,
+                "newLine": 107,
+                "text": "        v.payloadDigest ="
+              },
+              {
+                "type": " ",
+                "oldLine": 109,
+                "newLine": 108,
+                "text": "            digest(ProposePayload({archive: _args.archive, oracleInput: _args.oracleInput, headerHash: v.headerHash}));"
+              }
+            ]
+          },
+          {
+            "oldStart": 113,
+            "oldLines": 19,
+            "newStart": 112,
+            "newLines": 13,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 113,
+                "newLine": 112,
+                "text": "            ValidateHeaderArgs({"
+              },
+              {
+                "type": " ",
+                "oldLine": 114,
+                "newLine": 113,
+                "text": "                header: v.header,"
+              },
+              {
+                "type": " ",
+                "oldLine": 115,
+                "newLine": 114,
+                "text": "                digest: v.payloadDigest,"
+              },
+              {
+                "type": "-",
+                "oldLine": 116,
+                "text": "                manaBaseFee: FeeLib.summedBaseFee(components),",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 115,
+                "text": "                manaMinFee: FeeLib.summedMinFee(components),",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 117,
+                "newLine": 116,
+                "text": "                blobsHashesCommitment: v.blobsHashesCommitment,"
+              },
+              {
+                "type": " ",
+                "oldLine": 118,
+                "newLine": 117,
+                "text": "                flags: CheckpointHeaderValidationFlags({ignoreDA: false})"
+              },
+              {
+                "type": " ",
+                "oldLine": 119,
+                "newLine": 118,
+                "text": "            })"
+              },
+              {
+                "type": " ",
+                "oldLine": 120,
+                "newLine": 119,
+                "text": "        );"
+              },
+              { "type": " ", "oldLine": 121, "newLine": 120, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 122,
+                "newLine": 121,
+                "text": "        RollupStore storage rollupStore = STFLib.getStorage();"
+              },
+              {
+                "type": "-",
+                "oldLine": 123,
+                "text": "        {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 124,
+                "text": "            v.escapeHatch = ValidatorSelectionLib.getEscapeHatch();",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 125,
+                "text": "            if (address(v.escapeHatch) != address(0)) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 126,
+                "text": "                (v.isEscapeHatch, v.escapeHatchProposer) = v.escapeHatch.isHatchOpen(v.currentEpoch);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 127,
+                "text": "            }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 128,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 129, "newLine": 122, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 130,
+                "newLine": 123,
+                "text": "        if (v.isEscapeHatch) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 131,
+                "newLine": 124,
+                "text": "            // During escape hatch, only the designated proposer can propose"
+              }
+            ]
+          },
+          {
+            "oldStart": 156,
+            "oldLines": 22,
+            "newStart": 149,
+            "newLines": 18,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 156,
+                "newLine": 149,
+                "text": "        // so we need to know whether we are at the epoch start:"
+              },
+              {
+                "type": " ",
+                "oldLine": 157,
+                "newLine": 150,
+                "text": "        v.isFirstCheckpointOfEpoch ="
+              },
+              {
+                "type": " ",
+                "oldLine": 158,
+                "newLine": 151,
+                "text": "            v.currentEpoch > STFLib.getEpochForCheckpoint(checkpointNumber - 1) || checkpointNumber == 1;"
+              },
+              {
+                "type": "-",
+                "oldLine": 159,
+                "text": "        bytes32 blobCommitmentsHash = BlobLib.calculateBlobCommitmentsHash(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 152,
+                "text": "        bytes32 blobCommitmentsHash = BlobLib_1.calculateBlobCommitmentsHash(",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 160,
+                "newLine": 153,
+                "text": "            STFLib.getBlobCommitmentsHash(checkpointNumber - 1), v.blobCommitments, v.isFirstCheckpointOfEpoch"
+              },
+              {
+                "type": " ",
+                "oldLine": 161,
+                "newLine": 154,
+                "text": "        );"
+              },
+              { "type": " ", "oldLine": 162, "newLine": 155, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 163,
+                "newLine": 156,
+                "text": "        // Compute fee header for checkpoint metadata"
+              },
+              {
+                "type": "-",
+                "oldLine": 164,
+                "text": "        FeeHeader memory feeHeader;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 165,
+                "text": "        if (v.isTxsEnabled) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 166,
+                "text": "            // Since ignition have no transactions, we need not waste gas deriving the fee header",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 167,
+                "text": "            feeHeader = FeeLib.computeFeeHeader(",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 168,
+                "text": "                checkpointNumber,",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 169,
+                "text": "                _args.oracleInput.feeAssetPriceModifier,",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 170,
+                "text": "                v.header.totalManaUsed,",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 171,
+                "text": "                components.congestionCost,",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 172,
+                "text": "                components.proverCost",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 173,
+                "text": "            );",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 174,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 157,
+                "text": "        FeeHeader memory feeHeader = FeeLib.computeFeeHeader(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 158,
+                "text": "            checkpointNumber,",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 159,
+                "text": "            _args.oracleInput.feeAssetPriceModifier,",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 160,
+                "text": "            v.header.totalManaUsed,",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 161,
+                "text": "            components.congestionCost,",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 162,
+                "text": "            components.proverCost",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 163,
+                "text": "        );",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 175, "newLine": 164, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 176,
+                "newLine": 165,
+                "text": "        // Hash attestations for storage in checkpoint log"
+              },
+              {
+                "type": " ",
+                "oldLine": 177,
+                "newLine": 166,
+                "text": "        // Compute attestationsHash from the attestations"
+              }
+            ]
+          },
+          {
+            "oldStart": 184,
+            "oldLines": 6,
+            "newStart": 173,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 184,
+                "newLine": 173,
+                "text": "            TempCheckpointLog({"
+              },
+              {
+                "type": " ",
+                "oldLine": 185,
+                "newLine": 174,
+                "text": "                headerHash: v.headerHash,"
+              },
+              {
+                "type": " ",
+                "oldLine": 186,
+                "newLine": 175,
+                "text": "                blobCommitmentsHash: blobCommitmentsHash,"
+              },
+              {
+                "type": "+",
+                "newLine": 176,
+                "text": "                outHash: v.header.outHash,",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 187,
+                "newLine": 177,
+                "text": "                attestationsHash: v.attestationsHash,"
+              },
+              {
+                "type": " ",
+                "oldLine": 188,
+                "newLine": 178,
+                "text": "                payloadDigest: v.payloadDigest,"
+              },
+              {
+                "type": " ",
+                "oldLine": 189,
+                "newLine": 179,
+                "text": "                slotNumber: v.header.slotNumber,"
+              }
+            ]
+          },
+          {
+            "oldStart": 191,
+            "oldLines": 24,
+            "newStart": 181,
+            "newLines": 11,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 191,
+                "newLine": 181,
+                "text": "            })"
+              },
+              {
+                "type": " ",
+                "oldLine": 192,
+                "newLine": 182,
+                "text": "        );"
+              },
+              { "type": " ", "oldLine": 193, "newLine": 183, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 194,
+                "text": "        // Handle L1<->L2 message processing (only when transactions are enabled)",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 195,
+                "text": "        if (v.isTxsEnabled) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 196,
+                "text": "            // Since ignition will have no transactions there will be no method to consume or output message.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 197,
+                "text": "            // Therefore we can ignore it as long as mana target is zero.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 198,
+                "text": "            // Since the inbox is async, it must enforce its own check to not try to insert if ignition.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 184,
+                "text": "        // Consume pending L1->L2 messages and validate against header commitment",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 185,
+                "text": "        // @note  The checkpoint number here will always be >=1 as the genesis checkpoint is at 0",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 186,
+                "text": "        v.inHash = rollupStore.config.inbox.consume(checkpointNumber);",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 187,
+                "text": "        require(v.header.inHash == v.inHash, Errors.Rollup__InvalidInHash(v.inHash, v.header.inHash));",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 199, "newLine": 188, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 200,
+                "text": "            // Consume pending L1->L2 messages and validate against header commitment",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 201,
+                "text": "            // @note  The checkpoint number here will always be >=1 as the genesis checkpoint is at 0",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 202,
+                "text": "            v.inHash = rollupStore.config.inbox.consume(checkpointNumber);",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 203,
+                "text": "            require(",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 204,
+                "text": "                v.header.contentCommitment.inHash == v.inHash,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 205,
+                "text": "                Errors.Rollup__InvalidInHash(v.inHash, v.header.contentCommitment.inHash)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 206,
+                "text": "            );",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 207, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 208,
+                "text": "            // Insert L2->L1 messages into outbox for later consumption",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 209,
+                "text": "            rollupStore.config.outbox.insert(checkpointNumber, v.header.contentCommitment.outHash);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 210,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 211, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 212,
+                "newLine": 189,
+                "text": "        {"
+              },
+              {
+                "type": " ",
+                "oldLine": 213,
+                "newLine": 190,
+                "text": "            bytes32 archive = _args.archive;"
+              },
+              {
+                "type": " ",
+                "oldLine": 214,
+                "newLine": 191,
+                "text": "            if (v.isEscapeHatch) {"
+              }
+            ]
+          },
+          {
+            "oldStart": 228,
+            "oldLines": 6,
+            "newStart": 205,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 228,
+                "newLine": 205,
+                "text": "     *      for proposers to check header validity before submitting transactions"
+              },
+              { "type": " ", "oldLine": 229, "newLine": 206, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 230,
+                "newLine": 207,
+                "text": "     *      Header validations performed:"
+              },
+              {
+                "type": "+",
+                "newLine": 208,
+                "text": "     *      - Fr-encoded header fields are within the scalar field: Errors.Rollup__FieldElementOutOfRange",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 231,
+                "newLine": 209,
+                "text": "     *      - Coinbase address is non-zero: Errors.Rollup__InvalidCoinbase"
+              },
+              {
+                "type": " ",
+                "oldLine": 232,
+                "newLine": 210,
+                "text": "     *      - Mana usage within limits: Errors.Rollup__ManaLimitExceeded"
+              },
+              {
+                "type": " ",
+                "oldLine": 233,
+                "newLine": 211,
+                "text": "     *      - Builds on correct parent checkpoint (archive root check): Errors.Rollup__InvalidArchive"
+              }
+            ]
+          },
+          {
+            "oldStart": 237,
+            "oldLines": 11,
+            "newStart": 215,
+            "newLines": 17,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 237,
+                "newLine": 215,
+                "text": "     *      - Timestamp not in future: Errors.Rollup__TimestampInFuture"
+              },
+              {
+                "type": " ",
+                "oldLine": 238,
+                "newLine": 216,
+                "text": "     *      - Blob hashes match commitment (unless DA checks ignored): Errors.Rollup__UnavailableTxs"
+              },
+              {
+                "type": " ",
+                "oldLine": 239,
+                "newLine": 217,
+                "text": "     *      - DA fee is zero: Errors.Rollup__NonZeroDaFee"
+              },
+              {
+                "type": "-",
+                "oldLine": 240,
+                "text": "     *      - L2 gas fee matches computed mana base fee: Errors.Rollup__InvalidManaBaseFee",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 218,
+                "text": "     *      - L2 gas fee matches computed mana min fee: Errors.Rollup__InvalidManaMinFee",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 241, "newLine": 219, "text": "     *" },
+              {
+                "type": "-",
+                "oldLine": 242,
+                "text": "     * @param _args Validation arguments including header, digest, mana base fee, and flags",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 220,
+                "text": "     * @param _args Validation arguments including header, digest, mana min fee, and flags",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 243,
+                "newLine": 221,
+                "text": "     */"
+              },
+              {
+                "type": " ",
+                "oldLine": 244,
+                "newLine": 222,
+                "text": "    function validateHeader(ValidateHeaderArgs memory _args) internal view {"
+              },
+              {
+                "type": "+",
+                "newLine": 223,
+                "text": "        // Check that header fields that map to an Fr are within range.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 224,
+                "text": "        FieldLib.requireValidFieldElement(_args.header.blockHeadersHash);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 225,
+                "text": "        FieldLib.requireValidFieldElement(_args.header.outHash);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 226,
+                "text": "        FieldLib.requireValidFieldElement(_args.header.feeRecipient);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 227,
+                "text": "        FieldLib.requireValidFieldElement(bytes32(_args.header.accumulatedFees));",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 228, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 245,
+                "newLine": 229,
+                "text": "        require(_args.header.coinbase != address(0), Errors.Rollup__InvalidCoinbase());"
+              },
+              {
+                "type": " ",
+                "oldLine": 246,
+                "newLine": 230,
+                "text": "        require(_args.header.totalManaUsed <= FeeLib.getManaLimit(), Errors.Rollup__ManaLimitExceeded());"
+              },
+              { "type": " ", "oldLine": 247, "newLine": 231, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 269,
+            "oldLines": 37,
+            "newStart": 253,
+            "newLines": 41,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 269,
+                "newLine": 253,
+                "text": "        require(timestamp <= currentTime, Errors.Rollup__TimestampInFuture(currentTime, timestamp));"
+              },
+              { "type": " ", "oldLine": 270, "newLine": 254, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 271,
+                "newLine": 255,
+                "text": "        require("
+              },
+              {
+                "type": "-",
+                "oldLine": 272,
+                "text": "            _args.flags.ignoreDA || _args.header.contentCommitment.blobsHash == _args.blobsHashesCommitment,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 273,
+                "text": "            Errors.Rollup__UnavailableTxs(_args.header.contentCommitment.blobsHash)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 256,
+                "text": "            _args.flags.ignoreDA || _args.header.blobsHash == _args.blobsHashesCommitment,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 257,
+                "text": "            Errors.Rollup__UnavailableTxs(_args.header.blobsHash)",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 274,
+                "newLine": 258,
+                "text": "        );"
+              },
+              { "type": " ", "oldLine": 275, "newLine": 259, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 276,
+                "newLine": 260,
+                "text": "        require(_args.header.gasFees.feePerDaGas == 0, Errors.Rollup__NonZeroDaFee());"
+              },
+              {
+                "type": " ",
+                "oldLine": 277,
+                "newLine": 261,
+                "text": "        require("
+              },
+              {
+                "type": "-",
+                "oldLine": 278,
+                "text": "            _args.header.gasFees.feePerL2Gas == _args.manaBaseFee,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 279,
+                "text": "            Errors.Rollup__InvalidManaBaseFee(_args.manaBaseFee, _args.header.gasFees.feePerL2Gas)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 262,
+                "text": "            _args.header.gasFees.feePerL2Gas == _args.manaMinFee,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 263,
+                "text": "            Errors.Rollup__InvalidManaMinFee(_args.manaMinFee, _args.header.gasFees.feePerL2Gas)",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 280,
+                "newLine": 264,
+                "text": "        );"
+              },
+              { "type": " ", "oldLine": 281, "newLine": 265, "text": "    }" },
+              { "type": " ", "oldLine": 282, "newLine": 266, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 283,
+                "newLine": 267,
+                "text": "    /**"
+              },
+              {
+                "type": "-",
+                "oldLine": 284,
+                "text": "     * @notice  Gets the mana base fee components",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 268,
+                "text": "     * @notice  Gets the mana min fee components",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 285,
+                "newLine": 269,
+                "text": "     *          For more context, consult:"
+              },
+              {
+                "type": " ",
+                "oldLine": 286,
+                "newLine": 270,
+                "text": "     *          https://github.com/AztecProtocol/engineering-designs/blob/main/in-progress/8757-fees/design.md"
+              },
+              { "type": " ", "oldLine": 287, "newLine": 271, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 288,
+                "newLine": 272,
+                "text": "     * @param _timestamp - The timestamp of the checkpoint"
+              },
+              {
+                "type": " ",
+                "oldLine": 289,
+                "newLine": 273,
+                "text": "     * @param _inFeeAsset - Whether to return the fee in the fee asset or ETH"
+              },
+              { "type": " ", "oldLine": 290, "newLine": 274, "text": "     *" },
+              {
+                "type": "-",
+                "oldLine": 291,
+                "text": "     * @return The mana base fee components",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 275,
+                "text": "     * @return The mana min fee components",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 292,
+                "newLine": 276,
+                "text": "     */"
+              },
+              {
+                "type": "-",
+                "oldLine": 293,
+                "text": "    function getManaBaseFeeComponentsAt(Timestamp _timestamp, bool _inFeeAsset)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 277,
+                "text": "    function getManaMinFeeComponentsAt(Timestamp _timestamp, bool _inFeeAsset)",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 294,
+                "newLine": 278,
+                "text": "        internal"
+              },
+              {
+                "type": " ",
+                "oldLine": 295,
+                "newLine": 279,
+                "text": "        view"
+              },
+              {
+                "type": "-",
+                "oldLine": 296,
+                "text": "        returns (ManaBaseFeeComponents memory)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 280,
+                "text": "        returns (ManaMinFeeComponents memory)",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 297, "newLine": 281, "text": "    {" },
+              {
+                "type": " ",
+                "oldLine": 298,
+                "newLine": 282,
+                "text": "        uint256 checkpointOfInterest = STFLib.getEffectivePendingCheckpointNumber(_timestamp);"
+              },
+              {
+                "type": "-",
+                "oldLine": 299,
+                "text": "        return FeeLib.getManaBaseFeeComponentsAt(checkpointOfInterest, _timestamp, _inFeeAsset);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 283,
+                "text": "        return FeeLib.getManaMinFeeComponentsAt(checkpointOfInterest, _timestamp, _inFeeAsset);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 300, "newLine": 284, "text": "    }" },
+              { "type": " ", "oldLine": 301, "newLine": 285, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 302,
+                "text": "    function digest(ProposePayload memory _args) internal pure returns (bytes32) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 303,
+                "text": "        return keccak256(abi.encode(SignatureDomainSeparator.checkpointAttestation, _args));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 286,
+                "text": "    function digest(ProposePayload memory _args) internal view returns (bytes32) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 287,
+                "text": "        return digest(_args, address(this));",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 304, "newLine": 288, "text": "    }" },
+              { "type": "+", "newLine": 289, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 290,
+                "text": "    function digest(ProposePayload memory _args, address _verifyingContract) internal view returns (bytes32) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 291,
+                "text": "        return CoordinationSignatureLib.checkpointAttestationDigest(keccak256(abi.encode(_args)), _verifyingContract);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 292,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 305, "newLine": 293, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

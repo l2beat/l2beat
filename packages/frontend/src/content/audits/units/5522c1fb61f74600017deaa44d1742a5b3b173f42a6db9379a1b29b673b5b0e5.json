@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "5522c1fb61f74600017deaa44d1742a5b3b173f42a6db9379a1b29b673b5b0e5",
+  "name": "EIP712",
+  "kind": "contract",
+  "lines": 33,
+  "source": "contract EIP712 {\n    // Cache the domain separator as an immutable value, but also store the chain id that it\n    // corresponds to, in order to invalidate the cached domain separator if the chain id changes.\n    bytes32 private immutable _CACHED_DOMAIN_SEPARATOR;\n    uint256 private immutable _CACHED_CHAIN_ID;\n\n    bytes32 private constant _HASHED_NAME = keccak256(\"Permit2\");\n    bytes32 private constant _TYPE_HASH =\n        keccak256(\"EIP712Domain(string name,uint256 chainId,address verifyingContract)\");\n\n    constructor() {\n        _CACHED_CHAIN_ID = block.chainid;\n        _CACHED_DOMAIN_SEPARATOR = _buildDomainSeparator(_TYPE_HASH, _HASHED_NAME);\n    }\n\n    /// @notice Returns the domain separator for the current chain.\n    /// @dev Uses cached version if chainid and address are unchanged from construction.\n    function DOMAIN_SEPARATOR() public view returns (bytes32) {\n        return block.chainid == _CACHED_CHAIN_ID\n            ? _CACHED_DOMAIN_SEPARATOR\n            : _buildDomainSeparator(_TYPE_HASH, _HASHED_NAME);\n    }\n\n    /// @notice Builds a domain separator using the current chainId and contract address.\n    function _buildDomainSeparator(bytes32 typeHash, bytes32 nameHash) private view returns (bytes32) {\n        return keccak256(abi.encode(typeHash, nameHash, block.chainid, address(this)));\n    }\n\n    /// @notice Creates an EIP-712 typed data hash\n    function _hashTypedData(bytes32 dataHash) internal view returns (bytes32) {\n        return keccak256(abi.encodePacked(\"\\x19\\x01\", DOMAIN_SEPARATOR(), dataHash));\n    }\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

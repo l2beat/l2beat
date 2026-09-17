@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "146e843b603b2acb4bd35309b2715d2e1421cd792e308fac9f07278a5538a052",
+  "name": "mod.nr",
+  "kind": "program",
+  "lines": 4,
+  "source": "pub mod traits;\npub mod verification_key;\npub mod vk_data;\npub mod proof_data;",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

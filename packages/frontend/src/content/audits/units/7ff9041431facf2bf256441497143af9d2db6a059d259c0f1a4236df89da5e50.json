@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "7ff9041431facf2bf256441497143af9d2db6a059d259c0f1a4236df89da5e50",
+  "name": "mod.nr",
+  "kind": "program",
+  "lines": 1,
+  "source": "mod bignum_benchmarks;",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

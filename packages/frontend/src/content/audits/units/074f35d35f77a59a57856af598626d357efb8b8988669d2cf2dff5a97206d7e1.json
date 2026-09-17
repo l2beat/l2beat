@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "074f35d35f77a59a57856af598626d357efb8b8988669d2cf2dff5a97206d7e1",
+  "name": "CoinIssuer",
+  "kind": "contract",
+  "lines": 98,
+  "source": "contract CoinIssuer is ICoinIssuer, Ownable {\n    IMintableERC20 public immutable ASSET;\n    uint256 public immutable NOMINAL_ANNUAL_PERCENTAGE_CAP;\n    uint256 public immutable DEPLOYMENT_TIME;\n\n    // Note that the state variables below are \"cached\":\n    // they are only updated when minting after a year boundary.\n    uint256 public cachedBudgetYear;\n    uint256 public cachedBudget;\n\n    constructor(IMintableERC20 _asset, uint256 _annualPercentage, address _owner) Ownable(_owner) {\n        ASSET = _asset;\n        NOMINAL_ANNUAL_PERCENTAGE_CAP = _annualPercentage;\n        DEPLOYMENT_TIME = block.timestamp;\n\n        cachedBudgetYear = 0;\n        cachedBudget = _getNewBudget();\n\n        // If the budget is 0, it is likely a misconfiguration with tiny _annualPercentage or lack of initial supply\n        require(cachedBudget > 0, Errors.CoinIssuer__InvalidConfiguration());\n\n        emit BudgetReset(0, cachedBudget);\n    }\n\n    function acceptTokenOwnership() external override(ICoinIssuer) onlyOwner {\n        Ownable2Step(address(ASSET)).acceptOwnership();\n    }\n\n    /**\n     * @notice  Mint `_amount` tokens to `_to`\n     *\n     * @dev     The `_amount` must be within the `cachedBudget`\n     *\n     * @param _to - The address to receive the funds\n     * @param _amount - The amount to mint\n     */\n    function mint(address _to, uint256 _amount) external override(ICoinIssuer) onlyOwner {\n        // Update state if we've crossed into a new year (will reset budget and forfeit unused amount)\n        _updateBudgetIfNeeded();\n\n        uint256 budget = cachedBudget;\n\n        require(_amount <= budget, Errors.CoinIssuer__InsufficientMintAvailable(budget, _amount));\n        cachedBudget = budget - _amount;\n\n        ASSET.mint(_to, _amount);\n    }\n\n    /**\n     * @notice  The amount of funds that is available for \"minting\" in the current year\n     *          If we've crossed into a new year since the last mint, returns the fresh budget\n     *          for the new year based on current supply.\n     *\n     * @return The amount mintable\n     */\n    function mintAvailable() public view override(ICoinIssuer) returns (uint256) {\n        uint256 currentYear = _yearSinceGenesis();\n\n        // Until the budget is stale, return the cached budget\n        if (cachedBudgetYear >= currentYear) {\n            return cachedBudget;\n        }\n\n        // Crossed into new year(s): compute fresh budget\n        return _getNewBudget();\n    }\n\n    /**\n     * @notice  Internal function to update year and budget when crossing year boundaries\n     *\n     * @dev     If multiple years have passed without minting, jumps directly to current year\n     *          and all intermediate years' budgets are lost\n     */\n    function _updateBudgetIfNeeded() private {\n        uint256 currentYear = _yearSinceGenesis();\n        // If the budget is for the past, update the budget.\n        if (cachedBudgetYear < currentYear) {\n            cachedBudgetYear = currentYear;\n            cachedBudget = _getNewBudget();\n\n            emit BudgetReset(currentYear, cachedBudget);\n        }\n    }\n\n    /**\n     * @notice  Internal function to compute the current year since genesis\n     */\n    function _yearSinceGenesis() private view returns (uint256) {\n        return (block.timestamp - DEPLOYMENT_TIME) / 365 days;\n    }\n\n    /**\n     * @notice  Internal function to compute a fresh budget\n     */\n    function _getNewBudget() private view returns (uint256) {\n        return ASSET.totalSupply() * NOMINAL_ANNUAL_PERCENTAGE_CAP / 1e18;\n    }\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "identical",
+      "coveredLines": 98,
+      "match": {
+        "origin": "own",
+        "collection": "aztecnetwork",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "CoinIssuer",
+        "similarity": 1,
+        "reportId": "aztecnetwork/cantina-coinissuer-2025-11-12",
+        "repository": "AztecProtocol/aztec-packages",
+        "path": "l1-contracts/src/governance/CoinIssuer.sol",
+        "commit": "bcc710cc4f8733e6808413b8daf82c8f3d72310f",
+        "commitTimestamp": "2025-11-04T18:21:17Z",
+        "url": "https://github.com/AztecProtocol/aztec-packages/blob/bcc710cc4f8733e6808413b8daf82c8f3d72310f/l1-contracts/src/governance/CoinIssuer.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "remediation review",
+        "coverage": "verified fixes and documentation changes from PR 18188 (head commit)",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 4
+      },
+      "warnings": []
+    }
+  }
+}

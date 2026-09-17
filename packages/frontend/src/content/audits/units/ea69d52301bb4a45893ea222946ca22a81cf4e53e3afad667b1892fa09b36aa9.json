@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "ea69d52301bb4a45893ea222946ca22a81cf4e53e3afad667b1892fa09b36aa9",
+  "name": "(file-level declarations)",
+  "kind": "file-level",
+  "lines": 81,
+  "source": "using LibPosition for Position global;\ntype Position is uint128;\nusing LibHash for Hash global;\ntype Hash is bytes32;\nusing LibClaim for Claim global;\ntype Claim is bytes32;\nusing LibDuration for Duration global;\ntype Duration is uint64;\nusing LibTimestamp for Timestamp global;\ntype Timestamp is uint64;\nusing LibClock for Clock global;\ntype Clock is uint128;\nenum GameStatus {\n    // The game is currently in progress, and has not been resolved.\n    IN_PROGRESS,\n    // The game has concluded, and the `rootClaim` was challenged successfully.\n    CHALLENGER_WINS,\n    // The game has concluded, and the `rootClaim` could not be contested.\n    DEFENDER_WINS\n}\nenum BondDistributionMode {\n    // Bond distribution strategy has not been chosen.\n    UNDECIDED,\n    // Bonds should be distributed as normal.\n    NORMAL,\n    // Bonds should be refunded to claimants.\n    REFUND\n}\nstruct Proposal {\n    Hash root;\n    uint256 l2SequenceNumber;\n}\nerror MaxDepthTooLarge();\nerror InvalidSplitDepth();\nerror InvalidClockExtension();\nerror AlreadyInitialized();\nerror BadExtraData();\nerror AnchorRootNotFound();\nerror UnexpectedRootClaim(Claim rootClaim);\nerror InvalidChallengePeriod();\nusing LibGameType for GameType global;\ntype GameType is uint32;\nerror GameNotInProgress();\nerror InvalidParent();\nerror InvalidPrestate();\nerror ValidStep();\nerror DuplicateStep();\nerror InvalidDisputedClaimIndex();\nerror CannotDefendRootClaim();\nerror L2BlockNumberChallenged();\nerror GameDepthExceeded();\nerror IncorrectBondAmount();\nerror ClockTimeExceeded();\nerror ClaimAlreadyExists();\nusing LPPMetadataLib for LPPMetaData global;\ntype LPPMetaData is bytes32;\nerror InvalidLocalIdent();\nerror InvalidOutputRootProof();\nerror InvalidHeaderRLP();\nerror EmptyItem();\nerror UnexpectedString();\nerror InvalidDataRemainder();\nerror UnexpectedList();\nerror ContentLengthMismatch();\nerror InvalidHeader();\nerror BlockNumberMatches();\nerror OutOfOrderResolution();\nerror ClockNotExpired();\nerror ClaimAlreadyResolved();\nusing LibGameId for GameId global;\ntype GameId is bytes32;\nerror InvalidBondDistributionMode();\nerror NoCreditToClaim();\nerror BondTransferFailed();\nerror GamePaused();\nerror GameNotResolved();\nerror GameNotFinalized();\nusing LibVMStatus for VMStatus global;\ntype VMStatus is uint8;\nerror ClaimAboveSplit();\nerror BadAuth();",
+  "resolutions": {
+    "bb55951394276893": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

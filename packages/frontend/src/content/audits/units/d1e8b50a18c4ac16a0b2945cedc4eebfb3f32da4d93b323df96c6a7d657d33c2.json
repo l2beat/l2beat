@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "d1e8b50a18c4ac16a0b2945cedc4eebfb3f32da4d93b323df96c6a7d657d33c2",
+  "name": "IReinitializableBase",
+  "kind": "interface",
+  "lines": 8,
+  "source": "interface IReinitializableBase {\n    error ReinitializableBase_ZeroInitVersion();\n\n    function initVersion() external view returns (uint8);\n\n    // ReinitializerBase is abstract, so it has no constructor in its interface.\n    function __constructor__() external;\n}",
+  "resolutions": {
+    "ba5b6c9584fb78fd": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "44ad4cf96e2ef6f0": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "bb55951394276893": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

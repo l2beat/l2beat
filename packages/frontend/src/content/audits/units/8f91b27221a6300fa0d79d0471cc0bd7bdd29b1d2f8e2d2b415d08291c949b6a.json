@@ -1,0 +1,778 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "8f91b27221a6300fa0d79d0471cc0bd7bdd29b1d2f8e2d2b415d08291c949b6a",
+  "name": "circuit.rs",
+  "kind": "program",
+  "lines": 89,
+  "source": "use alloy_primitives::B256;\nuse scroll_zkvm_types_bundle::BundleWitness;\nuse scroll_zkvm_types_circuit::{\n    AggCircuit, AggregationInput, Circuit, ProgramCommitment,\n    io::read_witnesses,\n    public_inputs::{\n        Version,\n        batch::VersionedBatchInfo,\n        bundle::{BundleInfo, VersionedBundleInfo},\n    },\n};\n\nuse crate::child_commitments;\n\n#[allow(unused_imports, clippy::single_component_path_imports)]\nuse openvm_keccak256_guest;\n\n#[derive(Default)]\npub struct BundleCircuit;\n\nimpl Circuit for BundleCircuit {\n    type Witness = BundleWitness;\n\n    type PublicInputs = VersionedBundleInfo;\n\n    fn read_witness_bytes() -> Vec<u8> {\n        read_witnesses()\n    }\n\n    fn deserialize_witness(witness_bytes: &[u8]) -> Self::Witness {\n        let config = bincode::config::standard();\n        let (witness, _): (Self::Witness, _) =\n            bincode::serde::decode_from_slice(witness_bytes, config)\n                .expect(\"BundleCircuit: deserialization of witness bytes failed\");\n        witness\n    }\n\n    fn validate(witness: Self::Witness) -> Self::PublicInputs {\n        let version = Version::from(witness.version);\n        assert_eq!(version.fork, witness.fork_name);\n\n        (BundleInfo::from(&witness), version)\n    }\n}\n\nimpl AggCircuit for BundleCircuit {\n    type AggregatedPublicInputs = VersionedBatchInfo;\n\n    fn verify_commitments(commitment: &ProgramCommitment) {\n        assert_eq!(\n            commitment.vm,\n            child_commitments::VM_COMMIT,\n            \"mismatch batch-proof leaf commitment: expected={:?}, got={:?}\",\n            child_commitments::VM_COMMIT,\n            commitment.vm,\n        );\n        assert_eq!(\n            commitment.exe,\n            child_commitments::EXE_COMMIT,\n            \"mismatch batch-proof exe commitment: expected={:?}, got={:?}\",\n            child_commitments::EXE_COMMIT,\n            commitment.exe,\n        );\n    }\n\n    fn aggregated_public_inputs(witness: &Self::Witness) -> Vec<Self::AggregatedPublicInputs> {\n        let version = Version::from(witness.version);\n        witness\n            .batch_infos\n            .iter()\n            .cloned()\n            .map(|batch_info| (batch_info, version))\n            .collect()\n    }\n\n    fn aggregated_pi_hashes(proofs: &[AggregationInput]) -> Vec<B256> {\n        proofs\n            .iter()\n            .map(|proof| {\n                let transformed = proof\n                    .public_values\n                    .iter()\n                    .map(|&val| u8::try_from(val).expect(\"0 < public value < 256\"))\n                    .collect::<Vec<u8>>();\n                B256::from_slice(transformed.as_slice())\n            })\n            .collect()\n    }\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "differs",
+      "coveredLines": 55,
+      "match": {
+        "origin": "own",
+        "collection": "scroll",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "circuit.rs",
+        "similarity": 0.447,
+        "reportId": "scroll/trailofbits-scroll-euclid-phase1-2025-04",
+        "repository": "scroll-tech/zkvm-prover",
+        "path": "crates/circuits/bundle-circuit/src/circuit.rs",
+        "commit": "3f008792538a33271d116f75beab0e137a10f176",
+        "commitTimestamp": "2025-03-17T14:08:53Z",
+        "url": "https://github.com/scroll-tech/zkvm-prover/blob/3f008792538a33271d116f75beab0e137a10f176/crates/circuits/bundle-circuit/src/circuit.rs",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Head of PR #85 (fix review): TOB-SCREUC-1 resolved via zip_eq in the types crate.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 4
+      },
+      "diff": {
+        "added": 34,
+        "removed": 60,
+        "ignoredAdded": 3,
+        "ignoredRemoved": 8,
+        "unchanged": 55,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 106,
+            "newStart": 1,
+            "newLines": 75,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "use alloy_primitives::B256;"
+              },
+              {
+                "type": "-",
+                "oldLine": 2,
+                "text": "use scroll_zkvm_circuit_input_types::{",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 3,
+                "text": "    AggCircuit, Circuit,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 4,
+                "text": "    batch::BatchInfo,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 5,
+                "text": "    bundle::{ArchivedBundleWitness, BundleInfo},",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 6,
+                "text": "    proof::{AggregationInput, ProgramCommitment},",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 7,
+                "text": "    utils::read_witnesses,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 2,
+                "text": "use scroll_zkvm_types_bundle::BundleWitness;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "use scroll_zkvm_types_circuit::{",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 4,
+                "text": "    AggCircuit, AggregationInput, Circuit, ProgramCommitment,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 5,
+                "text": "    io::read_witnesses,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 6,
+                "text": "    public_inputs::{",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 7,
+                "text": "        Version,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 8,
+                "text": "        batch::VersionedBatchInfo,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 9,
+                "text": "        bundle::{BundleInfo, VersionedBundleInfo},",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 10,
+                "text": "    },",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 8, "newLine": 11, "text": "};" },
+              { "type": " ", "oldLine": 9, "newLine": 12, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 10,
+                "text": "#[cfg(feature = \"euclidv2\")]",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 11,
+                "text": "use crate::child_commitments::{EXE_COMMIT as BATCH_EXE_COMMIT, LEAF_COMMIT as BATCH_LEAF_COMMIT};",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 12,
+                "text": "#[cfg(not(feature = \"euclidv2\"))]",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 13,
+                "text": "use crate::child_commitments_legacy::{",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 14,
+                "text": "    EXE_COMMIT as BATCH_EXE_COMMIT, LEAF_COMMIT as BATCH_LEAF_COMMIT,",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 15, "text": "};", "ignored": false },
+              {
+                "type": "+",
+                "newLine": 13,
+                "text": "use crate::child_commitments;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 16, "newLine": 14, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 17,
+                "newLine": 15,
+                "text": "#[allow(unused_imports, clippy::single_component_path_imports)]"
+              },
+              {
+                "type": " ",
+                "oldLine": 18,
+                "newLine": 16,
+                "text": "use openvm_keccak256_guest;"
+              },
+              { "type": " ", "oldLine": 19, "newLine": 17, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 20,
+                "text": "openvm_algebra_guest::moduli_macros::moduli_init! {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 21,
+                "text": "    \"52435875175126190479447740508185965837690552500527637822603658699938581184513\"",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 22, "text": "}", "ignored": false },
+              { "type": "-", "oldLine": 23, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 18,
+                "text": "#[derive(Default)]",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 19,
+                "text": "pub struct BundleCircuit;"
+              },
+              { "type": " ", "oldLine": 25, "newLine": 20, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 26,
+                "newLine": 21,
+                "text": "impl Circuit for BundleCircuit {"
+              },
+              {
+                "type": "-",
+                "oldLine": 27,
+                "text": "    type Witness = ArchivedBundleWitness;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 22,
+                "text": "    type Witness = BundleWitness;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 28, "newLine": 23, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 29,
+                "text": "    type PublicInputs = BundleInfo;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 24,
+                "text": "    type PublicInputs = VersionedBundleInfo;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 30, "newLine": 25, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 31,
+                "text": "    fn setup() {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 32,
+                "text": "        setup_all_moduli();",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 33, "text": "    }", "ignored": false },
+              { "type": "-", "oldLine": 34, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 35,
+                "newLine": 26,
+                "text": "    fn read_witness_bytes() -> Vec<u8> {"
+              },
+              {
+                "type": " ",
+                "oldLine": 36,
+                "newLine": 27,
+                "text": "        read_witnesses()"
+              },
+              { "type": " ", "oldLine": 37, "newLine": 28, "text": "    }" },
+              { "type": " ", "oldLine": 38, "newLine": 29, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 39,
+                "text": "    fn deserialize_witness(witness_bytes: &[u8]) -> &Self::Witness {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 40,
+                "text": "        rkyv::access::<ArchivedBundleWitness, rkyv::rancor::BoxedError>(witness_bytes)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 41,
+                "text": "            .expect(\"BundleCircuit: rkyv deserialization of witness bytes failed\")",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 30,
+                "text": "    fn deserialize_witness(witness_bytes: &[u8]) -> Self::Witness {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 31,
+                "text": "        let config = bincode::config::standard();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 32,
+                "text": "        let (witness, _): (Self::Witness, _) =",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 33,
+                "text": "            bincode::serde::decode_from_slice(witness_bytes, config)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 34,
+                "text": "                .expect(\"BundleCircuit: deserialization of witness bytes failed\");",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 35,
+                "text": "        witness",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 42, "newLine": 36, "text": "    }" },
+              { "type": " ", "oldLine": 43, "newLine": 37, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 44,
+                "text": "    fn validate(witness: &Self::Witness) -> Self::PublicInputs {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 45,
+                "text": "        assert!(",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 46,
+                "text": "            !witness.batch_infos.is_empty(),",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 47,
+                "text": "            \"at least one batch in a bundle\"",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 48,
+                "text": "        );",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 38,
+                "text": "    fn validate(witness: Self::Witness) -> Self::PublicInputs {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 39,
+                "text": "        let version = Version::from(witness.version);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 40,
+                "text": "        assert_eq!(version.fork, witness.fork_name);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 49, "newLine": 41, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 50,
+                "text": "        let (first_batch, last_batch) = (",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 51,
+                "text": "            witness",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 52,
+                "text": "                .batch_infos",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 53,
+                "text": "                .first()",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 54,
+                "text": "                .expect(\"at least one batch in bundle\"),",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 55,
+                "text": "            witness",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 56,
+                "text": "                .batch_infos",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 57,
+                "text": "                .last()",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 58,
+                "text": "                .expect(\"at least one batch in bundle\"),",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 59,
+                "text": "        );",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 60, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 61,
+                "text": "        let chain_id = first_batch.chain_id.into();",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 62,
+                "text": "        let num_batches = u32::try_from(witness.batch_infos.len()).expect(\"num_batches: u32\");",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 63,
+                "text": "        let prev_state_root = first_batch.parent_state_root.into();",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 64,
+                "text": "        let prev_batch_hash = first_batch.parent_batch_hash.into();",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 65,
+                "text": "        let post_state_root = last_batch.state_root.into();",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 66,
+                "text": "        let batch_hash = last_batch.batch_hash.into();",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 67,
+                "text": "        let withdraw_root = last_batch.withdraw_root.into();",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 68,
+                "text": "        let msg_queue_hash = last_batch.post_msg_queue_hash.into();",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 69, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 70,
+                "text": "        BundleInfo {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 71,
+                "text": "            chain_id,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 72,
+                "text": "            num_batches,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 73,
+                "text": "            prev_state_root,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 74,
+                "text": "            prev_batch_hash,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 75,
+                "text": "            post_state_root,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 76,
+                "text": "            batch_hash,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 77,
+                "text": "            withdraw_root,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 78,
+                "text": "            msg_queue_hash,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 79,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 42,
+                "text": "        (BundleInfo::from(&witness), version)",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 80, "newLine": 43, "text": "    }" },
+              { "type": " ", "oldLine": 81, "newLine": 44, "text": "}" },
+              { "type": " ", "oldLine": 82, "newLine": 45, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 83,
+                "newLine": 46,
+                "text": "impl AggCircuit for BundleCircuit {"
+              },
+              {
+                "type": "-",
+                "oldLine": 84,
+                "text": "    type AggregatedPublicInputs = BatchInfo;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 47,
+                "text": "    type AggregatedPublicInputs = VersionedBatchInfo;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 85, "newLine": 48, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 86,
+                "newLine": 49,
+                "text": "    fn verify_commitments(commitment: &ProgramCommitment) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 87,
+                "newLine": 50,
+                "text": "        assert_eq!("
+              },
+              {
+                "type": "-",
+                "oldLine": 88,
+                "text": "            commitment.exe, BATCH_EXE_COMMIT,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 89,
+                "text": "            \"mismatch batch-proof exe commitment: expected={:?}, got={:?}\",",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 90,
+                "text": "            BATCH_EXE_COMMIT, commitment.exe,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 51,
+                "text": "            commitment.vm,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 52,
+                "text": "            child_commitments::VM_COMMIT,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 53,
+                "text": "            \"mismatch batch-proof leaf commitment: expected={:?}, got={:?}\",",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 54,
+                "text": "            child_commitments::VM_COMMIT,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 55,
+                "text": "            commitment.vm,",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 91,
+                "newLine": 56,
+                "text": "        );"
+              },
+              {
+                "type": " ",
+                "oldLine": 92,
+                "newLine": 57,
+                "text": "        assert_eq!("
+              },
+              {
+                "type": "-",
+                "oldLine": 93,
+                "text": "            commitment.leaf, BATCH_LEAF_COMMIT,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 94,
+                "text": "            \"mismatch batch-proof leaf commitment: expected={:?}, got={:?}\",",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 95,
+                "text": "            BATCH_EXE_COMMIT, commitment.leaf,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 58,
+                "text": "            commitment.exe,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 59,
+                "text": "            child_commitments::EXE_COMMIT,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 60,
+                "text": "            \"mismatch batch-proof exe commitment: expected={:?}, got={:?}\",",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 61,
+                "text": "            child_commitments::EXE_COMMIT,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 62,
+                "text": "            commitment.exe,",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 96,
+                "newLine": 63,
+                "text": "        );"
+              },
+              { "type": " ", "oldLine": 97, "newLine": 64, "text": "    }" },
+              { "type": " ", "oldLine": 98, "newLine": 65, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 99,
+                "newLine": 66,
+                "text": "    fn aggregated_public_inputs(witness: &Self::Witness) -> Vec<Self::AggregatedPublicInputs> {"
+              },
+              {
+                "type": "+",
+                "newLine": 67,
+                "text": "        let version = Version::from(witness.version);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 100,
+                "newLine": 68,
+                "text": "        witness"
+              },
+              {
+                "type": " ",
+                "oldLine": 101,
+                "newLine": 69,
+                "text": "            .batch_infos"
+              },
+              {
+                "type": " ",
+                "oldLine": 102,
+                "newLine": 70,
+                "text": "            .iter()"
+              },
+              {
+                "type": "-",
+                "oldLine": 103,
+                "text": "            .map(|archived| archived.into())",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 71,
+                "text": "            .cloned()",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 72,
+                "text": "            .map(|batch_info| (batch_info, version))",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 104,
+                "newLine": 73,
+                "text": "            .collect()"
+              },
+              { "type": " ", "oldLine": 105, "newLine": 74, "text": "    }" },
+              { "type": " ", "oldLine": 106, "newLine": 75, "text": "" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

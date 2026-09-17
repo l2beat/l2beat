@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "7b31e1759b7cb28a0b3518a932f74335637ef5c2e6f57f0673ced62f85670e2f",
+  "name": "public_logs.nr",
+  "kind": "program",
+  "lines": 35,
+  "source": "use crate::abis::log::Log;\nuse crate::address::aztec_address::AztecAddress;\nuse crate::constants::{FLAT_PUBLIC_LOGS_PAYLOAD_LENGTH, PUBLIC_LOG_HEADER_LENGTH};\nuse crate::traits::{Deserialize, Empty, Serialize, ToField};\n\n#[derive(Eq, Serialize, Deserialize)]\npub struct PublicLogs {\n    pub length: u32,\n    pub payload: [Field; FLAT_PUBLIC_LOGS_PAYLOAD_LENGTH],\n}\n\nimpl PublicLogs {\n    // Builds a PublicLogs struct from payload and length. Performs no validation, it's expected that length is validated beforehand.\n    pub fn new(payload: [Field; FLAT_PUBLIC_LOGS_PAYLOAD_LENGTH], length: u32) -> Self {\n        Self { payload, length }\n    }\n\n    /// Public logs are added in the avm. This function is only for tests.\n    pub fn add_log<let N: u32>(&mut self, contract_address: AztecAddress, log: Log<N>) {\n        // Header\n        self.payload[self.length] = log.length as Field;\n        self.payload[self.length + 1] = contract_address.to_field();\n        // Payload\n        for i in 0..log.length {\n            self.payload[self.length + PUBLIC_LOG_HEADER_LENGTH + i] = log.fields[i];\n        }\n        self.length += log.length + PUBLIC_LOG_HEADER_LENGTH;\n    }\n}\n\nimpl Empty for PublicLogs {\n    fn empty() -> Self {\n        Self { payload: [0; FLAT_PUBLIC_LOGS_PAYLOAD_LENGTH], length: 0 }\n    }\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

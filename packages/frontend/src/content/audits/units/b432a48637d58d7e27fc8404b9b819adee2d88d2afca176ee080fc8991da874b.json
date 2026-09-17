@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "b432a48637d58d7e27fc8404b9b819adee2d88d2afca176ee080fc8991da874b",
+  "name": "IERC20PermitAllowed",
+  "kind": "interface",
+  "lines": 22,
+  "source": "interface IERC20PermitAllowed {\n    /// @notice Approve the spender to spend some tokens via the holder signature\n    /// @dev This is the permit interface used by DAI and CHAI\n    /// @param holder The address of the token holder, the token owner\n    /// @param spender The address of the token spender\n    /// @param nonce The holder's nonce, increases at each call to permit\n    /// @param expiry The timestamp at which the permit is no longer valid\n    /// @param allowed Boolean that sets approval amount, true for type(uint256).max and false for 0\n    /// @param v Must produce valid secp256k1 signature from the holder along with `r` and `s`\n    /// @param r Must produce valid secp256k1 signature from the holder along with `v` and `s`\n    /// @param s Must produce valid secp256k1 signature from the holder along with `r` and `v`\n    function permit(\n        address holder,\n        address spender,\n        uint256 nonce,\n        uint256 expiry,\n        bool allowed,\n        uint8 v,\n        bytes32 r,\n        bytes32 s\n    ) external;\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

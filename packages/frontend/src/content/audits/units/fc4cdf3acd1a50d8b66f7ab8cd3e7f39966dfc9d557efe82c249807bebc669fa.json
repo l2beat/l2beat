@@ -1,0 +1,760 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "fc4cdf3acd1a50d8b66f7ab8cd3e7f39966dfc9d557efe82c249807bebc669fa",
+  "name": "Proxy",
+  "kind": "abstract",
+  "lines": 67,
+  "source": "abstract contract Proxy {\n    /**\n     * @dev Delegates the current call to `implementation`.\n     *\n     * This function does not return to its internal call site, it will return directly to the external caller.\n     */\n    function _delegate(address implementation) internal virtual {\n        assembly {\n            // Copy msg.data. We take full control of memory in this inline assembly\n            // block because it will not return to Solidity code. We overwrite the\n            // Solidity scratch pad at memory position 0.\n            calldatacopy(0, 0, calldatasize())\n\n            // Call the implementation.\n            // out and outsize are 0 because we don't know the size yet.\n            let result := delegatecall(gas(), implementation, 0, calldatasize(), 0, 0)\n\n            // Copy the returned data.\n            returndatacopy(0, 0, returndatasize())\n\n            switch result\n            // delegatecall returns 0 on error.\n            case 0 { revert(0, returndatasize()) }\n            default { return(0, returndatasize()) }\n        }\n    }\n\n    /**\n     * @dev This is a virtual function that should be overridden so it returns the address to which the fallback function\n     * and {_fallback} should delegate.\n     */\n    function _implementation() internal view virtual returns (address);\n\n    /**\n     * @dev Delegates the current call to the address returned by `_implementation()`.\n     *\n     * This function does not return to its internal call site, it will return directly to the external caller.\n     */\n    function _fallback() internal virtual {\n        _beforeFallback();\n        _delegate(_implementation());\n    }\n\n    /**\n     * @dev Fallback function that delegates calls to the address returned by `_implementation()`. Will run if no other\n     * function in the contract matches the call data.\n     */\n    fallback() external payable virtual {\n        _fallback();\n    }\n\n    /**\n     * @dev Fallback function that delegates calls to the address returned by `_implementation()`. Will run if call data\n     * is empty.\n     */\n    receive() external payable virtual {\n        _fallback();\n    }\n\n    /**\n     * @dev Hook that is called before falling back to the implementation. Can happen as part of a manual `_fallback`\n     * call, or as part of the Solidity `fallback` or `receive` functions.\n     *\n     * If overridden should call `super._beforeFallback()`.\n     */\n    function _beforeFallback() internal virtual {}\n}",
+  "resolutions": {
+    "ba5b6c9584fb78fd": {
+      "status": "differs",
+      "coveredLines": 64,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "Proxy",
+        "similarity": 0.949,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/proxy/Proxy.sol",
+        "commit": "8fff875589443c607ac4ef2d201a6d8bec5a43c8",
+        "commitTimestamp": "2023-07-09T19:54:32Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/8fff875589443c607ac4ef2d201a6d8bec5a43c8/contracts/proxy/Proxy.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "audit",
+        "coverage": "Full review of the file at the Phase 2 audit commit.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 4
+      },
+      "diff": {
+        "added": 3,
+        "removed": 0,
+        "ignoredAdded": 5,
+        "ignoredRemoved": 0,
+        "unchanged": 64,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 50,
+            "oldLines": 6,
+            "newStart": 50,
+            "newLines": 14,
+            "lines": [
+              { "type": " ", "oldLine": 50, "newLine": 50, "text": "    }" },
+              { "type": " ", "oldLine": 51, "newLine": 51, "text": "" },
+              { "type": " ", "oldLine": 52, "newLine": 52, "text": "    /**" },
+              {
+                "type": "+",
+                "newLine": 53,
+                "text": "     * @dev Fallback function that delegates calls to the address returned by `_implementation()`. Will run if call data",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 54,
+                "text": "     * is empty.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 55,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 56,
+                "text": "    receive() external payable virtual {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 57,
+                "text": "        _fallback();",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 58, "text": "    }", "ignored": false },
+              { "type": "+", "newLine": 59, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 60,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 53,
+                "newLine": 61,
+                "text": "     * @dev Hook that is called before falling back to the implementation. Can happen as part of a manual `_fallback`"
+              },
+              {
+                "type": " ",
+                "oldLine": 54,
+                "newLine": 62,
+                "text": "     * call, or as part of the Solidity `fallback` or `receive` functions."
+              },
+              { "type": " ", "oldLine": 55, "newLine": 63, "text": "     *" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "9fa846564f4071bd": {
+      "status": "differs",
+      "coveredLines": 64,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "Proxy",
+        "similarity": 0.949,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/proxy/Proxy.sol",
+        "commit": "8fff875589443c607ac4ef2d201a6d8bec5a43c8",
+        "commitTimestamp": "2023-07-09T19:54:32Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/8fff875589443c607ac4ef2d201a6d8bec5a43c8/contracts/proxy/Proxy.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "audit",
+        "coverage": "Full review of the file at the Phase 2 audit commit.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 4
+      },
+      "diff": {
+        "added": 3,
+        "removed": 0,
+        "ignoredAdded": 5,
+        "ignoredRemoved": 0,
+        "unchanged": 64,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 50,
+            "oldLines": 6,
+            "newStart": 50,
+            "newLines": 14,
+            "lines": [
+              { "type": " ", "oldLine": 50, "newLine": 50, "text": "    }" },
+              { "type": " ", "oldLine": 51, "newLine": 51, "text": "" },
+              { "type": " ", "oldLine": 52, "newLine": 52, "text": "    /**" },
+              {
+                "type": "+",
+                "newLine": 53,
+                "text": "     * @dev Fallback function that delegates calls to the address returned by `_implementation()`. Will run if call data",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 54,
+                "text": "     * is empty.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 55,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 56,
+                "text": "    receive() external payable virtual {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 57,
+                "text": "        _fallback();",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 58, "text": "    }", "ignored": false },
+              { "type": "+", "newLine": 59, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 60,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 53,
+                "newLine": 61,
+                "text": "     * @dev Hook that is called before falling back to the implementation. Can happen as part of a manual `_fallback`"
+              },
+              {
+                "type": " ",
+                "oldLine": 54,
+                "newLine": 62,
+                "text": "     * call, or as part of the Solidity `fallback` or `receive` functions."
+              },
+              { "type": " ", "oldLine": 55, "newLine": 63, "text": "     *" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "bb55951394276893": {
+      "status": "differs",
+      "coveredLines": 64,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "Proxy",
+        "similarity": 0.949,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/proxy/Proxy.sol",
+        "commit": "8fff875589443c607ac4ef2d201a6d8bec5a43c8",
+        "commitTimestamp": "2023-07-09T19:54:32Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/8fff875589443c607ac4ef2d201a6d8bec5a43c8/contracts/proxy/Proxy.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "audit",
+        "coverage": "Full review of the file at the Phase 2 audit commit.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 4
+      },
+      "diff": {
+        "added": 3,
+        "removed": 0,
+        "ignoredAdded": 5,
+        "ignoredRemoved": 0,
+        "unchanged": 64,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 50,
+            "oldLines": 6,
+            "newStart": 50,
+            "newLines": 14,
+            "lines": [
+              { "type": " ", "oldLine": 50, "newLine": 50, "text": "    }" },
+              { "type": " ", "oldLine": 51, "newLine": 51, "text": "" },
+              { "type": " ", "oldLine": 52, "newLine": 52, "text": "    /**" },
+              {
+                "type": "+",
+                "newLine": 53,
+                "text": "     * @dev Fallback function that delegates calls to the address returned by `_implementation()`. Will run if call data",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 54,
+                "text": "     * is empty.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 55,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 56,
+                "text": "    receive() external payable virtual {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 57,
+                "text": "        _fallback();",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 58, "text": "    }", "ignored": false },
+              { "type": "+", "newLine": 59, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 60,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 53,
+                "newLine": 61,
+                "text": "     * @dev Hook that is called before falling back to the implementation. Can happen as part of a manual `_fallback`"
+              },
+              {
+                "type": " ",
+                "oldLine": 54,
+                "newLine": 62,
+                "text": "     * call, or as part of the Solidity `fallback` or `receive` functions."
+              },
+              { "type": " ", "oldLine": 55, "newLine": 63, "text": "     *" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "d293c6ecba42b698": {
+      "status": "differs",
+      "coveredLines": 64,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "Proxy",
+        "similarity": 0.949,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/proxy/Proxy.sol",
+        "commit": "8fff875589443c607ac4ef2d201a6d8bec5a43c8",
+        "commitTimestamp": "2023-07-09T19:54:32Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/8fff875589443c607ac4ef2d201a6d8bec5a43c8/contracts/proxy/Proxy.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "audit",
+        "coverage": "Full review of the file at the Phase 2 audit commit.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 4
+      },
+      "diff": {
+        "added": 3,
+        "removed": 0,
+        "ignoredAdded": 5,
+        "ignoredRemoved": 0,
+        "unchanged": 64,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 50,
+            "oldLines": 6,
+            "newStart": 50,
+            "newLines": 14,
+            "lines": [
+              { "type": " ", "oldLine": 50, "newLine": 50, "text": "    }" },
+              { "type": " ", "oldLine": 51, "newLine": 51, "text": "" },
+              { "type": " ", "oldLine": 52, "newLine": 52, "text": "    /**" },
+              {
+                "type": "+",
+                "newLine": 53,
+                "text": "     * @dev Fallback function that delegates calls to the address returned by `_implementation()`. Will run if call data",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 54,
+                "text": "     * is empty.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 55,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 56,
+                "text": "    receive() external payable virtual {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 57,
+                "text": "        _fallback();",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 58, "text": "    }", "ignored": false },
+              { "type": "+", "newLine": 59, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 60,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 53,
+                "newLine": 61,
+                "text": "     * @dev Hook that is called before falling back to the implementation. Can happen as part of a manual `_fallback`"
+              },
+              {
+                "type": " ",
+                "oldLine": 54,
+                "newLine": 62,
+                "text": "     * call, or as part of the Solidity `fallback` or `receive` functions."
+              },
+              { "type": " ", "oldLine": 55, "newLine": 63, "text": "     *" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "f9658cd3a9a22004": {
+      "status": "differs",
+      "coveredLines": 65,
+      "match": {
+        "origin": "library",
+        "collection": "openzeppelin",
+        "relation": { "type": "library" },
+        "rank": 3,
+        "matchedBy": "name",
+        "auditedName": "Proxy",
+        "similarity": 0.949,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/proxy/Proxy.sol",
+        "commit": "8fff875589443c607ac4ef2d201a6d8bec5a43c8",
+        "commitTimestamp": "2023-07-09T19:54:32Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/8fff875589443c607ac4ef2d201a6d8bec5a43c8/contracts/proxy/Proxy.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "audit",
+        "coverage": "Full review of the file at the Phase 2 audit commit.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 4
+      },
+      "diff": {
+        "added": 3,
+        "removed": 0,
+        "ignoredAdded": 10,
+        "ignoredRemoved": 4,
+        "unchanged": 65,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 2,
+            "oldLines": 9,
+            "newStart": 2,
+            "newLines": 10,
+            "lines": [
+              { "type": " ", "oldLine": 2, "newLine": 2, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "     * @dev Delegates the current call to `implementation`."
+              },
+              { "type": " ", "oldLine": 4, "newLine": 4, "text": "     *" },
+              {
+                "type": "-",
+                "oldLine": 5,
+                "text": "     * This function does not return to its internal call site, it will return directly to the external caller.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 5,
+                "text": "     * This function does not return to its internall call site, it will return directly to the external caller.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 6, "newLine": 6, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 7,
+                "newLine": 7,
+                "text": "    function _delegate(address implementation) internal virtual {"
+              },
+              {
+                "type": "+",
+                "newLine": 8,
+                "text": "        // solhint-disable-next-line no-inline-assembly",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 8,
+                "newLine": 9,
+                "text": "        assembly {"
+              },
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 10,
+                "text": "            // Copy msg.data. We take full control of memory in this inline assembly"
+              },
+              {
+                "type": " ",
+                "oldLine": 10,
+                "newLine": 11,
+                "text": "            // block because it will not return to Solidity code. We overwrite the"
+              }
+            ]
+          },
+          {
+            "oldStart": 26,
+            "oldLines": 7,
+            "newStart": 27,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 26, "newLine": 27, "text": "    }" },
+              { "type": " ", "oldLine": 27, "newLine": 28, "text": "" },
+              { "type": " ", "oldLine": 28, "newLine": 29, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 29,
+                "text": "     * @dev This is a virtual function that should be overridden so it returns the address to which the fallback function",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 30,
+                "text": "     * @dev This is a virtual function that should be overriden so it returns the address to which the fallback function",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 30,
+                "newLine": 31,
+                "text": "     * and {_fallback} should delegate."
+              },
+              { "type": " ", "oldLine": 31, "newLine": 32, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 32,
+                "newLine": 33,
+                "text": "    function _implementation() internal view virtual returns (address);"
+              }
+            ]
+          },
+          {
+            "oldStart": 34,
+            "oldLines": 7,
+            "newStart": 35,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 34, "newLine": 35, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 35,
+                "newLine": 36,
+                "text": "     * @dev Delegates the current call to the address returned by `_implementation()`."
+              },
+              { "type": " ", "oldLine": 36, "newLine": 37, "text": "     *" },
+              {
+                "type": "-",
+                "oldLine": 37,
+                "text": "     * This function does not return to its internal call site, it will return directly to the external caller.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 38,
+                "text": "     * This function does not return to its internall call site, it will return directly to the external caller.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 38, "newLine": 39, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 39,
+                "newLine": 40,
+                "text": "    function _fallback() internal virtual {"
+              },
+              {
+                "type": " ",
+                "oldLine": 40,
+                "newLine": 41,
+                "text": "        _beforeFallback();"
+              }
+            ]
+          },
+          {
+            "oldStart": 50,
+            "oldLines": 10,
+            "newStart": 51,
+            "newLines": 18,
+            "lines": [
+              { "type": " ", "oldLine": 50, "newLine": 51, "text": "    }" },
+              { "type": " ", "oldLine": 51, "newLine": 52, "text": "" },
+              { "type": " ", "oldLine": 52, "newLine": 53, "text": "    /**" },
+              {
+                "type": "+",
+                "newLine": 54,
+                "text": "     * @dev Fallback function that delegates calls to the address returned by `_implementation()`. Will run if call data",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 55,
+                "text": "     * is empty.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 56,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 57,
+                "text": "    receive() external payable virtual {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 58,
+                "text": "        _fallback();",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 59, "text": "    }", "ignored": false },
+              { "type": "+", "newLine": 60, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 61,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 53,
+                "newLine": 62,
+                "text": "     * @dev Hook that is called before falling back to the implementation. Can happen as part of a manual `_fallback`"
+              },
+              {
+                "type": " ",
+                "oldLine": 54,
+                "newLine": 63,
+                "text": "     * call, or as part of the Solidity `fallback` or `receive` functions."
+              },
+              { "type": " ", "oldLine": 55, "newLine": 64, "text": "     *" },
+              {
+                "type": "-",
+                "oldLine": 56,
+                "text": "     * If overridden should call `super._beforeFallback()`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 65,
+                "text": "     * If overriden should call `super._beforeFallback()`.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 57, "newLine": 66, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 58,
+                "newLine": 67,
+                "text": "    function _beforeFallback() internal virtual {}"
+              },
+              { "type": " ", "oldLine": 59, "newLine": 68, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "1f5c32d18cf7148d": {
+      "status": "differs",
+      "coveredLines": 64,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "Proxy",
+        "similarity": 0.949,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/proxy/Proxy.sol",
+        "commit": "8fff875589443c607ac4ef2d201a6d8bec5a43c8",
+        "commitTimestamp": "2023-07-09T19:54:32Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/8fff875589443c607ac4ef2d201a6d8bec5a43c8/contracts/proxy/Proxy.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "audit",
+        "coverage": "Full review of the file at the Phase 2 audit commit.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 4
+      },
+      "diff": {
+        "added": 3,
+        "removed": 0,
+        "ignoredAdded": 5,
+        "ignoredRemoved": 0,
+        "unchanged": 64,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 50,
+            "oldLines": 6,
+            "newStart": 50,
+            "newLines": 14,
+            "lines": [
+              { "type": " ", "oldLine": 50, "newLine": 50, "text": "    }" },
+              { "type": " ", "oldLine": 51, "newLine": 51, "text": "" },
+              { "type": " ", "oldLine": 52, "newLine": 52, "text": "    /**" },
+              {
+                "type": "+",
+                "newLine": 53,
+                "text": "     * @dev Fallback function that delegates calls to the address returned by `_implementation()`. Will run if call data",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 54,
+                "text": "     * is empty.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 55,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 56,
+                "text": "    receive() external payable virtual {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 57,
+                "text": "        _fallback();",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 58, "text": "    }", "ignored": false },
+              { "type": "+", "newLine": 59, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 60,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 53,
+                "newLine": 61,
+                "text": "     * @dev Hook that is called before falling back to the implementation. Can happen as part of a manual `_fallback`"
+              },
+              {
+                "type": " ",
+                "oldLine": 54,
+                "newLine": 62,
+                "text": "     * call, or as part of the Solidity `fallback` or `receive` functions."
+              },
+              { "type": " ", "oldLine": 55, "newLine": 63, "text": "     *" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

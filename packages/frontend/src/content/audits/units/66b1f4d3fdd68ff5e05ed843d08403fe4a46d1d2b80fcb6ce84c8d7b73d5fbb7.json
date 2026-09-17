@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "66b1f4d3fdd68ff5e05ed843d08403fe4a46d1d2b80fcb6ce84c8d7b73d5fbb7",
+  "name": "PeripheryPaymentsWithFeeExtended",
+  "kind": "abstract",
+  "lines": 23,
+  "source": "abstract contract PeripheryPaymentsWithFeeExtended is\n    IPeripheryPaymentsWithFeeExtended,\n    PeripheryPaymentsExtended,\n    PeripheryPaymentsWithFee\n{\n    /// @inheritdoc IPeripheryPaymentsWithFeeExtended\n    function unwrapWETH9WithFee(uint256 amountMinimum, uint256 feeBips, address feeRecipient)\n        external\n        payable\n        override\n    {\n        unwrapWETH9WithFee(amountMinimum, msg.sender, feeBips, feeRecipient);\n    }\n\n    /// @inheritdoc IPeripheryPaymentsWithFeeExtended\n    function sweepTokenWithFee(address token, uint256 amountMinimum, uint256 feeBips, address feeRecipient)\n        external\n        payable\n        override\n    {\n        sweepTokenWithFee(token, amountMinimum, msg.sender, feeBips, feeRecipient);\n    }\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

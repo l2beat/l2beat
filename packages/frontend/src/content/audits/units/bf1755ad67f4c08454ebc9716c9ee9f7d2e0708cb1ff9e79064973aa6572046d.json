@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "bf1755ad67f4c08454ebc9716c9ee9f7d2e0708cb1ff9e79064973aa6572046d",
+  "name": "ERC20",
+  "kind": "interface",
+  "lines": 1,
+  "source": "interface ERC20 {}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

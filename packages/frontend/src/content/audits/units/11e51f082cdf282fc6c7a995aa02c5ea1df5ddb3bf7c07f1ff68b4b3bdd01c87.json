@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "11e51f082cdf282fc6c7a995aa02c5ea1df5ddb3bf7c07f1ff68b4b3bdd01c87",
+  "name": "ERC1155Burnable",
+  "kind": "abstract",
+  "lines": 19,
+  "source": "abstract contract ERC1155Burnable is ERC1155 {\n    function burn(address account, uint256 id, uint256 value) public virtual {\n        require(\n            account == _msgSender() || isApprovedForAll(account, _msgSender()),\n            \"ERC1155: caller is not token owner nor approved\"\n        );\n\n        _burn(account, id, value);\n    }\n\n    function burnBatch(address account, uint256[] memory ids, uint256[] memory values) public virtual {\n        require(\n            account == _msgSender() || isApprovedForAll(account, _msgSender()),\n            \"ERC1155: caller is not token owner nor approved\"\n        );\n\n        _burnBatch(account, ids, values);\n    }\n}",
+  "resolutions": {
+    "bb55951394276893": {
+      "status": "library",
+      "coveredLines": 19,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "ERC1155Burnable",
+        "similarity": 1,
+        "reportId": "openzeppelin/formal-verification__fv__reports__2022-05",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/token/ERC1155/extensions/ERC1155Burnable.sol",
+        "commit": "109778c17c7020618ea4e035efb9f0f9b82d43ca",
+        "commitTimestamp": "2022-06-14T18:38:04Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/109778c17c7020618ea4e035efb9f0f9b82d43ca/contracts/token/ERC1155/extensions/ERC1155Burnable.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "formal verification",
+        "coverage": "Certora formal verification of 6 CVL rules on burn/burnBatch authorization, proportionality and equivalence; coverage is limited to the specified properties.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 4
+      },
+      "warnings": []
+    }
+  }
+}

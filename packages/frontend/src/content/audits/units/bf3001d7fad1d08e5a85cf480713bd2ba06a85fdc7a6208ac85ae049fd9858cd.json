@@ -1,0 +1,106 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "bf3001d7fad1d08e5a85cf480713bd2ba06a85fdc7a6208ac85ae049fd9858cd",
+  "name": "Encoding",
+  "kind": "library",
+  "lines": 138,
+  "source": "library Encoding {\n    /**\n     * @notice RLP encodes the L2 transaction that would be generated when a given deposit is sent\n     *         to the L2 system. Useful for searching for a deposit in the L2 system. The\n     *         transaction is prefixed with 0x7e to identify its EIP-2718 type.\n     *\n     * @param _tx User deposit transaction to encode.\n     *\n     * @return RLP encoded L2 deposit transaction.\n     */\n    function encodeDepositTransaction(Types.UserDepositTransaction memory _tx) internal pure returns (bytes memory) {\n        bytes32 source = Hashing.hashDepositSource(_tx.l1BlockHash, _tx.logIndex);\n        bytes[] memory raw = new bytes[](8);\n        raw[0] = RLPWriter.writeBytes(abi.encodePacked(source));\n        raw[1] = RLPWriter.writeAddress(_tx.from);\n        raw[2] = _tx.isCreation ? RLPWriter.writeBytes(\"\") : RLPWriter.writeAddress(_tx.to);\n        raw[3] = RLPWriter.writeUint(_tx.mint);\n        raw[4] = RLPWriter.writeUint(_tx.value);\n        raw[5] = RLPWriter.writeUint(uint256(_tx.gasLimit));\n        raw[6] = RLPWriter.writeBool(false);\n        raw[7] = RLPWriter.writeBytes(_tx.data);\n        return abi.encodePacked(uint8(0x7e), RLPWriter.writeList(raw));\n    }\n\n    /**\n     * @notice Encodes the cross domain message based on the version that is encoded into the\n     *         message nonce.\n     *\n     * @param _nonce    Message nonce with version encoded into the first two bytes.\n     * @param _sender   Address of the sender of the message.\n     * @param _target   Address of the target of the message.\n     * @param _value    ETH value to send to the target.\n     * @param _gasLimit Gas limit to use for the message.\n     * @param _data     Data to send with the message.\n     *\n     * @return Encoded cross domain message.\n     */\n    function encodeCrossDomainMessage(\n        uint256 _nonce,\n        address _sender,\n        address _target,\n        uint256 _value,\n        uint256 _gasLimit,\n        bytes memory _data\n    ) internal pure returns (bytes memory) {\n        (, uint16 version) = decodeVersionedNonce(_nonce);\n        if (version == 0) {\n            return encodeCrossDomainMessageV0(_target, _sender, _data, _nonce);\n        } else if (version == 1) {\n            return encodeCrossDomainMessageV1(_nonce, _sender, _target, _value, _gasLimit, _data);\n        } else {\n            revert(\"Encoding: unknown cross domain message version\");\n        }\n    }\n\n    /**\n     * @notice Encodes a cross domain message based on the V0 (legacy) encoding.\n     *\n     * @param _target Address of the target of the message.\n     * @param _sender Address of the sender of the message.\n     * @param _data   Data to send with the message.\n     * @param _nonce  Message nonce.\n     *\n     * @return Encoded cross domain message.\n     */\n    function encodeCrossDomainMessageV0(address _target, address _sender, bytes memory _data, uint256 _nonce)\n        internal\n        pure\n        returns (bytes memory)\n    {\n        return abi.encodeWithSignature(\"relayMessage(address,address,bytes,uint256)\", _target, _sender, _data, _nonce);\n    }\n\n    /**\n     * @notice Encodes a cross domain message based on the V1 (current) encoding.\n     *\n     * @param _nonce    Message nonce.\n     * @param _sender   Address of the sender of the message.\n     * @param _target   Address of the target of the message.\n     * @param _value    ETH value to send to the target.\n     * @param _gasLimit Gas limit to use for the message.\n     * @param _data     Data to send with the message.\n     *\n     * @return Encoded cross domain message.\n     */\n    function encodeCrossDomainMessageV1(\n        uint256 _nonce,\n        address _sender,\n        address _target,\n        uint256 _value,\n        uint256 _gasLimit,\n        bytes memory _data\n    ) internal pure returns (bytes memory) {\n        return abi.encodeWithSignature(\n            \"relayMessage(uint256,address,address,uint256,uint256,bytes)\",\n            _nonce,\n            _sender,\n            _target,\n            _value,\n            _gasLimit,\n            _data\n        );\n    }\n\n    /**\n     * @notice Adds a version number into the first two bytes of a message nonce.\n     *\n     * @param _nonce   Message nonce to encode into.\n     * @param _version Version number to encode into the message nonce.\n     *\n     * @return Message nonce with version encoded into the first two bytes.\n     */\n    function encodeVersionedNonce(uint240 _nonce, uint16 _version) internal pure returns (uint256) {\n        uint256 nonce;\n        assembly {\n            nonce := or(shl(240, _version), _nonce)\n        }\n        return nonce;\n    }\n\n    /**\n     * @notice Pulls the version out of a version-encoded nonce.\n     *\n     * @param _nonce Message nonce with version encoded into the first two bytes.\n     *\n     * @return Nonce without encoded version.\n     * @return Version of the message.\n     */\n    function decodeVersionedNonce(uint256 _nonce) internal pure returns (uint240, uint16) {\n        uint240 nonce;\n        uint16 version;\n        assembly {\n            nonce := and(_nonce, 0x0000ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff)\n            version := shr(240, _nonce)\n        }\n        return (nonce, version);\n    }\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "identical",
+      "coveredLines": 138,
+      "match": {
+        "origin": "own",
+        "collection": "optimism",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "Encoding",
+        "similarity": 1,
+        "reportId": "optimism/trailofbits-invariant-testing-2022-11",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts-bedrock/contracts/libraries/Encoding.sol",
+        "commit": "b31d35b67755479645dd150e7cc8c6710f0b4a56",
+        "commitTimestamp": "2022-08-17T20:25:46Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/b31d35b67755479645dd150e7cc8c6710f0b4a56/packages/contracts-bedrock/contracts/libraries/Encoding.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Invariant documentation and Echidna property tests only; not a manual security review. Several documented properties are marked Not Tested.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 6
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 2,
+        "ignoredRemoved": 3,
+        "unchanged": 138,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 9,
+            "newStart": 1,
+            "newLines": 8,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "library Encoding {"
+              },
+              { "type": " ", "oldLine": 2, "newLine": 2, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "     * @notice RLP encodes the L2 transaction that would be generated when a given deposit is sent"
+              },
+              {
+                "type": "-",
+                "oldLine": 4,
+                "text": "     *         to the L2 system. Useful for searching for a deposit in the L2 system.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 5,
+                "text": "     *         This currently only supports user deposits and not system",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 6,
+                "text": "     *         transactions.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 4,
+                "text": "     *         to the L2 system. Useful for searching for a deposit in the L2 system. The",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 5,
+                "text": "     *         transaction is prefixed with 0x7e to identify its EIP-2718 type.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 7, "newLine": 6, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 8,
+                "newLine": 7,
+                "text": "     * @param _tx User deposit transaction to encode."
+              },
+              { "type": " ", "oldLine": 9, "newLine": 8, "text": "     *" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,91 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "4f230f1375fb3a2f4167a9c48019d9d2864a9b2b687cd675c13bb9b2d7680d6b",
+  "name": "SignatureDecoder",
+  "kind": "contract",
+  "lines": 43,
+  "source": "contract SignatureDecoder {\n    /// @dev Recovers address who signed the message\n    /// @param messageHash operation ethereum signed message hash\n    /// @param messageSignature message `txHash` signature\n    /// @param pos which signature to read\n    function recoverKey(bytes32 messageHash, bytes memory messageSignature, uint256 pos)\n        internal\n        pure\n        returns (address)\n    {\n        uint8 v;\n        bytes32 r;\n        bytes32 s;\n        (v, r, s) = signatureSplit(messageSignature, pos);\n        return ecrecover(messageHash, v, r, s);\n    }\n\n    /// @dev divides bytes signature into `uint8 v, bytes32 r, bytes32 s`.\n    /// @notice Make sure to peform a bounds check for @param pos, to avoid out of bounds access on @param signatures\n    /// @param pos which signature to read. A prior bounds check of this parameter should be performed, to avoid out of bounds access\n    /// @param signatures concatenated rsv signatures\n    function signatureSplit(bytes memory signatures, uint256 pos)\n        internal\n        pure\n        returns (uint8 v, bytes32 r, bytes32 s)\n    {\n        // The signature format is a compact form of:\n        //   {bytes32 r}{bytes32 s}{uint8 v}\n        // Compact means, uint8 is not padded to 32 bytes.\n        // solium-disable-next-line security/no-inline-assembly\n        assembly {\n            let signaturePos := mul(0x41, pos)\n            r := mload(add(signatures, add(signaturePos, 0x20)))\n            s := mload(add(signatures, add(signaturePos, 0x40)))\n            // Here we are loading the last 32 bytes, including 31 bytes\n            // of 's'. There is no 'mload8' to do this.\n            //\n            // 'byte' is not working due to the Solidity parser, so lets\n            // use the second best option, 'and'\n            v := and(mload(add(signatures, add(signaturePos, 0x41))), 0xff)\n        }\n    }\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "library",
+      "coveredLines": 43,
+      "match": {
+        "origin": "stack",
+        "collection": "safe",
+        "relation": { "type": "template", "template": "GnosisSafe" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "SignatureDecoder",
+        "similarity": 1,
+        "reportId": "safe/certora-safe-allowance-v1-0-0",
+        "repository": "safe-fndn/safe-modules",
+        "path": "modules/allowances/contracts/SignatureDecoder.sol",
+        "commit": "252e864496d3a7659195ab5b4418985678887ece",
+        "commitTimestamp": "2026-02-05T09:02:26Z",
+        "url": "https://github.com/safe-fndn/safe-modules/blob/252e864496d3a7659195ab5b4418985678887ece/modules/allowances/contracts/SignatureDecoder.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "Initial review",
+        "coverage": "Full manual review of the scoped source.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 10
+      },
+      "warnings": []
+    },
+    "f9658cd3a9a22004": {
+      "status": "library",
+      "coveredLines": 43,
+      "match": {
+        "origin": "stack",
+        "collection": "safe",
+        "relation": { "type": "template", "template": "GnosisSafe" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "SignatureDecoder",
+        "similarity": 1,
+        "reportId": "safe/certora-safe-allowance-v1-0-0",
+        "repository": "safe-fndn/safe-modules",
+        "path": "modules/allowances/contracts/SignatureDecoder.sol",
+        "commit": "252e864496d3a7659195ab5b4418985678887ece",
+        "commitTimestamp": "2026-02-05T09:02:26Z",
+        "url": "https://github.com/safe-fndn/safe-modules/blob/252e864496d3a7659195ab5b4418985678887ece/modules/allowances/contracts/SignatureDecoder.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "Initial review",
+        "coverage": "Full manual review of the scoped source.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 10
+      },
+      "warnings": []
+    },
+    "1f5c32d18cf7148d": {
+      "status": "library",
+      "coveredLines": 43,
+      "match": {
+        "origin": "stack",
+        "collection": "safe",
+        "relation": { "type": "template", "template": "GnosisSafe" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "SignatureDecoder",
+        "similarity": 1,
+        "reportId": "safe/certora-safe-allowance-v1-0-0",
+        "repository": "safe-fndn/safe-modules",
+        "path": "modules/allowances/contracts/SignatureDecoder.sol",
+        "commit": "252e864496d3a7659195ab5b4418985678887ece",
+        "commitTimestamp": "2026-02-05T09:02:26Z",
+        "url": "https://github.com/safe-fndn/safe-modules/blob/252e864496d3a7659195ab5b4418985678887ece/modules/allowances/contracts/SignatureDecoder.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "Initial review",
+        "coverage": "Full manual review of the scoped source.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 10
+      },
+      "warnings": []
+    }
+  }
+}

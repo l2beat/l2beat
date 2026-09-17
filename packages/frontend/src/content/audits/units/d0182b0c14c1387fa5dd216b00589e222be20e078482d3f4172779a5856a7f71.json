@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "d0182b0c14c1387fa5dd216b00589e222be20e078482d3f4172779a5856a7f71",
+  "name": "FiatTokenV1_1",
+  "kind": "contract",
+  "lines": 1,
+  "source": "contract FiatTokenV1_1 is FiatTokenV1, Rescuable {}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

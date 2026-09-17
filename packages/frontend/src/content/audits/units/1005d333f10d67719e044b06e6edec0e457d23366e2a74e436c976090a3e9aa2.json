@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "1005d333f10d67719e044b06e6edec0e457d23366e2a74e436c976090a3e9aa2",
+  "name": "validate.nr",
+  "kind": "program",
+  "lines": 8,
+  "source": "// Returns whether to validate the output of the circuit. Eventually we'll want to change this\n// to `!std::runtime::is_unconstrained`, so we skip unneeded validations when we\n// do not need to generate a proof. But for now, we always validate to make sure we catch\n// errors earlier, as most of our tests run with real proofs disabled, which means validation\n// checks get skipped.\npub fn should_validate_output() -> bool {\n    true\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,91 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "e1a771493cf84bde70f4b548c52f271d98fe1341f9837fa9b3bb1406ddb02be8",
+  "name": "ModuleManager",
+  "kind": "contract",
+  "lines": 129,
+  "source": "contract ModuleManager is SelfAuthorized, Executor {\n    event EnabledModule(Module module);\n    event DisabledModule(Module module);\n    event ExecutionFromModuleSuccess(address indexed module);\n    event ExecutionFromModuleFailure(address indexed module);\n\n    address internal constant SENTINEL_MODULES = address(0x1);\n\n    mapping(address => address) internal modules;\n\n    function setupModules(address to, bytes memory data) internal {\n        require(modules[SENTINEL_MODULES] == address(0), \"Modules have already been initialized\");\n        modules[SENTINEL_MODULES] = SENTINEL_MODULES;\n        if (to != address(0)) {\n            // Setup has to complete successfully or transaction fails.\n            require(executeDelegateCall(to, data, gasleft()), \"Could not finish initialization\");\n        }\n    }\n\n    /// @dev Allows to add a module to the whitelist.\n    ///      This can only be done via a Safe transaction.\n    /// @param module Module to be whitelisted.\n    function enableModule(Module module) public authorized {\n        // Module address cannot be null or sentinel.\n        require(address(module) != address(0) && address(module) != SENTINEL_MODULES, \"Invalid module address provided\");\n        // Module cannot be added twice.\n        require(modules[address(module)] == address(0), \"Module has already been added\");\n        modules[address(module)] = modules[SENTINEL_MODULES];\n        modules[SENTINEL_MODULES] = address(module);\n        emit EnabledModule(module);\n    }\n\n    /// @dev Allows to remove a module from the whitelist.\n    ///      This can only be done via a Safe transaction.\n    /// @param prevModule Module that pointed to the module to be removed in the linked list\n    /// @param module Module to be removed.\n    function disableModule(Module prevModule, Module module) public authorized {\n        // Validate module address and check that it corresponds to module index.\n        require(address(module) != address(0) && address(module) != SENTINEL_MODULES, \"Invalid module address provided\");\n        require(modules[address(prevModule)] == address(module), \"Invalid prevModule, module pair provided\");\n        modules[address(prevModule)] = modules[address(module)];\n        modules[address(module)] = address(0);\n        emit DisabledModule(module);\n    }\n\n    /// @dev Allows a Module to execute a Safe transaction without any further confirmations.\n    /// @param to Destination address of module transaction.\n    /// @param value Ether value of module transaction.\n    /// @param data Data payload of module transaction.\n    /// @param operation Operation type of module transaction.\n    function execTransactionFromModule(address to, uint256 value, bytes memory data, Enum.Operation operation)\n        public\n        returns (bool success)\n    {\n        // Only whitelisted modules are allowed.\n        require(\n            msg.sender != SENTINEL_MODULES && modules[msg.sender] != address(0),\n            \"Method can only be called from an enabled module\"\n        );\n        // Execute transaction without further confirmations.\n        success = execute(to, value, data, operation, gasleft());\n        if (success) {\n            emit ExecutionFromModuleSuccess(msg.sender);\n        } else {\n            emit ExecutionFromModuleFailure(msg.sender);\n        }\n    }\n\n    /// @dev Allows a Module to execute a Safe transaction without any further confirmations and return data\n    /// @param to Destination address of module transaction.\n    /// @param value Ether value of module transaction.\n    /// @param data Data payload of module transaction.\n    /// @param operation Operation type of module transaction.\n    function execTransactionFromModuleReturnData(address to, uint256 value, bytes memory data, Enum.Operation operation)\n        public\n        returns (bool success, bytes memory returnData)\n    {\n        success = execTransactionFromModule(to, value, data, operation);\n        // solium-disable-next-line security/no-inline-assembly\n        assembly {\n            // Load free memory location\n            let ptr := mload(0x40)\n            // We allocate memory for the return data by setting the free memory location to\n            // current free memory location + data size + 32 bytes for data size value\n            mstore(0x40, add(ptr, add(returndatasize(), 0x20)))\n            // Store the size\n            mstore(ptr, returndatasize())\n            // Store the data\n            returndatacopy(add(ptr, 0x20), 0, returndatasize())\n            // Point the return data to the correct memory location\n            returnData := ptr\n        }\n    }\n\n    /// @dev Returns array of first 10 modules.\n    /// @return Array of modules.\n    function getModules() public view returns (address[] memory) {\n        (address[] memory array,) = getModulesPaginated(SENTINEL_MODULES, 10);\n        return array;\n    }\n\n    /// @dev Returns array of modules.\n    /// @param start Start of the page.\n    /// @param pageSize Maximum number of modules that should be returned.\n    /// @return Array of modules.\n    function getModulesPaginated(address start, uint256 pageSize)\n        public\n        view\n        returns (address[] memory array, address next)\n    {\n        // Init array with max page size\n        array = new address[](pageSize);\n\n        // Populate return array\n        uint256 moduleCount = 0;\n        address currentModule = modules[start];\n        while (currentModule != address(0x0) && currentModule != SENTINEL_MODULES && moduleCount < pageSize) {\n            array[moduleCount] = currentModule;\n            currentModule = modules[currentModule];\n            moduleCount++;\n        }\n        next = currentModule;\n        // Set correct size of returned array\n        // solium-disable-next-line security/no-inline-assembly\n        assembly {\n            mstore(array, moduleCount)\n        }\n    }\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "library",
+      "coveredLines": 129,
+      "match": {
+        "origin": "stack",
+        "collection": "safe",
+        "relation": { "type": "template", "template": "GnosisSafe" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "ModuleManager",
+        "similarity": 1,
+        "reportId": "safe/g0-safe-1-1-1",
+        "repository": "safe-fndn/safe-smart-account",
+        "path": "contracts/base/ModuleManager.sol",
+        "commit": "2df0b2e0ad5d0f7ab5423e7f5baa72b2456d32ae",
+        "commitTimestamp": "2019-12-09T21:54:52Z",
+        "url": "https://github.com/safe-fndn/safe-smart-account/blob/2df0b2e0ad5d0f7ab5423e7f5baa72b2456d32ae/contracts/base/ModuleManager.sol",
+        "auditStatus": "partially_audited_with_no_major_findings",
+        "reviewPhase": "v1.1.1 review",
+        "coverage": "Review of v1.1.1 changes and the report appendix issues.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 8
+      },
+      "warnings": []
+    },
+    "f9658cd3a9a22004": {
+      "status": "library",
+      "coveredLines": 129,
+      "match": {
+        "origin": "stack",
+        "collection": "safe",
+        "relation": { "type": "template", "template": "GnosisSafe" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "ModuleManager",
+        "similarity": 1,
+        "reportId": "safe/g0-safe-1-1-1",
+        "repository": "safe-fndn/safe-smart-account",
+        "path": "contracts/base/ModuleManager.sol",
+        "commit": "2df0b2e0ad5d0f7ab5423e7f5baa72b2456d32ae",
+        "commitTimestamp": "2019-12-09T21:54:52Z",
+        "url": "https://github.com/safe-fndn/safe-smart-account/blob/2df0b2e0ad5d0f7ab5423e7f5baa72b2456d32ae/contracts/base/ModuleManager.sol",
+        "auditStatus": "partially_audited_with_no_major_findings",
+        "reviewPhase": "v1.1.1 review",
+        "coverage": "Review of v1.1.1 changes and the report appendix issues.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 8
+      },
+      "warnings": []
+    },
+    "1f5c32d18cf7148d": {
+      "status": "library",
+      "coveredLines": 129,
+      "match": {
+        "origin": "stack",
+        "collection": "safe",
+        "relation": { "type": "template", "template": "GnosisSafe" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "ModuleManager",
+        "similarity": 1,
+        "reportId": "safe/g0-safe-1-1-1",
+        "repository": "safe-fndn/safe-smart-account",
+        "path": "contracts/base/ModuleManager.sol",
+        "commit": "2df0b2e0ad5d0f7ab5423e7f5baa72b2456d32ae",
+        "commitTimestamp": "2019-12-09T21:54:52Z",
+        "url": "https://github.com/safe-fndn/safe-smart-account/blob/2df0b2e0ad5d0f7ab5423e7f5baa72b2456d32ae/contracts/base/ModuleManager.sol",
+        "auditStatus": "partially_audited_with_no_major_findings",
+        "reviewPhase": "v1.1.1 review",
+        "coverage": "Review of v1.1.1 changes and the report appendix issues.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 8
+      },
+      "warnings": []
+    }
+  }
+}

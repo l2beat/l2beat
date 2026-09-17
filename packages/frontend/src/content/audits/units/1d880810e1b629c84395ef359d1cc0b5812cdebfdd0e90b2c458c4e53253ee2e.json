@@ -1,0 +1,3138 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "1d880810e1b629c84395ef359d1cc0b5812cdebfdd0e90b2c458c4e53253ee2e",
+  "name": "WETH98",
+  "kind": "contract",
+  "lines": 128,
+  "source": "contract WETH98 {\n    /// @notice Returns the number of decimals the token uses.\n    /// @return The number of decimals the token uses.\n    uint8 public constant decimals = 18;\n\n    mapping(address => uint256) internal _balanceOf;\n    mapping(address => mapping(address => uint256)) internal _allowance;\n\n    /// @notice Emitted when an approval is made.\n    /// @param src The address that approved the transfer.\n    /// @param guy The address that was approved to transfer.\n    /// @param wad The amount that was approved to transfer.\n    event Approval(address indexed src, address indexed guy, uint256 wad);\n\n    /// @notice Emitted when a transfer is made.\n    /// @param src The address that transferred the WETH.\n    /// @param dst The address that received the WETH.\n    /// @param wad The amount of WETH that was transferred.\n    event Transfer(address indexed src, address indexed dst, uint256 wad);\n\n    /// @notice Emitted when a deposit is made.\n    /// @param dst The address that deposited the WETH.\n    /// @param wad The amount of WETH that was deposited.\n    event Deposit(address indexed dst, uint256 wad);\n\n    /// @notice Emitted when a withdrawal is made.\n    /// @param src The address that withdrew the WETH.\n    /// @param wad The amount of WETH that was withdrawn.\n    event Withdrawal(address indexed src, uint256 wad);\n\n    /// @notice Pipes to deposit.\n    receive() external payable {\n        deposit();\n    }\n\n    /// @notice Pipes to deposit.\n    fallback() external payable {\n        deposit();\n    }\n\n    /// @notice Returns the name of the token.\n    /// @return name_ The name of the token.\n    function name() external view virtual returns (string memory) {\n        return \"Wrapped Ether\";\n    }\n\n    /// @notice Returns the symbol of the token.\n    /// @return symbol_ The symbol of the token.\n    function symbol() external view virtual returns (string memory) {\n        return \"WETH\";\n    }\n\n    /// @notice Returns the amount of WETH that the spender can transfer on behalf of the owner.\n    /// @param owner The address that owns the WETH.\n    /// @param spender The address that is approved to transfer the WETH.\n    /// @return The amount of WETH that the spender can transfer on behalf of the owner.\n    function allowance(address owner, address spender) public view virtual returns (uint256) {\n        return _allowance[owner][spender];\n    }\n\n    /// @notice Returns the balance of the given address.\n    /// @param src The address to query the balance of.\n    /// @return The balance of the given address.\n    function balanceOf(address src) public view returns (uint256) {\n        return _balanceOf[src];\n    }\n\n    /// @notice Allows WETH to be deposited by sending ether to the contract.\n    function deposit() public payable virtual {\n        _balanceOf[msg.sender] += msg.value;\n        emit Deposit(msg.sender, msg.value);\n    }\n\n    /// @notice Withdraws an amount of ETH.\n    /// @param wad The amount of ETH to withdraw.\n    function withdraw(uint256 wad) public virtual {\n        require(_balanceOf[msg.sender] >= wad);\n        _balanceOf[msg.sender] -= wad;\n        payable(msg.sender).transfer(wad);\n        emit Withdrawal(msg.sender, wad);\n    }\n\n    /// @notice Returns the total supply of WETH.\n    /// @return The total supply of WETH.\n    function totalSupply() external view returns (uint256) {\n        return address(this).balance;\n    }\n\n    /// @notice Approves the given address to transfer the WETH on behalf of the caller.\n    /// @param guy The address that is approved to transfer the WETH.\n    /// @param wad The amount that is approved to transfer.\n    /// @return True if the approval was successful.\n    function approve(address guy, uint256 wad) public virtual returns (bool) {\n        _allowance[msg.sender][guy] = wad;\n        emit Approval(msg.sender, guy, wad);\n        return true;\n    }\n\n    /// @notice Transfers the given amount of WETH to the given address.\n    /// @param dst The address to transfer the WETH to.\n    /// @param wad The amount of WETH to transfer.\n    /// @return True if the transfer was successful.\n    function transfer(address dst, uint256 wad) external returns (bool) {\n        return transferFrom(msg.sender, dst, wad);\n    }\n\n    /// @notice Transfers the given amount of WETH from the given address to the given address.\n    /// @param src The address to transfer the WETH from.\n    /// @param dst The address to transfer the WETH to.\n    /// @param wad The amount of WETH to transfer.\n    /// @return True if the transfer was successful.\n    function transferFrom(address src, address dst, uint256 wad) public returns (bool) {\n        require(_balanceOf[src] >= wad);\n\n        uint256 senderAllowance = allowance(src, msg.sender);\n        if (src != msg.sender && senderAllowance != type(uint256).max) {\n            require(senderAllowance >= wad);\n            _allowance[src][msg.sender] -= wad;\n        }\n\n        _balanceOf[src] -= wad;\n        _balanceOf[dst] += wad;\n\n        emit Transfer(src, dst, wad);\n\n        return true;\n    }\n}",
+  "resolutions": {
+    "ba5b6c9584fb78fd": {
+      "status": "differs",
+      "coveredLines": 100,
+      "match": {
+        "origin": "upstream",
+        "collection": "optimism",
+        "relation": {
+          "type": "fork_of",
+          "repository": "ethereum-optimism/optimism"
+        },
+        "rank": 1,
+        "matchedBy": "name",
+        "auditedName": "WETH98",
+        "similarity": 0.579,
+        "reportId": "optimism/spearbit-fault-proofs-no-mips-2024-08",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts-bedrock/src/dispute/weth/WETH98.sol",
+        "commit": "1f7081798ce2d49b8643514663d10681cb853a3d",
+        "commitTimestamp": "2024-06-03T17:23:30Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/1f7081798ce2d49b8643514663d10681cb853a3d/packages/contracts-bedrock/src/dispute/weth/WETH98.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Review of the dispute protocol contracts; the report declares no file list, MIPS is excluded by title. No Critical or High findings, all issues acknowledged.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "diff": {
+        "added": 28,
+        "removed": 17,
+        "ignoredAdded": 51,
+        "ignoredRemoved": 8,
+        "unchanged": 100,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 9,
+            "newStart": 1,
+            "newLines": 33,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "contract WETH98 is IWETH {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "contract WETH98 {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 2,
+                "text": "    /// @notice Returns the number of decimals the token uses.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "    /// @return The number of decimals the token uses.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 4,
+                "text": "    uint8 public constant decimals = 18;"
+              },
+              { "type": " ", "oldLine": 3, "newLine": 5, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 4,
+                "text": "    mapping(address => uint256) public balanceOf;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 5,
+                "text": "    mapping(address => mapping(address => uint256)) public allowance;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 6,
+                "text": "    mapping(address => uint256) internal _balanceOf;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 7,
+                "text": "    mapping(address => mapping(address => uint256)) internal _allowance;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 6, "newLine": 8, "text": "" },
+              {
+                "type": "+",
+                "newLine": 9,
+                "text": "    /// @notice Emitted when an approval is made.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 10,
+                "text": "    /// @param src The address that approved the transfer.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 11,
+                "text": "    /// @param guy The address that was approved to transfer.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 12,
+                "text": "    /// @param wad The amount that was approved to transfer.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 13,
+                "text": "    event Approval(address indexed src, address indexed guy, uint256 wad);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 14, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 15,
+                "text": "    /// @notice Emitted when a transfer is made.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 16,
+                "text": "    /// @param src The address that transferred the WETH.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 17,
+                "text": "    /// @param dst The address that received the WETH.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 18,
+                "text": "    /// @param wad The amount of WETH that was transferred.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 19,
+                "text": "    event Transfer(address indexed src, address indexed dst, uint256 wad);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 20, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 21,
+                "text": "    /// @notice Emitted when a deposit is made.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 22,
+                "text": "    /// @param dst The address that deposited the WETH.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 23,
+                "text": "    /// @param wad The amount of WETH that was deposited.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 24,
+                "text": "    event Deposit(address indexed dst, uint256 wad);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 25, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 26,
+                "text": "    /// @notice Emitted when a withdrawal is made.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 27,
+                "text": "    /// @param src The address that withdrew the WETH.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 28,
+                "text": "    /// @param wad The amount of WETH that was withdrawn.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 29,
+                "text": "    event Withdrawal(address indexed src, uint256 wad);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 30, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 7,
+                "newLine": 31,
+                "text": "    /// @notice Pipes to deposit."
+              },
+              {
+                "type": " ",
+                "oldLine": 8,
+                "newLine": 32,
+                "text": "    receive() external payable {"
+              },
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 33,
+                "text": "        deposit();"
+              }
+            ]
+          },
+          {
+            "oldStart": 14,
+            "oldLines": 58,
+            "newStart": 38,
+            "newLines": 88,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 14,
+                "newLine": 38,
+                "text": "        deposit();"
+              },
+              { "type": " ", "oldLine": 15, "newLine": 39, "text": "    }" },
+              { "type": " ", "oldLine": 16, "newLine": 40, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 17,
+                "text": "    /// @inheritdoc IWETH",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 18,
+                "text": "    function name() external view virtual override returns (string memory) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 41,
+                "text": "    /// @notice Returns the name of the token.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 42,
+                "text": "    /// @return name_ The name of the token.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 43,
+                "text": "    function name() external view virtual returns (string memory) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 19,
+                "newLine": 44,
+                "text": "        return \"Wrapped Ether\";"
+              },
+              { "type": " ", "oldLine": 20, "newLine": 45, "text": "    }" },
+              { "type": " ", "oldLine": 21, "newLine": 46, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 22,
+                "text": "    /// @inheritdoc IWETH",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 23,
+                "text": "    function symbol() external view virtual override returns (string memory) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 47,
+                "text": "    /// @notice Returns the symbol of the token.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 48,
+                "text": "    /// @return symbol_ The symbol of the token.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 49,
+                "text": "    function symbol() external view virtual returns (string memory) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 50,
+                "text": "        return \"WETH\";"
+              },
+              { "type": " ", "oldLine": 25, "newLine": 51, "text": "    }" },
+              { "type": " ", "oldLine": 26, "newLine": 52, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 27,
+                "text": "    /// @inheritdoc IWETH",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 28,
+                "text": "    function deposit() public payable {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 29,
+                "text": "        balanceOf[msg.sender] += msg.value;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 53,
+                "text": "    /// @notice Returns the amount of WETH that the spender can transfer on behalf of the owner.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 54,
+                "text": "    /// @param owner The address that owns the WETH.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 55,
+                "text": "    /// @param spender The address that is approved to transfer the WETH.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 56,
+                "text": "    /// @return The amount of WETH that the spender can transfer on behalf of the owner.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 57,
+                "text": "    function allowance(address owner, address spender) public view virtual returns (uint256) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 58,
+                "text": "        return _allowance[owner][spender];",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 59, "text": "    }", "ignored": false },
+              { "type": "+", "newLine": 60, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 61,
+                "text": "    /// @notice Returns the balance of the given address.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 62,
+                "text": "    /// @param src The address to query the balance of.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 63,
+                "text": "    /// @return The balance of the given address.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 64,
+                "text": "    function balanceOf(address src) public view returns (uint256) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 65,
+                "text": "        return _balanceOf[src];",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 66, "text": "    }", "ignored": false },
+              { "type": "+", "newLine": 67, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 68,
+                "text": "    /// @notice Allows WETH to be deposited by sending ether to the contract.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 69,
+                "text": "    function deposit() public payable virtual {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 70,
+                "text": "        _balanceOf[msg.sender] += msg.value;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 30,
+                "newLine": 71,
+                "text": "        emit Deposit(msg.sender, msg.value);"
+              },
+              { "type": " ", "oldLine": 31, "newLine": 72, "text": "    }" },
+              { "type": " ", "oldLine": 32, "newLine": 73, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 33,
+                "text": "    /// @inheritdoc IWETH",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 74,
+                "text": "    /// @notice Withdraws an amount of ETH.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 75,
+                "text": "    /// @param wad The amount of ETH to withdraw.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 34,
+                "newLine": 76,
+                "text": "    function withdraw(uint256 wad) public virtual {"
+              },
+              {
+                "type": "-",
+                "oldLine": 35,
+                "text": "        require(balanceOf[msg.sender] >= wad);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 36,
+                "text": "        balanceOf[msg.sender] -= wad;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 77,
+                "text": "        require(_balanceOf[msg.sender] >= wad);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 78,
+                "text": "        _balanceOf[msg.sender] -= wad;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 37,
+                "newLine": 79,
+                "text": "        payable(msg.sender).transfer(wad);"
+              },
+              {
+                "type": " ",
+                "oldLine": 38,
+                "newLine": 80,
+                "text": "        emit Withdrawal(msg.sender, wad);"
+              },
+              { "type": " ", "oldLine": 39, "newLine": 81, "text": "    }" },
+              { "type": " ", "oldLine": 40, "newLine": 82, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 41,
+                "text": "    /// @inheritdoc IWETH",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 83,
+                "text": "    /// @notice Returns the total supply of WETH.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 84,
+                "text": "    /// @return The total supply of WETH.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 42,
+                "newLine": 85,
+                "text": "    function totalSupply() external view returns (uint256) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 43,
+                "newLine": 86,
+                "text": "        return address(this).balance;"
+              },
+              { "type": " ", "oldLine": 44, "newLine": 87, "text": "    }" },
+              { "type": " ", "oldLine": 45, "newLine": 88, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 46,
+                "text": "    /// @inheritdoc IWETH",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 47,
+                "text": "    function approve(address guy, uint256 wad) external returns (bool) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 48,
+                "text": "        allowance[msg.sender][guy] = wad;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 89,
+                "text": "    /// @notice Approves the given address to transfer the WETH on behalf of the caller.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 90,
+                "text": "    /// @param guy The address that is approved to transfer the WETH.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 91,
+                "text": "    /// @param wad The amount that is approved to transfer.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 92,
+                "text": "    /// @return True if the approval was successful.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 93,
+                "text": "    function approve(address guy, uint256 wad) public virtual returns (bool) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 94,
+                "text": "        _allowance[msg.sender][guy] = wad;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 49,
+                "newLine": 95,
+                "text": "        emit Approval(msg.sender, guy, wad);"
+              },
+              {
+                "type": " ",
+                "oldLine": 50,
+                "newLine": 96,
+                "text": "        return true;"
+              },
+              { "type": " ", "oldLine": 51, "newLine": 97, "text": "    }" },
+              { "type": " ", "oldLine": 52, "newLine": 98, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 53,
+                "text": "    /// @inheritdoc IWETH",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 99,
+                "text": "    /// @notice Transfers the given amount of WETH to the given address.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 100,
+                "text": "    /// @param dst The address to transfer the WETH to.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 101,
+                "text": "    /// @param wad The amount of WETH to transfer.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 102,
+                "text": "    /// @return True if the transfer was successful.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 54,
+                "newLine": 103,
+                "text": "    function transfer(address dst, uint256 wad) external returns (bool) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 55,
+                "newLine": 104,
+                "text": "        return transferFrom(msg.sender, dst, wad);"
+              },
+              { "type": " ", "oldLine": 56, "newLine": 105, "text": "    }" },
+              { "type": " ", "oldLine": 57, "newLine": 106, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 58,
+                "text": "    /// @inheritdoc IWETH",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 107,
+                "text": "    /// @notice Transfers the given amount of WETH from the given address to the given address.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 108,
+                "text": "    /// @param src The address to transfer the WETH from.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 109,
+                "text": "    /// @param dst The address to transfer the WETH to.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 110,
+                "text": "    /// @param wad The amount of WETH to transfer.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 111,
+                "text": "    /// @return True if the transfer was successful.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 59,
+                "newLine": 112,
+                "text": "    function transferFrom(address src, address dst, uint256 wad) public returns (bool) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 60,
+                "text": "        require(balanceOf[src] >= wad);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 113,
+                "text": "        require(_balanceOf[src] >= wad);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 61, "newLine": 114, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 62,
+                "text": "        if (src != msg.sender && allowance[src][msg.sender] != type(uint256).max) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 63,
+                "text": "            require(allowance[src][msg.sender] >= wad);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 64,
+                "text": "            allowance[src][msg.sender] -= wad;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 115,
+                "text": "        uint256 senderAllowance = allowance(src, msg.sender);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 116,
+                "text": "        if (src != msg.sender && senderAllowance != type(uint256).max) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 117,
+                "text": "            require(senderAllowance >= wad);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 118,
+                "text": "            _allowance[src][msg.sender] -= wad;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 65,
+                "newLine": 119,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 66, "newLine": 120, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 67,
+                "text": "        balanceOf[src] -= wad;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 68,
+                "text": "        balanceOf[dst] += wad;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 121,
+                "text": "        _balanceOf[src] -= wad;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 122,
+                "text": "        _balanceOf[dst] += wad;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 69, "newLine": 123, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 70,
+                "newLine": 124,
+                "text": "        emit Transfer(src, dst, wad);"
+              },
+              { "type": " ", "oldLine": 71, "newLine": 125, "text": "" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "44ad4cf96e2ef6f0": {
+      "status": "differs",
+      "coveredLines": 100,
+      "match": {
+        "origin": "upstream",
+        "collection": "optimism",
+        "relation": {
+          "type": "fork_of",
+          "repository": "ethereum-optimism/optimism"
+        },
+        "rank": 1,
+        "matchedBy": "name",
+        "auditedName": "WETH98",
+        "similarity": 0.579,
+        "reportId": "optimism/spearbit-fault-proofs-no-mips-2024-08",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts-bedrock/src/dispute/weth/WETH98.sol",
+        "commit": "1f7081798ce2d49b8643514663d10681cb853a3d",
+        "commitTimestamp": "2024-06-03T17:23:30Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/1f7081798ce2d49b8643514663d10681cb853a3d/packages/contracts-bedrock/src/dispute/weth/WETH98.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Review of the dispute protocol contracts; the report declares no file list, MIPS is excluded by title. No Critical or High findings, all issues acknowledged.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "diff": {
+        "added": 28,
+        "removed": 17,
+        "ignoredAdded": 51,
+        "ignoredRemoved": 8,
+        "unchanged": 100,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 9,
+            "newStart": 1,
+            "newLines": 33,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "contract WETH98 is IWETH {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "contract WETH98 {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 2,
+                "text": "    /// @notice Returns the number of decimals the token uses.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "    /// @return The number of decimals the token uses.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 4,
+                "text": "    uint8 public constant decimals = 18;"
+              },
+              { "type": " ", "oldLine": 3, "newLine": 5, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 4,
+                "text": "    mapping(address => uint256) public balanceOf;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 5,
+                "text": "    mapping(address => mapping(address => uint256)) public allowance;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 6,
+                "text": "    mapping(address => uint256) internal _balanceOf;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 7,
+                "text": "    mapping(address => mapping(address => uint256)) internal _allowance;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 6, "newLine": 8, "text": "" },
+              {
+                "type": "+",
+                "newLine": 9,
+                "text": "    /// @notice Emitted when an approval is made.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 10,
+                "text": "    /// @param src The address that approved the transfer.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 11,
+                "text": "    /// @param guy The address that was approved to transfer.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 12,
+                "text": "    /// @param wad The amount that was approved to transfer.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 13,
+                "text": "    event Approval(address indexed src, address indexed guy, uint256 wad);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 14, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 15,
+                "text": "    /// @notice Emitted when a transfer is made.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 16,
+                "text": "    /// @param src The address that transferred the WETH.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 17,
+                "text": "    /// @param dst The address that received the WETH.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 18,
+                "text": "    /// @param wad The amount of WETH that was transferred.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 19,
+                "text": "    event Transfer(address indexed src, address indexed dst, uint256 wad);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 20, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 21,
+                "text": "    /// @notice Emitted when a deposit is made.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 22,
+                "text": "    /// @param dst The address that deposited the WETH.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 23,
+                "text": "    /// @param wad The amount of WETH that was deposited.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 24,
+                "text": "    event Deposit(address indexed dst, uint256 wad);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 25, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 26,
+                "text": "    /// @notice Emitted when a withdrawal is made.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 27,
+                "text": "    /// @param src The address that withdrew the WETH.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 28,
+                "text": "    /// @param wad The amount of WETH that was withdrawn.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 29,
+                "text": "    event Withdrawal(address indexed src, uint256 wad);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 30, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 7,
+                "newLine": 31,
+                "text": "    /// @notice Pipes to deposit."
+              },
+              {
+                "type": " ",
+                "oldLine": 8,
+                "newLine": 32,
+                "text": "    receive() external payable {"
+              },
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 33,
+                "text": "        deposit();"
+              }
+            ]
+          },
+          {
+            "oldStart": 14,
+            "oldLines": 58,
+            "newStart": 38,
+            "newLines": 88,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 14,
+                "newLine": 38,
+                "text": "        deposit();"
+              },
+              { "type": " ", "oldLine": 15, "newLine": 39, "text": "    }" },
+              { "type": " ", "oldLine": 16, "newLine": 40, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 17,
+                "text": "    /// @inheritdoc IWETH",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 18,
+                "text": "    function name() external view virtual override returns (string memory) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 41,
+                "text": "    /// @notice Returns the name of the token.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 42,
+                "text": "    /// @return name_ The name of the token.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 43,
+                "text": "    function name() external view virtual returns (string memory) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 19,
+                "newLine": 44,
+                "text": "        return \"Wrapped Ether\";"
+              },
+              { "type": " ", "oldLine": 20, "newLine": 45, "text": "    }" },
+              { "type": " ", "oldLine": 21, "newLine": 46, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 22,
+                "text": "    /// @inheritdoc IWETH",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 23,
+                "text": "    function symbol() external view virtual override returns (string memory) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 47,
+                "text": "    /// @notice Returns the symbol of the token.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 48,
+                "text": "    /// @return symbol_ The symbol of the token.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 49,
+                "text": "    function symbol() external view virtual returns (string memory) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 50,
+                "text": "        return \"WETH\";"
+              },
+              { "type": " ", "oldLine": 25, "newLine": 51, "text": "    }" },
+              { "type": " ", "oldLine": 26, "newLine": 52, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 27,
+                "text": "    /// @inheritdoc IWETH",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 28,
+                "text": "    function deposit() public payable {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 29,
+                "text": "        balanceOf[msg.sender] += msg.value;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 53,
+                "text": "    /// @notice Returns the amount of WETH that the spender can transfer on behalf of the owner.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 54,
+                "text": "    /// @param owner The address that owns the WETH.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 55,
+                "text": "    /// @param spender The address that is approved to transfer the WETH.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 56,
+                "text": "    /// @return The amount of WETH that the spender can transfer on behalf of the owner.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 57,
+                "text": "    function allowance(address owner, address spender) public view virtual returns (uint256) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 58,
+                "text": "        return _allowance[owner][spender];",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 59, "text": "    }", "ignored": false },
+              { "type": "+", "newLine": 60, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 61,
+                "text": "    /// @notice Returns the balance of the given address.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 62,
+                "text": "    /// @param src The address to query the balance of.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 63,
+                "text": "    /// @return The balance of the given address.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 64,
+                "text": "    function balanceOf(address src) public view returns (uint256) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 65,
+                "text": "        return _balanceOf[src];",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 66, "text": "    }", "ignored": false },
+              { "type": "+", "newLine": 67, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 68,
+                "text": "    /// @notice Allows WETH to be deposited by sending ether to the contract.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 69,
+                "text": "    function deposit() public payable virtual {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 70,
+                "text": "        _balanceOf[msg.sender] += msg.value;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 30,
+                "newLine": 71,
+                "text": "        emit Deposit(msg.sender, msg.value);"
+              },
+              { "type": " ", "oldLine": 31, "newLine": 72, "text": "    }" },
+              { "type": " ", "oldLine": 32, "newLine": 73, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 33,
+                "text": "    /// @inheritdoc IWETH",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 74,
+                "text": "    /// @notice Withdraws an amount of ETH.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 75,
+                "text": "    /// @param wad The amount of ETH to withdraw.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 34,
+                "newLine": 76,
+                "text": "    function withdraw(uint256 wad) public virtual {"
+              },
+              {
+                "type": "-",
+                "oldLine": 35,
+                "text": "        require(balanceOf[msg.sender] >= wad);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 36,
+                "text": "        balanceOf[msg.sender] -= wad;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 77,
+                "text": "        require(_balanceOf[msg.sender] >= wad);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 78,
+                "text": "        _balanceOf[msg.sender] -= wad;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 37,
+                "newLine": 79,
+                "text": "        payable(msg.sender).transfer(wad);"
+              },
+              {
+                "type": " ",
+                "oldLine": 38,
+                "newLine": 80,
+                "text": "        emit Withdrawal(msg.sender, wad);"
+              },
+              { "type": " ", "oldLine": 39, "newLine": 81, "text": "    }" },
+              { "type": " ", "oldLine": 40, "newLine": 82, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 41,
+                "text": "    /// @inheritdoc IWETH",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 83,
+                "text": "    /// @notice Returns the total supply of WETH.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 84,
+                "text": "    /// @return The total supply of WETH.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 42,
+                "newLine": 85,
+                "text": "    function totalSupply() external view returns (uint256) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 43,
+                "newLine": 86,
+                "text": "        return address(this).balance;"
+              },
+              { "type": " ", "oldLine": 44, "newLine": 87, "text": "    }" },
+              { "type": " ", "oldLine": 45, "newLine": 88, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 46,
+                "text": "    /// @inheritdoc IWETH",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 47,
+                "text": "    function approve(address guy, uint256 wad) external returns (bool) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 48,
+                "text": "        allowance[msg.sender][guy] = wad;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 89,
+                "text": "    /// @notice Approves the given address to transfer the WETH on behalf of the caller.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 90,
+                "text": "    /// @param guy The address that is approved to transfer the WETH.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 91,
+                "text": "    /// @param wad The amount that is approved to transfer.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 92,
+                "text": "    /// @return True if the approval was successful.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 93,
+                "text": "    function approve(address guy, uint256 wad) public virtual returns (bool) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 94,
+                "text": "        _allowance[msg.sender][guy] = wad;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 49,
+                "newLine": 95,
+                "text": "        emit Approval(msg.sender, guy, wad);"
+              },
+              {
+                "type": " ",
+                "oldLine": 50,
+                "newLine": 96,
+                "text": "        return true;"
+              },
+              { "type": " ", "oldLine": 51, "newLine": 97, "text": "    }" },
+              { "type": " ", "oldLine": 52, "newLine": 98, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 53,
+                "text": "    /// @inheritdoc IWETH",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 99,
+                "text": "    /// @notice Transfers the given amount of WETH to the given address.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 100,
+                "text": "    /// @param dst The address to transfer the WETH to.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 101,
+                "text": "    /// @param wad The amount of WETH to transfer.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 102,
+                "text": "    /// @return True if the transfer was successful.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 54,
+                "newLine": 103,
+                "text": "    function transfer(address dst, uint256 wad) external returns (bool) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 55,
+                "newLine": 104,
+                "text": "        return transferFrom(msg.sender, dst, wad);"
+              },
+              { "type": " ", "oldLine": 56, "newLine": 105, "text": "    }" },
+              { "type": " ", "oldLine": 57, "newLine": 106, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 58,
+                "text": "    /// @inheritdoc IWETH",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 107,
+                "text": "    /// @notice Transfers the given amount of WETH from the given address to the given address.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 108,
+                "text": "    /// @param src The address to transfer the WETH from.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 109,
+                "text": "    /// @param dst The address to transfer the WETH to.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 110,
+                "text": "    /// @param wad The amount of WETH to transfer.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 111,
+                "text": "    /// @return True if the transfer was successful.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 59,
+                "newLine": 112,
+                "text": "    function transferFrom(address src, address dst, uint256 wad) public returns (bool) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 60,
+                "text": "        require(balanceOf[src] >= wad);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 113,
+                "text": "        require(_balanceOf[src] >= wad);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 61, "newLine": 114, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 62,
+                "text": "        if (src != msg.sender && allowance[src][msg.sender] != type(uint256).max) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 63,
+                "text": "            require(allowance[src][msg.sender] >= wad);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 64,
+                "text": "            allowance[src][msg.sender] -= wad;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 115,
+                "text": "        uint256 senderAllowance = allowance(src, msg.sender);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 116,
+                "text": "        if (src != msg.sender && senderAllowance != type(uint256).max) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 117,
+                "text": "            require(senderAllowance >= wad);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 118,
+                "text": "            _allowance[src][msg.sender] -= wad;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 65,
+                "newLine": 119,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 66, "newLine": 120, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 67,
+                "text": "        balanceOf[src] -= wad;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 68,
+                "text": "        balanceOf[dst] += wad;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 121,
+                "text": "        _balanceOf[src] -= wad;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 122,
+                "text": "        _balanceOf[dst] += wad;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 69, "newLine": 123, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 70,
+                "newLine": 124,
+                "text": "        emit Transfer(src, dst, wad);"
+              },
+              { "type": " ", "oldLine": 71, "newLine": 125, "text": "" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "bb55951394276893": {
+      "status": "differs",
+      "coveredLines": 100,
+      "match": {
+        "origin": "stack",
+        "collection": "optimism",
+        "relation": {
+          "type": "template",
+          "template": "opstack/AddressManager"
+        },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "WETH98",
+        "similarity": 0.579,
+        "reportId": "optimism/spearbit-fault-proofs-no-mips-2024-08",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts-bedrock/src/dispute/weth/WETH98.sol",
+        "commit": "1f7081798ce2d49b8643514663d10681cb853a3d",
+        "commitTimestamp": "2024-06-03T17:23:30Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/1f7081798ce2d49b8643514663d10681cb853a3d/packages/contracts-bedrock/src/dispute/weth/WETH98.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Review of the dispute protocol contracts; the report declares no file list, MIPS is excluded by title. No Critical or High findings, all issues acknowledged.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "diff": {
+        "added": 28,
+        "removed": 17,
+        "ignoredAdded": 51,
+        "ignoredRemoved": 8,
+        "unchanged": 100,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 9,
+            "newStart": 1,
+            "newLines": 33,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "contract WETH98 is IWETH {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "contract WETH98 {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 2,
+                "text": "    /// @notice Returns the number of decimals the token uses.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "    /// @return The number of decimals the token uses.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 4,
+                "text": "    uint8 public constant decimals = 18;"
+              },
+              { "type": " ", "oldLine": 3, "newLine": 5, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 4,
+                "text": "    mapping(address => uint256) public balanceOf;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 5,
+                "text": "    mapping(address => mapping(address => uint256)) public allowance;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 6,
+                "text": "    mapping(address => uint256) internal _balanceOf;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 7,
+                "text": "    mapping(address => mapping(address => uint256)) internal _allowance;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 6, "newLine": 8, "text": "" },
+              {
+                "type": "+",
+                "newLine": 9,
+                "text": "    /// @notice Emitted when an approval is made.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 10,
+                "text": "    /// @param src The address that approved the transfer.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 11,
+                "text": "    /// @param guy The address that was approved to transfer.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 12,
+                "text": "    /// @param wad The amount that was approved to transfer.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 13,
+                "text": "    event Approval(address indexed src, address indexed guy, uint256 wad);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 14, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 15,
+                "text": "    /// @notice Emitted when a transfer is made.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 16,
+                "text": "    /// @param src The address that transferred the WETH.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 17,
+                "text": "    /// @param dst The address that received the WETH.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 18,
+                "text": "    /// @param wad The amount of WETH that was transferred.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 19,
+                "text": "    event Transfer(address indexed src, address indexed dst, uint256 wad);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 20, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 21,
+                "text": "    /// @notice Emitted when a deposit is made.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 22,
+                "text": "    /// @param dst The address that deposited the WETH.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 23,
+                "text": "    /// @param wad The amount of WETH that was deposited.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 24,
+                "text": "    event Deposit(address indexed dst, uint256 wad);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 25, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 26,
+                "text": "    /// @notice Emitted when a withdrawal is made.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 27,
+                "text": "    /// @param src The address that withdrew the WETH.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 28,
+                "text": "    /// @param wad The amount of WETH that was withdrawn.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 29,
+                "text": "    event Withdrawal(address indexed src, uint256 wad);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 30, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 7,
+                "newLine": 31,
+                "text": "    /// @notice Pipes to deposit."
+              },
+              {
+                "type": " ",
+                "oldLine": 8,
+                "newLine": 32,
+                "text": "    receive() external payable {"
+              },
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 33,
+                "text": "        deposit();"
+              }
+            ]
+          },
+          {
+            "oldStart": 14,
+            "oldLines": 58,
+            "newStart": 38,
+            "newLines": 88,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 14,
+                "newLine": 38,
+                "text": "        deposit();"
+              },
+              { "type": " ", "oldLine": 15, "newLine": 39, "text": "    }" },
+              { "type": " ", "oldLine": 16, "newLine": 40, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 17,
+                "text": "    /// @inheritdoc IWETH",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 18,
+                "text": "    function name() external view virtual override returns (string memory) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 41,
+                "text": "    /// @notice Returns the name of the token.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 42,
+                "text": "    /// @return name_ The name of the token.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 43,
+                "text": "    function name() external view virtual returns (string memory) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 19,
+                "newLine": 44,
+                "text": "        return \"Wrapped Ether\";"
+              },
+              { "type": " ", "oldLine": 20, "newLine": 45, "text": "    }" },
+              { "type": " ", "oldLine": 21, "newLine": 46, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 22,
+                "text": "    /// @inheritdoc IWETH",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 23,
+                "text": "    function symbol() external view virtual override returns (string memory) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 47,
+                "text": "    /// @notice Returns the symbol of the token.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 48,
+                "text": "    /// @return symbol_ The symbol of the token.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 49,
+                "text": "    function symbol() external view virtual returns (string memory) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 50,
+                "text": "        return \"WETH\";"
+              },
+              { "type": " ", "oldLine": 25, "newLine": 51, "text": "    }" },
+              { "type": " ", "oldLine": 26, "newLine": 52, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 27,
+                "text": "    /// @inheritdoc IWETH",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 28,
+                "text": "    function deposit() public payable {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 29,
+                "text": "        balanceOf[msg.sender] += msg.value;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 53,
+                "text": "    /// @notice Returns the amount of WETH that the spender can transfer on behalf of the owner.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 54,
+                "text": "    /// @param owner The address that owns the WETH.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 55,
+                "text": "    /// @param spender The address that is approved to transfer the WETH.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 56,
+                "text": "    /// @return The amount of WETH that the spender can transfer on behalf of the owner.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 57,
+                "text": "    function allowance(address owner, address spender) public view virtual returns (uint256) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 58,
+                "text": "        return _allowance[owner][spender];",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 59, "text": "    }", "ignored": false },
+              { "type": "+", "newLine": 60, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 61,
+                "text": "    /// @notice Returns the balance of the given address.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 62,
+                "text": "    /// @param src The address to query the balance of.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 63,
+                "text": "    /// @return The balance of the given address.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 64,
+                "text": "    function balanceOf(address src) public view returns (uint256) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 65,
+                "text": "        return _balanceOf[src];",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 66, "text": "    }", "ignored": false },
+              { "type": "+", "newLine": 67, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 68,
+                "text": "    /// @notice Allows WETH to be deposited by sending ether to the contract.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 69,
+                "text": "    function deposit() public payable virtual {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 70,
+                "text": "        _balanceOf[msg.sender] += msg.value;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 30,
+                "newLine": 71,
+                "text": "        emit Deposit(msg.sender, msg.value);"
+              },
+              { "type": " ", "oldLine": 31, "newLine": 72, "text": "    }" },
+              { "type": " ", "oldLine": 32, "newLine": 73, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 33,
+                "text": "    /// @inheritdoc IWETH",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 74,
+                "text": "    /// @notice Withdraws an amount of ETH.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 75,
+                "text": "    /// @param wad The amount of ETH to withdraw.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 34,
+                "newLine": 76,
+                "text": "    function withdraw(uint256 wad) public virtual {"
+              },
+              {
+                "type": "-",
+                "oldLine": 35,
+                "text": "        require(balanceOf[msg.sender] >= wad);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 36,
+                "text": "        balanceOf[msg.sender] -= wad;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 77,
+                "text": "        require(_balanceOf[msg.sender] >= wad);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 78,
+                "text": "        _balanceOf[msg.sender] -= wad;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 37,
+                "newLine": 79,
+                "text": "        payable(msg.sender).transfer(wad);"
+              },
+              {
+                "type": " ",
+                "oldLine": 38,
+                "newLine": 80,
+                "text": "        emit Withdrawal(msg.sender, wad);"
+              },
+              { "type": " ", "oldLine": 39, "newLine": 81, "text": "    }" },
+              { "type": " ", "oldLine": 40, "newLine": 82, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 41,
+                "text": "    /// @inheritdoc IWETH",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 83,
+                "text": "    /// @notice Returns the total supply of WETH.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 84,
+                "text": "    /// @return The total supply of WETH.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 42,
+                "newLine": 85,
+                "text": "    function totalSupply() external view returns (uint256) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 43,
+                "newLine": 86,
+                "text": "        return address(this).balance;"
+              },
+              { "type": " ", "oldLine": 44, "newLine": 87, "text": "    }" },
+              { "type": " ", "oldLine": 45, "newLine": 88, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 46,
+                "text": "    /// @inheritdoc IWETH",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 47,
+                "text": "    function approve(address guy, uint256 wad) external returns (bool) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 48,
+                "text": "        allowance[msg.sender][guy] = wad;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 89,
+                "text": "    /// @notice Approves the given address to transfer the WETH on behalf of the caller.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 90,
+                "text": "    /// @param guy The address that is approved to transfer the WETH.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 91,
+                "text": "    /// @param wad The amount that is approved to transfer.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 92,
+                "text": "    /// @return True if the approval was successful.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 93,
+                "text": "    function approve(address guy, uint256 wad) public virtual returns (bool) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 94,
+                "text": "        _allowance[msg.sender][guy] = wad;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 49,
+                "newLine": 95,
+                "text": "        emit Approval(msg.sender, guy, wad);"
+              },
+              {
+                "type": " ",
+                "oldLine": 50,
+                "newLine": 96,
+                "text": "        return true;"
+              },
+              { "type": " ", "oldLine": 51, "newLine": 97, "text": "    }" },
+              { "type": " ", "oldLine": 52, "newLine": 98, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 53,
+                "text": "    /// @inheritdoc IWETH",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 99,
+                "text": "    /// @notice Transfers the given amount of WETH to the given address.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 100,
+                "text": "    /// @param dst The address to transfer the WETH to.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 101,
+                "text": "    /// @param wad The amount of WETH to transfer.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 102,
+                "text": "    /// @return True if the transfer was successful.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 54,
+                "newLine": 103,
+                "text": "    function transfer(address dst, uint256 wad) external returns (bool) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 55,
+                "newLine": 104,
+                "text": "        return transferFrom(msg.sender, dst, wad);"
+              },
+              { "type": " ", "oldLine": 56, "newLine": 105, "text": "    }" },
+              { "type": " ", "oldLine": 57, "newLine": 106, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 58,
+                "text": "    /// @inheritdoc IWETH",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 107,
+                "text": "    /// @notice Transfers the given amount of WETH from the given address to the given address.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 108,
+                "text": "    /// @param src The address to transfer the WETH from.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 109,
+                "text": "    /// @param dst The address to transfer the WETH to.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 110,
+                "text": "    /// @param wad The amount of WETH to transfer.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 111,
+                "text": "    /// @return True if the transfer was successful.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 59,
+                "newLine": 112,
+                "text": "    function transferFrom(address src, address dst, uint256 wad) public returns (bool) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 60,
+                "text": "        require(balanceOf[src] >= wad);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 113,
+                "text": "        require(_balanceOf[src] >= wad);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 61, "newLine": 114, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 62,
+                "text": "        if (src != msg.sender && allowance[src][msg.sender] != type(uint256).max) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 63,
+                "text": "            require(allowance[src][msg.sender] >= wad);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 64,
+                "text": "            allowance[src][msg.sender] -= wad;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 115,
+                "text": "        uint256 senderAllowance = allowance(src, msg.sender);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 116,
+                "text": "        if (src != msg.sender && senderAllowance != type(uint256).max) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 117,
+                "text": "            require(senderAllowance >= wad);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 118,
+                "text": "            _allowance[src][msg.sender] -= wad;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 65,
+                "newLine": 119,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 66, "newLine": 120, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 67,
+                "text": "        balanceOf[src] -= wad;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 68,
+                "text": "        balanceOf[dst] += wad;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 121,
+                "text": "        _balanceOf[src] -= wad;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 122,
+                "text": "        _balanceOf[dst] += wad;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 69, "newLine": 123, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 70,
+                "newLine": 124,
+                "text": "        emit Transfer(src, dst, wad);"
+              },
+              { "type": " ", "oldLine": 71, "newLine": 125, "text": "" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "1f5c32d18cf7148d": {
+      "status": "differs",
+      "coveredLines": 100,
+      "match": {
+        "origin": "stack",
+        "collection": "optimism",
+        "relation": {
+          "type": "template",
+          "template": "gnosisSafeModules/LivenessGuard"
+        },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "WETH98",
+        "similarity": 0.579,
+        "reportId": "optimism/spearbit-fault-proofs-no-mips-2024-08",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts-bedrock/src/dispute/weth/WETH98.sol",
+        "commit": "1f7081798ce2d49b8643514663d10681cb853a3d",
+        "commitTimestamp": "2024-06-03T17:23:30Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/1f7081798ce2d49b8643514663d10681cb853a3d/packages/contracts-bedrock/src/dispute/weth/WETH98.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Review of the dispute protocol contracts; the report declares no file list, MIPS is excluded by title. No Critical or High findings, all issues acknowledged.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "diff": {
+        "added": 28,
+        "removed": 17,
+        "ignoredAdded": 51,
+        "ignoredRemoved": 8,
+        "unchanged": 100,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 9,
+            "newStart": 1,
+            "newLines": 33,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "contract WETH98 is IWETH {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "contract WETH98 {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 2,
+                "text": "    /// @notice Returns the number of decimals the token uses.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "    /// @return The number of decimals the token uses.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 4,
+                "text": "    uint8 public constant decimals = 18;"
+              },
+              { "type": " ", "oldLine": 3, "newLine": 5, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 4,
+                "text": "    mapping(address => uint256) public balanceOf;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 5,
+                "text": "    mapping(address => mapping(address => uint256)) public allowance;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 6,
+                "text": "    mapping(address => uint256) internal _balanceOf;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 7,
+                "text": "    mapping(address => mapping(address => uint256)) internal _allowance;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 6, "newLine": 8, "text": "" },
+              {
+                "type": "+",
+                "newLine": 9,
+                "text": "    /// @notice Emitted when an approval is made.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 10,
+                "text": "    /// @param src The address that approved the transfer.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 11,
+                "text": "    /// @param guy The address that was approved to transfer.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 12,
+                "text": "    /// @param wad The amount that was approved to transfer.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 13,
+                "text": "    event Approval(address indexed src, address indexed guy, uint256 wad);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 14, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 15,
+                "text": "    /// @notice Emitted when a transfer is made.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 16,
+                "text": "    /// @param src The address that transferred the WETH.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 17,
+                "text": "    /// @param dst The address that received the WETH.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 18,
+                "text": "    /// @param wad The amount of WETH that was transferred.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 19,
+                "text": "    event Transfer(address indexed src, address indexed dst, uint256 wad);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 20, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 21,
+                "text": "    /// @notice Emitted when a deposit is made.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 22,
+                "text": "    /// @param dst The address that deposited the WETH.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 23,
+                "text": "    /// @param wad The amount of WETH that was deposited.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 24,
+                "text": "    event Deposit(address indexed dst, uint256 wad);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 25, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 26,
+                "text": "    /// @notice Emitted when a withdrawal is made.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 27,
+                "text": "    /// @param src The address that withdrew the WETH.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 28,
+                "text": "    /// @param wad The amount of WETH that was withdrawn.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 29,
+                "text": "    event Withdrawal(address indexed src, uint256 wad);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 30, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 7,
+                "newLine": 31,
+                "text": "    /// @notice Pipes to deposit."
+              },
+              {
+                "type": " ",
+                "oldLine": 8,
+                "newLine": 32,
+                "text": "    receive() external payable {"
+              },
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 33,
+                "text": "        deposit();"
+              }
+            ]
+          },
+          {
+            "oldStart": 14,
+            "oldLines": 58,
+            "newStart": 38,
+            "newLines": 88,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 14,
+                "newLine": 38,
+                "text": "        deposit();"
+              },
+              { "type": " ", "oldLine": 15, "newLine": 39, "text": "    }" },
+              { "type": " ", "oldLine": 16, "newLine": 40, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 17,
+                "text": "    /// @inheritdoc IWETH",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 18,
+                "text": "    function name() external view virtual override returns (string memory) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 41,
+                "text": "    /// @notice Returns the name of the token.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 42,
+                "text": "    /// @return name_ The name of the token.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 43,
+                "text": "    function name() external view virtual returns (string memory) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 19,
+                "newLine": 44,
+                "text": "        return \"Wrapped Ether\";"
+              },
+              { "type": " ", "oldLine": 20, "newLine": 45, "text": "    }" },
+              { "type": " ", "oldLine": 21, "newLine": 46, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 22,
+                "text": "    /// @inheritdoc IWETH",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 23,
+                "text": "    function symbol() external view virtual override returns (string memory) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 47,
+                "text": "    /// @notice Returns the symbol of the token.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 48,
+                "text": "    /// @return symbol_ The symbol of the token.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 49,
+                "text": "    function symbol() external view virtual returns (string memory) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 50,
+                "text": "        return \"WETH\";"
+              },
+              { "type": " ", "oldLine": 25, "newLine": 51, "text": "    }" },
+              { "type": " ", "oldLine": 26, "newLine": 52, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 27,
+                "text": "    /// @inheritdoc IWETH",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 28,
+                "text": "    function deposit() public payable {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 29,
+                "text": "        balanceOf[msg.sender] += msg.value;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 53,
+                "text": "    /// @notice Returns the amount of WETH that the spender can transfer on behalf of the owner.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 54,
+                "text": "    /// @param owner The address that owns the WETH.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 55,
+                "text": "    /// @param spender The address that is approved to transfer the WETH.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 56,
+                "text": "    /// @return The amount of WETH that the spender can transfer on behalf of the owner.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 57,
+                "text": "    function allowance(address owner, address spender) public view virtual returns (uint256) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 58,
+                "text": "        return _allowance[owner][spender];",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 59, "text": "    }", "ignored": false },
+              { "type": "+", "newLine": 60, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 61,
+                "text": "    /// @notice Returns the balance of the given address.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 62,
+                "text": "    /// @param src The address to query the balance of.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 63,
+                "text": "    /// @return The balance of the given address.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 64,
+                "text": "    function balanceOf(address src) public view returns (uint256) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 65,
+                "text": "        return _balanceOf[src];",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 66, "text": "    }", "ignored": false },
+              { "type": "+", "newLine": 67, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 68,
+                "text": "    /// @notice Allows WETH to be deposited by sending ether to the contract.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 69,
+                "text": "    function deposit() public payable virtual {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 70,
+                "text": "        _balanceOf[msg.sender] += msg.value;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 30,
+                "newLine": 71,
+                "text": "        emit Deposit(msg.sender, msg.value);"
+              },
+              { "type": " ", "oldLine": 31, "newLine": 72, "text": "    }" },
+              { "type": " ", "oldLine": 32, "newLine": 73, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 33,
+                "text": "    /// @inheritdoc IWETH",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 74,
+                "text": "    /// @notice Withdraws an amount of ETH.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 75,
+                "text": "    /// @param wad The amount of ETH to withdraw.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 34,
+                "newLine": 76,
+                "text": "    function withdraw(uint256 wad) public virtual {"
+              },
+              {
+                "type": "-",
+                "oldLine": 35,
+                "text": "        require(balanceOf[msg.sender] >= wad);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 36,
+                "text": "        balanceOf[msg.sender] -= wad;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 77,
+                "text": "        require(_balanceOf[msg.sender] >= wad);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 78,
+                "text": "        _balanceOf[msg.sender] -= wad;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 37,
+                "newLine": 79,
+                "text": "        payable(msg.sender).transfer(wad);"
+              },
+              {
+                "type": " ",
+                "oldLine": 38,
+                "newLine": 80,
+                "text": "        emit Withdrawal(msg.sender, wad);"
+              },
+              { "type": " ", "oldLine": 39, "newLine": 81, "text": "    }" },
+              { "type": " ", "oldLine": 40, "newLine": 82, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 41,
+                "text": "    /// @inheritdoc IWETH",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 83,
+                "text": "    /// @notice Returns the total supply of WETH.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 84,
+                "text": "    /// @return The total supply of WETH.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 42,
+                "newLine": 85,
+                "text": "    function totalSupply() external view returns (uint256) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 43,
+                "newLine": 86,
+                "text": "        return address(this).balance;"
+              },
+              { "type": " ", "oldLine": 44, "newLine": 87, "text": "    }" },
+              { "type": " ", "oldLine": 45, "newLine": 88, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 46,
+                "text": "    /// @inheritdoc IWETH",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 47,
+                "text": "    function approve(address guy, uint256 wad) external returns (bool) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 48,
+                "text": "        allowance[msg.sender][guy] = wad;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 89,
+                "text": "    /// @notice Approves the given address to transfer the WETH on behalf of the caller.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 90,
+                "text": "    /// @param guy The address that is approved to transfer the WETH.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 91,
+                "text": "    /// @param wad The amount that is approved to transfer.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 92,
+                "text": "    /// @return True if the approval was successful.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 93,
+                "text": "    function approve(address guy, uint256 wad) public virtual returns (bool) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 94,
+                "text": "        _allowance[msg.sender][guy] = wad;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 49,
+                "newLine": 95,
+                "text": "        emit Approval(msg.sender, guy, wad);"
+              },
+              {
+                "type": " ",
+                "oldLine": 50,
+                "newLine": 96,
+                "text": "        return true;"
+              },
+              { "type": " ", "oldLine": 51, "newLine": 97, "text": "    }" },
+              { "type": " ", "oldLine": 52, "newLine": 98, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 53,
+                "text": "    /// @inheritdoc IWETH",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 99,
+                "text": "    /// @notice Transfers the given amount of WETH to the given address.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 100,
+                "text": "    /// @param dst The address to transfer the WETH to.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 101,
+                "text": "    /// @param wad The amount of WETH to transfer.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 102,
+                "text": "    /// @return True if the transfer was successful.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 54,
+                "newLine": 103,
+                "text": "    function transfer(address dst, uint256 wad) external returns (bool) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 55,
+                "newLine": 104,
+                "text": "        return transferFrom(msg.sender, dst, wad);"
+              },
+              { "type": " ", "oldLine": 56, "newLine": 105, "text": "    }" },
+              { "type": " ", "oldLine": 57, "newLine": 106, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 58,
+                "text": "    /// @inheritdoc IWETH",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 107,
+                "text": "    /// @notice Transfers the given amount of WETH from the given address to the given address.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 108,
+                "text": "    /// @param src The address to transfer the WETH from.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 109,
+                "text": "    /// @param dst The address to transfer the WETH to.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 110,
+                "text": "    /// @param wad The amount of WETH to transfer.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 111,
+                "text": "    /// @return True if the transfer was successful.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 59,
+                "newLine": 112,
+                "text": "    function transferFrom(address src, address dst, uint256 wad) public returns (bool) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 60,
+                "text": "        require(balanceOf[src] >= wad);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 113,
+                "text": "        require(_balanceOf[src] >= wad);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 61, "newLine": 114, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 62,
+                "text": "        if (src != msg.sender && allowance[src][msg.sender] != type(uint256).max) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 63,
+                "text": "            require(allowance[src][msg.sender] >= wad);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 64,
+                "text": "            allowance[src][msg.sender] -= wad;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 115,
+                "text": "        uint256 senderAllowance = allowance(src, msg.sender);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 116,
+                "text": "        if (src != msg.sender && senderAllowance != type(uint256).max) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 117,
+                "text": "            require(senderAllowance >= wad);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 118,
+                "text": "            _allowance[src][msg.sender] -= wad;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 65,
+                "newLine": 119,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 66, "newLine": 120, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 67,
+                "text": "        balanceOf[src] -= wad;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 68,
+                "text": "        balanceOf[dst] += wad;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 121,
+                "text": "        _balanceOf[src] -= wad;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 122,
+                "text": "        _balanceOf[dst] += wad;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 69, "newLine": 123, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 70,
+                "newLine": 124,
+                "text": "        emit Transfer(src, dst, wad);"
+              },
+              { "type": " ", "oldLine": 71, "newLine": 125, "text": "" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

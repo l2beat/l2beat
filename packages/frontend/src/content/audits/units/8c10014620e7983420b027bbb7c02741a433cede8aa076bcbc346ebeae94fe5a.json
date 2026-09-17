@@ -1,0 +1,173 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "8c10014620e7983420b027bbb7c02741a433cede8aa076bcbc346ebeae94fe5a",
+  "name": "SafeCast_1",
+  "kind": "library",
+  "lines": 23,
+  "source": "library SafeCast_1 {\n    /// @notice Cast a uint256 to a uint160, revert on overflow\n    /// @param y The uint256 to be downcasted\n    /// @return z The downcasted integer, now type uint160\n    function toUint160(uint256 y) internal pure returns (uint160 z) {\n        require((z = uint160(y)) == y);\n    }\n\n    /// @notice Cast a int256 to a int128, revert on overflow or underflow\n    /// @param y The int256 to be downcasted\n    /// @return z The downcasted integer, now type int128\n    function toInt128(int256 y) internal pure returns (int128 z) {\n        require((z = int128(y)) == y);\n    }\n\n    /// @notice Cast a uint256 to a int256, revert on overflow\n    /// @param y The uint256 to be casted\n    /// @return z The casted integer, now type int256\n    function toInt256(uint256 y) internal pure returns (int256 z) {\n        require(y < 2 ** 255);\n        z = int256(y);\n    }\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "differs",
+      "coveredLines": 22,
+      "match": {
+        "origin": "own",
+        "collection": "uniswapv3",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "similarity",
+        "auditedName": "SafeCast",
+        "similarity": 1,
+        "reportId": "uniswapv3/trailofbits-uniswap-v3-core-2021-03",
+        "repository": "Uniswap/v3-core",
+        "path": "contracts/libraries/SafeCast.sol",
+        "commit": "99223f33fd69a9e024f00bd8eea17b029d3f8f2d",
+        "commitTimestamp": "2021-03-01T20:06:25Z",
+        "url": "https://github.com/Uniswap/v3-core/blob/99223f33fd69a9e024f00bd8eea17b029d3f8f2d/contracts/libraries/SafeCast.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "full file",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "diff": {
+        "added": 1,
+        "removed": 1,
+        "ignoredAdded": 4,
+        "ignoredRemoved": 1,
+        "unchanged": 22,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 18,
+            "newStart": 1,
+            "newLines": 21,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "library SafeCast {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "library SafeCast_1 {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "    /// @notice Cast a uint256 to a uint160, revert on overflow"
+              },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "    /// @param y The uint256 to be downcasted",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 4,
+                "text": "    /// @return z The downcasted integer, now type uint160"
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 5,
+                "text": "    function toUint160(uint256 y) internal pure returns (uint160 z) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 6,
+                "text": "        require((z = uint160(y)) == y);"
+              },
+              { "type": " ", "oldLine": 6, "newLine": 7, "text": "    }" },
+              { "type": " ", "oldLine": 7, "newLine": 8, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 8,
+                "newLine": 9,
+                "text": "    /// @notice Cast a int256 to a int128, revert on overflow or underflow"
+              },
+              {
+                "type": "+",
+                "newLine": 10,
+                "text": "    /// @param y The int256 to be downcasted",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 11,
+                "text": "    /// @return z The downcasted integer, now type int128"
+              },
+              {
+                "type": " ",
+                "oldLine": 10,
+                "newLine": 12,
+                "text": "    function toInt128(int256 y) internal pure returns (int128 z) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 11,
+                "newLine": 13,
+                "text": "        require((z = int128(y)) == y);"
+              },
+              { "type": " ", "oldLine": 12, "newLine": 14, "text": "    }" },
+              { "type": " ", "oldLine": 13, "newLine": 15, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 14,
+                "newLine": 16,
+                "text": "    /// @notice Cast a uint256 to a int256, revert on overflow"
+              },
+              {
+                "type": "-",
+                "oldLine": 15,
+                "text": "    /// @return z The downcasted integer, now type int256",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 17,
+                "text": "    /// @param y The uint256 to be casted",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 18,
+                "text": "    /// @return z The casted integer, now type int256",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 16,
+                "newLine": 19,
+                "text": "    function toInt256(uint256 y) internal pure returns (int256 z) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 17,
+                "newLine": 20,
+                "text": "        require(y < 2 ** 255);"
+              },
+              {
+                "type": " ",
+                "oldLine": 18,
+                "newLine": 21,
+                "text": "        z = int256(y);"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

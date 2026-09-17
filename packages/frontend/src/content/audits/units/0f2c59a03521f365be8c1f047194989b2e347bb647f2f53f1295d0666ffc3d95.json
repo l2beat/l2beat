@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "0f2c59a03521f365be8c1f047194989b2e347bb647f2f53f1295d0666ffc3d95",
+  "name": "ConfigurationLib",
+  "kind": "library",
+  "lines": 82,
+  "source": "library ConfigurationLib {\n    using CompressedTimeMath for CompressedTimestamp;\n\n    uint256 internal constant QUORUM_LOWER = 1;\n    uint256 internal constant QUORUM_UPPER = 1e18;\n\n    uint256 internal constant REQUIRED_YEA_MARGIN_UPPER = 1e18;\n\n    uint256 internal constant VOTES_LOWER = 1;\n    uint256 internal constant VOTES_UPPER = type(uint96).max; // Maximum for compressed storage (uint96)\n\n    uint256 internal constant LOCK_AMOUNT_LOWER = 2;\n    uint256 internal constant LOCK_AMOUNT_UPPER = type(uint96).max; // Maximum for compressed storage (uint96)\n\n    Timestamp internal constant TIME_LOWER = Timestamp.wrap(60);\n    Timestamp internal constant TIME_UPPER = Timestamp.wrap(90 * 24 * 3600);\n\n    /**\n     * @notice The delay after which a withdrawal can be finalized.\n     * @dev This applies to the \"normal\" withdrawal, not one induced by proposeWithLock.\n     * @dev Making the delay equal to the voting duration + execution delay + a \"small buffer\"\n     * ensures that if you were able to vote on a proposal, someone may execute it before you can exit.\n     *\n     * The \"small buffer\" is somewhat arbitrarily set to the votingDelay / 5.\n     */\n    function getWithdrawalDelay(CompressedConfiguration storage _self) internal view returns (Timestamp) {\n        Timestamp votingDelay = _self.votingDelay.decompress();\n        Timestamp votingDuration = _self.votingDuration.decompress();\n        Timestamp executionDelay = _self.executionDelay.decompress();\n\n        return Timestamp.wrap(Timestamp.unwrap(votingDelay) / 5) + votingDuration + executionDelay;\n    }\n\n    /**\n     * @notice\n     * @dev     We specify `memory` here since it is called on outside import for validation\n     *          before writing it to state.\n     */\n    function assertValid(Configuration memory _self) internal pure {\n        require(_self.quorum >= QUORUM_LOWER, Errors.Governance__ConfigurationLib__QuorumTooSmall());\n        require(_self.quorum <= QUORUM_UPPER, Errors.Governance__ConfigurationLib__QuorumTooBig());\n\n        require(\n            _self.requiredYeaMargin <= REQUIRED_YEA_MARGIN_UPPER,\n            Errors.Governance__ConfigurationLib__RequiredYeaMarginTooBig()\n        );\n\n        require(_self.minimumVotes >= VOTES_LOWER, Errors.Governance__ConfigurationLib__InvalidMinimumVotes());\n        require(_self.minimumVotes <= VOTES_UPPER, Errors.Governance__ConfigurationLib__InvalidMinimumVotes());\n\n        require(\n            _self.proposeConfig.lockAmount >= LOCK_AMOUNT_LOWER,\n            Errors.Governance__ConfigurationLib__LockAmountTooSmall()\n        );\n        require(\n            _self.proposeConfig.lockAmount <= LOCK_AMOUNT_UPPER, Errors.Governance__ConfigurationLib__LockAmountTooBig()\n        );\n\n        // Beyond checking the bounds like this, it might be useful to ensure that the value is larger than the withdrawal\n        // delay. this, can be useful if one want to ensure that the \"locker\" cannot himself vote in the proposal, but as\n        // it is unclear if this is a useful property, it is not enforced.\n        require(\n            _self.proposeConfig.lockDelay >= TIME_LOWER, Errors.Governance__ConfigurationLib__TimeTooSmall(\"LockDelay\")\n        );\n        require(\n            _self.proposeConfig.lockDelay <= Timestamp.wrap(type(uint32).max),\n            Errors.Governance__ConfigurationLib__TimeTooBig(\"LockDelay\")\n        );\n\n        require(_self.votingDelay >= TIME_LOWER, Errors.Governance__ConfigurationLib__TimeTooSmall(\"VotingDelay\"));\n        require(_self.votingDelay <= TIME_UPPER, Errors.Governance__ConfigurationLib__TimeTooBig(\"VotingDelay\"));\n\n        require(_self.votingDuration >= TIME_LOWER, Errors.Governance__ConfigurationLib__TimeTooSmall(\"VotingDuration\"));\n        require(_self.votingDuration <= TIME_UPPER, Errors.Governance__ConfigurationLib__TimeTooBig(\"VotingDuration\"));\n\n        require(_self.executionDelay >= TIME_LOWER, Errors.Governance__ConfigurationLib__TimeTooSmall(\"ExecutionDelay\"));\n        require(_self.executionDelay <= TIME_UPPER, Errors.Governance__ConfigurationLib__TimeTooBig(\"ExecutionDelay\"));\n\n        require(_self.gracePeriod >= TIME_LOWER, Errors.Governance__ConfigurationLib__TimeTooSmall(\"GracePeriod\"));\n        require(_self.gracePeriod <= TIME_UPPER, Errors.Governance__ConfigurationLib__TimeTooBig(\"GracePeriod\"));\n    }\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "identical",
+      "coveredLines": 82,
+      "match": {
+        "origin": "own",
+        "collection": "aztecnetwork",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "ConfigurationLib",
+        "similarity": 1,
+        "reportId": "aztecnetwork/veridise-governance-2025-10-13",
+        "repository": "AztecProtocol/aztec-packages",
+        "path": "l1-contracts/src/governance/libraries/ConfigurationLib.sol",
+        "commit": "a310dd929fc136669fd84baa5024d437ac1c9603",
+        "commitTimestamp": "2025-09-25T12:37:48Z",
+        "url": "https://github.com/AztecProtocol/aztec-packages/blob/a310dd929fc136669fd84baa5024d437ac1c9603/l1-contracts/src/governance/libraries/ConfigurationLib.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "remediation review",
+        "coverage": "confirmed maintainability fixes for V-AZGV-VUL-004 (PR 17248 head commit)",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "warnings": []
+    }
+  }
+}

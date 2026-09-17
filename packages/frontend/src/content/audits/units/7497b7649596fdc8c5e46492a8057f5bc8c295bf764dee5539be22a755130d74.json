@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "7497b7649596fdc8c5e46492a8057f5bc8c295bf764dee5539be22a755130d74",
+  "name": "Resolver",
+  "kind": "interface",
+  "lines": 3,
+  "source": "interface Resolver {\n    function addr(bytes32 node) external view returns (address);\n}",
+  "resolutions": {
+    "f9658cd3a9a22004": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

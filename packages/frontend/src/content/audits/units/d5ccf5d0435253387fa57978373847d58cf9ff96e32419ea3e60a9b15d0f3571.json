@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "d5ccf5d0435253387fa57978373847d58cf9ff96e32419ea3e60a9b15d0f3571",
+  "name": "IOptimismERC20Factory",
+  "kind": "interface",
+  "lines": 6,
+  "source": "interface IOptimismERC20Factory {\n    /// @notice Checks if a ERC20 token is deployed by the factory.\n    /// @param _localToken The address of the ERC20 token to check the deployment.\n    /// @return remoteToken_ The address of the remote token if it is deployed or `address(0)` if not.\n    function deployments(address _localToken) external view returns (address remoteToken_);\n}",
+  "resolutions": {
+    "ba5b6c9584fb78fd": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "44ad4cf96e2ef6f0": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "9fa846564f4071bd": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "bb55951394276893": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "1f5c32d18cf7148d": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

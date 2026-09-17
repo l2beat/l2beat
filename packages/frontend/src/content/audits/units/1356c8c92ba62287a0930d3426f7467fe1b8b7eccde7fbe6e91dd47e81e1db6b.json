@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "1356c8c92ba62287a0930d3426f7467fe1b8b7eccde7fbe6e91dd47e81e1db6b",
+  "name": "Constants",
+  "kind": "library",
+  "lines": 10,
+  "source": "library Constants {\n    /// @dev Used for identifying cases when this contract's balance of a token is to be used\n    uint256 internal constant CONTRACT_BALANCE = 0;\n\n    /// @dev Used as a flag for identifying msg.sender, saves gas by sending more 0 bytes\n    address internal constant MSG_SENDER = address(1);\n\n    /// @dev Used as a flag for identifying address(this), saves gas by sending more 0 bytes\n    address internal constant ADDRESS_THIS = address(2);\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

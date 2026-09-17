@@ -1,0 +1,307 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "cb1ea5f5e1be52603b3b846f051883e33bf85ccad6a87e57a8f70c0b174890c8",
+  "name": "ReentrancyGuard",
+  "kind": "abstract",
+  "lines": 42,
+  "source": "abstract contract ReentrancyGuard {\n    // Booleans are more expensive than uint256 or any type that takes up a full\n    // word because each write operation emits an extra SLOAD to first read the\n    // slot's contents, replace the bits taken up by the boolean, and then write\n    // back. This is the compiler's defense against contract upgrades and\n    // pointer aliasing, and it cannot be disabled.\n\n    // The values being non-zero value makes deployment a bit more expensive,\n    // but in exchange the refund on every call to nonReentrant will be lower in\n    // amount. Since refunds are capped to a percentage of the total\n    // transaction's gas, it is best to keep them low in cases like this one, to\n    // increase the likelihood of the full refund coming into effect.\n    uint256 private constant _NOT_ENTERED = 1;\n    uint256 private constant _ENTERED = 2;\n\n    uint256 private _status;\n\n    constructor() internal {\n        _status = _NOT_ENTERED;\n    }\n\n    /**\n     * @dev Prevents a contract from calling itself, directly or indirectly.\n     * Calling a `nonReentrant` function from another `nonReentrant`\n     * function is not supported. It is possible to prevent this from happening\n     * by making the `nonReentrant` function external, and make it call a\n     * `private` function that does the actual work.\n     */\n    modifier nonReentrant() {\n        // On the first call to nonReentrant, _notEntered will be true\n        require(_status != _ENTERED, \"ReentrancyGuard: reentrant call\");\n\n        // Any calls to nonReentrant after this point will fail\n        _status = _ENTERED;\n\n        _;\n\n        // By storing the original value once again, a refund is triggered (see\n        // https://eips.ethereum.org/EIPS/eip-2200)\n        _status = _NOT_ENTERED;\n    }\n}",
+  "resolutions": {
+    "f9658cd3a9a22004": {
+      "status": "differs",
+      "coveredLines": 40,
+      "match": {
+        "origin": "library",
+        "collection": "openzeppelin",
+        "relation": { "type": "library" },
+        "rank": 3,
+        "matchedBy": "name",
+        "auditedName": "ReentrancyGuard",
+        "similarity": 0.579,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/security/ReentrancyGuard.sol",
+        "commit": "adbb8c9d27e77452bc2253397908d3d044808e62",
+        "commitTimestamp": "2023-08-16T05:33:49Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/adbb8c9d27e77452bc2253397908d3d044808e62/contracts/security/ReentrancyGuard.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "audit",
+        "coverage": "Full review of the file at the Phase 5 audit commit.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 5
+      },
+      "diff": {
+        "added": 2,
+        "removed": 14,
+        "ignoredAdded": 4,
+        "ignoredRemoved": 13,
+        "unchanged": 40,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 15,
+            "oldLines": 12,
+            "newStart": 15,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 15, "newLine": 15, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 16,
+                "newLine": 16,
+                "text": "    uint256 private _status;"
+              },
+              { "type": " ", "oldLine": 17, "newLine": 17, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 18,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 19,
+                "text": "     * @dev Unauthorized reentrant call.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 20,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 21,
+                "text": "    error ReentrancyGuardReentrantCall();",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 22, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 23,
+                "text": "    constructor() {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 18,
+                "text": "    constructor() internal {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 19,
+                "text": "        _status = _NOT_ENTERED;"
+              },
+              { "type": " ", "oldLine": 25, "newLine": 20, "text": "    }" },
+              { "type": " ", "oldLine": 26, "newLine": 21, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 28,
+            "oldLines": 36,
+            "newStart": 23,
+            "newLines": 20,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 28,
+                "newLine": 23,
+                "text": "     * @dev Prevents a contract from calling itself, directly or indirectly."
+              },
+              {
+                "type": " ",
+                "oldLine": 29,
+                "newLine": 24,
+                "text": "     * Calling a `nonReentrant` function from another `nonReentrant`"
+              },
+              {
+                "type": " ",
+                "oldLine": 30,
+                "newLine": 25,
+                "text": "     * function is not supported. It is possible to prevent this from happening"
+              },
+              {
+                "type": "-",
+                "oldLine": 31,
+                "text": "     * by making the `nonReentrant` function external, and making it call a",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 26,
+                "text": "     * by making the `nonReentrant` function external, and make it call a",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 32,
+                "newLine": 27,
+                "text": "     * `private` function that does the actual work."
+              },
+              { "type": " ", "oldLine": 33, "newLine": 28, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 34,
+                "newLine": 29,
+                "text": "    modifier nonReentrant() {"
+              },
+              {
+                "type": "-",
+                "oldLine": 35,
+                "text": "        _nonReentrantBefore();",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 36,
+                "text": "        _;",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 37,
+                "text": "        _nonReentrantAfter();",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 38, "text": "    }", "ignored": false },
+              {
+                "type": "+",
+                "newLine": 30,
+                "text": "        // On the first call to nonReentrant, _notEntered will be true",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 31,
+                "text": "        require(_status != _ENTERED, \"ReentrancyGuard: reentrant call\");",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 39, "newLine": 32, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 40,
+                "text": "    function _nonReentrantBefore() private {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 41,
+                "text": "        // On the first call to nonReentrant, _status will be _NOT_ENTERED",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 42,
+                "text": "        if (_status == _ENTERED) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 43,
+                "text": "            revert ReentrancyGuardReentrantCall();",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 44,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 45, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 46,
+                "newLine": 33,
+                "text": "        // Any calls to nonReentrant after this point will fail"
+              },
+              {
+                "type": " ",
+                "oldLine": 47,
+                "newLine": 34,
+                "text": "        _status = _ENTERED;"
+              },
+              { "type": "-", "oldLine": 48, "text": "    }", "ignored": false },
+              { "type": " ", "oldLine": 49, "newLine": 35, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 50,
+                "text": "    function _nonReentrantAfter() private {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 36,
+                "text": "        _;",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 37, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 51,
+                "newLine": 38,
+                "text": "        // By storing the original value once again, a refund is triggered (see"
+              },
+              {
+                "type": " ",
+                "oldLine": 52,
+                "newLine": 39,
+                "text": "        // https://eips.ethereum.org/EIPS/eip-2200)"
+              },
+              {
+                "type": " ",
+                "oldLine": 53,
+                "newLine": 40,
+                "text": "        _status = _NOT_ENTERED;"
+              },
+              { "type": " ", "oldLine": 54, "newLine": 41, "text": "    }" },
+              { "type": "-", "oldLine": 55, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 56,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 57,
+                "text": "     * @dev Returns true if the reentrancy guard is currently set to \"entered\", which indicates there is a",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 58,
+                "text": "     * `nonReentrant` function in the call stack.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 59,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 60,
+                "text": "    function _reentrancyGuardEntered() internal view returns (bool) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 61,
+                "text": "        return _status == _ENTERED;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 62, "text": "    }", "ignored": false },
+              { "type": " ", "oldLine": 63, "newLine": 42, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "a52b23f695cf0ac01471c7d6581c5fd4f58ef77f027621e497c1025a986c4576",
+  "name": "OperatorFeeVault",
+  "kind": "contract",
+  "lines": 9,
+  "source": "contract OperatorFeeVault is FeeVault, ISemver {\n    /// @notice Semantic version.\n    /// @custom:semver 1.0.0\n    string public constant version = \"1.0.0\";\n\n    /// @notice Constructs the OperatorFeeVault contract.\n    /// Funds are withdrawn to the base fee vault on the L2 network.\n    constructor() FeeVault(Predeploys.BASE_FEE_VAULT, 0, Types.WithdrawalNetwork.L2) {}\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

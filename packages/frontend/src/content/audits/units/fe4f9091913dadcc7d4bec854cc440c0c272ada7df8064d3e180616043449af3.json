@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "fe4f9091913dadcc7d4bec854cc440c0c272ada7df8064d3e180616043449af3",
+  "name": "TornadoVault",
+  "kind": "contract",
+  "lines": 13,
+  "source": "contract TornadoVault {\n    using SafeERC20 for IERC20;\n\n    address internal constant TornTokenAddress = 0x77777FeDdddFfC19Ff86DB637967013e6C6A116C;\n    address internal constant GovernanceAddress = 0x5efda50f22d34F262c29268506C5Fa42cB56A1Ce;\n\n    /// @notice withdraws TORN from the contract\n    /// @param amount amount to withdraw\n    function withdrawTorn(address recipient, uint256 amount) external {\n        require(msg.sender == GovernanceAddress, \"only gov\");\n        IERC20(TornTokenAddress).safeTransfer(recipient, amount);\n    }\n}",
+  "resolutions": {
+    "f9658cd3a9a22004": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

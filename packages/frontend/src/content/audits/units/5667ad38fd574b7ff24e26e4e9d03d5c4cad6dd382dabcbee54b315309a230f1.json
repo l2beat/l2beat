@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "5667ad38fd574b7ff24e26e4e9d03d5c4cad6dd382dabcbee54b315309a230f1",
+  "name": "BpsLib",
+  "kind": "library",
+  "lines": 5,
+  "source": "library BpsLib {\n    function mul(uint256 _a, Bps _b) internal pure returns (uint256) {\n        return _a * uint256(Bps.unwrap(_b)) / 10_000;\n    }\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "identical",
+      "coveredLines": 5,
+      "match": {
+        "origin": "own",
+        "collection": "aztecnetwork",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "BpsLib",
+        "similarity": 1,
+        "reportId": "aztecnetwork/cantina-escape-hatch-2026-02-24",
+        "repository": "AztecProtocol/aztec-packages",
+        "path": "l1-contracts/src/core/libraries/rollup/RewardLib.sol",
+        "commit": "0092f9f01ed88cc3626270e62716d7b722ea1944",
+        "commitTimestamp": "2026-01-06T20:15:15Z",
+        "url": "https://github.com/AztecProtocol/aztec-packages/blob/0092f9f01ed88cc3626270e62716d7b722ea1944/l1-contracts/src/core/libraries/rollup/RewardLib.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "security review",
+        "coverage": "full file",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 4
+      },
+      "warnings": []
+    }
+  }
+}

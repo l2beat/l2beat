@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "d7c610b50d93e511fde99881c62b2de29dffcdfaa9f9f9713f06ef675ace2e9f",
+  "name": "IOwnable",
+  "kind": "interface",
+  "lines": 15,
+  "source": "interface IOwnable {\n    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);\n\n    /// @dev The caller account is not authorized to perform an operation.\n    error OwnableUnauthorizedAccount(address account);\n\n    /// @dev The owner is not a valid owner account. (eg. `address(0)`)\n    error OwnableInvalidOwner(address owner);\n\n    function owner() external view returns (address);\n    function renounceOwnership() external;\n    function transferOwnership(address newOwner) external; // nosemgrep\n\n    function __constructor__() external;\n}",
+  "resolutions": {
+    "44ad4cf96e2ef6f0": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

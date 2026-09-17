@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "8e6e11575be23f2d326cbe50166c09f5d37c21f6c03019a1b1fba7d82148ddd6",
+  "name": "IVerifier",
+  "kind": "interface",
+  "lines": 31,
+  "source": "interface IVerifier {\n    /**\n     * @notice Verifies a Withdrawal Proof\n     * @param _pA First elliptic curve point (π_A) of the Groth16 proof, encoded as two field elements\n     * @param _pB Second elliptic curve point (π_B) of the Groth16 proof, encoded as 2x2 matrix of field elements\n     * @param _pC Third elliptic curve point (π_C) of the Groth16 proof, encoded as two field elements\n     * @param _pubSignals The proof public signals (both input and output)\n     * @return _valid The boolean indicating if the proof is valid\n     */\n    function verifyProof(\n        uint256[2] memory _pA,\n        uint256[2][2] memory _pB,\n        uint256[2] memory _pC,\n        uint256[8] memory _pubSignals\n    ) external returns (bool _valid);\n\n    /**\n     * @notice Verifies a Ragequit Proof\n     * @param _pA First elliptic curve point (π_A) of the Groth16 proof, encoded as two field elements\n     * @param _pB Second elliptic curve point (π_B) of the Groth16 proof, encoded as 2x2 matrix of field elements\n     * @param _pC Third elliptic curve point (π_C) of the Groth16 proof, encoded as two field elements\n     * @param _pubSignals The proof public signals (both input and output)\n     * @return _valid The boolean indicating if the proof is valid\n     */\n    function verifyProof(\n        uint256[2] memory _pA,\n        uint256[2][2] memory _pB,\n        uint256[2] memory _pC,\n        uint256[4] memory _pubSignals\n    ) external returns (bool _valid);\n}",
+  "resolutions": {
+    "cbbcf694abda362c": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

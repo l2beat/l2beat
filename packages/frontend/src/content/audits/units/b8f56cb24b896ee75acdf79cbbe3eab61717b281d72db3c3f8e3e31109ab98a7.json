@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "b8f56cb24b896ee75acdf79cbbe3eab61717b281d72db3c3f8e3e31109ab98a7",
+  "name": "ICrossDomainMessenger",
+  "kind": "interface",
+  "lines": 9,
+  "source": "interface ICrossDomainMessenger {\n    function xDomainMessageSender() external view returns (address);\n\n    /// Sends a cross domain message to the target messenger.\n    /// @param _target Target contract address.\n    /// @param _message Message to send to the target.\n    /// @param _gasLimit Gas limit for the provided message.\n    function sendMessage(address _target, bytes calldata _message, uint32 _gasLimit) external;\n}",
+  "resolutions": {
+    "ba5b6c9584fb78fd": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

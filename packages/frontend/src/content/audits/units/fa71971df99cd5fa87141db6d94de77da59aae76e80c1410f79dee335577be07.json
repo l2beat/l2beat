@@ -1,0 +1,153 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "fa71971df99cd5fa87141db6d94de77da59aae76e80c1410f79dee335577be07",
+  "name": "GovernanceRelay",
+  "kind": "abstract",
+  "lines": 21,
+  "source": "abstract contract GovernanceRelay is CoreGovernance, CommonGovernanceRelay {\n    using Proposal for Proposal.ProposalDetail;\n    using GlobalProposal for GlobalProposal.GlobalProposalDetail;\n\n    /**\n     * @dev Relays voted proposal.\n     *\n     * Requirements:\n     * - The relay proposal is finalized.\n     *\n     */\n    function _relayProposal(\n        Proposal.ProposalDetail calldata _proposal,\n        Ballot.VoteType[] calldata _supports,\n        Signature[] calldata _signatures,\n        address _creator\n    ) internal {\n        _proposeProposalStruct(_proposal, _creator);\n        _relayVotesBySignatures(_proposal, _supports, _signatures, _proposal.hash());\n    }\n}",
+  "resolutions": {
+    "bb55951394276893": {
+      "status": "differs",
+      "coveredLines": 20,
+      "match": {
+        "origin": "own",
+        "collection": "roninnetwork",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "GovernanceRelay",
+        "similarity": 0.647,
+        "reportId": "roninnetwork/beosin-ronin-bridge-2023-09",
+        "repository": "axieinfinity/ronin-dpos-contracts",
+        "path": "contracts/extensions/sequential-governance/governance-relay/GovernanceRelay.sol",
+        "commit": "f4deb89ae8cfe97bed7bd429ac6ed9069ca20215",
+        "commitTimestamp": "2023-08-15T07:29:41Z",
+        "url": "https://github.com/axieinfinity/ronin-dpos-contracts/blob/f4deb89ae8cfe97bed7bd429ac6ed9069ca20215/contracts/extensions/sequential-governance/governance-relay/GovernanceRelay.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Full file review at tag v0.6.1-testnet (commit f4deb89a).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 6
+      },
+      "diff": {
+        "added": 1,
+        "removed": 9,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 20,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 13,
+            "oldLines": 17,
+            "newStart": 13,
+            "newLines": 9,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 13,
+                "newLine": 13,
+                "text": "        Proposal.ProposalDetail calldata _proposal,"
+              },
+              {
+                "type": " ",
+                "oldLine": 14,
+                "newLine": 14,
+                "text": "        Ballot.VoteType[] calldata _supports,"
+              },
+              {
+                "type": " ",
+                "oldLine": 15,
+                "newLine": 15,
+                "text": "        Signature[] calldata _signatures,"
+              },
+              {
+                "type": "-",
+                "oldLine": 16,
+                "text": "        bytes32 _domainSeparator,",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 17,
+                "newLine": 16,
+                "text": "        address _creator"
+              },
+              {
+                "type": " ",
+                "oldLine": 18,
+                "newLine": 17,
+                "text": "    ) internal {"
+              },
+              {
+                "type": " ",
+                "oldLine": 19,
+                "newLine": 18,
+                "text": "        _proposeProposalStruct(_proposal, _creator);"
+              },
+              {
+                "type": "-",
+                "oldLine": 20,
+                "text": "        bytes32 _proposalHash = _proposal.hash();",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 21,
+                "text": "        _relayVotesBySignatures(",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 22,
+                "text": "            _proposal,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 23,
+                "text": "            _supports,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 24,
+                "text": "            _signatures,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 25,
+                "text": "            ECDSA.toTypedDataHash(_domainSeparator, Ballot.hash(_proposalHash, Ballot.VoteType.For)),",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 26,
+                "text": "            ECDSA.toTypedDataHash(_domainSeparator, Ballot.hash(_proposalHash, Ballot.VoteType.Against))",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 27,
+                "text": "        );",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 19,
+                "text": "        _relayVotesBySignatures(_proposal, _supports, _signatures, _proposal.hash());",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 28, "newLine": 20, "text": "    }" },
+              { "type": " ", "oldLine": 29, "newLine": 21, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

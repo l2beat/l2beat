@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "9da7f0e24ac08ba5aff871330c526810d8d03b33938987ad43a19e94843af73d",
+  "name": "Nargo.toml",
+  "kind": "program",
+  "lines": 8,
+  "source": "[package]\nname = \"protocol_test_utils\"\ntype = \"lib\"\nauthors = [\"\"]\ncompiler_version = \">=0.18.0\"\n\n[dependencies]\ntypes = { path = \"../types\" }",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

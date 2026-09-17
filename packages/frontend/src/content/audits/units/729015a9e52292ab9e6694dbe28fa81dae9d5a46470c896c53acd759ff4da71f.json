@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "729015a9e52292ab9e6694dbe28fa81dae9d5a46470c896c53acd759ff4da71f",
+  "name": "ERC20Tornado",
+  "kind": "contract",
+  "lines": 36,
+  "source": "contract ERC20Tornado is Tornado {\n    using SafeERC20 for IERC20;\n\n    IERC20 public immutable token;\n\n    constructor(IVerifier _verifier, IHasher _hasher, uint256 _denomination, uint32 _merkleTreeHeight, IERC20 _token)\n        Tornado(_verifier, _hasher, _denomination, _merkleTreeHeight)\n    {\n        token = _token;\n    }\n\n    function _processDeposit() internal override {\n        require(msg.value == 0, \"ETH value is supposed to be 0 for ERC20 instance\");\n        token.safeTransferFrom(msg.sender, address(this), denomination);\n    }\n\n    function _processWithdraw(address payable _recipient, address payable _relayer, uint256 _fee, uint256 _refund)\n        internal\n        override\n    {\n        require(msg.value == _refund, \"Incorrect refund amount received by the contract\");\n\n        token.safeTransfer(_recipient, denomination - _fee);\n        if (_fee > 0) {\n            token.safeTransfer(_relayer, _fee);\n        }\n\n        if (_refund > 0) {\n            (bool success,) = _recipient.call{value: _refund}(\"\");\n            if (!success) {\n                // let's return _refund back to the relayer\n                _relayer.transfer(_refund);\n            }\n        }\n    }\n}",
+  "resolutions": {
+    "f9658cd3a9a22004": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

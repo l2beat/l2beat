@@ -1,0 +1,75 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "9825ea4ee55f0966b2e31c4b77513088867d35f9fd7121b53945e59d2b286658",
+  "name": "Errors_2",
+  "kind": "library",
+  "lines": 21,
+  "source": "library Errors_2 {\n    /**\n     * @dev The ETH balance of the account is not enough to perform the operation.\n     */\n    error InsufficientBalance(uint256 balance, uint256 needed);\n\n    /**\n     * @dev A call to an address target failed. The target may have reverted.\n     */\n    error FailedCall();\n\n    /**\n     * @dev The deployment failed.\n     */\n    error FailedDeployment();\n\n    /**\n     * @dev A necessary precompile is missing.\n     */\n    error MissingPrecompile(address);\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "differs",
+      "coveredLines": 20,
+      "match": {
+        "origin": "library",
+        "collection": "openzeppelin",
+        "relation": { "type": "library" },
+        "rank": 3,
+        "matchedBy": "similarity",
+        "auditedName": "Errors",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2024-10-v5.1",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/utils/Errors.sol",
+        "commit": "aba9ff61ac6d610eab12b1528c6f22f98dbb4dd3",
+        "commitTimestamp": "2024-07-24T08:37:16Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/aba9ff61ac6d610eab12b1528c6f22f98dbb4dd3/contracts/utils/Errors.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit - phase 2",
+        "coverage": "Phase 2 full review of this contract newly introduced in the v5.1 release.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 1,
+        "removed": 1,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 20,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 4,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "library Errors {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "library Errors_2 {",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 2, "newLine": 2, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "     * @dev The ETH balance of the account is not enough to perform the operation."
+              },
+              { "type": " ", "oldLine": 4, "newLine": 4, "text": "     */" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

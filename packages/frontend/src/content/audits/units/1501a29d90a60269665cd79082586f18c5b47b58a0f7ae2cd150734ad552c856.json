@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "1501a29d90a60269665cd79082586f18c5b47b58a0f7ae2cd150734ad552c856",
+  "name": "L2CrossDomainMessenger",
+  "kind": "contract",
+  "lines": 50,
+  "source": "contract L2CrossDomainMessenger is CrossDomainMessenger, Semver {\n    /**\n     * @custom:semver 1.4.0\n     *\n     * @param _l1CrossDomainMessenger Address of the L1CrossDomainMessenger contract.\n     */\n    constructor(address _l1CrossDomainMessenger) Semver(1, 4, 0) CrossDomainMessenger(_l1CrossDomainMessenger) {\n        initialize();\n    }\n\n    /**\n     * @notice Initializer.\n     */\n    function initialize() public initializer {\n        __CrossDomainMessenger_init();\n    }\n\n    /**\n     * @custom:legacy\n     * @notice Legacy getter for the remote messenger. Use otherMessenger going forward.\n     *\n     * @return Address of the L1CrossDomainMessenger contract.\n     */\n    function l1CrossDomainMessenger() public view returns (address) {\n        return OTHER_MESSENGER;\n    }\n\n    /**\n     * @inheritdoc CrossDomainMessenger\n     */\n    function _sendMessage(address _to, uint64 _gasLimit, uint256 _value, bytes memory _data) internal override {\n        L2ToL1MessagePasser(payable(Predeploys.L2_TO_L1_MESSAGE_PASSER)).initiateWithdrawal{value: _value}(\n            _to, _gasLimit, _data\n        );\n    }\n\n    /**\n     * @inheritdoc CrossDomainMessenger\n     */\n    function _isOtherMessenger() internal view override returns (bool) {\n        return AddressAliasHelper.undoL1ToL2Alias(msg.sender) == OTHER_MESSENGER;\n    }\n\n    /**\n     * @inheritdoc CrossDomainMessenger\n     */\n    function _isUnsafeTarget(address _target) internal view override returns (bool) {\n        return _target == address(this) || _target == address(Predeploys.L2_TO_L1_MESSAGE_PASSER);\n    }\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "identical",
+      "coveredLines": 50,
+      "match": {
+        "origin": "own",
+        "collection": "optimism",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "L2CrossDomainMessenger",
+        "similarity": 1,
+        "reportId": "optimism/code4rena-base-2023-08",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts-bedrock/contracts/L2/L2CrossDomainMessenger.sol",
+        "commit": "382d38b7d45bcbf73cb5e1e3f28cbd45d24e8a59",
+        "commitTimestamp": "2023-05-15T22:36:46Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/382d38b7d45bcbf73cb5e1e3f28cbd45d24e8a59/packages/contracts-bedrock/contracts/L2/L2CrossDomainMessenger.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "One of the fourteen contest-scope contracts; commit taken from the contest repository's code-freeze declaration (the report itself prints no hash).",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 7
+      },
+      "warnings": []
+    }
+  }
+}

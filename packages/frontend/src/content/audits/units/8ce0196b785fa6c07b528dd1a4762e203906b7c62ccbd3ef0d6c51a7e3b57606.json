@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "8ce0196b785fa6c07b528dd1a4762e203906b7c62ccbd3ef0d6c51a7e3b57606",
+  "name": "fee_recipient.nr",
+  "kind": "program",
+  "lines": 13,
+  "source": "use crate::{address::EthAddress, traits::{Deserialize, Empty, Serialize}};\n\n#[derive(Deserialize, Eq, Serialize)]\npub struct FeeRecipient {\n    pub recipient: EthAddress,\n    pub value: Field,\n}\n\nimpl Empty for FeeRecipient {\n    fn empty() -> Self {\n        Self { recipient: EthAddress::zero(), value: 0 }\n    }\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

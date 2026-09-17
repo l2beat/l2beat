@@ -1,0 +1,776 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "953b834e997f4354949d44e7c80af0064be918b805bc997e70dc15929a2790c9",
+  "name": "IL2ERC721Gateway",
+  "kind": "interface",
+  "lines": 110,
+  "source": "interface IL2ERC721Gateway {\n    /**\n     *\n     * Events *\n     *\n     */\n\n    /// @notice Emitted when the ERC721 NFT is transferred to recipient on layer 2.\n    /// @param l1Token The address of ERC721 NFT on layer 1.\n    /// @param l2Token The address of ERC721 NFT on layer 2.\n    /// @param from The address of sender on layer 1.\n    /// @param to The address of recipient on layer 2.\n    /// @param tokenId The token id of the ERC721 NFT deposited on layer 1.\n    event FinalizeDepositERC721(\n        address indexed l1Token, address indexed l2Token, address indexed from, address to, uint256 tokenId\n    );\n\n    /// @notice Emitted when the ERC721 NFT is batch transferred to recipient on layer 2.\n    /// @param l1Token The address of ERC721 NFT on layer 1.\n    /// @param l2Token The address of ERC721 NFT on layer 2.\n    /// @param from The address of sender on layer 1.\n    /// @param to The address of recipient on layer 2.\n    /// @param tokenIds The list of token ids of the ERC721 NFT deposited on layer 1.\n    event FinalizeBatchDepositERC721(\n        address indexed l1Token, address indexed l2Token, address indexed from, address to, uint256[] tokenIds\n    );\n\n    /// @notice Emitted when the ERC721 NFT is transferred to gateway on layer 2.\n    /// @param l1Token The address of ERC721 NFT on layer 1.\n    /// @param l2Token The address of ERC721 NFT on layer 2.\n    /// @param from The address of sender on layer 2.\n    /// @param to The address of recipient on layer 1.\n    /// @param tokenId The token id of the ERC721 NFT to withdraw on layer 2.\n    event WithdrawERC721(\n        address indexed l1Token, address indexed l2Token, address indexed from, address to, uint256 tokenId\n    );\n\n    /// @notice Emitted when the ERC721 NFT is batch transferred to gateway on layer 2.\n    /// @param l1Token The address of ERC721 NFT on layer 1.\n    /// @param l2Token The address of ERC721 NFT on layer 2.\n    /// @param from The address of sender on layer 2.\n    /// @param to The address of recipient on layer 1.\n    /// @param tokenIds The list of token ids of the ERC721 NFT to withdraw on layer 2.\n    event BatchWithdrawERC721(\n        address indexed l1Token, address indexed l2Token, address indexed from, address to, uint256[] tokenIds\n    );\n\n    /**\n     *\n     * Public Mutating Functions *\n     *\n     */\n\n    /// @notice Withdraw some ERC721 NFT to caller's account on layer 1.\n    /// @param token The address of ERC721 NFT on layer 2.\n    /// @param tokenId The token id to withdraw.\n    /// @param gasLimit Unused, but included for potential forward compatibility considerations.\n    function withdrawERC721(address token, uint256 tokenId, uint256 gasLimit) external payable;\n\n    /// @notice Withdraw some ERC721 NFT to caller's account on layer 1.\n    /// @param token The address of ERC721 NFT on layer 2.\n    /// @param to The address of recipient on layer 1.\n    /// @param tokenId The token id to withdraw.\n    /// @param gasLimit Unused, but included for potential forward compatibility considerations.\n    function withdrawERC721(address token, address to, uint256 tokenId, uint256 gasLimit) external payable;\n\n    /// @notice Batch withdraw a list of ERC721 NFT to caller's account on layer 1.\n    /// @param token The address of ERC721 NFT on layer 2.\n    /// @param tokenIds The list of token ids to withdraw.\n    /// @param gasLimit Unused, but included for potential forward compatibility considerations.\n    function batchWithdrawERC721(address token, uint256[] memory tokenIds, uint256 gasLimit) external payable;\n\n    /// @notice Batch withdraw a list of ERC721 NFT to caller's account on layer 1.\n    /// @param token The address of ERC721 NFT on layer 2.\n    /// @param to The address of recipient on layer 1.\n    /// @param tokenIds The list of token ids to withdraw.\n    /// @param gasLimit Unused, but included for potential forward compatibility considerations.\n    function batchWithdrawERC721(address token, address to, uint256[] memory tokenIds, uint256 gasLimit)\n        external\n        payable;\n\n    /// @notice Complete ERC721 deposit from layer 1 to layer 2 and send NFT to recipient's account on layer 2.\n    /// @dev Requirements:\n    ///  - The function should only be called by L2ScrollMessenger.\n    ///  - The function should also only be called by L1ERC721Gateway on layer 1.\n    /// @param l1Token The address of corresponding layer 1 token.\n    /// @param l2Token The address of corresponding layer 2 token.\n    /// @param from The address of account who withdraw the token on layer 1.\n    /// @param to The address of recipient on layer 2 to receive the token.\n    /// @param tokenId The token id to withdraw.\n    function finalizeDepositERC721(address l1Token, address l2Token, address from, address to, uint256 tokenId)\n        external;\n\n    /// @notice Complete ERC721 deposit from layer 1 to layer 2 and send NFT to recipient's account on layer 2.\n    /// @dev Requirements:\n    ///  - The function should only be called by L2ScrollMessenger.\n    ///  - The function should also only be called by L1ERC721Gateway on layer 1.\n    /// @param l1Token The address of corresponding layer 1 token.\n    /// @param l2Token The address of corresponding layer 2 token.\n    /// @param from The address of account who withdraw the token on layer 1.\n    /// @param to The address of recipient on layer 2 to receive the token.\n    /// @param tokenIds The list of token ids to withdraw.\n    function finalizeBatchDepositERC721(\n        address l1Token,\n        address l2Token,\n        address from,\n        address to,\n        uint256[] calldata tokenIds\n    ) external;\n}",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "identical",
+      "coveredLines": 110,
+      "match": {
+        "origin": "own",
+        "collection": "scroll",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "IL2ERC721Gateway",
+        "similarity": 1,
+        "reportId": "scroll/openzeppelin-scroll-layer1-audit-2023-07",
+        "repository": "scroll-tech/scroll",
+        "path": "contracts/src/L2/gateways/IL2ERC721Gateway.sol",
+        "commit": "3bc8a3f5c6ac816ddffadca41024331dcf4d3064",
+        "commitTimestamp": "2023-05-22T07:41:40Z",
+        "url": "https://github.com/scroll-tech/scroll/blob/3bc8a3f5c6ac816ddffadca41024331dcf4d3064/contracts/src/L2/gateways/IL2ERC721Gateway.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Full file review at audit commit.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 38,
+        "ignoredRemoved": 38,
+        "unchanged": 110,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 5,
+            "oldLines": 42,
+            "newStart": 5,
+            "newLines": 42,
+            "lines": [
+              { "type": " ", "oldLine": 5, "newLine": 5, "text": "     *" },
+              { "type": " ", "oldLine": 6, "newLine": 6, "text": "     */" },
+              { "type": " ", "oldLine": 7, "newLine": 7, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 8,
+                "text": "    /// @notice Emitted when the ERC721 NFT is transfered to recipient in layer 2.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 9,
+                "text": "    /// @param l1Token The address of ERC721 NFT in layer 1.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 10,
+                "text": "    /// @param l2Token The address of ERC721 NFT in layer 2.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 11,
+                "text": "    /// @param from The address of sender in layer 1.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 12,
+                "text": "    /// @param to The address of recipient in layer 2.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 13,
+                "text": "    /// @param tokenId The token id of the ERC721 NFT deposited in layer 1.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 8,
+                "text": "    /// @notice Emitted when the ERC721 NFT is transferred to recipient on layer 2.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 9,
+                "text": "    /// @param l1Token The address of ERC721 NFT on layer 1.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 10,
+                "text": "    /// @param l2Token The address of ERC721 NFT on layer 2.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 11,
+                "text": "    /// @param from The address of sender on layer 1.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 12,
+                "text": "    /// @param to The address of recipient on layer 2.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 13,
+                "text": "    /// @param tokenId The token id of the ERC721 NFT deposited on layer 1.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 14,
+                "newLine": 14,
+                "text": "    event FinalizeDepositERC721("
+              },
+              {
+                "type": " ",
+                "oldLine": 15,
+                "newLine": 15,
+                "text": "        address indexed l1Token, address indexed l2Token, address indexed from, address to, uint256 tokenId"
+              },
+              { "type": " ", "oldLine": 16, "newLine": 16, "text": "    );" },
+              { "type": " ", "oldLine": 17, "newLine": 17, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 18,
+                "text": "    /// @notice Emitted when the ERC721 NFT is batch transfered to recipient in layer 2.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 19,
+                "text": "    /// @param l1Token The address of ERC721 NFT in layer 1.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 20,
+                "text": "    /// @param l2Token The address of ERC721 NFT in layer 2.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 21,
+                "text": "    /// @param from The address of sender in layer 1.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 22,
+                "text": "    /// @param to The address of recipient in layer 2.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 23,
+                "text": "    /// @param tokenIds The list of token ids of the ERC721 NFT deposited in layer 1.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 18,
+                "text": "    /// @notice Emitted when the ERC721 NFT is batch transferred to recipient on layer 2.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 19,
+                "text": "    /// @param l1Token The address of ERC721 NFT on layer 1.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 20,
+                "text": "    /// @param l2Token The address of ERC721 NFT on layer 2.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 21,
+                "text": "    /// @param from The address of sender on layer 1.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 22,
+                "text": "    /// @param to The address of recipient on layer 2.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 23,
+                "text": "    /// @param tokenIds The list of token ids of the ERC721 NFT deposited on layer 1.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 24,
+                "text": "    event FinalizeBatchDepositERC721("
+              },
+              {
+                "type": " ",
+                "oldLine": 25,
+                "newLine": 25,
+                "text": "        address indexed l1Token, address indexed l2Token, address indexed from, address to, uint256[] tokenIds"
+              },
+              { "type": " ", "oldLine": 26, "newLine": 26, "text": "    );" },
+              { "type": " ", "oldLine": 27, "newLine": 27, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 28,
+                "text": "    /// @notice Emitted when the ERC721 NFT is transfered to gateway in layer 2.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 29,
+                "text": "    /// @param l1Token The address of ERC721 NFT in layer 1.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 30,
+                "text": "    /// @param l2Token The address of ERC721 NFT in layer 2.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 31,
+                "text": "    /// @param from The address of sender in layer 2.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 32,
+                "text": "    /// @param to The address of recipient in layer 1.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 33,
+                "text": "    /// @param tokenId The token id of the ERC721 NFT to withdraw in layer 2.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 28,
+                "text": "    /// @notice Emitted when the ERC721 NFT is transferred to gateway on layer 2.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 29,
+                "text": "    /// @param l1Token The address of ERC721 NFT on layer 1.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 30,
+                "text": "    /// @param l2Token The address of ERC721 NFT on layer 2.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 31,
+                "text": "    /// @param from The address of sender on layer 2.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 32,
+                "text": "    /// @param to The address of recipient on layer 1.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 33,
+                "text": "    /// @param tokenId The token id of the ERC721 NFT to withdraw on layer 2.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 34,
+                "newLine": 34,
+                "text": "    event WithdrawERC721("
+              },
+              {
+                "type": " ",
+                "oldLine": 35,
+                "newLine": 35,
+                "text": "        address indexed l1Token, address indexed l2Token, address indexed from, address to, uint256 tokenId"
+              },
+              { "type": " ", "oldLine": 36, "newLine": 36, "text": "    );" },
+              { "type": " ", "oldLine": 37, "newLine": 37, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 38,
+                "text": "    /// @notice Emitted when the ERC721 NFT is batch transfered to gateway in layer 2.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 39,
+                "text": "    /// @param l1Token The address of ERC721 NFT in layer 1.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 40,
+                "text": "    /// @param l2Token The address of ERC721 NFT in layer 2.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 41,
+                "text": "    /// @param from The address of sender in layer 2.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 42,
+                "text": "    /// @param to The address of recipient in layer 1.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 43,
+                "text": "    /// @param tokenIds The list of token ids of the ERC721 NFT to withdraw in layer 2.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 38,
+                "text": "    /// @notice Emitted when the ERC721 NFT is batch transferred to gateway on layer 2.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 39,
+                "text": "    /// @param l1Token The address of ERC721 NFT on layer 1.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 40,
+                "text": "    /// @param l2Token The address of ERC721 NFT on layer 2.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 41,
+                "text": "    /// @param from The address of sender on layer 2.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 42,
+                "text": "    /// @param to The address of recipient on layer 1.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 43,
+                "text": "    /// @param tokenIds The list of token ids of the ERC721 NFT to withdraw on layer 2.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 44,
+                "newLine": 44,
+                "text": "    event BatchWithdrawERC721("
+              },
+              {
+                "type": " ",
+                "oldLine": 45,
+                "newLine": 45,
+                "text": "        address indexed l1Token, address indexed l2Token, address indexed from, address to, uint256[] tokenIds"
+              },
+              { "type": " ", "oldLine": 46, "newLine": 46, "text": "    );" }
+            ]
+          },
+          {
+            "oldStart": 52,
+            "oldLines": 53,
+            "newStart": 52,
+            "newLines": 53,
+            "lines": [
+              { "type": " ", "oldLine": 52, "newLine": 52, "text": "     */" },
+              { "type": " ", "oldLine": 53, "newLine": 53, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 54,
+                "newLine": 54,
+                "text": "    /// @notice Withdraw some ERC721 NFT to caller's account on layer 1."
+              },
+              {
+                "type": "-",
+                "oldLine": 55,
+                "text": "    /// @param token The address of ERC721 NFT in layer 2.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 55,
+                "text": "    /// @param token The address of ERC721 NFT on layer 2.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 56,
+                "newLine": 56,
+                "text": "    /// @param tokenId The token id to withdraw."
+              },
+              {
+                "type": " ",
+                "oldLine": 57,
+                "newLine": 57,
+                "text": "    /// @param gasLimit Unused, but included for potential forward compatibility considerations."
+              },
+              {
+                "type": " ",
+                "oldLine": 58,
+                "newLine": 58,
+                "text": "    function withdrawERC721(address token, uint256 tokenId, uint256 gasLimit) external payable;"
+              },
+              { "type": " ", "oldLine": 59, "newLine": 59, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 60,
+                "newLine": 60,
+                "text": "    /// @notice Withdraw some ERC721 NFT to caller's account on layer 1."
+              },
+              {
+                "type": "-",
+                "oldLine": 61,
+                "text": "    /// @param token The address of ERC721 NFT in layer 2.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 62,
+                "text": "    /// @param to The address of recipient in layer 1.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 61,
+                "text": "    /// @param token The address of ERC721 NFT on layer 2.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 62,
+                "text": "    /// @param to The address of recipient on layer 1.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 63,
+                "newLine": 63,
+                "text": "    /// @param tokenId The token id to withdraw."
+              },
+              {
+                "type": " ",
+                "oldLine": 64,
+                "newLine": 64,
+                "text": "    /// @param gasLimit Unused, but included for potential forward compatibility considerations."
+              },
+              {
+                "type": " ",
+                "oldLine": 65,
+                "newLine": 65,
+                "text": "    function withdrawERC721(address token, address to, uint256 tokenId, uint256 gasLimit) external payable;"
+              },
+              { "type": " ", "oldLine": 66, "newLine": 66, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 67,
+                "newLine": 67,
+                "text": "    /// @notice Batch withdraw a list of ERC721 NFT to caller's account on layer 1."
+              },
+              {
+                "type": "-",
+                "oldLine": 68,
+                "text": "    /// @param token The address of ERC721 NFT in layer 2.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 68,
+                "text": "    /// @param token The address of ERC721 NFT on layer 2.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 69,
+                "newLine": 69,
+                "text": "    /// @param tokenIds The list of token ids to withdraw."
+              },
+              {
+                "type": " ",
+                "oldLine": 70,
+                "newLine": 70,
+                "text": "    /// @param gasLimit Unused, but included for potential forward compatibility considerations."
+              },
+              {
+                "type": " ",
+                "oldLine": 71,
+                "newLine": 71,
+                "text": "    function batchWithdrawERC721(address token, uint256[] memory tokenIds, uint256 gasLimit) external payable;"
+              },
+              { "type": " ", "oldLine": 72, "newLine": 72, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 73,
+                "newLine": 73,
+                "text": "    /// @notice Batch withdraw a list of ERC721 NFT to caller's account on layer 1."
+              },
+              {
+                "type": "-",
+                "oldLine": 74,
+                "text": "    /// @param token The address of ERC721 NFT in layer 2.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 75,
+                "text": "    /// @param to The address of recipient in layer 1.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 74,
+                "text": "    /// @param token The address of ERC721 NFT on layer 2.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 75,
+                "text": "    /// @param to The address of recipient on layer 1.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 76,
+                "newLine": 76,
+                "text": "    /// @param tokenIds The list of token ids to withdraw."
+              },
+              {
+                "type": " ",
+                "oldLine": 77,
+                "newLine": 77,
+                "text": "    /// @param gasLimit Unused, but included for potential forward compatibility considerations."
+              },
+              {
+                "type": " ",
+                "oldLine": 78,
+                "newLine": 78,
+                "text": "    function batchWithdrawERC721(address token, address to, uint256[] memory tokenIds, uint256 gasLimit)"
+              },
+              {
+                "type": " ",
+                "oldLine": 79,
+                "newLine": 79,
+                "text": "        external"
+              },
+              {
+                "type": " ",
+                "oldLine": 80,
+                "newLine": 80,
+                "text": "        payable;"
+              },
+              { "type": " ", "oldLine": 81, "newLine": 81, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 82,
+                "text": "    /// @notice Complete ERC721 deposit from layer 1 to layer 2 and send NFT to recipient's account in layer 2.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 82,
+                "text": "    /// @notice Complete ERC721 deposit from layer 1 to layer 2 and send NFT to recipient's account on layer 2.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 83,
+                "newLine": 83,
+                "text": "    /// @dev Requirements:"
+              },
+              {
+                "type": " ",
+                "oldLine": 84,
+                "newLine": 84,
+                "text": "    ///  - The function should only be called by L2ScrollMessenger."
+              },
+              {
+                "type": "-",
+                "oldLine": 85,
+                "text": "    ///  - The function should also only be called by L1ERC721Gateway in layer 1.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 85,
+                "text": "    ///  - The function should also only be called by L1ERC721Gateway on layer 1.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 86,
+                "newLine": 86,
+                "text": "    /// @param l1Token The address of corresponding layer 1 token."
+              },
+              {
+                "type": " ",
+                "oldLine": 87,
+                "newLine": 87,
+                "text": "    /// @param l2Token The address of corresponding layer 2 token."
+              },
+              {
+                "type": "-",
+                "oldLine": 88,
+                "text": "    /// @param from The address of account who withdraw the token in layer 1.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 89,
+                "text": "    /// @param to The address of recipient in layer 2 to receive the token.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 88,
+                "text": "    /// @param from The address of account who withdraw the token on layer 1.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 89,
+                "text": "    /// @param to The address of recipient on layer 2 to receive the token.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 90,
+                "newLine": 90,
+                "text": "    /// @param tokenId The token id to withdraw."
+              },
+              {
+                "type": " ",
+                "oldLine": 91,
+                "newLine": 91,
+                "text": "    function finalizeDepositERC721(address l1Token, address l2Token, address from, address to, uint256 tokenId)"
+              },
+              {
+                "type": " ",
+                "oldLine": 92,
+                "newLine": 92,
+                "text": "        external;"
+              },
+              { "type": " ", "oldLine": 93, "newLine": 93, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 94,
+                "text": "    /// @notice Complete ERC721 deposit from layer 1 to layer 2 and send NFT to recipient's account in layer 2.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 94,
+                "text": "    /// @notice Complete ERC721 deposit from layer 1 to layer 2 and send NFT to recipient's account on layer 2.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 95,
+                "newLine": 95,
+                "text": "    /// @dev Requirements:"
+              },
+              {
+                "type": " ",
+                "oldLine": 96,
+                "newLine": 96,
+                "text": "    ///  - The function should only be called by L2ScrollMessenger."
+              },
+              {
+                "type": "-",
+                "oldLine": 97,
+                "text": "    ///  - The function should also only be called by L1ERC721Gateway in layer 1.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 97,
+                "text": "    ///  - The function should also only be called by L1ERC721Gateway on layer 1.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 98,
+                "newLine": 98,
+                "text": "    /// @param l1Token The address of corresponding layer 1 token."
+              },
+              {
+                "type": " ",
+                "oldLine": 99,
+                "newLine": 99,
+                "text": "    /// @param l2Token The address of corresponding layer 2 token."
+              },
+              {
+                "type": "-",
+                "oldLine": 100,
+                "text": "    /// @param from The address of account who withdraw the token in layer 1.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 101,
+                "text": "    /// @param to The address of recipient in layer 2 to receive the token.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 100,
+                "text": "    /// @param from The address of account who withdraw the token on layer 1.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 101,
+                "text": "    /// @param to The address of recipient on layer 2 to receive the token.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 102,
+                "newLine": 102,
+                "text": "    /// @param tokenIds The list of token ids to withdraw."
+              },
+              {
+                "type": " ",
+                "oldLine": 103,
+                "newLine": 103,
+                "text": "    function finalizeBatchDepositERC721("
+              },
+              {
+                "type": " ",
+                "oldLine": 104,
+                "newLine": 104,
+                "text": "        address l1Token,"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

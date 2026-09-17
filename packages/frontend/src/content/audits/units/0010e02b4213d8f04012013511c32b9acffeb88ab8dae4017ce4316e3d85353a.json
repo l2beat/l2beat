@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "0010e02b4213d8f04012013511c32b9acffeb88ab8dae4017ce4316e3d85353a",
+  "name": "mod.nr",
+  "kind": "program",
+  "lines": 2,
+  "source": "mod parity_base_tests;\nmod parity_root_tests;",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "83c4d5aebecb295748bfd67fb4c4d73d1424c72e5e3b57f7cb595435b7ef2b97",
+  "name": "Nonce",
+  "kind": "abstract",
+  "lines": 19,
+  "source": "abstract contract Nonce is INonce {\n    /// @inheritdoc INonce\n    uint256 public nonce;\n\n    /// @notice Validates and increments the nonce for transaction ordering protection\n    /// @dev Ensures transactions are processed in the expected order, preventing front-running\n    ///      when searchers submit burns to claim available tokens. The nonce guarantees that\n    ///      if a searcher sees tokens available at a specific nonce, they can claim them\n    ///      without another transaction landing first. Reverts with InvalidNonce if the\n    ///      provided nonce doesn't match the current contract nonce.\n    /// @param _nonce The expected current nonce value\n    modifier handleNonce(uint256 _nonce) {\n        require(_nonce == nonce, InvalidNonce());\n        unchecked {\n            ++nonce;\n        }\n        _;\n    }\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

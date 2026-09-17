@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "5ec437ade5577d1141b530cb65a1c34816e4671bb4ada73bd2c46a596fba03f6",
+  "name": "U768.nr",
+  "kind": "program",
+  "lines": 23,
+  "source": "use crate::bignum::BigNum;\nuse crate::bignum::derive_bignum;\nuse crate::params::BigNumParams;\n\npub global U768_PARAMS: BigNumParams<7, 769> = BigNumParams {\n    has_multiplicative_inverse: false,\n    modulus: [0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x01000000000000],\n    double_modulus: [\n        0x01000000000000000000000000000000,\n        0xffffffffffffffffffffffffffffff,\n        0xffffffffffffffffffffffffffffff,\n        0xffffffffffffffffffffffffffffff,\n        0xffffffffffffffffffffffffffffff,\n        0xffffffffffffffffffffffffffffff,\n        0x01ffffffffffff,\n    ],\n    redc_param: [0x00, 0x00, 0x00, 0x00, 0x00, 0x00, 0x0100000000000000],\n};\n\n#[derive_bignum(7, 769, quote { U768_PARAMS })]\npub struct U768 {\n    limbs: [u128; 7],\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

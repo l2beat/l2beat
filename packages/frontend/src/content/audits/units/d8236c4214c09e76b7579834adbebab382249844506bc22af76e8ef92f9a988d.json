@@ -1,0 +1,256 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "d8236c4214c09e76b7579834adbebab382249844506bc22af76e8ef92f9a988d",
+  "name": "DeputyPauseModule",
+  "kind": "contract",
+  "lines": 182,
+  "source": "contract DeputyPauseModule is ISemver, EIP712 {\n    /// @notice Error message for deputy being invalid.\n    error DeputyPauseModule_InvalidDeputy();\n\n    /// @notice Error message for unauthorized calls.\n    error DeputyPauseModule_Unauthorized();\n\n    /// @notice Error message for nonce reuse.\n    error DeputyPauseModule_NonceAlreadyUsed();\n\n    /// @notice Error message for failed transaction execution.\n    error DeputyPauseModule_ExecutionFailed(string);\n\n    /// @notice Error message for the SuperchainConfig not being paused.\n    error DeputyPauseModule_SuperchainNotPaused();\n\n    /// @notice Error message for the call not being from the Foundation Safe.\n    error DeputyPauseModule_NotFromSafe();\n\n    /// @notice Struct for the Pause action.\n    /// @custom:field nonce Signature nonce.\n    /// @custom:field identifier Identifier to pause.\n    struct PauseMessage {\n        bytes32 nonce;\n        address identifier;\n    }\n\n    /// @notice Struct for the DeputyAuth action.\n    /// @custom:field deputy Address of the deputy account.\n    struct DeputyAuthMessage {\n        address deputy;\n    }\n\n    /// @notice Event emitted when the deputy address is set.\n    event DeputySet(address indexed deputy);\n\n    /// @notice Event emitted when the pause is triggered.\n    event PauseTriggered(address indexed deputy, bytes32 nonce, address identifier);\n\n    /// @notice Guardian Safe.\n    GnosisSafe internal immutable GUARDIAN_SAFE;\n\n    /// @notice Foundation Safe.\n    GnosisSafe internal immutable FOUNDATION_SAFE;\n\n    /// @notice SuperchainConfig contract.\n    ISuperchainConfig internal immutable SUPERCHAIN_CONFIG;\n\n    /// @notice Typehash for the Pause action.\n    bytes32 internal constant PAUSE_MESSAGE_TYPEHASH = keccak256(\"PauseMessage(bytes32 nonce,address identifier)\");\n\n    /// @notice Typehash for the DeputyAuth message.\n    bytes32 internal constant DEPUTY_AUTH_MESSAGE_TYPEHASH = keccak256(\"DeputyAuthMessage(address deputy)\");\n\n    /// @notice Address of the Deputy account.\n    address public deputy;\n\n    /// @notice Used nonces.\n    mapping(bytes32 => bool) public usedNonces;\n\n    /// @notice Semantic version.\n    /// @custom:semver 2.1.0\n    string public constant version = \"2.1.0\";\n\n    /// @param _guardianSafe Address of the Guardian Safe.\n    /// @param _foundationSafe Address of the Foundation Safe.\n    /// @param _superchainConfig Address of the SuperchainConfig contract.\n    /// @param _deputy Address of the deputy account.\n    /// @param _deputySignature Signature from the deputy verifying that the account is an EOA.\n    constructor(\n        GnosisSafe _guardianSafe,\n        GnosisSafe _foundationSafe,\n        ISuperchainConfig _superchainConfig,\n        address _deputy,\n        bytes memory _deputySignature\n    ) EIP712(\"DeputyPauseModule\", \"1\") {\n        _setDeputy(_deputy, _deputySignature);\n        GUARDIAN_SAFE = _guardianSafe;\n        FOUNDATION_SAFE = _foundationSafe;\n        SUPERCHAIN_CONFIG = _superchainConfig;\n    }\n\n    /// @notice Getter function for the Guardian Safe address.\n    /// @return guardianSafe_ Guardian Safe address.\n    function guardianSafe() public view returns (GnosisSafe guardianSafe_) {\n        guardianSafe_ = GUARDIAN_SAFE;\n    }\n\n    /// @notice Getter function for the Foundation Safe address.\n    /// @return foundationSafe_ Foundation Safe address.\n    function foundationSafe() public view returns (GnosisSafe foundationSafe_) {\n        foundationSafe_ = FOUNDATION_SAFE;\n    }\n\n    /// @notice Getter function for the SuperchainConfig address.\n    /// @return superchainConfig_ SuperchainConfig address.\n    function superchainConfig() public view returns (ISuperchainConfig superchainConfig_) {\n        superchainConfig_ = SUPERCHAIN_CONFIG;\n    }\n\n    /// @notice Getter function for the Pause message typehash.\n    /// @return pauseMessageTypehash_ Pause message typehash.\n    function pauseMessageTypehash() public pure returns (bytes32 pauseMessageTypehash_) {\n        pauseMessageTypehash_ = PAUSE_MESSAGE_TYPEHASH;\n    }\n\n    /// @notice Getter function for the DeputyAuth message typehash.\n    /// @return deputyAuthMessageTypehash_ DeputyAuth message typehash.\n    function deputyAuthMessageTypehash() public pure returns (bytes32 deputyAuthMessageTypehash_) {\n        deputyAuthMessageTypehash_ = DEPUTY_AUTH_MESSAGE_TYPEHASH;\n    }\n\n    /// @notice Sets the deputy address.\n    /// @param _deputy Deputy address.\n    /// @param _deputySignature Deputy signature.\n    function setDeputy(address _deputy, bytes memory _deputySignature) external {\n        // Can only be called by the Foundation Safe itself.\n        if (msg.sender != address(FOUNDATION_SAFE)) {\n            revert DeputyPauseModule_NotFromSafe();\n        }\n\n        // Set the deputy address.\n        _setDeputy(_deputy, _deputySignature);\n    }\n\n    /// @notice Calls the Guardian Safe's `execTransactionFromModuleReturnData()` function with\n    ///         the arguments necessary to call `pause()` on the SuperchainConfig.\n    ///         Front-running this function is completely safe, it'll pause either way.\n    /// @param _nonce Signature nonce.\n    /// @param _identifier The identifier to pause in the SuperchainConfig.\n    /// @param _signature ECDSA signature.\n    function pause(bytes32 _nonce, address _identifier, bytes memory _signature) external {\n        // Verify the signature.\n        bytes32 digest = _hashTypedDataV4(keccak256(abi.encode(PAUSE_MESSAGE_TYPEHASH, _nonce, _identifier)));\n        if (ECDSA.recover(digest, _signature) != deputy) {\n            revert DeputyPauseModule_Unauthorized();\n        }\n\n        // Make sure the nonce hasn't been used yet.\n        if (usedNonces[_nonce]) {\n            revert DeputyPauseModule_NonceAlreadyUsed();\n        }\n\n        // Mark the nonce as used.\n        usedNonces[_nonce] = true;\n\n        // Attempt to trigger the call.\n        (bool success, bytes memory returnData) = GUARDIAN_SAFE.execTransactionFromModuleReturnData(\n            address(SUPERCHAIN_CONFIG), 0, abi.encodeCall(ISuperchainConfig.pause, (_identifier)), Enum.Operation.Call\n        );\n\n        // If the call fails, revert.\n        if (!success) {\n            revert DeputyPauseModule_ExecutionFailed(string(returnData));\n        }\n\n        // Verify that the SuperchainConfig is now paused.\n        if (!SUPERCHAIN_CONFIG.paused(_identifier)) {\n            revert DeputyPauseModule_SuperchainNotPaused();\n        }\n\n        // Emit that the pause was triggered.\n        emit PauseTriggered(deputy, _nonce, _identifier);\n    }\n\n    /// @notice Internal function to set the deputy address.\n    /// @param _deputy Deputy address.\n    /// @param _deputySignature Deputy signature.\n    function _setDeputy(address _deputy, bytes memory _deputySignature) internal {\n        // Check that the deputy signature is valid.\n        bytes32 digest = _hashTypedDataV4(keccak256(abi.encode(DEPUTY_AUTH_MESSAGE_TYPEHASH, _deputy)));\n        if (ECDSA.recover(digest, _deputySignature) != _deputy) {\n            revert DeputyPauseModule_InvalidDeputy();\n        }\n\n        // Set the deputy address.\n        deputy = _deputy;\n\n        // Emit the DeputySet event.\n        emit DeputySet(_deputy);\n    }\n}",
+  "resolutions": {
+    "44ad4cf96e2ef6f0": {
+      "status": "differs",
+      "coveredLines": 176,
+      "match": {
+        "origin": "upstream",
+        "collection": "optimism",
+        "relation": {
+          "type": "fork_of",
+          "repository": "ethereum-optimism/optimism"
+        },
+        "rank": 1,
+        "matchedBy": "name",
+        "auditedName": "DeputyPauseModule",
+        "similarity": 0.966,
+        "reportId": "optimism/spearbit-upgrade16-2025-05",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts-bedrock/src/safe/DeputyPauseModule.sol",
+        "commit": "54c19f6acb7a6d3505f884bae601733d3d54a3a6",
+        "commitTimestamp": "2025-06-11T23:26:49Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/54c19f6acb7a6d3505f884bae601733d3d54a3a6/packages/contracts-bedrock/src/safe/DeputyPauseModule.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "re-audit",
+        "coverage": "Commit stated in the report header (tag op-contracts/v4.0.0, the proposal branch built on 7cd84fed with the PR 15939 audit fixes backported); the final Upgrade 16 state of the file.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 7
+      },
+      "diff": {
+        "added": 6,
+        "removed": 6,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 176,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 38,
+            "oldLines": 10,
+            "newStart": 38,
+            "newLines": 10,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 38,
+                "newLine": 38,
+                "text": "    event PauseTriggered(address indexed deputy, bytes32 nonce, address identifier);"
+              },
+              { "type": " ", "oldLine": 39, "newLine": 39, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 40,
+                "newLine": 40,
+                "text": "    /// @notice Guardian Safe."
+              },
+              {
+                "type": "-",
+                "oldLine": 41,
+                "text": "    Safe internal immutable GUARDIAN_SAFE;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 41,
+                "text": "    GnosisSafe internal immutable GUARDIAN_SAFE;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 42, "newLine": 42, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 43,
+                "newLine": 43,
+                "text": "    /// @notice Foundation Safe."
+              },
+              {
+                "type": "-",
+                "oldLine": 44,
+                "text": "    Safe internal immutable FOUNDATION_SAFE;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 44,
+                "text": "    GnosisSafe internal immutable FOUNDATION_SAFE;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 45, "newLine": 45, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 46,
+                "newLine": 46,
+                "text": "    /// @notice SuperchainConfig contract."
+              },
+              {
+                "type": " ",
+                "oldLine": 47,
+                "newLine": 47,
+                "text": "    ISuperchainConfig internal immutable SUPERCHAIN_CONFIG;"
+              }
+            ]
+          },
+          {
+            "oldStart": 68,
+            "oldLines": 8,
+            "newStart": 68,
+            "newLines": 8,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 68,
+                "newLine": 68,
+                "text": "    /// @param _deputy Address of the deputy account."
+              },
+              {
+                "type": " ",
+                "oldLine": 69,
+                "newLine": 69,
+                "text": "    /// @param _deputySignature Signature from the deputy verifying that the account is an EOA."
+              },
+              {
+                "type": " ",
+                "oldLine": 70,
+                "newLine": 70,
+                "text": "    constructor("
+              },
+              {
+                "type": "-",
+                "oldLine": 71,
+                "text": "        Safe _guardianSafe,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 72,
+                "text": "        Safe _foundationSafe,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 71,
+                "text": "        GnosisSafe _guardianSafe,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 72,
+                "text": "        GnosisSafe _foundationSafe,",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 73,
+                "newLine": 73,
+                "text": "        ISuperchainConfig _superchainConfig,"
+              },
+              {
+                "type": " ",
+                "oldLine": 74,
+                "newLine": 74,
+                "text": "        address _deputy,"
+              },
+              {
+                "type": " ",
+                "oldLine": 75,
+                "newLine": 75,
+                "text": "        bytes memory _deputySignature"
+              }
+            ]
+          },
+          {
+            "oldStart": 82,
+            "oldLines": 13,
+            "newStart": 82,
+            "newLines": 13,
+            "lines": [
+              { "type": " ", "oldLine": 82, "newLine": 82, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 83,
+                "newLine": 83,
+                "text": "    /// @notice Getter function for the Guardian Safe address."
+              },
+              {
+                "type": " ",
+                "oldLine": 84,
+                "newLine": 84,
+                "text": "    /// @return guardianSafe_ Guardian Safe address."
+              },
+              {
+                "type": "-",
+                "oldLine": 85,
+                "text": "    function guardianSafe() public view returns (Safe guardianSafe_) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 85,
+                "text": "    function guardianSafe() public view returns (GnosisSafe guardianSafe_) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 86,
+                "newLine": 86,
+                "text": "        guardianSafe_ = GUARDIAN_SAFE;"
+              },
+              { "type": " ", "oldLine": 87, "newLine": 87, "text": "    }" },
+              { "type": " ", "oldLine": 88, "newLine": 88, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 89,
+                "newLine": 89,
+                "text": "    /// @notice Getter function for the Foundation Safe address."
+              },
+              {
+                "type": " ",
+                "oldLine": 90,
+                "newLine": 90,
+                "text": "    /// @return foundationSafe_ Foundation Safe address."
+              },
+              {
+                "type": "-",
+                "oldLine": 91,
+                "text": "    function foundationSafe() public view returns (Safe foundationSafe_) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 91,
+                "text": "    function foundationSafe() public view returns (GnosisSafe foundationSafe_) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 92,
+                "newLine": 92,
+                "text": "        foundationSafe_ = FOUNDATION_SAFE;"
+              },
+              { "type": " ", "oldLine": 93, "newLine": 93, "text": "    }" },
+              { "type": " ", "oldLine": 94, "newLine": 94, "text": "" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

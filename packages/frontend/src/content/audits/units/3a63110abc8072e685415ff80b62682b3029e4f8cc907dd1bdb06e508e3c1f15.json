@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "3a63110abc8072e685415ff80b62682b3029e4f8cc907dd1bdb06e508e3c1f15",
+  "name": "nullifier_leaf_preimage.nr",
+  "kind": "program",
+  "lines": 80,
+  "source": "use crate::{\n    merkle_tree::{IndexedTreeLeafPreimage, LeafPreimage},\n    side_effect::Readable,\n    traits::{Deserialize, Empty, Hash, Serialize},\n};\n\n#[derive(Deserialize, Eq, Serialize)]\npub struct NullifierLeafPreimage {\n    pub nullifier: Field,\n    pub next_nullifier: Field,\n    pub next_index: Field,\n}\n\nimpl Empty for NullifierLeafPreimage {\n    fn empty() -> Self {\n        Self { nullifier: 0, next_nullifier: 0, next_index: 0 }\n    }\n}\n\nimpl Hash for NullifierLeafPreimage {\n    fn hash(self) -> Field {\n        if self.is_empty() {\n            // Note: Empty leaf preimages are used to pad the nullifiers emitted from a transaction so they can be\n            // inserted into the tree in a fixed-size batch. The hash of these padded leaves must be 0 so that the\n            // tree root does not change when a batch contains no transaction nullifiers.\n            0\n        } else {\n            crate::hash::poseidon2_hash(self.serialize())\n        }\n    }\n}\n\nimpl LeafPreimage for NullifierLeafPreimage {\n    fn get_key(self) -> Field {\n        self.nullifier\n    }\n\n    fn as_leaf(self) -> Field {\n        self.hash()\n    }\n}\n\nimpl IndexedTreeLeafPreimage<Field> for NullifierLeafPreimage {\n    fn get_next_key(self) -> Field {\n        self.next_nullifier\n    }\n\n    fn points_to_infinity(self) -> bool {\n        (self.next_nullifier == 0) & (self.next_index == 0)\n    }\n\n    fn update_pointers(self, next_key: Field, next_index: Field) -> Self {\n        Self { nullifier: self.nullifier, next_nullifier: next_key, next_index }\n    }\n\n    fn update_value(self, _nullifier: Field) -> Self {\n        assert(false, \"Tried to update a nullifier\");\n        Self::empty()\n    }\n\n    fn build_insertion_leaf(nullifier: Field, low_leaf: Self) -> Self {\n        Self { nullifier, next_nullifier: low_leaf.next_nullifier, next_index: low_leaf.next_index }\n    }\n}\n\nimpl Readable for NullifierLeafPreimage {\n    fn assert_match_read_request(self, read_request: Field) {\n        assert_eq(\n            self.nullifier,\n            read_request,\n            \"Value of the nullifier leaf does not match read request\",\n        );\n    }\n}\n\nimpl NullifierLeafPreimage {\n    pub fn is_empty(self) -> bool {\n        (self.nullifier == 0) & (self.next_nullifier == 0) & (self.next_index == 0)\n    }\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

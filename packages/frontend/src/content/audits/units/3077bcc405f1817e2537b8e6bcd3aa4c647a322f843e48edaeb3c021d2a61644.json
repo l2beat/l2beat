@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "3077bcc405f1817e2537b8e6bcd3aa4c647a322f843e48edaeb3c021d2a61644",
+  "name": "mod.nr",
+  "kind": "program",
+  "lines": 7,
+  "source": "pub mod private_to_rollup_kernel_circuit_public_inputs;\npub mod private_kernel_circuit_public_inputs;\npub mod private_to_public_kernel_circuit_public_inputs;\n\npub use private_kernel_circuit_public_inputs::PrivateKernelCircuitPublicInputs;\npub use private_to_public_kernel_circuit_public_inputs::PrivateToPublicKernelCircuitPublicInputs;\npub use private_to_rollup_kernel_circuit_public_inputs::PrivateToRollupKernelCircuitPublicInputs;",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

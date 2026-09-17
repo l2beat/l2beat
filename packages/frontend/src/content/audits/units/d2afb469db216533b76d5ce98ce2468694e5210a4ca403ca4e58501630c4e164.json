@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "d2afb469db216533b76d5ce98ce2468694e5210a4ca403ca4e58501630c4e164",
+  "name": "IMiner",
+  "kind": "interface",
+  "lines": 3,
+  "source": "interface IMiner {\n    function setTornadoTreesContract(address _tornadoTrees) external;\n}",
+  "resolutions": {
+    "f9658cd3a9a22004": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

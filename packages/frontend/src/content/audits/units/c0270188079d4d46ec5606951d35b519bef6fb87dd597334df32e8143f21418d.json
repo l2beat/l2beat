@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "c0270188079d4d46ec5606951d35b519bef6fb87dd597334df32e8143f21418d",
+  "name": "IGovernance",
+  "kind": "interface",
+  "lines": 42,
+  "source": "interface IGovernance {\n    event BeneficiaryAdded(address beneficiary);\n    event FloodGatesOpened();\n\n    event Proposed(uint256 indexed proposalId, address indexed proposal);\n    event VoteCast(uint256 indexed proposalId, address indexed voter, bool support, uint256 amount);\n    event ProposalExecuted(uint256 indexed proposalId);\n    event ProposalDropped(uint256 indexed proposalId);\n    event GovernanceProposerUpdated(address indexed governanceProposer);\n    event ConfigurationUpdated(Timestamp indexed time);\n\n    event Deposit(address indexed depositor, address indexed onBehalfOf, uint256 amount);\n    event WithdrawInitiated(uint256 indexed withdrawalId, address indexed recipient, uint256 amount);\n    event WithdrawFinalized(uint256 indexed withdrawalId);\n\n    function addBeneficiary(address _beneficiary) external;\n    function openFloodgates() external;\n\n    function updateGovernanceProposer(address _governanceProposer) external;\n    function updateConfiguration(Configuration memory _configuration) external;\n    function deposit(address _onBehalfOf, uint256 _amount) external;\n    function initiateWithdraw(address _to, uint256 _amount) external returns (uint256);\n    function finalizeWithdraw(uint256 _withdrawalId) external;\n    function propose(IPayload _proposal) external returns (uint256);\n    function proposeWithLock(IPayload _proposal, address _to) external returns (uint256);\n    function vote(uint256 _proposalId, uint256 _amount, bool _support) external;\n    function execute(uint256 _proposalId) external;\n    function dropProposal(uint256 _proposalId) external;\n\n    function isPermittedInGovernance(address _caller) external view returns (bool);\n    function isAllBeneficiariesAllowed() external view returns (bool);\n\n    function powerAt(address _owner, Timestamp _ts) external view returns (uint256);\n    function powerNow(address _owner) external view returns (uint256);\n    function totalPowerAt(Timestamp _ts) external view returns (uint256);\n    function totalPowerNow() external view returns (uint256);\n    function getProposalState(uint256 _proposalId) external view returns (ProposalState);\n    function getConfiguration() external view returns (Configuration memory);\n    function getProposal(uint256 _proposalId) external view returns (Proposal memory);\n    function getWithdrawal(uint256 _withdrawalId) external view returns (Withdrawal memory);\n    function getBallot(uint256 _proposalId, address _user) external view returns (Ballot memory);\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "identical",
+      "coveredLines": 42,
+      "match": {
+        "origin": "own",
+        "collection": "aztecnetwork",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "IGovernance",
+        "similarity": 1,
+        "reportId": "aztecnetwork/veridise-governance-2025-10-13",
+        "repository": "AztecProtocol/aztec-packages",
+        "path": "l1-contracts/src/governance/interfaces/IGovernance.sol",
+        "commit": "a310dd929fc136669fd84baa5024d437ac1c9603",
+        "commitTimestamp": "2025-09-25T12:37:48Z",
+        "url": "https://github.com/AztecProtocol/aztec-packages/blob/a310dd929fc136669fd84baa5024d437ac1c9603/l1-contracts/src/governance/interfaces/IGovernance.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "remediation review",
+        "coverage": "confirmed maintainability fixes for V-AZGV-VUL-004 (PR 17248 head commit)",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "warnings": []
+    }
+  }
+}

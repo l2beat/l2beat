@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "596e1b4ab85bc2ab4b66c8754c1b7e90fb73eca13f7c4bdfbd8ff3fa88815db6",
+  "name": "SafeSigners",
+  "kind": "library",
+  "lines": 75,
+  "source": "library SafeSigners {\n    /// @notice Splits signature bytes into `uint8 v, bytes32 r, bytes32 s`.\n    ///         Copied directly from\n    /// https://github.com/safe-global/safe-contracts/blob/e870f514ad34cd9654c72174d6d4a839e3c6639f/contracts/common/SignatureDecoder.sol\n    /// @dev Make sure to perform a bounds check for @param pos, to avoid out of bounds access on @param signatures\n    ///      The signature format is a compact form of {bytes32 r}{bytes32 s}{uint8 v}\n    ///      Compact means uint8 is not padded to 32 bytes.\n    /// @param pos Which signature to read.\n    ///            A prior bounds check of this parameter should be performed, to avoid out of bounds access.\n    /// @param signatures Concatenated {r, s, v} signatures.\n    /// @return v Recovery ID or Safe signature type.\n    /// @return r Output value r of the signature.\n    /// @return s Output value s of the signature.\n    function signatureSplit(bytes memory signatures, uint256 pos)\n        internal\n        pure\n        returns (uint8 v, bytes32 r, bytes32 s)\n    {\n        assembly {\n            let signaturePos := mul(0x41, pos)\n            r := mload(add(signatures, add(signaturePos, 0x20)))\n            s := mload(add(signatures, add(signaturePos, 0x40)))\n            /**\n             * Here we are loading the last 32 bytes, including 31 bytes\n             * of 's'. There is no 'mload8' to do this.\n             * 'byte' is not working due to the Solidity parser, so lets\n             * use the second best option, 'and'\n             */\n            v := and(mload(add(signatures, add(signaturePos, 0x41))), 0xff)\n        }\n    }\n\n    /// @notice Extract the signers from a set of signatures.\n    ///         This method is based closely on the code in the Safe.checkNSignatures() method.\n    ///         https://github.com/safe-global/safe-contracts/blob/e870f514ad34cd9654c72174d6d4a839e3c6639f/contracts/Safe.sol#L274\n    ///         It has been modified by removing all signature _validation_ code. We trust the Safe to properly validate\n    ///         the signatures.\n    ///         This method therefore simply extracts the addresses from the signatures.\n    function getNSigners(bytes32 dataHash, bytes memory signatures, uint256 requiredSignatures)\n        internal\n        pure\n        returns (address[] memory _owners)\n    {\n        _owners = new address[](requiredSignatures);\n\n        address currentOwner;\n        uint8 v;\n        bytes32 r;\n        bytes32 s;\n        uint256 i;\n        for (i = 0; i < requiredSignatures; i++) {\n            (v, r, s) = signatureSplit(signatures, i);\n            if (v == 0) {\n                // If v is 0 then it is a contract signature\n                // When handling contract signatures the address of the contract is encoded into r\n                currentOwner = address(uint160(uint256(r)));\n            } else if (v == 1) {\n                // If v is 1 then it is an approved hash\n                // When handling approved hashes the address of the approver is encoded into r\n                currentOwner = address(uint160(uint256(r)));\n            } else if (v > 30) {\n                // If v > 30 then default va (27,28) has been adjusted for eth_sign flow\n                // To support eth_sign and similar we adjust v and hash the messageHash with the Ethereum message prefix\n                // before applying ecrecover\n                currentOwner =\n                    ecrecover(keccak256(abi.encodePacked(\"\\x19Ethereum Signed Message:\\n32\", dataHash)), v - 4, r, s);\n            } else {\n                // Default is the ecrecover flow with the provided data hash\n                // Use ecrecover with the messageHash for EOA signatures\n                currentOwner = ecrecover(dataHash, v, r, s);\n            }\n            _owners[i] = currentOwner;\n        }\n    }\n}",
+  "resolutions": {
+    "44ad4cf96e2ef6f0": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "9fa846564f4071bd": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "1f5c32d18cf7148d": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

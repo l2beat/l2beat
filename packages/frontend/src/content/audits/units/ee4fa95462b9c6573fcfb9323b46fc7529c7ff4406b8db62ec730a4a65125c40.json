@@ -1,0 +1,383 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "ee4fa95462b9c6573fcfb9323b46fc7529c7ff4406b8db62ec730a4a65125c40",
+  "name": "SafeERC20",
+  "kind": "library",
+  "lines": 62,
+  "source": "library SafeERC20 {\n    using SafeMath for uint256;\n    using Address for address;\n\n    function safeTransfer(IERC20 token, address to, uint256 value) internal {\n        callOptionalReturn(token, abi.encodeWithSelector(token.transfer.selector, to, value));\n    }\n\n    function safeTransferFrom(IERC20 token, address from, address to, uint256 value) internal {\n        callOptionalReturn(token, abi.encodeWithSelector(token.transferFrom.selector, from, to, value));\n    }\n\n    function safeApprove(IERC20 token, address spender, uint256 value) internal {\n        // safeApprove should only be called when setting an initial allowance,\n        // or when resetting it to zero. To increase and decrease it, use\n        // 'safeIncreaseAllowance' and 'safeDecreaseAllowance'\n        // solhint-disable-next-line max-line-length\n        require(\n            (value == 0) || (token.allowance(address(this), spender) == 0),\n            \"SafeERC20: approve from non-zero to non-zero allowance\"\n        );\n        callOptionalReturn(token, abi.encodeWithSelector(token.approve.selector, spender, value));\n    }\n\n    function safeIncreaseAllowance(IERC20 token, address spender, uint256 value) internal {\n        uint256 newAllowance = token.allowance(address(this), spender).add(value);\n        callOptionalReturn(token, abi.encodeWithSelector(token.approve.selector, spender, newAllowance));\n    }\n\n    function safeDecreaseAllowance(IERC20 token, address spender, uint256 value) internal {\n        uint256 newAllowance = token.allowance(address(this), spender).sub(value);\n        callOptionalReturn(token, abi.encodeWithSelector(token.approve.selector, spender, newAllowance));\n    }\n\n    /**\n     * @dev Imitates a Solidity high-level call (i.e. a regular function call to a contract), relaxing the requirement\n     * on the return value: the return value is optional (but if data is returned, it must not be false).\n     * @param token The token targeted by the call.\n     * @param data The call data (encoded using abi.encode or one of its variants).\n     */\n    function callOptionalReturn(IERC20 token, bytes memory data) private {\n        // We need to perform a low level call here, to bypass Solidity's return data size checking mechanism, since\n        // we're implementing it ourselves.\n\n        // A Solidity high level call has three parts:\n        //  1. The target address is checked to verify it contains contract code\n        //  2. The call itself is made, and success asserted\n        //  3. The return value is decoded, which in turn checks the size of the returned data.\n        // solhint-disable-next-line max-line-length\n        require(address(token).isContract(), \"SafeERC20: call to non-contract\");\n\n        // solhint-disable-next-line avoid-low-level-calls\n        (bool success, bytes memory returndata) = address(token).call(data);\n        require(success, \"SafeERC20: low-level call failed\");\n\n        if (returndata.length > 0) {\n            // Return data is optional\n            // solhint-disable-next-line max-line-length\n            require(abi.decode(returndata, (bool)), \"SafeERC20: ERC20 operation did not succeed\");\n        }\n    }\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "differs",
+      "coveredLines": 45,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "SafeERC20",
+        "similarity": 0.576,
+        "reportId": "openzeppelin/contracts__audits__2018-10",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/token/ERC20/SafeERC20.sol",
+        "commit": "6d415c508be94ef8391ed6525df365452466da76",
+        "commitTimestamp": "2018-10-19T20:42:20Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/6d415c508be94ef8391ed6525df365452466da76/contracts/token/ERC20/SafeERC20.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Synthesized fix-review snapshot: master at the squash-merge of the last cited fix PR #1438, which contains every fix PR #1329-#1449 cited per finding; the Critical BreakInvariantBounty frontrunning issue was remediated by removing the contract in #1424. The report does not name a re-reviewed commit.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 10
+      },
+      "diff": {
+        "added": 17,
+        "removed": 6,
+        "ignoredAdded": 22,
+        "ignoredRemoved": 0,
+        "unchanged": 45,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 29,
+            "newStart": 1,
+            "newLines": 62,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "library SafeERC20 {"
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "    using SafeMath for uint256;"
+              },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "    using Address for address;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 3, "newLine": 4, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 5,
+                "text": "    function safeTransfer(IERC20 token, address to, uint256 value) internal {"
+              },
+              {
+                "type": "-",
+                "oldLine": 5,
+                "text": "        require(token.transfer(to, value));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 6,
+                "text": "        callOptionalReturn(token, abi.encodeWithSelector(token.transfer.selector, to, value));",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 6, "newLine": 7, "text": "    }" },
+              { "type": " ", "oldLine": 7, "newLine": 8, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 8,
+                "newLine": 9,
+                "text": "    function safeTransferFrom(IERC20 token, address from, address to, uint256 value) internal {"
+              },
+              {
+                "type": "-",
+                "oldLine": 9,
+                "text": "        require(token.transferFrom(from, to, value));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 10,
+                "text": "        callOptionalReturn(token, abi.encodeWithSelector(token.transferFrom.selector, from, to, value));",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 10, "newLine": 11, "text": "    }" },
+              { "type": " ", "oldLine": 11, "newLine": 12, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 12,
+                "newLine": 13,
+                "text": "    function safeApprove(IERC20 token, address spender, uint256 value) internal {"
+              },
+              {
+                "type": " ",
+                "oldLine": 13,
+                "newLine": 14,
+                "text": "        // safeApprove should only be called when setting an initial allowance,"
+              },
+              {
+                "type": " ",
+                "oldLine": 14,
+                "newLine": 15,
+                "text": "        // or when resetting it to zero. To increase and decrease it, use"
+              },
+              {
+                "type": " ",
+                "oldLine": 15,
+                "newLine": 16,
+                "text": "        // 'safeIncreaseAllowance' and 'safeDecreaseAllowance'"
+              },
+              {
+                "type": "-",
+                "oldLine": 16,
+                "text": "        require((value == 0) || (token.allowance(msg.sender, spender) == 0));",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 17,
+                "text": "        require(token.approve(spender, value));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 17,
+                "text": "        // solhint-disable-next-line max-line-length",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 18,
+                "text": "        require(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 19,
+                "text": "            (value == 0) || (token.allowance(address(this), spender) == 0),",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 20,
+                "text": "            \"SafeERC20: approve from non-zero to non-zero allowance\"",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 21,
+                "text": "        );",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 22,
+                "text": "        callOptionalReturn(token, abi.encodeWithSelector(token.approve.selector, spender, value));",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 18, "newLine": 23, "text": "    }" },
+              { "type": " ", "oldLine": 19, "newLine": 24, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 20,
+                "newLine": 25,
+                "text": "    function safeIncreaseAllowance(IERC20 token, address spender, uint256 value) internal {"
+              },
+              {
+                "type": " ",
+                "oldLine": 21,
+                "newLine": 26,
+                "text": "        uint256 newAllowance = token.allowance(address(this), spender).add(value);"
+              },
+              {
+                "type": "-",
+                "oldLine": 22,
+                "text": "        require(token.approve(spender, newAllowance));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 27,
+                "text": "        callOptionalReturn(token, abi.encodeWithSelector(token.approve.selector, spender, newAllowance));",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 23, "newLine": 28, "text": "    }" },
+              { "type": " ", "oldLine": 24, "newLine": 29, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 25,
+                "newLine": 30,
+                "text": "    function safeDecreaseAllowance(IERC20 token, address spender, uint256 value) internal {"
+              },
+              {
+                "type": " ",
+                "oldLine": 26,
+                "newLine": 31,
+                "text": "        uint256 newAllowance = token.allowance(address(this), spender).sub(value);"
+              },
+              {
+                "type": "-",
+                "oldLine": 27,
+                "text": "        require(token.approve(spender, newAllowance));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 32,
+                "text": "        callOptionalReturn(token, abi.encodeWithSelector(token.approve.selector, spender, newAllowance));",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 28, "newLine": 33, "text": "    }" },
+              { "type": "+", "newLine": 34, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 35,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 36,
+                "text": "     * @dev Imitates a Solidity high-level call (i.e. a regular function call to a contract), relaxing the requirement",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 37,
+                "text": "     * on the return value: the return value is optional (but if data is returned, it must not be false).",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 38,
+                "text": "     * @param token The token targeted by the call.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 39,
+                "text": "     * @param data The call data (encoded using abi.encode or one of its variants).",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 40,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 41,
+                "text": "    function callOptionalReturn(IERC20 token, bytes memory data) private {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 42,
+                "text": "        // We need to perform a low level call here, to bypass Solidity's return data size checking mechanism, since",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 43,
+                "text": "        // we're implementing it ourselves.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 44, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 45,
+                "text": "        // A Solidity high level call has three parts:",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 46,
+                "text": "        //  1. The target address is checked to verify it contains contract code",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 47,
+                "text": "        //  2. The call itself is made, and success asserted",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 48,
+                "text": "        //  3. The return value is decoded, which in turn checks the size of the returned data.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 49,
+                "text": "        // solhint-disable-next-line max-line-length",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 50,
+                "text": "        require(address(token).isContract(), \"SafeERC20: call to non-contract\");",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 51, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 52,
+                "text": "        // solhint-disable-next-line avoid-low-level-calls",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 53,
+                "text": "        (bool success, bytes memory returndata) = address(token).call(data);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 54,
+                "text": "        require(success, \"SafeERC20: low-level call failed\");",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 55, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 56,
+                "text": "        if (returndata.length > 0) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 57,
+                "text": "            // Return data is optional",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 58,
+                "text": "            // solhint-disable-next-line max-line-length",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 59,
+                "text": "            require(abi.decode(returndata, (bool)), \"SafeERC20: ERC20 operation did not succeed\");",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 60,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 61, "text": "    }", "ignored": false },
+              { "type": " ", "oldLine": 29, "newLine": 62, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

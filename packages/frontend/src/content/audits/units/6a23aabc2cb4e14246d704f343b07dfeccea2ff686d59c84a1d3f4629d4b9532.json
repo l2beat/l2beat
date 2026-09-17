@@ -1,0 +1,37 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "6a23aabc2cb4e14246d704f343b07dfeccea2ff686d59c84a1d3f4629d4b9532",
+  "name": ".gitignore",
+  "kind": "program",
+  "lines": 1,
+  "source": "/openvm",
+  "resolutions": {
+    "d293c6ecba42b698": {
+      "status": "identical",
+      "coveredLines": 1,
+      "match": {
+        "origin": "own",
+        "collection": "scroll",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": ".gitignore",
+        "similarity": 1,
+        "reportId": "scroll/trailofbits-scroll-euclid-phase1-2025-04",
+        "repository": "scroll-tech/zkvm-prover",
+        "path": "crates/circuits/batch-circuit/.gitignore",
+        "commit": "3f008792538a33271d116f75beab0e137a10f176",
+        "commitTimestamp": "2025-03-17T14:08:53Z",
+        "url": "https://github.com/scroll-tech/zkvm-prover/blob/3f008792538a33271d116f75beab0e137a10f176/crates/circuits/batch-circuit/.gitignore",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Head of PR #85 (fix review, March 24, 2025): TOB-SCREUC-1, -2 and -5 resolved; batch payload parsing relocated to crates/circuits/types.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "warnings": []
+    }
+  }
+}

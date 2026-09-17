@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "a72b81308655357e4197f0565e1af271aec4808ab132d9c1adc9a0f6200f0190",
+  "name": "Locker",
+  "kind": "library",
+  "lines": 21,
+  "source": "library Locker {\n    // The slot holding the locker state, transiently. bytes32(uint256(keccak256(\"Locker\")) - 1)\n    bytes32 constant LOCKER_SLOT = 0x0e87e1788ebd9ed6a7e63c70a374cd3283e41cad601d21fbe27863899ed4a708;\n\n    function set(address locker) internal {\n        // The locker is always msg.sender or address(0) so does not need to be cleaned\n        assembly (\"memory-safe\") {\n            tstore(LOCKER_SLOT, locker)\n        }\n    }\n\n    function get() internal view returns (address locker) {\n        assembly (\"memory-safe\") {\n            locker := tload(LOCKER_SLOT)\n        }\n    }\n\n    function isLocked() internal view returns (bool) {\n        return Locker.get() != address(0);\n    }\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

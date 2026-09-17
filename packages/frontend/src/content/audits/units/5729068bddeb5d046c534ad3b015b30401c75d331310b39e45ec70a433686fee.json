@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "5729068bddeb5d046c534ad3b015b30401c75d331310b39e45ec70a433686fee",
+  "name": "point_table.nr",
+  "kind": "program",
+  "lines": 65,
+  "source": "use crate::bigcurve::BigCurve;\nuse crate::curve_jac::types::AffineTranscript;\nuse crate::ops::affine::{double_with_hint, incomplete_add_with_hint};\nuse ::bignum::BigNum;\n\n/// Affine-coordinate lookup table for wNAF scalar multiplication (constrained side).\n///\n/// Stores 16 entries `[-15P, -13P, ..., -P, P, ..., 15P]` in affine `(x, y)` form.\n/// The wNAF slice value `s` maps to table index `(s + 15) / 2`.\n///\n/// For MSMs with fewer than 512 points, a per-point table minimizes addition operations.\npub(crate) struct PointTable<BN> {\n    x: [BN; 16],\n    y: [BN; 16],\n}\n\nimpl<BN: BigNum> PointTable<BN> {\n    pub(crate) fn empty() -> Self {\n        PointTable { x: [BN::zero(); 16], y: [BN::zero(); 16] }\n    }\n\n    /// Build a `PointTable` from an input point, verifying the transcript (constrained)\n    ///\n    /// ## Algorithm\n    ///\n    /// Same symmetry trick as the Jacobian `PointTable`: `-kP` shares the same `x`\n    /// with negated `y`. Each step is verified via `double_with_hint` / `incomplete_add_with_hint`.\n    ///\n    ///   1. `D = 2P` (one constrained doubling)\n    ///   2. `table[8] = P`, `table[7] = -P`\n    ///   3. For `i = 1..8`: `A = A + D`, `table[8+i] = A`, `table[7-i] = -A`\n    pub(crate) fn new_with_hint<P: BigCurve<BN>>(\n        point: P,\n        transcript: [AffineTranscript<BN>; 8],\n    ) -> Self {\n        let mut result: PointTable<BN> = PointTable { x: [BN::zero(); 16], y: [BN::zero(); 16] };\n\n        let D2: P = double_with_hint::<BN, P>(point, transcript[0]);\n\n        result.x[8] = point.x();\n        result.y[8] = point.y();\n        result.x[7] = point.x();\n        result.y[7] = point.y().neg();\n\n        let mut A: P = point;\n        for i in 1..8 {\n            A = incomplete_add_with_hint::<BN, P>(A, D2, transcript[i]);\n            result.x[8 + i] = A.x();\n            result.y[8 + i] = A.y();\n            result.x[7 - i] = A.x();\n            result.y[7 - i] = A.y().neg();\n        }\n        result\n    }\n\n    /// Look up a point by wNAF table index (constrained)\n    ///\n    /// Assumes all points in the table lie on the curve.\n    ///\n    /// `idx` is `(wnaf_slice + 15) / 2`, ranging from 0 (`-15P`) to 15 (`+15P`).\n    /// With the barretenberg backend, lookups on 256-bit curves cost ~12 constraints.\n    pub(crate) fn get<P: BigCurve<BN>>(self, idx: u32) -> P {\n        P::from_coordinates_unsafe(self.x[idx], self.y[idx], false)\n    }\n}",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "853041ee4ebb2a3cb789c68f39b27f8a8d4f1a1b105eefb0ed50ea5ca6c611e5",
+  "name": "lib.nr",
+  "kind": "program",
+  "lines": 26,
+  "source": "mod reset;\nmod abis;\nmod accumulated_data;\nmod components;\npub mod private_kernel_init;\npub mod private_kernel_init_n;\npub(crate) mod private_kernel_batch;\npub mod private_kernel_inner;\npub mod private_kernel_inner_n;\npub mod private_kernel_reset;\npub mod private_kernel_reset_tail;\npub mod private_kernel_reset_tail_to_public;\npub mod hiding_kernel_to_rollup;\npub mod hiding_kernel_to_public;\nmod tests;\n\npub use abis::{PaddedSideEffectAmounts, PaddedSideEffects, PrivateKernelResetHints};\npub use hiding_kernel_to_public::HidingKernelToPublicPrivateInputs;\npub use hiding_kernel_to_rollup::HidingKernelToRollupPrivateInputs;\npub use private_kernel_init::PrivateKernelInitCircuitPrivateInputs;\npub use private_kernel_init_n::PrivateKernelInitNCircuitPrivateInputs;\npub use private_kernel_inner::PrivateKernelInnerCircuitPrivateInputs;\npub use private_kernel_inner_n::PrivateKernelInnerNCircuitPrivateInputs;\npub use private_kernel_reset::PrivateKernelResetCircuitPrivateInputs;\npub use private_kernel_reset_tail::PrivateKernelResetTailCircuitPrivateInputs;\npub use private_kernel_reset_tail_to_public::PrivateKernelResetTailToPublicCircuitPrivateInputs;",
+  "resolutions": {
+    "41ad32932dea0dc9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

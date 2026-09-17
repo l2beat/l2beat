@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "d2f846b6cd43eaa7362759acd20318ce837dbda25e76c188f5deed7738e18905",
+  "name": "(file-level declarations)",
+  "kind": "file-level",
+  "lines": 9,
+  "source": "using LPPMetadataLib for LPPMetaData global;\ntype LPPMetaData is bytes32;\nerror UnsupportedStateVersion();\nerror InvalidExitedValue();\nerror InvalidMemoryProof();\nerror InvalidRMWInstruction();\nusing LibVMStatus for VMStatus global;\ntype VMStatus is uint8;\nerror InvalidSecondMemoryProof();",
+  "resolutions": {
+    "ba5b6c9584fb78fd": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "44ad4cf96e2ef6f0": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "bb55951394276893": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

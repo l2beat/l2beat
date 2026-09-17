@@ -1,0 +1,212 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "e5fe891e67f0a7f2cfb7bb705f48eecbd496238e364b62b6874f5c75b21b15a6",
+  "name": "PoolAddress",
+  "kind": "library",
+  "lines": 39,
+  "source": "library PoolAddress {\n    bytes32 internal constant POOL_INIT_CODE_HASH = 0xe34f199b19b2b4f47f68442619d555527d244f78a3297ea89325f843f87b8b54;\n\n    /// @notice The identifying key of the pool\n    struct PoolKey {\n        address token0;\n        address token1;\n        uint24 fee;\n    }\n\n    /// @notice Returns PoolKey: the ordered tokens with the matched fee levels\n    /// @param tokenA The first token of a pool, unsorted\n    /// @param tokenB The second token of a pool, unsorted\n    /// @param fee The fee level of the pool\n    /// @return Poolkey The pool details with ordered token0 and token1 assignments\n    function getPoolKey(address tokenA, address tokenB, uint24 fee) internal pure returns (PoolKey memory) {\n        if (tokenA > tokenB) {\n            (tokenA, tokenB) = (tokenB, tokenA);\n        }\n        return PoolKey({token0: tokenA, token1: tokenB, fee: fee});\n    }\n\n    /// @notice Deterministically computes the pool address given the factory and PoolKey\n    /// @param factory The Uniswap V3 factory contract address\n    /// @param key The PoolKey\n    /// @return pool The contract address of the V3 pool\n    function computeAddress(address factory, PoolKey memory key) internal pure returns (address pool) {\n        require(key.token0 < key.token1);\n        pool = address(\n            uint256(\n                keccak256(\n                    abi.encodePacked(\n                        hex\"ff\", factory, keccak256(abi.encode(key.token0, key.token1, key.fee)), POOL_INIT_CODE_HASH\n                    )\n                )\n            )\n        );\n    }\n}",
+  "resolutions": {
+    "2be3d633eaae18a2": {
+      "status": "differs",
+      "coveredLines": 37,
+      "match": {
+        "origin": "other",
+        "collection": "roninnetwork",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "name",
+        "auditedName": "PoolAddress",
+        "similarity": 0.936,
+        "reportId": "roninnetwork/code4rena-ronin-katana-v3-2024-10",
+        "repository": "ronin-chain/katana-v3-contracts",
+        "path": "src/periphery/libraries/PoolAddress.sol",
+        "commit": "03c80179e04f40d96f06c451ea494bb18f2a58fc",
+        "commitTimestamp": "2024-10-01T05:16:57Z",
+        "url": "https://github.com/ronin-chain/katana-v3-contracts/blob/03c80179e04f40d96f06c451ea494bb18f2a58fc/src/periphery/libraries/PoolAddress.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "competitive audit",
+        "coverage": "Full file review at the contest submodule commit listed in the C4 scope table.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 2,
+        "removed": 6,
+        "ignoredAdded": 1,
+        "ignoredRemoved": 1,
+        "unchanged": 37,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 6,
+            "newStart": 1,
+            "newLines": 5,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "library PoolAddress {"
+              },
+              {
+                "type": "-",
+                "oldLine": 2,
+                "text": "    bytes32 internal constant POOL_PROXY_INIT_CODE_HASH =",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 3,
+                "text": "        0xb381dabeb6037396a764deb39e57a4a3f75b641ce3e9944b1e4b18d036e322e1;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 2,
+                "text": "    bytes32 internal constant POOL_INIT_CODE_HASH = 0xe34f199b19b2b4f47f68442619d555527d244f78a3297ea89325f843f87b8b54;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 4, "newLine": 3, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 4,
+                "text": "    /// @notice The identifying key of the pool"
+              },
+              {
+                "type": " ",
+                "oldLine": 6,
+                "newLine": 5,
+                "text": "    struct PoolKey {"
+              }
+            ]
+          },
+          {
+            "oldStart": 22,
+            "oldLines": 7,
+            "newStart": 21,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 22, "newLine": 21, "text": "    }" },
+              { "type": " ", "oldLine": 23, "newLine": 22, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 23,
+                "text": "    /// @notice Deterministically computes the pool address given the factory and PoolKey"
+              },
+              {
+                "type": "-",
+                "oldLine": 25,
+                "text": "    /// @param factory The Katana V3 factory contract address",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 24,
+                "text": "    /// @param factory The Uniswap V3 factory contract address",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 26,
+                "newLine": 25,
+                "text": "    /// @param key The PoolKey"
+              },
+              {
+                "type": " ",
+                "oldLine": 27,
+                "newLine": 26,
+                "text": "    /// @return pool The contract address of the V3 pool"
+              },
+              {
+                "type": " ",
+                "oldLine": 28,
+                "newLine": 27,
+                "text": "    function computeAddress(address factory, PoolKey memory key) internal pure returns (address pool) {"
+              }
+            ]
+          },
+          {
+            "oldStart": 31,
+            "oldLines": 10,
+            "newStart": 30,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 31,
+                "newLine": 30,
+                "text": "            uint256("
+              },
+              {
+                "type": " ",
+                "oldLine": 32,
+                "newLine": 31,
+                "text": "                keccak256("
+              },
+              {
+                "type": " ",
+                "oldLine": 33,
+                "newLine": 32,
+                "text": "                    abi.encodePacked("
+              },
+              {
+                "type": "-",
+                "oldLine": 34,
+                "text": "                        hex\"ff\",",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 35,
+                "text": "                        factory,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 36,
+                "text": "                        keccak256(abi.encode(key.token0, key.token1, key.fee)),",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 37,
+                "text": "                        POOL_PROXY_INIT_CODE_HASH",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 33,
+                "text": "                        hex\"ff\", factory, keccak256(abi.encode(key.token0, key.token1, key.fee)), POOL_INIT_CODE_HASH",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 38,
+                "newLine": 34,
+                "text": "                    )"
+              },
+              {
+                "type": " ",
+                "oldLine": 39,
+                "newLine": 35,
+                "text": "                )"
+              },
+              {
+                "type": " ",
+                "oldLine": 40,
+                "newLine": 36,
+                "text": "            )"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

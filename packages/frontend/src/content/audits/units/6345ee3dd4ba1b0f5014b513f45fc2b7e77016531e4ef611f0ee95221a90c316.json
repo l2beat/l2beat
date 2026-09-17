@@ -1,0 +1,307 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "6345ee3dd4ba1b0f5014b513f45fc2b7e77016531e4ef611f0ee95221a90c316",
+  "name": "Tornado",
+  "kind": "contract",
+  "lines": 127,
+  "source": "contract Tornado is MerkleTreeWithHistory, ReentrancyGuard {\n    uint256 public denomination;\n    mapping(bytes32 => bool) public nullifierHashes;\n    // we store all commitments just to prevent accidental deposits with the same commitment\n    mapping(bytes32 => bool) public commitments;\n    IVerifier public verifier;\n\n    // operator can update snark verification key\n    // after the final trusted setup ceremony operator rights are supposed to be transferred to zero address\n    address public operator;\n\n    modifier onlyOperator() {\n        require(msg.sender == operator, \"Only operator can call this function.\");\n        _;\n    }\n\n    event Deposit(bytes32 indexed commitment, uint32 leafIndex, uint256 timestamp);\n    event Withdrawal(address to, bytes32 nullifierHash, address indexed relayer, uint256 fee);\n\n    /**\n     * @dev The constructor\n     * @param _verifier the address of SNARK verifier for this contract\n     * @param _denomination transfer amount for each deposit\n     * @param _merkleTreeHeight the height of deposits' Merkle Tree\n     * @param _operator operator address (see operator comment above)\n     */\n    constructor(IVerifier _verifier, uint256 _denomination, uint32 _merkleTreeHeight, address _operator)\n        public\n        MerkleTreeWithHistory(_merkleTreeHeight)\n    {\n        require(_denomination > 0, \"denomination should be greater than 0\");\n        verifier = _verifier;\n        operator = _operator;\n        denomination = _denomination;\n    }\n\n    /**\n     * @dev Deposit funds into the contract. The caller must send (for ETH) or approve (for ERC20) value equal to or `denomination` of this instance.\n     * @param _commitment the note commitment, which is PedersenHash(nullifier + secret)\n     */\n    function deposit(bytes32 _commitment) external payable nonReentrant {\n        require(!commitments[_commitment], \"The commitment has been submitted\");\n\n        uint32 insertedIndex = _insert(_commitment);\n        commitments[_commitment] = true;\n        _processDeposit();\n\n        emit Deposit(_commitment, insertedIndex, block.timestamp);\n    }\n\n    /**\n     * @dev this function is defined in a child contract\n     */\n    function _processDeposit() internal;\n\n    /**\n     * @dev Withdraw a deposit from the contract. `proof` is a zkSNARK proof data, and input is an array of circuit public inputs\n     * `input` array consists of:\n     *   - merkle root of all deposits in the contract\n     *   - hash of unique deposit nullifier to prevent double spends\n     *   - the recipient of funds\n     *   - optional fee that goes to the transaction sender (usually a relay)\n     */\n    function withdraw(\n        bytes calldata _proof,\n        bytes32 _root,\n        bytes32 _nullifierHash,\n        address payable _recipient,\n        address payable _relayer,\n        uint256 _fee,\n        uint256 _refund\n    ) external payable nonReentrant {\n        require(_fee <= denomination, \"Fee exceeds transfer value\");\n        require(!nullifierHashes[_nullifierHash], \"The note has been already spent\");\n        require(isKnownRoot(_root), \"Cannot find your merkle root\"); // Make sure to use a recent one\n        require(\n            verifier.verifyProof(\n                _proof, [uint256(_root), uint256(_nullifierHash), uint256(_recipient), uint256(_relayer), _fee, _refund]\n            ),\n            \"Invalid withdraw proof\"\n        );\n\n        nullifierHashes[_nullifierHash] = true;\n        _processWithdraw(_recipient, _relayer, _fee, _refund);\n        emit Withdrawal(_recipient, _nullifierHash, _relayer, _fee);\n    }\n\n    /**\n     * @dev this function is defined in a child contract\n     */\n    function _processWithdraw(address payable _recipient, address payable _relayer, uint256 _fee, uint256 _refund)\n        internal;\n\n    /**\n     * @dev whether a note is already spent\n     */\n    function isSpent(bytes32 _nullifierHash) public view returns (bool) {\n        return nullifierHashes[_nullifierHash];\n    }\n\n    /**\n     * @dev whether an array of notes is already spent\n     */\n    function isSpentArray(bytes32[] calldata _nullifierHashes) external view returns (bool[] memory spent) {\n        spent = new bool[](_nullifierHashes.length);\n        for (uint256 i = 0; i < _nullifierHashes.length; i++) {\n            if (isSpent(_nullifierHashes[i])) {\n                spent[i] = true;\n            }\n        }\n    }\n\n    /**\n     * @dev allow operator to update SNARK verification keys. This is needed to update keys after the final trusted setup ceremony is held.\n     * After that operator rights are supposed to be transferred to zero address\n     */\n    function updateVerifier(address _newVerifier) external onlyOperator {\n        verifier = IVerifier(_newVerifier);\n    }\n\n    /**\n     * @dev operator can change his address\n     */\n    function changeOperator(address _newOperator) external onlyOperator {\n        operator = _newOperator;\n    }\n}",
+  "resolutions": {
+    "f9658cd3a9a22004": {
+      "status": "differs",
+      "coveredLines": 117,
+      "match": {
+        "origin": "own",
+        "collection": "tornado-cash",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "alias",
+        "auditedName": "Mixer",
+        "similarity": 0.967,
+        "reportId": "tornado-cash/abdk-tornado-smart-contract-audit-2019-11-19",
+        "repository": "peppersec/tornado-mixer",
+        "path": "contracts/Mixer.sol",
+        "commit": "d0e312eb808797a4f20a81fda2224185a3f914b4",
+        "commitTimestamp": "2019-11-18T20:03:44Z",
+        "url": "https://github.com/peppersec/tornado-mixer/blob/d0e312eb808797a4f20a81fda2224185a3f914b4/contracts/Mixer.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "final audit snapshot after remediation",
+        "coverage": "full file",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "diff": {
+        "added": 10,
+        "removed": 2,
+        "ignoredAdded": 7,
+        "ignoredRemoved": 3,
+        "unchanged": 117,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 4,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "contract Mixer is MerkleTreeWithHistory, ReentrancyGuard {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "contract Tornado is MerkleTreeWithHistory, ReentrancyGuard {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "    uint256 public denomination;"
+              },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "    mapping(bytes32 => bool) public nullifierHashes;"
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "    // we store all commitments just to prevent accidental deposits with the same commitment"
+              }
+            ]
+          },
+          {
+            "oldStart": 35,
+            "oldLines": 7,
+            "newStart": 35,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 35, "newLine": 35, "text": "    }" },
+              { "type": " ", "oldLine": 36, "newLine": 36, "text": "" },
+              { "type": " ", "oldLine": 37, "newLine": 37, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 38,
+                "text": "     * @dev Deposit funds into mixer. The caller must send (for ETH) or approve (for ERC20) value equal to or `denomination` of this mixer.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 38,
+                "text": "     * @dev Deposit funds into the contract. The caller must send (for ETH) or approve (for ERC20) value equal to or `denomination` of this instance.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 39,
+                "newLine": 39,
+                "text": "     * @param _commitment the note commitment, which is PedersenHash(nullifier + secret)"
+              },
+              { "type": " ", "oldLine": 40, "newLine": 40, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 41,
+                "newLine": 41,
+                "text": "    function deposit(bytes32 _commitment) external payable nonReentrant {"
+              }
+            ]
+          },
+          {
+            "oldStart": 54,
+            "oldLines": 9,
+            "newStart": 54,
+            "newLines": 9,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 54,
+                "newLine": 54,
+                "text": "    function _processDeposit() internal;"
+              },
+              { "type": " ", "oldLine": 55, "newLine": 55, "text": "" },
+              { "type": " ", "oldLine": 56, "newLine": 56, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 57,
+                "text": "     * @dev Withdraw a deposit from the mixer. `proof` is a zkSNARK proof data, and input is an array of circuit public inputs",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 57,
+                "text": "     * @dev Withdraw a deposit from the contract. `proof` is a zkSNARK proof data, and input is an array of circuit public inputs",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 58,
+                "newLine": 58,
+                "text": "     * `input` array consists of:"
+              },
+              {
+                "type": "-",
+                "oldLine": 59,
+                "text": "     *   - merkle root of all deposits in the mixer",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 59,
+                "text": "     *   - merkle root of all deposits in the contract",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 60,
+                "newLine": 60,
+                "text": "     *   - hash of unique deposit nullifier to prevent double spends"
+              },
+              {
+                "type": " ",
+                "oldLine": 61,
+                "newLine": 61,
+                "text": "     *   - the recipient of funds"
+              },
+              {
+                "type": " ",
+                "oldLine": 62,
+                "newLine": 62,
+                "text": "     *   - optional fee that goes to the transaction sender (usually a relay)"
+              }
+            ]
+          },
+          {
+            "oldStart": 94,
+            "oldLines": 11,
+            "newStart": 94,
+            "newLines": 23,
+            "lines": [
+              { "type": " ", "oldLine": 94, "newLine": 94, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 95,
+                "newLine": 95,
+                "text": "     * @dev whether a note is already spent"
+              },
+              { "type": " ", "oldLine": 96, "newLine": 96, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 97,
+                "text": "    function isSpent(bytes32 _nullifierHash) external view returns (bool) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 97,
+                "text": "    function isSpent(bytes32 _nullifierHash) public view returns (bool) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 98,
+                "newLine": 98,
+                "text": "        return nullifierHashes[_nullifierHash];"
+              },
+              { "type": " ", "oldLine": 99, "newLine": 99, "text": "    }" },
+              { "type": " ", "oldLine": 100, "newLine": 100, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 101,
+                "newLine": 101,
+                "text": "    /**"
+              },
+              {
+                "type": "+",
+                "newLine": 102,
+                "text": "     * @dev whether an array of notes is already spent",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 103,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 104,
+                "text": "    function isSpentArray(bytes32[] calldata _nullifierHashes) external view returns (bool[] memory spent) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 105,
+                "text": "        spent = new bool[](_nullifierHashes.length);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 106,
+                "text": "        for (uint256 i = 0; i < _nullifierHashes.length; i++) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 107,
+                "text": "            if (isSpent(_nullifierHashes[i])) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 108,
+                "text": "                spent[i] = true;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 109,
+                "text": "            }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 110,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 111,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 112, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 113,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 102,
+                "newLine": 114,
+                "text": "     * @dev allow operator to update SNARK verification keys. This is needed to update keys after the final trusted setup ceremony is held."
+              },
+              {
+                "type": " ",
+                "oldLine": 103,
+                "newLine": 115,
+                "text": "     * After that operator rights are supposed to be transferred to zero address"
+              },
+              { "type": " ", "oldLine": 104, "newLine": 116, "text": "     */" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}
