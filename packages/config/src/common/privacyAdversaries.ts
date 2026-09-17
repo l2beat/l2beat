@@ -5,6 +5,7 @@ import type {
   PrivacyAdversaryCell,
   PrivacyAdversaryId,
   PrivacyAdversarySentiment,
+  PrivacyAlsoExposed,
   PrivacyExposure,
   PrivacyField,
   PrivacyFieldExposure,
@@ -74,6 +75,7 @@ export const PRIVACY_FIELDS: Record<PrivacyField, PrivacyFieldInfo> = {
     id: 'sender',
     label: 'Sender',
     subject: 'Sender',
+    promiseLabel: 'Sender privacy',
     description:
       'The Ethereum address that funds entered from, or that initiated a transfer.',
   },
@@ -81,6 +83,7 @@ export const PRIVACY_FIELDS: Record<PrivacyField, PrivacyFieldInfo> = {
     id: 'recipient',
     label: 'Recipient',
     subject: 'Recipient',
+    promiseLabel: 'Recipient privacy',
     description:
       'The Ethereum address that funds exit to, or that receives a transfer.',
   },
@@ -88,18 +91,21 @@ export const PRIVACY_FIELDS: Record<PrivacyField, PrivacyFieldInfo> = {
     id: 'amount',
     label: 'Amount',
     subject: 'Amounts',
+    promiseLabel: 'Amount privacy',
     description: 'The value moved.',
   },
   asset: {
     id: 'asset',
     label: 'Asset',
     subject: 'Asset',
+    promiseLabel: 'Asset privacy',
     description: 'Which token is moved.',
   },
   linkage: {
     id: 'linkage',
     label: 'Link',
     subject: 'Link',
+    promiseLabel: 'Link privacy',
     description:
       'Whether the entry and exit of the same funds, or sender and recipient of the same transfer, can be tied together.',
   },
@@ -146,13 +152,18 @@ export function getAlsoExposed(
   protects: PrivacyField,
   cell: PrivacyAdversaryAssessment,
   baseline: PrivacyAdversaryAssessment,
-): PrivacyField[] {
-  return PRIVACY_FIELD_ORDER.filter(
-    (field) =>
-      field !== protects &&
-      EXPOSURE_SEVERITY[getFieldExposure(cell, field)] >
-        EXPOSURE_SEVERITY[getFieldExposure(baseline, field)],
-  )
+): PrivacyAlsoExposed[] {
+  return PRIVACY_FIELD_ORDER.flatMap((field) => {
+    if (field === protects) return []
+    const exposure = getFieldExposure(cell, field)
+    if (
+      EXPOSURE_SEVERITY[exposure] <=
+      EXPOSURE_SEVERITY[getFieldExposure(baseline, field)]
+    ) {
+      return []
+    }
+    return [{ field, exposure }]
+  })
 }
 
 export const PRIVACY_ADVERSARY_ORDER: PrivacyAdversaryId[] = [

@@ -3,9 +3,9 @@ import type {
   PrivacyAdversarySentiment,
 } from '@l2beat/config'
 import { expect } from 'earl'
-import type { PrivacyAdversarySummaryCell } from '~/server/features/privacy/types'
+import type { PrivacyAdversariesSummary } from '~/server/features/privacy/types'
 import {
-  getPrivacyAdversariesMergedSentiment,
+  getPrivacyAdversariesTableValue,
   getPrivacyAdversaryTitle,
 } from './privacyAdversaryUi'
 
@@ -17,56 +17,59 @@ const IDS: PrivacyAdversaryId[] = [
   'futureAdversary',
 ]
 
-function cells(
+function summary(
   ...sentiments: PrivacyAdversarySentiment[]
-): PrivacyAdversarySummaryCell[] {
-  return sentiments.map((sentiment, i) => ({
-    id: IDS[i] ?? 'publicObserver',
-    label: IDS[i] ?? 'publicObserver',
-    description: '',
-    value: '',
-    sentiment,
-    exposure: '',
-    alsoExposed: [],
-  }))
+): PrivacyAdversariesSummary {
+  return {
+    promise: { protects: 'linkage', text: '' },
+    promiseLabel: 'Link privacy',
+    cells: sentiments.map((sentiment, i) => ({
+      id: IDS[i] ?? 'publicObserver',
+      label: IDS[i] ?? 'publicObserver',
+      description: '',
+      value: '',
+      sentiment,
+      exposure: '',
+      alsoExposed: [],
+    })),
+  }
 }
 
-describe(getPrivacyAdversariesMergedSentiment.name, () => {
+describe(getPrivacyAdversariesTableValue.name, () => {
+  const sentiment = (...s: PrivacyAdversarySentiment[]) =>
+    getPrivacyAdversariesTableValue(summary(...s)).sentiment
+
   it('ignores the future adversary', () => {
-    expect(
-      getPrivacyAdversariesMergedSentiment(
-        cells('good', 'good', 'good', 'good', 'bad'),
-      ),
-    ).toEqual('good')
+    expect(sentiment('good', 'good', 'good', 'good', 'bad')).toEqual('good')
   })
 
   it('is red when any other adversary is red', () => {
-    expect(
-      getPrivacyAdversariesMergedSentiment(
-        cells('good', 'good', 'good', 'bad', 'good'),
-      ),
-    ).toEqual('bad')
+    expect(sentiment('good', 'good', 'good', 'bad', 'good')).toEqual('bad')
   })
 
   it('takes the majority colour', () => {
-    expect(
-      getPrivacyAdversariesMergedSentiment(
-        cells('good', 'warning', 'warning', 'warning', 'good'),
-      ),
-    ).toEqual('warning')
-    expect(
-      getPrivacyAdversariesMergedSentiment(
-        cells('good', 'good', 'good', 'warning', 'bad'),
-      ),
-    ).toEqual('good')
+    expect(sentiment('good', 'warning', 'warning', 'warning', 'good')).toEqual(
+      'warning',
+    )
+    expect(sentiment('good', 'good', 'good', 'warning', 'bad')).toEqual('good')
   })
 
   it('is green on a tie', () => {
-    expect(
-      getPrivacyAdversariesMergedSentiment(
-        cells('good', 'good', 'warning', 'warning', 'bad'),
-      ),
-    ).toEqual('good')
+    expect(sentiment('good', 'good', 'warning', 'warning', 'bad')).toEqual(
+      'good',
+    )
+  })
+
+  it('sorts fewer red and yellow cells first within a colour', () => {
+    const hint = (...s: PrivacyAdversarySentiment[]) =>
+      getPrivacyAdversariesTableValue(summary(...s)).orderHint ?? 0
+    expect(hint('good', 'good', 'good', 'good', 'bad')).toEqual(0)
+    expect(hint('good', 'warning', 'good', 'good', 'good')).toBeGreaterThan(
+      hint('good', 'warning', 'warning', 'good', 'good'),
+    )
+    expect(hint('good', 'warning', 'warning', 'good', 'good')).toBeGreaterThan(
+      hint('good', 'bad', 'good', 'good', 'good'),
+    )
   })
 })
 

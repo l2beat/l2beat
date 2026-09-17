@@ -18,7 +18,7 @@ export function PrivacyAdversaryDots({
   className,
 }: {
   adversaries: PrivacyAdversariesSummary
-  /** Page each dot links into, '' for the current one; no link when omitted. */
+  /** Page each dot links into; no link when omitted. */
   href?: string
   size?: 'sm' | 'md'
   className?: string

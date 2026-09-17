@@ -28,20 +28,19 @@ import {
 } from '../../layer2s/tvs/get7dTvsBreakdown'
 import { EMPTY_PROJECTS_CHANGE_REPORT } from '../../projects-change-report/getProjectsChangeReport'
 import type { PrivacyProjectDetails } from '../getPrivacyProjectDetails'
-import {
-  type PrivacyAdversariesSummary,
-  type PrivacyRelayerStat,
-  toPrivacyAdversariesSummary,
-} from '../types'
+import type { PrivacyAdversariesSummary, PrivacyRelayerStat } from '../types'
 import {
   getPrivacyTrustedSetup,
   type PrivacyTrustedSetupSummary,
   toTrustedSetupSummaryValue,
 } from '../utils/getPrivacyTrustedSetup'
+import { resolvePrivacySources } from '../utils/resolvePrivacySources'
+import { toPrivacyAdversariesSummary } from '../utils/toPrivacyAdversariesSummary'
 
 export interface ProjectPrivacyEntry {
   id: ProjectId
   slug: string
+  href: string
   name: string
   shortName?: string
   icon: string
@@ -162,14 +161,9 @@ export async function getPrivacyProjectEntry(
     })
   }
 
-  sections.push({
-    type: 'PrivacyAdversariesSection',
-    props: {
-      id: 'privacy-adversaries',
-      title: 'Privacy against adversaries',
-      adversaries: details.adversaries,
-    },
-  })
+  // Filled in once every other section exists, so that its source links can
+  // point only at sections this page renders.
+  const adversariesSectionIndex = sections.length
 
   const chartProject = {
     id: details.id,
@@ -311,9 +305,19 @@ export async function getPrivacyProjectEntry(
     })
   }
 
+  sections.splice(adversariesSectionIndex, 0, {
+    type: 'PrivacyAdversariesSection',
+    props: {
+      id: 'privacy-adversaries',
+      title: 'Privacy against adversaries',
+      adversaries: resolvePrivacySources(details.adversaries, sections),
+    },
+  })
+
   return {
     id: details.id,
     slug: details.slug,
+    href: `/privacy/projects/${details.slug}`,
     name: details.name,
     shortName: details.shortName,
     icon,
