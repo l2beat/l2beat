@@ -18,8 +18,9 @@ export function resolvePrivacySources(
       const { contract, title = contract } = source
       return [{ title, url: `#${contract}` }]
     }
-    const title = source.title ?? titles.get(source.section)
-    return title ? [{ title, url: `#${source.section}` }] : []
+    const sectionTitle = titles.get(source.section)
+    if (sectionTitle === undefined) return []
+    return [{ title: source.title ?? sectionTitle, url: `#${source.section}` }]
   }
   return {
     ...adversaries,
