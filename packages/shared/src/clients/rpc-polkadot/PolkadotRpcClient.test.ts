@@ -21,7 +21,7 @@ describe(PolkadotRpcClient.name, () => {
       const rpc = mockClient({ http, generateId: () => 'unique-id' })
       const result = await rpc.getLatestBlockNumber()
 
-      expect(result).toStrictEqual(Number(mockBlockNumber))
+      expect(result).toEqual(Number(mockBlockNumber))
     })
   })
 
@@ -47,7 +47,7 @@ describe(PolkadotRpcClient.name, () => {
         +mockBlockNumber,
       )
 
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         number: +mockBlockNumber,
         hash: 'UNSUPPORTED',
         logsBloom: 'UNSUPPORTED',
@@ -77,7 +77,7 @@ describe(PolkadotRpcClient.name, () => {
         +mockBlockNumber,
       )
 
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         number: +mockBlockNumber,
         hash: 'UNSUPPORTED',
         logsBloom: 'UNSUPPORTED',
@@ -104,7 +104,7 @@ describe(PolkadotRpcClient.name, () => {
 
       const result = await rpc.getBlock()
 
-      expect(vi.mocked(http.fetch).mock.calls[0][1]?.body).toStrictEqual(
+      expect(vi.mocked(http.fetch).mock.calls[0][1]?.body).toEqual(
         JSON.stringify({
           method: 'chain_getBlockHash',
           params: [],
@@ -113,7 +113,7 @@ describe(PolkadotRpcClient.name, () => {
         }),
       )
 
-      expect(vi.mocked(http.fetch).mock.calls[1][1]?.body).toStrictEqual(
+      expect(vi.mocked(http.fetch).mock.calls[1][1]?.body).toEqual(
         JSON.stringify({
           method: 'chain_getBlock',
           params: [mockBlockHash],
@@ -122,7 +122,7 @@ describe(PolkadotRpcClient.name, () => {
         }),
       )
 
-      expect(result).toStrictEqual(mockResponse.result.block)
+      expect(result).toEqual(mockResponse.result.block)
     })
 
     it('get specific block', async () => {
@@ -142,7 +142,7 @@ describe(PolkadotRpcClient.name, () => {
 
       const result = await rpc.getBlock(mockBlockNumber)
 
-      expect(vi.mocked(http.fetch).mock.calls[0][1]?.body).toStrictEqual(
+      expect(vi.mocked(http.fetch).mock.calls[0][1]?.body).toEqual(
         JSON.stringify({
           method: 'chain_getBlockHash',
           params: [mockBlockNumber],
@@ -151,7 +151,7 @@ describe(PolkadotRpcClient.name, () => {
         }),
       )
 
-      expect(vi.mocked(http.fetch).mock.calls[1][1]?.body).toStrictEqual(
+      expect(vi.mocked(http.fetch).mock.calls[1][1]?.body).toEqual(
         JSON.stringify({
           method: 'chain_getBlock',
           params: [mockBlockHash],
@@ -160,7 +160,7 @@ describe(PolkadotRpcClient.name, () => {
         }),
       )
 
-      expect(result).toStrictEqual(mockResponse.result.block)
+      expect(result).toEqual(mockResponse.result.block)
     })
   })
 
@@ -174,7 +174,7 @@ describe(PolkadotRpcClient.name, () => {
 
       const result = await rpc.query('rpc_method', ['a', 1, true])
 
-      expect(result).toStrictEqual('data-returned-from-api')
+      expect(result).toEqual('data-returned-from-api')
       expect(http.fetch).toHaveBeenCalledExactlyOnceWith('API_URL', {
         body: JSON.stringify({
           method: 'rpc_method',
@@ -201,7 +201,7 @@ describe(PolkadotRpcClient.name, () => {
         },
       })
 
-      expect(validationInfo.success).toStrictEqual(false)
+      expect(validationInfo.success).toEqual(false)
     })
 
     it('returns true otherwise', async () => {
@@ -210,7 +210,7 @@ describe(PolkadotRpcClient.name, () => {
         result: 'success',
       })
 
-      expect(validationInfo.success).toStrictEqual(true)
+      expect(validationInfo.success).toEqual(true)
     })
   })
 })

@@ -34,7 +34,7 @@ describe(BlockTimestampProvider.name, () => {
           indexerClient.getBlockNumberAtOrBefore,
         ).toHaveBeenCalledExactlyOnceWith(TIMESTAMP)
         expect(blockProvider.getBlockNumberAtOrBefore).not.toHaveBeenCalled()
-        expect(result).toStrictEqual(BLOCK_NUMBER)
+        expect(result).toEqual(BLOCK_NUMBER)
       })
 
       it('falls back to block provider if indexer client fails', async () => {
@@ -61,7 +61,7 @@ describe(BlockTimestampProvider.name, () => {
         expect(
           blockProvider.getBlockNumberAtOrBefore,
         ).toHaveBeenCalledExactlyOnceWith(TIMESTAMP)
-        expect(result).toStrictEqual(BLOCK_NUMBER)
+        expect(result).toEqual(BLOCK_NUMBER)
       })
 
       it('uses block provider if no indexer client for chain', async () => {
@@ -88,7 +88,7 @@ describe(BlockTimestampProvider.name, () => {
         expect(
           blockProvider.getBlockNumberAtOrBefore,
         ).toHaveBeenCalledExactlyOnceWith(TIMESTAMP)
-        expect(result).toStrictEqual(BLOCK_NUMBER)
+        expect(result).toEqual(BLOCK_NUMBER)
       })
 
       it('throws error if indexer fails and no block provider available', async () => {

@@ -61,15 +61,13 @@ describe(buildIntegrateExamples.name, () => {
   const examples = buildIntegrateExamples(SAMPLE, META, 1787200000)
 
   it('points every request at the static host, with the address lowercased', () => {
-    expect(examples.address.request).toStrictEqual(
+    expect(examples.address.request).toEqual(
       `${CROPS_API_URL}/v1/address/1/${FACTORY.toLowerCase()}.json`,
     )
-    expect(examples.project.request).toStrictEqual(
+    expect(examples.project.request).toEqual(
       `${CROPS_API_URL}/v1/project/uniswap-v3.json`,
     )
-    expect(examples.crops.request).toStrictEqual(
-      `${CROPS_API_URL}/v1/crops.json`,
-    )
+    expect(examples.crops.request).toEqual(`${CROPS_API_URL}/v1/crops.json`)
   })
 
   it('shows the address match as crops-api writes it', () => {

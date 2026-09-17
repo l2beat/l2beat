@@ -40,7 +40,7 @@ describe(SlotTxsCountService.name, () => {
       )
 
       const result = await service.getTxsCount(1, 4)
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         records: [
           activityRecord('a', UnixTime.toStartOf(START, 'day'), 5, 5, 1, 2),
           activityRecord(

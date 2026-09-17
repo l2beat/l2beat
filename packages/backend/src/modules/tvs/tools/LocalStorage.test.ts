@@ -19,7 +19,7 @@ describe(LocalStorage.name, () => {
       const timestamp = UnixTime.now()
       await storage.writeAmount('token1', timestamp, 1000n)
       const amount = await storage.getAmount('token1', timestamp)
-      expect(amount).toStrictEqual(1000n)
+      expect(amount).toEqual(1000n)
     })
 
     it('persists amounts between instances', async () => {
@@ -29,7 +29,7 @@ describe(LocalStorage.name, () => {
 
       storage = new LocalStorage(TEST_FILE_PATH)
       const amount = await storage.getAmount('token1', timestamp)
-      expect(amount).toStrictEqual(1000n)
+      expect(amount).toEqual(1000n)
     })
   })
 
@@ -39,7 +39,7 @@ describe(LocalStorage.name, () => {
       const timestamp = UnixTime.now()
       await storage.writePrice('token1', timestamp, 1234.56)
       const price = await storage.getPrice('token1', timestamp)
-      expect(price).toStrictEqual(1234.56)
+      expect(price).toEqual(1234.56)
     })
 
     it('persists prices between instances', async () => {
@@ -49,7 +49,7 @@ describe(LocalStorage.name, () => {
 
       storage = new LocalStorage(TEST_FILE_PATH)
       const price = await storage.getPrice('token1', timestamp)
-      expect(price).toStrictEqual(1234.56)
+      expect(price).toEqual(1234.56)
     })
   })
 
@@ -58,7 +58,7 @@ describe(LocalStorage.name, () => {
       const storage = new LocalStorage(TEST_FILE_PATH)
       await storage.writeAddress('address1', '0x1234')
       const address = await storage.getAddress('address1')
-      expect(address).toStrictEqual('0x1234')
+      expect(address).toEqual('0x1234')
     })
 
     it('persists addresses between instances', async () => {
@@ -67,7 +67,7 @@ describe(LocalStorage.name, () => {
 
       storage = new LocalStorage(TEST_FILE_PATH)
       const address = await storage.getAddress('address1')
-      expect(address).toStrictEqual('0x1234')
+      expect(address).toEqual('0x1234')
     })
   })
 
@@ -82,10 +82,10 @@ describe(LocalStorage.name, () => {
       await storage.writePrice('token1', timestamp1, 100)
       await storage.writePrice('token1', timestamp2, 200)
 
-      expect(await storage.getAmount('token1', timestamp1)).toStrictEqual(1000n)
-      expect(await storage.getAmount('token1', timestamp2)).toStrictEqual(2000n)
-      expect(await storage.getPrice('token1', timestamp1)).toStrictEqual(100)
-      expect(await storage.getPrice('token1', timestamp2)).toStrictEqual(200)
+      expect(await storage.getAmount('token1', timestamp1)).toEqual(1000n)
+      expect(await storage.getAmount('token1', timestamp2)).toEqual(2000n)
+      expect(await storage.getPrice('token1', timestamp1)).toEqual(100)
+      expect(await storage.getPrice('token1', timestamp2)).toEqual(200)
     })
 
     it('can store data for multiple tokens', async () => {
@@ -97,10 +97,10 @@ describe(LocalStorage.name, () => {
       await storage.writePrice('token1', timestamp, 100)
       await storage.writePrice('token2', timestamp, 200)
 
-      expect(await storage.getAmount('token1', timestamp)).toStrictEqual(1000n)
-      expect(await storage.getAmount('token2', timestamp)).toStrictEqual(2000n)
-      expect(await storage.getPrice('token1', timestamp)).toStrictEqual(100)
-      expect(await storage.getPrice('token2', timestamp)).toStrictEqual(200)
+      expect(await storage.getAmount('token1', timestamp)).toEqual(1000n)
+      expect(await storage.getAmount('token2', timestamp)).toEqual(2000n)
+      expect(await storage.getPrice('token1', timestamp)).toEqual(100)
+      expect(await storage.getPrice('token2', timestamp)).toEqual(200)
     })
   })
 })

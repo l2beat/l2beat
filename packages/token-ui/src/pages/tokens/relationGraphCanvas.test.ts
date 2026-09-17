@@ -30,7 +30,7 @@ describe(drawRelationGraph.name, () => {
 
     drawRelationGraph(recordingContext(drawnText), sceneWith(node), viewState())
 
-    expect(drawnText).toStrictEqual([
+    expect(drawnText).toEqual([
       { text: 'TOKEN', x: 50, y: 28 },
       { text: 'unichain', x: 50, y: 38 },
     ])
@@ -46,7 +46,7 @@ describe(drawRelationGraph.name, () => {
 
     drawRelationGraph(recordingContext(drawnText), sceneWith(node), view)
 
-    expect(drawnText).toStrictEqual([])
+    expect(drawnText).toEqual([])
   })
 
   it('keeps the cluster heading above a focused symbol when zoomed out', () => {
@@ -70,7 +70,7 @@ describe(drawRelationGraph.name, () => {
     if (symbol === undefined || cluster === undefined) {
       throw new Error('Expected both symbol and cluster labels to be drawn')
     }
-    expect(cluster.y <= symbol.y - 8).toStrictEqual(true)
+    expect(cluster.y <= symbol.y - 8).toEqual(true)
   })
 })
 
@@ -78,7 +78,7 @@ describe(getLinkStyle.name, () => {
   const link = sceneLink('lockAndMint', false)
 
   it('draws unremarkable links thin and semi-transparent', () => {
-    expect(getLinkStyle(link, styleInputs({}))).toStrictEqual({
+    expect(getLinkStyle(link, styleInputs({}))).toEqual({
       color: RELATION_COLORS.lockAndMint,
       opacity: 0.55,
       width: 1.4,
@@ -96,8 +96,8 @@ describe(getLinkStyle.name, () => {
     )
 
     for (const style of [hoveredDirectly, hoveredViaEndpoint]) {
-      expect(style.opacity).toStrictEqual(0.95)
-      expect(style.width).toStrictEqual(3)
+      expect(style.opacity).toEqual(0.95)
+      expect(style.width).toEqual(3)
     }
   })
 
@@ -107,7 +107,7 @@ describe(getLinkStyle.name, () => {
       relationIds: new Set([link.id]),
     }
 
-    expect(getLinkStyle(link, styleInputs({ focus }))).toStrictEqual({
+    expect(getLinkStyle(link, styleInputs({ focus }))).toEqual({
       color: RELATION_COLORS.lockAndMint,
       opacity: 0.95,
       width: 2.8,
@@ -117,7 +117,7 @@ describe(getLinkStyle.name, () => {
         link,
         styleInputs({ focus: { nodeIds: new Set(), relationIds: new Set() } }),
       ).opacity,
-    ).toStrictEqual(0.08)
+    ).toEqual(0.08)
   })
 
   it('recolors links by conflict state when anomalies are highlighted', () => {
@@ -126,14 +126,14 @@ describe(getLinkStyle.name, () => {
         sceneLink('lockAndMint', true),
         styleInputs({ highlightAnomalies: true }),
       ),
-    ).toStrictEqual({
+    ).toEqual({
       color: RELATION_COLORS.conflict,
       opacity: 0.95,
       width: 2.2,
     })
     expect(
       getLinkStyle(link, styleInputs({ highlightAnomalies: true })),
-    ).toStrictEqual({ color: RELATION_COLORS.muted, opacity: 0.22, width: 1.4 })
+    ).toEqual({ color: RELATION_COLORS.muted, opacity: 0.22, width: 1.4 })
   })
 })
 
@@ -146,13 +146,13 @@ describe(getNodeRingOpacity.name, () => {
         node,
         styleInputs({ hovered: { type: 'node', id: node.data.id } }),
       ),
-    ).toStrictEqual(0.8)
+    ).toEqual(0.8)
     expect(
       getNodeRingOpacity(
         node,
         styleInputs({ selection: { type: 'node', id: node.data.id } }),
       ),
-    ).toStrictEqual(1)
+    ).toEqual(1)
   })
 
   it('shows a softer ring on the endpoints of a selected relation', () => {
@@ -167,19 +167,19 @@ describe(getNodeRingOpacity.name, () => {
           },
         }),
       ),
-    ).toStrictEqual(0.7)
+    ).toEqual(0.7)
   })
 
   it('hides the ring otherwise', () => {
-    expect(getNodeRingOpacity(node, styleInputs({}))).toStrictEqual(0)
+    expect(getNodeRingOpacity(node, styleInputs({}))).toEqual(0)
   })
 })
 
 describe(nodeVisualScreenScale.name, () => {
   it('scales nodes with the world until they reach constant screen size', () => {
-    expect(nodeVisualScreenScale(0.5)).toStrictEqual(0.5)
-    expect(nodeVisualScreenScale(1.2)).toStrictEqual(1.2)
-    expect(nodeVisualScreenScale(4)).toStrictEqual(1.2)
+    expect(nodeVisualScreenScale(0.5)).toEqual(0.5)
+    expect(nodeVisualScreenScale(1.2)).toEqual(1.2)
+    expect(nodeVisualScreenScale(4)).toEqual(1.2)
   })
 })
 

@@ -9,7 +9,7 @@ describe(getDaSolutionHref.name, () => {
         bridgeSlug: 'ethereum',
         isL2Project: true,
       }),
-    ).toStrictEqual('/layer2s/projects/robinhood')
+    ).toEqual('/layer2s/projects/robinhood')
   })
 
   it('links catalog DA layers to their bridge page', () => {
@@ -19,6 +19,6 @@ describe(getDaSolutionHref.name, () => {
         bridgeSlug: 'blobstream',
         isL2Project: false,
       }),
-    ).toStrictEqual('/data-availability/projects/celestia/blobstream')
+    ).toEqual('/data-availability/projects/celestia/blobstream')
   })
 })

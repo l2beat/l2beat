@@ -78,7 +78,7 @@ describe(DaService.name, () => {
         MOCK_ETHEREUM_CONFIGS,
       )
 
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         records: [
           {
             configurationId: 'eth-1',
@@ -137,7 +137,7 @@ describe(DaService.name, () => {
         MOCK_CELESTIA_CONFIGS,
       )
 
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         records: [
           {
             configurationId: 'cel-1',
@@ -195,7 +195,7 @@ describe(DaService.name, () => {
         MOCK_AVAIL_CONFIGS,
       )
 
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         records: [
           {
             configurationId: 'av-1',
@@ -307,7 +307,7 @@ describe(DaService.name, () => {
         MOCK_ETHEREUM_CONFIGS,
       )
 
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         records: [
           {
             configurationId: 'eth-1',

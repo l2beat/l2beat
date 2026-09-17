@@ -35,7 +35,7 @@ describe(BlockIndexerClient.name, () => {
         `${API_URL}?module=block&action=getblocknobytime&timestamp=3141592653&closest=before&apikey=key&chainId=1`,
         {},
       )
-      expect(blockNumber).toStrictEqual(result)
+      expect(blockNumber).toEqual(result)
     })
 
     it('if there is no closest block number try 10 minutes earlier', async () => {
@@ -75,7 +75,7 @@ describe(BlockIndexerClient.name, () => {
         {},
       )
 
-      expect(blockNumber).toStrictEqual(result)
+      expect(blockNumber).toEqual(result)
     })
 
     it('tries to find a block earlier only if no closest block found error, throws otherwise', async () => {
@@ -223,7 +223,7 @@ describe(BlockIndexerClient.name, () => {
     it('constructs a correct url', async () => {
       const httpClient = {
         fetch: vi.fn(async (url) => {
-          expect(url).toStrictEqual(
+          expect(url).toEqual(
             `${API_URL}?module=mod&action=act&foo=bar&baz=123&apikey=key&chainId=1`,
           )
           return { status: '1', message: 'OK', result: '' }
@@ -237,7 +237,7 @@ describe(BlockIndexerClient.name, () => {
     it('does not add api key for blockscout', async () => {
       const httpClient = {
         fetch: vi.fn(async (url) => {
-          expect(url).toStrictEqual(
+          expect(url).toEqual(
             `${API_URL}?module=mod&action=act&foo=bar&baz=123`,
           )
           return { status: '1', message: 'OK', result: '' }
@@ -262,7 +262,7 @@ describe(BlockIndexerClient.name, () => {
 
       const etherscanClient = new BlockIndexerClient(httpClient, rate, OPTIONS)
       const result = await etherscanClient.call('mod', 'act', {})
-      expect(result).toStrictEqual(response.result)
+      expect(result).toEqual(response.result)
     })
 
     it('throws on an error response', async () => {

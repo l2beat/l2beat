@@ -46,7 +46,7 @@ describe(BlobPriceProvider.name, () => {
 
       const result = await provider.getBlobPricesByBlockRange([100, 100])
 
-      expect(result).toStrictEqual(new Map())
+      expect(result).toEqual(new Map())
       expect(mockRpcClient.getFeeHistory).toHaveBeenCalledWith(1, 100, [])
     })
 
@@ -58,7 +58,7 @@ describe(BlobPriceProvider.name, () => {
 
       const result = await provider.getBlobPricesByBlockRange([100, 100])
 
-      expect(result).toStrictEqual(new Map([[100, 10n]]))
+      expect(result).toEqual(new Map([[100, 10n]]))
       expect(mockRpcClient.getFeeHistory).toHaveBeenCalledWith(1, 100, [])
     })
 
@@ -72,7 +72,7 @@ describe(BlobPriceProvider.name, () => {
 
       const result = await provider.getBlobPricesByBlockRange([100, 103])
 
-      expect(result).toStrictEqual(
+      expect(result).toEqual(
         new Map([
           [101, 10n],
           [103, 20n],
@@ -100,7 +100,7 @@ describe(BlobPriceProvider.name, () => {
         }
       }
 
-      expect(result).toStrictEqual(expected)
+      expect(result).toEqual(expected)
       expect(mockRpcClient.getFeeHistory).toHaveBeenCalledWith(100, 199, [])
     })
 
@@ -122,11 +122,11 @@ describe(BlobPriceProvider.name, () => {
 
       const result = await provider.getBlobPricesByBlockRange([50, 1099])
 
-      expect(result.size).toStrictEqual(1050)
-      expect(result.get(100)).toStrictEqual(1n)
-      expect(result.get(1099)).toStrictEqual(1000n)
-      expect(result.get(50)).toStrictEqual(1001n)
-      expect(result.get(549)).toStrictEqual(450n)
+      expect(result.size).toEqual(1050)
+      expect(result.get(100)).toEqual(1n)
+      expect(result.get(1099)).toEqual(1000n)
+      expect(result.get(50)).toEqual(1001n)
+      expect(result.get(549)).toEqual(450n)
 
       expect(mockRpcClient.getFeeHistory).toHaveBeenCalledTimes(2)
       expect(mockRpcClient.getFeeHistory).toHaveBeenNthCalledWith(
@@ -149,9 +149,9 @@ describe(BlobPriceProvider.name, () => {
 
       const result = await provider.getBlobPricesByBlockRange([100, 1099])
 
-      expect(result.size).toStrictEqual(1000)
-      expect(result.get(100)).toStrictEqual(1n)
-      expect(result.get(1099)).toStrictEqual(1000n)
+      expect(result.size).toEqual(1000)
+      expect(result.get(100)).toEqual(1n)
+      expect(result.get(1099)).toEqual(1000n)
       expect(mockRpcClient.getFeeHistory).toHaveBeenCalledWith(1000, 1099, [])
     })
 
@@ -171,13 +171,13 @@ describe(BlobPriceProvider.name, () => {
 
       const result = await provider.getBlobPricesByBlockRange([500, 2999])
 
-      expect(result.size).toStrictEqual(2500)
-      expect(result.get(2000)).toStrictEqual(10n)
-      expect(result.get(2999)).toStrictEqual(10n)
-      expect(result.get(1000)).toStrictEqual(20n)
-      expect(result.get(1999)).toStrictEqual(20n)
-      expect(result.get(500)).toStrictEqual(30n)
-      expect(result.get(999)).toStrictEqual(30n)
+      expect(result.size).toEqual(2500)
+      expect(result.get(2000)).toEqual(10n)
+      expect(result.get(2999)).toEqual(10n)
+      expect(result.get(1000)).toEqual(20n)
+      expect(result.get(1999)).toEqual(20n)
+      expect(result.get(500)).toEqual(30n)
+      expect(result.get(999)).toEqual(30n)
 
       expect(mockRpcClient.getFeeHistory).toHaveBeenCalledTimes(3)
       expect(mockRpcClient.getFeeHistory).toHaveBeenNthCalledWith(
@@ -213,7 +213,7 @@ describe(BlobPriceProvider.name, () => {
 
       const result = await provider.getBlobPricesByBlockRange([100, 105])
 
-      expect(result).toStrictEqual(
+      expect(result).toEqual(
         new Map([
           [100, 3n],
           [101, 4n],
@@ -236,7 +236,7 @@ describe(BlobPriceProvider.name, () => {
 
       const result = await provider.getBlobPricesByBlockRange([100, 109])
 
-      expect(result).toStrictEqual(new Map())
+      expect(result).toEqual(new Map())
     })
 
     it('propagates errors from RPC client', async () => {

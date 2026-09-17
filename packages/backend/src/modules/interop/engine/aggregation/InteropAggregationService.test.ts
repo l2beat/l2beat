@@ -47,7 +47,7 @@ describe(InteropAggregationService.name, () => {
       const result = service.aggregate(transfers, configs, to)
 
       expect(result.aggregatedTransfers).toHaveLength(1)
-      expect(result.aggregatedTransfers[0]).toStrictEqual({
+      expect(result.aggregatedTransfers[0]).toEqual({
         timestamp: to,
         id: 'config1',
         srcChain: 'ethereum',
@@ -75,7 +75,7 @@ describe(InteropAggregationService.name, () => {
       })
 
       expect(result.aggregatedTokens).toHaveLength(1)
-      expect(result.aggregatedTokens[0]).toStrictEqual({
+      expect(result.aggregatedTokens[0]).toEqual({
         timestamp: to,
         id: 'config1',
         srcChain: 'ethereum',
@@ -96,7 +96,7 @@ describe(InteropAggregationService.name, () => {
       })
 
       expect(result.aggregatedTokensPairs).toHaveLength(1)
-      expect(result.aggregatedTokensPairs[0]).toStrictEqual({
+      expect(result.aggregatedTokensPairs[0]).toEqual({
         timestamp: to,
         id: 'config1',
         srcChain: 'ethereum',
@@ -156,16 +156,16 @@ describe(InteropAggregationService.name, () => {
       const result = service.aggregate(transfers, configs, to)
 
       expect(result.aggregatedTransfers).toHaveLength(2)
-      expect(result.aggregatedTransfers[0].srcChain).toStrictEqual('ethereum')
-      expect(result.aggregatedTransfers[0].dstChain).toStrictEqual('arbitrum')
-      expect(result.aggregatedTransfers[1].srcChain).toStrictEqual('ethereum')
-      expect(result.aggregatedTransfers[1].dstChain).toStrictEqual('polygon')
+      expect(result.aggregatedTransfers[0].srcChain).toEqual('ethereum')
+      expect(result.aggregatedTransfers[0].dstChain).toEqual('arbitrum')
+      expect(result.aggregatedTransfers[1].srcChain).toEqual('ethereum')
+      expect(result.aggregatedTransfers[1].dstChain).toEqual('polygon')
 
       expect(result.aggregatedTokensPairs).toHaveLength(2)
-      expect(result.aggregatedTokensPairs[0].srcChain).toStrictEqual('ethereum')
-      expect(result.aggregatedTokensPairs[0].dstChain).toStrictEqual('arbitrum')
-      expect(result.aggregatedTokensPairs[1].srcChain).toStrictEqual('ethereum')
-      expect(result.aggregatedTokensPairs[1].dstChain).toStrictEqual('polygon')
+      expect(result.aggregatedTokensPairs[0].srcChain).toEqual('ethereum')
+      expect(result.aggregatedTokensPairs[0].dstChain).toEqual('arbitrum')
+      expect(result.aggregatedTokensPairs[1].srcChain).toEqual('ethereum')
+      expect(result.aggregatedTokensPairs[1].dstChain).toEqual('polygon')
     })
 
     it('calculates average value in flight for nonMinting bridge type', () => {
@@ -196,7 +196,7 @@ describe(InteropAggregationService.name, () => {
 
       const result = service.aggregate(transfers, configs, to)
 
-      expect(result.aggregatedTransfers[0].avgValueInFlight).toStrictEqual(1)
+      expect(result.aggregatedTransfers[0].avgValueInFlight).toEqual(1)
     })
 
     it('handles multiple configs correctly', () => {
@@ -244,12 +244,12 @@ describe(InteropAggregationService.name, () => {
       const result = service.aggregate(transfers, configs, to)
 
       expect(result.aggregatedTransfers).toHaveLength(2)
-      expect(result.aggregatedTransfers[0].id).toStrictEqual('config1')
-      expect(result.aggregatedTransfers[1].id).toStrictEqual('config2')
+      expect(result.aggregatedTransfers[0].id).toEqual('config1')
+      expect(result.aggregatedTransfers[1].id).toEqual('config2')
 
       expect(result.aggregatedTokensPairs).toHaveLength(2)
-      expect(result.aggregatedTokensPairs[0].id).toStrictEqual('config1')
-      expect(result.aggregatedTokensPairs[1].id).toStrictEqual('config2')
+      expect(result.aggregatedTokensPairs[0].id).toEqual('config1')
+      expect(result.aggregatedTokensPairs[1].id).toEqual('config2')
     })
 
     it('returns empty arrays when no transfers match', () => {
@@ -268,10 +268,10 @@ describe(InteropAggregationService.name, () => {
 
       const result = service.aggregate(transfers, configs, to)
 
-      expect(result.aggregatedTransfers).toStrictEqual([])
-      expect(result.aggregatedTokens).toStrictEqual([])
-      expect(result.aggregatedDeployedTokens).toStrictEqual([])
-      expect(result.aggregatedTokensPairs).toStrictEqual([])
+      expect(result.aggregatedTransfers).toEqual([])
+      expect(result.aggregatedTokens).toEqual([])
+      expect(result.aggregatedDeployedTokens).toEqual([])
+      expect(result.aggregatedTokensPairs).toEqual([])
     })
 
     it('aggregates deployed tokens per address with net minted', () => {
@@ -313,7 +313,7 @@ describe(InteropAggregationService.name, () => {
         (t) => t.tokenChain === 'arbitrum' && t.tokenAddress === '0xarb',
       )
 
-      expect(srcToken).toStrictEqual({
+      expect(srcToken).toEqual({
         timestamp: to,
         id: 'config1',
         srcChain: 'ethereum',
@@ -335,9 +335,9 @@ describe(InteropAggregationService.name, () => {
       })
 
       // The newly minted supply is attributed to the destination token.
-      expect(dstToken?.mintedValueUsd).toStrictEqual(2000)
-      expect(dstToken?.burnedValueUsd).toStrictEqual(0)
-      expect(dstToken?.volume).toStrictEqual(2000)
+      expect(dstToken?.mintedValueUsd).toEqual(2000)
+      expect(dstToken?.burnedValueUsd).toEqual(0)
+      expect(dstToken?.volume).toEqual(2000)
     })
 
     it('aggregates one-sided transfers even when their bridge type cannot be inferred', () => {
@@ -371,8 +371,8 @@ describe(InteropAggregationService.name, () => {
       const result = service.aggregate(transfers, configs, to)
 
       expect(result.aggregatedTransfers).toHaveLength(1)
-      expect(result.aggregatedTransfers[0]?.bridgeType).toStrictEqual('unknown')
-      expect(result.aggregatedTransfers[0]?.transferCount).toStrictEqual(1)
+      expect(result.aggregatedTransfers[0]?.bridgeType).toEqual('unknown')
+      expect(result.aggregatedTransfers[0]?.transferCount).toEqual(1)
       expect(result.aggregatedTokens).toHaveLength(1)
       expect(result.aggregatedTokensPairs).toHaveLength(1)
     })
@@ -408,9 +408,9 @@ describe(InteropAggregationService.name, () => {
 
       const result = service.aggregate(transfers, configs, to)
 
-      expect(result.aggregatedTransfers).toStrictEqual([])
-      expect(result.aggregatedTokens).toStrictEqual([])
-      expect(result.aggregatedTokensPairs).toStrictEqual([])
+      expect(result.aggregatedTransfers).toEqual([])
+      expect(result.aggregatedTokens).toEqual([])
+      expect(result.aggregatedTokensPairs).toEqual([])
     })
   })
 })

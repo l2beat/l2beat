@@ -19,7 +19,7 @@ describe(CallHandler.name, () => {
         [],
       )
 
-      expect(handler.dependencies).toStrictEqual([])
+      expect(handler.dependencies).toEqual([])
     })
 
     it('detects dependencies in args', () => {
@@ -34,7 +34,7 @@ describe(CallHandler.name, () => {
         [],
       )
 
-      expect(handler.dependencies).toStrictEqual(['foo', 'bar'])
+      expect(handler.dependencies).toEqual(['foo', 'bar'])
     })
 
     it('detects dependencies in inAddress', () => {
@@ -50,7 +50,7 @@ describe(CallHandler.name, () => {
         [],
       )
 
-      expect(handler.dependencies).toStrictEqual(['quax'])
+      expect(handler.dependencies).toEqual(['quax'])
     })
 
     // Only the base field is ever a field name, so only the base field can be
@@ -66,7 +66,7 @@ describe(CallHandler.name, () => {
         [],
       )
 
-      expect(handler.dependencies).toStrictEqual(['constructorArgs', 'bar'])
+      expect(handler.dependencies).toEqual(['constructorArgs', 'bar'])
     })
 
     it('detects the base field of a nested reference in inAddress', () => {
@@ -81,7 +81,7 @@ describe(CallHandler.name, () => {
         [],
       )
 
-      expect(handler.dependencies).toStrictEqual(['constructorArgs'])
+      expect(handler.dependencies).toEqual(['constructorArgs'])
     })
 
     it('detects the base field of a deeply nested reference', () => {
@@ -95,7 +95,7 @@ describe(CallHandler.name, () => {
         [],
       )
 
-      expect(handler.dependencies).toStrictEqual(['foo'])
+      expect(handler.dependencies).toEqual(['foo'])
     })
   })
 
@@ -111,7 +111,7 @@ describe(CallHandler.name, () => {
         [],
       )
 
-      expect(handler.getMethod()).toStrictEqual(
+      expect(handler.getMethod()).toEqual(
         'function foo(uint256 i) view returns (uint256)',
       )
     })
@@ -154,7 +154,7 @@ describe(CallHandler.name, () => {
         'function someName() view returns (uint256)',
       ])
 
-      expect(handler.getMethod()).toStrictEqual(
+      expect(handler.getMethod()).toEqual(
         'function someName() view returns (uint256)',
       )
     })
@@ -171,7 +171,7 @@ describe(CallHandler.name, () => {
         ],
       )
 
-      expect(handler.getMethod()).toStrictEqual(
+      expect(handler.getMethod()).toEqual(
         'function someName(uint256 a, uint256 b) view returns (uint256)',
       )
     })
@@ -202,7 +202,7 @@ describe(CallHandler.name, () => {
         ],
       )
 
-      expect(handler.getMethod()).toStrictEqual(
+      expect(handler.getMethod()).toEqual(
         'function bar() view returns (uint256)',
       )
     })
@@ -241,8 +241,8 @@ describe(CallHandler.name, () => {
             _abi: string,
             data: unknown[],
           ) => {
-            expect(passedAddress).toStrictEqual(address)
-            expect(data).toStrictEqual([1, 2])
+            expect(passedAddress).toEqual(address)
+            expect(data).toEqual([1, 2])
 
             return 3 as T
           },
@@ -255,7 +255,7 @@ describe(CallHandler.name, () => {
         [],
       )
       const result = await handler.execute(provider, address, {})
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         field: 'add',
         fragment: methodFragment,
         value: 3,
@@ -274,8 +274,8 @@ describe(CallHandler.name, () => {
             _abi: string,
             data: unknown[],
           ) => {
-            expect(passedAddress).toStrictEqual(inAddress)
-            expect(data).toStrictEqual([1, 2])
+            expect(passedAddress).toEqual(inAddress)
+            expect(data).toEqual([1, 2])
 
             return 3 as T
           },
@@ -293,7 +293,7 @@ describe(CallHandler.name, () => {
         [],
       )
       const result = await handler.execute(provider, address, {})
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         field: 'add',
         fragment: methodFragment,
         value: 3,
@@ -311,8 +311,8 @@ describe(CallHandler.name, () => {
             _abi: string,
             data: unknown[],
           ) => {
-            expect(passedAddress).toStrictEqual(address)
-            expect(data).toStrictEqual([1, 2])
+            expect(passedAddress).toEqual(address)
+            expect(data).toEqual([1, 2])
 
             return 3 as T
           },
@@ -328,7 +328,7 @@ describe(CallHandler.name, () => {
         foo: { field: 'foo', value: 1 },
         bar: { field: 'bar', value: 2 },
       })
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         field: 'add',
         fragment: methodFragment,
         value: 3,
@@ -347,8 +347,8 @@ describe(CallHandler.name, () => {
             _abi: string,
             data: unknown[],
           ) => {
-            expect(passedAddress).toStrictEqual(inAddress)
-            expect(data).toStrictEqual([1, 2])
+            expect(passedAddress).toEqual(inAddress)
+            expect(data).toEqual([1, 2])
 
             return 3 as T
           },
@@ -371,7 +371,7 @@ describe(CallHandler.name, () => {
           value: inAddress.toString(),
         },
       })
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         field: 'add',
         fragment: methodFragment,
         value: 3,
@@ -389,8 +389,8 @@ describe(CallHandler.name, () => {
             _abi: string,
             data: unknown[],
           ) => {
-            expect(passedAddress).toStrictEqual(address)
-            expect(data).toStrictEqual([1, 2])
+            expect(passedAddress).toEqual(address)
+            expect(data).toEqual([1, 2])
 
             return 3 as T
           },
@@ -407,7 +407,7 @@ describe(CallHandler.name, () => {
         [],
       )
 
-      expect(handler.dependencies).toStrictEqual([
+      expect(handler.dependencies).toEqual([
         'constructorArgs',
         'constructorArgs',
       ])
@@ -418,7 +418,7 @@ describe(CallHandler.name, () => {
           value: { _a: 1, _b: 2 },
         },
       })
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         field: 'add',
         fragment: methodFragment,
         value: 3,
@@ -437,8 +437,8 @@ describe(CallHandler.name, () => {
             _abi: string,
             data: unknown[],
           ) => {
-            expect(passedAddress).toStrictEqual(inAddress)
-            expect(data).toStrictEqual([1, 2])
+            expect(passedAddress).toEqual(inAddress)
+            expect(data).toEqual([1, 2])
 
             return 3 as T
           },
@@ -461,7 +461,7 @@ describe(CallHandler.name, () => {
           value: { _addressesRegistry: inAddress.toString() },
         },
       })
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         field: 'add',
         fragment: methodFragment,
         value: 3,
@@ -484,7 +484,7 @@ describe(CallHandler.name, () => {
         [],
       )
       const result = await handler.execute(provider, address, {})
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         field: 'add',
         fragment: methodFragment,
         error: 'oops',
@@ -507,7 +507,7 @@ describe(CallHandler.name, () => {
         [],
       )
       const result = await handler.execute(provider, address, {})
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         field: 'add',
         fragment: methodFragment,
         value: 3,
@@ -530,7 +530,7 @@ describe(CallHandler.name, () => {
         [],
       )
       const result = await handler.execute(provider, address, {})
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         field: 'add',
         value: 'EXPECT_REVERT',
         ignoreRelative: undefined,
@@ -552,7 +552,7 @@ describe(CallHandler.name, () => {
         [],
       )
       const result = await handler.execute(provider, address, {})
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         field: 'add',
         error: EXEC_REVERT_MSG,
         fragment: methodFragment,

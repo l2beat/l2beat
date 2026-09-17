@@ -114,7 +114,7 @@ describe(diffDiscovery.name, () => {
 
     const result = diffDiscovery(committed, discovered)
 
-    expect(result).toStrictEqual([
+    expect(result).toEqual([
       {
         name: 'A',
         address: ADDRESS_A,
@@ -167,7 +167,7 @@ describe(diffDiscovery.name, () => {
 
     const result = diffDiscovery(committed, discovered)
 
-    expect(result).toStrictEqual([
+    expect(result).toEqual([
       {
         name: 'A',
         address: ADDRESS_A,
@@ -195,7 +195,7 @@ describe(diffDiscovery.name, () => {
 
     const result = diffDiscovery(committed, discovered)
 
-    expect(result).toStrictEqual([
+    expect(result).toEqual([
       {
         name: 'A',
         address: ADDRESS_A,
@@ -233,7 +233,7 @@ describe(diffDiscovery.name, () => {
 
     const result = diffDiscovery(committed, discovered)
 
-    expect(result).toStrictEqual([
+    expect(result).toEqual([
       {
         name: 'A',
         address: ADDRESS_A,

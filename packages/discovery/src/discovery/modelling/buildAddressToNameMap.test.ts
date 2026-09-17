@@ -10,7 +10,7 @@ describe(buildAddressToNameMap.name, () => {
   it('gives every discovered entry an id built from its address', () => {
     expect(
       buildAddressToNameMap([contract(ADDRESS, 'Diamond'), eoa(OTHER)]),
-    ).toStrictEqual({
+    ).toEqual({
       [ADDRESS.toLowerCase()]: id(ADDRESS),
       [OTHER.toLowerCase()]: id(OTHER),
     })
@@ -22,7 +22,7 @@ describe(buildAddressToNameMap.name, () => {
         reference(ADDRESS),
         contract(ADDRESS, 'ProxyAdmin'),
       ]),
-    ).toStrictEqual({
+    ).toEqual({
       [ADDRESS.toLowerCase()]: id(ADDRESS),
     })
   })
@@ -35,7 +35,7 @@ describe(buildAddressToNameMap.name, () => {
         contract(ADDRESS, 'OwnName'),
         contract(ADDRESS, 'SharedModuleName'),
       ]),
-    ).toStrictEqual({
+    ).toEqual({
       [ADDRESS.toLowerCase()]: id(ADDRESS),
     })
   })

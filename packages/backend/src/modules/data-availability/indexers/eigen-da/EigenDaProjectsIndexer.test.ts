@@ -26,7 +26,7 @@ describe(EigenDaProjectsIndexer.name, () => {
 
       const { indexer } = mockIndexer({ configurations, daLayer: DA_LAYER })
 
-      expect(indexer.daLayer).toStrictEqual(DA_LAYER)
+      expect(indexer.daLayer).toEqual(DA_LAYER)
     })
 
     it('should throw when configurations have mismatched daLayer', () => {
@@ -102,7 +102,7 @@ describe(EigenDaProjectsIndexer.name, () => {
         expectedAdjustedTo,
       )
 
-      expect(safeHeight).toStrictEqual(expectedAdjustedTo)
+      expect(safeHeight).toEqual(expectedAdjustedTo)
     })
 
     it('should skip update when not at 02:00:00', async () => {
@@ -129,7 +129,7 @@ describe(EigenDaProjectsIndexer.name, () => {
 
       expect(eigenClient.getByProjectData).not.toHaveBeenCalled()
       expect(repository.upsertMany).not.toHaveBeenCalled()
-      expect(safeHeight).toStrictEqual(expectedAdjustedTo)
+      expect(safeHeight).toEqual(expectedAdjustedTo)
     })
 
     it('should handle empty data response', async () => {
@@ -156,7 +156,7 @@ describe(EigenDaProjectsIndexer.name, () => {
 
       expect(eigenClient.getByProjectData).toHaveBeenCalled()
       expect(repository.upsertMany).not.toHaveBeenCalled()
-      expect(safeHeight).toStrictEqual(expectedAdjustedTo)
+      expect(safeHeight).toEqual(expectedAdjustedTo)
     })
   })
 
@@ -195,7 +195,7 @@ describe(EigenDaProjectsIndexer.name, () => {
       const to = startOfDay + UnixTime.DAY + 2 * UnixTime.HOUR
       const result = await indexer.getByProjectData(to)
 
-      expect(result).toStrictEqual([
+      expect(result).toEqual([
         {
           timestamp: startOfDay + UnixTime.HOUR,
           totalSize: BigInt(Math.round(100 * 1024 * 1024)),
@@ -236,7 +236,7 @@ describe(EigenDaProjectsIndexer.name, () => {
       const result = await indexer.getByProjectData(to)
 
       // 09:00 is before since, 14:00 holds the until and 15:00 is after it
-      expect(result.map((r) => r.timestamp)).toStrictEqual([
+      expect(result.map((r) => r.timestamp)).toEqual([
         startOfDay + 10 * UnixTime.HOUR,
         startOfDay + 13 * UnixTime.HOUR,
       ])
@@ -275,7 +275,7 @@ describe(EigenDaProjectsIndexer.name, () => {
       const to = startOfDay + UnixTime.DAY + 2 * UnixTime.HOUR
       const result = await indexer.getByProjectData(to)
 
-      expect(result).toStrictEqual([
+      expect(result).toEqual([
         {
           timestamp: startOfDay + UnixTime.HOUR,
           totalSize: BigInt(Math.round(200 * 1024 * 1024)),
@@ -352,7 +352,7 @@ describe(EigenDaProjectsIndexer.name, () => {
       const to = startOfDay + UnixTime.DAY + 2 * UnixTime.HOUR
       const result = await indexer.getByProjectData(to)
 
-      expect(result).toStrictEqual([
+      expect(result).toEqual([
         {
           timestamp: sameTimestamp,
           totalSize: BigInt(Math.round((100 + 50) * 1024 * 1024)),

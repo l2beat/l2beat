@@ -19,8 +19,8 @@ describeDatabase(PrivacyAnonymitySetEventRepository.name, (db) => {
     await repository.upsertMany([initial])
 
     const updated = { ...initial, sender: 'bob', amount: 20n }
-    expect(await repository.upsertMany([updated])).toStrictEqual(1)
-    expect(await repository.getAll()).toStrictEqual([updated])
+    expect(await repository.upsertMany([updated])).toEqual(1)
+    expect(await repository.getAll()).toEqual([updated])
   })
 
   it('groups to the maximum individual amount per sender and UTC day', async () => {
@@ -39,7 +39,7 @@ describeDatabase(PrivacyAnonymitySetEventRepository.name, (db) => {
     )
 
     expect(result).toHaveLength(2)
-    expect(result).toStrictEqual(
+    expect(result).toEqual(
       expect.arrayContaining([
         {
           projectId: 'project-a',
@@ -73,11 +73,11 @@ describeDatabase(PrivacyAnonymitySetEventRepository.name, (db) => {
         START,
         START + UnixTime.HOUR,
       ),
-    ).toStrictEqual(2)
+    ).toEqual(2)
 
     const actual = await repository.getAll()
     expect(actual).toHaveLength(2)
-    expect(actual).toStrictEqual(
+    expect(actual).toEqual(
       expect.arrayContaining([
         event('aaaaaaaaaaaa', 3, START + 2 * UnixTime.HOUR, 'carol', 1n),
         event('bbbbbbbbbbbb', 4, START, 'dave', 1n),

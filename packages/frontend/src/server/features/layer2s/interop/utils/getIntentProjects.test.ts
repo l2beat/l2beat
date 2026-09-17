@@ -11,10 +11,7 @@ describe(getIntentProjects.name, () => {
       project({ id: 'a', name: 'Alpha', type: 'intent', intent: intentConfig }),
     ])
 
-    expect(result.map((project) => project.id.toString())).toStrictEqual([
-      'a',
-      'b',
-    ])
+    expect(result.map((project) => project.id.toString())).toEqual(['a', 'b'])
   })
 })
 

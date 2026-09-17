@@ -6,12 +6,12 @@ const parser = new DiffHistoryParser()
 describe('DiffHistoryParser', () => {
   describe('parse', () => {
     it('returns empty array for empty content', () => {
-      expect(parser.parse('')).toStrictEqual([])
+      expect(parser.parse('')).toEqual([])
     })
 
     it('returns empty array when only the leading hash is present', () => {
       const md = 'Generated with discovered.json: 0xabc\n\n'
-      expect(parser.parse(md)).toStrictEqual([])
+      expect(parser.parse(md)).toEqual([])
     })
 
     it('takes the timestamp from the run, else from the header date', () => {
@@ -36,11 +36,11 @@ describe('DiffHistoryParser', () => {
           '\n',
         ),
       )
-      expect(modern[0]!.timestamp).toStrictEqual(1777994288)
-      expect(legacy[0]!.timestamp).toStrictEqual(
+      expect(modern[0]!.timestamp).toEqual(1777994288)
+      expect(legacy[0]!.timestamp).toEqual(
         Math.floor(Date.parse('Fri, 01 Mar 2024 10:00:00 GMT') / 1000),
       )
-      expect(unparsable[0]!.timestamp).toStrictEqual(null)
+      expect(unparsable[0]!.timestamp).toEqual(null)
     })
 
     it('parses a modern (timestamp) entry with watched changes', () => {
@@ -67,23 +67,23 @@ describe('DiffHistoryParser', () => {
       ].join('\n')
 
       const entries = parser.parse(md)
-      expect(entries.length).toStrictEqual(1)
+      expect(entries.length).toEqual(1)
       const entry = entries[0]!
-      expect(entry.date).toStrictEqual('Tue, 05 May 2026 15:19:12 GMT')
-      expect(entry.discoveryHash).toStrictEqual('0xnewhash')
-      expect(entry.author).toStrictEqual('Alice (<alice@example.com>)')
-      expect(entry.current).toStrictEqual({
+      expect(entry.date).toEqual('Tue, 05 May 2026 15:19:12 GMT')
+      expect(entry.discoveryHash).toEqual('0xnewhash')
+      expect(entry.author).toEqual('Alice (<alice@example.com>)')
+      expect(entry.current).toEqual({
         kind: 'timestamp',
         value: 1777994288,
       })
-      expect(entry.comparing).toStrictEqual({
+      expect(entry.comparing).toEqual({
         ref: 'main',
         commit: 'abc123',
         at: { kind: 'timestamp', value: 1769513788 },
       })
-      expect(entry.description).toStrictEqual('Did a thing.')
-      expect(entry.sections.length).toStrictEqual(1)
-      expect(entry.sections[0]!.kind).toStrictEqual('watched-changes')
+      expect(entry.description).toEqual('Did a thing.')
+      expect(entry.sections.length).toEqual(1)
+      expect(entry.sections[0]!.kind).toEqual('watched-changes')
       expect(entry.sections[0]!.body).toContain('+ added')
       expect(entry.sections[0]!.body).toContain('- removed')
     })
@@ -103,10 +103,10 @@ describe('DiffHistoryParser', () => {
       ].join('\n')
 
       const entries = parser.parse(md)
-      expect(entries.length).toStrictEqual(1)
+      expect(entries.length).toEqual(1)
       const entry = entries[0]!
-      expect(entry.current).toStrictEqual({ kind: 'block', value: 18900000 })
-      expect(entry.comparing).toStrictEqual({
+      expect(entry.current).toEqual({ kind: 'block', value: 18900000 })
+      expect(entry.comparing).toEqual({
         ref: 'main',
         commit: 'deadbeef',
         at: { kind: 'block', value: 18000000 },
@@ -134,8 +134,8 @@ describe('DiffHistoryParser', () => {
       ].join('\n')
 
       const sections = parser.parse(md)[0]!.sections
-      expect(sections.length).toStrictEqual(1)
-      expect(sections[0]!.kind).toStrictEqual('config-related-changes')
+      expect(sections.length).toEqual(1)
+      expect(sections[0]!.kind).toEqual('config-related-changes')
       expect(sections[0]!.body).toContain('+ legacy')
     })
 
@@ -158,8 +158,8 @@ describe('DiffHistoryParser', () => {
       ].join('\n')
 
       const sections = parser.parse(md)[0]!.sections
-      expect(sections.length).toStrictEqual(1)
-      expect(sections[0]!.kind).toStrictEqual('config-related-changes')
+      expect(sections.length).toEqual(1)
+      expect(sections[0]!.kind).toEqual('config-related-changes')
     })
 
     it('parses initial discovery entries (no comparing, no comparing-block)', () => {
@@ -182,10 +182,10 @@ describe('DiffHistoryParser', () => {
       ].join('\n')
 
       const entry = parser.parse(md)[0]!
-      expect(entry.comparing).toStrictEqual(null)
-      expect(entry.current).toStrictEqual({ kind: 'block', value: 17000000 })
-      expect(entry.sections.length).toStrictEqual(1)
-      expect(entry.sections[0]!.kind).toStrictEqual('initial-discovery')
+      expect(entry.comparing).toEqual(null)
+      expect(entry.current).toEqual({ kind: 'block', value: 17000000 })
+      expect(entry.sections.length).toEqual(1)
+      expect(entry.sections[0]!.kind).toEqual('initial-discovery')
     })
 
     it('parses comparing line without a block field', () => {
@@ -203,7 +203,7 @@ describe('DiffHistoryParser', () => {
       ].join('\n')
 
       const entry = parser.parse(md)[0]!
-      expect(entry.comparing).toStrictEqual({
+      expect(entry.comparing).toEqual({
         ref: 'main',
         commit: 'cafebabe',
         at: null,
@@ -231,8 +231,8 @@ describe('DiffHistoryParser', () => {
       ].join('\n')
 
       const sections = parser.parse(md)[0]!.sections
-      expect(sections.length).toStrictEqual(1)
-      expect(sections[0]!.kind).toStrictEqual('source-code-changes')
+      expect(sections.length).toEqual(1)
+      expect(sections[0]!.kind).toEqual('source-code-changes')
       expect(sections[0]!.body).toContain('@@ -1 +1 @@')
     })
 
@@ -255,8 +255,8 @@ describe('DiffHistoryParser', () => {
       ].join('\n')
 
       const sections = parser.parse(md)[0]!.sections
-      expect(sections.length).toStrictEqual(1)
-      expect(sections[0]!.kind).toStrictEqual('watched-changes')
+      expect(sections.length).toEqual(1)
+      expect(sections[0]!.kind).toEqual('watched-changes')
     })
 
     it('parses multiple entries newest-first with each entry getting its own hash', () => {
@@ -284,11 +284,11 @@ describe('DiffHistoryParser', () => {
       ].join('\n')
 
       const entries = parser.parse(md)
-      expect(entries.length).toStrictEqual(2)
-      expect(entries[0]!.discoveryHash).toStrictEqual('0xnew')
-      expect(entries[0]!.description).toStrictEqual('newest')
-      expect(entries[1]!.discoveryHash).toStrictEqual('0xold')
-      expect(entries[1]!.description).toStrictEqual('oldest')
+      expect(entries.length).toEqual(2)
+      expect(entries[0]!.discoveryHash).toEqual('0xnew')
+      expect(entries[0]!.description).toEqual('newest')
+      expect(entries[1]!.discoveryHash).toEqual('0xold')
+      expect(entries[1]!.description).toEqual('oldest')
     })
 
     it('leaves discoveryHash null when an entry has no preceding hash line', () => {
@@ -303,7 +303,7 @@ describe('DiffHistoryParser', () => {
         '',
       ].join('\n')
 
-      expect(parser.parse(md)[0]!.discoveryHash).toStrictEqual(null)
+      expect(parser.parse(md)[0]!.discoveryHash).toEqual(null)
     })
 
     it('returns null current when neither timestamp nor block-number metadata is present', () => {
@@ -319,7 +319,7 @@ describe('DiffHistoryParser', () => {
       ].join('\n')
 
       const entry = parser.parse(md)[0]!
-      expect(entry.current).toStrictEqual(null)
+      expect(entry.current).toEqual(null)
     })
 
     it('captures author with email-style angle brackets verbatim', () => {
@@ -335,9 +335,7 @@ describe('DiffHistoryParser', () => {
         '',
       ].join('\n')
 
-      expect(parser.parse(md)[0]!.author).toStrictEqual(
-        'Alice (<alice@example.com>)',
-      )
+      expect(parser.parse(md)[0]!.author).toEqual('Alice (<alice@example.com>)')
     })
 
     it('handles description-only entries (no diff sections)', () => {
@@ -353,8 +351,8 @@ describe('DiffHistoryParser', () => {
       ].join('\n')
 
       const entry = parser.parse(md)[0]!
-      expect(entry.description).toStrictEqual('just text, no diff sections.')
-      expect(entry.sections).toStrictEqual([])
+      expect(entry.description).toEqual('just text, no diff sections.')
+      expect(entry.sections).toEqual([])
     })
   })
 })

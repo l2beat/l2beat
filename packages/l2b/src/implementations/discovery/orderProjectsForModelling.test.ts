@@ -12,14 +12,14 @@ describe(orderProjectsForModelling.name, () => {
       discovery('d'),
       discovery('e'),
     ]
-    expect(orderProjectsForModelling(discoveries)).toStrictEqual([
+    expect(orderProjectsForModelling(discoveries)).toEqual([
       'd',
       'b',
       'c',
       'a',
       'e',
     ])
-    expect(orderProjectsForModelling(discoveries.reverse())).toStrictEqual([
+    expect(orderProjectsForModelling(discoveries.reverse())).toEqual([
       'd',
       'b',
       'c',

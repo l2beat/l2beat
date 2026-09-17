@@ -13,10 +13,10 @@ describe(renderDashboardPage.name, () => {
 
     expect(
       html.includes(`Running since <time dateTime="${startedAt}">`),
-    ).toStrictEqual(true)
-    expect(html.includes(commitSha)).toStrictEqual(true)
+    ).toEqual(true)
+    expect(html.includes(commitSha)).toEqual(true)
     expect(
       html.includes(`https://github.com/l2beat/l2beat/commit/${commitSha}`),
-    ).toStrictEqual(true)
+    ).toEqual(true)
   })
 })

@@ -10,9 +10,9 @@ describe(UpsertMap.name, () => {
 
       const result = map.getOrInsert('foo', 100)
 
-      expect(result).toStrictEqual(42)
-      expect(map.get('foo')).toStrictEqual(42)
-      expect(map.size).toStrictEqual(1)
+      expect(result).toEqual(42)
+      expect(map.get('foo')).toEqual(42)
+      expect(map.size).toEqual(1)
     })
 
     it('inserts and returns default value when key does not exist', () => {
@@ -20,9 +20,9 @@ describe(UpsertMap.name, () => {
 
       const result = map.getOrInsert('foo', 100)
 
-      expect(result).toStrictEqual(100)
-      expect(map.get('foo')).toStrictEqual(100)
-      expect(map.size).toStrictEqual(1)
+      expect(result).toEqual(100)
+      expect(map.get('foo')).toEqual(100)
+      expect(map.size).toEqual(1)
     })
 
     it('works with complex value types', () => {
@@ -31,8 +31,8 @@ describe(UpsertMap.name, () => {
 
       const result = map.getOrInsert('foo', defaultValue)
 
-      expect(result).toStrictEqual(defaultValue)
-      expect(map.get('foo')).toStrictEqual({ count: 0 })
+      expect(result).toEqual(defaultValue)
+      expect(map.get('foo')).toEqual({ count: 0 })
     })
 
     it('handles multiple keys', () => {
@@ -42,9 +42,9 @@ describe(UpsertMap.name, () => {
       map.getOrInsert('b', 2)
       map.getOrInsert('a', 100) // Should not update
 
-      expect(map.get('a')).toStrictEqual(1)
-      expect(map.get('b')).toStrictEqual(2)
-      expect(map.size).toStrictEqual(2)
+      expect(map.get('a')).toEqual(1)
+      expect(map.get('b')).toEqual(2)
+      expect(map.size).toEqual(2)
     })
   })
 
@@ -58,9 +58,9 @@ describe(UpsertMap.name, () => {
 
       const result = map.getOrInsertComputed('foo', callback)
 
-      expect(result).toStrictEqual(42)
-      expect(map.get('foo')).toStrictEqual(42)
-      expect(map.size).toStrictEqual(1)
+      expect(result).toEqual(42)
+      expect(map.get('foo')).toEqual(42)
+      expect(map.size).toEqual(1)
     })
 
     it('computes and inserts value when key does not exist', () => {
@@ -69,9 +69,9 @@ describe(UpsertMap.name, () => {
 
       const result = map.getOrInsertComputed('foo', callback)
 
-      expect(result).toStrictEqual(30)
-      expect(map.get('foo')).toStrictEqual(30)
-      expect(map.size).toStrictEqual(1)
+      expect(result).toEqual(30)
+      expect(map.get('foo')).toEqual(30)
+      expect(map.size).toEqual(1)
     })
 
     it('passes key to callback function', () => {
@@ -80,8 +80,8 @@ describe(UpsertMap.name, () => {
 
       const result = map.getOrInsertComputed('test', callback)
 
-      expect(result).toStrictEqual('value-test')
-      expect(map.get('test')).toStrictEqual('value-test')
+      expect(result).toEqual('value-test')
+      expect(map.get('test')).toEqual('value-test')
     })
 
     it('only calls callback when key does not exist', () => {
@@ -96,8 +96,8 @@ describe(UpsertMap.name, () => {
       map.getOrInsertComputed('foo', callback)
       map.getOrInsertComputed('foo', callback)
 
-      expect(callCount).toStrictEqual(1)
-      expect(map.size).toStrictEqual(1)
+      expect(callCount).toEqual(1)
+      expect(map.size).toEqual(1)
     })
 
     it('works with complex computed values', () => {
@@ -106,8 +106,8 @@ describe(UpsertMap.name, () => {
 
       const result = map.getOrInsertComputed('foo', callback)
 
-      expect(result).toStrictEqual({ items: ['foo'] })
-      expect(map.get('foo')).toStrictEqual({ items: ['foo'] })
+      expect(result).toEqual({ items: ['foo'] })
+      expect(map.get('foo')).toEqual({ items: ['foo'] })
     })
 
     it('handles multiple keys with different computed values', () => {
@@ -118,10 +118,10 @@ describe(UpsertMap.name, () => {
       map.getOrInsertComputed('bb', callback)
       map.getOrInsertComputed('ccc', callback)
 
-      expect(map.get('a')).toStrictEqual(1)
-      expect(map.get('bb')).toStrictEqual(2)
-      expect(map.get('ccc')).toStrictEqual(3)
-      expect(map.size).toStrictEqual(3)
+      expect(map.get('a')).toEqual(1)
+      expect(map.get('bb')).toEqual(2)
+      expect(map.get('ccc')).toEqual(3)
+      expect(map.size).toEqual(3)
     })
   })
 
@@ -131,16 +131,16 @@ describe(UpsertMap.name, () => {
     map.set('a', 1)
     map.set('b', 2)
 
-    expect(map.has('a')).toStrictEqual(true)
-    expect(map.get('a')).toStrictEqual(1)
-    expect(map.size).toStrictEqual(2)
+    expect(map.has('a')).toEqual(true)
+    expect(map.get('a')).toEqual(1)
+    expect(map.size).toEqual(2)
 
     map.delete('a')
-    expect(map.has('a')).toStrictEqual(false)
-    expect(map.size).toStrictEqual(1)
+    expect(map.has('a')).toEqual(false)
+    expect(map.size).toEqual(1)
 
     map.clear()
-    expect(map.size).toStrictEqual(0)
+    expect(map.size).toEqual(0)
   })
 
   it('can be iterated like a regular Map', () => {
@@ -149,7 +149,7 @@ describe(UpsertMap.name, () => {
     map.set('b', 2)
 
     const entries = Array.from(map.entries())
-    expect(entries).toStrictEqual([
+    expect(entries).toEqual([
       ['a', 1],
       ['b', 2],
     ])

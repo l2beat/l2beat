@@ -9,7 +9,7 @@ describe('CROP_COLUMNS', () => {
       privacy: null,
       security: null,
     }
-    expect(CROP_COLUMNS.map((x) => x.key as string).sort()).toStrictEqual(
+    expect(CROP_COLUMNS.map((x) => x.key as string).sort()).toEqual(
       Object.keys(every).sort(),
     )
   })

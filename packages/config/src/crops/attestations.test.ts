@@ -16,11 +16,11 @@ describe('crop attestations', () => {
   )
 
   it('exactly one attestation is live under the current schema', () => {
-    expect(current.length).toStrictEqual(1)
+    expect(current.length).toEqual(1)
   })
 
   it('the live attestation names exactly the projects with crop evaluations', () => {
     const attested = [...(current[0]?.projectIds ?? [])].sort()
-    expect(attested).toStrictEqual(reviewed)
+    expect(attested).toEqual(reviewed)
   })
 })

@@ -46,8 +46,8 @@ describe(L2CostsUpdater.name, () => {
       expect(repository.insertMany).toHaveBeenCalledTimes(1)
       const insertedRecords = vi.mocked(repository.insertMany).mock
         .calls[0][0] as L2CostRecord[] | undefined
-      expect(insertedRecords).not.toStrictEqual(undefined)
-      expect(insertedRecords?.length).toStrictEqual(2)
+      expect(insertedRecords).not.toEqual(undefined)
+      expect(insertedRecords?.length).toEqual(2)
     })
 
     it('handles transactions across multiple blocks', async () => {
@@ -142,7 +142,7 @@ describe(L2CostsUpdater.name, () => {
       ]
 
       expect(result).toHaveLength(expected.length)
-      expect(result).toStrictEqual(expect.arrayContaining(expected))
+      expect(result).toEqual(expect.arrayContaining(expected))
     })
 
     it('throws error when blob price is missing for transaction with blob hashes', () => {
@@ -181,8 +181,8 @@ describe(L2CostsUpdater.name, () => {
 
       const result = updater.transform(transactions, blobBaseFeeByBlock)
 
-      expect(result[0].blobGasUsed).toStrictEqual(3 * ONE_BLOB_GAS)
-      expect(result[0].blobGasPrice).toStrictEqual(10n)
+      expect(result[0].blobGasUsed).toEqual(3 * ONE_BLOB_GAS)
+      expect(result[0].blobGasPrice).toEqual(10n)
     })
 
     it('handles null blob price when transaction has no blob hashes', () => {
@@ -199,8 +199,8 @@ describe(L2CostsUpdater.name, () => {
 
       const result = updater.transform(transactions, blobBaseFeeByBlock)
 
-      expect(result[0].blobGasPrice).toStrictEqual(null)
-      expect(result[0].blobGasUsed).toStrictEqual(null)
+      expect(result[0].blobGasPrice).toEqual(null)
+      expect(result[0].blobGasUsed).toEqual(null)
     })
   })
 

@@ -43,7 +43,7 @@ describe(getUnverifiedContractEntries.name, () => {
       permissions,
     )
 
-    expect(result).toStrictEqual([
+    expect(result).toEqual([
       {
         address: contractAddress,
         target: {
@@ -78,7 +78,7 @@ describe(getUnverifiedContractEntries.name, () => {
       permissions,
     )
 
-    expect(result).toStrictEqual([
+    expect(result).toEqual([
       {
         address: permissionAddress,
         target: {
@@ -103,9 +103,7 @@ describe(getUnverifiedContractEntries.name, () => {
       undefined,
     )
 
-    expect(result).toStrictEqual([
-      { address: contractAddress, target: undefined },
-    ])
+    expect(result).toEqual([{ address: contractAddress, target: undefined }])
   })
 
   it('keeps the same address on different chains distinct', () => {
@@ -119,7 +117,7 @@ describe(getUnverifiedContractEntries.name, () => {
       undefined,
     )
 
-    expect(result).toStrictEqual([
+    expect(result).toEqual([
       { address: contractAddress, target: undefined },
       { address: baseAddress, target: undefined },
     ])
@@ -138,7 +136,7 @@ describe(getUnverifiedContractEntries.name, () => {
       undefined,
     )
 
-    expect(result).toStrictEqual([
+    expect(result).toEqual([
       {
         address: contractAddress,
         target: {
@@ -164,7 +162,7 @@ describe(getUnverifiedContractEntries.name, () => {
       permissions,
     )
 
-    expect(result).toStrictEqual([
+    expect(result).toEqual([
       {
         address: permissionAddress,
         target: {
@@ -188,7 +186,7 @@ describe(getUnverifiedContractEntries.name, () => {
       undefined,
     )
 
-    expect(result).toStrictEqual([
+    expect(result).toEqual([
       {
         address: contractAddress,
         target: {

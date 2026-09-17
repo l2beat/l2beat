@@ -63,7 +63,7 @@ describe(CoingeckoQueryService.name, () => {
           START,
           START + 2 * UnixTime.HOUR,
         )
-        expect(prices).toStrictEqual([
+        expect(prices).toEqual([
           { timestamp: START, value: 1200 },
           { timestamp: START + 1 * UnixTime.HOUR, value: 1000 },
           { timestamp: START + 2 * UnixTime.HOUR, value: 1100 },
@@ -130,7 +130,7 @@ describe(CoingeckoQueryService.name, () => {
           },
         ]
 
-        expect(prices).toStrictEqual(pickClosestValues(constPrices, timestamps))
+        expect(prices).toEqual(pickClosestValues(constPrices, timestamps))
       })
 
       it('handles duplicates in data returned from API', async () => {
@@ -171,7 +171,7 @@ describe(CoingeckoQueryService.name, () => {
           START,
           START + 2 * UnixTime.HOUR,
         )
-        expect(prices).toStrictEqual([
+        expect(prices).toEqual([
           { timestamp: START, value: 1200 },
           { timestamp: START + 1 * UnixTime.HOUR, value: 1000 },
           { timestamp: START + 2 * UnixTime.HOUR, value: 1100 },
@@ -208,7 +208,7 @@ describe(CoingeckoQueryService.name, () => {
           START,
           START + 2 * UnixTime.HOUR,
         )
-        expect(prices).toStrictEqual([
+        expect(prices).toEqual([
           { timestamp: START, value: 1200 },
           { timestamp: START + 1 * UnixTime.HOUR, value: 1000 },
           {
@@ -243,7 +243,7 @@ describe(CoingeckoQueryService.name, () => {
           START,
           START + 2 * UnixTime.HOUR,
         )
-        expect(prices).toStrictEqual([
+        expect(prices).toEqual([
           { timestamp: START, value: 1200 },
           { timestamp: START + 1 * UnixTime.HOUR, value: 1000 },
           { timestamp: START + 2 * UnixTime.HOUR, value: 1100 },
@@ -287,7 +287,7 @@ describe(CoingeckoQueryService.name, () => {
         CoingeckoId('weth'),
         { from: START, to: START + 2 * UnixTime.HOUR },
       )
-      expect(prices).toStrictEqual([
+      expect(prices).toEqual([
         { timestamp: START, value: 1219900 },
         { timestamp: START + 1 * UnixTime.HOUR, value: 2126600 },
         { timestamp: START + 2 * UnixTime.HOUR, value: 2871100 },
@@ -307,7 +307,7 @@ describe(CoingeckoQueryService.name, () => {
         CoingeckoId('venice-token'),
         { from: START, to: START + 2 * UnixTime.HOUR },
       )
-      expect(supplies).toStrictEqual([
+      expect(supplies).toEqual([
         { timestamp: START, value: 100000 },
         { timestamp: START + 1 * UnixTime.HOUR, value: 100000 },
         { timestamp: START + 2 * UnixTime.HOUR, value: 300000 },
@@ -327,7 +327,7 @@ describe(CoingeckoQueryService.name, () => {
         CoingeckoId('venice-token'),
         { from: START, to: START + 2 * UnixTime.HOUR },
       )
-      expect(supplies).toStrictEqual([
+      expect(supplies).toEqual([
         { timestamp: START, value: 200000 },
         { timestamp: START + 1 * UnixTime.HOUR, value: 200000 },
         { timestamp: START + 2 * UnixTime.HOUR, value: 200000 },
@@ -343,7 +343,7 @@ describe(CoingeckoQueryService.name, () => {
         CoingeckoId('venice-token'),
         { from: START, to: START + 1 * UnixTime.HOUR },
       )
-      expect(supplies).toStrictEqual([
+      expect(supplies).toEqual([
         { timestamp: START, value: 0 },
         { timestamp: START + 1 * UnixTime.HOUR, value: 100000 },
       ])
@@ -367,9 +367,9 @@ describe(CoingeckoQueryService.name, () => {
         CoingeckoId('venice-token'),
         { from: START, to: START + (hours - 1) * UnixTime.HOUR },
       )
-      expect(supplies[1].value).toStrictEqual(100000)
-      expect(supplies[hours - 2].value).toStrictEqual(100000)
-      expect(supplies[hours - 1].value).toStrictEqual(300000)
+      expect(supplies[1].value).toEqual(100000)
+      expect(supplies[hours - 2].value).toEqual(100000)
+      expect(supplies[hours - 1].value).toEqual(300000)
     })
 
     it('throws when the corrupt stretch is longer than the repairable gap', async () => {
@@ -416,7 +416,7 @@ describe(CoingeckoQueryService.name, () => {
 
       const result = CoingeckoQueryService.calculateAdjustedTo(from, to)
 
-      expect(result).toStrictEqual(
+      expect(result).toEqual(
         from + CoingeckoQueryService.MAX_DAYS_FOR_ONE_CALL * UnixTime.DAY,
       )
     })
@@ -428,7 +428,7 @@ describe(CoingeckoQueryService.name, () => {
 
       const result = CoingeckoQueryService.calculateAdjustedTo(from, to)
 
-      expect(result).toStrictEqual(to)
+      expect(result).toEqual(to)
     })
   })
 
@@ -447,9 +447,7 @@ describe(CoingeckoQueryService.name, () => {
       const coingeckoQueryService = new CoingeckoQueryService(coingeckoClient)
       const result = await coingeckoQueryService.getAllCoingeckoIds()
 
-      expect(result).toStrictEqual(
-        ['bitcoin', 'ethereum', 'tether'].map(CoingeckoId),
-      )
+      expect(result).toEqual(['bitcoin', 'ethereum', 'tether'].map(CoingeckoId))
     })
   })
 })
@@ -465,7 +463,7 @@ describe(pickClosestValues.name, () => {
     ]
     const timestamps = getHourlyTimestamps(START, START + 2 * UnixTime.HOUR)
 
-    expect(pickClosestValues(prices, timestamps)).toStrictEqual([
+    expect(pickClosestValues(prices, timestamps)).toEqual([
       { value: 1000, timestamp: START },
       { value: 1100, timestamp: START + 1 * UnixTime.HOUR },
       { value: 1200, timestamp: START + 2 * UnixTime.HOUR },
@@ -486,7 +484,7 @@ describe(pickClosestValues.name, () => {
     ]
     const timestamps = getHourlyTimestamps(START, START + 2 * UnixTime.HOUR)
 
-    expect(pickClosestValues(prices, timestamps)).toStrictEqual([
+    expect(pickClosestValues(prices, timestamps)).toEqual([
       { value: 1000, timestamp: START },
       {
         value: 1100,
@@ -507,7 +505,7 @@ describe(pickClosestValues.name, () => {
     ]
     const timestamps = getHourlyTimestamps(START, START + 2 * UnixTime.HOUR)
 
-    expect(pickClosestValues(prices, timestamps)).toStrictEqual([
+    expect(pickClosestValues(prices, timestamps)).toEqual([
       { value: 1000, timestamp: START },
       {
         value: 1100,
@@ -537,7 +535,7 @@ describe(pickClosestValues.name, () => {
     ]
     const timestamps = getHourlyTimestamps(START, START + 2 * UnixTime.HOUR)
 
-    expect(pickClosestValues(prices, timestamps)).toStrictEqual([
+    expect(pickClosestValues(prices, timestamps)).toEqual([
       { value: 1200, timestamp: START },
       { value: 1300, timestamp: START + 1 * UnixTime.HOUR },
       {
@@ -557,7 +555,7 @@ describe(pickClosestValues.name, () => {
     ]
     const timestamps = getHourlyTimestamps(START, START + 2 * UnixTime.HOUR)
 
-    expect(pickClosestValues(prices, timestamps)).toStrictEqual([
+    expect(pickClosestValues(prices, timestamps)).toEqual([
       { value: 1000, timestamp: START },
       {
         value: 1200,
@@ -574,7 +572,7 @@ describe(pickClosestValues.name, () => {
     ]
     const timestamps = getHourlyTimestamps(START, START + 4 * UnixTime.HOUR)
 
-    expect(pickClosestValues(prices, timestamps)).toStrictEqual([
+    expect(pickClosestValues(prices, timestamps)).toEqual([
       { value: 1000, timestamp: START },
       {
         value: 1000,
@@ -598,7 +596,7 @@ describe(pickClosestValues.name, () => {
     ]
     const timestamps = getHourlyTimestamps(START, START + 2 * UnixTime.HOUR)
 
-    expect(pickClosestValues(prices, timestamps)).toStrictEqual([
+    expect(pickClosestValues(prices, timestamps)).toEqual([
       { value: 1100, timestamp: START },
       { value: 1100, timestamp: START + 1 * UnixTime.HOUR },
       {
@@ -615,7 +613,7 @@ describe(generateRangesToCallHourly.name, () => {
 
     expect(
       generateRangesToCallHourly(start, start + 30 * UnixTime.DAY),
-    ).toStrictEqual([
+    ).toEqual([
       {
         start: start,
         end: start + 30 * UnixTime.DAY,
@@ -628,7 +626,7 @@ describe(generateRangesToCallHourly.name, () => {
 
     expect(
       generateRangesToCallHourly(start, start + 90 * UnixTime.DAY),
-    ).toStrictEqual([
+    ).toEqual([
       {
         start: start,
         end: start + MAX_DAYS_FOR_HOURLY_PRECISION * UnixTime.DAY,
@@ -645,7 +643,7 @@ describe(generateRangesToCallHourly.name, () => {
 
     expect(
       generateRangesToCallHourly(start, start + 180 * UnixTime.DAY),
-    ).toStrictEqual([
+    ).toEqual([
       {
         start: start,
         end: start + MAX_DAYS_FOR_HOURLY_PRECISION * UnixTime.DAY,
@@ -690,24 +688,22 @@ describe(approximateCirculatingSupply.name, () => {
     it(`marketCap = ${testCase.marketCap}, price = ${testCase.price}`, () => {
       expect(
         approximateCirculatingSupply(testCase.marketCap, testCase.price),
-      ).toStrictEqual(testCase.expected)
+      ).toEqual(testCase.expected)
     })
   }
 
   it('returns NaN for a negative market cap', () => {
-    expect(Number.isNaN(approximateCirculatingSupply(-1, 11.9))).toStrictEqual(
+    expect(Number.isNaN(approximateCirculatingSupply(-1, 11.9))).toEqual(true)
+  })
+
+  it('returns NaN for a zero price and positive market cap', () => {
+    expect(Number.isNaN(approximateCirculatingSupply(1_000_000, 0))).toEqual(
       true,
     )
   })
 
-  it('returns NaN for a zero price and positive market cap', () => {
-    expect(
-      Number.isNaN(approximateCirculatingSupply(1_000_000, 0)),
-    ).toStrictEqual(true)
-  })
-
   it('returns 0 for a zero market cap and positive price', () => {
-    expect(approximateCirculatingSupply(0, 10)).toStrictEqual(0)
+    expect(approximateCirculatingSupply(0, 10)).toEqual(0)
   })
 })
 

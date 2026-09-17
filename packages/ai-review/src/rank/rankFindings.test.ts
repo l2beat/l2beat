@@ -33,12 +33,12 @@ describe(rankFindings.name, () => {
         line: 3,
       }),
     ])
-    expect(ranked.map((f) => f.claim)).toStrictEqual([
+    expect(ranked.map((f) => f.claim)).toEqual([
       'major-mid',
       'blocker-low',
       'minor-high',
     ])
-    expect(score(ranked[0])).toStrictEqual(1.4)
+    expect(score(ranked[0])).toEqual(1.4)
   })
 
   it('caps at 5', () => {
@@ -52,10 +52,7 @@ describe(rankFindings.name, () => {
       finding({ claim: 'strong', confidence: 0.9 }),
       finding({ claim: 'other-category', category: 'perf' }),
     ])
-    expect(ranked.map((f) => f.claim)).toStrictEqual([
-      'strong',
-      'other-category',
-    ])
+    expect(ranked.map((f) => f.claim)).toEqual(['strong', 'other-category'])
   })
 
   it('drops findings without evidence or fix sketch', () => {
@@ -64,6 +61,6 @@ describe(rankFindings.name, () => {
       finding({ fix_sketch: '', line: 2 }),
       finding({ line: 3 }),
     ])
-    expect(ranked.map((f) => f.location?.range?.start)).toStrictEqual([3])
+    expect(ranked.map((f) => f.location?.range?.start)).toEqual([3])
   })
 })

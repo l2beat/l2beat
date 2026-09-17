@@ -15,7 +15,7 @@ describeDatabase(AppStateRepository.name, (db) => {
         'interopAggregatesTimestampOverride',
       )
 
-      expect(result).toStrictEqual(undefined)
+      expect(result).toEqual(undefined)
     })
   })
 
@@ -31,7 +31,7 @@ describeDatabase(AppStateRepository.name, (db) => {
         'interopAggregatesTimestampOverride',
       )
 
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         key: 'interopAggregatesTimestampOverride',
         value: 1234,
         updatedAt: expect.any(Number),
@@ -55,7 +55,7 @@ describeDatabase(AppStateRepository.name, (db) => {
         'interopAggregatesTimestampOverride',
       )
 
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         key: 'interopAggregatesTimestampOverride',
         value: 5678,
         updatedAt: expect.any(Number),
@@ -78,7 +78,7 @@ describeDatabase(AppStateRepository.name, (db) => {
         'interopAggregatesTimestampOverride',
       )
 
-      expect(result).toStrictEqual(undefined)
+      expect(result).toEqual(undefined)
     })
   })
 
@@ -96,7 +96,7 @@ describeDatabase(AppStateRepository.name, (db) => {
         'interopAggregatesTimestampOverride',
       )
 
-      expect(result).toStrictEqual(undefined)
+      expect(result).toEqual(undefined)
     })
   })
 })

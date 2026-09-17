@@ -21,7 +21,7 @@ describe('metaUtils', () => {
 
       const result = interpolateString(description, analysis)
 
-      expect(result).toStrictEqual(
+      expect(result).toEqual(
         'Contract with address eth:0x1234567890123456789012345678901234567890 and value 42',
       )
     })

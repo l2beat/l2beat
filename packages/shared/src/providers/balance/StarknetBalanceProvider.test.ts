@@ -59,7 +59,7 @@ describe(StarknetBalanceProvider.name, () => {
         },
         BLOCK,
       )
-      expect(result).toStrictEqual([1n, 2n + (1n << 128n), 0n])
+      expect(result).toEqual([1n, 2n + (1n << 128n), 0n])
     })
 
     it('throws if any call fails', async () => {

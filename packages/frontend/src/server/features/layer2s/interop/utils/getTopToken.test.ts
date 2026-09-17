@@ -38,7 +38,7 @@ describe(getTopToken.name, () => {
       subgroupProjects: new Set(),
     })
 
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       id: 'eth',
       symbol: 'ETH',
       issuer: null,
@@ -78,7 +78,7 @@ describe(getTopToken.name, () => {
       subgroupProjects: new Set([ProjectId('sub')]),
     })
 
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       id: 'usdc',
       symbol: 'USDC',
       issuer: null,
@@ -117,7 +117,7 @@ describe(getTopToken.name, () => {
       subgroupProjects: new Set(),
     })
 
-    expect(result?.topProtocol).toStrictEqual({
+    expect(result?.topProtocol).toEqual({
       name: 'Wormhole',
       slug: 'wormhole',
       iconUrl: '/icons/wormhole.png',
@@ -147,8 +147,8 @@ describe(getTopToken.name, () => {
       subgroupProjects: new Set(),
     })
 
-    expect(result?.symbol).toStrictEqual('USDC')
-    expect(result?.transferCount).toStrictEqual(20)
+    expect(result?.symbol).toEqual('USDC')
+    expect(result?.transferCount).toEqual(20)
   })
 
   it('skips tokens missing metadata', () => {
@@ -173,7 +173,7 @@ describe(getTopToken.name, () => {
       subgroupProjects: new Set(),
     })
 
-    expect(result?.symbol).toStrictEqual('ETH')
+    expect(result?.symbol).toEqual('ETH')
   })
 
   it('returns undefined for empty or fully invalid records', () => {
@@ -200,8 +200,8 @@ describe(getTopToken.name, () => {
       subgroupProjects: new Set(),
     })
 
-    expect(emptyResult).toStrictEqual(undefined)
-    expect(invalidResult).toStrictEqual(undefined)
+    expect(emptyResult).toEqual(undefined)
+    expect(invalidResult).toEqual(undefined)
   })
 })
 

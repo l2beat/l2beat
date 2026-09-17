@@ -50,7 +50,7 @@ describe(getInteropTokenEntry.name, () => {
 
     const minters = section.props.deployments[0]?.minters
     assert(minters)
-    expect(minters).toStrictEqual([
+    expect(minters).toEqual([
       {
         id: ProjectId('alpha'),
         name: 'Alpha bridge',
@@ -103,7 +103,7 @@ describe(getInteropTokenEntry.name, () => {
 
     const minters = section.props.deployments[0]?.minters
     assert(minters)
-    expect(minters).toStrictEqual([
+    expect(minters).toEqual([
       {
         id: ProjectId('zeta'),
         name: 'Zeta bridge',

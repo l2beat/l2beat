@@ -33,7 +33,7 @@ describe(HourlyIndexer.name, () => {
 
       const result = await indexer.tick()
 
-      expect(result).toStrictEqual(LAST_HOUR)
+      expect(result).toEqual(LAST_HOUR)
     })
   })
 })

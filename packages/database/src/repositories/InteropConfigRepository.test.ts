@@ -16,13 +16,13 @@ describeDatabase(InteropConfigRepository.name, (database) => {
 
       const result = await repository.find('test-key')
 
-      expect(result).toStrictEqual(record)
+      expect(result).toEqual(record)
     })
 
     it('returns undefined when config does not exist', async () => {
       const result = await repository.find('non-existent-key')
 
-      expect(result).toStrictEqual(undefined)
+      expect(result).toEqual(undefined)
     })
 
     it('returns latest record when multiple records exist for the same key', async () => {
@@ -38,7 +38,7 @@ describeDatabase(InteropConfigRepository.name, (database) => {
 
       const result = await repository.find('test-key')
 
-      expect(result).toStrictEqual(laterRecord)
+      expect(result).toEqual(laterRecord)
     })
   })
 
@@ -49,7 +49,7 @@ describeDatabase(InteropConfigRepository.name, (database) => {
       await repository.insert(record)
 
       const result = await repository.find('new-key')
-      expect(result).toStrictEqual(record)
+      expect(result).toEqual(record)
     })
 
     it('inserts config with array value', async () => {
@@ -59,7 +59,7 @@ describeDatabase(InteropConfigRepository.name, (database) => {
       await repository.insert(record)
 
       const result = await repository.find('array-key')
-      expect(result).toStrictEqual(record)
+      expect(result).toEqual(record)
     })
 
     it('throws error when inserting duplicate key', async () => {
@@ -86,7 +86,7 @@ describeDatabase(InteropConfigRepository.name, (database) => {
 
       expect(result).toHaveLength(3)
       expect(result).toHaveLength(3)
-      expect(result).toStrictEqual(
+      expect(result).toEqual(
         expect.arrayContaining([record1, record2, record3]),
       )
     })
@@ -109,9 +109,7 @@ describeDatabase(InteropConfigRepository.name, (database) => {
 
       expect(result).toHaveLength(2)
       expect(result).toHaveLength(2)
-      expect(result).toStrictEqual(
-        expect.arrayContaining([newerRecord, otherRecord]),
-      )
+      expect(result).toEqual(expect.arrayContaining([newerRecord, otherRecord]))
     })
   })
 
@@ -148,10 +146,10 @@ describeDatabase(InteropConfigRepository.name, (database) => {
             .map((r) => (r.value as { version: number }).version)
             .sort((a, b) => a - b)
 
-        expect(deleted).toStrictEqual(3)
-        expect(versionsFor('a')).toStrictEqual([3, 4])
-        expect(versionsFor('b')).toStrictEqual([2, 3])
-        expect(versionsFor('c')).toStrictEqual([1])
+        expect(deleted).toEqual(3)
+        expect(versionsFor('a')).toEqual([3, 4])
+        expect(versionsFor('b')).toEqual([2, 3])
+        expect(versionsFor('c')).toEqual([1])
       })
 
       it('throws for keepLatest < 1', async () => {

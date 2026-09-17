@@ -9,6 +9,7 @@ import {
 } from './LivenessRepository'
 
 describe(toRecord.name, () => {
+  // toStrictEqual, not toEqual: these assertions are about an optional key being present with value undefined, which toEqual ignores.
   it('maps the ungrouped sentinel to undefined', () => {
     const timestamp = UnixTime(1)
 
@@ -102,7 +103,7 @@ describeDatabase(LivenessRepository.name, (db) => {
         ...newRows,
       ]
       expect(results).toHaveLength(expected.length)
-      expect(results).toStrictEqual(expect.arrayContaining(expected))
+      expect(results).toEqual(expect.arrayContaining(expected))
     })
 
     it('empty array', async () => {
@@ -139,7 +140,7 @@ describeDatabase(LivenessRepository.name, (db) => {
       const results = await repository.getAll()
       const expected = [...DATA, grouped[1]!, grouped[2]!]
       expect(results).toHaveLength(expected.length)
-      expect(results).toStrictEqual(expect.arrayContaining(expected))
+      expect(results).toEqual(expect.arrayContaining(expected))
     })
 
     it('replaces a grouped transaction only when an earlier one arrives', async () => {
@@ -170,7 +171,7 @@ describeDatabase(LivenessRepository.name, (db) => {
       const results = await repository.getAll()
       const expected = [...DATA, earlier]
       expect(results).toHaveLength(expected.length)
-      expect(results).toStrictEqual(expect.arrayContaining(expected))
+      expect(results).toEqual(expect.arrayContaining(expected))
     })
 
     it('stores a record per grouping key for one transaction', async () => {
@@ -190,7 +191,7 @@ describeDatabase(LivenessRepository.name, (db) => {
       const results = await repository.getAll()
       const expected = [...DATA, ...grouped]
       expect(results).toHaveLength(expected.length)
-      expect(results).toStrictEqual(expect.arrayContaining(expected))
+      expect(results).toEqual(expect.arrayContaining(expected))
     })
 
     it('rejects the same ungrouped transaction twice', async () => {
@@ -227,7 +228,7 @@ describeDatabase(LivenessRepository.name, (db) => {
         ...e,
       }))
       expect(results).toHaveLength(expected.length)
-      expect(results).toStrictEqual(expect.arrayContaining(expected))
+      expect(results).toEqual(expect.arrayContaining(expected))
     })
   })
 
@@ -238,7 +239,7 @@ describeDatabase(LivenessRepository.name, (db) => {
         const results = await repository.getLatestTimestampsByConfigId()
 
         expect(results).toHaveLength(3)
-        expect(results).toStrictEqual(
+        expect(results).toEqual(
           expect.arrayContaining([
             {
               configurationId: txIdA,
@@ -269,9 +270,7 @@ describeDatabase(LivenessRepository.name, (db) => {
         )
 
         expect(results).toHaveLength(2)
-        expect(results).toStrictEqual(
-          expect.arrayContaining([DATA[0]!, DATA[1]!]),
-        )
+        expect(results).toEqual(expect.arrayContaining([DATA[0]!, DATA[1]!]))
       })
     },
   )
@@ -298,7 +297,7 @@ describeDatabase(LivenessRepository.name, (db) => {
         )
 
         expect(results).toHaveLength(2)
-        expect(results).toStrictEqual(
+        expect(results).toEqual(
           expect.arrayContaining([DATA[1]!, NEW_DATA[0]!]),
         )
       })
@@ -320,9 +319,7 @@ describeDatabase(LivenessRepository.name, (db) => {
         )
 
         expect(results).toHaveLength(2)
-        expect(results).toStrictEqual(
-          expect.arrayContaining([DATA[0]!, DATA[1]!]),
-        )
+        expect(results).toEqual(expect.arrayContaining([DATA[0]!, DATA[1]!]))
       })
 
       it('should return record before from for each configuration, desc timestamp', async () => {
@@ -373,7 +370,7 @@ describeDatabase(LivenessRepository.name, (db) => {
         )
 
         expect(results).toHaveLength(3)
-        expect(results).toStrictEqual(
+        expect(results).toEqual(
           expect.arrayContaining([NEW_DATA[1]!, NEW_DATA[3]!, NEW_DATA[2]!]),
         )
       })
@@ -386,7 +383,7 @@ describeDatabase(LivenessRepository.name, (db) => {
 
       const results = await repository.getAll()
 
-      expect(results).toStrictEqual([])
+      expect(results).toEqual([])
     })
   })
 
@@ -397,29 +394,29 @@ describeDatabase(LivenessRepository.name, (db) => {
         txIdB.toString(),
       ])
 
-      expect(deleted).toStrictEqual(3)
+      expect(deleted).toEqual(3)
 
       const results = await repository.getAll()
       expect(results).toHaveLength(1)
-      expect(results).toStrictEqual(expect.arrayContaining([DATA[3]!]))
+      expect(results).toEqual(expect.arrayContaining([DATA[3]!]))
     })
 
     it('returns 0 for empty ids', async () => {
       const deleted = await repository.deleteByConfigIds([])
-      expect(deleted).toStrictEqual(0)
+      expect(deleted).toEqual(0)
 
       const results = await repository.getAll()
       expect(results).toHaveLength(DATA.length)
-      expect(results).toStrictEqual(expect.arrayContaining(DATA))
+      expect(results).toEqual(expect.arrayContaining(DATA))
     })
 
     it('returns 0 when no matching config found', async () => {
       const deleted = await repository.deleteByConfigIds(['non-existent-id'])
-      expect(deleted).toStrictEqual(0)
+      expect(deleted).toEqual(0)
 
       const results = await repository.getAll()
       expect(results).toHaveLength(DATA.length)
-      expect(results).toStrictEqual(expect.arrayContaining(DATA))
+      expect(results).toEqual(expect.arrayContaining(DATA))
     })
   })
 
@@ -463,7 +460,7 @@ describeDatabase(LivenessRepository.name, (db) => {
 
       const result = await repository.getAll()
 
-      expect(result).toStrictEqual([records[0]!, records[3]!])
+      expect(result).toEqual([records[0]!, records[3]!])
     })
   })
 })

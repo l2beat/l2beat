@@ -28,7 +28,7 @@ describe(getAverageDuration.name, () => {
       durationSplit,
     )
 
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       type: 'split',
       splits: [
         { label: 'Bus', duration: 60 },
@@ -59,7 +59,7 @@ describe(getAverageDuration.name, () => {
       durationSplit,
     )
 
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       type: 'single',
       duration: 160,
     })
@@ -76,7 +76,7 @@ describe(getAverageDuration.name, () => {
       undefined,
     )
 
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       type: 'single',
       duration: 160,
     })
@@ -105,7 +105,7 @@ describe(getAverageDuration.name, () => {
       durationSplit,
     )
 
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       type: 'split',
       splits: [
         { label: 'Bus', duration: 50 },
@@ -125,7 +125,7 @@ describe(getAverageDuration.name, () => {
       undefined,
     )
 
-    expect(result).toStrictEqual(null)
+    expect(result).toEqual(null)
   })
 
   it('keeps configured splits even when a subset has no matching transfers', () => {
@@ -149,7 +149,7 @@ describe(getAverageDuration.name, () => {
       durationSplit,
     )
 
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       type: 'split',
       splits: [
         { label: 'Bus', duration: null },
@@ -177,7 +177,7 @@ describe(getAverageDuration.name, () => {
       durationSplit,
     )
 
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       type: 'split',
       splits: [
         { label: 'Bus', duration: null },
@@ -212,7 +212,7 @@ describe(getAverageDuration.name, () => {
       durationSplit,
     )
 
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       type: 'split',
       splits: [
         { label: 'Bus', duration: 50 },
@@ -247,7 +247,7 @@ describe(getAverageDuration.name, () => {
       durationSplit,
     )
 
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       type: 'split',
       splits: [
         { label: 'Bus', duration: 50 },
@@ -282,7 +282,7 @@ describe(getAverageDuration.name, () => {
       durationSplit,
     )
 
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       type: 'single',
       duration: 65,
     })

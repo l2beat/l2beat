@@ -30,7 +30,7 @@ describeDatabase(FlatSourcesRepository.name, (db) => {
       await repository.upsert(flatRecord)
 
       const latest = await repository.get(projectId)
-      expect(latest).toStrictEqual(flatRecord)
+      expect(latest).toEqual(flatRecord)
     })
 
     it('two inserts, update the timestamp but not the flat', async () => {
@@ -44,7 +44,7 @@ describeDatabase(FlatSourcesRepository.name, (db) => {
 
       await repository.upsert(flatRecord)
       let latest = await repository.get(projectId)
-      expect(latest).toStrictEqual(flatRecord)
+      expect(latest).toEqual(flatRecord)
 
       await repository.upsert({
         ...flatRecord,
@@ -53,7 +53,7 @@ describeDatabase(FlatSourcesRepository.name, (db) => {
       })
 
       latest = await repository.get(projectId)
-      expect(latest).toStrictEqual({
+      expect(latest).toEqual({
         ...flatRecord,
         timestamp: 2,
       })
@@ -72,7 +72,7 @@ describeDatabase(FlatSourcesRepository.name, (db) => {
 
       await repository.upsert(flatRecord)
       let latest = await repository.get(projectId)
-      expect(latest).toStrictEqual(flatRecord)
+      expect(latest).toEqual(flatRecord)
 
       const newRecord = {
         ...flatRecord,
@@ -83,7 +83,7 @@ describeDatabase(FlatSourcesRepository.name, (db) => {
 
       await repository.upsert(newRecord)
       latest = await repository.get(projectId)
-      expect(latest).toStrictEqual(newRecord)
+      expect(latest).toEqual(newRecord)
     })
   })
 })

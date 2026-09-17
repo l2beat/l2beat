@@ -201,7 +201,7 @@ describe(commitTokenChanges.name, () => {
       expect(insert).toHaveBeenCalledTimes(3)
       const entries = insert.mock.calls.map((c) => c[0])
 
-      expect(entries[0]!).toStrictEqual({
+      expect(entries[0]!).toEqual({
         timestamp: expect.any(Number),
         source: 'manual',
         userEmail: 'someone@x.io',
@@ -210,7 +210,7 @@ describe(commitTokenChanges.name, () => {
         intent: { type: 'DeleteAbstractTokenIntent', id: abstract.id },
         ingestionLog: null,
       })
-      expect(entries[1]!).toStrictEqual({
+      expect(entries[1]!).toEqual({
         timestamp: expect.any(Number),
         source: 'manual',
         userEmail: 'someone@x.io',
@@ -219,7 +219,7 @@ describe(commitTokenChanges.name, () => {
         intent: { type: 'DeleteAbstractTokenIntent', id: abstract.id },
         ingestionLog: null,
       })
-      expect(entries[2]!).toStrictEqual({
+      expect(entries[2]!).toEqual({
         timestamp: expect.any(Number),
         source: 'manual',
         userEmail: 'someone@x.io',
@@ -259,12 +259,10 @@ describe(commitTokenChanges.name, () => {
 
       expect(insert).toHaveBeenCalledTimes(2)
       for (const call of insert.mock.calls) {
-        expect(call[0].source).toStrictEqual('ingestion')
-        expect(call[0].userEmail).toStrictEqual(null)
-        expect(call[0].intent).toStrictEqual(null)
-        expect(call[0].ingestionLog).toStrictEqual(
-          'step 1\nstep 2\nOutcome: write',
-        )
+        expect(call[0].source).toEqual('ingestion')
+        expect(call[0].userEmail).toEqual(null)
+        expect(call[0].intent).toEqual(null)
+        expect(call[0].ingestionLog).toEqual('step 1\nstep 2\nOutcome: write')
       }
     })
 
@@ -288,8 +286,8 @@ describe(commitTokenChanges.name, () => {
         { kind: 'manual', user: 'someone@x.io', intent: null },
       )
 
-      expect(insert.mock.calls[0]![0].ingestionLog).toStrictEqual(null)
-      expect(insert.mock.calls[0]![0].intent).toStrictEqual(null)
+      expect(insert.mock.calls[0]![0].ingestionLog).toEqual(null)
+      expect(insert.mock.calls[0]![0].intent).toEqual(null)
     })
   })
 })

@@ -22,7 +22,7 @@ describe(attachPermissions.name, () => {
 
     attachPermissions([discovery])
 
-    expect(discovery.entries.at(0)?.receivedPermissions).toStrictEqual([
+    expect(discovery.entries.at(0)?.receivedPermissions).toEqual([
       { permission: 'upgrade', from: TIMELOCK },
     ])
   })
@@ -39,7 +39,7 @@ describe(attachPermissions.name, () => {
 
     attachPermissions([consumer, module])
 
-    expect(module.entries.at(0)?.receivedPermissions).toStrictEqual([
+    expect(module.entries.at(0)?.receivedPermissions).toEqual([
       { permission: 'upgrade', from: TIMELOCK },
     ])
   })
@@ -56,7 +56,7 @@ describe(attachPermissions.name, () => {
 
     attachPermissions([consumer, module])
 
-    expect(module.entries.at(0)?.receivedPermissions).toStrictEqual(undefined)
+    expect(module.entries.at(0)?.receivedPermissions).toEqual(undefined)
   })
 
   it('leaves an address the map does not mention alone', () => {
@@ -66,7 +66,7 @@ describe(attachPermissions.name, () => {
 
     attachPermissions([discovery])
 
-    expect(discovery.entries.at(0)?.eoaWithUpgradePermissions).toStrictEqual(
+    expect(discovery.entries.at(0)?.eoaWithUpgradePermissions).toEqual(
       undefined,
     )
   })

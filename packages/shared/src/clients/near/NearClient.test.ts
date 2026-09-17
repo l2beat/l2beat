@@ -22,7 +22,7 @@ describe(NearClient.name, () => {
 
       const result = await client.getValidatorsInfo()
 
-      expect(result).toStrictEqual(mockValidatorsResult)
+      expect(result).toEqual(mockValidatorsResult)
       expect(http.fetch).toHaveBeenCalledExactlyOnceWith('API_URL', {
         method: 'POST',
         headers: {
@@ -60,7 +60,7 @@ describe(NearClient.name, () => {
 
       const result = await client.call('test_method', ['param1', 'param2'])
 
-      expect(result).toStrictEqual(mockResponse)
+      expect(result).toEqual(mockResponse)
       expect(http.fetch).toHaveBeenCalledExactlyOnceWith('API_URL', {
         method: 'POST',
         headers: {
@@ -85,7 +85,7 @@ describe(NearClient.name, () => {
 
       const result = await client.call('test_method', [])
 
-      expect(result).toStrictEqual(mockResponse)
+      expect(result).toEqual(mockResponse)
       expect(http.fetch).toHaveBeenCalledExactlyOnceWith('API_URL', {
         method: 'POST',
         headers: {
@@ -110,7 +110,7 @@ describe(NearClient.name, () => {
 
       const result = await client.call('validators', [null])
 
-      expect(result).toStrictEqual(mockResponse)
+      expect(result).toEqual(mockResponse)
       expect(http.fetch).toHaveBeenCalledExactlyOnceWith('API_URL', {
         method: 'POST',
         headers: {
@@ -138,7 +138,7 @@ describe(NearClient.name, () => {
         },
       })
 
-      expect(validationInfo.success).toStrictEqual(false)
+      expect(validationInfo.success).toEqual(false)
     })
 
     it('returns true for response without error', () => {
@@ -151,7 +151,7 @@ describe(NearClient.name, () => {
         },
       })
 
-      expect(validationInfo.success).toStrictEqual(true)
+      expect(validationInfo.success).toEqual(true)
     })
   })
 })

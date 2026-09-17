@@ -10,11 +10,11 @@ describe(createSourcesArchive.name, () => {
     })
 
     const files = unzipSync(archive)
-    expect(Object.keys(files).sort()).toStrictEqual([
+    expect(Object.keys(files).sort()).toEqual([
       'contracts/token/Token.sol',
       'interfaces/IERC20.sol',
     ])
-    expect(strFromU8(files['contracts/token/Token.sol']!)).toStrictEqual(
+    expect(strFromU8(files['contracts/token/Token.sol']!)).toEqual(
       'contract Token {}',
     )
   })

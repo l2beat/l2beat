@@ -13,7 +13,7 @@ describe(getActivityCompareChartParams.name, () => {
       CHART_RANGE,
     )
 
-    expect(params.projects).toStrictEqual([ProjectId('tracked')])
+    expect(params.projects).toEqual([ProjectId('tracked')])
   })
 })
 

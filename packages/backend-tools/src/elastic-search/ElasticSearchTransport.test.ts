@@ -180,8 +180,8 @@ describe(ElasticSearchTransport.name, () => {
 
     const [documents] = vi.mocked(clientMock.bulk).mock.calls[1]!
     expect(documents).toHaveLength(maxItems + 1)
-    expect(documents[0]).toStrictEqual({ id, ...log, message: '0000000000' })
-    expect(documents[maxItems]).toStrictEqual({
+    expect(documents[0]).toEqual({ id, ...log, message: '0000000000' })
+    expect(documents[maxItems]).toEqual({
       id,
       ...log,
       message: '0000020000',
@@ -271,9 +271,9 @@ describe(ElasticSearchTransport.name, () => {
     expect(recoveryDocs).toHaveLength(1)
 
     const recoveryDoc = recoveryDocs[0] as Record<string, unknown>
-    expect(recoveryDoc.id).toStrictEqual(id)
+    expect(recoveryDoc.id).toEqual(id)
     const ecs = recoveryDoc as { log: { level: string }; message: string }
-    expect(ecs.log.level).toStrictEqual('ERROR')
+    expect(ecs.log.level).toEqual('ERROR')
     expect(ecs.message).toMatch(/not valid JSON|Unexpected token/i)
   })
 

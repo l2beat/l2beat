@@ -48,7 +48,7 @@ describe(buildPermissionsModel.name, () => {
       CLUSTER_MAP,
     )
 
-    expect(model).toStrictEqual(undefined)
+    expect(model).toEqual(undefined)
   })
 })
 

@@ -28,7 +28,7 @@ describe(Clock.name, () => {
       const clock = new Clock(start, 0)
 
       const firstHour = clock.getFirstHour()
-      expect(firstHour).toStrictEqual(UnixTime.toNext(start, 'hour'))
+      expect(firstHour).toEqual(UnixTime.toNext(start, 'hour'))
     })
 
     it('cannot get first hour with minTimestamp in the future', () => {
@@ -48,7 +48,7 @@ describe(Clock.name, () => {
       const clock = new Clock(start, 0)
 
       const firstHour = clock.getFirstDay()
-      expect(firstHour).toStrictEqual(UnixTime.toNext(start, 'day'))
+      expect(firstHour).toEqual(UnixTime.toNext(start, 'day'))
     })
 
     it('cannot get first day with minTimestamp in the future', () => {
@@ -67,7 +67,7 @@ describe(Clock.name, () => {
       const clock = new Clock(0, 0)
 
       const lastHour = clock.getLastHour()
-      expect(lastHour).toStrictEqual(toTimestamp('13:00:00'))
+      expect(lastHour).toEqual(toTimestamp('13:00:00'))
     })
 
     it('uses the specified delay', () => {
@@ -75,7 +75,7 @@ describe(Clock.name, () => {
       const clock = new Clock(0, 10 * 60)
 
       const lastHour = clock.getLastHour()
-      expect(lastHour).toStrictEqual(toTimestamp('12:00:00'))
+      expect(lastHour).toEqual(toTimestamp('12:00:00'))
     })
   })
 
@@ -89,15 +89,12 @@ describe(Clock.name, () => {
       const calls: UnixTime[] = []
       const stop = clock.onNewHour((timestamp) => calls.push(timestamp))
 
-      expect(calls).toStrictEqual([])
+      expect(calls).toEqual([])
 
       // add two hours
       vi.advanceTimersByTime(2 * 60 * 60 * 1000)
 
-      expect(calls).toStrictEqual([
-        toTimestamp('14:00:00'),
-        toTimestamp('15:00:00'),
-      ])
+      expect(calls).toEqual([toTimestamp('14:00:00'), toTimestamp('15:00:00')])
       stop()
     })
   })

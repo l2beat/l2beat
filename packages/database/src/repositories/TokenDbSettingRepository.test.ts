@@ -11,9 +11,9 @@ describeTokenDatabase(TokenDbSettingRepository.name, (db) => {
 
   describe(TokenDbSettingRepository.prototype.get.name, () => {
     it('returns undefined when setting is missing', async () => {
-      expect(
-        await repository.get('interop-transfers:lastSerialId'),
-      ).toStrictEqual(undefined)
+      expect(await repository.get('interop-transfers:lastSerialId')).toEqual(
+        undefined,
+      )
     })
   })
 
@@ -28,9 +28,7 @@ describeTokenDatabase(TokenDbSettingRepository.name, (db) => {
         value: '25',
       })
 
-      expect(
-        await repository.get('interop-transfers:lastSerialId'),
-      ).toStrictEqual({
+      expect(await repository.get('interop-transfers:lastSerialId')).toEqual({
         key: 'interop-transfers:lastSerialId',
         value: '25',
       })

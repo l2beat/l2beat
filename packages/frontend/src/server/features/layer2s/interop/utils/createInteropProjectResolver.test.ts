@@ -21,7 +21,7 @@ describe(createInteropProjectResolver.name, () => {
           bridgeType: 'burnAndMint',
         }),
       ).map((p) => p.id),
-    ).toStrictEqual([ProjectId('usdt0')])
+    ).toEqual([ProjectId('usdt0')])
   })
 
   it('returns every surviving match', () => {
@@ -40,7 +40,7 @@ describe(createInteropProjectResolver.name, () => {
       observation({ plugin: 'ccip', bridgeType: 'burnAndMint' }),
     ).map((p) => p.id)
     expect(actual).toHaveLength(2)
-    expect(actual).toStrictEqual(
+    expect(actual).toEqual(
       expect.arrayContaining([ProjectId('first'), ProjectId('second')]),
     )
   })
@@ -53,7 +53,7 @@ describe(createInteropProjectResolver.name, () => {
       }),
     ])
 
-    expect(resolve(observation({ plugin: 'unknown' }))).toStrictEqual([])
+    expect(resolve(observation({ plugin: 'unknown' }))).toEqual([])
   })
 })
 

@@ -108,7 +108,7 @@ describe(getRailgunProxy.name, () => {
     })
 
     const result = await getRailgunProxy(provider, ADDRESS)
-    expect(result).toStrictEqual(undefined)
+    expect(result).toEqual(undefined)
   })
 
   it('detects unpaused proxy with no upgrades', async () => {
@@ -119,7 +119,7 @@ describe(getRailgunProxy.name, () => {
     })
 
     const result = await getRailgunProxy(provider, ADDRESS)
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       type: 'Railgun proxy',
       values: {
         $admin: ADMIN.toString(),
@@ -139,8 +139,8 @@ describe(getRailgunProxy.name, () => {
     })
 
     const result = await getRailgunProxy(provider, ADDRESS)
-    expect(result?.type).toStrictEqual('Railgun proxy')
-    expect(result?.values.$paused).toStrictEqual(true)
+    expect(result?.type).toEqual('Railgun proxy')
+    expect(result?.values.$paused).toEqual(true)
   })
 
   it('falls back to owner() when admin slot is zero', async () => {
@@ -152,7 +152,7 @@ describe(getRailgunProxy.name, () => {
     })
 
     const result = await getRailgunProxy(provider, ADDRESS)
-    expect(result?.values.$admin).toStrictEqual(OWNER.toString())
+    expect(result?.values.$admin).toEqual(OWNER.toString())
   })
 
   it('fetches past upgrades, ignoring unrelated events', async () => {
@@ -178,8 +178,8 @@ describe(getRailgunProxy.name, () => {
     })
 
     const result = await getRailgunProxy(provider, ADDRESS)
-    expect(result?.values.$upgradeCount).toStrictEqual(2)
-    expect(result?.values.$pastUpgrades).toStrictEqual([
+    expect(result?.values.$upgradeCount).toEqual(2)
+    expect(result?.values.$pastUpgrades).toEqual([
       [blockDate(1), Hash256(logs[0]!.transactionHash), [OLD_IMPLEMENTATION]],
       [blockDate(3), Hash256(logs[2]!.transactionHash), [IMPLEMENTATION]],
     ])

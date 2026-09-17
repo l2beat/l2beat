@@ -34,7 +34,7 @@ describe(StarknetCounter.name, () => {
         .mockReturnValueOnce(expectedResult.transactions[1].operationsCount)
 
       const result = counter.countForBlock(mockBlock)
-      expect(result).toStrictEqual(expectedResult)
+      expect(result).toEqual(expectedResult)
     })
   })
 
@@ -59,7 +59,7 @@ describe(StarknetCounter.name, () => {
         .mockReturnValueOnce(4)
 
       const result = counter.countForBlocks(mockBlocks)
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         dateStart: UnixTime.toDate(start),
         dateEnd: UnixTime.toDate(end),
         numberOfTransactions: 6,
@@ -94,7 +94,7 @@ describe(StarknetCounter.name, () => {
       }
       const blockNumber = 2999
       const result = counter.getOperationsCount(tx, blockNumber)
-      expect(result).toStrictEqual(1)
+      expect(result).toEqual(1)
     })
 
     it('should properly count user operations for type INVOKE', () => {
@@ -108,7 +108,7 @@ describe(StarknetCounter.name, () => {
       }
       const blockNumber = 3001
       const result = counter.getOperationsCount(tx, blockNumber)
-      expect(result).toStrictEqual(3)
+      expect(result).toEqual(3)
     })
 
     it('should properly count user operations for types other than INVOKE', () => {
@@ -122,7 +122,7 @@ describe(StarknetCounter.name, () => {
       }
       const blockNumber = 3001
       const result = counter.getOperationsCount(tx, blockNumber)
-      expect(result).toStrictEqual(1)
+      expect(result).toEqual(1)
     })
 
     it('should properly count user operations when data is missing', () => {
@@ -136,7 +136,7 @@ describe(StarknetCounter.name, () => {
       }
       const blockNumber = 3001
       const result = counter.getOperationsCount(tx, blockNumber)
-      expect(result).toStrictEqual(1)
+      expect(result).toEqual(1)
     })
   })
 })

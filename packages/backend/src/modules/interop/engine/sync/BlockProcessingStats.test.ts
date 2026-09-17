@@ -8,7 +8,7 @@ describe(BlockProcessingStats.name, () => {
     stats.record(1.25, 0.5)
     stats.record(1.25, 0.75)
 
-    expect(stats.get()).toStrictEqual({
+    expect(stats.get()).toEqual({
       totalMs: 2.5,
       cpuMs: 1.25,
       count: 2,

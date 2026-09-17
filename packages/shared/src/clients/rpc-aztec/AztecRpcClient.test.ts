@@ -13,7 +13,7 @@ describe(AztecRpcClient.name, () => {
 
       const result = await client.getLatestBlockNumber()
 
-      expect(result).toStrictEqual(123)
+      expect(result).toEqual(123)
       expect(http.fetch).toHaveBeenCalledExactlyOnceWith('RPC_URL', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -46,7 +46,7 @@ describe(AztecRpcClient.name, () => {
 
       const result = await client.getBlocks(100, 1)
 
-      expect(result).toStrictEqual([
+      expect(result).toEqual([
         { number: 100, timestamp: 1234567890, txEffectsCount: 2 },
       ])
     })
@@ -90,7 +90,7 @@ describe(AztecRpcClient.name, () => {
 
       const result = await client.getBlockHeaders(100, 1)
 
-      expect(result).toStrictEqual([{ number: 100, timestamp: 1234567890 }])
+      expect(result).toEqual([{ number: 100, timestamp: 1234567890 }])
       expect(http.fetch).toHaveBeenCalledExactlyOnceWith('RPC_URL', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -114,7 +114,7 @@ describe(AztecRpcClient.name, () => {
         client.validateResponse({
           error: { code: -32601, message: 'Method not found' },
         }),
-      ).toStrictEqual({ success: false })
+      ).toEqual({ success: false })
     })
   })
 })

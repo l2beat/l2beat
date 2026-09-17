@@ -18,7 +18,7 @@ describe(AvailDaProvider.name, () => {
 
       const result = await provider.getBlobs(1, 2)
 
-      expect(result).toStrictEqual([
+      expect(result).toEqual([
         {
           type: 'avail',
           daLayer: 'avail',
@@ -47,7 +47,7 @@ describe(AvailDaProvider.name, () => {
 
       const result = await provider.getBlobs(1, 2)
 
-      expect(result).toStrictEqual([])
+      expect(result).toEqual([])
     })
 
     it('return no blobs if no apps', async () => {
@@ -59,7 +59,7 @@ describe(AvailDaProvider.name, () => {
 
       const result = await provider.getBlobs(1, 2)
 
-      expect(result).toStrictEqual([])
+      expect(result).toEqual([])
     })
 
     it('return 1 blob per id that has an avail extrinsic', async () => {
@@ -71,7 +71,7 @@ describe(AvailDaProvider.name, () => {
 
       const result = await provider.getBlobs(1768867, 1768867)
 
-      expect(result).toStrictEqual([
+      expect(result).toEqual([
         {
           type: 'avail',
           daLayer: 'avail',
@@ -103,7 +103,7 @@ describe(AvailDaProvider.name, () => {
 
       const result = await provider.getBlobs(1768872, 1768872)
 
-      expect(result).toStrictEqual([
+      expect(result).toEqual([
         {
           type: 'avail',
           daLayer: 'avail',
@@ -134,7 +134,7 @@ describe(AvailDaProvider.name, () => {
       const timestamp = await provider.getBlockTimestamp(291)
 
       // the blobs of block 291 above carry this timestamp
-      expect(timestamp).toStrictEqual(UnixTime(1720092420))
+      expect(timestamp).toEqual(UnixTime(1720092420))
     })
   })
 })

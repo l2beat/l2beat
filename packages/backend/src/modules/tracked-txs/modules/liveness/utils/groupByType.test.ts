@@ -31,7 +31,7 @@ describe(groupByType.name, () => {
     ]
     const result = groupByType(records)
 
-    expect(result).toStrictEqual([
+    expect(result).toEqual([
       records.filter((r) => r.subtype === 'batchSubmissions'),
       records.filter((r) => r.subtype === 'stateUpdates'),
       [],

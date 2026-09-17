@@ -19,7 +19,7 @@ const CONFIGURATIONS = [
 describe(getTransferQuery.name, () => {
   it('returns valid SQL', () => {
     const query = getTransferQuery(CONFIGURATIONS, FROM, TO)
-    expect(query).toStrictEqual(`
+    expect(query).toEqual(`
     WITH
       params AS (
         SELECT
@@ -88,7 +88,7 @@ describe(getTransferQuery.name, () => {
       TO,
     )
 
-    expect(query).toStrictEqual(`
+    expect(query).toEqual(`
     WITH
       params AS (
         SELECT
@@ -153,7 +153,7 @@ describe(getTransferQuery.name, () => {
   it('handles empty helper tables', () => {
     const query = getTransferQuery([], FROM, TO)
 
-    expect(query).toStrictEqual(`
+    expect(query).toEqual(`
     WITH
       params AS (
         SELECT

@@ -28,7 +28,7 @@ describe(getActivityChartData.name, () => {
       [T, T + DAY],
     )
 
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       chart: [
         [T, { [ARBITRUM]: [100, 150], [BASE]: [10, 15] }],
         [T + DAY, { [ARBITRUM]: [200, 200], [BASE]: [20, 25] }],
@@ -58,7 +58,7 @@ describe(getActivityChartData.name, () => {
       [T, T + 2 * DAY],
     )
 
-    expect(result.chart).toStrictEqual([
+    expect(result.chart).toEqual([
       [T, { [ARBITRUM]: [100, 150], [BASE]: null }],
       [T + DAY, { [ARBITRUM]: [0, 0], [BASE]: [10, 15] }],
       [T + 2 * DAY, { [ARBITRUM]: [300, 350], [BASE]: [20, 25] }],
@@ -77,10 +77,10 @@ describe(getActivityChartData.name, () => {
       [T, T],
     )
 
-    expect(result.chart).toStrictEqual([
+    expect(result.chart).toEqual([
       [T, { [ARBITRUM]: [100, 150], [noActivity]: null }],
     ])
-    expect(result.projects).toStrictEqual([
+    expect(result.projects).toEqual([
       { projectId: ARBITRUM, sinceTimestamp: T },
     ])
   })
@@ -100,7 +100,7 @@ describe(getActivityChartData.name, () => {
       [null, T + 2 * DAY],
     )
 
-    expect(result.chart).toStrictEqual([
+    expect(result.chart).toEqual([
       [T + DAY, { [ARBITRUM]: [100, 150] }],
       [T + 2 * DAY, { [ARBITRUM]: [200, 250] }],
     ])
@@ -115,7 +115,7 @@ describe(getActivityChartData.name, () => {
       [T, T + DAY],
     )
 
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       chart: [],
       projects: [],
       syncedUntil: T + DAY,

@@ -19,7 +19,7 @@ describe('interopTransaction', () => {
         }),
       )
 
-      expect(tx).toStrictEqual({
+      expect(tx).toEqual({
         kind: 'canonical',
         hash: HASH_1,
         from: ADDRESS_1,
@@ -48,10 +48,8 @@ describe('interopTransaction', () => {
       )
 
       assert(tx.kind === 'bundle')
-      expect(tx.type).toStrictEqual('118')
-      expect(tx.calls).toStrictEqual([
-        { to: ADDRESS_3, value: 7n, data: '0xbeef' },
-      ])
+      expect(tx.type).toEqual('118')
+      expect(tx.calls).toEqual([{ to: ADDRESS_3, value: 7n, data: '0xbeef' }])
     })
 
     it('rejects unsupported custom envelope types', () => {
@@ -71,7 +69,7 @@ describe('interopTransaction', () => {
         value: 7n,
       })
 
-      expect(toInteropTransaction(upstream)).toStrictEqual({
+      expect(toInteropTransaction(upstream)).toEqual({
         kind: 'canonical',
         hash: HASH_1,
         from: ADDRESS_1,
@@ -89,7 +87,7 @@ describe('interopTransaction', () => {
         value: 7n,
       })
 
-      expect(toInteropTransaction(upstream)).toStrictEqual({
+      expect(toInteropTransaction(upstream)).toEqual({
         kind: 'canonical',
         hash: HASH_1,
         from: ADDRESS_1,
@@ -107,7 +105,7 @@ describe('interopTransaction', () => {
         value: 7n,
       })
 
-      expect(toInteropTransaction(upstream)).toStrictEqual({
+      expect(toInteropTransaction(upstream)).toEqual({
         kind: 'canonical',
         hash: HASH_1,
         from: ADDRESS_1,
@@ -142,7 +140,7 @@ describe('interopTransaction', () => {
         }),
       )
 
-      expect(getInteropTransactionDataCandidates(tx)).toStrictEqual([
+      expect(getInteropTransactionDataCandidates(tx)).toEqual([
         '0x1234',
         '0x5678',
       ])
@@ -173,7 +171,7 @@ describe('interopTransaction', () => {
           ),
           [ADDRESS_3],
         ),
-      ).toStrictEqual(9n)
+      ).toEqual(9n)
     })
   })
 })

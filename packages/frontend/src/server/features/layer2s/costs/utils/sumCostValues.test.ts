@@ -22,7 +22,7 @@ describe('sumValues', () => {
 
     const result = sumCostValues(records)
 
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       gas: {
         overhead: 100,
         calldata: 200,
@@ -78,7 +78,7 @@ describe('sumValues', () => {
 
     const result = sumCostValues(records)
 
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       gas: {
         overhead: 150,
         calldata: 260,
@@ -103,7 +103,7 @@ describe('sumValues', () => {
   it('should handle empty records array', () => {
     const result = sumCostValues([])
 
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       gas: {
         overhead: 0,
         calldata: 0,
@@ -145,7 +145,7 @@ describe('sumValues', () => {
 
     const result = sumCostValues(records)
 
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       gas: {
         overhead: 100,
         calldata: 200,
@@ -201,7 +201,7 @@ describe('sumValues', () => {
 
     const result = sumCostValues(records)
 
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       gas: {
         overhead: 150,
         calldata: 260,

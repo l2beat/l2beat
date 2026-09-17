@@ -82,7 +82,7 @@ describe(BlobService.name, () => {
         topics: record.topics ?? [],
       }))
       expect(blobs).toHaveLength(expected.length)
-      expect(blobs).toStrictEqual(expect.arrayContaining(expected))
+      expect(blobs).toEqual(expect.arrayContaining(expected))
 
       expect(mockBlobRepository.getByBlockRangeInclusive).toHaveBeenCalledWith(
         'ethereum',
@@ -106,7 +106,7 @@ describe(BlobService.name, () => {
       const blobService = new BlobService(mockDb)
       const result = await blobService.deleteAfter('ethereum', 100)
 
-      expect(result).toStrictEqual(deletedRecords)
+      expect(result).toEqual(deletedRecords)
 
       expect(mockBlobRepository.deleteAfter).toHaveBeenCalledWith(
         'ethereum',

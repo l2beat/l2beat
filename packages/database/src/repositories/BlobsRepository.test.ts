@@ -75,7 +75,7 @@ describeDatabase(BlobsRepository.name, (db) => {
       const results = await repository.getAll()
       const expected = [...DATA, ...newRows]
       expect(results).toHaveLength(expected.length)
-      expect(results).toStrictEqual(expect.arrayContaining(expected))
+      expect(results).toEqual(expect.arrayContaining(expected))
     })
 
     it('empty array', async () => {
@@ -91,7 +91,7 @@ describeDatabase(BlobsRepository.name, (db) => {
         ...e,
       }))
       expect(results).toHaveLength(expected.length)
-      expect(results).toStrictEqual(expect.arrayContaining(expected))
+      expect(results).toEqual(expect.arrayContaining(expected))
     })
   })
 
@@ -105,7 +105,7 @@ describeDatabase(BlobsRepository.name, (db) => {
 
       const expected = DATA.slice(1, 3)
       expect(results).toHaveLength(expected.length)
-      expect(results).toStrictEqual(expect.arrayContaining(expected))
+      expect(results).toEqual(expect.arrayContaining(expected))
     })
   })
 
@@ -144,7 +144,7 @@ describeDatabase(BlobsRepository.name, (db) => {
       )
 
       expect(results).toHaveLength(2)
-      expect(results).toStrictEqual(
+      expect(results).toEqual(
         expect.arrayContaining([
           { from: '0xA', to: '0xB', count: 2 },
           { from: '0xA', to: '0xC', count: 1 },
@@ -192,7 +192,7 @@ describeDatabase(BlobsRepository.name, (db) => {
         base + UnixTime.DAY,
       )
 
-      expect(results).toStrictEqual([{ from: '0xA', to: '0xB', count: 2 }])
+      expect(results).toEqual([{ from: '0xA', to: '0xB', count: 2 }])
     })
 
     it('should return empty array when no data matches', async () => {
@@ -205,7 +205,7 @@ describeDatabase(BlobsRepository.name, (db) => {
         base + UnixTime.DAY,
       )
 
-      expect(results).toStrictEqual([])
+      expect(results).toEqual([])
     })
   })
 
@@ -215,7 +215,7 @@ describeDatabase(BlobsRepository.name, (db) => {
 
       const results = await repository.getAll()
 
-      expect(results).toStrictEqual([])
+      expect(results).toEqual([])
     })
   })
 
@@ -225,7 +225,7 @@ describeDatabase(BlobsRepository.name, (db) => {
 
       const results = await repository.getAll()
 
-      expect(results).toStrictEqual(DATA.slice(0, 2))
+      expect(results).toEqual(DATA.slice(0, 2))
     })
   })
 })

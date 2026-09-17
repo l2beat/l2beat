@@ -62,7 +62,7 @@ describe(LowLevelProvider.name, () => {
 
     const result = await provider.call(EthereumAddress.random(), bytes, 10)
 
-    expect(result).toStrictEqual(bytes)
+    expect(result).toEqual(bytes)
   })
 
   it('retries on server error until success', async () => {
@@ -87,7 +87,7 @@ describe(LowLevelProvider.name, () => {
 
     const result = await provider.call(EthereumAddress.random(), bytes, 10)
 
-    expect(result).toStrictEqual(bytes)
+    expect(result).toEqual(bytes)
   })
 
   it('retries up to maximum attempts and then throws', async () => {
@@ -241,7 +241,7 @@ describe(LowLevelProvider.name, () => {
         COINGECKO_CLIENT,
       )
       const result = await provider.call(EthereumAddress.random(), bytes, 10)
-      expect(result).toStrictEqual(bytes)
+      expect(result).toEqual(bytes)
     })
   }
 })

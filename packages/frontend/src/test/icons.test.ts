@@ -21,7 +21,7 @@ describe('icons', () => {
         .sort()
       const requiredIcons = icons.filter((x) => uniqueSlugs.includes(x))
 
-      expect(requiredIcons).toStrictEqual(uniqueSlugs)
+      expect(requiredIcons).toEqual(uniqueSlugs)
     })
   })
 
@@ -82,12 +82,8 @@ describe('icons', () => {
         )
         const lightIconDimensions = getImageDimensions(lightIconBuffer)
         const darkIconDimensions = getImageDimensions(darkIconBuffer)
-        expect(lightIconDimensions?.height).toStrictEqual(
-          darkIconDimensions?.height,
-        )
-        expect(lightIconDimensions?.width).toStrictEqual(
-          darkIconDimensions?.width,
-        )
+        expect(lightIconDimensions?.height).toEqual(darkIconDimensions?.height)
+        expect(lightIconDimensions?.width).toEqual(darkIconDimensions?.width)
       }
     })
   })

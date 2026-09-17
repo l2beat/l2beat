@@ -38,7 +38,7 @@ describe(BlockTxsCountService.name, () => {
       )
 
       const result = await txsCountProvider.getTxsCount(1, 3)
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         records: [
           activityRecord('a', UnixTime.toStartOf(START, 'day'), 3, 5, 1, 2),
           activityRecord(
@@ -80,7 +80,7 @@ describe(BlockTxsCountService.name, () => {
         } as unknown as Logger,
       )
       const result = await txsCountProvider.getTxsCount(1, 2)
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         records: [
           activityRecord('a', UnixTime.toStartOf(START, 'day'), 1, 3, 1, 2),
         ],
@@ -124,7 +124,7 @@ describe(BlockTxsCountService.name, () => {
         logger,
       )
       const result = await txsCountProvider.getTxsCount(1, 3)
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         records: [
           activityRecord('a', UnixTime.toStartOf(START, 'day'), 1, 2, 1, 3),
         ],

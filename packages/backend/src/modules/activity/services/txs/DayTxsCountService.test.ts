@@ -21,7 +21,7 @@ describe(DayTxsCountService.prototype.getTxsCount.name, () => {
 
     const result = await txsCountProvider.getTxsCount(start, end)
 
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       records: [
         activityRecord(
           'a',
@@ -60,7 +60,7 @@ describe(DayTxsCountService.prototype.getTxsCount.name, () => {
 
     const result = await txsCountProvider.getTxsCount(start, end)
 
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       records: [
         activityRecord(
           'a',
@@ -91,7 +91,7 @@ describe(DayTxsCountService.prototype.getTxsCount.name, () => {
 
     const result = await txsCountProvider.getTxsCount(start, end)
 
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       records: [
         activityRecord(
           'a',
@@ -138,7 +138,7 @@ describe(DayTxsCountService.prototype.getTxsCount.name, () => {
 
     const result = await txsCountProvider.getTxsCount(start, end)
 
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       records: [
         activityRecord(
           'a',

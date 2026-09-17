@@ -12,17 +12,17 @@ describe(derivePortalDeposit.name, () => {
       logIndex: WORKED_EXAMPLE.logIndex,
     })
 
-    expect(derived).not.toStrictEqual(undefined)
+    expect(derived).not.toEqual(undefined)
     if (!derived) {
       return
     }
 
-    expect(derived.sourceHash).toStrictEqual(WORKED_EXAMPLE.sourceHash)
-    expect(derived.l2TxHash).toStrictEqual(WORKED_EXAMPLE.l2TxHash)
-    expect(derived.mint).toStrictEqual(82180496084697442374n)
-    expect(derived.value).toStrictEqual(82180496084697442374n)
-    expect(derived.gasLimit).toStrictEqual(100000n)
-    expect(derived.data).toStrictEqual('0x')
+    expect(derived.sourceHash).toEqual(WORKED_EXAMPLE.sourceHash)
+    expect(derived.l2TxHash).toEqual(WORKED_EXAMPLE.l2TxHash)
+    expect(derived.mint).toEqual(82180496084697442374n)
+    expect(derived.value).toEqual(82180496084697442374n)
+    expect(derived.gasLimit).toEqual(100000n)
+    expect(derived.data).toEqual('0x')
   })
 })
 

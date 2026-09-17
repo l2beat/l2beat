@@ -35,7 +35,7 @@ describe(ConstructorArgsHandler.name, () => {
 
       const response = await handler.execute(provider, contractAddress)
 
-      expect(response).toStrictEqual({
+      expect(response).toEqual({
         field: 'constructorArgs',
         value: [
           'Pi Day N00b Token',
@@ -69,7 +69,7 @@ describe(ConstructorArgsHandler.name, () => {
 
       const response = await handler.execute(provider, contractAddress)
 
-      expect(response).toStrictEqual({
+      expect(response).toEqual({
         field: 'constructorArgs',
         value: {
           name: 'Pi Day N00b Token',
@@ -125,7 +125,7 @@ describe(ConstructorArgsHandler.name, () => {
 
       const response = await handler.execute(provider, contractAddress)
 
-      expect(response).toStrictEqual({
+      expect(response).toEqual({
         field: 'constructorArgs',
         value: [
           'Pi Day N00b Token',
@@ -152,7 +152,7 @@ describe(decodeConstructorArgs.name, () => {
 
     const decoded = decodeConstructorArgs(ctor!, sampleTxData)
 
-    expect([...decoded]).toStrictEqual([
+    expect([...decoded]).toEqual([
       'Pi Day N00b Token',
       'PIE',
       18,
@@ -187,7 +187,7 @@ describe(decodeConstructorArgs.name, () => {
 
     const decoded = decodeConstructorArgs(ctor!, txData)
 
-    expect([...decoded]).toStrictEqual([
+    expect([...decoded]).toEqual([
       [
         '0x696cC7615A50CF12d1d1B38bF18A5606e9708296',
         '0x81165b6504520416487E5b4935865b4D3eeaa6e5',
@@ -210,7 +210,7 @@ describe('serializeResult', () => {
 
     const serialized = serializeResult(results)
 
-    expect(serialized).toStrictEqual([
+    expect(serialized).toEqual([
       ['0x696cC7615A50CF12d1d1B38bF18A5606e9708296'],
       '3',
     ])

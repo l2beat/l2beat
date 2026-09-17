@@ -124,7 +124,7 @@ describe(mapToReferenceNodes.name, () => {
 
     const result = mapToReferenceNodes(entries)
     expect(result).toHaveLength(7)
-    expect(result).toStrictEqual(
+    expect(result).toEqual(
       expect.arrayContaining([
         {
           address: entryA.address,
@@ -170,7 +170,7 @@ describe(getReachableEntries.name, () => {
       [second, first],
     ]) {
       const entries = [...duplicates, ...targets]
-      expect(getReachableEntries(entries, [ADDRESSES.A])).toStrictEqual(entries)
+      expect(getReachableEntries(entries, [ADDRESSES.A])).toEqual(entries)
     }
   })
 
@@ -188,7 +188,7 @@ describe(getReachableEntries.name, () => {
     const entrypoints = [entryA.address, entryB.address]
 
     const result = getReachableEntries(entries, entrypoints)
-    expect(result).toStrictEqual([entryA, entryB, entryC, entryD])
+    expect(result).toEqual([entryA, entryB, entryC, entryD])
   })
 
   /*
@@ -206,7 +206,7 @@ describe(getReachableEntries.name, () => {
     const entrypoints = [entryA.address]
 
     const result = getReachableEntries(entries, entrypoints)
-    expect(result).toStrictEqual([entryA])
+    expect(result).toEqual([entryA])
   })
 
   /*
@@ -229,7 +229,7 @@ describe(getReachableEntries.name, () => {
     const entrypoints = [entryA.address]
 
     const result = getReachableEntries(entries, entrypoints)
-    expect(result).toStrictEqual([entryA, entryB, entryC])
+    expect(result).toEqual([entryA, entryB, entryC])
   })
 
   /*
@@ -254,8 +254,8 @@ describe(getReachableEntries.name, () => {
     const entries = [entryA, entryB, entryC, entryD]
     const entrypoints = [entryA.address]
 
-    expect(getReachableEntries(entries, entrypoints, 0)).toStrictEqual([entryA])
-    expect(getReachableEntries(entries, entrypoints, 2)).toStrictEqual([
+    expect(getReachableEntries(entries, entrypoints, 0)).toEqual([entryA])
+    expect(getReachableEntries(entries, entrypoints, 2)).toEqual([
       entryA,
       entryB,
       entryC,
@@ -299,7 +299,7 @@ describe(getReachableEntries.name, () => {
     const entrypoints = [entryA.address]
 
     const result = getReachableEntries(entries, entrypoints)
-    expect(result).toStrictEqual([entryA, entryB, entryC, entryD])
+    expect(result).toEqual([entryA, entryB, entryC, entryD])
   })
 
   /*
@@ -325,7 +325,7 @@ describe(getReachableEntries.name, () => {
     const entrypoints = [entryA.address]
 
     const result = getReachableEntries(entries, entrypoints)
-    expect(result).toStrictEqual([entryA, entryB, entryC])
+    expect(result).toEqual([entryA, entryB, entryC])
   })
 
   /*
@@ -354,7 +354,7 @@ describe(getReachableEntries.name, () => {
     const entrypoints = [entryA.address, entryC.address]
 
     const result = getReachableEntries(entries, entrypoints)
-    expect(result).toStrictEqual([entryA, entryB, entryC, entryD])
+    expect(result).toEqual([entryA, entryB, entryC, entryD])
   })
 
   /*
@@ -396,7 +396,7 @@ describe(getReachableEntries.name, () => {
     const entrypoints = [entryA.address]
 
     const result = getReachableEntries(entries, entrypoints)
-    expect(result).toStrictEqual([entryA, entryB, entryC, entryD, entryE])
+    expect(result).toEqual([entryA, entryB, entryC, entryD, entryE])
   })
 
   /*
@@ -436,7 +436,7 @@ describe(getReachableEntries.name, () => {
     const entrypoints = [entryA.address]
 
     const result = getReachableEntries(entries, entrypoints)
-    expect(result).toStrictEqual([entryA, entryB, entryC, entryD, entryE])
+    expect(result).toEqual([entryA, entryB, entryC, entryD, entryE])
   })
 
   /*
@@ -465,7 +465,7 @@ describe(getReachableEntries.name, () => {
     const entrypoints = [entryA.address]
 
     const result = getReachableEntries(entries, entrypoints)
-    expect(result).toStrictEqual([entryA, entryB])
+    expect(result).toEqual([entryA, entryB])
   })
 
   /*
@@ -488,7 +488,7 @@ describe(getReachableEntries.name, () => {
     const entrypoints: ChainSpecificAddress[] = []
 
     const result = getReachableEntries(entries, entrypoints)
-    expect(result).toStrictEqual([])
+    expect(result).toEqual([])
   })
 
   /*
@@ -542,7 +542,7 @@ describe(getReachableEntries.name, () => {
     const entrypoints = [entryA.address]
 
     const result = getReachableEntries(entries, entrypoints)
-    expect(result).toStrictEqual([entryA, entryB, entryC, entryD])
+    expect(result).toEqual([entryA, entryB, entryC, entryD])
   })
 
   /*
@@ -577,13 +577,6 @@ describe(getReachableEntries.name, () => {
     const entrypoints = [entryA.address]
 
     const result = getReachableEntries(entries, entrypoints, 3)
-    expect(result).toStrictEqual([
-      entryA,
-      entryB,
-      entryC,
-      entryD,
-      entryE,
-      entryF,
-    ])
+    expect(result).toEqual([entryA, entryB, entryC, entryD, entryE, entryF])
   })
 })

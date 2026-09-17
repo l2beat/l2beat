@@ -57,7 +57,7 @@ describe(PrivacyBlockTimestampIndexer.name, () => {
         },
       ])
 
-      expect(safeHeight).toStrictEqual(from)
+      expect(safeHeight).toEqual(from)
     })
 
     it('rounds non-aligned from up to the next hour', async () => {
@@ -96,7 +96,7 @@ describe(PrivacyBlockTimestampIndexer.name, () => {
         blockTimestampProvider.getBlockNumberAtOrBefore,
       ).toHaveBeenCalledExactlyOnceWith(expectedTimestamp, 'ethereum')
 
-      expect(safeHeight).toStrictEqual(expectedTimestamp)
+      expect(safeHeight).toEqual(expectedTimestamp)
     })
 
     it('returns to value if timestamp is out of range', async () => {
@@ -125,7 +125,7 @@ describe(PrivacyBlockTimestampIndexer.name, () => {
       ])
       const safeHeight = await updateFn()
 
-      expect(safeHeight).toStrictEqual(to)
+      expect(safeHeight).toEqual(to)
     })
 
     it('throws when fetched block number is smaller than previously fetched', async () => {
@@ -270,8 +270,8 @@ describe(PrivacyBlockTimestampIndexer.name, () => {
         chain: 'ethereum',
         sinceTimestamp: UnixTime(999),
       })
-      expect(id1).toStrictEqual('0ceab271a1a3')
-      expect(id1).toStrictEqual(id2)
+      expect(id1).toEqual('0ceab271a1a3')
+      expect(id1).toEqual(id2)
     })
 
     it('differs across chains', () => {
@@ -283,7 +283,7 @@ describe(PrivacyBlockTimestampIndexer.name, () => {
         chain: 'arbitrum',
         sinceTimestamp: UnixTime(0),
       })
-      expect(id1).not.toStrictEqual(id2)
+      expect(id1).not.toEqual(id2)
     })
   })
 

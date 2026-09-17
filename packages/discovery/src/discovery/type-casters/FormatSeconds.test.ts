@@ -26,7 +26,7 @@ describe('FormatSeconds', () => {
   for (const data of testData) {
     it(`casts ${data.incomingValue} to "${data.expected}"`, () => {
       const result = FormatSeconds.cast({}, data.incomingValue)
-      expect(result).toStrictEqual(data.expected)
+      expect(result).toEqual(data.expected)
     })
   }
 })

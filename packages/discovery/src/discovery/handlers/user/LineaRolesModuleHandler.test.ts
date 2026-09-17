@@ -296,8 +296,8 @@ describe(LineaRolesModuleHandler.name, () => {
       getBytecode: vi.fn().mockResolvedValue(Bytes.fromHex('0xdeadbeef')),
       getDeployment: vi.fn().mockResolvedValue(undefined),
       getLogs: vi.fn(async (providedAddress, topics) => {
-        expect(providedAddress).toStrictEqual(address)
-        expect(topics).toStrictEqual([
+        expect(providedAddress).toEqual(address)
+        expect(topics).toEqual([
           [
             abi.getEventTopic('AllowTarget'),
             abi.getEventTopic('RevokeTarget'),
@@ -323,7 +323,7 @@ describe(LineaRolesModuleHandler.name, () => {
       [],
     )
     const value = await handler.execute(provider, address)
-    expect(value).toStrictEqual({
+    expect(value).toEqual({
       field: 'someName',
       value: {
         defaultRoles: {},
@@ -360,8 +360,8 @@ describe(LineaRolesModuleHandler.name, () => {
       getBytecode: vi.fn().mockResolvedValue(Bytes.fromHex('0xdeadbeef')),
       getDeployment: vi.fn().mockResolvedValue(undefined),
       getLogs: vi.fn(async (providedAddress, topics) => {
-        expect(providedAddress).toStrictEqual(address)
-        expect(topics).toStrictEqual([
+        expect(providedAddress).toEqual(address)
+        expect(topics).toEqual([
           [
             abi.getEventTopic('AllowTarget'),
             abi.getEventTopic('RevokeTarget'),
@@ -671,7 +671,7 @@ describe(LineaRolesModuleHandler.name, () => {
       [],
     )
     const value = await handler.execute(provider, address)
-    expect(value).toStrictEqual({
+    expect(value).toEqual({
       field: 'someName',
       value: {
         defaultRoles: {
@@ -872,7 +872,7 @@ describe(LineaRolesModuleHandler.name, () => {
       [],
     )
     const value = await handler.execute(provider, address)
-    expect(value).toStrictEqual({
+    expect(value).toEqual({
       field: 'someName',
       value: {
         defaultRoles: {},

@@ -11,7 +11,7 @@ describe(deduplicateAbi.name, () => {
       'function bar()',
     ])
 
-    expect(result).toStrictEqual([
+    expect(result).toEqual([
       'function bar()',
       'function baz()',
       'function foo()',
@@ -24,7 +24,7 @@ describe(deduplicateAbi.name, () => {
       'constructor(string foo)',
     ])
 
-    expect(result).toStrictEqual(['constructor(uint a, uint b)'])
+    expect(result).toEqual(['constructor(uint a, uint b)'])
   })
 
   it('only keeps the first function', () => {
@@ -33,13 +33,13 @@ describe(deduplicateAbi.name, () => {
       'function foo(uint c, uint d)',
     ])
 
-    expect(result).toStrictEqual(['function foo(uint a, uint b)'])
+    expect(result).toEqual(['function foo(uint a, uint b)'])
   })
 
   it('filters out invalid strings', () => {
     const result = deduplicateAbi(['function foo()', 'foo bar baz', '12345'])
 
-    expect(result).toStrictEqual(['function foo()'])
+    expect(result).toEqual(['function foo()'])
   })
 
   it('prefers view or pure functions even if they are late', () => {
@@ -55,7 +55,7 @@ describe(deduplicateAbi.name, () => {
       'function bar(uint e, uint f) view returns (uint)',
     ])
 
-    expect(result).toStrictEqual([
+    expect(result).toEqual([
       'function bar(uint e, uint f) view returns (uint)',
       'function foo(uint e, uint f) pure returns (uint)',
     ])

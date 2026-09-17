@@ -49,7 +49,7 @@ export function testDeletingArchivedRecords<T>(
       fakeRecord(start + 24 * UnixTime.HOUR),
     ]
     expect(results).toHaveLength(expected.length)
-    expect(results).toStrictEqual(expect.arrayContaining(expected))
+    expect(results).toEqual(expect.arrayContaining(expected))
   })
 
   it('deletes hourly records from to', async () => {
@@ -79,7 +79,7 @@ export function testDeletingArchivedRecords<T>(
       fakeRecord(start + 24 * UnixTime.HOUR),
     ]
     expect(results).toHaveLength(expected.length)
-    expect(results).toStrictEqual(expect.arrayContaining(expected))
+    expect(results).toEqual(expect.arrayContaining(expected))
   })
 
   it('deletes six hourly records to given date', async () => {
@@ -105,7 +105,7 @@ export function testDeletingArchivedRecords<T>(
       fakeRecord(start + 7 * UnixTime.HOUR),
     ]
     expect(results).toHaveLength(expected.length)
-    expect(results).toStrictEqual(expect.arrayContaining(expected))
+    expect(results).toEqual(expect.arrayContaining(expected))
   })
 
   it('deletes six hourly records from to', async () => {
@@ -138,6 +138,6 @@ export function testDeletingArchivedRecords<T>(
       fakeRecord(start + 13 * UnixTime.HOUR),
     ]
     expect(results).toHaveLength(expected.length)
-    expect(results).toStrictEqual(expect.arrayContaining(expected))
+    expect(results).toEqual(expect.arrayContaining(expected))
   })
 }

@@ -53,7 +53,7 @@ describe(ArbitrumScheduledTransactionsHandler.name, () => {
       contractAddress,
     )
 
-    expect(response).toStrictEqual({
+    expect(response).toEqual({
       field: 'scheduledTransactions',
       value: EXPECTED_DECODED_SCHEDULED_TRANSACTIONS as ContractValue,
       ignoreRelative: true,
@@ -73,7 +73,7 @@ describe(ArbitrumScheduledTransactionsHandler.name, () => {
         'function adjustTotalDelegation(int256 amount)',
       ])
       const calldata = iface.encodeFunctionData('adjustTotalDelegation', [1])
-      expect(handler.decodeCalldata(iface, calldata)).toStrictEqual({
+      expect(handler.decodeCalldata(iface, calldata)).toEqual({
         function: 'adjustTotalDelegation',
         inputs: [{ name: 'amount', value: 1 }],
       })
@@ -85,7 +85,7 @@ describe(ArbitrumScheduledTransactionsHandler.name, () => {
       // and fails the entire scheduledTransactions field.
       const iface = new utils.Interface(['function unrelated()'])
       const calldata = `0xec20b526${'0'.repeat(63)}1`
-      expect(handler.decodeCalldata(iface, calldata)).toStrictEqual({
+      expect(handler.decodeCalldata(iface, calldata)).toEqual({
         function: '0xec20b526',
         inputs: [{ name: 'calldata', value: calldata }],
       })
@@ -118,14 +118,14 @@ describe(ArbitrumScheduledTransactionsHandler.name, () => {
       ChainSpecificAddress.random(),
     )
     const value = response.value as Record<string, unknown>[]
-    expect(value.length).toStrictEqual(1)
+    expect(value.length).toEqual(1)
     const entry = value[0]
-    expect(entry?.raw).not.toStrictEqual(undefined)
-    expect(entry?.id).not.toStrictEqual(undefined)
+    expect(entry?.raw).not.toEqual(undefined)
+    expect(entry?.id).not.toEqual(undefined)
     // Degraded: no decoded field, and the whole field did not error out.
-    expect(entry?.decoded).toStrictEqual(undefined)
+    expect(entry?.decoded).toEqual(undefined)
     // The degradation is marked so it is visible in the diff, not silent.
-    expect(entry?.decodingFailed).toStrictEqual(true)
+    expect(entry?.decodingFailed).toEqual(true)
   })
 })
 

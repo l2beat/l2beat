@@ -182,7 +182,7 @@ describe(transformTransfersQueryResult.name, () => {
       },
     ]
 
-    expect(transformTransfersQueryResult(config, queryResults)).toStrictEqual(
+    expect(transformTransfersQueryResult(config, queryResults)).toEqual(
       expected,
     )
   })
@@ -319,7 +319,7 @@ describe(transformTransfersQueryResult.name, () => {
       },
     ]
 
-    expect(transformTransfersQueryResult(config, queryResults)).toStrictEqual(
+    expect(transformTransfersQueryResult(config, queryResults)).toEqual(
       expected,
     )
   })

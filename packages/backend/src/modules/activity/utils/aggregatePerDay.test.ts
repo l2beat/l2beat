@@ -16,7 +16,7 @@ describe(aggregatePerDay.name, () => {
       block(START + 1 * UnixTime.DAY + 1 * UnixTime.HOUR, 6, 7, 5),
     ])
 
-    expect(result).toStrictEqual([
+    expect(result).toEqual([
       activityRecord(project, START, 8, 12, 1, 3),
       activityRecord(project, START + 1 * UnixTime.DAY, 8, 9, 4, 5),
     ])

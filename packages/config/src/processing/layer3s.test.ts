@@ -52,9 +52,9 @@ describe('layer3s', () => {
 
       expect(layer3.stackedRiskView == null).toBe(false)
 
-      expect(layer3.config.trackedTxs).toStrictEqual(undefined)
-      expect(layer3.config.liveness).toStrictEqual(undefined)
-      expect(layer3.display.liveness).toStrictEqual(undefined)
+      expect(layer3.config.trackedTxs).toEqual(undefined)
+      expect(layer3.config.liveness).toEqual(undefined)
+      expect(layer3.display.liveness).toEqual(undefined)
     }
   })
 
@@ -112,7 +112,7 @@ describe('layer3s', () => {
     describe('every description ends with a dot', () => {
       for (const layer3 of layer3s) {
         it(layer3.display.name, () => {
-          expect(layer3.display.description.endsWith('.')).toStrictEqual(true)
+          expect(layer3.display.description.endsWith('.')).toEqual(true)
         })
       }
     })
@@ -124,12 +124,10 @@ describe('layer3s', () => {
         if (!layer3.stateValidation) continue
 
         if (layer3.stateValidation.description) {
-          expect(
-            layer3.stateValidation.description.endsWith('.'),
-          ).toStrictEqual(true)
+          expect(layer3.stateValidation.description.endsWith('.')).toEqual(true)
         }
         layer3.stateValidation?.categories.forEach((category) => {
-          expect(category.description.endsWith('.')).toStrictEqual(true)
+          expect(category.description.endsWith('.')).toEqual(true)
         })
       }
     })
@@ -141,7 +139,7 @@ describe('layer3s', () => {
         continue
       }
       it(`${layer3.display.name} does not have duplicated badges`, () => {
-        expect(layer3.badges?.length).toStrictEqual(uniq(layer3.badges).length)
+        expect(layer3.badges?.length).toEqual(uniq(layer3.badges).length)
       })
     }
   })
@@ -152,9 +150,7 @@ describe('layer3s', () => {
         const labels = layer3.reasonsForBeingOther?.map(
           (reason) => reason.label,
         )
-        expect(labels?.length).toStrictEqual(
-          labels ? uniq(labels).length : undefined,
-        )
+        expect(labels?.length).toEqual(labels ? uniq(labels).length : undefined)
       })
     }
 

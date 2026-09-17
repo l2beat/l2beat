@@ -61,11 +61,8 @@ describe('ContractConfigModel', () => {
       const original = ContractConfigModel.fromRawJsonc(jsonc)
       const updated = original.setIgnoreMethods(['newMethod'])
 
-      expect(toArray(original.ignoreMethods)).toStrictEqual([
-        'method1',
-        'method2',
-      ])
-      expect(toArray(updated.ignoreMethods)).toStrictEqual(['newMethod'])
+      expect(toArray(original.ignoreMethods)).toEqual(['method1', 'method2'])
+      expect(toArray(updated.ignoreMethods)).toEqual(['newMethod'])
     })
 
     it('peek returns cloned data, mutations do not affect original', () => {
@@ -76,29 +73,29 @@ describe('ContractConfigModel', () => {
         ;(peeked.ignoreMethods as string[]).push('hacker')
       }
 
-      expect(toArray(model.ignoreMethods)).toStrictEqual(['method1', 'method2'])
+      expect(toArray(model.ignoreMethods)).toEqual(['method1', 'method2'])
     })
   })
 
   describe('edge cases', () => {
     it('isEmpty returns true for empty config', () => {
       const model = new ContractConfigModel({} as any)
-      expect(model.isEmpty()).toStrictEqual(true)
+      expect(model.isEmpty()).toEqual(true)
     })
 
     it('isEmpty returns false for config with values', () => {
       const model = ContractConfigModel.fromRawJsonc(
         `{ "ignoreMethods": ["m1"] }`,
       )
-      expect(model.isEmpty()).toStrictEqual(false)
+      expect(model.isEmpty()).toEqual(false)
     })
 
     it('hasDefinition works correctly', () => {
       const model = ContractConfigModel.fromRawJsonc(
         `{ "ignoreMethods": ["m1"] }`,
       )
-      expect(model.hasDefinition('ignoreMethods')).toStrictEqual(true)
-      expect(model.hasDefinition('ignoreRelatives')).toStrictEqual(false)
+      expect(model.hasDefinition('ignoreMethods')).toEqual(true)
+      expect(model.hasDefinition('ignoreRelatives')).toEqual(false)
     })
   })
 
@@ -110,14 +107,14 @@ describe('ContractConfigModel', () => {
       }`
       const model = ContractConfigModel.fromRawJsonc(jsonc)
 
-      expect(model.hasComments()).toStrictEqual(true)
+      expect(model.hasComments()).toEqual(true)
     })
 
     it('returns false when config has no comments', () => {
       const jsonc = `{ "ignoreMethods": ["method1"] }`
       const model = ContractConfigModel.fromRawJsonc(jsonc)
 
-      expect(model.hasComments()).toStrictEqual(false)
+      expect(model.hasComments()).toEqual(false)
     })
   })
 
@@ -126,18 +123,18 @@ describe('ContractConfigModel', () => {
       const model = ContractConfigModel.fromRawJsonc(
         `{ "description": "test" }`,
       )
-      expect(model.description).toStrictEqual('test')
+      expect(model.description).toEqual('test')
       const updated = model.setDescription('new description')
-      expect(updated.description).toStrictEqual('new description')
+      expect(updated.description).toEqual('new description')
     })
 
     it('removes description when setting to undefined', () => {
       const model = ContractConfigModel.fromRawJsonc(
         `{ "description": "test" }`,
       )
-      expect(model.description).toStrictEqual('test')
+      expect(model.description).toEqual('test')
       const updated = model.setDescription(undefined)
-      expect(updated.description).toStrictEqual(undefined)
+      expect(updated.description).toEqual(undefined)
       const string = updated.toString()
       expect(string).not.toContain('description')
     })

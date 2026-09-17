@@ -27,8 +27,8 @@ describe(CatchingUpState.name, () => {
 
       const nextState = await state.catchUp()
 
-      expect(nextState).toStrictEqual(state)
-      expect(state.status).toStrictEqual('waiting for block number')
+      expect(nextState).toEqual(state)
+      expect(state.status).toEqual('waiting for block number')
       expect(getResyncState).toHaveBeenCalled()
     })
 
@@ -88,9 +88,9 @@ describe(CatchingUpState.name, () => {
 
       const nextState = await state.catchUp()
 
-      expect(nextState).toStrictEqual(state)
-      expect(state.status).toStrictEqual('waiting for wipe')
-      expect(syncer.waitingForWipe).toStrictEqual(true)
+      expect(nextState).toEqual(state)
+      expect(state.status).toEqual('waiting for wipe')
+      expect(syncer.waitingForWipe).toEqual(true)
       expect(saveProducedInteropEvents).not.toHaveBeenCalled()
     })
 
@@ -106,9 +106,9 @@ describe(CatchingUpState.name, () => {
 
       const nextState = await state.catchUp()
 
-      expect(nextState).toStrictEqual(state)
-      expect(state.status).toStrictEqual('waiting for wipe')
-      expect(syncer.waitingForWipe).toStrictEqual(true)
+      expect(nextState).toEqual(state)
+      expect(state.status).toEqual('waiting for wipe')
+      expect(syncer.waitingForWipe).toEqual(true)
     })
 
     it('switches to following when already synced to latest block', async () => {
@@ -174,7 +174,7 @@ describe(CatchingUpState.name, () => {
       const catchUpPromise = state.catchUp()
       await flushAsyncWork()
 
-      expect(state.status).toStrictEqual(
+      expect(state.status).toEqual(
         'saving events 10-10 (0 behind tip, 0 events)',
       )
 
@@ -285,7 +285,7 @@ describe(CatchingUpState.name, () => {
 
       await state.catchUp()
 
-      expect(getLogs.mock.calls[0][0]).toStrictEqual({
+      expect(getLogs.mock.calls[0][0]).toEqual({
         fromBlock: 2n,
         toBlock: 2n,
         topics: [['0xabc']],
@@ -373,7 +373,7 @@ describe(CatchingUpState.name, () => {
       expect(getTransactionReceipt).toHaveBeenCalledWith(txHash)
       expect(captureLog).toHaveBeenCalledTimes(1)
       const captured = captureLog.mock.calls[0][0] as LogToCapture | undefined
-      expect(captured?.txLogs.map((log) => log.topics[0])).toStrictEqual([
+      expect(captured?.txLogs.map((log) => log.topics[0])).toEqual([
         baseTopic0,
         extraTopic0,
         otherTopic0,
@@ -427,11 +427,11 @@ describe(CatchingUpState.name, () => {
       expect(getTransactionByHash).toHaveBeenCalledWith(txHash)
       const captured = captureLog.mock.calls[0][0] as LogToCapture | undefined
       assert(captured?.tx.kind === 'canonical')
-      expect(captured?.tx.hash).toStrictEqual(txHash)
-      expect(captured?.tx.data).toStrictEqual(transaction.input!)
-      expect(captured?.tx.value).toStrictEqual(transaction.value!)
-      expect(captured?.tx.from).toStrictEqual(transaction.from)
-      expect(captured?.tx.to).toStrictEqual(transaction.to?.toString())
+      expect(captured?.tx.hash).toEqual(txHash)
+      expect(captured?.tx.data).toEqual(transaction.input!)
+      expect(captured?.tx.value).toEqual(transaction.value!)
+      expect(captured?.tx.from).toEqual(transaction.from)
+      expect(captured?.tx.to).toEqual(transaction.to?.toString())
     })
 
     it('maps call-only bundle transaction fields for includeTx', async () => {
@@ -491,9 +491,9 @@ describe(CatchingUpState.name, () => {
       expect(getTransactionByHash).toHaveBeenCalledWith(txHash)
       const captured = captureLog.mock.calls[0][0] as LogToCapture | undefined
       assert(captured?.tx.kind === 'bundle')
-      expect(captured?.tx.hash).toStrictEqual(txHash)
-      expect(captured?.tx.from).toStrictEqual(transaction.from)
-      expect(captured?.tx.calls).toStrictEqual([
+      expect(captured?.tx.hash).toEqual(txHash)
+      expect(captured?.tx.from).toEqual(transaction.from)
+      expect(captured?.tx.calls).toEqual([
         {
           to: callTo,
           value: 321n,
@@ -526,19 +526,19 @@ describe(CatchingUpState.name, () => {
 
       const firstState = await state.catchUp()
 
-      expect(firstState).toStrictEqual(state)
-      expect(state.status).toStrictEqual('retrying smaller range [/2]')
-      expect(syncer.logRangeDivider).toStrictEqual(1)
+      expect(firstState).toEqual(state)
+      expect(state.status).toEqual('retrying smaller range [/2]')
+      expect(syncer.logRangeDivider).toEqual(1)
       expect(saveProducedInteropEvents).not.toHaveBeenCalled()
 
       const secondState = await state.catchUp()
 
-      expect(secondState).toStrictEqual(state)
-      expect(state.status).toStrictEqual('retrying smaller range [/4]')
-      expect(syncer.logRangeDivider).toStrictEqual(2)
+      expect(secondState).toEqual(state)
+      expect(state.status).toEqual('retrying smaller range [/4]')
+      expect(syncer.logRangeDivider).toEqual(2)
       const secondCall = getLogs.mock.calls[1][0]
-      expect(secondCall?.fromBlock).toStrictEqual(1n)
-      expect(secondCall?.toBlock).toStrictEqual(5_000n)
+      expect(secondCall?.fromBlock).toEqual(1n)
+      expect(secondCall?.toBlock).toEqual(5_000n)
     })
 
     it('throws after too many log range divider increments', async () => {

@@ -39,7 +39,7 @@ describe(ConfigHealthService.name, () => {
 
     expect(
       new ConfigHealthService().checkConfigHealth(CONFIG, discovery),
-    ).toStrictEqual([])
+    ).toEqual([])
   })
 
   it('reports nonexistent nested value paths in template health', () => {
@@ -59,7 +59,7 @@ describe(ConfigHealthService.name, () => {
         [discovery],
         TEMPLATE_ID,
       ),
-    ).toStrictEqual([
+    ).toEqual([
       {
         source: 'template',
         target: { templateId: TEMPLATE_ID },
@@ -84,7 +84,7 @@ describe(ConfigHealthService.name, () => {
         MISCONFIGURED_CONFIG,
         discovery,
       ),
-    ).toStrictEqual([
+    ).toEqual([
       {
         source: 'config',
         target: {

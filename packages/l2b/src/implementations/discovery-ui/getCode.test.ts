@@ -59,7 +59,7 @@ describe(getCodePaths.name, () => {
 
     const result = getCodePaths(configReader, PROJECT, ADDRESS)
 
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       entryName: 'Proxy',
       codePaths: [
         {

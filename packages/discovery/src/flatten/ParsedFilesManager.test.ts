@@ -72,7 +72,7 @@ describe(ParsedFilesManager.name, () => {
       ]
       const manager = ParsedFilesManager.parseFiles(files, EMPTY_REMAPPINGS)
 
-      expect(manager.findDeclaration('Contract1')).toStrictEqual({
+      expect(manager.findDeclaration('Contract1')).toEqual({
         declaration: expect.objectContaining({
           name: 'Contract1',
           type: 'contract',
@@ -98,9 +98,9 @@ describe(ParsedFilesManager.name, () => {
       const manager = ParsedFilesManager.parseFiles(files, EMPTY_REMAPPINGS)
       const root = manager.findDeclaration('R1')
 
-      expect(
-        manager.tryFindDeclaration('NonExistent', root.file),
-      ).toStrictEqual(undefined)
+      expect(manager.tryFindDeclaration('NonExistent', root.file)).toEqual(
+        undefined,
+      )
     })
 
     it('resolves imports', () => {
@@ -134,16 +134,14 @@ describe(ParsedFilesManager.name, () => {
 
       expect(
         manager.tryFindDeclaration('Alias1', root.file)?.declaration.name,
-      ).toStrictEqual('S1')
-      expect(manager.tryFindDeclaration('S2', root.file)).toStrictEqual(
-        undefined,
-      )
+      ).toEqual('S1')
+      expect(manager.tryFindDeclaration('S2', root.file)).toEqual(undefined)
       expect(
         manager.tryFindDeclaration('A1', root.file)?.declaration.name,
-      ).toStrictEqual('A1')
+      ).toEqual('A1')
       expect(
         manager.tryFindDeclaration('A2', root.file)?.declaration.name,
-      ).toStrictEqual('A2')
+      ).toEqual('A2')
     })
 
     it('normalizes imports', () => {
@@ -177,16 +175,14 @@ describe(ParsedFilesManager.name, () => {
 
       expect(
         manager.tryFindDeclaration('Alias1', root.file)?.declaration.name,
-      ).toStrictEqual('S1')
-      expect(manager.tryFindDeclaration('S2', root.file)).toStrictEqual(
-        undefined,
-      )
+      ).toEqual('S1')
+      expect(manager.tryFindDeclaration('S2', root.file)).toEqual(undefined)
       expect(
         manager.tryFindDeclaration('A1', root.file)?.declaration.name,
-      ).toStrictEqual('A1')
+      ).toEqual('A1')
       expect(
         manager.tryFindDeclaration('A2', root.file)?.declaration.name,
-      ).toStrictEqual('A2')
+      ).toEqual('A2')
     })
   })
 
@@ -260,7 +256,7 @@ describe(ParsedFilesManager.name, () => {
       const manager = ParsedFilesManager.parseFiles(files, EMPTY_REMAPPINGS)
       const root = manager.findDeclaration('R1')
 
-      expect(root.declaration.signatureReferences.sort()).toStrictEqual(
+      expect(root.declaration.signatureReferences.sort()).toEqual(
         ['L1', 'L2'].sort(),
       )
     })
@@ -295,7 +291,7 @@ describe(ParsedFilesManager.name, () => {
       const manager = ParsedFilesManager.parseFiles(files, EMPTY_REMAPPINGS)
       const root = manager.findDeclaration('R1')
 
-      expect(root.declaration.signatureReferences.sort()).toStrictEqual(
+      expect(root.declaration.signatureReferences.sort()).toEqual(
         ['L1', 'L2', 'S1', 'T1', 'f1'].sort(),
       )
     })
@@ -329,7 +325,7 @@ describe(ParsedFilesManager.name, () => {
       })
       const root = manager.findDeclaration('User')
 
-      expect(root.declaration.signatureReferences.sort()).toStrictEqual(
+      expect(root.declaration.signatureReferences.sort()).toEqual(
         ['CustomError', 'EventHappened', 'GLOBAL_VALUE'].sort(),
       )
       expect(manager.findDeclaration('GLOBAL_VALUE').declaration).toMatchObject(
@@ -367,9 +363,7 @@ contract MyContract { function f() public {} }`,
       const result = manager.findDeclaration('MyContract')
 
       // Content should start with 'contract', not comments
-      expect(result.declaration.content.startsWith('contract')).toStrictEqual(
-        true,
-      )
+      expect(result.declaration.content.startsWith('contract')).toEqual(true)
       expect(result.declaration.content).not.toContain('/// @title')
     })
 
@@ -434,9 +428,9 @@ contract Second { function f() public {} }`,
       const result = manager.findDeclaration('Second')
 
       // Second contract should NOT include the trailing comment from First
-      expect(
-        result.declaration.content.startsWith('contract Second'),
-      ).toStrictEqual(true)
+      expect(result.declaration.content.startsWith('contract Second')).toEqual(
+        true,
+      )
       expect(result.declaration.content).not.toContain('trailing comment')
     })
 

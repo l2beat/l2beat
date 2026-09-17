@@ -36,7 +36,7 @@ describe(InteropRecentPricesIndexer.name, () => {
 
       const result = await indexer.update(from, to)
 
-      expect(result).toStrictEqual(to)
+      expect(result).toEqual(to)
       expect(priceProvider.getAllCoingeckoIds).toHaveBeenCalledTimes(1)
       expect(priceProvider.getLatestPrices).toHaveBeenCalledWith([
         CoingeckoId('bitcoin'),
@@ -71,7 +71,7 @@ describe(InteropRecentPricesIndexer.name, () => {
 
       const result = await indexer.update(from, to)
 
-      expect(result).toStrictEqual(to)
+      expect(result).toEqual(to)
       expect(priceProvider.getAllCoingeckoIds).not.toHaveBeenCalled()
       expect(priceProvider.getLatestPrices).not.toHaveBeenCalled()
       expect(repository.insertMany).not.toHaveBeenCalled()
@@ -89,7 +89,7 @@ describe(InteropRecentPricesIndexer.name, () => {
         const to = start + UnixTime.HOUR
 
         const result = indexer.findFullHourInRange(from, to)
-        expect(result).toStrictEqual(
+        expect(result).toEqual(
           UnixTime.fromDate(new Date('2025-10-10T14:00:00Z')),
         )
       })
@@ -99,7 +99,7 @@ describe(InteropRecentPricesIndexer.name, () => {
         const to = start + 2 * UnixTime.HOUR
 
         const result = indexer.findFullHourInRange(from, to)
-        expect(result).toStrictEqual(
+        expect(result).toEqual(
           UnixTime.fromDate(new Date('2025-10-10T15:00:00Z')),
         )
       })
@@ -109,7 +109,7 @@ describe(InteropRecentPricesIndexer.name, () => {
         const to = start + 59 * UnixTime.MINUTE
 
         const result = indexer.findFullHourInRange(from, to)
-        expect(result).toStrictEqual(undefined)
+        expect(result).toEqual(undefined)
       })
     },
   )

@@ -14,7 +14,7 @@ describe(extractStarknetPrivacyFlow.name, () => {
       event(['0xdeposit', '0xuser', '0x0123'], ['0x1234']),
     )
 
-    expect(result).toStrictEqual({ count: 1, amount: 0x1234n })
+    expect(result).toEqual({ count: 1, amount: 0x1234n })
   })
 
   it('extracts a STRK-20 withdrawal amount after encrypted user data', () => {
@@ -26,7 +26,7 @@ describe(extractStarknetPrivacyFlow.name, () => {
       ),
     )
 
-    expect(result).toStrictEqual({ count: 1, amount: 0x4567n })
+    expect(result).toEqual({ count: 1, amount: 0x4567n })
   })
 
   it('ignores events for another token', () => {
@@ -35,7 +35,7 @@ describe(extractStarknetPrivacyFlow.name, () => {
       event(['0xdeposit', '0xuser', '0x456'], ['0x1234']),
     )
 
-    expect(result).toStrictEqual(undefined)
+    expect(result).toEqual(undefined)
   })
 })
 

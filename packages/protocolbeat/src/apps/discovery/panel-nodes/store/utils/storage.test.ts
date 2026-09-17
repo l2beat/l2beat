@@ -9,32 +9,32 @@ import {
 describe(reconcileHiddenFields.name, () => {
   it('keeps entries that exist on the node', () => {
     const result = reconcileHiddenFields(['a', 'b', 'c'], ['a', 'c'])
-    expect(result).toStrictEqual(['a', 'c'])
+    expect(result).toEqual(['a', 'c'])
   })
 
   it('drops stale entries no longer on the node', () => {
     const result = reconcileHiddenFields(['a', 'b'], ['a', 'removed', 'b'])
-    expect(result).toStrictEqual(['a', 'b'])
+    expect(result).toEqual(['a', 'b'])
   })
 
   it('dedupes duplicates', () => {
     const result = reconcileHiddenFields(['a', 'b'], ['a', 'a', 'b', 'a'])
-    expect(result).toStrictEqual(['a', 'b'])
+    expect(result).toEqual(['a', 'b'])
   })
 
   it('returns empty when no entries match', () => {
     const result = reconcileHiddenFields(['a', 'b'], ['x', 'y'])
-    expect(result).toStrictEqual([])
+    expect(result).toEqual([])
   })
 
   it('returns empty for empty hidden input', () => {
     const result = reconcileHiddenFields(['a', 'b'], [])
-    expect(result).toStrictEqual([])
+    expect(result).toEqual([])
   })
 
   it('returns empty when node has no fields', () => {
     const result = reconcileHiddenFields([], ['a', 'b'])
-    expect(result).toStrictEqual([])
+    expect(result).toEqual([])
   })
 })
 
@@ -47,7 +47,7 @@ describe(reconcileNodeHiddenFields.name, () => {
 
     const result = reconcileNodeHiddenFields(fields, ['member'])
 
-    expect(result).toStrictEqual(['group-field:first', 'group-field:second'])
+    expect(result).toEqual(['group-field:first', 'group-field:second'])
   })
 
   it('preserves stable field identities', () => {
@@ -55,7 +55,7 @@ describe(reconcileNodeHiddenFields.name, () => {
 
     const result = reconcileNodeHiddenFields(fields, ['group-field:first'])
 
-    expect(result).toStrictEqual(['group-field:first'])
+    expect(result).toEqual(['group-field:first'])
   })
 })
 
@@ -77,7 +77,7 @@ describe(buildStoredNodeLayout.name, () => {
       nodes: [node],
     } as unknown as State)
 
-    expect(layout.hiddenFields).toStrictEqual({ a: ['owner'] })
-    expect(layout.compressedRows).toStrictEqual({ a: ['$members'] })
+    expect(layout.hiddenFields).toEqual({ a: ['owner'] })
+    expect(layout.compressedRows).toEqual({ a: ['$members'] })
   })
 })

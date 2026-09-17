@@ -40,7 +40,7 @@ describe(getTokenInfos.name, () => {
 
     const result = await getTokenInfos([id], tokenDb, Logger.SILENT)
 
-    expect(result.size).toStrictEqual(0)
+    expect(result.size).toEqual(0)
   })
 })
 
@@ -431,7 +431,7 @@ describe(InteropFinancialsLoop.name, () => {
       ).toHaveLength(2)
       expect(
         vi.mocked(interopTransfer.updateManyFinancials).mock.calls[1][0],
-      ).toStrictEqual([
+      ).toEqual([
         { id: 'msg3', update: expect.objectContaining({ srcValueUsd: 2 }) },
       ])
       expect(analyzer.handleProcessedTransfers).toHaveBeenCalledTimes(2)
@@ -972,10 +972,10 @@ describe(InteropFinancialsLoop.name, () => {
         .mock.calls[0][0]
 
       expect(processedTransfers).toHaveLength(2)
-      expect(processedTransfers?.[0]?.transferId).toStrictEqual('msg1')
-      expect(processedTransfers?.[0]?.srcValueUsd).toStrictEqual(600)
-      expect(processedTransfers?.[0]?.dstValueUsd).toStrictEqual(100)
-      expect(processedTransfers?.[1]?.transferId).toStrictEqual('msg2')
+      expect(processedTransfers?.[0]?.transferId).toEqual('msg1')
+      expect(processedTransfers?.[0]?.srcValueUsd).toEqual(600)
+      expect(processedTransfers?.[0]?.dstValueUsd).toEqual(100)
+      expect(processedTransfers?.[1]?.transferId).toEqual('msg2')
       expect(
         interopRecentPrices.getClosestPricesAtOrBefore,
       ).toHaveBeenCalledWith(

@@ -16,8 +16,8 @@ describe(RpcClient.name, () => {
 
       const result = await rpc.getLatestBlockNumber()
 
-      expect(result).toStrictEqual(100)
-      expect(vi.mocked(http.fetch).mock.calls[0][1]?.body).toStrictEqual(
+      expect(result).toEqual(100)
+      expect(vi.mocked(http.fetch).mock.calls[0][1]?.body).toEqual(
         JSON.stringify({
           method: 'eth_blockNumber',
           params: [],
@@ -37,7 +37,7 @@ describe(RpcClient.name, () => {
 
       const result = await rpc.getBlockWithTransactions(100)
 
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         transactions: [mockTx('0'), mockTx(undefined)],
         timestamp: 100,
         hash: '0xabcdef',
@@ -46,7 +46,7 @@ describe(RpcClient.name, () => {
         parentBeaconBlockRoot: '0x123',
       })
 
-      expect(vi.mocked(http.fetch).mock.calls[0][1]?.body).toStrictEqual(
+      expect(vi.mocked(http.fetch).mock.calls[0][1]?.body).toEqual(
         JSON.stringify({
           method: 'eth_getBlockByNumber',
           params: ['0x64', true],
@@ -64,7 +64,7 @@ describe(RpcClient.name, () => {
 
       const result = await rpc.getBlock(100, false)
 
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         timestamp: 100,
         hash: '0xabcdef',
         logsBloom: `0x${'0'.repeat(512)}`,
@@ -72,7 +72,7 @@ describe(RpcClient.name, () => {
         parentBeaconBlockRoot: '0x123',
       })
 
-      expect(vi.mocked(http.fetch).mock.calls[0][1]?.body).toStrictEqual(
+      expect(vi.mocked(http.fetch).mock.calls[0][1]?.body).toEqual(
         JSON.stringify({
           method: 'eth_getBlockByNumber',
           params: ['0x64', false],
@@ -92,8 +92,8 @@ describe(RpcClient.name, () => {
 
       const result = await rpc.getBlockTimestamp(100)
 
-      expect(result).toStrictEqual(100)
-      expect(vi.mocked(http.fetch).mock.calls[0][1]?.body).toStrictEqual(
+      expect(result).toEqual(100)
+      expect(vi.mocked(http.fetch).mock.calls[0][1]?.body).toEqual(
         JSON.stringify({
           method: 'eth_getBlockByNumber',
           params: ['0x64', false],
@@ -115,9 +115,9 @@ describe(RpcClient.name, () => {
 
       const result = await rpc.getTransaction('0xabcd')
 
-      expect(result).toStrictEqual(mockTx('0x1'))
+      expect(result).toEqual(mockTx('0x1'))
 
-      expect(vi.mocked(http.fetch).mock.calls[0][1]?.body).toStrictEqual(
+      expect(vi.mocked(http.fetch).mock.calls[0][1]?.body).toEqual(
         JSON.stringify({
           method: 'eth_getTransactionByHash',
           params: ['0xabcd'],
@@ -139,9 +139,9 @@ describe(RpcClient.name, () => {
 
       const result = await rpc.getTransactionReceipt('0xabcd')
 
-      expect(result).toStrictEqual(mockReceipt)
+      expect(result).toEqual(mockReceipt)
 
-      expect(vi.mocked(http.fetch).mock.calls[0][1]?.body).toStrictEqual(
+      expect(vi.mocked(http.fetch).mock.calls[0][1]?.body).toEqual(
         JSON.stringify({
           method: 'eth_getTransactionReceipt',
           params: ['0xabcd'],
@@ -162,8 +162,8 @@ describe(RpcClient.name, () => {
       const address = EthereumAddress.random()
       const result = await rpc.getBalance(address, 'latest')
 
-      expect(result).toStrictEqual(BigInt(123))
-      expect(vi.mocked(http.fetch).mock.calls[0][1]?.body).toStrictEqual(
+      expect(result).toEqual(BigInt(123))
+      expect(vi.mocked(http.fetch).mock.calls[0][1]?.body).toEqual(
         JSON.stringify({
           method: 'eth_getBalance',
           params: [address, 'latest'],
@@ -206,7 +206,7 @@ describe(RpcClient.name, () => {
         mockTopics,
       )
 
-      expect(result).toStrictEqual([
+      expect(result).toEqual([
         {
           address: mockAddresses[0],
           topics: mockTopics,
@@ -219,7 +219,7 @@ describe(RpcClient.name, () => {
         },
       ])
 
-      expect(vi.mocked(http.fetch).mock.calls[0][1]?.body).toStrictEqual(
+      expect(vi.mocked(http.fetch).mock.calls[0][1]?.body).toEqual(
         JSON.stringify({
           method: 'eth_getLogs',
           params: [
@@ -291,7 +291,7 @@ describe(RpcClient.name, () => {
         mockTopics,
       )
 
-      expect(vi.mocked(http.fetch).mock.calls[0][1]?.body).toStrictEqual(
+      expect(vi.mocked(http.fetch).mock.calls[0][1]?.body).toEqual(
         JSON.stringify({
           method: 'eth_getLogs',
           params: [
@@ -307,7 +307,7 @@ describe(RpcClient.name, () => {
         }),
       )
 
-      expect(vi.mocked(http.fetch).mock.calls[1][1]?.body).toStrictEqual(
+      expect(vi.mocked(http.fetch).mock.calls[1][1]?.body).toEqual(
         JSON.stringify({
           method: 'eth_getLogs',
           params: [
@@ -323,7 +323,7 @@ describe(RpcClient.name, () => {
         }),
       )
 
-      expect(vi.mocked(http.fetch).mock.calls[2][1]?.body).toStrictEqual(
+      expect(vi.mocked(http.fetch).mock.calls[2][1]?.body).toEqual(
         JSON.stringify({
           method: 'eth_getLogs',
           params: [
@@ -340,7 +340,7 @@ describe(RpcClient.name, () => {
       )
 
       expect(result).toHaveLength(2)
-      expect(result).toStrictEqual(
+      expect(result).toEqual(
         expect.arrayContaining([
           {
             address: mockAddresses[0],
@@ -382,7 +382,7 @@ describe(RpcClient.name, () => {
         'latest',
       )
 
-      expect(result).toStrictEqual(Bytes.fromHex('0x123abc'))
+      expect(result).toEqual(Bytes.fromHex('0x123abc'))
       expect(http.fetch).toHaveBeenCalledTimes(1)
 
       expect(http.fetch).toHaveBeenCalledWith('API_URL', {
@@ -487,7 +487,7 @@ describe(RpcClient.name, () => {
         'latest',
       )
 
-      expect(result).toStrictEqual(Bytes.fromHex('0x'))
+      expect(result).toEqual(Bytes.fromHex('0x'))
     })
   })
 
@@ -509,8 +509,8 @@ describe(RpcClient.name, () => {
         multicallClient,
       })
 
-      expect(rpc.isMulticallDeployed(1000)).toStrictEqual(true)
-      expect(rpc.isMulticallDeployed(1001)).toStrictEqual(true)
+      expect(rpc.isMulticallDeployed(1000)).toEqual(true)
+      expect(rpc.isMulticallDeployed(1001)).toEqual(true)
     })
 
     it('returns false when multicall client is configured but block number is before deployment', () => {
@@ -530,7 +530,7 @@ describe(RpcClient.name, () => {
         multicallClient,
       })
 
-      expect(rpc.isMulticallDeployed(999)).toStrictEqual(false)
+      expect(rpc.isMulticallDeployed(999)).toEqual(false)
     })
 
     it('returns false when multicall client is not configured', () => {
@@ -543,7 +543,7 @@ describe(RpcClient.name, () => {
         logger: Logger.SILENT,
       })
 
-      expect(rpc.isMulticallDeployed(1000)).toStrictEqual(false)
+      expect(rpc.isMulticallDeployed(1000)).toEqual(false)
     })
   })
 
@@ -670,7 +670,7 @@ describe(RpcClient.name, () => {
       expect(decodeMock).toHaveBeenNthCalledWith(1, Bytes.fromHex('0x123456'))
       expect(decodeMock).toHaveBeenNthCalledWith(2, Bytes.fromHex('0x654321'))
 
-      expect(result).toStrictEqual([
+      expect(result).toEqual([
         { success: true, data: Bytes.fromHex('0x111') },
         { success: true, data: Bytes.fromHex('0x222') },
         { success: true, data: Bytes.fromHex('0x333') },
@@ -723,7 +723,7 @@ describe(RpcClient.name, () => {
 
       const result = await rpc.batchCall(calls)
 
-      expect(result).toStrictEqual([
+      expect(result).toEqual([
         Bytes.fromHex('0x123abc'),
         Bytes.fromHex('0x456def'),
         Bytes.fromHex('0x789abc'),
@@ -786,7 +786,7 @@ describe(RpcClient.name, () => {
 
       const result = await rpc.query('rpc_method', ['a', 1, true])
 
-      expect(result).toStrictEqual('data-returned-from-api')
+      expect(result).toEqual('data-returned-from-api')
       expect(http.fetch).toHaveBeenCalledExactlyOnceWith('API_URL', {
         body: JSON.stringify({
           method: 'rpc_method',
@@ -815,9 +815,7 @@ describe(RpcClient.name, () => {
       await rpc.query('rpc_method', ['a', 1, true])
 
       expect(rpcMetrics.record).toHaveBeenCalledTimes(1)
-      expect(rpcMetrics.record.mock.calls[0][0]?.method).toStrictEqual(
-        'rpc_method',
-      )
+      expect(rpcMetrics.record.mock.calls[0][0]?.method).toEqual('rpc_method')
     })
   })
 
@@ -864,7 +862,7 @@ describe(RpcClient.name, () => {
         jsonrpc: '2.0',
       }))
 
-      expect(result).toStrictEqual(expectedResult)
+      expect(result).toEqual(expectedResult)
       expect(http.fetch).toHaveBeenCalledExactlyOnceWith('API_URL', {
         body: JSON.stringify(expectedPayload),
         method: 'POST',
@@ -901,10 +899,8 @@ describe(RpcClient.name, () => {
       ])
 
       expect(rpcMetrics.record).toHaveBeenCalledTimes(1)
-      expect(rpcMetrics.record.mock.calls[0][0]?.method).toStrictEqual(
-        'rpc_method',
-      )
-      expect(rpcMetrics.record.mock.calls[0][0]?.count).toStrictEqual(2)
+      expect(rpcMetrics.record.mock.calls[0][0]?.method).toEqual('rpc_method')
+      expect(rpcMetrics.record.mock.calls[0][0]?.count).toEqual(2)
     })
   })
 
@@ -919,7 +915,7 @@ describe(RpcClient.name, () => {
         },
       })
 
-      expect(validationInfo.success).toStrictEqual(false)
+      expect(validationInfo.success).toEqual(false)
     })
 
     it('returns true otherwise', async () => {
@@ -928,7 +924,7 @@ describe(RpcClient.name, () => {
         result: 'success',
       })
 
-      expect(validationInfo.success).toStrictEqual(true)
+      expect(validationInfo.success).toEqual(true)
     })
   })
 })

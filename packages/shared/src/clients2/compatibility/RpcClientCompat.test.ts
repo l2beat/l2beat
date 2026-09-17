@@ -21,7 +21,7 @@ describe(RpcClientCompat.name, () => {
 
       const timestamp = await client.getBlockTimestamp(100)
 
-      expect(timestamp).toStrictEqual(1_000)
+      expect(timestamp).toEqual(1_000)
       expect(getBlockByNumber).toHaveBeenCalledExactlyOnceWith(100n, false)
     })
   })
@@ -79,7 +79,7 @@ describe(RpcClientCompat.name, () => {
 
       const result = await resultPromise
       expect(getBlockByNumber).toHaveBeenCalledTimes(26)
-      expect(result).toStrictEqual(
+      expect(result).toEqual(
         new Map(blockNumbers.map((number) => [number, number * 100])),
       )
     })

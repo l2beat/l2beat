@@ -86,19 +86,19 @@ describeDatabase(InteropMessageRepository.name, (database) => {
       const stats = result.find((s) => s.type === 'message')
       assert(stats)
 
-      expect(stats.plugin).toStrictEqual('plugin')
-      expect(stats.type).toStrictEqual('message')
-      expect(stats.count).toStrictEqual(3)
-      expect(stats.knownAppCount).toStrictEqual(3)
-      expect(stats.avgDuration).toStrictEqual(150)
+      expect(stats.plugin).toEqual('plugin')
+      expect(stats.type).toEqual('message')
+      expect(stats.count).toEqual(3)
+      expect(stats.knownAppCount).toEqual(3)
+      expect(stats.avgDuration).toEqual(150)
 
       const swapStats = result.find((s) => s.type === 'swap')
       assert(swapStats)
-      expect(swapStats.plugin).toStrictEqual('plugin')
-      expect(swapStats.type).toStrictEqual('swap')
-      expect(swapStats.count).toStrictEqual(1)
-      expect(swapStats.knownAppCount).toStrictEqual(1)
-      expect(swapStats.avgDuration).toStrictEqual(300)
+      expect(swapStats.plugin).toEqual('plugin')
+      expect(swapStats.type).toEqual('swap')
+      expect(swapStats.count).toEqual(1)
+      expect(swapStats.knownAppCount).toEqual(1)
+      expect(swapStats.avgDuration).toEqual(300)
     })
   })
 
@@ -125,8 +125,8 @@ describeDatabase(InteropMessageRepository.name, (database) => {
       })
 
       expect(filtered).toHaveLength(1)
-      expect(filtered[0]?.plugin).toStrictEqual('plugin-a')
-      expect(filtered[0]?.messageId).toStrictEqual('msg1')
+      expect(filtered[0]?.plugin).toEqual('plugin-a')
+      expect(filtered[0]?.messageId).toEqual('msg1')
     })
   })
 
@@ -152,7 +152,7 @@ describeDatabase(InteropMessageRepository.name, (database) => {
         { srcTxHash: '0xb', dstTxHash: '0xy' },
       ])
 
-      expect([...result.map((r) => r.messageId)].sort()).toStrictEqual(
+      expect([...result.map((r) => r.messageId)].sort()).toEqual(
         ['msg1', 'msg2'].sort(),
       )
     })
@@ -183,7 +183,7 @@ describeDatabase(InteropMessageRepository.name, (database) => {
         { srcTxHash: '0xb', dstTxHash: '0xy' },
       ])
 
-      expect([...result.map((r) => r.messageId)].sort()).toStrictEqual(
+      expect([...result.map((r) => r.messageId)].sort()).toEqual(
         ['msg1', 'msg2'].sort(),
       )
     })
@@ -201,12 +201,12 @@ describeDatabase(InteropMessageRepository.name, (database) => {
         { srcTxHash: '0xABC', dstTxHash: '0xDEF' },
       ])
 
-      expect(result.map((r) => r.messageId)).toStrictEqual(['msg1'])
+      expect(result.map((r) => r.messageId)).toEqual(['msg1'])
     })
 
     it('returns empty array for empty input', async () => {
       const result = await repository.getExistingItems([])
-      expect(result).toStrictEqual([])
+      expect(result).toEqual([])
     })
   })
 
@@ -244,12 +244,12 @@ describeDatabase(InteropMessageRepository.name, (database) => {
       await repository.insertMany(records)
 
       const deleted = await repository.deleteForPlugin('plugin-a')
-      expect(deleted).toStrictEqual(2)
+      expect(deleted).toEqual(2)
 
       const remaining = await repository.getAll()
       expect(remaining).toHaveLength(1)
-      expect(remaining[0]?.plugin).toStrictEqual('plugin-b')
-      expect(remaining[0]?.messageId).toStrictEqual('msg3')
+      expect(remaining[0]?.plugin).toEqual('plugin-b')
+      expect(remaining[0]?.messageId).toEqual('msg3')
     })
   })
 })

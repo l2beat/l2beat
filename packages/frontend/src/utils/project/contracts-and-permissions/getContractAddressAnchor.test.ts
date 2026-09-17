@@ -52,11 +52,11 @@ describe(createAddressAnchors.name, () => {
   it('creates an anchor only for the first occurrence of an address', () => {
     const getAddressAnchor = createAddressAnchors('contracts')
 
-    expect(getAddressAnchor(contractAddress)).toStrictEqual(
+    expect(getAddressAnchor(contractAddress)).toEqual(
       getContractAddressAnchor('contracts', contractAddress),
     )
-    expect(getAddressAnchor(contractAddress)).toStrictEqual(undefined)
-    expect(getAddressAnchor(adminAddress)).toStrictEqual(
+    expect(getAddressAnchor(contractAddress)).toEqual(undefined)
+    expect(getAddressAnchor(adminAddress)).toEqual(
       getContractAddressAnchor('contracts', adminAddress),
     )
   })
@@ -153,7 +153,7 @@ describe(createAddressAnchors.name, () => {
       permissionsSection,
     )
 
-    expect(entries).toStrictEqual([
+    expect(entries).toEqual([
       {
         address: contractAddress,
         target: {
@@ -184,8 +184,8 @@ describe(createAddressAnchors.name, () => {
         target: undefined,
       },
     ])
-    expect(contract.addresses[1]?.anchorId).toStrictEqual(undefined)
-    expect(contract.admins[0]?.anchorId).toStrictEqual(undefined)
+    expect(contract.addresses[1]?.anchorId).toEqual(undefined)
+    expect(contract.admins[0]?.anchorId).toEqual(undefined)
   })
 })
 

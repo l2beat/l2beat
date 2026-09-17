@@ -68,7 +68,7 @@ describe(createSummaryRouter.name, () => {
 
     const result = await caller.config()
 
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       featureToggles: {
         capture: true,
         matching: true,

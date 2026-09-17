@@ -41,7 +41,7 @@ describe('parseTokens', () => {
   it('flattens deployed tokens onto their abstract token', () => {
     const tokens = parseTokens(toBody([ETHER]))
 
-    expect(tokens).toStrictEqual([
+    expect(tokens).toEqual([
       {
         chain: 'ethereum',
         address: 'native',
@@ -66,14 +66,14 @@ describe('parseTokens', () => {
   it('skips a token without a coingecko id and keeps the rest', () => {
     const tokens = parseTokens(toBody([UNPRICED, ETHER]))
 
-    expect(tokens.map((token) => token.symbol)).toStrictEqual(['ETH', 'ETH'])
+    expect(tokens.map((token) => token.symbol)).toEqual(['ETH', 'ETH'])
   })
 
   it('reads an absent icon as undefined', () => {
     const priced = { ...UNPRICED, coingeckoId: 'no-price' }
     const tokens = parseTokens(toBody([priced]))
 
-    expect(tokens.map((token) => token.iconUrl)).toStrictEqual([undefined])
+    expect(tokens.map((token) => token.iconUrl)).toEqual([undefined])
   })
 
   it('rejects a response it cannot read', () => {

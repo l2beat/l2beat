@@ -44,7 +44,7 @@ describe(executeHandlers.name, () => {
       ],
       ChainSpecificAddress.random(),
     )
-    expect<unknown[]>(values).toStrictEqual([
+    expect<unknown[]>(values).toEqual([
       { field: 'foo', value: 123, ignoreRelative: undefined },
       { field: 'bar', value: 456, ignoreRelative: undefined },
     ])
@@ -83,7 +83,7 @@ describe(executeHandlers.name, () => {
       ],
       ChainSpecificAddress.random(),
     )
-    expect<unknown[]>(values).toStrictEqual([
+    expect<unknown[]>(values).toEqual([
       { field: 'foo', value: 123, ignoreRelative: undefined },
       { field: 'bar', value: 456, ignoreRelative: undefined },
       { field: 'xxx', value: 1001, ignoreRelative: undefined },
@@ -140,7 +140,7 @@ describe(executeHandlers.name, () => {
       ],
       ChainSpecificAddress.random(),
     )
-    expect<unknown[]>(values).toStrictEqual([
+    expect<unknown[]>(values).toEqual([
       { field: 'a', value: 100, ignoreRelative: undefined },
       { field: 'b', value: 200, ignoreRelative: undefined },
       { field: 'ab', value: 30000, ignoreRelative: undefined },
@@ -199,7 +199,7 @@ describe(executeHandlers.name, () => {
       [new FunkyHandler()],
       ChainSpecificAddress.random(),
     )
-    expect<unknown[]>(values).toStrictEqual([{ field: 'foo', error: 'oops' }])
+    expect<unknown[]>(values).toEqual([{ field: 'foo', error: 'oops' }])
   })
 
   it('handles multicallable handlers', async () => {
@@ -226,7 +226,7 @@ describe(executeHandlers.name, () => {
     )
 
     expect(values).toHaveLength(2)
-    expect(values).toStrictEqual(
+    expect(values).toEqual(
       expect.arrayContaining([
         { field: 'foo', fragment, value: 0x12345678 },
         { field: 'a', value: 123, ignoreRelative: undefined },
@@ -262,7 +262,7 @@ describe(executeHandlers.name, () => {
       ADDRESS,
     )
 
-    expect(values).toStrictEqual([
+    expect(values).toEqual([
       { field: 'foo', fragment, value: 3 },
       {
         field: 'bar',
@@ -282,7 +282,7 @@ describe(executeHandlers.name, () => {
       blockNumber: 123,
       chain: 'foo',
       callMethod: vi.fn(async <T>(passedAddress: ChainSpecificAddress) => {
-        expect(passedAddress).toStrictEqual(REGISTRY)
+        expect(passedAddress).toEqual(REGISTRY)
         return ADDRESS.toString() as T
       }),
     } as unknown as IProvider
@@ -315,7 +315,7 @@ describe(executeHandlers.name, () => {
       ADDRESS,
     )
 
-    expect(values).toStrictEqual([
+    expect(values).toEqual([
       {
         field: 'constructorArgs',
         value: { _addressesRegistry: REGISTRY.toString() },

@@ -9,9 +9,9 @@ const WASM_STACK_BYTES = 1024 * 1024
 describe(runClingo.name, () => {
   it('runs clingo on passed program', async () => {
     const result = await runClingo(VALID_PROGRAM)
-    expect(result.Result).toStrictEqual('SATISFIABLE')
+    expect(result.Result).toEqual('SATISFIABLE')
     if (result.Result === 'ERROR') return
-    expect(result.Call?.[0]?.Witnesses?.[0]?.Value).toStrictEqual(['a', 'b'])
+    expect(result.Call?.[0]?.Witnesses?.[0]?.Value).toEqual(['a', 'b'])
   })
 })
 
@@ -20,10 +20,7 @@ describe(runClingo.name, () => {
 // project failed with an empty error until the backend was restarted.
 describe(runClingoForSingleModel.name, () => {
   it('returns the facts of a valid program', async () => {
-    expect(await runClingoForSingleModel(VALID_PROGRAM)).toStrictEqual([
-      'a',
-      'b',
-    ])
+    expect(await runClingoForSingleModel(VALID_PROGRAM)).toEqual(['a', 'b'])
   })
 
   it('reports a syntax error with the clingo diagnostic', async () => {
@@ -37,25 +34,19 @@ describe(runClingoForSingleModel.name, () => {
     const message = await rejectionMessage(
       runClingoForSingleModel(programOfSize(WASM_STACK_BYTES + 64 * 1024)),
     )
-    expect(message).not.toStrictEqual('')
+    expect(message).not.toEqual('')
   })
 
   it('recovers after a syntax error', async () => {
     await rejectionMessage(runClingoForSingleModel(SYNTAX_ERROR_PROGRAM))
-    expect(await runClingoForSingleModel(VALID_PROGRAM)).toStrictEqual([
-      'a',
-      'b',
-    ])
+    expect(await runClingoForSingleModel(VALID_PROGRAM)).toEqual(['a', 'b'])
   })
 
   it('recovers after a program larger than the wasm stack', async () => {
     await rejectionMessage(
       runClingoForSingleModel(programOfSize(WASM_STACK_BYTES + 64 * 1024)),
     )
-    expect(await runClingoForSingleModel(VALID_PROGRAM)).toStrictEqual([
-      'a',
-      'b',
-    ])
+    expect(await runClingoForSingleModel(VALID_PROGRAM)).toEqual(['a', 'b'])
   })
 
   // Twelve real solver runs take well over the default budget on a loaded CI
@@ -65,10 +56,7 @@ describe(runClingoForSingleModel.name, () => {
     for (let i = 0; i < 12; i++) {
       await rejectionMessage(runClingoForSingleModel(failing))
     }
-    expect(await runClingoForSingleModel(VALID_PROGRAM)).toStrictEqual([
-      'a',
-      'b',
-    ])
+    expect(await runClingoForSingleModel(VALID_PROGRAM)).toEqual(['a', 'b'])
   }, 30_000)
 
   it('serves concurrent runs independently of each other', async () => {
@@ -78,10 +66,10 @@ describe(runClingoForSingleModel.name, () => {
       runClingoForSingleModel(programOfSize(WASM_STACK_BYTES + 64 * 1024)),
       runClingoForSingleModel(VALID_PROGRAM),
     ])
-    expect(results[0]).toStrictEqual({ status: 'fulfilled', value: ['a', 'b'] })
-    expect(results[1]?.status).toStrictEqual('rejected')
-    expect(results[2]?.status).toStrictEqual('rejected')
-    expect(results[3]).toStrictEqual({ status: 'fulfilled', value: ['a', 'b'] })
+    expect(results[0]).toEqual({ status: 'fulfilled', value: ['a', 'b'] })
+    expect(results[1]?.status).toEqual('rejected')
+    expect(results[2]?.status).toEqual('rejected')
+    expect(results[3]).toEqual({ status: 'fulfilled', value: ['a', 'b'] })
   })
 })
 

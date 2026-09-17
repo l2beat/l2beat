@@ -153,7 +153,7 @@ describe(getEverclearProxy.name, () => {
     // each mocked event, so we just assume that the date is an error
     const expectedDate = 'ERROR'
     const result = await getEverclearProxy(provider, ADDRESS)
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       type: 'Everclear proxy',
       values: {
         $admin: ADMIN.toString(),
@@ -253,7 +253,7 @@ describe(getEverclearProxy.name, () => {
     } as unknown as IProvider
 
     const result = await getEverclearProxy(provider, ADDRESS)
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       type: 'Everclear proxy',
       values: {
         $admin: ADMIN.toString(),

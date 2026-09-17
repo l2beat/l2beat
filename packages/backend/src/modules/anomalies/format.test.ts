@@ -12,16 +12,16 @@ describe(formatDuration.name, () => {
       formatDuration(
         days * 24 * 60 * 60 + hours * 60 * 60 + minutes * 60 + seconds + 0.1234,
       ),
-    ).toStrictEqual(`${days} days ${hours} hours`)
+    ).toEqual(`${days} days ${hours} hours`)
 
     expect(
       formatDuration(hours * 60 * 60 + minutes * 60 + seconds + 0.1234),
-    ).toStrictEqual(`${hours} hours ${minutes} minutes`)
+    ).toEqual(`${hours} hours ${minutes} minutes`)
 
-    expect(formatDuration(minutes * 60 + seconds + 0.1234)).toStrictEqual(
+    expect(formatDuration(minutes * 60 + seconds + 0.1234)).toEqual(
       `${minutes} minutes ${seconds} seconds`,
     )
 
-    expect(formatDuration(seconds + 0.1234)).toStrictEqual(`${seconds} seconds`)
+    expect(formatDuration(seconds + 0.1234)).toEqual(`${seconds} seconds`)
   })
 })

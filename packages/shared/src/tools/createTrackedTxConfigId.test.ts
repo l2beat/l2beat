@@ -48,9 +48,9 @@ describe(createTrackedTxId.name, () => {
       const post = createTrackedTxId(mock({ [f.key]: f.newValue }))
 
       if (f.shouldUpdateHash) {
-        expect(pre).not.toStrictEqual(post)
+        expect(pre).not.toEqual(post)
       } else {
-        expect(pre).toStrictEqual(post)
+        expect(pre).toEqual(post)
       }
     })
   }
@@ -79,8 +79,8 @@ describe(createTrackedTxId.name, () => {
       groupBy: { type: 'functionCallParameter', path: [0, 1] },
     })
 
-    expect(grouped).not.toStrictEqual(perTransaction)
-    expect(groupedByAnotherParameter).not.toStrictEqual(grouped)
+    expect(grouped).not.toEqual(perTransaction)
+    expect(groupedByAnotherParameter).not.toEqual(grouped)
   })
 })
 

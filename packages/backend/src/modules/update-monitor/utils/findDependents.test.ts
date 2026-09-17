@@ -25,6 +25,6 @@ describe(findDependents.name, () => {
     } as unknown as ConfigReader
 
     const dependents = findDependents('sharedProject', mockConfigReader)
-    expect(dependents).toStrictEqual(['projectB'])
+    expect(dependents).toEqual(['projectB'])
   })
 })

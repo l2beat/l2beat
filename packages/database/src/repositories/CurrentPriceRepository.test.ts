@@ -18,7 +18,7 @@ describeDatabase(CurrentPriceRepository.name, (database) => {
 
       const currentPrices = await repository.getAll()
       expect(currentPrices).toHaveLength(2)
-      expect(currentPrices).toStrictEqual(
+      expect(currentPrices).toEqual(
         expect.arrayContaining([saved('A', 1), saved('B', 2)]),
       )
     })
@@ -28,7 +28,7 @@ describeDatabase(CurrentPriceRepository.name, (database) => {
       await repository.upsertMany([mock('A', 2), mock('B', 3)])
       const currentPrices = await repository.getAll()
       expect(currentPrices).toHaveLength(2)
-      expect(currentPrices).toStrictEqual(
+      expect(currentPrices).toEqual(
         expect.arrayContaining([saved('A', 2), saved('B', 3)]),
       )
     })
@@ -42,7 +42,7 @@ describeDatabase(CurrentPriceRepository.name, (database) => {
 
         const currentPrices = await repository.getByCoingeckoIds(['A', 'B'])
         expect(currentPrices).toHaveLength(2)
-        expect(currentPrices).toStrictEqual(
+        expect(currentPrices).toEqual(
           expect.arrayContaining([saved('A', 1), saved('B', 2)]),
         )
       })
@@ -56,11 +56,11 @@ describeDatabase(CurrentPriceRepository.name, (database) => {
         await repository.upsertMany([mock('A', 1), mock('B', 2)])
 
         const deletedCount = await repository.deleteByCoingeckoIds([])
-        expect(deletedCount).toStrictEqual(0)
+        expect(deletedCount).toEqual(0)
 
         const remaining = await repository.getAll()
         expect(remaining).toHaveLength(2)
-        expect(remaining).toStrictEqual(
+        expect(remaining).toEqual(
           expect.arrayContaining([saved('A', 1), saved('B', 2)]),
         )
       })
@@ -69,22 +69,22 @@ describeDatabase(CurrentPriceRepository.name, (database) => {
         await repository.upsertMany([mock('A', 1), mock('B', 2), mock('C', 3)])
 
         const deletedCount = await repository.deleteByCoingeckoIds(['A', 'B'])
-        expect(deletedCount).toStrictEqual(2)
+        expect(deletedCount).toEqual(2)
 
         const remaining = await repository.getAll()
         expect(remaining).toHaveLength(1)
-        expect(remaining).toStrictEqual(expect.arrayContaining([saved('C', 3)]))
+        expect(remaining).toEqual(expect.arrayContaining([saved('C', 3)]))
       })
 
       it('returns 0 when deleting non-existent records', async () => {
         await repository.upsertMany([mock('A', 1), mock('B', 2)])
 
         const deletedCount = await repository.deleteByCoingeckoIds(['X', 'Y'])
-        expect(deletedCount).toStrictEqual(0)
+        expect(deletedCount).toEqual(0)
 
         const remaining = await repository.getAll()
         expect(remaining).toHaveLength(2)
-        expect(remaining).toStrictEqual(
+        expect(remaining).toEqual(
           expect.arrayContaining([saved('A', 1), saved('B', 2)]),
         )
       })

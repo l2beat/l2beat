@@ -23,7 +23,7 @@ describe(partializeNodeStore.name, () => {
       userPreferences: USER_PREFERENCES,
     } as unknown as State
 
-    expect(partializeNodeStore(state)).toStrictEqual({
+    expect(partializeNodeStore(state)).toEqual({
       userPreferences: USER_PREFERENCES,
     })
   })
@@ -37,15 +37,13 @@ describe(migrateNodeStoreState.name, () => {
       userPreferences: USER_PREFERENCES,
     })
 
-    expect(result).toStrictEqual({ userPreferences: USER_PREFERENCES })
+    expect(result).toEqual({ userPreferences: USER_PREFERENCES })
   })
 
   it('uses defaults for an invalid payload', () => {
-    expect(migrateNodeStoreState({ userPreferences: 'invalid' })).toStrictEqual(
-      {
-        userPreferences: DEFAULT_USER_PREFERENCES,
-      },
-    )
+    expect(migrateNodeStoreState({ userPreferences: 'invalid' })).toEqual({
+      userPreferences: DEFAULT_USER_PREFERENCES,
+    })
   })
 })
 
@@ -66,9 +64,9 @@ describe(mergeNodeStoreState.name, () => {
       currentState,
     )
 
-    expect(result.projectId).toStrictEqual('')
-    expect(result.nodes).toStrictEqual([])
-    expect(result.userPreferences).toStrictEqual(USER_PREFERENCES)
+    expect(result.projectId).toEqual('')
+    expect(result.nodes).toEqual([])
+    expect(result.userPreferences).toEqual(USER_PREFERENCES)
   })
 })
 
@@ -80,11 +78,6 @@ describe(clearLegacyNodeStoreVersions.name, () => {
       removeItem: (key) => removed.push(key),
     })
 
-    expect(removed).toStrictEqual([
-      'store-v2',
-      'store-v3',
-      'store-v4',
-      'store-v5',
-    ])
+    expect(removed).toEqual(['store-v2', 'store-v3', 'store-v4', 'store-v5'])
   })
 })

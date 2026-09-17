@@ -8,7 +8,7 @@ describe(findDraggableNodeAt.name, () => {
   const scene = sceneWith(node)
 
   it('returns undefined while node labels are hidden', () => {
-    expect(findDraggableNodeAt(scene, node.x, node.y, 10, 0.5)).toStrictEqual(
+    expect(findDraggableNodeAt(scene, node.x, node.y, 10, 0.5)).toEqual(
       undefined,
     )
   })

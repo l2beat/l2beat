@@ -18,13 +18,13 @@ describe(getFirstTwoNonZeroPrecision.name, () => {
     it(`should return ${testCase.expected} for ${testCase.value}`, () => {
       expect(
         getFirstTwoNonZeroPrecision(testCase.value, testCase.maxPrecision),
-      ).toStrictEqual(testCase.expected)
+      ).toEqual(testCase.expected)
     })
 
     it(`should return ${testCase.expected} for -${testCase.value}`, () => {
       expect(
         getFirstTwoNonZeroPrecision(-testCase.value, testCase.maxPrecision),
-      ).toStrictEqual(testCase.expected)
+      ).toEqual(testCase.expected)
     })
   }
 

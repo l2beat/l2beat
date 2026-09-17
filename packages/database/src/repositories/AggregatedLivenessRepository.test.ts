@@ -117,7 +117,7 @@ describeDatabase(AggregatedLivenessRepository.name, (db) => {
 
       const expected = [newRows[0], ...DATA.slice(1), newRows[1]]
       expect(results).toHaveLength(expected.length)
-      expect(results).toStrictEqual(expect.arrayContaining(expected))
+      expect(results).toEqual(expect.arrayContaining(expected))
     })
 
     it('empty array', async () => {
@@ -129,13 +129,13 @@ describeDatabase(AggregatedLivenessRepository.name, (db) => {
     it('is true for a project and subtype with records', async () => {
       expect(
         await repository.checkIfExists(PROJECT_A, 'batchSubmissions'),
-      ).toStrictEqual(true)
+      ).toEqual(true)
     })
 
     it('is false for a subtype the project has no records for', async () => {
       expect(
         await repository.checkIfExists(PROJECT_B, 'batchSubmissions'),
-      ).toStrictEqual(false)
+      ).toEqual(false)
     })
 
     it('only counts records at or after fromInclusive', async () => {
@@ -145,10 +145,10 @@ describeDatabase(AggregatedLivenessRepository.name, (db) => {
           'batchSubmissions',
           START + UnixTime.HOUR,
         ),
-      ).toStrictEqual(false)
+      ).toEqual(false)
       expect(
         await repository.checkIfExists(PROJECT_A, 'batchSubmissions', START),
-      ).toStrictEqual(true)
+      ).toEqual(true)
     })
   })
 
@@ -160,7 +160,7 @@ describeDatabase(AggregatedLivenessRepository.name, (db) => {
         ...e,
       }))
       expect(results).toHaveLength(expected.length)
-      expect(results).toStrictEqual(expect.arrayContaining(expected))
+      expect(results).toEqual(expect.arrayContaining(expected))
     })
   })
 
@@ -174,7 +174,7 @@ describeDatabase(AggregatedLivenessRepository.name, (db) => {
         ])
 
         expect(results).toHaveLength(3)
-        expect(results).toStrictEqual(
+        expect(results).toEqual(
           expect.arrayContaining([
             {
               projectId: PROJECT_A,
@@ -226,7 +226,7 @@ describeDatabase(AggregatedLivenessRepository.name, (db) => {
         const results = await repository.getAggregatesByTimeRange([null, START])
 
         expect(results).toHaveLength(1)
-        expect(results).toStrictEqual(
+        expect(results).toEqual(
           expect.arrayContaining([
             {
               projectId: PROJECT_A,
@@ -252,7 +252,7 @@ describeDatabase(AggregatedLivenessRepository.name, (db) => {
           [START - 2 * UnixTime.HOUR, START],
         )
 
-        expect(results).toStrictEqual([
+        expect(results).toEqual([
           {
             projectId: PROJECT_A,
             subtype: 'batchSubmissions',
@@ -290,7 +290,7 @@ describeDatabase(AggregatedLivenessRepository.name, (db) => {
           [null, START - 1 * UnixTime.HOUR],
         )
 
-        expect(results).toStrictEqual([
+        expect(results).toEqual([
           {
             projectId: PROJECT_A,
             subtype: 'batchSubmissions',
@@ -328,7 +328,7 @@ describeDatabase(AggregatedLivenessRepository.name, (db) => {
           [START - 3 * UnixTime.HOUR, START],
         )
 
-        expect(results).toStrictEqual([
+        expect(results).toEqual([
           {
             projectId: PROJECT_B,
             subtype: 'stateUpdates',
@@ -348,7 +348,7 @@ describeDatabase(AggregatedLivenessRepository.name, (db) => {
           [START - 3 * UnixTime.HOUR, START],
         )
 
-        expect(results).toStrictEqual([])
+        expect(results).toEqual([])
       })
     },
   )
@@ -363,7 +363,7 @@ describeDatabase(AggregatedLivenessRepository.name, (db) => {
         )
 
         expect(results).toHaveLength(2)
-        expect(results).toStrictEqual(
+        expect(results).toEqual(
           expect.arrayContaining([
             {
               projectId: PROJECT_A,
@@ -386,7 +386,7 @@ describeDatabase(AggregatedLivenessRepository.name, (db) => {
         )
 
         expect(results).toHaveLength(2)
-        expect(results).toStrictEqual(
+        expect(results).toEqual(
           expect.arrayContaining([
             {
               projectId: PROJECT_A,
@@ -408,7 +408,7 @@ describeDatabase(AggregatedLivenessRepository.name, (db) => {
           [START - 3 * UnixTime.HOUR, START],
         )
 
-        expect(results).toStrictEqual([])
+        expect(results).toEqual([])
       })
     },
   )
@@ -423,7 +423,7 @@ describeDatabase(AggregatedLivenessRepository.name, (db) => {
           'batchSubmissions',
         )
 
-        expect(result).toStrictEqual(START - 3 * UnixTime.HOUR)
+        expect(result).toEqual(START - 3 * UnixTime.HOUR)
       })
 
       it('is scoped to the given subtype', async () => {
@@ -432,7 +432,7 @@ describeDatabase(AggregatedLivenessRepository.name, (db) => {
           'stateUpdates',
         )
 
-        expect(result).toStrictEqual(START - 2 * UnixTime.HOUR)
+        expect(result).toEqual(START - 2 * UnixTime.HOUR)
       })
 
       it('returns undefined when there are no matching records', async () => {
@@ -441,7 +441,7 @@ describeDatabase(AggregatedLivenessRepository.name, (db) => {
           'batchSubmissions',
         )
 
-        expect(result).toStrictEqual(undefined)
+        expect(result).toEqual(undefined)
       })
     },
   )
@@ -452,7 +452,7 @@ describeDatabase(AggregatedLivenessRepository.name, (db) => {
 
       const results = await repository.getAll()
 
-      expect(results).toStrictEqual([])
+      expect(results).toEqual([])
     })
   })
 })

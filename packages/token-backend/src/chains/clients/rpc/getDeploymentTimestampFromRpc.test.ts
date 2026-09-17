@@ -12,7 +12,7 @@ describe(getDeploymentTimestampFromRpc.name, () => {
 
     const result = await getDeploymentTimestampFromRpc(rpc, '0xabc')
 
-    expect(result).toStrictEqual(undefined)
+    expect(result).toEqual(undefined)
     expect(rpc.getBlockTimestamp).toHaveBeenCalledTimes(0)
   })
 
@@ -31,7 +31,7 @@ describe(getDeploymentTimestampFromRpc.name, () => {
 
     const result = await getDeploymentTimestampFromRpc(rpc, '0xabc')
 
-    expect(result).toStrictEqual(timestamp)
+    expect(result).toEqual(timestamp)
     expect(rpc.getBlockTimestamp).toHaveBeenCalledWith(creationBlock)
   })
 
@@ -51,7 +51,7 @@ describe(getDeploymentTimestampFromRpc.name, () => {
 
     const result = await getDeploymentTimestampFromRpc(rpc, '0xabc')
 
-    expect(result).toStrictEqual(undefined)
+    expect(result).toEqual(undefined)
     expect(rpc.getBlockTimestamp).toHaveBeenCalledTimes(0)
   })
 })

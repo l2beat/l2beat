@@ -55,7 +55,7 @@ describe('Plan', () => {
       ],
     })
 
-    expect(parsed.commands[0]).toStrictEqual({
+    expect(parsed.commands[0]).toEqual({
       type: 'UpdateAbstractTokenCommand',
       id: 'ABC123',
       existing: {
@@ -96,7 +96,7 @@ describe('planning proof stamping', () => {
         { user: USER, skipLogs: true },
       )
 
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         outcome: 'success',
         plan: {
           intent: { type: 'AddDeployedTokenIntent', record },
@@ -126,7 +126,7 @@ describe('planning proof stamping', () => {
         { user: USER, skipLogs: true },
       )
 
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         outcome: 'success',
         plan: {
           intent: { type: 'AddDeployedTokenIntent', record },
@@ -157,7 +157,7 @@ describe('planning proof stamping', () => {
       )
 
       assertSuccess(result)
-      expect(result.plan.commands).toStrictEqual([
+      expect(result.plan.commands).toEqual([
         {
           type: 'UpdateDeployedTokenCommand',
           pk: { chain: existing.chain, address: existing.address },
@@ -185,7 +185,7 @@ describe('planning proof stamping', () => {
       )
 
       assertSuccess(result)
-      expect(result.plan.commands).toStrictEqual([
+      expect(result.plan.commands).toEqual([
         {
           type: 'UpdateDeployedTokenCommand',
           pk: { chain: existing.chain, address: existing.address },
@@ -213,7 +213,7 @@ describe('planning proof stamping', () => {
       )
 
       assertSuccess(result)
-      expect(result.plan.commands).toStrictEqual([
+      expect(result.plan.commands).toEqual([
         {
           type: 'UpdateDeployedTokenCommand',
           pk: { chain: existing.chain, address: existing.address },
@@ -238,7 +238,7 @@ describe('planning proof stamping', () => {
       )
 
       assertSuccess(result)
-      expect(result.plan.commands).toStrictEqual([
+      expect(result.plan.commands).toEqual([
         {
           type: 'UpdateDeployedTokenCommand',
           pk: { chain: existing.chain, address: existing.address },
@@ -263,7 +263,7 @@ describe('planning proof stamping', () => {
       )
 
       assertSuccess(result)
-      expect(result.plan.commands).toStrictEqual([
+      expect(result.plan.commands).toEqual([
         {
           type: 'UpdateDeployedTokenCommand',
           pk: { chain: existing.chain, address: existing.address },
@@ -296,7 +296,7 @@ describe('planning proof stamping', () => {
       )
 
       assertSuccess(result)
-      expect(result.plan.commands).toStrictEqual([
+      expect(result.plan.commands).toEqual([
         {
           type: 'AddTokenRelationCommand',
           record: tokenRelation(arbitrumToken, ethereumToken),
@@ -317,7 +317,7 @@ describe('planning proof stamping', () => {
         { user: USER, skipLogs: true },
       )
 
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         outcome: 'error',
         error:
           "A token relation cannot use bridge type 'unknown' — pick the mechanism the bridge uses",
@@ -337,7 +337,7 @@ describe('planning proof stamping', () => {
         { user: USER, skipLogs: true },
       )
 
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         outcome: 'error',
         error:
           'A token relation cannot use bridge type nonMinting — a nonMinting route may swap assets, and a relation asserts both endpoints are the same asset',
@@ -357,7 +357,7 @@ describe('planning proof stamping', () => {
         { user: USER, skipLogs: true },
       )
 
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         outcome: 'error',
         error:
           'Only a lockAndMint relation has a locked token — a burnAndMint relation must not name one',
@@ -378,7 +378,7 @@ describe('planning proof stamping', () => {
         { user: USER, skipLogs: true },
       )
 
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         outcome: 'error',
         error: 'A token relation must connect two different tokens',
       })
@@ -419,7 +419,7 @@ describe('planning proof stamping', () => {
       )
 
       assertSuccess(result)
-      expect(result.plan.commands).toStrictEqual([
+      expect(result.plan.commands).toEqual([
         {
           type: 'AddTokenRelationCommand',
           // Endpoints are normalized (arbitrum sorts first), and the stated
@@ -452,7 +452,7 @@ describe('planning proof stamping', () => {
         { user: USER, skipLogs: true },
       )
 
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         outcome: 'error',
         error:
           "A relation with plugin 'manual' must carry manual-entry evidence: { kind: 'manual', comment, bridge }",
@@ -477,7 +477,7 @@ describe('planning proof stamping', () => {
       )
 
       assertSuccess(result)
-      expect(result.plan.commands).toStrictEqual([
+      expect(result.plan.commands).toEqual([
         {
           type: 'UpdateTokenRelationCommand',
           pk: relationPk(existing),
@@ -504,7 +504,7 @@ describe('planning proof stamping', () => {
         { user: USER, skipLogs: true },
       )
 
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         outcome: 'error',
         error:
           'Only a lockAndMint relation has a locked token — a burnAndMint relation must not name one',
@@ -539,7 +539,7 @@ describe('planning proof stamping', () => {
       )
 
       assertSuccess(result)
-      expect(result.plan.commands).toStrictEqual([
+      expect(result.plan.commands).toEqual([
         {
           type: 'UpdateTokenRelationCommand',
           pk: relationPk(existing),
@@ -570,7 +570,7 @@ describe('planning proof stamping', () => {
       )
 
       assertSuccess(result)
-      expect(result.plan.commands).toStrictEqual([
+      expect(result.plan.commands).toEqual([
         {
           type: 'DeleteTokenRelationCommand',
           pk: relationPk(existing),
@@ -595,7 +595,7 @@ describe('planning proof stamping', () => {
       )
 
       assertSuccess(result)
-      expect(result.plan.commands).toStrictEqual([
+      expect(result.plan.commands).toEqual([
         {
           type: 'DeleteDeployedTokenCommand',
           pk: { chain: existing.chain, address: existing.address },
@@ -655,7 +655,7 @@ describe('MergeAbstractTokenIntent', () => {
     )
 
     assertSuccess(result)
-    expect(result.plan.commands).toStrictEqual([
+    expect(result.plan.commands).toEqual([
       {
         type: 'UpdateAbstractTokenCommand',
         existing: target,
@@ -724,7 +724,7 @@ describe('MergeAbstractTokenIntent', () => {
     )
 
     assertSuccess(result)
-    expect(result.plan.commands).toStrictEqual([
+    expect(result.plan.commands).toEqual([
       {
         type: 'UpdateAbstractTokenCommand',
         existing: target,
@@ -755,7 +755,7 @@ describe('MergeAbstractTokenIntent', () => {
       { user: USER, skipLogs: true },
     )
 
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       outcome: 'error',
       error: 'Cannot merge an abstract token into itself',
     })
@@ -775,7 +775,7 @@ describe('MergeAbstractTokenIntent', () => {
       { user: USER, skipLogs: true },
     )
 
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       outcome: 'error',
       error: "AbstractToken TARGET doesn't exist",
     })

@@ -29,7 +29,7 @@ describe(attachTrustedSetups.name, () => {
       ],
       [zkCatalogProject],
     )
-    expect(result?.trustedSetups).toStrictEqual(own)
+    expect(result?.trustedSetups).toEqual(own)
   })
 
   it('borrows trusted setups from the linked zk catalog project', () => {
@@ -37,11 +37,11 @@ describe(attachTrustedSetups.name, () => {
       [privacyProject({ zkCatalogId: ProjectId('zk') })],
       [zkCatalogProject],
     )
-    expect(result?.trustedSetups).toStrictEqual(trustedSetups)
+    expect(result?.trustedSetups).toEqual(trustedSetups)
   })
 
   it('returns no trusted setups when nothing is linked', () => {
     const [result] = attachTrustedSetups([privacyProject({})], [])
-    expect(result?.trustedSetups).toStrictEqual([])
+    expect(result?.trustedSetups).toEqual([])
   })
 })

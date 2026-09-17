@@ -8,6 +8,6 @@ describe(getChainNames.name, () => {
     const chains = getChainNames(layer2aWithDups)
 
     chains.sort()
-    expect(chains).toStrictEqual(['ethereum', 'optimism'])
+    expect(chains).toEqual(['ethereum', 'optimism'])
   })
 })

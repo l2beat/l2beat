@@ -36,9 +36,7 @@ describe(buildMarker.name, () => {
   it('carries run id, lessons version, engine and sources', () => {
     expect(
       buildMarker(review([], { context_sources: ['a', 'b'] }), meta),
-    ).toStrictEqual(
-      '<!-- ai-review run=r1 lessons=none engine=codex sources=a,b -->',
-    )
+    ).toEqual('<!-- ai-review run=r1 lessons=none engine=codex sources=a,b -->')
   })
 })
 
@@ -53,14 +51,14 @@ describe(buildReview.name, () => {
       ]),
       meta,
     )
-    expect(payload.event).toStrictEqual('COMMENT')
-    expect(payload.commit_id).toStrictEqual('sha1')
-    expect(
-      payload.comments.map((c) => [c.path, c.start_line, c.line]),
-    ).toStrictEqual([
-      ['src/a.ts', 2, 3],
-      ['src/a.ts', undefined, 4],
-    ])
+    expect(payload.event).toEqual('COMMENT')
+    expect(payload.commit_id).toEqual('sha1')
+    expect(payload.comments.map((c) => [c.path, c.start_line, c.line])).toEqual(
+      [
+        ['src/a.ts', 2, 3],
+        ['src/a.ts', undefined, 4],
+      ],
+    )
     expect(payload.comments[0].body).toContain(
       '**[major/correctness]** inline-range — `src/a.ts:2-3`',
     )
@@ -79,7 +77,7 @@ describe(buildReview.name, () => {
       meta,
       { inline: false },
     )
-    expect(payload.comments).toStrictEqual([])
+    expect(payload.comments).toEqual([])
     expect(payload.body).toContain('2 finding(s); 0 inline. 2 listed here:')
     expect(payload.body).toContain('has-lines — `src/a.ts:2-3`')
     expect(payload.body).toContain('no-location')
@@ -88,13 +86,11 @@ describe(buildReview.name, () => {
   it('zero findings posts the explicit no-findings body', () => {
     const r = review([])
     const payload = buildReview(r, meta)
-    expect(payload.comments).toStrictEqual([])
+    expect(payload.comments).toEqual([])
     expect(payload.body).toContain(
       'Reviewed, consulted `diff`, no findings above the bar.',
     )
-    expect(payload.body.trim().endsWith(buildMarker(r, meta))).toStrictEqual(
-      true,
-    )
+    expect(payload.body.trim().endsWith(buildMarker(r, meta))).toEqual(true)
   })
 
   it('aborted review posts the abort reason and no findings', () => {

@@ -7,13 +7,13 @@ describe(getRelevantBridgeTypes.name, () => {
   it('returns the selected type when the view is filtered', () => {
     const result = getRelevantBridgeTypes(project(), 'nonMinting')
 
-    expect(result).toStrictEqual(['nonMinting'])
+    expect(result).toEqual(['nonMinting'])
   })
 
   it('returns all configured bridge types when the view is aggregated', () => {
     const result = getRelevantBridgeTypes(project(), undefined)
 
-    expect(result).toStrictEqual(['lockAndMint', 'nonMinting'])
+    expect(result).toEqual(['lockAndMint', 'nonMinting'])
   })
 })
 

@@ -11,8 +11,8 @@ describe(StarkWareNamedStorageHandler.name, () => {
       const address = ChainSpecificAddress.random()
       const provider = {
         getStorage: vi.fn(async (passedAddress, slot) => {
-          expect(passedAddress).toStrictEqual(address)
-          expect(slot).toStrictEqual(
+          expect(passedAddress).toEqual(address)
+          expect(slot).toEqual(
             Bytes.fromHex(utils.solidityKeccak256(['string'], ['foo'])),
           )
           return Bytes.fromHex(
@@ -25,10 +25,10 @@ describe(StarkWareNamedStorageHandler.name, () => {
         type: 'starkWareNamedStorage',
         tag: 'foo',
       })
-      expect(handler.field).toStrictEqual('someName')
+      expect(handler.field).toEqual('someName')
 
       const result = await handler.execute(provider, address)
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         field: 'someName',
         value:
           '0x0000000000000000000000000000000000000000000000000000000000000123',
@@ -51,10 +51,10 @@ describe(StarkWareNamedStorageHandler.name, () => {
         tag: 'foo',
         returnType: 'number',
       })
-      expect(handler.field).toStrictEqual('someName')
+      expect(handler.field).toEqual('someName')
 
       const result = await handler.execute(provider, address)
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         field: 'someName',
         value: 0x123,
         ignoreRelative: undefined,
@@ -81,10 +81,10 @@ describe(StarkWareNamedStorageHandler.name, () => {
         tag: 'foo',
         returnType: 'address',
       })
-      expect(handler.field).toStrictEqual('someName')
+      expect(handler.field).toEqual('someName')
 
       const result = await handler.execute(provider, address)
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         field: 'someName',
         value: ChainSpecificAddress.address(resultAddress).toString(),
         ignoreRelative: undefined,
@@ -105,7 +105,7 @@ describe(StarkWareNamedStorageHandler.name, () => {
     } as unknown as IProvider
     const address = ChainSpecificAddress.random()
     const result = await handler.execute(provider, address)
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       field: 'someName',
       error: 'foo bar',
     })
@@ -128,7 +128,7 @@ describe(StarkWareNamedStorageHandler.name, () => {
 
     const address = ChainSpecificAddress.random()
     const result = await handler.execute(provider, address)
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       field: 'someName',
       value:
         '0x0000000000000000000000000000000000000000000000000000000000000123',

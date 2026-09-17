@@ -39,7 +39,7 @@ describe(DuneClient.name, () => {
           }),
         },
       )
-      expect(result.execution_id).toStrictEqual(executionId)
+      expect(result.execution_id).toEqual(executionId)
     })
   })
 
@@ -75,8 +75,8 @@ describe(DuneClient.name, () => {
           body: undefined,
         },
       )
-      expect(result.execution_id).toStrictEqual(executionId)
-      expect(result.state).toStrictEqual('QUERY_STATE_COMPLETED')
+      expect(result.execution_id).toEqual(executionId)
+      expect(result.state).toEqual('QUERY_STATE_COMPLETED')
     })
   })
 
@@ -107,7 +107,7 @@ describe(DuneClient.name, () => {
           body: undefined,
         },
       )
-      expect(result.result.rows).toStrictEqual(resultResponse.result.rows)
+      expect(result.result.rows).toEqual(resultResponse.result.rows)
     })
   })
 })

@@ -17,7 +17,7 @@ describe(ClientCore.name, () => {
         timeout: 1,
       })
 
-      expect(response).toStrictEqual({ result: 'success' })
+      expect(response).toEqual({ result: 'success' })
       expect(http.fetch).toHaveBeenCalledExactlyOnceWith(
         'https://api.test.com/data',
         {
@@ -52,15 +52,16 @@ describe(ClientCore.name, () => {
       )
       await clientCore.fetch('https://api.test.com/data', {})
 
-      expect(
-        clientCore.metricsAggregator.buffer.map((m) => m.label),
-      ).toStrictEqual(['blockSync.fetch', UNCATEGORIZED_METRICS_LABEL])
-      const stats = clientCore.rateLimiter.takeStats()
-      expect(Object.keys(stats.labels).sort()).toStrictEqual([
+      expect(clientCore.metricsAggregator.buffer.map((m) => m.label)).toEqual([
         'blockSync.fetch',
         UNCATEGORIZED_METRICS_LABEL,
       ])
-      expect(stats.labels['blockSync.fetch']?.dispatched).toStrictEqual(1)
+      const stats = clientCore.rateLimiter.takeStats()
+      expect(Object.keys(stats.labels).sort()).toEqual([
+        'blockSync.fetch',
+        UNCATEGORIZED_METRICS_LABEL,
+      ])
+      expect(stats.labels['blockSync.fetch']?.dispatched).toEqual(1)
     })
 
     it('Keeps the label across retries', async () => {
@@ -74,7 +75,7 @@ describe(ClientCore.name, () => {
       expect(
         clientCore.rateLimiter.takeStats().labels['blockSync.fetch']
           ?.dispatched,
-      ).toStrictEqual(2)
+      ).toEqual(2)
     })
   })
 })

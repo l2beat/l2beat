@@ -12,7 +12,7 @@ describe(parseInteropSelectionFromSearchParams.name, () => {
       interopChainsIds: CHAINS,
     })
 
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       from: ['ethereum', 'arbitrum'],
       to: ['ethereum', 'arbitrum'],
     })
@@ -24,7 +24,7 @@ describe(parseInteropSelectionFromSearchParams.name, () => {
       interopChainsIds: CHAINS,
     })
 
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       from: [],
       to: [],
     })

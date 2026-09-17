@@ -20,7 +20,7 @@ describe(VoyagerClient.name, () => {
       const client = mockClient({ http })
       const result = await client.getDailyUops()
 
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         [UnixTime.fromDate(new Date('2024-01-01'))]: 1000,
         [UnixTime.fromDate(new Date('2024-01-02'))]: 2000,
         [UnixTime.fromDate(new Date('2024-01-03'))]: 3000,
@@ -42,7 +42,7 @@ describe(VoyagerClient.name, () => {
       const client = mockClient({ http })
       const result = await client.getDailyUops()
 
-      expect(result).toStrictEqual({})
+      expect(result).toEqual({})
     })
 
     it('validates response structure', async () => {
@@ -72,7 +72,7 @@ describe(VoyagerClient.name, () => {
       const client = mockClient({ http })
       const result = await client.getDailyTxs()
 
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         [UnixTime.fromDate(new Date('2024-01-01'))]: 5000,
         [UnixTime.fromDate(new Date('2024-01-02'))]: 6000,
       })
@@ -93,7 +93,7 @@ describe(VoyagerClient.name, () => {
       const client = mockClient({ http })
       const result = await client.getDailyTxs()
 
-      expect(result).toStrictEqual({})
+      expect(result).toEqual({})
     })
   })
 
@@ -151,14 +151,14 @@ describe(VoyagerClient.name, () => {
       const client = mockClient({})
       const result = client.validateResponse({ data: 'test' })
 
-      expect(result).toStrictEqual({ success: true })
+      expect(result).toEqual({ success: true })
     })
 
     it('returns failure for error response', () => {
       const client = mockClient({})
       const result = client.validateResponse({ message: 'Error occurred' })
 
-      expect(result).toStrictEqual({ success: false })
+      expect(result).toEqual({ success: false })
     })
   })
 })

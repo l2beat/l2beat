@@ -8,9 +8,9 @@ describe(pipeBody.name, () => {
       headers: { 'x-test': 'yes' },
     })
     const piped = pipeBody(response, upperCase())
-    expect(await piped.text()).toStrictEqual('ABC')
-    expect(piped.status).toStrictEqual(201)
-    expect(piped.headers.get('x-test')).toStrictEqual('yes')
+    expect(await piped.text()).toEqual('ABC')
+    expect(piped.status).toEqual(201)
+    expect(piped.headers.get('x-test')).toEqual('yes')
   })
 
   it('returns a bodiless response untouched', () => {

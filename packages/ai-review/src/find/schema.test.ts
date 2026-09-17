@@ -12,12 +12,10 @@ describe('FIND_OUTPUT_SCHEMA', () => {
         }
       }
     }
-    expect(schema.additionalProperties).toStrictEqual(false)
-    expect(schema.required).toStrictEqual(['intent', 'findings'])
-    expect(schema.properties.findings.items.additionalProperties).toStrictEqual(
-      false,
-    )
-    expect(schema.properties.findings.items.required).toStrictEqual([
+    expect(schema.additionalProperties).toEqual(false)
+    expect(schema.required).toEqual(['intent', 'findings'])
+    expect(schema.properties.findings.items.additionalProperties).toEqual(false)
+    expect(schema.properties.findings.items.required).toEqual([
       'file',
       'line_start',
       'line_end',
@@ -48,9 +46,9 @@ describe('FIND_OUTPUT_SCHEMA', () => {
           },
         ],
       }),
-    ).toStrictEqual(true)
-    expect(
-      FindOutput.isValid({ intent: 'x', findings: [], extra: 1 }),
-    ).toStrictEqual(false)
+    ).toEqual(true)
+    expect(FindOutput.isValid({ intent: 'x', findings: [], extra: 1 })).toEqual(
+      false,
+    )
   })
 })

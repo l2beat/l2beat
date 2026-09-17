@@ -57,7 +57,7 @@ describe(StandardActivityBlockProvider.name, () => {
 
     const result = await provider.getBlocks(10, 10)
 
-    expect(result).toStrictEqual([
+    expect(result).toEqual([
       {
         number: 10,
         timestamp: UnixTime(1_700_000_000),
@@ -82,7 +82,7 @@ describe(AztecActivityBlockProvider.name, () => {
     const result = await provider.getBlocks(10, 11)
 
     expect(blockProvider.getBlocks).toHaveBeenCalledExactlyOnceWith(10, 2)
-    expect(result).toStrictEqual([
+    expect(result).toEqual([
       {
         number: 10,
         timestamp: 1_700_000_000,

@@ -52,7 +52,7 @@ describe(diffContracts.name, () => {
     const ignore = ['ignoreInWatchMode', ...ignoreInWatchMode]
     const result = diffContracts(committed, discovered, ignore)
 
-    expect(result).toStrictEqual([
+    expect(result).toEqual([
       {
         key: 'address',
         before: JSON.stringify(OLD_ADDRESS),

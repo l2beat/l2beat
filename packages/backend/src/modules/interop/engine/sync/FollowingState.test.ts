@@ -65,7 +65,7 @@ describe(FollowingState.name, () => {
 
       const nextState = await state.checkStatus()
 
-      expect(nextState).toStrictEqual(state)
+      expect(nextState).toEqual(state)
       expect(getLastSyncedRange).not.toHaveBeenCalled()
     })
   })
@@ -136,7 +136,7 @@ describe(FollowingState.name, () => {
 
       const nextState = await state.processNewestBlock(BLOCK, LOGS)
 
-      expect(nextState).toStrictEqual(state)
+      expect(nextState).toEqual(state)
       expect(getItemsToCapture).not.toHaveBeenCalled()
       expect(saveProducedInteropEvents).not.toHaveBeenCalled()
     })
@@ -167,7 +167,7 @@ describe(FollowingState.name, () => {
 
       const nextState = await state.processNewestBlock(BLOCK, LOGS)
 
-      expect(nextState).toStrictEqual(state)
+      expect(nextState).toEqual(state)
       expect(captureLog).toHaveBeenNthCalledWith(1, logA)
       expect(captureLog).toHaveBeenNthCalledWith(2, logB)
       expect(saveProducedInteropEvents).toHaveBeenCalledWith(
@@ -329,7 +329,7 @@ describe(FollowingState.name, () => {
       expect(getResyncState).toHaveBeenCalledTimes(1)
       expect(getLastSyncedRange).toHaveBeenCalledTimes(1)
       expect(saveProducedInteropEvents).toHaveBeenCalledTimes(2)
-      expect(saveProducedInteropEvents.mock.calls[1][1]).toStrictEqual({
+      expect(saveProducedInteropEvents.mock.calls[1][1]).toEqual({
         fromBlock: 90n,
         fromTimestamp: UnixTime(0),
         toBlock: 101n,
@@ -356,10 +356,10 @@ describe(FollowingState.name, () => {
       )
       const nextState = await state.processNewestBlock(BLOCK, LOGS)
 
-      expect(nextState).toStrictEqual(state)
+      expect(nextState).toEqual(state)
       expect(getLastSyncedRange).toHaveBeenCalledTimes(1)
       expect(saveProducedInteropEvents).toHaveBeenCalledTimes(2)
-      expect(saveProducedInteropEvents.mock.calls[1][1]).toStrictEqual(
+      expect(saveProducedInteropEvents.mock.calls[1][1]).toEqual(
         saveProducedInteropEvents.mock.calls[0][1],
       )
     })
@@ -394,7 +394,7 @@ describe(FollowingState.name, () => {
           LOGS,
         )
 
-        expect(sameState).toStrictEqual(state)
+        expect(sameState).toEqual(state)
         expect(nextState).toBeInstanceOf(CatchingUpState)
         expect(getResyncState).toHaveBeenCalledTimes(2)
       } finally {

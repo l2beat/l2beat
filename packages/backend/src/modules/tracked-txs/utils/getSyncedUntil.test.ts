@@ -14,7 +14,7 @@ type Configuration = Omit<
 describe(getSyncedUntil.name, () => {
   it('returns undefined if no configurations', () => {
     const result = getSyncedUntil([])
-    expect(result).toStrictEqual(undefined)
+    expect(result).toEqual(undefined)
   })
 
   it('returns undefined if no lastSyncedTimestamp', () => {
@@ -25,7 +25,7 @@ describe(getSyncedUntil.name, () => {
       } as unknown as Configuration,
     ])
 
-    expect(result).toStrictEqual(undefined)
+    expect(result).toEqual(undefined)
   })
 
   it('returns earliest lastSyncedTimestamp of configurations without untilTimestamp', () => {
@@ -44,7 +44,7 @@ describe(getSyncedUntil.name, () => {
       } as unknown as Configuration,
     ])
 
-    expect(result).toStrictEqual(FROM)
+    expect(result).toEqual(FROM)
   })
 
   it('returns earliest lastSyncedTimestamp of configurations with untilTimestamp', () => {
@@ -67,6 +67,6 @@ describe(getSyncedUntil.name, () => {
       } as unknown as Configuration,
     ])
 
-    expect(result).toStrictEqual(FROM + 1 * UnixTime.HOUR)
+    expect(result).toEqual(FROM + 1 * UnixTime.HOUR)
   })
 })

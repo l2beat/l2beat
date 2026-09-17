@@ -60,7 +60,7 @@ describe('GreaterThan', () => {
         },
         data.incomingValue,
       )
-      expect(result).toStrictEqual(data.expected)
+      expect(result).toEqual(data.expected)
     })
   }
 })

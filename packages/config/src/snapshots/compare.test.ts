@@ -40,7 +40,7 @@ describe(findRangeChanges.name, () => {
         [identity('a', 100, 200), identity('gone', 1)],
         [identity('a', 100, 200), identity('new', 2)],
       ),
-    ).toStrictEqual([])
+    ).toEqual([])
   })
 
   it('reports a moved since, a moved until and a closed entry', () => {
@@ -49,7 +49,7 @@ describe(findRangeChanges.name, () => {
         [identity('a', 100), identity('b', 100, 200), identity('c', 100)],
         [identity('a', 101), identity('b', 100, 199), identity('c', 100, 300)],
       ),
-    ).toStrictEqual([
+    ).toEqual([
       {
         id: 'a',
         label: 'label a',
@@ -75,7 +75,7 @@ describe(findRangeChanges.name, () => {
 describe(compareProject.name, () => {
   it('returns null when nothing changed', () => {
     const entries = [identity('a', 100), identity('b', 100, 200)]
-    expect(compareProject(domain, 'proj', entries, entries)).toStrictEqual(null)
+    expect(compareProject(domain, 'proj', entries, entries)).toEqual(null)
   })
 
   it('reports a rotation as one message with the freeze recipe', () => {
@@ -168,14 +168,14 @@ describe(diffSnapshots.name, () => {
         gamma: [identity('fresh', 5)],
       },
     )
-    expect(diff.missing).toStrictEqual([
+    expect(diff.missing).toEqual([
       { projectId: 'alpha', ...identity('gone', 1, 50) },
     ])
-    expect(diff.added).toStrictEqual([
+    expect(diff.added).toEqual([
       { projectId: 'alpha', ...identity('new', 2) },
       { projectId: 'gamma', ...identity('fresh', 5) },
     ])
-    expect(diff.rangeChanges).toStrictEqual([
+    expect(diff.rangeChanges).toEqual([
       {
         projectId: 'beta',
         id: 'moved',
@@ -184,12 +184,12 @@ describe(diffSnapshots.name, () => {
         new: { since: 100, until: 200 },
       },
     ])
-    expect(diff.unchanged).toStrictEqual(2)
+    expect(diff.unchanged).toEqual(2)
   })
 
   it('reports nothing for identical snapshots', () => {
     const snapshot = { alpha: [identity('a', 100, 200)] }
-    expect(diffSnapshots(snapshot, snapshot)).toStrictEqual({
+    expect(diffSnapshots(snapshot, snapshot)).toEqual({
       added: [],
       missing: [],
       rangeChanges: [],

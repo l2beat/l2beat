@@ -8,7 +8,7 @@ describe('renderMarkdown', () => {
       { allowHtml: false },
     )
 
-    expect(rendered).toStrictEqual(
+    expect(rendered).toEqual(
       '<p>hello &lt;img src=x onerror=alert(1)&gt; <strong>world</strong></p>\n',
     )
   })

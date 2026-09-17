@@ -36,11 +36,11 @@ describe(getDaBeatConfig.name, () => {
       new FeatureFlags('da-beat'),
     )
 
-    expect(config.projectsForDaBeatStats).toStrictEqual([
+    expect(config.projectsForDaBeatStats).toEqual([
       ProjectId('avail'),
       ProjectId('celestia'),
     ])
-    expect(config.coingeckoIds).toStrictEqual(['avail', 'celestia'])
+    expect(config.coingeckoIds).toEqual(['avail', 'celestia'])
   })
 
   it('excludes a project disabled with !da-beat.<project>', async () => {
@@ -50,7 +50,7 @@ describe(getDaBeatConfig.name, () => {
       new FeatureFlags('da-beat,!da-beat.avail'),
     )
 
-    expect(config.projectsForDaBeatStats).toStrictEqual([ProjectId('celestia')])
-    expect(config.coingeckoIds).toStrictEqual(['celestia'])
+    expect(config.projectsForDaBeatStats).toEqual([ProjectId('celestia')])
+    expect(config.coingeckoIds).toEqual(['celestia'])
   })
 })

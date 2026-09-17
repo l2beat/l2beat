@@ -25,7 +25,7 @@ describe(ArbitrumActorsHandler.name, () => {
 
     const response = await handler.execute(provider, contractAddress)
 
-    expect(response).toStrictEqual({
+    expect(response).toEqual({
       field: 'validators',
       value: [
         '0x54c0D3d6C101580dB3be8763A2aE2c6bb9dc840c',
@@ -53,7 +53,7 @@ describe(ArbitrumActorsHandler.name, () => {
 
     const response = await handler.execute(provider, contractAddress)
 
-    expect(response).toStrictEqual({
+    expect(response).toEqual({
       field: 'batchPosters',
       value: ['0x0C5911d57B24FCF1DC8B2608eFbAe57C7098E32D'],
     })

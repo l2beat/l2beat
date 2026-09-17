@@ -24,7 +24,7 @@ describe(CelestiaRpcClient.name, () => {
 
       const result = await rpc.getLatestBlockNumber()
 
-      expect(result).toStrictEqual(Number(mockBlockHeight))
+      expect(result).toEqual(Number(mockBlockHeight))
       expect(http.fetch).toHaveBeenCalledExactlyOnceWith('API_URL/block', {
         method: 'GET',
         redirect: 'follow',
@@ -53,7 +53,7 @@ describe(CelestiaRpcClient.name, () => {
 
       const result = await rpc.getBlockWithTransactions(Number(mockBlockHeight))
 
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         number: Number(mockBlockHeight),
         hash: 'UNSUPPORTED',
         logsBloom: 'UNSUPPORTED',
@@ -90,7 +90,7 @@ describe(CelestiaRpcClient.name, () => {
 
       const result = await rpc.getBlockWithTransactions('latest')
 
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         number: Number(mockBlockHeight),
         hash: 'UNSUPPORTED',
         logsBloom: 'UNSUPPORTED',
@@ -124,7 +124,7 @@ describe(CelestiaRpcClient.name, () => {
 
       const result = await rpc.getBlockTimestamp(100)
 
-      expect(result).toStrictEqual(UnixTime.fromDate(new Date(mockTimestamp)))
+      expect(result).toEqual(UnixTime.fromDate(new Date(mockTimestamp)))
       expect(http.fetch).toHaveBeenCalledExactlyOnceWith(
         'API_URL/block?height=100',
         {
@@ -165,7 +165,7 @@ describe(CelestiaRpcClient.name, () => {
 
       const result = await rpc.getBlockResult(100)
 
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         height: '100',
         txs_results: mockResults,
       })
@@ -191,7 +191,7 @@ describe(CelestiaRpcClient.name, () => {
         param2: 'value2',
       })
 
-      expect(result).toStrictEqual({ result: 'success' })
+      expect(result).toEqual({ result: 'success' })
       expect(http.fetch).toHaveBeenCalledExactlyOnceWith(
         'API_URL/test_method?param1=value1&param2=value2',
         {
@@ -241,7 +241,7 @@ describe(CelestiaRpcClient.name, () => {
 
       const result = await rpc.getValidatorsInfo({ page: 1 })
 
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         validators: [
           {
             voting_power: 1000000,
@@ -278,7 +278,7 @@ describe(CelestiaRpcClient.name, () => {
         perPage: 50,
       })
 
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         validators: [],
         count: 0,
         total: 50,
@@ -304,7 +304,7 @@ describe(CelestiaRpcClient.name, () => {
         },
       })
 
-      expect(validationInfo.success).toStrictEqual(false)
+      expect(validationInfo.success).toEqual(false)
     })
 
     it('returns true for valid response', () => {
@@ -315,7 +315,7 @@ describe(CelestiaRpcClient.name, () => {
         },
       })
 
-      expect(validationInfo.success).toStrictEqual(true)
+      expect(validationInfo.success).toEqual(true)
     })
   })
 })

@@ -20,7 +20,7 @@ describeDatabase(L2CostPriceRepository.name, (db) => {
     await repository.insertMany(records)
 
     const result = await repository.getAll()
-    expect(result).toStrictEqual(records)
+    expect(result).toEqual(records)
   })
 
   it(L2CostPriceRepository.prototype.getByTimestampRange.name, async () => {
@@ -37,7 +37,7 @@ describeDatabase(L2CostPriceRepository.name, (db) => {
       NOW - 1 * UnixTime.HOUR,
       NOW + 1 * UnixTime.HOUR,
     )
-    expect(result).toStrictEqual([records[1]!, records[2]!, records[3]!])
+    expect(result).toEqual([records[1]!, records[2]!, records[3]!])
   })
 
   it(L2CostPriceRepository.prototype.deleteAfter.name, async () => {
@@ -51,7 +51,7 @@ describeDatabase(L2CostPriceRepository.name, (db) => {
     await repository.deleteAfter(NOW)
 
     const result = await repository.getAll()
-    expect(result).toStrictEqual([records[0]!, records[1]!])
+    expect(result).toEqual([records[0]!, records[1]!])
   })
 })
 

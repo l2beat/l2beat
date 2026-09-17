@@ -15,7 +15,7 @@ describe(getHandlers.name, () => {
 
   it('returns empty handlers', () => {
     const handlers = getHandlers([], mockConfig)
-    expect(handlers).toStrictEqual([])
+    expect(handlers).toEqual([])
   })
 
   it('returns system handlers', () => {
@@ -27,7 +27,7 @@ describe(getHandlers.name, () => {
       ],
       mockConfig,
     )
-    expect(handlers).toStrictEqual([
+    expect(handlers).toEqual([
       new SimpleMethodHandler('function bar() view returns (address)'),
       new LimitedArrayHandler(
         'function baz(uint256 i) view returns (address)',
@@ -45,7 +45,7 @@ describe(getHandlers.name, () => {
       ],
       mockConfig,
     )
-    expect(handlers).toStrictEqual([
+    expect(handlers).toEqual([
       new SimpleMethodHandler('function bar() view returns (address)'),
     ])
   })
@@ -58,7 +58,7 @@ describe(getHandlers.name, () => {
       ],
       mockConfig,
     )
-    expect(handlers).toStrictEqual([
+    expect(handlers).toEqual([
       new SimpleMethodHandler('function bar() view returns (address)'),
     ])
   })
@@ -68,7 +68,7 @@ describe(getHandlers.name, () => {
       ['function complex(uint256 a, uint256 b) view returns (address)'],
       mockConfig,
     )
-    expect(handlers).toStrictEqual([])
+    expect(handlers).toEqual([])
   })
 
   it("ignores methods that don't return anything", () => {
@@ -79,12 +79,12 @@ describe(getHandlers.name, () => {
       ],
       mockConfig,
     )
-    expect(handlers).toStrictEqual([])
+    expect(handlers).toEqual([])
   })
 
   it('ignores write methods', () => {
     const handlers = getHandlers(['function write()'], mockConfig)
-    expect(handlers).toStrictEqual([])
+    expect(handlers).toEqual([])
   })
 
   it('ignores methods added to ignore list', () => {
@@ -103,7 +103,7 @@ describe(getHandlers.name, () => {
       ],
       config,
     )
-    expect(handlers).toStrictEqual([
+    expect(handlers).toEqual([
       new SimpleMethodHandler('function bar() view returns (address)'),
       new LimitedArrayHandler(
         'function flop(uint256 i) view returns (uint256)',
@@ -122,7 +122,7 @@ describe(getHandlers.name, () => {
     } as unknown as StructureContractConfig
 
     const handlers = getHandlers([], config)
-    expect(handlers).toStrictEqual([
+    expect(handlers).toEqual([
       new StorageHandler('bar', { type: 'storage', slot: 2 }),
       new StorageHandler('foo', { type: 'storage', slot: 1 }),
     ])
@@ -144,7 +144,7 @@ describe(getHandlers.name, () => {
       ],
       config,
     )
-    expect(handlers).toStrictEqual([
+    expect(handlers).toEqual([
       new StorageHandler('bar', { type: 'storage', slot: 2 }),
       new SimpleMethodHandler('function baz() view returns (address)'),
       new StorageHandler('foo', { type: 'storage', slot: 1 }),
@@ -165,7 +165,7 @@ describe(getHandlers.name, () => {
     } as unknown as StructureContractConfig
 
     const handlers = getHandlers([], config)
-    expect(handlers).toStrictEqual([
+    expect(handlers).toEqual([
       new ErrorHandler('foo', 'Cannot find a matching method for foo'),
     ])
   })

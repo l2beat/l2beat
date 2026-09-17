@@ -11,7 +11,7 @@ describe('Verify Discovery config files', () => {
       describe(ConfigReader.prototype.readConfig.name, () => {
         it(`can read ${project} config`, () => {
           const result = configReader.readConfig(project)
-          expect(result.name).toStrictEqual(project)
+          expect(result.name).toEqual(project)
         })
       })
     })

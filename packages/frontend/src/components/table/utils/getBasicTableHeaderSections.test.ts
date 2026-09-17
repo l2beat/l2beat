@@ -8,8 +8,8 @@ describe(getBasicTableHeaderSections.name, () => {
 
     const result = getBasicTableHeaderSections([header])
 
-    expect(result.groupedHeader).toStrictEqual(undefined)
-    expect(result.actualHeader).toStrictEqual(header)
+    expect(result.groupedHeader).toEqual(undefined)
+    expect(result.actualHeader).toEqual(header)
   })
 
   it('returns grouped and actual headers for two-level headers', () => {
@@ -18,8 +18,8 @@ describe(getBasicTableHeaderSections.name, () => {
 
     const result = getBasicTableHeaderSections([groupedHeader, actualHeader])
 
-    expect(result.groupedHeader).toStrictEqual(groupedHeader)
-    expect(result.actualHeader).toStrictEqual(actualHeader)
+    expect(result.groupedHeader).toEqual(groupedHeader)
+    expect(result.actualHeader).toEqual(actualHeader)
   })
 
   it('throws for more than one grouping level', () => {

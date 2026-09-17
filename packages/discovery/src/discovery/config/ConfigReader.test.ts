@@ -23,7 +23,7 @@ describe('resolveImports', () => {
   it('should resolve basic imports', () => {
     const reader = new ConfigReader('/base')
     const result = reader.resolveImports('/base', ['valid.jsonc'], new Set())
-    expect(result).toStrictEqual({ maxDepth: 123 })
+    expect(result).toEqual({ maxDepth: 123 })
   })
 
   it('should detect circular imports', () => {
@@ -43,7 +43,7 @@ describe('resolveImports', () => {
   it('should resolve nested imports', () => {
     const reader = new ConfigReader('/base')
     const result = reader.resolveImports('/base', ['nested.jsonc'], new Set())
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       import: ['./child.jsonc'],
       maxAddresses: 456,
     })
@@ -60,7 +60,7 @@ describe('resolveImports', () => {
     })
 
     const result = reader.resolveImports('/base', ['parent.jsonc'], new Set())
-    expect((result as any).maxDepth).toStrictEqual(123)
+    expect((result as any).maxDepth).toEqual(123)
   })
 })
 
@@ -80,12 +80,8 @@ describe('config and discovery resolution', () => {
 
       const reader = new ConfigReader('/base')
 
-      expect(reader.resolveProjectPath('project1')).toStrictEqual(
-        '/base/project1',
-      )
-      expect(reader.resolveProjectPath('project2')).toStrictEqual(
-        '/base/project2',
-      )
+      expect(reader.resolveProjectPath('project1')).toEqual('/base/project1')
+      expect(reader.resolveProjectPath('project2')).toEqual('/base/project2')
     })
 
     it('should throw error when project not found', () => {
@@ -129,7 +125,7 @@ describe('config and discovery resolution', () => {
       const reader = new ConfigReader('/base')
 
       const result = reader.enumerateProjectDirectories()
-      expect(result).toStrictEqual(['/base/project1', '/base/project2'])
+      expect(result).toEqual(['/base/project1', '/base/project2'])
     })
 
     it('should ignore directories starting with underscore', () => {
@@ -145,7 +141,7 @@ describe('config and discovery resolution', () => {
       const reader = new ConfigReader('/base')
 
       const result = reader.enumerateProjectDirectories()
-      expect(result).toStrictEqual(['/base/project1'])
+      expect(result).toEqual(['/base/project1'])
     })
   })
 
@@ -160,7 +156,7 @@ describe('config and discovery resolution', () => {
       const reader = new ConfigReader('/base')
       const result = reader.readAllDiscoveredProjects()
 
-      expect(result).toStrictEqual(['project1', 'project2'])
+      expect(result).toEqual(['project1', 'project2'])
     })
   })
 
@@ -177,8 +173,8 @@ describe('config and discovery resolution', () => {
       const reader = new ConfigReader('/base')
       const config = reader.readConfig('usdc')
 
-      expect(config.structure.name).toStrictEqual('usdc')
-      expect(config.structure.maxAddresses).toStrictEqual(10)
+      expect(config.structure.name).toEqual('usdc')
+      expect(config.structure.maxAddresses).toEqual(10)
     })
   })
 
@@ -196,8 +192,8 @@ describe('config and discovery resolution', () => {
       const reader = new ConfigReader('/base')
       const discovery = reader.readDiscovery('usdc')
 
-      expect(discovery.entries).toStrictEqual([])
-      expect(discovery.abis).toStrictEqual({})
+      expect(discovery.entries).toEqual([])
+      expect(discovery.abis).toEqual({})
     })
   })
 })

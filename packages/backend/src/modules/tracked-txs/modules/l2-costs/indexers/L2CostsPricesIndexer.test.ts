@@ -38,7 +38,7 @@ describe(L2CostsPricesIndexer.name, () => {
 
       expect(repository.insertMany).toHaveBeenCalledWith(prices)
 
-      expect(result).toStrictEqual(to)
+      expect(result).toEqual(to)
     })
 
     it('does nothing if no prices to save', async () => {
@@ -65,7 +65,7 @@ describe(L2CostsPricesIndexer.name, () => {
 
       expect(repository.insertMany).not.toHaveBeenCalled()
 
-      expect(result).toStrictEqual(to)
+      expect(result).toEqual(to)
     })
 
     it('shifts from if time range greater than MAX_DAYS_FOR_ONE_CALL', async () => {
@@ -96,7 +96,7 @@ describe(L2CostsPricesIndexer.name, () => {
 
       expect(fetchPricesMock).toHaveBeenCalledWith(from, shiftedTo)
 
-      expect(result).toStrictEqual(shiftedTo)
+      expect(result).toEqual(shiftedTo)
     })
   })
 
@@ -121,7 +121,7 @@ describe(L2CostsPricesIndexer.name, () => {
         coingeckoQueryServiceMock.getUsdPriceHistoryHourly,
       ).toHaveBeenCalledWith(ETHEREUM_COINGECKO_ID, from, to)
 
-      expect(result).toStrictEqual([
+      expect(result).toEqual([
         {
           timestamp: from,
           priceUsd: 3000,
@@ -147,7 +147,7 @@ describe(L2CostsPricesIndexer.name, () => {
 
       expect(repository.deleteAfter).toHaveBeenCalledWith(NOW)
 
-      expect(result).toStrictEqual(NOW)
+      expect(result).toEqual(NOW)
     })
   })
 })

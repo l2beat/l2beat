@@ -11,13 +11,13 @@ describe(getFunctionCallParameterPrefix.name, () => {
   it('returns the prefix ending after the selected scalar', () => {
     expect(
       getFunctionCallParameterPrefix('function submit(uint256)', [0]),
-    ).toStrictEqual(36)
+    ).toEqual(36)
     expect(
       getFunctionCallParameterPrefix(
         'function submit((uint256,uint256,bytes))',
         [0, 0],
       ),
-    ).toStrictEqual(68)
+    ).toEqual(68)
   })
 
   it('accepts configured grouping paths and keeps Aztec at 68 bytes', async () => {
@@ -44,7 +44,7 @@ describe(getFunctionCallParameterPrefix.name, () => {
       }
     }
 
-    expect(aztecPrefix).toStrictEqual(68)
+    expect(aztecPrefix).toEqual(68)
   })
 
   it('rejects paths without a static prefix', () => {
@@ -81,9 +81,7 @@ describe(getFunctionCallParameter.name, () => {
   it('extracts a scalar from a truncated dynamic tuple', () => {
     const prefix = input.slice(0, 2 + 68 * 2)
 
-    expect(getFunctionCallParameter(signature, prefix, [0, 0])).toStrictEqual(
-      '123',
-    )
+    expect(getFunctionCallParameter(signature, prefix, [0, 0])).toEqual('123')
   })
 
   it('rejects input truncated before the selected scalar', () => {

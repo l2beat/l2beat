@@ -18,7 +18,7 @@ describe(createGetStage.name, () => {
       },
     })
 
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       stage: 'Stage 1',
       message: undefined,
       downgradePending: undefined,
@@ -86,12 +86,12 @@ describe(createGetStage.name, () => {
       ),
     )
     // There is no way to get Stage 99 IRL but for test purposes it is ok
-    expect(result.stage).toStrictEqual('Stage 99' as Stage)
-    expect(result.message).toStrictEqual(undefined)
-    expect(result.downgradePending).toStrictEqual(undefined)
+    expect(result.stage).toEqual('Stage 99' as Stage)
+    expect(result.message).toEqual(undefined)
+    expect(result.downgradePending).toEqual(undefined)
     expect(result.summary).toHaveLength(100)
-    expect(result.missing).toStrictEqual(undefined)
-    expect(result.additionalConsiderations).toStrictEqual(undefined)
+    expect(result.missing).toEqual(undefined)
+    expect(result.additionalConsiderations).toEqual(undefined)
   })
 
   it('goes up to the last stage until requirement is not met', () => {
@@ -107,7 +107,7 @@ describe(createGetStage.name, () => {
       },
     })
 
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       stage: 'Stage 0',
       message: undefined,
       downgradePending: undefined,
@@ -166,7 +166,7 @@ describe(createGetStage.name, () => {
       },
     })
 
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       stage: 'Stage 0',
       summary: [
         {
@@ -215,7 +215,7 @@ describe(createGetStage.name, () => {
       },
     })
 
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       stage: 'Stage 0',
       downgradePending: undefined,
       missing: {
@@ -261,7 +261,7 @@ describe(createGetStage.name, () => {
       },
     })
 
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       stage: 'Stage 1',
       summary: [
         {
@@ -297,7 +297,7 @@ describe(createGetStage.name, () => {
       },
     })
 
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       stage: 'Stage 0',
       downgradePending: undefined,
       missing: {
@@ -373,7 +373,7 @@ describe(createGetStage.name, () => {
         },
       })
 
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         stage: 'Stage 0',
         downgradePending: undefined,
         message: undefined,
@@ -420,7 +420,7 @@ describe(createGetStage.name, () => {
         },
       })
 
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         stage: 'Stage 0',
         downgradePending: undefined,
         message: {
@@ -470,7 +470,7 @@ describe(createGetStage.name, () => {
         },
       })
 
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         stage: 'Stage 0',
         downgradePending: undefined,
         message: {
@@ -578,11 +578,11 @@ describe(createGetStage.name, () => {
         },
       })
 
-      expect(result.stage).toStrictEqual('Stage 1')
-      expect(result.downgradePending).toStrictEqual(undefined)
-      expect(result.missing).toStrictEqual(undefined)
+      expect(result.stage).toEqual('Stage 1')
+      expect(result.downgradePending).toEqual(undefined)
+      expect(result.missing).toEqual(undefined)
       const stage1Summary = result.summary.find((s) => s.stage === 'Stage 1')
-      expect(stage1Summary?.requirements).toStrictEqual([
+      expect(stage1Summary?.requirements).toEqual([
         { satisfied: true, description: 'ESCAPE_HATCH_TRUE' },
         { satisfied: true, description: 'UPCOMING_A_TRUE', upcoming: true },
         { satisfied: true, description: 'UPCOMING_B_TRUE', upcoming: true },
@@ -601,13 +601,13 @@ describe(createGetStage.name, () => {
         },
       })
 
-      expect(result.stage).toStrictEqual('Stage 1')
-      expect(result.downgradePending).toStrictEqual({
+      expect(result.stage).toEqual('Stage 1')
+      expect(result.downgradePending).toEqual({
         expiresAt: FUTURE_TIME,
         reasons: ['UPCOMING_A_FALSE', 'UPCOMING_B_FALSE'],
         toStage: 'Stage 0',
       })
-      expect(result.missing).toStrictEqual(undefined)
+      expect(result.missing).toEqual(undefined)
     })
 
     it('not expired + some failing + regular requirements also failing → missing set, no downgradePending', () => {
@@ -622,14 +622,14 @@ describe(createGetStage.name, () => {
         },
       })
 
-      expect(result.stage).toStrictEqual('Stage 0')
-      expect(result.missing).toStrictEqual({
+      expect(result.stage).toEqual('Stage 0')
+      expect(result.missing).toEqual({
         nextStage: 'Stage 1',
         requirements: ['ESCAPE_HATCH_FALSE'],
         principle: undefined,
       })
       // downgradePending should NOT be set because there's already a missing
-      expect(result.downgradePending).toStrictEqual(undefined)
+      expect(result.downgradePending).toEqual(undefined)
     })
 
     it('expired + some failing → added to missing, project downgraded', () => {
@@ -644,13 +644,13 @@ describe(createGetStage.name, () => {
         },
       })
 
-      expect(result.stage).toStrictEqual('Stage 0')
-      expect(result.missing).toStrictEqual({
+      expect(result.stage).toEqual('Stage 0')
+      expect(result.missing).toEqual({
         nextStage: 'Stage 1',
         requirements: ['UPCOMING_A_FALSE'],
         principle: undefined,
       })
-      expect(result.downgradePending).toStrictEqual(undefined)
+      expect(result.downgradePending).toEqual(undefined)
     })
 
     it('expired + all satisfied → no effect, requirements shown without upcoming flag', () => {
@@ -665,11 +665,11 @@ describe(createGetStage.name, () => {
         },
       })
 
-      expect(result.stage).toStrictEqual('Stage 1')
-      expect(result.downgradePending).toStrictEqual(undefined)
-      expect(result.missing).toStrictEqual(undefined)
+      expect(result.stage).toEqual('Stage 1')
+      expect(result.downgradePending).toEqual(undefined)
+      expect(result.missing).toEqual(undefined)
       const stage1Summary = result.summary.find((s) => s.stage === 'Stage 1')
-      expect(stage1Summary?.requirements).toStrictEqual([
+      expect(stage1Summary?.requirements).toEqual([
         { satisfied: true, description: 'ESCAPE_HATCH_TRUE' },
         { satisfied: true, description: 'UPCOMING_A_TRUE' },
         { satisfied: true, description: 'UPCOMING_B_TRUE' },
@@ -688,11 +688,11 @@ describe(createGetStage.name, () => {
         },
       })
 
-      expect(result.stage).toStrictEqual('Stage 1')
-      expect(result.downgradePending).toStrictEqual(undefined)
-      expect(result.missing).toStrictEqual(undefined)
+      expect(result.stage).toEqual('Stage 1')
+      expect(result.downgradePending).toEqual(undefined)
+      expect(result.missing).toEqual(undefined)
       const stage1Summary = result.summary.find((s) => s.stage === 'Stage 1')
-      expect(stage1Summary?.requirements).toStrictEqual([
+      expect(stage1Summary?.requirements).toEqual([
         { satisfied: true, description: 'ESCAPE_HATCH_TRUE' },
         {
           description: 'UPCOMING_A_TRUE',

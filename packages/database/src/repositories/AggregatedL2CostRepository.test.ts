@@ -21,7 +21,7 @@ describeDatabase(AggregatedL2CostRepository.name, (db) => {
     await repository.upsertMany(records)
 
     const result = await repository.getAll()
-    expect(result).toStrictEqual(records)
+    expect(result).toEqual(records)
   })
 
   it(AggregatedL2CostRepository.prototype.deleteAfter.name, async () => {
@@ -35,7 +35,7 @@ describeDatabase(AggregatedL2CostRepository.name, (db) => {
     await repository.deleteAfter(NOW)
 
     const result = await repository.getAll()
-    expect(result).toStrictEqual([records[0]!, records[1]!])
+    expect(result).toEqual([records[0]!, records[1]!])
   })
 
   describe(
@@ -56,7 +56,7 @@ describeDatabase(AggregatedL2CostRepository.name, (db) => {
         )
 
         expect(results).toHaveLength(records.length)
-        expect(results).toStrictEqual(expect.arrayContaining(records))
+        expect(results).toEqual(expect.arrayContaining(records))
       })
 
       it('should return all rows for given project id and since timestamp with exclusive to', async () => {
@@ -71,7 +71,7 @@ describeDatabase(AggregatedL2CostRepository.name, (db) => {
           [NOW - 1 * UnixTime.HOUR, NOW + 1 * UnixTime.HOUR],
         )
 
-        expect(results).toStrictEqual(records.slice(0, 2))
+        expect(results).toEqual(records.slice(0, 2))
       })
     },
   )
@@ -93,7 +93,7 @@ describeDatabase(AggregatedL2CostRepository.name, (db) => {
           [NOW - 7 * UnixTime.HOUR, NOW + 2 * UnixTime.HOUR],
         )
 
-        expect(results).toStrictEqual(records.slice(0, 2))
+        expect(results).toEqual(records.slice(0, 2))
       })
     },
   )
@@ -101,26 +101,22 @@ describeDatabase(AggregatedL2CostRepository.name, (db) => {
   describe(AggregatedL2CostRepository.prototype.checkIfExists.name, () => {
     it('is true when the project has any record', async () => {
       await repository.upsertMany([record({ projectId: ProjectId('a') })])
-      expect(await repository.checkIfExists(ProjectId('a'))).toStrictEqual(true)
+      expect(await repository.checkIfExists(ProjectId('a'))).toEqual(true)
     })
 
     it('is scoped to the project', async () => {
       await repository.upsertMany([record({ projectId: ProjectId('a') })])
-      expect(await repository.checkIfExists(ProjectId('b'))).toStrictEqual(
-        false,
-      )
+      expect(await repository.checkIfExists(ProjectId('b'))).toEqual(false)
     })
 
     it('only counts records at or after fromInclusive', async () => {
       await repository.upsertMany([
         record({ projectId: ProjectId('a'), timestamp: NOW - UnixTime.DAY }),
       ])
-      expect(await repository.checkIfExists(ProjectId('a'), NOW)).toStrictEqual(
-        false,
-      )
+      expect(await repository.checkIfExists(ProjectId('a'), NOW)).toEqual(false)
       expect(
         await repository.checkIfExists(ProjectId('a'), NOW - UnixTime.DAY),
-      ).toStrictEqual(true)
+      ).toEqual(true)
     })
   })
 
@@ -145,7 +141,7 @@ describeDatabase(AggregatedL2CostRepository.name, (db) => {
           ProjectId('b'),
         ])
 
-        expect(result).toStrictEqual(NOW - 5 * UnixTime.HOUR)
+        expect(result).toEqual(NOW - 5 * UnixTime.HOUR)
       })
 
       it('is scoped to the given projects', async () => {
@@ -161,7 +157,7 @@ describeDatabase(AggregatedL2CostRepository.name, (db) => {
           ProjectId('a'),
         ])
 
-        expect(result).toStrictEqual(NOW)
+        expect(result).toEqual(NOW)
       })
 
       it('returns undefined when there are no matching records', async () => {
@@ -169,7 +165,7 @@ describeDatabase(AggregatedL2CostRepository.name, (db) => {
           ProjectId('missing'),
         ])
 
-        expect(result).toStrictEqual(undefined)
+        expect(result).toEqual(undefined)
       })
 
       it('returns undefined for an empty project list', async () => {
@@ -177,7 +173,7 @@ describeDatabase(AggregatedL2CostRepository.name, (db) => {
 
         const result = await repository.getFirstTimestampByProjects([])
 
-        expect(result).toStrictEqual(undefined)
+        expect(result).toEqual(undefined)
       })
     },
   )

@@ -91,7 +91,7 @@ const EXPECTED_SQL = `
 describe(getFunctionCallQuery.name, () => {
   it('returns valid SQL', () => {
     const query = getFunctionCallQuery(CONFIGURATIONS, FROM, TO)
-    expect(query).toStrictEqual(EXPECTED_SQL)
+    expect(query).toEqual(EXPECTED_SQL)
   })
 
   it('returns valid SQL with duplicate configurations', () => {
@@ -101,7 +101,7 @@ describe(getFunctionCallQuery.name, () => {
       TO,
     )
 
-    expect(query).toStrictEqual(EXPECTED_SQL)
+    expect(query).toEqual(EXPECTED_SQL)
   })
 
   it('merges duplicates to the widest input request', () => {
@@ -120,7 +120,7 @@ describe(getFunctionCallQuery.name, () => {
       TO,
     )
 
-    expect(query).toStrictEqual(
+    expect(query).toEqual(
       getFunctionCallQuery(
         [
           { address: ADDRESS_1, selector: SELECTOR_1, inputBytes: 68 },

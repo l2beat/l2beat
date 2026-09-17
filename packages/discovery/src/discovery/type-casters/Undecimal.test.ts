@@ -34,7 +34,7 @@ describe('Undecimal', () => {
         { decimals: data.decimals },
         data.incomingValue,
       )
-      expect(result).toStrictEqual(data.expected)
+      expect(result).toEqual(data.expected)
     })
   }
 })

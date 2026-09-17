@@ -12,8 +12,8 @@ describe(applyBasicTableRowSorting.name, () => {
       return a.original.value - b.original.value
     })
 
-    expect(result.map((row) => row.original.value)).toStrictEqual([1, 2, 3])
-    expect(rows.map((row) => row.original.value)).toStrictEqual([1, 2, 3])
+    expect(result.map((row) => row.original.value)).toEqual([1, 2, 3])
+    expect(rows.map((row) => row.original.value)).toEqual([1, 2, 3])
   })
 
   it('returns rows unchanged when custom sorter is not provided', () => {
@@ -23,6 +23,6 @@ describe(applyBasicTableRowSorting.name, () => {
 
     const result = applyBasicTableRowSorting(rows, undefined)
 
-    expect(result.map((row) => row.original.value)).toStrictEqual([3, 1, 2])
+    expect(result.map((row) => row.original.value)).toEqual([3, 1, 2])
   })
 })

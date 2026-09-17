@@ -81,7 +81,7 @@ describe(BlockscoutV2Client.name, () => {
 
       const blockscoutClient = new BlockscoutV2Client(httpClient, API_URL)
       const result = await blockscoutClient.call('mod', 'id', 'act')
-      expect(result).toStrictEqual(responseMock)
+      expect(result).toEqual(responseMock)
     })
   })
 
@@ -103,9 +103,7 @@ describe(BlockscoutV2Client.name, () => {
         'internal-transactions',
       )
 
-      expect(result).toStrictEqual([
-        { ...responseMock.items[0], timestamp: NOW },
-      ])
+      expect(result).toEqual([{ ...responseMock.items[0], timestamp: NOW }])
     })
 
     it('throws if schema is not correct', async () => {

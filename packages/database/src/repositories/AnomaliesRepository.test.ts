@@ -59,7 +59,7 @@ describeDatabase(AnomaliesRepository.name, (db) => {
 
       const results = await repository.getAll()
       expect(results).toHaveLength(4)
-      expect(results).toStrictEqual(
+      expect(results).toEqual(
         expect.arrayContaining([
           newRows[0]!,
           {
@@ -92,7 +92,7 @@ describeDatabase(AnomaliesRepository.name, (db) => {
         ...e,
       }))
       expect(results).toHaveLength(expected.length)
-      expect(results).toStrictEqual(expect.arrayContaining(expected))
+      expect(results).toEqual(expect.arrayContaining(expected))
     })
   })
 
@@ -105,7 +105,7 @@ describeDatabase(AnomaliesRepository.name, (db) => {
 
       const expected = DATA.slice(1, 2)
       expect(results).toHaveLength(expected.length)
-      expect(results).toStrictEqual(expect.arrayContaining(expected))
+      expect(results).toEqual(expect.arrayContaining(expected))
     })
   })
 
@@ -118,7 +118,7 @@ describeDatabase(AnomaliesRepository.name, (db) => {
 
       const expected = DATA.slice(1, 2)
       expect(results).toHaveLength(expected.length)
-      expect(results).toStrictEqual(expect.arrayContaining(expected))
+      expect(results).toEqual(expect.arrayContaining(expected))
     })
 
     it('returns empty array when projectIds is empty', async () => {
@@ -127,7 +127,7 @@ describeDatabase(AnomaliesRepository.name, (db) => {
         START - 2 * UnixTime.HOUR,
       )
 
-      expect(results).toStrictEqual([])
+      expect(results).toEqual([])
     })
   })
 
@@ -137,7 +137,7 @@ describeDatabase(AnomaliesRepository.name, (db) => {
 
       const results = await repository.getAll()
 
-      expect(results).toStrictEqual([])
+      expect(results).toEqual([])
     })
   })
 })

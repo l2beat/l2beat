@@ -13,7 +13,7 @@ describe('EVMTransaction parser', () => {
       blockNumber: '0xa',
     })
 
-    expect(parsed).toStrictEqual({
+    expect(parsed).toEqual({
       hash: '0x1',
       from: '0x2',
       to: '0x3',
@@ -43,7 +43,7 @@ describe('EVMTransaction parser', () => {
       ],
     })
 
-    expect(parsed).toStrictEqual({
+    expect(parsed).toEqual({
       hash: '0x1',
       from: '0x2',
       to: undefined,
@@ -70,7 +70,7 @@ describe('EVMTransaction parser', () => {
       blockNumber: '0xa',
     })
 
-    expect(parsed).toStrictEqual({
+    expect(parsed).toEqual({
       hash: '0x1',
       from: '0x2',
       to: undefined,

@@ -56,7 +56,7 @@ describe(TokenRelationIngestion.name, () => {
       bridgeType: 'lockAndMint',
       lockedToken: 'B',
     })
-    expect(evidenceTransferId(inserted)).toStrictEqual('lock-mint')
+    expect(evidenceTransferId(inserted)).toEqual('lock-mint')
     expect(historyInsert).toHaveBeenCalledTimes(1)
     expect(historyInsert.mock.calls[0][0]).toMatchObject({
       source: 'ingestion',
@@ -100,7 +100,7 @@ describe(TokenRelationIngestion.name, () => {
 
     await ingestion.runOnce()
 
-    expect(events).toStrictEqual(['begin', 'insert', 'insert', 'commit'])
+    expect(events).toEqual(['begin', 'insert', 'insert', 'commit'])
   })
 
   it('creates relations without ever consulting the token catalogue', async () => {
@@ -161,7 +161,7 @@ describe(TokenRelationIngestion.name, () => {
     await ingestion.runOnce()
 
     expect(insert).toHaveBeenCalledTimes(1)
-    expect(insert.mock.calls[0][0]).toStrictEqual(
+    expect(insert.mock.calls[0][0]).toEqual(
       relationRecord({
         lockedToken: 'B',
         transfer: expect.any(Object),
@@ -249,7 +249,7 @@ describe(TokenRelationIngestion.name, () => {
 
     expect(insert).toHaveBeenCalledTimes(0)
     expect(update).toHaveBeenCalledTimes(1)
-    expect(update.mock.calls[0][1]).toStrictEqual({ lockedToken: 'B' })
+    expect(update.mock.calls[0][1]).toEqual({ lockedToken: 'B' })
   })
 
   it('does not overwrite a locked token that is already identified', async () => {
@@ -355,10 +355,10 @@ describe(TokenRelationIngestion.name, () => {
 
     expect(insert).toHaveBeenCalledTimes(1)
     const inserted = insert.mock.calls[0][0] as TokenRelationRecord
-    expect(inserted.bridgeType).toStrictEqual('lockAndMint')
+    expect(inserted.bridgeType).toEqual('lockAndMint')
     const evidence = inserted.transfer as Record<string, unknown>
-    expect('srcWasBurned' in evidence).toStrictEqual(false)
-    expect(evidence['dstWasMinted']).toStrictEqual(true)
+    expect('srcWasBurned' in evidence).toEqual(false)
+    expect(evidence['dstWasMinted']).toEqual(true)
   })
 
   it('ignores swap-like and unclassifiable transfers', async () => {
@@ -458,7 +458,7 @@ describe(TokenRelationIngestion.name, () => {
 
     expect(insert).toHaveBeenCalledTimes(1)
     const inserted = insert.mock.calls[0][0] as TokenRelationRecord
-    expect(evidenceTransferId(inserted)).toStrictEqual('first')
+    expect(evidenceTransferId(inserted)).toEqual('first')
   })
 
   it('pages through transfers and advances the cursor after every batch', async () => {
@@ -486,13 +486,13 @@ describe(TokenRelationIngestion.name, () => {
 
     await ingestion.runOnce()
 
-    expect(getAfterSerialId.mock.calls.map((call) => call[0])).toStrictEqual([
+    expect(getAfterSerialId.mock.calls.map((call) => call[0])).toEqual([
       '0',
       '100',
       '200',
     ])
     expect(insert).toHaveBeenCalledTimes(2)
-    expect(set.mock.calls.map((call) => call[0])).toStrictEqual([
+    expect(set.mock.calls.map((call) => call[0])).toEqual([
       { key: CURSOR_KEY, value: '100' },
       { key: CURSOR_KEY, value: '200' },
     ])

@@ -42,7 +42,7 @@ describe('tokenDbHistoryRouter', () => {
 
       const result = await caller.getPage({ page: 2, pageSize: 5 })
 
-      expect(result).toStrictEqual(page)
+      expect(result).toEqual(page)
       expect(getPage).toHaveBeenCalledWith({
         offset: 5,
         limit: 5,

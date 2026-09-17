@@ -28,13 +28,13 @@ describe(searchEntries.name, () => {
 
     const results = searchEntries('ethere', entries)
 
-    expect(results.map((entry) => entry.name)).toStrictEqual([
+    expect(results.map((entry) => entry.name)).toEqual([
       'Ethereal',
       'Ethereum with Enshrined Bridge',
     ])
-    expect(isDirectMatch('ethere', entries[0]!)).toStrictEqual(true)
-    expect(isDirectMatch('ethere', entries[1]!)).toStrictEqual(true)
-    expect(isDirectMatch('ethere', entries[2]!)).toStrictEqual(false)
+    expect(isDirectMatch('ethere', entries[0]!)).toEqual(true)
+    expect(isDirectMatch('ethere', entries[1]!)).toEqual(true)
+    expect(isDirectMatch('ethere', entries[2]!)).toEqual(false)
   })
 })
 
@@ -71,8 +71,8 @@ describe(groupSearchResults.name, () => {
       ...searchEntries('interop', pages),
     ])
 
-    expect(grouped.map(([category]) => category)).toStrictEqual(['interop'])
-    expect(grouped[0]?.[1].map((entry) => entry.name)).toStrictEqual([
+    expect(grouped.map(([category]) => category)).toEqual(['interop'])
+    expect(grouped[0]?.[1].map((entry) => entry.name)).toEqual([
       'Summary',
       'Non-minting',
     ])
@@ -99,10 +99,10 @@ describe(groupSearchResults.name, () => {
       ]),
     )
 
-    expect(grouped.map(([category]) => category)).toStrictEqual(['l2', 'da'])
+    expect(grouped.map(([category]) => category)).toEqual(['l2', 'da'])
     expect(
       grouped.flatMap(([, entries]) => entries.map((entry) => entry.name)),
-    ).toStrictEqual(['Ethereal', 'Ethereum with Enshrined Bridge'])
+    ).toEqual(['Ethereal', 'Ethereum with Enshrined Bridge'])
   })
 
   it('places tokens as the last shown group', () => {
@@ -117,10 +117,7 @@ describe(groupSearchResults.name, () => {
       ]),
     )
 
-    expect(grouped.map(([category]) => category)).toStrictEqual([
-      'l2',
-      'tokens',
-    ])
+    expect(grouped.map(([category]) => category)).toEqual(['l2', 'tokens'])
   })
 })
 

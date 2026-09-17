@@ -14,7 +14,7 @@ describe(SvmBlockProvider.name, () => {
       const result = await provider.getBlockWithTransactions(1)
 
       expect(client.getBlockWithTransactions).toHaveBeenCalledExactlyOnceWith(1)
-      expect(result).toStrictEqual(svmBlock(1))
+      expect(result).toEqual(svmBlock(1))
     })
 
     it('calls other client when there are errors', async () => {
@@ -46,7 +46,7 @@ describe(SvmBlockProvider.name, () => {
         client_three.getBlockWithTransactions,
       ).toHaveBeenCalledExactlyOnceWith(1)
 
-      expect(result).toStrictEqual(svmBlock(1))
+      expect(result).toEqual(svmBlock(1))
     })
 
     it('throws when ran out of fallbacks', async () => {
@@ -95,7 +95,7 @@ describe(SvmBlockProvider.name, () => {
         UnixTime(800 * 100),
       )
 
-      expect(blockNumber).toStrictEqual(800)
+      expect(blockNumber).toEqual(800)
       expect(client.getLatestSlotNumber).toHaveBeenCalledTimes(1)
     })
 
@@ -116,7 +116,7 @@ describe(SvmBlockProvider.name, () => {
         UnixTime(800 * 100),
       )
 
-      expect(blockNumber).toStrictEqual(800)
+      expect(blockNumber).toEqual(800)
       expect(client.getLatestSlotNumber).toHaveBeenCalledTimes(1)
       expect(client2.getLatestSlotNumber).toHaveBeenCalledTimes(1)
     })

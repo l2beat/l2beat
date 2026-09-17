@@ -77,7 +77,7 @@ describe(TvsPriceIndexer.name, () => {
       expect(tvsPriceRepository.upsertMany).toHaveBeenCalledExactlyOnceWith(
         expectedRecords,
       )
-      expect(safeHeight).toStrictEqual(adjustedTo)
+      expect(safeHeight).toEqual(adjustedTo)
     })
 
     it('filters out timestamps that should not be synced', async () => {
@@ -129,7 +129,7 @@ describe(TvsPriceIndexer.name, () => {
       expect(tvsPriceRepository.upsertMany).toHaveBeenCalledExactlyOnceWith(
         expectedRecords,
       )
-      expect(safeHeight).toStrictEqual(adjustedTo)
+      expect(safeHeight).toEqual(adjustedTo)
     })
 
     it('returns to value if no timestamps to sync', async () => {
@@ -171,7 +171,7 @@ describe(TvsPriceIndexer.name, () => {
         adjustedTo,
         1,
       )
-      expect(safeHeight).toStrictEqual(to)
+      expect(safeHeight).toEqual(to)
     })
 
     it('handles insufficient data errors', async () => {
@@ -220,7 +220,7 @@ describe(TvsPriceIndexer.name, () => {
       )
 
       expect(tvsPriceRepository.upsertMany).toHaveBeenCalledExactlyOnceWith([])
-      expect(safeHeight).toStrictEqual(adjustedTo)
+      expect(safeHeight).toEqual(adjustedTo)
     })
 
     it('rethrows other errors', async () => {

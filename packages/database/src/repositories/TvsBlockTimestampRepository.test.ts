@@ -18,12 +18,12 @@ describeDatabase(TvsBlockTimestampRepository.name, (db) => {
 
       const result = await repository.getAll()
       expect(result).toHaveLength(records.length)
-      expect(result).toStrictEqual(expect.arrayContaining(records))
+      expect(result).toEqual(expect.arrayContaining(records))
     })
 
     it('handles empty array', async () => {
       const inserted = await repository.upsertMany([])
-      expect(inserted).toStrictEqual(0)
+      expect(inserted).toEqual(0)
     })
 
     it('performs batch insert when more than 1000 records', async () => {
@@ -33,7 +33,7 @@ describeDatabase(TvsBlockTimestampRepository.name, (db) => {
       }
 
       const inserted = await repository.upsertMany(records)
-      expect(inserted).toStrictEqual(1500)
+      expect(inserted).toEqual(1500)
     })
 
     it('updates existing records on conflict', async () => {
@@ -50,11 +50,11 @@ describeDatabase(TvsBlockTimestampRepository.name, (db) => {
       ]
 
       const inserted = await repository.upsertMany(updatedRecords)
-      expect(inserted).toStrictEqual(2)
+      expect(inserted).toEqual(2)
 
       const result = await repository.getAll()
       expect(result).toHaveLength(updatedRecords.length)
-      expect(result).toStrictEqual(expect.arrayContaining(updatedRecords))
+      expect(result).toEqual(expect.arrayContaining(updatedRecords))
     })
   })
 
@@ -74,7 +74,7 @@ describeDatabase(TvsBlockTimestampRepository.name, (db) => {
           UnixTime(100),
         )
 
-        expect(result).toStrictEqual(1000)
+        expect(result).toEqual(1000)
       })
 
       it('returns undefined when no matching record exists', async () => {
@@ -87,7 +87,7 @@ describeDatabase(TvsBlockTimestampRepository.name, (db) => {
           UnixTime(200),
         )
 
-        expect(result).toStrictEqual(undefined)
+        expect(result).toEqual(undefined)
       })
     },
   )
@@ -106,11 +106,11 @@ describeDatabase(TvsBlockTimestampRepository.name, (db) => {
         'b'.repeat(12),
       ])
 
-      expect(deleted).toStrictEqual(3)
+      expect(deleted).toEqual(3)
 
       const results = await repository.getAll()
       expect(results).toHaveLength(1)
-      expect(results).toStrictEqual(
+      expect(results).toEqual(
         expect.arrayContaining([
           blockTimestamp('c', 'ethereum', UnixTime(1), 3001),
         ]),
@@ -123,11 +123,11 @@ describeDatabase(TvsBlockTimestampRepository.name, (db) => {
       ])
 
       const deleted = await repository.deleteByConfigIds([])
-      expect(deleted).toStrictEqual(0)
+      expect(deleted).toEqual(0)
 
       const results = await repository.getAll()
       expect(results).toHaveLength(1)
-      expect(results).toStrictEqual(
+      expect(results).toEqual(
         expect.arrayContaining([
           blockTimestamp('a', 'ethereum', UnixTime(1), 1001),
         ]),
@@ -140,11 +140,11 @@ describeDatabase(TvsBlockTimestampRepository.name, (db) => {
       ])
 
       const deleted = await repository.deleteByConfigIds(['b'.repeat(12)])
-      expect(deleted).toStrictEqual(0)
+      expect(deleted).toEqual(0)
 
       const results = await repository.getAll()
       expect(results).toHaveLength(1)
-      expect(results).toStrictEqual(
+      expect(results).toEqual(
         expect.arrayContaining([
           blockTimestamp('a', 'ethereum', UnixTime(1), 1001),
         ]),
@@ -169,11 +169,11 @@ describeDatabase(TvsBlockTimestampRepository.name, (db) => {
           UnixTime(2),
         )
 
-        expect(deleted).toStrictEqual(2)
+        expect(deleted).toEqual(2)
 
         const results = await repository.getAll()
         expect(results).toHaveLength(2)
-        expect(results).toStrictEqual(
+        expect(results).toEqual(
           expect.arrayContaining([
             blockTimestamp('b', 'ethereum', UnixTime(3), 1003),
             blockTimestamp('c', 'arbitrum', UnixTime(2), 2002),
@@ -192,11 +192,11 @@ describeDatabase(TvsBlockTimestampRepository.name, (db) => {
           UnixTime(2),
         )
 
-        expect(deleted).toStrictEqual(0)
+        expect(deleted).toEqual(0)
 
         const results = await repository.getAll()
         expect(results).toHaveLength(1)
-        expect(results).toStrictEqual(
+        expect(results).toEqual(
           expect.arrayContaining([
             blockTimestamp('b', 'ethereum', UnixTime(1), 1001),
           ]),

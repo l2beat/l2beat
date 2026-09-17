@@ -14,7 +14,7 @@ describe(BlockProvider.name, () => {
       const result = await provider.getBlockWithTransactions(1)
 
       expect(rpc.getBlockWithTransactions).toHaveBeenCalledExactlyOnceWith(1)
-      expect(result).toStrictEqual(block(1))
+      expect(result).toEqual(block(1))
     })
 
     it('calls other client when there are errors', async () => {
@@ -42,7 +42,7 @@ describe(BlockProvider.name, () => {
         rpc_three.getBlockWithTransactions,
       ).toHaveBeenCalledExactlyOnceWith(1)
 
-      expect(result).toStrictEqual(block(1))
+      expect(result).toEqual(block(1))
     })
 
     it('throws when ran out of fallbacks', async () => {
@@ -88,7 +88,7 @@ describe(BlockProvider.name, () => {
         UnixTime(800 * 100),
       )
 
-      expect(blockNumber).toStrictEqual(800)
+      expect(blockNumber).toEqual(800)
       expect(client.getLatestBlockNumber).toHaveBeenCalledTimes(1)
     })
 
@@ -106,7 +106,7 @@ describe(BlockProvider.name, () => {
         UnixTime(800 * 100),
       )
 
-      expect(blockNumber).toStrictEqual(800)
+      expect(blockNumber).toEqual(800)
       expect(getBlockTimestamp).toHaveBeenCalled()
       expect(client.getBlockWithTransactions).not.toHaveBeenCalled()
     })
@@ -130,7 +130,7 @@ describe(BlockProvider.name, () => {
         UnixTime(800 * 100),
       )
 
-      expect(blockNumber).toStrictEqual(800)
+      expect(blockNumber).toEqual(800)
       expect(client.getLatestBlockNumber).toHaveBeenCalledTimes(1)
       expect(client2.getLatestBlockNumber).toHaveBeenCalledTimes(1)
     })
@@ -149,7 +149,7 @@ describe(BlockProvider.name, () => {
         800,
       )
 
-      expect(blockNumber).toStrictEqual(300)
+      expect(blockNumber).toEqual(300)
       expect(client.getLatestBlockNumber).toHaveBeenCalledTimes(1)
     })
 

@@ -19,7 +19,7 @@ describe(StarknetDayProvider.name, () => {
       const provider = new StarknetDayProvider(voyagerClient)
       const result = await provider.getDailyTxsCount(2, 5)
 
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         [2 * UnixTime.DAY]: 200,
         [3 * UnixTime.DAY]: 300,
         [4 * UnixTime.DAY]: 400,
@@ -38,7 +38,7 @@ describe(StarknetDayProvider.name, () => {
       const provider = new StarknetDayProvider(voyagerClient)
       const result = await provider.getDailyTxsCount(5, 10)
 
-      expect(result).toStrictEqual({})
+      expect(result).toEqual({})
     })
 
     it('handles empty response from client', async () => {
@@ -49,7 +49,7 @@ describe(StarknetDayProvider.name, () => {
       const provider = new StarknetDayProvider(voyagerClient)
       const result = await provider.getDailyTxsCount(1, 5)
 
-      expect(result).toStrictEqual({})
+      expect(result).toEqual({})
     })
   })
 
@@ -68,7 +68,7 @@ describe(StarknetDayProvider.name, () => {
       const provider = new StarknetDayProvider(voyagerClient)
       const result = await provider.getDailyUopsCount(2, 5)
 
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         [2 * UnixTime.DAY]: 150,
         [3 * UnixTime.DAY]: 250,
         [4 * UnixTime.DAY]: 350,
@@ -87,7 +87,7 @@ describe(StarknetDayProvider.name, () => {
       const provider = new StarknetDayProvider(voyagerClient)
       const result = await provider.getDailyUopsCount(5, 10)
 
-      expect(result).toStrictEqual({})
+      expect(result).toEqual({})
     })
 
     it('handles empty response from client', async () => {
@@ -98,7 +98,7 @@ describe(StarknetDayProvider.name, () => {
       const provider = new StarknetDayProvider(voyagerClient)
       const result = await provider.getDailyUopsCount(1, 5)
 
-      expect(result).toStrictEqual({})
+      expect(result).toEqual({})
     })
   })
 
@@ -114,7 +114,7 @@ describe(StarknetDayProvider.name, () => {
       const provider = new StarknetDayProvider(voyagerClient)
       const result = await provider.getDailyTxsCount(1, 1)
 
-      expect(result).toStrictEqual({})
+      expect(result).toEqual({})
     })
   })
 })

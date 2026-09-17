@@ -40,7 +40,7 @@ describe(discoveryDiffToMarkdown.name, () => {
       BAR_CONTRACT_DIFF,
     ])
 
-    expect(result).toStrictEqual(
+    expect(result).toEqual(
       [
         '```diff',
         `    contract foo (${ADDRESS.toString()}) [N/A] {`,
@@ -70,7 +70,7 @@ describe(discoveryDiffToMarkdown.name, () => {
     )
 
     expect(result.length).toBeLessThanOrEqual(maxLength)
-    expect(result).toStrictEqual(
+    expect(result).toEqual(
       [
         '```diff',
         `    contract foo (${ADDRESS.toString()}) [N/A] {`,
@@ -85,7 +85,7 @@ describe(discoveryDiffToMarkdown.name, () => {
     const result = discoveryDiffToMarkdown([FOO_CONTRACT_DIFF], maxLength)
 
     expect(result.length).toBeLessThanOrEqual(maxLength)
-    expect(result).toStrictEqual(
+    expect(result).toEqual(
       ['```diff', '    contract f... (message too long)', '```'].join('\n'),
     )
   })
@@ -103,7 +103,7 @@ describe(discoveryDiffToMarkdown.name, () => {
       { ...BAR_CONTRACT_DIFF, description: undefined },
     ])
 
-    expect(result).toStrictEqual(
+    expect(result).toEqual(
       [
         '```diff',
         `    contract foo (${ADDRESS.toString()}) [N/A] {`,
@@ -135,7 +135,7 @@ describe(discoveryDiffToMarkdown.name, () => {
       },
     ])
 
-    expect(result).toStrictEqual(
+    expect(result).toEqual(
       [
         '```diff',
         `    contract foo (${ADDRESS.toString()}) [N/A] {`,
@@ -151,7 +151,7 @@ describe(discoveryDiffToMarkdown.name, () => {
 
   it('empty diffs, no meta', () => {
     const result = discoveryDiffToMarkdown([])
-    expect(result).toStrictEqual('')
+    expect(result).toEqual('')
   })
 })
 
@@ -167,7 +167,7 @@ describe(contractDiffToMarkdown.name, () => {
       undefined,
     )
 
-    expect(result).toStrictEqual(
+    expect(result).toEqual(
       [
         '```diff',
         '+   Status: CREATED',
@@ -190,7 +190,7 @@ describe(contractDiffToMarkdown.name, () => {
       undefined,
     )
 
-    expect(result).toStrictEqual(
+    expect(result).toEqual(
       [
         '```diff',
         '+   Status: CREATED',
@@ -212,7 +212,7 @@ describe(contractDiffToMarkdown.name, () => {
       undefined,
     )
 
-    expect(result).toStrictEqual(
+    expect(result).toEqual(
       [
         '```diff',
         '+   Status: CREATED',
@@ -234,7 +234,7 @@ describe(contractDiffToMarkdown.name, () => {
       undefined,
     )
 
-    expect(result).toStrictEqual(
+    expect(result).toEqual(
       [
         '```diff',
         '-   Status: DELETED',
@@ -259,7 +259,7 @@ describe(contractDiffToMarkdown.name, () => {
       undefined,
     )
 
-    expect(result).toStrictEqual(
+    expect(result).toEqual(
       [
         '```diff',
         `    contract foo (${ADDRESS.toString()}) [N/A] {`,
@@ -292,7 +292,7 @@ describe(contractDiffToMarkdown.name, () => {
     )
 
     expect(result.length).toBeLessThanOrEqual(maxLength)
-    expect(result).toStrictEqual(
+    expect(result).toEqual(
       ['```diff', '    contract f... (message too long)', '```'].join('\n'),
     )
   })
@@ -315,7 +315,7 @@ describe(contractDiffToMarkdown.name, () => {
       ],
     })
 
-    expect(result).toStrictEqual(
+    expect(result).toEqual(
       [
         '```diff',
         `    contract foo (${ADDRESS.toString()}) [N/A] {`,
@@ -343,7 +343,7 @@ describe(fieldDiffToMarkdown.name, () => {
       after: 'newValue',
     }
 
-    expect(fieldDiffToMarkdown(diff, undefined)).toStrictEqual(
+    expect(fieldDiffToMarkdown(diff, undefined)).toEqual(
       [
         '      values.bar:', // prettier hack
         '-        oldValue',
@@ -358,7 +358,7 @@ describe(fieldDiffToMarkdown.name, () => {
       after: 'newValue',
     }
 
-    expect(fieldDiffToMarkdown(diff)).toStrictEqual(
+    expect(fieldDiffToMarkdown(diff)).toEqual(
       [
         '      values.bar:', // prettier hack
         '+        newValue',
@@ -375,7 +375,7 @@ describe(fieldDiffToMarkdown.name, () => {
 
     const maxLength = 32
     const result = fieldDiffToMarkdown(diff, maxLength)
-    expect(result).toStrictEqual('      valu... (message too long)')
+    expect(result).toEqual('      valu... (message too long)')
     expect(result.length).toBeLessThanOrEqual(maxLength)
   })
 
@@ -388,7 +388,7 @@ describe(fieldDiffToMarkdown.name, () => {
       severity: 'LOW',
     } as const
 
-    expect(fieldDiffToMarkdown(diff)).toStrictEqual(
+    expect(fieldDiffToMarkdown(diff)).toEqual(
       [
         '+++ description: The bar value', // prettier hack
         '+++ severity: LOW',
@@ -407,7 +407,7 @@ describe(fieldDiffToMarkdown.name, () => {
       severity: 'LOW',
     } as const
 
-    expect(fieldDiffToMarkdown(diff)).toStrictEqual(
+    expect(fieldDiffToMarkdown(diff)).toEqual(
       [
         '+++ severity: LOW',
         '      values.bar:',
@@ -429,8 +429,6 @@ describe(fieldDiffToMarkdown.name, () => {
     const maxLength = 48
     const result = fieldDiffToMarkdown(diff, maxLength)
     expect(result.length).toBeLessThanOrEqual(maxLength)
-    expect(result).toStrictEqual(
-      '+++ description: The bar v... (message too long)',
-    )
+    expect(result).toEqual('+++ description: The bar v... (message too long)')
   })
 })

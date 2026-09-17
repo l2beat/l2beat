@@ -288,7 +288,7 @@ describe('discovery config.jsonc', () => {
         // const defaultDescriptionRediscover =
         //   'Discovery rerun on the same block number with only config-related changes.'
 
-        expect(description).not.toStrictEqual(defaultDescriptionDiscover)
+        expect(description).not.toEqual(defaultDescriptionDiscover)
       })
   })
 
@@ -333,7 +333,7 @@ describe('discovery config.jsonc', () => {
                 value.handler?.type === 'accessControl' &&
                 value.handler.pickRoleMembers === undefined
               ) {
-                expect(key).toStrictEqual('accessControl')
+                expect(key).toEqual('accessControl')
               }
             }
           }

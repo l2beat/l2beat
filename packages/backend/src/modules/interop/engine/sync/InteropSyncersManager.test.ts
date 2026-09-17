@@ -77,7 +77,7 @@ describe(InteropSyncersManager.name, () => {
 
         manager.start()
 
-        expect(manager.getSyncer('non-resyncable', 'ethereum')).toStrictEqual(
+        expect(manager.getSyncer('non-resyncable', 'ethereum')).toEqual(
           undefined,
         )
         expect(cleanerStart).not.toHaveBeenCalled()
@@ -138,7 +138,7 @@ describe(InteropSyncersManager.name, () => {
       expect(manager.getSyncer('cluster-b', 'arbitrum')).toBeInstanceOf(
         InteropEventSyncer,
       )
-      expect(manager.getSyncer('missing', 'ethereum')).toStrictEqual(undefined)
+      expect(manager.getSyncer('missing', 'ethereum')).toEqual(undefined)
     })
 
     it('reuses rpc clients per chain across clusters', () => {
@@ -155,8 +155,8 @@ describe(InteropSyncersManager.name, () => {
       expect(bEth).toBeInstanceOf(InteropEventSyncer)
       expect(aArb).toBeInstanceOf(InteropEventSyncer)
 
-      expect(aEth?.rpcClient).toStrictEqual(bEth?.rpcClient)
-      expect(aEth?.rpcClient).not.toStrictEqual(aArb?.rpcClient)
+      expect(aEth?.rpcClient).toEqual(bEth?.rpcClient)
+      expect(aEth?.rpcClient).not.toEqual(aArb?.rpcClient)
     })
   })
 
@@ -181,8 +181,8 @@ describe(InteropSyncersManager.name, () => {
 
         manager.start()
 
-        expect(syncerStart.mock.calls.length).toStrictEqual(4)
-        expect(cleanerStart.mock.calls.length).toStrictEqual(2)
+        expect(syncerStart.mock.calls.length).toEqual(4)
+        expect(cleanerStart.mock.calls.length).toEqual(2)
       } finally {
         InteropEventSyncer.prototype.start = originalSyncerStart
         InteropDataCleaner.prototype.start = originalCleanerStart
@@ -264,7 +264,7 @@ describe(InteropSyncersManager.name, () => {
 
       await new Promise<void>((resolve) => setImmediate(resolve))
 
-      expect(settled).toStrictEqual(false)
+      expect(settled).toEqual(false)
 
       bPending.resolve(undefined)
 
@@ -288,7 +288,7 @@ describe(InteropSyncersManager.name, () => {
 
       await processor.processBlock(block, logs)
 
-      expect(processor.chain).toStrictEqual('ethereum')
+      expect(processor.chain).toEqual('ethereum')
       expect(processNewestBlock).toHaveBeenCalledWith('ethereum', block, logs)
     })
   })
@@ -310,9 +310,9 @@ describe(InteropSyncersManager.name, () => {
         db,
       })
 
-      expect(
-        await manager.areSyncersFreshEnough(target, tolerance),
-      ).toStrictEqual(true)
+      expect(await manager.areSyncersFreshEnough(target, tolerance)).toEqual(
+        true,
+      )
     })
 
     it('ignores instantaneous syncer state when data is fresh', async () => {
@@ -337,9 +337,9 @@ describe(InteropSyncersManager.name, () => {
       }
       syncer.hasError = true
 
-      expect(
-        await manager.areSyncersFreshEnough(target, tolerance),
-      ).toStrictEqual(true)
+      expect(await manager.areSyncersFreshEnough(target, tolerance)).toEqual(
+        true,
+      )
     })
 
     it('returns false and warns when any syncer is synced before the threshold', async () => {
@@ -361,9 +361,9 @@ describe(InteropSyncersManager.name, () => {
         logger,
       })
 
-      expect(
-        await manager.areSyncersFreshEnough(target, tolerance),
-      ).toStrictEqual(false)
+      expect(await manager.areSyncersFreshEnough(target, tolerance)).toEqual(
+        false,
+      )
       expect(warn).toHaveBeenCalledWith(
         'Syncers are behind the aggregation threshold',
         {
@@ -395,9 +395,9 @@ describe(InteropSyncersManager.name, () => {
       })
 
       // arbitrum has never produced a synced range
-      expect(
-        await manager.areSyncersFreshEnough(target, tolerance),
-      ).toStrictEqual(false)
+      expect(await manager.areSyncersFreshEnough(target, tolerance)).toEqual(
+        false,
+      )
       expect(error).toHaveBeenCalledWith('Syncers have no synced range', {
         target,
         missing: ['cluster-a:arbitrum'],
@@ -428,9 +428,9 @@ describe(InteropSyncersManager.name, () => {
         logger,
       })
 
-      expect(
-        await manager.areSyncersFreshEnough(target, tolerance),
-      ).toStrictEqual(false)
+      expect(await manager.areSyncersFreshEnough(target, tolerance)).toEqual(
+        false,
+      )
       expect(warn).toHaveBeenCalledWith(
         'Syncers have a pending wipe or resync',
         {
@@ -462,9 +462,9 @@ describe(InteropSyncersManager.name, () => {
         db,
       })
 
-      expect(
-        await manager.areSyncersFreshEnough(target, tolerance),
-      ).toStrictEqual(false)
+      expect(await manager.areSyncersFreshEnough(target, tolerance)).toEqual(
+        false,
+      )
     })
   })
 
@@ -492,7 +492,7 @@ describe(InteropSyncersManager.name, () => {
 
       const result = await manager.getPluginSyncStatuses(target, tolerance)
 
-      expect(result.map((r) => `${r.pluginName}:${r.chain}`)).toStrictEqual([
+      expect(result.map((r) => `${r.pluginName}:${r.chain}`)).toEqual([
         'cluster-a:arbitrum',
         'cluster-a:ethereum',
         'cluster-b:arbitrum',
@@ -510,7 +510,7 @@ describe(InteropSyncersManager.name, () => {
         (r) => r.pluginName === 'cluster-c' && r.chain === 'ethereum',
       )
 
-      expect(aEth).toStrictEqual({
+      expect(aEth).toEqual({
         pluginName: 'cluster-a',
         chain: 'ethereum',
         chainStatus: 'active',
@@ -522,12 +522,12 @@ describe(InteropSyncersManager.name, () => {
         // pending resync
         blocksAggregation: true,
       })
-      expect(bEth?.syncMode).toStrictEqual('following-starting')
-      expect(bEth?.toBlock).toStrictEqual(undefined)
-      expect(cEth?.syncMode).toStrictEqual(undefined)
-      expect(cEth?.lastError).toStrictEqual('missing')
+      expect(bEth?.syncMode).toEqual('following-starting')
+      expect(bEth?.toBlock).toEqual(undefined)
+      expect(cEth?.syncMode).toEqual(undefined)
+      expect(cEth?.lastError).toEqual('missing')
       // cluster-c is not a registered plugin cluster
-      expect(cEth?.chainStatus).toStrictEqual('stale')
+      expect(cEth?.chainStatus).toEqual('stale')
     })
 
     it('classifies chains as active, disabled, or stale', async () => {
@@ -554,7 +554,7 @@ describe(InteropSyncersManager.name, () => {
         result.map((r) => [`${r.pluginName}:${r.chain}`, r.chainStatus]),
       )
 
-      expect(byKey).toStrictEqual({
+      expect(byKey).toEqual({
         'cluster-a:ethereum': 'active',
         'cluster-a:arbitrum': 'disabled',
         'cluster-a:forknet': 'stale',
@@ -589,7 +589,7 @@ describe(InteropSyncersManager.name, () => {
         result.map((r) => [`${r.pluginName}:${r.chain}`, r.blocksAggregation]),
       )
 
-      expect(byKey).toStrictEqual({
+      expect(byKey).toEqual({
         'cluster-a:ethereum': false, // fresh
         'cluster-a:arbitrum': true, // stale range
         'cluster-b:ethereum': true, // pending resync

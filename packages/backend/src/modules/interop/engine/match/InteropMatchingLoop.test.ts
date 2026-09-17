@@ -57,10 +57,8 @@ describe(InteropMatchingLoop.name, () => {
       )
 
       expect(query).toHaveBeenCalledTimes(1)
-      expect(deployedToAbstractMap.size).toStrictEqual(1)
-      expect(deployedToAbstractMap.get(chainSpecificAddress)).toStrictEqual(
-        TOKEN_A,
-      )
+      expect(deployedToAbstractMap.size).toEqual(1)
+      expect(deployedToAbstractMap.get(chainSpecificAddress)).toEqual(TOKEN_A)
     })
   })
 
@@ -145,10 +143,10 @@ describe('match', () => {
       {} as unknown as TokenMap,
     )
 
-    expect(sawEventC).toStrictEqual(true)
-    expect(matchedLookup).toStrictEqual(undefined)
-    expect(result.messages.length).toStrictEqual(1)
-    expect(result.unsupported.length).toStrictEqual(0)
+    expect(sawEventC).toEqual(true)
+    expect(matchedLookup).toEqual(undefined)
+    expect(result.messages.length).toEqual(1)
+    expect(result.unsupported.length).toEqual(0)
   })
 
   it('passes deployed-to-abstract map to plugins', async () => {
@@ -192,7 +190,7 @@ describe('match', () => {
       deployedToAbstractMap,
     )
 
-    expect(seen).toStrictEqual(TOKEN_A)
+    expect(seen).toEqual(TOKEN_A)
   })
 
   it('keeps transfers with explicit chain on the missing side', async () => {
@@ -237,12 +235,12 @@ describe('match', () => {
       {} as unknown as TokenMap,
     )
 
-    expect(result.transfers.length).toStrictEqual(1)
-    expect(result.unsupported.length).toStrictEqual(0)
+    expect(result.transfers.length).toEqual(1)
+    expect(result.unsupported.length).toEqual(0)
 
     const transfer = result.transfers[0]
-    expect(transfer.src.event?.ctx.chain).toStrictEqual('ethereum')
-    expect(transfer.dst.event).toStrictEqual(undefined)
-    expect(transfer.dst.chain).toStrictEqual('solana')
+    expect(transfer.src.event?.ctx.chain).toEqual('ethereum')
+    expect(transfer.dst.event).toEqual(undefined)
+    expect(transfer.dst.chain).toEqual('solana')
   })
 })

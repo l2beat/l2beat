@@ -7,7 +7,7 @@ describe(renameIdentifiers.name, () => {
     const src =
       'contract Foo { function bar(MyLib.MyStruct memory x) public {} }'
     const result = renameIdentifiers(src, [{ from: 'MyLib', to: 'NewLib' }])
-    expect(result).toStrictEqual(
+    expect(result).toEqual(
       'contract Foo { function bar(NewLib.MyStruct memory x) public {} }',
     )
   })
@@ -15,7 +15,7 @@ describe(renameIdentifiers.name, () => {
   it('renames a library identifier in an expression', () => {
     const src = 'contract Foo { function bar() public { Lib.doSomething(); } }'
     const result = renameIdentifiers(src, [{ from: 'Lib', to: 'NewLib' }])
-    expect(result).toStrictEqual(
+    expect(result).toEqual(
       'contract Foo { function bar() public { NewLib.doSomething(); } }',
     )
   })
@@ -24,7 +24,7 @@ describe(renameIdentifiers.name, () => {
     const src =
       'contract Foo { function bar(IERC20 token) public returns (IERC20) {} }'
     const result = renameIdentifiers(src, [{ from: 'IERC20', to: 'IERC20_v2' }])
-    expect(result).toStrictEqual(
+    expect(result).toEqual(
       'contract Foo { function bar(IERC20_v2 token) public returns (IERC20_v2) {} }',
     )
   })
@@ -47,7 +47,7 @@ describe(renameIdentifiers.name, () => {
       '    }',
       '}',
     ].join('\n')
-    expect(result).toStrictEqual(expected)
+    expect(result).toEqual(expected)
   })
 
   it('returns source unchanged when identifier is not found', () => {
@@ -55,13 +55,13 @@ describe(renameIdentifiers.name, () => {
     const result = renameIdentifiers(src, [
       { from: 'NonExistent', to: 'Something' },
     ])
-    expect(result).toStrictEqual(src)
+    expect(result).toEqual(src)
   })
 
   it('returns source unchanged when prevName equals newName', () => {
     const src = 'contract Foo { function bar(Lib.T x) public {} }'
     const result = renameIdentifiers(src, [{ from: 'Lib', to: 'Lib' }])
-    expect(result).toStrictEqual(src)
+    expect(result).toEqual(src)
   })
 
   it('fails to parse invalid', () => {
@@ -73,7 +73,7 @@ describe(renameIdentifiers.name, () => {
     const src =
       'contract Foo { function bar(uint256 x) public { uint256 y = x + x; } }'
     const result = renameIdentifiers(src, [{ from: 'x', to: 'amount' }])
-    expect(result).toStrictEqual(
+    expect(result).toEqual(
       'contract Foo { function bar(uint256 amount) public { uint256 y = amount + amount; } }',
     )
   })
@@ -119,21 +119,19 @@ describe(renameIdentifiers.name, () => {
   it('renames a contract declaration name', () => {
     const src = 'contract Base { function f() public {} }'
     const result = renameIdentifiers(src, [{ from: 'Base', to: 'Base_1' }])
-    expect(result).toStrictEqual('contract Base_1 { function f() public {} }')
+    expect(result).toEqual('contract Base_1 { function f() public {} }')
   })
 
   it('renames a contract declaration name and body self-references', () => {
     const src = 'contract Foo { function f(Foo x) public {} }'
     const result = renameIdentifiers(src, [{ from: 'Foo', to: 'Foo_1' }])
-    expect(result).toStrictEqual(
-      'contract Foo_1 { function f(Foo_1 x) public {} }',
-    )
+    expect(result).toEqual('contract Foo_1 { function f(Foo_1 x) public {} }')
   })
 
   it('renames an abstract contract declaration name', () => {
     const src = 'abstract contract Base { function f() public virtual; }'
     const result = renameIdentifiers(src, [{ from: 'Base', to: 'Base_1' }])
-    expect(result).toStrictEqual(
+    expect(result).toEqual(
       'abstract contract Base_1 { function f() public virtual; }',
     )
   })
@@ -141,13 +139,13 @@ describe(renameIdentifiers.name, () => {
   it('renames a struct declaration name', () => {
     const src = 'struct MyData { uint256 value; }'
     const result = renameIdentifiers(src, [{ from: 'MyData', to: 'MyData_1' }])
-    expect(result).toStrictEqual('struct MyData_1 { uint256 value; }')
+    expect(result).toEqual('struct MyData_1 { uint256 value; }')
   })
 
   it('renames an enum declaration name', () => {
     const src = 'enum Status { Active, Inactive }'
     const result = renameIdentifiers(src, [{ from: 'Status', to: 'Status_1' }])
-    expect(result).toStrictEqual('enum Status_1 { Active, Inactive }')
+    expect(result).toEqual('enum Status_1 { Active, Inactive }')
   })
 
   it('renames multiple different identifiers in one pass', () => {
@@ -157,19 +155,19 @@ describe(renameIdentifiers.name, () => {
       { from: 'Lib', to: 'NewLib' },
       { from: 'Other', to: 'Other_1' },
     ])
-    expect(result).toStrictEqual(
+    expect(result).toEqual(
       'contract Foo { function bar(NewLib.Type memory x, Other_1 y) public {} }',
     )
   })
 
   it('renames a function call in a state variable initializer (length mismatch)', () => {
     const src = 'contract Foo { uint256 x = test(); }'
-    expect(renameIdentifiers(src, [{ from: 'test', to: 'X' }])).toStrictEqual(
+    expect(renameIdentifiers(src, [{ from: 'test', to: 'X' }])).toEqual(
       'contract Foo { uint256 x = X(); }',
     )
-    expect(
-      renameIdentifiers(src, [{ from: 'test', to: 'XXXXXX' }]),
-    ).toStrictEqual('contract Foo { uint256 x = XXXXXX(); }')
+    expect(renameIdentifiers(src, [{ from: 'test', to: 'XXXXXX' }])).toEqual(
+      'contract Foo { uint256 x = XXXXXX(); }',
+    )
   })
 
   describe('with leading comments', () => {
@@ -177,7 +175,7 @@ describe(renameIdentifiers.name, () => {
       const src =
         '// SPDX-License-Identifier: MIT\ncontract Foo { function bar(Lib.T x) public {} }'
       const result = renameIdentifiers(src, [{ from: 'Lib', to: 'NewLib' }])
-      expect(result).toStrictEqual(
+      expect(result).toEqual(
         '// SPDX-License-Identifier: MIT\ncontract Foo { function bar(NewLib.T x) public {} }',
       )
     })
@@ -191,7 +189,7 @@ describe(renameIdentifiers.name, () => {
       const result = renameIdentifiers(src, [
         { from: 'IERC20', to: 'IERC20_v2' },
       ])
-      expect(result).toStrictEqual(
+      expect(result).toEqual(
         [
           '// Line 1',
           '// Line 2',
@@ -204,7 +202,7 @@ describe(renameIdentifiers.name, () => {
       const src =
         '/* multi-line\n   block comment */\ncontract Foo { function bar(Lib.T x) public {} }'
       const result = renameIdentifiers(src, [{ from: 'Lib', to: 'NewLib' }])
-      expect(result).toStrictEqual(
+      expect(result).toEqual(
         '/* multi-line\n   block comment */\ncontract Foo { function bar(NewLib.T x) public {} }',
       )
     })
@@ -213,7 +211,7 @@ describe(renameIdentifiers.name, () => {
       const src =
         '  \n// comment\n  /* block */\ncontract Foo { function bar(Token t) public {} }'
       const result = renameIdentifiers(src, [{ from: 'Token', to: 'Token_1' }])
-      expect(result).toStrictEqual(
+      expect(result).toEqual(
         '  \n// comment\n  /* block */\ncontract Foo { function bar(Token_1 t) public {} }',
       )
     })
@@ -221,7 +219,7 @@ describe(renameIdentifiers.name, () => {
     it('renames the contract name with leading comments', () => {
       const src = '// license header\ncontract Base { function f() public {} }'
       const result = renameIdentifiers(src, [{ from: 'Base', to: 'Base_1' }])
-      expect(result).toStrictEqual(
+      expect(result).toEqual(
         '// license header\ncontract Base_1 { function f() public {} }',
       )
     })
@@ -236,7 +234,7 @@ describe(renameIdentifiers.name, () => {
         { from: 'Lib', to: 'NewLib' },
         { from: 'Other', to: 'Other_1' },
       ])
-      expect(result).toStrictEqual(
+      expect(result).toEqual(
         [
           '/// @title Foo contract',
           '/// @notice Does things',

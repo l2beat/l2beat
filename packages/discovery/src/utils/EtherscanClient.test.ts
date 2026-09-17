@@ -46,7 +46,7 @@ describe(EtherscanClient.name, () => {
 
     const result = client.getContractDeploymentTx(ADDRESS)
     await vi.runAllTimersAsync()
-    expect(await result).toStrictEqual(TX_HASH)
+    expect(await result).toEqual(TX_HASH)
   })
 
   it('base-like creation date', async () => {
@@ -75,7 +75,7 @@ describe(EtherscanClient.name, () => {
 
     const result = client.getContractDeploymentTx(ADDRESS)
     await vi.runAllTimersAsync()
-    expect(await result).toStrictEqual(Hash256.ZERO)
+    expect(await result).toEqual(Hash256.ZERO)
   })
 
   it('retries when etherscan response is unparseable', async () => {
@@ -109,7 +109,7 @@ describe(EtherscanClient.name, () => {
 
     const result = client.getContractDeploymentTx(ADDRESS)
     await vi.runAllTimersAsync()
-    expect(await result).toStrictEqual(TX_HASH)
+    expect(await result).toEqual(TX_HASH)
   })
 
   it('retries when etherscan response is NOK', async () => {
@@ -144,7 +144,7 @@ describe(EtherscanClient.name, () => {
 
     const result = client.getContractDeploymentTx(ADDRESS)
     await vi.runAllTimersAsync()
-    expect(await result).toStrictEqual(TX_HASH)
+    expect(await result).toEqual(TX_HASH)
   })
 
   it('retries when etherscan has all the issues', async () => {
@@ -181,6 +181,6 @@ describe(EtherscanClient.name, () => {
 
     const result = client.getContractDeploymentTx(ADDRESS)
     await vi.runAllTimersAsync()
-    expect(await result).toStrictEqual(TX_HASH)
+    expect(await result).toEqual(TX_HASH)
   })
 })

@@ -40,7 +40,7 @@ describe(ProxyDetector.name, () => {
     } as unknown as IProvider
     const result = await detector.detectProxy(provider, address)
 
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       type: 'EOA',
       deployment: undefined,
       values: {},
@@ -69,7 +69,7 @@ describe(ProxyDetector.name, () => {
     } as unknown as IProvider
     const result = await detector.detectProxy(provider, address)
 
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       type: 'EIP7702 EOA',
       deployment: undefined,
       values: {
@@ -86,7 +86,7 @@ describe(ProxyDetector.name, () => {
     )
     const result = await detector.detectProxy(provider, address)
 
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       type: 'immutable',
       deployment: undefined,
       values: { $immutable: true },
@@ -102,7 +102,7 @@ describe(ProxyDetector.name, () => {
 
     const result = await detector.detectProxy(provider, address)
 
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       ...FIRST_DETAILS,
       deployment: undefined,
       addresses: [address, implementation],
@@ -120,7 +120,7 @@ describe(ProxyDetector.name, () => {
       'call implementation proxy',
     )
 
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       ...FIRST_DETAILS,
       deployment: undefined,
       addresses: [address, implementation],

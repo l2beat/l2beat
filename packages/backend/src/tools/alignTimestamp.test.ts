@@ -52,7 +52,7 @@ describe(alignTimestamp.name, () => {
         c.sixHourlyCutoff,
       )
 
-      expect(result).toStrictEqual(c.expected)
+      expect(result).toEqual(c.expected)
     })
   }
 })

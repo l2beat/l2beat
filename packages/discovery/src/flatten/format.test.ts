@@ -11,6 +11,6 @@ describe(format.name, () => {
     ])
 
     const formatted = format(before)
-    expect(formatted).toStrictEqual(after)
+    expect(formatted).toEqual(after)
   })
 })

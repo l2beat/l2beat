@@ -15,7 +15,7 @@ describe(getOneTimeEvents.name, () => {
   })
 
   it('returns an empty array if there are no events', () => {
-    expect(getOneTimeEvents([])).toStrictEqual([])
+    expect(getOneTimeEvents([])).toEqual([])
   })
 
   it('should throw an error if since date is after till date', () => {
@@ -33,7 +33,7 @@ describe(getOneTimeEvents.name, () => {
 
   it('returns one-time event for one-time event input', () => {
     const event = oneTimeEventMock()
-    expect(getOneTimeEvents([event])).toStrictEqual([event])
+    expect(getOneTimeEvents([event])).toEqual([event])
   })
 
   describe('returns one-time events for recurring event input', () => {
@@ -48,7 +48,7 @@ describe(getOneTimeEvents.name, () => {
         })
         const events = getOneTimeEvents([event])
 
-        expect(events).toStrictEqual([
+        expect(events).toEqual([
           oneTimeEventMock({
             id: event.id,
             data: { startDate: new Date('2020-12-09T13:00:00.000Z') },
@@ -74,7 +74,7 @@ describe(getOneTimeEvents.name, () => {
         })
         const events = getOneTimeEvents([event])
 
-        expect(events).toStrictEqual([
+        expect(events).toEqual([
           oneTimeEventMock({
             id: event.id,
             data: { startDate: new Date('2020-12-09T13:00:00.000Z') },
@@ -120,7 +120,7 @@ describe(getOneTimeEvents.name, () => {
         })
         const events = getOneTimeEvents([event])
 
-        expect(events).toStrictEqual([
+        expect(events).toEqual([
           oneTimeEventMock({
             id: event.id,
             data: { startDate: new Date('2020-12-09T13:00:00.000Z') },
@@ -157,7 +157,7 @@ describe(getOneTimeEvents.name, () => {
         })
         const events = getOneTimeEvents([event])
 
-        expect(events).toStrictEqual([
+        expect(events).toEqual([
           oneTimeEventMock({
             id: event.id,
             data: { startDate: new Date('2020-12-09T13:00:00.000Z') },
@@ -197,7 +197,7 @@ describe(getOneTimeEvents.name, () => {
         })
         const events = getOneTimeEvents([event])
 
-        expect(events).toStrictEqual([
+        expect(events).toEqual([
           oneTimeEventMock({
             id: event.id,
             data: { startDate: new Date('2021-01-13T13:00:00.000Z') },
@@ -223,7 +223,7 @@ describe(getOneTimeEvents.name, () => {
         })
         const events = getOneTimeEvents([event])
 
-        expect(events).toStrictEqual([
+        expect(events).toEqual([
           oneTimeEventMock({
             id: event.id,
             data: { startDate: new Date('2021-01-13T13:00:00.000Z') },
@@ -245,7 +245,7 @@ describe(getOneTimeEvents.name, () => {
         })
         const events = getOneTimeEvents([event])
 
-        expect(events).toStrictEqual([
+        expect(events).toEqual([
           oneTimeEventMock({
             id: event.id,
             data: { startDate: new Date('2021-01-13T13:00:00.000Z') },
@@ -265,7 +265,7 @@ describe(getOneTimeEvents.name, () => {
         })
 
         const events = getOneTimeEvents([event])
-        expect(events).toStrictEqual([
+        expect(events).toEqual([
           oneTimeEventMock({
             id: event.id,
             data: { startDate: new Date('2021-04-28T13:00:00.000Z') },
@@ -285,7 +285,7 @@ describe(getOneTimeEvents.name, () => {
         })
 
         const events = getOneTimeEvents([event])
-        expect(events).toStrictEqual([
+        expect(events).toEqual([
           oneTimeEventMock({
             id: event.id,
             data: { startDate: new Date('2021-05-05T13:00:00.000Z') },

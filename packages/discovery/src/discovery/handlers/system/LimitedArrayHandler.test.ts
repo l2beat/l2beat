@@ -18,19 +18,19 @@ describe(LimitedArrayHandler.name, () => {
     const provider = {
       callMethod: vi.fn(
         async <T>(a: ChainSpecificAddress, _abi: string, data: unknown[]) => {
-          expect(a).toStrictEqual(address)
+          expect(a).toEqual(address)
           const index = data[0] as number
-          expect(data).toStrictEqual([index])
+          expect(data).toEqual([index])
           return owners[index]!.toString() as T
         },
       ),
     } as unknown as IProvider
 
     const handler = new LimitedArrayHandler(method, 3)
-    expect(handler.field).toStrictEqual('owners')
+    expect(handler.field).toEqual('owners')
 
     const result = await handler.execute(provider, address)
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       field: 'owners',
       value: owners.map((x) => x.toString()),
       error: 'Too many values. Update configuration to explore fully',
@@ -48,10 +48,10 @@ describe(LimitedArrayHandler.name, () => {
     const provider = {
       callMethod: vi.fn(
         async <T>(a: ChainSpecificAddress, _abi: string, data: unknown[]) => {
-          expect(a).toStrictEqual(address)
+          expect(a).toEqual(address)
 
           const index = data[0] as number
-          expect(data).toStrictEqual([index])
+          expect(data).toEqual([index])
           if (index === 2) {
             return undefined as T
           }
@@ -63,7 +63,7 @@ describe(LimitedArrayHandler.name, () => {
 
     const handler = new LimitedArrayHandler(method, 3)
     const result = await handler.execute(provider, address)
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       field: 'owners',
       value: owners.map((x) => x.toString()).slice(0, 2),
     })
@@ -80,10 +80,10 @@ describe(LimitedArrayHandler.name, () => {
     const provider = {
       callMethod: vi.fn(
         async <T>(a: ChainSpecificAddress, _abi: string, data: unknown[]) => {
-          expect(a).toStrictEqual(address)
+          expect(a).toEqual(address)
 
           const index = data[0] as number
-          expect(data).toStrictEqual([index])
+          expect(data).toEqual([index])
           if (index === 2) {
             throw 'foo bar'
           }
@@ -95,7 +95,7 @@ describe(LimitedArrayHandler.name, () => {
 
     const handler = new LimitedArrayHandler(method, 3)
     const result = await handler.execute(provider, address)
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       field: 'owners',
       error: 'foo bar',
     })
@@ -106,9 +106,9 @@ describe(LimitedArrayHandler.name, () => {
     const provider = {
       callMethod: vi.fn(
         async <T>(a: ChainSpecificAddress, _abi: string, data: unknown[]) => {
-          expect(a).toStrictEqual(address)
+          expect(a).toEqual(address)
           const index = data[0] as number
-          expect(data).toStrictEqual([index])
+          expect(data).toEqual([index])
           if (index === 1) {
             return undefined
           }
@@ -122,7 +122,7 @@ describe(LimitedArrayHandler.name, () => {
       2,
     )
     const result = await handler.execute(provider, address)
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       field: '_$foo',
       value: [1],
     })

@@ -60,7 +60,7 @@ describe(OpenApi.name, () => {
       routeHandler(req, res, vi.fn())
 
       expect(handler).toHaveBeenCalledWith(req, res, expect.anything())
-      expect(req.params).toStrictEqual({})
+      expect(req.params).toEqual({})
     })
 
     it('returns 400 for invalid query parameters', () => {
@@ -114,7 +114,7 @@ describe(OpenApi.name, () => {
       routeHandler(req, res, vi.fn())
 
       expect(handler).toHaveBeenCalled()
-      expect(req.query).toStrictEqual({})
+      expect(req.query).toEqual({})
     })
   })
 
@@ -145,7 +145,7 @@ describe(OpenApi.name, () => {
       routeHandler(req, res, vi.fn())
 
       expect(handler).toHaveBeenCalledWith(req, res, expect.anything())
-      expect(req.params).toStrictEqual({ id: 'test-id' })
+      expect(req.params).toEqual({ id: 'test-id' })
     })
 
     it('returns 400 for invalid path parameters', () => {
@@ -199,8 +199,8 @@ describe(OpenApi.name, () => {
       routeHandler(req, res, vi.fn())
 
       expect(handler).toHaveBeenCalled()
-      expect(req.params).toStrictEqual({ id: 'test-id' })
-      expect(req.query).toStrictEqual({ page: '1' })
+      expect(req.params).toEqual({ id: 'test-id' })
+      expect(req.query).toEqual({ page: '1' })
     })
   })
 
@@ -211,7 +211,7 @@ describe(OpenApi.name, () => {
 
       const schema = openapi.getOpenApiSchema()
 
-      expect(schema).toStrictEqual({
+      expect(schema).toEqual({
         openapi: '3.1.0',
         info: {
           title: 'L2BEAT API',
@@ -251,7 +251,7 @@ describe(OpenApi.name, () => {
 
       const schema = openapi.getOpenApiSchema()
 
-      expect(schema.paths['/test']).toStrictEqual({
+      expect(schema.paths['/test']).toEqual({
         get: {
           summary: 'Test endpoint',
           description: 'A test endpoint',
@@ -283,7 +283,7 @@ describe(OpenApi.name, () => {
 
       const schema = openapi.getOpenApiSchema()
 
-      expect(Object.keys(schema.paths)).toStrictEqual([
+      expect(Object.keys(schema.paths)).toEqual([
         '/users/{userId}/posts/{postId}',
       ])
     })
@@ -307,7 +307,7 @@ describe(OpenApi.name, () => {
       const schema = openapi.getOpenApiSchema()
       const parameters = schema.paths['/test']?.get?.parameters
 
-      expect(parameters).toStrictEqual([
+      expect(parameters).toEqual([
         {
           name: 'page',
           in: 'query',
@@ -341,7 +341,7 @@ describe(OpenApi.name, () => {
       const schema = openapi.getOpenApiSchema()
       const parameters = schema.paths['/users/{id}']?.get?.parameters
 
-      expect(parameters).toStrictEqual([
+      expect(parameters).toEqual([
         {
           name: 'id',
           in: 'path',
@@ -367,7 +367,7 @@ describe(OpenApi.name, () => {
       const schema = openapi.getOpenApiSchema()
       const responses = schema.paths['/test']?.get?.responses
 
-      expect(responses).toStrictEqual({
+      expect(responses).toEqual({
         200: expect.any(Object),
         401: expect.any(Object),
         400: {
@@ -405,8 +405,8 @@ describe(OpenApi.name, () => {
       const schema = openapi.getOpenApiSchema()
       const responses = schema.paths['/test/{id}']?.get?.responses
 
-      expect(Object.keys(responses ?? {})).toStrictEqual(['200', '401', '404'])
-      expect(responses?.[404]).toStrictEqual({
+      expect(Object.keys(responses ?? {})).toEqual(['200', '401', '404'])
+      expect(responses?.[404]).toEqual({
         description: expect.any(String),
         content: {
           'application/json': {
@@ -434,10 +434,10 @@ describe(OpenApi.name, () => {
       const schema = openapi.getOpenApiSchema()
       const response = schema.paths['/users']?.get?.responses?.[200]
 
-      expect(schema.components.schemas).toStrictEqual({
+      expect(schema.components.schemas).toEqual({
         User: expect.any(Object),
       })
-      expect(response?.content['application/json'].schema).toStrictEqual({
+      expect(response?.content['application/json'].schema).toEqual({
         $ref: '#/components/schemas/User',
       })
     })
@@ -457,13 +457,13 @@ describe(OpenApi.name, () => {
       const schema = openapi.getOpenApiSchema()
       const response = schema.paths['/items']?.get?.responses?.[200]
 
-      expect(response?.content['application/json'].schema).toStrictEqual({
+      expect(response?.content['application/json'].schema).toEqual({
         type: 'array',
         items: {
           $ref: '#/components/schemas/Item',
         },
       })
-      expect(schema.components.schemas).toStrictEqual({
+      expect(schema.components.schemas).toEqual({
         Item: expect.any(Object),
       })
     })
@@ -483,7 +483,7 @@ describe(OpenApi.name, () => {
 
       const schema = openapi.getOpenApiSchema()
 
-      expect(schema.components.schemas).toStrictEqual({
+      expect(schema.components.schemas).toEqual({
         BadRequestResponse: expect.any(Object),
       })
     })
@@ -496,7 +496,7 @@ describe(OpenApi.name, () => {
 
       const schema = openapi.getOpenApiSchema()
 
-      expect(schema.components.schemas).not.toStrictEqual({
+      expect(schema.components.schemas).not.toEqual({
         BadRequestResponse: expect.any(Object),
       })
     })
@@ -525,7 +525,7 @@ describe(OpenApi.name, () => {
 
       const schema = openapi.getOpenApiSchema()
 
-      expect(schema.components.schemas).toStrictEqual({
+      expect(schema.components.schemas).toEqual({
         CustomError: expect.any(Object),
       })
     })
@@ -544,7 +544,7 @@ describe(OpenApi.name, () => {
       const interopProtocolSchema = schema.components.schemas
         .InteropProtocol as { properties?: Record<string, unknown> }
 
-      expect(interopProtocolSchema.properties?.subgroupId).toStrictEqual({
+      expect(interopProtocolSchema.properties?.subgroupId).toEqual({
         anyOf: [{ type: 'string' }, { type: 'null' }],
         description:
           'ID of the aggregate/root interop protocol this protocol belongs to. Null for aggregate/root protocols.',
@@ -553,6 +553,7 @@ describe(OpenApi.name, () => {
   })
 
   describe('edge cases', () => {
+    // toStrictEqual, not toEqual: these assertions are about an optional key being present with value undefined, which toEqual ignores.
     it('handles routes without optional fields', () => {
       const app = mockApp()
       const openapi = new OpenApi(app, baseSchema)
@@ -595,12 +596,12 @@ describe(OpenApi.name, () => {
         !Object.keys(
           response?.content['application/json'].schema ?? {},
         ).includes('$ref'),
-      ).toStrictEqual(true)
+      ).toEqual(true)
       expect(
         Object.keys(
           response?.content['application/json'].schema ?? {},
         ).includes('type'),
-      ).toStrictEqual(true)
+      ).toEqual(true)
     })
   })
 })

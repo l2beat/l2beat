@@ -74,7 +74,7 @@ describe(DaIndexer.name, () => {
         generatedRecords,
       )
 
-      expect(safeHeight).toStrictEqual(150)
+      expect(safeHeight).toEqual(150)
     })
 
     it('fetches blobs from cache, generates records, saves metrics to DB', async () => {
@@ -145,7 +145,7 @@ describe(DaIndexer.name, () => {
         150,
       )
 
-      expect(safeHeight).toStrictEqual(150)
+      expect(safeHeight).toEqual(150)
     })
 
     describe('handles batch size', () => {
@@ -162,7 +162,7 @@ describe(DaIndexer.name, () => {
           100,
           150,
         )
-        expect(safeHeight).toStrictEqual(150)
+        expect(safeHeight).toEqual(150)
       })
 
       it('from + batchSize < to', async () => {
@@ -178,7 +178,7 @@ describe(DaIndexer.name, () => {
           100,
           200,
         )
-        expect(safeHeight).toStrictEqual(200)
+        expect(safeHeight).toEqual(200)
       })
     })
 
@@ -196,7 +196,7 @@ describe(DaIndexer.name, () => {
         100,
         200,
       )
-      expect(safeHeight).toStrictEqual(200)
+      expect(safeHeight).toEqual(200)
 
       expect(repository.getForDaLayerInTimeRange).not.toHaveBeenCalled()
       expect(repository.upsertMany).not.toHaveBeenCalled()

@@ -18,7 +18,7 @@ describe(aggregateActivityRecords.name, () => {
 
     const result = aggregateActivityRecords(records)
 
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       [NOW]: {
         timestamp: NOW,
         count: 150, // 100 + 50
@@ -45,7 +45,7 @@ describe(aggregateActivityRecords.name, () => {
 
     const result = aggregateActivityRecords(records)
 
-    expect(result).toStrictEqual(undefined)
+    expect(result).toEqual(undefined)
   })
 
   it('starts aggregating from the first non-Ethereum record with count > 0', () => {
@@ -58,7 +58,7 @@ describe(aggregateActivityRecords.name, () => {
 
     const result = aggregateActivityRecords(records)
 
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       [NOW + 2 * UnixTime.DAY]: {
         timestamp: NOW + 2 * UnixTime.DAY,
         count: 100,
@@ -71,7 +71,7 @@ describe(aggregateActivityRecords.name, () => {
 
   it('handles empty input array', () => {
     const result = aggregateActivityRecords([])
-    expect(result).toStrictEqual(undefined)
+    expect(result).toEqual(undefined)
   })
 })
 

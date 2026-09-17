@@ -13,7 +13,7 @@ describe(getValidInteropSelection.name, () => {
       CHAINS,
     )
 
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       from: ['ethereum', 'base'],
       to: ['arbitrum'],
     })

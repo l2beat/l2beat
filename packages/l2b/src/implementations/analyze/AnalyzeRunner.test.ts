@@ -16,7 +16,7 @@ describe(runWithSelectedRunner.name, () => {
       },
     )
 
-    expect(result).toStrictEqual({ runner: 'cli', result: 'cli' })
+    expect(result).toEqual({ runner: 'cli', result: 'cli' })
   })
 
   it('falls back to api in auto mode when cli is unavailable', async () => {
@@ -34,7 +34,7 @@ describe(runWithSelectedRunner.name, () => {
       },
     )
 
-    expect(result).toStrictEqual({ runner: 'api', result: 'api' })
+    expect(result).toEqual({ runner: 'api', result: 'api' })
   })
 
   it('does not fall back in cli mode', async () => {
@@ -65,7 +65,7 @@ describe(runWithSelectedRunner.name, () => {
       },
     )
 
-    expect(result).toStrictEqual({ runner: 'api', result: 'api' })
+    expect(result).toEqual({ runner: 'api', result: 'api' })
   })
 })
 

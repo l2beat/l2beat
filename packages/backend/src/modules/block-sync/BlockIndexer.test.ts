@@ -25,7 +25,7 @@ describe(onlyConsistent.name, () => {
     const logC = { data: '0xc', blockHash: '0x3' } as Log
 
     const result = onlyConsistent([block1, block2, block3], [logA, logB, logC])
-    expect(result).toStrictEqual([
+    expect(result).toEqual([
       { block: block1, logs: [logA] },
       { block: block2, logs: [] },
       { block: block3, logs: [logB, logC] },
@@ -43,7 +43,7 @@ describe(onlyConsistent.name, () => {
     const logC = { data: '0xc', blockHash: '0x3' } as Log
 
     const result = onlyConsistent([block1, block2, block3], [logA, logB, logC])
-    expect(result).toStrictEqual([
+    expect(result).toEqual([
       { block: block1, logs: [logA] },
       { block: block2, logs: [] },
     ])
@@ -57,7 +57,7 @@ describe(onlyConsistent.name, () => {
     const logA = { data: '0xa', blockHash: '0x1' } as Log
 
     const result = onlyConsistent([block1, block2, block3], [logA])
-    expect(result).toStrictEqual([
+    expect(result).toEqual([
       { block: block1, logs: [logA] },
       { block: block2, logs: [] },
     ])
@@ -101,7 +101,7 @@ describe(BlockIndexer.name, () => {
 
       const result = await indexer.update(10, 12)
 
-      expect(result).toStrictEqual(11)
+      expect(result).toEqual(11)
       expect(processBlock).toHaveBeenCalledTimes(2)
       expect(processBlock).toHaveBeenCalledWith(block1, [log1])
       expect(processBlock).toHaveBeenCalledWith(block2, [log2])

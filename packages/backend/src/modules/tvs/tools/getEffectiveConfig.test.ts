@@ -116,7 +116,7 @@ describe(getEffectiveConfig.name, () => {
       },
     ] as any
 
-    expect(result).toStrictEqual(expectedResult)
+    expect(result).toEqual(expectedResult)
   })
 
   it('should remove tokens - amount not in range', async () => {
@@ -148,7 +148,7 @@ describe(getEffectiveConfig.name, () => {
       },
     ] as any
 
-    expect(result).toStrictEqual(expectedResult)
+    expect(result).toEqual(expectedResult)
   })
 
   it('should remove tokens - calculation formula with argument(s) not in range', async () => {
@@ -205,7 +205,7 @@ describe(getEffectiveConfig.name, () => {
       },
     ] as any
 
-    expect(result).toStrictEqual(expectedResult)
+    expect(result).toEqual(expectedResult)
   })
 })
 

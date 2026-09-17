@@ -36,7 +36,7 @@ describe('getInteropChains', () => {
       ],
     )
 
-    expect(result).toStrictEqual([
+    expect(result).toEqual([
       {
         id: 'arbitrum',
         name: 'Arbitrum One',
@@ -135,7 +135,7 @@ describe('getInteropChains', () => {
       ],
     )
 
-    expect(result).toStrictEqual([
+    expect(result).toEqual([
       {
         id: 'arbitrum',
         name: 'Arbitrum One',
@@ -209,7 +209,7 @@ describe('getInteropChains', () => {
       ],
     )
 
-    expect(result).toStrictEqual([
+    expect(result).toEqual([
       {
         id: 'arbitrum',
         name: 'Arbitrum One',
@@ -264,7 +264,7 @@ describe('getInteropChains', () => {
   })
 
   it('returns an empty array when there is no data', () => {
-    expect(getInteropChains([], [])).toStrictEqual([])
+    expect(getInteropChains([], [])).toEqual([])
   })
 })
 

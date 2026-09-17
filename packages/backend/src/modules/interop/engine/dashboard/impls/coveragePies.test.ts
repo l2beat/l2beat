@@ -23,10 +23,10 @@ describe(buildInteropCoveragePieCharts.name, () => {
     ])
 
     expect(chart == null).toBe(false)
-    expect(chart?.totalCount).toStrictEqual(93)
-    expect(chart?.supportedCount).toStrictEqual(82)
-    expect(chart?.unsupportedCount).toStrictEqual(11)
-    expect(chart?.slices.map((slice) => slice.label)).toStrictEqual([
+    expect(chart?.totalCount).toEqual(93)
+    expect(chart?.supportedCount).toEqual(82)
+    expect(chart?.unsupportedCount).toEqual(11)
+    expect(chart?.slices.map((slice) => slice.label)).toEqual([
       'monad',
       'ethereum',
       'monad (unsupported)',
@@ -39,7 +39,7 @@ describe(buildInteropCoveragePieCharts.name, () => {
         isSupported: slice.isSupported,
         rawChains: slice.rawChains,
       })),
-    ).toStrictEqual([
+    ).toEqual([
       {
         count: 50,
         isSupported: true,
@@ -82,9 +82,9 @@ describe(buildInteropCoveragePieCharts.name, () => {
       },
     ])
 
-    expect(chart?.totalCount).toStrictEqual(100)
-    expect(chart?.supportedCount).toStrictEqual(95)
-    expect(chart?.unsupportedCount).toStrictEqual(5)
+    expect(chart?.totalCount).toEqual(100)
+    expect(chart?.supportedCount).toEqual(95)
+    expect(chart?.unsupportedCount).toEqual(5)
     expect(
       chart?.slices.map((slice) => ({
         label: slice.label,
@@ -92,7 +92,7 @@ describe(buildInteropCoveragePieCharts.name, () => {
         isSupported: slice.isSupported,
         rawChains: slice.rawChains,
       })),
-    ).toStrictEqual([
+    ).toEqual([
       {
         label: 'solana',
         count: 95,

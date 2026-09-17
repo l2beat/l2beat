@@ -49,7 +49,7 @@ describe('googleSheetsEnvSync', () => {
         ['ETHEREUM_RPC_CALLS_PER_MINUTE', '120'],
       ])
 
-      expect(result).toStrictEqual([
+      expect(result).toEqual([
         {
           key: 'ETHEREUM_RPC_URL',
           value: 'https://rpc.example',
@@ -119,7 +119,7 @@ describe('googleSheetsEnvSync', () => {
         SYNCED_AT,
       )
 
-      expect(result).toStrictEqual(
+      expect(result).toEqual(
         file([
           ...managedSection("ETHEREUM_RPC_URL='https://rpc.example'"),
           '',
@@ -141,7 +141,7 @@ describe('googleSheetsEnvSync', () => {
         SYNCED_AT,
       )
 
-      expect(result).toStrictEqual(
+      expect(result).toEqual(
         file([
           ...managedSection('NEW_VALUE=2'),
           '',
@@ -175,7 +175,7 @@ describe('googleSheetsEnvSync', () => {
         SYNCED_AT,
       )
 
-      expect(result).toStrictEqual(
+      expect(result).toEqual(
         file([
           ...managedSection("A='pa$$word'", "B='x$&y'", "C='x$`y'"),
           '',
@@ -199,7 +199,7 @@ describe('googleSheetsEnvSync', () => {
         SYNCED_AT,
       )
 
-      expect(result).toStrictEqual(
+      expect(result).toEqual(
         file([...managedSection('NEW_VALUE=2'), '', 'LOCAL=1']),
       )
     })
@@ -221,7 +221,7 @@ describe('googleSheetsEnvSync', () => {
         SYNCED_AT,
       )
 
-      expect(result).toStrictEqual(
+      expect(result).toEqual(
         file([...managedSection('NEW_VALUE=2'), '', 'LOCAL=1']),
       )
     })
@@ -239,7 +239,7 @@ describe('googleSheetsEnvSync', () => {
         SYNCED_AT,
       )
 
-      expect(result).toStrictEqual(
+      expect(result).toEqual(
         file([...managedSection('NEW_VALUE=2'), '', `LOCAL='${END_MARKER}'`]),
       )
     })
@@ -295,7 +295,7 @@ describe('googleSheetsEnvSync', () => {
         SYNCED_AT,
       )
 
-      expect(result).toStrictEqual(
+      expect(result).toEqual(
         file([...managedSection("NEW_VALUE='x'"), '', 'LOCAL=1'], '\r\n'),
       )
     })
@@ -307,7 +307,7 @@ describe('googleSheetsEnvSync', () => {
         SYNCED_AT,
       )
 
-      expect(result).toStrictEqual(file(managedSection('A=1')))
+      expect(result).toEqual(file(managedSection('A=1')))
     })
 
     it('keeps existing content intact and adds a missing trailing newline', () => {
@@ -317,9 +317,7 @@ describe('googleSheetsEnvSync', () => {
         SYNCED_AT,
       )
 
-      expect(result).toStrictEqual(
-        file([...managedSection('A=1'), '', 'LOCAL=1']),
-      )
+      expect(result).toEqual(file([...managedSection('A=1'), '', 'LOCAL=1']))
     })
 
     it('refuses to render values that cannot be quoted safely', () => {

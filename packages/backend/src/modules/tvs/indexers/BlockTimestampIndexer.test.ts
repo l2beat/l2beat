@@ -65,7 +65,7 @@ describe(BlockTimestampIndexer.name, () => {
         },
       ])
 
-      expect(safeHeight).toStrictEqual(timestampToSync)
+      expect(safeHeight).toEqual(timestampToSync)
     })
 
     it('returns to value if timestamp is out of range', async () => {
@@ -98,7 +98,7 @@ describe(BlockTimestampIndexer.name, () => {
       expect(syncOptimizer.getTimestampToSync).toHaveBeenCalledExactlyOnceWith(
         from,
       )
-      expect(safeHeight).toStrictEqual(to)
+      expect(safeHeight).toEqual(to)
     })
 
     it('throws when fetched block number is smaller than previously fetched', async () => {

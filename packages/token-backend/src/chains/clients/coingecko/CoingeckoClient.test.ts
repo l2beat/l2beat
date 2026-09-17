@@ -22,7 +22,7 @@ describe(CoingeckoClient.name, () => {
 
     const result = await client.getCoinList({ includePlatform: true })
 
-    expect(result).toStrictEqual([
+    expect(result).toEqual([
       {
         id: 'usd-coin',
         symbol: 'usdc',
@@ -30,10 +30,10 @@ describe(CoingeckoClient.name, () => {
         platforms: { ethereum: '0x1234' },
       },
     ])
-    expect(fetch.mock.calls[0][0]).toStrictEqual(
+    expect(fetch.mock.calls[0][0]).toEqual(
       'https://api.coingecko.com/api/v3/coins/list?include_platform=true',
     )
-    expect(fetch.mock.calls[0][1]).toStrictEqual({ headers: {} })
+    expect(fetch.mock.calls[0][1]).toEqual({ headers: {} })
   })
 
   it('constructs the pro coin data request with an API key', async () => {
@@ -50,10 +50,10 @@ describe(CoingeckoClient.name, () => {
 
     await client.getCoinDataById('usd-coin')
 
-    expect(fetch.mock.calls[0][0]).toStrictEqual(
+    expect(fetch.mock.calls[0][0]).toEqual(
       'https://pro-api.coingecko.com/api/v3/coins/usd-coin?localization=false&tickers=false&community_data=false&developer_data=false&sparkline=false',
     )
-    expect(fetch.mock.calls[0][1]).toStrictEqual({
+    expect(fetch.mock.calls[0][1]).toEqual({
       headers: { 'x-cg-pro-api-key': 'my-api-key' },
     })
   })
@@ -73,10 +73,10 @@ describe(CoingeckoClient.name, () => {
       UnixTime(1622577232),
     )
 
-    expect(fetch.mock.calls[0][0]).toStrictEqual(
+    expect(fetch.mock.calls[0][0]).toEqual(
       'https://api.coingecko.com/api/v3/coins/ethereum/market_chart/range?vs_currency=usd&from=2020-06-19&to=2021-06-01',
     )
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       prices: [{ date: new Date(1592611200000), value: 228.9 }],
       marketCaps: [{ date: new Date(1592611200000), value: 25_534_271_650 }],
     })

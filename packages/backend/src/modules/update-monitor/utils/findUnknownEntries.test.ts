@@ -18,7 +18,7 @@ describe(findUnknownEntries.name, () => {
 
     const entries = [A, B, C] as EntryParameters[]
     const result = findUnknownEntries('', entries, configReader)
-    expect(result).toStrictEqual([C.address])
+    expect(result).toEqual([C.address])
   })
 
   it('works for empty arrays', () => {
@@ -30,6 +30,6 @@ describe(findUnknownEntries.name, () => {
 
     const entries: EntryParameters[] = []
     const result = findUnknownEntries('', entries, configReader)
-    expect(result).toStrictEqual([])
+    expect(result).toEqual([])
   })
 })

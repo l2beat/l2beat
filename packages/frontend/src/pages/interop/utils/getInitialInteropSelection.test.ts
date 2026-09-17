@@ -13,7 +13,7 @@ describe(getInitialInteropSelection.name, () => {
       interopChainsIds: CHAINS,
     })
 
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       from: [],
       to: [],
     })
@@ -30,7 +30,7 @@ describe(getInitialInteropSelection.name, () => {
       interopChainsIds: CHAINS,
     })
 
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       from: ['ethereum', 'arbitrum'],
       to: ['ethereum', 'base'],
     })

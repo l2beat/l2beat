@@ -65,7 +65,7 @@ describe(TvsCleaner.name, () => {
       )
       expectDeleteCalls(tvsAmountRepository, hourlyRange, sixHourlyRange)
       expectDeleteCalls(tvsPriceRepository, hourlyRange, sixHourlyRange)
-      expect(result).toStrictEqual(to)
+      expect(result).toEqual(to)
     })
 
     it('always cleans from the beginning up to the current cutoff', async () => {
@@ -118,7 +118,7 @@ describe(TvsCleaner.name, () => {
       )
       expectDeleteCalls(tvsAmountRepository, hourlyRange, sixHourlyRange)
       expectDeleteCalls(tvsPriceRepository, hourlyRange, sixHourlyRange)
-      expect(result).toStrictEqual(to)
+      expect(result).toEqual(to)
     })
   })
 
@@ -128,7 +128,7 @@ describe(TvsCleaner.name, () => {
 
       const result = await indexer.invalidate(123)
 
-      expect(result).toStrictEqual(123)
+      expect(result).toEqual(123)
     })
   })
 })

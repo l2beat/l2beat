@@ -25,10 +25,7 @@ describe(addReferencedDiscoveries.name, () => {
 
     addReferencedDiscoveries(discoveries, 'abstract', reader())
 
-    expect(discoveries.getSortedProjects()).toStrictEqual([
-      'abstract',
-      'shared',
-    ])
+    expect(discoveries.getSortedProjects()).toEqual(['abstract', 'shared'])
   })
 
   // The point of the helper: the project was just discovered at a block that is
@@ -43,7 +40,7 @@ describe(addReferencedDiscoveries.name, () => {
 
     addReferencedDiscoveries(discoveries, 'abstract', reader())
 
-    expect(discoveries.get('abstract').discoveryOutput).toStrictEqual(fresh)
+    expect(discoveries.get('abstract').discoveryOutput).toEqual(fresh)
   })
 
   it('collects the entries of the whole cluster', () => {
@@ -55,7 +52,7 @@ describe(addReferencedDiscoveries.name, () => {
 
     addReferencedDiscoveries(discoveries, 'abstract', reader())
 
-    expect(clusterEntries(discoveries).map((e) => e.address)).toStrictEqual([
+    expect(clusterEntries(discoveries).map((e) => e.address)).toEqual([
       TIMELOCK,
       COUNCIL,
       COUNCIL,
@@ -80,8 +77,8 @@ describe(addReferencedDiscoveries.name, () => {
     expect(() =>
       addReferencedDiscoveries(discoveries, 'abstract', broken),
     ).toThrow()
-    expect(discoveries.getSortedProjects()).toStrictEqual(['abstract'])
-    expect(discoveries.get('abstract').discoveryOutput).toStrictEqual(fresh)
+    expect(discoveries.getSortedProjects()).toEqual(['abstract'])
+    expect(discoveries.get('abstract').discoveryOutput).toEqual(fresh)
   })
 
   it('does not read the base project or load references removed from it', () => {
@@ -94,7 +91,7 @@ describe(addReferencedDiscoveries.name, () => {
     } as unknown as ConfigReader)
 
     expect(readDiscovery).not.toHaveBeenCalled()
-    expect(discoveries.getSortedProjects()).toStrictEqual(['abstract'])
+    expect(discoveries.getSortedProjects()).toEqual(['abstract'])
   })
 
   it('loads transitive references once and stops cycles at the fresh project', () => {
@@ -113,13 +110,13 @@ describe(addReferencedDiscoveries.name, () => {
       readDiscovery,
     } as unknown as ConfigReader)
 
-    expect(discoveries.getSortedProjects()).toStrictEqual([
+    expect(discoveries.getSortedProjects()).toEqual([
       'abstract',
       'nested',
       'shared',
     ])
     expect(readDiscovery).toHaveBeenCalledTimes(2)
-    expect(discoveries.get('abstract').discoveryOutput).toStrictEqual(fresh)
+    expect(discoveries.get('abstract').discoveryOutput).toEqual(fresh)
   })
 })
 

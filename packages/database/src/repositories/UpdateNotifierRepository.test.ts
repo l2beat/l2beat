@@ -26,7 +26,7 @@ describeDatabase(UpdateNotifierRepository.name, (db) => {
 
     const result = await repository.findLatestId()
 
-    expect(result).toStrictEqual(latestId)
+    expect(result).toEqual(latestId)
   })
 
   it(UpdateNotifierRepository.prototype.insert.name, async () => {
@@ -36,7 +36,7 @@ describeDatabase(UpdateNotifierRepository.name, (db) => {
 
     const latest = await repository.findLatestId()
 
-    expect(latest).toStrictEqual(latestId)
+    expect(latest).toEqual(latestId)
   })
 
   describe(UpdateNotifierRepository.prototype.getNewerThan.name, () => {
@@ -53,7 +53,7 @@ describeDatabase(UpdateNotifierRepository.name, (db) => {
         PROJECT1,
       )
 
-      expect(result.length).toStrictEqual(2)
+      expect(result.length).toEqual(2)
       expect(result[0]!).toMatchObject({ id: secondId, ...arbRecord1 })
       expect(result[1]!).toMatchObject({ id: thirdId, ...arbRecord2 })
     })
@@ -67,7 +67,7 @@ describeDatabase(UpdateNotifierRepository.name, (db) => {
         PROJECT1,
       )
 
-      expect(result.length).toStrictEqual(0)
+      expect(result.length).toEqual(0)
     })
 
     it('does not return if does not match any projectId', async () => {
@@ -79,7 +79,7 @@ describeDatabase(UpdateNotifierRepository.name, (db) => {
         PROJECT1,
       )
 
-      expect(result.length).toStrictEqual(0)
+      expect(result.length).toEqual(0)
     })
   })
 })

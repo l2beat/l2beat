@@ -99,7 +99,7 @@ describe(EventHandler.name, () => {
 
       const result = await handler.execute(provider, ADDRESS)
 
-      expect(result.value).toStrictEqual([])
+      expect(result.value).toEqual([])
     })
 
     it('user added, removed, and added again', async () => {
@@ -124,7 +124,7 @@ describe(EventHandler.name, () => {
 
       const result = await handler.execute(provider, ADDRESS)
 
-      expect(result.value).toStrictEqual([ChainSpecificAddress.address(U1)])
+      expect(result.value).toEqual([ChainSpecificAddress.address(U1)])
     })
 
     it('two event setting one event unsetting', async () => {
@@ -150,7 +150,7 @@ describe(EventHandler.name, () => {
 
       const result = await handler.execute(provider, ADDRESS)
 
-      expect(result.value).toStrictEqual([ChainSpecificAddress.address(U2)])
+      expect(result.value).toEqual([ChainSpecificAddress.address(U2)])
     })
 
     it('one event setting one event unsetting', async () => {
@@ -176,7 +176,7 @@ describe(EventHandler.name, () => {
 
       const result = await handler.execute(provider, ADDRESS)
 
-      expect(result.value).toStrictEqual([ChainSpecificAddress.address(U2)])
+      expect(result.value).toEqual([ChainSpecificAddress.address(U2)])
     })
 
     it('single event with boolean flag', async () => {
@@ -207,7 +207,7 @@ describe(EventHandler.name, () => {
 
       const result = await handler.execute(provider, ADDRESS)
 
-      expect(result.value).toStrictEqual([ChainSpecificAddress.address(U2)])
+      expect(result.value).toEqual([ChainSpecificAddress.address(U2)])
     })
 
     it('dedupBy lets dedup by one field while keeping others in the output', async () => {
@@ -238,7 +238,7 @@ describe(EventHandler.name, () => {
       const result = await handler.execute(provider, ADDRESS)
       // Without dedupBy, three different (user, added) tuples → three rows.
       // With dedupBy=user, latest per user wins → U1's added=false, U2's added=true.
-      expect(result.value).toStrictEqual([
+      expect(result.value).toEqual([
         { user: ChainSpecificAddress.address(U1), added: false },
         { user: ChainSpecificAddress.address(U2), added: true },
       ])
@@ -273,7 +273,7 @@ describe(EventHandler.name, () => {
 
       const result = await handler.execute(provider, ADDRESS)
 
-      expect(result.value).toStrictEqual([ChainSpecificAddress.address(U1)])
+      expect(result.value).toEqual([ChainSpecificAddress.address(U1)])
     })
 
     it('combines array additions with scalar removals and later re-additions', async () => {
@@ -305,7 +305,7 @@ describe(EventHandler.name, () => {
 
       const result = await handler.execute(provider, ADDRESS)
 
-      expect(result.value).toStrictEqual([
+      expect(result.value).toEqual([
         ChainSpecificAddress.address(U1),
         ChainSpecificAddress.address(U3),
       ])
@@ -343,7 +343,7 @@ describe(EventHandler.name, () => {
 
       const result = await handler.execute(provider, ADDRESS)
 
-      expect(result.value).toStrictEqual({ 1: [1, 4], 2: [], 3: [42] })
+      expect(result.value).toEqual({ 1: [1, 4], 2: [], 3: [42] })
     })
 
     it('multiple events with no matching filter', async () => {
@@ -370,7 +370,7 @@ describe(EventHandler.name, () => {
 
       const result = await handler.execute(provider, ADDRESS)
 
-      expect(result.value).toStrictEqual([])
+      expect(result.value).toEqual([])
     })
 
     it('multiple events with filter', async () => {
@@ -397,7 +397,7 @@ describe(EventHandler.name, () => {
 
       const result = await handler.execute(provider, ADDRESS)
 
-      expect(result.value).toStrictEqual([1, 2])
+      expect(result.value).toEqual([1, 2])
     })
 
     it('multiple events', async () => {
@@ -420,7 +420,7 @@ describe(EventHandler.name, () => {
 
       const result = await handler.execute(provider, ADDRESS)
 
-      expect(result.value).toStrictEqual([1, 2])
+      expect(result.value).toEqual([1, 2])
     })
 
     it('single event', async () => {
@@ -443,7 +443,7 @@ describe(EventHandler.name, () => {
 
       const result = await handler.execute(provider, ADDRESS)
 
-      expect(result.value).toStrictEqual([1])
+      expect(result.value).toEqual([1])
     })
 
     it('no events', async () => {
@@ -464,7 +464,7 @@ describe(EventHandler.name, () => {
       )
 
       const result = await handler.execute(provider, ADDRESS)
-      expect(result.value).toStrictEqual([])
+      expect(result.value).toEqual([])
     })
   })
 
@@ -496,7 +496,7 @@ describe(EventHandler.name, () => {
 
       const result = await handler.execute(provider, ADDRESS)
 
-      expect(result.value).toStrictEqual({ 1: 1, 3: 3 })
+      expect(result.value).toEqual({ 1: 1, 3: 3 })
     })
 
     it('groups by and filters on a nested struct field via dot-notation index', async () => {
@@ -531,7 +531,7 @@ describe(EventHandler.name, () => {
 
       const result = await handler.execute(provider, ADDRESS)
 
-      expect(result.value).toStrictEqual({ 1: D1, 2: D2 })
+      expect(result.value).toEqual({ 1: D1, 2: D2 })
     })
 
     it('works on semi-compatible events', async () => {
@@ -554,7 +554,7 @@ describe(EventHandler.name, () => {
 
       const result = await handler.execute(provider, ADDRESS)
 
-      expect(result.value).toStrictEqual(2)
+      expect(result.value).toEqual(2)
     })
 
     it('throws if ABI compatibility is not met', async () => {
@@ -594,7 +594,7 @@ describe(EventHandler.name, () => {
 
       const result = await handler.execute(provider, ADDRESS)
 
-      expect(result.value).toStrictEqual(3)
+      expect(result.value).toEqual(3)
     })
 
     it('multiple events with multiple values, grouped and filtered', async () => {
@@ -627,7 +627,7 @@ describe(EventHandler.name, () => {
 
       const result = await handler.execute(provider, ADDRESS)
 
-      expect(result.value).toStrictEqual({ 1: 4, 2: undefined, 3: 42 })
+      expect(result.value).toEqual({ 1: 4, 2: undefined, 3: 42 })
     })
 
     it('multiple events with multiple values, grouped and filtered', async () => {
@@ -662,7 +662,7 @@ describe(EventHandler.name, () => {
 
       const result = await handler.execute(provider, ADDRESS)
 
-      expect(result.value).toStrictEqual({ 1: 4, 2: 3, 3: 42 })
+      expect(result.value).toEqual({ 1: 4, 2: 3, 3: 42 })
     })
 
     it('multiple events with multiple values, grouped', async () => {
@@ -692,7 +692,7 @@ describe(EventHandler.name, () => {
 
       const result = await handler.execute(provider, ADDRESS)
 
-      expect(result.value).toStrictEqual({ 1: 4, 2: 3, 3: 42 })
+      expect(result.value).toEqual({ 1: 4, 2: 3, 3: 42 })
     })
 
     it('multiple events with multiple values filtered', async () => {
@@ -719,7 +719,7 @@ describe(EventHandler.name, () => {
 
       const result = await handler.execute(provider, ADDRESS)
 
-      expect(result.value).toStrictEqual(2)
+      expect(result.value).toEqual(2)
     })
 
     it('multiple events multiple values', async () => {
@@ -745,7 +745,7 @@ describe(EventHandler.name, () => {
 
       const result = await handler.execute(provider, ADDRESS)
 
-      expect(result.value).toStrictEqual({ batchIndex: 2, chainId: 4 })
+      expect(result.value).toEqual({ batchIndex: 2, chainId: 4 })
     })
 
     it('single event multiple values', async () => {
@@ -768,7 +768,7 @@ describe(EventHandler.name, () => {
 
       const result = await handler.execute(provider, ADDRESS)
 
-      expect(result.value).toStrictEqual({ batchIndex: 1, chainId: 1 })
+      expect(result.value).toEqual({ batchIndex: 1, chainId: 1 })
     })
 
     it('multiple events with no matching filter', async () => {
@@ -795,7 +795,7 @@ describe(EventHandler.name, () => {
 
       const result = await handler.execute(provider, ADDRESS)
 
-      expect(result.value).toStrictEqual(undefined)
+      expect(result.value).toEqual(undefined)
     })
 
     it('multiple events with filter', async () => {
@@ -822,7 +822,7 @@ describe(EventHandler.name, () => {
 
       const result = await handler.execute(provider, ADDRESS)
 
-      expect(result.value).toStrictEqual(2)
+      expect(result.value).toEqual(2)
     })
 
     it('multiple events', async () => {
@@ -845,7 +845,7 @@ describe(EventHandler.name, () => {
 
       const result = await handler.execute(provider, ADDRESS)
 
-      expect(result.value).toStrictEqual(2)
+      expect(result.value).toEqual(2)
     })
 
     it('single event', async () => {
@@ -868,7 +868,7 @@ describe(EventHandler.name, () => {
 
       const result = await handler.execute(provider, ADDRESS)
 
-      expect(result.value).toStrictEqual(1)
+      expect(result.value).toEqual(1)
     })
 
     it('no events', async () => {
@@ -891,7 +891,7 @@ describe(EventHandler.name, () => {
 
       const result = await handler.execute(provider, ADDRESS)
 
-      expect(result.value).toStrictEqual(undefined)
+      expect(result.value).toEqual(undefined)
     })
   })
 

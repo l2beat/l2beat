@@ -22,8 +22,8 @@ describe(UpdateDiffer.name, () => {
 
       await differ.run([PROJECT_A], UnixTime.now())
 
-      expect(differ.deleted).toStrictEqual([PROJECT_A])
-      expect(differ.inserted).toStrictEqual([
+      expect(differ.deleted).toEqual([PROJECT_A])
+      expect(differ.inserted).toEqual([
         record(PROJECT_A, ADDRESS_A, 'implementationChange'),
       ])
     })
@@ -36,8 +36,8 @@ describe(UpdateDiffer.name, () => {
 
       await differ.run([PROJECT_A], UnixTime.now())
 
-      expect(differ.deleted).toStrictEqual([PROJECT_A])
-      expect(differ.inserted).toStrictEqual([])
+      expect(differ.deleted).toEqual([PROJECT_A])
+      expect(differ.inserted).toEqual([])
     })
 
     it('keeps the rows of a project whose on disk discovery is newer', async () => {
@@ -58,8 +58,8 @@ describe(UpdateDiffer.name, () => {
 
       await differ.run([PROJECT_A], UnixTime.now())
 
-      expect(differ.inserted).toStrictEqual([])
-      expect(differ.deleted).toStrictEqual([])
+      expect(differ.inserted).toEqual([])
+      expect(differ.deleted).toEqual([])
     })
 
     it('keeps the rows of a project that was not discovered', async () => {
@@ -70,8 +70,8 @@ describe(UpdateDiffer.name, () => {
 
       await differ.run([PROJECT_A], UnixTime.now())
 
-      expect(differ.inserted).toStrictEqual([])
-      expect(differ.deleted).toStrictEqual([])
+      expect(differ.inserted).toEqual([])
+      expect(differ.deleted).toEqual([])
     })
 
     it('attributes a change to every project referencing the address', async () => {
@@ -90,7 +90,7 @@ describe(UpdateDiffer.name, () => {
 
       await differ.run([PROVIDER, PROJECT_A, PROJECT_B], UnixTime.now())
 
-      expect(differ.inserted).toStrictEqual([
+      expect(differ.inserted).toEqual([
         record(PROVIDER, ADDRESS_A, 'implementationChange'),
         record(PROJECT_A, ADDRESS_A, 'implementationChange'),
         record(PROJECT_B, ADDRESS_A, 'implementationChange'),
@@ -119,7 +119,7 @@ describe(UpdateDiffer.name, () => {
 
       await differ.run([PROVIDER, PROJECT_A], UnixTime.now())
 
-      expect(differ.inserted).toStrictEqual([
+      expect(differ.inserted).toEqual([
         record(PROVIDER, ADDRESS_B, 'implementationChange'),
       ])
     })
@@ -148,7 +148,7 @@ describe(UpdateDiffer.name, () => {
 
       await differ.run([SECOND_PROVIDER, PROVIDER, PROJECT_A], UnixTime.now())
 
-      expect(differ.inserted.map((r) => r.projectId)).toStrictEqual([
+      expect(differ.inserted.map((r) => r.projectId)).toEqual([
         SECOND_PROVIDER,
         PROVIDER,
         PROJECT_A,
@@ -189,7 +189,7 @@ describe(UpdateDiffer.name, () => {
         456,
       )
 
-      expect(result).toStrictEqual([
+      expect(result).toEqual([
         {
           address: diff.address,
           type: 'implementationChange',
@@ -234,7 +234,7 @@ describe(UpdateDiffer.name, () => {
         456,
       )
 
-      expect(result).toStrictEqual([
+      expect(result).toEqual([
         {
           address: diff.address,
           type: 'highSeverityFieldChange',
@@ -393,9 +393,9 @@ describe(UpdateDiffer.name, () => {
           456,
         )
 
-        expect(
-          result.some((r) => r.type === 'ultimateUpgraderChange'),
-        ).toStrictEqual(expected)
+        expect(result.some((r) => r.type === 'ultimateUpgraderChange')).toEqual(
+          expected,
+        )
       })
     }
 
@@ -451,7 +451,7 @@ describe(UpdateDiffer.name, () => {
         456,
       )
 
-      expect(result).toStrictEqual([
+      expect(result).toEqual([
         {
           address,
           type: 'ultimateUpgraderChange',

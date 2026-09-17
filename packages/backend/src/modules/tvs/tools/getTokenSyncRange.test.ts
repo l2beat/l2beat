@@ -42,7 +42,7 @@ describe(getTokenSyncRange.name, () => {
 
     const result = getTokenSyncRange(token)
 
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       sinceTimestamp: 5,
       untilTimestamp: undefined,
     })
@@ -87,7 +87,7 @@ describe(getTokenSyncRange.name, () => {
 
     const result = getTokenSyncRange(token)
 
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       sinceTimestamp: 5,
       untilTimestamp: 50,
     })

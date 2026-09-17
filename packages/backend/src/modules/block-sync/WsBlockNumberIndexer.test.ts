@@ -32,12 +32,12 @@ describe(WsBlockNumberIndexer.prototype.start.name, () => {
 
     mockWebSocket.simulateMessage(createEventMessage(blockNumber))
     let result = await indexer.tick()
-    expect(result).toStrictEqual(blockNumber)
+    expect(result).toEqual(blockNumber)
 
     blockNumber++
     mockWebSocket.simulateMessage(createEventMessage(blockNumber))
     result = await indexer.tick()
-    expect(result).toStrictEqual(blockNumber)
+    expect(result).toEqual(blockNumber)
   })
 })
 

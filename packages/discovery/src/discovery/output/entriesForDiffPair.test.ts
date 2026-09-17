@@ -19,8 +19,8 @@ describe(entriesForDiffPair.name, () => {
       }),
     )
 
-    expect(entries.length).toStrictEqual(1)
-    expect(entries.at(0)?.receivedPermissions).toStrictEqual([perm(COUNCIL)])
+    expect(entries.length).toEqual(1)
+    expect(entries.at(0)?.receivedPermissions).toEqual([perm(COUNCIL)])
   })
 
   // Without a stand-in the holder is absent from both sides of every diff, so
@@ -33,8 +33,8 @@ describe(entriesForDiffPair.name, () => {
       }),
     )
 
-    expect(entries.length).toStrictEqual(2)
-    expect(entries.at(1)).toStrictEqual({
+    expect(entries.length).toEqual(2)
+    expect(entries.at(1)).toEqual({
       type: 'Reference',
       address: COUNCIL,
       receivedPermissions: [perm(TIMELOCK)],
@@ -53,10 +53,10 @@ describe(entriesForDiffPair.name, () => {
 
     const diff = diffDiscovery(...entriesForDiffPair(before, after))
 
-    expect(diff.length).toStrictEqual(1)
-    expect(diff.at(0)?.address).toStrictEqual(COUNCIL)
-    expect(diff.at(0)?.type).toStrictEqual(undefined)
-    expect(diff.at(0)?.diff?.at(0)?.key).toStrictEqual('receivedPermissions')
+    expect(diff.length).toEqual(1)
+    expect(diff.at(0)?.address).toEqual(COUNCIL)
+    expect(diff.at(0)?.type).toEqual(undefined)
+    expect(diff.at(0)?.diff?.at(0)?.key).toEqual('receivedPermissions')
   })
 
   it('reports a removed external permission the same way', () => {
@@ -67,12 +67,12 @@ describe(entriesForDiffPair.name, () => {
 
     const diff = diffDiscovery(...entriesForDiffPair(before, after))
 
-    expect(diff.length).toStrictEqual(1)
-    expect(diff.at(0)?.address).toStrictEqual(COUNCIL)
-    expect(diff.at(0)?.type).toStrictEqual(undefined)
+    expect(diff.length).toEqual(1)
+    expect(diff.at(0)?.address).toEqual(COUNCIL)
+    expect(diff.at(0)?.type).toEqual(undefined)
     // Rendered as `external contract`, so the reader can tell it apart from
     // something this project discovered itself.
-    expect(diff.at(0)?.addressType).toStrictEqual('Reference')
+    expect(diff.at(0)?.addressType).toEqual('Reference')
   })
 
   it('says nothing when the external holder is unchanged', () => {
@@ -85,7 +85,7 @@ describe(entriesForDiffPair.name, () => {
       ),
     )
 
-    expect(diff).toStrictEqual([])
+    expect(diff).toEqual([])
   })
 
   // Standing in for it would compare a synthetic Reference against the real
@@ -100,10 +100,10 @@ describe(entriesForDiffPair.name, () => {
 
     const diff = diffDiscovery(...entriesForDiffPair(before, after))
 
-    expect(diff.length).toStrictEqual(1)
-    expect(diff.at(0)?.address).toStrictEqual(COUNCIL)
-    expect(diff.at(0)?.type).toStrictEqual('created')
-    expect(diff.at(0)?.addressType).toStrictEqual('Contract')
+    expect(diff.length).toEqual(1)
+    expect(diff.at(0)?.address).toEqual(COUNCIL)
+    expect(diff.at(0)?.type).toEqual('created')
+    expect(diff.at(0)?.addressType).toEqual('Contract')
   })
 
   it('leaves a removed contract a deletion, permission or not', () => {
@@ -114,8 +114,8 @@ describe(entriesForDiffPair.name, () => {
 
     const diff = diffDiscovery(...entriesForDiffPair(before, after))
 
-    expect(diff.length).toStrictEqual(1)
-    expect(diff.at(0)?.type).toStrictEqual('deleted')
+    expect(diff.length).toEqual(1)
+    expect(diff.at(0)?.type).toEqual('deleted')
   })
 
   it('never lists an address twice', () => {
@@ -126,7 +126,7 @@ describe(entriesForDiffPair.name, () => {
       }),
     )
 
-    expect(entries.map((e) => e.address)).toStrictEqual([TIMELOCK, COUNCIL])
+    expect(entries.map((e) => e.address)).toEqual([TIMELOCK, COUNCIL])
   })
 
   for (const removed of [false, true]) {
@@ -141,8 +141,8 @@ describe(entriesForDiffPair.name, () => {
 
       const diff = diffDiscovery(...entriesForDiffPair(previous, current))
 
-      expect(diff.length).toStrictEqual(1)
-      expect(diff[0]?.type).toStrictEqual(undefined)
+      expect(diff.length).toEqual(1)
+      expect(diff[0]?.type).toEqual(undefined)
       expect(diff[0]?.diff?.map((field) => field.key) ?? []).toContain(
         'receivedPermissions',
       )
@@ -158,7 +158,7 @@ describe(entriesForDiffPair.name, () => {
 
     diffDiscovery(...entriesForDiffPair(before, after))
 
-    expect([before, after]).toStrictEqual(original)
+    expect([before, after]).toEqual(original)
   })
 })
 

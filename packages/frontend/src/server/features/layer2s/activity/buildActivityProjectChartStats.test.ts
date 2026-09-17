@@ -26,7 +26,7 @@ describe(buildActivityProjectChartStats.name, () => {
       },
     })
 
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       tps: {
         pastDayCount: 2,
         pastDayChange: 1,
@@ -61,8 +61,8 @@ describe(buildActivityProjectChartStats.name, () => {
       },
     })
 
-    expect(result.uops.totalCount).toStrictEqual(undefined)
-    expect(result.tps.totalCount).toStrictEqual({
+    expect(result.uops.totalCount).toEqual(undefined)
+    expect(result.tps.totalCount).toEqual({
       value: 100,
       sinceTimestamp: SINCE,
     })

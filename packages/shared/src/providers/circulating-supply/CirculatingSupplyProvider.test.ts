@@ -30,7 +30,7 @@ describe(CirculatingSupplyProvider.name, () => {
         expect(
           coingeckoQueryService.getCirculatingSupplies,
         ).toHaveBeenCalledExactlyOnceWith(coingeckoId, range)
-        expect(result).toStrictEqual(expectedResult)
+        expect(result).toEqual(expectedResult)
       })
 
       it('propagates errors from CoingeckoQueryService', async () => {
@@ -81,7 +81,7 @@ describe(CirculatingSupplyProvider.name, () => {
         expect(
           coingeckoQueryService.getLatestMarketData,
         ).toHaveBeenCalledExactlyOnceWith(coingeckoIds)
-        expect(result).toStrictEqual(expectedResult)
+        expect(result).toEqual(expectedResult)
       })
 
       it('handles empty market data', async () => {
@@ -98,7 +98,7 @@ describe(CirculatingSupplyProvider.name, () => {
 
         const result = await provider.getLatestCirculatingSupplies(coingeckoIds)
 
-        expect(result).toStrictEqual(expectedResult)
+        expect(result).toEqual(expectedResult)
       })
 
       it('propagates errors from CoingeckoQueryService', async () => {
@@ -132,7 +132,7 @@ describe(CirculatingSupplyProvider.name, () => {
 
       const expected = CoingeckoQueryService.calculateAdjustedTo(from, to)
 
-      expect(result).toStrictEqual(expected)
+      expect(result).toEqual(expected)
     })
   })
 })

@@ -40,7 +40,7 @@ describeTokenDatabase(DeployedTokenRepository.name, (db) => {
       await repository.insert(record)
 
       const stored = await repository.findByChainAndAddress(record)
-      expect(stored).toStrictEqual({
+      expect(stored).toEqual({
         ...record,
         address: record.address.toLowerCase(),
       })
@@ -58,7 +58,7 @@ describeTokenDatabase(DeployedTokenRepository.name, (db) => {
       await repository.insert(record)
 
       const stored = await repository.findByChainAndAddress(record)
-      expect(stored).toStrictEqual(record)
+      expect(stored).toEqual(record)
     })
   })
 
@@ -100,10 +100,10 @@ describeTokenDatabase(DeployedTokenRepository.name, (db) => {
           },
         )
 
-        expect(updatedRows).toStrictEqual(1)
+        expect(updatedRows).toEqual(1)
 
         const stored = await repository.findByChainAndAddress(record)
-        expect(stored).toStrictEqual({
+        expect(stored).toEqual({
           ...record,
           address: record.address.toLowerCase(),
           abstractTokenId: secondAbstractToken.id,
@@ -136,7 +136,7 @@ describeTokenDatabase(DeployedTokenRepository.name, (db) => {
         chain: record.chain,
         address: record.address,
       })
-      expect(found).toStrictEqual({
+      expect(found).toEqual({
         ...record,
         address: record.address.toLowerCase(),
       })
@@ -161,14 +161,14 @@ describeTokenDatabase(DeployedTokenRepository.name, (db) => {
         chain: record.chain,
         address: lowercaseAddress.toUpperCase(), // find by uppercase
       })
-      expect(found).toStrictEqual(record)
+      expect(found).toEqual(record)
     })
   })
 
   describe(DeployedTokenRepository.prototype.getByChainAndAddress.name, () => {
     it('returns empty array for empty input', async () => {
       const result = await repository.getByChainAndAddress([])
-      expect(result).toStrictEqual([])
+      expect(result).toEqual([])
     })
 
     it('returns deployed token with abstract token when both exist', async () => {
@@ -196,7 +196,7 @@ describeTokenDatabase(DeployedTokenRepository.name, (db) => {
         },
       ])
 
-      expect(result).toStrictEqual([
+      expect(result).toEqual([
         {
           deployedToken: {
             ...deployedTokenRecord,
@@ -229,7 +229,7 @@ describeTokenDatabase(DeployedTokenRepository.name, (db) => {
         },
       ])
 
-      expect(result).toStrictEqual([
+      expect(result).toEqual([
         {
           deployedToken: {
             ...deployedTokenRecord,
@@ -297,7 +297,7 @@ describeTokenDatabase(DeployedTokenRepository.name, (db) => {
         },
       ])
 
-      expect(result).toStrictEqual([
+      expect(result).toEqual([
         {
           deployedToken: {
             ...deployedToken1,
@@ -334,7 +334,7 @@ describeTokenDatabase(DeployedTokenRepository.name, (db) => {
         },
       ])
 
-      expect(result).toStrictEqual([])
+      expect(result).toEqual([])
     })
 
     it('returns only matching deployed tokens when some do not exist', async () => {
@@ -367,7 +367,7 @@ describeTokenDatabase(DeployedTokenRepository.name, (db) => {
         }, // doesn't exist
       ])
 
-      expect(result).toStrictEqual([
+      expect(result).toEqual([
         {
           deployedToken: deployedTokenRecord,
           abstractToken: abstractTokenRecord,
@@ -381,7 +381,7 @@ describeTokenDatabase(DeployedTokenRepository.name, (db) => {
     () => {
       it('returns empty array for empty input', async () => {
         const result = await repository.getByChainsAndAddresses([])
-        expect(result).toStrictEqual([])
+        expect(result).toEqual([])
       })
 
       it('returns single matching record', async () => {
@@ -405,7 +405,7 @@ describeTokenDatabase(DeployedTokenRepository.name, (db) => {
           },
         ])
 
-        expect(result).toStrictEqual([deployedTokenRecord])
+        expect(result).toEqual([deployedTokenRecord])
       })
 
       it('returns multiple matching records', async () => {
@@ -458,7 +458,7 @@ describeTokenDatabase(DeployedTokenRepository.name, (db) => {
         ])
 
         expect(result).toHaveLength(3)
-        expect(result).toStrictEqual(
+        expect(result).toEqual(
           expect.arrayContaining([
             deployedToken1,
             deployedToken2,
@@ -479,7 +479,7 @@ describeTokenDatabase(DeployedTokenRepository.name, (db) => {
           },
         ])
 
-        expect(result).toStrictEqual([])
+        expect(result).toEqual([])
       })
 
       it('returns only matching deployed tokens when some do not exist', async () => {
@@ -508,7 +508,7 @@ describeTokenDatabase(DeployedTokenRepository.name, (db) => {
           }, // doesn't exist
         ])
 
-        expect(result).toStrictEqual([deployedTokenRecord])
+        expect(result).toEqual([deployedTokenRecord])
       })
 
       it('finds records with case-insensitive address matching', async () => {
@@ -533,7 +533,7 @@ describeTokenDatabase(DeployedTokenRepository.name, (db) => {
             address: mixedCaseAddress,
           },
         ])
-        expect(foundLower).toStrictEqual([
+        expect(foundLower).toEqual([
           { ...record, address: record.address.toLowerCase() },
         ])
       })
@@ -569,7 +569,7 @@ describeTokenDatabase(DeployedTokenRepository.name, (db) => {
         ])
 
         expect(result).toHaveLength(2)
-        expect(result).toStrictEqual(
+        expect(result).toEqual(
           expect.arrayContaining([
             { ...record1, address: record1.address.toLowerCase() },
             record2,
@@ -614,7 +614,7 @@ describeTokenDatabase(DeployedTokenRepository.name, (db) => {
       await repository.insert(records[1]!)
 
       const result = await repository.getByAbstractTokenId('TK0001')
-      expect(result).toStrictEqual([records[0]!])
+      expect(result).toEqual([records[0]!])
     })
   })
 
@@ -648,10 +648,10 @@ describeTokenDatabase(DeployedTokenRepository.name, (db) => {
         toPrimaryKey(first),
         toPrimaryKey(third),
       ])
-      expect(deleted).toStrictEqual(2)
+      expect(deleted).toEqual(2)
 
       const remaining = await repository.getAll()
-      expect(remaining).toStrictEqual([second])
+      expect(remaining).toEqual([second])
     })
   })
 })

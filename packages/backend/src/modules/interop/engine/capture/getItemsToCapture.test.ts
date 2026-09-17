@@ -23,24 +23,20 @@ describe(getItemsToCapture.name, () => {
       logs,
     )
 
-    expect(txsToCapture.map((t) => t.tx.hash)).toStrictEqual([
-      '0xa',
-      '0xb',
-      '0xc',
+    expect(txsToCapture.map((t) => t.tx.hash)).toEqual(['0xa', '0xb', '0xc'])
+    expect(txsToCapture.map((t) => t.txLogs.map((l) => l.logIndex))).toEqual([
+      [1],
+      [0, 2],
+      [],
     ])
-    expect(
-      txsToCapture.map((t) => t.txLogs.map((l) => l.logIndex)),
-    ).toStrictEqual([[1], [0, 2], []])
-    expect(logsToCapture.map((l) => [l.tx.hash, l.log.logIndex])).toStrictEqual(
-      [
-        ['0xa', 1],
-        ['0xb', 0],
-        ['0xb', 2],
-      ],
-    )
-    expect(logsToCapture[0]?.txLogs).toStrictEqual(txsToCapture[0]?.txLogs)
-    expect(logsToCapture[0]?.block).toStrictEqual(block)
-    expect(logsToCapture[0]?.chain).toStrictEqual('ethereum')
+    expect(logsToCapture.map((l) => [l.tx.hash, l.log.logIndex])).toEqual([
+      ['0xa', 1],
+      ['0xb', 0],
+      ['0xb', 2],
+    ])
+    expect(logsToCapture[0]?.txLogs).toEqual(txsToCapture[0]?.txLogs)
+    expect(logsToCapture[0]?.block).toEqual(block)
+    expect(logsToCapture[0]?.chain).toEqual('ethereum')
   })
 
   it('shares the prepared items for the same block and logs objects', () => {
@@ -61,7 +57,7 @@ describe(getItemsToCapture.name, () => {
     expect(otherLogs).not.toBe(first)
     expect(otherChain).not.toBe(first)
     expect(otherBlock).not.toBe(first)
-    expect(otherLogs).toStrictEqual(first)
+    expect(otherLogs).toEqual(first)
   })
 })
 

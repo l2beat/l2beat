@@ -7,7 +7,7 @@ describe(mergeTransferTypeStats.name, () => {
       bus: { transferCount: 1, totalDurationSum: 60 },
     }
 
-    expect(mergeTransferTypeStats(current, undefined)).toStrictEqual(current)
+    expect(mergeTransferTypeStats(current, undefined)).toEqual(current)
   })
 
   it('merges matching transfer types and adds new ones', () => {
@@ -22,7 +22,7 @@ describe(mergeTransferTypeStats.name, () => {
           train: { transferCount: 1, totalDurationSum: 30 },
         },
       ),
-    ).toStrictEqual({
+    ).toEqual({
       bus: { transferCount: 4, totalDurationSum: 150 },
       taxi: { transferCount: 2, totalDurationSum: 300 },
       train: { transferCount: 1, totalDurationSum: 30 },

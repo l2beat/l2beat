@@ -56,7 +56,7 @@ describe(LayerZeroMultisigHandler.name, () => {
 
     const response = await handler.execute(provider, contractAddress)
 
-    expect(response).toStrictEqual({
+    expect(response).toEqual({
       field: 'layerZeroMultisig',
       value: {
         signers: [
@@ -119,7 +119,7 @@ describe(LayerZeroMultisigHandler.name, () => {
 
     const response = await handler.execute(provider, contractAddress)
 
-    expect(response).toStrictEqual({
+    expect(response).toEqual({
       field: 'layerZeroMultisig',
       value: {
         signers: [

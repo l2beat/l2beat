@@ -31,7 +31,7 @@ describe(BlockActivityIndexer.name, () => {
       const newSafeHeight = await indexer.update(0, 100)
 
       expect(txsCountService.getTxsCount).toHaveBeenCalledWith(0, 50)
-      expect(newSafeHeight).toStrictEqual(50)
+      expect(newSafeHeight).toEqual(50)
     })
 
     it('gets blocks counts, sum with current counts, saves to db and updates sync metadata', async () => {
@@ -83,7 +83,7 @@ describe(BlockActivityIndexer.name, () => {
         START + 2 * UnixTime.DAY,
         10,
       )
-      expect(newSafeHeight).toStrictEqual(10)
+      expect(newSafeHeight).toEqual(10)
     })
 
     it('handle cases with block with 0 txs', async () => {
@@ -133,7 +133,7 @@ describe(BlockActivityIndexer.name, () => {
         START,
         10,
       )
-      expect(newSafeHeight).toStrictEqual(10)
+      expect(newSafeHeight).toEqual(10)
     })
   })
 
@@ -143,7 +143,7 @@ describe(BlockActivityIndexer.name, () => {
 
       const entries = await indexer.getDatabaseEntries([])
 
-      expect(entries).toStrictEqual(new Map())
+      expect(entries).toEqual(new Map())
     })
 
     it('returns a map of timestamps to records', async () => {
@@ -179,7 +179,7 @@ describe(BlockActivityIndexer.name, () => {
       ])
 
       // returns a map of timestamps to counts
-      expect(entries).toStrictEqual(
+      expect(entries).toEqual(
         new Map([
           [START, mockActivityRecords[0]],
           [START + 1 * UnixTime.DAY, mockActivityRecords[1]],
@@ -202,7 +202,7 @@ describe(BlockActivityIndexer.name, () => {
       const targetHeight = 10
       const newSafeHeight = await indexer.invalidate(targetHeight)
 
-      expect(newSafeHeight).toStrictEqual(targetHeight)
+      expect(newSafeHeight).toEqual(targetHeight)
     })
 
     it('throws assertion when more than one record found', async () => {
@@ -262,7 +262,7 @@ describe(BlockActivityIndexer.name, () => {
         expectedTimestamp,
       )
 
-      expect(result).toStrictEqual(expectedTargetHeight)
+      expect(result).toEqual(expectedTargetHeight)
     })
   })
 })

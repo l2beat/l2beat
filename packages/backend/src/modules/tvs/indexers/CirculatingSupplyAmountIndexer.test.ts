@@ -85,7 +85,7 @@ describe(CirculatingSupplyAmountIndexer.name, () => {
       expect(tvsAmountRepository.upsertMany).toHaveBeenCalledExactlyOnceWith(
         expectedRecords,
       )
-      expect(safeHeight).toStrictEqual(adjustedTo)
+      expect(safeHeight).toEqual(adjustedTo)
     })
 
     it('filters out timestamps that should not be synced', async () => {
@@ -141,7 +141,7 @@ describe(CirculatingSupplyAmountIndexer.name, () => {
       expect(tvsAmountRepository.upsertMany).toHaveBeenCalledExactlyOnceWith(
         expectedRecords,
       )
-      expect(safeHeight).toStrictEqual(adjustedTo)
+      expect(safeHeight).toEqual(adjustedTo)
     })
 
     it('returns to value if no timestamps to sync', async () => {
@@ -184,7 +184,7 @@ describe(CirculatingSupplyAmountIndexer.name, () => {
         adjustedTo,
         1,
       )
-      expect(safeHeight).toStrictEqual(to)
+      expect(safeHeight).toEqual(to)
     })
 
     it('drops invalid supply values and saves the rest', async () => {
@@ -239,7 +239,7 @@ describe(CirculatingSupplyAmountIndexer.name, () => {
       expect(tvsAmountRepository.upsertMany).toHaveBeenCalledExactlyOnceWith(
         expectedRecords,
       )
-      expect(safeHeight).toStrictEqual(adjustedTo)
+      expect(safeHeight).toEqual(adjustedTo)
     })
 
     it('handles insufficient data errors', async () => {
@@ -287,7 +287,7 @@ describe(CirculatingSupplyAmountIndexer.name, () => {
       })
 
       expect(tvsAmountRepository.upsertMany).toHaveBeenCalledExactlyOnceWith([])
-      expect(safeHeight).toStrictEqual(adjustedTo)
+      expect(safeHeight).toEqual(adjustedTo)
     })
 
     it('rethrows other errors', async () => {
@@ -380,7 +380,7 @@ describe(CirculatingSupplyAmountIndexer.name, () => {
 
   describe('SOURCE', () => {
     it('returns the correct source identifier', () => {
-      expect(CirculatingSupplyAmountIndexer.SOURCE()).toStrictEqual(
+      expect(CirculatingSupplyAmountIndexer.SOURCE()).toEqual(
         'l2b-circulating-supply',
       )
     })

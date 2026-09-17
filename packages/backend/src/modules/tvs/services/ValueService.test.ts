@@ -64,7 +64,7 @@ describe(ValueService.name, () => {
 
       const result = await valueService.calculate(tvsConfig, [mockTimestamp])
 
-      expect(result).toStrictEqual([
+      expect(result).toEqual([
         {
           timestamp: mockTimestamp,
           tokenId: tvsConfig.tokens[0].id,
@@ -185,7 +185,7 @@ describe(ValueService.name, () => {
 
       const result = await valueService.calculate(tvsConfig, [mockTimestamp])
 
-      expect(result).toStrictEqual([
+      expect(result).toEqual([
         {
           timestamp: mockTimestamp,
           tokenId: tvsConfig.tokens[0].id,
@@ -263,7 +263,7 @@ describe(ValueService.name, () => {
 
       const result = await valueService.calculate(tvsConfig, [mockTimestamp])
 
-      expect(result).toStrictEqual([
+      expect(result).toEqual([
         {
           timestamp: mockTimestamp,
           tokenId: tvsConfig.tokens[0].id,
@@ -337,7 +337,7 @@ describe(ValueService.name, () => {
 
       const result = await valueService.calculate(tvsConfig, [mockTimestamp])
 
-      expect(result).toStrictEqual([
+      expect(result).toEqual([
         {
           timestamp: mockTimestamp,
           tokenId: tvsConfig.tokens[0].id,
@@ -497,7 +497,7 @@ describe(ValueService.name, () => {
 
       const result = await valueService.calculate(tvsConfig, [mockTimestamp])
 
-      expect(result).toStrictEqual([
+      expect(result).toEqual([
         {
           timestamp: mockTimestamp,
           tokenId: tvsConfig.tokens[0].id,

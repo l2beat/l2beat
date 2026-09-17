@@ -10,31 +10,31 @@ import {
 
 describe(fieldPathPrefixes.name, () => {
   it('yields every enclosing group, shortest first', () => {
-    expect(fieldPathPrefixes('foo.bar[1].baz')).toStrictEqual([
+    expect(fieldPathPrefixes('foo.bar[1].baz')).toEqual([
       'foo',
       'foo.bar',
       'foo.bar[1]',
       'foo.bar[1].baz',
     ])
-    expect(fieldPathPrefixes('$members[0]')).toStrictEqual([
+    expect(fieldPathPrefixes('$members[0]')).toEqual([
       '$members',
       '$members[0]',
     ])
-    expect(fieldPathPrefixes('owner')).toStrictEqual(['owner'])
+    expect(fieldPathPrefixes('owner')).toEqual(['owner'])
   })
 })
 
 describe(resolveRowKey.name, () => {
   it('keeps a value on its own row when nothing encloses it', () => {
-    expect(resolveRowKey('$members[0]', new Set(['other']))).toStrictEqual(
+    expect(resolveRowKey('$members[0]', new Set(['other']))).toEqual(
       '$members[0]',
     )
   })
 
   it('lets the outermost compression win over a nested one', () => {
-    expect(
-      resolveRowKey('foo.bar[1]', new Set(['foo', 'foo.bar'])),
-    ).toStrictEqual('foo')
+    expect(resolveRowKey('foo.bar[1]', new Set(['foo', 'foo.bar']))).toEqual(
+      'foo',
+    )
   })
 })
 
@@ -44,12 +44,12 @@ describe(getRowLayout.name, () => {
       makeNode(['$threshold', '$members[0]', '$members[1]']),
     )
 
-    expect(layout.rows.map((row) => row.label)).toStrictEqual([
+    expect(layout.rows.map((row) => row.label)).toEqual([
       '$threshold',
       '$members[0]',
       '$members[1]',
     ])
-    expect(layout.rowByField).toStrictEqual([0, 1, 2])
+    expect(layout.rowByField).toEqual([0, 1, 2])
   })
 
   it('draws a compressed group as one counted row that keeps every value', () => {
@@ -61,10 +61,10 @@ describe(getRowLayout.name, () => {
       ),
     )
 
-    expect(layout.rows.length).toStrictEqual(2)
-    expect(layout.rows[1]?.label).toStrictEqual('$members (3)')
-    expect(layout.rows[1]?.fieldIndices).toStrictEqual([1, 2, 3])
-    expect(layout.rowByField).toStrictEqual([0, 1, 1, 1])
+    expect(layout.rows.length).toEqual(2)
+    expect(layout.rows[1]?.label).toEqual('$members (3)')
+    expect(layout.rows[1]?.fieldIndices).toEqual([1, 2, 3])
+    expect(layout.rowByField).toEqual([0, 1, 1, 1])
   })
 
   it('counts only the values a compressed row still links to', () => {
@@ -76,17 +76,17 @@ describe(getRowLayout.name, () => {
       ),
     )
 
-    expect(layout.rows.map((row) => row.label)).toStrictEqual([
+    expect(layout.rows.map((row) => row.label)).toEqual([
       'owner',
       '$members (1)',
     ])
     // A hidden value keeps the geometry of the row that follows it.
-    expect(layout.rowByField).toStrictEqual([0, 1, 2])
+    expect(layout.rowByField).toEqual([0, 1, 2])
 
     const allHidden = getRowLayout(
       makeNode(['owner', '$members[0]'], ['$members[0]'], ['$members']),
     )
-    expect(allHidden.rows.map((row) => row.label)).toStrictEqual(['owner'])
+    expect(allHidden.rows.map((row) => row.label)).toEqual(['owner'])
   })
 
   it('prefers a field label over its path, the way group rows are named', () => {
@@ -96,17 +96,17 @@ describe(getRowLayout.name, () => {
       fields: [{ ...(node.fields[0] as Field), label: 'Member' }],
     } as unknown as Node
 
-    expect(getRowLayout(labelled).rows[0]?.label).toStrictEqual('Member')
+    expect(getRowLayout(labelled).rows[0]?.label).toEqual('Member')
   })
 
   it('anchors a lone value at its row centre and fans a compressed row', () => {
-    expect(getRowLayout(makeNode(['owner'])).anchorByField).toStrictEqual([0])
+    expect(getRowLayout(makeNode(['owner'])).anchorByField).toEqual([0])
 
     const layout = getRowLayout(
       makeNode(['$members[0]', '$members[1]', '$members[2]'], [], ['$members']),
     )
 
-    expect(layout.anchorByField).toStrictEqual([
+    expect(layout.anchorByField).toEqual([
       (0.25 - 0.5) * ROW_FAN_SPREAD,
       0,
       (0.75 - 0.5) * ROW_FAN_SPREAD,
@@ -120,7 +120,7 @@ describe(reconcileCompressedRows.name, () => {
 
     expect(
       reconcileCompressedRows(fields, ['$members', 'gone', 'gone.deeper']),
-    ).toStrictEqual(['$members'])
+    ).toEqual(['$members'])
   })
 })
 

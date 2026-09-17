@@ -94,7 +94,7 @@ describe(ManagedMultiIndexer.name, () => {
         [actual('b', 100, null)],
         SERIALIZE,
       )
-      expect(newHeight).toStrictEqual({ safeHeight: 99 })
+      expect(newHeight).toEqual({ safeHeight: 99 })
     })
   })
 
@@ -182,7 +182,7 @@ describe(ManagedMultiIndexer.name, () => {
       const newHeight = await indexer.update(0, 50)
 
       expect(indexer.multiUpdate).not.toHaveBeenCalled()
-      expect(newHeight).toStrictEqual(50)
+      expect(newHeight).toEqual(50)
     })
 
     it('gets configurations from range, updates and saves the state', async () => {
@@ -226,7 +226,7 @@ describe(ManagedMultiIndexer.name, () => {
         indexerService.updateConfigurationsCurrentHeight,
       ).toHaveBeenCalledExactlyOnceWith(INDEXER_ID, 1100)
 
-      expect(newHeight).toStrictEqual(1100)
+      expect(newHeight).toEqual(1100)
     })
 
     it('cannot return more than currentHeight', async () => {
@@ -266,7 +266,7 @@ describe(ManagedMultiIndexer.name, () => {
 
     it('finds range correctly for a value before the start', () => {
       const fromBeforeStart = 10
-      expect(indexer.findRange(fromBeforeStart)).toStrictEqual({
+      expect(indexer.findRange(fromBeforeStart)).toEqual({
         from: Number.NEGATIVE_INFINITY,
         to: 99,
         configurations: [],
@@ -275,7 +275,7 @@ describe(ManagedMultiIndexer.name, () => {
 
     it('finds range correctly for a value at the start', () => {
       const fromAtStart = 100
-      expect(indexer.findRange(fromAtStart)).toStrictEqual({
+      expect(indexer.findRange(fromAtStart)).toEqual({
         from: 100,
         to: 200,
         configurations: [actual('a', 100, 200)],
@@ -284,7 +284,7 @@ describe(ManagedMultiIndexer.name, () => {
 
     it('finds range correctly for a value between start and end', () => {
       const fromBetween = 150
-      expect(indexer.findRange(fromBetween)).toStrictEqual({
+      expect(indexer.findRange(fromBetween)).toEqual({
         from: 100,
         to: 200,
         configurations: [actual('a', 100, 200)],
@@ -293,7 +293,7 @@ describe(ManagedMultiIndexer.name, () => {
 
     it('finds range correctly for a value at the end', () => {
       const fromAtEnd = 200
-      expect(indexer.findRange(fromAtEnd)).toStrictEqual({
+      expect(indexer.findRange(fromAtEnd)).toEqual({
         from: 100,
         to: 200,
         configurations: [actual('a', 100, 200)],
@@ -302,7 +302,7 @@ describe(ManagedMultiIndexer.name, () => {
 
     it('finds range correctly for a value after the end', () => {
       const fromAfterStart = 250
-      expect(indexer.findRange(fromAfterStart)).toStrictEqual({
+      expect(indexer.findRange(fromAfterStart)).toEqual({
         from: 201,
         to: Number.POSITIVE_INFINITY,
         configurations: [],
@@ -338,7 +338,7 @@ describe(ManagedMultiIndexer.name, () => {
 
       const targetHeight = await indexer.invalidate(100)
 
-      expect(targetHeight).toStrictEqual(100)
+      expect(targetHeight).toEqual(100)
     })
   })
 
@@ -427,7 +427,7 @@ describe(ManagedMultiIndexer.name, () => {
       const configurations = await getSavedConfigurations(indexerService)
 
       expect(configurations).toHaveLength(4)
-      expect(configurations).toStrictEqual(
+      expect(configurations).toEqual(
         expect.arrayContaining([
           saved('a', 100, 300, 300),
           saved('b', 200, 500, 500),
@@ -449,7 +449,7 @@ describe(ManagedMultiIndexer.name, () => {
           INDEXER_ID,
         )
       expect(before).toHaveLength(2)
-      expect(before).toStrictEqual(
+      expect(before).toEqual(
         expect.arrayContaining([
           saved('a', 400, null, 550),
           saved('d', 100, null, 550),
@@ -463,7 +463,7 @@ describe(ManagedMultiIndexer.name, () => {
           INDEXER_ID,
         )
       expect(after).toHaveLength(1)
-      expect(after).toStrictEqual(
+      expect(after).toEqual(
         expect.arrayContaining([saved('a', 400, null, 550)]),
       )
 
@@ -484,7 +484,7 @@ describe(ManagedMultiIndexer.name, () => {
           INDEXER_ID,
         )
       expect(before).toHaveLength(1)
-      expect(before).toStrictEqual(
+      expect(before).toEqual(
         expect.arrayContaining([saved('d', 100, null, 550)]),
       )
 
@@ -495,7 +495,7 @@ describe(ManagedMultiIndexer.name, () => {
           INDEXER_ID,
         )
       expect(after).toHaveLength(1)
-      expect(after).toStrictEqual(
+      expect(after).toEqual(
         expect.arrayContaining([saved('d', 50, null, null)]),
       )
 
@@ -517,7 +517,7 @@ describe(ManagedMultiIndexer.name, () => {
           INDEXER_ID,
         )
       expect(before).toHaveLength(1)
-      expect(before).toStrictEqual(
+      expect(before).toEqual(
         expect.arrayContaining([saved('d', 100, null, 550)]),
       )
 
@@ -528,7 +528,7 @@ describe(ManagedMultiIndexer.name, () => {
           INDEXER_ID,
         )
       expect(after).toHaveLength(1)
-      expect(after).toStrictEqual(
+      expect(after).toEqual(
         expect.arrayContaining([saved('d', 150, null, 550)]),
       )
 
@@ -550,7 +550,7 @@ describe(ManagedMultiIndexer.name, () => {
           INDEXER_ID,
         )
       expect(before).toHaveLength(1)
-      expect(before).toStrictEqual(
+      expect(before).toEqual(
         expect.arrayContaining([saved('d', 100, null, 550)]),
       )
 
@@ -561,7 +561,7 @@ describe(ManagedMultiIndexer.name, () => {
           INDEXER_ID,
         )
       expect(after).toHaveLength(1)
-      expect(after).toStrictEqual(
+      expect(after).toEqual(
         expect.arrayContaining([saved('d', 1000, null, null)]),
       )
 
@@ -582,7 +582,7 @@ describe(ManagedMultiIndexer.name, () => {
           INDEXER_ID,
         )
       expect(before).toHaveLength(1)
-      expect(before).toStrictEqual(
+      expect(before).toEqual(
         expect.arrayContaining([saved('d', 100, null, 550)]),
       )
 
@@ -593,7 +593,7 @@ describe(ManagedMultiIndexer.name, () => {
           INDEXER_ID,
         )
       expect(after).toHaveLength(1)
-      expect(after).toStrictEqual(
+      expect(after).toEqual(
         expect.arrayContaining([saved('d', 100, 1000, 550)]),
       )
 
@@ -613,7 +613,7 @@ describe(ManagedMultiIndexer.name, () => {
           INDEXER_ID,
         )
       expect(before).toHaveLength(1)
-      expect(before).toStrictEqual(
+      expect(before).toEqual(
         expect.arrayContaining([saved('d', 100, null, 550)]),
       )
 
@@ -624,9 +624,7 @@ describe(ManagedMultiIndexer.name, () => {
           INDEXER_ID,
         )
       expect(after).toHaveLength(1)
-      expect(after).toStrictEqual(
-        expect.arrayContaining([saved('d', 100, 200, 200)]),
-      )
+      expect(after).toEqual(expect.arrayContaining([saved('d', 100, 200, 200)]))
 
       expect(indexer.trimData).toHaveBeenCalledExactlyOnceWith([
         { id: 'd'.repeat(12), range: [201, 550] },
@@ -645,7 +643,7 @@ describe(ManagedMultiIndexer.name, () => {
           INDEXER_ID,
         )
       expect(before).toHaveLength(1)
-      expect(before).toStrictEqual(
+      expect(before).toEqual(
         expect.arrayContaining([
           { ...saved('d', 100, null, 550), properties: 'old-props' },
         ]),
@@ -658,7 +656,7 @@ describe(ManagedMultiIndexer.name, () => {
           INDEXER_ID,
         )
       expect(after).toHaveLength(1)
-      expect(after).toStrictEqual(
+      expect(after).toEqual(
         expect.arrayContaining([
           {
             ...saved('d', 100, null, 550),

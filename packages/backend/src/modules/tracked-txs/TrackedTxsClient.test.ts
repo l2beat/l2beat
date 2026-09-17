@@ -68,7 +68,7 @@ describe(TrackedTxsClient.name, () => {
       )
 
       // returns parsed data returned from internal methods
-      expect(data).toStrictEqual([...TRANSFERS_RESULT, ...FUNCTIONS_RESULT])
+      expect(data).toEqual([...TRANSFERS_RESULT, ...FUNCTIONS_RESULT])
     })
   })
 

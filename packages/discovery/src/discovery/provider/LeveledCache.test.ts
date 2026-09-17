@@ -65,7 +65,7 @@ describe('LeveledCache', () => {
         // Assertions
         expect(l1Mock.get).toHaveBeenCalledWith(key)
         expect(l2Mock.get).not.toHaveBeenCalled()
-        expect(result).toStrictEqual(value)
+        expect(result).toEqual(value)
       })
     })
 
@@ -83,7 +83,7 @@ describe('LeveledCache', () => {
         expect(l1Mock.get).toHaveBeenCalledWith(key)
         expect(l2Mock.get).toHaveBeenCalledWith(key)
         expect(l1Mock.set).toHaveBeenCalledWith(key, value)
-        expect(result).toStrictEqual(value)
+        expect(result).toEqual(value)
       })
 
       it('should handle set in l1 if l2.get succeeds', async () => {
@@ -108,7 +108,7 @@ describe('LeveledCache', () => {
         expect(l1Mock.get).toHaveBeenCalledWith(key)
         expect(l2Mock.get).toHaveBeenCalledWith(key)
         expect(l1Mock.set).not.toHaveBeenCalled()
-        expect(result).toStrictEqual(undefined)
+        expect(result).toEqual(undefined)
       })
     })
 

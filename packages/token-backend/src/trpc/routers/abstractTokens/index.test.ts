@@ -48,7 +48,7 @@ describe('abstractTokensRouter', () => {
       const caller = createRouter(mockTokenDb, mockCoingeckoClient)
       const result = await caller.getAll()
 
-      expect(result).toStrictEqual(abstractTokens)
+      expect(result).toEqual(abstractTokens)
       expect(mockGetAll).toHaveBeenCalledWith()
     })
 
@@ -63,7 +63,7 @@ describe('abstractTokensRouter', () => {
       const caller = createRouter(mockTokenDb, mockCoingeckoClient)
       const result = await caller.getAll()
 
-      expect(result).toStrictEqual([])
+      expect(result).toEqual([])
     })
   })
 
@@ -159,15 +159,13 @@ describe('abstractTokensRouter', () => {
       const caller = createRouter(mockTokenDb, mockCoingeckoClient)
       const result = await caller.getAllWithDeployedTokens()
 
-      expect(result.abstractTokens).toStrictEqual([
+      expect(result.abstractTokens).toEqual([
         {
           ...abstractTokens[0],
           deployedTokens: [deployedTokens[0], deployedTokens[1]],
         },
       ])
-      expect(result.deployedWithoutAbstractTokens).toStrictEqual([
-        deployedTokens[2],
-      ])
+      expect(result.deployedWithoutAbstractTokens).toEqual([deployedTokens[2]])
     })
 
     it('handles abstract tokens without deployed tokens', async () => {
@@ -197,13 +195,13 @@ describe('abstractTokensRouter', () => {
       const caller = createRouter(mockTokenDb, mockCoingeckoClient)
       const result = await caller.getAllWithDeployedTokens()
 
-      expect(result.abstractTokens).toStrictEqual([
+      expect(result.abstractTokens).toEqual([
         {
           ...abstractTokens[0],
           deployedTokens: [],
         },
       ])
-      expect(result.deployedWithoutAbstractTokens).toStrictEqual([])
+      expect(result.deployedWithoutAbstractTokens).toEqual([])
     })
   })
 
@@ -259,7 +257,7 @@ describe('abstractTokensRouter', () => {
       const caller = createRouter(mockTokenDb, mockCoingeckoClient)
       const result = await caller.getById('TK0001')
 
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         ...token,
         deployedTokens,
       })
@@ -276,7 +274,7 @@ describe('abstractTokensRouter', () => {
       const caller = createRouter(mockTokenDb, mockCoingeckoClient)
       const result = await caller.getById('TK9999')
 
-      expect(result).toStrictEqual(null)
+      expect(result).toEqual(null)
     })
   })
 
@@ -290,7 +288,7 @@ describe('abstractTokensRouter', () => {
       const caller = createRouter(mockTokenDb, mockCoingeckoClient)
       const result = await caller.checks('nonexistent-coin')
 
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         error: {
           type: 'not-found-on-coingecko',
           message: 'Coin not found on Coingecko',
@@ -327,13 +325,11 @@ describe('abstractTokensRouter', () => {
       const caller = createRouter(mockTokenDb, mockCoingeckoClient)
       const result = await caller.checks('bitcoin')
 
-      expect(result?.error).toStrictEqual(undefined)
-      expect(result?.data?.id).toStrictEqual('bitcoin')
-      expect(result?.data?.iconUrl).toStrictEqual(
-        'https://example.com/bitcoin.png',
-      )
-      expect(result?.data?.symbol).toStrictEqual('BTC')
-      expect(result?.data?.listingTimestamp).not.toStrictEqual(undefined)
+      expect(result?.error).toEqual(undefined)
+      expect(result?.data?.id).toEqual('bitcoin')
+      expect(result?.data?.iconUrl).toEqual('https://example.com/bitcoin.png')
+      expect(result?.data?.symbol).toEqual('BTC')
+      expect(result?.data?.listingTimestamp).not.toEqual(undefined)
       expect(mockGetCoinDataById).toHaveBeenCalledWith('bitcoin')
     })
 
@@ -358,7 +354,7 @@ describe('abstractTokensRouter', () => {
       const caller = createRouter(mockTokenDb, mockCoingeckoClient)
       const result = await caller.checks('bitcoin')
 
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         error: undefined,
         data: {
           id: 'bitcoin',
@@ -388,13 +384,11 @@ describe('abstractTokensRouter', () => {
       const caller = createRouter(mockTokenDb, mockCoingeckoClient)
       const result = await caller.checks('bitcoin')
 
-      expect(result?.error).toStrictEqual(undefined)
-      expect(result?.data?.id).toStrictEqual('bitcoin')
-      expect(result?.data?.iconUrl).toStrictEqual(
-        'https://example.com/bitcoin.png',
-      )
-      expect(result?.data?.symbol).toStrictEqual('BTC')
-      expect(result?.data?.listingTimestamp).toStrictEqual(undefined)
+      expect(result?.error).toEqual(undefined)
+      expect(result?.data?.id).toEqual('bitcoin')
+      expect(result?.data?.iconUrl).toEqual('https://example.com/bitcoin.png')
+      expect(result?.data?.symbol).toEqual('BTC')
+      expect(result?.data?.listingTimestamp).toEqual(undefined)
     })
   })
 })

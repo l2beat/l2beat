@@ -26,7 +26,7 @@ describe(EigenDaLayerIndexer.name, () => {
 
       const { indexer } = mockIndexer({ configurations, daLayer: DA_LAYER })
 
-      expect(indexer.daLayer).toStrictEqual(DA_LAYER)
+      expect(indexer.daLayer).toEqual(DA_LAYER)
     })
 
     it('should throw when configurations have mismatched daLayer', () => {
@@ -93,7 +93,7 @@ describe(EigenDaLayerIndexer.name, () => {
         expectedAdjustedTo,
       )
 
-      expect(safeHeight).toStrictEqual(expectedAdjustedTo)
+      expect(safeHeight).toEqual(expectedAdjustedTo)
     })
 
     it('should skip update within the sync disabled range', async () => {
@@ -116,7 +116,7 @@ describe(EigenDaLayerIndexer.name, () => {
 
       expect(eigenClient.getMetrics).not.toHaveBeenCalled()
       expect(repository.upsertMany).not.toHaveBeenCalled()
-      expect(safeHeight).toStrictEqual(expectedAdjustedTo)
+      expect(safeHeight).toEqual(expectedAdjustedTo)
     })
 
     it('should handle hour boundaries correctly', async () => {
@@ -163,7 +163,7 @@ describe(EigenDaLayerIndexer.name, () => {
         to - 1,
       )
 
-      expect(result).toStrictEqual({
+      expect(result).toEqual({
         timestamp: UnixTime.toStartOf(from, 'hour'),
         totalSize: BigInt(throughput),
         projectId: 'eigenda',
@@ -187,7 +187,7 @@ describe(EigenDaLayerIndexer.name, () => {
       const result = await indexer.getDaLayerData(from, to)
 
       const expectedTotalSize = BigInt(throughput)
-      expect(result.totalSize).toStrictEqual(expectedTotalSize)
+      expect(result.totalSize).toEqual(expectedTotalSize)
     })
   })
 

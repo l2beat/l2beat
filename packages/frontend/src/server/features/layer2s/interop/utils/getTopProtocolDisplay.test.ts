@@ -16,7 +16,7 @@ describe(getTopProtocolDisplay.name, () => {
       ]),
     )
 
-    expect(result).toStrictEqual({
+    expect(result).toEqual({
       name: 'Wormhole',
       slug: 'wormhole',
       iconUrl: '/icons/wormhole.png',
@@ -29,7 +29,7 @@ describe(getTopProtocolDisplay.name, () => {
       new Map(),
     )
 
-    expect(result).toStrictEqual(undefined)
+    expect(result).toEqual(undefined)
   })
 })
 

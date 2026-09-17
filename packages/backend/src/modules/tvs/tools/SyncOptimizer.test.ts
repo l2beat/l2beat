@@ -15,12 +15,12 @@ describe(SyncOptimizer.name, () => {
 
     it('returns true when timestamp is already the aligned sync target', () => {
       const ts = syncOptimizer.getTimestampToSync(LAST_HOUR - 1 * UnixTime.HOUR)
-      expect(syncOptimizer.shouldTimestampBeSynced(ts)).toStrictEqual(true)
+      expect(syncOptimizer.shouldTimestampBeSynced(ts)).toEqual(true)
     })
 
     it('returns false when timestamp is not the aligned sync target', () => {
       const ts = LAST_HOUR - 1 * UnixTime.HOUR + 123
-      expect(syncOptimizer.shouldTimestampBeSynced(ts)).toStrictEqual(false)
+      expect(syncOptimizer.shouldTimestampBeSynced(ts)).toEqual(false)
     })
   })
 
@@ -34,16 +34,16 @@ describe(SyncOptimizer.name, () => {
 
       expect(
         syncOptimizer.getTimestampToSync(LAST_HOUR - 200 * UnixTime.DAY),
-      ).toStrictEqual(UnixTime(1665619200))
+      ).toEqual(UnixTime(1665619200))
       expect(
         syncOptimizer.getTimestampToSync(LAST_HOUR - 100 * UnixTime.DAY),
-      ).toStrictEqual(UnixTime(1674259200))
+      ).toEqual(UnixTime(1674259200))
       expect(
         syncOptimizer.getTimestampToSync(LAST_HOUR - 40 * UnixTime.DAY),
-      ).toStrictEqual(UnixTime(1679443200))
+      ).toEqual(UnixTime(1679443200))
       expect(
         syncOptimizer.getTimestampToSync(LAST_HOUR - 1 * UnixTime.HOUR),
-      ).toStrictEqual(UnixTime(1682895600))
+      ).toEqual(UnixTime(1682895600))
     })
   })
 
@@ -58,7 +58,7 @@ describe(SyncOptimizer.name, () => {
           start + 100_000 * UnixTime.DAY,
           7,
         ),
-      ).toStrictEqual([
+      ).toEqual([
         UnixTime(1682874000),
         UnixTime(1682877600),
         UnixTime(1682881200),
@@ -79,7 +79,7 @@ describe(SyncOptimizer.name, () => {
           start + 6 * UnixTime.HOUR,
           100_000,
         ),
-      ).toStrictEqual([
+      ).toEqual([
         UnixTime(1682874000),
         UnixTime(1682877600),
         UnixTime(1682881200),
@@ -100,7 +100,7 @@ describe(SyncOptimizer.name, () => {
           start + 100_000 * UnixTime.DAY,
           7,
         ),
-      ).toStrictEqual([
+      ).toEqual([
         UnixTime(1674691200),
         UnixTime(1674712800),
         UnixTime(1674734400),
