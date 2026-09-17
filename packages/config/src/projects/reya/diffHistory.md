@@ -10,11 +10,11 @@ Generated with discovered.json: 0xa742a853b5de0f76e8fe3603cfe7eebc6e577ff0
 
 Upgrade to the BoLD dispute protocol (nitro-contracts v3.1.0) and ArbOS v51 "Dia", executed by Conduit Multisig 1 via the UpgradeExecutor.
 
-RollupProxy replaced by a BoLD rollup (`isPostBoLD: true`). Validator whitelist stays enabled, single validator unchanged. Stake unchanged at 0.1 ETH, now in WETH. `confirmPeriodBlocks` unchanged at 45818. `minimumAssertionPeriod` 10 → 75. `validatorAfkBlocks` 45818 → 2^50. `challengeGracePeriodBlocks` set to 14400. `anyTrustFastConfirmer` not set.
+RollupProxy replaced by a BoLD rollup (`isPostBoLD: true`). Validator whitelist stays enabled. Stake token ETH → WETH. `minimumAssertionPeriod` 10 → 75. `validatorAfkBlocks` 45818 → 2^50. `challengeGracePeriodBlocks` set to 14400.
 
-ChallengeManager replaced by EdgeChallengeManager: `challengePeriodBlocks` 45818, 1 big-step level, 0.1 WETH stake on big-step and small-step edges.
+ChallengeManager replaced by EdgeChallengeManager: 1 big-step level, 0.1 WETH stake on big-step and small-step edges.
 
-Bridge, Inbox, Outbox, RollupEventInbox and SequencerInbox upgraded. SequencerInbox: `isDelayBufferable: true` with buffer at max, `feeTokenPricer` unset, `delayBlocks` 5760 → 7200, `reader4844` replaced.
+Bridge, Inbox, Outbox, RollupEventInbox and SequencerInbox upgraded. SequencerInbox: `isDelayBufferable: true` with buffer at max, `delayBlocks` 5760 → 7200, `reader4844` replaced.
 
 OneStepProvers and OneStepProofEntry replaced. ValidatorUtils removed.
 
