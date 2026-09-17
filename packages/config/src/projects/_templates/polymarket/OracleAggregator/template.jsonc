@@ -38,7 +38,7 @@
       "permissions": [
         {
           "type": "interact",
-          "description": "resolve any request to a result of their choosing, replace an open request's reporter, disputer and arbitrator modules and liveness window, pause the whole oracle or block finalization per market, and manage all roles, with no delay."
+          "description": "resolve any request to a result of their choosing, rewrite an open request's rules, replace its reporter, disputer and arbitrator modules and liveness window, pause the whole oracle or block finalization per market, and manage all roles, with no delay."
         }
       ]
     },
@@ -66,7 +66,7 @@
       "permissions": [
         {
           "type": "interact",
-          "description": "register requests and replace an open request's reporter, disputer and arbitrator modules and liveness window, which lets them appoint themselves arbitrator and set the result, and block finalization per market, with no delay."
+          "description": "register requests, rewrite an open request's rules, and replace its reporter, disputer and arbitrator modules and liveness window, which lets them appoint themselves arbitrator and set the result, and block finalization per market, with no delay."
         }
       ]
     },
@@ -93,7 +93,7 @@
       "permissions": [
         {
           "type": "interact",
-          "description": "rewrite the resolution rules of an open request with no delay."
+          "description": "set the specification URI of a product in the market data registry."
         }
       ]
     },

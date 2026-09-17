@@ -30,7 +30,7 @@
       "permissions": [
         {
           "type": "interact",
-          "description": "grant and revoke the proposer, executor and canceller roles and change the minimum delay, with no delay."
+          "description": "grant and revoke the admin, proposer, executor and canceller roles with no delay."
         }
       ]
     },

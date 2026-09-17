@@ -1,40 +1,32 @@
-Generated with discovered.json: 0xd340ccde1ea4138e5732ec77b31e4a6ee964a47d
+Generated with discovered.json: 0x1f5f82bebf7ce1a76681ad38cc0baac7066722c2
 
-# Diff at Wed, 16 Sep 2026 15:08:57 GMT:
+# Diff at Thu, 17 Sep 2026 14:26:24 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
-- comparing to: main@704890475d4c89c204761682934cf7394154dae9 block: 1785484385
-- current timestamp: 1789571264
+- comparing to: main@15431f7683a0de5d516e42fa21c223b42652e15d block: 1785484385
+- current timestamp: 1789655109
 
 ## Description
 
-Timelock batch proposed 2026-08-27 and executed 2026-09-08 (tx `0x2b55c1ba874ab18e9f4258c99db25bebd0a34bdcf3834eea1ea77e4e7629d364`) called `upgradeToAndCall` with empty init data on seven proxies.
+Timelock batch proposed 2026-08-27 and executed 2026-09-08 upgraded six implementations.
 
-CollateralToken: `0x6bBCef9f7ef3B6C592c99e0f206a0DE94Ad0925f` → `0xCe84E053301A82937F90ee2C2c1889cAb1db25dE` ([diff](https://disco.l2beat.com/diff/matic:0x6bBCef9f7ef3B6C592c99e0f206a0DE94Ad0925f/matic:0xCe84E053301A82937F90ee2C2c1889cAb1db25dE)). Wrap/unwrap callbacks removed (the 5-argument overloads remain and ignore the callback arguments). New owner-only `rescue()` transfers any token balance held by the token contract itself; the vault is not reachable through it.
+CollateralToken ([diff](https://disco.l2beat.com/diff/matic:0x6bBCef9f7ef3B6C592c99e0f206a0DE94Ad0925f/matic:0xCe84E053301A82937F90ee2C2c1889cAb1db25dE)): wrap/unwrap callbacks removed, owner-only `rescue()` added.
 
-PositionManager: `0x30c038F0Dae8dcC3E6AD51D016F50821D32Cb87e` → `0xCc5De1e9D14a7AB75E872E23FC9D605518Bac2D0` ([diff](https://disco.l2beat.com/diff/matic:0x30c038F0Dae8dcC3E6AD51D016F50821D32Cb87e/matic:0xCc5De1e9D14a7AB75E872E23FC9D605518Bac2D0)). Contract logic unchanged apart from address masking in ERC1155 event emission. The id libraries now carry a `ResolutionChain` in bits 24-39 of condition and event ids (0 = Polygon); those bits were previously zero, so existing ids are unchanged.
+PositionManager ([diff](https://disco.l2beat.com/diff/matic:0x30c038F0Dae8dcC3E6AD51D016F50821D32Cb87e/matic:0xCc5De1e9D14a7AB75E872E23FC9D605518Bac2D0)): condition and event ids gain a `ResolutionChain` field, 0 = Polygon.
 
-BinaryModule: `0x492FEc596eC347459E1Ebe30b9245EB3B49B1BBa` → `0xf6428c0B5fa9361c0708CDdb95468cf54C56e9A2` ([diff](https://disco.l2beat.com/diff/matic:0x492FEc596eC347459E1Ebe30b9245EB3B49B1BBa/matic:0xf6428c0B5fa9361c0708CDdb95468cf54C56e9A2)). New immutable `RESOLUTION_CHAIN` = 0. Resolver-role holders can no longer report on markets mirrored from the CTF (the result is copied from the CTF ledger) or overwrite a stored result, and a repeated report must match the stored one. Resolution pause is per event instead of per condition. Migration of already-resolved CTF positions redeems them in the same call, and `migratePositions` now requires the legacy condition ids to be sorted ascending; unsorted calls revert.
+BinaryModule ([diff](https://disco.l2beat.com/diff/matic:0x492FEc596eC347459E1Ebe30b9245EB3B49B1BBa/matic:0xf6428c0B5fa9361c0708CDdb95468cf54C56e9A2)) and NegRiskModule ([diff](https://disco.l2beat.com/diff/matic:0xA61e7ca374F721D5b9FD5b0FEe6Fb90f27d448d7/matic:0x39a5B01a100edF811f2748aa37B1313715Ded70e)): `RESOLUTION_CHAIN` = 0. Resolver-role reports refused for migrated conditions and for conditions with a stored result. Resolution pause per event instead of per condition. `migratePositions` requires sorted legacy condition ids. NegRiskModule: `resolveConditionToNo()` removed, remaining results derived in `getResult()`.
 
-NegRiskModule: `0xA61e7ca374F721D5b9FD5b0FEe6Fb90f27d448d7` → `0x39a5B01a100edF811f2748aa37B1313715Ded70e` ([diff](https://disco.l2beat.com/diff/matic:0xA61e7ca374F721D5b9FD5b0FEe6Fb90f27d448d7/matic:0x39a5B01a100edF811f2748aa37B1313715Ded70e)). Same changes as BinaryModule. Public `resolveConditionToNo()` removed: once a condition resolves YES the remaining conditions, and once all resolve NO the synthetic last condition, are derived in `getResult()` instead of being stored by an explicit call. Stored results must be exactly 0 or 1e6. `getResultForBridge()` refuses a migrated event until every one of its conditions has a stored result.
+CombinatorialModule ([diff 2026-07-31](https://disco.l2beat.com/diff/matic:0x03CC063e6F9552E3842136538092134EdC8962DE/matic:0x572cD48cCe93B2E58F1cc0253a7fDd4B4952a9C2), [diff 2026-09-08](https://disco.l2beat.com/diff/matic:0x572cD48cCe93B2E58F1cc0253a7fDd4B4952a9C2/matic:0xf96968a44022B17240B42c557693E7C383d2d8a3)): upgraded twice. Leg sets stored on first use. Module-level bridge functions removed; the inherited ones do not restrict position ids to this module.
 
-CombinatorialModule: `0x03CC063e6F9552E3842136538092134EdC8962DE` → `0x572cD48cCe93B2E58F1cc0253a7fDd4B4952a9C2` on 2026-07-31 (tx `0x8d3af126155d4a85db8cb2a990a0eb9eb0909acbe36781c84674ccf5cd1ebb19`, [diff](https://disco.l2beat.com/diff/matic:0x03CC063e6F9552E3842136538092134EdC8962DE/matic:0x572cD48cCe93B2E58F1cc0253a7fDd4B4952a9C2)) → `0xf96968a44022B17240B42c557693E7C383d2d8a3` on 2026-09-08 ([diff](https://disco.l2beat.com/diff/matic:0x572cD48cCe93B2E58F1cc0253a7fDd4B4952a9C2/matic:0xf96968a44022B17240B42c557693E7C383d2d8a3)). July: leg sets are stored on first use and checked against the stored definition. September: the module-level `mintFromBridge`, `burnFromBridge`, `addBridge` and `removeBridge` overrides were removed in favour of the inherited BaseModule and OracleModule versions. The removed override required bridged ids to belong to this module with outcome index 0 or 1; the inherited one has no id check, and the ledger has `crossModuleAuth` set for this module, so a bridge-role holder could now mint or burn positions of any module. No address holds the bridge role on any module; admins can grant it with no delay. Events now include recipients.
+CombosExchange ([diff](https://disco.l2beat.com/diff/matic:0x7345C6842b244926125ed4054905cAc49620B5dc/matic:0x641b40ec414a076b9e79E703Fc7BF4EBEC248Bb7)): order fill status tracks the maker asset spent. Zero `takerAmount` orders rejected.
 
-CombosExchange: `0x7345C6842b244926125ed4054905cAc49620B5dc` → `0x641b40ec414a076b9e79E703Fc7BF4EBEC248Bb7` ([diff](https://disco.l2beat.com/diff/matic:0x7345C6842b244926125ed4054905cAc49620B5dc/matic:0x641b40ec414a076b9e79E703Fc7BF4EBEC248Bb7)). Order fill status now tracks the maker asset actually spent for both sides (BUY orders previously tracked shares at the signed price). Orders with zero `takerAmount` are rejected. Address and uint8 calldata fields are masked before use.
+OracleAggregator added with the resolver role on BinaryModule and NegRiskModule. AdminSafe is admin, OperationsAccount is operator and rule manager. 1 request registered.
 
-Router `0x12121212006e4CD160D18e3f00711DA5c3372600` (owner Timelock, not in discovery): `0x6c405da46fdc4172239e5053189b6577e290e62f` → `0x91fa5e2f12a308a13defdb6aaf80b71dbe9b7696` ([diff](https://disco.l2beat.com/diff/matic:0x6c405da46fdc4172239e5053189b6577e290e62f/matic:0x91fa5e2f12a308a13defdb6aaf80b71dbe9b7696)), adding only a zero-length operations check.
+ManagedOptimisticOracleV2 requester whitelist: 1 address added. Proposer whitelist: 41 added, 95 removed.
 
-New OracleAggregator `0x0A0a0A0A8B00C51b7D810501b03F230028C04a87` (proxy owned by the Timelock, admin AdminSafe) received the resolver role (16) on BinaryModule and NegRiskModule on 2026-08-27 in the transaction that proposed the batch (`0x312ed760426df32b16b2095c9a3444bd795d09f5327ddc66b8605f096d7545ce`). OperationsAccount `0xAC9930b2AE455a671b62dE86876A7e8587825294` received the operator and rule-manager roles (6) on 2026-09-08 (`0xcf59768c7039da7b7903cf75fe39820ade3e25f1a5fbe165855a2d3932916534`). Operators and admins can replace an open request's arbitrator with any address and set its liveness window to zero, after which that address can resolve the request; admins can also resolve directly. Its first and so far only request (2026-09-15, `0xb12ff9d222931e970b33d8c824ff2665ba82acc541a1cc2f9a7b412ecb7383b2`) targets BinaryModule with OOReporterModule `0x000012e0009c84078c4924fba808a41b9f67527f` as the only reporter and `0x000000000000000000000000000000000000dEaD` as the only disputer.
+AdminSafe: 1 member added, threshold 3/6 → 3/7.
 
-PolymarketOOReporter `0x53703Dd6129d723066b6362510E5aE2fECd48218` (proxy owned by the oracle operators' Safe `0x6ee4D971142afadEa1828445124D6137080B4146`) added to the managed oracle requester whitelist on 2026-09-11 (`0x6191243316298082ac9f7fcc0bf045e773d3e1418d7615f259ea3a4ce2931fd5`). OOReporterModule is its enabled requester (2026-09-03, `0x168de46687f406879af20438048c0eb4f1ba5181b1ff940f47cdbc3dacb196ff`) and EOA `0x2964a637feaea99edf573087e8c3c0c1917d553c` its oracle initializer (2026-09-15, `0x46d3cff218d5f5be1fc27eda2e017081f4de92ecb4d35265ea69b3e514e0bbaf`). OOReporterModule, PolymarketOOReporter and Router are not referenced by tracked contracts and stay outside discovery.
-
-AdminSafe: 1 member added on 2026-09-10 (`0x05a7c95f0a5b648822b935f94db98e30666c8ed9505dfeef91bdb585059d1c39`), threshold 3/6 → 3/7.
-
-Oracle operators' Safe `0x6ee4D971142afadEa1828445124D6137080B4146`: all 4 members replaced and 1 added in six transactions between 2026-09-03 and 2026-09-15, threshold 2/4 → 3/5 (`0xdf2283d8d58805cb15e5b65fb754b7e5d64d94ff3e7b03218200853c56a670c3`).
-
-Managed oracle proposer whitelist: 41 addresses added, 95 removed.
-
-DepositWalletFactory: one role entry set to 0 on 2026-08-22, no active role.
+GnosisSafeL2 (oracle resolver admin): 4 members replaced, 1 added, threshold 2/4 → 3/5.
 
 ## Watched changes
 
@@ -142,7 +134,7 @@ DepositWalletFactory: one role entry set to 0 on 2026-08-22, no active role.
     +++ description: None
       values.totalSupply:
 -        1022267684903528
-+        1023394380222820
++        1014900608745683
     }
 ```
 
@@ -175,7 +167,7 @@ DepositWalletFactory: one role entry set to 0 on 2026-08-22, no active role.
 +++ description: Total supply of the wrapper token.
       values.totalSupply:
 -        "23510804711007571"
-+        "24273536916931239"
++        "24257163035497567"
     }
 ```
 
@@ -188,7 +180,7 @@ DepositWalletFactory: one role entry set to 0 on 2026-08-22, no active role.
 -        "3 of 6 (50%)"
 +        "3 of 7 (43%)"
       receivedPermissions.0:
-+        {"permission":"interact","from":"matic:0x0A0a0A0A8B00C51b7D810501b03F230028C04a87","description":"resolve any request to a result of their choosing, replace an open request's reporter, disputer and arbitrator modules and liveness window, pause the whole oracle or block finalization per market, and manage all roles, with no delay.","role":".admins"}
++        {"permission":"interact","from":"matic:0x0A0a0A0A8B00C51b7D810501b03F230028C04a87","description":"resolve any request to a result of their choosing, rewrite an open request's rules, replace its reporter, disputer and arbitrator modules and liveness window, pause the whole oracle or block finalization per market, and manage all roles, with no delay.","role":".admins"}
       receivedPermissions.23:
 +        {"permission":"upgrade","from":"matic:0x0A0a0A0A8B00C51b7D810501b03F230028C04a87","description":"can upgrade the resolution router implementation and manage all roles.","role":".owner","via":[{"address":"matic:0x47EbFAC3353314C788B96CDCbf41daadfE03629C","delay":43200}]}
     }
@@ -510,9 +502,9 @@ DepositWalletFactory: one role entry set to 0 on 2026-08-22, no active role.
     contract OperationsAccount (matic:0xAC9930b2AE455a671b62dE86876A7e8587825294) [N/A] {
     +++ description: None
       receivedPermissions.0:
-+        {"permission":"interact","from":"matic:0x0A0a0A0A8B00C51b7D810501b03F230028C04a87","description":"register requests and replace an open request's reporter, disputer and arbitrator modules and liveness window, which lets them appoint themselves arbitrator and set the result, and block finalization per market, with no delay.","role":".operators"}
++        {"permission":"interact","from":"matic:0x0A0a0A0A8B00C51b7D810501b03F230028C04a87","description":"register requests, rewrite an open request's rules, and replace its reporter, disputer and arbitrator modules and liveness window, which lets them appoint themselves arbitrator and set the result, and block finalization per market, with no delay.","role":".operators"}
       receivedPermissions.1:
-+        {"permission":"interact","from":"matic:0x0A0a0A0A8B00C51b7D810501b03F230028C04a87","description":"rewrite the resolution rules of an open request with no delay.","role":".ruleManagers"}
++        {"permission":"interact","from":"matic:0x0A0a0A0A8B00C51b7D810501b03F230028C04a87","description":"set the specification URI of a product in the market data registry.","role":".ruleManagers"}
     }
 ```
 
@@ -533,7 +525,7 @@ DepositWalletFactory: one role entry set to 0 on 2026-08-22, no active role.
 +++ description: Total supply of the collateral token.
       values.totalSupply:
 -        491543026531785
-+        464168602274003
++        488232843961481
       implementationNames.matic:0x6bBCef9f7ef3B6C592c99e0f206a0DE94Ad0925f:
 -        "CollateralToken"
       implementationNames.matic:0xCe84E053301A82937F90ee2C2c1889cAb1db25dE:
@@ -658,7 +650,7 @@ discovery. Values are for block 1785484385 (main branch discovery), not current.
       receivedPermissions.4:
 +        {"permission":"interact","from":"matic:0x47EbFAC3353314C788B96CDCbf41daadfE03629C","description":"cancel queued transactions.","role":".cancellers"}
       receivedPermissions.5:
-+        {"permission":"interact","from":"matic:0x47EbFAC3353314C788B96CDCbf41daadfE03629C","description":"grant and revoke the proposer, executor and canceller roles and change the minimum delay, with no delay.","role":".admins"}
++        {"permission":"interact","from":"matic:0x47EbFAC3353314C788B96CDCbf41daadfE03629C","description":"grant and revoke the admin, proposer, executor and canceller roles with no delay.","role":".admins"}
       receivedPermissions.6:
 +        {"permission":"interact","from":"matic:0x47EbFAC3353314C788B96CDCbf41daadfE03629C","description":"propose transactions.","role":".proposers"}
       receivedPermissions.12:

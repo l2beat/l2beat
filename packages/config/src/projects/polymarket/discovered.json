@@ -1,6 +1,6 @@
 {
   "name": "polymarket",
-  "timestamp": 1789571264,
+  "timestamp": 1789655109,
   "configHash": "0x2393085a665c262d7cf5abd574e58a2630cf94de1b7cd151a1986f395223d0e4",
   "entries": [
     {
@@ -1675,7 +1675,7 @@
         "RESCUER_ROLE": "0xcf6f9f892731e14b8859835f2ff35575f447fb501f46243c4eb8bac19e31a050",
         "rescuers": [],
         "symbol": "USDC",
-        "totalSupply": 1023394380222820,
+        "totalSupply": 1014900608745683,
         "TRANSFER_WITH_AUTHORIZATION_TYPEHASH": "0x7c7c6cdb67a18743f49ec6fa9b35f50d52ed05cbed4cc592e13b44501c1a2267",
         "WITHDRAW_WITH_AUTHORIZATION_TYPEHASH": "0x6c8f8f5f82f0c140edd12e80d10ff715a36d6e5f73e406394862b5f1eb44c4f9"
       },
@@ -1942,7 +1942,7 @@
         "name": "Wrapped Collateral",
         "owner": "matic:0xd91E80cF2E7be2e162c6513ceD06f1dD0dA35296",
         "symbol": "WCOL",
-        "totalSupply": "24273536916931239",
+        "totalSupply": "24257163035497567",
         "underlying": "matic:0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174"
       },
       "fieldMeta": {
@@ -2038,7 +2038,7 @@
         "RECEIVE_WITH_AUTHORIZATION_TYPEHASH": "0xd099cc98ef71107a616c4f0f941f04c322d8e254fe26b3c6668db87aae413de8",
         "rescuer": "matic:0x0000000000000000000000000000000000000000",
         "symbol": "USDC",
-        "totalSupply": 631425003535543,
+        "totalSupply": 623338968123971,
         "TRANSFER_WITH_AUTHORIZATION_TYPEHASH": "0x7c7c6cdb67a18743f49ec6fa9b35f50d52ed05cbed4cc592e13b44501c1a2267",
         "version": "2"
       },
@@ -2458,7 +2458,7 @@
         "getChainId": 137,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 44,
+        "nonce": 45,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -3513,7 +3513,7 @@
           }
         ],
         "symbol": "pUSD",
-        "totalSupply": 464168602274003,
+        "totalSupply": 488232843961481,
         "USDC": "matic:0x3c499c542cEF5E3811e1192ce70d8cC03d5c3359",
         "USDCE": "matic:0x2791Bca1f2de4661ED88A30C99A7a9449Aa84174",
         "VAULT": "matic:0xC417fD8E9661c0d2120B64a04Bb3278C17E99DB1"
@@ -20240,8 +20240,8 @@
     "uma/ManagedOptimisticOracleV2": "0xb95f621832be01c1bbe24a90c57c2cf223f611413d14eea831cfb34f18f891b2",
     "uma/OptimisticOracleV2": "0xdb25a0cd206ef5646439b0ddbabcb9a6834c1c3c0f395b01803b7e38944859dc"
   },
-  "usedBlockNumbers": { "polygonpos": 93910820 },
-  "permissionsConfigHash": "0xf74bc6a10d72115bd2bbd4f5f279178006a52cbe6a3df9da16ddf8a8b087a445",
+  "usedBlockNumbers": { "polygonpos": 93966717 },
+  "permissionsConfigHash": "0x58ccaee457edb0a29c307d2653537f8582ad7bd8eb52a4fca6aa84a621b39aed",
   "permissions": {
     "matic:0x0000000000000000000000000000000000000000": {
       "receivedPermissions": [
@@ -20288,7 +20288,7 @@
         {
           "permission": "interact",
           "from": "matic:0x0A0a0A0A8B00C51b7D810501b03F230028C04a87",
-          "description": "resolve any request to a result of their choosing, replace an open request's reporter, disputer and arbitrator modules and liveness window, pause the whole oracle or block finalization per market, and manage all roles, with no delay.",
+          "description": "resolve any request to a result of their choosing, rewrite an open request's rules, replace its reporter, disputer and arbitrator modules and liveness window, pause the whole oracle or block finalization per market, and manage all roles, with no delay.",
           "role": ".admins"
         },
         {
@@ -20333,7 +20333,7 @@
         {
           "permission": "interact",
           "from": "matic:0x47EbFAC3353314C788B96CDCbf41daadfE03629C",
-          "description": "grant and revoke the proposer, executor and canceller roles and change the minimum delay, with no delay.",
+          "description": "grant and revoke the admin, proposer, executor and canceller roles with no delay.",
           "role": ".admins"
         },
         {
@@ -20787,13 +20787,13 @@
         {
           "permission": "interact",
           "from": "matic:0x0A0a0A0A8B00C51b7D810501b03F230028C04a87",
-          "description": "register requests and replace an open request's reporter, disputer and arbitrator modules and liveness window, which lets them appoint themselves arbitrator and set the result, and block finalization per market, with no delay.",
+          "description": "register requests, rewrite an open request's rules, and replace its reporter, disputer and arbitrator modules and liveness window, which lets them appoint themselves arbitrator and set the result, and block finalization per market, with no delay.",
           "role": ".operators"
         },
         {
           "permission": "interact",
           "from": "matic:0x0A0a0A0A8B00C51b7D810501b03F230028C04a87",
-          "description": "rewrite the resolution rules of an open request with no delay.",
+          "description": "set the specification URI of a product in the market data registry.",
           "role": ".ruleManagers"
         },
         {
