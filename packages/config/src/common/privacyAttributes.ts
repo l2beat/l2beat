@@ -53,10 +53,4 @@ export const PRIVACY_ATTRIBUTES = {
     description:
       'Uses fresh, one-time recipient addresses to obscure who controls the receiving address.',
   },
-  bridged: {
-    id: 'bridged',
-    label: 'Bridged',
-    description:
-      'Funds leave Ethereum through a bridge and gain their privacy on another chain.',
-  },
 } as const satisfies Record<string, PrivacyAttribute>
