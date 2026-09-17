@@ -30,6 +30,23 @@ const WRAPPER_NAMES = [
   'ConfidentialXAUTWrapper',
   'ConfidentialBbqTGBPWrapper',
   'ConfidentialSteakcUSDCWrapper',
+  'ConfidentialWBTCWrapper',
+  'ConfidentialAUSDWrapper',
+  'ConfidentialPENDLEWrapper',
+  'ConfidentialSteakUSDTWrapper',
+  'ConfidentialBbqUSDTWrapper',
+  'ConfidentialBbqUSDCWrapper',
+  'ConfidentialArmcWBTCWrapper',
+  'ConfidentialArmUSDTsWrapper',
+  'ConfidentialArmUSDCsWrapper',
+  'ConfidentialArmUSDTpWrapper',
+  'ConfidentialArmUSDCpWrapper',
+  'ConfidentialPendleUSDCWrapper',
+  'ConfidentialFAUSDeWrapper',
+  'ConfidentialFcUSDTWrapper',
+  'ConfidentialRoxcUSDCWrapper',
+  'ConfidentialRoxUSDCyWrapper',
+  'ConfidentialPAPYWrapper',
 ]
 
 const trackedWrappers = WRAPPER_NAMES.flatMap((name) => {
