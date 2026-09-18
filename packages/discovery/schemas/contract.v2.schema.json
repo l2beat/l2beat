@@ -123,7 +123,6 @@
                   },
                   "ignoreRelative": { "type": "boolean" }
                 },
-                "additionalProperties": false,
                 "required": ["type", "slot"]
               },
               {
@@ -141,7 +140,6 @@
                   "returnType": { "enum": ["address"] },
                   "ignoreRelative": { "type": "boolean" }
                 },
-                "additionalProperties": false,
                 "required": ["type", "slot"]
               },
               {
@@ -162,7 +160,6 @@
                   "startIndex": { "type": "number" },
                   "ignoreRelative": { "type": "boolean" }
                 },
-                "additionalProperties": false,
                 "required": ["type"]
               },
               {
@@ -180,7 +177,6 @@
                   "expectRevert": { "type": "boolean" },
                   "address": { "type": "string" }
                 },
-                "additionalProperties": false,
                 "required": ["type", "args"]
               },
               {
@@ -352,7 +348,6 @@
                   "returnType": { "enum": ["address", "bytes", "number"] },
                   "ignoreRelative": { "type": "boolean" }
                 },
-                "additionalProperties": false,
                 "required": ["type", "tag"]
               },
               {
@@ -368,7 +363,6 @@
                   "pickRoleMembers": { "type": "string" },
                   "ignoreRelative": { "type": "boolean" }
                 },
-                "additionalProperties": false,
                 "required": ["type"]
               },
               {
@@ -383,7 +377,6 @@
                   "pickRoleMembers": { "type": "string" },
                   "ignoreRelative": { "type": "boolean" }
                 },
-                "additionalProperties": false,
                 "required": ["type"]
               },
               {
@@ -397,7 +390,6 @@
                   },
                   "ignoreRelative": { "type": "boolean" }
                 },
-                "additionalProperties": false,
                 "required": ["type"]
               },
               {
@@ -411,7 +403,6 @@
                   },
                   "ignoreRelative": { "type": "boolean" }
                 },
-                "additionalProperties": false,
                 "required": ["type"]
               },
               {
@@ -425,7 +416,6 @@
                   },
                   "ignoreRelative": { "type": "boolean" }
                 },
-                "additionalProperties": false,
                 "required": ["type"]
               },
               {
@@ -434,7 +424,6 @@
                   "type": { "const": "constructorArgs" },
                   "nameArgs": { "type": "boolean" }
                 },
-                "additionalProperties": false,
                 "required": ["type"]
               },
               {
@@ -448,13 +437,11 @@
                     }
                   }
                 },
-                "additionalProperties": false,
                 "required": ["type", "topics"]
               },
               {
                 "type": "object",
                 "properties": { "type": { "const": "hardcoded" }, "value": {} },
-                "additionalProperties": false,
                 "required": ["type", "value"]
               },
               {
@@ -463,13 +450,11 @@
                   "type": { "const": "starkWareGovernance" },
                   "filterBy": { "type": "string" }
                 },
-                "additionalProperties": false,
                 "required": ["type", "filterBy"]
               },
               {
                 "type": "object",
                 "properties": { "type": { "const": "layerZeroMultisig" } },
-                "additionalProperties": false,
                 "required": ["type"]
               },
               {
@@ -478,7 +463,6 @@
                   "type": { "const": "manyChainMultiSig" },
                   "ignoreRelative": { "type": "boolean" }
                 },
-                "additionalProperties": false,
                 "required": ["type"]
               },
               {
@@ -492,7 +476,6 @@
                     ]
                   }
                 },
-                "additionalProperties": false,
                 "required": ["type", "actorType"]
               },
               {
@@ -500,7 +483,6 @@
                 "properties": {
                   "type": { "const": "arbitrumScheduledTransactions" }
                 },
-                "additionalProperties": false,
                 "required": ["type"]
               },
               {
@@ -509,7 +491,6 @@
                   "type": { "const": "opStackDA" },
                   "sequencerAddress": { "type": "string" }
                 },
-                "additionalProperties": false,
                 "required": ["type", "sequencerAddress"]
               },
               {
@@ -518,7 +499,6 @@
                   "type": { "const": "opStackSequencerInbox" },
                   "sequencerAddress": { "type": "string" }
                 },
-                "additionalProperties": false,
                 "required": ["type", "sequencerAddress"]
               },
               {
@@ -526,13 +506,11 @@
                 "properties": {
                   "type": { "const": "arbitrumSequencerVersion" }
                 },
-                "additionalProperties": false,
                 "required": ["type"]
               },
               {
                 "type": "object",
                 "properties": { "type": { "const": "arbitrumDACKeyset" } },
-                "additionalProperties": false,
                 "required": ["type"]
               },
               {
@@ -541,7 +519,6 @@
                   "type": { "const": "eip2535Facets" },
                   "ignoreRelative": { "type": "boolean" }
                 },
-                "additionalProperties": false,
                 "required": ["type"]
               },
               {
@@ -549,19 +526,16 @@
                 "properties": {
                   "type": { "const": "zksynceraScheduledTransactions" }
                 },
-                "additionalProperties": false,
                 "required": ["type"]
               },
               {
                 "type": "object",
                 "properties": { "type": { "const": "zksynceraValidators" } },
-                "additionalProperties": false,
                 "required": ["type"]
               },
               {
                 "type": "object",
                 "properties": { "type": { "const": "orbitPostsBlobs" } },
-                "additionalProperties": false,
                 "required": ["type"]
               },
               {
@@ -569,7 +543,6 @@
                 "properties": {
                   "type": { "const": "polygoncdkScheduledTransactions" }
                 },
-                "additionalProperties": false,
                 "required": ["type"]
               },
               {
@@ -617,13 +590,11 @@
                     }
                   }
                 },
-                "additionalProperties": false,
                 "required": ["type"]
               },
               {
                 "type": "object",
                 "properties": { "type": { "const": "tradable" } },
-                "additionalProperties": false,
                 "required": ["type"]
               },
               {
@@ -633,7 +604,6 @@
                   "permissionlessMinting": { "type": "boolean" },
                   "mintingWithPermit": { "type": "boolean" }
                 },
-                "additionalProperties": false,
                 "required": ["type"]
               },
               {
@@ -663,7 +633,6 @@
                   "pickChainAddress": { "type": "string" },
                   "ignoreRelative": { "type": "boolean" }
                 },
-                "additionalProperties": false,
                 "required": ["type"]
               }
             ]

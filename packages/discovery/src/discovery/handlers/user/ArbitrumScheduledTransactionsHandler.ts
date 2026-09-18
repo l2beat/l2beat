@@ -10,7 +10,7 @@ import { toContractValue } from '../utils/toContractValue'
 export type ArbitrumScheduledTransactionsHandlerDefinition = v.infer<
   typeof ArbitrumScheduledTransactionsHandlerDefinition
 >
-export const ArbitrumScheduledTransactionsHandlerDefinition = v.strictObject({
+export const ArbitrumScheduledTransactionsHandlerDefinition = v.object({
   type: v.literal('arbitrumScheduledTransactions'),
 })
 

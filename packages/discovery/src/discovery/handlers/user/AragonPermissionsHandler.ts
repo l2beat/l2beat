@@ -9,7 +9,7 @@ import type { Handler, HandlerResult } from '../Handler'
 export type AragonPermissionsHandlerDefinition = v.infer<
   typeof AragonPermissionsHandlerDefinition
 >
-export const AragonPermissionsHandlerDefinition = v.strictObject({
+export const AragonPermissionsHandlerDefinition = v.object({
   type: v.literal('aragonPermissions'),
   roleNames: v
     .record(

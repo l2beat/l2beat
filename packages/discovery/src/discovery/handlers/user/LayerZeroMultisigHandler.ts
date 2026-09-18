@@ -13,7 +13,7 @@ export type LayerZeroMultisigHandlerDefinition = v.infer<
   typeof LayerZeroMultisigHandlerDefinition
 >
 
-export const LayerZeroMultisigHandlerDefinition = v.strictObject({
+export const LayerZeroMultisigHandlerDefinition = v.object({
   type: v.literal('layerZeroMultisig'),
 })
 

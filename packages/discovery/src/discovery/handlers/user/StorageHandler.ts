@@ -18,7 +18,7 @@ import { bytes32ToContractValue } from '../utils/bytes32ToContractValue'
 import { valueToBigInt } from '../utils/valueToBigInt'
 
 export type StorageHandlerDefinition = v.infer<typeof StorageHandlerDefinition>
-export const StorageHandlerDefinition = v.strictObject({
+export const StorageHandlerDefinition = v.object({
   type: v.literal('storage'),
   slot: v.union([SingleSlot, v.array(SingleSlot).check((v) => v.length >= 1)]),
   offset: v

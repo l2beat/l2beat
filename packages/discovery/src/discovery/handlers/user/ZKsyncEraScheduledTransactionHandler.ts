@@ -13,7 +13,7 @@ import { toContractValue } from '../utils/toContractValue'
 export type ZKsyncEraScheduledTransactionsHandlerDefinition = v.infer<
   typeof ZKsyncEraScheduledTransactionsHandlerDefinition
 >
-export const ZKsyncEraScheduledTransactionsHandlerDefinition = v.strictObject({
+export const ZKsyncEraScheduledTransactionsHandlerDefinition = v.object({
   type: v.literal('zksynceraScheduledTransactions'),
 })
 

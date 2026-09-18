@@ -7,7 +7,7 @@ import type { Handler, HandlerResult } from '../Handler'
 export type ZKsyncEraValidatorsHandlerDefinition = v.infer<
   typeof ZKsyncEraValidatorsHandlerDefinition
 >
-export const ZKsyncEraValidatorsHandlerDefinition = v.strictObject({
+export const ZKsyncEraValidatorsHandlerDefinition = v.object({
   type: v.literal('zksynceraValidators'),
 })
 

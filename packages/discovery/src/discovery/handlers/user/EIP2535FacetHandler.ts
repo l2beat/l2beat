@@ -11,7 +11,7 @@ import type { Handler, HandlerResult } from '../Handler'
 export type EIP2535FacetHandlerDefinition = v.infer<
   typeof EIP2535FacetHandlerDefinition
 >
-export const EIP2535FacetHandlerDefinition = v.strictObject({
+export const EIP2535FacetHandlerDefinition = v.object({
   type: v.literal('eip2535Facets'),
   ignoreRelative: v.boolean().optional(),
 })

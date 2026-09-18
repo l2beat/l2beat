@@ -9,7 +9,7 @@ import type { Handler, HandlerResult } from '../Handler'
 export type ConstructorArgsDefinition = v.infer<
   typeof ConstructorArgsDefinition
 >
-export const ConstructorArgsDefinition = v.strictObject({
+export const ConstructorArgsDefinition = v.object({
   type: v.literal('constructorArgs'),
   nameArgs: v.boolean().optional(),
 })

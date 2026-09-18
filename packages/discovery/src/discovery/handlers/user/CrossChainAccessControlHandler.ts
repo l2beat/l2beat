@@ -9,7 +9,7 @@ import type { Handler, HandlerResult } from '../Handler'
 export type CrossChainAccessControlHandlerDefinition = v.infer<
   typeof CrossChainAccessControlHandlerDefinition
 >
-export const CrossChainAccessControlHandlerDefinition = v.strictObject({
+export const CrossChainAccessControlHandlerDefinition = v.object({
   type: v.literal('crossChainAccessControl'),
   roleNames: v
     .record(

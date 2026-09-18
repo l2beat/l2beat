@@ -9,7 +9,7 @@ import type { Handler, HandlerResult } from '../Handler'
 export type ArbitrumActorsHandlerDefinition = v.infer<
   typeof ArbitrumActorsHandlerDefinition
 >
-export const ArbitrumActorsHandlerDefinition = v.strictObject({
+export const ArbitrumActorsHandlerDefinition = v.object({
   type: v.literal('arbitrumActors'),
   actorType: v.union([v.literal('validator'), v.literal('batchPoster')]),
 })

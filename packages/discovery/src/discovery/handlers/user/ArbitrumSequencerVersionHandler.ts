@@ -14,7 +14,7 @@ import type { Handler, HandlerResult } from '../Handler'
 export type ArbitrumSequencerVersionDefinition = v.infer<
   typeof ArbitrumSequencerVersionDefinition
 >
-export const ArbitrumSequencerVersionDefinition = v.strictObject({
+export const ArbitrumSequencerVersionDefinition = v.object({
   type: v.literal('arbitrumSequencerVersion'),
 })
 

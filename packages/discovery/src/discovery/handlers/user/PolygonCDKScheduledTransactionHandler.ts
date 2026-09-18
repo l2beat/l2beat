@@ -13,7 +13,7 @@ import { toContractValue } from '../utils/toContractValue'
 export type PolygonCDKScheduledTransactionsHandlerDefinition = v.infer<
   typeof PolygonCDKScheduledTransactionsHandlerDefinition
 >
-export const PolygonCDKScheduledTransactionsHandlerDefinition = v.strictObject({
+export const PolygonCDKScheduledTransactionsHandlerDefinition = v.object({
   type: v.literal('polygoncdkScheduledTransactions'),
 })
 

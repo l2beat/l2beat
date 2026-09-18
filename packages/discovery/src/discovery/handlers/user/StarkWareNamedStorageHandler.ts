@@ -10,7 +10,7 @@ import { bytes32ToContractValue } from '../utils/bytes32ToContractValue'
 export type StarkWareNamedStorageHandlerDefinition = v.infer<
   typeof StarkWareNamedStorageHandlerDefinition
 >
-export const StarkWareNamedStorageHandlerDefinition = v.strictObject({
+export const StarkWareNamedStorageHandlerDefinition = v.object({
   type: v.literal('starkWareNamedStorage'),
   tag: v.string(),
   returnType: v.enum(['address', 'bytes', 'number']).optional(),

@@ -9,7 +9,7 @@ import type { Handler, HandlerResult } from '../Handler'
 export type OrbitPostsBlobsDefinition = v.infer<
   typeof OrbitPostsBlobsDefinition
 >
-export const OrbitPostsBlobsDefinition = v.strictObject({
+export const OrbitPostsBlobsDefinition = v.object({
   type: v.literal('orbitPostsBlobs'),
 })
 

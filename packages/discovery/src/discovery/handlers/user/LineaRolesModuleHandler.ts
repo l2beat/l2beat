@@ -11,7 +11,7 @@ import type { Handler, HandlerResult } from '../Handler'
 export type LineaRolesModuleHandlerDefinition = v.infer<
   typeof LineaRolesModuleHandlerDefinition
 >
-export const LineaRolesModuleHandlerDefinition = v.strictObject({
+export const LineaRolesModuleHandlerDefinition = v.object({
   type: v.literal('lineaRolesModule'),
   roleNames: v
     .record(

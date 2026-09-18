@@ -25,7 +25,7 @@ import { valueToBigInt } from '../utils/valueToBigInt'
 export type DynamicArrayHandlerDefinition = v.infer<
   typeof DynamicArrayHandlerDefinition
 >
-export const DynamicArrayHandlerDefinition = v.strictObject({
+export const DynamicArrayHandlerDefinition = v.object({
   type: v.literal('dynamicArray'),
   slot: SingleSlot,
   returnType: v.enum(['address']).optional(),

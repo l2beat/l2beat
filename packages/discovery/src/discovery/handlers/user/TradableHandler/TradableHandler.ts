@@ -11,7 +11,7 @@ const iface = new utils.Interface(abi)
 const topic0 = iface.getEventTopic('DealDeployed')
 
 export type TradableDefinition = v.infer<typeof TradableDefinition>
-export const TradableDefinition = v.strictObject({
+export const TradableDefinition = v.object({
   type: v.literal('tradable'),
 })
 

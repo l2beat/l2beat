@@ -9,7 +9,7 @@ import type { Handler, HandlerResult } from '../Handler'
 export type KintoAccessControlHandlerDefinition = v.infer<
   typeof KintoAccessControlHandlerDefinition
 >
-export const KintoAccessControlHandlerDefinition = v.strictObject({
+export const KintoAccessControlHandlerDefinition = v.object({
   type: v.literal('kintoAccessControl'),
   roleNames: v
     .record(

@@ -18,7 +18,7 @@ import { valueToAddress } from '../utils/valueToAddress'
 export type OpStackSequencerInboxHandlerDefinition = v.infer<
   typeof OpStackSequencerInboxHandlerDefinition
 >
-export const OpStackSequencerInboxHandlerDefinition = v.strictObject({
+export const OpStackSequencerInboxHandlerDefinition = v.object({
   type: v.literal('opStackSequencerInbox'),
   sequencerAddress: v.string(),
 })

@@ -9,7 +9,7 @@ import type { Handler, HandlerResult } from '../Handler'
 export type AccessControlHandlerDefinition = v.infer<
   typeof AccessControlHandlerDefinition
 >
-export const AccessControlHandlerDefinition = v.strictObject({
+export const AccessControlHandlerDefinition = v.object({
   type: v.literal('accessControl'),
   roleNames: v
     .record(

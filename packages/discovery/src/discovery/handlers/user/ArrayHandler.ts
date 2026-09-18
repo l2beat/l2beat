@@ -18,7 +18,7 @@ import { valueToBigInt } from '../utils/valueToBigInt'
 import { valueToNumber } from '../utils/valueToNumber'
 
 export type ArrayHandlerDefinition = v.infer<typeof ArrayHandlerDefinition>
-export const ArrayHandlerDefinition = v.strictObject({
+export const ArrayHandlerDefinition = v.object({
   type: v.literal('array'),
   indices: v.union([v.array(v.number()), v.string()]).optional(),
   method: v.string().optional(),

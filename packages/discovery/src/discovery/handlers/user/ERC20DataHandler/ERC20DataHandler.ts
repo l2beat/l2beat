@@ -13,7 +13,7 @@ import { SourceEntry } from './types'
 import { today } from './utils'
 
 export type ERC20DataDefinition = v.infer<typeof ERC20DataDefinition>
-export const ERC20DataDefinition = v.strictObject({
+export const ERC20DataDefinition = v.object({
   type: v.literal('ERC20Data'),
   overrides: SourceEntry,
 })

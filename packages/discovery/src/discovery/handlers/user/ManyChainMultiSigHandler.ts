@@ -9,7 +9,7 @@ import type { Handler, HandlerResult } from '../Handler'
 export type ManyChainMultiSigHandlerDefinition = v.infer<
   typeof ManyChainMultiSigHandlerDefinition
 >
-export const ManyChainMultiSigHandlerDefinition = v.strictObject({
+export const ManyChainMultiSigHandlerDefinition = v.object({
   type: v.literal('manyChainMultiSig'),
   ignoreRelative: v.boolean().optional(),
 })

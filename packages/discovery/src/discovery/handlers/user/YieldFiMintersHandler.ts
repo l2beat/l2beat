@@ -12,7 +12,7 @@ import {
 } from './AccessControlHandler'
 
 export type YieldFiMintersDefinition = v.infer<typeof YieldFiMintersDefinition>
-export const YieldFiMintersDefinition = v.strictObject({
+export const YieldFiMintersDefinition = v.object({
   type: v.literal('YieldFiMinters'),
   permissionlessMinting: v.boolean().optional(),
   mintingWithPermit: v.boolean().optional(),

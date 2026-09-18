@@ -3,7 +3,7 @@ import { v } from '@l2beat/validate'
 import type { Handler, HandlerResult } from '../Handler'
 
 export type HardCodedDefinition = v.infer<typeof HardCodedDefinition>
-export const HardCodedDefinition = v.strictObject({
+export const HardCodedDefinition = v.object({
   type: v.literal('hardcoded'),
   value: v.unknown(),
 })

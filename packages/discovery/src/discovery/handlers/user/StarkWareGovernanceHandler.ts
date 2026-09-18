@@ -13,7 +13,7 @@ import { toEventFragment } from '../utils/toEventFragment'
 export type StarkWareGovernanceHandlerDefinition = v.infer<
   typeof StarkWareGovernanceHandlerDefinition
 >
-export const StarkWareGovernanceHandlerDefinition = v.strictObject({
+export const StarkWareGovernanceHandlerDefinition = v.object({
   type: v.literal('starkWareGovernance'),
   filterBy: v.string(),
 })

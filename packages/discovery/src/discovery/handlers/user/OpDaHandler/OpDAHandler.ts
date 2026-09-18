@@ -15,7 +15,7 @@ import { checkForEigenDA } from './eigen-verification'
 export type OpStackDAHandlerDefinition = v.infer<
   typeof OpStackDAHandlerDefinition
 >
-export const OpStackDAHandlerDefinition = v.strictObject({
+export const OpStackDAHandlerDefinition = v.object({
   type: v.literal('opStackDA'),
   sequencerAddress: v.string(),
 })

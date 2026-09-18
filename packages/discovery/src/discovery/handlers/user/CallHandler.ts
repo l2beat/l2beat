@@ -19,7 +19,7 @@ import { callMethod, EXEC_REVERT_MSG } from '../utils/callMethod'
 import { getFunctionFragment } from '../utils/getFunctionFragment'
 
 export type CallHandlerDefinition = v.infer<typeof CallHandlerDefinition>
-export const CallHandlerDefinition = v.strictObject({
+export const CallHandlerDefinition = v.object({
   type: v.literal('call'),
   method: v.string().optional(),
   args: v.array(v.union([v.string(), v.number()])),

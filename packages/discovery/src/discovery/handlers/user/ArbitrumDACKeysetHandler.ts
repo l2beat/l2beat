@@ -10,7 +10,7 @@ export type ArbitrumDACKeysetHandlerDefinition = v.infer<
   typeof ArbitrumDACKeysetHandlerDefinition
 >
 
-export const ArbitrumDACKeysetHandlerDefinition = v.strictObject({
+export const ArbitrumDACKeysetHandlerDefinition = v.object({
   type: v.literal('arbitrumDACKeyset'),
 })
 

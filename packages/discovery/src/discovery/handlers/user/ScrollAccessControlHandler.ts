@@ -9,7 +9,7 @@ import type { Handler, HandlerResult } from '../Handler'
 export type ScrollAccessControlHandlerDefinition = v.infer<
   typeof ScrollAccessControlHandlerDefinition
 >
-export const ScrollAccessControlHandlerDefinition = v.strictObject({
+export const ScrollAccessControlHandlerDefinition = v.object({
   type: v.literal('scrollAccessControl'),
   roleNames: v
     .record(
