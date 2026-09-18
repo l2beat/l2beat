@@ -1,7 +1,7 @@
 {
   "name": "robinhood",
-  "timestamp": 1788301081,
-  "configHash": "0x2bc7641a43c2ca72886d36455a7798e7513549df46582894d44d2bf4af11b818",
+  "timestamp": 1789673051,
+  "configHash": "0x7b0f1e2ee0404ba0e452950195fda5084521e5ad759a9c2033a4275ef9d5a294",
   "entries": [
     {
       "address": "eth:0x026F0df4b04a258207337fBB05790F0E1283e526",
@@ -207,7 +207,7 @@
         ],
         "inbox": "eth:0x1A07cc4BD17E0118BdB54D70990D2158AbAD7a2D",
         "isPostBoLD": true,
-        "latestConfirmed": "0x65b0fab46019f7aaeacf8adb889545187b87f45d786ab992a155db694ee4bc53",
+        "latestConfirmed": "0x1524948df2de9d9e5ed71cb9d99d837f2281129dbe86b96f858088de498f312c",
         "loserStakeEscrow": "eth:0x1F3Bdec08A161Ca9e5480feF33A3B2278c2931C5",
         "minimumAssertionPeriod": 75,
         "outbox": "eth:0xf0ce991ea4A0d2400A4AB49b20ae333f6Dce3DE9",
@@ -692,7 +692,7 @@
           ]
         ],
         "$upgradeCount": 1,
-        "batchCount": 175666,
+        "batchCount": 253707,
         "batchPosterManager": "eth:0x0000000000000000000000000000000000000000",
         "batchPosters": ["eth:0xDaa526086787d9DEbE1D7F3FFdb1fE50cf8687F4"],
         "bridge": "eth:0xDf8755334ce7A73cCF6b581C02eA649AE3E864b3",
@@ -731,7 +731,7 @@
         "rollup": "eth:0x23A19d23e89166adedbDcB432518AB01e4272D94",
         "sequencerVersion": "0x00",
         "setIsBatchPosterCount": 1,
-        "totalDelayedMessagesRead": 203369,
+        "totalDelayedMessagesRead": 292002,
         "TREE_DAS_MESSAGE_HEADER_FLAG": "0x08",
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
@@ -803,7 +803,7 @@
         "decimals": 18,
         "name": "Wrapped Ether",
         "symbol": "WETH",
-        "totalSupply": "2017432043797018876695437"
+        "totalSupply": "2120265410289837951665654"
       },
       "implementationNames": {
         "eth:0xC02aaA39b223FE8D0A0e5C4F27eAD9083C756Cc2": "WETH9"
@@ -903,7 +903,7 @@
           "eth:0xc34f4907822d1cDC6aE3038Be22e6f12DEa35bd4"
         ],
         "allowedOutboxList": ["eth:0xf0ce991ea4A0d2400A4AB49b20ae333f6Dce3DE9"],
-        "delayedMessageCount": 203452,
+        "delayedMessageCount": 292040,
         "inboxHistory": [
           "eth:0x1A07cc4BD17E0118BdB54D70990D2158AbAD7a2D",
           "eth:0xc34f4907822d1cDC6aE3038Be22e6f12DEa35bd4"
@@ -911,8 +911,8 @@
         "outboxHistory": ["eth:0xf0ce991ea4A0d2400A4AB49b20ae333f6Dce3DE9"],
         "rollup": "eth:0x23A19d23e89166adedbDcB432518AB01e4272D94",
         "sequencerInbox": "eth:0xBd0D173EEb87D57A09521c24388a12789F33ba96",
-        "sequencerMessageCount": 175666,
-        "sequencerReportedSubMessageCount": 52067021
+        "sequencerMessageCount": 253707,
+        "sequencerReportedSubMessageCount": 65614744
       },
       "fieldMeta": {
         "allowedOutboxList": {
@@ -1133,7 +1133,7 @@
       "sinceBlock": 0,
       "values": {
         "$immutable": true,
-        "filteredTransactionsAdded": 6092,
+        "filteredTransactionsAdded": 6096,
         "filteredTransactionsDeleted": 0,
         "transactionFilterers": [
           "robinhood:0xebDc18A1F5C42fC25552eA233fAcf4054DF224b7"
@@ -1213,7 +1213,10 @@
           }
         },
         "ADMIN_ROLE": "0xa49807205ce4d355092ef5a8a18f56e8913cf4a201fbe287825b095693c21775",
-        "chainOwners": ["robinhood:0x2A153c6A1B66DBc930a8d7017230ab0253005C09"],
+        "chainOwners": [
+          "robinhood:0x2A153c6A1B66DBc930a8d7017230ab0253005C09",
+          "robinhood:0x5Eb36FD3A11f3A123c046E3BF84195BB4f5A2690"
+        ],
         "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
         "executors": [
@@ -1259,7 +1262,7 @@
         "getChainId": 4663,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 7 (43%)",
-        "nonce": 7,
+        "nonce": 9,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1383,6 +1386,62 @@
       "proxyType": "EOA"
     },
     {
+      "name": "GasPricingManagerMultisig",
+      "address": "robinhood:0x59f83b75bD225b9c9981B04982639625c88dFb1E",
+      "type": "Contract",
+      "template": "GnosisSafe",
+      "sourceHashes": [
+        "0xfe0725afd3cf2e5fb7627005a6bcf13ef7e35f78034eed2211edbffdb6a9aab5",
+        "0x076f4dffc7979344d7d248e876b1a947d75ebdf18b5746e3e2305d62eab1ab05"
+      ],
+      "proxyType": "gnosis safe",
+      "description": "Holds MANAGER_ROLE on the ResourceConstraintManager and can set the chain's gas-pricing constraints within that contract's bounds. One signer also sits on the 7/8 and 6/8 Robinhood multisigs that control the L2UpgradeExecutor; the other signer is not seen in any other tracked contract.",
+      "ignoreInWatchMode": ["nonce"],
+      "values": {
+        "$immutable": false,
+        "$implementation": "robinhood:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762",
+        "$members": [
+          "robinhood:0xb89C85BE593e6A8f7e35AC481b5F75Fc4036f31c",
+          "robinhood:0x91886E7ecAD146aE89F20c6f05CfdC81e7069ACc"
+        ],
+        "$threshold": 2,
+        "domainSeparator": "0x006b580aec57eb5d509c22099a920570a29661247a3d06ba3b61011dfd93c785",
+        "getChainId": 4663,
+        "GnosisSafe_modules": [],
+        "multisigThreshold": "2 of 2 (100%)",
+        "nonce": 2,
+        "VERSION": "1.4.1"
+      },
+      "implementationNames": {
+        "robinhood:0x59f83b75bD225b9c9981B04982639625c88dFb1E": "SafeProxy",
+        "robinhood:0x29fcB43b46531BcA003ddC8FCB67FFE91900C762": "SafeL2"
+      }
+    },
+    {
+      "name": "ResourceConstraintManager",
+      "address": "robinhood:0x5Eb36FD3A11f3A123c046E3BF84195BB4f5A2690",
+      "type": "Contract",
+      "sourceHashes": [
+        "0x19b7a35a10637b9a742952537232cc31e1d460b60452dd4792f3e0964202dc1c"
+      ],
+      "proxyType": "immutable",
+      "description": "Second ArbOS chain owner, added on 2026-09-11. The contract is immutable and exposes two functions: setGasPricingConstraints(), callable only by MANAGER_ROLE, forwards up to 10 (gas target, adjustment window, starting backlog) constraints to ArbOwner with gas targets limited to 7M-100M gas/s, adjustment windows to 5 s-24 h and the summed starting-backlog exponent to 8, i.e. a base fee of at most ~60 gwei at the chain's 0.02 gwei floor; revoke(), callable by anyone from 2027-01-01 00:00 UTC, removes the contract from the chain owners. Removal is not automatic: until revoke() is called, or the L2UpgradeExecutor removes it via ArbOwner, it stays a chain owner. At the ArbOS level it holds full chain-owner authority; the restriction to gas-pricing constraints exists only in this contract's code. DEFAULT_ADMIN_ROLE, which assigns MANAGER_ROLE, is held by the L2UpgradeExecutor.",
+      "deployerAddress": "robinhood:0xcFDab226f6DF33cd364Ff8E617bEB5Fe54E84Ebe",
+      "sinceTimestamp": 1788711044,
+      "sinceBlock": 56109950,
+      "values": {
+        "$immutable": true,
+        "DEFAULT_ADMIN_ROLE": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "expiryTimestamp": 1798761600,
+        "MANAGER_ROLE": "0x241ecf16d79d0f8dbfb92cbc07fe17840425976cf0667f022fe9877caa831b08",
+        "managers": ["robinhood:0x59f83b75bD225b9c9981B04982639625c88dFb1E"]
+      },
+      "fieldMeta": { "managers": { "severity": "HIGH", "type": "PERMISSION" } },
+      "implementationNames": {
+        "robinhood:0x5Eb36FD3A11f3A123c046E3BF84195BB4f5A2690": "ResourceConstraintManager"
+      }
+    },
+    {
       "address": "robinhood:0x640BF0B6b8706f35195d6491cbE347c01b967393",
       "type": "EOA",
       "proxyType": "EOA"
@@ -1450,7 +1509,7 @@
         "getChainId": 4663,
         "GnosisSafe_modules": [],
         "multisigThreshold": "7 of 8 (88%)",
-        "nonce": 6,
+        "nonce": 8,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1465,6 +1524,11 @@
     },
     {
       "address": "robinhood:0x90a0eb0337224f74D694c04648f0Ab8a80E37029",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
+      "address": "robinhood:0x91886E7ecAD146aE89F20c6f05CfdC81e7069ACc",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -2562,6 +2626,33 @@
       "event AdminChanged(address previousAdmin, address newAdmin)",
       "event Upgraded(address indexed implementation)"
     ],
+    "robinhood:0x59f83b75bD225b9c9981B04982639625c88dFb1E": [
+      "constructor(address _singleton)"
+    ],
+    "robinhood:0x5Eb36FD3A11f3A123c046E3BF84195BB4f5A2690": [
+      "constructor(address admin, address manager, uint256 _expiryTimestamp)",
+      "error InvalidPeriod(uint64 gasTargetPerSec, uint64 adjustmentWindowSecs, uint64 startingBacklogValue)",
+      "error InvalidTarget(uint64 gasTargetPerSec, uint64 adjustmentWindowSecs, uint64 startingBacklogValue)",
+      "error NotExpired()",
+      "error PricingExponentTooHigh(uint64 pricingExponent)",
+      "error TooManyConstraints()",
+      "event RoleAdminChanged(bytes32 indexed role, bytes32 indexed previousAdminRole, bytes32 indexed newAdminRole)",
+      "event RoleGranted(bytes32 indexed role, address indexed account, address indexed sender)",
+      "event RoleRevoked(bytes32 indexed role, address indexed account, address indexed sender)",
+      "function DEFAULT_ADMIN_ROLE() view returns (bytes32)",
+      "function MANAGER_ROLE() view returns (bytes32)",
+      "function expiryTimestamp() view returns (uint256)",
+      "function getRoleAdmin(bytes32 role) view returns (bytes32)",
+      "function getRoleMember(bytes32 role, uint256 index) view returns (address)",
+      "function getRoleMemberCount(bytes32 role) view returns (uint256)",
+      "function grantRole(bytes32 role, address account)",
+      "function hasRole(bytes32 role, address account) view returns (bool)",
+      "function renounceRole(bytes32 role, address account)",
+      "function revoke()",
+      "function revokeRole(bytes32 role, address account)",
+      "function setGasPricingConstraints(uint64[3][] constraints)",
+      "function supportsInterface(bytes4 interfaceId) view returns (bool)"
+    ],
     "robinhood:0x672Da8B43058D1bC78956d71d9A208E168E2a3EF": [
       "constructor(address initialOwner)",
       "error OwnableInvalidOwner(address owner)",
@@ -2608,8 +2699,8 @@
     "orbitstack/SequencerInbox": "0x100e93a03486bc9e5e0302baf9dc4f98d011fa54d4088db1cd234f5812482ba1",
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe"
   },
-  "usedBlockNumbers": { "ethereum": 25885371, "robinhood": 52069252 },
-  "permissionsConfigHash": "0xe595523f9f305f89089055a34ff3412f3268df174ee4baf52f77f98cfd9d4797",
+  "usedBlockNumbers": { "ethereum": 25999282, "robinhood": 65614956 },
+  "permissionsConfigHash": "0xdb9e6dadae5b8842f74508837660a48d795266afa8c4dbe1d125d18eed71aefe",
   "permissions": {
     "eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD": {
       "directlyReceivedPermissions": [
@@ -3034,7 +3125,7 @@
         {
           "permission": "interact",
           "from": "robinhood:0x2A153c6A1B66DBc930a8d7017230ab0253005C09",
-          "description": "Can add or remove transaction filterers and change ArbOS configuration on the L2, without delay.",
+          "description": "Chain-owner authority (instant for direct owners): can add or remove chain owners and transaction filterers, schedule ArbOS upgrades and change ArbOS configuration on the L2. The ResourceConstraintManager can only exercise it through its own code, which is limited to gas-pricing constraints.",
           "role": ".chainOwners",
           "via": [
             {
@@ -3138,7 +3229,7 @@
         {
           "permission": "interact",
           "from": "robinhood:0x2A153c6A1B66DBc930a8d7017230ab0253005C09",
-          "description": "Can add or remove transaction filterers and change ArbOS configuration on the L2, without delay.",
+          "description": "Chain-owner authority (instant for direct owners): can add or remove chain owners and transaction filterers, schedule ArbOS upgrades and change ArbOS configuration on the L2. The ResourceConstraintManager can only exercise it through its own code, which is limited to gas-pricing constraints.",
           "role": ".chainOwners"
         },
         {
@@ -3180,12 +3271,32 @@
         }
       ]
     },
+    "robinhood:0x59f83b75bD225b9c9981B04982639625c88dFb1E": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "robinhood:0x5Eb36FD3A11f3A123c046E3BF84195BB4f5A2690",
+          "description": "set the ArbOS multi-constraint gas pricing parameters within the bounds hardcoded in the ResourceConstraintManager (gas targets 7M-100M gas/s, adjustment windows 5 s-24 h, base fee at most ~60 gwei), without delay.",
+          "role": ".managers"
+        }
+      ]
+    },
+    "robinhood:0x5Eb36FD3A11f3A123c046E3BF84195BB4f5A2690": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "robinhood:0x2A153c6A1B66DBc930a8d7017230ab0253005C09",
+          "description": "Chain-owner authority (instant for direct owners): can add or remove chain owners and transaction filterers, schedule ArbOS upgrades and change ArbOS configuration on the L2. The ResourceConstraintManager can only exercise it through its own code, which is limited to gas-pricing constraints.",
+          "role": ".chainOwners"
+        }
+      ]
+    },
     "robinhood:0x663703B4bC1F5e896Af2854548d6380F45F1C5D0": {
       "receivedPermissions": [
         {
           "permission": "interact",
           "from": "robinhood:0x2A153c6A1B66DBc930a8d7017230ab0253005C09",
-          "description": "Can add or remove transaction filterers and change ArbOS configuration on the L2, without delay.",
+          "description": "Chain-owner authority (instant for direct owners): can add or remove chain owners and transaction filterers, schedule ArbOS upgrades and change ArbOS configuration on the L2. The ResourceConstraintManager can only exercise it through its own code, which is limited to gas-pricing constraints.",
           "role": ".chainOwners",
           "via": [
             {
@@ -3253,7 +3364,7 @@
         {
           "permission": "interact",
           "from": "robinhood:0x2A153c6A1B66DBc930a8d7017230ab0253005C09",
-          "description": "Can add or remove transaction filterers and change ArbOS configuration on the L2, without delay.",
+          "description": "Chain-owner authority (instant for direct owners): can add or remove chain owners and transaction filterers, schedule ArbOS upgrades and change ArbOS configuration on the L2. The ResourceConstraintManager can only exercise it through its own code, which is limited to gas-pricing constraints.",
           "role": ".chainOwners",
           "via": [
             {

@@ -1,3 +1,99 @@
+Generated with discovered.json: 0x14654851322dba7aba907113bd9ad400fe79b927
+
+# Diff at Thu, 17 Sep 2026 19:25:18 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@15431f7683a0de5d516e42fa21c223b42652e15d block: 1788301081
+- current timestamp: 1789673051
+
+## Description
+
+ResourceConstraintManager added as a second ArbOS chain owner on 2026-09-11 by the L2UpgradeExecutor. It can only be used by its MANAGER_ROLE, the new 2/2 GasPricingManagerMultisig, and only to call setGasPricingConstraints(): gas targets 7M-100M gas/s, adjustment windows 5 s-24 h, base fee at most ~60 gwei. Constraints set the same day: 60M gas/s over 15 s and 30M gas/s over 24 h. From 2027-01-01 anyone can remove it via revoke().
+
+Config: GasPricingManagerMultisig named; chain-owner permission description reworded.
+
+## Watched changes
+
+```diff
+    contract ArbFilteredTransactionsManager (robinhood:0x0000000000000000000000000000000000000074) [N/A] {
+    +++ description: ArbOS 61 transaction-filtering precompile. An authorized filterer registers tx hashes here; the state transition function then forcibly fails those transactions, including force-included ones, without delay.
+      values.filteredTransactionsAdded:
+-        6092
++        6096
+    }
+```
+
+```diff
+    contract L2UpgradeExecutor (robinhood:0x2A153c6A1B66DBc930a8d7017230ab0253005C09) [orbitstack/UpgradeExecutor] {
+    +++ description: ArbOS chain owner (UpgradeExecutor). Manages the ArbOwner chain-owner set and the transaction-filterer set, and can upgrade ArbOS configuration without delay.
+      values.chainOwners.1:
++        "robinhood:0x5Eb36FD3A11f3A123c046E3BF84195BB4f5A2690"
+    }
+```
+
+```diff
++   Status: CREATED
+    contract GasPricingManagerMultisig (robinhood:0x59f83b75bD225b9c9981B04982639625c88dFb1E) [GnosisSafe]
+    +++ description: Holds MANAGER_ROLE on the ResourceConstraintManager and can set the chain's gas-pricing constraints within that contract's bounds. One signer also sits on the 7/8 and 6/8 Robinhood multisigs that control the L2UpgradeExecutor; the other signer is not seen in any other tracked contract.
+```
+
+```diff
++   Status: CREATED
+    contract ResourceConstraintManager (robinhood:0x5Eb36FD3A11f3A123c046E3BF84195BB4f5A2690) [N/A]
+    +++ description: Second ArbOS chain owner, added on 2026-09-11. The contract is immutable and exposes two functions: setGasPricingConstraints(), callable only by MANAGER_ROLE, forwards up to 10 (gas target, adjustment window, starting backlog) constraints to ArbOwner with gas targets limited to 7M-100M gas/s, adjustment windows to 5 s-24 h and the summed starting-backlog exponent to 8, i.e. a base fee of at most ~60 gwei at the chain's 0.02 gwei floor; revoke(), callable by anyone from 2027-01-01 00:00 UTC, removes the contract from the chain owners. Removal is not automatic: until revoke() is called, or the L2UpgradeExecutor removes it via ArbOwner, it stays a chain owner. At the ArbOS level it holds full chain-owner authority; the restriction to gas-pricing constraints exists only in this contract's code. DEFAULT_ADMIN_ROLE, which assigns MANAGER_ROLE, is held by the L2UpgradeExecutor.
+```
+
+## Source code changes
+
+```diff
+.../.flat/GasPricingManagerMultisig/SafeL2.sol     | 1286 ++++++++++++++++++
+ .../GasPricingManagerMultisig/SafeProxy.p.sol      |   42 +
+ .../robinhood/.flat/ResourceConstraintManager.sol  | 1423 ++++++++++++++++++++
+ 3 files changed, 2751 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1788301081 (main branch discovery), not current.
+
+```diff
+    EOA (robinhood:0x0000000000000000000000000000000000000000) {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "Can add or remove transaction filterers and change ArbOS configuration on the L2, without delay."
++        "Chain-owner authority (instant for direct owners): can add or remove chain owners and transaction filterers, schedule ArbOS upgrades and change ArbOS configuration on the L2. The ResourceConstraintManager can only exercise it through its own code, which is limited to gas-pricing constraints."
+    }
+```
+
+```diff
+    contract L2UpgradeExecutor (robinhood:0x2A153c6A1B66DBc930a8d7017230ab0253005C09) [orbitstack/UpgradeExecutor] {
+    +++ description: ArbOS chain owner (UpgradeExecutor). Manages the ArbOwner chain-owner set and the transaction-filterer set, and can upgrade ArbOS configuration without delay.
+      directlyReceivedPermissions.2.description:
+-        "Can add or remove transaction filterers and change ArbOS configuration on the L2, without delay."
++        "Chain-owner authority (instant for direct owners): can add or remove chain owners and transaction filterers, schedule ArbOS upgrades and change ArbOS configuration on the L2. The ResourceConstraintManager can only exercise it through its own code, which is limited to gas-pricing constraints."
+    }
+```
+
+```diff
+    EOA (robinhood:0x663703B4bC1F5e896Af2854548d6380F45F1C5D0) {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "Can add or remove transaction filterers and change ArbOS configuration on the L2, without delay."
++        "Chain-owner authority (instant for direct owners): can add or remove chain owners and transaction filterers, schedule ArbOS upgrades and change ArbOS configuration on the L2. The ResourceConstraintManager can only exercise it through its own code, which is limited to gas-pricing constraints."
+    }
+```
+
+```diff
+    contract SafeL2 (robinhood:0x6b9F63817F1442e40Bb9c3C2207758934C323FdC) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0.description:
+-        "Can add or remove transaction filterers and change ArbOS configuration on the L2, without delay."
++        "Chain-owner authority (instant for direct owners): can add or remove chain owners and transaction filterers, schedule ArbOS upgrades and change ArbOS configuration on the L2. The ResourceConstraintManager can only exercise it through its own code, which is limited to gas-pricing constraints."
+    }
+```
+
 Generated with discovered.json: 0xe9b8359bce636511d66cdbc0c31fd933f3d330e9
 
 # Diff at Tue, 01 Sep 2026 22:19:14 GMT:
