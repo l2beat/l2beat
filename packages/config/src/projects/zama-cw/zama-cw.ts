@@ -6,12 +6,14 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { PRIVACY_ATTRIBUTES } from '../../common/privacyAttributes'
+import { PRIVACY_CATEGORIES } from '../../common/privacyCategories'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { generateDiscoveryDrivenContracts } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import { getTokenByAddress } from '../../tokens/getTokenByAddress'
 import type { BaseProject, ProjectPrivacyToken } from '../../types'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
+import { zamaCwAdversaries } from './adversaries'
 
 const discovery = new ProjectDiscovery('zama-cw')
 
@@ -202,8 +204,9 @@ export const zamaCw: BaseProject = {
     warnings: [],
   },
   privacyInfo: {
+    category: PRIVACY_CATEGORIES.confidentialAmounts,
+    trackedOn: ['ethereum'],
     tokens: privacyTokens,
-    summaryTrackedItemName: 'token',
     anonymitySet: {
       type: 'not-applicable',
       description:
@@ -226,12 +229,6 @@ export const zamaCw: BaseProject = {
       description:
         'The smart contracts are source-available, but users also rely on offchain FHE execution and threshold decryption services whose outputs are accepted onchain through signature verification. The offchain data cannot currently be fully reproduced from Ethereum DA.',
     },
-    privacy: {
-      value: 'Transparent transfer graph',
-      sentiment: 'bad',
-      description:
-        'Zama confidential tokens do not hide the links between senders and recipients, only the amounts. Anyone can retrace each confidential transfer to its contributing plaintext deposits.\nAdditionally, a threshold with usable KMS key shares can decrypt current and past private balances. Zama states that KMS nodes run inside TEEs, but this is not verified onchain. Compliance can be enforced by confidential token owners blocking users and by configured underlying-token denylist hooks during deposits, transfers, unwrap requests, and unwrap finalization. Confidential token owners can also appoint observer accounts that receive wildcard decryption access to all balances and transfer amounts of their token (currently none are configured).',
-    },
     attributes: [
       PRIVACY_ATTRIBUTES.fhe,
       PRIVACY_ATTRIBUTES.privateAmounts,
@@ -242,6 +239,7 @@ export const zamaCw: BaseProject = {
           'Interop with DeFi (swaps, vaults) from within the confidential token.',
       },
     ],
+    adversaries: zamaCwAdversaries,
     quantumResistant: true,
     riskSummary: readProjectMarkdown('zama-cw', 'riskSummary', {
       kmsThreshold,

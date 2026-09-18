@@ -6,7 +6,6 @@ import { validateRoute } from '~/utils/validateRoute'
 import { getDiscolupeProjects } from './getDiscolupeProjects'
 import { getInternalTokenBreakdown } from './getInternalTokenBreakdown'
 import { getLivenessTxs } from './getLivenessTxs'
-import { getLogoGeneratorProjects } from './getLogoGeneratorProjects'
 
 export function createInternalApiRouter() {
   const router = express.Router()
@@ -28,11 +27,6 @@ export function createInternalApiRouter() {
       success: true,
       data: discolupeProjects,
     })
-  })
-
-  router.get('/api/logo-generator', async (_, res) => {
-    const logoGeneratorProjects = await getLogoGeneratorProjects()
-    res.json(logoGeneratorProjects)
   })
 
   router.get(

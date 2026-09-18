@@ -42,7 +42,7 @@ export function ProjectsUsedIn({
         id: project.id,
         name: project.name,
         iconUrl: project.icon,
-        href: project.url,
+        href: noLink ? undefined : project.url,
       }))}
       dialog={{
         title: 'Projects used in',
@@ -52,7 +52,6 @@ export function ProjectsUsedIn({
       }}
       className={className}
       maxVisibleProjects={maxProjects}
-      disableIconLinks={noLink}
     />
   )
 }

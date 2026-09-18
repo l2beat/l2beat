@@ -61,8 +61,8 @@ export function PrivacyProjectStats({
       <div className="grid gap-4 md:grid-cols-4">
         <NotTrackedStat
           className="md:col-span-4"
-          title="Live metrics"
-          description="Onchain monitoring is not available for this project."
+          title="Metrics"
+          description="Data tracking is not available for this project."
         />
       </div>
     )

@@ -5,6 +5,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { PRIVACY_ATTRIBUTES } from '../../common/privacyAttributes'
+import { PRIVACY_CATEGORIES } from '../../common/privacyCategories'
 import { ZK_CATALOG_ATTESTERS } from '../../common/zkCatalogAttesters'
 import { ZK_CATALOG_TAGS } from '../../common/zkCatalogTags'
 import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
@@ -14,6 +15,7 @@ import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import { getTokenByAddress } from '../../tokens/getTokenByAddress'
 import type { BaseProject, ProjectPrivacyToken } from '../../types'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
+import { privacyBoostAdversaries } from './adversaries'
 
 const discovery = new ProjectDiscovery('privacy-boost')
 
@@ -302,7 +304,9 @@ export const privacyBoost: BaseProject = {
     ],
   },
   privacyInfo: {
+    category: PRIVACY_CATEGORIES.shieldedLedger,
     tokens: privacyTokens,
+    trackedOn: ['optimism'],
     exitWindow: {
       value: 'None',
       sentiment: 'bad',
@@ -321,12 +325,6 @@ export const privacyBoost: BaseProject = {
       description:
         'ZK circuits guaranteeing user fund security are published and reproduced, however the TEE sources guaranteeing privacy are not yet published. TEE logic could not be verified for correctness.',
     },
-    privacy: {
-      value: 'Admin API',
-      sentiment: 'bad',
-      description:
-        "Registered 'auditors' can query the TEE's Audit API to retrieve the balance and transaction history of any address. These queries can be logged publicly on the AuditGateway smart contract, but there is no verifiable guarantee that all queries are logged.",
-    },
     attributes: [
       PRIVACY_ATTRIBUTES.zk,
       PRIVACY_ATTRIBUTES.tee,
@@ -334,6 +332,7 @@ export const privacyBoost: BaseProject = {
       PRIVACY_ATTRIBUTES.defi,
       PRIVACY_ATTRIBUTES.anyAmount,
     ],
+    adversaries: privacyBoostAdversaries,
     riskSummary: readProjectMarkdown('privacy-boost', 'riskSummary'),
     upgradesAndGovernance: {
       content: readProjectMarkdown('privacy-boost', 'upgradesAndGovernance', {

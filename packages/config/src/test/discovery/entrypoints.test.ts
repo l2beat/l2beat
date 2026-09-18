@@ -1,34 +1,13 @@
-import {
-  ConfigReader,
-  type DiscoveryOutput,
-  getDiscoveryPaths,
-} from '@l2beat/discovery'
 import { assert, ChainSpecificAddress } from '@l2beat/shared-pure'
 import { existsSync, readFileSync } from 'fs'
 import { join } from 'path'
+import { configReader, configs, discoveryOf } from './fixtures'
 
 interface RawEntrypointsFile {
   entrypoints?: Record<string, { project: string }>
 }
 
-describe('discovery config.jsonc', () => {
-  const paths = getDiscoveryPaths()
-  const configReader = new ConfigReader(paths.discovery)
-  const configs = configReader
-    .readAllDiscoveredProjects()
-    .flatMap((project) => configReader.readConfig(project))
-
-  const discoveries: Record<string, DiscoveryOutput> = {}
-  for (const c of configs) {
-    discoveries[c.name] = configReader.readDiscovery(c.name)
-  }
-
-  const getDiscovery = (project: string) => {
-    const discovery = discoveries[project]
-    assert(discovery)
-    return discovery
-  }
-
+describe('discovery entrypoints.json', () => {
   it('has exactly one owner project for each entrypoint address', () => {
     const owners = new Map<string, string>()
 
@@ -63,7 +42,7 @@ describe('discovery config.jsonc', () => {
 
   it("doesn't discover any entrypoint that should only be referenced", () => {
     for (const c of configs ?? []) {
-      const discovery = getDiscovery(c.name)
+      const discovery = discoveryOf(c.name)
       const entrypoints = c.structure.entrypoints ?? {}
       for (const entry of discovery.entries) {
         const existingEntrypoint = entrypoints[entry.address]
@@ -87,7 +66,7 @@ describe('discovery config.jsonc', () => {
 
   it("doesn't reference legacy or not existing entrypoints", () => {
     for (const c of configs ?? []) {
-      const discovery = getDiscovery(c.name)
+      const discovery = discoveryOf(c.name)
       const entrypoints = c.structure.entrypoints ?? {}
       for (const entry of discovery.entries) {
         if (entry.type === 'Reference') {
@@ -137,7 +116,7 @@ describe('discovery config.jsonc', () => {
       )
 
       for (const [holder, permissions] of Object.entries(
-        getDiscovery(c.name).permissions ?? {},
+        discoveryOf(c.name).permissions ?? {},
       )) {
         const mentioned = [ChainSpecificAddress(holder)]
         for (const permission of [
@@ -168,7 +147,7 @@ describe('discovery config.jsonc', () => {
     for (const [addr, entrypoint] of Object.entries(
       config.structure.entrypoints ?? {},
     )) {
-      const discovery = getDiscovery(entrypoint.project)
+      const discovery = discoveryOf(entrypoint.project)
       if (entrypoint.isLegacy) {
         assert(
           discovery.entries.every((e) => e.address !== addr),

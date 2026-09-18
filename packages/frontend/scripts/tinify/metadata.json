@@ -1655,5 +1655,9 @@
   "static/meta-images/defi/projects/etherfi/opengraph-image.png": "e3bbb57f0012a0825c3e89fb10335ac2",
   "static/images/architecture/etherfi-deposits.png": "d08485c54790eefc4e9437828dd58e86",
   "static/images/architecture/etherfi-withdrawals.png": "e6016e0ae7869bc45f53378d710fd108",
+  "static/icons/zcash-near-intents.png": "c0635cdba1122fc6c6ffbd23e275038e",
+  "static/meta-images/privacy/projects/zcash-near-intents/opengraph-image.png": "814cbb8355d3247aa0626b384bab186e",
+  "static/icons/zcash.png": "e6a08906d09a55d85d5b5a96f8c1d7c3",
+  "static/meta-images/zk-catalog/projects/zcash/opengraph-image.png": "185a512253f4a84f3d46983eb96928d8",
   "static/meta-images/audits/opengraph-image.png": "36116eeb8296ead5e981b50c464f056f"
 }

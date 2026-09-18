@@ -172,8 +172,7 @@ export const sp1hypercube: BaseProject = {
       {
         hash: '0x4388a21c687fdd5f218d7e3d13190cac4c5355818d3605fd5fb811df468ee696',
         name: 'SP1 Hypercube Groth16 v6.1.0',
-        sourceLink:
-          'https://github.com/succinctlabs/sp1/tree/v6.1.0/crates/prover',
+        sourceLink: 'https://github.com/succinctlabs/sp1/tree/v6.1.0',
         proofSystem: ZK_CATALOG_TAGS.Groth16.SP1_v6_1_0,
         knownDeployments: [
           {
@@ -205,8 +204,7 @@ export const sp1hypercube: BaseProject = {
       {
         hash: '0x0e78f4db7a6771a3a6a7d9c3b0de6fe73d58781368967a7fe84d87aefffec896',
         name: 'SP1 Hypercube Groth16 v6.0.0',
-        sourceLink:
-          'https://github.com/succinctlabs/sp1/tree/v6.0.0/crates/prover',
+        sourceLink: 'https://github.com/succinctlabs/sp1/tree/v6.0.0',
         proofSystem: ZK_CATALOG_TAGS.Groth16.SP1_v6_0_0,
         knownDeployments: [
           {
@@ -226,8 +224,7 @@ export const sp1hypercube: BaseProject = {
       {
         hash: '0x5a093a2fcb46394f5cadfe55c44d4d572fad9cec7aeb38026b0278322ef07fac',
         name: 'SP1 Hypercube Plonk v6.1.0',
-        sourceLink:
-          'https://github.com/succinctlabs/sp1/tree/v6.1.0/crates/prover',
+        sourceLink: 'https://github.com/succinctlabs/sp1/tree/v6.1.0',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
         knownDeployments: [
           {
@@ -265,8 +262,7 @@ export const sp1hypercube: BaseProject = {
       {
         hash: '0xbb1a6f2930e94bfe8b35e794faf43133214534a17d2ad8e51358cad437b3c317',
         name: 'SP1 Hypercube Plonk v6.0.0',
-        sourceLink:
-          'https://github.com/succinctlabs/sp1/tree/v6.0.0/crates/prover',
+        sourceLink: 'https://github.com/succinctlabs/sp1/tree/v6.0.0',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Gnark,
         knownDeployments: [
           {

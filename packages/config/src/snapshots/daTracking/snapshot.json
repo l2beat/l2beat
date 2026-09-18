@@ -1579,7 +1579,8 @@
         "daLayer": "ethereum",
         "inbox": "0xFF00000000000000000000000000000000193939",
         "sequencers": ["0xF263a0AA8aFEaA7d516B596d49d7BA6C0FeB102c"],
-        "sinceBlock": 20912148
+        "sinceBlock": 20912148,
+        "untilBlock": 25994773
       }
     }
   ],

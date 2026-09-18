@@ -8,6 +8,7 @@ import {
 } from '@l2beat/shared-pure'
 import { formatBasisPoints } from '../../common/formatBasisPoints'
 import { PRIVACY_ATTRIBUTES } from '../../common/privacyAttributes'
+import { PRIVACY_CATEGORIES } from '../../common/privacyCategories'
 import { ZK_CATALOG_ATTESTERS } from '../../common/zkCatalogAttesters'
 import { ZK_CATALOG_TAGS } from '../../common/zkCatalogTags'
 import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
@@ -20,6 +21,7 @@ import {
 } from '../../tokens/getTokenByAddress'
 import type { BaseProject, ProjectPrivacyToken } from '../../types'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
+import { railgunAdversaries } from './adversaries'
 
 const discovery = new ProjectDiscovery('railgun')
 
@@ -238,6 +240,8 @@ export const railgun: BaseProject = {
     ],
   },
   privacyInfo: {
+    category: PRIVACY_CATEGORIES.shieldedLedger,
+    trackedOn: ['ethereum'],
     tokens: privacyTokens,
     relayerTracking: {
       type: 'railgunWaku',
@@ -259,22 +263,13 @@ export const railgun: BaseProject = {
       description:
         'The contracts, circuits, and supporting software needed to participate in the protocol are publicly available and can be run locally.',
     },
-    privacy: {
-      value: 'Optional compliance',
-      sentiment: 'good',
-      description:
-        'Compliance is optional at the core protocol level: users can create proofs of innocence to disassociate deposits from flagged addresses, and relayers can choose to require them.',
-    },
-    noteDiscovery: {
-      description:
-        "To find incoming transfers and rebuild the balance, a wallet downloads every new commitment emitted by the Railgun contract and tries to decrypt each one locally with the user's viewing key; successful decryptions are saved as the user's notes. Because every commitment is requested, the RPC provider does not learn which notes belong to the user from the queries alone.",
-    },
     attributes: [
       PRIVACY_ATTRIBUTES.zk,
       PRIVACY_ATTRIBUTES.transfers,
       PRIVACY_ATTRIBUTES.defi,
       PRIVACY_ATTRIBUTES.anyAmount,
     ],
+    adversaries: railgunAdversaries,
     riskSummary: readProjectMarkdown('railgun', 'riskSummary'),
     upgradesAndGovernance: {
       content: readProjectMarkdown('railgun', 'upgradesAndGovernance'),
