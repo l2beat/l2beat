@@ -6,10 +6,12 @@ import {
   getClusterMetrics,
   MAX_CLUSTER_ICONS,
   type Mark,
-  SOURCE_RING_GAP,
   VIEW_HEIGHT,
   VIEW_WIDTH,
 } from './tilePreviewLayout'
+
+const NODE_STROKE_WIDTH = 1
+const EDGE_STROKE_WIDTH = 0.8
 
 export function TokenGraphTileDiagram({
   graph,
@@ -32,7 +34,7 @@ export function TokenGraphTileDiagram({
           d={preview.path}
           fill="none"
           className="stroke-primary/25"
-          strokeWidth={0.8 * Math.min(preview.scale, 1.4)}
+          strokeWidth={EDGE_STROKE_WIDTH}
           strokeLinecap="round"
           strokeLinejoin="round"
         />
@@ -47,7 +49,6 @@ export function TokenGraphTileDiagram({
 function NodeMark({ mark }: { mark: Mark }) {
   const { node, x, y, radius } = mark
   const scale = radius / BASE_RADIUS
-  const strokeWidth = Math.min(scale, 1.35)
 
   if (node.chains.length > 1) {
     const metrics = getClusterMetrics(node, radius)
@@ -57,14 +58,6 @@ function NodeMark({ mark }: { mark: Mark }) {
     return (
       <g>
         <title>Burn & mint across {node.chains.length} chains</title>
-        {mark.isSource && (
-          <SourceRing
-            x={x}
-            y={y}
-            halfWidth={metrics.width / 2}
-            radius={radius}
-          />
-        )}
         <rect
           x={x - metrics.width / 2}
           y={y - radius}
@@ -72,7 +65,7 @@ function NodeMark({ mark }: { mark: Mark }) {
           height={radius * 2}
           rx={radius}
           className="fill-surface-primary stroke-brand"
-          strokeWidth={1.2 * strokeWidth}
+          strokeWidth={NODE_STROKE_WIDTH}
         />
         {shown.map((chain, index) => {
           const centreX =
@@ -84,7 +77,6 @@ function NodeMark({ mark }: { mark: Mark }) {
               x={centreX}
               y={y}
               radius={metrics.iconDiameter / 2}
-              strokeWidth={0.7 * strokeWidth}
             />
           )
         })}
@@ -107,16 +99,7 @@ function NodeMark({ mark }: { mark: Mark }) {
   return (
     <g>
       <title>{chain?.id ?? 'Unknown chain'}</title>
-      {mark.isSource && (
-        <SourceRing x={x} y={y} halfWidth={radius} radius={radius} />
-      )}
-      <ChainMark
-        iconUrl={chain?.iconUrl}
-        x={x}
-        y={y}
-        radius={radius}
-        strokeWidth={strokeWidth}
-      />
+      <ChainMark iconUrl={chain?.iconUrl} x={x} y={y} radius={radius} />
     </g>
   )
 }
@@ -126,13 +109,11 @@ function ChainMark({
   x,
   y,
   radius,
-  strokeWidth,
 }: {
   iconUrl: string | undefined
   x: number
   y: number
   radius: number
-  strokeWidth: number
 }) {
   const iconSize = radius * 1.4
   return (
@@ -142,7 +123,7 @@ function ChainMark({
         cy={y}
         r={radius}
         className="fill-surface-primary stroke-divider"
-        strokeWidth={strokeWidth}
+        strokeWidth={NODE_STROKE_WIDTH}
       />
       {iconUrl ? (
         <image
@@ -160,29 +141,57 @@ function ChainMark({
   )
 }
 
-function SourceRing({
-  x,
-  y,
-  halfWidth,
-  radius,
-}: {
-  x: number
-  y: number
-  halfWidth: number
-  radius: number
-}) {
-  const scale = radius / BASE_RADIUS
-  const gap = SOURCE_RING_GAP * scale
+export function TokenGraphTilesLegend() {
+  const radius = BASE_RADIUS * 1.5
+  const pill = getClusterMetrics(
+    { id: '', volume: null, chains: [{ id: '', iconUrl: undefined }] },
+    radius,
+  )
   return (
-    <rect
-      x={x - halfWidth - gap}
-      y={y - radius - gap}
-      width={(halfWidth + gap) * 2}
-      height={(radius + gap) * 2}
-      rx={radius + gap}
-      fill="none"
-      className="stroke-brand/30"
-      strokeWidth={0.9 * Math.min(scale, 1.35)}
-    />
+    <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-label-value-13 text-secondary">
+      <span className="flex items-center gap-2">
+        <svg width={radius * 2 + 2} height={radius * 2 + 2} aria-hidden>
+          <ChainMark
+            iconUrl={undefined}
+            x={radius + 1}
+            y={radius + 1}
+            radius={radius}
+          />
+        </svg>
+        Deployment
+      </span>
+      <span className="flex items-center gap-2">
+        <svg width={pill.width + 2} height={radius * 2 + 2} aria-hidden>
+          <rect
+            x={1}
+            y={1}
+            width={pill.width}
+            height={radius * 2}
+            rx={radius}
+            className="fill-surface-primary stroke-brand"
+            strokeWidth={NODE_STROKE_WIDTH}
+          />
+          <ChainMark
+            iconUrl={undefined}
+            x={1 + pill.width / 2}
+            y={radius + 1}
+            radius={pill.iconDiameter / 2}
+          />
+        </svg>
+        Burn & mint cluster
+      </span>
+      <span className="flex items-center gap-2">
+        <svg width="8" height="22" aria-hidden>
+          <path
+            d="M 4 1 V 21"
+            fill="none"
+            className="stroke-primary/25"
+            strokeWidth={EDGE_STROKE_WIDTH * 1.5}
+            strokeLinecap="round"
+          />
+        </svg>
+        Backs the deployment below
+      </span>
+    </div>
   )
 }

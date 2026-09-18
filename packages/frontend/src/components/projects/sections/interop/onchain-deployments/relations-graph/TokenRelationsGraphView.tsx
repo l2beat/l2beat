@@ -19,7 +19,7 @@ import type {
   InteropTokenRelationsNode,
 } from '~/server/features/layer2s/interop/token/getInteropTokenRelationsGraph'
 import { cn } from '~/utils/cn'
-import { getUnconnectedIds } from './graphSelectors'
+import { getUnconnectedIds, isCluster } from './graphSelectors'
 import { RelationsDetails } from './RelationsDetails'
 import { RelationsDiagram } from './RelationsDiagram'
 
@@ -72,7 +72,10 @@ export function TokenRelationsGraphView({
   return (
     <div>
       <div className="mb-3 flex min-h-8 flex-wrap items-center justify-between gap-2">
-        <Legend />
+        <Legend
+          hasClusters={graph.nodes.some(isCluster)}
+          hasUnconnected={canHide && !hideUnconnected}
+        />
         {canHide && (
           <Checkbox
             name="hideUnconnectedDeployments"
@@ -195,7 +198,13 @@ function DiagramPane({
   )
 }
 
-export function Legend() {
+export function Legend({
+  hasClusters = false,
+  hasUnconnected = false,
+}: {
+  hasClusters?: boolean
+  hasUnconnected?: boolean
+}) {
   return (
     <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-label-value-13 text-secondary">
       <span className="flex items-center gap-2">
@@ -212,17 +221,42 @@ export function Legend() {
         </svg>
         Backs
       </span>
-      <span className="flex items-center gap-2">
-        <span className="-space-x-1.5 flex shrink-0">
-          <span className="size-4 rounded-full border border-divider bg-surface-primary" />
-          <span className="size-4 rounded-full border border-divider bg-surface-primary" />
+      {hasClusters && (
+        <span className="flex items-center gap-2">
+          <MiniCard rows={2} />
+          Burn & mint cluster
         </span>
-        Burn & mint cluster
-      </span>
-      <span className="flex items-center gap-2">
-        <span className="size-4 shrink-0 rounded border border-divider border-dashed" />
-        No observed relations
-      </span>
+      )}
+      {hasUnconnected && (
+        <span className="flex items-center gap-2">
+          <MiniCard rows={1} dashed />
+          No observed relations
+        </span>
+      )}
     </div>
+  )
+}
+
+function MiniCard({
+  rows,
+  dashed = false,
+}: {
+  rows: number
+  dashed?: boolean
+}) {
+  return (
+    <span
+      className={cn(
+        'flex w-7 shrink-0 flex-col justify-center gap-[3px] rounded-sm border border-divider bg-surface-primary px-1 py-[3px]',
+        dashed && 'border-dashed',
+      )}
+    >
+      {Array.from({ length: rows }, (_, index) => (
+        <span key={index} className="flex items-center gap-0.5">
+          <span className="size-1 shrink-0 rounded-full bg-secondary/60" />
+          <span className="h-px flex-1 rounded bg-secondary/40" />
+        </span>
+      ))}
+    </span>
   )
 }

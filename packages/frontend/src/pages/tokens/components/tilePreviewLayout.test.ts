@@ -1,12 +1,6 @@
 import { expect } from 'earl'
 import type { TokenGraphTile } from '~/server/features/tokens/buildTokenGraphTiles'
-import {
-  BASE_RADIUS,
-  buildPreview,
-  SOURCE_RING_GAP,
-  VIEW_HEIGHT,
-  VIEW_WIDTH,
-} from './tilePreviewLayout'
+import { buildPreview, VIEW_HEIGHT, VIEW_WIDTH } from './tilePreviewLayout'
 
 describe(buildPreview.name, () => {
   it('keeps a wide star inside the viewport', () => {
@@ -63,12 +57,10 @@ function graph(
 }
 
 function expectInsideViewport(preview: ReturnType<typeof buildPreview>) {
-  const ringGap = (SOURCE_RING_GAP / BASE_RADIUS) * preview.scale * BASE_RADIUS
   for (const mark of preview.marks) {
-    const ring = mark.isSource ? ringGap : 0
-    expect(mark.x - mark.halfWidth - ring).toBeGreaterThanOrEqual(0)
-    expect(mark.x + mark.halfWidth + ring).toBeLessThanOrEqual(VIEW_WIDTH)
-    expect(mark.y - mark.radius - ring).toBeGreaterThanOrEqual(0)
-    expect(mark.y + mark.radius + ring).toBeLessThanOrEqual(VIEW_HEIGHT)
+    expect(mark.x - mark.halfWidth).toBeGreaterThanOrEqual(0)
+    expect(mark.x + mark.halfWidth).toBeLessThanOrEqual(VIEW_WIDTH)
+    expect(mark.y - mark.radius).toBeGreaterThanOrEqual(0)
+    expect(mark.y + mark.radius).toBeLessThanOrEqual(VIEW_HEIGHT)
   }
 }

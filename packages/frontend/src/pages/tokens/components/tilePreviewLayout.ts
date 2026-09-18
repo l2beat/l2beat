@@ -11,7 +11,6 @@ export const VIEW_HEIGHT = 132
 export const X_PADDING = 12
 export const Y_PADDING = 14
 export const BASE_RADIUS = 6
-export const SOURCE_RING_GAP = 3
 export const LINE_GAP = 0.5
 export const MAX_CLUSTER_ICONS = 5
 const MIN_GAP = 3
@@ -45,7 +44,6 @@ export interface Mark {
   radius: number
   halfWidth: number
   row: number
-  isSource: boolean
 }
 
 export function buildPreview(graph: TokenGraphTile['graph']): {
@@ -54,20 +52,12 @@ export function buildPreview(graph: TokenGraphTile['graph']): {
   scale: number
 } {
   const { nodes, edges } = graph
-  const backed = new Set(edges.map((edge) => edge.backed))
-  const sourceIds = new Set(
-    edges.map((edge) => edge.backer).filter((id) => !backed.has(id)),
-  )
-
   const rows = getRows(graph)
 
-  const scale = getScale(nodes.length, rows, sourceIds)
+  const scale = getScale(nodes.length, rows)
   const radius = BASE_RADIUS * scale
-  const rowHalfHeights = rows.map((row) =>
-    getRowHalfHeight(row, radius, sourceIds),
-  )
   const rowYs = getRowCenters(
-    rowHalfHeights,
+    rows.map(() => radius),
     getVerticalSpan(nodes.length, rows.length),
   )
 
@@ -83,7 +73,6 @@ export function buildPreview(graph: TokenGraphTile['graph']): {
         radius,
         halfWidth: halfWidths[index] ?? radius,
         row: rowIndex,
-        isSource: sourceIds.has(node.id),
       })
     })
   })
@@ -111,11 +100,7 @@ function getRows({ nodes, edges }: TokenGraphTile['graph']) {
     .map(([, row]) => row.toSorted((a, b) => x(a) - x(b)))
 }
 
-function getScale(
-  nodeCount: number,
-  rows: TokenGraphTileNode[][],
-  sourceIds: ReadonlySet<string>,
-): number {
+function getScale(nodeCount: number, rows: TokenGraphTileNode[][]): number {
   const desired = getSizeBucket(nodeCount).scale
   const widthCaps = rows.map((row) => {
     const width = row.reduce(
@@ -125,25 +110,13 @@ function getScale(
     const gaps = Math.max(0, row.length - 1) * MIN_GAP
     return width === 0 ? desired : (VIEW_WIDTH - X_PADDING * 2 - gaps) / width
   })
-  const height = rows.reduce(
-    (sum, row) => sum + getRowHalfHeight(row, BASE_RADIUS, sourceIds) * 2,
-    0,
-  )
+  const height = rows.length * BASE_RADIUS * 2
   const heightCap =
     height === 0
       ? desired
       : (VIEW_HEIGHT - Y_PADDING * 2 - Math.max(0, rows.length - 1) * MIN_GAP) /
         height
   return Math.min(desired, ...widthCaps, heightCap)
-}
-
-function getRowHalfHeight(
-  row: TokenGraphTileNode[],
-  radius: number,
-  sourceIds: ReadonlySet<string>,
-): number {
-  const ringGap = (SOURCE_RING_GAP / BASE_RADIUS) * radius
-  return radius + (row.some((node) => sourceIds.has(node.id)) ? ringGap : 0)
 }
 
 function getVerticalSpan(nodeCount: number, rowCount: number): number {

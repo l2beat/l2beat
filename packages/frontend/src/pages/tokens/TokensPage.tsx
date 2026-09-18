@@ -6,6 +6,7 @@ import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { TokenGraphTile } from '~/server/features/tokens/buildTokenGraphTiles'
 import { TokenGraphDialog } from './components/TokenGraphDialog'
 import { TokenGraphGrid } from './components/TokenGraphGrid'
+import { TokenGraphTilesLegend } from './components/TokenGraphTileDiagram'
 
 interface Props extends AppLayoutProps {
   queryState: DehydratedState
@@ -22,6 +23,9 @@ export function TokensPage({ queryState, ...props }: Props) {
         </MainPageHeader>
         <HydrationBoundary state={queryState}>
           <div className="max-md:px-4">
+            <div className="mb-3">
+              <TokenGraphTilesLegend />
+            </div>
             <TokenGraphGrid onOpen={setOpened} />
           </div>
           <TokenGraphDialog
