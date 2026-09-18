@@ -1667,7 +1667,7 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe"
   },
   "usedBlockNumbers": { "base": 50171751 },
-  "permissionsConfigHash": "0xc80d116758221c1f84b66bae046ec3527fa1b3fe06e9496fd46f9d2fdb9af569",
+  "permissionsConfigHash": "0xb76e5259f5ea6e00e8e26e268144042c9470ed07fddcfe5c2e0cde74290bf30d",
   "permissions": {
     "base:0x107c739629aCced04e3197EAa6b44CdEe0cE246c": {
       "receivedPermissions": [
@@ -1676,6 +1676,16 @@
           "from": "base:0xdA2445f1cA60bC2C739A96298746aDBB6706f011",
           "description": "Can submit transaction batches or commitments to the SequencerInbox contract on the host chain.",
           "role": ".batchPosters"
+        }
+      ]
+    },
+    "base:0x133f066C470d044dB3889359fC5B542d016B5B92": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "base:0xCaE93d52fAd1Ed496b888eA5794b99Cd1999fFDC",
+          "description": "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root.",
+          "role": ".anyTrustFastConfirmer"
         }
       ]
     },
@@ -1753,7 +1763,7 @@
         {
           "permission": "interact",
           "from": "base:0xCaE93d52fAd1Ed496b888eA5794b99Cd1999fFDC",
-          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
+          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
           "role": ".owner",
           "via": [
             { "address": "base:0xfdFBECa29FFf84A5e1e31F8572509E2C36fF4B81" }
@@ -1862,6 +1872,15 @@
         {
           "permission": "interact",
           "from": "base:0xCaE93d52fAd1Ed496b888eA5794b99Cd1999fFDC",
+          "description": "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root.",
+          "role": ".anyTrustFastConfirmer",
+          "via": [
+            { "address": "base:0x133f066C470d044dB3889359fC5B542d016B5B92" }
+          ]
+        },
+        {
+          "permission": "interact",
+          "from": "base:0xCaE93d52fAd1Ed496b888eA5794b99Cd1999fFDC",
           "description": "Can propose new state roots (called nodes) and challenge state roots on the host chain.",
           "role": ".getValidators"
         }
@@ -1877,7 +1896,7 @@
         {
           "permission": "interact",
           "from": "base:0xCaE93d52fAd1Ed496b888eA5794b99Cd1999fFDC",
-          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
+          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
           "role": ".owner"
         },
         {

@@ -1786,8 +1786,18 @@
     "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe"
   },
   "usedBlockNumbers": { "arbitrum": 502808510 },
-  "permissionsConfigHash": "0x30937f7fa8f433071f1914d3200b3e15b4cc755ba9230c338226f244808e7de6",
+  "permissionsConfigHash": "0xceb49d8ec7ad664258b7e24dad65da9d9709051f06f4b8d8928f8d62a17cf9d5",
   "permissions": {
+    "arb1:0x1B2B1Eb3e4b24903BeEbcAEDdCee5A953f79Fa43": {
+      "directlyReceivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "arb1:0xf3C4a84a948658D012C915Ad4bb4b501F6C3c075",
+          "description": "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root.",
+          "role": ".anyTrustFastConfirmer"
+        }
+      ]
+    },
     "arb1:0x336dD5a1aB948058E4c699fD7732c2AA78C10d90": {
       "receivedPermissions": [
         {
@@ -1808,7 +1818,7 @@
         {
           "permission": "interact",
           "from": "arb1:0xf3C4a84a948658D012C915Ad4bb4b501F6C3c075",
-          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
+          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
           "role": ".owner"
         },
         {
@@ -1863,7 +1873,7 @@
         {
           "permission": "interact",
           "from": "arb1:0xf3C4a84a948658D012C915Ad4bb4b501F6C3c075",
-          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability and DACs, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
+          "description": "Pause and unpause and set important roles and parameters in the system contracts: Can delegate Sequencer management to a BatchPosterManager address, manage data availability, DACs and the fastConfirmer role, set the Sequencer-only window, introduce an allowList to the bridge and whitelist Inboxes/Outboxes.",
           "role": ".owner",
           "via": [
             { "address": "arb1:0x458B2e28fb08258ef5Fdc11a4De5289A04A5eCf8" }
@@ -2108,6 +2118,15 @@
     },
     "arb1:0xd76a3aCEd4115B017301C54C211EC36aA5E37e05": {
       "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "arb1:0xf3C4a84a948658D012C915Ad4bb4b501F6C3c075",
+          "description": "Can finalize a state root before the challenge period has passed. This allows withdrawing from the bridge based on the state root.",
+          "role": ".anyTrustFastConfirmer",
+          "via": [
+            { "address": "arb1:0x1B2B1Eb3e4b24903BeEbcAEDdCee5A953f79Fa43" }
+          ]
+        },
         {
           "permission": "interact",
           "from": "arb1:0xf3C4a84a948658D012C915Ad4bb4b501F6C3c075",
