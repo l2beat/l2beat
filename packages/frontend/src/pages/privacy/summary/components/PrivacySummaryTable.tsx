@@ -3,9 +3,7 @@ import {
   createColumnHelper,
   getCoreRowModel,
   getSortedRowModel,
-  type SortingState,
 } from '@tanstack/react-table'
-import { useState } from 'react'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import { NotApplicableBadge } from '~/components/badge/NotApplicableBadge'
 import { PercentChange } from '~/components/PercentChange'
@@ -269,27 +267,21 @@ const columns = [
   }),
 ]
 
-const initialSorting: SortingState = [{ id: 'totalValueLockedUsd', desc: true }]
-
 export function PrivacySummaryTable({
   entries,
 }: {
   entries: PrivacySummaryEntry[]
 }) {
-  const [sorting, setSorting] = useState<SortingState>(initialSorting)
-
   const table = useTable('PrivacySummaryTable', {
     data: entries,
     columns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     state: {
-      sorting,
       columnPinning: {
         left: ['#', 'logo'],
       },
     },
-    onSortingChange: setSorting,
   })
 
   return (
