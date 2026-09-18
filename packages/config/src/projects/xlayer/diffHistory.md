@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x8a96d23d9663bea065581ca1e455890ca79cec1e
+Generated with discovered.json: 0x6abb5359968d87e254cc8a30c17123cb30b154fc
 
-# Diff at Fri, 18 Sep 2026 07:46:39 GMT:
+# Diff at Fri, 18 Sep 2026 07:47:30 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - comparing to: main@15431f7683a0de5d516e42fa21c223b42652e15d block: 1782911432
@@ -65,7 +65,7 @@ New `TimelockController` (OpenZeppelin v5.7.0, 1h delay): Xlayer Multisig is pro
 
 ```diff
     contract OwnerContract (eth:0xe58C365Da30c746204022e61482bBE828cAA9091) [N/A] {
-    +++ description: None
+    +++ description: Unverified contract through which its owner can execute arbitrary calls.
       receivedPermissions.0:
 -        {"permission":"interact","from":"eth:0x9D4c8FAEadDdDeeE1Ed0c92dAbAD815c2484f675","description":"set the dispute game implementation and initial bond for any game type.","role":".owner"}
     }
@@ -99,9 +99,11 @@ discovery. Values are for block 1782911432 (main branch discovery), not current.
 
 ```diff
     contract OwnerContract (eth:0xe58C365Da30c746204022e61482bBE828cAA9091) [N/A] {
-    +++ description: None
+    +++ description: Unverified contract through which its owner can execute arbitrary calls.
       receivedPermissions.0:
 +        {"permission":"interact","from":"eth:0x9D4c8FAEadDdDeeE1Ed0c92dAbAD815c2484f675","description":"set the dispute game implementation and initial bond for any game type.","role":".owner"}
+      description:
++        "Unverified contract through which its owner can execute arbitrary calls."
     }
 ```
 

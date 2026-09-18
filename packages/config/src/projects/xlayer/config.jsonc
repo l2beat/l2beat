@@ -11,6 +11,9 @@
     "eth:0xC290bE56089BCC83c6993583ce2cF51a7951D45A": "Xlayer Multisig"
   },
   "overrides": {
+    "eth:0xe58C365Da30c746204022e61482bBE828cAA9091": {
+      "description": "Unverified contract through which its owner can execute arbitrary calls."
+    },
     "eth:0x64057ad1DdAc804d0D26A7275b193D9DACa19993": {
       "description": "Central message and gas token (dOKB) bridge of the OP stack part of this deployment. It finalizes withdrawals against the currently respected OP Succinct Lite dispute game and allows forced transactions.",
       "types": {

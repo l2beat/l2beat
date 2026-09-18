@@ -1,7 +1,7 @@
 {
   "name": "xlayer",
   "timestamp": 1789554702,
-  "configHash": "0x57e5b1d8e3cf37420ba72eda189ad2f62d230b8d7fe60316516f035d1e061fc0",
+  "configHash": "0x0afb59e7a855d310cf7a8ad457e77a2ce4c7a6422a540f37c39a282c6687449b",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -1003,6 +1003,7 @@
       "type": "Contract",
       "unverified": true,
       "proxyType": "immutable",
+      "description": "Unverified contract through which its owner can execute arbitrary calls.",
       "deployerAddress": "eth:0xAd9bCE315bF77C0Ade22097199953381C6Cc72eE",
       "sinceTimestamp": 1761567071,
       "sinceBlock": 23668694,
