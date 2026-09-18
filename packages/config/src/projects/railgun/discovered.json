@@ -1,7 +1,7 @@
 {
   "name": "railgun",
-  "timestamp": 1789125106,
-  "configHash": "0x4d9f6b35dd2f111d367c7e567a367baa1e9e55e6f74e001b9deffdf86899cfdc",
+  "timestamp": 1789711666,
+  "configHash": "0x9aa2e6b830ed740ecf560e280386743dca9c7dd3c0e8b74eaa9b620041630b5e",
   "entries": [
     {
       "name": "IntervalPayouts",
@@ -63,61 +63,6 @@
         "eth:0x29905A43aA3865D0D7F2743dDE63754B4aa9CA11": "IntervalPayouts"
       },
       "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 18 } }],
-      "category": { "name": "External Bridges", "priority": 1 }
-    },
-    {
-      "name": "GovernorRewardsSweeper",
-      "address": "eth:0x2eCa05b128bF5cbd5A73CC4BB625B51131FF119B",
-      "type": "Contract",
-      "template": "railgun/Sweeper",
-      "sourceHashes": [
-        "0x9058adc1861f18dfc2238b3223c1d8b6da8c0bff358aa3bf00915c0d2dfb7174",
-        "0x0b06be077f821ae1860dd79fc78b6a3c529270e369384afc64f0ac0a9473ab33"
-      ],
-      "proxyType": "Railgun proxy",
-      "description": "Helper that forwards all ETH or ERC20 balances it holds to a fixed receiver.",
-      "deployerAddress": "eth:0x76EB574EFF49FB64DE6f7F2854952B05B5E24624",
-      "sinceTimestamp": 1669148003,
-      "sinceBlock": 16027851,
-      "values": {
-        "$admin": "eth:0x76EB574EFF49FB64DE6f7F2854952B05B5E24624",
-        "$implementation": "eth:0x2ea76A3c4795DD1a5d206B285fD21b2Fb83EAf1a",
-        "$pastUpgrades": [
-          [
-            "2022-11-22T20:14:11.000Z",
-            "0x8a7ec325dbefb9e150064f9b94f680f3a96fef73b2f1160c40aa195a88a98ad6",
-            ["eth:0x7d1C12008d180718938F535eE0dec7ac3473c179"]
-          ],
-          [
-            "2023-02-07T06:14:47.000Z",
-            "0x128597009072e4bbc08293c81904d4cf5bb22b9cad1f87bf99a7edaa2878deaf",
-            ["eth:0x2ea76A3c4795DD1a5d206B285fD21b2Fb83EAf1a"]
-          ]
-        ],
-        "$paused": false,
-        "$upgradeCount": 2,
-        "receiver": "eth:0xA02782CE1bF85f56f8cC7C0E66e61299Ac75c86f"
-      },
-      "fieldMeta": {
-        "$admin": {
-          "severity": "HIGH",
-          "description": "Direct proxy admin of the Sweeper proxy.",
-          "type": "PERMISSION"
-        },
-        "$implementation": {
-          "severity": "HIGH",
-          "description": "Current Sweeper implementation.",
-          "type": "CODE_CHANGE"
-        },
-        "receiver": {
-          "severity": "HIGH",
-          "description": "Fixed recipient that receives every ETH or ERC20 balance swept by this contract."
-        }
-      },
-      "implementationNames": {
-        "eth:0x2eCa05b128bF5cbd5A73CC4BB625B51131FF119B": "PausableUpgradableProxy",
-        "eth:0x2ea76A3c4795DD1a5d206B285fD21b2Fb83EAf1a": "Sweeper"
-      },
       "category": { "name": "External Bridges", "priority": 1 }
     },
     {
@@ -965,7 +910,7 @@
         "defaultAdminRoleMembers": [
           "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B"
         ],
-        "RAILBalance": "2,304,905.826797828311822624",
+        "RAILBalance": "2,304,906.690395929691937489",
         "TRANSFER_ROLE": "0x8502233096d909befbda0999bb8ea2f3a6be3c138b9fbf003752a4c8bce86f6c",
         "transferRoleMembers": [
           "eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B",
@@ -1021,37 +966,6 @@
       "category": { "name": "Local Infrastructure", "priority": 5 }
     },
     {
-      "name": "Getters",
-      "address": "eth:0xe90275239D734899e8D94646139213F6F97bEB0E",
-      "type": "Contract",
-      "template": "railgun/Getters",
-      "sourceHashes": [
-        "0x2b27b919f2f0ceebf6a30b8b3af7426812898663d4c26085ab9a97200354f7a6"
-      ],
-      "proxyType": "immutable",
-      "description": "Read-only helper contract that batches governance snapshot and reward-view calls.",
-      "deployerAddress": "eth:0x76EB574EFF49FB64DE6f7F2854952B05B5E24624",
-      "sinceTimestamp": 1670115011,
-      "sinceBlock": 16107975,
-      "values": {
-        "$immutable": true,
-        "governorRewards": "eth:0x2eCa05b128bF5cbd5A73CC4BB625B51131FF119B",
-        "staking": "eth:0xEE6A649Aa3766bD117e12C161726b693A1B2Ee20"
-      },
-      "fieldMeta": {
-        "staking": {
-          "description": "Staking contract queried for snapshot history and voting-power data."
-        },
-        "governorRewards": {
-          "description": "Configured contract address used by the reward-view helper methods."
-        }
-      },
-      "implementationNames": {
-        "eth:0xe90275239D734899e8D94646139213F6F97bEB0E": "Getters"
-      },
-      "category": { "name": "External Bridges", "priority": 1 }
-    },
-    {
       "name": "Staking",
       "address": "eth:0xEE6A649Aa3766bD117e12C161726b693A1B2Ee20",
       "type": "Contract",
@@ -1069,7 +983,7 @@
         "$immutable": true,
         "DEPLOY_TIME": 1625670240,
         "intervalAtTime": [],
-        "RAILStaked": "41,501,342.007301699802997895",
+        "RAILStaked": "41,613,048.173433359453394507",
         "SNAPSHOT_INTERVAL": 86400,
         "SNAPSHOT_INTERVAL_fmt": "1d",
         "STAKE_LOCKTIME": 2592000,
@@ -1284,23 +1198,6 @@
       "function token() view returns (address)",
       "function totalPayouts() view returns (uint256)",
       "function treasury() view returns (address)"
-    ],
-    "eth:0x2ea76A3c4795DD1a5d206B285fD21b2Fb83EAf1a": [
-      "constructor(address _receiver)",
-      "function receiver() view returns (address)",
-      "function transferERC20(address _token)",
-      "function transferETH()"
-    ],
-    "eth:0x2eCa05b128bF5cbd5A73CC4BB625B51131FF119B": [
-      "constructor(address _admin)",
-      "event ProxyOwnershipTransfer(address previousOwner, address newOwner)",
-      "event ProxyPause()",
-      "event ProxyUnpause()",
-      "event ProxyUpgrade(address previousImplementation, address newImplementation)",
-      "function pause()",
-      "function transferOwnership(address _newOwner)",
-      "function unpause()",
-      "function upgrade(address _newImplementation)"
     ],
     "eth:0x4F8E20f55f879beE7Bc010Bd6bD2138B34aC65c8": [
       "constructor(address _admin)",
@@ -1656,15 +1553,6 @@
       "function unpause()",
       "function upgrade(address _newImplementation)"
     ],
-    "eth:0xe90275239D734899e8D94646139213F6F97bEB0E": [
-      "constructor(address _staking, address _governorRewards)",
-      "function getAccountSnapshots(address _account) view returns (tuple(uint256 interval, uint256 votingPower)[])",
-      "function getClaimed(address _account, address[] _tokens, uint256 _startingInterval, uint256 _endingInterval) view returns (bool[])",
-      "function getEarnedTokensPerInterval(address _account, address _token, uint256 _startingInterval, uint256 _endingInterval) view returns (uint256[])",
-      "function getGlobalsSnapshots() view returns (tuple(uint256 interval, uint256 totalVotingPower, uint256 totalStaked)[])",
-      "function governorRewards() view returns (address)",
-      "function staking() view returns (address)"
-    ],
     "eth:0xEE6A649Aa3766bD117e12C161726b693A1B2Ee20": [
       "constructor(address _stakingToken)",
       "event Claim(address indexed account, uint256 indexed stakeID)",
@@ -1723,7 +1611,6 @@
   },
   "usedTemplates": {
     "railgun/Delegator": "0xfb68e5ca10bac6979413d0bfc12ef74a760fbe13fbbc4be4bb7ac2d4b4fd25d2",
-    "railgun/Getters": "0xc2d9dc8a843eec349cf7491b6123f0494b71cd8308a138102d022781e8717b70",
     "railgun/GovernorRewards": "0x57affc64455412dccc40619b5fe609e68f9e5cc7e9e974ee0eb337aceb11a2a5",
     "railgun/IntervalPayouts": "0x09fe161481fbf0d6537d95f2fea87b62f20bcf765449ab946ee2af02f60ec1c1",
     "railgun/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
@@ -1731,14 +1618,13 @@
     "railgun/RailToken": "0x804530e37ec6008f7e038487ae7914ce758ee7b27c21a98172234dc96f3fe682",
     "railgun/RelayAdapt": "0xe64239195c9b233532c77144e0b1161bdf296080b3fbe1d7857a20920c72f5df",
     "railgun/Staking": "0x7be0011fe230d0df425b604fe047026ba396620550299ad956bef1743a90dd8e",
-    "railgun/Sweeper": "0x770b366e3e05222adc3601c01c4d6707431927b39692b296f886ae34d7c9f3a2",
     "railgun/SweeperLegacy": "0x2eb417aa4538dd13c156beb75374c4ab97c3a0e34a2e1616eaf4d440bed50af7",
     "railgun/Treasury": "0x4221ed0e8307ee2ffd52d7bd83b3f6805d2cd431814543ed36f5dc42b7d77988",
     "railgun/VKeySetter": "0x91335987d90d44c42826772e13ce649fe7f74f91f53eb69227ef49ff63fe5d89",
     "railgun/Voting": "0x67493aa4e015e72df54398b5228d0608b52403af2ad52e9d3e93adb52249abc7"
   },
-  "usedBlockNumbers": { "ethereum": 25953779 },
-  "permissionsConfigHash": "0x01e1a57cdadae5c8b20adc9f51ff7da113b6bdbfa57733598109e9a19a92f1d0",
+  "usedBlockNumbers": { "ethereum": 26002488 },
+  "permissionsConfigHash": "0x55bd3f2567e9f9384e6eab55f3da6dbc14e6dedcade3ac13ab8aed026e4f629a",
   "permissions": {
     "eth:0x29905A43aA3865D0D7F2743dDE63754B4aa9CA11": {
       "directlyReceivedPermissions": [
@@ -1816,23 +1702,11 @@
       "receivedPermissions": [
         {
           "permission": "interact",
-          "from": "eth:0x2eCa05b128bF5cbd5A73CC4BB625B51131FF119B",
-          "description": "pause, unpause, transfer proxy ownership, or upgrade the Sweeper implementation.",
-          "role": ".$admin"
-        },
-        {
-          "permission": "interact",
           "from": "eth:0x9086aFC6FC88667d4031Cabd556AfDD0E3903B46",
           "description": "stage replacement verification keys and manage the helper's local SETTING and WAITING states.",
           "role": ".owner"
-        },
-        {
-          "permission": "upgrade",
-          "from": "eth:0x2eCa05b128bF5cbd5A73CC4BB625B51131FF119B",
-          "role": "admin"
         }
-      ],
-      "eoaWithUpgradePermissions": true
+      ]
     },
     "eth:0x859E0C1790b8a721F4943742603cDB685A73BA5D": {
       "directlyReceivedPermissions": [
