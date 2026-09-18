@@ -15,7 +15,6 @@ import chalk from 'chalk'
 import { expect } from 'earl'
 import { existsSync } from 'fs'
 import uniq from 'lodash/uniq'
-import { PRIVACY_FIELDS } from '../common/privacyAdversaries'
 import { asArray } from '../templates/utils'
 import { NON_DISCOVERY_DRIVEN_PROJECTS } from '../test/constants'
 import { checkRisk } from '../test/helpers'
@@ -394,8 +393,31 @@ describe('getProjects', () => {
   })
 
   describe('privacy projects', () => {
+    const chainNames = new Set(
+      projects.flatMap((p) => (p.chainConfig ? [p.chainConfig.name] : [])),
+    )
+
     for (const project of projects) {
       if (!project.privacyInfo) continue
+
+      const trackedOn = project.privacyInfo.trackedOn
+
+      it(`${project.id} is tracked on at least one chain`, () => {
+        expect(trackedOn.length).toBeGreaterThan(0)
+      })
+
+      it(`${project.id} has no duplicate trackedOn chains`, () => {
+        expect(new Set(trackedOn).size).toEqual(trackedOn.length)
+      })
+
+      it(`${project.id} trackedOn chains all have a chainConfig`, () => {
+        for (const chain of trackedOn) {
+          assert(
+            chainNames.has(chain),
+            `${project.id} privacyInfo.trackedOn: no project has chainConfig.name "${chain}"`,
+          )
+        }
+      })
 
       it(`${project.id} has at most one zk catalog trusted setup entry`, () => {
         expect(
@@ -436,23 +458,18 @@ describe('getProjects', () => {
       const adversaries = project.privacyInfo.adversaries
       if (adversaries) {
         const baseline = adversaries.cells.publicObserver
+        const contractNames = new Set(
+          Object.values(project.contracts?.addresses ?? {})
+            .flat()
+            .map((c) => c.name),
+        )
         for (const [adversaryId, cell] of Object.entries(adversaries.cells)) {
-          it(`${project.id} ${adversaryId} interior map is complete and matches the baseline`, () => {
+          it(`${project.id} ${adversaryId} has an interior map iff the baseline has one`, () => {
             expect(cell.interior !== undefined).toEqual(
               baseline.interior !== undefined,
             )
-            if (cell.interior) {
-              expect(Object.keys(cell.interior).sort()).toEqual(
-                Object.keys(PRIVACY_FIELDS).sort(),
-              )
-            }
           })
 
-          const contractNames = new Set(
-            Object.values(project.contracts?.addresses ?? {})
-              .flat()
-              .map((c) => c.name),
-          )
           for (const source of cell.sources ?? []) {
             if (!('contract' in source)) continue
             it(`${project.id} ${adversaryId} source contract ${source.contract} exists`, () => {

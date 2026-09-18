@@ -7,14 +7,14 @@ const HONK_README =
 
 export const payyAdversaries = definePrivacyAdversaries({
   promise: {
-    protects: 'amount',
-    text: 'Hides the amount and owner of each note. Which notes fund which, and every deposit and withdrawal, is public.',
+    protects: 'linkage',
+    text: 'Promises private stablecoin transfers. Delivers hidden amounts and note owners over a public spend graph: which notes fund which, and every deposit and withdrawal, is public.',
   },
   cells: {
     publicObserver: {
-      sentiment: 'warning',
+      sentiment: 'bad',
       exposure:
-        'Only the amount and owner of a note are hidden. Every transaction names the notes it spends and creates, all blocks and proofs are served openly, and each deposit or withdrawal shows address and amount and points at one node of that graph. The per-transaction proofs use a flavor whose authors document that it is not zero-knowledge; how much of a note it leaks is not established.',
+        'Every transaction names the notes it spends and creates, so which notes fund which is public by design; only the amount and owner of a note are hidden. Empty padding notes have a zero commitment, so single-input and single-output transactions are recognizable. All blocks and proofs are served openly, and each deposit or withdrawal shows address and amount and points at one node of that graph. The per-transaction proofs use a flavor whose authors document that it is not zero-knowledge; how much of a note it leaks is not established.',
       advice:
         'Withdraw to an address that cannot be tied to you, and never an amount that matches a deposit.',
       interior: {

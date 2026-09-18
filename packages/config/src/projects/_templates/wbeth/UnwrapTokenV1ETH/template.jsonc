@@ -2,7 +2,7 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "UnwrapTokenV1ETH",
   "category": "core",
-  "description": "Redemption queue for wBETH. The token contract records a claim here when a holder burns wBETH; the claim becomes payable once ETH has been allocated to it (automatically on request if the queue already holds enough, otherwise by the operator) and the lock time of {{ lockTime }} has passed. Only ETH sent by the token operator or the rechargeAddress counts toward allocation; the contract has no way to pull ETH from validators. {{ nextIndex }} claims have been recorded so far. The operator can also send any surplus ETH back to the ethBackAddress.",
+  "description": "Redemption queue for wBETH. The token contract records a claim here when a holder burns wBETH; the claim becomes payable once ETH has been allocated to it (automatically on request if the queue already holds enough, otherwise by the operator) and the lock time of {{ lockTime }} has passed. Only ETH sent by the token operator or the rechargeAddress counts toward allocation; the contract has no way to pull ETH from validators. The operator can also send any surplus ETH back to the ethBackAddress.",
   "ignoreMethods": ["getWithdrawRequests", "getUserWithdrawRequests"],
   "ignoreInWatchMode": [
     "nextIndex",

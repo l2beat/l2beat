@@ -131,16 +131,14 @@ export function BridgeList({
     >
       {prefix}
       {bridges.map((bridge) => (
-        <CustomLink
+        <BridgeLink
           key={bridge.id}
-          href={bridge.href}
-          variant="plain"
-          underline={false}
+          bridge={bridge}
           className="flex items-center gap-1 hover:underline"
         >
           <img src={bridge.iconUrl} alt="" className="size-3.5 rounded-full" />
           {bridge.name}
-        </CustomLink>
+        </BridgeLink>
       ))}
     </span>
   )
@@ -220,11 +218,9 @@ export function BridgeIcons({ bridges }: { bridges: ProjectIconListItem[] }) {
   return (
     <span className="-space-x-1 flex shrink-0">
       {bridges.map((bridge) => (
-        <CustomLink
+        <BridgeLink
           key={bridge.id}
-          href={bridge.href}
-          variant="plain"
-          underline={false}
+          bridge={bridge}
           title={bridge.name}
           className="rounded-full bg-surface-primary"
         >
@@ -233,9 +229,40 @@ export function BridgeIcons({ bridges }: { bridges: ProjectIconListItem[] }) {
             alt={bridge.name}
             className="size-4 rounded-full"
           />
-        </CustomLink>
+        </BridgeLink>
       ))}
     </span>
+  )
+}
+
+function BridgeLink({
+  bridge,
+  title,
+  className,
+  children,
+}: {
+  bridge: ProjectIconListItem
+  title?: string
+  className: string
+  children: ReactNode
+}) {
+  if (!bridge.href) {
+    return (
+      <span title={title} className={className}>
+        {children}
+      </span>
+    )
+  }
+  return (
+    <CustomLink
+      href={bridge.href}
+      variant="plain"
+      underline={false}
+      title={title}
+      className={className}
+    >
+      {children}
+    </CustomLink>
   )
 }
 

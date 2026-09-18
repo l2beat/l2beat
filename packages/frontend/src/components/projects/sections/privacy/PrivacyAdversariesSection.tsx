@@ -3,9 +3,9 @@ import type {
   PrivacyAdversaryCell,
   PrivacyExposureMap,
   PrivacyFieldInfo,
-  PrivacySource,
   ProjectPrivacyAdversaries,
 } from '@l2beat/config'
+import isEqual from 'lodash/isEqual'
 import {
   Tooltip,
   TooltipContent,
@@ -17,40 +17,18 @@ import {
   getExposureNote,
   getPrivacyAdversaryAnchor,
   PRIVACY_ADVERSARIES_TOOLTIP,
-  PRIVACY_EXPOSURE_CLASS_NAME,
+  PRIVACY_EXPOSURE_CHIP_CLASS_NAME,
   PRIVACY_EXPOSURE_LABEL,
   PRIVACY_INTERIOR_LABEL,
 } from '~/pages/privacy/adversaries/privacyAdversaryUi'
-import { sentimentToRiskDot } from '~/pages/privacy/sentimentToRiskDot'
-import { TrustedSetupRiskDot } from '~/pages/zk-catalog/v2/components/TrustedSetupRiskDot'
+import { PrivacySentimentDot } from '~/pages/privacy/PrivacySentimentDot'
 import { cn } from '~/utils/cn'
 import { ProjectSection } from '../ProjectSection'
 import type { ProjectSectionProps } from '../types'
 
 export interface PrivacyAdversariesSectionProps extends ProjectSectionProps {
+  /** Sources already resolved to urls, see resolvePrivacySources. */
   adversaries: ProjectPrivacyAdversaries
-}
-
-const SECTION_TITLE = {
-  permissions: 'Permissions',
-  verifiers: 'Verifier IDs',
-  'trusted-setups': 'Trusted setup',
-  'upgrades-and-governance': 'Upgrades & Governance',
-} as const
-
-/** Contract and section sources point at anchors on this page. */
-function resolveSource(source: PrivacySource): { title: string; href: string } {
-  if ('url' in source) return { title: source.title, href: source.url }
-  if ('contract' in source) {
-    return {
-      title: source.title ?? source.contract,
-      href: `#${source.contract}`,
-    }
-  }
-  return {
-    title: source.title ?? SECTION_TITLE[source.section],
-    href: `#${source.section}`,
-  }
 }
 
 export function PrivacyAdversariesSection({
@@ -103,11 +81,7 @@ function AdversaryBlock({
       className="flex scroll-mt-24 flex-col gap-3"
     >
       <div className="flex flex-wrap items-center gap-x-3 gap-y-1">
-        <TrustedSetupRiskDot
-          risk={sentimentToRiskDot(cell.sentiment)}
-          size="sm"
-          className="shrink-0"
-        />
+        <PrivacySentimentDot sentiment={cell.sentiment} />
         <Tooltip>
           <TooltipTrigger className="font-bold text-paragraph-16 md:text-paragraph-18">
             {adversary.label}
@@ -143,21 +117,21 @@ function AdversaryBlock({
       {cell.sources && cell.sources.length > 0 && (
         <div className="flex flex-wrap gap-x-4 gap-y-1 text-paragraph-13">
           <span className="text-secondary">Sources:</span>
-          {cell.sources.map((source) => {
-            const link = resolveSource(source)
-            return (
-              <CustomLink key={link.href} href={link.href}>
-                {link.title}
-              </CustomLink>
-            )
-          })}
+          {cell.sources.map(
+            (source, i) =>
+              'url' in source && (
+                <CustomLink key={i} href={source.url}>
+                  {source.title}
+                </CustomLink>
+              ),
+          )}
         </div>
       )}
     </div>
   )
 }
 
-/** Only the interior fields whose verdict differs from the public observer. */
+/** Only the interior fields whose verdict or note differs from the public observer. */
 function ExposureDiff({
   interior,
   baseline,
@@ -168,14 +142,13 @@ function ExposureDiff({
   fields: PrivacyFieldInfo[]
 }) {
   const changed = fields.filter(
-    (field) =>
-      getExposure(interior[field.id]) !== getExposure(baseline[field.id]),
+    (field) => !isEqual(interior[field.id], baseline[field.id]),
   )
 
   if (changed.length === 0) {
     return (
       <p className="text-paragraph-13 text-secondary italic">
-        Learns nothing beyond the public observer.
+        {PRIVACY_INTERIOR_LABEL}, the same as for a public observer.
       </p>
     )
   }
@@ -210,7 +183,7 @@ function ExposureChips({
           <span
             className={cn(
               'inline-flex select-none items-center gap-1 rounded border px-1.5 py-0.5 font-medium text-xs',
-              PRIVACY_EXPOSURE_CLASS_NAME[verdict],
+              PRIVACY_EXPOSURE_CHIP_CLASS_NAME[verdict],
             )}
           >
             {field.label}

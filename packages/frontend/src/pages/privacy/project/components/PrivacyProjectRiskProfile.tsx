@@ -24,11 +24,14 @@ import {
 } from '../../PrivacyWalkawayTestIcon'
 import { PRIVACY_ASSESSMENT } from '../../privacyAssessment'
 import { sentimentToRiskDot } from '../../sentimentToRiskDot'
+import { DotWithLabel } from '../../summary/components/DotWithLabel'
 
 interface Props {
   trustedSetup: PrivacyTrustedSetupSummary
   exitWindow: PrivacyExitWindow
   adversaries: PrivacyAdversariesSummary
+  /** This project's page, which the adversary dots link into. */
+  href: string
   reproducibility: PrivacySummaryValue
   className?: string
 }
@@ -37,6 +40,7 @@ export function PrivacyProjectRiskProfile({
   trustedSetup,
   exitWindow,
   adversaries,
+  href,
   reproducibility,
   className,
 }: Props) {
@@ -62,7 +66,17 @@ export function PrivacyProjectRiskProfile({
         title={PRIVACY_ASSESSMENT.title}
         tooltip={PRIVACY_ASSESSMENT.tooltip}
         value={
-          <PrivacyAdversaryDots adversaries={adversaries} size="md" href="" />
+          <DotWithLabel
+            dot={
+              <PrivacyAdversaryDots
+                adversaries={adversaries}
+                size="md"
+                href={href}
+              />
+            }
+            label={adversaries.promiseLabel}
+            className="items-end md:items-start"
+          />
         }
       />
       <ProjectSummaryStat
@@ -91,7 +105,7 @@ function RiskValue({
   return (
     <Tooltip>
       <TooltipTrigger
-        className="flex items-center gap-2"
+        className="flex items-center gap-2 text-left"
         aria-label={value.value}
       >
         <TrustedSetupRiskDot risk={risk} size="md" className="shrink-0" />

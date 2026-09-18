@@ -20,7 +20,6 @@
         "MOCK",
         "NODE_ENV",
         "DEPLOYMENT_ENV",
-        "NEXT_RUNTIME",
         "PORT",
         "REWRITE",
         "SENTRY_AUTH_TOKEN",

@@ -1,5 +1,6 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { PRIVACY_ATTRIBUTES } from '../../common/privacyAttributes'
+import { PRIVACY_CATEGORIES } from '../../common/privacyCategories'
 import type { BaseProject } from '../../types'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
 import { zcashNearIntentsAdversaries } from './adversaries'
@@ -59,6 +60,8 @@ export const zcashNearIntents: BaseProject = {
     badges: [],
   },
   privacyInfo: {
+    category: PRIVACY_CATEGORIES.shieldedLedger,
+    trackedOn: ['ethereum'],
     tokens: [],
     zkCatalogId: ProjectId('zcash'),
     anonymitySet: {

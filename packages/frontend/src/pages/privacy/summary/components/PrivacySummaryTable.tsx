@@ -1,11 +1,9 @@
-import { formatCurrency, formatInteger, pluralize } from '@l2beat/shared-pure'
+import { formatCurrency, formatInteger } from '@l2beat/shared-pure'
 import {
   createColumnHelper,
   getCoreRowModel,
   getSortedRowModel,
-  type SortingState,
 } from '@tanstack/react-table'
-import { useState } from 'react'
 import { NoDataBadge } from '~/components/badge/NoDataBadge'
 import { NotApplicableBadge } from '~/components/badge/NotApplicableBadge'
 import { PercentChange } from '~/components/PercentChange'
@@ -28,10 +26,7 @@ import { TableLink } from '~/components/table/TableLink'
 import { useTable } from '~/hooks/useTable'
 import type { PrivacySummaryEntry } from '~/server/features/privacy/getPrivacySummaryEntries'
 import { PrivacyAdversaryDots } from '../../adversaries/PrivacyAdversaryDots'
-import {
-  getPrivacyAdversaryRank,
-  PRIVACY_PROMISE_LABEL,
-} from '../../adversaries/privacyAdversaryUi'
+import { getPrivacyAdversariesTableValue } from '../../adversaries/privacyAdversaryUi'
 import { PRIVACY_ASSESSMENT } from '../../privacyAssessment'
 import { DotWithLabel } from './DotWithLabel'
 import { PrivacyAssessmentCell } from './PrivacyAssessmentCell'
@@ -76,12 +71,7 @@ const columns = [
                 <ProjectNameCell project={project} withInfoTooltip />
               </TwoRowCell.First>
               <TwoRowCell.Second>
-                {ctx.row.original.isTracked
-                  ? `${formatInteger(ctx.row.original.poolsTracked)} ${pluralize(
-                      ctx.row.original.poolsTracked,
-                      ctx.row.original.summaryTrackedItemName,
-                    )} tracked`
-                  : 'Not tracked'}
+                {ctx.row.original.category.label}
               </TwoRowCell.Second>
             </TwoRowCell>
           </TableLink>
@@ -169,7 +159,7 @@ const columns = [
     },
   }),
   columnHelper.accessor(
-    (entry) => getPrivacyAdversaryRank(entry.adversaries.cells),
+    (entry) => getPrivacyAdversariesTableValue(entry.adversaries),
     {
       id: 'adversaries',
       header: PRIVACY_ASSESSMENT.title,
@@ -178,11 +168,16 @@ const columns = [
         return (
           <DotWithLabel
             dot={<PrivacyAdversaryDots adversaries={adversaries} href={href} />}
-            label={PRIVACY_PROMISE_LABEL[adversaries.promise.protects]}
+            label={adversaries.promiseLabel}
           />
         )
       },
       sortDescFirst: true,
+      sortingFn: (a, b) =>
+        sortTableValues(
+          getPrivacyAdversariesTableValue(a.original.adversaries),
+          getPrivacyAdversariesTableValue(b.original.adversaries),
+        ),
       meta: {
         align: 'center',
         tooltip: PRIVACY_ASSESSMENT.tooltip,
@@ -272,27 +267,21 @@ const columns = [
   }),
 ]
 
-const initialSorting: SortingState = [{ id: 'totalValueLockedUsd', desc: true }]
-
 export function PrivacySummaryTable({
   entries,
 }: {
   entries: PrivacySummaryEntry[]
 }) {
-  const [sorting, setSorting] = useState<SortingState>(initialSorting)
-
-  const table = useTable({
+  const table = useTable('PrivacySummaryTable', {
     data: entries,
     columns,
     getCoreRowModel: getCoreRowModel(),
     getSortedRowModel: getSortedRowModel(),
     state: {
-      sorting,
       columnPinning: {
         left: ['#', 'logo'],
       },
     },
-    onSortingChange: setSorting,
   })
 
   return (

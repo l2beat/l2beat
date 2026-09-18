@@ -1,5 +1,6 @@
 {
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "archived": true,
   "name": "karak",
   "import": ["../globalConfig.jsonc"],
   "initialAddresses": ["eth:0xBA61F25dd9f2d5f02D01B1C2c1c5F0B14c4B48A3"],

@@ -717,7 +717,33 @@
       }
     },
     "category": { "type": "string" },
-    "critical": { "type": "boolean" },
+    "critical": {
+      "anyOf": [
+        { "const": true },
+        {
+          "anyOf": [
+            {
+              "type": "object",
+              "properties": {
+                "sinceTimestamp": { "type": "number" },
+                "untilTimestamp": { "type": "number" }
+              },
+              "additionalProperties": false,
+              "required": ["sinceTimestamp"]
+            },
+            {
+              "type": "object",
+              "properties": {
+                "sinceTimestamp": { "type": "number" },
+                "untilTimestamp": { "type": "number" }
+              },
+              "additionalProperties": false,
+              "required": ["untilTimestamp"]
+            }
+          ]
+        }
+      ]
+    },
     "description": { "type": "string" },
     "references": {
       "type": "array",

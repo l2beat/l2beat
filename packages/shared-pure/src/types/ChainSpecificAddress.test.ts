@@ -56,6 +56,70 @@ describe(ChainSpecificAddress.name, () => {
         'eth:0xAbCdABCd12345678abcDabCd12345678ABcdaBcd' as unknown as ChainSpecificAddress,
       )
     })
+
+    it('does not accept a trailing segment after the address', () => {
+      expect(() =>
+        ChainSpecificAddress(
+          'eth:0xAbCdABCd12345678abcDabCd12345678ABcdaBcd:extra',
+        ),
+      ).toThrow(
+        TypeError,
+        'Invalid ChainSpecificAddress: eth:0xAbCdABCd12345678abcDabCd12345678ABcdaBcd:extra',
+      )
+    })
+  })
+
+  describe(ChainSpecificAddress.tryParse.name, () => {
+    it('returns the checksummed value', () => {
+      expect(
+        ChainSpecificAddress.tryParse(
+          'eth:0xabcdabcd12345678abcdabcd12345678abcdabcd',
+        ),
+      ).toEqual(
+        'eth:0xAbCdABCd12345678abcDabCd12345678ABcdaBcd' as unknown as ChainSpecificAddress,
+      )
+    })
+
+    it('returns undefined instead of throwing', () => {
+      const invalid = [
+        'foo',
+        '',
+        '0xAbCdABCd12345678abcDabCd12345678ABcdaBcd',
+        'kk:foo',
+        'kk:0xAbCdABCd12345678abcDabCd12345678ABcdaBcd',
+        'eth:0xAbCdABCd12345678abcDabCd12345678ABcdaBcD',
+        'eth:0xAbCdABCd12345678abcDabCd12345678ABcdaBcd:extra',
+        'eth:',
+        ':0xAbCdABCd12345678abcDabCd12345678ABcdaBcd',
+      ]
+      for (const value of invalid) {
+        expect(ChainSpecificAddress.tryParse(value)).toEqual(undefined)
+        expect(() => ChainSpecificAddress(value)).toThrow(TypeError)
+      }
+    })
+
+    it('agrees with the constructor on valid values', () => {
+      for (let i = 0; i < 64; i++) {
+        const value = ChainSpecificAddress.random()
+        expect(ChainSpecificAddress.tryParse(value)).toEqual(
+          ChainSpecificAddress(value),
+        )
+      }
+    })
+
+    it('agrees with check', () => {
+      const values = [
+        'eth:0xAbCdABCd12345678abcDabCd12345678ABcdaBcd',
+        'eth:0xabcdabcd12345678abcdabcd12345678abcdabcd',
+        'kk:0xAbCdABCd12345678abcDabCd12345678ABcdaBcd',
+        'foo',
+      ]
+      for (const value of values) {
+        expect(ChainSpecificAddress.tryParse(value) === value).toEqual(
+          ChainSpecificAddress.check(value),
+        )
+      }
+    })
   })
 
   describe(ChainSpecificAddress.random.name, () => {

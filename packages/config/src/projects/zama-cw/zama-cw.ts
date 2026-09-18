@@ -6,6 +6,7 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { PRIVACY_ATTRIBUTES } from '../../common/privacyAttributes'
+import { PRIVACY_CATEGORIES } from '../../common/privacyCategories'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { generateDiscoveryDrivenContracts } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
@@ -31,6 +32,23 @@ const WRAPPER_NAMES = [
   'ConfidentialXAUTWrapper',
   'ConfidentialBbqTGBPWrapper',
   'ConfidentialSteakcUSDCWrapper',
+  'ConfidentialWBTCWrapper',
+  'ConfidentialAUSDWrapper',
+  'ConfidentialPENDLEWrapper',
+  'ConfidentialSteakUSDTWrapper',
+  'ConfidentialBbqUSDTWrapper',
+  'ConfidentialBbqUSDCWrapper',
+  'ConfidentialArmcWBTCWrapper',
+  'ConfidentialArmUSDTsWrapper',
+  'ConfidentialArmUSDCsWrapper',
+  'ConfidentialArmUSDTpWrapper',
+  'ConfidentialArmUSDCpWrapper',
+  'ConfidentialPendleUSDCWrapper',
+  'ConfidentialFAUSDeWrapper',
+  'ConfidentialFcUSDTWrapper',
+  'ConfidentialRoxcUSDCWrapper',
+  'ConfidentialRoxUSDCyWrapper',
+  'ConfidentialPAPYWrapper',
 ]
 
 const trackedWrappers = WRAPPER_NAMES.flatMap((name) => {
@@ -186,8 +204,9 @@ export const zamaCw: BaseProject = {
     warnings: [],
   },
   privacyInfo: {
+    category: PRIVACY_CATEGORIES.confidentialAmounts,
+    trackedOn: ['ethereum'],
     tokens: privacyTokens,
-    summaryTrackedItemName: 'token',
     anonymitySet: {
       type: 'not-applicable',
       description:

@@ -14,6 +14,42 @@ describe('DiffHistoryParser', () => {
       expect(parser.parse(md)).toEqual([])
     })
 
+    it('derives the entry id from the header facts only', () => {
+      const header = [
+        '# Diff at Tue, 05 May 2026 15:19:12 GMT:',
+        '',
+        '- author: Alice (<alice@example.com>)',
+        '- current timestamp: 1777994288',
+        '',
+        '## Description',
+        '',
+      ]
+      const before = parser.parse([...header, 'First wording.', ''].join('\n'))
+      const after = parser.parse([...header, 'Edited wording.', ''].join('\n'))
+      const other = parser.parse(
+        [...header, 'First wording.', '']
+          .join('\n')
+          .replace('1777994288', '1777994289'),
+      )
+      expect(before[0]!.id).toEqual(after[0]!.id)
+      expect(before[0]!.id.length).toEqual(8)
+      expect(other[0]!.id).not.toEqual(before[0]!.id)
+    })
+
+    it('tells apart entries sharing a date and chain point by file order', () => {
+      const entry = [
+        '# Diff at Tue, 05 May 2026 15:19:12 GMT:',
+        '',
+        '- current timestamp: 1777994288',
+        '',
+      ]
+      const twice = parser.parse([...entry, ...entry].join('\n'))
+      const once = parser.parse(entry.join('\n'))
+      expect(twice.length).toEqual(2)
+      expect(twice[0]!.id).toEqual(once[0]!.id)
+      expect(twice[1]!.id).not.toEqual(twice[0]!.id)
+    })
+
     it('takes the timestamp from the run, else from the header date', () => {
       const modern = parser.parse(
         [

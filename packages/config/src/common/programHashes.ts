@@ -838,7 +838,7 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
   '0x0083a8b50160475a7a5911c03dfdee30f6c8a83112a71c5c1125cfb96148b8c2': {
     ...OP_SUCCINCT_AGG_BLOBS,
     programUrl:
-      'https://github.com/0xFacet/zk-fault-proofs/tree/facet/programs/aggregation',
+      'https://github.com/0xFacet/zk-fault-proofs/tree/ad0ef0488e714212cb420ae04c9b242d9ef26f24/programs/aggregation',
     proverSystemProject: ProjectId('sp1turbo'),
     verificationStatus: 'successful',
     verificationSteps: readMarkdown(
@@ -848,7 +848,7 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
   '0x43f01f7522e77ddc0bea30de6cb8075608a0d0c906660e4f5f430a1e5e170829': {
     ...OP_SUCCINCT_RANGE_BLOBS,
     programUrl:
-      'https://github.com/0xFacet/zk-fault-proofs/tree/facet/programs/range',
+      'https://github.com/0xFacet/zk-fault-proofs/tree/ad0ef0488e714212cb420ae04c9b242d9ef26f24/programs/range',
     proverSystemProject: ProjectId('sp1turbo'),
     verificationStatus: 'successful',
     verificationSteps: readMarkdown(
@@ -910,6 +910,8 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
   '0x0e5158b64c46007c04e5972727a2a26832337fbe765162294b0ce1ed0db36f9d': {
     ...OP_SUCCINCT_RANGE_BLOBS,
     proverSystemProject: ProjectId('sp1'),
+    programUrl:
+      'https://github.com/succinctlabs/op-succinct/tree/v3.5.0/programs/range/ethereum',
     verificationStatus: 'successful',
     verificationSteps: readMarkdown(
       'common/programHashes/0x0e5158b64c46007c04e5972727a2a26832337fbe765162294b0ce1ed0db36f9d.md',
@@ -1360,7 +1362,7 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
     ...RAIKO_BATCH('v1.16.1'),
     proverSystemProject: ProjectId('sp1turbo'),
     programUrl:
-      'https://github.com/taikoxyz/raiko/tree/hotfix/hotfix-based-on-1.16.1/provers/sp1/guest/src/batch.rs',
+      'https://github.com/taikoxyz/raiko/blob/5530e3c51d568265a56fbb86c1b9e50d6534012e/provers/sp1/guest/src/batch.rs',
     verificationStatus: 'successful',
     verificationSteps: readMarkdown(
       'common/programHashes/0x0079682c7b5af614273de79761aaad20d1c8e1a65091388b81be836632d382f8.md',
@@ -1380,7 +1382,7 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
     ...RAIKO_BATCH('v1.16.1'),
     proverSystemProject: ProjectId('sp1turbo'),
     programUrl:
-      'https://github.com/taikoxyz/raiko/tree/hotfix/hotfix-based-on-1.16.1/provers/sp1/guest/src/batch.rs',
+      'https://github.com/taikoxyz/raiko/blob/5530e3c51d568265a56fbb86c1b9e50d6534012e/provers/sp1/guest/src/batch.rs',
     verificationStatus: 'successful',
     verificationSteps: readMarkdown(
       'common/programHashes/0x3cb4163d56bd850967bcf2ec1aaad20d0e470d324244e22e037d06cc32d382f8.md',
@@ -1400,7 +1402,7 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
     ...RAIKO_AGG('v1.16.1'),
     proverSystemProject: ProjectId('sp1turbo'),
     programUrl:
-      'https://github.com/taikoxyz/raiko/tree/hotfix/hotfix-based-on-1.16.1/provers/sp1/guest/src/shasta_aggregation.rs',
+      'https://github.com/taikoxyz/raiko/blob/5530e3c51d568265a56fbb86c1b9e50d6534012e/provers/sp1/guest/src/shasta_aggregation.rs',
     verificationStatus: 'successful',
     verificationSteps: readMarkdown(
       'common/programHashes/0x0002ac747570512099ca19c17f5a3b9f39697e5617a19ff2f2b2464229a50c7c.md',
@@ -1420,7 +1422,7 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
     ...RAIKO_AGG('v1.16.1'),
     proverSystemProject: ProjectId('sp1turbo'),
     programUrl:
-      'https://github.com/taikoxyz/raiko/tree/hotfix/hotfix-based-on-1.16.1/provers/sp1/guest/src/shasta_aggregation.rs',
+      'https://github.com/taikoxyz/raiko/blob/5530e3c51d568265a56fbb86c1b9e50d6534012e/provers/sp1/guest/src/shasta_aggregation.rs',
     verificationStatus: 'successful',
     verificationSteps: readMarkdown(
       'common/programHashes/0x01563a3a5c1448263943382f75a3b9f34b4bf2b05e867fcb65648c8429a50c7c.md',
@@ -1443,6 +1445,8 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
   '0xd7c1d74ce26e897e8bc7ea094667dcdb04c405ba1836bdb9b0ad773fc9fd0651': {
     // https://github.com/boundless-xyz/kailua/blob/3d284ca656a678f0546500e4a30c494a26358a18/book/src/setup.md?plain=1#L44
     ...KAILUA_FP('Risc0 v3.0.3'),
+    programUrl:
+      'https://github.com/boundless-xyz/kailua/tree/3d284ca656a678f0546500e4a30c494a26358a18/crates/kona',
     verificationStatus: 'notVerified',
   },
   '0x3768ea4f0e0d940f69c4cc5bd39a9e2772bfe3cb57818ce526bbe68033ee5934': {
@@ -1451,7 +1455,8 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
   },
   '0xb2e2b1513e80ea1e8f998e51bf8e7754eec21dbd0463e0b6b115165ba6bac2bf': {
     ...KAILUA_FP('v1.3.0'),
-    programUrl: 'https://github.com/boundless-xyz/kailua/tree/v1.3.0',
+    programUrl:
+      'https://github.com/boundless-xyz/kailua/tree/v1.3.0/crates/kona',
     verificationStatus: 'successful',
     verificationSteps: readMarkdown(
       'common/programHashes/0xb2e2b1513e80ea1e8f998e51bf8e7754eec21dbd0463e0b6b115165ba6bac2bf.md',
@@ -1460,7 +1465,8 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
   '0xf176eb82fbbb5d2d281a9cce459062bcdbe65f93d7156829b174fae2b4690c23': {
     // https://github.com/boundless-xyz/kailua/blob/dead453517c48240a221845640493b232255c907/book/src/setup.md
     ...KAILUA_FP('Risc0 v3.0.4, Kailua v1.1.8'),
-    programUrl: 'https://github.com/boundless-xyz/kailua/releases/tag/v1.1.8',
+    programUrl:
+      'https://github.com/boundless-xyz/kailua/tree/v1.1.8/crates/kona',
     verificationStatus: 'successful',
     verificationSteps: readMarkdown(
       'common/programHashes/0xf176eb82fbbb5d2d281a9cce459062bcdbe65f93d7156829b174fae2b4690c23.md',
@@ -1482,7 +1488,7 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
       'Risc0 v3.0.5, Kailua v1.3.0 (Hokulea)',
       'This is the Hokulea variant of the Kailua guest, used by projects that post data availability to EigenDA.',
     ),
-    programUrl: 'https://github.com/boundless-xyz/kailua/releases/tag/v1.3.0',
+    programUrl: 'https://github.com/boundless-xyz/kailua/tree/v1.3.0/crates',
     verificationStatus: 'successful',
     verificationSteps: readMarkdown(
       'common/programHashes/0xd3c097dfec583bb305eefcb5dcddc313b072e372cee66e13492c37fb50e6a90b.md',
@@ -1737,7 +1743,7 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
     ...RAIKO_BATCH('v1.16.1'),
     proverSystemProject: ProjectId('risc0'),
     programUrl:
-      'https://github.com/taikoxyz/raiko/tree/hotfix/hotfix-based-on-1.16.1/provers/risc0/guest/src/boundless_batch.rs',
+      'https://github.com/taikoxyz/raiko/blob/5530e3c51d568265a56fbb86c1b9e50d6534012e/provers/risc0/guest/src/boundless_batch.rs',
     verificationStatus: 'successful',
     verificationSteps: readMarkdown(
       'common/programHashes/0x46efe5e0c74976548ee6856789fbfb4929b8f2f9118a119c57ced6e1062e727b.md',
@@ -1757,7 +1763,7 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
     ...RAIKO_AGG('v1.16.1'),
     proverSystemProject: ProjectId('risc0'),
     programUrl:
-      'https://github.com/taikoxyz/raiko/tree/hotfix/hotfix-based-on-1.16.1/provers/risc0/guest/src/boundless_batch.rs',
+      'https://github.com/taikoxyz/raiko/blob/5530e3c51d568265a56fbb86c1b9e50d6534012e/provers/risc0/guest/src/boundless_batch.rs',
     verificationStatus: 'successful',
     verificationSteps: readMarkdown(
       'common/programHashes/0xdfbce2039ad8b78b236b5a9dceba5d8cee0d9e4638fc8f1fe11a0b2d8bfa039e.md',
@@ -2146,7 +2152,7 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
   '0x0100088580465d88420e6369230ee94a32ff356dbcdd407a4be49fc8009b2a81': {
     ...BOOJUM_BOOTLOADER('v26'),
     programUrl:
-      'https://github.com/matter-labs/era-contracts/blob/release-v26/system-contracts/bootloader/bootloader.yul',
+      'https://github.com/matter-labs/era-contracts/blob/f7ecdb91f7941a3be01ce08bf6a2e4a5fb02a8d5/system-contracts/bootloader/bootloader.yul',
     verificationStatus: 'successful',
     verificationSteps: readMarkdown(
       'common/programHashes/0x0100088580465d88420e6369230ee94a32ff356dbcdd407a4be49fc8009b2a81.md',
@@ -2351,7 +2357,7 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
     description:
       'A commitment to the exact WASM binary version used for Orbit stack optimistic dispute games, which uses Celestia DA.',
     programUrl:
-      'https://github.com/celestiaorg/nitro/tree/celestia-v3.3.2/arbos',
+      'https://github.com/celestiaorg/nitro/tree/7c9d688a256cc60f2b8db9dbe9ac40511d0d1f2e/arbos',
     verificationStatus: 'successful',
     verificationSteps: readMarkdown(
       'common/programHashes/0xaf1dbdfceb871c00bfbb1675983133df04f0ed04e89647812513c091e3a982b3.md',
@@ -2371,7 +2377,7 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
   '0x033c000916b4a88cfffeceddd6cf0f4be3897a89195941e5a7c3f8209b4dbb6e': {
     ...ABSOLUTE_PRESTATE('v1.9.0 (cannon64)'),
     programUrl:
-      'https://github.com/ethereum-optimism/optimism/tree/op-program/v1.9.0/op-program',
+      'https://github.com/ethereum-optimism/optimism/tree/op-program/v1.9.0/op-program/client',
     verificationStatus: 'successful',
     verificationSteps: readMarkdown(
       'common/programHashes/0x033c000916b4a88cfffeceddd6cf0f4be3897a89195941e5a7c3f8209b4dbb6e.md',
@@ -2384,7 +2390,7 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
     description:
       'A commitment to the initial state of the OP stack fault proof program of Kona client.',
     programUrl:
-      'https://github.com/ethereum-optimism/optimism/tree/d7cea91bc2f555a76b7720bf9c32f46c0b856119/kona',
+      'https://github.com/ethereum-optimism/optimism/tree/d7cea91bc2f555a76b7720bf9c32f46c0b856119/rust/kona',
     verificationStatus: 'successful',
     verificationSteps: readMarkdown(
       'common/programHashes/0x0337ecb3604c0b40c352e0c7711beb17a212d583f4fe956fd8d66e29ad5f9025.md',
@@ -2393,7 +2399,7 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
   '0x03682932cec7ce0a3874b19675a6bbc923054a7b321efc7d3835187b172494b6': {
     ...ABSOLUTE_PRESTATE('v1.6.0 (cannon64)'),
     programUrl:
-      'https://github.com/ethereum-optimism/optimism/tree/op-program/v1.6.0/op-program',
+      'https://github.com/ethereum-optimism/optimism/tree/op-program/v1.6.0/op-program/client',
     verificationStatus: 'successful',
     verificationSteps: readMarkdown(
       'common/programHashes/0x03682932cec7ce0a3874b19675a6bbc923054a7b321efc7d3835187b172494b6.md',
@@ -2402,7 +2408,7 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
   '0x03caa1871bb9fe7f9b11217c245c16e4ded33367df5b3ccb2c6d0a847a217d1b': {
     ...ABSOLUTE_PRESTATE('v1.8.0-rc.4 (cannon64)'),
     programUrl:
-      'https://github.com/ethereum-optimism/optimism/tree/op-program/v1.8.0-rc.4/op-program',
+      'https://github.com/ethereum-optimism/optimism/tree/op-program/v1.8.0-rc.4/op-program/client',
     verificationStatus: 'successful',
     verificationSteps: readMarkdown(
       'common/programHashes/0x03caa1871bb9fe7f9b11217c245c16e4ded33367df5b3ccb2c6d0a847a217d1b.md',
@@ -2419,7 +2425,7 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
   '0x038512e02c4c3f7bdaec27d00edf55b7155e0905301e1a88083e4e0a6764d54c': {
     ...ABSOLUTE_PRESTATE('v1.3.1'),
     programUrl:
-      'https://github.com/ethereum-optimism/optimism/tree/op-node/v1.3.1/op-program',
+      'https://github.com/ethereum-optimism/optimism/tree/op-node/v1.3.1/op-program/client',
     verificationStatus: 'successful',
     verificationSteps: readMarkdown(
       'common/programHashes/0x038512e02c4c3f7bdaec27d00edf55b7155e0905301e1a88083e4e0a6764d54c.md',
@@ -2428,7 +2434,7 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
   '0x03cb5216c8cf2902c66127db119ba03a1296205736addc39cfeafc7c14d0bd14': {
     ...ABSOLUTE_PRESTATE('Lisk'),
     programUrl:
-      'https://github.com/ethereum-optimism/optimism/tree/op-contracts/v1.3.0/op-program',
+      'https://github.com/ethereum-optimism/optimism/tree/op-contracts/v1.3.0/op-program/client',
     verificationStatus: 'successful',
     verificationSteps: readMarkdown(
       'common/programHashes/0x03cb5216c8cf2902c66127db119ba03a1296205736addc39cfeafc7c14d0bd14.md',
@@ -2437,7 +2443,7 @@ Note: \`cargo prove vkey --elf <path-to-elf-file>\` prints a different SP1 vkey 
   '0x03eb07101fbdeaf3f04d9fb76526362c1eea2824e4c6e970bdb19675b72e4fc8': {
     ...ABSOLUTE_PRESTATE('v1.6.1 (cannon64)'),
     programUrl:
-      'https://github.com/ethereum-optimism/optimism/tree/op-program/v1.6.1/op-program',
+      'https://github.com/ethereum-optimism/optimism/tree/op-program/v1.6.1/op-program/client',
     verificationStatus: 'successful',
     verificationSteps: readMarkdown(
       'common/programHashes/0x03eb07101fbdeaf3f04d9fb76526362c1eea2824e4c6e970bdb19675b72e4fc8.md',

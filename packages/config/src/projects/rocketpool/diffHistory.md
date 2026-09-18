@@ -1,3 +1,89 @@
+Generated with discovered.json: 0xc25932f6c059bd7c8f511768950c4c8ff0f6125c
+
+# Diff at Wed, 16 Sep 2026 14:20:22 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@46c99238e8a0ab5dceba63616e2dee6b1d122281 block: 1788817670
+- current timestamp: 1789568354
+
+## Description
+
+`rocketDAOProtocolVerifier` re-pointed to a new implementation (version 2 to 3) via oDAO proposal 31 (2026-08-27), executed 2026-09-10 after the 7d delay. It patches a vulnerability in the pDAO voting system: the contract that validates a node's voting-power proof was missing two input bounds (`_nodeIndex < nodeCount` and `_witness.length == depth`), so a node registered after a proposal's snapshot could submit a malformed proof that should have been rejected. The rest of the diff is a 0.8.18 to 0.8.30 compiler bump. Old contract deregistered.
+https://disco.l2beat.com/diff/eth:0xd1f7e573cdC64FC0B201ca37aB50bC7Dd880040A/eth:0xc4D85aA3e318c38005F6D73cC53E5A2b4223723a
+
+`node.registration.enabled` set to `true` (security council proposal 32, 2026-09-11): new node operators can register again, after the switch was turned off on 2026-08-19 while the verifier fix was pending.
+
+## Watched changes
+
+```diff
+    contract RocketStorage (eth:0x1d8f8f00cfa6758d7bE78336684788Fb0ee0Fa46) [rocketpool/RocketStorage] {
+    +++ description: Eternal-storage registry and the root of the protocol. It holds every protocol variable in typed key-value maps and is the only contract with persistent state; the logic contracts are stateless and read and write through it. Each logic contract is registered under the hash of its name, so repointing a name in a single write moves every caller to a new implementation on its next call. Write access is limited to addresses flagged as registered contracts, which means the registry itself imposes no delay: any delay comes from the contract performing the write. Registered names are not enumerable on-chain, so discovery resolves each one by calling the address lookup with its name hash.
+      values.rocketDAOProtocolVerifier:
+-        "eth:0xd1f7e573cdC64FC0B201ca37aB50bC7Dd880040A"
++        "eth:0xc4D85aA3e318c38005F6D73cC53E5A2b4223723a"
+    }
+```
+
+```diff
+    contract RocketDAONodeTrustedUpgrade (eth:0x9290AA076a2F1418a4E414E3D83AE03cA8E1ad10) [rocketpool/RocketDAONodeTrustedUpgrade] {
+    +++ description: The only path that changes which code the protocol runs. A passed oracle-set proposal records a pending change here rather than applying it; the change becomes applicable after 7d and, until then, the security council can cancel it. Once the delay has run and the change was not cancelled, any oracle-set member applies it. A fixed list of names is refused outright: the custody contract, the token contracts, the beacon-chain deposit contract, and the penalty-cap contract. Registering an entirely new name is allowed and grants that address write access to the registry, which is how the exclusion list is worked around. The bootstrap account had an immediate path here; it is permanently closed.
+      values.pendingUpgradeExecuted.1:
+-        false
++        true
+    }
+```
+
+```diff
+    contract RocketDAOProtocolSettingsNode (eth:0xb02B883303e658Ddcd58D3871Dc4Ca0C91f0fc9D) [rocketpool/RocketDAOProtocolSettingsNode] {
+    +++ description: Parameters for node operators: whether registration and node deposits are enabled, bond sizes, the minimum collateral stake, the unstaking waiting period, and the cap on stake that counts toward voting power. Values live in the shared registry, not here; this contract is the typed accessor and the only writer is a passed governance proposal.
+      values.getRegistrationEnabled:
+-        false
++        true
+    }
+```
+
+```diff
+    contract RocketNodeManager (eth:0xcf2d76A7499d3acB5A22ce83c027651e8d76e250) [rocketpool/RocketNodeManager] {
+    +++ description: Register of node operators. It records registration, the operator's withdrawal address for ETH and for the collateral token, timezone, smoothing-pool membership, and the address of the operator's pooled validator contract. Changing a withdrawal address is a two-step confirm, so a mistyped address cannot strand the operator. New registrations are currently true.
+      description:
+-        "Register of node operators. It records registration, the operator's withdrawal address for ETH and for the collateral token, timezone, smoothing-pool membership, and the address of the operator's pooled validator contract. Changing a withdrawal address is a two-step confirm, so a mistyped address cannot strand the operator. New registrations are currently false."
++        "Register of node operators. It records registration, the operator's withdrawal address for ETH and for the collateral token, timezone, smoothing-pool membership, and the address of the operator's pooled validator contract. Changing a withdrawal address is a two-step confirm, so a mistyped address cannot strand the operator. New registrations are currently true."
++++ description: True when a new operator may register.
+      values.registrationState:
+-        false
++        true
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract RocketDAOProtocolVerifier (eth:0xd1f7e573cdC64FC0B201ca37aB50bC7Dd880040A) [rocketpool/RocketDAOProtocolVerifier]
+    +++ description: Fraud-proof referee for the voting-power trees used by token-holder governance. A proposer stakes 100 collateral tokens on a claimed tree; any address can stake 10 to challenge a node of it, and the proposer must answer within 30m or the proposal is defeated and the bonds are transferred to the challengers. Nobody is trusted to assert the tree; the bonds and the response deadline are what make it binding.
+```
+
+## Source code changes
+
+```diff
+.../dev/null                                       | 1487 --------------------
+ .../RocketDAOProtocolVerifier.sol}                 |    0
+ 2 files changed, 1487 deletions(-)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1788817670 (main branch discovery), not current.
+
+```diff
+    contract RocketDAOProtocolVerifier (eth:0xc4D85aA3e318c38005F6D73cC53E5A2b4223723a) [rocketpool/RocketDAOProtocolVerifier] {
+    +++ description: Fraud-proof referee for the voting-power trees used by token-holder governance. A proposer stakes 100 collateral tokens on a claimed tree; any address can stake 10 to challenge a node of it, and the proposer must answer within 30m or the proposal is defeated and the bonds are transferred to the challengers. Nobody is trusted to assert the tree; the bonds and the response deadline are what make it binding.
+      name:
+-        "RocketDAOProtocolVerifierV2"
++        "RocketDAOProtocolVerifier"
+    }
+```
+
 Generated with discovered.json: 0xcf72d32112820af1e3bda7f171468fe58b13b28f
 
 # Diff at Tue, 08 Sep 2026 11:13:13 GMT:

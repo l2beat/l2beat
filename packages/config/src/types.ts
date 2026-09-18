@@ -280,6 +280,9 @@ export interface BaseProject {
   discoveryInfo?: ProjectDiscoveryInfo
   /** Public entries of diffHistory.md, newest first. */
   discoveryUpdates?: ProjectDiscoveryUpdate[]
+  /** Ossification factor measured at config build time, for projects with a
+   *  critical contract in their discovery config. */
+  ossification?: ProjectOssification
 
   // tags
   archivedAt?: UnixTime
@@ -1061,6 +1064,12 @@ export type ProjectExternalDependency =
 // #region privacy data
 
 export interface ProjectPrivacyInfo {
+  /**
+   * Chains on which L2BEAT tracks this protocol's deployment, mostly through
+   * project discovery. Each chain needs a project with a matching chainConfig
+   * for its icon.
+   */
+  trackedOn: string[]
   tokens: ProjectPrivacyToken[]
   /**
    * A project tracks relayers either through onchain events or through
@@ -1068,7 +1077,8 @@ export interface ProjectPrivacyInfo {
    * mixing kinds within one project is not representable.
    */
   relayerTracking?: ProjectPrivacyRelayerTracking
-  summaryTrackedItemName?: string
+  /** The deployed mechanism. Decides the promised field, not the grade. */
+  category: PrivacyCategory
   anonymitySet?: {
     type: 'not-applicable'
     description: string
@@ -1134,7 +1144,19 @@ export interface PrivacyAttribute {
   description: string
 }
 
-// #region privacy adversaries (PoC)
+export type PrivacyCategoryId =
+  | 'pool'
+  | 'shieldedLedger'
+  | 'stealthAddress'
+  | 'confidentialAmounts'
+
+export interface PrivacyCategory {
+  id: PrivacyCategoryId
+  label: string
+  description: string
+}
+
+// #region privacy adversaries
 
 /**
  * Adversaries are defined by capability, never by identity. Real-world actors
@@ -1174,6 +1196,11 @@ export interface PrivacyFieldInfo {
   label: string
   /** Noun used in derived cell values, e.g. "Link" in "Link at risk". */
   subject: string
+  /**
+   * Caption under the dots that grade this field, e.g. "Link privacy". A noun
+   * phrase, not a claim: the dots say how well the promise holds.
+   */
+  promiseLabel: string
   description: string
 }
 
@@ -1272,6 +1299,13 @@ export interface PrivacyAdversariesConfig {
   cells: Record<PrivacyAdversaryId, PrivacyAdversaryAssessment>
 }
 
+/** A field this adversary learns more about than the public observer. */
+export interface PrivacyAlsoExposed {
+  field: PrivacyField
+  /** This adversary's interior verdict for the field. */
+  exposure: PrivacyExposure
+}
+
 export interface PrivacyAdversaryCell extends PrivacyAdversaryAssessment {
   id: PrivacyAdversaryId
   /** Derived: "<promised subject> <state>", e.g. "Link private". */
@@ -1281,7 +1315,7 @@ export interface PrivacyAdversaryCell extends PrivacyAdversaryAssessment {
    * worse than the public observer's. Empty for the public observer itself,
    * whose leaks the promise text already describes.
    */
-  alsoExposed: PrivacyField[]
+  alsoExposed: PrivacyAlsoExposed[]
 }
 
 /**
@@ -1820,6 +1854,55 @@ export interface ProjectEscrow {
   sharedEscrow?: SharedEscrow
 }
 
+export type OssificationChangeType = 'code' | 'state'
+
+export interface ProjectOssificationCriticalUpdate {
+  /** Discovery update id, shared with diffHistory.md and discoveryUpdates. */
+  id: string
+  type: OssificationChangeType
+}
+
+export interface ProjectOssificationContract {
+  name: string
+  address: string
+  isVerified: boolean
+  /** Start of the battle-tested clock: last critical change, or deployment
+   *  if the contract never changed. */
+  ossifyingSince: number
+  codeChangeCount: number
+  stateChangeCount: number
+}
+
+/** Score, change rate and clock timestamps of the critical perimeter. Ages
+ *  are not stored: the frontend subtracts the timestamps from the request
+ *  time. Score and change rate are measured against the config build time,
+ *  which lags the request by at most the age of the deploy. The TVS exposure
+ *  needs the database and is added by the frontend. */
+export interface ProjectOssification {
+  /** 0-100: the share of recorded code-bug exploits (published, versioned
+   *  incident dataset, see ossificationCurve.json) whose exploited code was
+   *  younger than this perimeter's age. 0 while any critical contract is
+   *  unverified. */
+  score: number
+  /** score as a 0..1 fraction; 0 gates exposure when unverified */
+  maturity: number
+  /** Start of the unchanged period: the newest deployment or critical change
+   *  anywhere in the perimeter. */
+  projectClockStart: number
+  /** Timestamp of the last critical change, absent if none ever */
+  lastCriticalChange?: number
+  /** 24h-clustered critical change events per year, trailing window */
+  criticalChangesPerYear: number
+  clusteredEventCount: number
+  windowSeconds: number
+  /** 24h-clustered timestamps of every perimeter reset, ascending: critical
+   *  changes plus deployments of critical contracts. */
+  perimeterResets: number[]
+  /** Youngest clock first. */
+  contracts: ProjectOssificationContract[]
+  criticalUpdates: ProjectOssificationCriticalUpdate[]
+}
+
 export interface ProjectDiscoveryInfo {
   isDiscoDriven: boolean
   permissionsDiscoDriven: boolean
@@ -1829,8 +1912,9 @@ export interface ProjectDiscoveryInfo {
 }
 
 export interface ProjectDiscoveryUpdate {
-  /** Fingerprint of the whole entry, the same one the update card's copy
-   *  link has always used. */
+  /** The diffHistory.md entry id (DiffHistoryEntry.id): derived from the
+   *  header date and chain point only, so it survives description edits and
+   *  matches ossification criticalUpdates. */
   id: string
   date: string
   /** Run timestamp; header date for legacy block-numbered entries; null when

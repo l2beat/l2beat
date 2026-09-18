@@ -1,5 +1,6 @@
 import type {
   PrivacyAttribute,
+  PrivacyCategory,
   PrivacyExitWindow,
   PrivacySummaryValue,
 } from '@l2beat/config'
@@ -9,15 +10,12 @@ import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { manifest } from '~/utils/Manifest'
 import { get7dTvsBreakdown } from '../layer2s/tvs/get7dTvsBreakdown'
-import {
-  type PrivacyAdversariesSummary,
-  type PrivacyProject,
-  toPrivacyAdversariesSummary,
-} from './types'
+import type { PrivacyAdversariesSummary, PrivacyProject } from './types'
 import {
   getPrivacyTrustedSetup,
   type PrivacyTrustedSetup,
 } from './utils/getPrivacyTrustedSetup'
+import { toPrivacyAdversariesSummary } from './utils/toPrivacyAdversariesSummary'
 
 export interface PrivacySummaryEntry {
   id: string
@@ -35,7 +33,7 @@ export interface PrivacySummaryEntry {
   totalDeposits?: number
   totalValueDeposited30dUsd?: number
   isUnderReview: boolean
-  summaryTrackedItemName: string
+  category: PrivacyCategory
   trustedSetup: PrivacyTrustedSetup
   exitWindow: PrivacyExitWindow
   reproducibility: PrivacySummaryValue
@@ -155,8 +153,7 @@ function getPrivacySummaryBaseEntry(
     description: project.display.description,
     hasTvl: project.tvsConfig !== undefined,
     isUnderReview: !!project.statuses.reviewStatus,
-    summaryTrackedItemName:
-      project.privacyInfo.summaryTrackedItemName ?? 'pool',
+    category: project.privacyInfo.category,
     trustedSetup: getPrivacyTrustedSetup(project.trustedSetups),
     exitWindow: project.privacyInfo.exitWindow,
     reproducibility: project.privacyInfo.reproducibility,

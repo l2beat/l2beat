@@ -3,6 +3,7 @@ import { HydrationBoundary } from '@tanstack/react-query'
 import { HorizontalSeparator } from '~/components/core/HorizontalSeparator'
 import { HighlightableLinkContextProvider } from '~/components/link/highlightable/HighlightableLinkContext'
 import { PrivacyAttributeTag } from '~/components/PrivacyAttributeTag'
+import { ProjectIconList } from '~/components/ProjectIconList'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { DesktopProjectLinks } from '~/components/projects/links/DesktopProjectLinks'
 import { DesktopProjectNavigation } from '~/components/projects/navigation/DesktopProjectNavigation'
@@ -19,6 +20,7 @@ import type { AppLayoutProps } from '~/layouts/AppLayout'
 import { AppLayout } from '~/layouts/AppLayout'
 import { SideNavLayout } from '~/layouts/SideNavLayout'
 import type { ProjectPrivacyEntry } from '~/server/features/privacy/project/getPrivacyProjectEntry'
+import { toPrivacyAdversariesSummary } from '~/server/features/privacy/utils/toPrivacyAdversariesSummary'
 import { PrivacyProjectRiskProfile } from './components/PrivacyProjectRiskProfile'
 import { PrivacyProjectStats } from './components/PrivacyProjectStats'
 
@@ -36,6 +38,16 @@ export function PrivacyProjectPage({
 }: Props) {
   const navigationSections = projectDetailsToNavigationSections(entry.sections)
   const isNavigationEmpty = navigationSections.length === 0
+  // The header dots are derived from the section so the cells ship only once.
+  const adversariesSection = entry.sections.find(
+    (section) => section.type === 'PrivacyAdversariesSection',
+  )
+  if (!adversariesSection) {
+    throw new Error('Privacy project page without an adversaries section')
+  }
+  const adversaries = toPrivacyAdversariesSummary(
+    adversariesSection.props.adversaries,
+  )
 
   return (
     <AppLayout {...props}>
@@ -114,16 +126,32 @@ export function PrivacyProjectPage({
                       <PrivacyProjectRiskProfile
                         trustedSetup={entry.trustedSetup}
                         exitWindow={entry.exitWindow}
-                        adversaries={entry.adversaries}
+                        adversaries={adversaries}
+                        href={entry.href}
                         reproducibility={entry.reproducibility}
                         className="mt-4"
                       />
 
-                      {entry.attributes.length > 0 && (
-                        <>
-                          <HorizontalSeparator className="mt-4 max-md:hidden" />
+                      <HorizontalSeparator className="mt-4 max-md:hidden" />
+                      <div className="mt-6 flex flex-col gap-4 md:mt-4 md:flex-row md:gap-8">
+                        <ProjectSummaryStat
+                          title="Tracked on"
+                          tooltip="Chains on which the protocol deployment is tracked by L2BEAT."
+                          value={
+                            <ProjectIconList
+                              projects={entry.trackedOn}
+                              dialog={{
+                                title: 'Tracked on',
+                                description: 'Search for chains',
+                                searchPlaceholder:
+                                  'Start typing to find chain...',
+                                emptyText: 'No chains found.',
+                              }}
+                            />
+                          }
+                        />
+                        {entry.attributes.length > 0 && (
                           <ProjectSummaryStat
-                            className="mt-6 md:mt-4"
                             title="Attributes"
                             tooltip="Protocol attributes and capabilities."
                             valueClassName="flex flex-wrap justify-start gap-1"
@@ -134,8 +162,8 @@ export function PrivacyProjectPage({
                               />
                             ))}
                           />
-                        </>
-                      )}
+                        )}
+                      </div>
 
                       <HorizontalSeparator className="my-4 max-md:hidden" />
                       <div className="max-md:hidden">

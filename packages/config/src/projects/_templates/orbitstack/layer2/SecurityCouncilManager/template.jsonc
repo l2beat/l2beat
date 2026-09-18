@@ -98,6 +98,21 @@
           "description": "schedule a proposal to remove a Security Council member."
         }
       ]
+    },
+    "minRotationPeriodSetterAC": {
+      "handler": {
+        "type": "accessControl",
+        "roleNames": {
+          "0xdca740b6747d464c97988ea224a1c2afa5d593dea6c130c887834cb139bbe3cd": "MIN_ROTATION_PERIOD_SETTER"
+        },
+        "pickRoleMembers": "MIN_ROTATION_PERIOD_SETTER"
+      },
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "set the minimum period between Security Council member key rotations."
+        }
+      ]
     }
   }
 }

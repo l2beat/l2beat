@@ -7,7 +7,6 @@ import { DecoderApp as DecoderApp3 } from './decoder-3/DecoderApp'
 import { DecoderApp as NewDecoderApp } from './decoder-new/DecoderApp'
 import { DiscoLupe } from './discolupe/DiscoLupe'
 import { Layout } from './Layout'
-import { LogoGenerator } from './logo-generator/LogoGenerator'
 import { MonitorApp } from './monitor/MonitorApp'
 import { SimulatorApp } from './simulator/SimulatorApp'
 
@@ -28,7 +27,6 @@ ReactDOM.createRoot(root).render(
             <Route path="/decoder-new" element={<NewDecoderApp />} />
             <Route path="/simulator" element={<SimulatorApp />} />
             <Route path="/discolupe" element={<DiscoLupe />} />
-            <Route path="/logo-generator" element={<LogoGenerator />} />
             <Route path="/monitor" element={<MonitorApp />} />
           </Route>
         </Routes>

@@ -19,8 +19,10 @@ import type {
 } from '@l2beat/database'
 import type { ProjectId } from '@l2beat/shared-pure'
 import { assertUnreachable, UnixTime } from '@l2beat/shared-pure'
+import type { ProjectIconListItem } from '~/components/ProjectIconList'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
+import { ps } from '~/server/projects'
 import { calculatePercentageChange } from '~/utils/calculatePercentageChange'
 import { TOKEN_PLACEHOLDER_ICON_URL } from '~/utils/tokenPlaceholderIconUrl'
 import { getPrivacyProject } from './getPrivacyProjects'
@@ -30,6 +32,7 @@ import type {
   PrivacyProject,
   PrivacyRelayerStat,
 } from './types'
+import { getPrivacyTrackedChains } from './utils/getPrivacyTrackedChains'
 
 interface PrivacyProjectFlowData {
   totals: PrivacyFlowBucketTotalRecord[]
@@ -58,6 +61,7 @@ export interface PrivacyProjectDetails {
   riskSummary?: string
   upgradesAndGovernance?: ProjectUpgradesAndGovernance
   attributes: PrivacyAttribute[]
+  trackedOn: ProjectIconListItem[]
   assets: PrivacyAsset[]
   summary: {
     bucketCount: number
@@ -91,10 +95,12 @@ export async function getPrivacyProjectDetails(
   const last7dCutoff = currentDay - 7 * UnixTime.DAY
   const last30dCutoff = currentDay - 30 * UnixTime.DAY
 
-  const [{ totals, daily30d, tokenValues }, relayerStat] = await Promise.all([
-    getPrivacyProjectFlowData(project, last30dCutoff, currentDay, now),
-    getRelayerStat(project, UnixTime(now - 30 * UnixTime.DAY), now),
-  ])
+  const [{ totals, daily30d, tokenValues }, relayerStat, trackedOn] =
+    await Promise.all([
+      getPrivacyProjectFlowData(project, last30dCutoff, currentDay, now),
+      getRelayerStat(project, UnixTime(now - 30 * UnixTime.DAY), now),
+      getTrackedOn(project),
+    ])
 
   const tvlBySymbol = new Map<string, number>()
   for (const tv of tokenValues) {
@@ -270,6 +276,7 @@ export async function getPrivacyProjectDetails(
     riskSummary: project.privacyInfo.riskSummary,
     upgradesAndGovernance: project.privacyInfo.upgradesAndGovernance,
     attributes: project.privacyInfo.attributes ?? [],
+    trackedOn,
     assets: orderedAssets,
     summary: {
       bucketCount: summaryBucketCount,
@@ -296,6 +303,29 @@ export async function getPrivacyProjectDetails(
       relayerStat,
     },
   }
+}
+
+async function getTrackedOn(
+  project: PrivacyProject,
+): Promise<ProjectIconListItem[]> {
+  const [chainProjects, daLayers] = await Promise.all([
+    ps.getProjects({
+      select: ['chainConfig'],
+      optional: [
+        'scalingInfo',
+        'daBridge',
+        'daLayer',
+        'privacyInfo',
+        'defiInfo',
+      ],
+    }),
+    ps.getProjects({ where: ['daLayer'] }),
+  ])
+  return getPrivacyTrackedChains(
+    project.privacyInfo.trackedOn,
+    chainProjects,
+    daLayers,
+  )
 }
 
 const MIN_OBSERVED_DAYS_FOR_AVERAGE = 7

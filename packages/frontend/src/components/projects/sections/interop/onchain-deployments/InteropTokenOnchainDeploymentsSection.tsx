@@ -43,19 +43,22 @@ export function InteropTokenOnchainDeploymentsSection({
         .toSorted((a, b) => (b.volume ?? -1) - (a.volume ?? -1)),
     [graph],
   )
-  const table = useTable<DeploymentRow>({
-    data: deployments,
-    columns: interopTokenOnchainDeploymentsColumns,
-    getCoreRowModel: getCoreRowModel(),
-    getSortedRowModel: getSortedRowModel(),
-    getPaginationRowModel: getPaginationRowModel(),
-    initialState: {
-      pagination: {
-        pageSize: DEPLOYMENTS_PER_PAGE,
-        pageIndex: 0,
+  const table = useTable<DeploymentRow>(
+    'InteropTokenOnchainDeploymentsSection',
+    {
+      data: deployments,
+      columns: interopTokenOnchainDeploymentsColumns,
+      getCoreRowModel: getCoreRowModel(),
+      getSortedRowModel: getSortedRowModel(),
+      getPaginationRowModel: getPaginationRowModel(),
+      initialState: {
+        pagination: {
+          pageSize: DEPLOYMENTS_PER_PAGE,
+          pageIndex: 0,
+        },
       },
     },
-  })
+  )
 
   const pageCount = table.getPageCount()
   const currentPage = table.getState().pagination.pageIndex

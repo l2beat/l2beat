@@ -119,8 +119,6 @@ function getRawEnv(): Record<
     return window.__ENV__
   }
 
-  // As NextJS bundler inlines the env variables, we need to do this manually
-  // https://nextjs.org/docs/pages/guides/environment-variables#bundling-environment-variables-for-the-browser
   return {
     // Server
     DATABASE_URL: process.env.DATABASE_URL,
