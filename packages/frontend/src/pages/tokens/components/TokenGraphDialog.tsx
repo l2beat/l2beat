@@ -8,7 +8,10 @@ import {
   DialogTitle,
 } from '~/components/core/Dialog'
 import { Skeleton } from '~/components/core/Skeleton'
-import { TokenRelationsGraphView } from '~/components/projects/sections/interop/onchain-deployments/relations-graph/TokenRelationsGraphView'
+import {
+  Legend,
+  TokenRelationsGraphView,
+} from '~/components/projects/sections/interop/onchain-deployments/relations-graph/TokenRelationsGraphView'
 import type { TokenGraphTile } from '~/server/features/tokens/buildTokenGraphTiles'
 import { useTRPC } from '~/trpc/React'
 import { cn } from '~/utils/cn'
@@ -62,7 +65,12 @@ export function TokenGraphDialog({
         </DialogDescription>
 
         {isPending ? (
-          <Skeleton className={cn(DIAGRAM_CLASS_NAME, 'rounded-lg')} />
+          <div>
+            <div className="mb-3 flex min-h-8 items-center">
+              <Legend />
+            </div>
+            <Skeleton className={cn(DIAGRAM_CLASS_NAME, 'rounded-lg')} />
+          </div>
         ) : isError ? (
           <div className="flex flex-col items-center gap-3 py-8 text-label-value-14 text-secondary">
             Could not load the graph.

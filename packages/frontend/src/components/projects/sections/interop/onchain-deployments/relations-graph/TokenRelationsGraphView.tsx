@@ -71,7 +71,7 @@ export function TokenRelationsGraphView({
 
   return (
     <div>
-      <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
+      <div className="mb-3 flex min-h-8 flex-wrap items-center justify-between gap-2">
         <Legend />
         {canHide && (
           <Checkbox
@@ -195,7 +195,7 @@ function DiagramPane({
   )
 }
 
-function Legend() {
+export function Legend() {
   return (
     <div className="flex flex-wrap items-center gap-x-5 gap-y-2 text-label-value-13 text-secondary">
       <span className="flex items-center gap-2">
