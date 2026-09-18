@@ -19,20 +19,12 @@
       "ignoreDiscovery": true
     },
     "zircuit:0x4200000000000000000000000000000000000015": {
-      // The Jovian L1Block implementation lives at the address fixed by the OP
-      // spec (deployer 0x4210..0006, nonce 0). On Zircuit that nonce was spent
-      // in 2025 on an L2ToL1MessagePasser, so the Jovian code was set there with
-      // no creation transaction. Sourcify (the only explorer for this chain)
-      // still serves the old L2ToL1MessagePasser match, and a new verification
-      // is not expected to replace it, as there is no creation code to match.
-      // The path below is a manual label, NOT an integrity check: discovery
-      // neither fetches it nor compares it with the bytecode. It was checked
-      // by hand: the deployed runtime code hashes to
-      // 0x5f885ca815d2cf27a203123e50b8ae204fdca910b6995d90b2d7700cbb9240d1, the
-      // L1Block code hash given by the Jovian spec, which builds it from the
-      // linked commit (https://specs.optimism.io/protocol/jovian/derivation.html).
-      // The manual source carries no ABI, so the getters are declared here.
-      // Drop this override once the implementation changes.
+      // Sourcify (the only explorer for this chain) serves a stale
+      // L2ToL1MessagePasser match for the Jovian L1Block implementation. The path
+      // below is a manual label, not an integrity check: the deployed code was
+      // checked by hand against the L1Block code hash in the Jovian spec
+      // (https://specs.optimism.io/protocol/jovian/derivation.html). It carries no
+      // ABI, so the getters are declared here. Drop once the implementation changes.
       "preferManualSourcePaths": true,
       "manualSourcePaths": {
         "zircuit:0x3Ba4007f5C922FBb33C454B41ea7a1f11E83df2C": "https://github.com/ethereum-optimism/optimism/blob/773798a67678ab28c3ef7ee3405f25c04616af19/packages/contracts-bedrock/src/L2/L1Block.sol"
