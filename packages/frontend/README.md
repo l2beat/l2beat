@@ -1,6 +1,6 @@
 # @l2beat/frontend
 
-The dynamic, public-facing Next.js frontend of L2BEAT.
+The dynamic, public-facing frontend of L2BEAT.
 
 ## Setup
 
@@ -13,8 +13,8 @@ pnpm build:dependencies
 ```
 
 ## Scripts
-- `pnpm dev` - run the Next.js development server
-- `pnpm dev:mock` - run the Next.js development server with mock data
+- `pnpm dev` - run the development server
+- `pnpm dev:mock` - run the development server with mock data
 - `pnpm build` - compile the production build
 - `pnpm start` - start the production server
 - `pnpm start:mock` - start the production server with mock data
