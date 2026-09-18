@@ -1,7 +1,6 @@
 import type { InMemoryCache } from '@l2beat/shared-pure'
 import type { Request } from 'express'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
-import { env } from '~/env'
 import { getInteropTokenData } from '~/server/features/layer2s/interop/getInteropTokenData'
 import { getInteropAbstractTokens } from '~/server/features/layer2s/interop/token/getInteropAbstractTokens'
 import { getInteropTokenEntry } from '~/server/features/layer2s/interop/token/getInteropTokenEntry'
@@ -115,7 +114,7 @@ async function getCachedData({
     interopProjects,
   ] = await Promise.all([
     getInteropAbstractTokens(activeInteropChainIds),
-    env.MOCK ? undefined : getAggregatedInteropSnapshotTimestamp(),
+    getAggregatedInteropSnapshotTimestamp(),
     ps.getProjects({ select: ['chainConfig'] }),
     ps.getProjects({ select: ['interopConfig'] }),
   ])
@@ -130,7 +129,9 @@ async function getCachedData({
       { snapshotTimestamp, interopProjects },
     ),
     getInteropTokenOnchainDeployments(token.id, activeInteropChainIds),
-    getInteropTokenPairStats(token.id, snapshotTimestamp, interopProjects),
+    snapshotTimestamp
+      ? getInteropTokenPairStats(token.id, snapshotTimestamp, interopProjects)
+      : undefined,
   ])
 
   const relationsGraph =

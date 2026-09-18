@@ -26,9 +26,9 @@ const graph: InteropTokenRelationsGraph = {
     node('L', [['linea', '0x11', null]]),
   ],
   edges: [
-    { from: 'E', to: 'A', bridges: [] },
-    { from: 'E', to: 'B', bridges: [] },
-    { from: 'A', to: 'C', bridges: [] },
+    { backer: 'E', backed: 'A', bridges: [] },
+    { backer: 'E', backed: 'B', bridges: [] },
+    { backer: 'A', backed: 'C', bridges: [] },
   ],
 }
 
@@ -166,8 +166,8 @@ describe(getDirectlyBackedNodes.name, () => {
       edges: [
         ...graph.edges,
         ...descendants.map((node) => ({
-          from: 'A',
-          to: node.id,
+          backer: 'A',
+          backed: node.id,
           bridges: [],
         })),
       ],

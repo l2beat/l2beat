@@ -38,7 +38,8 @@ interface Props {
   graph: InteropTokenRelationsGraph
   node: InteropTokenRelationsNode
   onSelectNode: (id: string) => void
-  onClose: () => void
+  onClose?: () => void
+  className?: string
 }
 
 export function RelationsDetails({
@@ -46,9 +47,15 @@ export function RelationsDetails({
   node,
   onSelectNode,
   onClose,
+  className,
 }: Props) {
   return (
-    <div className="flex h-full flex-col divide-y divide-divider overflow-y-auto rounded-lg border border-divider bg-surface-primary px-4 shadow-xl">
+    <div
+      className={cn(
+        'flex h-full flex-col divide-y divide-divider bg-surface-primary px-4',
+        className,
+      )}
+    >
       <Header node={node} onClose={onClose} />
       <PanelSection
         title="Past 24h crosschain activity"
@@ -78,13 +85,13 @@ function Header({
   onClose,
 }: {
   node: InteropTokenRelationsNode
-  onClose: () => void
+  onClose: (() => void) | undefined
 }) {
   const first = node.deployments[0]
   if (!first) return null
   const cluster = isCluster(node)
   return (
-    <header className="flex items-start justify-between gap-3 py-4">
+    <header className="sticky top-0 z-10 flex items-start justify-between gap-3 bg-surface-primary py-4">
       <div className="flex min-w-0 items-center gap-3">
         {cluster ? (
           <span className="-space-x-2 flex shrink-0">
@@ -125,14 +132,16 @@ function Header({
           )}
         </div>
       </div>
-      <button
-        type="button"
-        aria-label="Close details"
-        onClick={onClose}
-        className="-mr-1.5 flex size-7 shrink-0 items-center justify-center rounded-md text-secondary hover:bg-surface-secondary hover:text-primary"
-      >
-        <CloseIcon className="size-3 fill-current" />
-      </button>
+      {onClose && (
+        <button
+          type="button"
+          aria-label="Close details"
+          onClick={onClose}
+          className="-mr-1.5 flex size-7 shrink-0 items-center justify-center rounded-md text-secondary hover:bg-surface-secondary hover:text-primary"
+        >
+          <CloseIcon className="size-3 fill-current" />
+        </button>
+      )}
     </header>
   )
 }

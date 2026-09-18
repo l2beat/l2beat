@@ -37,6 +37,9 @@ function isInteropBridgeType(value: string): value is InteropBridgeType {
   return (InteropBridgeTypeValues as readonly string[]).includes(value)
 }
 
+/** How long raw `InteropTransfer` rows are kept before the cleaner drops them. */
+export const INTEROP_TRANSFER_RETENTION = 7 * UnixTime.DAY
+
 export interface InteropTransferRecord {
   plugin: string
   bridgeType: KnownInteropBridgeType | undefined

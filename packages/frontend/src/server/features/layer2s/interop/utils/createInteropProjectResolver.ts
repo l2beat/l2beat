@@ -37,14 +37,14 @@ export function createMatchingProjectsResolver<TTarget>(
   }
 }
 
-/**
- * Unlike `createTransferBridgeResolver`, several matches are legitimate:
- * more than one bridge can mint the same deployment.
- */
 export type InteropProjectResolver = (
   observation: InteropPluginObservation,
 ) => Project<'interopConfig'>[]
 
+/**
+ * Unlike `createTransferBridgeResolver`, several matches are legitimate:
+ * more than one bridge can mint the same deployment.
+ */
 export function createInteropProjectResolver(
   projects: Project<'interopConfig'>[],
 ): InteropProjectResolver {

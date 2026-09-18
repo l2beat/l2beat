@@ -37,7 +37,10 @@ export function InteropTokenOnchainDeploymentsSection({
   ...sectionProps
 }: InteropTokenOnchainDeploymentsSectionProps) {
   const deployments = useMemo(
-    () => graph.nodes.flatMap((node) => node.deployments),
+    () =>
+      graph.nodes
+        .flatMap((node) => node.deployments)
+        .toSorted((a, b) => (b.volume ?? -1) - (a.volume ?? -1)),
     [graph],
   )
   const table = useTable<DeploymentRow>({
@@ -47,12 +50,6 @@ export function InteropTokenOnchainDeploymentsSection({
     getSortedRowModel: getSortedRowModel(),
     getPaginationRowModel: getPaginationRowModel(),
     initialState: {
-      sorting: [
-        {
-          id: 'volume',
-          desc: true,
-        },
-      ],
       pagination: {
         pageSize: DEPLOYMENTS_PER_PAGE,
         pageIndex: 0,

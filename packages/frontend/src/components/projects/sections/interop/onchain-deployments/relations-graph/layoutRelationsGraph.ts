@@ -6,9 +6,8 @@ export interface LayoutNode {
 }
 
 export interface LayoutEdge {
-  /** `from` backs `to`. */
-  from: string
-  to: string
+  backer: string
+  backed: string
 }
 
 export interface NodeBox {
@@ -109,9 +108,12 @@ function assignLayers(
   const outgoing = new Map<string, string[]>()
   const remaining = new Map(nodes.map((node) => [node.id, 0]))
   for (const edge of edges) {
-    if (!ids.has(edge.from) || !ids.has(edge.to)) continue
-    outgoing.set(edge.from, [...(outgoing.get(edge.from) ?? []), edge.to])
-    remaining.set(edge.to, (remaining.get(edge.to) ?? 0) + 1)
+    if (!ids.has(edge.backer) || !ids.has(edge.backed)) continue
+    outgoing.set(edge.backer, [
+      ...(outgoing.get(edge.backer) ?? []),
+      edge.backed,
+    ])
+    remaining.set(edge.backed, (remaining.get(edge.backed) ?? 0) + 1)
   }
 
   const layer = new Map(nodes.map((node) => [node.id, 0]))
@@ -142,11 +144,14 @@ function getPrimaryParents(
 ): Map<string, string> {
   const result = new Map<string, string>()
   for (const edge of edges.toSorted(
-    (a, b) => a.from.localeCompare(b.from) || a.to.localeCompare(b.to),
+    (a, b) =>
+      a.backer.localeCompare(b.backer) || a.backed.localeCompare(b.backed),
   )) {
-    if (result.has(edge.to)) continue
-    if (layerOf.get(edge.to) !== (layerOf.get(edge.from) ?? 0) + 1) continue
-    result.set(edge.to, edge.from)
+    if (result.has(edge.backed)) continue
+    if (layerOf.get(edge.backed) !== (layerOf.get(edge.backer) ?? 0) + 1) {
+      continue
+    }
+    result.set(edge.backed, edge.backer)
   }
   return result
 }

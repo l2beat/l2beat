@@ -116,6 +116,6 @@ function node(
   return { id, volume, ...size }
 }
 
-function edge(from: string, to: string) {
-  return { from, to }
+function edge(backer: string, backed: string) {
+  return { backer, backed }
 }
