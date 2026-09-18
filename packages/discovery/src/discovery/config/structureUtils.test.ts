@@ -93,5 +93,74 @@ describe(makeEntryStructureConfig.name, () => {
       expect(config.ignoreMethods).toEqual(['fromOverride'])
       expect(config.address).toEqual(ADDRESS)
     })
+
+    it('replaces a template handler with the override handler instead of merging them', () => {
+      const config = mergeTemplateIntoOverride(
+        {
+          fields: {
+            sequencerInbox: {
+              handler: { type: 'hardcoded', value: 'eth:0xff00' },
+            },
+          },
+        },
+        {
+          fields: {
+            sequencerInbox: {
+              handler: {
+                type: 'opStackSequencerInbox',
+                sequencerAddress: '{{ batcherHash }}',
+              },
+            },
+          },
+        },
+      )
+
+      expect(config.fields?.sequencerInbox?.handler).toEqual({
+        type: 'hardcoded',
+        value: 'eth:0xff00',
+      })
+    })
+
+    it('keeps the template handler when the override sets none', () => {
+      const config = mergeTemplateIntoOverride(
+        { fields: { sequencerInbox: { template: 'from override' } } },
+        {
+          fields: {
+            sequencerInbox: {
+              handler: {
+                type: 'opStackSequencerInbox',
+                sequencerAddress: '{{ batcherHash }}',
+              },
+            },
+          },
+        },
+      )
+
+      expect(config.fields?.sequencerInbox?.handler).toEqual({
+        type: 'opStackSequencerInbox',
+        sequencerAddress: '{{ batcherHash }}',
+      })
+      expect(config.fields?.sequencerInbox?.template).toEqual('from override')
+    })
+
+    it('merges a contract field that is itself named handler', () => {
+      const config = mergeTemplateIntoOverride(
+        { fields: { handler: { template: 'from override' } } },
+        {
+          fields: {
+            handler: {
+              handler: { type: 'storage', slot: 1 },
+              template: 'from template',
+            },
+          },
+        },
+      )
+
+      expect(config.fields?.handler?.handler).toEqual({
+        type: 'storage',
+        slot: 1,
+      })
+      expect(config.fields?.handler?.template).toEqual('from override')
+    })
   })
 })
