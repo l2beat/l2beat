@@ -3,7 +3,7 @@ import {
   ATTESTATION_NETWORK,
   ATTESTATION_NETWORK_NAMES,
 } from '../implementations/crops/easConfig'
-import { ExistingPath, HttpUrl } from './types'
+import { ExistingPath, HttpUrl, ViemAddress, ViemHash } from './types'
 
 export const discoveryPath = option({
   type: optional(ExistingPath),
@@ -32,6 +32,36 @@ export const attestationNetwork = option({
   long: 'network',
   description: 'which network the crop attestations live on.',
   defaultValue: () => ATTESTATION_NETWORK,
+})
+
+/**
+ * Left out, the Safe committed in easConfig for the network is used. A flag
+ * rather than a positional so a paste cannot land in the wrong slot.
+ */
+export const attestationSafe = option({
+  type: optional(ViemAddress),
+  env: 'L2B_CROPS_SAFE',
+  long: 'safe',
+  description:
+    'the Safe that attests. Defaults to the one committed for the network.',
+})
+
+/**
+ * The payload carries a timestamp, so calldata generated twice differs. A
+ * reviewer reproducing a batch passes the value decoded from it and compares
+ * the hex byte for byte.
+ */
+export const attestationReviewedAt = option({
+  type: optional(number),
+  long: 'reviewed-at',
+  description:
+    'unix seconds to stamp the attestation with. Defaults to now; pass the value decoded from an existing batch to reproduce its calldata.',
+})
+
+export const attestationTxHash = option({
+  type: ViemHash,
+  long: 'tx',
+  description: 'hash of the executed Safe transaction to record.',
 })
 
 export const chainName = option({

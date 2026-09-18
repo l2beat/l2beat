@@ -2,9 +2,9 @@ import {
   type Address,
   type Chain,
   createPublicClient,
-  createWalletClient,
   decodeAbiParameters,
   encodeAbiParameters,
+  encodeFunctionData,
   type Hex,
   http,
   type Log,
@@ -12,11 +12,9 @@ import {
   parseAbi,
   parseAbiParameters,
   parseEventLogs,
-  publicActions,
   zeroAddress,
   zeroHash,
 } from 'viem'
-import { privateKeyToAccount } from 'viem/accounts'
 import { mainnet, sepolia } from 'viem/chains'
 import {
   ATTESTATION_SCHEMA,
@@ -39,6 +37,7 @@ export const EAS_ABI = parseAbi([
   'function multiRevoke(MultiRevocationRequest[] multiRequests) payable',
   'function getAttestation(bytes32 uid) view returns (Attestation)',
   'event Attested(address indexed recipient, address indexed attester, bytes32 uid, bytes32 indexed schemaUID)',
+  'event Revoked(address indexed recipient, address indexed attester, bytes32 uid, bytes32 indexed schemaUID)',
 ])
 
 export const SCHEMA_REGISTRY_ABI = parseAbi([
@@ -128,21 +127,6 @@ export function createReader(
   })
 }
 
-/** Signs and simulates: every write is dry-run against the node before it is sent. */
-export function createSigner(
-  network: AttestationNetworkConfig,
-  privateKey: Hex,
-  rpcUrl?: string,
-) {
-  return createWalletClient({
-    chain: CHAINS[network.name],
-    account: privateKeyToAccount(privateKey),
-    transport: http(rpcUrl),
-  }).extend(publicActions)
-}
-
-export type Signer = ReturnType<typeof createSigner>
-
 export async function isSchemaRegistered(
   reader: PublicClient,
   network: AttestationNetworkConfig,
@@ -156,12 +140,8 @@ export async function isSchemaRegistered(
   return record.uid !== zeroHash
 }
 
-export async function registerSchema(
-  signer: Signer,
-  network: AttestationNetworkConfig,
-): Promise<Hex> {
-  const { request } = await signer.simulateContract({
-    address: network.schemaRegistry,
+export function encodeRegisterSchema(): Hex {
+  return encodeFunctionData({
     abi: SCHEMA_REGISTRY_ABI,
     functionName: 'register',
     args: [
@@ -170,7 +150,6 @@ export async function registerSchema(
       ATTESTATION_SCHEMA_REVOCABLE,
     ],
   })
-  return await signer.writeContract(request)
 }
 
 export async function getAttestation(
@@ -216,7 +195,7 @@ export async function getAttestations(
 
 // No recipient (the subject is a protocol, not an account) and no expiry
 // (revocation is the only way an attestation stops being valid).
-function multiAttestArgs(attestations: NewAttestation[]) {
+export function multiAttestArgs(attestations: NewAttestation[]) {
   return [
     [
       {
@@ -250,37 +229,56 @@ export function multiRevokeArgs(revocations: Revocation[]) {
   ] as const
 }
 
-export async function multiAttest(
-  signer: Signer,
-  network: AttestationNetworkConfig,
-  attestations: NewAttestation[],
-): Promise<Hex> {
-  const { request } = await signer.simulateContract({
-    address: network.eas,
+export function encodeMultiAttest(attestations: NewAttestation[]): Hex {
+  return encodeFunctionData({
     abi: EAS_ABI,
     functionName: 'multiAttest',
     args: multiAttestArgs(attestations),
   })
-  return await signer.writeContract(request)
 }
 
-export async function multiRevoke(
-  signer: Signer,
-  network: AttestationNetworkConfig,
-  revocations: Revocation[],
-): Promise<Hex> {
-  const { request } = await signer.simulateContract({
-    address: network.eas,
+export function encodeMultiRevoke(revocations: Revocation[]): Hex {
+  return encodeFunctionData({
     abi: EAS_ABI,
     functionName: 'multiRevoke',
     args: multiRevokeArgs(revocations),
   })
-  return await signer.writeContract(request)
+}
+
+/**
+ * A Safe execution emits the Safe's own events beside the EAS ones, and a
+ * batch may touch other contracts entirely, so both readers below take only
+ * the logs EAS itself wrote.
+ */
+function easLogs(network: AttestationNetworkConfig, logs: Log[]): Log[] {
+  const eas = network.eas.toLowerCase()
+  return logs.filter((log) => log.address.toLowerCase() === eas)
 }
 
 /** EAS emits one Attested event per attestation, in submission order. */
-export function readAttestedUids(logs: Log[]): Hex[] {
-  return parseEventLogs({ abi: EAS_ABI, eventName: 'Attested', logs }).map(
-    (log) => log.args.uid,
-  )
+export function readAttestedUids(
+  network: AttestationNetworkConfig,
+  logs: Log[],
+): Hex[] {
+  return parseEventLogs({
+    abi: EAS_ABI,
+    eventName: 'Attested',
+    logs: easLogs(network, logs),
+  }).map((log) => log.args.uid)
+}
+
+/** The revoker is indexed on the event, so a receipt says who revoked what. */
+export function readRevoked(
+  network: AttestationNetworkConfig,
+  logs: Log[],
+): { uid: Hex; attester: Address; schema: Hex }[] {
+  return parseEventLogs({
+    abi: EAS_ABI,
+    eventName: 'Revoked',
+    logs: easLogs(network, logs),
+  }).map((log) => ({
+    uid: log.args.uid,
+    attester: log.args.attester,
+    schema: log.args.schemaUID,
+  }))
 }

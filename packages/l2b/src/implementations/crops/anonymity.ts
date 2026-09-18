@@ -1,7 +1,7 @@
 import type { AttestationNetworkConfig } from './easConfig'
 
 // While the attestations live on a testnet, nothing published onchain may tie
-// them to L2BEAT. The commands run this right before signing.
+// them to L2BEAT. crops-attest runs this before it will print any calldata.
 
 const FORBIDDEN = ['l2beat', 'crops']
 
@@ -21,7 +21,7 @@ export function assertAnonymous(
   const found = findIdentifyingStrings(text)
   if (found.length > 0) {
     throw new Error(
-      `${what} contains ${found.map((x) => `"${x}"`).join(', ')}, which must not appear onchain while attesting on ${network.name}. Refusing to sign.`,
+      `${what} contains ${found.map((x) => `"${x}"`).join(', ')}, which must not appear onchain while attesting on ${network.name}. Refusing to build the calldata.`,
     )
   }
 }

@@ -35,3 +35,5 @@ packages/backend/scripts/tvs/breakdown.json
 packages/backend/scripts/tvs/local-data.json
 packages/backend/scripts/da/preview.json
 packages/uops-dashboard/src/chains.json
+# l2b crops-attest output
+crops-attest.md

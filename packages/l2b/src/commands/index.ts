@@ -9,6 +9,7 @@ import { CompareOpStacks } from './CompareOpStacks'
 import { CompareOrbitStacks } from './CompareOrbitStacks'
 import { CountUserOperations } from './CountUserOperations'
 import { CropsAttest } from './CropsAttest'
+import { CropsRecord } from './CropsRecord'
 import { CropsVerify } from './CropsVerify'
 import { DecodeEigenDACommitment } from './DecodeEigenDACommitment'
 import { DeploymentTimestamp } from './DeploymentTimestamp'
@@ -64,6 +65,7 @@ export function getSubcommands() {
     CompareOrbitStacks,
     CountUserOperations,
     CropsAttest,
+    CropsRecord,
     CropsVerify,
     DecodeEigenDACommitment,
     DeploymentTimestamp,

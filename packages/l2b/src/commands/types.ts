@@ -7,6 +7,7 @@ import {
 } from '@l2beat/shared-pure'
 import { extendType, string, type Type } from 'cmd-ts'
 import { stat } from 'fs/promises'
+import { type Address, getAddress, type Hex, isAddress, isHash } from 'viem'
 
 export const EthereumAddressValue: Type<string, EthereumAddress> = {
   from(str): Promise<EthereumAddress> {
@@ -100,6 +101,23 @@ export const File = extendType(string, {
     const stats = await stat(path)
     assert(stats.isFile(), 'Path does not exist')
     return path
+  },
+})
+
+/** Checksummed, so it can be compared with what viem reads back from a node. */
+export const ViemAddress: Type<string, Address> = extendType(string, {
+  // biome-ignore lint/suspicious/useAwait: does not work without async
+  async from(str) {
+    assert(isAddress(str), `${str} is not an address`)
+    return getAddress(str)
+  },
+})
+
+export const ViemHash: Type<string, Hex> = extendType(string, {
+  // biome-ignore lint/suspicious/useAwait: does not work without async
+  async from(str) {
+    assert(isHash(str), `${str} is not a 32 byte hash`)
+    return str
   },
 })
 

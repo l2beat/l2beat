@@ -4,7 +4,7 @@ import type {
   ProjectCrops,
   ProjectOpenSourceCropEvaluation,
 } from '@l2beat/config'
-import { OSI_LICENSES } from '@l2beat/config'
+import { OSI_LICENSES, qualifiesForGarden } from '@l2beat/config'
 import type {
   ResolvedCropEvaluation,
   ResolvedCrops,
@@ -41,13 +41,9 @@ export function resolveCropEvaluation(
   return resolved
 }
 
-/**
- * A single red crop keeps a project out, whatever the other three say. It is
- * still reviewed, and its project page still shows the evaluation.
- */
-export function qualifiesForGarden(crops: ResolvedCrops): boolean {
-  return Object.values(crops).every((crop) => crop.sentiment !== 'bad')
-}
+// One definition, in config, so the site, the API and `l2b crops-attest`
+// cannot disagree about who is in the garden.
+export { qualifiesForGarden }
 
 /** Throws rather than render a green Open source crop nothing backs. */
 function getOsiLicense(id: OsiLicenseId): OsiLicense {
