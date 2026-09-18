@@ -34,6 +34,47 @@ describe(getPrivacyAnonymitySetSyncStatus.name, () => {
     expect(result.syncingLabels).toEqual([series[1]!.label])
   })
 
+  it('uses compact amounts in syncing labels without changing the series labels', () => {
+    const minimumAmounts = [
+      '999',
+      '1000',
+      '1500',
+      '20000',
+      '1500000',
+      '1000000000',
+      '1000000000000',
+    ]
+    const series = getPrivacyAnonymitySetSeries(
+      makeProject(minimumAmounts, 0),
+    ).filter((item) => item.bucketId === 'first')
+
+    const result = getPrivacyAnonymitySetSyncStatus(series, [], target)
+
+    expect(result.syncingLabels).toEqual([
+      '≥999 ETH',
+      '≥1 K ETH',
+      '≥1.5 K ETH',
+      '≥20 K ETH',
+      '≥1.5 M ETH',
+      '≥1 B ETH',
+      '≥1 T ETH',
+    ])
+    expect(series.map((item) => item.label)).toEqual(
+      minimumAmounts.map((amount) => `≥${amount} ETH`),
+    )
+
+    const denominationSeries = getPrivacyAnonymitySetSeries(
+      makeProject(['20000'], 0, 'denomination'),
+    ).filter((item) => item.bucketId === 'first')
+    const denominationResult = getPrivacyAnonymitySetSyncStatus(
+      denominationSeries,
+      [],
+      target,
+    )
+
+    expect(denominationResult.syncingLabels).toEqual(['20 K ETH'])
+  })
+
   it('requires an active, started configuration', () => {
     const project = makeProject()
     const series = getPrivacyAnonymitySetSeries(project)
@@ -95,6 +136,8 @@ describe(getPrivacyAnonymitySetSyncStatus.name, () => {
 
 function makeProject(
   minimumAmounts: string[] = ['1'],
+  decimals = 18,
+  bucketType: 'pool' | 'denomination' = 'pool',
 ): PrivacyAnonymitySetProject {
   const addresses = [
     EthereumAddress(`0x${'11'.repeat(20)}`),
@@ -107,13 +150,13 @@ function makeProject(
           address: EthereumAddress.ZERO,
           iconUrl: undefined,
           symbol: 'ETH',
-          decimals: 18,
+          decimals,
           priceId: 'ethereum',
           sinceTimestamp: UnixTime(0),
         },
         buckets: ['first', 'second'].map((id, index) => ({
           id,
-          type: 'pool' as const,
+          type: bucketType,
           label: id,
           address: ChainSpecificAddress.fromLong('ethereum', addresses[index]!),
           sinceTimestamp: UnixTime(0),

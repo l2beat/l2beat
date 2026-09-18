@@ -36,11 +36,11 @@ describe(getAnonymitySetSteps.name, () => {
   it('explains which series are excluded while syncing', () => {
     const summary = makeSummary({
       bucketType: 'pool',
-      syncingLabels: ['≥200 DAI', '≥20000 DAI'],
+      syncingLabels: ['≥200 DAI', '≥20 K DAI'],
     })
 
     expect(getAnonymitySetSyncingNote(summary)).toEqual(
-      'The displayed value excludes series still being indexed: ≥200 DAI, ≥20000 DAI.',
+      'The displayed value excludes series still being indexed: ≥200 DAI, ≥20 K DAI.',
     )
   })
 })

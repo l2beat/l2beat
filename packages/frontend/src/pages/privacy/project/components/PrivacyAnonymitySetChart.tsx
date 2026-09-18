@@ -149,7 +149,7 @@ function AnonymitySetTooltip({
           : `${label}-day holding duration`}
       </div>
       <div className="flex flex-col gap-2">
-        {payload.map((entry) => {
+        {sortAnonymitySetTooltipEntries(payload).map((entry) => {
           if (
             typeof entry.dataKey !== 'string' ||
             entry.hide ||
@@ -183,4 +183,20 @@ function AnonymitySetTooltip({
       </div>
     </ChartTooltipWrapper>
   )
+}
+
+export function sortAnonymitySetTooltipEntries<T extends { value?: unknown }>(
+  entries: readonly T[],
+): T[] {
+  return entries.toSorted((a, b) => {
+    const aValue = toFiniteNumber(a.value)
+    const bValue = toFiniteNumber(b.value)
+
+    return bValue - aValue
+  })
+}
+
+function toFiniteNumber(value: unknown): number {
+  const numericValue = Number(value ?? 0)
+  return Number.isFinite(numericValue) ? numericValue : Number.NEGATIVE_INFINITY
 }
