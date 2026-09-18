@@ -6,8 +6,8 @@ import type {
 import { execSync } from 'child_process'
 import { writeFileSync } from 'fs'
 import { dirname, join } from 'path'
-import type { Address } from 'viem'
 import {
+  type Address,
   ATTESTATION_SCHEMA,
   ATTESTATION_SCHEMA_UID,
   type AttestationNetworkConfig,

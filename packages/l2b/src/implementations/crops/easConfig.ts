@@ -1,4 +1,5 @@
-import type { Address, Hex } from 'viem'
+export type Hex = `0x${string}`
+export type Address = Hex
 
 // The EAS deployment l2b attests on. Config's ledger repeats what readers
 // need (network, schema, uid); this is where those values are decided.
@@ -32,6 +33,7 @@ export interface AttestationNetworkConfig {
   schemaRegistry: Address
   explorer: string
   isTestnet: boolean
+  publicRpc: string
 }
 
 export const ATTESTATION_NETWORKS: Record<
@@ -45,6 +47,7 @@ export const ATTESTATION_NETWORKS: Record<
     schemaRegistry: '0x0a7E2Ff54e76B8E6659aedc9103FB21c038050D0',
     explorer: 'https://sepolia.easscan.org',
     isTestnet: true,
+    publicRpc: 'https://ethereum-sepolia-rpc.publicnode.com',
   },
   ethereum: {
     name: 'ethereum',
@@ -53,6 +56,7 @@ export const ATTESTATION_NETWORKS: Record<
     schemaRegistry: '0xA7b39296258348C78294F95B872b282326A97BDF',
     explorer: 'https://easscan.org',
     isTestnet: false,
+    publicRpc: 'https://ethereum-rpc.publicnode.com',
   },
 }
 

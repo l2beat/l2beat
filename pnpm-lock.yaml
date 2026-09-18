@@ -962,9 +962,6 @@ importers:
       rimraf:
         specifier: ^5.0.0
         version: 5.0.10
-      viem:
-        specifier: ^2.18.6
-        version: 2.31.6(typescript@7.0.2)(zod@3.24.1)
     devDependencies:
       '@l2beat/typescript-config':
         specifier: workspace:*
