@@ -5,8 +5,8 @@ import { getTokenDb } from '~/server/tokenDb'
 import { FrontendInMemoryCache } from '~/utils/FrontendInMemoryCache'
 import { manifest } from '~/utils/Manifest'
 import { getActiveInteropAbstractTokens } from '../layer2s/interop/token/getInteropAbstractTokens'
-import { getPairStatsParams } from '../layer2s/interop/token/getInteropTokenRelations'
 import { getChainDisplayInfo } from '../layer2s/interop/token/getInteropTokenRelationsGraph'
+import { getTokenGraphPairStatsParams } from '../layer2s/interop/token/getTokenGraphPairStatsParams'
 import { createInteropProjectResolver } from '../layer2s/interop/utils/createInteropProjectResolver'
 import { getAggregatedInteropSnapshotTimestamp } from '../layer2s/interop/utils/getAggregatedInteropTimestamp'
 import { getActiveInteropChainIds } from '../layer2s/interop/utils/getInteropChains'
@@ -77,7 +77,7 @@ async function getTokenGraphTilesData(): Promise<TokenGraphTile[]> {
 }
 
 async function getPairStatsByTokenId() {
-  const params = await getPairStatsParams()
+  const params = await getTokenGraphPairStatsParams()
   if (!params) return undefined
   const rows = await getDb().interopTransfer.getAllDeployedTokenPairStats(
     params.timeRange,

@@ -16,7 +16,7 @@ export function createTokensRouter(
   router.get('/tokens', async (req, res) => {
     const data = await cache.get(
       {
-        key: ['tokens', req.originalUrl],
+        key: ['tokens'],
         ttl: 5 * 60,
         staleWhileRevalidate: 25 * 60,
       },

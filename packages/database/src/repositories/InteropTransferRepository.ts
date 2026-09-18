@@ -1013,7 +1013,6 @@ export class InteropTransferRepository extends BaseRepository {
     )
   }
 
-  /** `getAllDeployedTokenPairStats` narrowed to one abstract token. */
   async getDeployedTokenPairStats(
     abstractTokenId: string,
     timeRange: InteropTransferTimeRange,

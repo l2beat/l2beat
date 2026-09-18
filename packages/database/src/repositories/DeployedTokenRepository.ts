@@ -234,7 +234,6 @@ export class DeployedTokenRepository extends BaseRepository {
     return rows.map(toRecord)
   }
 
-  /** Skips the metadata/assignment-proof JSON that `getAll` carries. */
   async getAllAssignments(): Promise<DeployedTokenAssignment[]> {
     return await this.db
       .selectFrom('DeployedToken')

@@ -187,7 +187,6 @@ export class AbstractTokenRepository extends BaseRepository {
     return result.map(toRecord)
   }
 
-  /** Skips the coingecko/comment JSON that `getAll` carries. */
   async getAllSummaries(): Promise<AbstractTokenSummary[]> {
     return await this.db
       .selectFrom('AbstractToken')
