@@ -27,11 +27,9 @@ RUN --mount=type=secret,id=TURBO_TOKEN,env=TURBO_TOKEN \
   --mount=type=secret,id=TURBO_API,env=TURBO_API \
   pnpm build:frontend
 
-# Replace node_modules with production dependencies only. Switching dev -> prod
-# in place does not garbage-collect the virtual store, so purge and reinstall
-# offline from the local store (cached native builds are reused).
-RUN rm -rf node_modules packages/*/node_modules && \
-  CI=true pnpm install --prod --frozen-lockfile --offline
+# Trace the server's runtime dependencies and include its assets without
+# copying source code, build caches, or unused packages into the release.
+RUN pnpm --filter @l2beat/frontend exec tsx scripts/buildRuntime.ts /runtime
 
 FROM node:22.22.0-slim AS release
 
@@ -43,7 +41,7 @@ RUN apt update && \
   groupadd -r appgroup && useradd -r -g appgroup -m appuser
 
 WORKDIR /app/
-COPY --from=builder --chown=appuser:appgroup /src/ .
+COPY --from=builder --chown=appuser:appgroup /runtime/ .
 WORKDIR /app/packages/frontend/
 
 USER appuser
