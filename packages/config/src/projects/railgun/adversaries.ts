@@ -86,7 +86,7 @@ export const railgunAdversaries = definePrivacyAdversaries({
       exposure:
         'There is no view key, so nobody can read past activity. The DAO can upgrade the contracts after a seven-day delay. The proof-of-innocence list provider can refuse to list a shield, leaving only a self-broadcast exit.',
       advice:
-        'Watch governance proposals; you have seven days to unshield before an upgrade takes effect. Be ready to self-broadcast if the list provider censors you.',
+        'Watch governance proposals. You have seven days to unshield before an upgrade takes effect. Be ready to self-broadcast if the list provider censors you.',
       interior: {
         sender: 'private',
         recipient: 'private',

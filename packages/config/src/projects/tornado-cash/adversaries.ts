@@ -12,7 +12,7 @@ export const tornadoCashAdversaries = definePrivacyAdversaries({
     publicObserver: {
       sentiment: 'good',
       exposure:
-        'Which deposit funds which withdrawal is hidden. Each pool has one fixed amount and no in-pool transfers, so every withdrawal spends exactly one deposit.',
+        'Each pool has one fixed amount and no in-pool transfers, so every withdrawal spends exactly one deposit.',
       advice: S.exitViaRelayer('relayer'),
       sources: [
         { contract: 'Pool_1_ETH', title: '1 ETH pool' },
@@ -24,7 +24,7 @@ export const tornadoCashAdversaries = definePrivacyAdversaries({
     },
     chainAnalyst: {
       sentiment: 'good',
-      exposure: `The candidates for a withdrawal are the unspent deposits of the same pool, the tracked anonymity set, which differs sharply between pools. Timing, address reuse and relayer choice narrow it further. ${S.walletFingerprint('relayer')}`,
+      exposure: `The candidates for a withdrawal are the unspent deposits of the same pool, the anonymity set, which differs sharply between pools. Timing, address reuse and relayer choice narrow it further. ${S.walletFingerprint('relayer')}`,
       advice: `${S.largeAnonymitySet} Deposit a large sum as one note. ${S.freshExit}`,
       sources: [
         {
