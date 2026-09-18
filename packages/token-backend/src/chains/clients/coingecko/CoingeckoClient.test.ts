@@ -58,6 +58,44 @@ describe(CoingeckoClient.name, () => {
     })
   })
 
+  it('fetches circulating supplies in one markets request', async () => {
+    const fetch = mockFetch([
+      {
+        id: 'usd-coin',
+        circulating_supply: 75_000_000_000,
+        last_updated: '2026-09-03T07:57:20.000Z',
+      },
+      {
+        id: 'missing-supply',
+        circulating_supply: null,
+        last_updated: null,
+      },
+    ])
+    const client = new CoingeckoClient({ callsPerMinute: 100_000 })
+
+    const result = await client.getCoinsMarketData([
+      'usd-coin',
+      'missing-supply',
+    ])
+
+    expect(result).toEqual([
+      {
+        id: 'usd-coin',
+        circulating_supply: 75_000_000_000,
+        last_updated: '2026-09-03T07:57:20.000Z',
+      },
+      {
+        id: 'missing-supply',
+        circulating_supply: null,
+        last_updated: null,
+      },
+    ])
+    expect(fetch.calls[0]?.args[0]).toEqual(
+      'https://api.coingecko.com/api/v3/coins/markets?vs_currency=usd&ids=usd-coin%2Cmissing-supply&per_page=2&sparkline=false',
+    )
+    expect(fetch.calls[0]?.args[1]).toEqual({ headers: {} })
+  })
+
   it('constructs the market chart range request', async () => {
     const fetch = mockFetch({
       prices: [[1592611200000, 228.9]],
