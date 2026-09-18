@@ -1,5 +1,10 @@
 import { getCollection } from '~/content/getCollection'
 import { env } from '~/env'
+import {
+  GARDEN_PATH,
+  INTEGRATE_CROPS_PATH,
+  SUBMIT_PROTOCOL_PATH,
+} from '~/pages/garden/paths'
 import { shouldHaveNoBridgePage } from './features/data-availability/utils/shouldHaveNoBridgePage'
 import { ps } from './projects'
 
@@ -54,6 +59,9 @@ export async function getPagePaths(): Promise<PagePath[]> {
   }
   if (env.CLIENT_SIDE_DEFI_ENABLED) {
     paths.push('/defi/summary')
+  }
+  if (env.CLIENT_SIDE_GARDEN_ENABLED) {
+    paths.push(GARDEN_PATH, SUBMIT_PROTOCOL_PATH, INTEGRATE_CROPS_PATH)
   }
   paths.push(...(await getDynamicPagePaths()))
   return paths

@@ -25,6 +25,110 @@
       "category": "stablecoin"
     },
     {
+      "symbol": "AUSD",
+      "address": "0x00000000eFE302BEAA2b3e6e1b18d08D69a9012a",
+      "coingeckoId": "agora-dollar",
+      "category": "stablecoin"
+    },
+    {
+      // Steakhouse Prime USDT vault (Morpho); not listed on CoinGecko, priced with its USDT underlying
+      "symbol": "steakUSDT",
+      "address": "0xbeef003C68896c7D2c3c60d363e8d71a49Ab2bf9",
+      "coingeckoId": "tether",
+      "category": "stablecoin"
+    },
+    {
+      // Steakhouse High Yield USDT vault (Morpho); not listed on CoinGecko, priced with its USDT underlying
+      "symbol": "bbqUSDT",
+      "address": "0xbeeff07d991C04CD640DE9F15C08ba59c4FEDEb7",
+      "coingeckoId": "tether",
+      "category": "stablecoin"
+    },
+    {
+      // Steakhouse High Yield USDC vault (Morpho); not listed on CoinGecko, priced with its USDC underlying
+      "symbol": "bbqUSDC",
+      "address": "0xbeeff2C5bF38f90e3482a8b19F12E5a6D2FCa757",
+      "coingeckoId": "usd-coin",
+      "category": "stablecoin"
+    },
+    {
+      // Wintermute Confidential WBTC vault (Morpho); not listed on CoinGecko, priced with its WBTC underlying
+      "symbol": "armcWBTC",
+      "address": "0x3d5EcCb62974178236A768A7ef14D3ce468Fbe91",
+      "coingeckoId": "wrapped-bitcoin",
+      "category": "btc"
+    },
+    {
+      // Wintermute USDT Select vault (Morpho); not listed on CoinGecko, priced with its USDT underlying
+      "symbol": "armUSDTs",
+      "address": "0x500aE64100D7DbDb640531085C2F5d40cDC8930D",
+      "coingeckoId": "tether",
+      "category": "stablecoin"
+    },
+    {
+      // Wintermute USDC Select vault (Morpho); not listed on CoinGecko, priced with its USDC underlying
+      "symbol": "armUSDCs",
+      "address": "0xA2EAaD0D586cF9FD73bb2c09cF6A7E3e187D68cd",
+      "coingeckoId": "usd-coin",
+      "category": "stablecoin"
+    },
+    {
+      // Wintermute USDT Prime vault (Morpho); not listed on CoinGecko, priced with its USDT underlying
+      "symbol": "armUSDTp",
+      "address": "0xBf29043164660C60A2a72Cd15FFe2304e87B6838",
+      "coingeckoId": "tether",
+      "category": "stablecoin"
+    },
+    {
+      // Wintermute USDC Prime vault (Morpho); not listed on CoinGecko, priced with its USDC underlying
+      "symbol": "armUSDCp",
+      "address": "0x5dc53a23AdC9f2Bed98de6F59F7F309a7c71FF2B",
+      "coingeckoId": "usd-coin",
+      "category": "stablecoin"
+    },
+    {
+      // Wintermute Pendle Ecosystem USDC vault (Morpho); not listed on CoinGecko, priced with its USDC underlying
+      "symbol": "pendleUSDC",
+      "address": "0x55C1B6e461a6334B567bAF0FEb5D728715446f05",
+      "coingeckoId": "usd-coin",
+      "category": "stablecoin"
+    },
+    {
+      // Flowdesk AUSD RWA Strategy vault (Morpho); not listed on CoinGecko, priced with its AUSD underlying
+      "symbol": "fAUSDe",
+      "address": "0x32401B9fb79065Bc15949DE0BD43927492f02F0C",
+      "coingeckoId": "agora-dollar",
+      "category": "stablecoin"
+    },
+    {
+      // Flowdesk Confidential High Yield USDT vault (Morpho); not listed on CoinGecko, priced with its USDT underlying
+      "symbol": "fcUSDT",
+      "address": "0xb48C056C5608bA2Ee4cD94AF2bF4b1F25295Bd7e",
+      "coingeckoId": "tether",
+      "category": "stablecoin"
+    },
+    {
+      // RockawayX Confidential RWA USDC vault (Morpho); not listed on CoinGecko, priced with its USDC underlying
+      "symbol": "roxcUSDC",
+      "address": "0xc207d3f66537D7F66456808379A0E560cF20Da36",
+      "coingeckoId": "usd-coin",
+      "category": "stablecoin"
+    },
+    {
+      // RockawayX USDC Yield vault (Morpho); not listed on CoinGecko, priced with its USDC underlying
+      "symbol": "roxUSDCy",
+      "address": "0xE0181090c22579B6A217f1522cbf8c9f1F0C1965",
+      "coingeckoId": "usd-coin",
+      "category": "stablecoin"
+    },
+    {
+      // Bitwise Premium RWA AUSD vault (Morpho); not listed on CoinGecko, priced with its AUSD underlying
+      "symbol": "PAPY",
+      "address": "0xB344e331A3cDa61D329fb3Cca2Be5942da87c418",
+      "coingeckoId": "agora-dollar",
+      "category": "stablecoin"
+    },
+    {
       "symbol": "RON",
       "address": "0x5f2Db62536dd888AacEa933068384318A02094c0",
       "coingeckoId": "ronin"
@@ -3015,7 +3119,7 @@
       "symbol": "RAIN",
       "address": "0x25118290e6A5f4139381D072181157035864099d",
       "source": "native",
-      "supply": "circulatingSupply" // overridden by a custom TVS formula excluding controlled allocation balances
+      "supply": "circulatingSupply" // overridden by a custom TVS formula excluding controlled allocation and custody balances
     },
     {
       "symbol": "syrupUSDC",

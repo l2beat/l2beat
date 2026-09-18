@@ -7,7 +7,7 @@ import {
   type TrackedTxSharpSubmissionConfig,
   type TrackedTxTransferConfig,
 } from '@l2beat/shared'
-import { assert, ProjectId } from '@l2beat/shared-pure'
+import { assert, ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { existsSync, readFileSync } from 'fs'
 import { join } from 'path'
 import { badgesCompareFn } from '../common/badges'
@@ -23,6 +23,7 @@ import type {
   ProjectScalingRiskView,
   ScalingProject,
 } from '../internalTypes'
+import { loadOssification } from '../ossification/loadOssification'
 import { asArray, emptyArrayToUndefined } from '../templates/utils'
 import {
   type BaseProject,
@@ -54,6 +55,7 @@ import { getVM } from './utils/getVM'
 const daBridges = refactored.filter((p) => p.daBridge)
 export function getProjects(): BaseProject[] {
   runConfigAdjustments()
+  const now = UnixTime.now()
 
   return refactored
     .map((p): BaseProject => ({ ...p, tvsConfig: getTvsConfig(p) }))
@@ -61,11 +63,21 @@ export function getProjects(): BaseProject[] {
     .concat(layer3s.map(layer2Or3ToProject))
     .concat(ecosystems)
     .map(withDiscoveryUpdates)
+    .map((project) => withOssification(project, now))
 }
 
 function withDiscoveryUpdates(project: BaseProject): BaseProject {
   const discoveryUpdates = loadDiscoveryUpdates(project.id)
   return discoveryUpdates ? { ...project, discoveryUpdates } : project
+}
+
+function withOssification(project: BaseProject, now: UnixTime): BaseProject {
+  const ossification = loadOssification(
+    project.id,
+    now,
+    project.chainConfig?.sinceTimestamp,
+  )
+  return ossification ? { ...project, ossification } : project
 }
 
 function layer2Or3ToProject(p: ScalingProject): BaseProject {
@@ -171,6 +183,7 @@ function layer2Or3ToProject(p: ScalingProject): BaseProject {
     daTrackingConfig: p.config.daTracking,
     ecosystemInfo: p.ecosystemInfo,
     interopConfig: p.interopConfig,
+    crops: p.crops,
     // tags
     archivedAt: p.archivedAt,
     hasTestnet: p.hasTestnet,

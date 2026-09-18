@@ -4,8 +4,8 @@ import type {
   StateValidationProgramHashData,
 } from '~/components/projects/sections/program-hashes/ProgramHashesSection'
 import type { SevenDayTvsBreakdown } from '~/server/features/layer2s/tvs/get7dTvsBreakdown'
-import { manifest } from '~/utils/Manifest'
 import type { ProjectSectionProps } from '../../components/projects/sections/types'
+import { toUsedInProjectWithIcon } from './contracts-and-permissions/getProgramHashes'
 import { tvsComparator } from './getVerifiersSection'
 
 export function getProgramHashesSection(
@@ -27,20 +27,10 @@ export function getProgramHashesSection(
       if (!current) {
         result.set(programHash.hash, {
           ...programHash,
-          usedIn: [
-            {
-              ...l2Project,
-              icon: manifest.getUrl(`/icons/${l2Project.slug}.png`),
-              url: `/layer2s/projects/${l2Project.slug}`,
-            },
-          ],
+          usedIn: [toUsedInProjectWithIcon(l2Project)],
         })
       } else {
-        current.usedIn.push({
-          ...l2Project,
-          icon: manifest.getUrl(`/icons/${l2Project.slug}.png`),
-          url: `/layer2s/projects/${l2Project.slug}`,
-        })
+        current.usedIn.push(toUsedInProjectWithIcon(l2Project))
       }
 
       current?.usedIn.sort(tvsComparator(allProjectsWithDaBridge, tvs))

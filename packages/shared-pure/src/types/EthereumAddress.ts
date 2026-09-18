@@ -56,15 +56,7 @@ EthereumAddress.unsafe = function unsafe(address: string) {
 }
 
 EthereumAddress.from = function from(value: string) {
-  const withoutPrefix = value.slice(2)
-
-  for (const char of withoutPrefix) {
-    if (!ALLOWED_CHARS.includes(char.toLowerCase())) {
-      throw new TypeError('Invalid EthereumAddress')
-    }
-  }
-
-  const padded = withoutPrefix.padStart(40, '0')
+  const padded = value.slice(2).padStart(40, '0')
   return EthereumAddress('0x' + padded)
 }
 

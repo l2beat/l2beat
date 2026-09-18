@@ -3,8 +3,8 @@ import type { ZkCatalogTvsSectionProps } from '~/components/projects/sections/tv
 import type { ProjectSectionProps } from '~/components/projects/sections/types'
 import { getLogger } from '~/server/utils/logger'
 import type { ProjectWithPageMetadata } from '~/utils/project/getProjectUrl'
+import { toChartProject } from '~/utils/project/toChartProject'
 import { optionToRange } from '~/utils/range/range'
-import { withProjectIcon } from '~/utils/withProjectIcon'
 import { getProjectsUsedIn } from './getTrustedSetupsWithVerifiersAndAttesters'
 
 export function getZkCatalogTvsSection(
@@ -83,7 +83,7 @@ export function getZkCatalogTvsSection(
     defaultRange: optionToRange('1y'),
     milestones: milestones,
     tvsInfo: project.tvsInfo,
-    project: withProjectIcon(project),
+    project: toChartProject(project),
     projectsForTvs,
   }
 }

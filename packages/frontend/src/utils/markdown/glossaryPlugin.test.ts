@@ -42,6 +42,28 @@ describe(linkGlossaryTerms.name, () => {
     )
   })
 
+  it('lets a longer term win over a shorter one that starts earlier', () => {
+    const overlapping = linkGlossaryTerms([
+      { id: 'ab', matches: ['alpha beta'], description: 'AB' },
+      { id: 'bcd', matches: ['beta gamma delta'], description: 'BCD' },
+    ])
+    const output = overlapping('alpha beta gamma delta')
+    expect(output).toEqual(
+      `alpha [beta gamma delta](/glossary#bcd?description=${encodeURIComponent('BCD')})`,
+    )
+  })
+
+  it('does not link a term inside a link it just created', () => {
+    const nested = linkGlossaryTerms([
+      { id: 'glossary', matches: ['glossary'], description: 'G' },
+      { id: 'desc', matches: ['description'], description: 'D' },
+    ])
+    const output = nested('See the glossary.')
+    expect(output).toEqual(
+      `See the [glossary](/glossary#glossary?description=${encodeURIComponent('G')}).`,
+    )
+  })
+
   it('should not replace terms within existing markdown links', () => {
     const input = 'Check out more here: [Blob](https://example.com).'
     const output = linkTerms(input)

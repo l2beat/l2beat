@@ -454,11 +454,35 @@ describe('getProjects', () => {
           expect(configuredBuckets).toEqual(0)
         }
       })
+
+      const adversaries = project.privacyInfo.adversaries
+      if (adversaries) {
+        const baseline = adversaries.cells.publicObserver
+        const contractNames = new Set(
+          Object.values(project.contracts?.addresses ?? {})
+            .flat()
+            .map((c) => c.name),
+        )
+        for (const [adversaryId, cell] of Object.entries(adversaries.cells)) {
+          it(`${project.id} ${adversaryId} has an interior map iff the baseline has one`, () => {
+            expect(cell.interior !== undefined).toEqual(
+              baseline.interior !== undefined,
+            )
+          })
+
+          for (const source of cell.sources ?? []) {
+            if (!('contract' in source)) continue
+            it(`${project.id} ${adversaryId} source contract ${source.contract} exists`, () => {
+              expect(contractNames.has(source.contract)).toEqual(true)
+            })
+          }
+        }
+      }
     }
   })
 
   describe('contracts', () => {
-    for (const project of getProjects()) {
+    for (const project of projects) {
       describe(project.id, () => {
         const permissions = Object.values(project.permissions ?? {})
         const all = [

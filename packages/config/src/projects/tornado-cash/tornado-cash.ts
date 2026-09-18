@@ -8,7 +8,9 @@ import {
   UnixTime,
 } from '@l2beat/shared-pure'
 import { utils } from 'ethers'
+import { CROP_NOTES } from '../../common/crops'
 import { PRIVACY_ATTRIBUTES } from '../../common/privacyAttributes'
+import { PRIVACY_CATEGORIES } from '../../common/privacyCategories'
 import { ZK_CATALOG_ATTESTERS } from '../../common/zkCatalogAttesters'
 import { ZK_CATALOG_TAGS } from '../../common/zkCatalogTags'
 import { TRUSTED_SETUPS } from '../../common/zkCatalogTrustedSetups'
@@ -18,6 +20,7 @@ import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import { getTokenByAddress } from '../../tokens/getTokenByAddress'
 import type { BaseProject, ProjectPrivacyToken } from '../../types'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
+import { tornadoCashAdversaries } from './adversaries'
 
 const discovery = new ProjectDiscovery('tornado-cash')
 
@@ -180,6 +183,7 @@ export const tornadoCash: BaseProject = {
     ],
   },
   privacyInfo: {
+    category: PRIVACY_CATEGORIES.pool,
     trackedOn: ['ethereum'],
     tokens: getPrivacyTokens(),
     relayerTracking: {
@@ -204,17 +208,8 @@ export const tornadoCash: BaseProject = {
       description:
         'There is at least one practical way to participate in Tornado Cash using published source code that can be audited and run locally.',
     },
-    privacy: {
-      value: 'Unconditional',
-      sentiment: 'good',
-      description:
-        'There is no protocol-level compliance mechanism or way to compromise user privacy.',
-    },
-    noteDiscovery: {
-      description:
-        "A Tornado Cash note is generated locally at deposit time and kept by the user, so normally nothing has to be discovered to spend it. Users can additionally back up notes onchain: the note is encrypted to a user's private key and is emitted as an `EncryptedNote` event on `TornadoRouter`. The recovery downloads all such events and tries to decrypt each one locally. Because every event is requested, the RPC provider learns neither which events belong to the user, nor into which pool the user has deposited from the queries alone.",
-    },
     attributes: [PRIVACY_ATTRIBUTES.zk, PRIVACY_ATTRIBUTES.fixedAmounts],
+    adversaries: tornadoCashAdversaries,
     riskSummary: readProjectMarkdown('tornado-cash', 'riskSummary'),
     upgradesAndGovernance: {
       content: readProjectMarkdown('tornado-cash', 'upgradesAndGovernance'),
@@ -235,10 +230,51 @@ export const tornadoCash: BaseProject = {
       },
     },
   },
+  crops: {
+    censorshipResistance: {
+      sentiment: 'good',
+      points: [
+        CROP_NOTES.infiniteExitWindow,
+        'CR based on Ethereum L1 inclusion.',
+        CROP_NOTES.passesWalkawayTest(),
+        'Multiple active relayers; users can self-relay withdrawals.',
+      ],
+    },
+    openSource: {
+      sentiment: 'good',
+      license: 'GPL-3.0',
+      points: [
+        'Reproducible from source: anyone can audit it and run it locally to participate.',
+      ],
+    },
+    privacy: {
+      sentiment: 'good',
+      points: [
+        'Unconditional privacy.',
+        'Clearly defined anonymity set per fixed-denomination pool.',
+      ],
+    },
+    security: {
+      sentiment: 'good',
+      points: ['Simple, well-ossified design.'],
+      missing: [
+        'Not quantum-resistant, which may expose user privacy to harvest-now-decrypt-later attacks.',
+        'Brittle onchain governance (token voting) controls the official frontend (ENS+IPFS).',
+      ],
+      notReviewed: ['Formal verification.'],
+    },
+  },
   permissions: discovery.getDiscoveredPermissions(),
   contracts: {
     addresses: generateDiscoveryDrivenContracts([discovery]),
     risks: [],
+    zkVerifiers: [
+      discovery.getContract('Verifier').address,
+      discovery.getContract('BatchTreeUpdateVerifier').address,
+      discovery.getContract('TreeUpdateVerifier').address,
+      discovery.getContract('RewardVerifier').address,
+      discovery.getContract('WithdrawVerifier').address,
+    ],
   },
 }
 

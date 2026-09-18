@@ -43,7 +43,7 @@ export function InteropTokensTableView({
 
   const tableData = useMemo(() => tokens ?? [], [tokens])
 
-  const table = useTable<TokenRow>({
+  const table = useTable<TokenRow>('InteropTokensTableView', {
     data: tableData,
     columns,
     getCoreRowModel: getCoreRowModel(),

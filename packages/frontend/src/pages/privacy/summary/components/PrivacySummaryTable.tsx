@@ -1,4 +1,4 @@
-import { formatCurrency, formatInteger, pluralize } from '@l2beat/shared-pure'
+import { formatCurrency, formatInteger } from '@l2beat/shared-pure'
 import {
   createColumnHelper,
   getCoreRowModel,
@@ -27,7 +27,10 @@ import {
 import { TableLink } from '~/components/table/TableLink'
 import { useTable } from '~/hooks/useTable'
 import type { PrivacySummaryEntry } from '~/server/features/privacy/getPrivacySummaryEntries'
+import { PrivacyAdversaryDots } from '../../adversaries/PrivacyAdversaryDots'
+import { getPrivacyAdversariesTableValue } from '../../adversaries/privacyAdversaryUi'
 import { PRIVACY_ASSESSMENT } from '../../privacyAssessment'
+import { DotWithLabel } from './DotWithLabel'
 import { PrivacyAssessmentCell } from './PrivacyAssessmentCell'
 import { PrivacyTrustedSetupCell } from './PrivacyTrustedSetupCell'
 
@@ -70,12 +73,7 @@ const columns = [
                 <ProjectNameCell project={project} withInfoTooltip />
               </TwoRowCell.First>
               <TwoRowCell.Second>
-                {ctx.row.original.isTracked
-                  ? `${formatInteger(ctx.row.original.poolsTracked)} ${pluralize(
-                      ctx.row.original.poolsTracked,
-                      ctx.row.original.summaryTrackedItemName,
-                    )} tracked`
-                  : 'Not tracked'}
+                {ctx.row.original.category.label}
               </TwoRowCell.Second>
             </TwoRowCell>
           </TableLink>
@@ -86,39 +84,6 @@ const columns = [
     meta: {
       cellClassName: 'pl-4',
       headClassName: 'pl-4',
-    },
-  }),
-  columnHelper.display({
-    id: 'attributes',
-    header: 'Attributes',
-    cell: (ctx) => {
-      const attributes = ctx.row.original.attributes
-
-      if (attributes.length === 0) {
-        return <NoDataBadge />
-      }
-
-      const half = Math.ceil(attributes.length / 2)
-      const rows = [attributes.slice(0, half), attributes.slice(half)].filter(
-        (row) => row.length > 0,
-      )
-
-      return (
-        <div className="flex w-max flex-col gap-1">
-          {rows.map((row, index) => (
-            <div key={index} className="flex gap-1">
-              {row.map((attribute) => (
-                <PrivacyAttributeTag key={attribute.id} attribute={attribute} />
-              ))}
-            </div>
-          ))}
-        </div>
-      )
-    },
-    enableSorting: false,
-    meta: {
-      cellClassName: 'py-2',
-      tooltip: 'Protocol attributes and capabilities.',
     },
   }),
   ...withChangeSort(
@@ -195,6 +160,32 @@ const columns = [
         'Total USD value of all deposits over the last 30 days, based on configured token prices.',
     },
   }),
+  columnHelper.accessor(
+    (entry) => getPrivacyAdversariesTableValue(entry.adversaries),
+    {
+      id: 'adversaries',
+      header: PRIVACY_ASSESSMENT.title,
+      cell: (ctx) => {
+        const { adversaries, href } = ctx.row.original
+        return (
+          <DotWithLabel
+            dot={<PrivacyAdversaryDots adversaries={adversaries} href={href} />}
+            label={adversaries.promiseLabel}
+          />
+        )
+      },
+      sortDescFirst: true,
+      sortingFn: (a, b) =>
+        sortTableValues(
+          getPrivacyAdversariesTableValue(a.original.adversaries),
+          getPrivacyAdversariesTableValue(b.original.adversaries),
+        ),
+      meta: {
+        align: 'center',
+        tooltip: PRIVACY_ASSESSMENT.tooltip,
+      },
+    },
+  ),
   columnHelper.display({
     id: 'trustedSetup',
     header: 'Setup',
@@ -214,7 +205,6 @@ const columns = [
     cell: (ctx) => (
       <PrivacyAssessmentCell
         value={ctx.row.original.exitWindow}
-        showValue
         walkawayTest={ctx.row.original.exitWindow.walkawayTest}
       />
     ),
@@ -228,29 +218,11 @@ const columns = [
         'Time users have to withdraw before a malicious upgrade can take effect.',
     },
   }),
-  columnHelper.accessor((entry) => adjustTableValue(entry.privacy), {
-    id: 'privacy',
-    header: PRIVACY_ASSESSMENT.title,
-    cell: (ctx) => (
-      <PrivacyAssessmentCell value={ctx.row.original.privacy} showValue />
-    ),
-    sortDescFirst: true,
-    sortUndefined: 'last',
-    sortingFn: (a, b) =>
-      sortTableValues(a.original.privacy, b.original.privacy),
-    meta: {
-      align: 'center',
-      tooltip: PRIVACY_ASSESSMENT.tooltip,
-    },
-  }),
   columnHelper.accessor((entry) => adjustTableValue(entry.reproducibility), {
     id: 'reproducibility',
     header: 'Repro',
     cell: (ctx) => (
-      <PrivacyAssessmentCell
-        value={ctx.row.original.reproducibility}
-        showValue
-      />
+      <PrivacyAssessmentCell value={ctx.row.original.reproducibility} />
     ),
     sortDescFirst: true,
     sortUndefined: 'last',
@@ -260,6 +232,39 @@ const columns = [
       align: 'center',
       tooltip:
         'Whether all source code needed to audit the protocol and participate in it is published and can be used locally.',
+    },
+  }),
+  columnHelper.display({
+    id: 'attributes',
+    header: 'Attributes',
+    cell: (ctx) => {
+      const attributes = ctx.row.original.attributes
+
+      if (attributes.length === 0) {
+        return <NoDataBadge />
+      }
+
+      const half = Math.ceil(attributes.length / 2)
+      const rows = [attributes.slice(0, half), attributes.slice(half)].filter(
+        (row) => row.length > 0,
+      )
+
+      return (
+        <div className="flex w-max flex-col gap-1">
+          {rows.map((row, index) => (
+            <div key={index} className="flex gap-1">
+              {row.map((attribute) => (
+                <PrivacyAttributeTag key={attribute.id} attribute={attribute} />
+              ))}
+            </div>
+          ))}
+        </div>
+      )
+    },
+    enableSorting: false,
+    meta: {
+      cellClassName: 'py-2',
+      tooltip: 'Protocol attributes and capabilities.',
     },
   }),
 ]
@@ -273,7 +278,7 @@ export function PrivacySummaryTable({
 }) {
   const [sorting, setSorting] = useState<SortingState>(initialSorting)
 
-  const table = useTable({
+  const table = useTable('PrivacySummaryTable', {
     data: entries,
     columns,
     getCoreRowModel: getCoreRowModel(),

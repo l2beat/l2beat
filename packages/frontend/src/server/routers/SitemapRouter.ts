@@ -1,7 +1,6 @@
 import express from 'express'
+import { PRODUCTION_ORIGIN } from '~/consts/productionOrigin'
 import { getPagePaths } from '~/server/pagePaths'
-
-const BASE_URL = 'https://l2beat.com'
 
 export function createSitemapRouter() {
   const router = express.Router()
@@ -12,7 +11,7 @@ export function createSitemapRouter() {
     const urls = paths
       .map(
         (path) =>
-          `  <url>\n    <loc>${escapeXml(BASE_URL + path)}</loc>\n  </url>`,
+          `  <url>\n    <loc>${escapeXml(PRODUCTION_ORIGIN + path)}</loc>\n  </url>`,
       )
       .join('\n')
 

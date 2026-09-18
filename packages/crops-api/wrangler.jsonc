@@ -1,0 +1,22 @@
+{
+  "$schema": "node_modules/wrangler/config-schema.json",
+  "name": "crops-api",
+  "compatibility_date": "2026-09-01",
+  // No `main` on purpose: the whole site is pre-generated, so a script would only add latency.
+  "assets": {
+    "directory": "./out",
+    // Clients probe addresses that may not exist; they need an empty 404, not an HTML page.
+    "not_found_handling": "none"
+  },
+  "workers_dev": false,
+  // No routes on purpose: declared routes make wrangler read the zone on every deploy, and the
+  // deploy token is scoped to Workers Scripts only. Custom domains are attached once by hand.
+  // `production` is empty because it inherits everything above. It exists so the workflow can
+  // pass one `--env` input for both targets: wrangler rejects an env name missing from this block.
+  "env": {
+    "production": {},
+    "staging": {
+      "name": "crops-api-staging"
+    }
+  }
+}

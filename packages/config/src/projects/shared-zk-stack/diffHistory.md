@@ -1,3 +1,28 @@
+Generated with discovered.json: 0x19f9a202aba3b04c9d6da8e72f6b1c96ffd61762
+
+# Diff at Tue, 15 Sep 2026 09:27:24 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@24f869586e8e8385e009b6c9ee143df521270ecb block: 1789042096
+- current timestamp: 1789464378
+
+## Description
+
+Created this proposal: https://www.tally.xyz/gov/zksync/proposal/49883493212277767948924829453899549013679463473253620701602979414799679547598?govId=eip155%3A324%3A0x76705327e682F2d96943280D99464Ab61219e34f.
+
+It should allow each elastic chain to set their own execution delay for up to 30 days, security reasons are quoted.
+
+## Watched changes
+
+```diff
+    contract ZkProtocolGovernor (zksync:0x76705327e682F2d96943280D99464Ab61219e34f) [shared-zk-stack/ZkGovernor] {
+    +++ description: Main Governance contract allowing for token voting (simple majority) with the ZK token through delegates. This contract is used for protocol upgrade proposals (ZIPs) that start on ZKsync Era, go through Ethereum Layer 1 and can - from there - target all L1 and L2 contracts. At least 21M ZK tokens are necessary to start a proposal and a 630M quorum of voted tokens must be met to succeed.
+      values.proposalCreatedCount:
+-        17
++        18
+    }
+```
+
 Generated with discovered.json: 0xb9cf5f20fd40bcfe5effd115df25ea747ae01542
 
 # Diff at Thu, 10 Sep 2026 12:09:27 GMT:

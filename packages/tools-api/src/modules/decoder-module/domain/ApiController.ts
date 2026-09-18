@@ -2,6 +2,7 @@ import { inflateRawSync } from 'zlib'
 import type { Chain } from '../../../config/types'
 import type { AlchemyClient } from '../../../third-party/AlchemyClient'
 import type { IAddressService } from './AddressService'
+import type { AddressAlias } from './addressAlias'
 import type { Decoder, Transaction } from './Decoder'
 import type { ISignatureService } from './SignatureService'
 
@@ -30,6 +31,7 @@ export interface AddressResult {
   chainId: number
   address: `0x${string}`
   name?: string
+  alias?: AddressAlias
   abi: SignatureResult[]
 }
 
@@ -85,8 +87,15 @@ export class ApiController {
       chainId,
       address,
       name: result.name,
+      alias: result.alias,
       abi: result.abi,
     }
+  }
+
+  async getSafeState(chainId: number, address: `0x${string}`) {
+    const chain = this.chains.find((x) => x.chainId === chainId)
+    if (!chain) throw new Error('Unknown chain id')
+    return await this.alchemyClient.getSafeState(address, chain)
   }
 
   lookupPreimages(hashes: `0x${string}`[]): PreimageResult[] {

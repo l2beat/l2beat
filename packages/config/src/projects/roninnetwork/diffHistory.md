@@ -1,3 +1,73 @@
+Generated with discovered.json: 0xb05903944bd0caf7083fe816a2c78259ec3812a3
+
+# Diff at Fri, 11 Sep 2026 16:12:17 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@35c16d59b7fb15cd8141bb98bfd0e5a0b6c74620 block: 1787834376
+- current timestamp: 1789077777
+
+## Description
+
+`respectedGameType` switched from `1337` (KailuaGame) to `1` (PermissionedDisputeGame) on the AnchorStateRegistry and OptimismPortal2. No implementation change, no game retirement or blacklist. Withdrawals now settle against permissioned proposals.
+
+The type-1 prestate is op-program v1.3.1 (`0x038512e0…`), which cannot execute for chain 2020.
+
+## Watched changes
+
+```diff
+    contract AnchorStateRegistry (eth:0x0B95fF1d1B113bac3E29Ac0BBF2089126C9aE81A) [opstack/AnchorStateRegistry_post13] {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
+      description:
+-        "Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the KailuaGame."
++        "Contains the latest confirmed state root that can be used as a starting point in a dispute game. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame."
+      values.RespectedGameString:
+-        "KailuaGame"
++        "PermissionedDisputeGame"
++++ severity: HIGH
+      values.respectedGameType:
+-        1337
++        1
+    }
+```
+
+```diff
+    contract OptimismPortal2 (eth:0x652CD53eCf9466E5Fb00D0E11d6CBf6469a56D77) [opstack/OptimismPortal2] {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
+      description:
+-        "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the KailuaGame."
++        "The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame."
+      values.RespectedGameString:
+-        "KailuaGame"
++        "PermissionedDisputeGame"
++++ severity: HIGH
+      values.respectedGameType:
+-        1337
++        1
+    }
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1787834376 (main branch discovery), not current.
+
+```diff
+    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x45dA2CD511DA5FEAa535eBF166E628314a65843a","description":"Allowed to challenge or delete state roots proposed by a Proposer.","role":".challengerFromDGF"}]
+    }
+```
+
+```diff
+    EOA (eth:0xD379de941E78Ab394d4D4917FcCE1CC45b6cd620) {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0x45dA2CD511DA5FEAa535eBF166E628314a65843a","description":"Allowed to post new state roots of the current layer to the host chain.","role":".proposerFromDGF"}
+    }
+```
+
 Generated with discovered.json: 0x6b26e1d73ae584826037f2d0ea48854d6abd6bee
 
 # Diff at Thu, 27 Aug 2026 12:41:08 GMT:

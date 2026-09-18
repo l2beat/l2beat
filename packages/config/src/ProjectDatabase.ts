@@ -56,6 +56,8 @@ const schema = {
   defiInfo: 'TEXT',
   externalDependencies: 'TEXT',
 
+  crops: 'TEXT',
+
   tvsInfo: 'TEXT',
   tvsConfig: 'TEXT',
   activityConfig: 'TEXT',
@@ -71,6 +73,7 @@ const schema = {
   contracts: 'TEXT',
   discoveryInfo: 'TEXT',
   discoveryUpdates: 'TEXT',
+  ossification: 'TEXT',
 
   archivedAt: 'INTEGER',
   hasTestnet: 'BOOLEAN',

@@ -16,6 +16,7 @@ import {
 import { type Parser, v } from '@l2beat/validate'
 import type { ZkCatalogAttester } from './common/zkCatalogAttesters'
 import type { ZkCatalogTagType } from './common/zkCatalogTags'
+import type { OsiLicenseId } from './crops/osiLicenses'
 
 // #region shared types
 export type Sentiment = 'bad' | 'warning' | 'good' | 'neutral' | 'UnderReview'
@@ -257,6 +258,9 @@ export interface BaseProject {
   // external dependency data
   externalDependencies?: ProjectExternalDependency[]
 
+  // crops data
+  crops?: ProjectCrops
+
   // feature configs
   tvsInfo?: ProjectTvsInfo
   tvsConfig?: TvsToken[]
@@ -276,6 +280,9 @@ export interface BaseProject {
   discoveryInfo?: ProjectDiscoveryInfo
   /** Public entries of diffHistory.md, newest first. */
   discoveryUpdates?: ProjectDiscoveryUpdate[]
+  /** Ossification factor measured at config build time, for projects with a
+   *  critical contract in their discovery config. */
+  ossification?: ProjectOssification
 
   // tags
   archivedAt?: UnixTime
@@ -1027,7 +1034,6 @@ export type ProjectDefiCategory =
   | 'Liquid Staking'
   | 'Oracle'
   | 'Stablecoin'
-  | 'Liquid Staking'
   | 'Prediction market'
 
 export interface ProjectDefiInfo {
@@ -1071,7 +1077,8 @@ export interface ProjectPrivacyInfo {
    * mixing kinds within one project is not representable.
    */
   relayerTracking?: ProjectPrivacyRelayerTracking
-  summaryTrackedItemName?: string
+  /** The deployed mechanism. Decides the promised field, not the grade. */
+  category: PrivacyCategory
   anonymitySet?: {
     type: 'not-applicable'
     description: string
@@ -1083,9 +1090,9 @@ export interface ProjectPrivacyInfo {
   detailedDescription?: string
   exitWindow: PrivacyExitWindow
   reproducibility: PrivacySummaryValue
-  privacy: PrivacySummaryValue
-  noteDiscovery?: PrivacyNoteDiscovery
   attributes?: PrivacyAttribute[]
+  /** Per-adversary privacy assessment. Author with definePrivacyAdversaries. */
+  adversaries: ProjectPrivacyAdversaries
   /**
    * Privacy-specific quantum-resistance flag. Distinct in meaning from
    * ProjectZkCatalogInfo.quantumResistant
@@ -1095,11 +1102,6 @@ export interface ProjectPrivacyInfo {
   upgradesAndGovernance?: ProjectUpgradesAndGovernance
   /** ZK catalog project whose trusted setups are shown when this project has no own zkCatalogInfo. */
   zkCatalogId?: ProjectId
-}
-
-export interface PrivacyNoteDiscovery {
-  description: string
-  risks?: string[]
 }
 
 export type ProjectPrivacyRelayerTracking =
@@ -1141,6 +1143,193 @@ export interface PrivacyAttribute {
   label: string
   description: string
 }
+
+export type PrivacyCategoryId =
+  | 'pool'
+  | 'shieldedLedger'
+  | 'stealthAddress'
+  | 'confidentialAmounts'
+
+export interface PrivacyCategory {
+  id: PrivacyCategoryId
+  label: string
+  description: string
+}
+
+// #region privacy adversaries
+
+/**
+ * Adversaries are defined by capability, never by identity. Real-world actors
+ * (governments, data brokers, chain analytics firms) are unions of these
+ * capabilities and are described as personas on top of the assessments.
+ */
+export type PrivacyAdversaryId =
+  | 'publicObserver'
+  | 'chainAnalyst'
+  | 'networkObserver'
+  | 'privilegedInsider'
+  | 'futureAdversary'
+
+export interface PrivacyAdversary {
+  id: PrivacyAdversaryId
+  label: string
+  /** What this adversary can observe or do. */
+  description: string
+  /** Real-world actors that hold (at least) this capability. */
+  examples: string
+}
+
+/**
+ * What can be learned about a single user action. Web2 identifiers (IP,
+ * session, account, API key) are a route by which a field is exposed, named
+ * in that field's note, never a field.
+ */
+export type PrivacyField =
+  | 'sender'
+  | 'recipient'
+  | 'amount'
+  | 'asset'
+  | 'linkage'
+
+export interface PrivacyFieldInfo {
+  id: PrivacyField
+  label: string
+  /** Noun used in derived cell values, e.g. "Link" in "Link at risk". */
+  subject: string
+  /**
+   * Caption under the dots that grade this field, e.g. "Link privacy". A noun
+   * phrase, not a claim: the dots say how well the promise holds.
+   */
+  promiseLabel: string
+  description: string
+}
+
+/**
+ * private: private by construction.
+ * atRisk: private only under a condition named in `note`, e.g. the user avoids
+ *   a footgun or a counterparty never shared a key. No note where the verdict
+ *   is inherited from the public observer or the previous spine adversary.
+ * exposed: visible to this adversary by design.
+ * unverifiable: cannot be derived from onchain state or published source.
+ */
+export type PrivacyExposure = 'private' | 'atRisk' | 'exposed' | 'unverifiable'
+
+export type PrivacyFieldExposure =
+  | PrivacyExposure
+  | { verdict: PrivacyExposure; note: string }
+
+/** Complete: every field has a verdict. */
+export type PrivacyExposureMap = Record<PrivacyField, PrivacyFieldExposure>
+
+export type PrivacyAdversarySentiment = 'good' | 'warning' | 'bad'
+
+export interface PrivacyAdversaryAssessment {
+  /**
+   * The one judgment per cell. Answers "can a careful user defeat this
+   * adversary using only the protocol and the supported options of its
+   * reference client?": good = yes, warning = only outside supported options
+   * or by accepting a leak to another adversary, bad = no. It judges the
+   * promised field only; other leaks are a derived marker. User
+   * hygiene never lowers the sentiment (it goes into `advice` and `atRisk`
+   * notes); facts about the deployment do, such as an anonymity set too small
+   * for care to matter or a structural leak the adversary exploits. Network
+   * observer baseline: Tor, and an own node where the client has an RPC
+   * setting. Tor hides only the IP; identifiers the client sends stay
+   * attributed, and one server still sees a session's requests together.
+   * Services the operator runs are judged as the privileged insider. The cell
+   * value is derived from it and from the project's `protects` field.
+   */
+  sentiment: PrivacyAdversarySentiment
+  /**
+   * What this adversary learns beyond the public observer and what stays
+   * hidden, in one or two plain sentences; the first sentence carries the
+   * reason for the sentiment. Never refers to other cells or quotes live
+   * numbers; the tracked anonymity set stands in for them.
+   */
+  exposure: string
+  /**
+   * How a user keeps it private, when that is conditional (the cell is at
+   * risk, or a field is). Omit when nothing the user does changes the result.
+   * Positive instructions only (say what to do), and only what this adversary
+   * adds over the public observer: advice is not repeated across cells.
+   */
+  advice?: string
+  /**
+   * Actions taken while shielded (private transfers, in-pool DeFi). Present
+   * for all adversaries of a project or for none. Entry and exit are public
+   * Ethereum transactions; whether the promised field survives them is the
+   * cell's sentiment.
+   */
+  interior?: PrivacyExposureMap
+  /** Pointers to the onchain state or source code backing the verdicts. */
+  sources?: PrivacySource[]
+}
+
+/**
+ * Where a claim can be checked. A url for code and papers; a contract name
+ * (as in discovery) links to that entry in the Contracts section; a section
+ * id links to another section of the project page. Contract names are
+ * validated against the project's contracts in tests.
+ */
+export type PrivacySource =
+  | { title: string; url: string }
+  | { contract: string; title?: string }
+  | {
+      section:
+        | 'permissions'
+        | 'verifiers'
+        | 'trusted-setups'
+        | 'upgrades-and-governance'
+      title?: string
+    }
+
+/** What a project author writes. definePrivacyAdversaries derives the rest. */
+export interface PrivacyPromise {
+  /** The field the protocol promises to protect. Cell values are derived from it. */
+  protects: PrivacyField
+  /**
+   * The same promise in one plain sentence, e.g. "Hides which deposit funds
+   * which withdrawal. Everything else is public." Shown on hover / in intros.
+   */
+  text: string
+}
+
+export interface PrivacyAdversariesConfig {
+  promise: PrivacyPromise
+  cells: Record<PrivacyAdversaryId, PrivacyAdversaryAssessment>
+}
+
+/** A field this adversary learns more about than the public observer. */
+export interface PrivacyAlsoExposed {
+  field: PrivacyField
+  /** This adversary's interior verdict for the field. */
+  exposure: PrivacyExposure
+}
+
+export interface PrivacyAdversaryCell extends PrivacyAdversaryAssessment {
+  id: PrivacyAdversaryId
+  /** Derived: "<promised subject> <state>", e.g. "Link private". */
+  value: string
+  /**
+   * Derived: fields other than the promised one whose interior verdict is
+   * worse than the public observer's. Empty for the public observer itself,
+   * whose leaks the promise text already describes.
+   */
+  alsoExposed: PrivacyAlsoExposed[]
+}
+
+/**
+ * Shipped to the frontend, which has no access to config code, so the
+ * adversary and field registries travel with the data (as attributes do).
+ */
+export interface ProjectPrivacyAdversaries {
+  promise: PrivacyPromise
+  adversaries: PrivacyAdversary[]
+  fields: PrivacyFieldInfo[]
+  cells: Record<PrivacyAdversaryId, PrivacyAdversaryCell>
+}
+
+// #endregion
 
 export interface ProjectPrivacyToken {
   token: {
@@ -1208,6 +1397,19 @@ export type PrivacyFlowExtractorConfig =
       }
     }
   | {
+      /**
+       * Standard ERC-20 Transfer(from, to, value) emitted by the token
+       * contract, with amount = value. For pools whose own events carry no
+       * amount: a deposit is a transfer to the pool, a withdrawal a transfer
+       * from it. At least one filter is required and both are applied
+       * server-side as indexed-topic filters.
+       */
+      extractor: 'erc20Transfer'
+      params:
+        | { from: EthereumAddress; to?: EthereumAddress }
+        | { from?: EthereumAddress; to: EthereumAddress }
+    }
+  | {
       extractor: 'privacyPoolsValue'
       params: Record<string, never>
     }
@@ -1254,6 +1456,69 @@ export type PrivacyFlowExtractorConfig =
 
 export type PrivacyFlowExtractor = PrivacyFlowExtractorConfig['extractor']
 export type PrivacyFlowExtractorParams = PrivacyFlowExtractorConfig['params']
+
+// #endregion
+
+// #region crops data
+
+export type { OsiLicense, OsiLicenseId } from './crops/osiLicenses'
+
+export const PROJECT_CROP_SENTIMENTS = ['good', 'warning', 'bad'] as const
+/** Narrower than `Sentiment`: "not graded" is a status, not a colour. */
+export type ProjectCropSentiment = (typeof PROJECT_CROP_SENTIMENTS)[number]
+
+export const GRADED_CROP_STATUSES = ['reviewed', 'partiallyReviewed'] as const
+/**
+ * `fullyTransparent` is a finished answer, not a gap: the protocol makes no
+ * claim to the property. Neither ungraded status carries a sentiment.
+ */
+export const UNGRADED_CROP_STATUSES = [
+  'notReviewed',
+  'fullyTransparent',
+] as const
+export type ProjectCropStatus =
+  | (typeof GRADED_CROP_STATUSES)[number]
+  | (typeof UNGRADED_CROP_STATUSES)[number]
+
+export interface ProjectCropFindings {
+  /** What the evaluation rests on - one finding per bullet. */
+  points?: string[]
+  /** Checked, and the criterion is not met. */
+  missing?: string[]
+  /** Neutral caveats and context - neither a positive finding nor a miss. */
+  additionalConsiderations?: string[]
+  /** Criteria we have not assessed yet. Never a claim about the protocol. */
+  notReviewed?: string[]
+}
+
+export interface ProjectGradedCrop extends ProjectCropFindings {
+  /** Defaults to `reviewed`. */
+  status?: (typeof GRADED_CROP_STATUSES)[number]
+  sentiment: ProjectCropSentiment
+}
+
+export interface ProjectUngradedCrop extends ProjectCropFindings {
+  status: (typeof UNGRADED_CROP_STATUSES)[number]
+  sentiment?: undefined
+}
+
+/** A graded crop must say how it fares; an ungraded one cannot. */
+export type ProjectCropEvaluation = ProjectGradedCrop | ProjectUngradedCrop
+
+export type ProjectOpenSourceCropEvaluation = ProjectCropEvaluation & {
+  /**
+   * SPDX id of an OSI-approved license - see `OSI_LICENSES`. The name and the
+   * link are rendered from the list, so the prose cannot drift from the id.
+   */
+  license?: OsiLicenseId
+}
+
+export interface ProjectCrops {
+  censorshipResistance: ProjectCropEvaluation
+  openSource: ProjectOpenSourceCropEvaluation
+  privacy: ProjectCropEvaluation
+  security: ProjectCropEvaluation
+}
 
 // #endregion
 
@@ -1589,6 +1854,55 @@ export interface ProjectEscrow {
   sharedEscrow?: SharedEscrow
 }
 
+export type OssificationChangeType = 'code' | 'state'
+
+export interface ProjectOssificationCriticalUpdate {
+  /** Discovery update id, shared with diffHistory.md and discoveryUpdates. */
+  id: string
+  type: OssificationChangeType
+}
+
+export interface ProjectOssificationContract {
+  name: string
+  address: string
+  isVerified: boolean
+  /** Start of the battle-tested clock: last critical change, or deployment
+   *  if the contract never changed. */
+  ossifyingSince: number
+  codeChangeCount: number
+  stateChangeCount: number
+}
+
+/** Score, change rate and clock timestamps of the critical perimeter. Ages
+ *  are not stored: the frontend subtracts the timestamps from the request
+ *  time. Score and change rate are measured against the config build time,
+ *  which lags the request by at most the age of the deploy. The TVS exposure
+ *  needs the database and is added by the frontend. */
+export interface ProjectOssification {
+  /** 0-100: the share of recorded code-bug exploits (published, versioned
+   *  incident dataset, see ossificationCurve.json) whose exploited code was
+   *  younger than this perimeter's age. 0 while any critical contract is
+   *  unverified. */
+  score: number
+  /** score as a 0..1 fraction; 0 gates exposure when unverified */
+  maturity: number
+  /** Start of the unchanged period: the newest deployment or critical change
+   *  anywhere in the perimeter. */
+  projectClockStart: number
+  /** Timestamp of the last critical change, absent if none ever */
+  lastCriticalChange?: number
+  /** 24h-clustered critical change events per year, trailing window */
+  criticalChangesPerYear: number
+  clusteredEventCount: number
+  windowSeconds: number
+  /** 24h-clustered timestamps of every perimeter reset, ascending: critical
+   *  changes plus deployments of critical contracts. */
+  perimeterResets: number[]
+  /** Youngest clock first. */
+  contracts: ProjectOssificationContract[]
+  criticalUpdates: ProjectOssificationCriticalUpdate[]
+}
+
 export interface ProjectDiscoveryInfo {
   isDiscoDriven: boolean
   permissionsDiscoDriven: boolean
@@ -1598,8 +1912,9 @@ export interface ProjectDiscoveryInfo {
 }
 
 export interface ProjectDiscoveryUpdate {
-  /** Fingerprint of the whole entry, the same one the update card's copy
-   *  link has always used. */
+  /** The diffHistory.md entry id (DiffHistoryEntry.id): derived from the
+   *  header date and chain point only, so it survives description edits and
+   *  matches ossification criticalUpdates. */
   id: string
   date: string
   /** Run timestamp; header date for legacy block-numbered entries; null when
@@ -1809,6 +2124,29 @@ export const BalanceOfEscrowAmountFormulaSchema = v.object({
   escrowAddress: v.string().transform(EthereumAddress),
 })
 
+export type BalanceOfEscrowsAmountFormula = v.infer<
+  typeof BalanceOfEscrowsAmountFormulaSchema
+>
+export const BalanceOfEscrowsAmountFormulaSchema = v.object({
+  type: v.literal('balanceOfEscrows'),
+  chain: v.string(),
+  sinceTimestamp: v.number(),
+  untilTimestamp: v.number().optional(),
+  address: v.union([
+    v.string().transform(EthereumAddress),
+    v.literal('native'),
+  ]),
+  decimals: v.number(),
+  escrowAddresses: v
+    .array(v.string().transform(EthereumAddress))
+    .check(
+      (addresses) =>
+        addresses.length > 0 &&
+        new Set(addresses.map((address) => address.toLowerCase())).size ===
+          addresses.length,
+    ),
+})
+
 export type TotalSupplyAmountFormula = v.infer<
   typeof TotalSupplyAmountFormulaSchema
 >
@@ -1871,6 +2209,7 @@ export const ConstAmountFormulaSchema = v.object({
 export type AmountFormula = v.infer<typeof AmountFormulaSchema>
 export const AmountFormulaSchema = v.union([
   BalanceOfEscrowAmountFormulaSchema,
+  BalanceOfEscrowsAmountFormulaSchema,
   TotalSupplyAmountFormulaSchema,
   CirculatingSupplyAmountFormulaSchema,
   ConstAmountFormulaSchema,
@@ -1885,6 +2224,7 @@ export function isAmountFormula(formula: Formula): boolean {
 
 export type OnchainAmountFormula =
   | BalanceOfEscrowAmountFormula
+  | BalanceOfEscrowsAmountFormula
   | TotalSupplyAmountFormula
   | StarknetTotalSupplyAmountFormula
   | StarknetBalanceOfAmountFormula
@@ -1895,6 +2235,7 @@ export function isOnchainAmountFormula(
   return (
     formula.type === 'totalSupply' ||
     formula.type === 'balanceOfEscrow' ||
+    formula.type === 'balanceOfEscrows' ||
     formula.type === 'starknetTotalSupply' ||
     formula.type === 'starknetBalanceOf'
   )

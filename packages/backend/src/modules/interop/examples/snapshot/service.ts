@@ -1,3 +1,4 @@
+import type { LogsTopicFilter } from '@l2beat/shared'
 import { createHash } from 'crypto'
 import { readFileSync } from 'fs'
 import { readdir, readFile, writeFile } from 'fs/promises'
@@ -189,6 +190,21 @@ export class ExampleInputs {
 
 export function buildSnapshotKey(params: string[]): string {
   return params.join('.')
+}
+
+export function buildLogsSnapshotKey(
+  from: number,
+  to: number,
+  addresses?: string[],
+  topics?: LogsTopicFilter,
+): string[] {
+  return [
+    'logs',
+    from.toString(),
+    to.toString(),
+    addresses?.join(',') ?? 'all',
+    topics ? JSON.stringify(topics) : 'all',
+  ]
 }
 
 export function hashExampleDefinition(definition: unknown): string {

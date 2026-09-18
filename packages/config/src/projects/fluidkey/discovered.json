@@ -1,6 +1,6 @@
 {
   "name": "fluidkey",
-  "timestamp": 1788853601,
+  "timestamp": 1789471844,
   "configHash": "0xf0d6956b629bc8d352b676a61e22cbf7f6036cb5f5fa28ecd4a0fcb6c4b21587",
   "entries": [
     {
@@ -1297,12 +1297,12 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
   "usedBlockNumbers": {
-    "arbitrum": 502954163,
-    "base": 51032127,
-    "ethereum": 25931246,
-    "gnosis": 48141225,
-    "optimism": 156627412,
-    "polygonpos": 93432378
+    "arbitrum": 505403555,
+    "base": 51341248,
+    "ethereum": 25982575,
+    "gnosis": 48262412,
+    "optimism": 156936533,
+    "polygonpos": 93844540
   },
   "permissionsConfigHash": "0x48e0108fb9c12ce73f33c68f53e9c5c41ed3b918e006e7732657b0d9eeec2c01",
   "permissions": {

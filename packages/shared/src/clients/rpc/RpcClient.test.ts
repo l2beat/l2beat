@@ -225,7 +225,7 @@ describe(RpcClient.name, () => {
           params: [
             {
               address: mockAddresses,
-              topics: [mockTopics],
+              topics: mockTopics,
               fromBlock: `0x${mockFromBlock.toString(16)}`,
               toBlock: `0x${mockToBlock.toString(16)}`,
             },
@@ -296,7 +296,7 @@ describe(RpcClient.name, () => {
           params: [
             {
               address: mockAddresses,
-              topics: [mockTopics],
+              topics: mockTopics,
               fromBlock: `0x${mockFromBlock.toString(16)}`,
               toBlock: `0x${mockToBlock.toString(16)}`,
             },
@@ -312,7 +312,7 @@ describe(RpcClient.name, () => {
           params: [
             {
               address: mockAddresses,
-              topics: [mockTopics],
+              topics: mockTopics,
               fromBlock: `0x${mockFromBlock.toString(16)}`,
               toBlock: `0x${mockMiddleBlock.toString(16)}`,
             },
@@ -328,7 +328,7 @@ describe(RpcClient.name, () => {
           params: [
             {
               address: mockAddresses,
-              topics: [mockTopics],
+              topics: mockTopics,
               fromBlock: `0x${(mockMiddleBlock + 1).toString(16)}`,
               toBlock: `0x${mockToBlock.toString(16)}`,
             },
@@ -947,7 +947,7 @@ const mockRawTx = (to: string | undefined) => ({
   hash: '0x1',
   value: 11111111n.toString(),
   from: '0xf',
-  to,
+  to: to ?? null,
   input: '0x1',
   type: '0x2',
   blockNumber: '0x64',

@@ -1,10 +1,12 @@
 import { ProjectId, UnixTime } from '@l2beat/shared-pure'
 import { PRIVACY_ATTRIBUTES } from '../../common/privacyAttributes'
+import { PRIVACY_CATEGORIES } from '../../common/privacyCategories'
 import { ProjectDiscovery } from '../../discovery/ProjectDiscovery'
 import { generateDiscoveryDrivenContracts } from '../../templates/generateDiscoveryDrivenSections'
 import { getDiscoveryInfo } from '../../templates/getDiscoveryInfo'
 import type { BaseProject } from '../../types'
 import { readProjectMarkdown } from '../../utils/readMarkdown'
+import { cloakedAdversaries } from './adversaries'
 
 const discovery = new ProjectDiscovery('cloaked')
 
@@ -44,12 +46,12 @@ export const cloaked: BaseProject = {
     badges: [],
   },
   privacyInfo: {
+    category: PRIVACY_CATEGORIES.stealthAddress,
     trackedOn: ['ethereum'],
     // Cloaked balances live in arbitrary one-time EOAs and cannot be
     // attributed using public chain data. Its Privacy Pools integration uses
     // pools that L2BEAT tracks on the separate Privacy Pools project page.
     tokens: [],
-    summaryTrackedItemName: 'address',
     exitWindow: {
       value: 'Infinite',
       sentiment: 'good',
@@ -68,16 +70,11 @@ export const cloaked: BaseProject = {
       description:
         'The production web wallet is closed source and cannot be self-hosted. The published derivation code and API schema can nevertheless be used to build a local client that creates an account, derives keys, and signs and submits payments through the hosted API. The backend implementations of the API, ENS gateway, indexer, and relay service are not published, so the complete service cannot be reproduced.',
     },
-    privacy: {
-      value: 'Admin view key',
-      sentiment: 'bad',
-      description:
-        'Cloaked holds a private, per-account viewing capability that lets its service derive and link every stealth address for that account. Its relay also sees both sides of Privacy Pools activity. This centralized visibility does not provide spending authority, and users can keep spending keys outside the closed-source wallet by using an inspected local client.',
-    },
     attributes: [
       PRIVACY_ATTRIBUTES.stealthAddresses,
       PRIVACY_ATTRIBUTES.anyAmount,
     ],
+    adversaries: cloakedAdversaries,
     riskSummary: readProjectMarkdown('cloaked', 'riskSummary'),
     upgradesAndGovernance: {
       content: readProjectMarkdown('cloaked', 'upgradesAndGovernance'),

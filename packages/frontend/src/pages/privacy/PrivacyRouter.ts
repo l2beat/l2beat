@@ -4,6 +4,7 @@ import express from 'express'
 import type { RenderFunction } from '~/ssr/types'
 import type { Manifest } from '~/utils/Manifest'
 import { validateRoute } from '~/utils/validateRoute'
+import { sendNotFoundPage } from '../not-found/sendNotFoundPage'
 import { getPrivacyProjectData } from './project/getPrivacyProjectData'
 import { getPrivacySummaryData } from './summary/getPrivacySummaryData'
 
@@ -47,7 +48,7 @@ export function createPrivacyRouter(
       )
 
       if (!data) {
-        res.status(404).send('Not found')
+        await sendNotFoundPage(manifest, render, req.originalUrl, res)
         return
       }
 

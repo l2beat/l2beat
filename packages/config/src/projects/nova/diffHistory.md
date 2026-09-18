@@ -1,3 +1,40 @@
+Generated with discovered.json: 0xd586a22e0a1cc89c1c1587ea10f1d5cc47594a20
+
+# Diff at Mon, 07 Sep 2026 14:41:20 GMT:
+
+- author: vincfurc (<10850139+vincfurc@users.noreply.github.com>)
+- comparing to: main@041f4be232de31648e9a26f8b80fa8f2d65fc60d block: 1787834844
+- current timestamp: 1788792011
+
+## Description
+
+Arbitrum Nova stopped using its AnyTrust Data Availability Committee: since
+2026-08-31 all batches are posted to Ethereum as blobs. Nova reclassifies from
+Optimium to Optimistic Rollup.
+
+The L1Timelock added scheduled transaction #143: the Security Council Election
+Process Improvements upgrade action (`SecurityCouncilUpgradeAction.perform()`),
+executed 2026-08-31 20:52 UTC.
+
+## Watched changes
+
+```diff
+    contract SequencerInbox (eth:0x211E1c4c7f1bF5351Ac850Ed10FD68CFfCF6c21b) [orbitstack/SequencerInbox] {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      values.sequencerVersion:
+-        "0x88"
++        "0x00"
+    }
+```
+
+```diff
+    contract L1Timelock (eth:0xE6841D92B0C345144506576eC13ECf5103aC7f49) [orbitstack/Timelock] {
+    +++ description: A timelock with access control. The current minimum delay is 3d. Proposals that passed their minimum delay can be executed by the anyone.
+      values.scheduledTransactions.143:
++        {"id":"0xbf93fbef0a1274cf00bfcbdff101bdc83b9924f9711879d284d6495728356e85","decoded":{"chain":"arbitrum","contractName":"SecurityCouncilUpgradeAction","function":"perform","inputs":[],"address":"arb1:0xeF98Fc7A7F08De47Ed01f3F11f07319c22106445","calldata":"0xb147f40c","executor":"eth:0xCF57572261c7c2BCF21ffD220ea7d1a27D40A827","inboxOnEthereum":"eth:0x4Dbd4fc535Ac27206064B68FfCf827b0A60BAB3f"},"raw":{"target":"eth:0xa723C008e76E379c55599D2E4d93879BeaFDa79C","value":0,"data":"0x0000000000000000000000004dbd4fc535ac27206064b68ffcf827b0a60bab3f000000000000000000000000cf57572261c7c2bcf21ffd220ea7d1a27d40a82700000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000c000000000000000000000000000000000000000000000000000000000000000841cff79cd000000000000000000000000ef98fc7a7f08de47ed01f3f11f07319c2210644500000000000000000000000000000000000000000000000000000000000000400000000000000000000000000000000000000000000000000000000000000004b147f40c0000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000","delay":259200}}
+    }
+```
+
 Generated with discovered.json: 0xef21f3f60f71b9853e8844c038099c8c755b9bfd
 
 # Diff at Thu, 27 Aug 2026 12:49:01 GMT:

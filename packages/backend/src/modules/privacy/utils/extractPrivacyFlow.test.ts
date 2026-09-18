@@ -3,6 +3,7 @@ import { EthereumAddress, UnixTime } from '@l2beat/shared-pure'
 import { expect } from 'earl'
 import { utils } from 'ethers'
 import type { PrivacyFlowIndexerConfig, PrivacyRpcLog } from '../types'
+import { erc20Interface } from './erc20'
 import { extractPrivacyAnonymitySetDeposit } from './extractPrivacyAnonymitySetDeposit'
 import { extractPrivacyFlow } from './extractPrivacyFlow'
 
@@ -64,6 +65,70 @@ function encodeLog(
 }
 
 describe(extractPrivacyFlow.name, () => {
+  describe('erc20Transfer', () => {
+    const config: PrivacyFlowIndexerConfig = {
+      ...baseFlowConfig,
+      event: 'Transfer',
+      extractor: 'erc20Transfer',
+      params: { to: ADDRESS },
+    }
+
+    it('returns the transferred value with count=1', () => {
+      const log = encodeLog(erc20Interface, 'Transfer', [
+        TOKEN_ADDRESS,
+        ADDRESS,
+        1500n,
+      ])
+
+      expect(extractPrivacyFlow(config, log)).toEqual({
+        count: 1,
+        amount: 1500n,
+      })
+    })
+
+    it('ignores zero-value transfers', () => {
+      const log = encodeLog(erc20Interface, 'Transfer', [
+        TOKEN_ADDRESS,
+        ADDRESS,
+        0n,
+      ])
+
+      expect(extractPrivacyFlow(config, log)).toEqual(undefined)
+    })
+
+    it('ignores self transfers', () => {
+      const log = encodeLog(erc20Interface, 'Transfer', [
+        ADDRESS,
+        ADDRESS,
+        1500n,
+      ])
+
+      expect(extractPrivacyFlow(config, log)).toEqual(undefined)
+    })
+
+    it('ignores transfers whose recipient is not the configured `to`', () => {
+      const log = encodeLog(erc20Interface, 'Transfer', [
+        TOKEN_ADDRESS,
+        OTHER_TOKEN_ADDRESS,
+        1500n,
+      ])
+
+      expect(extractPrivacyFlow(config, log)).toEqual(undefined)
+    })
+
+    it('ignores transfers whose sender is not the configured `from`', () => {
+      const log = encodeLog(erc20Interface, 'Transfer', [
+        OTHER_TOKEN_ADDRESS,
+        TOKEN_ADDRESS,
+        1500n,
+      ])
+
+      expect(
+        extractPrivacyFlow({ ...config, params: { from: ADDRESS } }, log),
+      ).toEqual(undefined)
+    })
+  })
+
   describe('fixedAmount', () => {
     it('returns the configured fixed amount with count=1', () => {
       const config: PrivacyFlowIndexerConfig = {

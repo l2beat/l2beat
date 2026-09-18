@@ -1,3 +1,52 @@
+Generated with discovered.json: 0x72efc1b651957b069960016955682e92e4fca899
+
+# Diff at Wed, 16 Sep 2026 12:51:00 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@46c99238e8a0ab5dceba63616e2dee6b1d122281 block: 1789044573
+- current timestamp: 1789562974
+
+## Description
+
+Alchemy Multisig 1: threshold lowered from `5 of 8` to `3 of 8`. Same change on settlus, shape and worldchain.
+
+## Watched changes
+
+```diff
+    contract Alchemy Multisig 1 (eth:0xA4fB12D15Eb85dc9284a7df0AdBC8B696EdbbF1d) [GnosisSafe] {
+    +++ description: None
+      values.$threshold:
+-        5
++        3
+      values.multisigThreshold:
+-        "5 of 8 (63%)"
++        "3 of 8 (38%)"
+    }
+```
+
+Generated with discovered.json: 0x0fdca23d04a3ecc3243183ed58d0bf940ce55b43
+
+# Diff at Thu, 10 Sep 2026 12:50:59 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@35c16d59b7fb15cd8141bb98bfd0e5a0b6c74620 block: 1788792449
+- current timestamp: 1789044573
+
+## Description
+
+Optimism Security Council: Member rotated.
+
+## Watched changes
+
+```diff
+    contract Optimism Security Council (eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03) [GnosisSafe] {
+    +++ description: None
+      values.$members.9:
+-        "eth:0x0aA384EB2fedD2741277A0f72909A0d7275575D7"
++        "eth:0xd91530dB01c60C6B3b824707D33fb0771aB85930"
+    }
+```
+
 Generated with discovered.json: 0xe3c69831d382f802e2ebb6d4664bb27a942f7b45
 
 # Diff at Mon, 07 Sep 2026 14:49:01 GMT:

@@ -82,16 +82,6 @@ export function Layout() {
                 </NavLink>
               </li>
               <li>
-                <NavLink
-                  className={({ isActive }) =>
-                    clsx('font-mono underline', isActive && 'text-orange-500')
-                  }
-                  to="/logo-generator"
-                >
-                  /logo-generator
-                </NavLink>
-              </li>
-              <li>
                 <Link
                   className="font-mono underline"
                   to="https://disco.l2beat.com/ui"
