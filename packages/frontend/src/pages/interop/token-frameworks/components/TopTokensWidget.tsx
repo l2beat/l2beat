@@ -69,7 +69,6 @@ export function TopTokensWidget({
       isLoading={isLoading}
       transfer={transfer}
       className="md:col-span-2 lg:row-span-5"
-      tabsListClassName="h-6 w-fit"
       getTabData={(activeTab) => {
         const items =
           activeTab === 'all'

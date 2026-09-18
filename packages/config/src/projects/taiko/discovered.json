@@ -1,6 +1,6 @@
 {
   "name": "taiko",
-  "timestamp": 1788264785,
+  "timestamp": 1789471567,
   "configHash": "0x5818477a5d3509fe254dafba7775a97c0d82d4b7976e53c79e566e533af3f5ef",
   "entries": [
     {
@@ -343,7 +343,7 @@
           ]
         ],
         "$upgradeCount": 7,
-        "clock": 1788264779,
+        "clock": 1789471559,
         "CLOCK_MODE": "mode=timestamp",
         "decimals": 18,
         "DOMAIN_SEPARATOR": "0x15dfeacb963b1d12ac3b844e6bfc8a2eb912596d4287394b77f927575cd14cb2",
@@ -613,11 +613,6 @@
       }
     },
     {
-      "address": "eth:0x35376dD47C061Bc3b8c8e8d61987019e7ED58f06",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
       "name": "Taiko Foundation Treasury Multisig",
       "address": "eth:0x363e846B91AF677Fb82f709b6c35BD1AaFc6B3Da",
       "type": "Contract",
@@ -646,7 +641,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 186,
+        "nonce": 188,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1048,12 +1043,12 @@
           "permissionlessInclusionMultiplier": 160
         },
         "getCoreState": {
-          "nextProposalId": 32415,
-          "lastProposalBlockId": 25882349,
-          "lastFinalizedProposalId": 32402,
-          "lastFinalizedTimestamp": 1788263051,
-          "lastCheckpointTimestamp": 1788263051,
-          "lastFinalizedBlockHash": "0x4fee18f5f155f359956f140f03f3e534975b103a5a06bbabf424255fd04706dc"
+          "nextProposalId": 35527,
+          "lastProposalBlockId": 25982540,
+          "lastFinalizedProposalId": 35521,
+          "lastFinalizedTimestamp": 1789469807,
+          "lastCheckpointTimestamp": 1789469807,
+          "lastFinalizedBlockHash": "0xbb038c7837673e4ca6c0059b5bcefe4e807faf398d4d52f844540cc1324e20cb"
         },
         "getCurrentForcedInclusionFee": 1000000,
         "getForcedInclusionState": { "head_": 3, "tail_": 3 },
@@ -1713,7 +1708,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 6 (67%)",
-        "nonce": 146,
+        "nonce": 147,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -2463,7 +2458,7 @@
         "GAS_RESERVE": 800000,
         "impl": "eth:0x1c94D798CFA08F396E5BA9F81697289c53273381",
         "inNonReentrant": false,
-        "nextMessageId": 40487,
+        "nextMessageId": 40516,
         "owner": "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a",
         "paused": false,
         "pauser": "eth:0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F",
@@ -2700,7 +2695,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "1 of 2 (50%)",
-        "nonce": 59,
+        "nonce": 61,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -2832,17 +2827,14 @@
           "eth:0x45D4403351Bc34283CE6450D91c099f40D06dA4e",
           "eth:0x0F026a3efE44E0Fe34B87375EFe69b16c05D0438"
         ],
-        "getOperatorForCurrentEpoch": "eth:0x35376dD47C061Bc3b8c8e8d61987019e7ED58f06",
+        "getOperatorForCurrentEpoch": "eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990",
         "getOperatorForNextEpoch": "eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990",
         "impl": "eth:0xDBae46E35C18719E6c78aaBF9c8869c4eC84c149",
         "inNonReentrant": false,
         "latestActivationEpoch": 1786964951,
         "OPERATOR_CHANGE_DELAY": 2,
-        "operatorCount": 2,
-        "operatorMapping": [
-          "eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990",
-          "eth:0x35376dD47C061Bc3b8c8e8d61987019e7ED58f06"
-        ],
+        "operatorCount": 1,
+        "operatorMapping": ["eth:0x5F62d006C10C009ff50C878Cd6157aC861C99990"],
         "owner": "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a",
         "paused": false,
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000",
@@ -4457,8 +4449,8 @@
     "taiko/TaikoToken": "0x715f0fe61aa0d583fd8574521dfa81827a944339f94c46c74a6a058c47089804",
     "taiko/ZkRequiredVerifier": "0x215cf223af5b47bf8dab2909a0722a0465a0fc6dc7d60fffd22c4ec5e9018c67"
   },
-  "usedBlockNumbers": { "ethereum": 25882355 },
-  "permissionsConfigHash": "0x4f0de9cbd2216fa44ba0e0af6270ab4bc9e06c2b7f2e3eca6ed6eaf3747f62d2",
+  "usedBlockNumbers": { "ethereum": 25982552 },
+  "permissionsConfigHash": "0x77138bc69bc61f3f16905db81e9c3c3e226f8cf7780a2e070241def92829e23a",
   "modelledAgainst": {
     "shared-sp1": "0x2e84e1ff84b5975e2af157e2590c2c72b31b7d3524b767661f01d8ae0b955540"
   },
@@ -5029,16 +5021,6 @@
           "from": "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711",
           "delay": 259200,
           "role": ".Executor"
-        }
-      ]
-    },
-    "eth:0x35376dD47C061Bc3b8c8e8d61987019e7ED58f06": {
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0xFD019460881e6EeC632258222393d5821029b2ac",
-          "description": "eligible to propose batches on L1; only the selected current-epoch operator can successfully propose.",
-          "role": ".operatorMapping"
         }
       ]
     },

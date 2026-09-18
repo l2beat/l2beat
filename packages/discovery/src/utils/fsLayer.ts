@@ -1,4 +1,4 @@
-import { readdirSync } from 'fs'
+import { readdirSync, statSync } from 'fs'
 import { basename, dirname } from 'path'
 
 // NOTE(radomski): On some file systems, mainly Apple's AFS and Microsoft's
@@ -11,10 +11,24 @@ import { basename, dirname } from 'path'
 // sure that a given file exists with the same basename as provided in the path
 // use this function.
 export function fileExistsCaseSensitive(path: string): boolean {
-  const filenames = readdirSync(dirname(path))
-  if (!filenames.includes(basename(path))) {
-    return false
-  }
+  return listDirectory(dirname(path)).has(basename(path))
+}
 
-  return true
+// Every project lookup lists the same large projects directory, which
+// dominated config loading. A directory's mtime changes whenever an entry is
+// added, removed or renamed, so a stat is enough to know the listing is fresh.
+const directoryListings = new Map<
+  string,
+  { mtimeMs: number; names: Set<string> }
+>()
+
+function listDirectory(directory: string): Set<string> {
+  const { mtimeMs } = statSync(directory)
+  const cached = directoryListings.get(directory)
+  if (cached?.mtimeMs === mtimeMs) {
+    return cached.names
+  }
+  const names = new Set(readdirSync(directory))
+  directoryListings.set(directory, { mtimeMs, names })
+  return names
 }

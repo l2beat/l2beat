@@ -1,3 +1,56 @@
+Generated with discovered.json: 0xa92a24c47f9fc448cb23677dd789d3e12d52e3e7
+
+# Diff at Fri, 18 Sep 2026 10:40:29 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@d903624f4bbcd7c3db85ae1858dfd3303fa28c5c block: 1787570584
+- current timestamp: 1789726631
+
+## Description
+
+Upgraded lighter verifier on robinhood. The new version is not yet reproduced from the sources. The .sol sources were missing from the blockscout and sourcify, I reconstructed and submitted them.
+
+## Watched changes
+
+```diff
+    contract UpgradeGatekeeper (robinhood:0x43CfF77CD060A155dCe5deb12B93b875f69F2716) [lighter/UpgradeGatekeeper] {
+    +++ description: Governance contract functioning like an upgrade timelock for downstream contracts. The current delay is 21d and can be entirely skipped by robinhood:0x4972E0CaCb2AC45644BA054838e96fF4f6f7eFDb.
+      values.versionId:
+-        5
++        6
+    }
+```
+
+```diff
+    contract ZkLighterVerifier (robinhood:0xe1aFBE2D670eFF0e7C8A41F080792C011916ac31) [N/A] {
+    +++ description: None
+      template:
+-        "lighter/ZkLighterVerifier"
+      sourceHashes.1:
+-        "0xe9918698c11cc35630c3cd99d564142087c3968ded02116451208d19007b069a"
++        "0xa54f86e01624213bae74fb0e5155537807b948cb043a804c3b2acb905aa631d1"
+      description:
+-        "The main ZK verifier of Lighter, settles the proofs of correct L2 state transition in the case of normal rollup operation."
+      values.$implementation:
+-        "robinhood:0x61CA82e45F5a57d00E66b522Be72D8bA41e634Aa"
++        "robinhood:0xCBF92533F5816c6Ee0e4250F4E138b3f49962EF2"
+      values.getTarget:
+-        "robinhood:0x61CA82e45F5a57d00E66b522Be72D8bA41e634Aa"
++        "robinhood:0xCBF92533F5816c6Ee0e4250F4E138b3f49962EF2"
+      implementationNames.robinhood:0x61CA82e45F5a57d00E66b522Be72D8bA41e634Aa:
+-        "ZkLighterVerifier"
+      implementationNames.robinhood:0xCBF92533F5816c6Ee0e4250F4E138b3f49962EF2:
++        "ZkLighterVerifier"
+    }
+```
+
+## Source code changes
+
+```diff
+.../ZkLighterVerifier/ZkLighterVerifier.sol                    | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
+```
+
 Generated with discovered.json: 0x47e75ff0c9912a7d053b3b4d514b89f6d0bd8c35
 
 # Diff at Mon, 24 Aug 2026 11:55:55 GMT:

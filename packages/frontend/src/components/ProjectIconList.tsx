@@ -16,7 +16,7 @@ export interface ProjectIconListItem {
   id: string
   name: string
   iconUrl: string
-  href: string
+  href?: string
 }
 
 export interface ProjectIconListDialog {
@@ -31,7 +31,6 @@ interface Props {
   dialog: ProjectIconListDialog
   className?: string
   maxVisibleProjects?: number
-  disableIconLinks?: boolean
 }
 
 export function ProjectIconList({
@@ -39,7 +38,6 @@ export function ProjectIconList({
   dialog,
   className,
   maxVisibleProjects = 5,
-  disableIconLinks,
 }: Props) {
   const [open, setOpen] = useState(false)
   const router = useRouter()
@@ -49,6 +47,7 @@ export function ProjectIconList({
   const overflowProjects = projects.slice(maxVisibleProjects)
 
   function onItemSelect(project: ProjectIconListItem) {
+    if (!project.href) return
     setOpen(false)
     router.push(project.href)
   }
@@ -75,18 +74,18 @@ export function ProjectIconList({
 
           return (
             <Tooltip key={project.id}>
-              {disableIconLinks ? (
-                <TooltipTrigger>{image}</TooltipTrigger>
-              ) : (
+              {project.href ? (
                 <TooltipTrigger asChild disabledOnMobile>
                   <a href={project.href} className="size-5">
                     {image}
                   </a>
                 </TooltipTrigger>
+              ) : (
+                <TooltipTrigger>{image}</TooltipTrigger>
               )}
               <TooltipContent>
                 <p className="font-bold">{project.name}</p>
-                {!disableIconLinks && (
+                {project.href && (
                   <p className="text-secondary text-xs">
                     Click to view project page
                   </p>

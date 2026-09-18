@@ -29,6 +29,7 @@ import {
   type AttestationNetworkConfig,
 } from '../implementations/crops/easConfig'
 import {
+  assertLedgerCommitted,
   getLedgerPath,
   ledgerFor,
   withAttested,
@@ -55,6 +56,7 @@ export const CropsAttest = command({
   },
   handler: async (args) => {
     const network = ATTESTATION_NETWORKS[args.network]
+    assertLedgerCommitted()
     const privateKey = readAttesterKey()
     const reader = createReader(network, args.rpcUrl)
     // Until the key is known the header carries the committed attester; the

@@ -82,31 +82,57 @@ export type ChainSpecificAddress = string & {
 }
 
 export function ChainSpecificAddress(value: string): ChainSpecificAddress {
-  const [chain, address] = value.split(':')
-  if (chain === undefined || address === undefined) {
-    throw new TypeError(`Incorrect ChainSpecificAddress format: ${value}`)
+  const parsed = ChainSpecificAddress.tryParse(value)
+  if (parsed === undefined) {
+    throw parseFailure(value)
   }
 
+  return parsed
+}
+
+// The chain name is checked first because it is far cheaper than the ERC-55
+// checksum, and callers reject non-addresses in bulk.
+ChainSpecificAddress.tryParse = function tryParse(
+  value: string,
+): ChainSpecificAddress | undefined {
+  const separatorIndex = value.indexOf(':')
+  if (separatorIndex === -1) {
+    return undefined
+  }
+
+  const chain = value.slice(0, separatorIndex)
+  if (!SHORT_CHAIN_NAMES.has(chain as ShortChainName)) {
+    return undefined
+  }
+
+  const address = value.slice(separatorIndex + 1)
   const result = validateAddress(address)
   if (!result.valid) {
-    throw new TypeError(`Invalid ChainSpecificAddress: ${value}`)
-  }
-
-  if (!SHORT_CHAIN_NAMES.has(chain as ShortChainName)) {
-    throw new TypeError(`Unknown chain name: ${chain}`)
+    return undefined
   }
 
   return `${chain}:${result.address}` as unknown as ChainSpecificAddress
 }
 
+function parseFailure(value: string): TypeError {
+  const separatorIndex = value.indexOf(':')
+  if (separatorIndex === -1) {
+    return new TypeError(`Incorrect ChainSpecificAddress format: ${value}`)
+  }
+
+  const address = value.slice(separatorIndex + 1)
+  if (!validateAddress(address).valid) {
+    return new TypeError(`Invalid ChainSpecificAddress: ${value}`)
+  }
+
+  const chain = value.slice(0, separatorIndex)
+  return new TypeError(`Unknown chain name: ${chain}`)
+}
+
 ChainSpecificAddress.check = function check(
   value: string,
 ): value is ChainSpecificAddress {
-  try {
-    return ChainSpecificAddress(value).toString() === value
-  } catch {
-    return false
-  }
+  return ChainSpecificAddress.tryParse(value) === value
 }
 
 ChainSpecificAddress.random = function random(chain: ShortChainName = 'eth') {

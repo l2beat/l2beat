@@ -13,7 +13,7 @@ export async function getEcosystemProjectData(
   const helpers = getSsrHelpers()
   const [appLayoutProps, ecosystem] = await Promise.all([
     getAppLayoutProps(),
-    getEcosystemEntry(slug, helpers),
+    getEcosystemEntry(slug),
   ])
 
   if (!ecosystem) {

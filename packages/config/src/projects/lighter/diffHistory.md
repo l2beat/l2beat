@@ -1,3 +1,87 @@
+Generated with discovered.json: 0xbe4a7b2ddb095205c8ea74f1421316a1da286dbd
+
+# Diff at Tue, 15 Sep 2026 09:44:24 GMT:
+
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@24f869586e8e8385e009b6c9ee143df521270ecb block: 1789042027
+- current timestamp: 1789464683
+
+## Description
+
+New verifier deployed (no sources published yet). Upgraded the main contract: https://disco.l2beat.com/diff/eth:0x8D692294a4824d868e35B3CEcd734aCf41B2342e/eth:0xb9B30C7Ac4eCBf756bc68D7b12c842E415A9cA8e. Added functionality to conveniently change pubkey for master account, minor refactoring.
+
+## Watched changes
+
+```diff
+    contract Lighter (eth:0x3B4D794a66304F130a4Db8F2551B0070dfCf5ca7) [lighter/ZkLighterWithSpot] {
+    +++ description: The main rollup contract. It processes L2 batches, manages token deposits and withdrawals, allows users to submit censorship-resistant L2 transactions and controls desert mode (escape hatch). Logic is split between two contracts because of code-size limits, many operations are delegated to AdditionalZKLighter.
+      sourceHashes.1:
+-        "0xb4dce2f15590894c57a91457428ad19b912efa03f6198f09e308f82518d33234"
++        "0x2c7c54c7dbae18fe5dd08d3aa5ccf1890e97148735d1d4a7768fe8fe9a67d6a3"
+      values.$implementation.0:
+-        "eth:0x8D692294a4824d868e35B3CEcd734aCf41B2342e"
++        "eth:0xb9B30C7Ac4eCBf756bc68D7b12c842E415A9cA8e"
+      values.$implementation.1:
+-        "eth:0xaA5e1aaa81a39F828248ffFeaDC77CcEC8eC3906"
++        "eth:0x1b2Fd2341cdC9d4F00CE5488A0db172d8C8a98E4"
+      values.additionalZkLighter:
+-        "eth:0xaA5e1aaa81a39F828248ffFeaDC77CcEC8eC3906"
++        "eth:0x1b2Fd2341cdC9d4F00CE5488A0db172d8C8a98E4"
+      values.getTarget:
+-        "eth:0x8D692294a4824d868e35B3CEcd734aCf41B2342e"
++        "eth:0xb9B30C7Ac4eCBf756bc68D7b12c842E415A9cA8e"
+      values.MAX_PUBLIC_MARKET_INDEX:
++        281474976710655
+      values.NIL_PUBLIC_MARKET_INDEX:
++        255
+      implementationNames.eth:0x8D692294a4824d868e35B3CEcd734aCf41B2342e:
+-        "ZkLighter"
+      implementationNames.eth:0xaA5e1aaa81a39F828248ffFeaDC77CcEC8eC3906:
+-        "AdditionalZkLighter"
+      implementationNames.eth:0xb9B30C7Ac4eCBf756bc68D7b12c842E415A9cA8e:
++        "ZkLighter"
+      implementationNames.eth:0x1b2Fd2341cdC9d4F00CE5488A0db172d8C8a98E4:
++        "AdditionalZkLighter"
+    }
+```
+
+```diff
+    contract UpgradeGatekeeper (eth:0x94da8A995D0D82Ef0fE7E509C6D76c22603B6f67) [lighter/UpgradeGatekeeper] {
+    +++ description: Governance contract functioning like an upgrade timelock for downstream contracts. The current delay is 21d and can be entirely skipped by eth:0x92b12c9d85BF7bd2EF5d2F53F4cd4Ce0BE432045.
+      values.versionId:
+-        69
++        71
+    }
+```
+
+```diff
+    contract ZkLighterVerifier (eth:0xac3Ce44B6ff4E402858C99D5699ff63131572BaA) [lighter/ZkLighterVerifier] {
+    +++ description: The main ZK verifier of Lighter, settles the proofs of correct L2 state transition in the case of normal rollup operation.
+      sourceHashes.1:
+-        "0xd6bd16e71487e79b2b73fdcd4ac6274826c2eea864e60a68d0527898b6aa449e"
++        "0xb7e4318fc7163594c3382febfcafc104afdbd2e77905ca0c7b2d26c8ff527538"
+      values.$implementation:
+-        "eth:0x4E6505D3AE8Aa910e5d35557c76F567077622a6A"
++        "eth:0x21B036c441C2E3aeD710526189Cd6F5b3151AfbE"
+      values.getTarget:
+-        "eth:0x4E6505D3AE8Aa910e5d35557c76F567077622a6A"
++        "eth:0x21B036c441C2E3aeD710526189Cd6F5b3151AfbE"
+      implementationNames.eth:0x4E6505D3AE8Aa910e5d35557c76F567077622a6A:
+-        "ZkLighterVerifier"
+      implementationNames.eth:0x21B036c441C2E3aeD710526189Cd6F5b3151AfbE:
++        "ZkLighterVerifier"
+    }
+```
+
+## Source code changes
+
+```diff
+.../Lighter/AdditionalZkLighter.2.sol              | 62 +++++++++++--------
+ .../Lighter/ZkLighter.1.sol                        | 72 ++++++++++++----------
+ .../ZkLighterVerifier/ZkLighterVerifier.sol        |  8 +--
+ 3 files changed, 79 insertions(+), 63 deletions(-)
+```
+
 Generated with discovered.json: 0xaa52707e8c3be3c79db5869df938934f20f92ed9
 
 # Diff at Thu, 10 Sep 2026 12:08:42 GMT:

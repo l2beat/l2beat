@@ -1,5 +1,6 @@
 {
   "$schema": "../../../../discovery/schemas/config.v2.schema.json",
+  "archived": true,
   "name": "r0ar",
   "import": ["../globalConfig.jsonc"],
   "initialAddresses": ["eth:0x2c6AF306F8D0Cd6d9E76D43b2DC9a4E60a7f446e"],

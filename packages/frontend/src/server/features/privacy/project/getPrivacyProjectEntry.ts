@@ -5,6 +5,7 @@ import type {
   ProjectRedWarning,
 } from '@l2beat/config'
 import type { ProjectId } from '@l2beat/shared-pure'
+import type { ProjectIconListItem } from '~/components/ProjectIconList'
 import type { ProjectLink } from '~/components/projects/links/types'
 import type { BadgeWithParams } from '~/components/projects/ProjectBadge'
 import type { ProjectDetailsSection } from '~/components/projects/sections/types'
@@ -21,7 +22,7 @@ import { getBadgeWithParams } from '~/utils/project/getBadgeWithParams'
 import { getProjectLinks } from '~/utils/project/getProjectLinks'
 import { getTrustedSetupsSectionFromTrustedSetups } from '~/utils/project/getTrustedSetupsSection'
 import { getVerifiersSection } from '~/utils/project/getVerifiersSection'
-import { type ChartRange, optionToRange } from '~/utils/range/range'
+import { optionToRange } from '~/utils/range/range'
 import {
   EMPTY_TVS_BREAKDOWN,
   get7dTvsBreakdown,
@@ -34,10 +35,12 @@ import {
   type PrivacyTrustedSetupSummary,
   toTrustedSetupSummaryValue,
 } from '../utils/getPrivacyTrustedSetup'
+import { resolvePrivacySources } from '../utils/resolvePrivacySources'
 
 export interface ProjectPrivacyEntry {
   id: ProjectId
   slug: string
+  href: string
   name: string
   shortName?: string
   icon: string
@@ -56,9 +59,9 @@ export interface ProjectPrivacyEntry {
   assetsCount: number
   hasTvl: boolean
   attributes: PrivacyAttribute[]
+  trackedOn: ProjectIconListItem[]
   exitWindow: PrivacyExitWindow
   trustedSetup: PrivacyTrustedSetupSummary
-  privacy: PrivacySummaryValue
   reproducibility: PrivacySummaryValue
   summary: {
     totalValueLockedUsd: number | undefined
@@ -99,7 +102,6 @@ export async function getPrivacyProjectEntry(
       ],
     }),
     get7dTvsBreakdown({ type: 'all' }),
-    prefetchCharts(details, helpers, defaultChartRange),
   ])
 
   const permissionsSection = getPermissionsSection(
@@ -159,20 +161,9 @@ export async function getPrivacyProjectEntry(
     })
   }
 
-  if (details.noteDiscovery) {
-    sections.push({
-      type: 'MarkdownSection',
-      props: {
-        id: 'note-discovery',
-        title: 'Note discovery',
-        content: details.noteDiscovery.description,
-        risks: details.noteDiscovery.risks?.map((text) => ({
-          text,
-          isCritical: false,
-        })),
-      },
-    })
-  }
+  // Filled in once every other section exists, so that its source links can
+  // point only at sections this page renders.
+  const adversariesSectionIndex = sections.length
 
   const chartProject = {
     id: details.id,
@@ -326,9 +317,19 @@ export async function getPrivacyProjectEntry(
     })
   }
 
+  sections.splice(adversariesSectionIndex, 0, {
+    type: 'PrivacyAdversariesSection',
+    props: {
+      id: 'privacy-adversaries',
+      title: 'Privacy against adversaries',
+      adversaries: resolvePrivacySources(details.adversaries, sections),
+    },
+  })
+
   return {
     id: details.id,
     slug: details.slug,
+    href: `/privacy/projects/${details.slug}`,
     name: details.name,
     shortName: details.shortName,
     icon,
@@ -344,11 +345,11 @@ export async function getPrivacyProjectEntry(
     assetsCount: details.assets.length,
     hasTvl: details.hasTvl,
     attributes: details.attributes,
+    trackedOn: details.trackedOn,
     exitWindow: details.exitWindow,
     trustedSetup: toTrustedSetupSummaryValue(
       getPrivacyTrustedSetup(details.trustedSetups),
     ),
-    privacy: details.privacy,
     reproducibility: details.reproducibility,
     summary: {
       totalValueLockedUsd: details.hasTvl
@@ -369,46 +370,4 @@ export async function getPrivacyProjectEntry(
     },
     sections,
   }
-}
-
-async function prefetchCharts(
-  details: PrivacyProjectDetails,
-  helpers: SsrHelpers,
-  range: ChartRange,
-): Promise<void> {
-  const flowsPrefetch =
-    details.assets.length > 0
-      ? helpers.queryClient.prefetchQuery(
-          helpers.trpc.privacy.flowsChart.queryOptions({
-            projectIds: [details.id],
-            range,
-          }),
-        )
-      : undefined
-
-  const anonymitySetPrefetch = details.hasAnonymitySet
-    ? helpers.queryClient.prefetchQuery(
-        helpers.trpc.privacy.anonymitySetChart.queryOptions({
-          projectId: details.id,
-          range,
-        }),
-      )
-    : undefined
-
-  if (!details.hasTvl) {
-    await Promise.all([flowsPrefetch, anonymitySetPrefetch])
-    return undefined
-  }
-
-  // The other chart prefetches ride along so all charts are dehydrated for the client.
-  await Promise.all([
-    helpers.queryClient.fetchQuery(
-      helpers.trpc.tvs.chartByProjects.queryOptions({
-        projectIds: [details.id],
-        range,
-      }),
-    ),
-    flowsPrefetch,
-    anonymitySetPrefetch,
-  ])
 }

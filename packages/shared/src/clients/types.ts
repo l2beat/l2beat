@@ -40,12 +40,19 @@ export interface AztecBlockClient {
   chain: string
 }
 
+/**
+ * eth_getLogs topic filter: entries are positional starting at topic0, an
+ * array entry matches any of its values at that position and null matches
+ * anything at that position.
+ */
+export type LogsTopicFilter = (string | string[] | null)[]
+
 export interface LogsClient {
   getLogs(
     from: number,
     to: number,
     addresses?: string[],
-    topics?: string[],
+    topics?: LogsTopicFilter,
   ): Promise<Log[]>
   chain: string
 }

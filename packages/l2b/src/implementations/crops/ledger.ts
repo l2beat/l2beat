@@ -3,6 +3,7 @@ import type {
   CropAttestationLedger,
   RevokedCropAttestation,
 } from '@l2beat/config'
+import { execSync } from 'child_process'
 import { writeFileSync } from 'fs'
 import { dirname, join } from 'path'
 import type { Address } from 'viem'
@@ -80,4 +81,20 @@ export function sorted(ledger: CropAttestationLedger): CropAttestationLedger {
 
 function byRevision<T extends { revision: number }>(items: T[]): T[] {
   return [...items].sort((a, b) => a.revision - b.revision)
+}
+
+/**
+ * Only crops-attest holds the attester key, so the one realistic way the
+ * ledger and the chain diverge is a run whose output was never committed.
+ * Refusing to start on top of such a file makes that visible right away.
+ */
+export function assertLedgerCommitted(path = getLedgerPath()): void {
+  const status = execSync(`git status --porcelain -- ${JSON.stringify(path)}`, {
+    encoding: 'utf8',
+  }).trim()
+  if (status !== '') {
+    throw new Error(
+      `${path} has uncommitted changes from an earlier run. Rebuild config, commit the ledger, then run again.`,
+    )
+  }
 }

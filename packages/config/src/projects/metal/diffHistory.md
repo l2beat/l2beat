@@ -1,3 +1,292 @@
+Generated with discovered.json: 0x4a5f635e439f4305471214fe3e50f378fab24c8b
+
+# Diff at Wed, 16 Sep 2026 07:40:32 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@1cb797f504a624cec192b1b91d5dc357af06c9d8 block: 1789044529
+- current timestamp: 1789544313
+
+## Description
+
+Exited Superchain governance ([Maintenance Upgrade Proposal](https://vote.optimism.io/proposals/4304410266089046490387351551487953598976707777337874544366097374448296807206)), executed by the SuperchainProxyAdminOwner: ProxyAdmin and DisputeGameFactory `owner` and the `guardian` role moved to the Conduit Multisig 1, and `superchainConfig` was repointed from the shared Superchain instance to the Conduit-operated fork (pauses expire after 3mo 1d). Same change on metal, mode and zora.
+
+## Watched changes
+
+```diff
+-   Status: DELETED
+    contract LivenessModule (eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748) [gnosisSafeModules/LivenessModule]
+    +++ description: used to remove members inactive for 3mo 8d while making sure that the threshold remains above 75%. If the number of members falls below 8, the eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92 takes ownership of the multisig
+```
+
+```diff
+-   Status: DELETED
+    contract Optimism Guardian Multisig (eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
+    contract L1CrossDomainMessenger (eth:0x0a47A44f1B2bb753474f8c830322554A96C9934D) [opstack/L1CrossDomainMessenger] {
+    +++ description: Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.
+      values.proxyAdminOwner:
+-        "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
++        "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
+      values.superchainConfig:
+-        "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
++        "eth:0x097f99768A0a4a0A81bAbbCB1ea18193bA9D53cC"
+    }
+```
+
+```diff
+    contract AnchorStateRegistry (eth:0x120EB40F5FC6D2B47c67960bDb696a9e317C84b0) [opstack/AnchorStateRegistry_post20] {
+    +++ description: Contains the latest confirmed state root that can be used as a starting point in a dispute game. This variant stores respectedGameType, retirementTimestamp, and disputeGameFinalityDelaySeconds locally and drops the legacy *FromGame fields, since the AggregateVerifier model does not expose vm()/weth()/absolutePrestate() on its game implementation.
+      values.proxyAdminOwner:
+-        "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
++        "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
+      values.superchainConfig:
+-        "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
++        "eth:0x097f99768A0a4a0A81bAbbCB1ea18193bA9D53cC"
+    }
+```
+
+```diff
+    contract OptimismMintableERC20Factory (eth:0x1aaab4E20d2e4Bb992b5BCA2125e8bd3588c8730) [opstack/OptimismMintableERC20Factory] {
+    +++ description: A helper contract that generates OptimismMintableERC20 contracts on the network it's deployed to. OptimismMintableERC20 is a standard extension of the base ERC20 token contract designed to allow the L1StandardBridge contracts to mint and burn tokens. This makes it possible to use an OptimismMintableERC20 as this chain's representation of a token on the host chain, or vice-versa.
+      values.proxyAdminOwner:
+-        "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
++        "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract LivenessGuard (eth:0x24424336F04440b1c28685a38303aC33C9D14a25) [gnosisSafeModules/LivenessGuard]
+    +++ description: Modular contract to be used together with the LivenessModule. Tracks liveness / activity of Safe owners.
+```
+
+```diff
+    contract ProxyAdmin (eth:0x37Ff0ae34dadA1A95A4251d10ef7Caa868c7AC99) [global/ProxyAdmin] {
+    +++ description: None
+      values.owner:
+-        "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
++        "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
+    }
+```
+
+```diff
+    contract OptimismPortal2 (eth:0x3F37aBdE2C6b5B2ed6F8045787Df1ED1E3753956) [opstack/OptimismPortal2] {
+    +++ description: The OptimismPortal contract is the main entry point to deposit funds from L1 to L2. It also allows to prove and finalize withdrawals. It specifies which game type can be used for withdrawals, which currently is the PermissionedDisputeGame.
+      values.guardian:
+-        "eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"
++        "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
+      values.proxyAdminOwner:
+-        "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
++        "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
+      values.superchainConfig:
+-        "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
++        "eth:0x097f99768A0a4a0A81bAbbCB1ea18193bA9D53cC"
+    }
+```
+
+```diff
+    contract Conduit Multisig 1 (eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0x097f99768A0a4a0A81bAbbCB1ea18193bA9D53cC","description":"Allowed to pause withdrawals. In op stack systems with a proof system, the Guardian can also blacklist dispute games and set the respected game type (permissioned / permissionless).","role":".guardian"}
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0x7BFfF391A2dbbDc68A259792AC9748F50FcDE93E","description":"Allowed to challenge or delete state roots proposed by a Proposer.","role":".challengerFromDGF"}
+      receivedPermissions.3:
++        {"permission":"interact","from":"eth:0xd4b1EC0DEc3C7F12abD3ec27B7514880ae1C3a37","description":"set and change address mappings.","role":".owner","via":[{"address":"eth:0x37Ff0ae34dadA1A95A4251d10ef7Caa868c7AC99"}]}
+      receivedPermissions.4:
++        {"permission":"upgrade","from":"eth:0x097f99768A0a4a0A81bAbbCB1ea18193bA9D53cC","role":"admin","via":[{"address":"eth:0xb4899FF43Ae727B1E9CB19AC44660e4A43Fad0b5"}]}
+      receivedPermissions.5:
++        {"permission":"upgrade","from":"eth:0x0a47A44f1B2bb753474f8c830322554A96C9934D","role":"admin","via":[{"address":"eth:0x37Ff0ae34dadA1A95A4251d10ef7Caa868c7AC99"}]}
+      receivedPermissions.6:
++        {"permission":"upgrade","from":"eth:0x120EB40F5FC6D2B47c67960bDb696a9e317C84b0","role":"admin","via":[{"address":"eth:0x37Ff0ae34dadA1A95A4251d10ef7Caa868c7AC99"}]}
+      receivedPermissions.7:
++        {"permission":"upgrade","from":"eth:0x1aaab4E20d2e4Bb992b5BCA2125e8bd3588c8730","role":"admin","via":[{"address":"eth:0x37Ff0ae34dadA1A95A4251d10ef7Caa868c7AC99"}]}
+      receivedPermissions.8:
++        {"permission":"upgrade","from":"eth:0x3F37aBdE2C6b5B2ed6F8045787Df1ED1E3753956","role":"admin","via":[{"address":"eth:0x37Ff0ae34dadA1A95A4251d10ef7Caa868c7AC99"}]}
+      receivedPermissions.9:
++        {"permission":"upgrade","from":"eth:0x50D700e97967F9115e3f999bDB263d69F6704680","role":"admin","via":[{"address":"eth:0x37Ff0ae34dadA1A95A4251d10ef7Caa868c7AC99"}]}
+      receivedPermissions.10:
++        {"permission":"upgrade","from":"eth:0x6d0f65D59b55B0FEC5d2d15365154DcADC140BF3","description":"upgrading the bridge implementation can give access to all funds escrowed therein.","role":".$admin","via":[{"address":"eth:0x37Ff0ae34dadA1A95A4251d10ef7Caa868c7AC99"}]}
+      receivedPermissions.11:
++        {"permission":"upgrade","from":"eth:0x7BD909970B0EEdcF078De6Aeff23ce571663b8aA","role":"admin","via":[{"address":"eth:0x37Ff0ae34dadA1A95A4251d10ef7Caa868c7AC99"}]}
+      receivedPermissions.12:
++        {"permission":"upgrade","from":"eth:0x7BFfF391A2dbbDc68A259792AC9748F50FcDE93E","role":"admin","via":[{"address":"eth:0x37Ff0ae34dadA1A95A4251d10ef7Caa868c7AC99"}]}
+      receivedPermissions.13:
++        {"permission":"upgrade","from":"eth:0xDa0148772a61b10F07EE5ceFD2f5818cC7E2307a","role":"admin","via":[{"address":"eth:0x37Ff0ae34dadA1A95A4251d10ef7Caa868c7AC99"}]}
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"eth:0x37Ff0ae34dadA1A95A4251d10ef7Caa868c7AC99","role":".owner"},{"permission":"act","from":"eth:0xb4899FF43Ae727B1E9CB19AC44660e4A43Fad0b5","role":".owner"}]
+    }
+```
+
+```diff
+    contract L1ERC721Bridge (eth:0x50D700e97967F9115e3f999bDB263d69F6704680) [opstack/L1ERC721Bridge] {
+    +++ description: Used to bridge ERC-721 tokens from host chain to this chain.
+      values.proxyAdminOwner:
+-        "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
++        "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
+      values.superchainConfig:
+-        "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
++        "eth:0x097f99768A0a4a0A81bAbbCB1ea18193bA9D53cC"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract SuperchainProxyAdmin (eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04) [global/ProxyAdmin]
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract SuperchainProxyAdminOwner (eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
+    contract L1StandardBridge (eth:0x6d0f65D59b55B0FEC5d2d15365154DcADC140BF3) [opstack/L1StandardBridge] {
+    +++ description: The main entry point to deposit ERC20 tokens from host chain to this chain.
+      values.proxyAdminOwner:
+-        "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
++        "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
+      values.superchainConfig:
+-        "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
++        "eth:0x097f99768A0a4a0A81bAbbCB1ea18193bA9D53cC"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract DeputyPauseModule (eth:0x76fC2F971FB355D0453cF9F64d3F9E4f640E1754) [opstack/DeputyPauseModule]
+    +++ description: Allows eth:0x2fA150379bF32b6d79Eeb4ff9bD280E76049a87c, called the deputy pauser, to act on behalf of the eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92 if set as its Safe module.
+```
+
+```diff
+    contract SystemConfig (eth:0x7BD909970B0EEdcF078De6Aeff23ce571663b8aA) [opstack/SystemConfig] {
+    +++ description: Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.
+      values.$pastUpgrades.14:
++        ["2026-09-14T17:41:23.000Z","0x51a87bdeb0fbace19135195333144298987fd53084ab5c8520b27972aba235cf",["eth:0x2476c911E6D4D9411E677D8Faf15a64ac1fDEEe8"]]
+      values.$pastUpgrades.15:
++        ["2026-09-14T17:41:23.000Z","0x51a87bdeb0fbace19135195333144298987fd53084ab5c8520b27972aba235cf",["eth:0x42Ad0173051225Ac784100e9acD43349707F4db9"]]
+      values.$upgradeCount:
+-        14
++        16
+      values.guardian:
+-        "eth:0x09f7150D8c019BeF34450d6920f6B3608ceFdAf2"
++        "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
+      values.proxyAdminOwner:
+-        "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
++        "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
+      values.superchainConfig:
+-        "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
++        "eth:0x097f99768A0a4a0A81bAbbCB1ea18193bA9D53cC"
+    }
+```
+
+```diff
+    contract DisputeGameFactory (eth:0x7BFfF391A2dbbDc68A259792AC9748F50FcDE93E) [opstack/DisputeGameFactory_v2] {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them. This variant exposes per-type reads only; the legacy array views (gameImpls[], initBonds[]) were removed in the new implementation.
+      values.challengerFromDGF:
+-        "eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A"
++        "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
+      values.owner:
+-        "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
++        "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
+      values.permissionedGameArgs:
+-        "0xdead000000000000000000000000000000000000000000000000000000000000acc005dcd857b401e4732e6f7837135a22825cfa120eb40f5fc6d2b47c67960bdb696a9e317c84b0da0148772a61b10f07ee5cefd2f5818cc7e2307a00000000000000000000000000000000000000000000000000000000000006d6c8187d40ad440328104a52bbed2d8efc5ab1f1f69ba6e03d8b90de867373db8cf1a58d2f7f006b3a"
++        "0xdead000000000000000000000000000000000000000000000000000000000000acc005dcd857b401e4732e6f7837135a22825cfa120eb40f5fc6d2b47c67960bdb696a9e317c84b0da0148772a61b10f07ee5cefd2f5818cc7e2307a00000000000000000000000000000000000000000000000000000000000006d6c8187d40ad440328104a52bbed2d8efc5ab1f1f64a4962275df8c60a80d3a25faec5aa7de116a746"
+      values.proxyAdminOwner:
+-        "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
++        "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract OpFoundationUpgradeSafe (eth:0x847B5c174615B1B7fDF770882256e2D3E95b9D92) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract SuperchainConfig (eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C) [opstack/SuperchainConfig_expiry]
+    +++ description: Used to manage global configuration values for multiple OP Chains within a single Superchain network. The SuperchainConfig contract manages individual pause states for each chain connected to it, as well as a global pause state for all chains. The guardian role can pause either separately, but each pause expires after 3 months if left untouched.
+```
+
+```diff
+-   Status: DELETED
+    contract OpFoundationOperationsSafe (eth:0x9BA6e03D8B90dE867373Db8cF1A58d2F7F006b3A) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
+-   Status: DELETED
+    contract SaferSafes (eth:0xA8447329e52F64AED2bFc9E7a2506F7D369f483a) [gnosisSafeModules/SaferSafes]
+    +++ description: A Gnosis Safe module combining LivenessModule and TimelockGuard. Provides liveness checks where a fallback owner can challenge and take over if Safe owners are unresponsive, plus optional timelock delays for transaction scheduling.
+```
+
+```diff
+-   Status: DELETED
+    contract Optimism Security Council (eth:0xc2819DC788505Aac350142A7A707BF9D03E3Bd03) [GnosisSafe]
+    +++ description: None
+```
+
+```diff
+    contract DelayedWETH (eth:0xDa0148772a61b10F07EE5ceFD2f5818cC7E2307a) [opstack/DelayedWETH] {
+    +++ description: Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.
+      values.config:
+-        "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C"
++        "eth:0x097f99768A0a4a0A81bAbbCB1ea18193bA9D53cC"
+      values.proxyAdminOwner:
+-        "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
++        "eth:0x4a4962275DF8C60a80d3a25faEc5AA7De116A746"
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract AddressManager (eth:0xdE1FCfB0851916CA5101820A69b13a4E276bd81F) [opstack/AddressManager]
+    +++ description: Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.
+```
+
+```diff
++   Status: CREATED
+    contract SuperchainConfig (eth:0x097f99768A0a4a0A81bAbbCB1ea18193bA9D53cC) [opstack/SuperchainConfigFake_expiry]
+    +++ description: This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages pause states for each chain connected to it, as well as a global pause state for all chains. The guardian role can pause either separately, but each pause expires after 3mo 1d if left untouched.
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (eth:0xb4899FF43Ae727B1E9CB19AC44660e4A43Fad0b5) [global/ProxyAdmin]
+    +++ description: None
+```
+
+## Source code changes
+
+```diff
+.../dev/null                                       |  177 -
+ .../AddressManager.sol}                            |    0
+ .../DeputyPauseModule.sol => /dev/null             | 2534 ----------
+ .../LivenessGuard.sol => /dev/null                 | 1632 -------
+ .../LivenessModule.sol => /dev/null                | 1298 ------
+ .../Proxy.p.sol => /dev/null                       |   42 -
+ .../Safe.sol => /dev/null                          | 1216 -----
+ .../GnosisSafeProxy.p.sol => /dev/null             |   38 -
+ .../OpFoundationUpgradeSafe/Safe.sol => /dev/null  | 1216 -----
+ .../GnosisSafe.sol => /dev/null                    | 1026 ----
+ .../GnosisSafeProxy.p.sol => /dev/null             |   38 -
+ .../GnosisSafe.sol => /dev/null                    | 1026 ----
+ .../GnosisSafeProxy.p.sol => /dev/null             |   38 -
+ ...0x37Ff0ae34dadA1A95A4251d10ef7Caa868c7AC99.sol} |    0
+ ...0xb4899FF43Ae727B1E9CB19AC44660e4A43Fad0b5.sol} |    0
+ .../.flat@1789044529/SaferSafes.sol => /dev/null   | 4916 --------------------
+ .../GnosisSafe.sol => /dev/null                    | 1026 ----
+ .../GnosisSafeProxy.p.sol => /dev/null             |   38 -
+ 18 files changed, 16261 deletions(-)
+```
+
 Generated with discovered.json: 0x742c72f6367748cac78591683313ec755bceaa11
 
 # Diff at Thu, 10 Sep 2026 12:50:08 GMT:

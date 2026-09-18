@@ -89,7 +89,7 @@ describe(PrivacyRelayerActivityIndexer.name, () => {
       50,
       150,
       [CONTRACT.toString()],
-      [EVENT],
+      [[EVENT]],
     )
     expect(blockProvider.getBlockTimestamps).not.toHaveBeenCalled()
     expect(privacyRelayerActivity.upsertMany).toHaveBeenOnlyCalledWith([

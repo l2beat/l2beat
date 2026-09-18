@@ -1,3 +1,45 @@
+Generated with discovered.json: 0x784217ca28287f4cb3413c9b4814fc7fd5a0f21e
+
+# Diff at Fri, 18 Sep 2026 06:24:34 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@15431f7683a0de5d516e42fa21c223b42652e15d block: 1789125106
+- current timestamp: 1789711666
+
+## Description
+
+Config: Remove two legacy contracts that are not referenced / have no permissions.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1789125106 (main branch discovery), not current.
+
+```diff
+-   Status: DELETED
+    contract GovernorRewardsSweeper (eth:0x2eCa05b128bF5cbd5A73CC4BB625B51131FF119B) [railgun/Sweeper]
+    +++ description: Helper that forwards all ETH or ERC20 balances it holds to a fixed receiver.
+```
+
+```diff
+    EOA (eth:0x76EB574EFF49FB64DE6f7F2854952B05B5E24624) {
+    +++ description: None
+      receivedPermissions.0:
+-        {"permission":"interact","from":"eth:0x2eCa05b128bF5cbd5A73CC4BB625B51131FF119B","description":"pause, unpause, transfer proxy ownership, or upgrade the Sweeper implementation.","role":".$admin"}
+      receivedPermissions.2:
+-        {"permission":"upgrade","from":"eth:0x2eCa05b128bF5cbd5A73CC4BB625B51131FF119B","role":"admin"}
+      eoaWithUpgradePermissions:
+-        true
+    }
+```
+
+```diff
+-   Status: DELETED
+    contract Getters (eth:0xe90275239D734899e8D94646139213F6F97bEB0E) [railgun/Getters]
+    +++ description: Read-only helper contract that batches governance snapshot and reward-view calls.
+```
+
 Generated with discovered.json: 0x5e7e68b4f911e3e0d3054cc80ad6225fb38b3651
 
 # Diff at Fri, 11 Sep 2026 11:12:51 GMT:

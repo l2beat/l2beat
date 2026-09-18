@@ -1,0 +1,7 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "EtherFiOracle",
+  "category": "gov",
+  "description": "Committee oracle: members submit periodic reports (beacon balances, rewards, withdrawal amounts) that reach consensus before EtherFiAdmin applies them.",
+  "ignoreMethods": ["proxiableUUID"]
+}

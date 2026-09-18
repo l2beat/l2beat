@@ -1,6 +1,6 @@
 {
   "name": "privacy-boost",
-  "timestamp": 1788787273,
+  "timestamp": 1789464689,
   "configHash": "0x60336af145f53acb240c8cf8e9345a7fc84b53db5c2909b9cfe81635da0c7c11",
   "entries": [
     {
@@ -455,14 +455,14 @@
         "authTreeDepth": 20,
         "currentAuthTreeNumber": 0,
         "getAllAuthTreeRoots": [
-          "11561986336561533178841570028147612442488111158794000282153406870398367072704"
+          "19227483129716734431020243988009392092993349987835363574744078110368631313771"
         ],
         "MAX_APPROVAL_LIFETIME": 2592000,
         "MAX_AUTH_TREE_NUMBER": 32767,
         "operator": "oeth:0x78a927114A20Fb34b9d8d9c6a9A75E65f918D52B",
         "owner": "oeth:0x6476cBeBbce2673aeDAa464a4b9f31FD284aA0dC",
         "pendingOwner": "oeth:0x0000000000000000000000000000000000000000",
-        "registryRoot": "11561986336561533178841570028147612442488111158794000282153406870398367072704"
+        "registryRoot": "19227483129716734431020243988009392092993349987835363574744078110368631313771"
       },
       "fieldMeta": {
         "allowedRelays": {
@@ -501,16 +501,17 @@
         "$immutable": false,
         "$implementation": "oeth:0x41675C099F32341bf84BFc5382aF534df5C7461a",
         "$members": [
+          "oeth:0xcf01AB4fa0C5796811Ad939daB8dEd833cf90683",
           "oeth:0x769ef261964f1eDe0a554b74e9bB900d3Fb4AF1E",
-          "oeth:0x90d3EbF1bbE3075F41772bB6f0A54e6038C84244",
+          "oeth:0xB30347E816B525453468cC95C17231Ab04a0C0A9",
           "oeth:0xfEa8d7D07365a1A429319EF7A7a265CB4F530237"
         ],
-        "$threshold": 2,
+        "$threshold": 3,
         "domainSeparator": "0x107dd9a24adb165f1f8fc36d91b8bf46f210130c3dda2ac1189433726c7decb9",
         "getChainId": 10,
         "GnosisSafe_modules": [],
-        "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 12,
+        "multisigThreshold": "3 of 4 (75%)",
+        "nonce": 13,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1432,6 +1433,11 @@
       }
     },
     {
+      "address": "oeth:0xB30347E816B525453468cC95C17231Ab04a0C0A9",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "AuditGateway",
       "address": "oeth:0xb328535aB3bCe578996AE9af5A7f44f175721118",
       "type": "Contract",
@@ -1656,6 +1662,11 @@
         "oeth:0xca689828854a422CF1f778be03CA80549408F620": "TransparentUpgradeableProxy",
         "oeth:0x9CB144D35748932EC44950d0837248fcF8747828": "PrivacyBoost"
       }
+    },
+    {
+      "address": "oeth:0xcf01AB4fa0C5796811Ad939daB8dEd833cf90683",
+      "type": "EOA",
+      "proxyType": "EOA"
     },
     {
       "address": "oeth:0xE7F9E649b5406bf0751EA242CAc712151e1c73eB",
@@ -2417,8 +2428,8 @@
     "privacy-boost/PrivacyBoost_v2": "0xfa919fb7deac56c5265566b40b691108381cf867ebde39c52ba2780bdf80dfbc",
     "privacy-boost/TokenRegistry": "0x5862dbcfbe28cca245e3f2a7d1bca8c58fc6b6b8e2d77666a7042529cac6a5e4"
   },
-  "usedBlockNumbers": { "optimism": 156594248 },
-  "permissionsConfigHash": "0x956daf2f610948409d0cd6b7dd3a943abd8ad3bf6917f60a6e76a95243b10d5e",
+  "usedBlockNumbers": { "optimism": 156932956 },
+  "permissionsConfigHash": "0x743cfea9813a537f83e2f6a6c3985a81d691d801ea4e987ecae1590895d034d6",
   "permissions": {
     "oeth:0x11B75DE42f6107AE4D5C50e4e34af6E34F63C0dd": {
       "directlyReceivedPermissions": [

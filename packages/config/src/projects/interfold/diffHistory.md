@@ -1,3 +1,62 @@
+Generated with discovered.json: 0xcc0a725f20e81a749031616e4d3d738554440e62
+
+# Diff at Tue, 15 Sep 2026 12:11:52 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@a35dcf63dd3a2006e7759c0ac66a3c7d5e615ed9 block: 1788789718
+- current timestamp: 1789471922
+
+## Description
+
+Three new ciphernodes registered and four operators activated in the bonding registry, each new operator posting the standard 32k FOLD bond. numActiveOperators 14 -> 19 out of 21 registered.
+
+## Watched changes
+
+```diff
+    contract BondingRegistry (eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F) [interfold/BondingRegistry] {
+    +++ description: Collateral registry for ciphernode operators. Operators become eligible by depositing ticket collateral backed by sUSDS and a FOLD bond, and by attesting a current software release in the NodeReleaseRegistry; the contract also enforces exits, committee obligations, bans and slashing debits.
++++ description: Operator keys currently active under the collateral, release-attestation and ban rules, reconstructed from activation events. Eligibility-configuration bumps invalidate all cached statuses without emitting events, so entries here may still await re-activation.
+      values.activeOperators.17:
++        "eth:0x630B9c418aCb02829E34F2E0B7948b4A9c92e05F"
++++ description: Operator keys currently active under the collateral, release-attestation and ban rules, reconstructed from activation events. Eligibility-configuration bumps invalidate all cached statuses without emitting events, so entries here may still await re-activation.
+      values.activeOperators.18:
++        "eth:0xdBEd503093A01EA08f21144114542E53594536D6"
++++ description: Operator keys currently active under the collateral, release-attestation and ban rules, reconstructed from activation events. Eligibility-configuration bumps invalidate all cached statuses without emitting events, so entries here may still await re-activation.
+      values.activeOperators.19:
++        "eth:0x12c75ce176D5a58d2a72e85Af158Cbd8749fE1D8"
++++ description: Operator keys currently active under the collateral, release-attestation and ban rules, reconstructed from activation events. Eligibility-configuration bumps invalidate all cached statuses without emitting events, so entries here may still await re-activation.
+      values.activeOperators.20:
++        "eth:0x222D696D0242194457eD491b0c52aBbF9250342F"
++++ description: Number of operators whose active status is valid under the current eligibility-configuration version. Unlike activeOperators, this drops immediately when the version is bumped, so it is the signal for a mass invalidation.
+      values.numActiveOperators:
+-        14
++        19
+    }
+```
+
+```diff
+    EOA (eth:0x12c75ce176D5a58d2a72e85Af158Cbd8749fE1D8) {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"member","from":"eth:0x0ec90465095C21830BEcED07e032809A2Bd2915F","description":"submit one chosen eligible ticket per E3 sortition and be selected for ciphernode committee duties.","role":".activeOperators"}
+    }
+```
+
+```diff
+    contract CiphernodeRegistry (eth:0xC927A5B2d8F68697bC28C0670df05178c93df2d7) [interfold/CiphernodeRegistry] {
+    +++ description: Registry of ciphernodes and E3 committees. It performs ticket-weighted committee selection, records DKG (distributed key generation) proof anchors and the committee public key (to which cyphertexts can be encrypted), and tracks committee viability. Sortition entropy is supplied asynchronously by a governance-set randomness provider.
++++ description: Current registered ciphernode operator keys reconstructed from add and remove events. For each E3, the active configuration selects three of these keys; $threshold applies to that selected committee, not to the full registry.
+      values.$members.18:
++        "eth:0x630B9c418aCb02829E34F2E0B7948b4A9c92e05F"
++++ description: Current registered ciphernode operator keys reconstructed from add and remove events. For each E3, the active configuration selects three of these keys; $threshold applies to that selected committee, not to the full registry.
+      values.$members.19:
++        "eth:0xdBEd503093A01EA08f21144114542E53594536D6"
++++ description: Current registered ciphernode operator keys reconstructed from add and remove events. For each E3, the active configuration selects three of these keys; $threshold applies to that selected committee, not to the full registry.
+      values.$members.20:
++        "eth:0x222D696D0242194457eD491b0c52aBbF9250342F"
+    }
+```
+
 Generated with discovered.json: 0x30ff4a57af617f6c15972893189c47530c07b2b6
 
 # Diff at Mon, 07 Sep 2026 14:03:32 GMT:

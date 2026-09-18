@@ -8,6 +8,11 @@
   ],
   "names": { "eth:0x2ba529D229FDc1DA08e67F536588aE45932d030A": "Burn Caller" },
   "overrides": {
+    // OPContractsManagerV2 (shared upgrade tooling). Ignored so discovery
+    // doesn't follow it into bare implementations; authority is the ProxyAdminOwner.
+    "eth:0x9Ce712Ff84E02659846dc6450BB9b7642fE8bE5D": {
+      "ignoreDiscovery": true
+    },
     "eth:0x069c4c579671f8c120b1327a73217D01Ea2EC5ea": {
       "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"]
     },

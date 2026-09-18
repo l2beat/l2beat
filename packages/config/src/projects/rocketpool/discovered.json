@@ -1,6 +1,6 @@
 {
   "name": "rocketpool",
-  "timestamp": 1788817670,
+  "timestamp": 1789568354,
   "configHash": "0xa6a9822ddd71880057980f9e2c341ca5e55c753ecf65ea6e21995f167d043aff",
   "entries": [
     {
@@ -19,8 +19,8 @@
       "sinceBlock": 11052984,
       "values": {
         "$immutable": true,
-        "get_deposit_count": "0x0def260000000000",
-        "get_deposit_root": "0xe9244f90d5c8b745b86054fe0f3108954caabeee62be24a5702f604b87909972"
+        "get_deposit_count": "0x4801270000000000",
+        "get_deposit_root": "0x3c6b4394d8a0afb8bfda4b7308222e422fb65af58ed3397039359509529a7dbc"
       },
       "implementationNames": {
         "eth:0x00000000219ab540356cBB839Cbe05303d7705Fa": "DepositContract"
@@ -224,7 +224,7 @@
         "rocketDAOProtocolSettingsProposals": "eth:0xf6ad771dfB1cd10c66F688E251b5E5c21cbfDF81",
         "rocketDAOProtocolSettingsRewards": "eth:0x8857610Ba0A7caFD4dBE1120bfF03E9c74fc4124",
         "rocketDAOProtocolSettingsSecurity": "eth:0xC9D771AaF504F33bB3C8a7E67eA9f1881F837cFf",
-        "rocketDAOProtocolVerifier": "eth:0xd1f7e573cdC64FC0B201ca37aB50bC7Dd880040A",
+        "rocketDAOProtocolVerifier": "eth:0xc4D85aA3e318c38005F6D73cC53E5A2b4223723a",
         "rocketDAOSecurity": "eth:0x84aE6D61Df5c6ba7196b5C76Bcb112B8a689aD37",
         "rocketDAOSecurityActions": "eth:0xeaa442dF4Bb5394c66C8024eFb4979bEc89Eb59a",
         "rocketDAOSecurityProposals": "eth:0x334B9B1a6F9d7531efb13746482ff40f1c2a0c4e",
@@ -320,12 +320,12 @@
         "constructorArgs": {
           "_rocketStorageAddress": "eth:0x1d8f8f00cfa6758d7bE78336684788Fb0ee0Fa46"
         },
-        "getBalancesBlock": 25923544,
-        "getBalancesTimestamp": 1788761927,
+        "getBalancesBlock": 25988103,
+        "getBalancesTimestamp": 1789539551,
         "getETHUtilizationRate": "1000000000000000000",
-        "getStakingETHBalance": "371500029257049244335939",
-        "getTotalETHBalance": "371500029257049244335939",
-        "getTotalRETHSupply": "317188318865139284891372",
+        "getStakingETHBalance": "371059736769758769699244",
+        "getTotalETHBalance": "371059736769758769699244",
+        "getTotalRETHSupply": "316644094761186241776033",
         "maxDelta": "2",
         "networkSettings": "eth:0x67Fd03a5095197D1aD1F932BC55E022C420b1153",
         "oracleSet": "eth:0xb8e783882b11Ff4f6Cef3C501EA0f4b960152cc9",
@@ -368,7 +368,7 @@
       "values": {
         "$immutable": true,
         "getState": [6, 6, 6, 6],
-        "getTotal": 31,
+        "getTotal": 32,
         "version": 2
       },
       "implementationNames": {
@@ -436,8 +436,8 @@
         "constructorArgs": {
           "_rocketStorageAddress": "eth:0x1d8f8f00cfa6758d7bE78336684788Fb0ee0Fa46"
         },
-        "getPricesBlock": 25923544,
-        "getRPLPrice": 696573990000173,
+        "getPricesBlock": 25988103,
+        "getRPLPrice": 679308435228087,
         "oracleSet": "eth:0xb8e783882b11Ff4f6Cef3C501EA0f4b960152cc9",
         "version": 4
       },
@@ -934,7 +934,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "2 of 3 (67%)",
-        "nonce": 16,
+        "nonce": 18,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -1105,7 +1105,7 @@
           "eth:0x91003AD0e47d3B963467A22f2a42F92fdc161d22",
           "eth:0xc4D85aA3e318c38005F6D73cC53E5A2b4223723a"
         ],
-        "pendingUpgradeExecuted": [true, false],
+        "pendingUpgradeExecuted": [true, true],
         "pendingUpgradeNames": [
           "rocketUpgradeOneDotFourDissolveHotfix",
           "rocketDAOProtocolVerifier"
@@ -1419,14 +1419,14 @@
           "_rocketStorageAddress": "eth:0x1d8f8f00cfa6758d7bE78336684788Fb0ee0Fa46"
         },
         "decimals": 18,
-        "getCollateralRate": 11645,
-        "getExchangeRate": "1171228595637539761",
-        "getTotalCollateral": 4325484140,
+        "getCollateralRate": 2063,
+        "getExchangeRate": "1171851118997222858",
+        "getTotalCollateral": 765759711,
         "name": "Rocket Pool ETH",
         "networkSettings": "eth:0x67Fd03a5095197D1aD1F932BC55E022C420b1153",
         "symbol": "rETH",
         "targetCollateralRate": "1",
-        "totalSupply": "317114898221225804877930",
+        "totalSupply": "316636070548163371379332",
         "transferDelayBlocks": 0,
         "version": 1
       },
@@ -1498,7 +1498,7 @@
         "getMaximumStakeForVotingPower": "1500000000000000000",
         "getMinimumLegacyRPLStake": "150000000000000000",
         "getReducedBond": "4000000000000000000",
-        "getRegistrationEnabled": false,
+        "getRegistrationEnabled": true,
         "getSmoothingPoolRegistrationEnabled": true,
         "getUnstakingPeriod": 2419200,
         "getVacantMinipoolsEnabled": false,
@@ -1674,7 +1674,7 @@
       "category": { "name": "Non-Critical", "priority": 0 }
     },
     {
-      "name": "RocketDAOProtocolVerifierV2",
+      "name": "RocketDAOProtocolVerifier",
       "address": "eth:0xc4D85aA3e318c38005F6D73cC53E5A2b4223723a",
       "type": "Contract",
       "template": "rocketpool/RocketDAOProtocolVerifier",
@@ -1867,10 +1867,10 @@
         "getClaimIntervalsPassed": 0,
         "getClaimIntervalTime": 2419200,
         "getClaimIntervalTimeStart": 1787808939,
-        "getEthBalance": "7652204343873828514",
-        "getPendingETHRewards": "6904534939728249994",
-        "getPendingRPLRewards": "36580261009788123336550",
-        "getPendingVoterShare": "7652204343873828514",
+        "getEthBalance": "19303023292605836010",
+        "getPendingETHRewards": "12499016371753297924",
+        "getPendingRPLRewards": "64053989256473509898120",
+        "getPendingVoterShare": "19303023292605836010",
         "getRewardIndex": 53,
         "getRPLBalance": "3046114450335216979695",
         "oracleSet": "eth:0xb8e783882b11Ff4f6Cef3C501EA0f4b960152cc9",
@@ -1921,14 +1921,14 @@
         "depositSettings": "eth:0x227BE8dD01DF8ad9BED0178e4F8cEC2996C5c365",
         "getBalance": "19739140722506135779",
         "getExcessBalance": 0,
-        "getExpressQueueLength": 1348,
-        "getMaximumDepositAmount": "6061932260859277493864221",
+        "getExpressQueueLength": 1360,
+        "getMaximumDepositAmount": "6062444260859277493864221",
         "getMinipoolQueueLength": 0,
-        "getNodeBalance": "7744000000000000000000",
-        "getQueueIndex": 2170,
-        "getStandardQueueLength": 588,
-        "getTotalQueueLength": 1936,
-        "getUserBalance": "-7724260859277493864221",
+        "getNodeBalance": "7808000000000000000000",
+        "getQueueIndex": 2173,
+        "getStandardQueueLength": 592,
+        "getTotalQueueLength": 1952,
+        "getUserBalance": "-7788260859277493864221",
         "maximumPoolSize": "6,000,000",
         "minimumDeposit": "0.01",
         "version": 4
@@ -1956,7 +1956,7 @@
         "0xc4045d8d5fc41644cf232b43880801659cf8614dbe3e0daffb1a76ac253d381a"
       ],
       "proxyType": "immutable",
-      "description": "Register of node operators. It records registration, the operator's withdrawal address for ETH and for the collateral token, timezone, smoothing-pool membership, and the address of the operator's pooled validator contract. Changing a withdrawal address is a two-step confirm, so a mistyped address cannot strand the operator. New registrations are currently false.",
+      "description": "Register of node operators. It records registration, the operator's withdrawal address for ETH and for the collateral token, timezone, smoothing-pool membership, and the address of the operator's pooled validator contract. Changing a withdrawal address is a two-step confirm, so a mistyped address cannot strand the operator. New registrations are currently true.",
       "ignoreInWatchMode": ["getNodeCount"],
       "deployerAddress": "eth:0x27e80dB1f5a975f4C43C5eC163114E796cdB603D",
       "sinceTimestamp": 1770607763,
@@ -1966,9 +1966,9 @@
         "constructorArgs": {
           "_rocketStorageAddress": "eth:0x1d8f8f00cfa6758d7bE78336684788Fb0ee0Fa46"
         },
-        "getNodeCount": 4152,
+        "getNodeCount": 4156,
         "nodeSettings": "eth:0xb02B883303e658Ddcd58D3871Dc4Ca0C91f0fc9D",
-        "registrationState": false,
+        "registrationState": true,
         "version": 5
       },
       "fieldMeta": {
@@ -2014,37 +2014,6 @@
       "category": { "name": "Governance", "priority": 3 }
     },
     {
-      "name": "RocketDAOProtocolVerifier",
-      "address": "eth:0xd1f7e573cdC64FC0B201ca37aB50bC7Dd880040A",
-      "type": "Contract",
-      "template": "rocketpool/RocketDAOProtocolVerifier",
-      "sourceHashes": [
-        "0xf3809b1c927eeda431c963bcd4c6d73a7f8cbb6ee5a237b9319321c82c32f5c4"
-      ],
-      "proxyType": "immutable",
-      "description": "Fraud-proof referee for the voting-power trees used by token-holder governance. A proposer stakes 100 collateral tokens on a claimed tree; any address can stake 10 to challenge a node of it, and the proposer must answer within 30m or the proposal is defeated and the bonds are transferred to the challengers. Nobody is trusted to assert the tree; the bonds and the response deadline are what make it binding.",
-      "deployerAddress": "eth:0x27e80dB1f5a975f4C43C5eC163114E796cdB603D",
-      "sinceTimestamp": 1728693887,
-      "sinceBlock": 20946033,
-      "values": {
-        "$immutable": true,
-        "challengeBond": "10",
-        "challengePeriod": "30m",
-        "constructorArgs": {
-          "_rocketStorageAddress": "eth:0x1d8f8f00cfa6758d7bE78336684788Fb0ee0Fa46"
-        },
-        "getDepthPerRound": 5,
-        "proposalBond": "100",
-        "proposalSettings": "eth:0xf6ad771dfB1cd10c66F688E251b5E5c21cbfDF81",
-        "version": 2
-      },
-      "implementationNames": {
-        "eth:0xd1f7e573cdC64FC0B201ca37aB50bC7Dd880040A": "RocketDAOProtocolVerifier"
-      },
-      "usedTypes": [{ "typeCaster": "Undecimal", "arg": { "decimals": 18 } }],
-      "category": { "name": "Governance", "priority": 3 }
-    },
-    {
       "name": "RocketTokenRPL",
       "address": "eth:0xD33526068D116cE69F19A9ee46F0bd304F21A51f",
       "type": "Contract",
@@ -2069,17 +2038,17 @@
         "decimals": 18,
         "getInflationCalcTime": 1787809314,
         "getInflationIntervalRate": "1000133680617113500",
-        "getInflationIntervalsPassed": 11,
+        "getInflationIntervalsPassed": 20,
         "getInflationIntervalStartTime": 1633066914,
         "getInflationIntervalTime": 86400,
         "getInflationRewardsContractAddress": "eth:0xCba5951fc706Fc783b7C142DaE8576Ebe29c41FD",
-        "inflationCalculate": "33534146559452906356855",
+        "inflationCalculate": "61007874806138292918425",
         "inflationInterval": "1d",
         "inflationRate": "1.0001336806171135",
         "name": "Rocket Pool Protocol",
         "symbol": "RPL",
         "totalSupply": "22789554107220508640973240",
-        "totalSwappedRPL": "17312454945148412440631736",
+        "totalSwappedRPL": "17313112649870770584844928",
         "version": 1
       },
       "implementationNames": {
@@ -2325,10 +2294,10 @@
       "sinceBlock": 24416589,
       "values": {
         "$immutable": true,
-        "getActiveMinipoolCount": 14174,
-        "getFinalisedMinipoolCount": 28143,
+        "getActiveMinipoolCount": 14151,
+        "getFinalisedMinipoolCount": 28166,
         "getMinipoolCount": 42317,
-        "getStakingMinipoolCount": 14162,
+        "getStakingMinipoolCount": 14139,
         "getVacantMinipoolCount": 0,
         "version": 6
       },
@@ -2459,9 +2428,9 @@
       "proxyType": "immutable",
       "description": "Holds node operators' collateral-token stake. Staking and unstaking are open to the operator or their designated collateral withdrawal address; unstaking is a two-step withdrawal with a 28d waiting period. The stake is not inert: any registered contract can lock, burn, or transfer it, and a legacy validator contract can slash it, so an operator's collateral is exposed to whatever code is registered at those names.",
       "ignoreInWatchMode": [
-        "getTotalRPLStake",
-        "getTotalMegapoolRPLStake",
-        "getTotalLegacyRPLStake"
+        "getTotalStakedRPL",
+        "getTotalMegapoolStakedRPL",
+        "getTotalLegacyStakedRPL"
       ],
       "deployerAddress": "eth:0x27e80dB1f5a975f4C43C5eC163114E796cdB603D",
       "sinceTimestamp": 1770607811,
@@ -2471,9 +2440,9 @@
         "constructorArgs": {
           "_rocketStorageAddress": "eth:0x1d8f8f00cfa6758d7bE78336684788Fb0ee0Fa46"
         },
-        "getTotalLegacyStakedRPL": "6751545486699781815802051",
-        "getTotalMegapoolStakedRPL": "3382328173046231270943019",
-        "getTotalStakedRPL": "10133873659746013086745070",
+        "getTotalLegacyStakedRPL": "6706352423427440944711708",
+        "getTotalMegapoolStakedRPL": "3402593757807780417518495",
+        "getTotalStakedRPL": "10108946181235221362230203",
         "nodeSettings": "eth:0xb02B883303e658Ddcd58D3871Dc4Ca0C91f0fc9D",
         "unstakingPeriod": "28d",
         "version": 7
@@ -2497,7 +2466,7 @@
       "deployerAddress": "eth:0x27e80dB1f5a975f4C43C5eC163114E796cdB603D",
       "sinceTimestamp": 1770607739,
       "sinceBlock": 24416528,
-      "values": { "$immutable": true, "getValidatorCount": 4951, "version": 1 },
+      "values": { "$immutable": true, "getValidatorCount": 4975, "version": 1 },
       "implementationNames": {
         "eth:0xf2CCd522Ba5fFEda28fe0389963845D61F342034": "RocketMegapoolManager"
       },
@@ -3953,28 +3922,6 @@
       "function proposalTreasuryUpdateContract(string _contractName, address _recipientAddress, uint256 _amountPerPeriod, uint256 _periodLength, uint256 _numPeriods)",
       "function version() view returns (uint8)"
     ],
-    "eth:0xd1f7e573cdC64FC0B201ca37aB50bC7Dd880040A": [
-      "constructor(address _rocketStorageAddress)",
-      "event ChallengeSubmitted(uint256 indexed proposalID, address indexed challenger, uint256 index, uint256 timestamp)",
-      "event ProposalBondBurned(uint256 indexed proposalID, address indexed proposer, uint256 amount, uint256 timestamp)",
-      "event RootSubmitted(uint256 indexed proposalID, address indexed proposer, uint32 blockNumber, uint256 index, tuple(uint256 sum, bytes32 hash) root, tuple(uint256 sum, bytes32 hash)[] treeNodes, uint256 timestamp)",
-      "function burnProposalBond(uint256 _proposalID)",
-      "function claimBondChallenger(uint256 _proposalID, uint256[] _indices)",
-      "function claimBondProposer(uint256 _proposalID, uint256[] _indices)",
-      "function createChallenge(uint256 _proposalID, uint256 _index, tuple(uint256 sum, bytes32 hash) _node, tuple(uint256 sum, bytes32 hash)[] _witness)",
-      "function defeatProposal(uint256 _proposalID, uint256 _index)",
-      "function getChallengeBond(uint256 _proposalID) view returns (uint256)",
-      "function getChallengePeriod(uint256 _proposalID) view returns (uint256)",
-      "function getChallengeState(uint256 _proposalID, uint256 _index) view returns (uint8)",
-      "function getDefeatIndex(uint256 _proposalID) view returns (uint256)",
-      "function getDepthPerRound() pure returns (uint256)",
-      "function getNode(uint256 _proposalID, uint256 _index) view returns (tuple(uint256 sum, bytes32 hash))",
-      "function getProposalBond(uint256 _proposalID) view returns (uint256)",
-      "function submitProposalRoot(uint256 _proposalID, address _proposer, uint32 _blockNumber, tuple(uint256 sum, bytes32 hash)[] _treeNodes)",
-      "function submitRoot(uint256 _proposalID, uint256 _index, tuple(uint256 sum, bytes32 hash)[] _nodes)",
-      "function verifyVote(address _voter, uint256 _nodeIndex, uint256 _proposalID, uint256 _votingPower, tuple(uint256 sum, bytes32 hash)[] _witness) view returns (bool)",
-      "function version() view returns (uint8)"
-    ],
     "eth:0xD33526068D116cE69F19A9ee46F0bd304F21A51f": [
       "constructor(address _rocketStorageAddress, address _rocketTokenRPLFixedSupplyAddress)",
       "event Approval(address indexed owner, address indexed spender, uint256 value)",
@@ -4376,7 +4323,7 @@
     "rocketpool/RocketNodeDistributorDelegate": "0xa38f9b2425c32b5450782262d5d6fb45a557c0ab985993345ef89413ffc8b254",
     "rocketpool/RocketNodeDistributorFactory": "0xee4de2c0a038d63d6ffec56dbfbe13084ffc4ccf28bca53d5adfc56c64986a2d",
     "rocketpool/RocketNodeManager": "0x3aec3436b56c41ff59ad7de737762d271b0fbaf1c1bad11fb256009def1bc2cb",
-    "rocketpool/RocketNodeStaking": "0x6396bbffef9f5b1b4199cc0ee68904f1ee6ddcc58776f322080f93584694e9de",
+    "rocketpool/RocketNodeStaking": "0xd4e3618bce4f41befe799d66e27532fd870f7e938493070ca7a7e4a6f4eb2932",
     "rocketpool/RocketPoolToken": "0x45cda0cf9ac9f8691a75f338995b44e066c315afa60d733c45e531ab78e21b69",
     "rocketpool/RocketRewardsPool": "0x11ebab73193d1819bc3ee18ccf83cf37e9e57b8a51812605a355fba70ea588eb",
     "rocketpool/RocketSmoothingPool": "0x0bac5ecb06d70c2bd1e4a620f531163bd74f04e41fdc863f96c721a3832644a9",
@@ -4391,8 +4338,8 @@
     "rocketpool/RocketUpgradeOneDotTwo": "0x327a0ba9225fde0a0eb14e2dc57a9de8dbdc2609e8145ddd325d2cc5099d7be5",
     "rocketpool/RocketVault": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
-  "usedBlockNumbers": { "ethereum": 25928261 },
-  "permissionsConfigHash": "0x2c73c9a8790f46f8982721c4c19f3a42ef311b3d815d93b4a041f8b1a4dd0788",
+  "usedBlockNumbers": { "ethereum": 25990589 },
+  "permissionsConfigHash": "0x39b8fa0713b7993158c701d950c2c16b94a4a58a68779d6683793025e89b507c",
   "permissions": {
     "eth:0x0cCF14983364A7735d369879603930Afe10df21e": {
       "receivedPermissions": [

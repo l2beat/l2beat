@@ -1,5 +1,6 @@
 import type {
   PrivacyAttribute,
+  PrivacyCategory,
   PrivacyExitWindow,
   PrivacySummaryValue,
 } from '@l2beat/config'
@@ -13,11 +14,12 @@ import {
   getPrivacyAnonymitySetSummaries,
   type PrivacyAnonymitySetSummary,
 } from './anonymity-set/getPrivacyAnonymitySetSummaries'
-import type { PrivacyProject } from './types'
+import type { PrivacyAdversariesSummary, PrivacyProject } from './types'
 import {
   getPrivacyTrustedSetup,
   type PrivacyTrustedSetup,
 } from './utils/getPrivacyTrustedSetup'
+import { toPrivacyAdversariesSummary } from './utils/toPrivacyAdversariesSummary'
 
 export interface PrivacySummaryEntry {
   id: string
@@ -36,11 +38,11 @@ export interface PrivacySummaryEntry {
   totalValueDeposited30dUsd?: number
   anonymitySet: PrivacyAnonymitySetSummary
   isUnderReview: boolean
-  summaryTrackedItemName: string
+  category: PrivacyCategory
   trustedSetup: PrivacyTrustedSetup
   exitWindow: PrivacyExitWindow
   reproducibility: PrivacySummaryValue
-  privacy: PrivacySummaryValue
+  adversaries: PrivacyAdversariesSummary
   attributes: PrivacyAttribute[]
   quantumResistant?: boolean
 }
@@ -170,12 +172,11 @@ function getPrivacySummaryBaseEntry(
     description: project.display.description,
     hasTvl: project.tvsConfig !== undefined,
     isUnderReview: !!project.statuses.reviewStatus,
-    summaryTrackedItemName:
-      project.privacyInfo.summaryTrackedItemName ?? 'pool',
+    category: project.privacyInfo.category,
     trustedSetup: getPrivacyTrustedSetup(project.trustedSetups),
     exitWindow: project.privacyInfo.exitWindow,
     reproducibility: project.privacyInfo.reproducibility,
-    privacy: project.privacyInfo.privacy,
+    adversaries: toPrivacyAdversariesSummary(project.privacyInfo.adversaries),
     attributes: project.privacyInfo.attributes ?? [],
     quantumResistant: project.privacyInfo.quantumResistant,
   }

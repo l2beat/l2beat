@@ -3,6 +3,7 @@ import { expect } from 'earl'
 import { getProjects } from '../processing/getProjects'
 import {
   type AmountFormula,
+  BalanceOfEscrowsAmountFormulaSchema,
   type Formula,
   isAmountFormula,
   isOnchainAmountFormula,
@@ -12,14 +13,15 @@ import {
 type FormulaTest = (formula: Formula) => void
 
 describe('tvs', () => {
-  const projects = getProjects().filter((p) => p.tvsConfig)
+  const allProjects = getProjects()
+  const projects = allProjects.filter((p) => p.tvsConfig)
   const chainSinceTimestamps = new Map(
-    getProjects()
+    allProjects
       .filter((p) => p.chainConfig)
       .map((c) => [c.chainConfig!.name, c.chainConfig!.sinceTimestamp]),
   )
   const chainUntilTimestamps = new Map(
-    getProjects()
+    allProjects
       .filter((p) => p.chainConfig?.untilTimestamp)
       .map((c) => [c.chainConfig!.name, c.chainConfig!.untilTimestamp!]),
   )
@@ -50,6 +52,24 @@ describe('tvs', () => {
     }
 
     expect(() => ProjectTvsConfigSchema.parse(mockTvsConfig)).toThrow()
+  })
+
+  it('requires aggregate escrow addresses to be non-empty and unique', () => {
+    const formula = {
+      type: 'balanceOfEscrows' as const,
+      chain: 'arbitrum',
+      sinceTimestamp: 1729881083,
+      address: '0x1111111111111111111111111111111111111111',
+      decimals: 18,
+      escrowAddresses: [] as string[],
+    }
+
+    expect(() => BalanceOfEscrowsAmountFormulaSchema.parse(formula)).toThrow()
+    formula.escrowAddresses = [
+      '0x2222222222222222222222222222222222222222',
+      '0x2222222222222222222222222222222222222222',
+    ]
+    expect(() => BalanceOfEscrowsAmountFormulaSchema.parse(formula)).toThrow()
   })
 
   for (const project of projects) {
