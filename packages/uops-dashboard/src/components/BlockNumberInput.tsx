@@ -1,5 +1,7 @@
 import { useState } from 'react'
-import type { ApiError, LatestBlockApiRequest } from '@/types'
+import { API } from '@/types'
+import { getErrorMessage } from '@/utils/getErrorMessage'
+import { postApi } from '@/utils/postApi'
 
 export function BlockNumberInput({
   value,
@@ -16,22 +18,11 @@ export function BlockNumberInput({
   const getLatestBlock = async () => {
     setIsLoading(true)
     try {
-      const res = await fetch(`${window.location.origin}/api/latest`, {
-        method: 'POST',
-        body: JSON.stringify({
-          chainId: chain,
-        } as LatestBlockApiRequest),
-      })
-
-      const body = await res.json()
-      if (res.status === 200) {
-        setBlockNumber(body as string)
-      } else {
-        const error = body as ApiError
-        setErrorMessage(error.message)
-      }
+      const latest = await postApi(API.latest, { chainId: chain })
+      setBlockNumber(latest.toString())
     } catch (err) {
       console.log(err)
+      setErrorMessage(getErrorMessage(err))
     }
     setIsLoading(false)
   }

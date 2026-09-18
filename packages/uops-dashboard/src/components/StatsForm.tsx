@@ -1,11 +1,13 @@
 import { useState } from 'react'
 import { SUPPORTED_CHAINS } from '@/chains'
-import type { ApiError, Stats, StatsApiRequest, StatsWithChain } from '@/types'
-import { BlockCountInput, type InputMode } from './blockCountInput'
-import { ChainDropdown } from './chainDropdown'
-import { ErrorModal } from './errorModal'
-import { ProgressBar } from './progressBar'
-import { SubmitButton } from './submitButton'
+import { API, type StatsWithChain } from '@/types'
+import { getErrorMessage } from '@/utils/getErrorMessage'
+import { postApi } from '@/utils/postApi'
+import { BlockCountInput, type InputMode } from './BlockCountInput'
+import { ChainDropdown } from './ChainDropdown'
+import { ErrorModal } from './ErrorModal'
+import { ProgressBar } from './ProgressBar'
+import { SubmitButton } from './SubmitButton'
 
 export function StatsForm({
   lastFetched,
@@ -83,11 +85,11 @@ export function StatsForm({
           currentBatchSize = blocksLeftToFetch
         }
 
-        const batch = await getBatch(
+        const batch = await postApi(API.stats, {
           chainId,
-          currentBatchSize,
-          currentLastFetched,
-        )
+          count: currentBatchSize,
+          lastFetched: currentLastFetched,
+        })
         currentLastFetched = batch.startBlock
 
         setLoadedCount((loadedCount) => loadedCount + currentBatchSize)
@@ -98,35 +100,11 @@ export function StatsForm({
         blocksLeftToFetch -= currentBatchSize
       }
     } catch (err) {
-      setErrorMessage((err as Error).message)
+      setErrorMessage(getErrorMessage(err))
     }
 
     setIsLoading(false)
     setLoadedCount(0)
-  }
-
-  const getBatch = async (
-    chainId: string,
-    count: number,
-    lastFetched?: number,
-  ): Promise<Stats> => {
-    const res = await fetch(`${window.location.origin}/api/stats`, {
-      method: 'POST',
-      body: JSON.stringify({
-        chainId,
-        count,
-        lastFetched,
-      } as StatsApiRequest),
-    })
-
-    const body = await res.json()
-    if (res.status !== 200) {
-      const error = body as ApiError
-      throw new Error(error.message)
-    }
-
-    const stats = body as Stats
-    return stats
   }
 
   return (

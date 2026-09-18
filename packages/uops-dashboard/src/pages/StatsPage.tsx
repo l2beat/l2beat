@@ -1,11 +1,10 @@
-import Head from 'next/head'
 import { useState } from 'react'
-import { BlockList } from '@/components/blockList'
-import { SmartAccountList } from '@/components/smartAccountList'
-import { StatsDetails } from '@/components/statsDetails'
-import { StatsForm } from '@/components/statsForm'
+import { BlockList } from '@/components/BlockList'
+import { SmartAccountList } from '@/components/SmartAccountList'
+import { StatsDetails } from '@/components/StatsDetails'
+import { StatsForm } from '@/components/StatsForm'
 import type { StatsWithChain } from '@/types'
-import { rankBlocks } from '../../utils/rankBlocks'
+import { rankBlocks } from '@/utils/rankBlocks'
 
 export default function StatsPage() {
   const [stats, setStats] = useState<StatsWithChain>()
@@ -59,9 +58,6 @@ export default function StatsPage() {
   }
   return (
     <>
-      <Head>
-        <title>UOPS Explorer - L2BEAT</title>
-      </Head>
       <main>
         <h1 className="mt-4 mb-4 text-center font-extrabold text-4xl text-gray-900 leading-none tracking-tight md:text-5xl lg:text-6xl dark:text-white">
           Block statistics
