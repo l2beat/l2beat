@@ -1,7 +1,7 @@
 {
   "name": "xlayer",
   "timestamp": 1789554702,
-  "configHash": "0x0afb59e7a855d310cf7a8ad457e77a2ce4c7a6422a540f37c39a282c6687449b",
+  "configHash": "0x57e5b1d8e3cf37420ba72eda189ad2f62d230b8d7fe60316516f035d1e061fc0",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -1003,7 +1003,6 @@
       "type": "Contract",
       "unverified": true,
       "proxyType": "immutable",
-      "description": "Unverified call forwarder: its owner (currently the EOA 0x6eE7…C6aA, a Xlayer Multisig signer) can execute arbitrary calls through it and replace the owner.",
       "deployerAddress": "eth:0xAd9bCE315bF77C0Ade22097199953381C6Cc72eE",
       "sinceTimestamp": 1761567071,
       "sinceBlock": 23668694,
@@ -1225,7 +1224,7 @@
         "0x3d36d493b22d28ce536d4901653b65ba94a6a7389499578f0298434341ba8fbf"
       ],
       "proxyType": "immutable",
-      "description": "A timelock with access control that owns the DisputeGameFactory and its ProxyAdmin. The current minimum delay is 1h. Proposals that passed their minimum delay can be executed by anyone.",
+      "description": "A timelock with access control. The current minimum delay is 1h.",
       "deployerAddress": "eth:0x8d7c41aa990234b2d7E064Df150A4228ed984648",
       "sinceTimestamp": 1789439375,
       "sinceBlock": 25979879,

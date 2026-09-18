@@ -1,9 +1,9 @@
-Generated with discovered.json: 0x03512036c21a87b7e27c2ce6c1136d92ecb5af02
+Generated with discovered.json: 0x8a96d23d9663bea065581ca1e455890ca79cec1e
 
-# Diff at Wed, 16 Sep 2026 10:32:48 GMT:
+# Diff at Fri, 18 Sep 2026 07:46:39 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
-- comparing to: main@46c99238e8a0ab5dceba63616e2dee6b1d122281 block: 1782911432
+- comparing to: main@15431f7683a0de5d516e42fa21c223b42652e15d block: 1782911432
 - current timestamp: 1789554702
 
 ## Description
@@ -65,7 +65,7 @@ New `TimelockController` (OpenZeppelin v5.7.0, 1h delay): Xlayer Multisig is pro
 
 ```diff
     contract OwnerContract (eth:0xe58C365Da30c746204022e61482bBE828cAA9091) [N/A] {
-    +++ description: Unverified call forwarder: its owner (currently the EOA 0x6eE7…C6aA, a Xlayer Multisig signer) can execute arbitrary calls through it and replace the owner.
+    +++ description: None
       receivedPermissions.0:
 -        {"permission":"interact","from":"eth:0x9D4c8FAEadDdDeeE1Ed0c92dAbAD815c2484f675","description":"set the dispute game implementation and initial bond for any game type.","role":".owner"}
     }
@@ -80,7 +80,7 @@ New `TimelockController` (OpenZeppelin v5.7.0, 1h delay): Xlayer Multisig is pro
 ```diff
 +   Status: CREATED
     contract TimelockController (eth:0xFa3A5834D9990B94045C7b3229547FF101D552d6) [global/TimelockController]
-    +++ description: A timelock with access control that owns the DisputeGameFactory and its ProxyAdmin. The current minimum delay is 1h. Proposals that passed their minimum delay can be executed by anyone.
+    +++ description: A timelock with access control. The current minimum delay is 1h.
 ```
 
 ## Source code changes
@@ -99,11 +99,9 @@ discovery. Values are for block 1782911432 (main branch discovery), not current.
 
 ```diff
     contract OwnerContract (eth:0xe58C365Da30c746204022e61482bBE828cAA9091) [N/A] {
-    +++ description: Unverified call forwarder: its owner (currently the EOA 0x6eE7…C6aA, a Xlayer Multisig signer) can execute arbitrary calls through it and replace the owner.
+    +++ description: None
       receivedPermissions.0:
 +        {"permission":"interact","from":"eth:0x9D4c8FAEadDdDeeE1Ed0c92dAbAD815c2484f675","description":"set the dispute game implementation and initial bond for any game type.","role":".owner"}
-      description:
-+        "Unverified call forwarder: its owner (currently the EOA 0x6eE7…C6aA, a Xlayer Multisig signer) can execute arbitrary calls through it and replace the owner."
     }
 ```
 
