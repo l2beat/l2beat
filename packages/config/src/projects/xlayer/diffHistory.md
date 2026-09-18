@@ -12,8 +12,6 @@ New `TimelockController` (OpenZeppelin v5.7.0, 1h delay): Xlayer Multisig is pro
 
 `DisputeGameFactory` owner changed from `OwnerContract` to the `TimelockController`, and its proxy admin moved to a new `ProxyAdmin` owned by the `TimelockController`. All other proxies stay under the old `ProxyAdmin`.
 
-Config: new `TimelockController` shape, timelock delay routed through the Proposer, `DisputeGameFactory` owner permission added.
-
 ## Watched changes
 
 ```diff
