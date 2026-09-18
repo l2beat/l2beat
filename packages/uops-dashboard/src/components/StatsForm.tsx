@@ -1,12 +1,12 @@
 import { useState } from 'react'
 import { SUPPORTED_CHAINS } from '@/chains'
-import type { Stats, StatsApiRequest, StatsWithChain } from '@/types'
+import { Stats, type StatsApiRequest, type StatsWithChain } from '@/types'
 import { postApi } from '@/utils/postApi'
-import { BlockCountInput, type InputMode } from './blockCountInput'
-import { ChainDropdown } from './chainDropdown'
-import { ErrorModal } from './errorModal'
-import { ProgressBar } from './progressBar'
-import { SubmitButton } from './submitButton'
+import { BlockCountInput, type InputMode } from './BlockCountInput'
+import { ChainDropdown } from './ChainDropdown'
+import { ErrorModal } from './ErrorModal'
+import { ProgressBar } from './ProgressBar'
+import { SubmitButton } from './SubmitButton'
 
 export function StatsForm({
   lastFetched,
@@ -112,7 +112,7 @@ export function StatsForm({
     lastFetched?: number,
   ): Promise<Stats> => {
     const request: StatsApiRequest = { chainId, count, lastFetched }
-    return await postApi<Stats>('stats', request)
+    return await postApi('stats', request, Stats)
   }
 
   return (

@@ -1,8 +1,8 @@
 import { useState } from 'react'
-import { BlockList } from '@/components/blockList'
-import { SmartAccountList } from '@/components/smartAccountList'
-import { StatsDetails } from '@/components/statsDetails'
-import { StatsForm } from '@/components/statsForm'
+import { BlockList } from '@/components/BlockList'
+import { SmartAccountList } from '@/components/SmartAccountList'
+import { StatsDetails } from '@/components/StatsDetails'
+import { StatsForm } from '@/components/StatsForm'
 import type { StatsWithChain } from '@/types'
 import { rankBlocks } from '@/utils/rankBlocks'
 

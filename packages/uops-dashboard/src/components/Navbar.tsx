@@ -1,5 +1,5 @@
 import { Navbar } from 'flowbite-react'
-import { Logo } from './logo'
+import { Logo } from './Logo'
 
 export function MainNavbar() {
   const currentPath = window.location.pathname

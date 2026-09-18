@@ -1,8 +1,8 @@
 import type { Chain } from '@/chains'
 import type { CountedTransaction } from '@/types'
-import { BatchIcon } from './icons/batchIcon'
-import { UnknownIcon } from './icons/unknownIcon'
-import { TransactionDetails } from './transactionDetails'
+import { BatchIcon } from './icons/BatchIcon'
+import { UnknownIcon } from './icons/UnknownIcon'
+import { TransactionDetails } from './TransactionDetails'
 
 export function TransactionList({
   txs,

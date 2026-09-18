@@ -3,8 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "pnpm prebuild && tsx watch src/server/index.dev.ts",
+    "dev": "pnpm prebuild && tsx watch --exclude './vite.config.mts.timestamp-*' src/server/index.dev.ts",
     "prebuild": "pnpm build:config && node ./scripts/getChains.mjs",
+    "build:dependencies": "cd ../.. && pnpm build:dependencies:uops-dashboard",
     "build": "vite build && esbuild src/server/index.ts --bundle --platform=node --packages=external --outfile=dist/server/index.js",
     "start": "NODE_ENV=production node dist/server/index.js",
     "format": "biome format .",

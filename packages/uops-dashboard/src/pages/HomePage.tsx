@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react'
-import { BlockDetails } from '@/components/blockDetails'
-import { TransactionList } from '@/components/transactionList'
+import { BlockDetails } from '@/components/BlockDetails'
+import { TransactionList } from '@/components/TransactionList'
 import type { BlockWithChain } from '@/types'
-import { BlockForm } from '../components/blockForm'
+import { BlockForm } from '../components/BlockForm'
 
 export default function HomePage() {
   const [block, setBlock] = useState<BlockWithChain>()

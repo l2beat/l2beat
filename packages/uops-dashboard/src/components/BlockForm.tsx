@@ -1,15 +1,15 @@
 import { useEffect, useState } from 'react'
 import { SUPPORTED_CHAINS } from '@/chains'
-import type {
-  BlockWithChain,
+import {
+  type BlockWithChain,
   CountedBlock,
-  UserOperationsApiRequest,
+  type UserOperationsApiRequest,
 } from '@/types'
 import { postApi } from '@/utils/postApi'
-import { BlockNumberInput } from './blockNumberInput'
-import { ChainDropdown } from './chainDropdown'
-import { ErrorModal } from './errorModal'
-import { SubmitButton } from './submitButton'
+import { BlockNumberInput } from './BlockNumberInput'
+import { ChainDropdown } from './ChainDropdown'
+import { ErrorModal } from './ErrorModal'
+import { SubmitButton } from './SubmitButton'
 
 export function BlockForm({
   onComplete,
@@ -67,7 +67,7 @@ export function BlockForm({
         chainId,
         blockNumber: Number(blockNumber),
       }
-      const block = await postApi<CountedBlock>('uops', request)
+      const block = await postApi('uops', request, CountedBlock)
       onComplete({ ...block, chain })
     } catch (err) {
       console.log(err)

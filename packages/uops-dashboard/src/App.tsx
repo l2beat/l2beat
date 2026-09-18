@@ -1,4 +1,4 @@
-import Layout from '@/components/layout'
+import Layout from '@/components/Layout'
 import HomePage from './pages/HomePage'
 import StatsPage from './pages/StatsPage'
 

@@ -1,10 +1,12 @@
+import type { Parser } from '@l2beat/validate'
 import express, { type Router } from 'express'
 import { SUPPORTED_CHAINS } from '@/chains'
-import type {
-  ApiError,
-  CountedBlock,
+import {
+  type ApiError,
+  type CountedBlock,
   LatestBlockApiRequest,
-  Stats,
+  type LatestBlockApiResponse,
+  type Stats,
   StatsApiRequest,
   UserOperationsApiRequest,
 } from '@/types'
@@ -17,14 +19,16 @@ export function createApiRouter(): Router {
 
   router.post(
     '/latest',
-    chainEndpoint<LatestBlockApiRequest, number>((chainService) =>
-      chainService.getBlockNumber(),
+    chainEndpoint<LatestBlockApiRequest, LatestBlockApiResponse>(
+      LatestBlockApiRequest,
+      (chainService) => chainService.getBlockNumber(),
     ),
   )
 
   router.post(
     '/uops',
     chainEndpoint<UserOperationsApiRequest, CountedBlock>(
+      UserOperationsApiRequest,
       async (chainService, input, db) => {
         const block = await chainService.getBlock(input.blockNumber)
         await saveDb(db)
@@ -35,27 +39,34 @@ export function createApiRouter(): Router {
 
   router.post(
     '/stats',
-    chainEndpoint<StatsApiRequest, Stats>(async (chainService, input) => {
-      const lastToFetch = input.lastFetched
-        ? input.lastFetched - 1
-        : await chainService.getBlockNumber()
-      const startBlock = lastToFetch - input.count + 1
+    chainEndpoint<StatsApiRequest, Stats>(
+      StatsApiRequest,
+      async (chainService, input) => {
+        const lastToFetch = input.lastFetched
+          ? input.lastFetched - 1
+          : await chainService.getBlockNumber()
+        const startBlock = lastToFetch - input.count + 1
 
-      const results = await chainService.analyzeBlocks(startBlock, input.count)
+        const results = await chainService.analyzeBlocks(
+          startBlock,
+          input.count,
+        )
 
-      return {
-        startBlock,
-        endBlock: lastToFetch,
-        numberOfBlocks: input.count,
-        ...results,
-      }
-    }),
+        return {
+          startBlock,
+          endBlock: lastToFetch,
+          numberOfBlocks: input.count,
+          ...results,
+        }
+      },
+    ),
   )
 
   return router
 }
 
 function chainEndpoint<Input extends { chainId: string }, Output>(
+  Input: Parser<Input>,
   respond: (
     chainService: ChainService,
     input: Input,
@@ -66,8 +77,15 @@ function chainEndpoint<Input extends { chainId: string }, Output>(
     console.log(`Received request: ${req.method} ${req.originalUrl}`)
     console.log(req.body)
 
+    const parsed = Input.safeParse(req.body)
+    if (!parsed.success) {
+      const message = `Invalid request body at ${parsed.path}: ${parsed.message}`
+      res.status(400).json({ message })
+      return
+    }
+    const input = parsed.data
+
     try {
-      const input = req.body as Input
       const chain = SUPPORTED_CHAINS.find((chain) => chain.id === input.chainId)
       if (!chain) {
         throw new Error(`Chain with id ${input.chainId} is not supported`)

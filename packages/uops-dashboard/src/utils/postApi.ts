@@ -1,8 +1,10 @@
-import type { ApiError } from '@/types'
+import type { Parser } from '@l2beat/validate'
+import { ApiError } from '@/types'
 
 export async function postApi<Output>(
   endpoint: 'latest' | 'uops' | 'stats',
   input: unknown,
+  Output: Parser<Output>,
 ): Promise<Output> {
   const res = await fetch(`/api/${endpoint}`, {
     method: 'POST',
@@ -11,9 +13,9 @@ export async function postApi<Output>(
     body: JSON.stringify(input),
   })
 
-  const body = await res.json()
+  const body: unknown = await res.json()
   if (res.status !== 200) {
-    throw new Error((body as ApiError).message)
+    throw new Error(ApiError.parse(body).message)
   }
-  return body as Output
+  return Output.parse(body)
 }
