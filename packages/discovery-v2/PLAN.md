@@ -10,11 +10,14 @@ A new package `@l2beat/discovery-v2` with a CLI that, given an existing project 
 
 1. walks the contract graph from `initialAddresses` (BFS with depth/count limits),
 2. reuses V1's providers, cache, proxy detection, source fetching and flattening,
-3. compiles each verified contract with its exact solc, emits AST facts, runs Soufflé, and builds a
-   compact per-contract **dossier** (state variables, slots, writers, emitted events, readers),
-4. asks an AI (Codex CLI) to author an **acquisition plan** (JSON: what to fetch, how to shape it with jq),
-   validates the plan statically, by dry run and by consistency assertions against current getters, repairs
-   it up to twice, and persists it keyed by the contract's source hash so it is reused on every later run
+3. compiles each verified contract with its exact solc, emits AST facts, runs Soufflé by default, and builds
+   a **source index** plus a deterministic acquisition worklist. The index supplies potential writers,
+   referencing functions, initialization, candidate events and analysis gaps; it guides source reading,
+   not an interpretation of how acquisition works,
+4. asks an AI (Codex CLI) to investigate related worklist items incrementally, retrieving facts and source
+   as needed and contributing steps directly to one shared **acquisition plan** (JSON: what to fetch, how
+   to shape it with jq). The harness validates contributions, executes them and available consistency
+   assertions, supports up to two repair rounds per investigation, and persists the plan for later replay
    (with an applicability check on each reuse),
 5. executes the plan deterministically against the chain at a fixed timestamp/block,
 6. writes a `discovered.json` and `.flat/` folder compatible with V1 (values, proxies, sources; no permissions
@@ -27,7 +30,8 @@ A new package `@l2beat/discovery-v2` with a CLI that, given an existing project 
 Out of scope for phase 1 (listed so nobody expects them): permissions modelling (Clingo), the declarative
 `fold` block, fetch kinds `transaction`/`trace`/`source`/`explorerTxs`/blobs, cross‑project `entrypoints`
 and `Reference` entries, `.code` raw sources, diffHistory, update‑monitor integration, Disco UI changes,
-replacing V1 in production.
+replacing V1 in production, AI-authored Datalog/SQL queries, and AI-controlled project traversal. BFS remains
+fixed in this phase; interactive authoring concerns acquisition within a prepared contract.
 
 ## 1. Decision: a new package, importing from `@l2beat/discovery`
 
@@ -127,9 +131,10 @@ config.jsonc ──► ConfigReader ──► initialAddresses, maxAddresses, ma
    ├───────────────────────────────────────────────────────────────────────────────┤
    │ 2 PlanResolver                                                                │
    │   PlanStore.get(shapeHash) ──hit──► plan                                      │
-   │   miss ► FactsStage (solc → facts → Soufflé → dossier)                        │
-   │        ► PlanAuthor (Codex): workspace + prompt + schema → plan               │
-   │        ► PlanValidator: schema → static → dry run → repair (≤2 rounds)        │
+   │   miss ► FactsStage (solc → inventory + facts → Soufflé → source index)       │
+   │        ► Worklist: choose related items → inspect facts/source               │
+   │        ► PlanAuthor ↔ retrieval tools ↔ incremental plan validation          │
+   │        ► covered / unresolved / excluded; shared plan → final validation     │
    │        ► PlanStore.put(shapeHash, plan, meta)                                 │
    ├───────────────────────────────────────────────────────────────────────────────┤
    │ 3 PlanExecutor                                                                │
@@ -168,11 +173,13 @@ facts/compile.ts            explorer version → useSolidityCompiler (as l2b Fla
 facts/emit.ts               compact AST → task-specific relations (TSV), one construct per fixture
 facts/souffle.ts            spawn souffle -F facts -D derived rules.dl; read TSV
 facts/rules/acquisition.dl  aliases, writes through calls/params/modifiers, entry writers, candidate events, references, unsupported flags
-facts/Dossier.ts            derived relations + ABI + storage layout + getter preview → dossier JSON
-ai/PlanAuthor.ts            interface + CodexPlanAuthor (spawn codex exec), workspace layout, recording
-ai/prompt.ts                prompt assembly; PLAN_FORMAT.md is a checked-in file
-ai/repair.ts                validation ladder + repair loop
-ai/isolation.ts             no-shell vs bwrap modes, temp workspace, command audit from the --json event stream
+facts/Dossier.ts            source-index backing JSON; static observations separate from snapshot previews
+ai/Worklist.ts              inventory, related-item groups, statuses and references to shared plan steps
+ai/inspect.ts               inspect_variable, read_source, search_source, read_reference; scoped retrieval
+ai/PlanAuthor.ts            interface + CodexPlanAuthor (spawn codex exec), bounded investigation loop, recording
+ai/prompt.ts                compact briefing + active group; PLAN_FORMAT.md is a checked-in file
+ai/repair.ts                incremental validation + local repair + final whole-plan checks
+ai/isolation.ts             shell/tools disabled in Codex; harness-controlled retrieval of allowed artifacts
 output/write.ts             toDiscoveryOutput + V2 extras + .flat + run.json
 benchmark/{correspond,compare,report}.ts   V1 field → acquisition source, correspondence with V2 steps, agreement classes, reports
 ```
@@ -185,13 +192,17 @@ Commands (cmd‑ts, same style as V1):
 
 - `discover <project> [--timestamp T | --dev | --block N] [--max-addresses N] [--max-depth N]
   [--concurrency N] [--out DIR] [--in-place] [--no-ai] [--reauthor] [--only <chain:address>...]
-  [--model M] [--effort E] [--stats]`
+  [--model M] [--effort E] [--facts on|off] [--stats]`
   - `--dev` = V1 semantics: use the timestamp saved in the project's committed `discovered.json`. This is
     the benchmark mode; the engine asserts that `usedBlockNumbers` equal V1's and aborts otherwise.
   - Default output: `<dirname(paths.cache)>/discovery-v2/<project>/` (gitignored: `packages/config/cache/`).
     `--in-place` writes into the project folder (only for the eventual switch‑over; refuses unless `--force`).
   - `--no-ai`: fail an address whose plan is missing instead of authoring (deterministic reruns).
-- `plan <chain:address> [--timestamp T]` authors and validates a plan for one address, prints it.
+  - `--facts on|off` (default `on`) controls Soufflé-derived assistance during authoring, not plan execution.
+    Both modes keep the same compiler/ABI inventory, storage layout, source retrieval, previews and
+    worklist. `off` skips Soufflé and withholds derived relationships; unavailable relations are labelled
+    unavailable, never represented as empty results. Comparison runs use separate plan stores (§6).
+- `plan <chain:address> [--timestamp T] [--facts on|off]` authors and validates a plan for one address, prints it.
 - `execute <plan.json> <chain:address> [--timestamp T]` runs a plan file, prints values/errors.
 - `facts <chain:address> | <file.sol>` prints the dossier (and writes the run folder).
 - `benchmark <project> [--v2 DIR]` compares V1 vs V2 (§6).
@@ -219,9 +230,11 @@ then `P proxyType`, `A plan <hash8> (cached|authored:attempts)`, `R relative`, `
   (documented in `run.json`).
 - No re‑analysis/reachability pruning (V1 needs it because templates suggested by referrers can change
   results). V2 is single‑pass.
-- Per‑address failure policy: an exception in preparation (RPC/explorer) fails the run (as V1); a failure
-  in facts/AI/plan yields an entry with proxy values only and `errors['@plan'] = reason`; a failing step
-  yields `errors[field]`. BFS continues with whatever relatives exist.
+- Per-address failure policy: an exception in preparation (RPC/explorer) fails the run (as V1). Facts-stage
+  failure is recorded as unavailable assistance; source/ABI authoring may continue in a visibly degraded
+  mode (§8). AI/plan failure preserves any validated, executable partial plan and its outstanding work;
+  when none exists, the entry has proxy values only and `errors['@plan'] = reason`. A failing step yields
+  `errors[field]`. BFS continues with whatever relatives exist; incomplete coverage remains explicit.
 
 ### 3.3 Address preparation (reuse)
 
@@ -242,8 +255,11 @@ Exactly V1's `AddressAnalyzer` prefix, without templates/handlers:
 
 `packages/config/src/projects/_plans/<shapeHash>/plan.json` and `meta.json`, committed to git (like
 `_templates/`). `meta.json`: contract name, first address/chain seen, model, effort, attempts, validation
-summary, fragment versions, created/updated timestamps, `sourceHashes` array, dossier status. AI transcripts
-are **not** committed; they go to `packages/config/cache/discovery-v2/ai/<shapeHash>/attempt-N/`.
+summary, fragment versions, created/updated timestamps, `sourceHashes` array, source-index status and
+`authoringFacts: on | off | unavailable`. A `coverage.json` sidecar records the inventory items, their
+outcomes, assumptions and linked plan step ids; this is bookkeeping, not another executable language.
+AI transcripts are **not** committed; they go to
+`packages/config/cache/discovery-v2/ai/<runId>/<shapeHash>/group-N/attempt-N/turn-N/`.
 
 Lookup by shape hash; miss → author. `--reauthor` forces re‑authoring for `--only` addresses. A source change
 produces a new hash, so the old plan is simply unused (a later cleanup command can list orphans, like
@@ -270,7 +286,12 @@ cross‑project reuse (GnosisSafe, OZ Timelock, OP stack contracts appear in doz
 templates already exploit; a per‑project store would re‑author the same code per project. If per‑project
 overrides turn out to be needed, add `<project>/plans/<hash>.json` with precedence over the global store.
 
-### 3.5 Facts stage
+### 3.5 Facts stage and source index
+
+Soufflé assistance is enabled in the first researcher-facing version. The index is generated mechanically;
+it is not an AI-authored summary or an intermediate acquisition specification. `dossier.json` remains the
+backing artifact name, but the AI receives a compact inventory and retrieves detailed entries on demand.
+Acquisition JSON is the only executable specification.
 
 Input: one flattened `.sol` per code address (proxy and implementations compiled separately; the dossier is
 built for the implementation(s), the proxy contributes only its ABI). Steps:
@@ -284,9 +305,16 @@ built for the implementation(s), the proxy contributes only its ABI). Steps:
    `factsStatus: 'compile-failed'` and the compiler message. Vyper (`solidityVersion` starts with `vyper`)
    and pre‑0.4.10 sources have no facts. `storageLayout` exists from solc 0.5.13; older contracts get
    `slot: null` and the AI is told storage reads are unavailable for them.
-2. **Emit** (`facts/emit.ts`, one pass over the compact AST). Only observations the rules use, each construct
+2. **Inventory and emit** (`facts/emit.ts`, one pass over the compact AST). The deterministic inventory lists
+   state variables, ABI getters, events and unsupported regions, including inherited declarations. It
+   records membership in the selected deployed contract and distinguishes unrelated declarations present
+   in a flattened file. Symbol ids are scoped to the source bundle/compilation unit so separately compiled
+   implementations cannot collide; every retrievable symbol has a qualified name and source range.
+   With `--facts off`, retain this basic inventory and layout but do not expose derived relationships.
+   Only observations the rules use are emitted, each construct
    added with its own fixture (§5) rather than against a size target;
-   no generic `child`/`attr` dump. Every id is a solc AST node id; the emitter also records the enclosing
+   no generic `child`/`attr` dump. Local relation ids are solc AST node ids within a compilation unit; the
+   source index qualifies them with that unit when exposing them to AI. The emitter records the enclosing
    function of each interesting node so no containment relation is needed:
 
    | Relation | Meaning |
@@ -326,8 +354,10 @@ built for the implementation(s), the proxy contributes only its ABI). Steps:
    The prototype measured 80 ms of Soufflé start‑up plus negligible evaluation at this fact volume; the
    rules could be a TS fixpoint, but Soufflé keeps them declarative and inspectable, and the derived TSVs are
    saved next to the facts for replay (`souffle -F facts -D derived acquisition.dl`).
-4. **Dossier** (`facts/Dossier.ts`) joins derived relations with the ABI (signatures, parameter names,
-   event definitions; joined by selector) and the getter preview, and writes `dossier.json`:
+4. **Source index** (`facts/Dossier.ts`) joins derived relations with the ABI (signatures, parameter names,
+   event definitions; joined by selector), preserving source locations and analysis gaps. `dossier.json`
+   stores these observations; deployment context and getter previews are attached per snapshot, not cached
+   as source facts. The following abbreviated entry illustrates the backing data, not the initial prompt:
 
 ```jsonc
 {
@@ -368,70 +398,130 @@ built for the implementation(s), the proxy contributes only its ABI). Steps:
 Two different cache lifetimes are involved and are kept apart:
 
 - **Static facts** (compile output, base facts, derived relations, and the dossier *without* `deployment` and
-  `preview`) depend only on the source, so they are cached under `cache/discovery-v2/facts/<sourceHash>/`
-  and never recomputed for the same hash.
+  `preview`) are cached under `cache/discovery-v2/facts/<analysisHash>/`; the identity includes source,
+  compiler input/version and emitter/rule versions. Reuse avoids recompilation when these inputs match.
 - **State** (`preview`, `deployment`) depends on chain, address and block. The harness produces it at
   authoring time for the address being analyzed: all 0‑arg view/pure functions with outputs in the ABI are
   called once at the target block (V1's `SimpleMethodHandler` makes the same calls, so in benchmark mode they
   are cache hits), and `ProxyDetector`'s result is summarized. Two deployments of the same code get different
   previews. The preview is prompt input only; what gets fetched is decided by the plan (§3.7).
 
-Dossier size is capped (≈60 KB; long lists truncated with counts); full source is available in the AI
-workspace.
+Keep the complete index as an artifact. The initial prompt contains only a compact inventory overview,
+analysis status and active worklist group; large inventories are paginated. Retrieval responses have byte
+and item limits and explicit continuation cursors/counts, so truncation never silently hides outstanding
+items. Source remains available through the retrieval tools. An index entry is a starting point for
+reading, not a whitelist: the AI can inspect any prepared source when a dependency or analysis gap requires
+it. Raw base/derived relations remain available as debugging artifacts, not a mandatory prompt dump.
 
-### 3.6 AI authoring
+Static compilation/index caches include the actual compiler input/version and emitter/rule versions in
+the cache identity. Snapshot previews are always bound to chain, address and block.
 
-`PlanAuthor` interface: `author(input: AuthorInput, attempt: number, feedback?: ValidationReport):
-Promise<{ plan: unknown; raw: string; usage?: … }>`. First implementation `CodexPlanAuthor`; a
-`ClaudePlanAuthor` (`claude -p --output-format json`) is a later drop‑in since the bake‑off harness already
-drove both. Tests use a `ScriptedPlanAuthor`.
+### 3.6 Incremental AI authoring
 
-Workspace per attempt (`cache/discovery-v2/ai/<hash>/attempt-N/workspace/`): `sources/<Name>.sol` (flattened,
-one per code address), `abi.json`, `dossier.json`, `PLAN_FORMAT.md` (the checked‑in spec, §3.7),
-`fragments/*.jq`, `prelude.jq`, `examples/` (two or three checked‑in exemplary plans). The prompt (stdin)
-contains the task, the dossier inline, the ABI inline, the format spec inline, and instructions to read the
-sources from the workspace when needed. Sources are not pasted into the prompt: a flattened OP‑stack file is
-100–300 KB and the bake‑off showed prompt hygiene matters more than volume.
+The first useful version combines source indexing and authoring. Do not require a source-only prototype
+as a product acceptance gate. The no-facts path is an explicit comparison mode with the same retrieval
+interface (§6), not the default experience.
 
-Codex invocation (from `queryable-facts/src/ask.mjs` and the spike's `agent.ts`): `codex exec
---ignore-user-config --ephemeral --skip-git-repo-check --sandbox read-only --color never --model M
--c model_reasoning_effort=E -c project_doc_max_bytes=0 -c web_search="disabled" -c features.multi_agent=false
---output-schema schema.json --output-last-message response.json -` with `cwd = workspace`, stdin = prompt,
-timeout 15 min, SIGKILL on timeout, stdio to files. Whether the shell tool is enabled depends on the
-isolation mode described below.
-Every attempt records `prompt.md`, `schema.json`, `response.json`, `cli.log`, `validation.json`.
+**Worklist and shared plan.** The harness seeds a worklist from the inventory (§3.5): variables, ABI
+getters, and event/unsupported regions that need consideration. These are acquisition opportunities,
+not a promise that all on-chain state is enumerable. Related items may be grouped: for example, an array
+and mapping implementing one enumerable set, or role membership and role administration. AI may propose
+such groups or identify additional tasks, but the harness preserves each original item and its outcome.
+Simple getters may be investigated in batches; a complex collection gets a focused investigation. Do not
+require one fresh model session per variable.
 
-What the AI must **not** see in benchmark mode: the project's V1 `discovered.json`, `config.jsonc` field
-definitions, templates. The workspace is built only from chain data and V2's own files. (The jq fragments
-encode OZ AccessControl knowledge that templates also encode; that is disclosed in the benchmark report.)
+Worklist statuses are `pending`, `investigating`, `covered`, `unresolved`, and `excluded`. Each completed
+item records a reason, source references, linked acquisition step ids where applicable, and assumptions.
+`covered` means an acquisition procedure exists, not that its correctness or completeness is proved.
+Examples: `owner` covered by a getter; `_roles` covered by replay under explicit assumptions; `balances`
+readable for known keys but complete enumeration unresolved; assembly-managed storage unresolved. The
+harness rejects dangling step references and never lets finalization silently drop pending items. Budget
+exhaustion leaves a partial result and an explicit outstanding list. An empty queue means every inventoried
+item was accounted for, not that every possible acquisition method was found.
 
-Setting `cwd` and `--sandbox read-only` does **not** enforce this. Tested on this machine with Codex
-0.155: under the read‑only sandbox a command in a temp directory reads any file on disk (network is blocked).
-Enforcement therefore comes from V2, in two modes:
+Each investigation contributes directly to **one shared acquisition plan per contract**. Contributions use
+structured step additions/replacements (not arbitrary JSON patches or a new DSL), plus proposed worklist
+outcomes. The harness owns step ids, checks references, rejects conflicting changes and keeps earlier
+accepted steps. Shared fetches can serve several items; compatible fetches are reused without automatically
+merging semantically different queries. If a contribution changes a step used by another group, revalidate
+its dependents and reopen affected worklist outcomes. Coverage records are a sidecar; the executor only
+needs acquisition JSON and its pinned dependencies.
 
-- **No‑shell mode (default).** `-c features.shell_tool=false`, as the teaching prototype does. The model has
-  no tool at all, so nothing can be read; the flattened source(s) are inlined in the prompt. Used whenever
-  the inlined material fits a size budget (default 400 KB of source; the dossier tells which contracts of a
-  flattened file matter, so interfaces and unrelated libraries can be dropped first).
-- **Isolated‑shell mode** for larger sources: the shell stays on but Codex runs under `bwrap` (available
-  here) with only the workspace, the Codex binary and its auth directory mounted, no network namespace.
-  Every command the model runs is taken from the `--json` event stream and recorded; a command referencing
-  a path outside the workspace fails the attempt in benchmark mode. The workspace itself lives in a temp
-  directory outside the repository in both modes.
+**Briefing and retrieval.** The initial prompt contains the task, a concise acquisition-format description,
+helper contracts and one or two examples, a compact contract/inventory overview, deployment/analysis
+status, and the active group's ids. Neither full flattened sources nor the entire dossier/ABI is inlined.
+The harness supplies relevant getter previews with their block identity. Four small retrieval operations
+are sufficient initially:
 
-`--dangerously-bypass-approvals-and-sandbox` is never used.
+| Operation | Result |
+| --- | --- |
+| `inspect_variable(id, cursor?)` | declaration/layout, potential writers, referencing functions, initialization, candidate events, source locations and analysis gaps, bundled together; derived parts labelled unavailable in facts-off mode |
+| `read_source(symbolOrLocation, cursor?)` | exact source with file/line identity and enclosing context; declarations, function/modifier bodies and other ranges can all be read |
+| `search_source(query, cursor?)` | bounded literal matches across prepared sources, including code outside the initial selection |
+| `read_reference(id, cursor?)` | allowlisted ABI sections, inventory pages, plan-format/helper/fragment documentation, or current shared plan steps/worklist entries |
+
+Use qualified contract/function names in responses, with stable ids for unambiguous requests. All
+responses are bounded and paginated. The tools navigate deterministic artifacts; they do not decide
+whether events suffice to reconstruct state. For `_roles`, AI starts with its writers and initialization,
+reads the functions, follows helpers/modifiers as needed, and decides which events and transformations
+belong in the acquisition plan. Source outside the initial selection always remains retrievable. In
+particular, unsupported constructs must invite further reading or an unresolved outcome, not exclusion.
+
+No general SQL interface or AI-authored Datalog is required in phase 1. Add that flexibility only if real
+investigations repeatedly need relationships the small interface cannot provide. The execution engine and
+raw facts remain separate from their readable presentation.
+
+**Model loop and isolation.** `PlanAuthor` accepts an `AuthorInput` containing the overview, active group,
+shared-plan index and retrieval/validation history. A structured model turn returns one of `inspect`
+(tool + arguments), `propose` (plan contribution + worklist outcomes), or `finish_group`. The harness
+executes retrieval, validates/tries contributions and returns concrete results. `finish_group` is accepted
+only once the group's items have explicit outcomes. Tests use a `ScriptedPlanAuthor`; Codex CLI is the
+first adapter and other model adapters can implement the same protocol. This reuses the bounded request/
+response pattern in `queryable-facts/src/ask.mjs`, not a single whole-contract generation call.
+
+Artifacts per authoring run: prepared `sources/<Name>.sol` (one per code address), `abi.json`,
+`dossier.json`, `PLAN_FORMAT.md`, prelude/fragments/examples, the shared candidate `plan.json`, and
+`coverage.json`. Initial briefings and each tool request/response, proposal, validation result and group
+outcome are saved. Each group works with its relevant evidence and the current shared plan; do not append
+all earlier groups' source snippets to every prompt. Exact evidence stays retrievable from artifacts.
+
+Codex runs in an empty temporary workspace outside the repository, using the teaching prototype's
+no-shell setup: `codex exec --ignore-user-config --ephemeral --skip-git-repo-check --sandbox read-only
+--color never --model M -c model_reasoning_effort=E -c project_doc_max_bytes=0
+-c web_search="disabled" -c features.multi_agent=false -c features.shell_tool=false
+--output-schema schema.json --output-last-message response.json -`. The output schema describes the
+structured turn protocol above; the separate plan schema validates contributions. No other model-side
+filesystem/network tools or connectors are enabled. The model asks for retrieval in its structured
+response; only the host resolves the request against allowed artifacts, so disabling shell does **not**
+mean inlining source or removing navigation. Each CLI response, log and validation result is recorded.
+The host retains its normal ability to invoke the model and execute the acquisition plan.
+
+V1 `discovered.json`, config field definitions and templates are never exposed through these tools.
+Resolve artifact ids through an allowlist, not arbitrary model-provided filesystem paths; reject path
+traversal and symlink escapes. Tests prove that source search and reference reads cannot reach V1 outputs
+or other repository files. `cwd`/read-only flags alone are not the read-isolation mechanism, and command
+string audits are not a substitute. Phase 1 does not need the proposed `bwrap`/inlined-source split.
+Fragments containing known patterns remain available equally in both comparison modes and are disclosed.
 
 Instructions to the model (summary of `PLAN_FORMAT.md` §"Authoring rules"): fetch every piece of state a
 researcher would want to watch; prefer getters, then storage slots, then events for state without accessors;
 name fields after the getter or variable; never embed addresses (plans are per source hash, executed at many
 addresses); use `use:` fragments for known patterns; mark large/unbounded collections with `forEach` limits;
-state impossibility explicitly in a `notes` array (e.g., "mapping `balances` has no enumeration and no
-events; not fetchable").
+record acquisition limitations in `notes` and the worklist (e.g., "individual balances are readable for
+known keys; complete key enumeration remains unresolved"). Read the relevant source before proposing
+non-trivial acquisition logic; inspect initialization and dependent helpers, modifiers or external
+references when needed. Facts guide the reading scope; neither absent facts nor successful execution prove
+that acquisition is complete. Keep snapshot observations out of reusable plan constants unless the source
+establishes that they are invariant.
 
-Validation ladder (`ai/repair.ts`), each stage's errors are fed back verbatim as the repair round input:
+Validation ladder (`ai/repair.ts`), used incrementally on contributions and again on the whole plan:
+errors are fed back to the responsible investigation, preserving unrelated accepted steps. During partial
+authoring, not-yet-covered getters remain worklist items rather than errors requiring every contribution
+to implement the entire contract. Whole-plan coverage and dependency checks run at finalization.
 
-1. JSON parses and matches the schema (`@l2beat/validate` schema; the same schema is exported as JSON Schema
-   for `--output-schema`).
+1. The model response parses and matches the turn-protocol JSON Schema supplied to `--output-schema`.
+   For a `propose` response, apply its structured contribution to a candidate copy and check the resulting
+   acquisition plan against `plan/schema.ts`. The accepted shared plan changes only after validation.
 2. Static: unique step ids; every `$ref` resolves; no cycles; `method`/`events` parse with ethers
    `Fragment.from` and exist in the merged ABI (inline ABI fragments allowed when the ABI is incomplete, e.g.
    proxies with partial explorer ABIs); `forEach` bounds within limits; no `0x` 40‑hex literals except the zero
@@ -466,11 +556,18 @@ Validation ladder (`ai/repair.ts`), each stage's errors are fed back verbatim as
 5. Held‑out application: when `meta.json` knows another address with the same shape, the plan is executed
    there too, and its assertions must pass there as well; static literal checks catch address constants,
    this catches value constants. Up to 2 repair rounds (bake‑off: one round lifted Codex jq from 40 to 42/42
-   and Claude jq from 40 to 42). Then persist: `status: ok | partial` with the remaining errors, which surface
-   in `discovered.json` `errors`.
+   and Claude jq from 40 to 42). Then persist the valid executable plan: `status: ok | partial` with the
+   remaining errors and unresolved work. Outstanding or unresolved acquisition items make coverage partial;
+   intentional exclusions retain their reasons. Execution errors surface in `discovered.json` `errors`,
+   while coverage details remain in the sidecar/run metadata. No status claims semantic completeness.
 
-Budgets (defaults, all CLI‑tunable): 15 min per attempt, 3 attempts, `maxTokens` unspecified (Codex
-controls), per‑run cap on AI invocations (`--max-ai N`, default unlimited but logged).
+Budgets (defaults, all CLI-tunable): 15 min per focused investigation attempt, 3 attempts (initial plus
+2 repair rounds), at most 24 retrieval requests per attempt, with per-response byte/item limits and a
+bounded active context. Retrieval turns are not counted as repair rounds. Record actual model invocations,
+usage, wall time and source bytes retrieved; a per-run `--max-ai N` cap counts every invocation, including
+retrieval and repair turns. Exhaustion preserves accepted steps and marks outstanding work unresolved.
+Further related-item investigations may reuse context within the budget; grouping and smaller contexts
+are a reliability hypothesis to test, not a guarantee that weaker models succeed or that more turns help.
 
 ### 3.7 Acquisition plan format v1
 
@@ -652,8 +749,9 @@ colorization applied.
 
 V2‑specific additions, all optional and namespaced so nothing downstream misreads them: top‑level
 `"discoveryV2": { "version": 1, "usedPlans": { "<address>": "<shapeHash>" }, "model": "...", "run": "<id>" }`
-and per entry `"plan": "<shapeHash>"` plus `"planStatus": "ok" | "partial" | "missing"`. `fieldMeta.description`
-is populated from step `description`s when present (Disco UI ignores `fieldMeta`, the update monitor reads
+and per entry `"plan": "<shapeHash>"` plus `"planStatus": "ok" | "partial" | "missing" | "inapplicable"`.
+`run.json` records authoring facts mode/availability and outstanding work, and links the coverage sidecar;
+`ok` does not mean correctness or completeness was proved. `fieldMeta.description` is populated from step `description`s when present (Disco UI ignores `fieldMeta`, the update monitor reads
 `severity` only; harmless).
 
 What downstream consumers need (from the code, file references in the research notes):
@@ -701,7 +799,17 @@ Unit tests (no network, no external tools):
 - `jq/fragments`: `openzeppelin/accessControl` on the recorded Scroll timelock logs (already a fixture in
   `expr-bakeoff/fixtures-rolelogs.json`) equals V1's `AccessControlHandler` output.
 - `engine`: BFS with a scripted preparer/executor: limits, dedupe, multi‑chain, ignoreDiscovery, failure policy.
-- `plan/PlanStore`: layout, meta, hash lookup, reauthor.
+- `plan/PlanStore`: layout, meta, hash lookup, reauthor, coverage sidecar and comparison-store separation.
+- `ai/Worklist`: deterministic inventory, inherited versus unrelated declarations, related-item grouping,
+  getter batches, preserved item ids, explicit unresolved/excluded outcomes, no silent pending-item loss,
+  shared-step reuse/conflict rejection and reopening outcomes when dependencies change.
+- `ai/inspect`: exact source ranges, qualified ids across compilation units, modifiers/helpers reachable
+  beyond initial snippets, bounded pagination without dropped items, facts-off responses labelled
+  unavailable, and forbidden-path/symlink rejection for every retrieval operation.
+- `ai/PlanAuthor`: scripted multi-turn investigation (inspect → source → propose → feedback → finish),
+  missing-source evidence for non-trivial proposals, local repair preserving other groups, and budget
+  exhaustion saving partial work. Prompt fixtures assert no full source/dossier dump and no derived-fact
+  leakage in facts-off mode; facts-on mode includes Soufflé assistance from the first authoring test.
 - `ai/repair`: ladder with a `ScriptedPlanAuthor` (first attempt invalid, second valid; exhausted attempts →
   `partial`); getter coverage feedback (uncovered getters listed, `skip` honoured, uint256 array getters
   flagged); prompt snapshot tests.
@@ -712,8 +820,10 @@ Unit tests (no network, no external tools):
 - `facts/rules`: the same fixtures through Soufflé → expected `entryWrite`/`varEvent`/`references`/`varUnsupported` rows
   (env‑gated, see below), plus a TS re‑implementation of the fixpoints used only in tests to cross‑check the
   Datalog on the fixtures.
-- `facts/Dossier`: from checked‑in derived TSV fixtures + ABI → expected dossier JSON.
-- `benchmark/compare`: synthetic V1/V2 pairs with known recall/precision.
+- `facts/Dossier`: from checked-in derived TSV fixtures + ABI → expected source-index entries; preview
+  separation, source locations, inventory pagination and unavailable-analysis flags.
+- `benchmark/compare`: synthetic V1/V2 pairs with known correspondence/value agreement and an on/off
+  comparison fixture proving that plans and derived assistance cannot leak between authoring modes.
 
 Integration tests with recorded chain data (deterministic, no RPC):
 
@@ -783,48 +893,69 @@ Projects: start with **scroll** (OZ timelocks, Safes, custom rollup, two chains)
 heavily templated, the spike's reference corpus); then **polygon-cdk** (arrays/mappings), **taiko**, **linea**.
 List in `benchmarks/projects.json`. Aggregate table across projects in `benchmarks/README.md`.
 
-Fairness rules: no V1 outputs reachable by the AI, enforced by the no‑shell or `bwrap` isolation modes and
-the command audit (§3.6), with the mode used recorded in `benchmark.json`; plans committed so results are
-reproducible with `--no-ai`; the same block; note that fragments encode known patterns.
+Fairness rules: no V1 outputs reachable by the AI, enforced by host-controlled retrieval and disabled
+model-side shell/filesystem tools (§3.6); plans saved so results are reproducible with `--no-ai`; the same
+block; note that fragments encode known patterns. V1 is a useful reference, not an exhaustive correctness
+oracle: extra V2 fields and disagreements require interpretation, and passing assertions may not establish
+complete enumeration.
+
+**Facts-on / facts-off comparison.** Default researcher runs use `--facts on`. Comparison runs freshly
+author plans with `on` and `off` in separate stores under the benchmark run directory; neither may reuse a
+plan, coverage outcome, transcript or generated fragment from the other, or from the normal global plan
+store. The run configuration supplies each store root to `PlanStore`. Within each arm, same-shape reuse and
+subsequent deterministic replay remain allowed and are reported separately from first authoring.
+
+Both arms use the same model/settings, prepared sources, compiler/ABI inventory, storage layout, previews,
+worklist machinery, acquisition executor, fixed examples/fragments, snapshot and configured budgets. Only
+Soufflé-derived relationships and their retrieval responses differ. Facts-off mode does not expose raw
+base/derived fact files as a back door; basic inventory fields retain their normal meaning. It still
+retrieves source incrementally rather than receiving a full-source dump. Failed or unavailable facts in an
+on run are reported as degraded, not counted as a successful assisted run.
+
+Compare acquisition-task correspondence, value agreement, unresolved/skipped items, assertion failures,
+model usage, source bytes retrieved and elapsed time. Record budget exhaustion and repeat runs where
+practical to expose model variance. Do not claim that a single comparison proves correctness or that
+smaller models will necessarily benefit. Source-index expansion and alternative grouping/context policies
+should be evaluated as separate changes rather than silently changing both arms at once.
 
 ## 7. Milestones and acceptance criteria
 
 Effort figures are rough working estimates, not commitments.
 
-The order proves the product's central loop first (source → AI‑authored plan → execution → deterministic
-replay) on a few contracts, then widens to whole projects, then adds the facts stage as an authoring aid
-whose value can be measured as an ablation.
+Build and test the executor independently, but include the small facts stage and focused retrieval before
+the first researcher-facing AI version. Prove the assisted authoring → execution → replay loop on a few
+contracts before widening traversal. Source-only authoring is a comparison arm, never the go/no-go gate
+for whether assisted authoring is worth building.
 
 - **M0 — skeleton (½ day).** Package files, `cli.ts` with `doctor`, imports from `@l2beat/discovery` compile,
   `pnpm build/typecheck/lint/test` green, added V1 exports.
-- **M1 — plan format + executor + jq (3–4 days).** Schema, validator (static checks, coverage, evidence
-  rules), executor with the five fetch kinds, `forEach`, packed storage decoding, `assert` steps,
-  `JqRuntime` in child processes, prelude, `openzeppelin/accessControl`; `execute` command. Three
-  hand‑written plans as the fixed test bed: a scalar‑getter contract (Scroll `L1Timelock` getters), a
-  dynamic array with a length getter (`PolygonRollupManager`), and event‑derived membership with a
-  `hasRole` assertion (the same timelock). Golden tests replay them through the fixture cache; values equal
-  the committed V1 entries (formatting classes noted).
-- **M2 — AI authoring vertical slice (3–4 days).** `CodexPlanAuthor` with both isolation modes, workspace,
-  prompt, ladder, repair, `PlanStore` with applicability check and `planHash`; `plan` command. Input to the
-  model is ABI + flattened source + the state part of the dossier only (getter preview, deployment); no
-  Soufflé yet. Acceptance on the same three contracts: the authored plans pass validation, execute at the
-  V1 block with values equal to V1's for corresponded fields, replay deterministically with `--no-ai`,
-  apply at a **second deployment of the same shape** (another Scroll timelock) with assertions passing, and
-  execute at a **later block** with the expected changes. This is the go/no‑go for the approach.
-- **M3 — project traversal + output (1–2 days).** Engine BFS, limits, multi‑chain, `Analysis` assembly,
-  `toDiscoveryOutput`, `.flat/`, `run.json`. `discover scroll --dev --no-ai` first with plans missing
-  (proxy values only; `usedBlockNumbers` equal V1's; every V2 address exists in V1's file), then with
-  authoring enabled: a full Scroll run end to end.
-- **M4 — benchmark tooling (2–3 days).** Field correspondence, value agreement, overlap figures, reports;
-  scroll and zora with ABI‑and‑source‑only authoring. These are the baseline numbers.
-- **M5 — facts stage, incrementally (3–4 days, then ongoing).** `compile.ts` mirroring l2b, `emit.ts` one
-  construct at a time with fixtures (direct writes → index/member writes → aliases → library storage params
-  → modifiers/overrides → emits → unsupported flags), `acquisition.dl`, `Dossier.ts`, `facts` command;
-  compile‑failure report over Scroll. Acceptance is the ablation: re‑author the benchmark projects with the
-  full dossier and compare task recall and value agreement against M4. If the dossier does not move the
-  numbers, it stays small.
-- **M6 — widen (ongoing).** Three more projects, prompt/fragment tuning driven by the uncorresponded‑field
-  list and the `different` list, write‑up.
+- **M1 — plan format + executor + jq (3–4 days).** Schema, static validation, coverage/evidence rules,
+  five fetch kinds, `forEach`, packed storage decoding, assertions, `JqRuntime` in child processes,
+  prelude/fragments and `execute`. Hand-written plans cover scalar getters, a dynamic array with a length
+  getter, and event-derived membership with getter checks. Golden replay uses recorded chain data.
+- **M2 — source index + worklist + retrieval (incremental).** Compile, inventory, small fixture-driven
+  emitter and Soufflé rules, `Dossier.ts`, worklist and four retrieval operations. Add supported constructs
+  with fixtures (direct/index/member writes, call propagation, aliases/storage parameters, modifiers,
+  initialization, candidate events and unsupported flags) as needed by the first examples. Unsupported
+  constructs remain visible; do not wait for comprehensive Solidity coverage. Acceptance: a focused
+  `_roles` investigation can locate writers, initialization and relevant helpers; unrelated declarations
+  do not pollute the worklist; related array/mapping items can be grouped; no pending item is lost.
+- **M3 — assisted AI authoring (3–4 days after M2).** Codex structured retrieval/proposal loop, compact
+  briefing, shared plan, local repair, applicability checks, plan hash and saved coverage. Facts are on by
+  default. On the same three examples, AI reads relevant source in multiple turns, writes acquisition
+  steps, produces values matching V1 on corresponded fields, and replays with `--no-ai`. Test a second
+  same-shape deployment and a later block with assertions and explicit unresolved outcomes. The first
+  researcher-facing version includes this assistance; it does not inline full flattened sources.
+- **M4 — project traversal + output (1–2 days).** BFS, limits, multi-chain, `Analysis` assembly, V1-compatible
+  output, `.flat/` and run metadata; full Scroll run with assisted authoring. Compile/index failures and
+  budget exhaustion remain visible rather than silently producing an apparently complete discovery.
+- **M5 — benchmark and controlled comparison (2–3 days, then ongoing).** Correspondence/value reports for
+  Scroll and Zora, freshly authored facts-on/off arms in separate stores (§6), including unresolved work,
+  cost and retrieval volume. Inspect non-trivial disagreements; use findings to improve rules, retrieval
+  or grouping rather than expanding the index indiscriminately.
+- **M6 — widen (ongoing).** Three more projects, prompt/fragment tuning driven by missing tasks and value
+  disagreements, fixture-driven rule extensions and a write-up. Additional models may use the same bounded
+  interface; their reliability is measured, not inferred from context size alone.
 
 Phase 2 candidates, in the order the benchmark is likely to demand them: declarative `fold`, `transaction`/
 `trace` fetch kinds (Arbitrum/Polygon scheduled transactions handlers), `keccak` helper, packed array
@@ -833,8 +964,11 @@ fetch, multi‑address plans, permissions, Disco UI switch, update‑monitor int
 
 ## 8. Risks and mitigations
 
-- **Soufflé is a system dependency** (2.5 tested). Mitigation: `doctor`, clear failure, facts optional (AI
-  gets ABI + source + preview without a dossier; `factsStatus` recorded), env‑gated tests, CI does not need it.
+- **Soufflé is a system dependency** (2.5 tested). Mitigation: `doctor` checks it for the default assisted
+  path. Missing tools or per-contract analysis failures are explicit (`authoringFacts: unavailable`, with
+  the reason), never silently called facts-off. Where source/ABI are available, the same retrieval loop can
+  continue in a clearly degraded mode, keeping unknown analysis coverage visible. `--facts off` is the
+  deliberate comparison mode. Environment-gated real-tool tests accompany ordinary fixture-based tests.
 - **solc coverage**: the explorer's exact version is used, so failures are rare (l2b's flattener validator
   already compiles flattened sources this way); native binaries exist from 0.4.10; older or Vyper contracts
   have no facts; `storageLayout` only from 0.5.13. Mitigation: fallbacks in §3.5, and the compile‑failure
@@ -852,9 +986,10 @@ fetch, multi‑address plans, permissions, Disco UI switch, update‑monitor int
   cross‑checks where getters exist, an automatic `history` caveat when `ProxyDetector` reports past
   implementations, and the `initialization` list in the dossier. Unsupported history stays explicitly
   uncertain in the output rather than silently trusted.
-- **Benchmark leakage**: Codex's read‑only sandbox reads anywhere on disk. Mitigation: no‑shell mode with
-  inlined sources by default, `bwrap` isolation with a command audit otherwise, temp workspaces outside the
-  repository, and the mode recorded per run (§3.6).
+- **Benchmark leakage**: read-only sandbox flags do not restrict source reads to the intended artifacts.
+  Mitigation: model-side shell and other filesystem tools disabled; structured retrieval is resolved by the
+  host against an allowlist, with no V1 outputs/templates accessible. Tests cover path/symlink escapes and
+  cross-arm plan/fact leakage (§3.6, §6).
 - **AI nondeterminism and cost**: plans are persisted and committed; re‑authoring only on hash change or
   `--reauthor`; budgets and attempt caps; `--no-ai` reruns.
 - **Plans that overfit an address** (seen in the bake‑off with CEL): static literal check + held‑out dry run
@@ -888,8 +1023,10 @@ fetch, multi‑address plans, permissions, Disco UI switch, update‑monitor int
    claims about what they cover, compiler selection copied in spirit
    from `packages/l2b` (explorer's exact version) with pragma resolution as fallback; no code from
    `spike/queryable-facts-v2` (§1.3, §3.5).
-6. Codex as the first `PlanAuthor` with shell reading a read‑only workspace; sources not inlined (§3.6).
-7. Repair rounds: 2; attempt timeout 15 min; concurrency 4 addresses / 2 AI authorings.
+6. Codex as the first `PlanAuthor`, with structured, host-controlled retrieval and incremental contributions
+   to one shared acquisition plan. No shell and no whole-source prompt (§3.6).
+7. Repair rounds: 2 per focused investigation; attempt timeout 15 min and 24 retrieval requests;
+   concurrency 4 addresses / 2 AI authorings, with an optional per-run invocation cap (§3.6).
 8. Phase 1 ignores everything in `config.jsonc` except `initialAddresses`, limits, `ignoreDiscovery`,
    manual `proxyType`, and colorization names (§3.2).
 9. Plan reuse keeps V1's shape hash as the candidate key (so plans are shared across proxy variants like
@@ -900,10 +1037,15 @@ fetch, multi‑address plans, permissions, Disco UI switch, update‑monitor int
     validator for event‑ and storage‑derived fields, instead of building a separate verifier (§3.6).
 11. Benchmark headline = acquisition‑task correspondence and value agreement; value‑coincidence overlap is
     reported but not used as the success measure (§6).
-12. Benchmark isolation = no‑shell mode with inlined sources by default, `bwrap` plus command audit for
-    large sources; Codex's own sandbox flags are not relied on for read isolation (§3.6).
-13. Milestones prove the authoring → execution → replay loop on three contracts and two deployments before
-    project traversal and before the facts stage, whose value is then measured as an ablation (§7).
+12. Benchmark isolation = no model-side shell/filesystem tools, allowlisted host retrieval and separate
+    on/off plan stores. Codex sandbox flags alone are not relied on for read isolation (§3.6, §6).
+13. Soufflé-backed source navigation is part of the first researcher-facing AI version, enabled by default.
+    The small facts stage precedes assisted authoring; facts-off is a controlled comparison (§7).
+14. A deterministic worklist accounts for inventory items; related variables can be investigated together,
+    simple getters in batches. AI reads source and writes acquisition JSON directly. The dossier is backing
+    index data, and coverage is bookkeeping; neither is an intermediate executable specification (§3.6).
+15. Start with four retrieval operations, not AI-authored Datalog/SQL. Expand query flexibility only for
+    demonstrated investigation needs; do not require all facts or source to be in the prompt (§3.6).
 
 ## 10. Appendix
 
