@@ -8,17 +8,11 @@ Generated with discovered.json: 0x03512036c21a87b7e27c2ce6c1136d92ecb5af02
 
 ## Description
 
-X Layer put the `DisputeGameFactory` behind a new 1h timelock. Standalone X Layer action; no other chain is involved.
+New `TimelockController` (OpenZeppelin v5.7.0, 1h delay): Xlayer Multisig is proposer and canceller, anyone can execute.
 
-New `TimelockController` (`0xFa3A…52d6`, unmodified OpenZeppelin v5.7.0): minimum delay 1h, PROPOSER and CANCELLER roles held by the Xlayer Multisig (2/3), EXECUTOR open to anyone (`0x0`), DEFAULT_ADMIN held by the timelock itself.
+`DisputeGameFactory` owner changed from `OwnerContract` to the `TimelockController`, and its proxy admin moved to a new `ProxyAdmin` owned by the `TimelockController`. All other proxies stay under the old `ProxyAdmin`.
 
-New `ProxyAdmin` (`0xE8b5…90Ee`) owned by the `TimelockController`; it administers only the `DisputeGameFactory`.
-
-`DisputeGameFactory`: proxy admin changed from `ProxyAdmin` `0x313c…FEE6` (owned by the Xlayer Multisig, no delay) to the new `ProxyAdmin`; `owner` changed from the unverified `OwnerContract` `0xe58C…9091` (a call forwarder owned by the single EOA `0x6eE7…C6aA`, itself a Xlayer Multisig signer) to the `TimelockController`.
-
-Net effect: upgrading the `DisputeGameFactory` or changing its game implementations and init bonds now needs a Xlayer Multisig proposal and a 1h wait (anyone can execute after the delay, the multisig can cancel). Before: upgrades were instant by the same multisig and game implementation changes instant by a single EOA. All other proxies (`OptimismPortal2`, `SystemConfig`, `L1StandardBridge`, `L1CrossDomainMessenger`, `AnchorStateRegistry`, `DelayedWETH`, `L1ERC721Bridge`, `OptimismMintableERC20Factory`) stay under the old `ProxyAdmin` with no delay.
-
-Config: added the OpenZeppelin v5.7 shape to `global/TimelockController`; xlayer overrides give the Proposer an `act` permission carrying the timelock delay (open executor, same modelling as `orbitstack/Timelock`) and add the previously missing `DisputeGameFactory` `owner` permission.
+Config: new `TimelockController` shape, timelock delay routed through the Proposer, `DisputeGameFactory` owner permission added.
 
 ## Watched changes
 
