@@ -80,8 +80,7 @@ export const openvmprover: BaseProject = {
       {
         hash: '0x6a74f16c472ea2698ee461daf35ffb62faaef6280d40390961daa181bc805663',
         name: 'OpenVM v1.6.0 PostFeynman',
-        sourceLink:
-          'https://github.com/scroll-tech/zkvm-prover/tree/1839b4905bd920bf75de9c25997b8383029e021d/crates/prover',
+        sourceLink: 'https://github.com/openvm-org/openvm/tree/v1.6.0',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Halo2,
         knownDeployments: [
           {
@@ -103,8 +102,7 @@ export const openvmprover: BaseProject = {
       {
         hash: '0x30af8474d8e13b8ce6a96eae63293310e7c1072b890bde77f96786497a9e5f4b',
         name: 'OpenVM Feynman',
-        sourceLink:
-          'https://github.com/scroll-tech/zkvm-prover/tree/v0.5.0/crates/prover',
+        sourceLink: 'https://github.com/openvm-org/openvm/tree/v1.2.1-rc.1',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Halo2,
         knownDeployments: [
           {
@@ -126,8 +124,7 @@ export const openvmprover: BaseProject = {
       {
         hash: '0xf86ce35d4f5b1478f21194d9c6fc825f8d8afc0468425c981dc017149f0cac5e',
         name: 'OpenVM Galileo',
-        sourceLink:
-          'https://github.com/scroll-tech/zkvm-prover/tree/v0.7.0/crates/prover',
+        sourceLink: 'https://github.com/openvm-org/openvm/tree/v1.4.0',
         proofSystem: ZK_CATALOG_TAGS.Plonk.Halo2,
         knownDeployments: [
           {

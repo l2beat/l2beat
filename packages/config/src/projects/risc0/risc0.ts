@@ -113,7 +113,7 @@ export const risc0: BaseProject = {
       {
         hash: '0xa42b7a9c647b7bea4f92660bfd9cd3c5afc91b4c40773f9fb410eb55c8402e40',
         name: 'RiscZero v2.2.0',
-        sourceLink: 'https://github.com/risc0/risc0/tree/v2.2.0',
+        sourceLink: 'https://github.com/risc0/risc0/tree/v2.2.0/risc0',
         proofSystem: ZK_CATALOG_TAGS.Groth16.Snarkjs,
         knownDeployments: [
           {
@@ -143,7 +143,7 @@ export const risc0: BaseProject = {
       {
         hash: '0x10ab33bc472e3e9024d89e512d33781519ba9b1621e4fe0ffd80cd20523062a8',
         name: 'RiscZero v3.0.0',
-        sourceLink: 'https://github.com/risc0/risc0/tree/v3.0.0',
+        sourceLink: 'https://github.com/risc0/risc0/tree/v3.0.0/risc0',
         proofSystem: ZK_CATALOG_TAGS.Groth16.Snarkjs,
         knownDeployments: [
           {
@@ -205,7 +205,7 @@ export const risc0: BaseProject = {
       {
         hash: '0x79325d9dc09af1afcea4dbf04db9fada7a71846045ad56daa1996bbebf9468d8',
         name: 'RiscZero v1.0.0',
-        sourceLink: 'https://github.com/risc0/risc0/tree/v1.0.0',
+        sourceLink: 'https://github.com/risc0/risc0/tree/v1.0.0/risc0',
         proofSystem: ZK_CATALOG_TAGS.Groth16.Snarkjs,
         knownDeployments: [
           {
@@ -227,6 +227,8 @@ export const risc0: BaseProject = {
       {
         hash: '0x0000000000000000000000000000000000000000000000000000000000000000',
         name: 'Kailua v1.2.0 verifier',
+        sourceLink:
+          'https://github.com/boundless-xyz/kailua/tree/v1.2.0/crates/contracts',
         proofSystem: ZK_CATALOG_TAGS.Groth16.Snarkjs,
         knownDeployments: [
           {
@@ -244,7 +246,7 @@ export const risc0: BaseProject = {
       {
         hash: '0x55c1a9d623f4b589ad496bf8fde885abfafbcbf0129c67f1dbc78c8430b69eaf',
         name: 'RiscZero v2.0.0-rc.3',
-        sourceLink: 'https://github.com/risc0/risc0/tree/v2.0.0-rc.3',
+        sourceLink: 'https://github.com/risc0/risc0/tree/v2.0.0-rc.3/risc0',
         proofSystem: ZK_CATALOG_TAGS.Groth16.Snarkjs,
         knownDeployments: [
           {
@@ -266,7 +268,7 @@ export const risc0: BaseProject = {
       {
         hash: '0x23aae7a460d8470faa11d2b75a9005eee1d3e0bce0e88ac2288f1ada4e4664df',
         name: 'RiscZero v2.1.0',
-        sourceLink: 'https://github.com/risc0/risc0/tree/v2.1.0',
+        sourceLink: 'https://github.com/risc0/risc0/tree/v2.1.0/risc0',
         proofSystem: ZK_CATALOG_TAGS.Groth16.Snarkjs,
         knownDeployments: [
           {
