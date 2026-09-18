@@ -1,10 +1,8 @@
 import {
-  ConfigReader,
   colorize,
   generateClingoForDiscoveries,
   generatePermissionConfigHash,
   get$Implementations,
-  getDiscoveryPaths,
   getHashToBeMatched,
   loadDiscoveriesForModelling,
   makeEntryStructureConfig,
@@ -16,9 +14,7 @@ import { isDeepStrictEqual } from 'util'
 import { layer2s } from '../../processing/layer2s'
 import { layer3s } from '../../processing/layer3s'
 import { refactored } from '../../processing/refactored'
-
-const paths = getDiscoveryPaths()
-const configReader = new ConfigReader(paths.discovery)
+import { configReader, configs, discoveryOf, paths } from './fixtures'
 
 // A list of onchain projects that are not L2s (or prelaunch) or bridges
 // (so we don't show them on the frontend), but we still
@@ -51,10 +47,6 @@ export const onChainProjects: string[] = [
 describe('discovery config.jsonc', () => {
   const templateService = new TemplateService(paths.discovery)
 
-  const configs = configReader
-    .readAllDiscoveredProjects()
-    .flatMap((project) => configReader.readConfig(project))
-
   const projectIds = layer2s
     .map((p) => p.id.toString())
     .concat(layer3s.map((p) => p.id.toString()))
@@ -84,7 +76,7 @@ describe('discovery config.jsonc', () => {
     const notEqual = []
 
     for (const c of configs) {
-      const discovery = configReader.readDiscovery(c.name)
+      const discovery = discoveryOf(c.name)
       if (discovery.name !== c.name) {
         notEqual.push(c.name)
       }
@@ -102,7 +94,7 @@ describe('discovery config.jsonc', () => {
     const notSorted: string[] = []
 
     for (const c of configs ?? []) {
-      const discovery = configReader.readDiscovery(c.name)
+      const discovery = discoveryOf(c.name)
 
       if (
         !isDeepStrictEqual(
@@ -124,7 +116,7 @@ describe('discovery config.jsonc', () => {
 
   it('committed discovery config hash, template hashes and shapeFilesHash are up to date', () => {
     for (const c of configs.filter((c) => !c.archived)) {
-      const discovery = configReader.readDiscovery(c.name)
+      const discovery = discoveryOf(c.name)
       const reasons = templateService.discoveryNeedsRefresh(discovery, c)
 
       assert(
@@ -159,7 +151,7 @@ describe('discovery config.jsonc', () => {
     const proxies: Set<ChainSpecificAddress> = new Set()
 
     for (const c of configs.filter((c) => !c.archived)) {
-      const discovery = configReader.readDiscovery(c.name)
+      const discovery = discoveryOf(c.name)
       const addresses = discovery.entries
         .filter((e) => get$Implementations(e.values).length > 0)
         .map((e) => e.address)
@@ -228,7 +220,7 @@ describe('discovery config.jsonc', () => {
       const allShapes = templateService.getAllShapes()
 
       for (const c of configs.filter((c) => !c.archived)) {
-        const discovery = configReader.readDiscovery(c.name)
+        const discovery = discoveryOf(c.name)
 
         for (const contract of discovery.entries) {
           if (
@@ -294,7 +286,7 @@ describe('discovery config.jsonc', () => {
 
   it('discovery.json does not include errors', () => {
     for (const c of configs) {
-      const discovery = configReader.readDiscovery(c.name)
+      const discovery = discoveryOf(c.name)
 
       assert(
         discovery.entries.every((c) => c.errors === undefined),
@@ -321,7 +313,7 @@ describe('discovery config.jsonc', () => {
     // inversion logic depends on this
     describe('all accessControl fields keys are accessControl', () => {
       for (const c of configs ?? []) {
-        const discovery = configReader.readDiscovery(c.name)
+        const discovery = discoveryOf(c.name)
         it(c.name, () => {
           for (const entry of discovery.entries) {
             const fields = makeEntryStructureConfig(
@@ -377,7 +369,7 @@ describe('discovery config.jsonc', () => {
 
   it('is colorized correctly', () => {
     for (const c of configs ?? []) {
-      const discovery = configReader.readDiscovery(c.name)
+      const discovery = discoveryOf(c.name)
       const color = colorize(c.color, discovery, templateService)
 
       const isColorizedCorrectly = compareLeftKeysInRight(color, discovery)

@@ -1,9 +1,7 @@
 import {
-  ConfigReader,
   type DiscoveryOutput,
   type EntryParameters,
   getChainShortName,
-  getDiscoveryPaths,
 } from '@l2beat/discovery'
 import { assert, ChainSpecificAddress, notUndefined } from '@l2beat/shared-pure'
 import uniq from 'lodash/uniq'
@@ -14,10 +12,9 @@ import { layer3s } from '../processing/layer3s'
 import { refactored } from '../processing/refactored'
 import type { BaseProject, ProjectContract } from '../types'
 import { getChainNames } from '../utils/chains'
+import { discoveryOrUndefined } from './discovery/fixtures'
 
 describe('verification status', () => {
-  const paths = getDiscoveryPaths()
-  const configReader = new ConfigReader(paths.discovery)
   const projects = [...layer2s, ...layer3s, ...refactored]
 
   for (const project of projects) {
@@ -30,7 +27,7 @@ describe('verification status', () => {
           return
         }
 
-        const discoveries = getDiscoveries(configReader, projectId)
+        const discoveries = getDiscoveries(projectId)
         assert(
           discoveries.length > 0,
           `Failed to read discovery for ${projectId} on ${chain}, create a discovery entry for it. It is needed for ${unverified.toString()}`,
@@ -46,14 +43,8 @@ describe('verification status', () => {
   }
 })
 
-function getDiscoveries(
-  configReader: ConfigReader,
-  project: string,
-): DiscoveryOutput[] {
-  let discovery = undefined
-  try {
-    discovery = configReader.readDiscovery(project)
-  } catch {}
+function getDiscoveries(project: string): DiscoveryOutput[] {
+  const discovery = discoveryOrUndefined(project)
   if (discovery === undefined) {
     return []
   }
@@ -71,11 +62,11 @@ function getDiscoveries(
 
     for (const p of referencedProjects.filter((p) => !seen.has(p))) {
       seen.add(p)
-      try {
-        const referenced = configReader.readDiscovery(p)
+      const referenced = discoveryOrUndefined(p)
+      if (referenced !== undefined) {
         result.push(referenced)
         queue.push(referenced)
-      } catch {}
+      }
     }
   }
 
