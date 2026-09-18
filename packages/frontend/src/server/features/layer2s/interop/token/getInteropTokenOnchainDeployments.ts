@@ -1,7 +1,7 @@
 import { isMintedAtEndpoint, type TokenRelationRoute } from '@l2beat/database'
 import { env } from '~/env'
 import { getTokenDb } from '~/server/tokenDb'
-import { deploymentKey } from '../utils/deploymentKey'
+import { deploymentKey, type Endpoint } from '../utils/deploymentKey'
 
 export interface InteropTokenMintingPlugin {
   plugin: string
@@ -92,10 +92,7 @@ function getMintingPlugins(
   )
 }
 
-function endpoint(
-  relation: TokenRelationRoute,
-  slot: 'A' | 'B',
-): { chain: string; address: string } {
+function endpoint(relation: TokenRelationRoute, slot: 'A' | 'B'): Endpoint {
   return slot === 'A'
     ? { chain: relation.tokenAChain, address: relation.tokenAAddress }
     : { chain: relation.tokenBChain, address: relation.tokenBAddress }
