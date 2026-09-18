@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "c05639f645750e25dac34ecd4fc0cff8398284403286fbe5e4011952f99d4d6d",
+  "name": "program.go",
+  "kind": "program",
+  "lines": 96,
+  "source": "package client\n\nimport (\n\t\"context\"\n\t\"errors\"\n\t\"fmt\"\n\t\"io\"\n\t\"os\"\n\n\t\"github.com/ethereum/go-ethereum/common\"\n\t\"github.com/ethereum/go-ethereum/log\"\n\t\"github.com/ethereum/go-ethereum/params\"\n\n\t\"github.com/ethereum-optimism/optimism/op-node/rollup\"\n\tpreimage \"github.com/ethereum-optimism/optimism/op-preimage\"\n\tcldr \"github.com/ethereum-optimism/optimism/op-program/client/driver\"\n\t\"github.com/ethereum-optimism/optimism/op-program/client/l1\"\n\t\"github.com/ethereum-optimism/optimism/op-program/client/l2\"\n\toppio \"github.com/ethereum-optimism/optimism/op-program/io\"\n\t\"github.com/ethereum-optimism/optimism/op-service/eth\"\n)\n\n// Main executes the client program in a detached context and exits the current process.\n// The client runtime environment must be preset before calling this function.\nfunc Main(logger log.Logger) {\n\tlog.Info(\"Starting fault proof program client\")\n\tpreimageOracle := CreatePreimageChannel()\n\tpreimageHinter := CreateHinterChannel()\n\tif err := RunProgram(logger, preimageOracle, preimageHinter); errors.Is(err, cldr.ErrClaimNotValid) {\n\t\tlog.Error(\"Claim is invalid\", \"err\", err)\n\t\tos.Exit(1)\n\t} else if err != nil {\n\t\tlog.Error(\"Program failed\", \"err\", err)\n\t\tos.Exit(2)\n\t} else {\n\t\tlog.Info(\"Claim successfully verified\")\n\t\tos.Exit(0)\n\t}\n}\n\n// RunProgram executes the Program, while attached to an IO based pre-image oracle, to be served by a host.\nfunc RunProgram(logger log.Logger, preimageOracle io.ReadWriter, preimageHinter io.ReadWriter) error {\n\n\tpClient := preimage.NewOracleClient(preimageOracle)\n\thClient := preimage.NewHintWriter(preimageHinter)\n\tl1PreimageOracle := l1.NewCachingOracle(l1.NewPreimageOracle(pClient, hClient))\n\tl2PreimageOracle := l2.NewCachingOracle(l2.NewPreimageOracle(pClient, hClient))\n\n\tbootInfo := NewBootstrapClient(pClient).BootInfo()\n\tlogger.Info(\"Program Bootstrapped\", \"bootInfo\", bootInfo)\n\treturn runDerivation(\n\t\tlogger,\n\t\tbootInfo.RollupConfig,\n\t\tbootInfo.L2ChainConfig,\n\t\tbootInfo.L1Head,\n\t\tbootInfo.L2OutputRoot,\n\t\tbootInfo.L2Claim,\n\t\tbootInfo.L2ClaimBlockNumber,\n\t\tl1PreimageOracle,\n\t\tl2PreimageOracle,\n\t)\n}\n\n// runDerivation executes the L2 state transition, given a minimal interface to retrieve data.\nfunc runDerivation(logger log.Logger, cfg *rollup.Config, l2Cfg *params.ChainConfig, l1Head common.Hash, l2OutputRoot common.Hash, l2Claim common.Hash, l2ClaimBlockNum uint64, l1Oracle l1.Oracle, l2Oracle l2.Oracle) error {\n\tl1Source := l1.NewOracleL1Client(logger, l1Oracle, l1Head)\n\tengineBackend, err := l2.NewOracleBackedL2Chain(logger, l2Oracle, l2Cfg, l2OutputRoot)\n\tif err != nil {\n\t\treturn fmt.Errorf(\"failed to create oracle-backed L2 chain: %w\", err)\n\t}\n\tl2Source := l2.NewOracleEngine(cfg, logger, engineBackend)\n\n\tlogger.Info(\"Starting derivation\")\n\td := cldr.NewDriver(logger, cfg, l1Source, l2Source, l2ClaimBlockNum)\n\tfor {\n\t\tif err = d.Step(context.Background()); errors.Is(err, io.EOF) {\n\t\t\tbreak\n\t\t} else if err != nil {\n\t\t\treturn err\n\t\t}\n\t}\n\treturn d.ValidateClaim(eth.Bytes32(l2Claim))\n}\n\nfunc CreateHinterChannel() oppio.FileChannel {\n\tr := os.NewFile(HClientRFd, \"preimage-hint-read\")\n\tw := os.NewFile(HClientWFd, \"preimage-hint-write\")\n\treturn oppio.NewReadWritePair(r, w)\n}\n\n// CreatePreimageChannel returns a FileChannel for the preimage oracle in a detached context\nfunc CreatePreimageChannel() oppio.FileChannel {\n\tr := os.NewFile(PClientRFd, \"preimage-oracle-read\")\n\tw := os.NewFile(PClientWFd, \"preimage-oracle-write\")\n\treturn oppio.NewReadWritePair(r, w)\n}",
+  "resolutions": {
+    "bb55951394276893": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "437dcc6cbc847e9a": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

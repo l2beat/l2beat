@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "a614678fe4b0b64e4b6b733adbf9a51c10f53a386ef168b1309e8715d48a966c",
+  "name": "stub_oracle.go",
+  "kind": "program",
+  "lines": 87,
+  "source": "package test\n\nimport (\n\t\"encoding/binary\"\n\t\"testing\"\n\n\t\"github.com/ethereum-optimism/optimism/op-service/eth\"\n\t\"github.com/ethereum/go-ethereum/common\"\n\t\"github.com/ethereum/go-ethereum/core/types\"\n\t\"github.com/ethereum/go-ethereum/crypto\"\n)\n\ntype StubOracle struct {\n\tt *testing.T\n\n\t// Blocks maps block hash to eth.BlockInfo\n\tBlocks map[common.Hash]eth.BlockInfo\n\n\t// Txs maps block hash to transactions\n\tTxs map[common.Hash]types.Transactions\n\n\t// Rcpts maps Block hash to receipts\n\tRcpts map[common.Hash]types.Receipts\n\n\t// Blobs maps indexed blob hash to l1 block ref to blob\n\tBlobs map[eth.L1BlockRef]map[eth.IndexedBlobHash]*eth.Blob\n\n\t// PcmpResults maps hashed input to the results of precompile calls\n\tPcmpResults map[common.Hash][]byte\n}\n\nfunc NewStubOracle(t *testing.T) *StubOracle {\n\treturn &StubOracle{\n\t\tt:           t,\n\t\tBlocks:      make(map[common.Hash]eth.BlockInfo),\n\t\tTxs:         make(map[common.Hash]types.Transactions),\n\t\tRcpts:       make(map[common.Hash]types.Receipts),\n\t\tBlobs:       make(map[eth.L1BlockRef]map[eth.IndexedBlobHash]*eth.Blob),\n\t\tPcmpResults: make(map[common.Hash][]byte),\n\t}\n}\n\nfunc (o StubOracle) HeaderByBlockHash(blockHash common.Hash) eth.BlockInfo {\n\tinfo, ok := o.Blocks[blockHash]\n\tif !ok {\n\t\to.t.Fatalf(\"unknown block %s\", blockHash)\n\t}\n\treturn info\n}\n\nfunc (o StubOracle) TransactionsByBlockHash(blockHash common.Hash) (eth.BlockInfo, types.Transactions) {\n\ttxs, ok := o.Txs[blockHash]\n\tif !ok {\n\t\to.t.Fatalf(\"unknown txs %s\", blockHash)\n\t}\n\treturn o.HeaderByBlockHash(blockHash), txs\n}\n\nfunc (o StubOracle) ReceiptsByBlockHash(blockHash common.Hash) (eth.BlockInfo, types.Receipts) {\n\trcpts, ok := o.Rcpts[blockHash]\n\tif !ok {\n\t\to.t.Fatalf(\"unknown rcpts %s\", blockHash)\n\t}\n\treturn o.HeaderByBlockHash(blockHash), rcpts\n}\n\nfunc (o StubOracle) GetBlob(ref eth.L1BlockRef, blobHash eth.IndexedBlobHash) *eth.Blob {\n\tblobMap, ok := o.Blobs[ref]\n\tif !ok {\n\t\to.t.Fatalf(\"unknown blob ref %s\", ref)\n\t}\n\tblob, ok := blobMap[blobHash]\n\tif !ok {\n\t\to.t.Fatalf(\"unknown blob hash %s %d\", blobHash.Hash, blobHash.Index)\n\t}\n\treturn blob\n}\n\nfunc (o StubOracle) Precompile(addr common.Address, input []byte, requiredGas uint64) ([]byte, bool) {\n\targ := append(addr.Bytes(), binary.BigEndian.AppendUint64(nil, requiredGas)...)\n\targ = append(arg, input...)\n\tresult, ok := o.PcmpResults[crypto.Keccak256Hash(arg)]\n\tif !ok {\n\t\to.t.Fatalf(\"unknown kzg point evaluation %x\", input)\n\t}\n\treturn result, true\n}",
+  "resolutions": {
+    "437dcc6cbc847e9a": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "1f5c32d18cf7148d": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

@@ -713,6 +713,725 @@
         ]
       },
       "warnings": []
+    },
+    "437dcc6cbc847e9a": {
+      "status": "identical",
+      "coveredLines": 132,
+      "match": {
+        "origin": "other",
+        "collection": "bob",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "identity",
+        "auditedName": "SafeCall",
+        "similarity": 1,
+        "reportId": "bob/veridise-kailua-2025-02",
+        "repository": "boundless-xyz/kailua",
+        "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "commit": "27dec82b67de1051df9258b36f8366ebf308e5bf",
+        "commitTimestamp": "2025-02-06T07:42:16Z",
+        "url": "https://github.com/boundless-xyz/kailua/blob/27dec82b67de1051df9258b36f8366ebf308e5bf/crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix commit",
+        "coverage": "Confirmed fix commit for V-KLA-VUL-004 (contract nits).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "warnings": []
+    },
+    "d79ad2713a1d64a9": {
+      "status": "identical",
+      "coveredLines": 143,
+      "match": {
+        "origin": "other",
+        "collection": "bob",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "identity",
+        "auditedName": "SafeCall",
+        "similarity": 1,
+        "reportId": "bob/veridise-kailua-2025-02",
+        "repository": "boundless-xyz/kailua",
+        "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "commit": "27dec82b67de1051df9258b36f8366ebf308e5bf",
+        "commitTimestamp": "2025-02-06T07:42:16Z",
+        "url": "https://github.com/boundless-xyz/kailua/blob/27dec82b67de1051df9258b36f8366ebf308e5bf/crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix commit",
+        "coverage": "Confirmed fix commit for V-KLA-VUL-004 (contract nits).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 51,
+        "ignoredRemoved": 40,
+        "unchanged": 143,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 9,
+            "newStart": 1,
+            "newLines": 12,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "library SafeCall {"
+              },
+              {
+                "type": "-",
+                "oldLine": 2,
+                "text": "    /// @notice Performs a low level call without copying any returndata.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 3,
+                "text": "    /// @dev Passes no calldata to the call context.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 4,
+                "text": "    /// @param _target   Address to call",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 5,
+                "text": "    /// @param _gas      Amount of gas to pass to the call",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 6,
+                "text": "    /// @param _value    Amount of value to pass to the call",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 2, "text": "    /**", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "     * @notice Performs a low level call without copying any returndata.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 4,
+                "text": "     * @dev Passes no calldata to the call context.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 5, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 6,
+                "text": "     * @param _target   Address to call",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 7,
+                "text": "     * @param _gas      Amount of gas to pass to the call",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 8,
+                "text": "     * @param _value    Amount of value to pass to the call",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 9, "text": "     */", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 7,
+                "newLine": 10,
+                "text": "    function send(address _target, uint256 _gas, uint256 _value) internal returns (bool) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 8,
+                "newLine": 11,
+                "text": "        bool _success;"
+              },
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 12,
+                "text": "        assembly {"
+              }
+            ]
+          },
+          {
+            "oldStart": 21,
+            "oldLines": 11,
+            "newStart": 24,
+            "newLines": 14,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 21,
+                "newLine": 24,
+                "text": "        return _success;"
+              },
+              { "type": " ", "oldLine": 22, "newLine": 25, "text": "    }" },
+              { "type": " ", "oldLine": 23, "newLine": 26, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 24,
+                "text": "    /// @notice Perform a low level call without copying any returndata",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 25,
+                "text": "    /// @param _target   Address to call",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 26,
+                "text": "    /// @param _gas      Amount of gas to pass to the call",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 27,
+                "text": "    /// @param _value    Amount of value to pass to the call",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 28,
+                "text": "    /// @param _calldata Calldata to pass to the call",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 27,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 28,
+                "text": "     * @notice Perform a low level call without copying any returndata",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 29, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 30,
+                "text": "     * @param _target   Address to call",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 31,
+                "text": "     * @param _gas      Amount of gas to pass to the call",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 32,
+                "text": "     * @param _value    Amount of value to pass to the call",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 33,
+                "text": "     * @param _calldata Calldata to pass to the call",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 34,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 29,
+                "newLine": 35,
+                "text": "    function call(address _target, uint256 _gas, uint256 _value, bytes memory _calldata) internal returns (bool) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 30,
+                "newLine": 36,
+                "text": "        bool _success;"
+              },
+              {
+                "type": " ",
+                "oldLine": 31,
+                "newLine": 37,
+                "text": "        assembly {"
+              }
+            ]
+          },
+          {
+            "oldStart": 43,
+            "oldLines": 29,
+            "newStart": 49,
+            "newLines": 31,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 43,
+                "newLine": 49,
+                "text": "        return _success;"
+              },
+              { "type": " ", "oldLine": 44, "newLine": 50, "text": "    }" },
+              { "type": " ", "oldLine": 45, "newLine": 51, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 46,
+                "text": "    /// @notice Helper function to determine if there is sufficient gas remaining within the context",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 47,
+                "text": "    ///         to guarantee that the minimum gas requirement for a call will be met as well as",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 48,
+                "text": "    ///         optionally reserving a specified amount of gas for after the call has concluded.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 49,
+                "text": "    /// @param _minGas      The minimum amount of gas that may be passed to the target context.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 50,
+                "text": "    /// @param _reservedGas Optional amount of gas to reserve for the caller after the execution",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 51,
+                "text": "    ///                     of the target context.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 52,
+                "text": "    /// @return `true` if there is enough gas remaining to safely supply `_minGas` to the target",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 53,
+                "text": "    ///         context as well as reserve `_reservedGas` for the caller after the execution of",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 54,
+                "text": "    ///         the target context.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 55,
+                "text": "    /// @dev !!!!! FOOTGUN ALERT !!!!!",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 56,
+                "text": "    ///      1.) The 40_000 base buffer is to account for the worst case of the dynamic cost of the",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 57,
+                "text": "    ///          `CALL` opcode's `address_access_cost`, `positive_value_cost`, and",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 58,
+                "text": "    ///          `value_to_empty_account_cost` factors with an added buffer of 5,700 gas. It is",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 59,
+                "text": "    ///          still possible to self-rekt by initiating a withdrawal with a minimum gas limit",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 60,
+                "text": "    ///          that does not account for the `memory_expansion_cost` & `code_execution_cost`",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 61,
+                "text": "    ///          factors of the dynamic cost of the `CALL` opcode.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 62,
+                "text": "    ///      2.) This function should *directly* precede the external call if possible. There is an",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 63,
+                "text": "    ///          added buffer to account for gas consumed between this check and the call, but it",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 64,
+                "text": "    ///          is only 5,700 gas.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 65,
+                "text": "    ///      3.) Because EIP-150 ensures that a maximum of 63/64ths of the remaining gas in the call",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 66,
+                "text": "    ///          frame may be passed to a subcontext, we need to ensure that the gas will not be",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 67,
+                "text": "    ///          truncated.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 68,
+                "text": "    ///      4.) Use wisely. This function is not a silver bullet.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 52,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 53,
+                "text": "     * @notice Helper function to determine if there is sufficient gas remaining within the context",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 54,
+                "text": "     *         to guarantee that the minimum gas requirement for a call will be met as well as",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 55,
+                "text": "     *         optionally reserving a specified amount of gas for after the call has concluded.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 56,
+                "text": "     * @param _minGas      The minimum amount of gas that may be passed to the target context.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 57,
+                "text": "     * @param _reservedGas Optional amount of gas to reserve for the caller after the execution",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 58,
+                "text": "     *                     of the target context.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 59,
+                "text": "     * @return `true` if there is enough gas remaining to safely supply `_minGas` to the target",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 60,
+                "text": "     *         context as well as reserve `_reservedGas` for the caller after the execution of",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 61,
+                "text": "     *         the target context.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 62,
+                "text": "     * @dev !!!!! FOOTGUN ALERT !!!!!",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 63,
+                "text": "     *      1.) The 40_000 base buffer is to account for the worst case of the dynamic cost of the",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 64,
+                "text": "     *          `CALL` opcode's `address_access_cost`, `positive_value_cost`, and",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 65,
+                "text": "     *          `value_to_empty_account_cost` factors with an added buffer of 5,700 gas. It is",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 66,
+                "text": "     *          still possible to self-rekt by initiating a withdrawal with a minimum gas limit",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 67,
+                "text": "     *          that does not account for the `memory_expansion_cost` & `code_execution_cost`",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 68,
+                "text": "     *          factors of the dynamic cost of the `CALL` opcode.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 69,
+                "text": "     *      2.) This function should *directly* precede the external call if possible. There is an",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 70,
+                "text": "     *          added buffer to account for gas consumed between this check and the call, but it",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 71,
+                "text": "     *          is only 5,700 gas.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 72,
+                "text": "     *      3.) Because EIP-150 ensures that a maximum of 63/64ths of the remaining gas in the call",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 73,
+                "text": "     *          frame may be passed to a subcontext, we need to ensure that the gas will not be",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 74,
+                "text": "     *          truncated.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 75,
+                "text": "     *      4.) Use wisely. This function is not a silver bullet.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 76,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 69,
+                "newLine": 77,
+                "text": "    function hasMinGas(uint256 _minGas, uint256 _reservedGas) internal view returns (bool) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 70,
+                "newLine": 78,
+                "text": "        bool _hasMinGas;"
+              },
+              {
+                "type": " ",
+                "oldLine": 71,
+                "newLine": 79,
+                "text": "        assembly {"
+              }
+            ]
+          },
+          {
+            "oldStart": 75,
+            "oldLines": 13,
+            "newStart": 83,
+            "newLines": 16,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 75,
+                "newLine": 83,
+                "text": "        return _hasMinGas;"
+              },
+              { "type": " ", "oldLine": 76, "newLine": 84, "text": "    }" },
+              { "type": " ", "oldLine": 77, "newLine": 85, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 78,
+                "text": "    /// @notice Perform a low level call without copying any returndata. This function",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 79,
+                "text": "    ///         will revert if the call cannot be performed with the specified minimum",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 80,
+                "text": "    ///         gas.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 81,
+                "text": "    /// @param _target   Address to call",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 82,
+                "text": "    /// @param _minGas   The minimum amount of gas that may be passed to the call",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 83,
+                "text": "    /// @param _value    Amount of value to pass to the call",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 84,
+                "text": "    /// @param _calldata Calldata to pass to the call",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 86,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 87,
+                "text": "     * @notice Perform a low level call without copying any returndata. This function",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 88,
+                "text": "     *         will revert if the call cannot be performed with the specified minimum",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 89,
+                "text": "     *         gas.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 90, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 91,
+                "text": "     * @param _target   Address to call",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 92,
+                "text": "     * @param _minGas   The minimum amount of gas that may be passed to the call",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 93,
+                "text": "     * @param _value    Amount of value to pass to the call",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 94,
+                "text": "     * @param _calldata Calldata to pass to the call",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 95,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 85,
+                "newLine": 96,
+                "text": "    function callWithMinGas(address _target, uint256 _minGas, uint256 _value, bytes memory _calldata)"
+              },
+              {
+                "type": " ",
+                "oldLine": 86,
+                "newLine": 97,
+                "text": "        internal"
+              },
+              {
+                "type": " ",
+                "oldLine": 87,
+                "newLine": 98,
+                "text": "        returns (bool)"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
     }
   }
 }

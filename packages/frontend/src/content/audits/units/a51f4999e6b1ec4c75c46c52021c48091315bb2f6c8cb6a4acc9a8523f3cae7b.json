@@ -194,6 +194,255 @@
         "totalVersions": 1
       },
       "warnings": []
+    },
+    "d80a56c5abf9208b": {
+      "status": "library",
+      "coveredLines": 16,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "IERC20Metadata",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/token/ERC20/extensions/IERC20Metadata.sol",
+        "commit": "99a4cfca17279b77ae945b30cf9f7e87b21bf6f8",
+        "commitTimestamp": "2023-06-06T04:08:31Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/99a4cfca17279b77ae945b30cf9f7e87b21bf6f8/contracts/token/ERC20/extensions/IERC20Metadata.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "audit",
+        "coverage": "Full review of the file at the Phase 1 audit commit.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "warnings": []
+    },
+    "437dcc6cbc847e9a": {
+      "status": "library",
+      "coveredLines": 16,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "IERC20Metadata",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/token/ERC20/extensions/IERC20Metadata.sol",
+        "commit": "99a4cfca17279b77ae945b30cf9f7e87b21bf6f8",
+        "commitTimestamp": "2023-06-06T04:08:31Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/99a4cfca17279b77ae945b30cf9f7e87b21bf6f8/contracts/token/ERC20/extensions/IERC20Metadata.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "audit",
+        "coverage": "Full review of the file at the Phase 1 audit commit.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "warnings": []
+    },
+    "e3b0c44298fc1c14": {
+      "status": "library",
+      "coveredLines": 16,
+      "match": {
+        "origin": "library",
+        "collection": "openzeppelin",
+        "relation": { "type": "library" },
+        "rank": 3,
+        "matchedBy": "identity",
+        "auditedName": "IERC20Metadata",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/token/ERC20/extensions/IERC20Metadata.sol",
+        "commit": "99a4cfca17279b77ae945b30cf9f7e87b21bf6f8",
+        "commitTimestamp": "2023-06-06T04:08:31Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/99a4cfca17279b77ae945b30cf9f7e87b21bf6f8/contracts/token/ERC20/extensions/IERC20Metadata.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "audit",
+        "coverage": "Full review of the file at the Phase 1 audit commit.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "warnings": []
+    },
+    "d79ad2713a1d64a9": {
+      "status": "library",
+      "coveredLines": 16,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "IERC20Metadata",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/token/ERC20/extensions/IERC20Metadata.sol",
+        "commit": "99a4cfca17279b77ae945b30cf9f7e87b21bf6f8",
+        "commitTimestamp": "2023-06-06T04:08:31Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/99a4cfca17279b77ae945b30cf9f7e87b21bf6f8/contracts/token/ERC20/extensions/IERC20Metadata.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "audit",
+        "coverage": "Full review of the file at the Phase 1 audit commit.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "warnings": []
+    },
+    "2295595c4243408b": {
+      "status": "library",
+      "coveredLines": 16,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "IERC20Metadata",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/token/ERC20/extensions/IERC20Metadata.sol",
+        "commit": "99a4cfca17279b77ae945b30cf9f7e87b21bf6f8",
+        "commitTimestamp": "2023-06-06T04:08:31Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/99a4cfca17279b77ae945b30cf9f7e87b21bf6f8/contracts/token/ERC20/extensions/IERC20Metadata.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "audit",
+        "coverage": "Full review of the file at the Phase 1 audit commit.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "warnings": []
+    },
+    "5d5f82d91c09d4ec": {
+      "status": "library",
+      "coveredLines": 16,
+      "match": {
+        "origin": "library",
+        "collection": "openzeppelin",
+        "relation": { "type": "library" },
+        "rank": 3,
+        "matchedBy": "identity",
+        "auditedName": "IERC20Metadata",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/token/ERC20/extensions/IERC20Metadata.sol",
+        "commit": "99a4cfca17279b77ae945b30cf9f7e87b21bf6f8",
+        "commitTimestamp": "2023-06-06T04:08:31Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/99a4cfca17279b77ae945b30cf9f7e87b21bf6f8/contracts/token/ERC20/extensions/IERC20Metadata.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "audit",
+        "coverage": "Full review of the file at the Phase 1 audit commit.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 3,
+        "ignoredRemoved": 3,
+        "unchanged": 16,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 16,
+            "newStart": 1,
+            "newLines": 16,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "interface IERC20Metadata is IERC20 {"
+              },
+              { "type": " ", "oldLine": 2, "newLine": 2, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 3,
+                "text": "     * @dev Returns the name of the token.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "     * Returns the name of the token.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 4, "newLine": 4, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 5,
+                "text": "    function name() external view returns (string memory);"
+              },
+              { "type": " ", "oldLine": 6, "newLine": 6, "text": "" },
+              { "type": " ", "oldLine": 7, "newLine": 7, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 8,
+                "text": "     * @dev Returns the symbol of the token.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 8,
+                "text": "     * Returns the symbol of the token.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 9, "newLine": 9, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 10,
+                "newLine": 10,
+                "text": "    function symbol() external view returns (string memory);"
+              },
+              { "type": " ", "oldLine": 11, "newLine": 11, "text": "" },
+              { "type": " ", "oldLine": 12, "newLine": 12, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 13,
+                "text": "     * @dev Returns the decimals places of the token.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 13,
+                "text": "     * Returns the decimals places of the token.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 14, "newLine": 14, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 15,
+                "newLine": 15,
+                "text": "    function decimals() external view returns (uint8);"
+              },
+              { "type": " ", "oldLine": 16, "newLine": 16, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
     }
   }
 }

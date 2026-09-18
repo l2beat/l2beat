@@ -201,6 +201,202 @@
         ]
       },
       "warnings": []
+    },
+    "d80a56c5abf9208b": {
+      "status": "differs",
+      "coveredLines": 108,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "Time",
+        "similarity": 0.962,
+        "reportId": "openzeppelin/contracts__audits__2026-02-v5.6",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/utils/types/Time.sol",
+        "commit": "5fd1781b1454fd1ef8e722282f86f9293cacf256",
+        "commitTimestamp": "2026-02-27T15:00:00Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/5fd1781b1454fd1ef8e722282f86f9293cacf256/contracts/utils/types/Time.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Review of the fixes to the audit findings; the report states this commit reflects the final state of the audited codebase including all implemented resolutions.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 6
+      },
+      "diff": {
+        "added": 3,
+        "removed": 7,
+        "ignoredAdded": 1,
+        "ignoredRemoved": 1,
+        "unchanged": 108,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 18,
+            "oldLines": 7,
+            "newStart": 18,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 18,
+                "newLine": 18,
+                "text": "    // ==================================================== Delay ====================================================="
+              },
+              { "type": " ", "oldLine": 19, "newLine": 19, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 20,
+                "newLine": 20,
+                "text": "     * @dev A `Delay` is a uint32 duration that can be programmed to change value automatically at a given point in the"
+              },
+              {
+                "type": "-",
+                "oldLine": 21,
+                "text": "     * future. The \"effect\" timepoint describes when the transition happens from the \"old\" value to the \"new\" value.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 21,
+                "text": "     * future. The \"effect\" timepoint describes when the transitions happens from the \"old\" value to the \"new\" value.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 22,
+                "text": "     * This allows updating the delay applied to some operation while keeping some guarantees."
+              },
+              { "type": " ", "oldLine": 23, "newLine": 23, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 24,
+                "text": "     * In particular, the {update} function guarantees that if the delay is reduced, the old delay still applies for"
+              }
+            ]
+          },
+          {
+            "oldStart": 52,
+            "oldLines": 12,
+            "newStart": 52,
+            "newLines": 8,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 52,
+                "newLine": 52,
+                "text": "     * @dev Get the value at a given timepoint plus the pending value and effect timepoint if there is a scheduled"
+              },
+              {
+                "type": " ",
+                "oldLine": 53,
+                "newLine": 53,
+                "text": "     * change after this timepoint. If the effect timepoint is 0, then the pending value should not be considered."
+              },
+              { "type": " ", "oldLine": 54, "newLine": 54, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 55,
+                "text": "    function _getFullAt(Delay self, uint48 timepoint)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 56,
+                "text": "        private",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 57,
+                "text": "        pure",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 58,
+                "text": "        returns (uint32 valueBefore, uint32 valueAfter, uint48 effect)",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 59, "text": "    {", "ignored": false },
+              {
+                "type": "-",
+                "oldLine": 60,
+                "text": "        (valueBefore, valueAfter, effect) = self.unpack();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 55,
+                "text": "    function _getFullAt(Delay self, uint48 timepoint) private pure returns (uint32, uint32, uint48) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 56,
+                "text": "        (uint32 valueBefore, uint32 valueAfter, uint48 effect) = self.unpack();",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 61,
+                "newLine": 57,
+                "text": "        return effect <= timepoint ? (valueAfter, 0, 0) : (valueBefore, valueAfter, effect);"
+              },
+              { "type": " ", "oldLine": 62, "newLine": 58, "text": "    }" },
+              { "type": " ", "oldLine": 63, "newLine": 59, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 65,
+            "oldLines": 7,
+            "newStart": 61,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 65,
+                "newLine": 61,
+                "text": "     * @dev Get the current value plus the pending value and effect timepoint if there is a scheduled change. If the"
+              },
+              {
+                "type": " ",
+                "oldLine": 66,
+                "newLine": 62,
+                "text": "     * effect timepoint is 0, then the pending value should not be considered."
+              },
+              { "type": " ", "oldLine": 67, "newLine": 63, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 68,
+                "text": "    function getFull(Delay self) internal view returns (uint32 valueBefore, uint32 valueAfter, uint48 effect) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 64,
+                "text": "    function getFull(Delay self) internal view returns (uint32, uint32, uint48) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 69,
+                "newLine": 65,
+                "text": "        return _getFullAt(self, timestamp());"
+              },
+              { "type": " ", "oldLine": 70, "newLine": 66, "text": "    }" },
+              { "type": " ", "oldLine": 71, "newLine": 67, "text": "" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
     }
   }
 }

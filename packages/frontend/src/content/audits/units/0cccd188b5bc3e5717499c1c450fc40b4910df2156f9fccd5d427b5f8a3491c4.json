@@ -83,6 +83,84 @@
         ]
       },
       "warnings": []
+    },
+    "d80a56c5abf9208b": {
+      "status": "differs",
+      "coveredLines": 17,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "IERC721Enumerable",
+        "similarity": 0.875,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/token/ERC721/extensions/IERC721Enumerable.sol",
+        "commit": "b027c3541c03348767b62d45721eaa7d50f02b65",
+        "commitTimestamp": "2023-07-19T19:13:00Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/b027c3541c03348767b62d45721eaa7d50f02b65/contracts/token/ERC721/extensions/IERC721Enumerable.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "audit",
+        "coverage": "Full review of the file at the Phase 3 audit commit.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 1,
+        "removed": 1,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 17,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 8,
+            "oldLines": 7,
+            "newStart": 8,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 8,
+                "newLine": 8,
+                "text": "     * @dev Returns a token ID owned by `owner` at a given `index` of its token list."
+              },
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 9,
+                "text": "     * Use along with {balanceOf} to enumerate all of ``owner``'s tokens."
+              },
+              { "type": " ", "oldLine": 10, "newLine": 10, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 11,
+                "text": "    function tokenOfOwnerByIndex(address owner, uint256 index) external view returns (uint256);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 11,
+                "text": "    function tokenOfOwnerByIndex(address owner, uint256 index) external view returns (uint256 tokenId);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 12, "newLine": 12, "text": "" },
+              { "type": " ", "oldLine": 13, "newLine": 13, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 14,
+                "newLine": 14,
+                "text": "     * @dev Returns a token ID at a given `index` of all the tokens stored by the contract."
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
     }
   }
 }

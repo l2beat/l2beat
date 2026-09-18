@@ -113,6 +113,223 @@
         "totalVersions": 9
       },
       "warnings": []
+    },
+    "437dcc6cbc847e9a": {
+      "status": "library",
+      "coveredLines": 162,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "ECDSA",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/utils/cryptography/ECDSA.sol",
+        "commit": "7282b506fd168d01c3f7b42d90bf83f4b288623d",
+        "commitTimestamp": "2023-09-08T00:14:59Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/7282b506fd168d01c3f7b42d90bf83f4b288623d/contracts/utils/cryptography/ECDSA.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Fix review limited to the changes of pull request #4581 (head commit).",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 9
+      },
+      "warnings": []
+    },
+    "d80a56c5abf9208b": {
+      "status": "library",
+      "coveredLines": 162,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "ECDSA",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/utils/cryptography/ECDSA.sol",
+        "commit": "7282b506fd168d01c3f7b42d90bf83f4b288623d",
+        "commitTimestamp": "2023-09-08T00:14:59Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/7282b506fd168d01c3f7b42d90bf83f4b288623d/contracts/utils/cryptography/ECDSA.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Fix review limited to the changes of pull request #4581 (head commit).",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 9
+      },
+      "warnings": []
+    },
+    "2295595c4243408b": {
+      "status": "library",
+      "coveredLines": 162,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "ECDSA",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/utils/cryptography/ECDSA.sol",
+        "commit": "7282b506fd168d01c3f7b42d90bf83f4b288623d",
+        "commitTimestamp": "2023-09-08T00:14:59Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/7282b506fd168d01c3f7b42d90bf83f4b288623d/contracts/utils/cryptography/ECDSA.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Fix review limited to the changes of pull request #4581 (head commit).",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 9
+      },
+      "warnings": []
+    },
+    "13052b7adc791062": {
+      "status": "library",
+      "coveredLines": 162,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "ECDSA",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/utils/cryptography/ECDSA.sol",
+        "commit": "7282b506fd168d01c3f7b42d90bf83f4b288623d",
+        "commitTimestamp": "2023-09-08T00:14:59Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/7282b506fd168d01c3f7b42d90bf83f4b288623d/contracts/utils/cryptography/ECDSA.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Fix review limited to the changes of pull request #4581 (head commit).",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 9
+      },
+      "warnings": []
+    },
+    "5d5f82d91c09d4ec": {
+      "status": "library",
+      "coveredLines": 159,
+      "match": {
+        "origin": "library",
+        "collection": "openzeppelin",
+        "relation": { "type": "library" },
+        "rank": 3,
+        "matchedBy": "identity",
+        "auditedName": "ECDSA",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/utils/cryptography/ECDSA.sol",
+        "commit": "7282b506fd168d01c3f7b42d90bf83f4b288623d",
+        "commitTimestamp": "2023-09-08T00:14:59Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/7282b506fd168d01c3f7b42d90bf83f4b288623d/contracts/utils/cryptography/ECDSA.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Fix review limited to the changes of pull request #4581 (head commit).",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 9
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 2,
+        "ignoredRemoved": 5,
+        "unchanged": 159,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 22,
+            "oldLines": 12,
+            "newStart": 22,
+            "newLines": 9,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 22,
+                "text": "    error ECDSAInvalidSignatureS(bytes32 s);"
+              },
+              { "type": " ", "oldLine": 23, "newLine": 23, "text": "" },
+              { "type": " ", "oldLine": 24, "newLine": 24, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 25,
+                "text": "     * @dev Returns the address that signed a hashed message (`hash`) with `signature` or an error. This will not",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 26,
+                "text": "     * return address(0) without also returning an error description. Errors are documented using an enum (error type)",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 27,
+                "text": "     * and a bytes32 providing additional information about the error.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 25,
+                "text": "     * @dev Returns the address that signed a hashed message (`hash`) with",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 26,
+                "text": "     * `signature` or error string. This address can then be used for verification purposes.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 28, "newLine": 27, "text": "     *" },
+              {
+                "type": "-",
+                "oldLine": 29,
+                "text": "     * If no error is returned, then the address can be used for verification purposes.",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 30, "text": "     *", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 31,
+                "newLine": 28,
+                "text": "     * The `ecrecover` EVM precompile allows for malleable (non-unique) signatures:"
+              },
+              {
+                "type": " ",
+                "oldLine": 32,
+                "newLine": 29,
+                "text": "     * this function rejects them by requiring the `s` value to be in the lower"
+              },
+              {
+                "type": " ",
+                "oldLine": 33,
+                "newLine": 30,
+                "text": "     * half order, and the `v` value to be either 27 or 28."
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
     }
   }
 }

@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "0e4eeee03b90432ed262d9042fc0d6862ddd82568dbfe794106a99723fe4659e",
+  "name": "light.rs",
+  "kind": "program",
+  "lines": 140,
+  "source": "use std::sync::Arc;\n\nuse sp1_core_executor::{ExecutionReport, Program, SP1Context, SP1CoreOpts};\nuse sp1_core_machine::io::SP1Stdin;\nuse sp1_hypercube::{\n    prover::{CpuShardProver, ProverSemaphore},\n    SP1VerifyingKey,\n};\nuse sp1_primitives::io::SP1PublicValues;\nuse sp1_verifier::SP1Proof;\n\nuse crate::{\n    verify::{SP1Verifier, VerifierRecursionVks},\n    worker::{node::SP1NodeCore, AirProverWorker},\n    CpuSP1ProverComponents, SP1ProverComponents,\n};\n\nstruct SP1LightNodeInner {\n    /// The core node is used to execute the program and verify the proof\n    core: SP1NodeCore,\n    /// The core air prover is used to do the setup step\n    core_air_prover: Arc<<CpuSP1ProverComponents as SP1ProverComponents>::CoreProver>,\n    /// The permits are used to limit the number of concurrent provers\n    permits: ProverSemaphore,\n}\n\npub struct SP1LightNode {\n    inner: Arc<SP1LightNodeInner>,\n}\n\nimpl Clone for SP1LightNode {\n    fn clone(&self) -> Self {\n        Self { inner: self.inner.clone() }\n    }\n}\n\nimpl SP1LightNode {\n    pub async fn new() -> Self {\n        Self::with_opts(SP1CoreOpts::default()).await\n    }\n\n    /// Create a new light node\n    pub async fn with_opts(opts: SP1CoreOpts) -> Self {\n        // Initializing the merkle tree is blocking, so we need to spawn in on a blocking task.\n        tokio::task::spawn_blocking(|| {\n            // Get a core prover for the light node to be able to do the setup step\n            let core_verifier = CpuSP1ProverComponents::core_verifier();\n            let core_air_prover =\n                Arc::new(CpuShardProver::new(core_verifier.shard_verifier().clone()));\n            let permits = ProverSemaphore::new(1);\n\n            // Get a new verifier for the light(( node.\n            let verifier = SP1Verifier::new(VerifierRecursionVks::default());\n            // Create a new core node for the light node\n            let core = SP1NodeCore::new(verifier, opts);\n\n            Self { inner: Arc::new(SP1LightNodeInner { core, core_air_prover, permits }) }\n        })\n        .await\n        .expect(\"failed to initialize light node\")\n    }\n\n    pub async fn setup(&self, elf: &[u8]) -> anyhow::Result<SP1VerifyingKey> {\n        let program = Program::from(elf)\n            .map_err(|e| anyhow::anyhow!(\"failed to disassemble program: {}\", e))?;\n        let program = Arc::new(program);\n        let (_, vk) = self.inner.core_air_prover.setup(program, self.inner.permits.clone()).await;\n        let vk = SP1VerifyingKey { vk };\n        Ok(vk)\n    }\n\n    /// Execute a program\n    pub async fn execute(\n        &self,\n        elf: &[u8],\n        stdin: SP1Stdin,\n        context: SP1Context<'static>,\n    ) -> anyhow::Result<(SP1PublicValues, [u8; 32], ExecutionReport)> {\n        self.inner.core.execute(elf, stdin, context).await\n    }\n\n    /// Verify a proof\n    pub fn verify(&self, vk: &SP1VerifyingKey, proof: &SP1Proof) -> anyhow::Result<()> {\n        self.inner.core.verify(vk, proof)\n    }\n\n    #[inline]\n    pub fn inner(&self) -> &SP1NodeCore {\n        &self.inner.core\n    }\n}\n\n#[cfg(test)]\nmod tests {\n    use sp1_core_machine::utils::setup_logger;\n    use sp1_hypercube::HashableKey;\n    use tracing::Instrument;\n\n    use crate::worker::{cpu_worker_builder, SP1LocalNodeBuilder};\n\n    use super::*;\n\n    #[tokio::test]\n    async fn test_light_node() {\n        setup_logger();\n\n        let light_node =\n            SP1LightNode::new().instrument(tracing::info_span!(\"initialize light node\")).await;\n\n        let node = SP1LocalNodeBuilder::from_worker_client_builder(cpu_worker_builder())\n            .build()\n            .instrument(tracing::info_span!(\"initialize full node\"))\n            .await\n            .unwrap();\n\n        let elf = test_artifacts::FIBONACCI_ELF;\n        let stdin = SP1Stdin::default();\n\n        // Execute the program with the light node\n        let context = SP1Context::default();\n        let (_, _, report) =\n            light_node.execute(&elf, stdin.clone(), context.clone()).await.unwrap();\n        tracing::info!(\"report: {:?}\", report);\n        // Setup the program with the light node\n        let light_node_vk = light_node.setup(&elf).await.unwrap();\n        // Prove the program with the full node\n        let node_vk = node.setup(&elf).await.unwrap();\n        // Check that they are equal by comparing the digests\n        assert_eq!(light_node_vk.hash_koalabear(), node_vk.hash_koalabear());\n\n        // Prove the program with the full node\n        let proof = node.prove(&elf, stdin, context).await.unwrap();\n        // verify the proof with the light node\n        light_node.verify(&light_node_vk, &proof.proof).unwrap();\n\n        let node_vks = node.core().recursion_vks();\n        let light_node_vks = light_node.inner().recursion_vks();\n        assert_eq!(node_vks, light_node_vks, \"If this assertion fails, run test `sp1_prover::worker::node::full::tests::make_verifier_vks`\");\n    }\n}",
+  "resolutions": {
+    "44ad4cf96e2ef6f0": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "437dcc6cbc847e9a": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "5d5f82d91c09d4ec": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "e3b0c44298fc1c14": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "d79ad2713a1d64a9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "2295595c4243408b": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "d80a56c5abf9208b": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

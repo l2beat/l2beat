@@ -197,6 +197,684 @@
         ]
       },
       "warnings": []
+    },
+    "44ad4cf96e2ef6f0": {
+      "status": "differs",
+      "coveredLines": 33,
+      "match": {
+        "origin": "stack",
+        "collection": "sp1",
+        "relation": {
+          "type": "template",
+          "template": "succinct/OPSuccinct/AccessManager"
+        },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "components.rs",
+        "similarity": 0.917,
+        "reportId": "sp1/zellic-sp1-design-review-2024",
+        "repository": "succinctlabs/sp1",
+        "path": "crates/prover/src/components.rs",
+        "commit": "15be73d3acae3718a0acc529ed566f6a448b1c0e",
+        "commitTimestamp": "2024-11-27T02:59:17Z",
+        "url": "https://github.com/succinctlabs/sp1/blob/15be73d3acae3718a0acc529ed566f6a448b1c0e/crates/prover/src/components.rs",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "Initial audit",
+        "coverage": "Design-level review only (explicitly not a code audit): RV32IM specification compliance and the register/low-memory aliasing at addresses 0x0-0x1f, focused mostly on load and store instruction behaviour; soundness/completeness of the ZK proofs and circuits and correctness of implementation details were out of scope.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 2,
+        "removed": 2,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 33,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 25,
+            "oldLines": 9,
+            "newStart": 25,
+            "newLines": 9,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 25,
+                "newLine": 25,
+                "text": "        + Sync;"
+              },
+              { "type": " ", "oldLine": 26, "newLine": 26, "text": "}" },
+              { "type": " ", "oldLine": 27, "newLine": 27, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 28,
+                "text": "pub struct DefaultProverComponents;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 28,
+                "text": "pub struct CpuProverComponents;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 29, "newLine": 29, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 30,
+                "text": "impl SP1ProverComponents for DefaultProverComponents {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 30,
+                "text": "impl SP1ProverComponents for CpuProverComponents {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 31,
+                "newLine": 31,
+                "text": "    type CoreProver = CpuProver<CoreSC, RiscvAir<<CoreSC as StarkGenericConfig>::Val>>;"
+              },
+              {
+                "type": " ",
+                "oldLine": 32,
+                "newLine": 32,
+                "text": "    type CompressProver = CpuProver<InnerSC, CompressAir<<InnerSC as StarkGenericConfig>::Val>>;"
+              },
+              {
+                "type": " ",
+                "oldLine": 33,
+                "newLine": 33,
+                "text": "    type ShrinkProver = CpuProver<InnerSC, ShrinkAir<<InnerSC as StarkGenericConfig>::Val>>;"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "437dcc6cbc847e9a": {
+      "status": "differs",
+      "coveredLines": 33,
+      "match": {
+        "origin": "library",
+        "collection": "sp1",
+        "relation": { "type": "library" },
+        "rank": 3,
+        "matchedBy": "name",
+        "auditedName": "components.rs",
+        "similarity": 0.917,
+        "reportId": "sp1/zellic-sp1-design-review-2024",
+        "repository": "succinctlabs/sp1",
+        "path": "crates/prover/src/components.rs",
+        "commit": "15be73d3acae3718a0acc529ed566f6a448b1c0e",
+        "commitTimestamp": "2024-11-27T02:59:17Z",
+        "url": "https://github.com/succinctlabs/sp1/blob/15be73d3acae3718a0acc529ed566f6a448b1c0e/crates/prover/src/components.rs",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "Initial audit",
+        "coverage": "Design-level review only (explicitly not a code audit): RV32IM specification compliance and the register/low-memory aliasing at addresses 0x0-0x1f, focused mostly on load and store instruction behaviour; soundness/completeness of the ZK proofs and circuits and correctness of implementation details were out of scope.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 2,
+        "removed": 2,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 33,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 25,
+            "oldLines": 9,
+            "newStart": 25,
+            "newLines": 9,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 25,
+                "newLine": 25,
+                "text": "        + Sync;"
+              },
+              { "type": " ", "oldLine": 26, "newLine": 26, "text": "}" },
+              { "type": " ", "oldLine": 27, "newLine": 27, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 28,
+                "text": "pub struct DefaultProverComponents;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 28,
+                "text": "pub struct CpuProverComponents;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 29, "newLine": 29, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 30,
+                "text": "impl SP1ProverComponents for DefaultProverComponents {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 30,
+                "text": "impl SP1ProverComponents for CpuProverComponents {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 31,
+                "newLine": 31,
+                "text": "    type CoreProver = CpuProver<CoreSC, RiscvAir<<CoreSC as StarkGenericConfig>::Val>>;"
+              },
+              {
+                "type": " ",
+                "oldLine": 32,
+                "newLine": 32,
+                "text": "    type CompressProver = CpuProver<InnerSC, CompressAir<<InnerSC as StarkGenericConfig>::Val>>;"
+              },
+              {
+                "type": " ",
+                "oldLine": 33,
+                "newLine": 33,
+                "text": "    type ShrinkProver = CpuProver<InnerSC, ShrinkAir<<InnerSC as StarkGenericConfig>::Val>>;"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "5d5f82d91c09d4ec": {
+      "status": "differs",
+      "coveredLines": 33,
+      "match": {
+        "origin": "library",
+        "collection": "sp1",
+        "relation": { "type": "library" },
+        "rank": 3,
+        "matchedBy": "name",
+        "auditedName": "components.rs",
+        "similarity": 0.917,
+        "reportId": "sp1/zellic-sp1-design-review-2024",
+        "repository": "succinctlabs/sp1",
+        "path": "crates/prover/src/components.rs",
+        "commit": "15be73d3acae3718a0acc529ed566f6a448b1c0e",
+        "commitTimestamp": "2024-11-27T02:59:17Z",
+        "url": "https://github.com/succinctlabs/sp1/blob/15be73d3acae3718a0acc529ed566f6a448b1c0e/crates/prover/src/components.rs",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "Initial audit",
+        "coverage": "Design-level review only (explicitly not a code audit): RV32IM specification compliance and the register/low-memory aliasing at addresses 0x0-0x1f, focused mostly on load and store instruction behaviour; soundness/completeness of the ZK proofs and circuits and correctness of implementation details were out of scope.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 2,
+        "removed": 2,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 33,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 25,
+            "oldLines": 9,
+            "newStart": 25,
+            "newLines": 9,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 25,
+                "newLine": 25,
+                "text": "        + Sync;"
+              },
+              { "type": " ", "oldLine": 26, "newLine": 26, "text": "}" },
+              { "type": " ", "oldLine": 27, "newLine": 27, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 28,
+                "text": "pub struct DefaultProverComponents;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 28,
+                "text": "pub struct CpuProverComponents;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 29, "newLine": 29, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 30,
+                "text": "impl SP1ProverComponents for DefaultProverComponents {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 30,
+                "text": "impl SP1ProverComponents for CpuProverComponents {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 31,
+                "newLine": 31,
+                "text": "    type CoreProver = CpuProver<CoreSC, RiscvAir<<CoreSC as StarkGenericConfig>::Val>>;"
+              },
+              {
+                "type": " ",
+                "oldLine": 32,
+                "newLine": 32,
+                "text": "    type CompressProver = CpuProver<InnerSC, CompressAir<<InnerSC as StarkGenericConfig>::Val>>;"
+              },
+              {
+                "type": " ",
+                "oldLine": 33,
+                "newLine": 33,
+                "text": "    type ShrinkProver = CpuProver<InnerSC, ShrinkAir<<InnerSC as StarkGenericConfig>::Val>>;"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "e3b0c44298fc1c14": {
+      "status": "differs",
+      "coveredLines": 33,
+      "match": {
+        "origin": "library",
+        "collection": "sp1",
+        "relation": { "type": "library" },
+        "rank": 3,
+        "matchedBy": "name",
+        "auditedName": "components.rs",
+        "similarity": 0.917,
+        "reportId": "sp1/zellic-sp1-design-review-2024",
+        "repository": "succinctlabs/sp1",
+        "path": "crates/prover/src/components.rs",
+        "commit": "15be73d3acae3718a0acc529ed566f6a448b1c0e",
+        "commitTimestamp": "2024-11-27T02:59:17Z",
+        "url": "https://github.com/succinctlabs/sp1/blob/15be73d3acae3718a0acc529ed566f6a448b1c0e/crates/prover/src/components.rs",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "Initial audit",
+        "coverage": "Design-level review only (explicitly not a code audit): RV32IM specification compliance and the register/low-memory aliasing at addresses 0x0-0x1f, focused mostly on load and store instruction behaviour; soundness/completeness of the ZK proofs and circuits and correctness of implementation details were out of scope.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 2,
+        "removed": 2,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 33,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 25,
+            "oldLines": 9,
+            "newStart": 25,
+            "newLines": 9,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 25,
+                "newLine": 25,
+                "text": "        + Sync;"
+              },
+              { "type": " ", "oldLine": 26, "newLine": 26, "text": "}" },
+              { "type": " ", "oldLine": 27, "newLine": 27, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 28,
+                "text": "pub struct DefaultProverComponents;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 28,
+                "text": "pub struct CpuProverComponents;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 29, "newLine": 29, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 30,
+                "text": "impl SP1ProverComponents for DefaultProverComponents {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 30,
+                "text": "impl SP1ProverComponents for CpuProverComponents {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 31,
+                "newLine": 31,
+                "text": "    type CoreProver = CpuProver<CoreSC, RiscvAir<<CoreSC as StarkGenericConfig>::Val>>;"
+              },
+              {
+                "type": " ",
+                "oldLine": 32,
+                "newLine": 32,
+                "text": "    type CompressProver = CpuProver<InnerSC, CompressAir<<InnerSC as StarkGenericConfig>::Val>>;"
+              },
+              {
+                "type": " ",
+                "oldLine": 33,
+                "newLine": 33,
+                "text": "    type ShrinkProver = CpuProver<InnerSC, ShrinkAir<<InnerSC as StarkGenericConfig>::Val>>;"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "d79ad2713a1d64a9": {
+      "status": "differs",
+      "coveredLines": 33,
+      "match": {
+        "origin": "stack",
+        "collection": "sp1",
+        "relation": {
+          "type": "template",
+          "template": "succinct/OPSuccinct/OPSuccinctL2OutputOracle_mantle"
+        },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "components.rs",
+        "similarity": 0.917,
+        "reportId": "sp1/zellic-sp1-design-review-2024",
+        "repository": "succinctlabs/sp1",
+        "path": "crates/prover/src/components.rs",
+        "commit": "15be73d3acae3718a0acc529ed566f6a448b1c0e",
+        "commitTimestamp": "2024-11-27T02:59:17Z",
+        "url": "https://github.com/succinctlabs/sp1/blob/15be73d3acae3718a0acc529ed566f6a448b1c0e/crates/prover/src/components.rs",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "Initial audit",
+        "coverage": "Design-level review only (explicitly not a code audit): RV32IM specification compliance and the register/low-memory aliasing at addresses 0x0-0x1f, focused mostly on load and store instruction behaviour; soundness/completeness of the ZK proofs and circuits and correctness of implementation details were out of scope.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 2,
+        "removed": 2,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 33,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 25,
+            "oldLines": 9,
+            "newStart": 25,
+            "newLines": 9,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 25,
+                "newLine": 25,
+                "text": "        + Sync;"
+              },
+              { "type": " ", "oldLine": 26, "newLine": 26, "text": "}" },
+              { "type": " ", "oldLine": 27, "newLine": 27, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 28,
+                "text": "pub struct DefaultProverComponents;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 28,
+                "text": "pub struct CpuProverComponents;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 29, "newLine": 29, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 30,
+                "text": "impl SP1ProverComponents for DefaultProverComponents {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 30,
+                "text": "impl SP1ProverComponents for CpuProverComponents {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 31,
+                "newLine": 31,
+                "text": "    type CoreProver = CpuProver<CoreSC, RiscvAir<<CoreSC as StarkGenericConfig>::Val>>;"
+              },
+              {
+                "type": " ",
+                "oldLine": 32,
+                "newLine": 32,
+                "text": "    type CompressProver = CpuProver<InnerSC, CompressAir<<InnerSC as StarkGenericConfig>::Val>>;"
+              },
+              {
+                "type": " ",
+                "oldLine": 33,
+                "newLine": 33,
+                "text": "    type ShrinkProver = CpuProver<InnerSC, ShrinkAir<<InnerSC as StarkGenericConfig>::Val>>;"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "2295595c4243408b": {
+      "status": "differs",
+      "coveredLines": 33,
+      "match": {
+        "origin": "stack",
+        "collection": "sp1",
+        "relation": { "type": "template", "template": "succinct/SP1Verifier" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "components.rs",
+        "similarity": 0.917,
+        "reportId": "sp1/zellic-sp1-design-review-2024",
+        "repository": "succinctlabs/sp1",
+        "path": "crates/prover/src/components.rs",
+        "commit": "15be73d3acae3718a0acc529ed566f6a448b1c0e",
+        "commitTimestamp": "2024-11-27T02:59:17Z",
+        "url": "https://github.com/succinctlabs/sp1/blob/15be73d3acae3718a0acc529ed566f6a448b1c0e/crates/prover/src/components.rs",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "Initial audit",
+        "coverage": "Design-level review only (explicitly not a code audit): RV32IM specification compliance and the register/low-memory aliasing at addresses 0x0-0x1f, focused mostly on load and store instruction behaviour; soundness/completeness of the ZK proofs and circuits and correctness of implementation details were out of scope.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 2,
+        "removed": 2,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 33,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 25,
+            "oldLines": 9,
+            "newStart": 25,
+            "newLines": 9,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 25,
+                "newLine": 25,
+                "text": "        + Sync;"
+              },
+              { "type": " ", "oldLine": 26, "newLine": 26, "text": "}" },
+              { "type": " ", "oldLine": 27, "newLine": 27, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 28,
+                "text": "pub struct DefaultProverComponents;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 28,
+                "text": "pub struct CpuProverComponents;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 29, "newLine": 29, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 30,
+                "text": "impl SP1ProverComponents for DefaultProverComponents {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 30,
+                "text": "impl SP1ProverComponents for CpuProverComponents {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 31,
+                "newLine": 31,
+                "text": "    type CoreProver = CpuProver<CoreSC, RiscvAir<<CoreSC as StarkGenericConfig>::Val>>;"
+              },
+              {
+                "type": " ",
+                "oldLine": 32,
+                "newLine": 32,
+                "text": "    type CompressProver = CpuProver<InnerSC, CompressAir<<InnerSC as StarkGenericConfig>::Val>>;"
+              },
+              {
+                "type": " ",
+                "oldLine": 33,
+                "newLine": 33,
+                "text": "    type ShrinkProver = CpuProver<InnerSC, ShrinkAir<<InnerSC as StarkGenericConfig>::Val>>;"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "d80a56c5abf9208b": {
+      "status": "differs",
+      "coveredLines": 33,
+      "match": {
+        "origin": "library",
+        "collection": "sp1",
+        "relation": { "type": "library" },
+        "rank": 3,
+        "matchedBy": "name",
+        "auditedName": "components.rs",
+        "similarity": 0.917,
+        "reportId": "sp1/zellic-sp1-design-review-2024",
+        "repository": "succinctlabs/sp1",
+        "path": "crates/prover/src/components.rs",
+        "commit": "15be73d3acae3718a0acc529ed566f6a448b1c0e",
+        "commitTimestamp": "2024-11-27T02:59:17Z",
+        "url": "https://github.com/succinctlabs/sp1/blob/15be73d3acae3718a0acc529ed566f6a448b1c0e/crates/prover/src/components.rs",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "Initial audit",
+        "coverage": "Design-level review only (explicitly not a code audit): RV32IM specification compliance and the register/low-memory aliasing at addresses 0x0-0x1f, focused mostly on load and store instruction behaviour; soundness/completeness of the ZK proofs and circuits and correctness of implementation details were out of scope.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 2,
+        "removed": 2,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 33,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 25,
+            "oldLines": 9,
+            "newStart": 25,
+            "newLines": 9,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 25,
+                "newLine": 25,
+                "text": "        + Sync;"
+              },
+              { "type": " ", "oldLine": 26, "newLine": 26, "text": "}" },
+              { "type": " ", "oldLine": 27, "newLine": 27, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 28,
+                "text": "pub struct DefaultProverComponents;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 28,
+                "text": "pub struct CpuProverComponents;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 29, "newLine": 29, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 30,
+                "text": "impl SP1ProverComponents for DefaultProverComponents {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 30,
+                "text": "impl SP1ProverComponents for CpuProverComponents {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 31,
+                "newLine": 31,
+                "text": "    type CoreProver = CpuProver<CoreSC, RiscvAir<<CoreSC as StarkGenericConfig>::Val>>;"
+              },
+              {
+                "type": " ",
+                "oldLine": 32,
+                "newLine": 32,
+                "text": "    type CompressProver = CpuProver<InnerSC, CompressAir<<InnerSC as StarkGenericConfig>::Val>>;"
+              },
+              {
+                "type": " ",
+                "oldLine": 33,
+                "newLine": 33,
+                "text": "    type ShrinkProver = CpuProver<InnerSC, ShrinkAir<<InnerSC as StarkGenericConfig>::Val>>;"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
     }
   }
 }

@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "09efd53e21fc87e6ef9d5e5171eb97c3014452eeb1534c556de8127f05db1a70",
+  "name": "oracle.go",
+  "kind": "program",
+  "lines": 104,
+  "source": "package l2\n\nimport (\n\t\"fmt\"\n\n\t\"github.com/ethereum/go-ethereum/common\"\n\t\"github.com/ethereum/go-ethereum/core/types\"\n\t\"github.com/ethereum/go-ethereum/rlp\"\n\n\tpreimage \"github.com/ethereum-optimism/optimism/op-preimage\"\n\t\"github.com/ethereum-optimism/optimism/op-program/client/mpt\"\n\t\"github.com/ethereum-optimism/optimism/op-service/eth\"\n)\n\n// StateOracle defines the high-level API used to retrieve L2 state data pre-images\n// The returned data is always the preimage of the requested hash.\ntype StateOracle interface {\n\t// NodeByHash retrieves the merkle-patricia trie node pre-image for a given hash.\n\t// Trie nodes may be from the world state trie or any account storage trie.\n\t// Contract code is not stored as part of the trie and must be retrieved via CodeByHash\n\tNodeByHash(nodeHash common.Hash) []byte\n\n\t// CodeByHash retrieves the contract code pre-image for a given hash.\n\t// codeHash should be retrieved from the world state account for a contract.\n\tCodeByHash(codeHash common.Hash) []byte\n}\n\n// Oracle defines the high-level API used to retrieve L2 data.\n// The returned data is always the preimage of the requested hash.\ntype Oracle interface {\n\tStateOracle\n\n\t// BlockByHash retrieves the block with the given hash.\n\tBlockByHash(blockHash common.Hash) *types.Block\n\n\tOutputByRoot(root common.Hash) eth.Output\n}\n\n// PreimageOracle implements Oracle using by interfacing with the pure preimage.Oracle\n// to fetch pre-images to decode into the requested data.\ntype PreimageOracle struct {\n\toracle preimage.Oracle\n\thint   preimage.Hinter\n}\n\nvar _ Oracle = (*PreimageOracle)(nil)\n\nfunc NewPreimageOracle(raw preimage.Oracle, hint preimage.Hinter) *PreimageOracle {\n\treturn &PreimageOracle{\n\t\toracle: raw,\n\t\thint:   hint,\n\t}\n}\n\nfunc (p *PreimageOracle) headerByBlockHash(blockHash common.Hash) *types.Header {\n\tp.hint.Hint(BlockHeaderHint(blockHash))\n\theaderRlp := p.oracle.Get(preimage.Keccak256Key(blockHash))\n\tvar header types.Header\n\tif err := rlp.DecodeBytes(headerRlp, &header); err != nil {\n\t\tpanic(fmt.Errorf(\"invalid block header %s: %w\", blockHash, err))\n\t}\n\treturn &header\n}\n\nfunc (p *PreimageOracle) BlockByHash(blockHash common.Hash) *types.Block {\n\theader := p.headerByBlockHash(blockHash)\n\ttxs := p.LoadTransactions(blockHash, header.TxHash)\n\n\treturn types.NewBlockWithHeader(header).WithBody(txs, nil)\n}\n\nfunc (p *PreimageOracle) LoadTransactions(blockHash common.Hash, txHash common.Hash) []*types.Transaction {\n\tp.hint.Hint(TransactionsHint(blockHash))\n\n\topaqueTxs := mpt.ReadTrie(txHash, func(key common.Hash) []byte {\n\t\treturn p.oracle.Get(preimage.Keccak256Key(key))\n\t})\n\n\ttxs, err := eth.DecodeTransactions(opaqueTxs)\n\tif err != nil {\n\t\tpanic(fmt.Errorf(\"failed to decode list of txs: %w\", err))\n\t}\n\treturn txs\n}\n\nfunc (p *PreimageOracle) NodeByHash(nodeHash common.Hash) []byte {\n\tp.hint.Hint(StateNodeHint(nodeHash))\n\treturn p.oracle.Get(preimage.Keccak256Key(nodeHash))\n}\n\nfunc (p *PreimageOracle) CodeByHash(codeHash common.Hash) []byte {\n\tp.hint.Hint(CodeHint(codeHash))\n\treturn p.oracle.Get(preimage.Keccak256Key(codeHash))\n}\n\nfunc (p *PreimageOracle) OutputByRoot(l2OutputRoot common.Hash) eth.Output {\n\tp.hint.Hint(L2OutputHint(l2OutputRoot))\n\tdata := p.oracle.Get(preimage.Keccak256Key(l2OutputRoot))\n\toutput, err := eth.UnmarshalOutput(data)\n\tif err != nil {\n\t\tpanic(fmt.Errorf(\"invalid L2 output data for root %s: %w\", l2OutputRoot, err))\n\t}\n\treturn output\n}",
+  "resolutions": {
+    "437dcc6cbc847e9a": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "bb55951394276893": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

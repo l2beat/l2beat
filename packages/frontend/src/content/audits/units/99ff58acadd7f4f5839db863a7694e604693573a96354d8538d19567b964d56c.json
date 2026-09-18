@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "99ff58acadd7f4f5839db863a7694e604693573a96354d8538d19567b964d56c",
+  "name": "main.rs",
+  "kind": "program",
+  "lines": 60,
+  "source": "//! A program to verify a Optimism L2 block STF with Ethereum DA in the zkVM.\n//!\n//! This binary contains the client program for executing the Optimism rollup state transition\n//! across a range of blocks, which can be used to generate an on chain validity proof. Depending on\n//! the compilation pipeline, it will compile to be run either in native mode or in zkVM mode. In\n//! native mode, the data for verifying the batch validity is fetched from RPC, while in zkVM mode,\n//! the data is supplied by the host binary to the verifiable program.\n\n#![no_main]\nsp1_zkvm::entrypoint!(main);\n\nuse canoe_sp1_cc_verifier::CanoeSp1CCVerifier;\nuse celo_eigenda_registry::CeloCanoeVerifierAddressFetcher;\nuse celo_proof::CeloBootInfo;\nuse hokulea_proof::eigenda_witness::EigenDAWitness;\nuse hokulea_zkvm_verification::eigenda_witness_to_preloaded_provider;\nuse op_succinct_client_utils::witness::{EigenDAWitnessData, WitnessData};\nuse op_succinct_eigenda_client_utils::executor::EigenDAWitnessExecutor;\nuse op_succinct_range_utils::run_range_program;\n#[cfg(feature = \"tracing-subscriber\")]\nuse op_succinct_range_utils::setup_tracing;\nuse rkyv::rancor::Error;\n\nfn main() {\n    #[cfg(feature = \"tracing-subscriber\")]\n    setup_tracing();\n\n    kona_proof::block_on(async move {\n        let witness_rkyv_bytes: Vec<u8> = sp1_zkvm::io::read_vec();\n        let witness_data = rkyv::from_bytes::<EigenDAWitnessData, Error>(&witness_rkyv_bytes)\n            .expect(\"Failed to deserialize witness data.\");\n\n        let (oracle, beacon) = witness_data\n            .clone()\n            .get_oracle_and_blob_provider()\n            .await\n            .expect(\"Failed to load oracle and blob provider\");\n\n        // Load boot info using CeloBootInfo which uses celo_registry (has Celo chain configs)\n        let celo_boot =\n            CeloBootInfo::load(oracle.as_ref()).await.expect(\"Failed to load boot info\");\n\n        let eigenda_witness: EigenDAWitness = serde_cbor::from_slice(\n            &witness_data.eigenda_data.clone().expect(\"eigenda witness data is not present\"),\n        )\n        .expect(\"cannot deserialize eigenda witness\");\n        let preloaded_preimage_provider = eigenda_witness_to_preloaded_provider(\n            oracle.clone(),\n            &celo_boot.op_boot_info,\n            CanoeSp1CCVerifier {},\n            CeloCanoeVerifierAddressFetcher {},\n            eigenda_witness,\n        )\n        .await\n        .expect(\"Failed to get preloaded blob provider\");\n\n        run_range_program(EigenDAWitnessExecutor::new(preloaded_preimage_provider), oracle, beacon)\n            .await;\n    });\n}",
+  "resolutions": {
+    "44ad4cf96e2ef6f0": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

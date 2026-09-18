@@ -149,6 +149,165 @@
         "totalVersions": 6
       },
       "warnings": []
+    },
+    "437dcc6cbc847e9a": {
+      "status": "identical",
+      "coveredLines": 6,
+      "match": {
+        "origin": "stack",
+        "collection": "optimism",
+        "relation": {
+          "type": "template",
+          "template": "gnosisSafeModules/LivenessGuard"
+        },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "CrossDomainMessengerLegacySpacer0",
+        "similarity": 1,
+        "reportId": "optimism/cantina-eip7702-2025-02",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts-bedrock/src/universal/CrossDomainMessenger.sol",
+        "commit": "88419adbf689336913a3db7d4c3691b2b0102e75",
+        "commitTimestamp": "2025-03-05T15:37:49Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/88419adbf689336913a3db7d4c3691b2b0102e75/packages/contracts-bedrock/src/universal/CrossDomainMessenger.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Head commit of PR 14608, verified by Cantina as the fix for 3.1.1 (baseGas() updated to the EIP-7623 formula).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 6
+      },
+      "warnings": []
+    },
+    "a8bf4a329bb46967": {
+      "status": "identical",
+      "coveredLines": 6,
+      "match": {
+        "origin": "stack",
+        "collection": "optimism",
+        "relation": {
+          "type": "template",
+          "template": "opstack/L1CrossDomainMessenger"
+        },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "CrossDomainMessengerLegacySpacer0",
+        "similarity": 1,
+        "reportId": "optimism/cantina-eip7702-2025-02",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts-bedrock/src/universal/CrossDomainMessenger.sol",
+        "commit": "88419adbf689336913a3db7d4c3691b2b0102e75",
+        "commitTimestamp": "2025-03-05T15:37:49Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/88419adbf689336913a3db7d4c3691b2b0102e75/packages/contracts-bedrock/src/universal/CrossDomainMessenger.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Head commit of PR 14608, verified by Cantina as the fix for 3.1.1 (baseGas() updated to the EIP-7623 formula).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 6
+      },
+      "warnings": []
+    },
+    "d79ad2713a1d64a9": {
+      "status": "identical",
+      "coveredLines": 8,
+      "match": {
+        "origin": "stack",
+        "collection": "optimism",
+        "relation": {
+          "type": "template",
+          "template": "opstack/AddressManager"
+        },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "CrossDomainMessengerLegacySpacer0",
+        "similarity": 1,
+        "reportId": "optimism/cantina-eip7702-2025-02",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts-bedrock/src/universal/CrossDomainMessenger.sol",
+        "commit": "88419adbf689336913a3db7d4c3691b2b0102e75",
+        "commitTimestamp": "2025-03-05T15:37:49Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/88419adbf689336913a3db7d4c3691b2b0102e75/packages/contracts-bedrock/src/universal/CrossDomainMessenger.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Head commit of PR 14608, verified by Cantina as the fix for 3.1.1 (baseGas() updated to the EIP-7623 formula).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 6
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 5,
+        "ignoredRemoved": 3,
+        "unchanged": 8,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 6,
+            "newStart": 1,
+            "newLines": 8,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "contract CrossDomainMessengerLegacySpacer0 {"
+              },
+              {
+                "type": "-",
+                "oldLine": 2,
+                "text": "    /// @custom:legacy",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 3,
+                "text": "    /// @custom:spacer libAddressManager",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 4,
+                "text": "    /// @notice Spacer for backwards compatibility.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 2, "text": "    /**", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "     * @custom:legacy",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 4,
+                "text": "     * @custom:spacer libAddressManager",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 5,
+                "text": "     * @notice Spacer for backwards compatibility.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 6, "text": "     */", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 7,
+                "text": "    address private spacer_0_0_20;"
+              },
+              { "type": " ", "oldLine": 6, "newLine": 8, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
     }
   }
 }

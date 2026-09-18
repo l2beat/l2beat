@@ -185,6 +185,642 @@
         ]
       },
       "warnings": []
+    },
+    "44ad4cf96e2ef6f0": {
+      "status": "differs",
+      "coveredLines": 87,
+      "match": {
+        "origin": "stack",
+        "collection": "sp1",
+        "relation": {
+          "type": "template",
+          "template": "succinct/OPSuccinct/AccessManager"
+        },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "release.sh",
+        "similarity": 0.973,
+        "reportId": "sp1/zellic-sp1-design-review-2024",
+        "repository": "succinctlabs/sp1",
+        "path": "crates/prover/release.sh",
+        "commit": "15be73d3acae3718a0acc529ed566f6a448b1c0e",
+        "commitTimestamp": "2024-11-27T02:59:17Z",
+        "url": "https://github.com/succinctlabs/sp1/blob/15be73d3acae3718a0acc529ed566f6a448b1c0e/crates/prover/release.sh",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "Initial audit",
+        "coverage": "Design-level review only (explicitly not a code audit): RV32IM specification compliance and the register/low-memory aliasing at addresses 0x0-0x1f, focused mostly on load and store instruction behaviour; soundness/completeness of the ZK proofs and circuits and correctness of implementation details were out of scope.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 2,
+        "removed": 2,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 87,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 77,
+            "oldLines": 8,
+            "newStart": 77,
+            "newLines": 8,
+            "lines": [
+              { "type": " ", "oldLine": 77, "newLine": 77, "text": "fi" },
+              { "type": " ", "oldLine": 78, "newLine": 78, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 79,
+                "newLine": 79,
+                "text": "# Copy Groth16 and Plonk vks to verifier crate"
+              },
+              {
+                "type": "-",
+                "oldLine": 80,
+                "text": "cp ./build/groth16/$VERSION/groth16_vk.bin ../verifier/bn254-vk/groth16_vk.bin",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 81,
+                "text": "cp ./build/plonk/$VERSION/plonk_vk.bin ../verifier/bn254-vk/plonk_vk.bin",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 80,
+                "text": "cp ./build/groth16/groth16_vk.bin ../verifier/bn254-vk/groth16_vk.bin",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 81,
+                "text": "cp ./build/plonk/plonk_vk.bin ../verifier/bn254-vk/plonk_vk.bin",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 82, "newLine": 82, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 83,
+                "newLine": 83,
+                "text": "echo \"Successfully uploaded build artifacts to S3:\""
+              },
+              {
+                "type": " ",
+                "oldLine": 84,
+                "newLine": 84,
+                "text": "echo \"- s3://$S3_BUCKET/$GROTH16_ARCHIVE\""
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "437dcc6cbc847e9a": {
+      "status": "differs",
+      "coveredLines": 87,
+      "match": {
+        "origin": "library",
+        "collection": "sp1",
+        "relation": { "type": "library" },
+        "rank": 3,
+        "matchedBy": "name",
+        "auditedName": "release.sh",
+        "similarity": 0.973,
+        "reportId": "sp1/zellic-sp1-design-review-2024",
+        "repository": "succinctlabs/sp1",
+        "path": "crates/prover/release.sh",
+        "commit": "15be73d3acae3718a0acc529ed566f6a448b1c0e",
+        "commitTimestamp": "2024-11-27T02:59:17Z",
+        "url": "https://github.com/succinctlabs/sp1/blob/15be73d3acae3718a0acc529ed566f6a448b1c0e/crates/prover/release.sh",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "Initial audit",
+        "coverage": "Design-level review only (explicitly not a code audit): RV32IM specification compliance and the register/low-memory aliasing at addresses 0x0-0x1f, focused mostly on load and store instruction behaviour; soundness/completeness of the ZK proofs and circuits and correctness of implementation details were out of scope.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 2,
+        "removed": 2,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 87,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 77,
+            "oldLines": 8,
+            "newStart": 77,
+            "newLines": 8,
+            "lines": [
+              { "type": " ", "oldLine": 77, "newLine": 77, "text": "fi" },
+              { "type": " ", "oldLine": 78, "newLine": 78, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 79,
+                "newLine": 79,
+                "text": "# Copy Groth16 and Plonk vks to verifier crate"
+              },
+              {
+                "type": "-",
+                "oldLine": 80,
+                "text": "cp ./build/groth16/$VERSION/groth16_vk.bin ../verifier/bn254-vk/groth16_vk.bin",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 81,
+                "text": "cp ./build/plonk/$VERSION/plonk_vk.bin ../verifier/bn254-vk/plonk_vk.bin",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 80,
+                "text": "cp ./build/groth16/groth16_vk.bin ../verifier/bn254-vk/groth16_vk.bin",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 81,
+                "text": "cp ./build/plonk/plonk_vk.bin ../verifier/bn254-vk/plonk_vk.bin",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 82, "newLine": 82, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 83,
+                "newLine": 83,
+                "text": "echo \"Successfully uploaded build artifacts to S3:\""
+              },
+              {
+                "type": " ",
+                "oldLine": 84,
+                "newLine": 84,
+                "text": "echo \"- s3://$S3_BUCKET/$GROTH16_ARCHIVE\""
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "5d5f82d91c09d4ec": {
+      "status": "differs",
+      "coveredLines": 87,
+      "match": {
+        "origin": "library",
+        "collection": "sp1",
+        "relation": { "type": "library" },
+        "rank": 3,
+        "matchedBy": "name",
+        "auditedName": "release.sh",
+        "similarity": 0.973,
+        "reportId": "sp1/zellic-sp1-design-review-2024",
+        "repository": "succinctlabs/sp1",
+        "path": "crates/prover/release.sh",
+        "commit": "15be73d3acae3718a0acc529ed566f6a448b1c0e",
+        "commitTimestamp": "2024-11-27T02:59:17Z",
+        "url": "https://github.com/succinctlabs/sp1/blob/15be73d3acae3718a0acc529ed566f6a448b1c0e/crates/prover/release.sh",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "Initial audit",
+        "coverage": "Design-level review only (explicitly not a code audit): RV32IM specification compliance and the register/low-memory aliasing at addresses 0x0-0x1f, focused mostly on load and store instruction behaviour; soundness/completeness of the ZK proofs and circuits and correctness of implementation details were out of scope.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 2,
+        "removed": 2,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 87,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 77,
+            "oldLines": 8,
+            "newStart": 77,
+            "newLines": 8,
+            "lines": [
+              { "type": " ", "oldLine": 77, "newLine": 77, "text": "fi" },
+              { "type": " ", "oldLine": 78, "newLine": 78, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 79,
+                "newLine": 79,
+                "text": "# Copy Groth16 and Plonk vks to verifier crate"
+              },
+              {
+                "type": "-",
+                "oldLine": 80,
+                "text": "cp ./build/groth16/$VERSION/groth16_vk.bin ../verifier/bn254-vk/groth16_vk.bin",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 81,
+                "text": "cp ./build/plonk/$VERSION/plonk_vk.bin ../verifier/bn254-vk/plonk_vk.bin",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 80,
+                "text": "cp ./build/groth16/groth16_vk.bin ../verifier/bn254-vk/groth16_vk.bin",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 81,
+                "text": "cp ./build/plonk/plonk_vk.bin ../verifier/bn254-vk/plonk_vk.bin",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 82, "newLine": 82, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 83,
+                "newLine": 83,
+                "text": "echo \"Successfully uploaded build artifacts to S3:\""
+              },
+              {
+                "type": " ",
+                "oldLine": 84,
+                "newLine": 84,
+                "text": "echo \"- s3://$S3_BUCKET/$GROTH16_ARCHIVE\""
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "e3b0c44298fc1c14": {
+      "status": "differs",
+      "coveredLines": 87,
+      "match": {
+        "origin": "library",
+        "collection": "sp1",
+        "relation": { "type": "library" },
+        "rank": 3,
+        "matchedBy": "name",
+        "auditedName": "release.sh",
+        "similarity": 0.973,
+        "reportId": "sp1/zellic-sp1-design-review-2024",
+        "repository": "succinctlabs/sp1",
+        "path": "crates/prover/release.sh",
+        "commit": "15be73d3acae3718a0acc529ed566f6a448b1c0e",
+        "commitTimestamp": "2024-11-27T02:59:17Z",
+        "url": "https://github.com/succinctlabs/sp1/blob/15be73d3acae3718a0acc529ed566f6a448b1c0e/crates/prover/release.sh",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "Initial audit",
+        "coverage": "Design-level review only (explicitly not a code audit): RV32IM specification compliance and the register/low-memory aliasing at addresses 0x0-0x1f, focused mostly on load and store instruction behaviour; soundness/completeness of the ZK proofs and circuits and correctness of implementation details were out of scope.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 2,
+        "removed": 2,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 87,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 77,
+            "oldLines": 8,
+            "newStart": 77,
+            "newLines": 8,
+            "lines": [
+              { "type": " ", "oldLine": 77, "newLine": 77, "text": "fi" },
+              { "type": " ", "oldLine": 78, "newLine": 78, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 79,
+                "newLine": 79,
+                "text": "# Copy Groth16 and Plonk vks to verifier crate"
+              },
+              {
+                "type": "-",
+                "oldLine": 80,
+                "text": "cp ./build/groth16/$VERSION/groth16_vk.bin ../verifier/bn254-vk/groth16_vk.bin",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 81,
+                "text": "cp ./build/plonk/$VERSION/plonk_vk.bin ../verifier/bn254-vk/plonk_vk.bin",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 80,
+                "text": "cp ./build/groth16/groth16_vk.bin ../verifier/bn254-vk/groth16_vk.bin",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 81,
+                "text": "cp ./build/plonk/plonk_vk.bin ../verifier/bn254-vk/plonk_vk.bin",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 82, "newLine": 82, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 83,
+                "newLine": 83,
+                "text": "echo \"Successfully uploaded build artifacts to S3:\""
+              },
+              {
+                "type": " ",
+                "oldLine": 84,
+                "newLine": 84,
+                "text": "echo \"- s3://$S3_BUCKET/$GROTH16_ARCHIVE\""
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "d79ad2713a1d64a9": {
+      "status": "differs",
+      "coveredLines": 87,
+      "match": {
+        "origin": "stack",
+        "collection": "sp1",
+        "relation": {
+          "type": "template",
+          "template": "succinct/OPSuccinct/OPSuccinctL2OutputOracle_mantle"
+        },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "release.sh",
+        "similarity": 0.973,
+        "reportId": "sp1/zellic-sp1-design-review-2024",
+        "repository": "succinctlabs/sp1",
+        "path": "crates/prover/release.sh",
+        "commit": "15be73d3acae3718a0acc529ed566f6a448b1c0e",
+        "commitTimestamp": "2024-11-27T02:59:17Z",
+        "url": "https://github.com/succinctlabs/sp1/blob/15be73d3acae3718a0acc529ed566f6a448b1c0e/crates/prover/release.sh",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "Initial audit",
+        "coverage": "Design-level review only (explicitly not a code audit): RV32IM specification compliance and the register/low-memory aliasing at addresses 0x0-0x1f, focused mostly on load and store instruction behaviour; soundness/completeness of the ZK proofs and circuits and correctness of implementation details were out of scope.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 2,
+        "removed": 2,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 87,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 77,
+            "oldLines": 8,
+            "newStart": 77,
+            "newLines": 8,
+            "lines": [
+              { "type": " ", "oldLine": 77, "newLine": 77, "text": "fi" },
+              { "type": " ", "oldLine": 78, "newLine": 78, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 79,
+                "newLine": 79,
+                "text": "# Copy Groth16 and Plonk vks to verifier crate"
+              },
+              {
+                "type": "-",
+                "oldLine": 80,
+                "text": "cp ./build/groth16/$VERSION/groth16_vk.bin ../verifier/bn254-vk/groth16_vk.bin",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 81,
+                "text": "cp ./build/plonk/$VERSION/plonk_vk.bin ../verifier/bn254-vk/plonk_vk.bin",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 80,
+                "text": "cp ./build/groth16/groth16_vk.bin ../verifier/bn254-vk/groth16_vk.bin",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 81,
+                "text": "cp ./build/plonk/plonk_vk.bin ../verifier/bn254-vk/plonk_vk.bin",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 82, "newLine": 82, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 83,
+                "newLine": 83,
+                "text": "echo \"Successfully uploaded build artifacts to S3:\""
+              },
+              {
+                "type": " ",
+                "oldLine": 84,
+                "newLine": 84,
+                "text": "echo \"- s3://$S3_BUCKET/$GROTH16_ARCHIVE\""
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "2295595c4243408b": {
+      "status": "differs",
+      "coveredLines": 87,
+      "match": {
+        "origin": "stack",
+        "collection": "sp1",
+        "relation": { "type": "template", "template": "succinct/SP1Verifier" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "release.sh",
+        "similarity": 0.973,
+        "reportId": "sp1/zellic-sp1-design-review-2024",
+        "repository": "succinctlabs/sp1",
+        "path": "crates/prover/release.sh",
+        "commit": "15be73d3acae3718a0acc529ed566f6a448b1c0e",
+        "commitTimestamp": "2024-11-27T02:59:17Z",
+        "url": "https://github.com/succinctlabs/sp1/blob/15be73d3acae3718a0acc529ed566f6a448b1c0e/crates/prover/release.sh",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "Initial audit",
+        "coverage": "Design-level review only (explicitly not a code audit): RV32IM specification compliance and the register/low-memory aliasing at addresses 0x0-0x1f, focused mostly on load and store instruction behaviour; soundness/completeness of the ZK proofs and circuits and correctness of implementation details were out of scope.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 2,
+        "removed": 2,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 87,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 77,
+            "oldLines": 8,
+            "newStart": 77,
+            "newLines": 8,
+            "lines": [
+              { "type": " ", "oldLine": 77, "newLine": 77, "text": "fi" },
+              { "type": " ", "oldLine": 78, "newLine": 78, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 79,
+                "newLine": 79,
+                "text": "# Copy Groth16 and Plonk vks to verifier crate"
+              },
+              {
+                "type": "-",
+                "oldLine": 80,
+                "text": "cp ./build/groth16/$VERSION/groth16_vk.bin ../verifier/bn254-vk/groth16_vk.bin",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 81,
+                "text": "cp ./build/plonk/$VERSION/plonk_vk.bin ../verifier/bn254-vk/plonk_vk.bin",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 80,
+                "text": "cp ./build/groth16/groth16_vk.bin ../verifier/bn254-vk/groth16_vk.bin",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 81,
+                "text": "cp ./build/plonk/plonk_vk.bin ../verifier/bn254-vk/plonk_vk.bin",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 82, "newLine": 82, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 83,
+                "newLine": 83,
+                "text": "echo \"Successfully uploaded build artifacts to S3:\""
+              },
+              {
+                "type": " ",
+                "oldLine": 84,
+                "newLine": 84,
+                "text": "echo \"- s3://$S3_BUCKET/$GROTH16_ARCHIVE\""
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "d80a56c5abf9208b": {
+      "status": "differs",
+      "coveredLines": 87,
+      "match": {
+        "origin": "library",
+        "collection": "sp1",
+        "relation": { "type": "library" },
+        "rank": 3,
+        "matchedBy": "name",
+        "auditedName": "release.sh",
+        "similarity": 0.973,
+        "reportId": "sp1/zellic-sp1-design-review-2024",
+        "repository": "succinctlabs/sp1",
+        "path": "crates/prover/release.sh",
+        "commit": "15be73d3acae3718a0acc529ed566f6a448b1c0e",
+        "commitTimestamp": "2024-11-27T02:59:17Z",
+        "url": "https://github.com/succinctlabs/sp1/blob/15be73d3acae3718a0acc529ed566f6a448b1c0e/crates/prover/release.sh",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "Initial audit",
+        "coverage": "Design-level review only (explicitly not a code audit): RV32IM specification compliance and the register/low-memory aliasing at addresses 0x0-0x1f, focused mostly on load and store instruction behaviour; soundness/completeness of the ZK proofs and circuits and correctness of implementation details were out of scope.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 2,
+        "removed": 2,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 87,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 77,
+            "oldLines": 8,
+            "newStart": 77,
+            "newLines": 8,
+            "lines": [
+              { "type": " ", "oldLine": 77, "newLine": 77, "text": "fi" },
+              { "type": " ", "oldLine": 78, "newLine": 78, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 79,
+                "newLine": 79,
+                "text": "# Copy Groth16 and Plonk vks to verifier crate"
+              },
+              {
+                "type": "-",
+                "oldLine": 80,
+                "text": "cp ./build/groth16/$VERSION/groth16_vk.bin ../verifier/bn254-vk/groth16_vk.bin",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 81,
+                "text": "cp ./build/plonk/$VERSION/plonk_vk.bin ../verifier/bn254-vk/plonk_vk.bin",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 80,
+                "text": "cp ./build/groth16/groth16_vk.bin ../verifier/bn254-vk/groth16_vk.bin",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 81,
+                "text": "cp ./build/plonk/plonk_vk.bin ../verifier/bn254-vk/plonk_vk.bin",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 82, "newLine": 82, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 83,
+                "newLine": 83,
+                "text": "echo \"Successfully uploaded build artifacts to S3:\""
+              },
+              {
+                "type": " ",
+                "oldLine": 84,
+                "newLine": 84,
+                "text": "echo \"- s3://$S3_BUCKET/$GROTH16_ARCHIVE\""
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
     }
   }
 }

@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "3b85b857cf47fc76488ead23513326653b692bb894fb0c2ca9689110926e491d",
+  "name": "driver_test.go",
+  "kind": "program",
+  "lines": 120,
+  "source": "package driver\n\nimport (\n\t\"context\"\n\t\"errors\"\n\t\"testing\"\n\n\t\"github.com/stretchr/testify/require\"\n\n\t\"github.com/ethereum/go-ethereum/log\"\n\n\t\"github.com/ethereum-optimism/optimism/op-service/eth\"\n\t\"github.com/ethereum-optimism/optimism/op-service/event\"\n\t\"github.com/ethereum-optimism/optimism/op-service/testlog\"\n)\n\nvar mockErr = errors.New(\"mock error\")\n\ntype fakeEnd struct {\n\tclosing bool\n\tresult  error\n}\n\nfunc (d *fakeEnd) Closing() bool {\n\treturn d.closing\n}\n\nfunc (d *fakeEnd) Result() (eth.L2BlockRef, error) {\n\treturn eth.L2BlockRef{}, d.result\n}\n\nfunc TestDriver(t *testing.T) {\n\tnewTestDriver := func(t *testing.T, onEvent func(d *Driver, end *fakeEnd, ev event.Event)) *Driver {\n\t\tlogger := testlog.Logger(t, log.LevelInfo)\n\t\tend := &fakeEnd{}\n\t\td := &Driver{\n\t\t\tlogger: logger,\n\t\t\tend:    end,\n\t\t}\n\t\td.deriver = event.DeriverFunc(func(ctx context.Context, ev event.Event) bool {\n\t\t\tonEvent(d, end, ev)\n\t\t\treturn true\n\t\t})\n\t\treturn d\n\t}\n\n\tt.Run(\"insta complete\", func(t *testing.T) {\n\t\td := newTestDriver(t, func(d *Driver, end *fakeEnd, ev event.Event) {\n\t\t\tend.closing = true\n\t\t})\n\t\t_, err := d.RunComplete()\n\t\trequire.NoError(t, err)\n\t})\n\n\tt.Run(\"insta error\", func(t *testing.T) {\n\t\td := newTestDriver(t, func(d *Driver, end *fakeEnd, ev event.Event) {\n\t\t\tend.closing = true\n\t\t\tend.result = mockErr\n\t\t})\n\t\t_, err := d.RunComplete()\n\t\trequire.ErrorIs(t, mockErr, err)\n\t})\n\n\tt.Run(\"success after a few events\", func(t *testing.T) {\n\t\tcount := 0\n\t\td := newTestDriver(t, func(d *Driver, end *fakeEnd, ev event.Event) {\n\t\t\tif count > 3 {\n\t\t\t\tend.closing = true\n\t\t\t\treturn\n\t\t\t}\n\t\t\tcount += 1\n\t\t\td.Emit(context.Background(), TestEvent{})\n\t\t})\n\t\t_, err := d.RunComplete()\n\t\trequire.NoError(t, err)\n\t})\n\n\tt.Run(\"error after a few events\", func(t *testing.T) {\n\t\tcount := 0\n\t\td := newTestDriver(t, func(d *Driver, end *fakeEnd, ev event.Event) {\n\t\t\tif count > 3 {\n\t\t\t\tend.closing = true\n\t\t\t\tend.result = mockErr\n\t\t\t\treturn\n\t\t\t}\n\t\t\tcount += 1\n\t\t\td.Emit(context.Background(), TestEvent{})\n\t\t})\n\t\t_, err := d.RunComplete()\n\t\trequire.ErrorIs(t, mockErr, err)\n\t})\n\n\tt.Run(\"exhaust events\", func(t *testing.T) {\n\t\tcount := 0\n\t\td := newTestDriver(t, func(d *Driver, end *fakeEnd, ev event.Event) {\n\t\t\tif count < 3 { // stop generating events after a while, without changing end condition\n\t\t\t\td.Emit(context.Background(), TestEvent{})\n\t\t\t}\n\t\t\tcount += 1\n\t\t})\n\t\t// No further processing to be done so evaluate if the claims output root is correct.\n\t\t_, err := d.RunComplete()\n\t\trequire.NoError(t, err)\n\t})\n\n\tt.Run(\"queued events\", func(t *testing.T) {\n\t\tcount := 0\n\t\td := newTestDriver(t, func(d *Driver, end *fakeEnd, ev event.Event) {\n\t\t\tif count < 3 {\n\t\t\t\td.Emit(context.Background(), TestEvent{})\n\t\t\t\td.Emit(context.Background(), TestEvent{})\n\t\t\t}\n\t\t\tcount += 1\n\t\t})\n\t\t_, err := d.RunComplete()\n\t\trequire.NoError(t, err)\n\t\t// add 1 for initial event that RunComplete fires\n\t\trequire.Equal(t, 1+3*2, count, \"must have queued up 2 events 3 times\")\n\t})\n}",
+  "resolutions": {
+    "437dcc6cbc847e9a": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "1f5c32d18cf7148d": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

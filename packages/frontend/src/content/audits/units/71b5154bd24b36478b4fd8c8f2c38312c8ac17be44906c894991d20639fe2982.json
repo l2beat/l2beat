@@ -86,6 +86,878 @@
         "totalVersions": 1
       },
       "warnings": []
+    },
+    "d80a56c5abf9208b": {
+      "status": "library",
+      "coveredLines": 44,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "IERC1155Receiver",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/token/ERC1155/IERC1155Receiver.sol",
+        "commit": "99a4cfca17279b77ae945b30cf9f7e87b21bf6f8",
+        "commitTimestamp": "2023-06-06T04:08:31Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/99a4cfca17279b77ae945b30cf9f7e87b21bf6f8/contracts/token/ERC1155/IERC1155Receiver.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "audit",
+        "coverage": "Full review of the file at the Phase 1 audit commit.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "warnings": []
+    },
+    "d79ad2713a1d64a9": {
+      "status": "library",
+      "coveredLines": 44,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "IERC1155Receiver",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/token/ERC1155/IERC1155Receiver.sol",
+        "commit": "99a4cfca17279b77ae945b30cf9f7e87b21bf6f8",
+        "commitTimestamp": "2023-06-06T04:08:31Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/99a4cfca17279b77ae945b30cf9f7e87b21bf6f8/contracts/token/ERC1155/IERC1155Receiver.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "audit",
+        "coverage": "Full review of the file at the Phase 1 audit commit.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 2,
+        "ignoredRemoved": 2,
+        "unchanged": 44,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 6,
+            "newStart": 1,
+            "newLines": 6,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "interface IERC1155Receiver is IERC165 {"
+              },
+              { "type": " ", "oldLine": 2, "newLine": 2, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 3,
+                "text": "     * @dev Handles the receipt of a single ERC1155 token type. This function is",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "     * @dev Handles the receipt of a single ERC-1155 token type. This function is",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "     * called at the end of a `safeTransferFrom` after the balance has been updated."
+              },
+              { "type": " ", "oldLine": 5, "newLine": 5, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 6,
+                "newLine": 6,
+                "text": "     * NOTE: To accept the transfer, this must return"
+              }
+            ]
+          },
+          {
+            "oldStart": 19,
+            "oldLines": 7,
+            "newStart": 19,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 19,
+                "newLine": 19,
+                "text": "        returns (bytes4);"
+              },
+              { "type": " ", "oldLine": 20, "newLine": 20, "text": "" },
+              { "type": " ", "oldLine": 21, "newLine": 21, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 22,
+                "text": "     * @dev Handles the receipt of a multiple ERC1155 token types. This function",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 22,
+                "text": "     * @dev Handles the receipt of a multiple ERC-1155 token types. This function",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 23,
+                "newLine": 23,
+                "text": "     * is called at the end of a `safeBatchTransferFrom` after the balances have"
+              },
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 24,
+                "text": "     * been updated."
+              },
+              { "type": " ", "oldLine": 25, "newLine": 25, "text": "     *" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "5d5f82d91c09d4ec": {
+      "status": "library",
+      "coveredLines": 39,
+      "match": {
+        "origin": "library",
+        "collection": "openzeppelin",
+        "relation": { "type": "library" },
+        "rank": 3,
+        "matchedBy": "identity",
+        "auditedName": "IERC1155Receiver",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/token/ERC1155/IERC1155Receiver.sol",
+        "commit": "99a4cfca17279b77ae945b30cf9f7e87b21bf6f8",
+        "commitTimestamp": "2023-06-06T04:08:31Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/99a4cfca17279b77ae945b30cf9f7e87b21bf6f8/contracts/token/ERC1155/IERC1155Receiver.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "audit",
+        "coverage": "Full review of the file at the Phase 1 audit commit.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 20,
+        "ignoredRemoved": 25,
+        "unchanged": 39,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 18,
+            "newStart": 1,
+            "newLines": 16,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "interface IERC1155Receiver is IERC165 {"
+              },
+              { "type": " ", "oldLine": 2, "newLine": 2, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "     * @dev Handles the receipt of a single ERC1155 token type. This function is"
+              },
+              {
+                "type": "-",
+                "oldLine": 4,
+                "text": "     * called at the end of a `safeTransferFrom` after the balance has been updated.",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 5, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 6,
+                "text": "     * NOTE: To accept the transfer, this must return",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 7,
+                "text": "     * `bytes4(keccak256(\"onERC1155Received(address,address,uint256,uint256,bytes)\"))`",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 8,
+                "text": "     * (i.e. 0xf23a6e61, or its own function selector).",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 9, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 10,
+                "text": "     * @param operator The address which initiated the transfer (i.e. msg.sender)",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 11,
+                "text": "     * @param from The address which previously owned the token",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 12,
+                "text": "     * @param id The ID of the token being transferred",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 13,
+                "text": "     * @param value The amount of tokens being transferred",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 14,
+                "text": "     * @param data Additional data with no specified format",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 15,
+                "text": "     * @return `bytes4(keccak256(\"onERC1155Received(address,address,uint256,uint256,bytes)\"))` if transfer is allowed",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 4,
+                "text": "     *     called at the end of a `safeTransferFrom` after the balance has been updated.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 5,
+                "text": "     *     To accept the transfer, this must return",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 6,
+                "text": "     *     `bytes4(keccak256(\"onERC1155Received(address,address,uint256,uint256,bytes)\"))`",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 7,
+                "text": "     *     (i.e. 0xf23a6e61, or its own function selector).",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 8,
+                "text": "     *     @param operator The address which initiated the transfer (i.e. msg.sender)",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 9,
+                "text": "     *     @param from The address which previously owned the token",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 10,
+                "text": "     *     @param id The ID of the token being transferred",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 11,
+                "text": "     *     @param value The amount of tokens being transferred",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 12,
+                "text": "     *     @param data Additional data with no specified format",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 13,
+                "text": "     *     @return `bytes4(keccak256(\"onERC1155Received(address,address,uint256,uint256,bytes)\"))` if transfer is allowed",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 16, "newLine": 14, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 17,
+                "newLine": 15,
+                "text": "    function onERC1155Received(address operator, address from, uint256 id, uint256 value, bytes calldata data)"
+              },
+              {
+                "type": " ",
+                "oldLine": 18,
+                "newLine": 16,
+                "text": "        external"
+              }
+            ]
+          },
+          {
+            "oldStart": 20,
+            "oldLines": 19,
+            "newStart": 18,
+            "newLines": 16,
+            "lines": [
+              { "type": " ", "oldLine": 20, "newLine": 18, "text": "" },
+              { "type": " ", "oldLine": 21, "newLine": 19, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 20,
+                "text": "     * @dev Handles the receipt of a multiple ERC1155 token types. This function"
+              },
+              {
+                "type": "-",
+                "oldLine": 23,
+                "text": "     * is called at the end of a `safeBatchTransferFrom` after the balances have",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 24,
+                "text": "     * been updated.",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 25, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 26,
+                "text": "     * NOTE: To accept the transfer(s), this must return",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 27,
+                "text": "     * `bytes4(keccak256(\"onERC1155BatchReceived(address,address,uint256[],uint256[],bytes)\"))`",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 28,
+                "text": "     * (i.e. 0xbc197c81, or its own function selector).",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 29, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 30,
+                "text": "     * @param operator The address which initiated the batch transfer (i.e. msg.sender)",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 31,
+                "text": "     * @param from The address which previously owned the token",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 32,
+                "text": "     * @param ids An array containing ids of each token being transferred (order and length must match values array)",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 33,
+                "text": "     * @param values An array containing amounts of each token being transferred (order and length must match ids array)",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 34,
+                "text": "     * @param data Additional data with no specified format",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 35,
+                "text": "     * @return `bytes4(keccak256(\"onERC1155BatchReceived(address,address,uint256[],uint256[],bytes)\"))` if transfer is allowed",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 21,
+                "text": "     *     is called at the end of a `safeBatchTransferFrom` after the balances have",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 22,
+                "text": "     *     been updated. To accept the transfer(s), this must return",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 23,
+                "text": "     *     `bytes4(keccak256(\"onERC1155BatchReceived(address,address,uint256[],uint256[],bytes)\"))`",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 24,
+                "text": "     *     (i.e. 0xbc197c81, or its own function selector).",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 25,
+                "text": "     *     @param operator The address which initiated the batch transfer (i.e. msg.sender)",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 26,
+                "text": "     *     @param from The address which previously owned the token",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 27,
+                "text": "     *     @param ids An array containing ids of each token being transferred (order and length must match values array)",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 28,
+                "text": "     *     @param values An array containing amounts of each token being transferred (order and length must match ids array)",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 29,
+                "text": "     *     @param data Additional data with no specified format",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 30,
+                "text": "     *     @return `bytes4(keccak256(\"onERC1155BatchReceived(address,address,uint256[],uint256[],bytes)\"))` if transfer is allowed",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 36, "newLine": 31, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 37,
+                "newLine": 32,
+                "text": "    function onERC1155BatchReceived("
+              },
+              {
+                "type": " ",
+                "oldLine": 38,
+                "newLine": 33,
+                "text": "        address operator,"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "2295595c4243408b": {
+      "status": "library",
+      "coveredLines": 44,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "IERC1155Receiver",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/token/ERC1155/IERC1155Receiver.sol",
+        "commit": "99a4cfca17279b77ae945b30cf9f7e87b21bf6f8",
+        "commitTimestamp": "2023-06-06T04:08:31Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/99a4cfca17279b77ae945b30cf9f7e87b21bf6f8/contracts/token/ERC1155/IERC1155Receiver.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "audit",
+        "coverage": "Full review of the file at the Phase 1 audit commit.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "warnings": []
+    },
+    "e3b0c44298fc1c14": {
+      "status": "library",
+      "coveredLines": 39,
+      "match": {
+        "origin": "library",
+        "collection": "openzeppelin",
+        "relation": { "type": "library" },
+        "rank": 3,
+        "matchedBy": "identity",
+        "auditedName": "IERC1155Receiver",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/token/ERC1155/IERC1155Receiver.sol",
+        "commit": "99a4cfca17279b77ae945b30cf9f7e87b21bf6f8",
+        "commitTimestamp": "2023-06-06T04:08:31Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/99a4cfca17279b77ae945b30cf9f7e87b21bf6f8/contracts/token/ERC1155/IERC1155Receiver.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "audit",
+        "coverage": "Full review of the file at the Phase 1 audit commit.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 20,
+        "ignoredRemoved": 25,
+        "unchanged": 39,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 18,
+            "newStart": 1,
+            "newLines": 16,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "interface IERC1155Receiver is IERC165 {"
+              },
+              { "type": " ", "oldLine": 2, "newLine": 2, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "     * @dev Handles the receipt of a single ERC1155 token type. This function is"
+              },
+              {
+                "type": "-",
+                "oldLine": 4,
+                "text": "     * called at the end of a `safeTransferFrom` after the balance has been updated.",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 5, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 6,
+                "text": "     * NOTE: To accept the transfer, this must return",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 7,
+                "text": "     * `bytes4(keccak256(\"onERC1155Received(address,address,uint256,uint256,bytes)\"))`",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 8,
+                "text": "     * (i.e. 0xf23a6e61, or its own function selector).",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 9, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 10,
+                "text": "     * @param operator The address which initiated the transfer (i.e. msg.sender)",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 11,
+                "text": "     * @param from The address which previously owned the token",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 12,
+                "text": "     * @param id The ID of the token being transferred",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 13,
+                "text": "     * @param value The amount of tokens being transferred",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 14,
+                "text": "     * @param data Additional data with no specified format",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 15,
+                "text": "     * @return `bytes4(keccak256(\"onERC1155Received(address,address,uint256,uint256,bytes)\"))` if transfer is allowed",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 4,
+                "text": "     *     called at the end of a `safeTransferFrom` after the balance has been updated.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 5,
+                "text": "     *     To accept the transfer, this must return",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 6,
+                "text": "     *     `bytes4(keccak256(\"onERC1155Received(address,address,uint256,uint256,bytes)\"))`",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 7,
+                "text": "     *     (i.e. 0xf23a6e61, or its own function selector).",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 8,
+                "text": "     *     @param operator The address which initiated the transfer (i.e. msg.sender)",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 9,
+                "text": "     *     @param from The address which previously owned the token",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 10,
+                "text": "     *     @param id The ID of the token being transferred",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 11,
+                "text": "     *     @param value The amount of tokens being transferred",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 12,
+                "text": "     *     @param data Additional data with no specified format",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 13,
+                "text": "     *     @return `bytes4(keccak256(\"onERC1155Received(address,address,uint256,uint256,bytes)\"))` if transfer is allowed",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 16, "newLine": 14, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 17,
+                "newLine": 15,
+                "text": "    function onERC1155Received(address operator, address from, uint256 id, uint256 value, bytes calldata data)"
+              },
+              {
+                "type": " ",
+                "oldLine": 18,
+                "newLine": 16,
+                "text": "        external"
+              }
+            ]
+          },
+          {
+            "oldStart": 20,
+            "oldLines": 19,
+            "newStart": 18,
+            "newLines": 16,
+            "lines": [
+              { "type": " ", "oldLine": 20, "newLine": 18, "text": "" },
+              { "type": " ", "oldLine": 21, "newLine": 19, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 20,
+                "text": "     * @dev Handles the receipt of a multiple ERC1155 token types. This function"
+              },
+              {
+                "type": "-",
+                "oldLine": 23,
+                "text": "     * is called at the end of a `safeBatchTransferFrom` after the balances have",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 24,
+                "text": "     * been updated.",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 25, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 26,
+                "text": "     * NOTE: To accept the transfer(s), this must return",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 27,
+                "text": "     * `bytes4(keccak256(\"onERC1155BatchReceived(address,address,uint256[],uint256[],bytes)\"))`",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 28,
+                "text": "     * (i.e. 0xbc197c81, or its own function selector).",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 29, "text": "     *", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 30,
+                "text": "     * @param operator The address which initiated the batch transfer (i.e. msg.sender)",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 31,
+                "text": "     * @param from The address which previously owned the token",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 32,
+                "text": "     * @param ids An array containing ids of each token being transferred (order and length must match values array)",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 33,
+                "text": "     * @param values An array containing amounts of each token being transferred (order and length must match ids array)",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 34,
+                "text": "     * @param data Additional data with no specified format",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 35,
+                "text": "     * @return `bytes4(keccak256(\"onERC1155BatchReceived(address,address,uint256[],uint256[],bytes)\"))` if transfer is allowed",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 21,
+                "text": "     *     is called at the end of a `safeBatchTransferFrom` after the balances have",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 22,
+                "text": "     *     been updated. To accept the transfer(s), this must return",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 23,
+                "text": "     *     `bytes4(keccak256(\"onERC1155BatchReceived(address,address,uint256[],uint256[],bytes)\"))`",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 24,
+                "text": "     *     (i.e. 0xbc197c81, or its own function selector).",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 25,
+                "text": "     *     @param operator The address which initiated the batch transfer (i.e. msg.sender)",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 26,
+                "text": "     *     @param from The address which previously owned the token",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 27,
+                "text": "     *     @param ids An array containing ids of each token being transferred (order and length must match values array)",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 28,
+                "text": "     *     @param values An array containing amounts of each token being transferred (order and length must match ids array)",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 29,
+                "text": "     *     @param data Additional data with no specified format",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 30,
+                "text": "     *     @return `bytes4(keccak256(\"onERC1155BatchReceived(address,address,uint256[],uint256[],bytes)\"))` if transfer is allowed",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 36, "newLine": 31, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 37,
+                "newLine": 32,
+                "text": "    function onERC1155BatchReceived("
+              },
+              {
+                "type": " ",
+                "oldLine": 38,
+                "newLine": 33,
+                "text": "        address operator,"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
     }
   }
 }

@@ -103,6 +103,104 @@
         ]
       },
       "warnings": []
+    },
+    "437dcc6cbc847e9a": {
+      "status": "differs",
+      "coveredLines": 160,
+      "match": {
+        "origin": "stack",
+        "collection": "optimism",
+        "relation": {
+          "type": "template",
+          "template": "opstack/AnchorStateRegistry_post13"
+        },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "SuperchainConfig",
+        "similarity": 1,
+        "reportId": "optimism/cantina-upgrade20-2026-08",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts-bedrock/src/L1/SuperchainConfig.sol",
+        "commit": "7799a2464f23b4e19abd5e29843545f960e677be",
+        "commitTimestamp": "2026-07-31T01:27:36Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/7799a2464f23b4e19abd5e29843545f960e677be/packages/contracts-bedrock/src/L1/SuperchainConfig.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Upgrade 20 review of the file at commit 7799a246 (Aug 6-12, 2026). No Critical/High/Medium findings in the report. No findings located in this file.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 10
+      },
+      "diff": {
+        "added": 1,
+        "removed": 1,
+        "ignoredAdded": 1,
+        "ignoredRemoved": 1,
+        "unchanged": 160,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 38,
+            "oldLines": 8,
+            "newStart": 38,
+            "newLines": 8,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 38,
+                "newLine": 38,
+                "text": "    event ConfigUpdate(UpdateType indexed updateType, bytes data);"
+              },
+              { "type": " ", "oldLine": 39, "newLine": 39, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 40,
+                "newLine": 40,
+                "text": "    /// @notice Semantic version."
+              },
+              {
+                "type": "-",
+                "oldLine": 41,
+                "text": "    /// @custom:semver 2.4.3",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 42,
+                "text": "    string public constant version = \"2.4.3\";",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 41,
+                "text": "    /// @custom:semver 2.4.2",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 42,
+                "text": "    string public constant version = \"2.4.2\";",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 43, "newLine": 43, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 44,
+                "newLine": 44,
+                "text": "    /// @notice Constructs the SuperchainConfig contract."
+              },
+              {
+                "type": " ",
+                "oldLine": 45,
+                "newLine": 45,
+                "text": "    constructor() ReinitializableBase(2) {"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
     }
   }
 }

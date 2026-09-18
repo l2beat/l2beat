@@ -32,6 +32,33 @@
         "totalVersions": 9
       },
       "warnings": []
+    },
+    "d80a56c5abf9208b": {
+      "status": "library",
+      "coveredLines": 338,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "EnumerableSet",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/utils/structs/EnumerableSet.sol",
+        "commit": "b5a3e693e7eeca8d5f608460fd8beeee8e332b03",
+        "commitTimestamp": "2023-08-08T06:22:59Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/b5a3e693e7eeca8d5f608460fd8beeee8e332b03/contracts/utils/structs/EnumerableSet.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "audit",
+        "coverage": "Only the changes to the file between versions 4.9 and 5.0 were reviewed at the Phase 4 audit commit (diff-only review).",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 9
+      },
+      "warnings": []
     }
   }
 }

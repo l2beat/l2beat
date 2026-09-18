@@ -344,6 +344,684 @@
         ]
       },
       "warnings": []
+    },
+    "2295595c4243408b": {
+      "status": "differs",
+      "coveredLines": 389,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "TimelockController",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2023-05-v4.9",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/governance/TimelockController.sol",
+        "commit": "ca822213f2275a14c26167bd387ac3522da67fe9",
+        "commitTimestamp": "2023-03-26T17:23:13Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/ca822213f2275a14c26167bd387ac3522da67fe9/contracts/governance/TimelockController.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Full review of the file as part of the Contracts 4.9 release audit.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 9
+      },
+      "diff": {
+        "added": 0,
+        "removed": 7,
+        "ignoredAdded": 4,
+        "ignoredRemoved": 8,
+        "unchanged": 389,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 27,
+            "oldLines": 11,
+            "newStart": 27,
+            "newLines": 6,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 27,
+                "newLine": 27,
+                "text": "    event CallExecuted(bytes32 indexed id, uint256 indexed index, address target, uint256 value, bytes data);"
+              },
+              { "type": " ", "oldLine": 28, "newLine": 28, "text": "" },
+              { "type": " ", "oldLine": 29, "newLine": 29, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 30,
+                "text": "     * @dev Emitted when new proposal is scheduled with non-zero salt.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 31,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 32,
+                "text": "    event CallSalt(bytes32 indexed id, bytes32 salt);",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 33, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 34,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 35,
+                "newLine": 30,
+                "text": "     * @dev Emitted when operation `id` is cancelled."
+              },
+              { "type": " ", "oldLine": 36, "newLine": 31, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 37,
+                "newLine": 32,
+                "text": "    event Cancelled(bytes32 indexed id);"
+              }
+            ]
+          },
+          {
+            "oldStart": 145,
+            "oldLines": 7,
+            "newStart": 140,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 145, "newLine": 140, "text": "    }" },
+              { "type": " ", "oldLine": 146, "newLine": 141, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 147,
+                "newLine": 142,
+                "text": "    /**"
+              },
+              {
+                "type": "-",
+                "oldLine": 148,
+                "text": "     * @dev Returns the timestamp at which an operation becomes ready (0 for",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 143,
+                "text": "     * @dev Returns the timestamp at with an operation becomes ready (0 for",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 149,
+                "newLine": 144,
+                "text": "     * unset operations, 1 for done operations)."
+              },
+              {
+                "type": " ",
+                "oldLine": 150,
+                "newLine": 145,
+                "text": "     */"
+              },
+              {
+                "type": " ",
+                "oldLine": 151,
+                "newLine": 146,
+                "text": "    function getTimestamp(bytes32 id) public view virtual returns (uint256 timestamp) {"
+              }
+            ]
+          },
+          {
+            "oldStart": 191,
+            "oldLines": 7,
+            "newStart": 186,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 191,
+                "newLine": 186,
+                "text": "    /**"
+              },
+              {
+                "type": " ",
+                "oldLine": 192,
+                "newLine": 187,
+                "text": "     * @dev Schedule an operation containing a single transaction."
+              },
+              { "type": " ", "oldLine": 193, "newLine": 188, "text": "     *" },
+              {
+                "type": "-",
+                "oldLine": 194,
+                "text": "     * Emits events {CallScheduled} and {CallSalt}.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 189,
+                "text": "     * Emits a {CallScheduled} event.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 195, "newLine": 190, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 196,
+                "newLine": 191,
+                "text": "     * Requirements:"
+              },
+              { "type": " ", "oldLine": 197, "newLine": 192, "text": "     *" }
+            ]
+          },
+          {
+            "oldStart": 208,
+            "oldLines": 15,
+            "newStart": 203,
+            "newLines": 12,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 208,
+                "newLine": 203,
+                "text": "        bytes32 id = hashOperation(target, value, data, predecessor, salt);"
+              },
+              {
+                "type": " ",
+                "oldLine": 209,
+                "newLine": 204,
+                "text": "        _schedule(id, delay);"
+              },
+              {
+                "type": " ",
+                "oldLine": 210,
+                "newLine": 205,
+                "text": "        emit CallScheduled(id, 0, target, value, data, predecessor, delay);"
+              },
+              {
+                "type": "-",
+                "oldLine": 211,
+                "text": "        if (salt != bytes32(0)) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 212,
+                "text": "            emit CallSalt(id, salt);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 213,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 214, "newLine": 206, "text": "    }" },
+              { "type": " ", "oldLine": 215, "newLine": 207, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 216,
+                "newLine": 208,
+                "text": "    /**"
+              },
+              {
+                "type": " ",
+                "oldLine": 217,
+                "newLine": 209,
+                "text": "     * @dev Schedule an operation containing a batch of transactions."
+              },
+              { "type": " ", "oldLine": 218, "newLine": 210, "text": "     *" },
+              {
+                "type": "-",
+                "oldLine": 219,
+                "text": "     * Emits a {CallSalt} event and one {CallScheduled} event per transaction in the batch.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 211,
+                "text": "     * Emits one {CallScheduled} event per transaction in the batch.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 220, "newLine": 212, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 221,
+                "newLine": 213,
+                "text": "     * Requirements:"
+              },
+              { "type": " ", "oldLine": 222, "newLine": 214, "text": "     *" }
+            ]
+          },
+          {
+            "oldStart": 238,
+            "oldLines": 13,
+            "newStart": 230,
+            "newLines": 10,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 238,
+                "newLine": 230,
+                "text": "        for (uint256 i = 0; i < targets.length; ++i) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 239,
+                "newLine": 231,
+                "text": "            emit CallScheduled(id, i, targets[i], values[i], payloads[i], predecessor, delay);"
+              },
+              {
+                "type": " ",
+                "oldLine": 240,
+                "newLine": 232,
+                "text": "        }"
+              },
+              {
+                "type": "-",
+                "oldLine": 241,
+                "text": "        if (salt != bytes32(0)) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 242,
+                "text": "            emit CallSalt(id, salt);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 243,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 244, "newLine": 233, "text": "    }" },
+              { "type": " ", "oldLine": 245, "newLine": 234, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 246,
+                "newLine": 235,
+                "text": "    /**"
+              },
+              {
+                "type": "-",
+                "oldLine": 247,
+                "text": "     * @dev Schedule an operation that is to become valid after a given delay.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 236,
+                "text": "     * @dev Schedule an operation that is to becomes valid after a given delay.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 248,
+                "newLine": 237,
+                "text": "     */"
+              },
+              {
+                "type": " ",
+                "oldLine": 249,
+                "newLine": 238,
+                "text": "    function _schedule(bytes32 id, uint256 delay) private {"
+              },
+              {
+                "type": " ",
+                "oldLine": 250,
+                "newLine": 239,
+                "text": "        require(!isOperation(id), \"TimelockController: operation already scheduled\");"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "d80a56c5abf9208b": {
+      "status": "differs",
+      "coveredLines": 389,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "TimelockController",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2023-05-v4.9",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/governance/TimelockController.sol",
+        "commit": "ca822213f2275a14c26167bd387ac3522da67fe9",
+        "commitTimestamp": "2023-03-26T17:23:13Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/ca822213f2275a14c26167bd387ac3522da67fe9/contracts/governance/TimelockController.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Full review of the file as part of the Contracts 4.9 release audit.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 9
+      },
+      "diff": {
+        "added": 0,
+        "removed": 7,
+        "ignoredAdded": 4,
+        "ignoredRemoved": 8,
+        "unchanged": 389,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 27,
+            "oldLines": 11,
+            "newStart": 27,
+            "newLines": 6,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 27,
+                "newLine": 27,
+                "text": "    event CallExecuted(bytes32 indexed id, uint256 indexed index, address target, uint256 value, bytes data);"
+              },
+              { "type": " ", "oldLine": 28, "newLine": 28, "text": "" },
+              { "type": " ", "oldLine": 29, "newLine": 29, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 30,
+                "text": "     * @dev Emitted when new proposal is scheduled with non-zero salt.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 31,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 32,
+                "text": "    event CallSalt(bytes32 indexed id, bytes32 salt);",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 33, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 34,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 35,
+                "newLine": 30,
+                "text": "     * @dev Emitted when operation `id` is cancelled."
+              },
+              { "type": " ", "oldLine": 36, "newLine": 31, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 37,
+                "newLine": 32,
+                "text": "    event Cancelled(bytes32 indexed id);"
+              }
+            ]
+          },
+          {
+            "oldStart": 145,
+            "oldLines": 7,
+            "newStart": 140,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 145, "newLine": 140, "text": "    }" },
+              { "type": " ", "oldLine": 146, "newLine": 141, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 147,
+                "newLine": 142,
+                "text": "    /**"
+              },
+              {
+                "type": "-",
+                "oldLine": 148,
+                "text": "     * @dev Returns the timestamp at which an operation becomes ready (0 for",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 143,
+                "text": "     * @dev Returns the timestamp at with an operation becomes ready (0 for",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 149,
+                "newLine": 144,
+                "text": "     * unset operations, 1 for done operations)."
+              },
+              {
+                "type": " ",
+                "oldLine": 150,
+                "newLine": 145,
+                "text": "     */"
+              },
+              {
+                "type": " ",
+                "oldLine": 151,
+                "newLine": 146,
+                "text": "    function getTimestamp(bytes32 id) public view virtual returns (uint256 timestamp) {"
+              }
+            ]
+          },
+          {
+            "oldStart": 191,
+            "oldLines": 7,
+            "newStart": 186,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 191,
+                "newLine": 186,
+                "text": "    /**"
+              },
+              {
+                "type": " ",
+                "oldLine": 192,
+                "newLine": 187,
+                "text": "     * @dev Schedule an operation containing a single transaction."
+              },
+              { "type": " ", "oldLine": 193, "newLine": 188, "text": "     *" },
+              {
+                "type": "-",
+                "oldLine": 194,
+                "text": "     * Emits events {CallScheduled} and {CallSalt}.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 189,
+                "text": "     * Emits a {CallScheduled} event.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 195, "newLine": 190, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 196,
+                "newLine": 191,
+                "text": "     * Requirements:"
+              },
+              { "type": " ", "oldLine": 197, "newLine": 192, "text": "     *" }
+            ]
+          },
+          {
+            "oldStart": 208,
+            "oldLines": 15,
+            "newStart": 203,
+            "newLines": 12,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 208,
+                "newLine": 203,
+                "text": "        bytes32 id = hashOperation(target, value, data, predecessor, salt);"
+              },
+              {
+                "type": " ",
+                "oldLine": 209,
+                "newLine": 204,
+                "text": "        _schedule(id, delay);"
+              },
+              {
+                "type": " ",
+                "oldLine": 210,
+                "newLine": 205,
+                "text": "        emit CallScheduled(id, 0, target, value, data, predecessor, delay);"
+              },
+              {
+                "type": "-",
+                "oldLine": 211,
+                "text": "        if (salt != bytes32(0)) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 212,
+                "text": "            emit CallSalt(id, salt);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 213,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 214, "newLine": 206, "text": "    }" },
+              { "type": " ", "oldLine": 215, "newLine": 207, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 216,
+                "newLine": 208,
+                "text": "    /**"
+              },
+              {
+                "type": " ",
+                "oldLine": 217,
+                "newLine": 209,
+                "text": "     * @dev Schedule an operation containing a batch of transactions."
+              },
+              { "type": " ", "oldLine": 218, "newLine": 210, "text": "     *" },
+              {
+                "type": "-",
+                "oldLine": 219,
+                "text": "     * Emits a {CallSalt} event and one {CallScheduled} event per transaction in the batch.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 211,
+                "text": "     * Emits one {CallScheduled} event per transaction in the batch.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 220, "newLine": 212, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 221,
+                "newLine": 213,
+                "text": "     * Requirements:"
+              },
+              { "type": " ", "oldLine": 222, "newLine": 214, "text": "     *" }
+            ]
+          },
+          {
+            "oldStart": 238,
+            "oldLines": 13,
+            "newStart": 230,
+            "newLines": 10,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 238,
+                "newLine": 230,
+                "text": "        for (uint256 i = 0; i < targets.length; ++i) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 239,
+                "newLine": 231,
+                "text": "            emit CallScheduled(id, i, targets[i], values[i], payloads[i], predecessor, delay);"
+              },
+              {
+                "type": " ",
+                "oldLine": 240,
+                "newLine": 232,
+                "text": "        }"
+              },
+              {
+                "type": "-",
+                "oldLine": 241,
+                "text": "        if (salt != bytes32(0)) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 242,
+                "text": "            emit CallSalt(id, salt);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 243,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 244, "newLine": 233, "text": "    }" },
+              { "type": " ", "oldLine": 245, "newLine": 234, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 246,
+                "newLine": 235,
+                "text": "    /**"
+              },
+              {
+                "type": "-",
+                "oldLine": 247,
+                "text": "     * @dev Schedule an operation that is to become valid after a given delay.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 236,
+                "text": "     * @dev Schedule an operation that is to becomes valid after a given delay.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 248,
+                "newLine": 237,
+                "text": "     */"
+              },
+              {
+                "type": " ",
+                "oldLine": 249,
+                "newLine": 238,
+                "text": "    function _schedule(bytes32 id, uint256 delay) private {"
+              },
+              {
+                "type": " ",
+                "oldLine": 250,
+                "newLine": 239,
+                "text": "        require(!isOperation(id), \"TimelockController: operation already scheduled\");"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
     }
   }
 }

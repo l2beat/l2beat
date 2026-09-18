@@ -1517,6 +1517,510 @@
         ]
       },
       "warnings": []
+    },
+    "437dcc6cbc847e9a": {
+      "status": "differs",
+      "coveredLines": 907,
+      "match": {
+        "origin": "stack",
+        "collection": "optimism",
+        "relation": {
+          "type": "template",
+          "template": "opstack/AnchorStateRegistry_post13"
+        },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "MIPS64Instructions",
+        "similarity": 0.961,
+        "reportId": "optimism/cantina-u17-2025-10",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts-bedrock/src/cannon/libraries/MIPS64Instructions.sol",
+        "commit": "aeed7033f7f739d8ecd4bd70a42ff09013bbc91e",
+        "commitTimestamp": "2025-10-16T14:37:42Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/aeed7033f7f739d8ecd4bd70a42ff09013bbc91e/packages/contracts-bedrock/src/cannon/libraries/MIPS64Instructions.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Full review of the file as part of the u17 (op-contracts/v5.0.0) upgrade review; keccak256 hash listed in the report appendix.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 6
+      },
+      "diff": {
+        "added": 10,
+        "removed": 10,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 907,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 13,
+            "oldLines": 7,
+            "newStart": 13,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 13, "newLine": 13, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 14,
+                "newLine": 14,
+                "text": "    struct CoreStepLogicParams {"
+              },
+              {
+                "type": " ",
+                "oldLine": 15,
+                "newLine": 15,
+                "text": "        /// @param opcode The opcode value parsed from insn."
+              },
+              {
+                "type": "-",
+                "oldLine": 16,
+                "text": "        st.CpuScalars cpu;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 16,
+                "text": "        MIPS64State.CpuScalars cpu;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 17,
+                "newLine": 17,
+                "text": "        /// @param registers The CPU registers."
+              },
+              {
+                "type": " ",
+                "oldLine": 18,
+                "newLine": 18,
+                "text": "        uint64[32] registers;"
+              },
+              {
+                "type": " ",
+                "oldLine": 19,
+                "newLine": 19,
+                "text": "        /// @param memRoot The current merkle root of the memory."
+              }
+            ]
+          },
+          {
+            "oldStart": 58,
+            "oldLines": 7,
+            "newStart": 58,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 58,
+                "newLine": 58,
+                "text": "            if (_pc & 0x3 != 0) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 59,
+                "newLine": 59,
+                "text": "                revert InvalidPC();"
+              },
+              {
+                "type": " ",
+                "oldLine": 60,
+                "newLine": 60,
+                "text": "            }"
+              },
+              {
+                "type": "-",
+                "oldLine": 61,
+                "text": "            uint64 word = MIPS64Memory.readMem(_memRoot, _pc & arch.ADDRESS_MASK, _insnProofOffset);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 61,
+                "text": "            uint64 word = MIPS64Memory.readMem(_memRoot, _pc & MIPS64Arch.ADDRESS_MASK, _insnProofOffset);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 62,
+                "newLine": 62,
+                "text": "            insn_ = uint32(selectSubWord(_pc, word, 4, false));"
+              },
+              {
+                "type": " ",
+                "oldLine": 63,
+                "newLine": 63,
+                "text": "            opcode_ = insn_ >> 26; // First 6-bits"
+              },
+              {
+                "type": " ",
+                "oldLine": 64,
+                "newLine": 64,
+                "text": "            fun_ = insn_ & 0x3f; // Last 6-bits"
+              }
+            ]
+          },
+          {
+            "oldStart": 143,
+            "oldLines": 7,
+            "newStart": 143,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 143,
+                "newLine": 143,
+                "text": "            if (_args.opcode >= 0x20 || _args.opcode == OP_LOAD_DOUBLE_LEFT || _args.opcode == OP_LOAD_DOUBLE_RIGHT) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 144,
+                "newLine": 144,
+                "text": "                // M[R[rs]+SignExtImm]"
+              },
+              {
+                "type": " ",
+                "oldLine": 145,
+                "newLine": 145,
+                "text": "                rs += signExtendImmediate(_args.insn);"
+              },
+              {
+                "type": "-",
+                "oldLine": 146,
+                "text": "                uint64 addr = rs & arch.ADDRESS_MASK;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 146,
+                "text": "                uint64 addr = rs & MIPS64Arch.ADDRESS_MASK;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 147,
+                "newLine": 147,
+                "text": "                mem = MIPS64Memory.readMem(_args.memRoot, addr, _args.memProofOffset);"
+              },
+              {
+                "type": " ",
+                "oldLine": 148,
+                "newLine": 148,
+                "text": "                if (_args.opcode >= 0x28) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 149,
+                "newLine": 149,
+                "text": "                    // store for 32-bit"
+              }
+            ]
+          },
+          {
+            "oldStart": 613,
+            "oldLines": 7,
+            "newStart": 613,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 613,
+                "newLine": 613,
+                "text": "    function signExtend(uint64 _dat, uint64 _idx) internal pure returns (uint64 out_) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 614,
+                "newLine": 614,
+                "text": "        unchecked {"
+              },
+              {
+                "type": " ",
+                "oldLine": 615,
+                "newLine": 615,
+                "text": "            bool isSigned = (_dat >> (_idx - 1)) & 1 != 0;"
+              },
+              {
+                "type": "-",
+                "oldLine": 616,
+                "text": "            uint256 signed = ((1 << (arch.WORD_SIZE - _idx)) - 1) << _idx;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 616,
+                "text": "            uint256 signed = ((1 << (MIPS64Arch.WORD_SIZE - _idx)) - 1) << _idx;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 617,
+                "newLine": 617,
+                "text": "            uint256 mask = (1 << _idx) - 1;"
+              },
+              {
+                "type": " ",
+                "oldLine": 618,
+                "newLine": 618,
+                "text": "            return uint64(_dat & mask | (isSigned ? signed : 0));"
+              },
+              {
+                "type": " ",
+                "oldLine": 619,
+                "newLine": 619,
+                "text": "        }"
+              }
+            ]
+          },
+          {
+            "oldStart": 627,
+            "oldLines": 7,
+            "newStart": 627,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 627,
+                "newLine": 627,
+                "text": "    /// @param _rtReg The register to be used for the branch."
+              },
+              {
+                "type": " ",
+                "oldLine": 628,
+                "newLine": 628,
+                "text": "    /// @param _rs The register to be compared with the branch register."
+              },
+              {
+                "type": " ",
+                "oldLine": 629,
+                "newLine": 629,
+                "text": "    function handleBranch("
+              },
+              {
+                "type": "-",
+                "oldLine": 630,
+                "text": "        st.CpuScalars memory _cpu,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 630,
+                "text": "        MIPS64State.CpuScalars memory _cpu,",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 631,
+                "newLine": 631,
+                "text": "        uint64[32] memory _registers,"
+              },
+              {
+                "type": " ",
+                "oldLine": 632,
+                "newLine": 632,
+                "text": "        uint32 _opcode,"
+              },
+              {
+                "type": " ",
+                "oldLine": 633,
+                "newLine": 633,
+                "text": "        uint32 _insn,"
+              }
+            ]
+          },
+          {
+            "oldStart": 701,
+            "oldLines": 7,
+            "newStart": 701,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 701,
+                "newLine": 701,
+                "text": "    /// @param _rt The value of the RT register."
+              },
+              {
+                "type": " ",
+                "oldLine": 702,
+                "newLine": 702,
+                "text": "    /// @param _storeReg The register to store the result in."
+              },
+              {
+                "type": " ",
+                "oldLine": 703,
+                "newLine": 703,
+                "text": "    function handleHiLo("
+              },
+              {
+                "type": "-",
+                "oldLine": 704,
+                "text": "        st.CpuScalars memory _cpu,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 704,
+                "text": "        MIPS64State.CpuScalars memory _cpu,",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 705,
+                "newLine": 705,
+                "text": "        uint64[32] memory _registers,"
+              },
+              {
+                "type": " ",
+                "oldLine": 706,
+                "newLine": 706,
+                "text": "        uint32 _fun,"
+              },
+              {
+                "type": " ",
+                "oldLine": 707,
+                "newLine": 707,
+                "text": "        uint64 _rs,"
+              }
+            ]
+          },
+          {
+            "oldStart": 842,
+            "oldLines": 7,
+            "newStart": 842,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 842,
+                "newLine": 842,
+                "text": "    /// @param _val The value to store."
+              },
+              {
+                "type": " ",
+                "oldLine": 843,
+                "newLine": 843,
+                "text": "    /// @param _conditional Whether or not the store is conditional."
+              },
+              {
+                "type": " ",
+                "oldLine": 844,
+                "newLine": 844,
+                "text": "    function handleRd("
+              },
+              {
+                "type": "-",
+                "oldLine": 845,
+                "text": "        st.CpuScalars memory _cpu,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 845,
+                "text": "        MIPS64State.CpuScalars memory _cpu,",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 846,
+                "newLine": 846,
+                "text": "        uint64[32] memory _registers,"
+              },
+              {
+                "type": " ",
+                "oldLine": 847,
+                "newLine": 847,
+                "text": "        uint64 _storeReg,"
+              },
+              {
+                "type": " ",
+                "oldLine": 848,
+                "newLine": 848,
+                "text": "        uint64 _val,"
+              }
+            ]
+          },
+          {
+            "oldStart": 904,
+            "oldLines": 11,
+            "newStart": 904,
+            "newLines": 11,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 904,
+                "newLine": 904,
+                "text": "        returns (uint64 dataMask_, uint64 bitOffset_, uint64 bitLength_)"
+              },
+              { "type": " ", "oldLine": 905, "newLine": 905, "text": "    {" },
+              {
+                "type": " ",
+                "oldLine": 906,
+                "newLine": 906,
+                "text": "        uint64 bitLength = _byteLength << 3;"
+              },
+              {
+                "type": "-",
+                "oldLine": 907,
+                "text": "        uint64 dataMask = ~uint64(0) >> (arch.WORD_SIZE - bitLength);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 907,
+                "text": "        uint64 dataMask = ~uint64(0) >> (MIPS64Arch.WORD_SIZE - bitLength);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 908, "newLine": 908, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 909,
+                "newLine": 909,
+                "text": "        // Figure out sub-word index based on the low-order bits in vaddr"
+              },
+              {
+                "type": "-",
+                "oldLine": 910,
+                "text": "        uint64 byteIndexMask = _vaddr & arch.EXT_MASK & ~(_byteLength - 1);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 911,
+                "text": "        uint64 maxByteShift = arch.WORD_SIZE_BYTES - _byteLength;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 910,
+                "text": "        uint64 byteIndexMask = _vaddr & MIPS64Arch.EXT_MASK & ~(_byteLength - 1);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 911,
+                "text": "        uint64 maxByteShift = MIPS64Arch.WORD_SIZE_BYTES - _byteLength;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 912,
+                "newLine": 912,
+                "text": "        uint64 byteIndex = _vaddr & byteIndexMask;"
+              },
+              {
+                "type": " ",
+                "oldLine": 913,
+                "newLine": 913,
+                "text": "        uint64 bitOffset = (maxByteShift - byteIndex) << 3;"
+              },
+              { "type": " ", "oldLine": 914, "newLine": 914, "text": "" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
     }
   }
 }

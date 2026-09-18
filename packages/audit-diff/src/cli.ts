@@ -8,7 +8,7 @@ import { EvidenceIndex } from './evidence/index.js'
 import { PreparedUnitCache } from './evidence/units.js'
 import { generateProject } from './generate.js'
 import { UnitStore } from './store/store.js'
-import { fetchZkSources } from './zk/fetch.js'
+import { ZkSourceSync } from './zk/fetch.js'
 
 const USAGE = `Usage:
   audit-diff generate --dataset <path> --out <dir> (--project <id>... | --all) [--all-contracts] [--projects-dir <dir>]
@@ -48,13 +48,18 @@ async function main() {
       )
 
       const store = new UnitStore(outDir, datasetRevision)
+      // Per-unit diagnostics are useful for one project but overwhelming for
+      // a full regeneration; project summaries are still printed below.
+      const projectLog = projectIds.length > 1 ? () => {} : log
       const formatter = new Formatter(
         datasetDir,
         path.join(cacheDir, 'formatted'),
         log,
       )
+      const zkSources = new ZkSourceSync({ projectsDir, zkCacheDir, log })
       for (const projectId of projectIds) {
         console.log(`\n== ${projectId}`)
+        await zkSources.sync(projectId)
         const report = generateProject({
           projectId,
           projectsDir,
@@ -67,7 +72,7 @@ async function main() {
           allContracts: Boolean(args['all-contracts']),
           datasetRevision,
           datasetRepoUrl: config.datasetRepoUrl,
-          log,
+          log: projectLog,
         })
         store.writeProject(report)
         const s = report.summary
@@ -87,8 +92,9 @@ async function main() {
     }
     case 'fetch-zk': {
       const projectIds = selectProjects(args, projectsDir)
+      const zkSources = new ZkSourceSync({ projectsDir, zkCacheDir, log })
       for (const projectId of projectIds) {
-        await fetchZkSources({ projectId, projectsDir, zkCacheDir, log })
+        await zkSources.sync(projectId, true)
       }
       return
     }

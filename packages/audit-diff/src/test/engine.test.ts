@@ -22,6 +22,11 @@ import {
   unitsCompatible,
 } from '../resolve/resolve.js'
 import { UnitStore } from '../store/store.js'
+import {
+  getZkSourceRequests,
+  parseGitHubUrl,
+  resolveRefFromNames,
+} from '../zk/fetch.js'
 
 const here = path.dirname(fileURLToPath(import.meta.url))
 const FIXTURES = path.join(here, 'fixtures')
@@ -76,6 +81,78 @@ describe('deployed', () => {
     expect(treasury?.sourceFiles.length).toEqual(1)
     // EOAs are not contracts
     expect(project.contracts.length).toEqual(4)
+  })
+})
+
+describe('zk sources', () => {
+  it('derives verifier and program sources from project config', () => {
+    const address = { toString: () => 'eth:0x1234' }
+    const requests = getZkSourceRequests(
+      {
+        contracts: {
+          zkVerifiers: [address],
+          programHashes: [
+            {
+              title: 'Range program',
+              programUrl:
+                'https://github.com/example/program/tree/v1.0.0/range',
+            },
+            { title: 'Unknown program' },
+          ],
+        },
+      },
+      [
+        {
+          zkCatalogInfo: {
+            verifierHashes: [
+              {
+                name: 'Verifier v1',
+                sourceLink:
+                  'https://github.com/example/verifier/tree/v1.0.0/src',
+                knownDeployments: [{ address }],
+              },
+            ],
+          },
+        },
+      ],
+    )
+
+    expect(requests).toEqual([
+      {
+        type: 'verifier',
+        name: 'Verifier v1',
+        link: 'https://github.com/example/verifier/tree/v1.0.0/src',
+        address: 'eth:0x1234',
+      },
+      {
+        type: 'program',
+        name: 'Range program',
+        link: 'https://github.com/example/program/tree/v1.0.0/range',
+      },
+    ])
+  })
+
+  it('parses blob anchors and resolves refs containing slashes', () => {
+    const blob = parseGitHubUrl(
+      'https://github.com/org/repo/blob/abcdef0123456789abcdef0123456789abcdef01/src/main.rs#L10',
+    )
+    expect(blob?.repoPath).toEqual('src/main.rs')
+    expect(blob?.kind).toEqual('blob')
+
+    const ambiguous = parseGitHubUrl(
+      'https://github.com/celo-org/op-succinct/tree/celo/v2.1.0/programs/range/eigenda',
+    )
+    expect(
+      ambiguous &&
+        resolveRefFromNames(ambiguous, ['main', 'celo/v2.1.0', 'celo/v2.0.0']),
+    ).toEqual({
+      repository: 'celo-org/op-succinct',
+      url: 'https://github.com/celo-org/op-succinct',
+      revision: 'celo/v2.1.0',
+      repoPath: 'programs/range/eigenda',
+      kind: 'tree',
+      tail: 'celo/v2.1.0/programs/range/eigenda',
+    })
   })
 })
 

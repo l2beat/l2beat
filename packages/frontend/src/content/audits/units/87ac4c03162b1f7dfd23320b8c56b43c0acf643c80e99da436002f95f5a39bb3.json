@@ -95,6 +95,36 @@
         "totalVersions": 1
       },
       "warnings": []
+    },
+    "437dcc6cbc847e9a": {
+      "status": "identical",
+      "coveredLines": 15,
+      "match": {
+        "origin": "stack",
+        "collection": "optimism",
+        "relation": {
+          "type": "template",
+          "template": "opstack/AnchorStateRegistry_post13"
+        },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "IBigStepper",
+        "similarity": 1,
+        "reportId": "optimism/spearbit-fault-proofs-no-mips-2024-08",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts-bedrock/src/dispute/interfaces/IBigStepper.sol",
+        "commit": "1f7081798ce2d49b8643514663d10681cb853a3d",
+        "commitTimestamp": "2024-06-03T17:23:30Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/1f7081798ce2d49b8643514663d10681cb853a3d/packages/contracts-bedrock/src/dispute/interfaces/IBigStepper.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Review of the dispute protocol contracts; the report declares no file list, MIPS is excluded by title. No Critical or High findings, all issues acknowledged.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "warnings": []
     }
   }
 }

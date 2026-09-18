@@ -355,6 +355,356 @@
         ]
       },
       "warnings": []
+    },
+    "d79ad2713a1d64a9": {
+      "status": "differs",
+      "coveredLines": 177,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "similarity",
+        "auditedName": "ECDSA",
+        "similarity": 0.876,
+        "reportId": "openzeppelin/contracts__audits__2023-05-v4.9",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/utils/cryptography/ECDSA.sol",
+        "commit": "91df66c4a9dfd0425ff923cbeb3a20155f1355ea",
+        "commitTimestamp": "2023-04-21T11:35:07Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/91df66c4a9dfd0425ff923cbeb3a20155f1355ea/contracts/utils/cryptography/ECDSA.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Only the changes to this file between versions 4.8 and 4.9 were reviewed.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 9
+      },
+      "diff": {
+        "added": 6,
+        "removed": 19,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 9,
+        "unchanged": 177,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 4,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "library ECDSA {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "library ECDSAUpgradeable {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "    enum RecoverError {"
+              },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "        NoError,"
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "        InvalidSignature,"
+              }
+            ]
+          },
+          {
+            "oldStart": 150,
+            "oldLines": 15,
+            "newStart": 150,
+            "newLines": 10,
+            "lines": [
+              { "type": " ", "oldLine": 150, "newLine": 150, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 151,
+                "newLine": 151,
+                "text": "     * See {recover}."
+              },
+              {
+                "type": " ",
+                "oldLine": 152,
+                "newLine": 152,
+                "text": "     */"
+              },
+              {
+                "type": "-",
+                "oldLine": 153,
+                "text": "    function toEthSignedMessageHash(bytes32 hash) internal pure returns (bytes32 message) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 153,
+                "text": "    function toEthSignedMessageHash(bytes32 hash) internal pure returns (bytes32) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 154,
+                "newLine": 154,
+                "text": "        // 32 is the length in bytes of hash,"
+              },
+              {
+                "type": " ",
+                "oldLine": 155,
+                "newLine": 155,
+                "text": "        // enforced by the type signature above"
+              },
+              {
+                "type": "-",
+                "oldLine": 156,
+                "text": "        /// @solidity memory-safe-assembly",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 157,
+                "text": "        assembly {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 158,
+                "text": "            mstore(0x00, \"\\x19Ethereum Signed Message:\\n32\")",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 159,
+                "text": "            mstore(0x1c, hash)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 160,
+                "text": "            message := keccak256(0x00, 0x3c)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 161,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 156,
+                "text": "        return keccak256(abi.encodePacked(\"\\x19Ethereum Signed Message:\\n32\", hash));",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 162, "newLine": 157, "text": "    }" },
+              { "type": " ", "oldLine": 163, "newLine": 158, "text": "" },
+              { "type": " ", "oldLine": 164, "newLine": 159, "text": "    /**" }
+            ]
+          },
+          {
+            "oldStart": 170,
+            "oldLines": 7,
+            "newStart": 165,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 170,
+                "newLine": 165,
+                "text": "     * See {recover}."
+              },
+              {
+                "type": " ",
+                "oldLine": 171,
+                "newLine": 166,
+                "text": "     */"
+              },
+              {
+                "type": " ",
+                "oldLine": 172,
+                "newLine": 167,
+                "text": "    function toEthSignedMessageHash(bytes memory s) internal pure returns (bytes32) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 173,
+                "text": "        return keccak256(abi.encodePacked(\"\\x19Ethereum Signed Message:\\n\", Strings.toString(s.length), s));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 168,
+                "text": "        return keccak256(abi.encodePacked(\"\\x19Ethereum Signed Message:\\n\", StringsUpgradeable.toString(s.length), s));",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 174, "newLine": 169, "text": "    }" },
+              { "type": " ", "oldLine": 175, "newLine": 170, "text": "" },
+              { "type": " ", "oldLine": 176, "newLine": 171, "text": "    /**" }
+            ]
+          },
+          {
+            "oldStart": 182,
+            "oldLines": 24,
+            "newStart": 177,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 182, "newLine": 177, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 183,
+                "newLine": 178,
+                "text": "     * See {recover}."
+              },
+              {
+                "type": " ",
+                "oldLine": 184,
+                "newLine": 179,
+                "text": "     */"
+              },
+              {
+                "type": "-",
+                "oldLine": 185,
+                "text": "    function toTypedDataHash(bytes32 domainSeparator, bytes32 structHash) internal pure returns (bytes32 data) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 186,
+                "text": "        /// @solidity memory-safe-assembly",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 187,
+                "text": "        assembly {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 188,
+                "text": "            let ptr := mload(0x40)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 189,
+                "text": "            mstore(ptr, \"\\x19\\x01\")",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 190,
+                "text": "            mstore(add(ptr, 0x02), domainSeparator)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 191,
+                "text": "            mstore(add(ptr, 0x22), structHash)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 192,
+                "text": "            data := keccak256(ptr, 0x42)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 193,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 180,
+                "text": "    function toTypedDataHash(bytes32 domainSeparator, bytes32 structHash) internal pure returns (bytes32) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 181,
+                "text": "        return keccak256(abi.encodePacked(\"\\x19\\x01\", domainSeparator, structHash));",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 194, "newLine": 182, "text": "    }" },
+              { "type": "-", "oldLine": 195, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 196,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 197,
+                "text": "     * @dev Returns an Ethereum Signed Data with intended validator, created from a",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 198,
+                "text": "     * `validator` and `data` according to the version 0 of EIP-191.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 199,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 200,
+                "text": "     * See {recover}.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 201,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 202,
+                "text": "    function toDataWithIntendedValidatorHash(address validator, bytes memory data) internal pure returns (bytes32) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 203,
+                "text": "        return keccak256(abi.encodePacked(\"\\x19\\x00\", validator, data));",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 204,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 205, "newLine": 183, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
     }
   }
 }

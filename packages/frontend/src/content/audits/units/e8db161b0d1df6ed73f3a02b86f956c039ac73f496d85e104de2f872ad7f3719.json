@@ -104,6 +104,501 @@
         ]
       },
       "warnings": []
+    },
+    "d80a56c5abf9208b": {
+      "status": "differs",
+      "coveredLines": 138,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "Address",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2025-07-v5.4",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/utils/Address.sol",
+        "commit": "f6fea85717b1a09300c7a783554696a0d6f3df12",
+        "commitTimestamp": "2025-06-13T18:37:42Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/f6fea85717b1a09300c7a783554696a0d6f3df12/contracts/utils/Address.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Diff-only review of the changes between release v5.3 (e4f7021) and release v5.4; the pre-existing file was not re-audited in full.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 9
+      },
+      "diff": {
+        "added": 2,
+        "removed": 1,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 138,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 130,
+            "oldLines": 7,
+            "newStart": 130,
+            "newLines": 8,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 130,
+                "newLine": 130,
+                "text": "        if (returndata.length > 0) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 131,
+                "newLine": 131,
+                "text": "            // The easiest way to bubble the revert reason is using memory via assembly"
+              },
+              {
+                "type": " ",
+                "oldLine": 132,
+                "newLine": 132,
+                "text": "            assembly (\"memory-safe\") {"
+              },
+              {
+                "type": "-",
+                "oldLine": 133,
+                "text": "                revert(add(returndata, 0x20), mload(returndata))",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 133,
+                "text": "                let returndata_size := mload(returndata)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 134,
+                "text": "                revert(add(32, returndata), returndata_size)",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 134,
+                "newLine": 135,
+                "text": "            }"
+              },
+              {
+                "type": " ",
+                "oldLine": 135,
+                "newLine": 136,
+                "text": "        } else {"
+              },
+              {
+                "type": " ",
+                "oldLine": 136,
+                "newLine": 137,
+                "text": "            revert Errors.FailedCall();"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "437dcc6cbc847e9a": {
+      "status": "differs",
+      "coveredLines": 138,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "Address",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2025-07-v5.4",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/utils/Address.sol",
+        "commit": "f6fea85717b1a09300c7a783554696a0d6f3df12",
+        "commitTimestamp": "2025-06-13T18:37:42Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/f6fea85717b1a09300c7a783554696a0d6f3df12/contracts/utils/Address.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Diff-only review of the changes between release v5.3 (e4f7021) and release v5.4; the pre-existing file was not re-audited in full.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 9
+      },
+      "diff": {
+        "added": 2,
+        "removed": 1,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 138,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 130,
+            "oldLines": 7,
+            "newStart": 130,
+            "newLines": 8,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 130,
+                "newLine": 130,
+                "text": "        if (returndata.length > 0) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 131,
+                "newLine": 131,
+                "text": "            // The easiest way to bubble the revert reason is using memory via assembly"
+              },
+              {
+                "type": " ",
+                "oldLine": 132,
+                "newLine": 132,
+                "text": "            assembly (\"memory-safe\") {"
+              },
+              {
+                "type": "-",
+                "oldLine": 133,
+                "text": "                revert(add(returndata, 0x20), mload(returndata))",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 133,
+                "text": "                let returndata_size := mload(returndata)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 134,
+                "text": "                revert(add(32, returndata), returndata_size)",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 134,
+                "newLine": 135,
+                "text": "            }"
+              },
+              {
+                "type": " ",
+                "oldLine": 135,
+                "newLine": 136,
+                "text": "        } else {"
+              },
+              {
+                "type": " ",
+                "oldLine": 136,
+                "newLine": 137,
+                "text": "            revert Errors.FailedCall();"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "d79ad2713a1d64a9": {
+      "status": "differs",
+      "coveredLines": 138,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "Address",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2025-07-v5.4",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/utils/Address.sol",
+        "commit": "f6fea85717b1a09300c7a783554696a0d6f3df12",
+        "commitTimestamp": "2025-06-13T18:37:42Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/f6fea85717b1a09300c7a783554696a0d6f3df12/contracts/utils/Address.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Diff-only review of the changes between release v5.3 (e4f7021) and release v5.4; the pre-existing file was not re-audited in full.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 9
+      },
+      "diff": {
+        "added": 2,
+        "removed": 1,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 138,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 130,
+            "oldLines": 7,
+            "newStart": 130,
+            "newLines": 8,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 130,
+                "newLine": 130,
+                "text": "        if (returndata.length > 0) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 131,
+                "newLine": 131,
+                "text": "            // The easiest way to bubble the revert reason is using memory via assembly"
+              },
+              {
+                "type": " ",
+                "oldLine": 132,
+                "newLine": 132,
+                "text": "            assembly (\"memory-safe\") {"
+              },
+              {
+                "type": "-",
+                "oldLine": 133,
+                "text": "                revert(add(returndata, 0x20), mload(returndata))",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 133,
+                "text": "                let returndata_size := mload(returndata)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 134,
+                "text": "                revert(add(32, returndata), returndata_size)",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 134,
+                "newLine": 135,
+                "text": "            }"
+              },
+              {
+                "type": " ",
+                "oldLine": 135,
+                "newLine": 136,
+                "text": "        } else {"
+              },
+              {
+                "type": " ",
+                "oldLine": 136,
+                "newLine": 137,
+                "text": "            revert Errors.FailedCall();"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "2295595c4243408b": {
+      "status": "differs",
+      "coveredLines": 138,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "Address",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2025-07-v5.4",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/utils/Address.sol",
+        "commit": "f6fea85717b1a09300c7a783554696a0d6f3df12",
+        "commitTimestamp": "2025-06-13T18:37:42Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/f6fea85717b1a09300c7a783554696a0d6f3df12/contracts/utils/Address.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Diff-only review of the changes between release v5.3 (e4f7021) and release v5.4; the pre-existing file was not re-audited in full.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 9
+      },
+      "diff": {
+        "added": 2,
+        "removed": 1,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 138,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 130,
+            "oldLines": 7,
+            "newStart": 130,
+            "newLines": 8,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 130,
+                "newLine": 130,
+                "text": "        if (returndata.length > 0) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 131,
+                "newLine": 131,
+                "text": "            // The easiest way to bubble the revert reason is using memory via assembly"
+              },
+              {
+                "type": " ",
+                "oldLine": 132,
+                "newLine": 132,
+                "text": "            assembly (\"memory-safe\") {"
+              },
+              {
+                "type": "-",
+                "oldLine": 133,
+                "text": "                revert(add(returndata, 0x20), mload(returndata))",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 133,
+                "text": "                let returndata_size := mload(returndata)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 134,
+                "text": "                revert(add(32, returndata), returndata_size)",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 134,
+                "newLine": 135,
+                "text": "            }"
+              },
+              {
+                "type": " ",
+                "oldLine": 135,
+                "newLine": 136,
+                "text": "        } else {"
+              },
+              {
+                "type": " ",
+                "oldLine": 136,
+                "newLine": 137,
+                "text": "            revert Errors.FailedCall();"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "5d5f82d91c09d4ec": {
+      "status": "differs",
+      "coveredLines": 138,
+      "match": {
+        "origin": "library",
+        "collection": "openzeppelin",
+        "relation": { "type": "library" },
+        "rank": 3,
+        "matchedBy": "name",
+        "auditedName": "Address",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2025-07-v5.4",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/utils/Address.sol",
+        "commit": "f6fea85717b1a09300c7a783554696a0d6f3df12",
+        "commitTimestamp": "2025-06-13T18:37:42Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/f6fea85717b1a09300c7a783554696a0d6f3df12/contracts/utils/Address.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Diff-only review of the changes between release v5.3 (e4f7021) and release v5.4; the pre-existing file was not re-audited in full.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 9
+      },
+      "diff": {
+        "added": 2,
+        "removed": 1,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 138,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 130,
+            "oldLines": 7,
+            "newStart": 130,
+            "newLines": 8,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 130,
+                "newLine": 130,
+                "text": "        if (returndata.length > 0) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 131,
+                "newLine": 131,
+                "text": "            // The easiest way to bubble the revert reason is using memory via assembly"
+              },
+              {
+                "type": " ",
+                "oldLine": 132,
+                "newLine": 132,
+                "text": "            assembly (\"memory-safe\") {"
+              },
+              {
+                "type": "-",
+                "oldLine": 133,
+                "text": "                revert(add(returndata, 0x20), mload(returndata))",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 133,
+                "text": "                let returndata_size := mload(returndata)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 134,
+                "text": "                revert(add(32, returndata), returndata_size)",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 134,
+                "newLine": 135,
+                "text": "            }"
+              },
+              {
+                "type": " ",
+                "oldLine": 135,
+                "newLine": 136,
+                "text": "        } else {"
+              },
+              {
+                "type": " ",
+                "oldLine": 136,
+                "newLine": 137,
+                "text": "            revert Errors.FailedCall();"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
     }
   }
 }

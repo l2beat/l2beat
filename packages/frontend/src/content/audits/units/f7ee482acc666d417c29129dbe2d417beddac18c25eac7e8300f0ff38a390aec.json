@@ -196,6 +196,197 @@
         ]
       },
       "warnings": []
+    },
+    "d80a56c5abf9208b": {
+      "status": "library",
+      "coveredLines": 59,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "ERC20Permit",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2025-07-v5.4",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/token/ERC20/extensions/ERC20Permit.sol",
+        "commit": "f6fea85717b1a09300c7a783554696a0d6f3df12",
+        "commitTimestamp": "2025-06-13T18:37:42Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/f6fea85717b1a09300c7a783554696a0d6f3df12/contracts/token/ERC20/extensions/ERC20Permit.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Diff-only review of the changes between release v5.3 (e4f7021) and release v5.4; the pre-existing file was not re-audited in full.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 4
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 9,
+        "ignoredRemoved": 3,
+        "unchanged": 59,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 19,
+            "oldLines": 7,
+            "newStart": 19,
+            "newLines": 9,
+            "lines": [
+              { "type": " ", "oldLine": 19, "newLine": 19, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 20,
+                "newLine": 20,
+                "text": "    constructor(string memory name) EIP712(name, \"1\") {}"
+              },
+              { "type": " ", "oldLine": 21, "newLine": 21, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 22,
+                "text": "    /// @inheritdoc IERC20Permit",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 22,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 23,
+                "text": "     * @inheritdoc IERC20Permit",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 24,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 23,
+                "newLine": 25,
+                "text": "    function permit(address owner, address spender, uint256 value, uint256 deadline, uint8 v, bytes32 r, bytes32 s)"
+              },
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 26,
+                "text": "        public"
+              },
+              {
+                "type": " ",
+                "oldLine": 25,
+                "newLine": 27,
+                "text": "        virtual"
+              }
+            ]
+          },
+          {
+            "oldStart": 40,
+            "oldLines": 12,
+            "newStart": 42,
+            "newLines": 16,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 40,
+                "newLine": 42,
+                "text": "        _approve(owner, spender, value);"
+              },
+              { "type": " ", "oldLine": 41, "newLine": 43, "text": "    }" },
+              { "type": " ", "oldLine": 42, "newLine": 44, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 43,
+                "text": "    /// @inheritdoc IERC20Permit",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 45,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 46,
+                "text": "     * @inheritdoc IERC20Permit",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 47,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 44,
+                "newLine": 48,
+                "text": "    function nonces(address owner) public view virtual override(IERC20Permit, Nonces) returns (uint256) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 45,
+                "newLine": 49,
+                "text": "        return super.nonces(owner);"
+              },
+              { "type": " ", "oldLine": 46, "newLine": 50, "text": "    }" },
+              { "type": " ", "oldLine": 47, "newLine": 51, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 48,
+                "text": "    /// @inheritdoc IERC20Permit",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 52,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 53,
+                "text": "     * @inheritdoc IERC20Permit",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 54,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 49,
+                "newLine": 55,
+                "text": "    // solhint-disable-next-line func-name-mixedcase"
+              },
+              {
+                "type": " ",
+                "oldLine": 50,
+                "newLine": 56,
+                "text": "    function DOMAIN_SEPARATOR() external view virtual returns (bytes32) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 51,
+                "newLine": 57,
+                "text": "        return _domainSeparatorV4();"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
     }
   }
 }

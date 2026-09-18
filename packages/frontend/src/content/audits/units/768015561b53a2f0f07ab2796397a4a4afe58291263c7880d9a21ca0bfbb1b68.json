@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "768015561b53a2f0f07ab2796397a4a4afe58291263c7880d9a21ca0bfbb1b68",
+  "name": "Dockerfile",
+  "kind": "program",
+  "lines": 9,
+  "source": "ARG OP_STACK_GO_BUILDER=us-docker.pkg.dev/oplabs-tools-artifacts/images/op-stack-go:latest\nFROM $OP_STACK_GO_BUILDER as builder\n# See \"make golang-docker\" and /ops/docker/op-stack-go\n\nFROM alpine:3.18\n\nCOPY --from=builder /usr/local/bin/op-program /usr/local/bin/op-program\n\nCMD [\"op-program\"]",
+  "resolutions": {
+    "437dcc6cbc847e9a": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "bb55951394276893": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

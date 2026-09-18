@@ -2,7 +2,7 @@
   "schemaVersion": 2,
   "projectId": "privacy-pools",
   "slug": "privacy-pools",
-  "generatedAt": 1789642559,
+  "generatedAt": 1789646761,
   "datasetRevision": "46018b80ce082d30d802c931c2f7ed961738b662",
   "discoveryTimestamp": 1779964040,
   "contractSelection": "all",
@@ -69,24 +69,24 @@
     ]
   },
   "summary": {
-    "contracts": 18,
+    "contracts": 19,
     "contractsWithoutSource": 1,
     "units": {
-      "identical": 87,
+      "identical": 90,
       "library": 42,
       "differs": 21,
-      "unaudited": 134
+      "unaudited": 158
     },
     "uniqueUnits": {
-      "identical": 8,
+      "identical": 11,
       "library": 11,
       "differs": 6,
-      "unaudited": 15
+      "unaudited": 35
     },
     "lines": {
-      "total": 73007,
-      "covered": 19002,
-      "uncovered": 54005
+      "total": 159208,
+      "covered": 19234,
+      "uncovered": 139974
     }
   },
   "reportIds": [
@@ -94,6 +94,7 @@
     "openzeppelin/contracts__audits__2023-10-v5.0",
     "openzeppelin/contracts__audits__2024-10-v5.1",
     "openzeppelin/contracts__audits__2026-02-v5.6",
+    "privacy-pools/oxorio-privacy-pools-circuits-2025-02",
     "privacy-pools/oxorio-privacy-pools-core-contracts-2025-03",
     "privacy-pools/oxorio-privacy-pools-precommitment-pr-2025-05",
     "safe/certora-safe-1-3-0"
@@ -8216,6 +8217,625 @@
               "startLine": 974,
               "endLine": 2163,
               "lines": 1190,
+              "status": "unaudited",
+              "coveredLines": 0,
+              "warnings": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Privacy Pools verifiers v1.2.1",
+      "address": "0xa45ACa8604a73D80C551fAad6355A5c3A5565eC6",
+      "chain": "eth",
+      "zk": {
+        "type": "verifier",
+        "link": "https://github.com/0xbow-io/privacy-pools-core/tree/v1.2.1/packages/circuits",
+        "commit": "a80836a47451e662f127af17e11430ffa976c234"
+      },
+      "noSource": false,
+      "summary": {
+        "contracts": 1,
+        "contractsWithoutSource": 0,
+        "units": {
+          "identical": 3,
+          "library": 0,
+          "differs": 0,
+          "unaudited": 24
+        },
+        "uniqueUnits": {
+          "identical": 3,
+          "library": 0,
+          "differs": 0,
+          "unaudited": 20
+        },
+        "lines": {
+          "total": 86201,
+          "covered": 232,
+          "uncovered": 85969
+        }
+      },
+      "files": [
+        {
+          "path": "privacy-pools/verifier-Privacy_Pools_verifiers_v1.2.1-b1fb29d2/.gitignore",
+          "role": "program",
+          "lines": 125,
+          "units": [
+            {
+              "unitHash": "8e301f72398a525d23eeaa3a6d19da917c23f44f69b8a2264778a1e6ad50c9ec",
+              "contextKey": "cbbcf694abda362c",
+              "name": ".gitignore",
+              "kind": "program",
+              "startLine": 1,
+              "endLine": 124,
+              "lines": 124,
+              "status": "unaudited",
+              "coveredLines": 0,
+              "warnings": []
+            }
+          ]
+        },
+        {
+          "path": "privacy-pools/verifier-Privacy_Pools_verifiers_v1.2.1-b1fb29d2/.prettierrc.js",
+          "role": "program",
+          "lines": 4,
+          "units": [
+            {
+              "unitHash": "060abee6a7563984a7c8110f372abe5b9a9e3482a5b6a98008eb750fa8fcd1dd",
+              "contextKey": "cbbcf694abda362c",
+              "name": ".prettierrc.js",
+              "kind": "program",
+              "startLine": 1,
+              "endLine": 3,
+              "lines": 3,
+              "status": "unaudited",
+              "coveredLines": 0,
+              "warnings": []
+            }
+          ]
+        },
+        {
+          "path": "privacy-pools/verifier-Privacy_Pools_verifiers_v1.2.1-b1fb29d2/CHANGELOG.md",
+          "role": "program",
+          "lines": 12,
+          "units": [
+            {
+              "unitHash": "88553ef009703672db5b645fa05a1e1d7e88c1223b3d63f64e0a0f273f657ea9",
+              "contextKey": "cbbcf694abda362c",
+              "name": "CHANGELOG.md",
+              "kind": "program",
+              "startLine": 1,
+              "endLine": 12,
+              "lines": 12,
+              "status": "unaudited",
+              "coveredLines": 0,
+              "warnings": []
+            }
+          ]
+        },
+        {
+          "path": "privacy-pools/verifier-Privacy_Pools_verifiers_v1.2.1-b1fb29d2/README.md",
+          "role": "program",
+          "lines": 87,
+          "units": [
+            {
+              "unitHash": "2715d503fc0281143be8f1c0d7c4822c82e4c251ae82d222bdb9e7dd89896ce6",
+              "contextKey": "cbbcf694abda362c",
+              "name": "README.md",
+              "kind": "program",
+              "startLine": 1,
+              "endLine": 86,
+              "lines": 86,
+              "status": "unaudited",
+              "coveredLines": 0,
+              "warnings": []
+            }
+          ]
+        },
+        {
+          "path": "privacy-pools/verifier-Privacy_Pools_verifiers_v1.2.1-b1fb29d2/build/commitment/commitment.sym",
+          "role": "program",
+          "lines": 2288,
+          "units": [
+            {
+              "unitHash": "bdbcb4df213494877a07642ae9e0aa866ae7934ae389dd5998cc27a11ec5f05a",
+              "contextKey": "cbbcf694abda362c",
+              "name": "commitment.sym",
+              "kind": "program",
+              "startLine": 1,
+              "endLine": 2287,
+              "lines": 2287,
+              "status": "unaudited",
+              "coveredLines": 0,
+              "warnings": []
+            }
+          ]
+        },
+        {
+          "path": "privacy-pools/verifier-Privacy_Pools_verifiers_v1.2.1-b1fb29d2/build/commitment/commitment_js/generate_witness.js",
+          "role": "program",
+          "lines": 22,
+          "units": [
+            {
+              "unitHash": "34ea1044ced5bf659ac971067ad1e28b561187f71526bae54fb03cfaedb6d7d6",
+              "contextKey": "cbbcf694abda362c",
+              "name": "generate_witness.js",
+              "kind": "program",
+              "startLine": 1,
+              "endLine": 21,
+              "lines": 21,
+              "status": "unaudited",
+              "coveredLines": 0,
+              "warnings": []
+            }
+          ]
+        },
+        {
+          "path": "privacy-pools/verifier-Privacy_Pools_verifiers_v1.2.1-b1fb29d2/build/commitment/commitment_js/witness_calculator.js",
+          "role": "program",
+          "lines": 382,
+          "units": [
+            {
+              "unitHash": "2c57c4f1d8014cdcde637762370669e3d44103dde5328d380d01c6c44b513802",
+              "contextKey": "cbbcf694abda362c",
+              "name": "witness_calculator.js",
+              "kind": "program",
+              "startLine": 1,
+              "endLine": 381,
+              "lines": 381,
+              "status": "unaudited",
+              "coveredLines": 0,
+              "warnings": []
+            }
+          ]
+        },
+        {
+          "path": "privacy-pools/verifier-Privacy_Pools_verifiers_v1.2.1-b1fb29d2/build/merkleTree/merkleTree.sym",
+          "role": "program",
+          "lines": 25013,
+          "units": [
+            {
+              "unitHash": "feaa2c79071babf08088dce4ffaa09ae3a1996dc5f224763bba79aa4f50a27dd",
+              "contextKey": "cbbcf694abda362c",
+              "name": "merkleTree.sym",
+              "kind": "program",
+              "startLine": 1,
+              "endLine": 25012,
+              "lines": 25012,
+              "status": "unaudited",
+              "coveredLines": 0,
+              "warnings": []
+            }
+          ]
+        },
+        {
+          "path": "privacy-pools/verifier-Privacy_Pools_verifiers_v1.2.1-b1fb29d2/build/merkleTree/merkleTree_js/generate_witness.js",
+          "role": "program",
+          "lines": 22,
+          "units": [
+            {
+              "unitHash": "34ea1044ced5bf659ac971067ad1e28b561187f71526bae54fb03cfaedb6d7d6",
+              "contextKey": "cbbcf694abda362c",
+              "name": "generate_witness.js",
+              "kind": "program",
+              "startLine": 1,
+              "endLine": 21,
+              "lines": 21,
+              "status": "unaudited",
+              "coveredLines": 0,
+              "warnings": []
+            }
+          ]
+        },
+        {
+          "path": "privacy-pools/verifier-Privacy_Pools_verifiers_v1.2.1-b1fb29d2/build/merkleTree/merkleTree_js/witness_calculator.js",
+          "role": "program",
+          "lines": 382,
+          "units": [
+            {
+              "unitHash": "2c57c4f1d8014cdcde637762370669e3d44103dde5328d380d01c6c44b513802",
+              "contextKey": "cbbcf694abda362c",
+              "name": "witness_calculator.js",
+              "kind": "program",
+              "startLine": 1,
+              "endLine": 381,
+              "lines": 381,
+              "status": "unaudited",
+              "coveredLines": 0,
+              "warnings": []
+            }
+          ]
+        },
+        {
+          "path": "privacy-pools/verifier-Privacy_Pools_verifiers_v1.2.1-b1fb29d2/build/withdraw/withdraw.sym",
+          "role": "program",
+          "lines": 54946,
+          "units": [
+            {
+              "unitHash": "8053568428bbed2000268a18dac9b5db2069dc39451994cc95beaa51c9b77afe",
+              "contextKey": "cbbcf694abda362c",
+              "name": "withdraw.sym",
+              "kind": "program",
+              "startLine": 1,
+              "endLine": 54945,
+              "lines": 54945,
+              "status": "unaudited",
+              "coveredLines": 0,
+              "warnings": []
+            }
+          ]
+        },
+        {
+          "path": "privacy-pools/verifier-Privacy_Pools_verifiers_v1.2.1-b1fb29d2/build/withdraw/withdraw_js/generate_witness.js",
+          "role": "program",
+          "lines": 22,
+          "units": [
+            {
+              "unitHash": "34ea1044ced5bf659ac971067ad1e28b561187f71526bae54fb03cfaedb6d7d6",
+              "contextKey": "cbbcf694abda362c",
+              "name": "generate_witness.js",
+              "kind": "program",
+              "startLine": 1,
+              "endLine": 21,
+              "lines": 21,
+              "status": "unaudited",
+              "coveredLines": 0,
+              "warnings": []
+            }
+          ]
+        },
+        {
+          "path": "privacy-pools/verifier-Privacy_Pools_verifiers_v1.2.1-b1fb29d2/build/withdraw/withdraw_js/witness_calculator.js",
+          "role": "program",
+          "lines": 382,
+          "units": [
+            {
+              "unitHash": "2c57c4f1d8014cdcde637762370669e3d44103dde5328d380d01c6c44b513802",
+              "contextKey": "cbbcf694abda362c",
+              "name": "witness_calculator.js",
+              "kind": "program",
+              "startLine": 1,
+              "endLine": 381,
+              "lines": 381,
+              "status": "unaudited",
+              "coveredLines": 0,
+              "warnings": []
+            }
+          ]
+        },
+        {
+          "path": "privacy-pools/verifier-Privacy_Pools_verifiers_v1.2.1-b1fb29d2/circuits/commitment.circom",
+          "role": "program",
+          "lines": 42,
+          "units": [
+            {
+              "unitHash": "cc995fda84faf40ba90744326384965ee26213dae9a97c8211f7aa4cd9f671a5",
+              "contextKey": "cbbcf694abda362c",
+              "name": "commitment.circom",
+              "kind": "program",
+              "startLine": 1,
+              "endLine": 41,
+              "lines": 41,
+              "status": "identical",
+              "coveredLines": 41,
+              "match": {
+                "origin": "own",
+                "collection": "privacy-pools",
+                "relation": {
+                  "type": "own"
+                },
+                "rank": 0,
+                "matchedBy": "identity",
+                "auditedName": "commitment.circom",
+                "similarity": 1,
+                "reportId": "privacy-pools/oxorio-privacy-pools-circuits-2025-02",
+                "repository": "0xbow-io/privacy-pools-core",
+                "path": "packages/circuits/circuits/commitment.circom",
+                "commit": "8da36d5e2150ab3c567d85ca8a6b2eb6b51740cb",
+                "commitTimestamp": "2025-02-19T13:49:44Z",
+                "url": "https://github.com/0xbow-io/privacy-pools-core/blob/8da36d5e2150ab3c567d85ca8a6b2eb6b51740cb/packages/circuits/circuits/commitment.circom",
+                "auditStatus": "audited_with_no_major_findings",
+                "reviewPhase": "final commit / fix review",
+                "coverage": "Final audited commit with fixes verified.",
+                "majorFindings": 0,
+                "isLatestVersion": true,
+                "laterAuditedVersionExists": false,
+                "totalVersions": 2
+              },
+              "warnings": []
+            }
+          ]
+        },
+        {
+          "path": "privacy-pools/verifier-Privacy_Pools_verifiers_v1.2.1-b1fb29d2/circuits/merkleTree.circom",
+          "role": "program",
+          "lines": 80,
+          "units": [
+            {
+              "unitHash": "5aadae9ea824b2b2ef6408aac60d824baf0e5e91d51e9504195a62896527d9e0",
+              "contextKey": "cbbcf694abda362c",
+              "name": "merkleTree.circom",
+              "kind": "program",
+              "startLine": 1,
+              "endLine": 79,
+              "lines": 79,
+              "status": "identical",
+              "coveredLines": 79,
+              "match": {
+                "origin": "own",
+                "collection": "privacy-pools",
+                "relation": {
+                  "type": "own"
+                },
+                "rank": 0,
+                "matchedBy": "identity",
+                "auditedName": "merkleTree.circom",
+                "similarity": 1,
+                "reportId": "privacy-pools/oxorio-privacy-pools-circuits-2025-02",
+                "repository": "0xbow-io/privacy-pools-core",
+                "path": "packages/circuits/circuits/merkleTree.circom",
+                "commit": "8da36d5e2150ab3c567d85ca8a6b2eb6b51740cb",
+                "commitTimestamp": "2025-02-19T13:49:44Z",
+                "url": "https://github.com/0xbow-io/privacy-pools-core/blob/8da36d5e2150ab3c567d85ca8a6b2eb6b51740cb/packages/circuits/circuits/merkleTree.circom",
+                "auditStatus": "audited_with_no_major_findings",
+                "reviewPhase": "final commit / fix review",
+                "coverage": "Final audited commit with fixes verified.",
+                "majorFindings": 0,
+                "isLatestVersion": true,
+                "laterAuditedVersionExists": false,
+                "totalVersions": 2
+              },
+              "warnings": []
+            }
+          ]
+        },
+        {
+          "path": "privacy-pools/verifier-Privacy_Pools_verifiers_v1.2.1-b1fb29d2/circuits/withdraw.circom",
+          "role": "program",
+          "lines": 113,
+          "units": [
+            {
+              "unitHash": "288e67517c85419ad3c6343a6562c97c3fc5254bd72daef0abf28deaa2be533f",
+              "contextKey": "cbbcf694abda362c",
+              "name": "withdraw.circom",
+              "kind": "program",
+              "startLine": 1,
+              "endLine": 112,
+              "lines": 112,
+              "status": "identical",
+              "coveredLines": 112,
+              "match": {
+                "origin": "own",
+                "collection": "privacy-pools",
+                "relation": {
+                  "type": "own"
+                },
+                "rank": 0,
+                "matchedBy": "identity",
+                "auditedName": "withdraw.circom",
+                "similarity": 1,
+                "reportId": "privacy-pools/oxorio-privacy-pools-circuits-2025-02",
+                "repository": "0xbow-io/privacy-pools-core",
+                "path": "packages/circuits/circuits/withdraw.circom",
+                "commit": "8da36d5e2150ab3c567d85ca8a6b2eb6b51740cb",
+                "commitTimestamp": "2025-02-19T13:49:44Z",
+                "url": "https://github.com/0xbow-io/privacy-pools-core/blob/8da36d5e2150ab3c567d85ca8a6b2eb6b51740cb/packages/circuits/circuits/withdraw.circom",
+                "auditStatus": "audited_with_no_major_findings",
+                "reviewPhase": "final commit / fix review",
+                "coverage": "Final audited commit with fixes verified.",
+                "majorFindings": 0,
+                "isLatestVersion": true,
+                "laterAuditedVersionExists": false,
+                "totalVersions": 2
+              },
+              "warnings": []
+            }
+          ]
+        },
+        {
+          "path": "privacy-pools/verifier-Privacy_Pools_verifiers_v1.2.1-b1fb29d2/scripts/present.sh",
+          "role": "program",
+          "lines": 13,
+          "units": [
+            {
+              "unitHash": "25a202f85fdc1d6d784324e1a2be15207397d49e0ee6cd631c6c0d6dd2b41805",
+              "contextKey": "cbbcf694abda362c",
+              "name": "present.sh",
+              "kind": "program",
+              "startLine": 1,
+              "endLine": 12,
+              "lines": 12,
+              "status": "unaudited",
+              "coveredLines": 0,
+              "warnings": []
+            }
+          ]
+        },
+        {
+          "path": "privacy-pools/verifier-Privacy_Pools_verifiers_v1.2.1-b1fb29d2/src/index.ts",
+          "role": "program",
+          "lines": 41,
+          "units": [
+            {
+              "unitHash": "928db5c0d1773667235a4a95c3cf6447deb16a1b45ae635181d70c240c387081",
+              "contextKey": "cbbcf694abda362c",
+              "name": "index.ts",
+              "kind": "program",
+              "startLine": 1,
+              "endLine": 40,
+              "lines": 40,
+              "status": "unaudited",
+              "coveredLines": 0,
+              "warnings": []
+            }
+          ]
+        },
+        {
+          "path": "privacy-pools/verifier-Privacy_Pools_verifiers_v1.2.1-b1fb29d2/tests/commitment.test.ts",
+          "role": "program",
+          "lines": 206,
+          "units": [
+            {
+              "unitHash": "ebaf2a906abf0c48ed1a0801c222bca79798a07530094386caf99ee9558b4254",
+              "contextKey": "cbbcf694abda362c",
+              "name": "commitment.test.ts",
+              "kind": "program",
+              "startLine": 1,
+              "endLine": 205,
+              "lines": 205,
+              "status": "unaudited",
+              "coveredLines": 0,
+              "warnings": []
+            }
+          ]
+        },
+        {
+          "path": "privacy-pools/verifier-Privacy_Pools_verifiers_v1.2.1-b1fb29d2/tests/common/index.ts",
+          "role": "program",
+          "lines": 35,
+          "units": [
+            {
+              "unitHash": "8b408e6ac1ed196ed807e81b186eb60db674705039d8397cbff7b585d78f41d1",
+              "contextKey": "cbbcf694abda362c",
+              "name": "index.ts",
+              "kind": "program",
+              "startLine": 1,
+              "endLine": 34,
+              "lines": 34,
+              "status": "unaudited",
+              "coveredLines": 0,
+              "warnings": []
+            }
+          ]
+        },
+        {
+          "path": "privacy-pools/verifier-Privacy_Pools_verifiers_v1.2.1-b1fb29d2/tests/lean-imt.test.ts",
+          "role": "program",
+          "lines": 82,
+          "units": [
+            {
+              "unitHash": "4044e283b95d66bcd51bc81d131fefdbd919e0996544b8830941ad4204148213",
+              "contextKey": "cbbcf694abda362c",
+              "name": "lean-imt.test.ts",
+              "kind": "program",
+              "startLine": 1,
+              "endLine": 81,
+              "lines": 81,
+              "status": "unaudited",
+              "coveredLines": 0,
+              "warnings": []
+            }
+          ]
+        },
+        {
+          "path": "privacy-pools/verifier-Privacy_Pools_verifiers_v1.2.1-b1fb29d2/tests/withdrawal.test.ts",
+          "role": "program",
+          "lines": 560,
+          "units": [
+            {
+              "unitHash": "96baa03d9eb29c9894bd4e03e5a32e1ab97b148594f2bc0ac5f995759658d5ff",
+              "contextKey": "cbbcf694abda362c",
+              "name": "withdrawal.test.ts",
+              "kind": "program",
+              "startLine": 1,
+              "endLine": 559,
+              "lines": 559,
+              "status": "unaudited",
+              "coveredLines": 0,
+              "warnings": []
+            }
+          ]
+        },
+        {
+          "path": "privacy-pools/verifier-Privacy_Pools_verifiers_v1.2.1-b1fb29d2/trusted-setup/beacon_hash",
+          "role": "program",
+          "lines": 2,
+          "units": [
+            {
+              "unitHash": "2e6ed45ddc191d5f4306607c24ba418b19edfe15ad1c1518faea0449df8bffde",
+              "contextKey": "cbbcf694abda362c",
+              "name": "beacon_hash",
+              "kind": "program",
+              "startLine": 1,
+              "endLine": 1,
+              "lines": 1,
+              "status": "unaudited",
+              "coveredLines": 0,
+              "warnings": []
+            }
+          ]
+        },
+        {
+          "path": "privacy-pools/verifier-Privacy_Pools_verifiers_v1.2.1-b1fb29d2/trusted-setup/final-keys/commitment.vkey",
+          "role": "program",
+          "lines": 109,
+          "units": [
+            {
+              "unitHash": "4c77b4657b5fabe016f18f6e9fed8a8b02adbe06fda20d02e34bc8ed9d2d8ed5",
+              "contextKey": "cbbcf694abda362c",
+              "name": "commitment.vkey",
+              "kind": "program",
+              "startLine": 1,
+              "endLine": 109,
+              "lines": 109,
+              "status": "unaudited",
+              "coveredLines": 0,
+              "warnings": []
+            }
+          ]
+        },
+        {
+          "path": "privacy-pools/verifier-Privacy_Pools_verifiers_v1.2.1-b1fb29d2/trusted-setup/final-keys/withdraw.vkey",
+          "role": "program",
+          "lines": 129,
+          "units": [
+            {
+              "unitHash": "eabed67a5a4da58d9941b9b41283096d1e849a3970115413db01675f75300cc3",
+              "contextKey": "cbbcf694abda362c",
+              "name": "withdraw.vkey",
+              "kind": "program",
+              "startLine": 1,
+              "endLine": 129,
+              "lines": 129,
+              "status": "unaudited",
+              "coveredLines": 0,
+              "warnings": []
+            }
+          ]
+        },
+        {
+          "path": "privacy-pools/verifier-Privacy_Pools_verifiers_v1.2.1-b1fb29d2/trusted-setup/final_contribution_beacon",
+          "role": "program",
+          "lines": 2,
+          "units": [
+            {
+              "unitHash": "c87bd495d8ccfe9fb4158ee26d47e5ca2bcd4e853f80c9fdebf7e2921630e6e5",
+              "contextKey": "cbbcf694abda362c",
+              "name": "final_contribution_beacon",
+              "kind": "program",
+              "startLine": 1,
+              "endLine": 1,
+              "lines": 1,
+              "status": "unaudited",
+              "coveredLines": 0,
+              "warnings": []
+            }
+          ]
+        },
+        {
+          "path": "privacy-pools/verifier-Privacy_Pools_verifiers_v1.2.1-b1fb29d2/yarn.lock",
+          "role": "program",
+          "lines": 1124,
+          "units": [
+            {
+              "unitHash": "b5cee3ff09f97732855dc03b833ff65e9ae6cdc88bc736baeba829861e8ec012",
+              "contextKey": "cbbcf694abda362c",
+              "name": "yarn.lock",
+              "kind": "program",
+              "startLine": 1,
+              "endLine": 1123,
+              "lines": 1123,
               "status": "unaudited",
               "coveredLines": 0,
               "warnings": []

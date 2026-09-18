@@ -145,6 +145,146 @@
         ]
       },
       "warnings": []
+    },
+    "437dcc6cbc847e9a": {
+      "status": "differs",
+      "coveredLines": 41,
+      "match": {
+        "origin": "stack",
+        "collection": "optimism",
+        "relation": {
+          "type": "template",
+          "template": "gnosisSafeModules/LivenessGuard"
+        },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "L2CrossDomainMessenger",
+        "similarity": 0.913,
+        "reportId": "optimism/cantina-mcp-l1-2024-02",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts-bedrock/src/L2/L2CrossDomainMessenger.sol",
+        "commit": "e6ef3a900c42c8722e72c2e2314027f85d12ced5",
+        "commitTimestamp": "2024-01-22T20:42:47Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/e6ef3a900c42c8722e72c2e2314027f85d12ced5/packages/contracts-bedrock/src/L2/L2CrossDomainMessenger.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "diff audit",
+        "coverage": "Review of the MCP L1 (multi-chain prep) upgrade changes; the report declares no file list, this file is recorded because findings locate in it.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 7
+      },
+      "diff": {
+        "added": 4,
+        "removed": 1,
+        "ignoredAdded": 3,
+        "ignoredRemoved": 1,
+        "unchanged": 41,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 6,
+            "newStart": 1,
+            "newLines": 6,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "contract L2CrossDomainMessenger is CrossDomainMessenger, ISemver {"
+              },
+              {
+                "type": "-",
+                "oldLine": 2,
+                "text": "    /// @custom:semver 2.0.0",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 3,
+                "text": "    string public constant version = \"2.0.0\";",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 2,
+                "text": "    /// @custom:semver 2.1.1-beta.1",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "    string public constant version = \"2.1.1-beta.1\";",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 4, "newLine": 4, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 5,
+                "text": "    /// @notice Constructs the L2CrossDomainMessenger contract."
+              },
+              {
+                "type": " ",
+                "oldLine": 6,
+                "newLine": 6,
+                "text": "    constructor() CrossDomainMessenger() {"
+              }
+            ]
+          },
+          {
+            "oldStart": 29,
+            "oldLines": 6,
+            "newStart": 29,
+            "newLines": 11,
+            "lines": [
+              { "type": " ", "oldLine": 29, "newLine": 29, "text": "    }" },
+              { "type": " ", "oldLine": 30, "newLine": 30, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 31,
+                "newLine": 31,
+                "text": "    /// @inheritdoc CrossDomainMessenger"
+              },
+              {
+                "type": "+",
+                "newLine": 32,
+                "text": "    function gasPayingToken() internal view override returns (address addr_, uint8 decimals_) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 33,
+                "text": "        (addr_, decimals_) = L1Block(Predeploys.L1_BLOCK_ATTRIBUTES).gasPayingToken();",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 34, "text": "    }", "ignored": false },
+              { "type": "+", "newLine": 35, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 36,
+                "text": "    /// @inheritdoc CrossDomainMessenger",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 32,
+                "newLine": 37,
+                "text": "    function _isOtherMessenger() internal view override returns (bool) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 33,
+                "newLine": 38,
+                "text": "        return AddressAliasHelper.undoL1ToL2Alias(msg.sender) == address(otherMessenger);"
+              },
+              { "type": " ", "oldLine": 34, "newLine": 39, "text": "    }" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
     }
   }
 }

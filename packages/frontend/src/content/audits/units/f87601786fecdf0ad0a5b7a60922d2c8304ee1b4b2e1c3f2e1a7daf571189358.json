@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "f87601786fecdf0ad0a5b7a60922d2c8304ee1b4b2e1c3f2e1a7daf571189358",
+  "name": "run-static-analysis.sh",
+  "kind": "program",
+  "lines": 66,
+  "source": "#!/usr/bin/env bash\n\nset -e          # Exit immediately if a command exits with a non-zero status\nset -o pipefail # Ensure failures in pipelines are detected\n\n# Usage function\nusage() {\n  echo \"Usage: $0 <vm-profile> <baseline-report>\"\n  echo \"Valid profiles: cannon-singlethreaded-32, cannon-multithreaded-64\"\n  exit 1\n}\n\n# Validate input\nif [[ $# -ne 2 ]]; then\n  usage\nfi\n\nVM_PROFILE_CONFIG=$1\nBASELINE_REPORT=$2\n\nANALYZER_BIN=\"vm-compat\"\n\nif ! command -v llvm-objdump &> /dev/null; then\n  echo \"❌ Error: llvm-objdump is required but not found in \\$PATH\"\n  echo \"Please install it using one of the following commands, based on your OS:\"\n  echo \"  Ubuntu/Debian: sudo apt-get install -y llvm\"\n  echo \"  Fedora: sudo dnf install -y llvm\"\n  echo \"  Arch Linux: sudo pacman -Sy llvm\"\n  echo \"  macOS (Homebrew): brew install llvm\"\n  exit 1\nfi\n\necho \"✅ llvm-objdump found at $(which llvm-objdump)\"\n\n# Check if 'vm-compat' is installed\nif ! command -v vm-compat &> /dev/null; then\n  echo \"❌ Error: 'vm-compat' is required but not found in \\$PATH\"\n  echo \"Please install it using:\"\n  echo \"  mise use -g ubi:ChainSafe/vm-compat@1.1.0\"\n  echo \"Or manually download from:\"\n  echo \"  https://github.com/ChainSafe/vm-compat/releases\"\n  exit 1\nfi\n\necho \"✅ vm-compat found at $(which vm-compat)\"\n\n# Run the analyzer\necho \"Running analysis with VM profile: $VM_PROFILE_CONFIG using baseline report: $BASELINE_REPORT...\"\nOUTPUT_FILE=$(mktemp)\n\n# Note: to output the full report, remove the `--baseline-report` option below\n\"$ANALYZER_BIN\" analyze --with-trace=true --skip-warnings=false --format=json --vm-profile-config \"$VM_PROFILE_CONFIG\" --baseline-report \"$BASELINE_REPORT\" --report-output-path \"$OUTPUT_FILE\" ./client/cmd/main.go\n\n# Check if JSON output contains any issues\nISSUE_COUNT=$(jq 'length' \"$OUTPUT_FILE\")\n\nif [ \"$ISSUE_COUNT\" -gt 0 ]; then\n  echo \"❌ Analysis found $ISSUE_COUNT issues!\"\n  cat \"$OUTPUT_FILE\"\n  rm -f \"$OUTPUT_FILE\"\n  exit 1\nelse\n  echo \"✅ No issues found.\"\n  rm -f \"$OUTPUT_FILE\"\n  exit 0\nfi",
+  "resolutions": {
+    "437dcc6cbc847e9a": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "1f5c32d18cf7148d": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

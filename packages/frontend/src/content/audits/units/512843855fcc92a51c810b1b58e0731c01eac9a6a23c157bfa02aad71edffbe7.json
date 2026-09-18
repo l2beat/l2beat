@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "512843855fcc92a51c810b1b58e0731c01eac9a6a23c157bfa02aad71edffbe7",
+  "name": "godebug.go",
+  "kind": "program",
+  "lines": 8,
+  "source": "// Disable annotating anonymous memory mappings. Cannon doesn't support this syscall\n// The directive (and functionality) only exists on go1.25 and above so this file is conditionally included.\n\n//go:build go1.25\n\n//go:debug decoratemappings=0\n\npackage main",
+  "resolutions": {
+    "437dcc6cbc847e9a": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "1f5c32d18cf7148d": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

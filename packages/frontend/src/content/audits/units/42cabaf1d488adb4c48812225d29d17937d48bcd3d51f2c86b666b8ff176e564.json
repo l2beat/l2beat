@@ -165,6 +165,646 @@
         ]
       },
       "warnings": []
+    },
+    "d80a56c5abf9208b": {
+      "status": "library",
+      "coveredLines": 50,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "Proxy",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/proxy/Proxy.sol",
+        "commit": "8cb5200797e2ff322d3632be6c9df80e72dd8fed",
+        "commitTimestamp": "2023-08-04T17:04:22Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/8cb5200797e2ff322d3632be6c9df80e72dd8fed/contracts/proxy/Proxy.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Fix review limited to the changes of pull request #4502 (head commit).",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 4
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 2,
+        "ignoredRemoved": 2,
+        "unchanged": 50,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 26,
+            "oldLines": 8,
+            "newStart": 26,
+            "newLines": 8,
+            "lines": [
+              { "type": " ", "oldLine": 26, "newLine": 26, "text": "    }" },
+              { "type": " ", "oldLine": 27, "newLine": 27, "text": "" },
+              { "type": " ", "oldLine": 28, "newLine": 28, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 29,
+                "text": "     * @dev This is a virtual function that should be overridden so it returns the address to which the fallback function",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 30,
+                "text": "     * and {_fallback} should delegate.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 29,
+                "text": "     * @dev This is a virtual function that should be overridden so it returns the address to which the fallback",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 30,
+                "text": "     * function and {_fallback} should delegate.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 31, "newLine": 31, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 32,
+                "newLine": 32,
+                "text": "    function _implementation() internal view virtual returns (address);"
+              },
+              { "type": " ", "oldLine": 33, "newLine": 33, "text": "" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "437dcc6cbc847e9a": {
+      "status": "library",
+      "coveredLines": 50,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "Proxy",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/proxy/Proxy.sol",
+        "commit": "8cb5200797e2ff322d3632be6c9df80e72dd8fed",
+        "commitTimestamp": "2023-08-04T17:04:22Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/8cb5200797e2ff322d3632be6c9df80e72dd8fed/contracts/proxy/Proxy.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Fix review limited to the changes of pull request #4502 (head commit).",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 4
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 2,
+        "ignoredRemoved": 2,
+        "unchanged": 50,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 26,
+            "oldLines": 8,
+            "newStart": 26,
+            "newLines": 8,
+            "lines": [
+              { "type": " ", "oldLine": 26, "newLine": 26, "text": "    }" },
+              { "type": " ", "oldLine": 27, "newLine": 27, "text": "" },
+              { "type": " ", "oldLine": 28, "newLine": 28, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 29,
+                "text": "     * @dev This is a virtual function that should be overridden so it returns the address to which the fallback function",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 30,
+                "text": "     * and {_fallback} should delegate.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 29,
+                "text": "     * @dev This is a virtual function that should be overridden so it returns the address to which the fallback",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 30,
+                "text": "     * function and {_fallback} should delegate.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 31, "newLine": 31, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 32,
+                "newLine": 32,
+                "text": "    function _implementation() internal view virtual returns (address);"
+              },
+              { "type": " ", "oldLine": 33, "newLine": 33, "text": "" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "a8bf4a329bb46967": {
+      "status": "library",
+      "coveredLines": 50,
+      "match": {
+        "origin": "library",
+        "collection": "openzeppelin",
+        "relation": { "type": "library" },
+        "rank": 3,
+        "matchedBy": "identity",
+        "auditedName": "Proxy",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/proxy/Proxy.sol",
+        "commit": "8cb5200797e2ff322d3632be6c9df80e72dd8fed",
+        "commitTimestamp": "2023-08-04T17:04:22Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/8cb5200797e2ff322d3632be6c9df80e72dd8fed/contracts/proxy/Proxy.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Fix review limited to the changes of pull request #4502 (head commit).",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 4
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 2,
+        "ignoredRemoved": 2,
+        "unchanged": 50,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 26,
+            "oldLines": 8,
+            "newStart": 26,
+            "newLines": 8,
+            "lines": [
+              { "type": " ", "oldLine": 26, "newLine": 26, "text": "    }" },
+              { "type": " ", "oldLine": 27, "newLine": 27, "text": "" },
+              { "type": " ", "oldLine": 28, "newLine": 28, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 29,
+                "text": "     * @dev This is a virtual function that should be overridden so it returns the address to which the fallback function",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 30,
+                "text": "     * and {_fallback} should delegate.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 29,
+                "text": "     * @dev This is a virtual function that should be overridden so it returns the address to which the fallback",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 30,
+                "text": "     * function and {_fallback} should delegate.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 31, "newLine": 31, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 32,
+                "newLine": 32,
+                "text": "    function _implementation() internal view virtual returns (address);"
+              },
+              { "type": " ", "oldLine": 33, "newLine": 33, "text": "" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "e3b0c44298fc1c14": {
+      "status": "library",
+      "coveredLines": 50,
+      "match": {
+        "origin": "library",
+        "collection": "openzeppelin",
+        "relation": { "type": "library" },
+        "rank": 3,
+        "matchedBy": "identity",
+        "auditedName": "Proxy",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/proxy/Proxy.sol",
+        "commit": "8cb5200797e2ff322d3632be6c9df80e72dd8fed",
+        "commitTimestamp": "2023-08-04T17:04:22Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/8cb5200797e2ff322d3632be6c9df80e72dd8fed/contracts/proxy/Proxy.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Fix review limited to the changes of pull request #4502 (head commit).",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 4
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 2,
+        "ignoredRemoved": 2,
+        "unchanged": 50,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 26,
+            "oldLines": 8,
+            "newStart": 26,
+            "newLines": 8,
+            "lines": [
+              { "type": " ", "oldLine": 26, "newLine": 26, "text": "    }" },
+              { "type": " ", "oldLine": 27, "newLine": 27, "text": "" },
+              { "type": " ", "oldLine": 28, "newLine": 28, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 29,
+                "text": "     * @dev This is a virtual function that should be overridden so it returns the address to which the fallback function",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 30,
+                "text": "     * and {_fallback} should delegate.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 29,
+                "text": "     * @dev This is a virtual function that should be overridden so it returns the address to which the fallback",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 30,
+                "text": "     * function and {_fallback} should delegate.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 31, "newLine": 31, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 32,
+                "newLine": 32,
+                "text": "    function _implementation() internal view virtual returns (address);"
+              },
+              { "type": " ", "oldLine": 33, "newLine": 33, "text": "" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "5d5f82d91c09d4ec": {
+      "status": "library",
+      "coveredLines": 50,
+      "match": {
+        "origin": "library",
+        "collection": "openzeppelin",
+        "relation": { "type": "library" },
+        "rank": 3,
+        "matchedBy": "identity",
+        "auditedName": "Proxy",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/proxy/Proxy.sol",
+        "commit": "8cb5200797e2ff322d3632be6c9df80e72dd8fed",
+        "commitTimestamp": "2023-08-04T17:04:22Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/8cb5200797e2ff322d3632be6c9df80e72dd8fed/contracts/proxy/Proxy.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Fix review limited to the changes of pull request #4502 (head commit).",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 4
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 2,
+        "ignoredRemoved": 2,
+        "unchanged": 50,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 26,
+            "oldLines": 8,
+            "newStart": 26,
+            "newLines": 8,
+            "lines": [
+              { "type": " ", "oldLine": 26, "newLine": 26, "text": "    }" },
+              { "type": " ", "oldLine": 27, "newLine": 27, "text": "" },
+              { "type": " ", "oldLine": 28, "newLine": 28, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 29,
+                "text": "     * @dev This is a virtual function that should be overridden so it returns the address to which the fallback function",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 30,
+                "text": "     * and {_fallback} should delegate.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 29,
+                "text": "     * @dev This is a virtual function that should be overridden so it returns the address to which the fallback",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 30,
+                "text": "     * function and {_fallback} should delegate.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 31, "newLine": 31, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 32,
+                "newLine": 32,
+                "text": "    function _implementation() internal view virtual returns (address);"
+              },
+              { "type": " ", "oldLine": 33, "newLine": 33, "text": "" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "2295595c4243408b": {
+      "status": "library",
+      "coveredLines": 50,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "Proxy",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/proxy/Proxy.sol",
+        "commit": "8cb5200797e2ff322d3632be6c9df80e72dd8fed",
+        "commitTimestamp": "2023-08-04T17:04:22Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/8cb5200797e2ff322d3632be6c9df80e72dd8fed/contracts/proxy/Proxy.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Fix review limited to the changes of pull request #4502 (head commit).",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 4
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 2,
+        "ignoredRemoved": 2,
+        "unchanged": 50,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 26,
+            "oldLines": 8,
+            "newStart": 26,
+            "newLines": 8,
+            "lines": [
+              { "type": " ", "oldLine": 26, "newLine": 26, "text": "    }" },
+              { "type": " ", "oldLine": 27, "newLine": 27, "text": "" },
+              { "type": " ", "oldLine": 28, "newLine": 28, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 29,
+                "text": "     * @dev This is a virtual function that should be overridden so it returns the address to which the fallback function",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 30,
+                "text": "     * and {_fallback} should delegate.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 29,
+                "text": "     * @dev This is a virtual function that should be overridden so it returns the address to which the fallback",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 30,
+                "text": "     * function and {_fallback} should delegate.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 31, "newLine": 31, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 32,
+                "newLine": 32,
+                "text": "    function _implementation() internal view virtual returns (address);"
+              },
+              { "type": " ", "oldLine": 33, "newLine": 33, "text": "" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "13052b7adc791062": {
+      "status": "library",
+      "coveredLines": 50,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "Proxy",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/proxy/Proxy.sol",
+        "commit": "8cb5200797e2ff322d3632be6c9df80e72dd8fed",
+        "commitTimestamp": "2023-08-04T17:04:22Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/8cb5200797e2ff322d3632be6c9df80e72dd8fed/contracts/proxy/Proxy.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Fix review limited to the changes of pull request #4502 (head commit).",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 4
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 2,
+        "ignoredRemoved": 2,
+        "unchanged": 50,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 26,
+            "oldLines": 8,
+            "newStart": 26,
+            "newLines": 8,
+            "lines": [
+              { "type": " ", "oldLine": 26, "newLine": 26, "text": "    }" },
+              { "type": " ", "oldLine": 27, "newLine": 27, "text": "" },
+              { "type": " ", "oldLine": 28, "newLine": 28, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 29,
+                "text": "     * @dev This is a virtual function that should be overridden so it returns the address to which the fallback function",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 30,
+                "text": "     * and {_fallback} should delegate.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 29,
+                "text": "     * @dev This is a virtual function that should be overridden so it returns the address to which the fallback",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 30,
+                "text": "     * function and {_fallback} should delegate.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 31, "newLine": 31, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 32,
+                "newLine": 32,
+                "text": "    function _implementation() internal view virtual returns (address);"
+              },
+              { "type": " ", "oldLine": 33, "newLine": 33, "text": "" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "d79ad2713a1d64a9": {
+      "status": "library",
+      "coveredLines": 50,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "Proxy",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/proxy/Proxy.sol",
+        "commit": "8cb5200797e2ff322d3632be6c9df80e72dd8fed",
+        "commitTimestamp": "2023-08-04T17:04:22Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/8cb5200797e2ff322d3632be6c9df80e72dd8fed/contracts/proxy/Proxy.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Fix review limited to the changes of pull request #4502 (head commit).",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 4
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 2,
+        "ignoredRemoved": 2,
+        "unchanged": 50,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 26,
+            "oldLines": 8,
+            "newStart": 26,
+            "newLines": 8,
+            "lines": [
+              { "type": " ", "oldLine": 26, "newLine": 26, "text": "    }" },
+              { "type": " ", "oldLine": 27, "newLine": 27, "text": "" },
+              { "type": " ", "oldLine": 28, "newLine": 28, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 29,
+                "text": "     * @dev This is a virtual function that should be overridden so it returns the address to which the fallback function",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 30,
+                "text": "     * and {_fallback} should delegate.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 29,
+                "text": "     * @dev This is a virtual function that should be overridden so it returns the address to which the fallback",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 30,
+                "text": "     * function and {_fallback} should delegate.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 31, "newLine": 31, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 32,
+                "newLine": 32,
+                "text": "    function _implementation() internal view virtual returns (address);"
+              },
+              { "type": " ", "oldLine": 33, "newLine": 33, "text": "" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
     }
   }
 }

@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "ca290e608265bcc5d19b4e7c5ca8f4a8880a39c84fb56562ac908e33e52f414a",
+  "name": "flags_test.go",
+  "kind": "program",
+  "lines": 60,
+  "source": "package flags\n\nimport (\n\t\"reflect\"\n\t\"strings\"\n\t\"testing\"\n\n\t\"github.com/urfave/cli/v2\"\n)\n\n// TestUniqueFlags asserts that all flag names are unique, to avoid accidental conflicts between the many flags.\nfunc TestUniqueFlags(t *testing.T) {\n\tseenCLI := make(map[string]struct{})\n\tfor _, flag := range Flags {\n\t\tfor _, name := range flag.Names() {\n\t\t\tif _, ok := seenCLI[name]; ok {\n\t\t\t\tt.Errorf(\"duplicate flag %s\", name)\n\t\t\t\tcontinue\n\t\t\t}\n\t\t\tseenCLI[name] = struct{}{}\n\t\t}\n\t}\n}\n\n// TestUniqueEnvVars asserts that all flag env vars are unique, to avoid accidental conflicts between the many flags.\nfunc TestUniqueEnvVars(t *testing.T) {\n\tseenCLI := make(map[string]struct{})\n\tfor _, flag := range Flags {\n\t\tenvVar := envVarForFlag(flag)\n\t\tif _, ok := seenCLI[envVar]; envVar != \"\" && ok {\n\t\t\tt.Errorf(\"duplicate flag env var %s\", envVar)\n\t\t\tcontinue\n\t\t}\n\t\tseenCLI[envVar] = struct{}{}\n\t}\n}\n\nfunc TestCorrectEnvVarPrefix(t *testing.T) {\n\tfor _, flag := range Flags {\n\t\tenvVar := envVarForFlag(flag)\n\t\tif envVar == \"\" {\n\t\t\tt.Errorf(\"Failed to find EnvVar for flag %v\", flag.Names()[0])\n\t\t}\n\t\tif !strings.HasPrefix(envVar, \"OP_PROGRAM_\") {\n\t\t\tt.Errorf(\"Flag %v env var (%v) does not start with OP_PROGRAM_\", flag.Names()[0], envVar)\n\t\t}\n\t\tif strings.Contains(envVar, \"__\") {\n\t\t\tt.Errorf(\"Flag %v env var (%v) has duplicate underscores\", flag.Names()[0], envVar)\n\t\t}\n\t}\n}\n\nfunc envVarForFlag(flag cli.Flag) string {\n\tvalues := reflect.ValueOf(flag)\n\tenvVarValue := values.Elem().FieldByName(\"EnvVars\")\n\tif envVarValue == (reflect.Value{}) || envVarValue.Len() == 0 {\n\t\treturn \"\"\n\t}\n\treturn envVarValue.Index(0).String()\n}",
+  "resolutions": {
+    "437dcc6cbc847e9a": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "1f5c32d18cf7148d": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

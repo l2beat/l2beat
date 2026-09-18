@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "eb9a355f6a9915871498f310d9d7836563057b1471d381812c2cc88988e1205c",
+  "name": "splitter_test.go",
+  "kind": "program",
+  "lines": 38,
+  "source": "package kvstore\n\nimport (\n\t\"testing\"\n\n\tpreimage \"github.com/ethereum-optimism/optimism/op-preimage\"\n\t\"github.com/ethereum/go-ethereum/common\"\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc TestPreimageSourceSplitter(t *testing.T) {\n\tlocalResult := []byte{1}\n\tglobalResult := []byte{2}\n\tlocal := func(key common.Hash) ([]byte, error) { return localResult, nil }\n\tglobal := func(key common.Hash) ([]byte, error) { return globalResult, nil }\n\tsplitter := NewPreimageSourceSplitter(local, global)\n\n\ttests := []struct {\n\t\tname      string\n\t\tkeyPrefix byte\n\t\texpected  []byte\n\t}{\n\t\t{\"Local\", byte(preimage.LocalKeyType), localResult},\n\t\t{\"Keccak\", byte(preimage.Keccak256KeyType), globalResult},\n\t\t{\"Generic\", byte(3), globalResult},\n\t\t{\"Reserved\", byte(4), globalResult},\n\t\t{\"Application\", byte(255), globalResult},\n\t}\n\tfor _, test := range tests {\n\t\tt.Run(test.name, func(t *testing.T) {\n\t\t\tkey := common.Hash{0xff}\n\t\t\tkey[0] = test.keyPrefix\n\t\t\tres, err := splitter.Get(key)\n\t\t\trequire.NoError(t, err)\n\t\t\trequire.Equal(t, test.expected, res)\n\t\t})\n\t}\n}",
+  "resolutions": {
+    "437dcc6cbc847e9a": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "bb55951394276893": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "1f5c32d18cf7148d": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

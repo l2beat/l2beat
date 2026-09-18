@@ -95,6 +95,66 @@
         "totalVersions": 2
       },
       "warnings": []
+    },
+    "437dcc6cbc847e9a": {
+      "status": "identical",
+      "coveredLines": 5,
+      "match": {
+        "origin": "stack",
+        "collection": "optimism",
+        "relation": {
+          "type": "template",
+          "template": "opstack/AddressManager"
+        },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "IStaticL1ChugSplashProxy",
+        "similarity": 1,
+        "reportId": "optimism/code4rena-base-2023-08",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts-bedrock/contracts/universal/ProxyAdmin.sol",
+        "commit": "382d38b7d45bcbf73cb5e1e3f28cbd45d24e8a59",
+        "commitTimestamp": "2023-05-15T22:36:46Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/382d38b7d45bcbf73cb5e1e3f28cbd45d24e8a59/packages/contracts-bedrock/contracts/universal/ProxyAdmin.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "One of the fourteen contest-scope contracts; commit taken from the contest repository's code-freeze declaration (the report itself prints no hash).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "warnings": []
+    },
+    "d79ad2713a1d64a9": {
+      "status": "identical",
+      "coveredLines": 5,
+      "match": {
+        "origin": "stack",
+        "collection": "optimism",
+        "relation": {
+          "type": "template",
+          "template": "opstack/AddressManager"
+        },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "IStaticL1ChugSplashProxy",
+        "similarity": 1,
+        "reportId": "optimism/code4rena-base-2023-08",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts-bedrock/contracts/universal/ProxyAdmin.sol",
+        "commit": "382d38b7d45bcbf73cb5e1e3f28cbd45d24e8a59",
+        "commitTimestamp": "2023-05-15T22:36:46Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/382d38b7d45bcbf73cb5e1e3f28cbd45d24e8a59/packages/contracts-bedrock/contracts/universal/ProxyAdmin.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "One of the fourteen contest-scope contracts; commit taken from the contest repository's code-freeze declaration (the report itself prints no hash).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "warnings": []
     }
   }
 }

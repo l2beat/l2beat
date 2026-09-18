@@ -640,6 +640,281 @@
         ]
       },
       "warnings": []
+    },
+    "437dcc6cbc847e9a": {
+      "status": "library",
+      "coveredLines": 127,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "EIP712",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2026-02-v5.6",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/utils/cryptography/EIP712.sol",
+        "commit": "5fd1781b1454fd1ef8e722282f86f9293cacf256",
+        "commitTimestamp": "2026-02-27T15:00:00Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/5fd1781b1454fd1ef8e722282f86f9293cacf256/contracts/utils/cryptography/EIP712.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Review of the fixes to the audit findings; the report states this commit reflects the final state of the audited codebase including all implemented resolutions.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 5
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 4,
+        "ignoredRemoved": 4,
+        "unchanged": 127,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 15,
+            "oldLines": 16,
+            "newStart": 15,
+            "newLines": 14,
+            "lines": [
+              { "type": " ", "oldLine": 15, "newLine": 15, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 16,
+                "newLine": 16,
+                "text": "    ShortString private immutable _name;"
+              },
+              {
+                "type": " ",
+                "oldLine": 17,
+                "newLine": 17,
+                "text": "    ShortString private immutable _version;"
+              },
+              {
+                "type": "-",
+                "oldLine": 18,
+                "text": "    // slither-disable-next-line constable-states",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 19,
+                "newLine": 18,
+                "text": "    string private _nameFallback;"
+              },
+              {
+                "type": "-",
+                "oldLine": 20,
+                "text": "    // slither-disable-next-line constable-states",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 21,
+                "newLine": 19,
+                "text": "    string private _versionFallback;"
+              },
+              { "type": " ", "oldLine": 22, "newLine": 20, "text": "" },
+              { "type": " ", "oldLine": 23, "newLine": 21, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 22,
+                "text": "     * @dev Initializes the domain separator and parameter caches."
+              },
+              { "type": " ", "oldLine": 25, "newLine": 23, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 26,
+                "newLine": 24,
+                "text": "     * The meaning of `name` and `version` is specified in"
+              },
+              {
+                "type": "-",
+                "oldLine": 27,
+                "text": "     * https://eips.ethereum.org/EIPS/eip-712#definition-of-domainseparator[EIP-712]:",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 25,
+                "text": "     * https://eips.ethereum.org/EIPS/eip-712#definition-of-domainseparator[EIP 712]:",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 28, "newLine": 26, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 29,
+                "newLine": 27,
+                "text": "     * - `name`: the user readable name of the signing domain, i.e. the name of the DApp or the protocol."
+              },
+              {
+                "type": " ",
+                "oldLine": 30,
+                "newLine": 28,
+                "text": "     * - `version`: the current major version of the signing domain."
+              }
+            ]
+          },
+          {
+            "oldStart": 77,
+            "oldLines": 7,
+            "newStart": 75,
+            "newLines": 9,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 77,
+                "newLine": 75,
+                "text": "        return MessageHashUtils.toTypedDataHash(_domainSeparatorV4(), structHash);"
+              },
+              { "type": " ", "oldLine": 78, "newLine": 76, "text": "    }" },
+              { "type": " ", "oldLine": 79, "newLine": 77, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 80,
+                "text": "    /// @inheritdoc IERC5267",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 78,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 79,
+                "text": "     * @dev See {IERC-5267}.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 80,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 81,
+                "newLine": 81,
+                "text": "    function eip712Domain()"
+              },
+              {
+                "type": " ",
+                "oldLine": 82,
+                "newLine": 82,
+                "text": "        public"
+              },
+              {
+                "type": " ",
+                "oldLine": 83,
+                "newLine": 83,
+                "text": "        view"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "d80a56c5abf9208b": {
+      "status": "library",
+      "coveredLines": 129,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "EIP712",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2026-02-v5.6",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/utils/cryptography/EIP712.sol",
+        "commit": "5fd1781b1454fd1ef8e722282f86f9293cacf256",
+        "commitTimestamp": "2026-02-27T15:00:00Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/5fd1781b1454fd1ef8e722282f86f9293cacf256/contracts/utils/cryptography/EIP712.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Review of the fixes to the audit findings; the report states this commit reflects the final state of the audited codebase including all implemented resolutions.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 5
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 3,
+        "ignoredRemoved": 1,
+        "unchanged": 129,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 77,
+            "oldLines": 7,
+            "newStart": 77,
+            "newLines": 9,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 77,
+                "newLine": 77,
+                "text": "        return MessageHashUtils.toTypedDataHash(_domainSeparatorV4(), structHash);"
+              },
+              { "type": " ", "oldLine": 78, "newLine": 78, "text": "    }" },
+              { "type": " ", "oldLine": 79, "newLine": 79, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 80,
+                "text": "    /// @inheritdoc IERC5267",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 80,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 81,
+                "text": "     * @inheritdoc IERC5267",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 82,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 81,
+                "newLine": 83,
+                "text": "    function eip712Domain()"
+              },
+              {
+                "type": " ",
+                "oldLine": 82,
+                "newLine": 84,
+                "text": "        public"
+              },
+              {
+                "type": " ",
+                "oldLine": 83,
+                "newLine": 85,
+                "text": "        view"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
     }
   }
 }

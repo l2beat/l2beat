@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "15ca6410dc334aa2a6e2887f150351ab9e477204ce34beb2d35d13f538ac28ea",
+  "name": "client.go",
+  "kind": "program",
+  "lines": 83,
+  "source": "package l1\n\nimport (\n\t\"context\"\n\t\"errors\"\n\t\"fmt\"\n\n\t\"github.com/ethereum/go-ethereum\"\n\n\t\"github.com/ethereum-optimism/optimism/op-service/eth\"\n\t\"github.com/ethereum/go-ethereum/common\"\n\t\"github.com/ethereum/go-ethereum/core/types\"\n\t\"github.com/ethereum/go-ethereum/log\"\n)\n\nvar (\n\tErrNotFound     = ethereum.NotFound\n\tErrUnknownLabel = errors.New(\"unknown label\")\n)\n\ntype OracleL1Client struct {\n\tlogger               log.Logger\n\toracle               Oracle\n\thead                 eth.L1BlockRef\n\thashByNum            map[uint64]common.Hash\n\tearliestIndexedBlock eth.L1BlockRef\n}\n\nfunc NewOracleL1Client(logger log.Logger, oracle Oracle, l1Head common.Hash) *OracleL1Client {\n\thead := eth.InfoToL1BlockRef(oracle.HeaderByBlockHash(l1Head))\n\tlogger.Info(\"L1 head loaded\", \"hash\", head.Hash, \"number\", head.Number)\n\treturn &OracleL1Client{\n\t\tlogger:               logger,\n\t\toracle:               oracle,\n\t\thead:                 head,\n\t\thashByNum:            map[uint64]common.Hash{head.Number: head.Hash},\n\t\tearliestIndexedBlock: head,\n\t}\n}\n\nfunc (o *OracleL1Client) L1BlockRefByLabel(ctx context.Context, label eth.BlockLabel) (eth.L1BlockRef, error) {\n\tif label != eth.Unsafe && label != eth.Safe && label != eth.Finalized {\n\t\treturn eth.L1BlockRef{}, fmt.Errorf(\"%w: %s\", ErrUnknownLabel, label)\n\t}\n\t// The L1 head is pre-agreed and unchanging so it can be used for all of unsafe, safe and finalized\n\treturn o.head, nil\n}\n\nfunc (o *OracleL1Client) L1BlockRefByNumber(ctx context.Context, number uint64) (eth.L1BlockRef, error) {\n\tif number > o.head.Number {\n\t\treturn eth.L1BlockRef{}, fmt.Errorf(\"%w: block number %d\", ErrNotFound, number)\n\t}\n\thash, ok := o.hashByNum[number]\n\tif ok {\n\t\treturn o.L1BlockRefByHash(ctx, hash)\n\t}\n\tblock := o.earliestIndexedBlock\n\to.logger.Info(\"Extending block by number lookup\", \"from\", block.Number, \"to\", number)\n\tfor block.Number > number {\n\t\tblock = eth.InfoToL1BlockRef(o.oracle.HeaderByBlockHash(block.ParentHash))\n\t\to.hashByNum[block.Number] = block.Hash\n\t\to.earliestIndexedBlock = block\n\t}\n\treturn block, nil\n}\n\nfunc (o *OracleL1Client) L1BlockRefByHash(ctx context.Context, hash common.Hash) (eth.L1BlockRef, error) {\n\treturn eth.InfoToL1BlockRef(o.oracle.HeaderByBlockHash(hash)), nil\n}\n\nfunc (o *OracleL1Client) InfoByHash(ctx context.Context, hash common.Hash) (eth.BlockInfo, error) {\n\treturn o.oracle.HeaderByBlockHash(hash), nil\n}\n\nfunc (o *OracleL1Client) FetchReceipts(ctx context.Context, blockHash common.Hash) (eth.BlockInfo, types.Receipts, error) {\n\tinfo, rcpts := o.oracle.ReceiptsByBlockHash(blockHash)\n\treturn info, rcpts, nil\n}\n\nfunc (o *OracleL1Client) InfoAndTxsByHash(ctx context.Context, hash common.Hash) (eth.BlockInfo, types.Transactions, error) {\n\tinfo, txs := o.oracle.TransactionsByBlockHash(hash)\n\treturn info, txs, nil\n}",
+  "resolutions": {
+    "437dcc6cbc847e9a": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "bb55951394276893": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "1f5c32d18cf7148d": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

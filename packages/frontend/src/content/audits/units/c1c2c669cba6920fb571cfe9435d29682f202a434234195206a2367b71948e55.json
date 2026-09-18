@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "c1c2c669cba6920fb571cfe9435d29682f202a434234195206a2367b71948e55",
+  "name": "canon.go",
+  "kind": "program",
+  "lines": 88,
+  "source": "package l2\n\nimport (\n\t\"fmt\"\n\n\t\"github.com/ethereum/go-ethereum/common\"\n\t\"github.com/ethereum/go-ethereum/core/types\"\n)\n\ntype BlockByHashFn func(hash common.Hash) *types.Block\n\ntype CanonicalBlockHeaderOracle struct {\n\thead                 *types.Header\n\thashByNum            map[uint64]common.Hash\n\tearliestIndexedBlock *types.Header\n\tblockByHashFn        BlockByHashFn\n}\n\nfunc NewCanonicalBlockHeaderOracle(head *types.Header, blockByHashFn BlockByHashFn) *CanonicalBlockHeaderOracle {\n\treturn &CanonicalBlockHeaderOracle{\n\t\thead: head,\n\t\thashByNum: map[uint64]common.Hash{\n\t\t\thead.Number.Uint64(): head.Hash(),\n\t\t},\n\t\tearliestIndexedBlock: head,\n\t\tblockByHashFn:        blockByHashFn,\n\t}\n}\n\nfunc (o *CanonicalBlockHeaderOracle) CurrentHeader() *types.Header {\n\treturn o.head\n}\n\n// GetHeaderByNumber walks back from the current head to the requested block number\nfunc (o *CanonicalBlockHeaderOracle) GetHeaderByNumber(n uint64) *types.Header {\n\tif o.head.Number.Uint64() < n {\n\t\treturn nil\n\t}\n\n\tif o.earliestIndexedBlock.Number.Uint64() <= n {\n\t\t// guaranteed to be cached during lookup\n\t\thash, ok := o.hashByNum[n]\n\t\tif !ok {\n\t\t\tpanic(fmt.Sprintf(\"block %v was not indexed when earliest block number is %v\", n, o.earliestIndexedBlock.Number))\n\t\t}\n\t\treturn o.blockByHashFn(hash).Header()\n\t}\n\n\th := o.earliestIndexedBlock\n\tfor h.Number.Uint64() > n {\n\t\thash := h.ParentHash\n\t\th = o.blockByHashFn(hash).Header()\n\t\to.hashByNum[h.Number.Uint64()] = hash\n\t}\n\to.earliestIndexedBlock = h\n\treturn h\n}\n\nfunc (o *CanonicalBlockHeaderOracle) SetCanonical(head *types.Header) common.Hash {\n\toldHead := o.head\n\to.head = head\n\n\t// Remove canonical hashes after the new header\n\tfor n := head.Number.Uint64() + 1; n <= oldHead.Number.Uint64(); n++ {\n\t\tdelete(o.hashByNum, n)\n\t}\n\n\t// Add new canonical blocks to the block by number cache\n\t// Since the original head is added to the block number cache and acts as the finalized block,\n\t// at some point we must reach the existing canonical chain and can stop updating.\n\th := o.head\n\tfor {\n\t\tnewHash := h.Hash()\n\t\tprevHash, ok := o.hashByNum[h.Number.Uint64()]\n\t\tif ok && prevHash == newHash {\n\t\t\t// Connected with the existing canonical chain so stop updating\n\t\t\tbreak\n\t\t}\n\t\to.hashByNum[h.Number.Uint64()] = newHash\n\t\tif h.Number.Uint64() == 0 {\n\t\t\t// Reachable if there aren't any cached blocks at or before the common ancestor\n\t\t\tbreak\n\t\t}\n\t\th = o.blockByHashFn(h.ParentHash).Header()\n\t}\n\to.earliestIndexedBlock = h\n\treturn head.Hash()\n}",
+  "resolutions": {
+    "437dcc6cbc847e9a": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "1f5c32d18cf7148d": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

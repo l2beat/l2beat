@@ -121,6 +121,354 @@
         ]
       },
       "warnings": []
+    },
+    "d80a56c5abf9208b": {
+      "status": "differs",
+      "coveredLines": 203,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "similarity",
+        "auditedName": "ECDSA",
+        "similarity": 0.99,
+        "reportId": "openzeppelin/contracts__audits__2023-05-v4.9",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/utils/cryptography/ECDSA.sol",
+        "commit": "91df66c4a9dfd0425ff923cbeb3a20155f1355ea",
+        "commitTimestamp": "2023-04-21T11:35:07Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/91df66c4a9dfd0425ff923cbeb3a20155f1355ea/contracts/utils/cryptography/ECDSA.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Only the changes to this file between versions 4.8 and 4.9 were reviewed.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 9
+      },
+      "diff": {
+        "added": 2,
+        "removed": 2,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 203,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 4,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "library ECDSA {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "library ECDSAUpgradeable {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "    enum RecoverError {"
+              },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "        NoError,"
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "        InvalidSignature,"
+              }
+            ]
+          },
+          {
+            "oldStart": 170,
+            "oldLines": 7,
+            "newStart": 170,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 170,
+                "newLine": 170,
+                "text": "     * See {recover}."
+              },
+              {
+                "type": " ",
+                "oldLine": 171,
+                "newLine": 171,
+                "text": "     */"
+              },
+              {
+                "type": " ",
+                "oldLine": 172,
+                "newLine": 172,
+                "text": "    function toEthSignedMessageHash(bytes memory s) internal pure returns (bytes32) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 173,
+                "text": "        return keccak256(abi.encodePacked(\"\\x19Ethereum Signed Message:\\n\", Strings.toString(s.length), s));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 173,
+                "text": "        return keccak256(abi.encodePacked(\"\\x19Ethereum Signed Message:\\n\", StringsUpgradeable.toString(s.length), s));",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 174, "newLine": 174, "text": "    }" },
+              { "type": " ", "oldLine": 175, "newLine": 175, "text": "" },
+              { "type": " ", "oldLine": 176, "newLine": 176, "text": "    /**" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "437dcc6cbc847e9a": {
+      "status": "differs",
+      "coveredLines": 203,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "similarity",
+        "auditedName": "ECDSA",
+        "similarity": 0.99,
+        "reportId": "openzeppelin/contracts__audits__2023-05-v4.9",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/utils/cryptography/ECDSA.sol",
+        "commit": "91df66c4a9dfd0425ff923cbeb3a20155f1355ea",
+        "commitTimestamp": "2023-04-21T11:35:07Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/91df66c4a9dfd0425ff923cbeb3a20155f1355ea/contracts/utils/cryptography/ECDSA.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Only the changes to this file between versions 4.8 and 4.9 were reviewed.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 9
+      },
+      "diff": {
+        "added": 2,
+        "removed": 2,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 203,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 4,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "library ECDSA {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "library ECDSAUpgradeable {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "    enum RecoverError {"
+              },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "        NoError,"
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "        InvalidSignature,"
+              }
+            ]
+          },
+          {
+            "oldStart": 170,
+            "oldLines": 7,
+            "newStart": 170,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 170,
+                "newLine": 170,
+                "text": "     * See {recover}."
+              },
+              {
+                "type": " ",
+                "oldLine": 171,
+                "newLine": 171,
+                "text": "     */"
+              },
+              {
+                "type": " ",
+                "oldLine": 172,
+                "newLine": 172,
+                "text": "    function toEthSignedMessageHash(bytes memory s) internal pure returns (bytes32) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 173,
+                "text": "        return keccak256(abi.encodePacked(\"\\x19Ethereum Signed Message:\\n\", Strings.toString(s.length), s));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 173,
+                "text": "        return keccak256(abi.encodePacked(\"\\x19Ethereum Signed Message:\\n\", StringsUpgradeable.toString(s.length), s));",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 174, "newLine": 174, "text": "    }" },
+              { "type": " ", "oldLine": 175, "newLine": 175, "text": "" },
+              { "type": " ", "oldLine": 176, "newLine": 176, "text": "    /**" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "13052b7adc791062": {
+      "status": "differs",
+      "coveredLines": 203,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "similarity",
+        "auditedName": "ECDSA",
+        "similarity": 0.99,
+        "reportId": "openzeppelin/contracts__audits__2023-05-v4.9",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/utils/cryptography/ECDSA.sol",
+        "commit": "91df66c4a9dfd0425ff923cbeb3a20155f1355ea",
+        "commitTimestamp": "2023-04-21T11:35:07Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/91df66c4a9dfd0425ff923cbeb3a20155f1355ea/contracts/utils/cryptography/ECDSA.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Only the changes to this file between versions 4.8 and 4.9 were reviewed.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 9
+      },
+      "diff": {
+        "added": 2,
+        "removed": 2,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 203,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 4,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "library ECDSA {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "library ECDSAUpgradeable {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "    enum RecoverError {"
+              },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "        NoError,"
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "        InvalidSignature,"
+              }
+            ]
+          },
+          {
+            "oldStart": 170,
+            "oldLines": 7,
+            "newStart": 170,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 170,
+                "newLine": 170,
+                "text": "     * See {recover}."
+              },
+              {
+                "type": " ",
+                "oldLine": 171,
+                "newLine": 171,
+                "text": "     */"
+              },
+              {
+                "type": " ",
+                "oldLine": 172,
+                "newLine": 172,
+                "text": "    function toEthSignedMessageHash(bytes memory s) internal pure returns (bytes32) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 173,
+                "text": "        return keccak256(abi.encodePacked(\"\\x19Ethereum Signed Message:\\n\", Strings.toString(s.length), s));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 173,
+                "text": "        return keccak256(abi.encodePacked(\"\\x19Ethereum Signed Message:\\n\", StringsUpgradeable.toString(s.length), s));",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 174, "newLine": 174, "text": "    }" },
+              { "type": " ", "oldLine": 175, "newLine": 175, "text": "" },
+              { "type": " ", "oldLine": 176, "newLine": 176, "text": "    /**" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
     }
   }
 }

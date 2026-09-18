@@ -746,6 +746,253 @@
         ]
       },
       "warnings": []
+    },
+    "437dcc6cbc847e9a": {
+      "status": "differs",
+      "coveredLines": 430,
+      "match": {
+        "origin": "stack",
+        "collection": "optimism",
+        "relation": {
+          "type": "template",
+          "template": "opstack/AnchorStateRegistry_post13"
+        },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "MIPS64Syscalls",
+        "similarity": 0.972,
+        "reportId": "optimism/spearbit-u16a-2025-09",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts-bedrock/src/cannon/libraries/MIPS64Syscalls.sol",
+        "commit": "475801690f7a451469ee4da87b5fe3c54c92f372",
+        "commitTimestamp": "2025-09-08T23:51:38Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/475801690f7a451469ee4da87b5fe3c54c92f372/packages/contracts-bedrock/src/cannon/libraries/MIPS64Syscalls.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Reviewed in full (keccak256 file hash listed in the report appendix) at the stated commit during the 2-day Optimism U16a review (Sep 9-11, 2025). No Critical/High/Medium findings; no findings located in this file.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 9
+      },
+      "diff": {
+        "added": 9,
+        "removed": 6,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 430,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 261,
+            "oldLines": 7,
+            "newStart": 261,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 261,
+                "newLine": 261,
+                "text": "            }"
+              },
+              {
+                "type": " ",
+                "oldLine": 262,
+                "newLine": 262,
+                "text": "            // pre-image oracle read"
+              },
+              {
+                "type": " ",
+                "oldLine": 263,
+                "newLine": 263,
+                "text": "            else if (_args.a0 == FD_PREIMAGE_READ) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 264,
+                "text": "                uint64 effAddr = _args.a1 & arch.ADDRESS_MASK;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 264,
+                "text": "                uint64 effAddr = _args.a1 & MIPS64Arch.ADDRESS_MASK;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 265,
+                "newLine": 265,
+                "text": "                // verify proof is correct, and get the existing memory."
+              },
+              {
+                "type": " ",
+                "oldLine": 266,
+                "newLine": 266,
+                "text": "                // mask the addr to align it to 4 bytes"
+              },
+              {
+                "type": " ",
+                "oldLine": 267,
+                "newLine": 267,
+                "text": "                uint64 mem = MIPS64Memory.readMem(_args.memRoot, effAddr, _args.proofOffset);"
+              }
+            ]
+          },
+          {
+            "oldStart": 341,
+            "oldLines": 7,
+            "newStart": 341,
+            "newLines": 8,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 341,
+                "newLine": 341,
+                "text": "            // pre-image oracle"
+              },
+              {
+                "type": " ",
+                "oldLine": 342,
+                "newLine": 342,
+                "text": "            else if (_args._a0 == FD_PREIMAGE_WRITE) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 343,
+                "newLine": 343,
+                "text": "                // mask the addr to align it to 4 bytes"
+              },
+              {
+                "type": "-",
+                "oldLine": 344,
+                "text": "                uint64 mem = MIPS64Memory.readMem(_args._memRoot, _args._a1 & arch.ADDRESS_MASK, _args._proofOffset);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 344,
+                "text": "                uint64 mem =",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 345,
+                "text": "                    MIPS64Memory.readMem(_args._memRoot, _args._a1 & MIPS64Arch.ADDRESS_MASK, _args._proofOffset);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 345,
+                "newLine": 346,
+                "text": "                bytes32 key = _args._preimageKey;"
+              },
+              { "type": " ", "oldLine": 346, "newLine": 347, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 347,
+                "newLine": 348,
+                "text": "                // Construct pre-image key from memory"
+              }
+            ]
+          },
+          {
+            "oldStart": 419,
+            "oldLines": 10,
+            "newStart": 420,
+            "newLines": 12,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 419,
+                "newLine": 420,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 420, "newLine": 421, "text": "    }" },
+              { "type": " ", "oldLine": 421, "newLine": 422, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 422,
+                "text": "    function handleSyscallUpdates(st.CpuScalars memory _cpu, uint64[32] memory _registers, uint64 _v0, uint64 _v1)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 423,
+                "text": "        internal",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 424,
+                "text": "        pure",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 425,
+                "text": "    {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 423,
+                "text": "    function handleSyscallUpdates(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 424,
+                "text": "        MIPS64State.CpuScalars memory _cpu,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 425,
+                "text": "        uint64[32] memory _registers,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 426,
+                "text": "        uint64 _v0,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 427,
+                "text": "        uint64 _v1",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 428,
+                "text": "    ) internal pure {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 426,
+                "newLine": 429,
+                "text": "        unchecked {"
+              },
+              {
+                "type": " ",
+                "oldLine": 427,
+                "newLine": 430,
+                "text": "            // Write the results back to the state registers"
+              },
+              {
+                "type": " ",
+                "oldLine": 428,
+                "newLine": 431,
+                "text": "            _registers[REG_SYSCALL_RET1] = _v0;"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
     }
   }
 }

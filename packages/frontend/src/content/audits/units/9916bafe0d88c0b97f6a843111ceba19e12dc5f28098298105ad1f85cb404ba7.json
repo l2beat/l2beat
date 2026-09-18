@@ -511,6 +511,1783 @@
         ]
       },
       "warnings": []
+    },
+    "44ad4cf96e2ef6f0": {
+      "status": "differs",
+      "coveredLines": 206,
+      "match": {
+        "origin": "stack",
+        "collection": "sp1",
+        "relation": {
+          "type": "template",
+          "template": "succinct/OPSuccinct/AccessManager"
+        },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "build.rs",
+        "similarity": 0.963,
+        "reportId": "sp1/zellic-sp1-design-review-2024",
+        "repository": "succinctlabs/sp1",
+        "path": "crates/prover/src/build.rs",
+        "commit": "15be73d3acae3718a0acc529ed566f6a448b1c0e",
+        "commitTimestamp": "2024-11-27T02:59:17Z",
+        "url": "https://github.com/succinctlabs/sp1/blob/15be73d3acae3718a0acc529ed566f6a448b1c0e/crates/prover/src/build.rs",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "Initial audit",
+        "coverage": "Design-level review only (explicitly not a code audit): RV32IM specification compliance and the register/low-memory aliasing at addresses 0x0-0x1f, focused mostly on load and store instruction behaviour; soundness/completeness of the ZK proofs and circuits and correctness of implementation details were out of scope.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 4,
+        "removed": 3,
+        "ignoredAdded": 4,
+        "ignoredRemoved": 5,
+        "unchanged": 206,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 3,
+            "newStart": 1,
+            "newLines": 5,
+            "lines": [
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "#![allow(clippy::print_stdout)] // okay to print to stdout: this is a build script",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 2, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 3,
+                "text": "use std::{borrow::Borrow, path::PathBuf};"
+              },
+              { "type": " ", "oldLine": 2, "newLine": 4, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 5,
+                "text": "use p3_baby_bear::BabyBear;"
+              }
+            ]
+          },
+          {
+            "oldStart": 12,
+            "oldLines": 15,
+            "newStart": 14,
+            "newLines": 13,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 12,
+                "newLine": 14,
+                "text": "    constraints::{Constraint, ConstraintCompiler},"
+              },
+              {
+                "type": " ",
+                "oldLine": 13,
+                "newLine": 15,
+                "text": "    ir::Builder,"
+              },
+              { "type": " ", "oldLine": 14, "newLine": 16, "text": "};" },
+              { "type": "-", "oldLine": 15, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 16,
+                "newLine": 17,
+                "text": "use sp1_recursion_core::air::RecursionPublicValues;"
+              },
+              {
+                "type": "-",
+                "oldLine": 17,
+                "text": "pub use sp1_recursion_core::stark::sp1_dev_mode;",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 18, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 19,
+                "text": "pub use sp1_recursion_circuit::witness::{OuterWitness, Witnessable};",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 20, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 21,
+                "newLine": 18,
+                "text": "use sp1_recursion_gnark_ffi::{Groth16Bn254Prover, PlonkBn254Prover};"
+              },
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 19,
+                "text": "use sp1_stark::{SP1ProverOpts, ShardProof, StarkVerifyingKey};"
+              },
+              { "type": " ", "oldLine": 23, "newLine": 20, "text": "" },
+              {
+                "type": "+",
+                "newLine": 21,
+                "text": "pub use sp1_recursion_circuit::witness::{OuterWitness, Witnessable};",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 22,
+                "text": "pub use sp1_recursion_core::stark::sp1_dev_mode;",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 23, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 24,
+                "text": "use crate::{"
+              },
+              {
+                "type": " ",
+                "oldLine": 25,
+                "newLine": 25,
+                "text": "    utils::{babybear_bytes_to_bn254, babybears_to_bn254, words_to_bytes},"
+              },
+              {
+                "type": " ",
+                "oldLine": 26,
+                "newLine": 26,
+                "text": "    OuterSC, SP1Prover, WrapAir,"
+              }
+            ]
+          },
+          {
+            "oldStart": 153,
+            "oldLines": 16,
+            "newStart": 153,
+            "newLines": 16,
+            "lines": [
+              { "type": " ", "oldLine": 153, "newLine": 153, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 154,
+                "newLine": 154,
+                "text": "    tracing::info!(\"initializing prover\");"
+              },
+              {
+                "type": " ",
+                "oldLine": 155,
+                "newLine": 155,
+                "text": "    let prover: SP1Prover = SP1Prover::new();"
+              },
+              {
+                "type": "-",
+                "oldLine": 156,
+                "text": "    let opts = SP1ProverOpts::default();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 156,
+                "text": "    let opts = SP1ProverOpts::auto();",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 157,
+                "newLine": 157,
+                "text": "    let context = SP1Context::default();"
+              },
+              { "type": " ", "oldLine": 158, "newLine": 158, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 159,
+                "newLine": 159,
+                "text": "    tracing::info!(\"setup elf\");"
+              },
+              {
+                "type": "-",
+                "oldLine": 160,
+                "text": "    let (pk, vk) = prover.setup(elf);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 160,
+                "text": "    let (_, pk_d, program, vk) = prover.setup(elf);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 161, "newLine": 161, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 162,
+                "newLine": 162,
+                "text": "    tracing::info!(\"prove core\");"
+              },
+              {
+                "type": " ",
+                "oldLine": 163,
+                "newLine": 163,
+                "text": "    let mut stdin = SP1Stdin::new();"
+              },
+              {
+                "type": " ",
+                "oldLine": 164,
+                "newLine": 164,
+                "text": "    stdin.write(&500u32);"
+              },
+              {
+                "type": "-",
+                "oldLine": 165,
+                "text": "    let core_proof = prover.prove_core(&pk, &stdin, opts, context).unwrap();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 165,
+                "text": "    let core_proof = prover.prove_core(&pk_d, program, &stdin, opts, context).unwrap();",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 166, "newLine": 166, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 167,
+                "newLine": 167,
+                "text": "    tracing::info!(\"compress\");"
+              },
+              {
+                "type": " ",
+                "oldLine": 168,
+                "newLine": 168,
+                "text": "    let compressed_proof = prover.compress(&vk, core_proof, vec![], opts).unwrap();"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "437dcc6cbc847e9a": {
+      "status": "differs",
+      "coveredLines": 206,
+      "match": {
+        "origin": "library",
+        "collection": "sp1",
+        "relation": { "type": "library" },
+        "rank": 3,
+        "matchedBy": "name",
+        "auditedName": "build.rs",
+        "similarity": 0.963,
+        "reportId": "sp1/zellic-sp1-design-review-2024",
+        "repository": "succinctlabs/sp1",
+        "path": "crates/prover/src/build.rs",
+        "commit": "15be73d3acae3718a0acc529ed566f6a448b1c0e",
+        "commitTimestamp": "2024-11-27T02:59:17Z",
+        "url": "https://github.com/succinctlabs/sp1/blob/15be73d3acae3718a0acc529ed566f6a448b1c0e/crates/prover/src/build.rs",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "Initial audit",
+        "coverage": "Design-level review only (explicitly not a code audit): RV32IM specification compliance and the register/low-memory aliasing at addresses 0x0-0x1f, focused mostly on load and store instruction behaviour; soundness/completeness of the ZK proofs and circuits and correctness of implementation details were out of scope.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 4,
+        "removed": 3,
+        "ignoredAdded": 4,
+        "ignoredRemoved": 5,
+        "unchanged": 206,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 3,
+            "newStart": 1,
+            "newLines": 5,
+            "lines": [
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "#![allow(clippy::print_stdout)] // okay to print to stdout: this is a build script",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 2, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 3,
+                "text": "use std::{borrow::Borrow, path::PathBuf};"
+              },
+              { "type": " ", "oldLine": 2, "newLine": 4, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 5,
+                "text": "use p3_baby_bear::BabyBear;"
+              }
+            ]
+          },
+          {
+            "oldStart": 12,
+            "oldLines": 15,
+            "newStart": 14,
+            "newLines": 13,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 12,
+                "newLine": 14,
+                "text": "    constraints::{Constraint, ConstraintCompiler},"
+              },
+              {
+                "type": " ",
+                "oldLine": 13,
+                "newLine": 15,
+                "text": "    ir::Builder,"
+              },
+              { "type": " ", "oldLine": 14, "newLine": 16, "text": "};" },
+              { "type": "-", "oldLine": 15, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 16,
+                "newLine": 17,
+                "text": "use sp1_recursion_core::air::RecursionPublicValues;"
+              },
+              {
+                "type": "-",
+                "oldLine": 17,
+                "text": "pub use sp1_recursion_core::stark::sp1_dev_mode;",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 18, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 19,
+                "text": "pub use sp1_recursion_circuit::witness::{OuterWitness, Witnessable};",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 20, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 21,
+                "newLine": 18,
+                "text": "use sp1_recursion_gnark_ffi::{Groth16Bn254Prover, PlonkBn254Prover};"
+              },
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 19,
+                "text": "use sp1_stark::{SP1ProverOpts, ShardProof, StarkVerifyingKey};"
+              },
+              { "type": " ", "oldLine": 23, "newLine": 20, "text": "" },
+              {
+                "type": "+",
+                "newLine": 21,
+                "text": "pub use sp1_recursion_circuit::witness::{OuterWitness, Witnessable};",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 22,
+                "text": "pub use sp1_recursion_core::stark::sp1_dev_mode;",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 23, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 24,
+                "text": "use crate::{"
+              },
+              {
+                "type": " ",
+                "oldLine": 25,
+                "newLine": 25,
+                "text": "    utils::{babybear_bytes_to_bn254, babybears_to_bn254, words_to_bytes},"
+              },
+              {
+                "type": " ",
+                "oldLine": 26,
+                "newLine": 26,
+                "text": "    OuterSC, SP1Prover, WrapAir,"
+              }
+            ]
+          },
+          {
+            "oldStart": 153,
+            "oldLines": 16,
+            "newStart": 153,
+            "newLines": 16,
+            "lines": [
+              { "type": " ", "oldLine": 153, "newLine": 153, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 154,
+                "newLine": 154,
+                "text": "    tracing::info!(\"initializing prover\");"
+              },
+              {
+                "type": " ",
+                "oldLine": 155,
+                "newLine": 155,
+                "text": "    let prover: SP1Prover = SP1Prover::new();"
+              },
+              {
+                "type": "-",
+                "oldLine": 156,
+                "text": "    let opts = SP1ProverOpts::default();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 156,
+                "text": "    let opts = SP1ProverOpts::auto();",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 157,
+                "newLine": 157,
+                "text": "    let context = SP1Context::default();"
+              },
+              { "type": " ", "oldLine": 158, "newLine": 158, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 159,
+                "newLine": 159,
+                "text": "    tracing::info!(\"setup elf\");"
+              },
+              {
+                "type": "-",
+                "oldLine": 160,
+                "text": "    let (pk, vk) = prover.setup(elf);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 160,
+                "text": "    let (_, pk_d, program, vk) = prover.setup(elf);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 161, "newLine": 161, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 162,
+                "newLine": 162,
+                "text": "    tracing::info!(\"prove core\");"
+              },
+              {
+                "type": " ",
+                "oldLine": 163,
+                "newLine": 163,
+                "text": "    let mut stdin = SP1Stdin::new();"
+              },
+              {
+                "type": " ",
+                "oldLine": 164,
+                "newLine": 164,
+                "text": "    stdin.write(&500u32);"
+              },
+              {
+                "type": "-",
+                "oldLine": 165,
+                "text": "    let core_proof = prover.prove_core(&pk, &stdin, opts, context).unwrap();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 165,
+                "text": "    let core_proof = prover.prove_core(&pk_d, program, &stdin, opts, context).unwrap();",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 166, "newLine": 166, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 167,
+                "newLine": 167,
+                "text": "    tracing::info!(\"compress\");"
+              },
+              {
+                "type": " ",
+                "oldLine": 168,
+                "newLine": 168,
+                "text": "    let compressed_proof = prover.compress(&vk, core_proof, vec![], opts).unwrap();"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "5d5f82d91c09d4ec": {
+      "status": "differs",
+      "coveredLines": 206,
+      "match": {
+        "origin": "library",
+        "collection": "sp1",
+        "relation": { "type": "library" },
+        "rank": 3,
+        "matchedBy": "name",
+        "auditedName": "build.rs",
+        "similarity": 0.963,
+        "reportId": "sp1/zellic-sp1-design-review-2024",
+        "repository": "succinctlabs/sp1",
+        "path": "crates/prover/src/build.rs",
+        "commit": "15be73d3acae3718a0acc529ed566f6a448b1c0e",
+        "commitTimestamp": "2024-11-27T02:59:17Z",
+        "url": "https://github.com/succinctlabs/sp1/blob/15be73d3acae3718a0acc529ed566f6a448b1c0e/crates/prover/src/build.rs",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "Initial audit",
+        "coverage": "Design-level review only (explicitly not a code audit): RV32IM specification compliance and the register/low-memory aliasing at addresses 0x0-0x1f, focused mostly on load and store instruction behaviour; soundness/completeness of the ZK proofs and circuits and correctness of implementation details were out of scope.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 4,
+        "removed": 3,
+        "ignoredAdded": 4,
+        "ignoredRemoved": 5,
+        "unchanged": 206,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 3,
+            "newStart": 1,
+            "newLines": 5,
+            "lines": [
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "#![allow(clippy::print_stdout)] // okay to print to stdout: this is a build script",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 2, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 3,
+                "text": "use std::{borrow::Borrow, path::PathBuf};"
+              },
+              { "type": " ", "oldLine": 2, "newLine": 4, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 5,
+                "text": "use p3_baby_bear::BabyBear;"
+              }
+            ]
+          },
+          {
+            "oldStart": 12,
+            "oldLines": 15,
+            "newStart": 14,
+            "newLines": 13,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 12,
+                "newLine": 14,
+                "text": "    constraints::{Constraint, ConstraintCompiler},"
+              },
+              {
+                "type": " ",
+                "oldLine": 13,
+                "newLine": 15,
+                "text": "    ir::Builder,"
+              },
+              { "type": " ", "oldLine": 14, "newLine": 16, "text": "};" },
+              { "type": "-", "oldLine": 15, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 16,
+                "newLine": 17,
+                "text": "use sp1_recursion_core::air::RecursionPublicValues;"
+              },
+              {
+                "type": "-",
+                "oldLine": 17,
+                "text": "pub use sp1_recursion_core::stark::sp1_dev_mode;",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 18, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 19,
+                "text": "pub use sp1_recursion_circuit::witness::{OuterWitness, Witnessable};",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 20, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 21,
+                "newLine": 18,
+                "text": "use sp1_recursion_gnark_ffi::{Groth16Bn254Prover, PlonkBn254Prover};"
+              },
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 19,
+                "text": "use sp1_stark::{SP1ProverOpts, ShardProof, StarkVerifyingKey};"
+              },
+              { "type": " ", "oldLine": 23, "newLine": 20, "text": "" },
+              {
+                "type": "+",
+                "newLine": 21,
+                "text": "pub use sp1_recursion_circuit::witness::{OuterWitness, Witnessable};",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 22,
+                "text": "pub use sp1_recursion_core::stark::sp1_dev_mode;",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 23, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 24,
+                "text": "use crate::{"
+              },
+              {
+                "type": " ",
+                "oldLine": 25,
+                "newLine": 25,
+                "text": "    utils::{babybear_bytes_to_bn254, babybears_to_bn254, words_to_bytes},"
+              },
+              {
+                "type": " ",
+                "oldLine": 26,
+                "newLine": 26,
+                "text": "    OuterSC, SP1Prover, WrapAir,"
+              }
+            ]
+          },
+          {
+            "oldStart": 153,
+            "oldLines": 16,
+            "newStart": 153,
+            "newLines": 16,
+            "lines": [
+              { "type": " ", "oldLine": 153, "newLine": 153, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 154,
+                "newLine": 154,
+                "text": "    tracing::info!(\"initializing prover\");"
+              },
+              {
+                "type": " ",
+                "oldLine": 155,
+                "newLine": 155,
+                "text": "    let prover: SP1Prover = SP1Prover::new();"
+              },
+              {
+                "type": "-",
+                "oldLine": 156,
+                "text": "    let opts = SP1ProverOpts::default();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 156,
+                "text": "    let opts = SP1ProverOpts::auto();",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 157,
+                "newLine": 157,
+                "text": "    let context = SP1Context::default();"
+              },
+              { "type": " ", "oldLine": 158, "newLine": 158, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 159,
+                "newLine": 159,
+                "text": "    tracing::info!(\"setup elf\");"
+              },
+              {
+                "type": "-",
+                "oldLine": 160,
+                "text": "    let (pk, vk) = prover.setup(elf);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 160,
+                "text": "    let (_, pk_d, program, vk) = prover.setup(elf);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 161, "newLine": 161, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 162,
+                "newLine": 162,
+                "text": "    tracing::info!(\"prove core\");"
+              },
+              {
+                "type": " ",
+                "oldLine": 163,
+                "newLine": 163,
+                "text": "    let mut stdin = SP1Stdin::new();"
+              },
+              {
+                "type": " ",
+                "oldLine": 164,
+                "newLine": 164,
+                "text": "    stdin.write(&500u32);"
+              },
+              {
+                "type": "-",
+                "oldLine": 165,
+                "text": "    let core_proof = prover.prove_core(&pk, &stdin, opts, context).unwrap();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 165,
+                "text": "    let core_proof = prover.prove_core(&pk_d, program, &stdin, opts, context).unwrap();",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 166, "newLine": 166, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 167,
+                "newLine": 167,
+                "text": "    tracing::info!(\"compress\");"
+              },
+              {
+                "type": " ",
+                "oldLine": 168,
+                "newLine": 168,
+                "text": "    let compressed_proof = prover.compress(&vk, core_proof, vec![], opts).unwrap();"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "e3b0c44298fc1c14": {
+      "status": "differs",
+      "coveredLines": 206,
+      "match": {
+        "origin": "library",
+        "collection": "sp1",
+        "relation": { "type": "library" },
+        "rank": 3,
+        "matchedBy": "name",
+        "auditedName": "build.rs",
+        "similarity": 0.963,
+        "reportId": "sp1/zellic-sp1-design-review-2024",
+        "repository": "succinctlabs/sp1",
+        "path": "crates/prover/src/build.rs",
+        "commit": "15be73d3acae3718a0acc529ed566f6a448b1c0e",
+        "commitTimestamp": "2024-11-27T02:59:17Z",
+        "url": "https://github.com/succinctlabs/sp1/blob/15be73d3acae3718a0acc529ed566f6a448b1c0e/crates/prover/src/build.rs",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "Initial audit",
+        "coverage": "Design-level review only (explicitly not a code audit): RV32IM specification compliance and the register/low-memory aliasing at addresses 0x0-0x1f, focused mostly on load and store instruction behaviour; soundness/completeness of the ZK proofs and circuits and correctness of implementation details were out of scope.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 4,
+        "removed": 3,
+        "ignoredAdded": 4,
+        "ignoredRemoved": 5,
+        "unchanged": 206,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 3,
+            "newStart": 1,
+            "newLines": 5,
+            "lines": [
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "#![allow(clippy::print_stdout)] // okay to print to stdout: this is a build script",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 2, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 3,
+                "text": "use std::{borrow::Borrow, path::PathBuf};"
+              },
+              { "type": " ", "oldLine": 2, "newLine": 4, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 5,
+                "text": "use p3_baby_bear::BabyBear;"
+              }
+            ]
+          },
+          {
+            "oldStart": 12,
+            "oldLines": 15,
+            "newStart": 14,
+            "newLines": 13,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 12,
+                "newLine": 14,
+                "text": "    constraints::{Constraint, ConstraintCompiler},"
+              },
+              {
+                "type": " ",
+                "oldLine": 13,
+                "newLine": 15,
+                "text": "    ir::Builder,"
+              },
+              { "type": " ", "oldLine": 14, "newLine": 16, "text": "};" },
+              { "type": "-", "oldLine": 15, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 16,
+                "newLine": 17,
+                "text": "use sp1_recursion_core::air::RecursionPublicValues;"
+              },
+              {
+                "type": "-",
+                "oldLine": 17,
+                "text": "pub use sp1_recursion_core::stark::sp1_dev_mode;",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 18, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 19,
+                "text": "pub use sp1_recursion_circuit::witness::{OuterWitness, Witnessable};",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 20, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 21,
+                "newLine": 18,
+                "text": "use sp1_recursion_gnark_ffi::{Groth16Bn254Prover, PlonkBn254Prover};"
+              },
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 19,
+                "text": "use sp1_stark::{SP1ProverOpts, ShardProof, StarkVerifyingKey};"
+              },
+              { "type": " ", "oldLine": 23, "newLine": 20, "text": "" },
+              {
+                "type": "+",
+                "newLine": 21,
+                "text": "pub use sp1_recursion_circuit::witness::{OuterWitness, Witnessable};",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 22,
+                "text": "pub use sp1_recursion_core::stark::sp1_dev_mode;",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 23, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 24,
+                "text": "use crate::{"
+              },
+              {
+                "type": " ",
+                "oldLine": 25,
+                "newLine": 25,
+                "text": "    utils::{babybear_bytes_to_bn254, babybears_to_bn254, words_to_bytes},"
+              },
+              {
+                "type": " ",
+                "oldLine": 26,
+                "newLine": 26,
+                "text": "    OuterSC, SP1Prover, WrapAir,"
+              }
+            ]
+          },
+          {
+            "oldStart": 153,
+            "oldLines": 16,
+            "newStart": 153,
+            "newLines": 16,
+            "lines": [
+              { "type": " ", "oldLine": 153, "newLine": 153, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 154,
+                "newLine": 154,
+                "text": "    tracing::info!(\"initializing prover\");"
+              },
+              {
+                "type": " ",
+                "oldLine": 155,
+                "newLine": 155,
+                "text": "    let prover: SP1Prover = SP1Prover::new();"
+              },
+              {
+                "type": "-",
+                "oldLine": 156,
+                "text": "    let opts = SP1ProverOpts::default();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 156,
+                "text": "    let opts = SP1ProverOpts::auto();",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 157,
+                "newLine": 157,
+                "text": "    let context = SP1Context::default();"
+              },
+              { "type": " ", "oldLine": 158, "newLine": 158, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 159,
+                "newLine": 159,
+                "text": "    tracing::info!(\"setup elf\");"
+              },
+              {
+                "type": "-",
+                "oldLine": 160,
+                "text": "    let (pk, vk) = prover.setup(elf);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 160,
+                "text": "    let (_, pk_d, program, vk) = prover.setup(elf);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 161, "newLine": 161, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 162,
+                "newLine": 162,
+                "text": "    tracing::info!(\"prove core\");"
+              },
+              {
+                "type": " ",
+                "oldLine": 163,
+                "newLine": 163,
+                "text": "    let mut stdin = SP1Stdin::new();"
+              },
+              {
+                "type": " ",
+                "oldLine": 164,
+                "newLine": 164,
+                "text": "    stdin.write(&500u32);"
+              },
+              {
+                "type": "-",
+                "oldLine": 165,
+                "text": "    let core_proof = prover.prove_core(&pk, &stdin, opts, context).unwrap();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 165,
+                "text": "    let core_proof = prover.prove_core(&pk_d, program, &stdin, opts, context).unwrap();",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 166, "newLine": 166, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 167,
+                "newLine": 167,
+                "text": "    tracing::info!(\"compress\");"
+              },
+              {
+                "type": " ",
+                "oldLine": 168,
+                "newLine": 168,
+                "text": "    let compressed_proof = prover.compress(&vk, core_proof, vec![], opts).unwrap();"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "d79ad2713a1d64a9": {
+      "status": "differs",
+      "coveredLines": 206,
+      "match": {
+        "origin": "stack",
+        "collection": "sp1",
+        "relation": {
+          "type": "template",
+          "template": "succinct/OPSuccinct/OPSuccinctL2OutputOracle_mantle"
+        },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "build.rs",
+        "similarity": 0.963,
+        "reportId": "sp1/zellic-sp1-design-review-2024",
+        "repository": "succinctlabs/sp1",
+        "path": "crates/prover/src/build.rs",
+        "commit": "15be73d3acae3718a0acc529ed566f6a448b1c0e",
+        "commitTimestamp": "2024-11-27T02:59:17Z",
+        "url": "https://github.com/succinctlabs/sp1/blob/15be73d3acae3718a0acc529ed566f6a448b1c0e/crates/prover/src/build.rs",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "Initial audit",
+        "coverage": "Design-level review only (explicitly not a code audit): RV32IM specification compliance and the register/low-memory aliasing at addresses 0x0-0x1f, focused mostly on load and store instruction behaviour; soundness/completeness of the ZK proofs and circuits and correctness of implementation details were out of scope.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 4,
+        "removed": 3,
+        "ignoredAdded": 4,
+        "ignoredRemoved": 5,
+        "unchanged": 206,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 3,
+            "newStart": 1,
+            "newLines": 5,
+            "lines": [
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "#![allow(clippy::print_stdout)] // okay to print to stdout: this is a build script",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 2, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 3,
+                "text": "use std::{borrow::Borrow, path::PathBuf};"
+              },
+              { "type": " ", "oldLine": 2, "newLine": 4, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 5,
+                "text": "use p3_baby_bear::BabyBear;"
+              }
+            ]
+          },
+          {
+            "oldStart": 12,
+            "oldLines": 15,
+            "newStart": 14,
+            "newLines": 13,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 12,
+                "newLine": 14,
+                "text": "    constraints::{Constraint, ConstraintCompiler},"
+              },
+              {
+                "type": " ",
+                "oldLine": 13,
+                "newLine": 15,
+                "text": "    ir::Builder,"
+              },
+              { "type": " ", "oldLine": 14, "newLine": 16, "text": "};" },
+              { "type": "-", "oldLine": 15, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 16,
+                "newLine": 17,
+                "text": "use sp1_recursion_core::air::RecursionPublicValues;"
+              },
+              {
+                "type": "-",
+                "oldLine": 17,
+                "text": "pub use sp1_recursion_core::stark::sp1_dev_mode;",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 18, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 19,
+                "text": "pub use sp1_recursion_circuit::witness::{OuterWitness, Witnessable};",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 20, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 21,
+                "newLine": 18,
+                "text": "use sp1_recursion_gnark_ffi::{Groth16Bn254Prover, PlonkBn254Prover};"
+              },
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 19,
+                "text": "use sp1_stark::{SP1ProverOpts, ShardProof, StarkVerifyingKey};"
+              },
+              { "type": " ", "oldLine": 23, "newLine": 20, "text": "" },
+              {
+                "type": "+",
+                "newLine": 21,
+                "text": "pub use sp1_recursion_circuit::witness::{OuterWitness, Witnessable};",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 22,
+                "text": "pub use sp1_recursion_core::stark::sp1_dev_mode;",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 23, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 24,
+                "text": "use crate::{"
+              },
+              {
+                "type": " ",
+                "oldLine": 25,
+                "newLine": 25,
+                "text": "    utils::{babybear_bytes_to_bn254, babybears_to_bn254, words_to_bytes},"
+              },
+              {
+                "type": " ",
+                "oldLine": 26,
+                "newLine": 26,
+                "text": "    OuterSC, SP1Prover, WrapAir,"
+              }
+            ]
+          },
+          {
+            "oldStart": 153,
+            "oldLines": 16,
+            "newStart": 153,
+            "newLines": 16,
+            "lines": [
+              { "type": " ", "oldLine": 153, "newLine": 153, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 154,
+                "newLine": 154,
+                "text": "    tracing::info!(\"initializing prover\");"
+              },
+              {
+                "type": " ",
+                "oldLine": 155,
+                "newLine": 155,
+                "text": "    let prover: SP1Prover = SP1Prover::new();"
+              },
+              {
+                "type": "-",
+                "oldLine": 156,
+                "text": "    let opts = SP1ProverOpts::default();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 156,
+                "text": "    let opts = SP1ProverOpts::auto();",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 157,
+                "newLine": 157,
+                "text": "    let context = SP1Context::default();"
+              },
+              { "type": " ", "oldLine": 158, "newLine": 158, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 159,
+                "newLine": 159,
+                "text": "    tracing::info!(\"setup elf\");"
+              },
+              {
+                "type": "-",
+                "oldLine": 160,
+                "text": "    let (pk, vk) = prover.setup(elf);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 160,
+                "text": "    let (_, pk_d, program, vk) = prover.setup(elf);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 161, "newLine": 161, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 162,
+                "newLine": 162,
+                "text": "    tracing::info!(\"prove core\");"
+              },
+              {
+                "type": " ",
+                "oldLine": 163,
+                "newLine": 163,
+                "text": "    let mut stdin = SP1Stdin::new();"
+              },
+              {
+                "type": " ",
+                "oldLine": 164,
+                "newLine": 164,
+                "text": "    stdin.write(&500u32);"
+              },
+              {
+                "type": "-",
+                "oldLine": 165,
+                "text": "    let core_proof = prover.prove_core(&pk, &stdin, opts, context).unwrap();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 165,
+                "text": "    let core_proof = prover.prove_core(&pk_d, program, &stdin, opts, context).unwrap();",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 166, "newLine": 166, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 167,
+                "newLine": 167,
+                "text": "    tracing::info!(\"compress\");"
+              },
+              {
+                "type": " ",
+                "oldLine": 168,
+                "newLine": 168,
+                "text": "    let compressed_proof = prover.compress(&vk, core_proof, vec![], opts).unwrap();"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "2295595c4243408b": {
+      "status": "differs",
+      "coveredLines": 206,
+      "match": {
+        "origin": "stack",
+        "collection": "sp1",
+        "relation": { "type": "template", "template": "succinct/SP1Verifier" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "build.rs",
+        "similarity": 0.963,
+        "reportId": "sp1/zellic-sp1-design-review-2024",
+        "repository": "succinctlabs/sp1",
+        "path": "crates/prover/src/build.rs",
+        "commit": "15be73d3acae3718a0acc529ed566f6a448b1c0e",
+        "commitTimestamp": "2024-11-27T02:59:17Z",
+        "url": "https://github.com/succinctlabs/sp1/blob/15be73d3acae3718a0acc529ed566f6a448b1c0e/crates/prover/src/build.rs",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "Initial audit",
+        "coverage": "Design-level review only (explicitly not a code audit): RV32IM specification compliance and the register/low-memory aliasing at addresses 0x0-0x1f, focused mostly on load and store instruction behaviour; soundness/completeness of the ZK proofs and circuits and correctness of implementation details were out of scope.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 4,
+        "removed": 3,
+        "ignoredAdded": 4,
+        "ignoredRemoved": 5,
+        "unchanged": 206,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 3,
+            "newStart": 1,
+            "newLines": 5,
+            "lines": [
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "#![allow(clippy::print_stdout)] // okay to print to stdout: this is a build script",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 2, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 3,
+                "text": "use std::{borrow::Borrow, path::PathBuf};"
+              },
+              { "type": " ", "oldLine": 2, "newLine": 4, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 5,
+                "text": "use p3_baby_bear::BabyBear;"
+              }
+            ]
+          },
+          {
+            "oldStart": 12,
+            "oldLines": 15,
+            "newStart": 14,
+            "newLines": 13,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 12,
+                "newLine": 14,
+                "text": "    constraints::{Constraint, ConstraintCompiler},"
+              },
+              {
+                "type": " ",
+                "oldLine": 13,
+                "newLine": 15,
+                "text": "    ir::Builder,"
+              },
+              { "type": " ", "oldLine": 14, "newLine": 16, "text": "};" },
+              { "type": "-", "oldLine": 15, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 16,
+                "newLine": 17,
+                "text": "use sp1_recursion_core::air::RecursionPublicValues;"
+              },
+              {
+                "type": "-",
+                "oldLine": 17,
+                "text": "pub use sp1_recursion_core::stark::sp1_dev_mode;",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 18, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 19,
+                "text": "pub use sp1_recursion_circuit::witness::{OuterWitness, Witnessable};",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 20, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 21,
+                "newLine": 18,
+                "text": "use sp1_recursion_gnark_ffi::{Groth16Bn254Prover, PlonkBn254Prover};"
+              },
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 19,
+                "text": "use sp1_stark::{SP1ProverOpts, ShardProof, StarkVerifyingKey};"
+              },
+              { "type": " ", "oldLine": 23, "newLine": 20, "text": "" },
+              {
+                "type": "+",
+                "newLine": 21,
+                "text": "pub use sp1_recursion_circuit::witness::{OuterWitness, Witnessable};",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 22,
+                "text": "pub use sp1_recursion_core::stark::sp1_dev_mode;",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 23, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 24,
+                "text": "use crate::{"
+              },
+              {
+                "type": " ",
+                "oldLine": 25,
+                "newLine": 25,
+                "text": "    utils::{babybear_bytes_to_bn254, babybears_to_bn254, words_to_bytes},"
+              },
+              {
+                "type": " ",
+                "oldLine": 26,
+                "newLine": 26,
+                "text": "    OuterSC, SP1Prover, WrapAir,"
+              }
+            ]
+          },
+          {
+            "oldStart": 153,
+            "oldLines": 16,
+            "newStart": 153,
+            "newLines": 16,
+            "lines": [
+              { "type": " ", "oldLine": 153, "newLine": 153, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 154,
+                "newLine": 154,
+                "text": "    tracing::info!(\"initializing prover\");"
+              },
+              {
+                "type": " ",
+                "oldLine": 155,
+                "newLine": 155,
+                "text": "    let prover: SP1Prover = SP1Prover::new();"
+              },
+              {
+                "type": "-",
+                "oldLine": 156,
+                "text": "    let opts = SP1ProverOpts::default();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 156,
+                "text": "    let opts = SP1ProverOpts::auto();",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 157,
+                "newLine": 157,
+                "text": "    let context = SP1Context::default();"
+              },
+              { "type": " ", "oldLine": 158, "newLine": 158, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 159,
+                "newLine": 159,
+                "text": "    tracing::info!(\"setup elf\");"
+              },
+              {
+                "type": "-",
+                "oldLine": 160,
+                "text": "    let (pk, vk) = prover.setup(elf);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 160,
+                "text": "    let (_, pk_d, program, vk) = prover.setup(elf);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 161, "newLine": 161, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 162,
+                "newLine": 162,
+                "text": "    tracing::info!(\"prove core\");"
+              },
+              {
+                "type": " ",
+                "oldLine": 163,
+                "newLine": 163,
+                "text": "    let mut stdin = SP1Stdin::new();"
+              },
+              {
+                "type": " ",
+                "oldLine": 164,
+                "newLine": 164,
+                "text": "    stdin.write(&500u32);"
+              },
+              {
+                "type": "-",
+                "oldLine": 165,
+                "text": "    let core_proof = prover.prove_core(&pk, &stdin, opts, context).unwrap();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 165,
+                "text": "    let core_proof = prover.prove_core(&pk_d, program, &stdin, opts, context).unwrap();",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 166, "newLine": 166, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 167,
+                "newLine": 167,
+                "text": "    tracing::info!(\"compress\");"
+              },
+              {
+                "type": " ",
+                "oldLine": 168,
+                "newLine": 168,
+                "text": "    let compressed_proof = prover.compress(&vk, core_proof, vec![], opts).unwrap();"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "d80a56c5abf9208b": {
+      "status": "differs",
+      "coveredLines": 206,
+      "match": {
+        "origin": "library",
+        "collection": "sp1",
+        "relation": { "type": "library" },
+        "rank": 3,
+        "matchedBy": "name",
+        "auditedName": "build.rs",
+        "similarity": 0.963,
+        "reportId": "sp1/zellic-sp1-design-review-2024",
+        "repository": "succinctlabs/sp1",
+        "path": "crates/prover/src/build.rs",
+        "commit": "15be73d3acae3718a0acc529ed566f6a448b1c0e",
+        "commitTimestamp": "2024-11-27T02:59:17Z",
+        "url": "https://github.com/succinctlabs/sp1/blob/15be73d3acae3718a0acc529ed566f6a448b1c0e/crates/prover/src/build.rs",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "Initial audit",
+        "coverage": "Design-level review only (explicitly not a code audit): RV32IM specification compliance and the register/low-memory aliasing at addresses 0x0-0x1f, focused mostly on load and store instruction behaviour; soundness/completeness of the ZK proofs and circuits and correctness of implementation details were out of scope.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 4,
+        "removed": 3,
+        "ignoredAdded": 4,
+        "ignoredRemoved": 5,
+        "unchanged": 206,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 3,
+            "newStart": 1,
+            "newLines": 5,
+            "lines": [
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "#![allow(clippy::print_stdout)] // okay to print to stdout: this is a build script",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 2, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 3,
+                "text": "use std::{borrow::Borrow, path::PathBuf};"
+              },
+              { "type": " ", "oldLine": 2, "newLine": 4, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 5,
+                "text": "use p3_baby_bear::BabyBear;"
+              }
+            ]
+          },
+          {
+            "oldStart": 12,
+            "oldLines": 15,
+            "newStart": 14,
+            "newLines": 13,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 12,
+                "newLine": 14,
+                "text": "    constraints::{Constraint, ConstraintCompiler},"
+              },
+              {
+                "type": " ",
+                "oldLine": 13,
+                "newLine": 15,
+                "text": "    ir::Builder,"
+              },
+              { "type": " ", "oldLine": 14, "newLine": 16, "text": "};" },
+              { "type": "-", "oldLine": 15, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 16,
+                "newLine": 17,
+                "text": "use sp1_recursion_core::air::RecursionPublicValues;"
+              },
+              {
+                "type": "-",
+                "oldLine": 17,
+                "text": "pub use sp1_recursion_core::stark::sp1_dev_mode;",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 18, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 19,
+                "text": "pub use sp1_recursion_circuit::witness::{OuterWitness, Witnessable};",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 20, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 21,
+                "newLine": 18,
+                "text": "use sp1_recursion_gnark_ffi::{Groth16Bn254Prover, PlonkBn254Prover};"
+              },
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 19,
+                "text": "use sp1_stark::{SP1ProverOpts, ShardProof, StarkVerifyingKey};"
+              },
+              { "type": " ", "oldLine": 23, "newLine": 20, "text": "" },
+              {
+                "type": "+",
+                "newLine": 21,
+                "text": "pub use sp1_recursion_circuit::witness::{OuterWitness, Witnessable};",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 22,
+                "text": "pub use sp1_recursion_core::stark::sp1_dev_mode;",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 23, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 24,
+                "text": "use crate::{"
+              },
+              {
+                "type": " ",
+                "oldLine": 25,
+                "newLine": 25,
+                "text": "    utils::{babybear_bytes_to_bn254, babybears_to_bn254, words_to_bytes},"
+              },
+              {
+                "type": " ",
+                "oldLine": 26,
+                "newLine": 26,
+                "text": "    OuterSC, SP1Prover, WrapAir,"
+              }
+            ]
+          },
+          {
+            "oldStart": 153,
+            "oldLines": 16,
+            "newStart": 153,
+            "newLines": 16,
+            "lines": [
+              { "type": " ", "oldLine": 153, "newLine": 153, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 154,
+                "newLine": 154,
+                "text": "    tracing::info!(\"initializing prover\");"
+              },
+              {
+                "type": " ",
+                "oldLine": 155,
+                "newLine": 155,
+                "text": "    let prover: SP1Prover = SP1Prover::new();"
+              },
+              {
+                "type": "-",
+                "oldLine": 156,
+                "text": "    let opts = SP1ProverOpts::default();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 156,
+                "text": "    let opts = SP1ProverOpts::auto();",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 157,
+                "newLine": 157,
+                "text": "    let context = SP1Context::default();"
+              },
+              { "type": " ", "oldLine": 158, "newLine": 158, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 159,
+                "newLine": 159,
+                "text": "    tracing::info!(\"setup elf\");"
+              },
+              {
+                "type": "-",
+                "oldLine": 160,
+                "text": "    let (pk, vk) = prover.setup(elf);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 160,
+                "text": "    let (_, pk_d, program, vk) = prover.setup(elf);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 161, "newLine": 161, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 162,
+                "newLine": 162,
+                "text": "    tracing::info!(\"prove core\");"
+              },
+              {
+                "type": " ",
+                "oldLine": 163,
+                "newLine": 163,
+                "text": "    let mut stdin = SP1Stdin::new();"
+              },
+              {
+                "type": " ",
+                "oldLine": 164,
+                "newLine": 164,
+                "text": "    stdin.write(&500u32);"
+              },
+              {
+                "type": "-",
+                "oldLine": 165,
+                "text": "    let core_proof = prover.prove_core(&pk, &stdin, opts, context).unwrap();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 165,
+                "text": "    let core_proof = prover.prove_core(&pk_d, program, &stdin, opts, context).unwrap();",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 166, "newLine": 166, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 167,
+                "newLine": 167,
+                "text": "    tracing::info!(\"compress\");"
+              },
+              {
+                "type": " ",
+                "oldLine": 168,
+                "newLine": 168,
+                "text": "    let compressed_proof = prover.compress(&vk, core_proof, vec![], opts).unwrap();"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
     }
   }
 }

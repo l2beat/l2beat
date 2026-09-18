@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "69cad9aa6776b5ed7dac3da1400c54513d69d1d428b73b229b2e5ecf0ef78a69",
+  "name": "repro.justfile",
+  "kind": "program",
+  "lines": 49,
+  "source": "GIT_COMMIT := \"\"\nGIT_DATE := \"\"\n\nCANNON_VERSION := \"v0.0.0\"\nOP_PROGRAM_VERSION := \"v0.0.0\"\n\nGOOS := \"\"\nGOARCH := \"\"\n\n# Build the cannon binary\ncannon:\n    #!/bin/bash\n    # in devnet scenario, the cannon binary is already built.\n    [ -x /app/cannon/bin/cannon ] && exit 0\n    cd ../cannon\n    make cannon \\\n        GOOS={{GOOS}} \\\n        GOARCH={{GOARCH}} \\\n        GITCOMMIT={{GIT_COMMIT}} \\\n        GITDATE={{GIT_DATE}} \\\n        VERSION={{CANNON_VERSION}}\n\n# Build the op-program-client elf binaries\nop-program-client-mips:\n    #!/bin/bash\n    cd ../op-program\n    make op-program-client-mips \\\n        GOOS=linux \\\n        GOARCH=mips \\\n        GOMIPS=softfloat \\\n        GITCOMMIT={{GIT_COMMIT}} \\\n        GITDATE={{GIT_DATE}} \\\n        VERSION={{OP_PROGRAM_VERSION}}\n\n# Generate the prestate proof containing the absolute pre-state hash.\nprestate TYPE CLIENT_SUFFIX PRESTATE_SUFFIX: cannon op-program-client-mips\n    #!/bin/bash\n    go run /app/op-program/builder/main.go build-prestate \\\n        --program-elf /app/op-program/bin/op-program-client{{CLIENT_SUFFIX}}.elf \\\n        --version {{TYPE}}\\\n        --suffix {{PRESTATE_SUFFIX}}\n\nbuild-mt64: (prestate \"multithreaded64-5\" \"64\" \"-mt64\")\nbuild-mt64Next: (prestate \"multithreaded64-5\" \"64\" \"-mt64Next\")\nbuild-interop: (prestate \"multithreaded64-5\" \"-interop\" \"-interop\")\nbuild-interopNext: (prestate \"multithreaded64-5\" \"-interop\" \"-interopNext\")\n\nbuild-current: build-mt64 build-interop\nbuild-next: build-mt64Next build-interopNext",
+  "resolutions": {
+    "437dcc6cbc847e9a": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "1f5c32d18cf7148d": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

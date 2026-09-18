@@ -80,6 +80,231 @@
         ]
       },
       "warnings": []
+    },
+    "5d5f82d91c09d4ec": {
+      "status": "differs",
+      "coveredLines": 337,
+      "match": {
+        "origin": "library",
+        "collection": "openzeppelin",
+        "relation": { "type": "library" },
+        "rank": 3,
+        "matchedBy": "similarity",
+        "auditedName": "EnumerableSet",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/utils/structs/EnumerableSet.sol",
+        "commit": "b5a3e693e7eeca8d5f608460fd8beeee8e332b03",
+        "commitTimestamp": "2023-08-08T06:22:59Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/b5a3e693e7eeca8d5f608460fd8beeee8e332b03/contracts/utils/structs/EnumerableSet.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "audit",
+        "coverage": "Only the changes to the file between versions 4.9 and 5.0 were reviewed at the Phase 4 audit commit (diff-only review).",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 9
+      },
+      "diff": {
+        "added": 1,
+        "removed": 1,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 337,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 4,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "library EnumerableSet {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "library EnumerableSetUpgradeable {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "    // To implement this library for multiple types with as little code"
+              },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "    // repetition as possible, we write it in terms of a generic Set type with"
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "    // bytes32 values."
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "d80a56c5abf9208b": {
+      "status": "differs",
+      "coveredLines": 337,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "similarity",
+        "auditedName": "EnumerableSet",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/utils/structs/EnumerableSet.sol",
+        "commit": "b5a3e693e7eeca8d5f608460fd8beeee8e332b03",
+        "commitTimestamp": "2023-08-08T06:22:59Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/b5a3e693e7eeca8d5f608460fd8beeee8e332b03/contracts/utils/structs/EnumerableSet.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "audit",
+        "coverage": "Only the changes to the file between versions 4.9 and 5.0 were reviewed at the Phase 4 audit commit (diff-only review).",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 9
+      },
+      "diff": {
+        "added": 1,
+        "removed": 1,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 337,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 4,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "library EnumerableSet {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "library EnumerableSetUpgradeable {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "    // To implement this library for multiple types with as little code"
+              },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "    // repetition as possible, we write it in terms of a generic Set type with"
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "    // bytes32 values."
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "13052b7adc791062": {
+      "status": "differs",
+      "coveredLines": 337,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "similarity",
+        "auditedName": "EnumerableSet",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/utils/structs/EnumerableSet.sol",
+        "commit": "b5a3e693e7eeca8d5f608460fd8beeee8e332b03",
+        "commitTimestamp": "2023-08-08T06:22:59Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/b5a3e693e7eeca8d5f608460fd8beeee8e332b03/contracts/utils/structs/EnumerableSet.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "audit",
+        "coverage": "Only the changes to the file between versions 4.9 and 5.0 were reviewed at the Phase 4 audit commit (diff-only review).",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 9
+      },
+      "diff": {
+        "added": 1,
+        "removed": 1,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 337,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 4,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "library EnumerableSet {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "library EnumerableSetUpgradeable {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "    // To implement this library for multiple types with as little code"
+              },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "    // repetition as possible, we write it in terms of a generic Set type with"
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "    // bytes32 values."
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
     }
   }
 }

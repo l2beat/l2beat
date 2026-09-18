@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "152a1ecfdb93c2be31e1dd582721721e5238c67e7a67ff270bfac880393273d6",
+  "name": "host_test.go",
+  "kind": "program",
+  "lines": 66,
+  "source": "package host\n\nimport (\n\t\"context\"\n\t\"errors\"\n\t\"testing\"\n\t\"time\"\n\n\t\"github.com/ethereum-optimism/optimism/op-node/chaincfg\"\n\tpreimage \"github.com/ethereum-optimism/optimism/op-preimage\"\n\t\"github.com/ethereum-optimism/optimism/op-program/chainconfig\"\n\t\"github.com/ethereum-optimism/optimism/op-program/client\"\n\t\"github.com/ethereum-optimism/optimism/op-program/client/l1\"\n\t\"github.com/ethereum-optimism/optimism/op-program/host/config\"\n\t\"github.com/ethereum-optimism/optimism/op-program/host/kvstore\"\n\t\"github.com/ethereum-optimism/optimism/op-program/io\"\n\t\"github.com/ethereum-optimism/optimism/op-service/testlog\"\n\t\"github.com/ethereum/go-ethereum/common\"\n\t\"github.com/ethereum/go-ethereum/log\"\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc TestServerMode(t *testing.T) {\n\tdir := t.TempDir()\n\n\tl1Head := common.Hash{0x11}\n\tl2OutputRoot := common.Hash{0x33}\n\tcfg := config.NewConfig(chaincfg.Goerli, chainconfig.OPGoerliChainConfig, l1Head, common.Hash{0x22}, l2OutputRoot, common.Hash{0x44}, 1000)\n\tcfg.DataDir = dir\n\tcfg.ServerMode = true\n\n\tpreimageServer, preimageClient, err := io.CreateBidirectionalChannel()\n\trequire.NoError(t, err)\n\tdefer preimageClient.Close()\n\thintServer, hintClient, err := io.CreateBidirectionalChannel()\n\trequire.NoError(t, err)\n\tdefer hintClient.Close()\n\tlogger := testlog.Logger(t, log.LvlTrace)\n\tresult := make(chan error)\n\tgo func() {\n\t\tresult <- PreimageServer(context.Background(), logger, cfg, preimageServer, hintServer)\n\t}()\n\n\tpClient := preimage.NewOracleClient(preimageClient)\n\thClient := preimage.NewHintWriter(hintClient)\n\tl1PreimageOracle := l1.NewPreimageOracle(pClient, hClient)\n\n\trequire.Equal(t, l1Head.Bytes(), pClient.Get(client.L1HeadLocalIndex), \"Should get l1 head preimages\")\n\trequire.Equal(t, l2OutputRoot.Bytes(), pClient.Get(client.L2OutputRootLocalIndex), \"Should get l2 output root preimages\")\n\n\t// Should exit when a preimage is unavailable\n\trequire.Panics(t, func() {\n\t\tl1PreimageOracle.HeaderByBlockHash(common.HexToHash(\"0x1234\"))\n\t}, \"Preimage should not be available\")\n\trequire.ErrorIs(t, waitFor(result), kvstore.ErrNotFound)\n}\n\nfunc waitFor(ch chan error) error {\n\ttimeout := time.After(30 * time.Second)\n\tselect {\n\tcase err := <-ch:\n\t\treturn err\n\tcase <-timeout:\n\t\treturn errors.New(\"timed out\")\n\t}\n}",
+  "resolutions": {
+    "437dcc6cbc847e9a": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "bb55951394276893": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

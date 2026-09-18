@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "775a1e4259ef1f33d2fb28d4ef2a9811e34ec3d5b9eb6648dfc6100543602d46",
+  "name": "preinterop.go",
+  "kind": "program",
+  "lines": 40,
+  "source": "package client\n\nimport (\n\t\"github.com/ethereum-optimism/optimism/op-program/client/boot\"\n\t\"github.com/ethereum-optimism/optimism/op-program/client/claim\"\n\t\"github.com/ethereum-optimism/optimism/op-program/client/l1\"\n\t\"github.com/ethereum-optimism/optimism/op-program/client/l2\"\n\t\"github.com/ethereum-optimism/optimism/op-program/client/tasks\"\n\t\"github.com/ethereum-optimism/optimism/op-service/eth\"\n\t\"github.com/ethereum/go-ethereum/log\"\n)\n\nfunc RunPreInteropProgram(\n\tlogger log.Logger,\n\tbootInfo *boot.BootInfo,\n\tl1PreimageOracle *l1.CachingOracle,\n\tl2PreimageOracle *l2.CachingOracle,\n\tdb l2.KeyValueStore,\n\topts tasks.DerivationOptions,\n) error {\n\tlogger.Info(\"Program Bootstrapped\", \"bootInfo\", bootInfo)\n\tresult, err := tasks.RunDerivation(\n\t\tlogger,\n\t\tbootInfo.RollupConfig,\n\t\tbootInfo.L1ChainConfig,\n\t\tnil, // No dependency set pre-interop\n\t\tbootInfo.L2ChainConfig,\n\t\tbootInfo.L1Head,\n\t\tbootInfo.L2OutputRoot,\n\t\tbootInfo.L2ClaimBlockNumber,\n\t\tl1PreimageOracle,\n\t\tl2PreimageOracle,\n\t\tdb,\n\t\topts,\n\t)\n\tif err != nil {\n\t\treturn err\n\t}\n\treturn claim.ValidateClaim(logger, eth.Bytes32(bootInfo.L2Claim), result.OutputRoot)\n}",
+  "resolutions": {
+    "437dcc6cbc847e9a": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "1f5c32d18cf7148d": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

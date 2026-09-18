@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "8a6c82e897ce9d382025d365a0f53bde8cec6341520fd178b5e51893f2615a13",
+  "name": "program.go",
+  "kind": "program",
+  "lines": 68,
+  "source": "package client\n\nimport (\n\t\"errors\"\n\t\"io\"\n\t\"os\"\n\n\tpreimage \"github.com/ethereum-optimism/optimism/op-preimage\"\n\t\"github.com/ethereum-optimism/optimism/op-program/client/boot\"\n\t\"github.com/ethereum-optimism/optimism/op-program/client/claim\"\n\t\"github.com/ethereum-optimism/optimism/op-program/client/interop\"\n\t\"github.com/ethereum-optimism/optimism/op-program/client/l1\"\n\t\"github.com/ethereum-optimism/optimism/op-program/client/l2\"\n\t\"github.com/ethereum-optimism/optimism/op-program/client/tasks\"\n\toplog \"github.com/ethereum-optimism/optimism/op-service/log\"\n\t\"github.com/ethereum/go-ethereum/ethdb/memorydb\"\n\t\"github.com/ethereum/go-ethereum/log\"\n)\n\ntype Config struct {\n\tInteropEnabled bool\n}\n\n// Main executes the client program in a detached context and exits the current process.\n// The client runtime environment must be preset before calling this function.\nfunc Main(useInterop bool) {\n\t// Default to a machine parsable but relatively human friendly log format.\n\t// Don't do anything fancy to detect if color output is supported.\n\tlogger := oplog.NewLogger(os.Stdout, oplog.CLIConfig{\n\t\tLevel:  log.LevelInfo,\n\t\tFormat: oplog.FormatLogFmt,\n\t\tColor:  false,\n\t})\n\toplog.SetGlobalLogHandler(logger.Handler())\n\n\tlogger.Info(\"Starting fault proof program client\", \"useInterop\", useInterop)\n\tpreimageOracle := preimage.ClientPreimageChannel()\n\tpreimageHinter := preimage.ClientHinterChannel()\n\tconfig := Config{\n\t\tInteropEnabled: useInterop,\n\t}\n\tif err := RunProgram(logger, preimageOracle, preimageHinter, config); errors.Is(err, claim.ErrClaimNotValid) {\n\t\tlog.Error(\"Claim is invalid\", \"err\", err)\n\t\tos.Exit(1)\n\t} else if err != nil {\n\t\tlog.Error(\"Program failed\", \"err\", err)\n\t\tos.Exit(2)\n\t} else {\n\t\tlog.Info(\"Claim successfully verified\")\n\t\tos.Exit(0)\n\t}\n}\n\n// RunProgram executes the Program, while attached to an IO based pre-image oracle, to be served by a host.\nfunc RunProgram(logger log.Logger, preimageOracle io.ReadWriter, preimageHinter io.ReadWriter, cfg Config) error {\n\tpClient := preimage.NewOracleClient(preimageOracle)\n\thClient := preimage.NewHintWriter(preimageHinter)\n\tl1PreimageOracle := l1.NewCachingOracle(l1.NewPreimageOracle(pClient, hClient))\n\tl2PreimageOracle := l2.NewCachingOracle(l2.NewPreimageOracle(pClient, hClient, cfg.InteropEnabled))\n\n\tif cfg.InteropEnabled {\n\t\tbootInfo := boot.BootstrapInterop(pClient)\n\t\treturn interop.RunInteropProgram(logger, bootInfo, l1PreimageOracle, l2PreimageOracle)\n\t}\n\tbootInfo := boot.NewBootstrapClient(pClient).BootInfo()\n\tdb := memorydb.New()\n\treturn RunPreInteropProgram(logger, bootInfo, l1PreimageOracle, l2PreimageOracle, db, tasks.DerivationOptions{})\n}",
+  "resolutions": {
+    "437dcc6cbc847e9a": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "1f5c32d18cf7148d": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

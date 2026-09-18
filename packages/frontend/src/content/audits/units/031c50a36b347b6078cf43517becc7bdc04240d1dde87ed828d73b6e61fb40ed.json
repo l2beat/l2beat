@@ -530,6 +530,606 @@
         ]
       },
       "warnings": ["kind-mismatch"]
+    },
+    "d80a56c5abf9208b": {
+      "status": "differs",
+      "coveredLines": 5,
+      "match": {
+        "origin": "stack",
+        "collection": "safe",
+        "relation": { "type": "template", "template": "GnosisSafe" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "Enum",
+        "similarity": 0.831,
+        "reportId": "safe/nethermind-safe-allowance-v1-0-0",
+        "repository": "safe-fndn/safe-modules",
+        "path": "modules/allowances/contracts/Enum.sol",
+        "commit": "c95f03900bff99be090dadb9de1c74b162365485",
+        "commitTimestamp": "2026-02-24T11:43:03Z",
+        "url": "https://github.com/safe-fndn/safe-modules/blob/c95f03900bff99be090dadb9de1c74b162365485/modules/allowances/contracts/Enum.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "Security review",
+        "coverage": "Full manual review of the scoped source.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 9
+      },
+      "diff": {
+        "added": 1,
+        "removed": 1,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 5,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 4,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "contract Enum {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "interface Enum {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "    enum Operation {"
+              },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "        Call,"
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "        DelegateCall"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": ["kind-mismatch"]
+    },
+    "5d5f82d91c09d4ec": {
+      "status": "differs",
+      "coveredLines": 5,
+      "match": {
+        "origin": "stack",
+        "collection": "safe",
+        "relation": { "type": "template", "template": "GnosisSafe" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "Enum",
+        "similarity": 0.831,
+        "reportId": "safe/nethermind-safe-allowance-v1-0-0",
+        "repository": "safe-fndn/safe-modules",
+        "path": "modules/allowances/contracts/Enum.sol",
+        "commit": "c95f03900bff99be090dadb9de1c74b162365485",
+        "commitTimestamp": "2026-02-24T11:43:03Z",
+        "url": "https://github.com/safe-fndn/safe-modules/blob/c95f03900bff99be090dadb9de1c74b162365485/modules/allowances/contracts/Enum.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "Security review",
+        "coverage": "Full manual review of the scoped source.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 9
+      },
+      "diff": {
+        "added": 1,
+        "removed": 1,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 5,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 4,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "contract Enum {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "interface Enum {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "    enum Operation {"
+              },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "        Call,"
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "        DelegateCall"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": ["kind-mismatch"]
+    },
+    "17b794d2d7a7faed": {
+      "status": "differs",
+      "coveredLines": 5,
+      "match": {
+        "origin": "stack",
+        "collection": "safe",
+        "relation": { "type": "template", "template": "GnosisSafe" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "Enum",
+        "similarity": 0.831,
+        "reportId": "safe/nethermind-safe-allowance-v1-0-0",
+        "repository": "safe-fndn/safe-modules",
+        "path": "modules/allowances/contracts/Enum.sol",
+        "commit": "c95f03900bff99be090dadb9de1c74b162365485",
+        "commitTimestamp": "2026-02-24T11:43:03Z",
+        "url": "https://github.com/safe-fndn/safe-modules/blob/c95f03900bff99be090dadb9de1c74b162365485/modules/allowances/contracts/Enum.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "Security review",
+        "coverage": "Full manual review of the scoped source.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 9
+      },
+      "diff": {
+        "added": 1,
+        "removed": 1,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 5,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 4,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "contract Enum {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "interface Enum {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "    enum Operation {"
+              },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "        Call,"
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "        DelegateCall"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": ["kind-mismatch"]
+    },
+    "657c8b86adb58ba2": {
+      "status": "differs",
+      "coveredLines": 5,
+      "match": {
+        "origin": "stack",
+        "collection": "safe",
+        "relation": { "type": "template", "template": "GnosisSafe" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "Enum",
+        "similarity": 0.831,
+        "reportId": "safe/nethermind-safe-allowance-v1-0-0",
+        "repository": "safe-fndn/safe-modules",
+        "path": "modules/allowances/contracts/Enum.sol",
+        "commit": "c95f03900bff99be090dadb9de1c74b162365485",
+        "commitTimestamp": "2026-02-24T11:43:03Z",
+        "url": "https://github.com/safe-fndn/safe-modules/blob/c95f03900bff99be090dadb9de1c74b162365485/modules/allowances/contracts/Enum.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "Security review",
+        "coverage": "Full manual review of the scoped source.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 9
+      },
+      "diff": {
+        "added": 1,
+        "removed": 1,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 5,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 4,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "contract Enum {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "interface Enum {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "    enum Operation {"
+              },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "        Call,"
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "        DelegateCall"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": ["kind-mismatch"]
+    },
+    "437dcc6cbc847e9a": {
+      "status": "differs",
+      "coveredLines": 5,
+      "match": {
+        "origin": "stack",
+        "collection": "safe",
+        "relation": { "type": "template", "template": "GnosisSafe" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "Enum",
+        "similarity": 0.831,
+        "reportId": "safe/nethermind-safe-allowance-v1-0-0",
+        "repository": "safe-fndn/safe-modules",
+        "path": "modules/allowances/contracts/Enum.sol",
+        "commit": "c95f03900bff99be090dadb9de1c74b162365485",
+        "commitTimestamp": "2026-02-24T11:43:03Z",
+        "url": "https://github.com/safe-fndn/safe-modules/blob/c95f03900bff99be090dadb9de1c74b162365485/modules/allowances/contracts/Enum.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "Security review",
+        "coverage": "Full manual review of the scoped source.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 9
+      },
+      "diff": {
+        "added": 1,
+        "removed": 1,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 5,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 4,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "contract Enum {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "interface Enum {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "    enum Operation {"
+              },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "        Call,"
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "        DelegateCall"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": ["kind-mismatch"]
+    },
+    "d79ad2713a1d64a9": {
+      "status": "differs",
+      "coveredLines": 5,
+      "match": {
+        "origin": "stack",
+        "collection": "safe",
+        "relation": { "type": "template", "template": "GnosisSafe" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "Enum",
+        "similarity": 0.831,
+        "reportId": "safe/nethermind-safe-allowance-v1-0-0",
+        "repository": "safe-fndn/safe-modules",
+        "path": "modules/allowances/contracts/Enum.sol",
+        "commit": "c95f03900bff99be090dadb9de1c74b162365485",
+        "commitTimestamp": "2026-02-24T11:43:03Z",
+        "url": "https://github.com/safe-fndn/safe-modules/blob/c95f03900bff99be090dadb9de1c74b162365485/modules/allowances/contracts/Enum.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "Security review",
+        "coverage": "Full manual review of the scoped source.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 9
+      },
+      "diff": {
+        "added": 1,
+        "removed": 1,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 5,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 4,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "contract Enum {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "interface Enum {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "    enum Operation {"
+              },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "        Call,"
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "        DelegateCall"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": ["kind-mismatch"]
+    },
+    "2295595c4243408b": {
+      "status": "differs",
+      "coveredLines": 5,
+      "match": {
+        "origin": "stack",
+        "collection": "safe",
+        "relation": { "type": "template", "template": "GnosisSafe" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "Enum",
+        "similarity": 0.831,
+        "reportId": "safe/nethermind-safe-allowance-v1-0-0",
+        "repository": "safe-fndn/safe-modules",
+        "path": "modules/allowances/contracts/Enum.sol",
+        "commit": "c95f03900bff99be090dadb9de1c74b162365485",
+        "commitTimestamp": "2026-02-24T11:43:03Z",
+        "url": "https://github.com/safe-fndn/safe-modules/blob/c95f03900bff99be090dadb9de1c74b162365485/modules/allowances/contracts/Enum.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "Security review",
+        "coverage": "Full manual review of the scoped source.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 9
+      },
+      "diff": {
+        "added": 1,
+        "removed": 1,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 5,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 4,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "contract Enum {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "interface Enum {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "    enum Operation {"
+              },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "        Call,"
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "        DelegateCall"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": ["kind-mismatch"]
+    },
+    "ac5dcc09144e4f4d": {
+      "status": "differs",
+      "coveredLines": 5,
+      "match": {
+        "origin": "stack",
+        "collection": "safe",
+        "relation": { "type": "template", "template": "GnosisSafe" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "Enum",
+        "similarity": 0.831,
+        "reportId": "safe/nethermind-safe-allowance-v1-0-0",
+        "repository": "safe-fndn/safe-modules",
+        "path": "modules/allowances/contracts/Enum.sol",
+        "commit": "c95f03900bff99be090dadb9de1c74b162365485",
+        "commitTimestamp": "2026-02-24T11:43:03Z",
+        "url": "https://github.com/safe-fndn/safe-modules/blob/c95f03900bff99be090dadb9de1c74b162365485/modules/allowances/contracts/Enum.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "Security review",
+        "coverage": "Full manual review of the scoped source.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 9
+      },
+      "diff": {
+        "added": 1,
+        "removed": 1,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 5,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 4,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "contract Enum {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "interface Enum {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "    enum Operation {"
+              },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "        Call,"
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "        DelegateCall"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": ["kind-mismatch"]
     }
   }
 }

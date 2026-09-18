@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "a8abd548d2ecd0e628f4a8f0cbd2d2b83ec1b30c9ec8b23449d1d6e7f44a2e1f",
+  "name": "derive_test.go",
+  "kind": "program",
+  "lines": 75,
+  "source": "package tasks\n\nimport (\n\t\"errors\"\n\t\"testing\"\n\n\t\"github.com/ethereum-optimism/optimism/op-service/eth\"\n\t\"github.com/ethereum/go-ethereum/common\"\n\t\"github.com/stretchr/testify/require\"\n)\n\nvar errBoom = errors.New(\"boom\")\n\nfunc TestLoadOutputRoot(t *testing.T) {\n\tt.Run(\"Success\", func(t *testing.T) {\n\t\tsafeHead := eth.L2BlockRef{Number: 65}\n\t\tl2 := &mockL2{\n\t\t\tblockHash:  common.Hash{0x24},\n\t\t\toutputRoot: eth.Bytes32{0x11},\n\t\t}\n\t\tresult, err := loadOutputRoot(uint64(0), safeHead, l2)\n\t\trequire.NoError(t, err)\n\t\tassertDerivationResult(t, result, safeHead, l2.blockHash, l2.outputRoot)\n\t})\n\n\tt.Run(\"Success-PriorToSafeHead\", func(t *testing.T) {\n\t\texpected := eth.Bytes32{0x11}\n\t\tsafeHead := eth.L2BlockRef{\n\t\t\tNumber: 10,\n\t\t}\n\t\tl2 := &mockL2{\n\t\t\tblockHash:  common.Hash{0x24},\n\t\t\toutputRoot: expected,\n\t\t}\n\t\tresult, err := loadOutputRoot(uint64(20), safeHead, l2)\n\t\trequire.NoError(t, err)\n\t\trequire.Equal(t, uint64(10), l2.requestedOutputRoot)\n\t\tassertDerivationResult(t, result, safeHead, l2.blockHash, l2.outputRoot)\n\t})\n\n\tt.Run(\"Error-OutputRoot\", func(t *testing.T) {\n\t\tsafeHead := eth.L2BlockRef{Number: 10}\n\t\tl2 := &mockL2{\n\t\t\tblockHash:     common.Hash{0x24},\n\t\t\toutputRoot:    eth.Bytes32{0x11},\n\t\t\toutputRootErr: errBoom,\n\t\t}\n\t\t_, err := loadOutputRoot(uint64(0), safeHead, l2)\n\t\trequire.ErrorIs(t, err, errBoom)\n\t})\n}\n\nfunc assertDerivationResult(t *testing.T, actual DerivationResult, safeHead eth.L2BlockRef, blockHash common.Hash, outputRoot eth.Bytes32) {\n\trequire.Equal(t, safeHead, actual.Head)\n\trequire.Equal(t, blockHash, actual.BlockHash)\n\trequire.Equal(t, outputRoot, actual.OutputRoot)\n}\n\ntype mockL2 struct {\n\tblockHash     common.Hash\n\toutputRoot    eth.Bytes32\n\toutputRootErr error\n\n\trequestedOutputRoot uint64\n}\n\nfunc (m *mockL2) L2OutputRoot(u uint64) (common.Hash, eth.Bytes32, error) {\n\tm.requestedOutputRoot = u\n\tif m.outputRootErr != nil {\n\t\treturn common.Hash{}, eth.Bytes32{}, m.outputRootErr\n\t}\n\treturn m.blockHash, m.outputRoot, nil\n}\n\nvar _ L2Source = (*mockL2)(nil)",
+  "resolutions": {
+    "437dcc6cbc847e9a": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "1f5c32d18cf7148d": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

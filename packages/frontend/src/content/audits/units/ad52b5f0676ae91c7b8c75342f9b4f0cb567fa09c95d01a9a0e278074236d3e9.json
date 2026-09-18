@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "ad52b5f0676ae91c7b8c75342f9b4f0cb567fa09c95d01a9a0e278074236d3e9",
+  "name": "roots_test.go",
+  "kind": "program",
+  "lines": 50,
+  "source": "package types\n\nimport (\n\t\"testing\"\n\n\t\"github.com/ethereum-optimism/optimism/op-service/eth\"\n\t\"github.com/ethereum/go-ethereum/common\"\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc TestTransitionStateCodec(t *testing.T) {\n\tt.Run(\"TransitionState\", func(t *testing.T) {\n\t\tsuperRoot := &eth.SuperV1{\n\t\t\tTimestamp: 9842494,\n\t\t\tChains: []eth.ChainIDAndOutput{\n\t\t\t\t{ChainID: eth.ChainIDFromUInt64(34), Output: eth.Bytes32{0x01}},\n\t\t\t\t{ChainID: eth.ChainIDFromUInt64(35), Output: eth.Bytes32{0x02}},\n\t\t\t},\n\t\t}\n\t\tstate := &TransitionState{\n\t\t\tSuperRoot: superRoot.Marshal(),\n\t\t\tPendingProgress: []OptimisticBlock{\n\t\t\t\t{BlockHash: common.Hash{0x05}, OutputRoot: eth.Bytes32{0x03}},\n\t\t\t\t{BlockHash: common.Hash{0x06}, OutputRoot: eth.Bytes32{0x04}},\n\t\t\t},\n\t\t\tStep: 2,\n\t\t}\n\t\tdata := state.Marshal()\n\t\tactual, err := UnmarshalTransitionState(data)\n\t\trequire.NoError(t, err)\n\t\trequire.Equal(t, state, actual)\n\t})\n\n\tt.Run(\"SuperRoot\", func(t *testing.T) {\n\t\tsuperRoot := &eth.SuperV1{\n\t\t\tTimestamp: 9842494,\n\t\t\tChains: []eth.ChainIDAndOutput{\n\t\t\t\t{ChainID: eth.ChainIDFromUInt64(34), Output: eth.Bytes32{0x01}},\n\t\t\t\t{ChainID: eth.ChainIDFromUInt64(35), Output: eth.Bytes32{0x02}},\n\t\t\t},\n\t\t}\n\t\texpected := &TransitionState{\n\t\t\tSuperRoot: superRoot.Marshal(),\n\t\t}\n\t\tdata := superRoot.Marshal()\n\t\tactual, err := UnmarshalTransitionState(data)\n\t\trequire.NoError(t, err)\n\t\trequire.Equal(t, expected, actual)\n\t})\n}",
+  "resolutions": {
+    "437dcc6cbc847e9a": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "1f5c32d18cf7148d": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

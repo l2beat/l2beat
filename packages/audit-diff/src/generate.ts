@@ -30,7 +30,7 @@ export interface GenerateOptions {
   projectId: string
   /** `packages/config/src/projects`. */
   projectsDir: string
-  /** `.cache/zk`, written by `fetch-zk`. */
+  /** `.cache/zk`, synchronized from project config by the CLI. */
   zkCacheDir: string
   evidence: EvidenceIndex
   store: UnitStore
@@ -190,7 +190,7 @@ export function generateProject(
     }
   })
 
-  // zk verifiers and programs fetched by `fetch-zk`; one whole-file unit per
+  // zk verifiers and programs synchronized from config; one whole-file unit per
   // source, matched by identity or by repository path suffix.
   for (const entry of readZkSources(options.zkCacheDir, options.projectId)) {
     const [chain, address] = entry.address?.includes(':')

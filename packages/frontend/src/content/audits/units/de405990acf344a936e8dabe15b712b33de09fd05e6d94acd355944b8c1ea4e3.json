@@ -32,6 +32,33 @@
         "totalVersions": 14
       },
       "warnings": []
+    },
+    "d80a56c5abf9208b": {
+      "status": "library",
+      "coveredLines": 512,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "Strings",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2025-04-v5.3",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/utils/Strings.sol",
+        "commit": "f3f0a6466f2be4f8b2d73c97cec0fa6e37763ec0",
+        "commitTimestamp": "2025-04-03T16:31:04Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/f3f0a6466f2be4f8b2d73c97cec0fa6e37763ec0/contracts/utils/Strings.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Review limited to the resolutions of the reported findings as contained in the final audited state of the release-v5.3 branch.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 14
+      },
+      "warnings": []
     }
   }
 }

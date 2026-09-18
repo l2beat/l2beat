@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "ec9dbc5fb6c7f48d412bbdd3a730a636add31a8f168ce77d091e708afdf453c5",
+  "name": "db.go",
+  "kind": "program",
+  "lines": 91,
+  "source": "package l2\n\nimport (\n\t\"bytes\"\n\t\"errors\"\n\t\"fmt\"\n\n\t\"github.com/ethereum/go-ethereum/common\"\n\t\"github.com/ethereum/go-ethereum/core/rawdb\"\n\t\"github.com/ethereum/go-ethereum/ethdb\"\n\t\"github.com/ethereum/go-ethereum/ethdb/memorydb\"\n)\n\nvar codePrefixedKeyLength = common.HashLength + len(rawdb.CodePrefix)\n\nvar (\n\tErrInvalidKeyLength = errors.New(\"pre-images must be identified by 32-byte hash keys\")\n)\n\ntype OracleKeyValueStore struct {\n\tdb     ethdb.KeyValueStore\n\toracle StateOracle\n}\n\nfunc NewOracleBackedDB(oracle StateOracle) *OracleKeyValueStore {\n\treturn &OracleKeyValueStore{\n\t\tdb:     memorydb.New(),\n\t\toracle: oracle,\n\t}\n}\n\nfunc (o *OracleKeyValueStore) Get(key []byte) ([]byte, error) {\n\thas, err := o.db.Has(key)\n\tif err != nil {\n\t\treturn nil, fmt.Errorf(\"checking in-memory db: %w\", err)\n\t}\n\tif has {\n\t\treturn o.db.Get(key)\n\t}\n\n\tif len(key) == codePrefixedKeyLength && bytes.HasPrefix(key, rawdb.CodePrefix) {\n\t\tkey = key[len(rawdb.CodePrefix):]\n\t\treturn o.oracle.CodeByHash(*(*[common.HashLength]byte)(key)), nil\n\t}\n\tif len(key) != common.HashLength {\n\t\treturn nil, ErrInvalidKeyLength\n\t}\n\treturn o.oracle.NodeByHash(*(*[common.HashLength]byte)(key)), nil\n}\n\nfunc (o *OracleKeyValueStore) NewBatch() ethdb.Batch {\n\treturn o.db.NewBatch()\n}\n\nfunc (o *OracleKeyValueStore) NewBatchWithSize(size int) ethdb.Batch {\n\treturn o.db.NewBatchWithSize(size)\n}\n\nfunc (o *OracleKeyValueStore) Put(key []byte, value []byte) error {\n\treturn o.db.Put(key, value)\n}\n\nfunc (o *OracleKeyValueStore) Close() error {\n\treturn nil\n}\n\n// Remaining methods are unused when accessing the state for block processing so leaving unimplemented.\n\nfunc (o *OracleKeyValueStore) Has(key []byte) (bool, error) {\n\tpanic(\"not supported\")\n}\n\nfunc (o *OracleKeyValueStore) Delete(key []byte) error {\n\tpanic(\"not supported\")\n}\n\nfunc (o *OracleKeyValueStore) Stat(property string) (string, error) {\n\tpanic(\"not supported\")\n}\n\nfunc (o *OracleKeyValueStore) NewIterator(prefix []byte, start []byte) ethdb.Iterator {\n\tpanic(\"not supported\")\n}\n\nfunc (o *OracleKeyValueStore) Compact(start []byte, limit []byte) error {\n\tpanic(\"not supported\")\n}\n\nfunc (o *OracleKeyValueStore) NewSnapshot() (ethdb.Snapshot, error) {\n\tpanic(\"not supported\")\n}",
+  "resolutions": {
+    "437dcc6cbc847e9a": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "bb55951394276893": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

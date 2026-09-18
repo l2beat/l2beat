@@ -283,6 +283,985 @@
         ]
       },
       "warnings": []
+    },
+    "44ad4cf96e2ef6f0": {
+      "status": "differs",
+      "coveredLines": 87,
+      "match": {
+        "origin": "stack",
+        "collection": "sp1",
+        "relation": {
+          "type": "template",
+          "template": "succinct/OPSuccinct/AccessManager"
+        },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "tendermint_sweep.rs",
+        "similarity": 0.972,
+        "reportId": "sp1/zellic-sp1-design-review-2024",
+        "repository": "succinctlabs/sp1",
+        "path": "crates/prover/scripts/tendermint_sweep.rs",
+        "commit": "15be73d3acae3718a0acc529ed566f6a448b1c0e",
+        "commitTimestamp": "2024-11-27T02:59:17Z",
+        "url": "https://github.com/succinctlabs/sp1/blob/15be73d3acae3718a0acc529ed566f6a448b1c0e/crates/prover/scripts/tendermint_sweep.rs",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "Initial audit",
+        "coverage": "Design-level review only (explicitly not a code audit): RV32IM specification compliance and the register/low-memory aliasing at addresses 0x0-0x1f, focused mostly on load and store instruction behaviour; soundness/completeness of the ZK proofs and circuits and correctness of implementation details were out of scope.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 2,
+        "removed": 2,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 87,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 5,
+            "oldLines": 7,
+            "newStart": 5,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 5,
+                "text": "use itertools::iproduct;"
+              },
+              {
+                "type": " ",
+                "oldLine": 6,
+                "newLine": 6,
+                "text": "use sp1_core_executor::SP1Context;"
+              },
+              {
+                "type": " ",
+                "oldLine": 7,
+                "newLine": 7,
+                "text": "use sp1_core_machine::io::SP1Stdin;"
+              },
+              {
+                "type": "-",
+                "oldLine": 8,
+                "text": "use sp1_prover::components::DefaultProverComponents;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 8,
+                "text": "use sp1_prover::components::CpuProverComponents;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 9,
+                "text": "use sp1_prover::SP1Prover;"
+              },
+              {
+                "type": " ",
+                "oldLine": 10,
+                "newLine": 10,
+                "text": "use sp1_stark::SP1ProverOpts;"
+              },
+              {
+                "type": " ",
+                "oldLine": 11,
+                "newLine": 11,
+                "text": "use tracing_subscriber::EnvFilter;"
+              }
+            ]
+          },
+          {
+            "oldStart": 37,
+            "oldLines": 7,
+            "newStart": 37,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 37,
+                "newLine": 37,
+                "text": "    std::env::set_var(\"RECONSTRUCT_COMMITMENTS\", \"false\");"
+              },
+              { "type": " ", "oldLine": 38, "newLine": 38, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 39,
+                "newLine": 39,
+                "text": "    // Initialize prover."
+              },
+              {
+                "type": "-",
+                "oldLine": 40,
+                "text": "    let prover = SP1Prover::<DefaultProverComponents>::new();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 40,
+                "text": "    let prover = SP1Prover::<CpuProverComponents>::new();",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 41, "newLine": 41, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 42,
+                "newLine": 42,
+                "text": "    // Setup sweep."
+              },
+              {
+                "type": " ",
+                "oldLine": 43,
+                "newLine": 43,
+                "text": "    let iterations = [480000u32];"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "437dcc6cbc847e9a": {
+      "status": "differs",
+      "coveredLines": 87,
+      "match": {
+        "origin": "library",
+        "collection": "sp1",
+        "relation": { "type": "library" },
+        "rank": 3,
+        "matchedBy": "name",
+        "auditedName": "tendermint_sweep.rs",
+        "similarity": 0.972,
+        "reportId": "sp1/zellic-sp1-design-review-2024",
+        "repository": "succinctlabs/sp1",
+        "path": "crates/prover/scripts/tendermint_sweep.rs",
+        "commit": "15be73d3acae3718a0acc529ed566f6a448b1c0e",
+        "commitTimestamp": "2024-11-27T02:59:17Z",
+        "url": "https://github.com/succinctlabs/sp1/blob/15be73d3acae3718a0acc529ed566f6a448b1c0e/crates/prover/scripts/tendermint_sweep.rs",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "Initial audit",
+        "coverage": "Design-level review only (explicitly not a code audit): RV32IM specification compliance and the register/low-memory aliasing at addresses 0x0-0x1f, focused mostly on load and store instruction behaviour; soundness/completeness of the ZK proofs and circuits and correctness of implementation details were out of scope.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 2,
+        "removed": 2,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 87,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 5,
+            "oldLines": 7,
+            "newStart": 5,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 5,
+                "text": "use itertools::iproduct;"
+              },
+              {
+                "type": " ",
+                "oldLine": 6,
+                "newLine": 6,
+                "text": "use sp1_core_executor::SP1Context;"
+              },
+              {
+                "type": " ",
+                "oldLine": 7,
+                "newLine": 7,
+                "text": "use sp1_core_machine::io::SP1Stdin;"
+              },
+              {
+                "type": "-",
+                "oldLine": 8,
+                "text": "use sp1_prover::components::DefaultProverComponents;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 8,
+                "text": "use sp1_prover::components::CpuProverComponents;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 9,
+                "text": "use sp1_prover::SP1Prover;"
+              },
+              {
+                "type": " ",
+                "oldLine": 10,
+                "newLine": 10,
+                "text": "use sp1_stark::SP1ProverOpts;"
+              },
+              {
+                "type": " ",
+                "oldLine": 11,
+                "newLine": 11,
+                "text": "use tracing_subscriber::EnvFilter;"
+              }
+            ]
+          },
+          {
+            "oldStart": 37,
+            "oldLines": 7,
+            "newStart": 37,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 37,
+                "newLine": 37,
+                "text": "    std::env::set_var(\"RECONSTRUCT_COMMITMENTS\", \"false\");"
+              },
+              { "type": " ", "oldLine": 38, "newLine": 38, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 39,
+                "newLine": 39,
+                "text": "    // Initialize prover."
+              },
+              {
+                "type": "-",
+                "oldLine": 40,
+                "text": "    let prover = SP1Prover::<DefaultProverComponents>::new();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 40,
+                "text": "    let prover = SP1Prover::<CpuProverComponents>::new();",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 41, "newLine": 41, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 42,
+                "newLine": 42,
+                "text": "    // Setup sweep."
+              },
+              {
+                "type": " ",
+                "oldLine": 43,
+                "newLine": 43,
+                "text": "    let iterations = [480000u32];"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "5d5f82d91c09d4ec": {
+      "status": "differs",
+      "coveredLines": 87,
+      "match": {
+        "origin": "library",
+        "collection": "sp1",
+        "relation": { "type": "library" },
+        "rank": 3,
+        "matchedBy": "name",
+        "auditedName": "tendermint_sweep.rs",
+        "similarity": 0.972,
+        "reportId": "sp1/zellic-sp1-design-review-2024",
+        "repository": "succinctlabs/sp1",
+        "path": "crates/prover/scripts/tendermint_sweep.rs",
+        "commit": "15be73d3acae3718a0acc529ed566f6a448b1c0e",
+        "commitTimestamp": "2024-11-27T02:59:17Z",
+        "url": "https://github.com/succinctlabs/sp1/blob/15be73d3acae3718a0acc529ed566f6a448b1c0e/crates/prover/scripts/tendermint_sweep.rs",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "Initial audit",
+        "coverage": "Design-level review only (explicitly not a code audit): RV32IM specification compliance and the register/low-memory aliasing at addresses 0x0-0x1f, focused mostly on load and store instruction behaviour; soundness/completeness of the ZK proofs and circuits and correctness of implementation details were out of scope.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 2,
+        "removed": 2,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 87,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 5,
+            "oldLines": 7,
+            "newStart": 5,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 5,
+                "text": "use itertools::iproduct;"
+              },
+              {
+                "type": " ",
+                "oldLine": 6,
+                "newLine": 6,
+                "text": "use sp1_core_executor::SP1Context;"
+              },
+              {
+                "type": " ",
+                "oldLine": 7,
+                "newLine": 7,
+                "text": "use sp1_core_machine::io::SP1Stdin;"
+              },
+              {
+                "type": "-",
+                "oldLine": 8,
+                "text": "use sp1_prover::components::DefaultProverComponents;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 8,
+                "text": "use sp1_prover::components::CpuProverComponents;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 9,
+                "text": "use sp1_prover::SP1Prover;"
+              },
+              {
+                "type": " ",
+                "oldLine": 10,
+                "newLine": 10,
+                "text": "use sp1_stark::SP1ProverOpts;"
+              },
+              {
+                "type": " ",
+                "oldLine": 11,
+                "newLine": 11,
+                "text": "use tracing_subscriber::EnvFilter;"
+              }
+            ]
+          },
+          {
+            "oldStart": 37,
+            "oldLines": 7,
+            "newStart": 37,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 37,
+                "newLine": 37,
+                "text": "    std::env::set_var(\"RECONSTRUCT_COMMITMENTS\", \"false\");"
+              },
+              { "type": " ", "oldLine": 38, "newLine": 38, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 39,
+                "newLine": 39,
+                "text": "    // Initialize prover."
+              },
+              {
+                "type": "-",
+                "oldLine": 40,
+                "text": "    let prover = SP1Prover::<DefaultProverComponents>::new();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 40,
+                "text": "    let prover = SP1Prover::<CpuProverComponents>::new();",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 41, "newLine": 41, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 42,
+                "newLine": 42,
+                "text": "    // Setup sweep."
+              },
+              {
+                "type": " ",
+                "oldLine": 43,
+                "newLine": 43,
+                "text": "    let iterations = [480000u32];"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "e3b0c44298fc1c14": {
+      "status": "differs",
+      "coveredLines": 87,
+      "match": {
+        "origin": "library",
+        "collection": "sp1",
+        "relation": { "type": "library" },
+        "rank": 3,
+        "matchedBy": "name",
+        "auditedName": "tendermint_sweep.rs",
+        "similarity": 0.972,
+        "reportId": "sp1/zellic-sp1-design-review-2024",
+        "repository": "succinctlabs/sp1",
+        "path": "crates/prover/scripts/tendermint_sweep.rs",
+        "commit": "15be73d3acae3718a0acc529ed566f6a448b1c0e",
+        "commitTimestamp": "2024-11-27T02:59:17Z",
+        "url": "https://github.com/succinctlabs/sp1/blob/15be73d3acae3718a0acc529ed566f6a448b1c0e/crates/prover/scripts/tendermint_sweep.rs",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "Initial audit",
+        "coverage": "Design-level review only (explicitly not a code audit): RV32IM specification compliance and the register/low-memory aliasing at addresses 0x0-0x1f, focused mostly on load and store instruction behaviour; soundness/completeness of the ZK proofs and circuits and correctness of implementation details were out of scope.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 2,
+        "removed": 2,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 87,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 5,
+            "oldLines": 7,
+            "newStart": 5,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 5,
+                "text": "use itertools::iproduct;"
+              },
+              {
+                "type": " ",
+                "oldLine": 6,
+                "newLine": 6,
+                "text": "use sp1_core_executor::SP1Context;"
+              },
+              {
+                "type": " ",
+                "oldLine": 7,
+                "newLine": 7,
+                "text": "use sp1_core_machine::io::SP1Stdin;"
+              },
+              {
+                "type": "-",
+                "oldLine": 8,
+                "text": "use sp1_prover::components::DefaultProverComponents;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 8,
+                "text": "use sp1_prover::components::CpuProverComponents;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 9,
+                "text": "use sp1_prover::SP1Prover;"
+              },
+              {
+                "type": " ",
+                "oldLine": 10,
+                "newLine": 10,
+                "text": "use sp1_stark::SP1ProverOpts;"
+              },
+              {
+                "type": " ",
+                "oldLine": 11,
+                "newLine": 11,
+                "text": "use tracing_subscriber::EnvFilter;"
+              }
+            ]
+          },
+          {
+            "oldStart": 37,
+            "oldLines": 7,
+            "newStart": 37,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 37,
+                "newLine": 37,
+                "text": "    std::env::set_var(\"RECONSTRUCT_COMMITMENTS\", \"false\");"
+              },
+              { "type": " ", "oldLine": 38, "newLine": 38, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 39,
+                "newLine": 39,
+                "text": "    // Initialize prover."
+              },
+              {
+                "type": "-",
+                "oldLine": 40,
+                "text": "    let prover = SP1Prover::<DefaultProverComponents>::new();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 40,
+                "text": "    let prover = SP1Prover::<CpuProverComponents>::new();",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 41, "newLine": 41, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 42,
+                "newLine": 42,
+                "text": "    // Setup sweep."
+              },
+              {
+                "type": " ",
+                "oldLine": 43,
+                "newLine": 43,
+                "text": "    let iterations = [480000u32];"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "d79ad2713a1d64a9": {
+      "status": "differs",
+      "coveredLines": 87,
+      "match": {
+        "origin": "stack",
+        "collection": "sp1",
+        "relation": {
+          "type": "template",
+          "template": "succinct/OPSuccinct/OPSuccinctL2OutputOracle_mantle"
+        },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "tendermint_sweep.rs",
+        "similarity": 0.972,
+        "reportId": "sp1/zellic-sp1-design-review-2024",
+        "repository": "succinctlabs/sp1",
+        "path": "crates/prover/scripts/tendermint_sweep.rs",
+        "commit": "15be73d3acae3718a0acc529ed566f6a448b1c0e",
+        "commitTimestamp": "2024-11-27T02:59:17Z",
+        "url": "https://github.com/succinctlabs/sp1/blob/15be73d3acae3718a0acc529ed566f6a448b1c0e/crates/prover/scripts/tendermint_sweep.rs",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "Initial audit",
+        "coverage": "Design-level review only (explicitly not a code audit): RV32IM specification compliance and the register/low-memory aliasing at addresses 0x0-0x1f, focused mostly on load and store instruction behaviour; soundness/completeness of the ZK proofs and circuits and correctness of implementation details were out of scope.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 2,
+        "removed": 2,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 87,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 5,
+            "oldLines": 7,
+            "newStart": 5,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 5,
+                "text": "use itertools::iproduct;"
+              },
+              {
+                "type": " ",
+                "oldLine": 6,
+                "newLine": 6,
+                "text": "use sp1_core_executor::SP1Context;"
+              },
+              {
+                "type": " ",
+                "oldLine": 7,
+                "newLine": 7,
+                "text": "use sp1_core_machine::io::SP1Stdin;"
+              },
+              {
+                "type": "-",
+                "oldLine": 8,
+                "text": "use sp1_prover::components::DefaultProverComponents;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 8,
+                "text": "use sp1_prover::components::CpuProverComponents;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 9,
+                "text": "use sp1_prover::SP1Prover;"
+              },
+              {
+                "type": " ",
+                "oldLine": 10,
+                "newLine": 10,
+                "text": "use sp1_stark::SP1ProverOpts;"
+              },
+              {
+                "type": " ",
+                "oldLine": 11,
+                "newLine": 11,
+                "text": "use tracing_subscriber::EnvFilter;"
+              }
+            ]
+          },
+          {
+            "oldStart": 37,
+            "oldLines": 7,
+            "newStart": 37,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 37,
+                "newLine": 37,
+                "text": "    std::env::set_var(\"RECONSTRUCT_COMMITMENTS\", \"false\");"
+              },
+              { "type": " ", "oldLine": 38, "newLine": 38, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 39,
+                "newLine": 39,
+                "text": "    // Initialize prover."
+              },
+              {
+                "type": "-",
+                "oldLine": 40,
+                "text": "    let prover = SP1Prover::<DefaultProverComponents>::new();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 40,
+                "text": "    let prover = SP1Prover::<CpuProverComponents>::new();",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 41, "newLine": 41, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 42,
+                "newLine": 42,
+                "text": "    // Setup sweep."
+              },
+              {
+                "type": " ",
+                "oldLine": 43,
+                "newLine": 43,
+                "text": "    let iterations = [480000u32];"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "2295595c4243408b": {
+      "status": "differs",
+      "coveredLines": 87,
+      "match": {
+        "origin": "stack",
+        "collection": "sp1",
+        "relation": { "type": "template", "template": "succinct/SP1Verifier" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "tendermint_sweep.rs",
+        "similarity": 0.972,
+        "reportId": "sp1/zellic-sp1-design-review-2024",
+        "repository": "succinctlabs/sp1",
+        "path": "crates/prover/scripts/tendermint_sweep.rs",
+        "commit": "15be73d3acae3718a0acc529ed566f6a448b1c0e",
+        "commitTimestamp": "2024-11-27T02:59:17Z",
+        "url": "https://github.com/succinctlabs/sp1/blob/15be73d3acae3718a0acc529ed566f6a448b1c0e/crates/prover/scripts/tendermint_sweep.rs",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "Initial audit",
+        "coverage": "Design-level review only (explicitly not a code audit): RV32IM specification compliance and the register/low-memory aliasing at addresses 0x0-0x1f, focused mostly on load and store instruction behaviour; soundness/completeness of the ZK proofs and circuits and correctness of implementation details were out of scope.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 2,
+        "removed": 2,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 87,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 5,
+            "oldLines": 7,
+            "newStart": 5,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 5,
+                "text": "use itertools::iproduct;"
+              },
+              {
+                "type": " ",
+                "oldLine": 6,
+                "newLine": 6,
+                "text": "use sp1_core_executor::SP1Context;"
+              },
+              {
+                "type": " ",
+                "oldLine": 7,
+                "newLine": 7,
+                "text": "use sp1_core_machine::io::SP1Stdin;"
+              },
+              {
+                "type": "-",
+                "oldLine": 8,
+                "text": "use sp1_prover::components::DefaultProverComponents;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 8,
+                "text": "use sp1_prover::components::CpuProverComponents;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 9,
+                "text": "use sp1_prover::SP1Prover;"
+              },
+              {
+                "type": " ",
+                "oldLine": 10,
+                "newLine": 10,
+                "text": "use sp1_stark::SP1ProverOpts;"
+              },
+              {
+                "type": " ",
+                "oldLine": 11,
+                "newLine": 11,
+                "text": "use tracing_subscriber::EnvFilter;"
+              }
+            ]
+          },
+          {
+            "oldStart": 37,
+            "oldLines": 7,
+            "newStart": 37,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 37,
+                "newLine": 37,
+                "text": "    std::env::set_var(\"RECONSTRUCT_COMMITMENTS\", \"false\");"
+              },
+              { "type": " ", "oldLine": 38, "newLine": 38, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 39,
+                "newLine": 39,
+                "text": "    // Initialize prover."
+              },
+              {
+                "type": "-",
+                "oldLine": 40,
+                "text": "    let prover = SP1Prover::<DefaultProverComponents>::new();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 40,
+                "text": "    let prover = SP1Prover::<CpuProverComponents>::new();",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 41, "newLine": 41, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 42,
+                "newLine": 42,
+                "text": "    // Setup sweep."
+              },
+              {
+                "type": " ",
+                "oldLine": 43,
+                "newLine": 43,
+                "text": "    let iterations = [480000u32];"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "d80a56c5abf9208b": {
+      "status": "differs",
+      "coveredLines": 87,
+      "match": {
+        "origin": "library",
+        "collection": "sp1",
+        "relation": { "type": "library" },
+        "rank": 3,
+        "matchedBy": "name",
+        "auditedName": "tendermint_sweep.rs",
+        "similarity": 0.972,
+        "reportId": "sp1/zellic-sp1-design-review-2024",
+        "repository": "succinctlabs/sp1",
+        "path": "crates/prover/scripts/tendermint_sweep.rs",
+        "commit": "15be73d3acae3718a0acc529ed566f6a448b1c0e",
+        "commitTimestamp": "2024-11-27T02:59:17Z",
+        "url": "https://github.com/succinctlabs/sp1/blob/15be73d3acae3718a0acc529ed566f6a448b1c0e/crates/prover/scripts/tendermint_sweep.rs",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "Initial audit",
+        "coverage": "Design-level review only (explicitly not a code audit): RV32IM specification compliance and the register/low-memory aliasing at addresses 0x0-0x1f, focused mostly on load and store instruction behaviour; soundness/completeness of the ZK proofs and circuits and correctness of implementation details were out of scope.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 2,
+        "removed": 2,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 87,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 5,
+            "oldLines": 7,
+            "newStart": 5,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 5,
+                "text": "use itertools::iproduct;"
+              },
+              {
+                "type": " ",
+                "oldLine": 6,
+                "newLine": 6,
+                "text": "use sp1_core_executor::SP1Context;"
+              },
+              {
+                "type": " ",
+                "oldLine": 7,
+                "newLine": 7,
+                "text": "use sp1_core_machine::io::SP1Stdin;"
+              },
+              {
+                "type": "-",
+                "oldLine": 8,
+                "text": "use sp1_prover::components::DefaultProverComponents;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 8,
+                "text": "use sp1_prover::components::CpuProverComponents;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 9,
+                "text": "use sp1_prover::SP1Prover;"
+              },
+              {
+                "type": " ",
+                "oldLine": 10,
+                "newLine": 10,
+                "text": "use sp1_stark::SP1ProverOpts;"
+              },
+              {
+                "type": " ",
+                "oldLine": 11,
+                "newLine": 11,
+                "text": "use tracing_subscriber::EnvFilter;"
+              }
+            ]
+          },
+          {
+            "oldStart": 37,
+            "oldLines": 7,
+            "newStart": 37,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 37,
+                "newLine": 37,
+                "text": "    std::env::set_var(\"RECONSTRUCT_COMMITMENTS\", \"false\");"
+              },
+              { "type": " ", "oldLine": 38, "newLine": 38, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 39,
+                "newLine": 39,
+                "text": "    // Initialize prover."
+              },
+              {
+                "type": "-",
+                "oldLine": 40,
+                "text": "    let prover = SP1Prover::<DefaultProverComponents>::new();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 40,
+                "text": "    let prover = SP1Prover::<CpuProverComponents>::new();",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 41, "newLine": 41, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 42,
+                "newLine": 42,
+                "text": "    // Setup sweep."
+              },
+              {
+                "type": " ",
+                "oldLine": 43,
+                "newLine": 43,
+                "text": "    let iterations = [480000u32];"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
     }
   }
 }

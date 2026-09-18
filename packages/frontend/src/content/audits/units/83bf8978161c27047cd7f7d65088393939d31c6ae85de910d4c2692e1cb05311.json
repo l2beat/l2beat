@@ -261,6 +261,262 @@
         ]
       },
       "warnings": []
+    },
+    "437dcc6cbc847e9a": {
+      "status": "differs",
+      "coveredLines": 182,
+      "match": {
+        "origin": "other",
+        "collection": "bob",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "name",
+        "auditedName": "Encoding",
+        "similarity": 0.967,
+        "reportId": "bob/veridise-kailua-2025-02",
+        "repository": "boundless-xyz/kailua",
+        "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "commit": "27dec82b67de1051df9258b36f8366ebf308e5bf",
+        "commitTimestamp": "2025-02-06T07:42:16Z",
+        "url": "https://github.com/boundless-xyz/kailua/blob/27dec82b67de1051df9258b36f8366ebf308e5bf/crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix commit",
+        "coverage": "Confirmed fix commit for V-KLA-VUL-004 (contract nits).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 4,
+        "removed": 9,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 3,
+        "unchanged": 182,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 158,
+            "oldLines": 8,
+            "newStart": 158,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 158,
+                "newLine": 158,
+                "text": "    /// @param _blobBaseFee         L1 blob base fee."
+              },
+              {
+                "type": " ",
+                "oldLine": 159,
+                "newLine": 159,
+                "text": "    /// @param _hash                L1 blockhash."
+              },
+              {
+                "type": " ",
+                "oldLine": 160,
+                "newLine": 160,
+                "text": "    /// @param _batcherHash         Versioned hash to authenticate batcher by."
+              },
+              {
+                "type": "-",
+                "oldLine": 161,
+                "text": "    /// @param _dependencySet       Array of the chain IDs in the interop dependency set.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 162,
+                "text": "    function encodeSetL1BlockValuesInterop(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 161,
+                "text": "    function encodeSetL1BlockValuesIsthmus(",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 163,
+                "newLine": 162,
+                "text": "        uint32 _baseFeeScalar,"
+              },
+              {
+                "type": " ",
+                "oldLine": 164,
+                "newLine": 163,
+                "text": "        uint32 _blobBaseFeeScalar,"
+              },
+              {
+                "type": " ",
+                "oldLine": 165,
+                "newLine": 164,
+                "text": "        uint64 _sequenceNumber,"
+              }
+            ]
+          },
+          {
+            "oldStart": 168,
+            "oldLines": 14,
+            "newStart": 167,
+            "newLines": 9,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 168,
+                "newLine": 167,
+                "text": "        uint256 _baseFee,"
+              },
+              {
+                "type": " ",
+                "oldLine": 169,
+                "newLine": 168,
+                "text": "        uint256 _blobBaseFee,"
+              },
+              {
+                "type": " ",
+                "oldLine": 170,
+                "newLine": 169,
+                "text": "        bytes32 _hash,"
+              },
+              {
+                "type": "-",
+                "oldLine": 171,
+                "text": "        bytes32 _batcherHash,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 172,
+                "text": "        uint256[] memory _dependencySet",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 170,
+                "text": "        bytes32 _batcherHash",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 173,
+                "newLine": 171,
+                "text": "    ) internal pure returns (bytes memory) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 174,
+                "text": "        require(_dependencySet.length <= type(uint8).max, \"Encoding: dependency set length is too large\");",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 175,
+                "text": "        // Check that the batcher hash is just the address with 0 padding to the left for version 0.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 176,
+                "text": "        require(uint160(uint256(_batcherHash)) == uint256(_batcherHash), \"Encoding: invalid batcher hash\");",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 177, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 178,
+                "text": "        bytes4 functionSignature = bytes4(keccak256(\"setL1BlockValuesInterop()\"));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 172,
+                "text": "        bytes4 functionSignature = bytes4(keccak256(\"setL1BlockValuesIsthmus()\"));",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 179,
+                "newLine": 173,
+                "text": "        return abi.encodePacked("
+              },
+              {
+                "type": " ",
+                "oldLine": 180,
+                "newLine": 174,
+                "text": "            functionSignature,"
+              },
+              {
+                "type": " ",
+                "oldLine": 181,
+                "newLine": 175,
+                "text": "            _baseFeeScalar,"
+              }
+            ]
+          },
+          {
+            "oldStart": 186,
+            "oldLines": 9,
+            "newStart": 180,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 186,
+                "newLine": 180,
+                "text": "            _baseFee,"
+              },
+              {
+                "type": " ",
+                "oldLine": 187,
+                "newLine": 181,
+                "text": "            _blobBaseFee,"
+              },
+              {
+                "type": " ",
+                "oldLine": 188,
+                "newLine": 182,
+                "text": "            _hash,"
+              },
+              {
+                "type": "-",
+                "oldLine": 189,
+                "text": "            _batcherHash,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 190,
+                "text": "            uint8(_dependencySet.length),",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 191,
+                "text": "            _dependencySet",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 183,
+                "text": "            _batcherHash",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 192,
+                "newLine": 184,
+                "text": "        );"
+              },
+              { "type": " ", "oldLine": 193, "newLine": 185, "text": "    }" },
+              { "type": " ", "oldLine": 194, "newLine": 186, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
     }
   }
 }

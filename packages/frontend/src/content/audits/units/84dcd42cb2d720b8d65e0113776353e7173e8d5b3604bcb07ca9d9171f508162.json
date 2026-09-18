@@ -149,6 +149,666 @@
         "totalVersions": 6
       },
       "warnings": []
+    },
+    "437dcc6cbc847e9a": {
+      "status": "identical",
+      "coveredLines": 51,
+      "match": {
+        "origin": "stack",
+        "collection": "optimism",
+        "relation": {
+          "type": "template",
+          "template": "gnosisSafeModules/LivenessGuard"
+        },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "CrossDomainMessengerLegacySpacer1",
+        "similarity": 1,
+        "reportId": "optimism/cantina-eip7702-2025-02",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts-bedrock/src/universal/CrossDomainMessenger.sol",
+        "commit": "88419adbf689336913a3db7d4c3691b2b0102e75",
+        "commitTimestamp": "2025-03-05T15:37:49Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/88419adbf689336913a3db7d4c3691b2b0102e75/packages/contracts-bedrock/src/universal/CrossDomainMessenger.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Head commit of PR 14608, verified by Cantina as the fix for 3.1.1 (baseGas() updated to the EIP-7623 formula).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 6
+      },
+      "warnings": []
+    },
+    "a8bf4a329bb46967": {
+      "status": "identical",
+      "coveredLines": 51,
+      "match": {
+        "origin": "stack",
+        "collection": "optimism",
+        "relation": {
+          "type": "template",
+          "template": "opstack/L1CrossDomainMessenger"
+        },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "CrossDomainMessengerLegacySpacer1",
+        "similarity": 1,
+        "reportId": "optimism/cantina-eip7702-2025-02",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts-bedrock/src/universal/CrossDomainMessenger.sol",
+        "commit": "88419adbf689336913a3db7d4c3691b2b0102e75",
+        "commitTimestamp": "2025-03-05T15:37:49Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/88419adbf689336913a3db7d4c3691b2b0102e75/packages/contracts-bedrock/src/universal/CrossDomainMessenger.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Head commit of PR 14608, verified by Cantina as the fix for 3.1.1 (baseGas() updated to the EIP-7623 formula).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 6
+      },
+      "warnings": []
+    },
+    "d79ad2713a1d64a9": {
+      "status": "identical",
+      "coveredLines": 70,
+      "match": {
+        "origin": "stack",
+        "collection": "optimism",
+        "relation": {
+          "type": "template",
+          "template": "opstack/AddressManager"
+        },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "CrossDomainMessengerLegacySpacer1",
+        "similarity": 1,
+        "reportId": "optimism/cantina-eip7702-2025-02",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts-bedrock/src/universal/CrossDomainMessenger.sol",
+        "commit": "88419adbf689336913a3db7d4c3691b2b0102e75",
+        "commitTimestamp": "2025-03-05T15:37:49Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/88419adbf689336913a3db7d4c3691b2b0102e75/packages/contracts-bedrock/src/universal/CrossDomainMessenger.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Head commit of PR 14608, verified by Cantina as the fix for 3.1.1 (baseGas() updated to the EIP-7623 formula).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 6
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 51,
+        "ignoredRemoved": 32,
+        "unchanged": 70,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 51,
+            "newStart": 1,
+            "newLines": 70,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "contract CrossDomainMessengerLegacySpacer1 {"
+              },
+              {
+                "type": "-",
+                "oldLine": 2,
+                "text": "    /// @custom:legacy",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 3,
+                "text": "    /// @custom:spacer ContextUpgradable's __gap",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 4,
+                "text": "    /// @notice Spacer for backwards compatibility. Comes from OpenZeppelin",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 5,
+                "text": "    ///         ContextUpgradable.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 2, "text": "    /**", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "     * @custom:legacy",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 4,
+                "text": "     * @custom:spacer ContextUpgradable's __gap",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 5,
+                "text": "     * @notice Spacer for backwards compatibility. Comes from OpenZeppelin",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 6,
+                "text": "     *         ContextUpgradable.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 7, "text": "     *", "ignored": true },
+              { "type": "+", "newLine": 8, "text": "     */", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 6,
+                "newLine": 9,
+                "text": "    uint256[50] private spacer_1_0_1600;"
+              },
+              { "type": " ", "oldLine": 7, "newLine": 10, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 8,
+                "text": "    /// @custom:legacy",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 9,
+                "text": "    /// @custom:spacer OwnableUpgradeable's _owner",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 10,
+                "text": "    /// @notice Spacer for backwards compatibility.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 11,
+                "text": "    ///         Come from OpenZeppelin OwnableUpgradeable.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 11,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 12,
+                "text": "     * @custom:legacy",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 13,
+                "text": "     * @custom:spacer OwnableUpgradeable's _owner",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 14,
+                "text": "     * @notice Spacer for backwards compatibility.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 15,
+                "text": "     *         Come from OpenZeppelin OwnableUpgradeable.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 16,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 12,
+                "newLine": 17,
+                "text": "    address private spacer_51_0_20;"
+              },
+              { "type": " ", "oldLine": 13, "newLine": 18, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 14,
+                "text": "    /// @custom:legacy",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 15,
+                "text": "    /// @custom:spacer OwnableUpgradeable's __gap",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 16,
+                "text": "    /// @notice Spacer for backwards compatibility. Comes from OpenZeppelin",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 17,
+                "text": "    ///         OwnableUpgradeable.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 19,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 20,
+                "text": "     * @custom:legacy",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 21,
+                "text": "     * @custom:spacer OwnableUpgradeable's __gap",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 22,
+                "text": "     * @notice Spacer for backwards compatibility. Comes from OpenZeppelin",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 23,
+                "text": "     *         OwnableUpgradeable.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 24,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 18,
+                "newLine": 25,
+                "text": "    uint256[49] private spacer_52_0_1568;"
+              },
+              { "type": " ", "oldLine": 19, "newLine": 26, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 20,
+                "text": "    /// @custom:legacy",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 21,
+                "text": "    /// @custom:spacer PausableUpgradable's _paused",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 22,
+                "text": "    /// @notice Spacer for backwards compatibility. Comes from OpenZeppelin",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 23,
+                "text": "    ///         PausableUpgradable.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 27,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 28,
+                "text": "     * @custom:legacy",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 29,
+                "text": "     * @custom:spacer PausableUpgradable's _paused",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 30,
+                "text": "     * @notice Spacer for backwards compatibility. Comes from OpenZeppelin",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 31,
+                "text": "     *         PausableUpgradable.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 32,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 33,
+                "text": "    bool private spacer_101_0_1;"
+              },
+              { "type": " ", "oldLine": 25, "newLine": 34, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 26,
+                "text": "    /// @custom:legacy",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 27,
+                "text": "    /// @custom:spacer PausableUpgradable's __gap",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 28,
+                "text": "    /// @notice Spacer for backwards compatibility. Comes from OpenZeppelin",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 29,
+                "text": "    ///         PausableUpgradable.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 35,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 36,
+                "text": "     * @custom:legacy",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 37,
+                "text": "     * @custom:spacer PausableUpgradable's __gap",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 38,
+                "text": "     * @notice Spacer for backwards compatibility. Comes from OpenZeppelin",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 39,
+                "text": "     *         PausableUpgradable.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 40,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 30,
+                "newLine": 41,
+                "text": "    uint256[49] private spacer_102_0_1568;"
+              },
+              { "type": " ", "oldLine": 31, "newLine": 42, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 32,
+                "text": "    /// @custom:legacy",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 33,
+                "text": "    /// @custom:spacer ReentrancyGuardUpgradeable's `_status` field.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 34,
+                "text": "    /// @notice Spacer for backwards compatibility.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 43,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 44,
+                "text": "     * @custom:legacy",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 45,
+                "text": "     * @custom:spacer ReentrancyGuardUpgradeable's `_status` field.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 46,
+                "text": "     * @notice Spacer for backwards compatibility.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 47,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 35,
+                "newLine": 48,
+                "text": "    uint256 private spacer_151_0_32;"
+              },
+              { "type": " ", "oldLine": 36, "newLine": 49, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 37,
+                "text": "    /// @custom:legacy",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 38,
+                "text": "    /// @custom:spacer ReentrancyGuardUpgradeable's __gap",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 39,
+                "text": "    /// @notice Spacer for backwards compatibility.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 50,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 51,
+                "text": "     * @custom:legacy",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 52,
+                "text": "     * @custom:spacer ReentrancyGuardUpgradeable's __gap",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 53,
+                "text": "     * @notice Spacer for backwards compatibility.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 54,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 40,
+                "newLine": 55,
+                "text": "    uint256[49] private spacer_152_0_1568;"
+              },
+              { "type": " ", "oldLine": 41, "newLine": 56, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 42,
+                "text": "    /// @custom:legacy",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 43,
+                "text": "    /// @custom:spacer blockedMessages",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 44,
+                "text": "    /// @notice Spacer for backwards compatibility.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 57,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 58,
+                "text": "     * @custom:legacy",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 59,
+                "text": "     * @custom:spacer blockedMessages",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 60,
+                "text": "     * @notice Spacer for backwards compatibility.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 61,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 45,
+                "newLine": 62,
+                "text": "    mapping(bytes32 => bool) private spacer_201_0_32;"
+              },
+              { "type": " ", "oldLine": 46, "newLine": 63, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 47,
+                "text": "    /// @custom:legacy",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 48,
+                "text": "    /// @custom:spacer relayedMessages",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 49,
+                "text": "    /// @notice Spacer for backwards compatibility.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 64,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 65,
+                "text": "     * @custom:legacy",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 66,
+                "text": "     * @custom:spacer relayedMessages",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 67,
+                "text": "     * @notice Spacer for backwards compatibility.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 68,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 50,
+                "newLine": 69,
+                "text": "    mapping(bytes32 => bool) private spacer_202_0_32;"
+              },
+              { "type": " ", "oldLine": 51, "newLine": 70, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
     }
   }
 }

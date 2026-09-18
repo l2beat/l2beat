@@ -14220,6 +14220,5692 @@
         ]
       },
       "warnings": []
+    },
+    "437dcc6cbc847e9a": {
+      "status": "differs",
+      "coveredLines": 1031,
+      "match": {
+        "origin": "library",
+        "collection": "solady",
+        "relation": { "type": "library" },
+        "rank": 3,
+        "matchedBy": "name",
+        "auditedName": "FixedPointMathLib",
+        "similarity": 0.952,
+        "reportId": "solady/xuwinnie-solady-cbrt-proof",
+        "repository": "Vectorized/solady",
+        "path": "src/utils/FixedPointMathLib.sol",
+        "commit": "43f9d49815c8126d92771b26bd9bdbe2dbea87a5",
+        "commitTimestamp": "2024-08-01T09:32:50Z",
+        "url": "https://github.com/Vectorized/solady/blob/43f9d49815c8126d92771b26bd9bdbe2dbea87a5/src/utils/FixedPointMathLib.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "Formal proof",
+        "coverage": "Mathematical correctness proof of the cbrt and cbrtWad functions only; the rest of the file was not reviewed.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 31,
+        "removed": 95,
+        "ignoredAdded": 72,
+        "ignoredRemoved": 109,
+        "unchanged": 1031,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 184,
+            "oldLines": 19,
+            "newStart": 184,
+            "newLines": 17,
+            "lines": [
+              { "type": " ", "oldLine": 184, "newLine": 184, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 185,
+                "newLine": 185,
+                "text": "    /// @dev Equivalent to `x` to the power of `y`."
+              },
+              {
+                "type": " ",
+                "oldLine": 186,
+                "newLine": 186,
+                "text": "    /// because `x ** y = (e ** ln(x)) ** y = e ** (ln(x) * y)`."
+              },
+              {
+                "type": "-",
+                "oldLine": 187,
+                "text": "    /// Note: This function is an approximation.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 188,
+                "newLine": 187,
+                "text": "    function powWad(int256 x, int256 y) internal pure returns (int256) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 189,
+                "newLine": 188,
+                "text": "        // Using `ln(x)` means `x` must be greater than 0."
+              },
+              {
+                "type": " ",
+                "oldLine": 190,
+                "newLine": 189,
+                "text": "        return expWad((lnWad(x) * y) / int256(WAD));"
+              },
+              { "type": " ", "oldLine": 191, "newLine": 190, "text": "    }" },
+              { "type": " ", "oldLine": 192, "newLine": 191, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 193,
+                "newLine": 192,
+                "text": "    /// @dev Returns `exp(x)`, denominated in `WAD`."
+              },
+              {
+                "type": "-",
+                "oldLine": 194,
+                "text": "    /// Credit to Remco Bloemen under MIT license: https://2π.com/22/exp-ln",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 195,
+                "text": "    /// Note: This function is an approximation. Monotonically increasing.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 193,
+                "text": "    /// Credit to Remco Bloemen under MIT license: https://2π.com/21/exp-ln",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 196,
+                "newLine": 194,
+                "text": "    function expWad(int256 x) internal pure returns (int256 r) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 197,
+                "newLine": 195,
+                "text": "        unchecked {"
+              },
+              {
+                "type": " ",
+                "oldLine": 198,
+                "newLine": 196,
+                "text": "            // When the result is less than 0.5 we return zero."
+              },
+              {
+                "type": "-",
+                "oldLine": 199,
+                "text": "            // This happens when `x <= (log(1e-18) * 1e18) ~ -4.15e19`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 197,
+                "text": "            // This happens when `x <= floor(log(0.5e18) * 1e18) ≈ -42e18`.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 200,
+                "newLine": 198,
+                "text": "            if (x <= -41446531673892822313) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 201,
+                "newLine": 199,
+                "text": "                return r;"
+              },
+              {
+                "type": " ",
+                "oldLine": 202,
+                "newLine": 200,
+                "text": "            }"
+              }
+            ]
+          },
+          {
+            "oldStart": 261,
+            "oldLines": 8,
+            "newStart": 259,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 261, "newLine": 259, "text": "    }" },
+              { "type": " ", "oldLine": 262, "newLine": 260, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 263,
+                "newLine": 261,
+                "text": "    /// @dev Returns `ln(x)`, denominated in `WAD`."
+              },
+              {
+                "type": "-",
+                "oldLine": 264,
+                "text": "    /// Credit to Remco Bloemen under MIT license: https://2π.com/22/exp-ln",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 265,
+                "text": "    /// Note: This function is an approximation. Monotonically increasing.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 262,
+                "text": "    /// Credit to Remco Bloemen under MIT license: https://2π.com/21/exp-ln",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 266,
+                "newLine": 263,
+                "text": "    function lnWad(int256 x) internal pure returns (int256 r) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 267,
+                "newLine": 264,
+                "text": "        /// @solidity memory-safe-assembly"
+              },
+              {
+                "type": " ",
+                "oldLine": 268,
+                "newLine": 265,
+                "text": "        assembly {"
+              }
+            ]
+          },
+          {
+            "oldStart": 338,
+            "oldLines": 7,
+            "newStart": 335,
+            "newLines": 6,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 338,
+                "newLine": 335,
+                "text": "    /// @dev Returns `W_0(x)`, denominated in `WAD`."
+              },
+              {
+                "type": " ",
+                "oldLine": 339,
+                "newLine": 336,
+                "text": "    /// See: https://en.wikipedia.org/wiki/Lambert_W_function"
+              },
+              {
+                "type": " ",
+                "oldLine": 340,
+                "newLine": 337,
+                "text": "    /// a.k.a. Product log function. This is an approximation of the principal branch."
+              },
+              {
+                "type": "-",
+                "oldLine": 341,
+                "text": "    /// Note: This function is an approximation. Monotonically increasing.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 342,
+                "newLine": 338,
+                "text": "    function lambertW0Wad(int256 x) internal pure returns (int256 w) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 343,
+                "newLine": 339,
+                "text": "        // forgefmt: disable-next-item"
+              },
+              {
+                "type": " ",
+                "oldLine": 344,
+                "newLine": 340,
+                "text": "        unchecked {"
+              }
+            ]
+          },
+          {
+            "oldStart": 353,
+            "oldLines": 7,
+            "newStart": 349,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 353,
+                "newLine": 349,
+                "text": "                } else if (w <= -0x3ffffffffffffff) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 354,
+                "newLine": 350,
+                "text": "                    i = 32; // Inputs near `-1/e` take very long to converge."
+              },
+              {
+                "type": " ",
+                "oldLine": 355,
+                "newLine": 351,
+                "text": "                }"
+              },
+              {
+                "type": "-",
+                "oldLine": 356,
+                "text": "            } else if (uint256(w >> 63) == uint256(0)) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 352,
+                "text": "            } else if (w >> 63 == 0) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 357,
+                "newLine": 353,
+                "text": "                /// @solidity memory-safe-assembly"
+              },
+              {
+                "type": " ",
+                "oldLine": 358,
+                "newLine": 354,
+                "text": "                assembly {"
+              },
+              {
+                "type": " ",
+                "oldLine": 359,
+                "newLine": 355,
+                "text": "                    // Inline log2 for more performance, since the range is small."
+              }
+            ]
+          },
+          {
+            "oldStart": 374,
+            "oldLines": 7,
+            "newStart": 370,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 374,
+                "newLine": 370,
+                "text": "                    i := add(3, iszero(shr(68, x)))"
+              },
+              {
+                "type": " ",
+                "oldLine": 375,
+                "newLine": 371,
+                "text": "                    c := iszero(shr(143, x))"
+              },
+              {
+                "type": " ",
+                "oldLine": 376,
+                "newLine": 372,
+                "text": "                }"
+              },
+              {
+                "type": "-",
+                "oldLine": 377,
+                "text": "                if (c == uint256(0)) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 373,
+                "text": "                if (c == 0) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 378,
+                "newLine": 374,
+                "text": "                    do { // If `x` is big, use Newton's so that intermediate values won't overflow."
+              },
+              {
+                "type": " ",
+                "oldLine": 379,
+                "newLine": 375,
+                "text": "                        int256 e = expWad(w);"
+              },
+              {
+                "type": " ",
+                "oldLine": 380,
+                "newLine": 376,
+                "text": "                        /// @solidity memory-safe-assembly"
+              }
+            ]
+          },
+          {
+            "oldStart": 384,
+            "oldLines": 7,
+            "newStart": 380,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 384,
+                "newLine": 380,
+                "text": "                        }"
+              },
+              {
+                "type": " ",
+                "oldLine": 385,
+                "newLine": 381,
+                "text": "                        if (p <= w) break;"
+              },
+              {
+                "type": " ",
+                "oldLine": 386,
+                "newLine": 382,
+                "text": "                        p = w;"
+              },
+              {
+                "type": "-",
+                "oldLine": 387,
+                "text": "                    } while (--i != uint256(0));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 383,
+                "text": "                    } while (--i != 0);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 388,
+                "newLine": 384,
+                "text": "                    /// @solidity memory-safe-assembly"
+              },
+              {
+                "type": " ",
+                "oldLine": 389,
+                "newLine": 385,
+                "text": "                    assembly {"
+              },
+              {
+                "type": " ",
+                "oldLine": 390,
+                "newLine": 386,
+                "text": "                        w := sub(w, sgt(w, 2))"
+              }
+            ]
+          },
+          {
+            "oldStart": 409,
+            "oldLines": 17,
+            "newStart": 405,
+            "newLines": 18,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 409,
+                "newLine": 405,
+                "text": "            }"
+              },
+              {
+                "type": " ",
+                "oldLine": 410,
+                "newLine": 406,
+                "text": "            // For certain ranges of `x`, we'll use the quadratic-rate recursive formula of"
+              },
+              {
+                "type": " ",
+                "oldLine": 411,
+                "newLine": 407,
+                "text": "            // R. Iacono and J.P. Boyd for the last iteration, to avoid catastrophic cancellation."
+              },
+              {
+                "type": "-",
+                "oldLine": 412,
+                "text": "            if (c == uint256(0)) return w;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 413,
+                "text": "            int256 t = w | 1;",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 414,
+                "text": "            /// @solidity memory-safe-assembly",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 415,
+                "text": "            assembly {",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 416,
+                "text": "                x := sdiv(mul(x, wad), t)",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 408,
+                "text": "            if (c != 0) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 409,
+                "text": "                int256 t = w | 1;",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 410,
+                "text": "                /// @solidity memory-safe-assembly",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 411,
+                "text": "                assembly {",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 412,
+                "text": "                    x := sdiv(mul(x, wad), t)",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 413,
+                "text": "                }",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 414,
+                "text": "                x = (t * (wad + lnWad(x)));",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 415,
+                "text": "                /// @solidity memory-safe-assembly",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 416,
+                "text": "                assembly {",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 417,
+                "text": "                    w := sdiv(x, add(wad, t))",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 418,
+                "text": "                }",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 417,
+                "newLine": 419,
+                "text": "            }"
+              },
+              {
+                "type": "-",
+                "oldLine": 418,
+                "text": "            x = (t * (wad + lnWad(x)));",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 419,
+                "text": "            /// @solidity memory-safe-assembly",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 420,
+                "text": "            assembly {",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 421,
+                "text": "                w := sdiv(x, add(wad, t))",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 422,
+                "text": "            }",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 423,
+                "newLine": 420,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 424, "newLine": 421, "text": "    }" },
+              { "type": " ", "oldLine": 425, "newLine": 422, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 427,
+            "oldLines": 98,
+            "newStart": 424,
+            "newLines": 83,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 427,
+                "newLine": 424,
+                "text": "    /*                  GENERAL NUMBER UTILITIES                  */"
+              },
+              {
+                "type": " ",
+                "oldLine": 428,
+                "newLine": 425,
+                "text": "    /*.•°:°.´+˚.*°.˚:*.´•*.+°.•°:´*.´•*.•°.•°:°.´:•˚°.*°.˚:*.´+°.•*/"
+              },
+              { "type": " ", "oldLine": 429, "newLine": 426, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 430,
+                "text": "    /// @dev Calculates `floor(x * y / d)` with full precision.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 427,
+                "text": "    /// @dev Calculates `floor(a * b / d)` with full precision.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 431,
+                "newLine": 428,
+                "text": "    /// Throws if result overflows a uint256 or when `d` is zero."
+              },
+              {
+                "type": " ",
+                "oldLine": 432,
+                "newLine": 429,
+                "text": "    /// Credit to Remco Bloemen under MIT license: https://2π.com/21/muldiv"
+              },
+              {
+                "type": " ",
+                "oldLine": 433,
+                "newLine": 430,
+                "text": "    function fullMulDiv(uint256 x, uint256 y, uint256 d) internal pure returns (uint256 result) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 434,
+                "newLine": 431,
+                "text": "        /// @solidity memory-safe-assembly"
+              },
+              {
+                "type": " ",
+                "oldLine": 435,
+                "newLine": 432,
+                "text": "        assembly {"
+              },
+              {
+                "type": "-",
+                "oldLine": 436,
+                "text": "            // 512-bit multiply `[p1 p0] = x * y`.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 437,
+                "text": "            // Compute the product mod `2**256` and mod `2**256 - 1`",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 438,
+                "text": "            // then use the Chinese Remainder Theorem to reconstruct",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 439,
+                "text": "            // the 512 bit result. The result is stored in two 256",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 440,
+                "text": "            // variables such that `product = p1 * 2**256 + p0`.",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 441, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 442,
+                "text": "            // Temporarily use `result` as `p0` to save gas.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 443,
+                "text": "            result := mul(x, y) // Lower 256 bits of `x * y`.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 444,
+                "newLine": 433,
+                "text": "            for {} 1 {} {"
+              },
+              {
+                "type": "-",
+                "oldLine": 445,
+                "text": "                // If overflows.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 446,
+                "text": "                if iszero(mul(or(iszero(x), eq(div(result, x), y)), d)) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 447,
+                "text": "                    let mm := mulmod(x, y, not(0))",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 448,
+                "text": "                    let p1 := sub(mm, add(result, lt(mm, result))) // Upper 256 bits of `x * y`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 434,
+                "text": "                // 512-bit multiply `[p1 p0] = x * y`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 435,
+                "text": "                // Compute the product mod `2**256` and mod `2**256 - 1`",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 436,
+                "text": "                // then use the Chinese Remainder Theorem to reconstruct",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 437,
+                "text": "                // the 512 bit result. The result is stored in two 256",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 438,
+                "text": "                // variables such that `product = p1 * 2**256 + p0`.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 449, "newLine": 439, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 450,
+                "text": "                    /*------------------- 512 by 256 division --------------------*/",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 440,
+                "text": "                // Least significant 256 bits of the product.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 441,
+                "text": "                result := mul(x, y) // Temporarily use `result` as `p0` to save gas.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 442,
+                "text": "                let mm := mulmod(x, y, not(0))",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 443,
+                "text": "                // Most significant 256 bits of the product.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 444,
+                "text": "                let p1 := sub(mm, add(result, lt(mm, result)))",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 451, "newLine": 445, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 452,
+                "text": "                    // Make division exact by subtracting the remainder from `[p1 p0]`.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 453,
+                "text": "                    let r := mulmod(x, y, d) // Compute remainder using mulmod.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 454,
+                "text": "                    let t := and(d, sub(0, d)) // The least significant bit of `d`. `t >= 1`.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 455,
+                "text": "                    // Make sure the result is less than `2**256`. Also prevents `d == 0`.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 456,
+                "text": "                    // Placing the check here seems to give more optimal stack operations.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 457,
+                "text": "                    if iszero(gt(d, p1)) {",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 446,
+                "text": "                // Handle non-overflow cases, 256 by 256 division.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 447,
+                "text": "                if iszero(p1) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 448,
+                "text": "                    if iszero(d) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 458,
+                "newLine": 449,
+                "text": "                        mstore(0x00, 0xae47f702) // `FullMulDivFailed()`."
+              },
+              {
+                "type": " ",
+                "oldLine": 459,
+                "newLine": 450,
+                "text": "                        revert(0x1c, 0x04)"
+              },
+              {
+                "type": " ",
+                "oldLine": 460,
+                "newLine": 451,
+                "text": "                    }"
+              },
+              {
+                "type": "-",
+                "oldLine": 461,
+                "text": "                    d := div(d, t) // Divide `d` by `t`, which is a power of two.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 462,
+                "text": "                    // Invert `d mod 2**256`",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 463,
+                "text": "                    // Now that `d` is an odd number, it has an inverse",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 464,
+                "text": "                    // modulo `2**256` such that `d * inv = 1 mod 2**256`.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 465,
+                "text": "                    // Compute the inverse by starting with a seed that is correct",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 466,
+                "text": "                    // correct for four bits. That is, `d * inv = 1 mod 2**4`.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 467,
+                "text": "                    let inv := xor(2, mul(3, d))",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 468,
+                "text": "                    // Now use Newton-Raphson iteration to improve the precision.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 469,
+                "text": "                    // Thanks to Hensel's lifting lemma, this also works in modular",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 470,
+                "text": "                    // arithmetic, doubling the correct bits in each step.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 471,
+                "text": "                    inv := mul(inv, sub(2, mul(d, inv))) // inverse mod 2**8",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 472,
+                "text": "                    inv := mul(inv, sub(2, mul(d, inv))) // inverse mod 2**16",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 473,
+                "text": "                    inv := mul(inv, sub(2, mul(d, inv))) // inverse mod 2**32",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 474,
+                "text": "                    inv := mul(inv, sub(2, mul(d, inv))) // inverse mod 2**64",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 475,
+                "text": "                    inv := mul(inv, sub(2, mul(d, inv))) // inverse mod 2**128",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 476,
+                "text": "                    result :=",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 477,
+                "text": "                        mul(",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 478,
+                "text": "                            // Divide [p1 p0] by the factors of two.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 479,
+                "text": "                            // Shift in bits from `p1` into `p0`. For this we need",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 480,
+                "text": "                            // to flip `t` such that it is `2**256 / t`.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 481,
+                "text": "                            or(mul(sub(p1, gt(r, result)), add(div(sub(0, t), t), 1)), div(sub(result, r), t)),",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 482,
+                "text": "                            mul(sub(2, mul(d, inv)), inv) // inverse mod 2**256",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 483,
+                "text": "                        )",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 452,
+                "text": "                    result := div(result, d)",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 484,
+                "newLine": 453,
+                "text": "                    break"
+              },
+              {
+                "type": " ",
+                "oldLine": 485,
+                "newLine": 454,
+                "text": "                }"
+              },
+              {
+                "type": "-",
+                "oldLine": 486,
+                "text": "                result := div(result, d)",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 455, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 456,
+                "text": "                // Make sure the result is less than `2**256`. Also prevents `d == 0`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 457,
+                "text": "                if iszero(gt(d, p1)) {",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 458,
+                "text": "                    mstore(0x00, 0xae47f702) // `FullMulDivFailed()`.",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 459,
+                "text": "                    revert(0x1c, 0x04)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 460,
+                "text": "                }",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 461, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 462,
+                "text": "                /*------------------- 512 by 256 division --------------------*/",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 463, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 464,
+                "text": "                // Make division exact by subtracting the remainder from `[p1 p0]`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 465,
+                "text": "                // Compute remainder using mulmod.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 466,
+                "text": "                let r := mulmod(x, y, d)",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 467,
+                "text": "                // `t` is the least significant bit of `d`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 468,
+                "text": "                // Always greater or equal to 1.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 469,
+                "text": "                let t := and(d, sub(0, d))",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 470,
+                "text": "                // Divide `d` by `t`, which is a power of two.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 471,
+                "text": "                d := div(d, t)",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 472,
+                "text": "                // Invert `d mod 2**256`",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 473,
+                "text": "                // Now that `d` is an odd number, it has an inverse",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 474,
+                "text": "                // modulo `2**256` such that `d * inv = 1 mod 2**256`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 475,
+                "text": "                // Compute the inverse by starting with a seed that is correct",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 476,
+                "text": "                // correct for four bits. That is, `d * inv = 1 mod 2**4`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 477,
+                "text": "                let inv := xor(2, mul(3, d))",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 478,
+                "text": "                // Now use Newton-Raphson iteration to improve the precision.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 479,
+                "text": "                // Thanks to Hensel's lifting lemma, this also works in modular",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 480,
+                "text": "                // arithmetic, doubling the correct bits in each step.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 481,
+                "text": "                inv := mul(inv, sub(2, mul(d, inv))) // inverse mod 2**8",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 482,
+                "text": "                inv := mul(inv, sub(2, mul(d, inv))) // inverse mod 2**16",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 483,
+                "text": "                inv := mul(inv, sub(2, mul(d, inv))) // inverse mod 2**32",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 484,
+                "text": "                inv := mul(inv, sub(2, mul(d, inv))) // inverse mod 2**64",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 485,
+                "text": "                inv := mul(inv, sub(2, mul(d, inv))) // inverse mod 2**128",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 486,
+                "text": "                result :=",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 487,
+                "text": "                    mul(",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 488,
+                "text": "                        // Divide [p1 p0] by the factors of two.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 489,
+                "text": "                        // Shift in bits from `p1` into `p0`. For this we need",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 490,
+                "text": "                        // to flip `t` such that it is `2**256 / t`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 491,
+                "text": "                        or(mul(sub(p1, gt(r, result)), add(div(sub(0, t), t), 1)), div(sub(result, r), t)),",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 492,
+                "text": "                        // inverse mod 2**256",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 493,
+                "text": "                        mul(inv, sub(2, mul(d, inv)))",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 494,
+                "text": "                    )",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 487,
+                "newLine": 495,
+                "text": "                break"
+              },
+              {
+                "type": " ",
+                "oldLine": 488,
+                "newLine": 496,
+                "text": "            }"
+              },
+              {
+                "type": " ",
+                "oldLine": 489,
+                "newLine": 497,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 490, "newLine": 498, "text": "    }" },
+              { "type": " ", "oldLine": 491, "newLine": 499, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 492,
+                "text": "    /// @dev Calculates `floor(x * y / d)` with full precision.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 493,
+                "text": "    /// Behavior is undefined if `d` is zero or the final result cannot fit in 256 bits.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 494,
+                "text": "    /// Performs the full 512 bit calculation regardless.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 495,
+                "text": "    function fullMulDivUnchecked(uint256 x, uint256 y, uint256 d) internal pure returns (uint256 result) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 496,
+                "text": "        /// @solidity memory-safe-assembly",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 497,
+                "text": "        assembly {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 498,
+                "text": "            result := mul(x, y)",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 499,
+                "text": "            let mm := mulmod(x, y, not(0))",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 500,
+                "text": "            let p1 := sub(mm, add(result, lt(mm, result)))",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 501,
+                "text": "            let t := and(d, sub(0, d))",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 502,
+                "text": "            let r := mulmod(x, y, d)",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 503,
+                "text": "            d := div(d, t)",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 504,
+                "text": "            let inv := xor(2, mul(3, d))",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 505,
+                "text": "            inv := mul(inv, sub(2, mul(d, inv)))",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 506,
+                "text": "            inv := mul(inv, sub(2, mul(d, inv)))",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 507,
+                "text": "            inv := mul(inv, sub(2, mul(d, inv)))",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 508,
+                "text": "            inv := mul(inv, sub(2, mul(d, inv)))",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 509,
+                "text": "            inv := mul(inv, sub(2, mul(d, inv)))",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 510,
+                "text": "            result :=",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 511,
+                "text": "                mul(",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 512,
+                "text": "                    or(mul(sub(p1, gt(r, result)), add(div(sub(0, t), t), 1)), div(sub(result, r), t)),",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 513,
+                "text": "                    mul(sub(2, mul(d, inv)), inv)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 514,
+                "text": "                )",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 515,
+                "text": "        }",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 516, "text": "    }", "ignored": true },
+              { "type": "-", "oldLine": 517, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 518,
+                "newLine": 500,
+                "text": "    /// @dev Calculates `floor(x * y / d)` with full precision, rounded up."
+              },
+              {
+                "type": " ",
+                "oldLine": 519,
+                "newLine": 501,
+                "text": "    /// Throws if result overflows a uint256 or when `d` is zero."
+              },
+              {
+                "type": " ",
+                "oldLine": 520,
+                "newLine": 502,
+                "text": "    /// Credit to Uniswap-v3-core under MIT license:"
+              },
+              {
+                "type": "-",
+                "oldLine": 521,
+                "text": "    /// https://github.com/Uniswap/v3-core/blob/main/contracts/libraries/FullMath.sol",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 503,
+                "text": "    /// https://github.com/Uniswap/v3-core/blob/contracts/libraries/FullMath.sol",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 522,
+                "newLine": 504,
+                "text": "    function fullMulDivUp(uint256 x, uint256 y, uint256 d) internal pure returns (uint256 result) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 523,
+                "newLine": 505,
+                "text": "        result = fullMulDiv(x, y, d);"
+              },
+              {
+                "type": " ",
+                "oldLine": 524,
+                "newLine": 506,
+                "text": "        /// @solidity memory-safe-assembly"
+              }
+            ]
+          },
+          {
+            "oldStart": 538,
+            "oldLines": 13,
+            "newStart": 520,
+            "newLines": 12,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 538,
+                "newLine": 520,
+                "text": "    function mulDiv(uint256 x, uint256 y, uint256 d) internal pure returns (uint256 z) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 539,
+                "newLine": 521,
+                "text": "        /// @solidity memory-safe-assembly"
+              },
+              {
+                "type": " ",
+                "oldLine": 540,
+                "newLine": 522,
+                "text": "        assembly {"
+              },
+              {
+                "type": "-",
+                "oldLine": 541,
+                "text": "            z := mul(x, y)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 542,
+                "text": "            // Equivalent to `require(d != 0 && (y == 0 || x <= type(uint256).max / y))`.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 543,
+                "text": "            if iszero(mul(or(iszero(x), eq(div(z, x), y)), d)) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 523,
+                "text": "            // Equivalent to require(d != 0 && (y == 0 || x <= type(uint256).max / y))",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 524,
+                "text": "            if iszero(mul(d, iszero(mul(y, gt(x, div(not(0), y)))))) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 544,
+                "newLine": 525,
+                "text": "                mstore(0x00, 0xad251c27) // `MulDivFailed()`."
+              },
+              {
+                "type": " ",
+                "oldLine": 545,
+                "newLine": 526,
+                "text": "                revert(0x1c, 0x04)"
+              },
+              {
+                "type": " ",
+                "oldLine": 546,
+                "newLine": 527,
+                "text": "            }"
+              },
+              {
+                "type": "-",
+                "oldLine": 547,
+                "text": "            z := div(z, d)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 528,
+                "text": "            z := div(mul(x, y), d)",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 548,
+                "newLine": 529,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 549, "newLine": 530, "text": "    }" },
+              { "type": " ", "oldLine": 550, "newLine": 531, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 553,
+            "oldLines": 13,
+            "newStart": 534,
+            "newLines": 12,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 553,
+                "newLine": 534,
+                "text": "    function mulDivUp(uint256 x, uint256 y, uint256 d) internal pure returns (uint256 z) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 554,
+                "newLine": 535,
+                "text": "        /// @solidity memory-safe-assembly"
+              },
+              {
+                "type": " ",
+                "oldLine": 555,
+                "newLine": 536,
+                "text": "        assembly {"
+              },
+              {
+                "type": "-",
+                "oldLine": 556,
+                "text": "            z := mul(x, y)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 557,
+                "text": "            // Equivalent to `require(d != 0 && (y == 0 || x <= type(uint256).max / y))`.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 558,
+                "text": "            if iszero(mul(or(iszero(x), eq(div(z, x), y)), d)) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 537,
+                "text": "            // Equivalent to require(d != 0 && (y == 0 || x <= type(uint256).max / y))",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 538,
+                "text": "            if iszero(mul(d, iszero(mul(y, gt(x, div(not(0), y)))))) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 559,
+                "newLine": 539,
+                "text": "                mstore(0x00, 0xad251c27) // `MulDivFailed()`."
+              },
+              {
+                "type": " ",
+                "oldLine": 560,
+                "newLine": 540,
+                "text": "                revert(0x1c, 0x04)"
+              },
+              {
+                "type": " ",
+                "oldLine": 561,
+                "newLine": 541,
+                "text": "            }"
+              },
+              {
+                "type": "-",
+                "oldLine": 562,
+                "text": "            z := add(iszero(iszero(mod(z, d))), div(z, d))",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 542,
+                "text": "            z := add(iszero(iszero(mod(mul(x, y), d))), div(mul(x, y), d))",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 563,
+                "newLine": 543,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 564, "newLine": 544, "text": "    }" },
+              { "type": " ", "oldLine": 565, "newLine": 545, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 584,
+            "oldLines": 14,
+            "newStart": 564,
+            "newLines": 6,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 584,
+                "newLine": 564,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 585, "newLine": 565, "text": "    }" },
+              { "type": " ", "oldLine": 586, "newLine": 566, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 587,
+                "text": "    /// @dev Returns `condition ? x : y`, without branching.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 588,
+                "text": "    function ternary(bool condition, uint256 x, uint256 y) internal pure returns (uint256 result) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 589,
+                "text": "        /// @solidity memory-safe-assembly",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 590,
+                "text": "        assembly {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 591,
+                "text": "            result := xor(x, mul(xor(x, y), iszero(condition)))",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 592,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 593,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 594, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 595,
+                "newLine": 567,
+                "text": "    /// @dev Exponentiate `x` to `y` by squaring, denominated in base `b`."
+              },
+              {
+                "type": " ",
+                "oldLine": 596,
+                "newLine": 568,
+                "text": "    /// Reverts if the computation overflows."
+              },
+              {
+                "type": " ",
+                "oldLine": 597,
+                "newLine": 569,
+                "text": "    function rpow(uint256 x, uint256 y, uint256 b) internal pure returns (uint256 z) {"
+              }
+            ]
+          },
+          {
+            "oldStart": 618,
+            "oldLines": 7,
+            "newStart": 590,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 618,
+                "newLine": 590,
+                "text": "                        // If `z * x` overflowed or `zx + half` overflowed:"
+              },
+              {
+                "type": " ",
+                "oldLine": 619,
+                "newLine": 591,
+                "text": "                        if or(xor(div(zx, x), z), lt(zxRound, zx)) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 620,
+                "newLine": 592,
+                "text": "                            // Revert if `x` is non-zero."
+              },
+              {
+                "type": "-",
+                "oldLine": 621,
+                "text": "                            if x {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 593,
+                "text": "                            if iszero(iszero(x)) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 622,
+                "newLine": 594,
+                "text": "                                mstore(0x00, 0x49f7642b) // `RPowOverflow()`."
+              },
+              {
+                "type": " ",
+                "oldLine": 623,
+                "newLine": 595,
+                "text": "                                revert(0x1c, 0x04)"
+              },
+              {
+                "type": " ",
+                "oldLine": 624,
+                "newLine": 596,
+                "text": "                            }"
+              }
+            ]
+          },
+          {
+            "oldStart": 630,
+            "oldLines": 7,
+            "newStart": 602,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 630,
+                "newLine": 602,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 631, "newLine": 603, "text": "    }" },
+              { "type": " ", "oldLine": 632, "newLine": 604, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 633,
+                "text": "    /// @dev Returns the square root of `x`, rounded down.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 605,
+                "text": "    /// @dev Returns the square root of `x`.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 634,
+                "newLine": 606,
+                "text": "    function sqrt(uint256 x) internal pure returns (uint256 z) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 635,
+                "newLine": 607,
+                "text": "        /// @solidity memory-safe-assembly"
+              },
+              {
+                "type": " ",
+                "oldLine": 636,
+                "newLine": 608,
+                "text": "        assembly {"
+              }
+            ]
+          },
+          {
+            "oldStart": 684,
+            "oldLines": 7,
+            "newStart": 656,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 684,
+                "newLine": 656,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 685, "newLine": 657, "text": "    }" },
+              { "type": " ", "oldLine": 686, "newLine": 658, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 687,
+                "text": "    /// @dev Returns the cube root of `x`, rounded down.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 659,
+                "text": "    /// @dev Returns the cube root of `x`.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 688,
+                "newLine": 660,
+                "text": "    /// Credit to bout3fiddy and pcaversaccio under AGPLv3 license:"
+              },
+              {
+                "type": " ",
+                "oldLine": 689,
+                "newLine": 661,
+                "text": "    /// https://github.com/pcaversaccio/snekmate/blob/main/src/utils/Math.vy"
+              },
+              {
+                "type": " ",
+                "oldLine": 690,
+                "newLine": 662,
+                "text": "    function cbrt(uint256 x) internal pure returns (uint256 z) {"
+              }
+            ]
+          },
+          {
+            "oldStart": 710,
+            "oldLines": 47,
+            "newStart": 682,
+            "newLines": 32,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 710,
+                "newLine": 682,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 711, "newLine": 683, "text": "    }" },
+              { "type": " ", "oldLine": 712, "newLine": 684, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 713,
+                "text": "    /// @dev Returns the square root of `x`, denominated in `WAD`, rounded down.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 685,
+                "text": "    /// @dev Returns the square root of `x`, denominated in `WAD`.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 714,
+                "newLine": 686,
+                "text": "    function sqrtWad(uint256 x) internal pure returns (uint256 z) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 715,
+                "newLine": 687,
+                "text": "        unchecked {"
+              },
+              {
+                "type": "-",
+                "oldLine": 716,
+                "text": "            if (x <= type(uint256).max / 10 ** 18) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 717,
+                "text": "                return sqrt(x * 10 ** 18);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 688,
+                "text": "            z = 10 ** 9;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 689,
+                "text": "            if (x <= type(uint256).max / 10 ** 36 - 1) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 690,
+                "text": "                x *= 10 ** 18;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 691,
+                "text": "                z = 1;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 718,
+                "newLine": 692,
+                "text": "            }"
+              },
+              {
+                "type": "-",
+                "oldLine": 719,
+                "text": "            z = (1 + sqrt(x)) * 10 ** 9;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 720,
+                "text": "            z = (fullMulDivUnchecked(x, 10 ** 18, z) + z) >> 1;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 693,
+                "text": "            z *= sqrt(x);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 721,
+                "newLine": 694,
+                "text": "        }"
+              },
+              {
+                "type": "-",
+                "oldLine": 722,
+                "text": "        /// @solidity memory-safe-assembly",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 723,
+                "text": "        assembly {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 724,
+                "text": "            z := sub(z, gt(999999999999999999, sub(mulmod(z, z, x), 1)))",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 725,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 726, "newLine": 695, "text": "    }" },
+              { "type": " ", "oldLine": 727, "newLine": 696, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 728,
+                "text": "    /// @dev Returns the cube root of `x`, denominated in `WAD`, rounded down.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 697,
+                "text": "    /// @dev Returns the cube root of `x`, denominated in `WAD`.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 729,
+                "newLine": 698,
+                "text": "    function cbrtWad(uint256 x) internal pure returns (uint256 z) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 730,
+                "newLine": 699,
+                "text": "        unchecked {"
+              },
+              {
+                "type": "-",
+                "oldLine": 731,
+                "text": "            if (x <= type(uint256).max / 10 ** 36) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 732,
+                "text": "                return cbrt(x * 10 ** 36);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 733,
+                "text": "            }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 734,
+                "text": "            z = (1 + cbrt(x)) * 10 ** 12;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 735,
+                "text": "            z = (fullMulDivUnchecked(x, 10 ** 36, z * z) + z + z) / 3;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 736,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 737,
+                "text": "        /// @solidity memory-safe-assembly",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 738,
+                "text": "        assembly {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 739,
+                "text": "            let p := x",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 740,
+                "text": "            for {} 1 {} {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 741,
+                "text": "                if iszero(shr(229, p)) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 742,
+                "text": "                    if iszero(shr(199, p)) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 743,
+                "text": "                        p := mul(p, 100000000000000000)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 744,
+                "text": "                        break",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 745,
+                "text": "                    }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 746,
+                "text": "                    p := mul(p, 100000000)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 747,
+                "text": "                    break",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 700,
+                "text": "            z = 10 ** 12;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 701,
+                "text": "            if (x <= (type(uint256).max / 10 ** 36) * 10 ** 18 - 1) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 702,
+                "text": "                if (x >= type(uint256).max / 10 ** 36) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 703,
+                "text": "                    x *= 10 ** 18;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 704,
+                "text": "                    z = 10 ** 6;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 705,
+                "text": "                } else {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 706,
+                "text": "                    x *= 10 ** 36;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 707,
+                "text": "                    z = 1;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 748,
+                "newLine": 708,
+                "text": "                }"
+              },
+              {
+                "type": "-",
+                "oldLine": 749,
+                "text": "                if iszero(shr(249, p)) { p := mul(p, 100) }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 750,
+                "text": "                break",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 751,
+                "newLine": 709,
+                "text": "            }"
+              },
+              {
+                "type": "-",
+                "oldLine": 752,
+                "text": "            let t := mulmod(mul(z, z), z, p)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 753,
+                "text": "            z := sub(z, gt(lt(t, shr(1, p)), iszero(t)))",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 710,
+                "text": "            z *= cbrt(x);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 754,
+                "newLine": 711,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 755, "newLine": 712, "text": "    }" },
+              { "type": " ", "oldLine": 756, "newLine": 713, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 758,
+            "oldLines": 12,
+            "newStart": 715,
+            "newLines": 11,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 758,
+                "newLine": 715,
+                "text": "    function factorial(uint256 x) internal pure returns (uint256 result) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 759,
+                "newLine": 716,
+                "text": "        /// @solidity memory-safe-assembly"
+              },
+              {
+                "type": " ",
+                "oldLine": 760,
+                "newLine": 717,
+                "text": "        assembly {"
+              },
+              {
+                "type": "-",
+                "oldLine": 761,
+                "text": "            result := 1",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 762,
+                "newLine": 718,
+                "text": "            if iszero(lt(x, 58)) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 763,
+                "newLine": 719,
+                "text": "                mstore(0x00, 0xaba0f2a2) // `FactorialOverflow()`."
+              },
+              {
+                "type": " ",
+                "oldLine": 764,
+                "newLine": 720,
+                "text": "                revert(0x1c, 0x04)"
+              },
+              {
+                "type": " ",
+                "oldLine": 765,
+                "newLine": 721,
+                "text": "            }"
+              },
+              {
+                "type": "-",
+                "oldLine": 766,
+                "text": "            for {} x { x := sub(x, 1) } { result := mul(result, x) }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 722,
+                "text": "            for { result := 1 } x { x := sub(x, 1) } { result := mul(result, x) }",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 767,
+                "newLine": 723,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 768, "newLine": 724, "text": "    }" },
+              { "type": " ", "oldLine": 769, "newLine": 725, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 918,
+            "oldLines": 17,
+            "newStart": 874,
+            "newLines": 17,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 918,
+                "newLine": 874,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 919, "newLine": 875, "text": "    }" },
+              { "type": " ", "oldLine": 920, "newLine": 876, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 921,
+                "text": "    /// @dev Returns the average of `x` and `y`. Rounds towards zero.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 877,
+                "text": "    /// @dev Returns the average of `x` and `y`.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 922,
+                "newLine": 878,
+                "text": "    function avg(uint256 x, uint256 y) internal pure returns (uint256 z) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 923,
+                "newLine": 879,
+                "text": "        unchecked {"
+              },
+              {
+                "type": " ",
+                "oldLine": 924,
+                "newLine": 880,
+                "text": "            z = (x & y) + ((x ^ y) >> 1);"
+              },
+              {
+                "type": " ",
+                "oldLine": 925,
+                "newLine": 881,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 926, "newLine": 882, "text": "    }" },
+              { "type": " ", "oldLine": 927, "newLine": 883, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 928,
+                "text": "    /// @dev Returns the average of `x` and `y`. Rounds towards negative infinity.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 884,
+                "text": "    /// @dev Returns the average of `x` and `y`.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 929,
+                "newLine": 885,
+                "text": "    function avg(int256 x, int256 y) internal pure returns (int256 z) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 930,
+                "newLine": 886,
+                "text": "        unchecked {"
+              },
+              {
+                "type": "-",
+                "oldLine": 931,
+                "text": "            z = (x >> 1) + (y >> 1) + (x & y & 1);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 887,
+                "text": "            z = (x >> 1) + (y >> 1) + (((x & 1) + (y & 1)) >> 1);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 932,
+                "newLine": 888,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 933, "newLine": 889, "text": "    }" },
+              { "type": " ", "oldLine": 934, "newLine": 890, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 936,
+            "oldLines": 19,
+            "newStart": 892,
+            "newLines": 11,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 936,
+                "newLine": 892,
+                "text": "    function abs(int256 x) internal pure returns (uint256 z) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 937,
+                "newLine": 893,
+                "text": "        /// @solidity memory-safe-assembly"
+              },
+              {
+                "type": " ",
+                "oldLine": 938,
+                "newLine": 894,
+                "text": "        assembly {"
+              },
+              {
+                "type": "-",
+                "oldLine": 939,
+                "text": "            z := xor(sar(255, x), add(sar(255, x), x))",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 895,
+                "text": "            z := xor(sub(0, shr(255, x)), add(sub(0, shr(255, x)), x))",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 940,
+                "newLine": 896,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 941, "newLine": 897, "text": "    }" },
+              { "type": " ", "oldLine": 942, "newLine": 898, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 943,
+                "newLine": 899,
+                "text": "    /// @dev Returns the absolute distance between `x` and `y`."
+              },
+              {
+                "type": "-",
+                "oldLine": 944,
+                "text": "    function dist(uint256 x, uint256 y) internal pure returns (uint256 z) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 945,
+                "text": "        /// @solidity memory-safe-assembly",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 946,
+                "text": "        assembly {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 947,
+                "text": "            z := xor(mul(xor(sub(y, x), sub(x, y)), gt(x, y)), sub(y, x))",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 948,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 949,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 950, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 951,
+                "text": "    /// @dev Returns the absolute distance between `x` and `y`.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 952,
+                "newLine": 900,
+                "text": "    function dist(int256 x, int256 y) internal pure returns (uint256 z) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 953,
+                "newLine": 901,
+                "text": "        /// @solidity memory-safe-assembly"
+              },
+              {
+                "type": " ",
+                "oldLine": 954,
+                "newLine": 902,
+                "text": "        assembly {"
+              }
+            ]
+          },
+          {
+            "oldStart": 1018,
+            "oldLines": 55,
+            "newStart": 966,
+            "newLines": 6,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1018,
+                "newLine": 966,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 1019, "newLine": 967, "text": "    }" },
+              { "type": " ", "oldLine": 1020, "newLine": 968, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 1021,
+                "text": "    /// @dev Returns `a + (b - a) * (t - begin) / (end - begin)`,",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 1022,
+                "text": "    /// with `t` clamped between `begin` and `end` (inclusive).",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 1023,
+                "text": "    /// Agnostic to the order of (`a`, `b`) and (`end`, `begin`).",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 1024,
+                "text": "    /// If `begins == end`, returns `t <= begin ? a : b`.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 1025,
+                "text": "    function lerp(uint256 a, uint256 b, uint256 t, uint256 begin, uint256 end) internal pure returns (uint256) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 1026,
+                "text": "        if (begin > end) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 1027,
+                "text": "            t = ~t;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 1028,
+                "text": "            begin = ~begin;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 1029,
+                "text": "            end = ~end;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 1030,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 1031,
+                "text": "        if (t <= begin) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 1032,
+                "text": "            return a;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 1033,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 1034,
+                "text": "        if (t >= end) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 1035,
+                "text": "            return b;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 1036,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 1037,
+                "text": "        unchecked {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 1038,
+                "text": "            if (b >= a) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 1039,
+                "text": "                return a + fullMulDiv(b - a, t - begin, end - begin);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 1040,
+                "text": "            }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 1041,
+                "text": "            return a - fullMulDiv(a - b, t - begin, end - begin);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 1042,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 1043,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 1044, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 1045,
+                "text": "    /// @dev Returns `a + (b - a) * (t - begin) / (end - begin)`.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 1046,
+                "text": "    /// with `t` clamped between `begin` and `end` (inclusive).",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 1047,
+                "text": "    /// Agnostic to the order of (`a`, `b`) and (`end`, `begin`).",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 1048,
+                "text": "    /// If `begins == end`, returns `t <= begin ? a : b`.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 1049,
+                "text": "    function lerp(int256 a, int256 b, int256 t, int256 begin, int256 end) internal pure returns (int256) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 1050,
+                "text": "        if (begin > end) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 1051,
+                "text": "            t = int256(~uint256(t));",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 1052,
+                "text": "            begin = int256(~uint256(begin));",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 1053,
+                "text": "            end = int256(~uint256(end));",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 1054,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 1055,
+                "text": "        if (t <= begin) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 1056,
+                "text": "            return a;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 1057,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 1058,
+                "text": "        if (t >= end) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 1059,
+                "text": "            return b;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 1060,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 1061,
+                "text": "        // forgefmt: disable-next-item",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 1062,
+                "text": "        unchecked {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 1063,
+                "text": "            if (b >= a) return int256(uint256(a) + fullMulDiv(uint256(b) - uint256(a),",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 1064,
+                "text": "                uint256(t) - uint256(begin), uint256(end) - uint256(begin)));",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 1065,
+                "text": "            return int256(uint256(a) - fullMulDiv(uint256(a) - uint256(b),",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 1066,
+                "text": "                uint256(t) - uint256(begin), uint256(end) - uint256(begin)));",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 1067,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 1068,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 1069, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 1070,
+                "newLine": 969,
+                "text": "    /*´:°•.°+.*•´.*:˚.°*.˚•´.°:°•.°•.*•´.*:˚.°*.˚•´.°:°•.°+.*•´.*:*/"
+              },
+              {
+                "type": " ",
+                "oldLine": 1071,
+                "newLine": 970,
+                "text": "    /*                   RAW NUMBER OPERATIONS                    */"
+              },
+              {
+                "type": " ",
+                "oldLine": 1072,
+                "newLine": 971,
+                "text": "    /*.•°:°.´+˚.*°.˚:*.´•*.+°.•°:´*.´•*.•°.•°:°.´:•˚°.*°.˚:*.´+°.•*/"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "d79ad2713a1d64a9": {
+      "status": "differs",
+      "coveredLines": 1031,
+      "match": {
+        "origin": "library",
+        "collection": "solady",
+        "relation": { "type": "library" },
+        "rank": 3,
+        "matchedBy": "name",
+        "auditedName": "FixedPointMathLib",
+        "similarity": 0.952,
+        "reportId": "solady/xuwinnie-solady-cbrt-proof",
+        "repository": "Vectorized/solady",
+        "path": "src/utils/FixedPointMathLib.sol",
+        "commit": "43f9d49815c8126d92771b26bd9bdbe2dbea87a5",
+        "commitTimestamp": "2024-08-01T09:32:50Z",
+        "url": "https://github.com/Vectorized/solady/blob/43f9d49815c8126d92771b26bd9bdbe2dbea87a5/src/utils/FixedPointMathLib.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "Formal proof",
+        "coverage": "Mathematical correctness proof of the cbrt and cbrtWad functions only; the rest of the file was not reviewed.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 31,
+        "removed": 95,
+        "ignoredAdded": 72,
+        "ignoredRemoved": 109,
+        "unchanged": 1031,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 184,
+            "oldLines": 19,
+            "newStart": 184,
+            "newLines": 17,
+            "lines": [
+              { "type": " ", "oldLine": 184, "newLine": 184, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 185,
+                "newLine": 185,
+                "text": "    /// @dev Equivalent to `x` to the power of `y`."
+              },
+              {
+                "type": " ",
+                "oldLine": 186,
+                "newLine": 186,
+                "text": "    /// because `x ** y = (e ** ln(x)) ** y = e ** (ln(x) * y)`."
+              },
+              {
+                "type": "-",
+                "oldLine": 187,
+                "text": "    /// Note: This function is an approximation.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 188,
+                "newLine": 187,
+                "text": "    function powWad(int256 x, int256 y) internal pure returns (int256) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 189,
+                "newLine": 188,
+                "text": "        // Using `ln(x)` means `x` must be greater than 0."
+              },
+              {
+                "type": " ",
+                "oldLine": 190,
+                "newLine": 189,
+                "text": "        return expWad((lnWad(x) * y) / int256(WAD));"
+              },
+              { "type": " ", "oldLine": 191, "newLine": 190, "text": "    }" },
+              { "type": " ", "oldLine": 192, "newLine": 191, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 193,
+                "newLine": 192,
+                "text": "    /// @dev Returns `exp(x)`, denominated in `WAD`."
+              },
+              {
+                "type": "-",
+                "oldLine": 194,
+                "text": "    /// Credit to Remco Bloemen under MIT license: https://2π.com/22/exp-ln",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 195,
+                "text": "    /// Note: This function is an approximation. Monotonically increasing.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 193,
+                "text": "    /// Credit to Remco Bloemen under MIT license: https://2π.com/21/exp-ln",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 196,
+                "newLine": 194,
+                "text": "    function expWad(int256 x) internal pure returns (int256 r) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 197,
+                "newLine": 195,
+                "text": "        unchecked {"
+              },
+              {
+                "type": " ",
+                "oldLine": 198,
+                "newLine": 196,
+                "text": "            // When the result is less than 0.5 we return zero."
+              },
+              {
+                "type": "-",
+                "oldLine": 199,
+                "text": "            // This happens when `x <= (log(1e-18) * 1e18) ~ -4.15e19`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 197,
+                "text": "            // This happens when `x <= floor(log(0.5e18) * 1e18) ≈ -42e18`.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 200,
+                "newLine": 198,
+                "text": "            if (x <= -41446531673892822313) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 201,
+                "newLine": 199,
+                "text": "                return r;"
+              },
+              {
+                "type": " ",
+                "oldLine": 202,
+                "newLine": 200,
+                "text": "            }"
+              }
+            ]
+          },
+          {
+            "oldStart": 261,
+            "oldLines": 8,
+            "newStart": 259,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 261, "newLine": 259, "text": "    }" },
+              { "type": " ", "oldLine": 262, "newLine": 260, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 263,
+                "newLine": 261,
+                "text": "    /// @dev Returns `ln(x)`, denominated in `WAD`."
+              },
+              {
+                "type": "-",
+                "oldLine": 264,
+                "text": "    /// Credit to Remco Bloemen under MIT license: https://2π.com/22/exp-ln",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 265,
+                "text": "    /// Note: This function is an approximation. Monotonically increasing.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 262,
+                "text": "    /// Credit to Remco Bloemen under MIT license: https://2π.com/21/exp-ln",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 266,
+                "newLine": 263,
+                "text": "    function lnWad(int256 x) internal pure returns (int256 r) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 267,
+                "newLine": 264,
+                "text": "        /// @solidity memory-safe-assembly"
+              },
+              {
+                "type": " ",
+                "oldLine": 268,
+                "newLine": 265,
+                "text": "        assembly {"
+              }
+            ]
+          },
+          {
+            "oldStart": 338,
+            "oldLines": 7,
+            "newStart": 335,
+            "newLines": 6,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 338,
+                "newLine": 335,
+                "text": "    /// @dev Returns `W_0(x)`, denominated in `WAD`."
+              },
+              {
+                "type": " ",
+                "oldLine": 339,
+                "newLine": 336,
+                "text": "    /// See: https://en.wikipedia.org/wiki/Lambert_W_function"
+              },
+              {
+                "type": " ",
+                "oldLine": 340,
+                "newLine": 337,
+                "text": "    /// a.k.a. Product log function. This is an approximation of the principal branch."
+              },
+              {
+                "type": "-",
+                "oldLine": 341,
+                "text": "    /// Note: This function is an approximation. Monotonically increasing.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 342,
+                "newLine": 338,
+                "text": "    function lambertW0Wad(int256 x) internal pure returns (int256 w) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 343,
+                "newLine": 339,
+                "text": "        // forgefmt: disable-next-item"
+              },
+              {
+                "type": " ",
+                "oldLine": 344,
+                "newLine": 340,
+                "text": "        unchecked {"
+              }
+            ]
+          },
+          {
+            "oldStart": 353,
+            "oldLines": 7,
+            "newStart": 349,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 353,
+                "newLine": 349,
+                "text": "                } else if (w <= -0x3ffffffffffffff) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 354,
+                "newLine": 350,
+                "text": "                    i = 32; // Inputs near `-1/e` take very long to converge."
+              },
+              {
+                "type": " ",
+                "oldLine": 355,
+                "newLine": 351,
+                "text": "                }"
+              },
+              {
+                "type": "-",
+                "oldLine": 356,
+                "text": "            } else if (uint256(w >> 63) == uint256(0)) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 352,
+                "text": "            } else if (w >> 63 == 0) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 357,
+                "newLine": 353,
+                "text": "                /// @solidity memory-safe-assembly"
+              },
+              {
+                "type": " ",
+                "oldLine": 358,
+                "newLine": 354,
+                "text": "                assembly {"
+              },
+              {
+                "type": " ",
+                "oldLine": 359,
+                "newLine": 355,
+                "text": "                    // Inline log2 for more performance, since the range is small."
+              }
+            ]
+          },
+          {
+            "oldStart": 374,
+            "oldLines": 7,
+            "newStart": 370,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 374,
+                "newLine": 370,
+                "text": "                    i := add(3, iszero(shr(68, x)))"
+              },
+              {
+                "type": " ",
+                "oldLine": 375,
+                "newLine": 371,
+                "text": "                    c := iszero(shr(143, x))"
+              },
+              {
+                "type": " ",
+                "oldLine": 376,
+                "newLine": 372,
+                "text": "                }"
+              },
+              {
+                "type": "-",
+                "oldLine": 377,
+                "text": "                if (c == uint256(0)) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 373,
+                "text": "                if (c == 0) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 378,
+                "newLine": 374,
+                "text": "                    do { // If `x` is big, use Newton's so that intermediate values won't overflow."
+              },
+              {
+                "type": " ",
+                "oldLine": 379,
+                "newLine": 375,
+                "text": "                        int256 e = expWad(w);"
+              },
+              {
+                "type": " ",
+                "oldLine": 380,
+                "newLine": 376,
+                "text": "                        /// @solidity memory-safe-assembly"
+              }
+            ]
+          },
+          {
+            "oldStart": 384,
+            "oldLines": 7,
+            "newStart": 380,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 384,
+                "newLine": 380,
+                "text": "                        }"
+              },
+              {
+                "type": " ",
+                "oldLine": 385,
+                "newLine": 381,
+                "text": "                        if (p <= w) break;"
+              },
+              {
+                "type": " ",
+                "oldLine": 386,
+                "newLine": 382,
+                "text": "                        p = w;"
+              },
+              {
+                "type": "-",
+                "oldLine": 387,
+                "text": "                    } while (--i != uint256(0));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 383,
+                "text": "                    } while (--i != 0);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 388,
+                "newLine": 384,
+                "text": "                    /// @solidity memory-safe-assembly"
+              },
+              {
+                "type": " ",
+                "oldLine": 389,
+                "newLine": 385,
+                "text": "                    assembly {"
+              },
+              {
+                "type": " ",
+                "oldLine": 390,
+                "newLine": 386,
+                "text": "                        w := sub(w, sgt(w, 2))"
+              }
+            ]
+          },
+          {
+            "oldStart": 409,
+            "oldLines": 17,
+            "newStart": 405,
+            "newLines": 18,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 409,
+                "newLine": 405,
+                "text": "            }"
+              },
+              {
+                "type": " ",
+                "oldLine": 410,
+                "newLine": 406,
+                "text": "            // For certain ranges of `x`, we'll use the quadratic-rate recursive formula of"
+              },
+              {
+                "type": " ",
+                "oldLine": 411,
+                "newLine": 407,
+                "text": "            // R. Iacono and J.P. Boyd for the last iteration, to avoid catastrophic cancellation."
+              },
+              {
+                "type": "-",
+                "oldLine": 412,
+                "text": "            if (c == uint256(0)) return w;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 413,
+                "text": "            int256 t = w | 1;",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 414,
+                "text": "            /// @solidity memory-safe-assembly",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 415,
+                "text": "            assembly {",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 416,
+                "text": "                x := sdiv(mul(x, wad), t)",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 408,
+                "text": "            if (c != 0) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 409,
+                "text": "                int256 t = w | 1;",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 410,
+                "text": "                /// @solidity memory-safe-assembly",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 411,
+                "text": "                assembly {",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 412,
+                "text": "                    x := sdiv(mul(x, wad), t)",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 413,
+                "text": "                }",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 414,
+                "text": "                x = (t * (wad + lnWad(x)));",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 415,
+                "text": "                /// @solidity memory-safe-assembly",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 416,
+                "text": "                assembly {",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 417,
+                "text": "                    w := sdiv(x, add(wad, t))",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 418,
+                "text": "                }",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 417,
+                "newLine": 419,
+                "text": "            }"
+              },
+              {
+                "type": "-",
+                "oldLine": 418,
+                "text": "            x = (t * (wad + lnWad(x)));",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 419,
+                "text": "            /// @solidity memory-safe-assembly",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 420,
+                "text": "            assembly {",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 421,
+                "text": "                w := sdiv(x, add(wad, t))",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 422,
+                "text": "            }",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 423,
+                "newLine": 420,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 424, "newLine": 421, "text": "    }" },
+              { "type": " ", "oldLine": 425, "newLine": 422, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 427,
+            "oldLines": 98,
+            "newStart": 424,
+            "newLines": 83,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 427,
+                "newLine": 424,
+                "text": "    /*                  GENERAL NUMBER UTILITIES                  */"
+              },
+              {
+                "type": " ",
+                "oldLine": 428,
+                "newLine": 425,
+                "text": "    /*.•°:°.´+˚.*°.˚:*.´•*.+°.•°:´*.´•*.•°.•°:°.´:•˚°.*°.˚:*.´+°.•*/"
+              },
+              { "type": " ", "oldLine": 429, "newLine": 426, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 430,
+                "text": "    /// @dev Calculates `floor(x * y / d)` with full precision.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 427,
+                "text": "    /// @dev Calculates `floor(a * b / d)` with full precision.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 431,
+                "newLine": 428,
+                "text": "    /// Throws if result overflows a uint256 or when `d` is zero."
+              },
+              {
+                "type": " ",
+                "oldLine": 432,
+                "newLine": 429,
+                "text": "    /// Credit to Remco Bloemen under MIT license: https://2π.com/21/muldiv"
+              },
+              {
+                "type": " ",
+                "oldLine": 433,
+                "newLine": 430,
+                "text": "    function fullMulDiv(uint256 x, uint256 y, uint256 d) internal pure returns (uint256 result) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 434,
+                "newLine": 431,
+                "text": "        /// @solidity memory-safe-assembly"
+              },
+              {
+                "type": " ",
+                "oldLine": 435,
+                "newLine": 432,
+                "text": "        assembly {"
+              },
+              {
+                "type": "-",
+                "oldLine": 436,
+                "text": "            // 512-bit multiply `[p1 p0] = x * y`.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 437,
+                "text": "            // Compute the product mod `2**256` and mod `2**256 - 1`",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 438,
+                "text": "            // then use the Chinese Remainder Theorem to reconstruct",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 439,
+                "text": "            // the 512 bit result. The result is stored in two 256",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 440,
+                "text": "            // variables such that `product = p1 * 2**256 + p0`.",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 441, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 442,
+                "text": "            // Temporarily use `result` as `p0` to save gas.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 443,
+                "text": "            result := mul(x, y) // Lower 256 bits of `x * y`.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 444,
+                "newLine": 433,
+                "text": "            for {} 1 {} {"
+              },
+              {
+                "type": "-",
+                "oldLine": 445,
+                "text": "                // If overflows.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 446,
+                "text": "                if iszero(mul(or(iszero(x), eq(div(result, x), y)), d)) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 447,
+                "text": "                    let mm := mulmod(x, y, not(0))",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 448,
+                "text": "                    let p1 := sub(mm, add(result, lt(mm, result))) // Upper 256 bits of `x * y`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 434,
+                "text": "                // 512-bit multiply `[p1 p0] = x * y`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 435,
+                "text": "                // Compute the product mod `2**256` and mod `2**256 - 1`",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 436,
+                "text": "                // then use the Chinese Remainder Theorem to reconstruct",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 437,
+                "text": "                // the 512 bit result. The result is stored in two 256",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 438,
+                "text": "                // variables such that `product = p1 * 2**256 + p0`.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 449, "newLine": 439, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 450,
+                "text": "                    /*------------------- 512 by 256 division --------------------*/",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 440,
+                "text": "                // Least significant 256 bits of the product.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 441,
+                "text": "                result := mul(x, y) // Temporarily use `result` as `p0` to save gas.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 442,
+                "text": "                let mm := mulmod(x, y, not(0))",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 443,
+                "text": "                // Most significant 256 bits of the product.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 444,
+                "text": "                let p1 := sub(mm, add(result, lt(mm, result)))",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 451, "newLine": 445, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 452,
+                "text": "                    // Make division exact by subtracting the remainder from `[p1 p0]`.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 453,
+                "text": "                    let r := mulmod(x, y, d) // Compute remainder using mulmod.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 454,
+                "text": "                    let t := and(d, sub(0, d)) // The least significant bit of `d`. `t >= 1`.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 455,
+                "text": "                    // Make sure the result is less than `2**256`. Also prevents `d == 0`.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 456,
+                "text": "                    // Placing the check here seems to give more optimal stack operations.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 457,
+                "text": "                    if iszero(gt(d, p1)) {",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 446,
+                "text": "                // Handle non-overflow cases, 256 by 256 division.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 447,
+                "text": "                if iszero(p1) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 448,
+                "text": "                    if iszero(d) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 458,
+                "newLine": 449,
+                "text": "                        mstore(0x00, 0xae47f702) // `FullMulDivFailed()`."
+              },
+              {
+                "type": " ",
+                "oldLine": 459,
+                "newLine": 450,
+                "text": "                        revert(0x1c, 0x04)"
+              },
+              {
+                "type": " ",
+                "oldLine": 460,
+                "newLine": 451,
+                "text": "                    }"
+              },
+              {
+                "type": "-",
+                "oldLine": 461,
+                "text": "                    d := div(d, t) // Divide `d` by `t`, which is a power of two.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 462,
+                "text": "                    // Invert `d mod 2**256`",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 463,
+                "text": "                    // Now that `d` is an odd number, it has an inverse",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 464,
+                "text": "                    // modulo `2**256` such that `d * inv = 1 mod 2**256`.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 465,
+                "text": "                    // Compute the inverse by starting with a seed that is correct",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 466,
+                "text": "                    // correct for four bits. That is, `d * inv = 1 mod 2**4`.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 467,
+                "text": "                    let inv := xor(2, mul(3, d))",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 468,
+                "text": "                    // Now use Newton-Raphson iteration to improve the precision.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 469,
+                "text": "                    // Thanks to Hensel's lifting lemma, this also works in modular",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 470,
+                "text": "                    // arithmetic, doubling the correct bits in each step.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 471,
+                "text": "                    inv := mul(inv, sub(2, mul(d, inv))) // inverse mod 2**8",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 472,
+                "text": "                    inv := mul(inv, sub(2, mul(d, inv))) // inverse mod 2**16",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 473,
+                "text": "                    inv := mul(inv, sub(2, mul(d, inv))) // inverse mod 2**32",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 474,
+                "text": "                    inv := mul(inv, sub(2, mul(d, inv))) // inverse mod 2**64",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 475,
+                "text": "                    inv := mul(inv, sub(2, mul(d, inv))) // inverse mod 2**128",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 476,
+                "text": "                    result :=",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 477,
+                "text": "                        mul(",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 478,
+                "text": "                            // Divide [p1 p0] by the factors of two.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 479,
+                "text": "                            // Shift in bits from `p1` into `p0`. For this we need",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 480,
+                "text": "                            // to flip `t` such that it is `2**256 / t`.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 481,
+                "text": "                            or(mul(sub(p1, gt(r, result)), add(div(sub(0, t), t), 1)), div(sub(result, r), t)),",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 482,
+                "text": "                            mul(sub(2, mul(d, inv)), inv) // inverse mod 2**256",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 483,
+                "text": "                        )",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 452,
+                "text": "                    result := div(result, d)",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 484,
+                "newLine": 453,
+                "text": "                    break"
+              },
+              {
+                "type": " ",
+                "oldLine": 485,
+                "newLine": 454,
+                "text": "                }"
+              },
+              {
+                "type": "-",
+                "oldLine": 486,
+                "text": "                result := div(result, d)",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 455, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 456,
+                "text": "                // Make sure the result is less than `2**256`. Also prevents `d == 0`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 457,
+                "text": "                if iszero(gt(d, p1)) {",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 458,
+                "text": "                    mstore(0x00, 0xae47f702) // `FullMulDivFailed()`.",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 459,
+                "text": "                    revert(0x1c, 0x04)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 460,
+                "text": "                }",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 461, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 462,
+                "text": "                /*------------------- 512 by 256 division --------------------*/",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 463, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 464,
+                "text": "                // Make division exact by subtracting the remainder from `[p1 p0]`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 465,
+                "text": "                // Compute remainder using mulmod.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 466,
+                "text": "                let r := mulmod(x, y, d)",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 467,
+                "text": "                // `t` is the least significant bit of `d`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 468,
+                "text": "                // Always greater or equal to 1.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 469,
+                "text": "                let t := and(d, sub(0, d))",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 470,
+                "text": "                // Divide `d` by `t`, which is a power of two.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 471,
+                "text": "                d := div(d, t)",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 472,
+                "text": "                // Invert `d mod 2**256`",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 473,
+                "text": "                // Now that `d` is an odd number, it has an inverse",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 474,
+                "text": "                // modulo `2**256` such that `d * inv = 1 mod 2**256`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 475,
+                "text": "                // Compute the inverse by starting with a seed that is correct",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 476,
+                "text": "                // correct for four bits. That is, `d * inv = 1 mod 2**4`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 477,
+                "text": "                let inv := xor(2, mul(3, d))",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 478,
+                "text": "                // Now use Newton-Raphson iteration to improve the precision.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 479,
+                "text": "                // Thanks to Hensel's lifting lemma, this also works in modular",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 480,
+                "text": "                // arithmetic, doubling the correct bits in each step.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 481,
+                "text": "                inv := mul(inv, sub(2, mul(d, inv))) // inverse mod 2**8",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 482,
+                "text": "                inv := mul(inv, sub(2, mul(d, inv))) // inverse mod 2**16",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 483,
+                "text": "                inv := mul(inv, sub(2, mul(d, inv))) // inverse mod 2**32",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 484,
+                "text": "                inv := mul(inv, sub(2, mul(d, inv))) // inverse mod 2**64",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 485,
+                "text": "                inv := mul(inv, sub(2, mul(d, inv))) // inverse mod 2**128",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 486,
+                "text": "                result :=",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 487,
+                "text": "                    mul(",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 488,
+                "text": "                        // Divide [p1 p0] by the factors of two.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 489,
+                "text": "                        // Shift in bits from `p1` into `p0`. For this we need",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 490,
+                "text": "                        // to flip `t` such that it is `2**256 / t`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 491,
+                "text": "                        or(mul(sub(p1, gt(r, result)), add(div(sub(0, t), t), 1)), div(sub(result, r), t)),",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 492,
+                "text": "                        // inverse mod 2**256",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 493,
+                "text": "                        mul(inv, sub(2, mul(d, inv)))",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 494,
+                "text": "                    )",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 487,
+                "newLine": 495,
+                "text": "                break"
+              },
+              {
+                "type": " ",
+                "oldLine": 488,
+                "newLine": 496,
+                "text": "            }"
+              },
+              {
+                "type": " ",
+                "oldLine": 489,
+                "newLine": 497,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 490, "newLine": 498, "text": "    }" },
+              { "type": " ", "oldLine": 491, "newLine": 499, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 492,
+                "text": "    /// @dev Calculates `floor(x * y / d)` with full precision.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 493,
+                "text": "    /// Behavior is undefined if `d` is zero or the final result cannot fit in 256 bits.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 494,
+                "text": "    /// Performs the full 512 bit calculation regardless.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 495,
+                "text": "    function fullMulDivUnchecked(uint256 x, uint256 y, uint256 d) internal pure returns (uint256 result) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 496,
+                "text": "        /// @solidity memory-safe-assembly",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 497,
+                "text": "        assembly {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 498,
+                "text": "            result := mul(x, y)",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 499,
+                "text": "            let mm := mulmod(x, y, not(0))",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 500,
+                "text": "            let p1 := sub(mm, add(result, lt(mm, result)))",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 501,
+                "text": "            let t := and(d, sub(0, d))",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 502,
+                "text": "            let r := mulmod(x, y, d)",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 503,
+                "text": "            d := div(d, t)",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 504,
+                "text": "            let inv := xor(2, mul(3, d))",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 505,
+                "text": "            inv := mul(inv, sub(2, mul(d, inv)))",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 506,
+                "text": "            inv := mul(inv, sub(2, mul(d, inv)))",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 507,
+                "text": "            inv := mul(inv, sub(2, mul(d, inv)))",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 508,
+                "text": "            inv := mul(inv, sub(2, mul(d, inv)))",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 509,
+                "text": "            inv := mul(inv, sub(2, mul(d, inv)))",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 510,
+                "text": "            result :=",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 511,
+                "text": "                mul(",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 512,
+                "text": "                    or(mul(sub(p1, gt(r, result)), add(div(sub(0, t), t), 1)), div(sub(result, r), t)),",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 513,
+                "text": "                    mul(sub(2, mul(d, inv)), inv)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 514,
+                "text": "                )",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 515,
+                "text": "        }",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 516, "text": "    }", "ignored": true },
+              { "type": "-", "oldLine": 517, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 518,
+                "newLine": 500,
+                "text": "    /// @dev Calculates `floor(x * y / d)` with full precision, rounded up."
+              },
+              {
+                "type": " ",
+                "oldLine": 519,
+                "newLine": 501,
+                "text": "    /// Throws if result overflows a uint256 or when `d` is zero."
+              },
+              {
+                "type": " ",
+                "oldLine": 520,
+                "newLine": 502,
+                "text": "    /// Credit to Uniswap-v3-core under MIT license:"
+              },
+              {
+                "type": "-",
+                "oldLine": 521,
+                "text": "    /// https://github.com/Uniswap/v3-core/blob/main/contracts/libraries/FullMath.sol",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 503,
+                "text": "    /// https://github.com/Uniswap/v3-core/blob/contracts/libraries/FullMath.sol",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 522,
+                "newLine": 504,
+                "text": "    function fullMulDivUp(uint256 x, uint256 y, uint256 d) internal pure returns (uint256 result) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 523,
+                "newLine": 505,
+                "text": "        result = fullMulDiv(x, y, d);"
+              },
+              {
+                "type": " ",
+                "oldLine": 524,
+                "newLine": 506,
+                "text": "        /// @solidity memory-safe-assembly"
+              }
+            ]
+          },
+          {
+            "oldStart": 538,
+            "oldLines": 13,
+            "newStart": 520,
+            "newLines": 12,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 538,
+                "newLine": 520,
+                "text": "    function mulDiv(uint256 x, uint256 y, uint256 d) internal pure returns (uint256 z) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 539,
+                "newLine": 521,
+                "text": "        /// @solidity memory-safe-assembly"
+              },
+              {
+                "type": " ",
+                "oldLine": 540,
+                "newLine": 522,
+                "text": "        assembly {"
+              },
+              {
+                "type": "-",
+                "oldLine": 541,
+                "text": "            z := mul(x, y)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 542,
+                "text": "            // Equivalent to `require(d != 0 && (y == 0 || x <= type(uint256).max / y))`.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 543,
+                "text": "            if iszero(mul(or(iszero(x), eq(div(z, x), y)), d)) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 523,
+                "text": "            // Equivalent to require(d != 0 && (y == 0 || x <= type(uint256).max / y))",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 524,
+                "text": "            if iszero(mul(d, iszero(mul(y, gt(x, div(not(0), y)))))) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 544,
+                "newLine": 525,
+                "text": "                mstore(0x00, 0xad251c27) // `MulDivFailed()`."
+              },
+              {
+                "type": " ",
+                "oldLine": 545,
+                "newLine": 526,
+                "text": "                revert(0x1c, 0x04)"
+              },
+              {
+                "type": " ",
+                "oldLine": 546,
+                "newLine": 527,
+                "text": "            }"
+              },
+              {
+                "type": "-",
+                "oldLine": 547,
+                "text": "            z := div(z, d)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 528,
+                "text": "            z := div(mul(x, y), d)",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 548,
+                "newLine": 529,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 549, "newLine": 530, "text": "    }" },
+              { "type": " ", "oldLine": 550, "newLine": 531, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 553,
+            "oldLines": 13,
+            "newStart": 534,
+            "newLines": 12,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 553,
+                "newLine": 534,
+                "text": "    function mulDivUp(uint256 x, uint256 y, uint256 d) internal pure returns (uint256 z) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 554,
+                "newLine": 535,
+                "text": "        /// @solidity memory-safe-assembly"
+              },
+              {
+                "type": " ",
+                "oldLine": 555,
+                "newLine": 536,
+                "text": "        assembly {"
+              },
+              {
+                "type": "-",
+                "oldLine": 556,
+                "text": "            z := mul(x, y)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 557,
+                "text": "            // Equivalent to `require(d != 0 && (y == 0 || x <= type(uint256).max / y))`.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 558,
+                "text": "            if iszero(mul(or(iszero(x), eq(div(z, x), y)), d)) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 537,
+                "text": "            // Equivalent to require(d != 0 && (y == 0 || x <= type(uint256).max / y))",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 538,
+                "text": "            if iszero(mul(d, iszero(mul(y, gt(x, div(not(0), y)))))) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 559,
+                "newLine": 539,
+                "text": "                mstore(0x00, 0xad251c27) // `MulDivFailed()`."
+              },
+              {
+                "type": " ",
+                "oldLine": 560,
+                "newLine": 540,
+                "text": "                revert(0x1c, 0x04)"
+              },
+              {
+                "type": " ",
+                "oldLine": 561,
+                "newLine": 541,
+                "text": "            }"
+              },
+              {
+                "type": "-",
+                "oldLine": 562,
+                "text": "            z := add(iszero(iszero(mod(z, d))), div(z, d))",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 542,
+                "text": "            z := add(iszero(iszero(mod(mul(x, y), d))), div(mul(x, y), d))",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 563,
+                "newLine": 543,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 564, "newLine": 544, "text": "    }" },
+              { "type": " ", "oldLine": 565, "newLine": 545, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 584,
+            "oldLines": 14,
+            "newStart": 564,
+            "newLines": 6,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 584,
+                "newLine": 564,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 585, "newLine": 565, "text": "    }" },
+              { "type": " ", "oldLine": 586, "newLine": 566, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 587,
+                "text": "    /// @dev Returns `condition ? x : y`, without branching.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 588,
+                "text": "    function ternary(bool condition, uint256 x, uint256 y) internal pure returns (uint256 result) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 589,
+                "text": "        /// @solidity memory-safe-assembly",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 590,
+                "text": "        assembly {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 591,
+                "text": "            result := xor(x, mul(xor(x, y), iszero(condition)))",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 592,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 593,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 594, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 595,
+                "newLine": 567,
+                "text": "    /// @dev Exponentiate `x` to `y` by squaring, denominated in base `b`."
+              },
+              {
+                "type": " ",
+                "oldLine": 596,
+                "newLine": 568,
+                "text": "    /// Reverts if the computation overflows."
+              },
+              {
+                "type": " ",
+                "oldLine": 597,
+                "newLine": 569,
+                "text": "    function rpow(uint256 x, uint256 y, uint256 b) internal pure returns (uint256 z) {"
+              }
+            ]
+          },
+          {
+            "oldStart": 618,
+            "oldLines": 7,
+            "newStart": 590,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 618,
+                "newLine": 590,
+                "text": "                        // If `z * x` overflowed or `zx + half` overflowed:"
+              },
+              {
+                "type": " ",
+                "oldLine": 619,
+                "newLine": 591,
+                "text": "                        if or(xor(div(zx, x), z), lt(zxRound, zx)) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 620,
+                "newLine": 592,
+                "text": "                            // Revert if `x` is non-zero."
+              },
+              {
+                "type": "-",
+                "oldLine": 621,
+                "text": "                            if x {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 593,
+                "text": "                            if iszero(iszero(x)) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 622,
+                "newLine": 594,
+                "text": "                                mstore(0x00, 0x49f7642b) // `RPowOverflow()`."
+              },
+              {
+                "type": " ",
+                "oldLine": 623,
+                "newLine": 595,
+                "text": "                                revert(0x1c, 0x04)"
+              },
+              {
+                "type": " ",
+                "oldLine": 624,
+                "newLine": 596,
+                "text": "                            }"
+              }
+            ]
+          },
+          {
+            "oldStart": 630,
+            "oldLines": 7,
+            "newStart": 602,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 630,
+                "newLine": 602,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 631, "newLine": 603, "text": "    }" },
+              { "type": " ", "oldLine": 632, "newLine": 604, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 633,
+                "text": "    /// @dev Returns the square root of `x`, rounded down.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 605,
+                "text": "    /// @dev Returns the square root of `x`.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 634,
+                "newLine": 606,
+                "text": "    function sqrt(uint256 x) internal pure returns (uint256 z) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 635,
+                "newLine": 607,
+                "text": "        /// @solidity memory-safe-assembly"
+              },
+              {
+                "type": " ",
+                "oldLine": 636,
+                "newLine": 608,
+                "text": "        assembly {"
+              }
+            ]
+          },
+          {
+            "oldStart": 684,
+            "oldLines": 7,
+            "newStart": 656,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 684,
+                "newLine": 656,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 685, "newLine": 657, "text": "    }" },
+              { "type": " ", "oldLine": 686, "newLine": 658, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 687,
+                "text": "    /// @dev Returns the cube root of `x`, rounded down.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 659,
+                "text": "    /// @dev Returns the cube root of `x`.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 688,
+                "newLine": 660,
+                "text": "    /// Credit to bout3fiddy and pcaversaccio under AGPLv3 license:"
+              },
+              {
+                "type": " ",
+                "oldLine": 689,
+                "newLine": 661,
+                "text": "    /// https://github.com/pcaversaccio/snekmate/blob/main/src/utils/Math.vy"
+              },
+              {
+                "type": " ",
+                "oldLine": 690,
+                "newLine": 662,
+                "text": "    function cbrt(uint256 x) internal pure returns (uint256 z) {"
+              }
+            ]
+          },
+          {
+            "oldStart": 710,
+            "oldLines": 47,
+            "newStart": 682,
+            "newLines": 32,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 710,
+                "newLine": 682,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 711, "newLine": 683, "text": "    }" },
+              { "type": " ", "oldLine": 712, "newLine": 684, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 713,
+                "text": "    /// @dev Returns the square root of `x`, denominated in `WAD`, rounded down.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 685,
+                "text": "    /// @dev Returns the square root of `x`, denominated in `WAD`.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 714,
+                "newLine": 686,
+                "text": "    function sqrtWad(uint256 x) internal pure returns (uint256 z) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 715,
+                "newLine": 687,
+                "text": "        unchecked {"
+              },
+              {
+                "type": "-",
+                "oldLine": 716,
+                "text": "            if (x <= type(uint256).max / 10 ** 18) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 717,
+                "text": "                return sqrt(x * 10 ** 18);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 688,
+                "text": "            z = 10 ** 9;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 689,
+                "text": "            if (x <= type(uint256).max / 10 ** 36 - 1) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 690,
+                "text": "                x *= 10 ** 18;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 691,
+                "text": "                z = 1;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 718,
+                "newLine": 692,
+                "text": "            }"
+              },
+              {
+                "type": "-",
+                "oldLine": 719,
+                "text": "            z = (1 + sqrt(x)) * 10 ** 9;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 720,
+                "text": "            z = (fullMulDivUnchecked(x, 10 ** 18, z) + z) >> 1;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 693,
+                "text": "            z *= sqrt(x);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 721,
+                "newLine": 694,
+                "text": "        }"
+              },
+              {
+                "type": "-",
+                "oldLine": 722,
+                "text": "        /// @solidity memory-safe-assembly",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 723,
+                "text": "        assembly {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 724,
+                "text": "            z := sub(z, gt(999999999999999999, sub(mulmod(z, z, x), 1)))",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 725,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 726, "newLine": 695, "text": "    }" },
+              { "type": " ", "oldLine": 727, "newLine": 696, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 728,
+                "text": "    /// @dev Returns the cube root of `x`, denominated in `WAD`, rounded down.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 697,
+                "text": "    /// @dev Returns the cube root of `x`, denominated in `WAD`.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 729,
+                "newLine": 698,
+                "text": "    function cbrtWad(uint256 x) internal pure returns (uint256 z) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 730,
+                "newLine": 699,
+                "text": "        unchecked {"
+              },
+              {
+                "type": "-",
+                "oldLine": 731,
+                "text": "            if (x <= type(uint256).max / 10 ** 36) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 732,
+                "text": "                return cbrt(x * 10 ** 36);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 733,
+                "text": "            }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 734,
+                "text": "            z = (1 + cbrt(x)) * 10 ** 12;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 735,
+                "text": "            z = (fullMulDivUnchecked(x, 10 ** 36, z * z) + z + z) / 3;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 736,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 737,
+                "text": "        /// @solidity memory-safe-assembly",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 738,
+                "text": "        assembly {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 739,
+                "text": "            let p := x",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 740,
+                "text": "            for {} 1 {} {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 741,
+                "text": "                if iszero(shr(229, p)) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 742,
+                "text": "                    if iszero(shr(199, p)) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 743,
+                "text": "                        p := mul(p, 100000000000000000)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 744,
+                "text": "                        break",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 745,
+                "text": "                    }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 746,
+                "text": "                    p := mul(p, 100000000)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 747,
+                "text": "                    break",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 700,
+                "text": "            z = 10 ** 12;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 701,
+                "text": "            if (x <= (type(uint256).max / 10 ** 36) * 10 ** 18 - 1) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 702,
+                "text": "                if (x >= type(uint256).max / 10 ** 36) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 703,
+                "text": "                    x *= 10 ** 18;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 704,
+                "text": "                    z = 10 ** 6;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 705,
+                "text": "                } else {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 706,
+                "text": "                    x *= 10 ** 36;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 707,
+                "text": "                    z = 1;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 748,
+                "newLine": 708,
+                "text": "                }"
+              },
+              {
+                "type": "-",
+                "oldLine": 749,
+                "text": "                if iszero(shr(249, p)) { p := mul(p, 100) }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 750,
+                "text": "                break",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 751,
+                "newLine": 709,
+                "text": "            }"
+              },
+              {
+                "type": "-",
+                "oldLine": 752,
+                "text": "            let t := mulmod(mul(z, z), z, p)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 753,
+                "text": "            z := sub(z, gt(lt(t, shr(1, p)), iszero(t)))",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 710,
+                "text": "            z *= cbrt(x);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 754,
+                "newLine": 711,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 755, "newLine": 712, "text": "    }" },
+              { "type": " ", "oldLine": 756, "newLine": 713, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 758,
+            "oldLines": 12,
+            "newStart": 715,
+            "newLines": 11,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 758,
+                "newLine": 715,
+                "text": "    function factorial(uint256 x) internal pure returns (uint256 result) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 759,
+                "newLine": 716,
+                "text": "        /// @solidity memory-safe-assembly"
+              },
+              {
+                "type": " ",
+                "oldLine": 760,
+                "newLine": 717,
+                "text": "        assembly {"
+              },
+              {
+                "type": "-",
+                "oldLine": 761,
+                "text": "            result := 1",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 762,
+                "newLine": 718,
+                "text": "            if iszero(lt(x, 58)) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 763,
+                "newLine": 719,
+                "text": "                mstore(0x00, 0xaba0f2a2) // `FactorialOverflow()`."
+              },
+              {
+                "type": " ",
+                "oldLine": 764,
+                "newLine": 720,
+                "text": "                revert(0x1c, 0x04)"
+              },
+              {
+                "type": " ",
+                "oldLine": 765,
+                "newLine": 721,
+                "text": "            }"
+              },
+              {
+                "type": "-",
+                "oldLine": 766,
+                "text": "            for {} x { x := sub(x, 1) } { result := mul(result, x) }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 722,
+                "text": "            for { result := 1 } x { x := sub(x, 1) } { result := mul(result, x) }",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 767,
+                "newLine": 723,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 768, "newLine": 724, "text": "    }" },
+              { "type": " ", "oldLine": 769, "newLine": 725, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 918,
+            "oldLines": 17,
+            "newStart": 874,
+            "newLines": 17,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 918,
+                "newLine": 874,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 919, "newLine": 875, "text": "    }" },
+              { "type": " ", "oldLine": 920, "newLine": 876, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 921,
+                "text": "    /// @dev Returns the average of `x` and `y`. Rounds towards zero.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 877,
+                "text": "    /// @dev Returns the average of `x` and `y`.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 922,
+                "newLine": 878,
+                "text": "    function avg(uint256 x, uint256 y) internal pure returns (uint256 z) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 923,
+                "newLine": 879,
+                "text": "        unchecked {"
+              },
+              {
+                "type": " ",
+                "oldLine": 924,
+                "newLine": 880,
+                "text": "            z = (x & y) + ((x ^ y) >> 1);"
+              },
+              {
+                "type": " ",
+                "oldLine": 925,
+                "newLine": 881,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 926, "newLine": 882, "text": "    }" },
+              { "type": " ", "oldLine": 927, "newLine": 883, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 928,
+                "text": "    /// @dev Returns the average of `x` and `y`. Rounds towards negative infinity.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 884,
+                "text": "    /// @dev Returns the average of `x` and `y`.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 929,
+                "newLine": 885,
+                "text": "    function avg(int256 x, int256 y) internal pure returns (int256 z) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 930,
+                "newLine": 886,
+                "text": "        unchecked {"
+              },
+              {
+                "type": "-",
+                "oldLine": 931,
+                "text": "            z = (x >> 1) + (y >> 1) + (x & y & 1);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 887,
+                "text": "            z = (x >> 1) + (y >> 1) + (((x & 1) + (y & 1)) >> 1);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 932,
+                "newLine": 888,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 933, "newLine": 889, "text": "    }" },
+              { "type": " ", "oldLine": 934, "newLine": 890, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 936,
+            "oldLines": 19,
+            "newStart": 892,
+            "newLines": 11,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 936,
+                "newLine": 892,
+                "text": "    function abs(int256 x) internal pure returns (uint256 z) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 937,
+                "newLine": 893,
+                "text": "        /// @solidity memory-safe-assembly"
+              },
+              {
+                "type": " ",
+                "oldLine": 938,
+                "newLine": 894,
+                "text": "        assembly {"
+              },
+              {
+                "type": "-",
+                "oldLine": 939,
+                "text": "            z := xor(sar(255, x), add(sar(255, x), x))",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 895,
+                "text": "            z := xor(sub(0, shr(255, x)), add(sub(0, shr(255, x)), x))",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 940,
+                "newLine": 896,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 941, "newLine": 897, "text": "    }" },
+              { "type": " ", "oldLine": 942, "newLine": 898, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 943,
+                "newLine": 899,
+                "text": "    /// @dev Returns the absolute distance between `x` and `y`."
+              },
+              {
+                "type": "-",
+                "oldLine": 944,
+                "text": "    function dist(uint256 x, uint256 y) internal pure returns (uint256 z) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 945,
+                "text": "        /// @solidity memory-safe-assembly",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 946,
+                "text": "        assembly {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 947,
+                "text": "            z := xor(mul(xor(sub(y, x), sub(x, y)), gt(x, y)), sub(y, x))",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 948,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 949,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 950, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 951,
+                "text": "    /// @dev Returns the absolute distance between `x` and `y`.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 952,
+                "newLine": 900,
+                "text": "    function dist(int256 x, int256 y) internal pure returns (uint256 z) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 953,
+                "newLine": 901,
+                "text": "        /// @solidity memory-safe-assembly"
+              },
+              {
+                "type": " ",
+                "oldLine": 954,
+                "newLine": 902,
+                "text": "        assembly {"
+              }
+            ]
+          },
+          {
+            "oldStart": 1018,
+            "oldLines": 55,
+            "newStart": 966,
+            "newLines": 6,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1018,
+                "newLine": 966,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 1019, "newLine": 967, "text": "    }" },
+              { "type": " ", "oldLine": 1020, "newLine": 968, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 1021,
+                "text": "    /// @dev Returns `a + (b - a) * (t - begin) / (end - begin)`,",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 1022,
+                "text": "    /// with `t` clamped between `begin` and `end` (inclusive).",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 1023,
+                "text": "    /// Agnostic to the order of (`a`, `b`) and (`end`, `begin`).",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 1024,
+                "text": "    /// If `begins == end`, returns `t <= begin ? a : b`.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 1025,
+                "text": "    function lerp(uint256 a, uint256 b, uint256 t, uint256 begin, uint256 end) internal pure returns (uint256) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 1026,
+                "text": "        if (begin > end) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 1027,
+                "text": "            t = ~t;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 1028,
+                "text": "            begin = ~begin;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 1029,
+                "text": "            end = ~end;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 1030,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 1031,
+                "text": "        if (t <= begin) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 1032,
+                "text": "            return a;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 1033,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 1034,
+                "text": "        if (t >= end) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 1035,
+                "text": "            return b;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 1036,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 1037,
+                "text": "        unchecked {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 1038,
+                "text": "            if (b >= a) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 1039,
+                "text": "                return a + fullMulDiv(b - a, t - begin, end - begin);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 1040,
+                "text": "            }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 1041,
+                "text": "            return a - fullMulDiv(a - b, t - begin, end - begin);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 1042,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 1043,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 1044, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 1045,
+                "text": "    /// @dev Returns `a + (b - a) * (t - begin) / (end - begin)`.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 1046,
+                "text": "    /// with `t` clamped between `begin` and `end` (inclusive).",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 1047,
+                "text": "    /// Agnostic to the order of (`a`, `b`) and (`end`, `begin`).",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 1048,
+                "text": "    /// If `begins == end`, returns `t <= begin ? a : b`.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 1049,
+                "text": "    function lerp(int256 a, int256 b, int256 t, int256 begin, int256 end) internal pure returns (int256) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 1050,
+                "text": "        if (begin > end) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 1051,
+                "text": "            t = int256(~uint256(t));",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 1052,
+                "text": "            begin = int256(~uint256(begin));",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 1053,
+                "text": "            end = int256(~uint256(end));",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 1054,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 1055,
+                "text": "        if (t <= begin) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 1056,
+                "text": "            return a;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 1057,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 1058,
+                "text": "        if (t >= end) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 1059,
+                "text": "            return b;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 1060,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 1061,
+                "text": "        // forgefmt: disable-next-item",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 1062,
+                "text": "        unchecked {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 1063,
+                "text": "            if (b >= a) return int256(uint256(a) + fullMulDiv(uint256(b) - uint256(a),",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 1064,
+                "text": "                uint256(t) - uint256(begin), uint256(end) - uint256(begin)));",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 1065,
+                "text": "            return int256(uint256(a) - fullMulDiv(uint256(a) - uint256(b),",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 1066,
+                "text": "                uint256(t) - uint256(begin), uint256(end) - uint256(begin)));",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 1067,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 1068,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 1069, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 1070,
+                "newLine": 969,
+                "text": "    /*´:°•.°+.*•´.*:˚.°*.˚•´.°:°•.°•.*•´.*:˚.°*.˚•´.°:°•.°+.*•´.*:*/"
+              },
+              {
+                "type": " ",
+                "oldLine": 1071,
+                "newLine": 970,
+                "text": "    /*                   RAW NUMBER OPERATIONS                    */"
+              },
+              {
+                "type": " ",
+                "oldLine": 1072,
+                "newLine": 971,
+                "text": "    /*.•°:°.´+˚.*°.˚:*.´•*.+°.•°:´*.´•*.•°.•°:°.´:•˚°.*°.˚:*.´+°.•*/"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
     }
   }
 }

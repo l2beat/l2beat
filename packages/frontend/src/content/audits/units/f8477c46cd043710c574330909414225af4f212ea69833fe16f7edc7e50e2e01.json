@@ -80,6 +80,156 @@
         ]
       },
       "warnings": []
+    },
+    "d79ad2713a1d64a9": {
+      "status": "differs",
+      "coveredLines": 328,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "similarity",
+        "auditedName": "Math",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2022-10-Checkpoints",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/utils/math/Math.sol",
+        "commit": "14f98dbb581a5365ce3f0c50bd850e499c554f72",
+        "commitTimestamp": "2022-09-28T18:42:55Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/14f98dbb581a5365ce3f0c50bd850e499c554f72/contracts/utils/math/Math.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Full manual review as an explicitly scoped dependency of the Checkpoints library; no findings reported against this file.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 12
+      },
+      "diff": {
+        "added": 1,
+        "removed": 1,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 328,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 4,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "library Math {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "library MathUpgradeable {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "    enum Rounding {"
+              },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "        Down, // Toward negative infinity"
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "        Up, // Toward infinity"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "e3b0c44298fc1c14": {
+      "status": "differs",
+      "coveredLines": 328,
+      "match": {
+        "origin": "library",
+        "collection": "openzeppelin",
+        "relation": { "type": "library" },
+        "rank": 3,
+        "matchedBy": "similarity",
+        "auditedName": "Math",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2022-10-Checkpoints",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/utils/math/Math.sol",
+        "commit": "14f98dbb581a5365ce3f0c50bd850e499c554f72",
+        "commitTimestamp": "2022-09-28T18:42:55Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/14f98dbb581a5365ce3f0c50bd850e499c554f72/contracts/utils/math/Math.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Full manual review as an explicitly scoped dependency of the Checkpoints library; no findings reported against this file.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 12
+      },
+      "diff": {
+        "added": 1,
+        "removed": 1,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 328,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 4,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "library Math {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "library MathUpgradeable {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "    enum Rounding {"
+              },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "        Down, // Toward negative infinity"
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "        Up, // Toward infinity"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
     }
   }
 }

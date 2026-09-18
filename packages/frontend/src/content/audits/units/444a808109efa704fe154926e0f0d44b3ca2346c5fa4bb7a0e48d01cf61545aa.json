@@ -32,6 +32,60 @@
         "totalVersions": 8
       },
       "warnings": []
+    },
+    "d80a56c5abf9208b": {
+      "status": "library",
+      "coveredLines": 183,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "Initializable",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2025-04-v5.3",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/proxy/utils/Initializable.sol",
+        "commit": "f3f0a6466f2be4f8b2d73c97cec0fa6e37763ec0",
+        "commitTimestamp": "2025-04-03T16:31:04Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/f3f0a6466f2be4f8b2d73c97cec0fa6e37763ec0/contracts/proxy/utils/Initializable.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Review limited to the resolutions of the reported findings as contained in the final audited state of the release-v5.3 branch.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 8
+      },
+      "warnings": []
+    },
+    "5d5f82d91c09d4ec": {
+      "status": "library",
+      "coveredLines": 183,
+      "match": {
+        "origin": "library",
+        "collection": "openzeppelin",
+        "relation": { "type": "library" },
+        "rank": 3,
+        "matchedBy": "identity",
+        "auditedName": "Initializable",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2025-04-v5.3",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/proxy/utils/Initializable.sol",
+        "commit": "f3f0a6466f2be4f8b2d73c97cec0fa6e37763ec0",
+        "commitTimestamp": "2025-04-03T16:31:04Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/f3f0a6466f2be4f8b2d73c97cec0fa6e37763ec0/contracts/proxy/utils/Initializable.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Review limited to the resolutions of the reported findings as contained in the final audited state of the release-v5.3 branch.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 8
+      },
+      "warnings": []
     }
   }
 }

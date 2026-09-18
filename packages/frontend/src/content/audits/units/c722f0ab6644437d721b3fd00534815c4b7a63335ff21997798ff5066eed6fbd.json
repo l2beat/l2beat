@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "c722f0ab6644437d721b3fd00534815c4b7a63335ff21997798ff5066eed6fbd",
+  "name": "CIRCUITS.md",
+  "kind": "program",
+  "lines": 29,
+  "source": "# BN254 Wrapping Circuits\n\n## Generating circuits\n\nFrom this crate, run\n\n```bash\nmake build-circuits\n```\n\n## Trusted setup\n\nThe groth16 pk and vk were generated with a trusted setup ceremony. To learn more about how the ceremony was organized and how to verify contributions, refer to the the following resources.\n\n- The [github repo](https://github.com/succinctlabs/semaphore-gnark-11/commit/6d6ebc3608e609ec879e9ba99abee6b6b97d937d) for coordinating setup. Also includes verification instructions. This exact commit was used to generate v6.0.0 circuits.\n\n- [SP1 docs](https://docs.succinct.xyz/docs/sp1/security/security-model#trusted-setup) to see the exact contributors.\n\n## Publishing (for SP1 maintainers)\n\nRun\n\n```bash\nmake release-circuits\n```\n\nIf you're publishing with trusted setup, make sure that the contents of the `build` directory are up to date with the correct contracts, pks, and vks. Upload the trusted setup artifacts separately.\n\nAlso note that the published version will reference the repo `SP1_CIRCUIT_VERSION` file.",
+  "resolutions": {
+    "44ad4cf96e2ef6f0": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "437dcc6cbc847e9a": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "5d5f82d91c09d4ec": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "e3b0c44298fc1c14": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "d79ad2713a1d64a9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "2295595c4243408b": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "d80a56c5abf9208b": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

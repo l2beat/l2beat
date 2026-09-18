@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "21e44937155386539aa9fe97c20c6e2595c7e2f3d56d5ebc9c32c8a249725d41",
+  "name": "cache.go",
+  "kind": "program",
+  "lines": 76,
+  "source": "package l2\n\nimport (\n\t\"github.com/ethereum-optimism/optimism/op-service/eth\"\n\t\"github.com/ethereum/go-ethereum/common\"\n\t\"github.com/ethereum/go-ethereum/core/types\"\n\t\"github.com/hashicorp/golang-lru/v2/simplelru\"\n)\n\n// blockCacheSize should be set large enough to handle the pipeline reset process of walking back from L2 head to find\n// the L1 origin that is old enough to start buffering channel data from.\nconst blockCacheSize = 3_000\nconst nodeCacheSize = 100_000\nconst codeCacheSize = 10_000\n\ntype CachingOracle struct {\n\toracle  Oracle\n\tblocks  *simplelru.LRU[common.Hash, *types.Block]\n\tnodes   *simplelru.LRU[common.Hash, []byte]\n\tcodes   *simplelru.LRU[common.Hash, []byte]\n\toutputs *simplelru.LRU[common.Hash, eth.Output]\n}\n\nfunc NewCachingOracle(oracle Oracle) *CachingOracle {\n\tblockLRU, _ := simplelru.NewLRU[common.Hash, *types.Block](blockCacheSize, nil)\n\tnodeLRU, _ := simplelru.NewLRU[common.Hash, []byte](nodeCacheSize, nil)\n\tcodeLRU, _ := simplelru.NewLRU[common.Hash, []byte](codeCacheSize, nil)\n\toutputLRU, _ := simplelru.NewLRU[common.Hash, eth.Output](codeCacheSize, nil)\n\treturn &CachingOracle{\n\t\toracle:  oracle,\n\t\tblocks:  blockLRU,\n\t\tnodes:   nodeLRU,\n\t\tcodes:   codeLRU,\n\t\toutputs: outputLRU,\n\t}\n}\n\nfunc (o *CachingOracle) NodeByHash(nodeHash common.Hash) []byte {\n\tnode, ok := o.nodes.Get(nodeHash)\n\tif ok {\n\t\treturn node\n\t}\n\tnode = o.oracle.NodeByHash(nodeHash)\n\to.nodes.Add(nodeHash, node)\n\treturn node\n}\n\nfunc (o *CachingOracle) CodeByHash(codeHash common.Hash) []byte {\n\tcode, ok := o.codes.Get(codeHash)\n\tif ok {\n\t\treturn code\n\t}\n\tcode = o.oracle.CodeByHash(codeHash)\n\to.codes.Add(codeHash, code)\n\treturn code\n}\n\nfunc (o *CachingOracle) BlockByHash(blockHash common.Hash) *types.Block {\n\tblock, ok := o.blocks.Get(blockHash)\n\tif ok {\n\t\treturn block\n\t}\n\tblock = o.oracle.BlockByHash(blockHash)\n\to.blocks.Add(blockHash, block)\n\treturn block\n}\n\nfunc (o *CachingOracle) OutputByRoot(root common.Hash) eth.Output {\n\toutput, ok := o.outputs.Get(root)\n\tif ok {\n\t\treturn output\n\t}\n\toutput = o.oracle.OutputByRoot(root)\n\to.outputs.Add(root, output)\n\treturn output\n}",
+  "resolutions": {
+    "437dcc6cbc847e9a": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "bb55951394276893": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

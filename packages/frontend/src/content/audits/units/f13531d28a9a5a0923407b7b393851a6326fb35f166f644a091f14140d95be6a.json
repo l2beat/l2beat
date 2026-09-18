@@ -219,6 +219,226 @@
         ]
       },
       "warnings": []
+    },
+    "5d5f82d91c09d4ec": {
+      "status": "library",
+      "coveredLines": 128,
+      "match": {
+        "origin": "library",
+        "collection": "openzeppelin",
+        "relation": { "type": "library" },
+        "rank": 3,
+        "matchedBy": "identity",
+        "auditedName": "UUPSUpgradeable",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/proxy/utils/UUPSUpgradeable.sol",
+        "commit": "8cb5200797e2ff322d3632be6c9df80e72dd8fed",
+        "commitTimestamp": "2023-08-04T17:04:22Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/8cb5200797e2ff322d3632be6c9df80e72dd8fed/contracts/proxy/utils/UUPSUpgradeable.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Fix review limited to the changes of pull request #4502 (head commit).",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 5
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 5,
+        "ignoredRemoved": 6,
+        "unchanged": 128,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 24,
+            "oldLines": 9,
+            "newStart": 24,
+            "newLines": 9,
+            "lines": [
+              { "type": " ", "oldLine": 24, "newLine": 24, "text": "" },
+              { "type": " ", "oldLine": 25, "newLine": 25, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 26,
+                "newLine": 26,
+                "text": "     * @dev Check that the execution is being performed through a delegatecall call and that the execution context is"
+              },
+              {
+                "type": "-",
+                "oldLine": 27,
+                "text": "     * a proxy contract with an implementation (as defined in ERC1967) pointing to self. This should only be the case",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 27,
+                "text": "     * a proxy contract with an implementation (as defined in ERC-1967) pointing to self. This should only be the case",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 28,
+                "newLine": 28,
+                "text": "     * for UUPS and transparent proxies that are using the current contract as their implementation. Execution of a"
+              },
+              {
+                "type": "-",
+                "oldLine": 29,
+                "text": "     * function through ERC1167 minimal proxies (clones) would not normally pass this test, but is not guaranteed to",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 29,
+                "text": "     * function through ERC-1167 minimal proxies (clones) would not normally pass this test, but is not guaranteed to",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 30,
+                "newLine": 30,
+                "text": "     * fail."
+              },
+              { "type": " ", "oldLine": 31, "newLine": 31, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 32,
+                "newLine": 32,
+                "text": "    modifier onlyProxy() {"
+              }
+            ]
+          },
+          {
+            "oldStart": 44,
+            "oldLines": 7,
+            "newStart": 44,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 44, "newLine": 44, "text": "    }" },
+              { "type": " ", "oldLine": 45, "newLine": 45, "text": "" },
+              { "type": " ", "oldLine": 46, "newLine": 46, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 47,
+                "text": "     * @dev Implementation of the ERC1822 {proxiableUUID} function. This returns the storage slot used by the",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 47,
+                "text": "     * @dev Implementation of the ERC-1822 {proxiableUUID} function. This returns the storage slot used by the",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 48,
+                "newLine": 48,
+                "text": "     * implementation. It is used to validate the implementation's compatibility when performing an upgrade."
+              },
+              { "type": " ", "oldLine": 49, "newLine": 49, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 50,
+                "newLine": 50,
+                "text": "     * IMPORTANT: A proxy pointing at a proxiable contract should not be considered proxiable itself, because this risks"
+              }
+            ]
+          },
+          {
+            "oldStart": 72,
+            "oldLines": 8,
+            "newStart": 72,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 72, "newLine": 72, "text": "" },
+              { "type": " ", "oldLine": 73, "newLine": 73, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 74,
+                "newLine": 74,
+                "text": "     * @dev Reverts if the execution is not performed via delegatecall or the execution"
+              },
+              {
+                "type": "-",
+                "oldLine": 75,
+                "text": "     * context is not of a proxy with an ERC1967-compliant implementation pointing to self.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 76,
+                "text": "     * See {_onlyProxy}.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 75,
+                "text": "     * context is not of a proxy with an ERC-1967 compliant implementation pointing to self.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 77, "newLine": 76, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 78,
+                "newLine": 77,
+                "text": "    function _checkProxy() internal view virtual {"
+              },
+              {
+                "type": " ",
+                "oldLine": 79,
+                "newLine": 78,
+                "text": "        if ("
+              }
+            ]
+          },
+          {
+            "oldStart": 111,
+            "oldLines": 7,
+            "newStart": 110,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 111,
+                "newLine": 110,
+                "text": "     * @dev Performs an implementation upgrade with a security check for UUPS proxies, and additional setup call."
+              },
+              { "type": " ", "oldLine": 112, "newLine": 111, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 113,
+                "newLine": 112,
+                "text": "     * As a security check, {proxiableUUID} is invoked in the new implementation, and the return value"
+              },
+              {
+                "type": "-",
+                "oldLine": 114,
+                "text": "     * is expected to be the implementation slot in ERC1967.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 113,
+                "text": "     * is expected to be the implementation slot in ERC-1967.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 115, "newLine": 114, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 116,
+                "newLine": 115,
+                "text": "     * Emits an {IERC1967-Upgraded} event."
+              },
+              { "type": " ", "oldLine": 117, "newLine": 116, "text": "     */" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
     }
   }
 }

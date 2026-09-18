@@ -511,6 +511,259 @@
         ]
       },
       "warnings": []
+    },
+    "437dcc6cbc847e9a": {
+      "status": "differs",
+      "coveredLines": 94,
+      "match": {
+        "origin": "other",
+        "collection": "celo",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "name",
+        "auditedName": "ISystemConfig",
+        "similarity": 0.985,
+        "reportId": "celo/hashlock-celo-optimism-superchain-2026-02",
+        "repository": "celo-org/optimism",
+        "path": "packages/contracts-bedrock/interfaces/L1/ISystemConfig.sol",
+        "commit": "c138180e992f54502a62e3fcf803eb701e38b990",
+        "commitTimestamp": "2026-01-20T14:26:35Z",
+        "url": "https://github.com/celo-org/optimism/blob/c138180e992f54502a62e3fcf803eb701e38b990/packages/contracts-bedrock/interfaces/L1/ISystemConfig.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "full file in celo-contracts/v5.0.0 line (Celo CGT changes vs op-deployer/v0.5.2)",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "diff": {
+        "added": 6,
+        "removed": 4,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 94,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 6,
+            "oldLines": 8,
+            "newStart": 6,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 6,
+                "newLine": 6,
+                "text": "        UNSAFE_BLOCK_SIGNER,"
+              },
+              {
+                "type": " ",
+                "oldLine": 7,
+                "newLine": 7,
+                "text": "        EIP_1559_PARAMS,"
+              },
+              {
+                "type": " ",
+                "oldLine": 8,
+                "newLine": 8,
+                "text": "        OPERATOR_FEE_PARAMS,"
+              },
+              {
+                "type": "-",
+                "oldLine": 9,
+                "text": "        MIN_BASE_FEE,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 10,
+                "text": "        DA_FOOTPRINT_GAS_SCALAR",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 9,
+                "text": "        MIN_BASE_FEE",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 11, "newLine": 10, "text": "    }" },
+              { "type": " ", "oldLine": 12, "newLine": 11, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 13,
+                "newLine": 12,
+                "text": "    struct Addresses {"
+              }
+            ]
+          },
+          {
+            "oldStart": 67,
+            "oldLines": 7,
+            "newStart": 66,
+            "newLines": 6,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 67,
+                "newLine": 66,
+                "text": "    function operatorFeeConstant() external view returns (uint64);"
+              },
+              {
+                "type": " ",
+                "oldLine": 68,
+                "newLine": 67,
+                "text": "    function operatorFeeScalar() external view returns (uint32);"
+              },
+              {
+                "type": " ",
+                "oldLine": 69,
+                "newLine": 68,
+                "text": "    function minBaseFee() external view returns (uint64);"
+              },
+              {
+                "type": "-",
+                "oldLine": 70,
+                "text": "    function daFootprintGasScalar() external view returns (uint16);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 71,
+                "newLine": 69,
+                "text": "    function optimismMintableERC20Factory() external view returns (address addr_);"
+              },
+              {
+                "type": " ",
+                "oldLine": 72,
+                "newLine": 70,
+                "text": "    function optimismPortal() external view returns (address addr_);"
+              },
+              {
+                "type": " ",
+                "oldLine": 73,
+                "newLine": 71,
+                "text": "    function overhead() external view returns (uint256);"
+              }
+            ]
+          },
+          {
+            "oldStart": 83,
+            "oldLines": 7,
+            "newStart": 81,
+            "newLines": 6,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 83,
+                "newLine": 81,
+                "text": "    function setUnsafeBlockSigner(address _unsafeBlockSigner) external;"
+              },
+              {
+                "type": " ",
+                "oldLine": 84,
+                "newLine": 82,
+                "text": "    function setEIP1559Params(uint32 _denominator, uint32 _elasticity) external;"
+              },
+              {
+                "type": " ",
+                "oldLine": 85,
+                "newLine": 83,
+                "text": "    function setMinBaseFee(uint64 _minBaseFee) external;"
+              },
+              {
+                "type": "-",
+                "oldLine": 86,
+                "text": "    function setDAFootprintGasScalar(uint16 _daFootprintGasScalar) external;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 87,
+                "newLine": 84,
+                "text": "    function startBlock() external view returns (uint256 startBlock_);"
+              },
+              {
+                "type": " ",
+                "oldLine": 88,
+                "newLine": 85,
+                "text": "    function transferOwnership(address newOwner) external; // nosemgrep"
+              },
+              {
+                "type": " ",
+                "oldLine": 89,
+                "newLine": 86,
+                "text": "    function unsafeBlockSigner() external view returns (address addr_);"
+              }
+            ]
+          },
+          {
+            "oldStart": 93,
+            "oldLines": 6,
+            "newStart": 90,
+            "newLines": 11,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 93,
+                "newLine": 90,
+                "text": "    function guardian() external view returns (address);"
+              },
+              {
+                "type": " ",
+                "oldLine": 94,
+                "newLine": 91,
+                "text": "    function setFeature(bytes32 _feature, bool _enabled) external;"
+              },
+              {
+                "type": " ",
+                "oldLine": 95,
+                "newLine": 92,
+                "text": "    function isFeatureEnabled(bytes32) external view returns (bool);"
+              },
+              {
+                "type": "+",
+                "newLine": 93,
+                "text": "    function isCustomGasToken() external view returns (bool);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 94,
+                "text": "    function gasPayingToken() external view returns (address address_, uint8 decimals_);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 95,
+                "text": "    function gasPayingTokenName() external view returns (string memory name_);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 96,
+                "text": "    function gasPayingTokenSymbol() external view returns (string memory symbol_);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 97,
+                "text": "    function setGasPayingToken(address _token, uint8 _decimals, bytes32 _name, bytes32 _symbol) external;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 96, "newLine": 98, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 97,
+                "newLine": 99,
+                "text": "    function __constructor__() external;"
+              },
+              { "type": " ", "oldLine": 98, "newLine": 100, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
     }
   }
 }

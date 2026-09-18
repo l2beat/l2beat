@@ -516,6 +516,520 @@
         ]
       },
       "warnings": []
+    },
+    "437dcc6cbc847e9a": {
+      "status": "differs",
+      "coveredLines": 198,
+      "match": {
+        "origin": "stack",
+        "collection": "optimism",
+        "relation": {
+          "type": "template",
+          "template": "opstack/L1CrossDomainMessenger"
+        },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "Proxy",
+        "similarity": 0.984,
+        "reportId": "optimism/openzeppelin-bedrock-periphery-2022-09",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts-bedrock/contracts/universal/Proxy.sol",
+        "commit": "93d3bd411a8ae75702539ac9c5fe00bad21d4104",
+        "commitTimestamp": "2022-07-21T16:50:18Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/93d3bd411a8ae75702539ac9c5fe00bad21d4104/packages/contracts-bedrock/contracts/universal/Proxy.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Full review of the listed file at the audited commit. Fix commits live in the inaccessible optimism-audit-fixes repository and are not recorded.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 6,
+        "removed": 5,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 198,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 73,
+            "oldLines": 7,
+            "newStart": 73,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 73, "newLine": 73, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 74,
+                "newLine": 74,
+                "text": "     * @param _implementation Address of the implementation contract."
+              },
+              { "type": " ", "oldLine": 75, "newLine": 75, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 76,
+                "text": "    function upgradeTo(address _implementation) external proxyCallIfNotAdmin {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 76,
+                "text": "    function upgradeTo(address _implementation) public virtual proxyCallIfNotAdmin {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 77,
+                "newLine": 77,
+                "text": "        _setImplementation(_implementation);"
+              },
+              { "type": " ", "oldLine": 78, "newLine": 78, "text": "    }" },
+              { "type": " ", "oldLine": 79, "newLine": 79, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 85,
+            "oldLines": 8,
+            "newStart": 85,
+            "newLines": 9,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 85,
+                "newLine": 85,
+                "text": "     * @param _data           Calldata to delegatecall the new implementation with."
+              },
+              { "type": " ", "oldLine": 86, "newLine": 86, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 87,
+                "newLine": 87,
+                "text": "    function upgradeToAndCall(address _implementation, bytes calldata _data)"
+              },
+              {
+                "type": "-",
+                "oldLine": 88,
+                "text": "        external",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 88,
+                "text": "        public",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 89,
+                "newLine": 89,
+                "text": "        payable"
+              },
+              {
+                "type": "+",
+                "newLine": 90,
+                "text": "        virtual",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 90,
+                "newLine": 91,
+                "text": "        proxyCallIfNotAdmin"
+              },
+              {
+                "type": " ",
+                "oldLine": 91,
+                "newLine": 92,
+                "text": "        returns (bytes memory)"
+              },
+              { "type": " ", "oldLine": 92, "newLine": 93, "text": "    {" }
+            ]
+          },
+          {
+            "oldStart": 101,
+            "oldLines": 7,
+            "newStart": 102,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 101, "newLine": 102, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 102,
+                "newLine": 103,
+                "text": "     * @param _admin New owner of the proxy contract."
+              },
+              {
+                "type": " ",
+                "oldLine": 103,
+                "newLine": 104,
+                "text": "     */"
+              },
+              {
+                "type": "-",
+                "oldLine": 104,
+                "text": "    function changeAdmin(address _admin) external proxyCallIfNotAdmin {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 105,
+                "text": "    function changeAdmin(address _admin) public virtual proxyCallIfNotAdmin {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 105,
+                "newLine": 106,
+                "text": "        _changeAdmin(_admin);"
+              },
+              { "type": " ", "oldLine": 106, "newLine": 107, "text": "    }" },
+              { "type": " ", "oldLine": 107, "newLine": 108, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 110,
+            "oldLines": 7,
+            "newStart": 111,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 110, "newLine": 111, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 111,
+                "newLine": 112,
+                "text": "     * @return Owner address."
+              },
+              {
+                "type": " ",
+                "oldLine": 112,
+                "newLine": 113,
+                "text": "     */"
+              },
+              {
+                "type": "-",
+                "oldLine": 113,
+                "text": "    function admin() external proxyCallIfNotAdmin returns (address) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 114,
+                "text": "    function admin() public virtual proxyCallIfNotAdmin returns (address) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 114,
+                "newLine": 115,
+                "text": "        return _getAdmin();"
+              },
+              { "type": " ", "oldLine": 115, "newLine": 116, "text": "    }" },
+              { "type": " ", "oldLine": 116, "newLine": 117, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 119,
+            "oldLines": 7,
+            "newStart": 120,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 119, "newLine": 120, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 120,
+                "newLine": 121,
+                "text": "     * @return Implementation address."
+              },
+              {
+                "type": " ",
+                "oldLine": 121,
+                "newLine": 122,
+                "text": "     */"
+              },
+              {
+                "type": "-",
+                "oldLine": 122,
+                "text": "    function implementation() external proxyCallIfNotAdmin returns (address) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 123,
+                "text": "    function implementation() public virtual proxyCallIfNotAdmin returns (address) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 123,
+                "newLine": 124,
+                "text": "        return _getImplementation();"
+              },
+              { "type": " ", "oldLine": 124, "newLine": 125, "text": "    }" },
+              { "type": " ", "oldLine": 125, "newLine": 126, "text": "" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "d79ad2713a1d64a9": {
+      "status": "differs",
+      "coveredLines": 198,
+      "match": {
+        "origin": "stack",
+        "collection": "optimism",
+        "relation": {
+          "type": "template",
+          "template": "opstack/AddressManager"
+        },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "Proxy",
+        "similarity": 0.984,
+        "reportId": "optimism/openzeppelin-bedrock-periphery-2022-09",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts-bedrock/contracts/universal/Proxy.sol",
+        "commit": "93d3bd411a8ae75702539ac9c5fe00bad21d4104",
+        "commitTimestamp": "2022-07-21T16:50:18Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/93d3bd411a8ae75702539ac9c5fe00bad21d4104/packages/contracts-bedrock/contracts/universal/Proxy.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Full review of the listed file at the audited commit. Fix commits live in the inaccessible optimism-audit-fixes repository and are not recorded.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 6,
+        "removed": 5,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 198,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 73,
+            "oldLines": 7,
+            "newStart": 73,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 73, "newLine": 73, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 74,
+                "newLine": 74,
+                "text": "     * @param _implementation Address of the implementation contract."
+              },
+              { "type": " ", "oldLine": 75, "newLine": 75, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 76,
+                "text": "    function upgradeTo(address _implementation) external proxyCallIfNotAdmin {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 76,
+                "text": "    function upgradeTo(address _implementation) public virtual proxyCallIfNotAdmin {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 77,
+                "newLine": 77,
+                "text": "        _setImplementation(_implementation);"
+              },
+              { "type": " ", "oldLine": 78, "newLine": 78, "text": "    }" },
+              { "type": " ", "oldLine": 79, "newLine": 79, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 85,
+            "oldLines": 8,
+            "newStart": 85,
+            "newLines": 9,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 85,
+                "newLine": 85,
+                "text": "     * @param _data           Calldata to delegatecall the new implementation with."
+              },
+              { "type": " ", "oldLine": 86, "newLine": 86, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 87,
+                "newLine": 87,
+                "text": "    function upgradeToAndCall(address _implementation, bytes calldata _data)"
+              },
+              {
+                "type": "-",
+                "oldLine": 88,
+                "text": "        external",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 88,
+                "text": "        public",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 89,
+                "newLine": 89,
+                "text": "        payable"
+              },
+              {
+                "type": "+",
+                "newLine": 90,
+                "text": "        virtual",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 90,
+                "newLine": 91,
+                "text": "        proxyCallIfNotAdmin"
+              },
+              {
+                "type": " ",
+                "oldLine": 91,
+                "newLine": 92,
+                "text": "        returns (bytes memory)"
+              },
+              { "type": " ", "oldLine": 92, "newLine": 93, "text": "    {" }
+            ]
+          },
+          {
+            "oldStart": 101,
+            "oldLines": 7,
+            "newStart": 102,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 101, "newLine": 102, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 102,
+                "newLine": 103,
+                "text": "     * @param _admin New owner of the proxy contract."
+              },
+              {
+                "type": " ",
+                "oldLine": 103,
+                "newLine": 104,
+                "text": "     */"
+              },
+              {
+                "type": "-",
+                "oldLine": 104,
+                "text": "    function changeAdmin(address _admin) external proxyCallIfNotAdmin {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 105,
+                "text": "    function changeAdmin(address _admin) public virtual proxyCallIfNotAdmin {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 105,
+                "newLine": 106,
+                "text": "        _changeAdmin(_admin);"
+              },
+              { "type": " ", "oldLine": 106, "newLine": 107, "text": "    }" },
+              { "type": " ", "oldLine": 107, "newLine": 108, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 110,
+            "oldLines": 7,
+            "newStart": 111,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 110, "newLine": 111, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 111,
+                "newLine": 112,
+                "text": "     * @return Owner address."
+              },
+              {
+                "type": " ",
+                "oldLine": 112,
+                "newLine": 113,
+                "text": "     */"
+              },
+              {
+                "type": "-",
+                "oldLine": 113,
+                "text": "    function admin() external proxyCallIfNotAdmin returns (address) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 114,
+                "text": "    function admin() public virtual proxyCallIfNotAdmin returns (address) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 114,
+                "newLine": 115,
+                "text": "        return _getAdmin();"
+              },
+              { "type": " ", "oldLine": 115, "newLine": 116, "text": "    }" },
+              { "type": " ", "oldLine": 116, "newLine": 117, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 119,
+            "oldLines": 7,
+            "newStart": 120,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 119, "newLine": 120, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 120,
+                "newLine": 121,
+                "text": "     * @return Implementation address."
+              },
+              {
+                "type": " ",
+                "oldLine": 121,
+                "newLine": 122,
+                "text": "     */"
+              },
+              {
+                "type": "-",
+                "oldLine": 122,
+                "text": "    function implementation() external proxyCallIfNotAdmin returns (address) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 123,
+                "text": "    function implementation() public virtual proxyCallIfNotAdmin returns (address) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 123,
+                "newLine": 124,
+                "text": "        return _getImplementation();"
+              },
+              { "type": " ", "oldLine": 124, "newLine": 125, "text": "    }" },
+              { "type": " ", "oldLine": 125, "newLine": 126, "text": "" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
     }
   }
 }

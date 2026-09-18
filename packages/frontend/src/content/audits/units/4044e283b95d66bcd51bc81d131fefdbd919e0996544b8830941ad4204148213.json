@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "4044e283b95d66bcd51bc81d131fefdbd919e0996544b8830941ad4204148213",
+  "name": "lean-imt.test.ts",
+  "kind": "program",
+  "lines": 81,
+  "source": "import { WitnessTester } from \"circomkit\";\nimport { circomkit, randomBigInt, padSiblings } from \"./common\";\nimport { hashLeftRight } from \"../../../node_modules/maci-crypto/build/ts/hashing.js\"; // TODO: fix maci import\nimport { LeanIMT } from \"@zk-kit/lean-imt\";\n\ndescribe(\"LeanIMTInclusionProof Circuit\", () => {\n  let circuit: WitnessTester<[\"leaf\", \"leafIndex\", \"siblings\", \"actualDepth\"], [\"out\"]>;\n\n  const hash = (a: bigint, b: bigint) => hashLeftRight(a, b);\n  const maxDepth = 8;\n\n  // Lean Incrementral Merkle tree\n  let tree: LeanIMT<bigint>;\n\n  before(async () => {\n    circuit = await circomkit.WitnessTester(`merkleTree`, {\n      file: \"merkleTree\",\n      template: \"LeanIMTInclusionProof\",\n      pubs: [\"leaf\", \"leafIndex\", \"siblings\", \"actualDepth\"],\n      params: [maxDepth],\n    });\n  });\n\n  // Flush trees before each test\n  beforeEach(async () => {\n    tree = new LeanIMT(hash);\n  });\n\n  it(\"Should compute roots correctly\", async () => {\n    const LEAVES = 16;\n\n    let leavesIndexes = [];\n\n    // insert leaves\n    for (let i = 0; i < LEAVES; ++i) {\n      let leafValue = randomBigInt();\n      tree!.insert(leafValue);\n\n      leavesIndexes.push(tree.indexOf(leafValue));\n    }\n\n    for (let i = 0; i < LEAVES; ++i) {\n      let stateProof = tree.generateProof(i);\n\n      await circuit.expectPass(\n        {\n          leaf: stateProof.leaf,\n          leafIndex: stateProof.index,\n          siblings: padSiblings(stateProof.siblings, maxDepth),\n          actualDepth: tree.depth,\n        },\n        { out: tree.root },\n      );\n    }\n  });\n\n  it(\"Should fail when passing a tree depth greater than the max depth\", async () => {\n    const LEAVES = 16;\n\n    let leavesIndexes = [];\n\n    // insert leaves\n    for (let i = 0; i < LEAVES; ++i) {\n      let leafValue = randomBigInt();\n      tree!.insert(leafValue);\n\n      leavesIndexes.push(tree.indexOf(leafValue));\n    }\n\n    for (let i = 0; i < LEAVES; ++i) {\n      let stateProof = tree.generateProof(i);\n\n      await circuit.expectFail({\n        leaf: stateProof.leaf,\n        leafIndex: stateProof.index,\n        siblings: padSiblings(stateProof.siblings, maxDepth),\n        actualDepth: maxDepth + 1,\n      });\n    }\n  });\n});",
+  "resolutions": {
+    "cbbcf694abda362c": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

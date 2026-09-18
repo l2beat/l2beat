@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "e00978fa764c08a78919b2641c678ff5486f902e3f927474cbd6c4fc26df5fae",
+  "name": "env.go",
+  "kind": "program",
+  "lines": 10,
+  "source": "package client\n\nconst (\n\t// 0,1,2 used for stdin,stdout,stderr\n\tHClientRFd = iota + 3\n\tHClientWFd\n\tPClientRFd\n\tPClientWFd\n\tMaxFd\n)",
+  "resolutions": {
+    "437dcc6cbc847e9a": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "bb55951394276893": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "1f5c32d18cf7148d": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

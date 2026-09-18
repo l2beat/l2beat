@@ -485,6 +485,736 @@
         ]
       },
       "warnings": []
+    },
+    "437dcc6cbc847e9a": {
+      "status": "differs",
+      "coveredLines": 74,
+      "match": {
+        "origin": "other",
+        "collection": "bob",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "name",
+        "auditedName": "OwnableUpgradeable",
+        "similarity": 1,
+        "reportId": "bob/veridise-kailua-2025-02",
+        "repository": "boundless-xyz/kailua",
+        "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "commit": "27dec82b67de1051df9258b36f8366ebf308e5bf",
+        "commitTimestamp": "2025-02-06T07:42:16Z",
+        "url": "https://github.com/boundless-xyz/kailua/blob/27dec82b67de1051df9258b36f8366ebf308e5bf/crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix commit",
+        "coverage": "Confirmed fix commit for V-KLA-VUL-004 (contract nits).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 1,
+        "removed": 1,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 74,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 4,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "abstract contract OwnableUpgradeable is Initializable_1, ContextUpgradeable {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "abstract contract OwnableUpgradeable is Initializable, ContextUpgradeable {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "    address private _owner;"
+              },
+              { "type": " ", "oldLine": 3, "newLine": 3, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "13052b7adc791062": {
+      "status": "differs",
+      "coveredLines": 74,
+      "match": {
+        "origin": "other",
+        "collection": "bob",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "name",
+        "auditedName": "OwnableUpgradeable",
+        "similarity": 1,
+        "reportId": "bob/veridise-kailua-2025-02",
+        "repository": "boundless-xyz/kailua",
+        "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "commit": "27dec82b67de1051df9258b36f8366ebf308e5bf",
+        "commitTimestamp": "2025-02-06T07:42:16Z",
+        "url": "https://github.com/boundless-xyz/kailua/blob/27dec82b67de1051df9258b36f8366ebf308e5bf/crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix commit",
+        "coverage": "Confirmed fix commit for V-KLA-VUL-004 (contract nits).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 1,
+        "removed": 1,
+        "ignoredAdded": 2,
+        "ignoredRemoved": 2,
+        "unchanged": 74,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 4,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "abstract contract OwnableUpgradeable is Initializable_1, ContextUpgradeable {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "abstract contract OwnableUpgradeable is Initializable, ContextUpgradeable {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "    address private _owner;"
+              },
+              { "type": " ", "oldLine": 3, "newLine": 3, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);"
+              }
+            ]
+          },
+          {
+            "oldStart": 38,
+            "oldLines": 10,
+            "newStart": 38,
+            "newLines": 10,
+            "lines": [
+              { "type": " ", "oldLine": 38, "newLine": 38, "text": "" },
+              { "type": " ", "oldLine": 39, "newLine": 39, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 40,
+                "newLine": 40,
+                "text": "     * @dev Leaves the contract without owner. It will not be possible to call"
+              },
+              {
+                "type": "-",
+                "oldLine": 41,
+                "text": "     * `onlyOwner` functions anymore. Can only be called by the current owner.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 41,
+                "text": "     * `onlyOwner` functions. Can only be called by the current owner.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 42, "newLine": 42, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 43,
+                "newLine": 43,
+                "text": "     * NOTE: Renouncing ownership will leave the contract without an owner,"
+              },
+              {
+                "type": "-",
+                "oldLine": 44,
+                "text": "     * thereby removing any functionality that is only available to the owner.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 44,
+                "text": "     * thereby disabling any functionality that is only available to the owner.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 45, "newLine": 45, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 46,
+                "newLine": 46,
+                "text": "    function renounceOwnership() public virtual onlyOwner {"
+              },
+              {
+                "type": " ",
+                "oldLine": 47,
+                "newLine": 47,
+                "text": "        _transferOwnership(address(0));"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "d80a56c5abf9208b": {
+      "status": "differs",
+      "coveredLines": 74,
+      "match": {
+        "origin": "other",
+        "collection": "bob",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "name",
+        "auditedName": "OwnableUpgradeable",
+        "similarity": 1,
+        "reportId": "bob/veridise-kailua-2025-02",
+        "repository": "boundless-xyz/kailua",
+        "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "commit": "27dec82b67de1051df9258b36f8366ebf308e5bf",
+        "commitTimestamp": "2025-02-06T07:42:16Z",
+        "url": "https://github.com/boundless-xyz/kailua/blob/27dec82b67de1051df9258b36f8366ebf308e5bf/crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix commit",
+        "coverage": "Confirmed fix commit for V-KLA-VUL-004 (contract nits).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 1,
+        "removed": 1,
+        "ignoredAdded": 2,
+        "ignoredRemoved": 2,
+        "unchanged": 74,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 4,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "abstract contract OwnableUpgradeable is Initializable_1, ContextUpgradeable {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "abstract contract OwnableUpgradeable is Initializable, ContextUpgradeable {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "    address private _owner;"
+              },
+              { "type": " ", "oldLine": 3, "newLine": 3, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);"
+              }
+            ]
+          },
+          {
+            "oldStart": 38,
+            "oldLines": 10,
+            "newStart": 38,
+            "newLines": 10,
+            "lines": [
+              { "type": " ", "oldLine": 38, "newLine": 38, "text": "" },
+              { "type": " ", "oldLine": 39, "newLine": 39, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 40,
+                "newLine": 40,
+                "text": "     * @dev Leaves the contract without owner. It will not be possible to call"
+              },
+              {
+                "type": "-",
+                "oldLine": 41,
+                "text": "     * `onlyOwner` functions anymore. Can only be called by the current owner.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 41,
+                "text": "     * `onlyOwner` functions. Can only be called by the current owner.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 42, "newLine": 42, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 43,
+                "newLine": 43,
+                "text": "     * NOTE: Renouncing ownership will leave the contract without an owner,"
+              },
+              {
+                "type": "-",
+                "oldLine": 44,
+                "text": "     * thereby removing any functionality that is only available to the owner.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 44,
+                "text": "     * thereby disabling any functionality that is only available to the owner.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 45, "newLine": 45, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 46,
+                "newLine": 46,
+                "text": "    function renounceOwnership() public virtual onlyOwner {"
+              },
+              {
+                "type": " ",
+                "oldLine": 47,
+                "newLine": 47,
+                "text": "        _transferOwnership(address(0));"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "5d5f82d91c09d4ec": {
+      "status": "differs",
+      "coveredLines": 74,
+      "match": {
+        "origin": "other",
+        "collection": "bob",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "name",
+        "auditedName": "OwnableUpgradeable",
+        "similarity": 1,
+        "reportId": "bob/veridise-kailua-2025-02",
+        "repository": "boundless-xyz/kailua",
+        "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "commit": "27dec82b67de1051df9258b36f8366ebf308e5bf",
+        "commitTimestamp": "2025-02-06T07:42:16Z",
+        "url": "https://github.com/boundless-xyz/kailua/blob/27dec82b67de1051df9258b36f8366ebf308e5bf/crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix commit",
+        "coverage": "Confirmed fix commit for V-KLA-VUL-004 (contract nits).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 1,
+        "removed": 1,
+        "ignoredAdded": 2,
+        "ignoredRemoved": 2,
+        "unchanged": 74,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 4,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "abstract contract OwnableUpgradeable is Initializable_1, ContextUpgradeable {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "abstract contract OwnableUpgradeable is Initializable, ContextUpgradeable {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "    address private _owner;"
+              },
+              { "type": " ", "oldLine": 3, "newLine": 3, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);"
+              }
+            ]
+          },
+          {
+            "oldStart": 38,
+            "oldLines": 10,
+            "newStart": 38,
+            "newLines": 10,
+            "lines": [
+              { "type": " ", "oldLine": 38, "newLine": 38, "text": "" },
+              { "type": " ", "oldLine": 39, "newLine": 39, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 40,
+                "newLine": 40,
+                "text": "     * @dev Leaves the contract without owner. It will not be possible to call"
+              },
+              {
+                "type": "-",
+                "oldLine": 41,
+                "text": "     * `onlyOwner` functions anymore. Can only be called by the current owner.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 41,
+                "text": "     * `onlyOwner` functions. Can only be called by the current owner.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 42, "newLine": 42, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 43,
+                "newLine": 43,
+                "text": "     * NOTE: Renouncing ownership will leave the contract without an owner,"
+              },
+              {
+                "type": "-",
+                "oldLine": 44,
+                "text": "     * thereby removing any functionality that is only available to the owner.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 44,
+                "text": "     * thereby disabling any functionality that is only available to the owner.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 45, "newLine": 45, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 46,
+                "newLine": 46,
+                "text": "    function renounceOwnership() public virtual onlyOwner {"
+              },
+              {
+                "type": " ",
+                "oldLine": 47,
+                "newLine": 47,
+                "text": "        _transferOwnership(address(0));"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "d79ad2713a1d64a9": {
+      "status": "differs",
+      "coveredLines": 74,
+      "match": {
+        "origin": "other",
+        "collection": "bob",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "name",
+        "auditedName": "OwnableUpgradeable",
+        "similarity": 1,
+        "reportId": "bob/veridise-kailua-2025-02",
+        "repository": "boundless-xyz/kailua",
+        "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "commit": "27dec82b67de1051df9258b36f8366ebf308e5bf",
+        "commitTimestamp": "2025-02-06T07:42:16Z",
+        "url": "https://github.com/boundless-xyz/kailua/blob/27dec82b67de1051df9258b36f8366ebf308e5bf/crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix commit",
+        "coverage": "Confirmed fix commit for V-KLA-VUL-004 (contract nits).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 1,
+        "removed": 1,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 74,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 4,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "abstract contract OwnableUpgradeable is Initializable_1, ContextUpgradeable {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "abstract contract OwnableUpgradeable is Initializable, ContextUpgradeable {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "    address private _owner;"
+              },
+              { "type": " ", "oldLine": 3, "newLine": 3, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "e3b0c44298fc1c14": {
+      "status": "differs",
+      "coveredLines": 74,
+      "match": {
+        "origin": "other",
+        "collection": "bob",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "name",
+        "auditedName": "OwnableUpgradeable",
+        "similarity": 1,
+        "reportId": "bob/veridise-kailua-2025-02",
+        "repository": "boundless-xyz/kailua",
+        "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "commit": "27dec82b67de1051df9258b36f8366ebf308e5bf",
+        "commitTimestamp": "2025-02-06T07:42:16Z",
+        "url": "https://github.com/boundless-xyz/kailua/blob/27dec82b67de1051df9258b36f8366ebf308e5bf/crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix commit",
+        "coverage": "Confirmed fix commit for V-KLA-VUL-004 (contract nits).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 1,
+        "removed": 1,
+        "ignoredAdded": 2,
+        "ignoredRemoved": 2,
+        "unchanged": 74,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 4,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "abstract contract OwnableUpgradeable is Initializable_1, ContextUpgradeable {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "abstract contract OwnableUpgradeable is Initializable, ContextUpgradeable {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "    address private _owner;"
+              },
+              { "type": " ", "oldLine": 3, "newLine": 3, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);"
+              }
+            ]
+          },
+          {
+            "oldStart": 38,
+            "oldLines": 10,
+            "newStart": 38,
+            "newLines": 10,
+            "lines": [
+              { "type": " ", "oldLine": 38, "newLine": 38, "text": "" },
+              { "type": " ", "oldLine": 39, "newLine": 39, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 40,
+                "newLine": 40,
+                "text": "     * @dev Leaves the contract without owner. It will not be possible to call"
+              },
+              {
+                "type": "-",
+                "oldLine": 41,
+                "text": "     * `onlyOwner` functions anymore. Can only be called by the current owner.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 41,
+                "text": "     * `onlyOwner` functions. Can only be called by the current owner.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 42, "newLine": 42, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 43,
+                "newLine": 43,
+                "text": "     * NOTE: Renouncing ownership will leave the contract without an owner,"
+              },
+              {
+                "type": "-",
+                "oldLine": 44,
+                "text": "     * thereby removing any functionality that is only available to the owner.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 44,
+                "text": "     * thereby disabling any functionality that is only available to the owner.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 45, "newLine": 45, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 46,
+                "newLine": 46,
+                "text": "    function renounceOwnership() public virtual onlyOwner {"
+              },
+              {
+                "type": " ",
+                "oldLine": 47,
+                "newLine": 47,
+                "text": "        _transferOwnership(address(0));"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "2295595c4243408b": {
+      "status": "differs",
+      "coveredLines": 74,
+      "match": {
+        "origin": "other",
+        "collection": "bob",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "name",
+        "auditedName": "OwnableUpgradeable",
+        "similarity": 1,
+        "reportId": "bob/veridise-kailua-2025-02",
+        "repository": "boundless-xyz/kailua",
+        "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "commit": "27dec82b67de1051df9258b36f8366ebf308e5bf",
+        "commitTimestamp": "2025-02-06T07:42:16Z",
+        "url": "https://github.com/boundless-xyz/kailua/blob/27dec82b67de1051df9258b36f8366ebf308e5bf/crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix commit",
+        "coverage": "Confirmed fix commit for V-KLA-VUL-004 (contract nits).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 1,
+        "removed": 1,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 74,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 4,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "abstract contract OwnableUpgradeable is Initializable_1, ContextUpgradeable {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "abstract contract OwnableUpgradeable is Initializable, ContextUpgradeable {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "    address private _owner;"
+              },
+              { "type": " ", "oldLine": 3, "newLine": 3, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "    event OwnershipTransferred(address indexed previousOwner, address indexed newOwner);"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
     }
   }
 }

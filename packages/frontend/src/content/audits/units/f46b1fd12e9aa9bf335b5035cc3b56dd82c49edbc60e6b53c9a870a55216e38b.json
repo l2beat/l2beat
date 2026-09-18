@@ -413,6 +413,686 @@
         ]
       },
       "warnings": []
+    },
+    "d80a56c5abf9208b": {
+      "status": "differs",
+      "coveredLines": 13,
+      "match": {
+        "origin": "other",
+        "collection": "bob",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "name",
+        "auditedName": "ContextUpgradeable",
+        "similarity": 0.781,
+        "reportId": "bob/veridise-kailua-2025-02",
+        "repository": "boundless-xyz/kailua",
+        "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "commit": "27dec82b67de1051df9258b36f8366ebf308e5bf",
+        "commitTimestamp": "2025-02-06T07:42:16Z",
+        "url": "https://github.com/boundless-xyz/kailua/blob/27dec82b67de1051df9258b36f8366ebf308e5bf/crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix commit",
+        "coverage": "Confirmed fix commit for V-KLA-VUL-004 (contract nits).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 4,
+        "removed": 2,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 5,
+        "unchanged": 13,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 4,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "abstract contract ContextUpgradeable is Initializable_1 {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "abstract contract ContextUpgradeable is Initializable {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "    function __Context_init() internal onlyInitializing {}"
+              },
+              { "type": " ", "oldLine": 3, "newLine": 3, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "    function __Context_init_unchained() internal onlyInitializing {}"
+              }
+            ]
+          },
+          {
+            "oldStart": 11,
+            "oldLines": 10,
+            "newStart": 11,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 11,
+                "newLine": 11,
+                "text": "        return msg.data;"
+              },
+              { "type": " ", "oldLine": 12, "newLine": 12, "text": "    }" },
+              { "type": " ", "oldLine": 13, "newLine": 13, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 14,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 15,
+                "text": "     * @dev This empty reserved space is put in place to allow future versions to add new",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 16,
+                "text": "     * variables without shifting down storage in the inheritance chain.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 17,
+                "text": "     * See https://docs.openzeppelin.com/contracts/4.x/upgradeable#storage_gaps",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 18,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 19,
+                "text": "    uint256[50] private __gap;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 14,
+                "text": "    function _contextSuffixLength() internal view virtual returns (uint256) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 15,
+                "text": "        return 0;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 16, "text": "    }", "ignored": false },
+              { "type": " ", "oldLine": 20, "newLine": 17, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "437dcc6cbc847e9a": {
+      "status": "differs",
+      "coveredLines": 13,
+      "match": {
+        "origin": "other",
+        "collection": "bob",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "name",
+        "auditedName": "ContextUpgradeable",
+        "similarity": 0.781,
+        "reportId": "bob/veridise-kailua-2025-02",
+        "repository": "boundless-xyz/kailua",
+        "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "commit": "27dec82b67de1051df9258b36f8366ebf308e5bf",
+        "commitTimestamp": "2025-02-06T07:42:16Z",
+        "url": "https://github.com/boundless-xyz/kailua/blob/27dec82b67de1051df9258b36f8366ebf308e5bf/crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix commit",
+        "coverage": "Confirmed fix commit for V-KLA-VUL-004 (contract nits).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 4,
+        "removed": 2,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 5,
+        "unchanged": 13,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 4,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "abstract contract ContextUpgradeable is Initializable_1 {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "abstract contract ContextUpgradeable is Initializable {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "    function __Context_init() internal onlyInitializing {}"
+              },
+              { "type": " ", "oldLine": 3, "newLine": 3, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "    function __Context_init_unchained() internal onlyInitializing {}"
+              }
+            ]
+          },
+          {
+            "oldStart": 11,
+            "oldLines": 10,
+            "newStart": 11,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 11,
+                "newLine": 11,
+                "text": "        return msg.data;"
+              },
+              { "type": " ", "oldLine": 12, "newLine": 12, "text": "    }" },
+              { "type": " ", "oldLine": 13, "newLine": 13, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 14,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 15,
+                "text": "     * @dev This empty reserved space is put in place to allow future versions to add new",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 16,
+                "text": "     * variables without shifting down storage in the inheritance chain.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 17,
+                "text": "     * See https://docs.openzeppelin.com/contracts/4.x/upgradeable#storage_gaps",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 18,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 19,
+                "text": "    uint256[50] private __gap;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 14,
+                "text": "    function _contextSuffixLength() internal view virtual returns (uint256) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 15,
+                "text": "        return 0;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 16, "text": "    }", "ignored": false },
+              { "type": " ", "oldLine": 20, "newLine": 17, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "a8bf4a329bb46967": {
+      "status": "differs",
+      "coveredLines": 13,
+      "match": {
+        "origin": "other",
+        "collection": "bob",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "name",
+        "auditedName": "ContextUpgradeable",
+        "similarity": 0.781,
+        "reportId": "bob/veridise-kailua-2025-02",
+        "repository": "boundless-xyz/kailua",
+        "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "commit": "27dec82b67de1051df9258b36f8366ebf308e5bf",
+        "commitTimestamp": "2025-02-06T07:42:16Z",
+        "url": "https://github.com/boundless-xyz/kailua/blob/27dec82b67de1051df9258b36f8366ebf308e5bf/crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix commit",
+        "coverage": "Confirmed fix commit for V-KLA-VUL-004 (contract nits).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 4,
+        "removed": 2,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 5,
+        "unchanged": 13,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 4,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "abstract contract ContextUpgradeable is Initializable_1 {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "abstract contract ContextUpgradeable is Initializable {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "    function __Context_init() internal onlyInitializing {}"
+              },
+              { "type": " ", "oldLine": 3, "newLine": 3, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "    function __Context_init_unchained() internal onlyInitializing {}"
+              }
+            ]
+          },
+          {
+            "oldStart": 11,
+            "oldLines": 10,
+            "newStart": 11,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 11,
+                "newLine": 11,
+                "text": "        return msg.data;"
+              },
+              { "type": " ", "oldLine": 12, "newLine": 12, "text": "    }" },
+              { "type": " ", "oldLine": 13, "newLine": 13, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 14,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 15,
+                "text": "     * @dev This empty reserved space is put in place to allow future versions to add new",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 16,
+                "text": "     * variables without shifting down storage in the inheritance chain.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 17,
+                "text": "     * See https://docs.openzeppelin.com/contracts/4.x/upgradeable#storage_gaps",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 18,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 19,
+                "text": "    uint256[50] private __gap;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 14,
+                "text": "    function _contextSuffixLength() internal view virtual returns (uint256) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 15,
+                "text": "        return 0;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 16, "text": "    }", "ignored": false },
+              { "type": " ", "oldLine": 20, "newLine": 17, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "2295595c4243408b": {
+      "status": "differs",
+      "coveredLines": 13,
+      "match": {
+        "origin": "other",
+        "collection": "bob",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "name",
+        "auditedName": "ContextUpgradeable",
+        "similarity": 0.781,
+        "reportId": "bob/veridise-kailua-2025-02",
+        "repository": "boundless-xyz/kailua",
+        "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "commit": "27dec82b67de1051df9258b36f8366ebf308e5bf",
+        "commitTimestamp": "2025-02-06T07:42:16Z",
+        "url": "https://github.com/boundless-xyz/kailua/blob/27dec82b67de1051df9258b36f8366ebf308e5bf/crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix commit",
+        "coverage": "Confirmed fix commit for V-KLA-VUL-004 (contract nits).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 4,
+        "removed": 2,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 5,
+        "unchanged": 13,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 4,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "abstract contract ContextUpgradeable is Initializable_1 {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "abstract contract ContextUpgradeable is Initializable {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "    function __Context_init() internal onlyInitializing {}"
+              },
+              { "type": " ", "oldLine": 3, "newLine": 3, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "    function __Context_init_unchained() internal onlyInitializing {}"
+              }
+            ]
+          },
+          {
+            "oldStart": 11,
+            "oldLines": 10,
+            "newStart": 11,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 11,
+                "newLine": 11,
+                "text": "        return msg.data;"
+              },
+              { "type": " ", "oldLine": 12, "newLine": 12, "text": "    }" },
+              { "type": " ", "oldLine": 13, "newLine": 13, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 14,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 15,
+                "text": "     * @dev This empty reserved space is put in place to allow future versions to add new",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 16,
+                "text": "     * variables without shifting down storage in the inheritance chain.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 17,
+                "text": "     * See https://docs.openzeppelin.com/contracts/4.x/upgradeable#storage_gaps",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 18,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 19,
+                "text": "    uint256[50] private __gap;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 14,
+                "text": "    function _contextSuffixLength() internal view virtual returns (uint256) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 15,
+                "text": "        return 0;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 16, "text": "    }", "ignored": false },
+              { "type": " ", "oldLine": 20, "newLine": 17, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "5d5f82d91c09d4ec": {
+      "status": "differs",
+      "coveredLines": 13,
+      "match": {
+        "origin": "other",
+        "collection": "bob",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "name",
+        "auditedName": "ContextUpgradeable",
+        "similarity": 0.781,
+        "reportId": "bob/veridise-kailua-2025-02",
+        "repository": "boundless-xyz/kailua",
+        "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "commit": "27dec82b67de1051df9258b36f8366ebf308e5bf",
+        "commitTimestamp": "2025-02-06T07:42:16Z",
+        "url": "https://github.com/boundless-xyz/kailua/blob/27dec82b67de1051df9258b36f8366ebf308e5bf/crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix commit",
+        "coverage": "Confirmed fix commit for V-KLA-VUL-004 (contract nits).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 4,
+        "removed": 2,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 5,
+        "unchanged": 13,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 4,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "abstract contract ContextUpgradeable is Initializable_1 {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "abstract contract ContextUpgradeable is Initializable {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "    function __Context_init() internal onlyInitializing {}"
+              },
+              { "type": " ", "oldLine": 3, "newLine": 3, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "    function __Context_init_unchained() internal onlyInitializing {}"
+              }
+            ]
+          },
+          {
+            "oldStart": 11,
+            "oldLines": 10,
+            "newStart": 11,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 11,
+                "newLine": 11,
+                "text": "        return msg.data;"
+              },
+              { "type": " ", "oldLine": 12, "newLine": 12, "text": "    }" },
+              { "type": " ", "oldLine": 13, "newLine": 13, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 14,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 15,
+                "text": "     * @dev This empty reserved space is put in place to allow future versions to add new",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 16,
+                "text": "     * variables without shifting down storage in the inheritance chain.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 17,
+                "text": "     * See https://docs.openzeppelin.com/contracts/4.x/upgradeable#storage_gaps",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 18,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 19,
+                "text": "    uint256[50] private __gap;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 14,
+                "text": "    function _contextSuffixLength() internal view virtual returns (uint256) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 15,
+                "text": "        return 0;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 16, "text": "    }", "ignored": false },
+              { "type": " ", "oldLine": 20, "newLine": 17, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
     }
   }
 }

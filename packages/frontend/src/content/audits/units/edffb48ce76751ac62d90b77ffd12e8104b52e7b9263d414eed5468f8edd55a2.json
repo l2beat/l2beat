@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "edffb48ce76751ac62d90b77ffd12e8104b52e7b9263d414eed5468f8edd55a2",
+  "name": "pebble_test.go",
+  "kind": "program",
+  "lines": 28,
+  "source": "package kvstore\n\nimport (\n\t\"path/filepath\"\n\t\"testing\"\n\n\t\"github.com/ethereum/go-ethereum/crypto\"\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc TestPebbleKV(t *testing.T) {\n\ttmp := t.TempDir() // automatically removed by testing cleanup\n\tkv := newPebbleKV(tmp)\n\tt.Cleanup(func() { // Can't use defer because kvTest runs tests in parallel.\n\t\trequire.NoError(t, kv.Close())\n\t})\n\tkvTest(t, kv)\n}\n\nfunc TestPebbleKV_CreateMissingDirectory(t *testing.T) {\n\ttmp := t.TempDir()\n\tdir := filepath.Join(tmp, \"data\")\n\tkv := newPebbleKV(dir)\n\tdefer kv.Close()\n\tval := []byte{1, 2, 3, 4}\n\tkey := crypto.Keccak256Hash(val)\n\trequire.NoError(t, kv.Put(key, val))\n}",
+  "resolutions": {
+    "437dcc6cbc847e9a": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "1f5c32d18cf7148d": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,1480 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "638b9c8091112b3613175e0657dba0df425781d1e9e6b015abc50be03c2a2df0",
+  "name": "consolidate.go",
+  "kind": "program",
+  "lines": 421,
+  "source": "package interop\n\nimport (\n\t\"errors\"\n\t\"fmt\"\n\n\t\"github.com/ethereum-optimism/optimism/op-program/client/boot\"\n\t\"github.com/ethereum-optimism/optimism/op-program/client/interop/types\"\n\t\"github.com/ethereum-optimism/optimism/op-program/client/l1\"\n\t\"github.com/ethereum-optimism/optimism/op-program/client/l2\"\n\t\"github.com/ethereum-optimism/optimism/op-service/eth\"\n\t\"github.com/ethereum-optimism/optimism/op-supervisor/supervisor/backend/cross\"\n\t\"github.com/ethereum-optimism/optimism/op-supervisor/supervisor/backend/depset\"\n\t\"github.com/ethereum-optimism/optimism/op-supervisor/supervisor/backend/processors\"\n\tsupervisortypes \"github.com/ethereum-optimism/optimism/op-supervisor/supervisor/types\"\n\t\"github.com/ethereum/go-ethereum/common\"\n\t\"github.com/ethereum/go-ethereum/core/rawdb\"\n\tethtypes \"github.com/ethereum/go-ethereum/core/types\"\n\t\"github.com/ethereum/go-ethereum/crypto\"\n\t\"github.com/ethereum/go-ethereum/log\"\n)\n\nvar ErrInvalidBlockReplacement = errors.New(\"invalid block replacement error\")\n\n// ReceiptsToExecutingMessages returns the executing messages in the receipts indexed by their position in the log.\nfunc ReceiptsToExecutingMessages(receipts ethtypes.Receipts) (map[uint32]*supervisortypes.ExecutingMessage, uint32, error) {\n\texecMsgs := make(map[uint32]*supervisortypes.ExecutingMessage)\n\tvar curr uint32\n\tfor _, rcpt := range receipts {\n\t\tfor _, l := range rcpt.Logs {\n\t\t\texecMsg, err := processors.DecodeExecutingMessageLog(l)\n\t\t\tif err != nil {\n\t\t\t\treturn nil, 0, err\n\t\t\t}\n\t\t\tif execMsg != nil {\n\t\t\t\texecMsgs[curr] = execMsg\n\t\t\t}\n\t\t\tcurr++\n\t\t}\n\t}\n\treturn execMsgs, curr, nil\n}\n\ntype execMessageCacheEntry struct {\n\texecMsgs map[uint32]*supervisortypes.ExecutingMessage\n\tlogCount uint32\n}\n\ntype consolidateState struct {\n\t*types.TransitionState\n\treplacedChains map[eth.ChainID]bool\n\n\t// execMessageCache is used to memoize iteration of logs in blocks to speed up executing message retrieval\n\texecMessageCache map[common.Hash]execMessageCacheEntry\n}\n\nfunc newConsolidateState(transitionState *types.TransitionState) *consolidateState {\n\ts := &consolidateState{\n\t\tTransitionState: &types.TransitionState{\n\t\t\tPendingProgress: make([]types.OptimisticBlock, len(transitionState.PendingProgress)),\n\t\t\tSuperRoot:       transitionState.SuperRoot,\n\t\t\tStep:            transitionState.Step,\n\t\t},\n\t\treplacedChains:   make(map[eth.ChainID]bool),\n\t\texecMessageCache: make(map[common.Hash]execMessageCacheEntry),\n\t}\n\t// We will be updating the transition state as blocks are replaced, so make a copy\n\tcopy(s.PendingProgress, transitionState.PendingProgress)\n\treturn s\n}\n\nfunc (s *consolidateState) isReplaced(chainID eth.ChainID) bool {\n\treturn s.replacedChains[chainID]\n}\n\nfunc (s *consolidateState) setReplaced(transitionStateIndex int, chainID eth.ChainID, outputRoot eth.Bytes32, replacementBlockHash common.Hash) {\n\ts.PendingProgress[transitionStateIndex].OutputRoot = outputRoot\n\ts.PendingProgress[transitionStateIndex].BlockHash = replacementBlockHash\n\ts.replacedChains[chainID] = true\n}\n\nfunc (s *consolidateState) getCachedExecMsgs(blockHash common.Hash) (map[uint32]*supervisortypes.ExecutingMessage, uint32, bool) {\n\tentry, ok := s.execMessageCache[blockHash]\n\tif !ok {\n\t\treturn nil, 0, false\n\t}\n\treturn entry.execMsgs, entry.logCount, true\n}\n\nfunc (s *consolidateState) setCachedExecMsgs(blockHash common.Hash, execMsgs map[uint32]*supervisortypes.ExecutingMessage, logCount uint32) {\n\ts.execMessageCache[blockHash] = execMessageCacheEntry{\n\t\texecMsgs: execMsgs,\n\t\tlogCount: logCount,\n\t}\n}\n\nfunc RunConsolidation(\n\tlogger log.Logger,\n\tbootInfo *boot.BootInfoInterop,\n\tl1PreimageOracle l1.Oracle,\n\tl2PreimageOracle l2.Oracle,\n\ttransitionState *types.TransitionState,\n\tsuperRoot *eth.SuperV1,\n\ttasks taskExecutor,\n) (eth.Bytes32, error) {\n\tconsolidateState := newConsolidateState(transitionState)\n\t// Use a reference to the transition state so the consolidate oracle has a recent view.\n\t// The TransitionStateByRoot method isn't expected to be used during consolidation,\n\t// but we pass the state for safety in case this changes in the future.\n\tconsolidateOracle := NewConsolidateOracle(l2PreimageOracle, consolidateState.TransitionState)\n\n\t// Keep consolidating until there are no more invalid blocks to replace\nloop:\n\tfor {\n\t\terr := singleRoundConsolidation(logger, bootInfo, l1PreimageOracle, consolidateOracle, consolidateState, superRoot, tasks)\n\t\tswitch {\n\t\tcase err == nil:\n\t\t\tbreak loop\n\t\tcase errors.Is(err, ErrInvalidBlockReplacement):\n\t\t\tcontinue\n\t\tdefault:\n\t\t\treturn eth.Bytes32{}, err\n\t\t}\n\t}\n\n\tvar consolidatedChains []eth.ChainIDAndOutput\n\tfor i, chain := range superRoot.Chains {\n\t\tconsolidatedChains = append(consolidatedChains, eth.ChainIDAndOutput{\n\t\t\tChainID: chain.ChainID,\n\t\t\tOutput:  consolidateState.PendingProgress[i].OutputRoot,\n\t\t})\n\t}\n\tconsolidatedSuper := &eth.SuperV1{\n\t\tTimestamp: superRoot.Timestamp + 1,\n\t\tChains:    consolidatedChains,\n\t}\n\treturn eth.SuperRoot(consolidatedSuper), nil\n}\n\nfunc singleRoundConsolidation(\n\tlogger log.Logger,\n\tbootInfo *boot.BootInfoInterop,\n\tl1PreimageOracle l1.Oracle,\n\tl2PreimageOracle *ConsolidateOracle,\n\tconsolidateState *consolidateState,\n\tsuperRoot *eth.SuperV1,\n\ttasks taskExecutor,\n) error {\n\t// The depset is the same for all chains. So it suffices to use any chain ID\n\tdepSet, err := bootInfo.Configs.DependencySet(superRoot.Chains[0].ChainID)\n\tif err != nil {\n\t\treturn fmt.Errorf(\"failed to get dependency set: %w\", err)\n\t}\n\tdeps, err := newConsolidateCheckDeps(depSet, bootInfo.Configs, consolidateState.TransitionState, superRoot.Chains, l2PreimageOracle, consolidateState)\n\tif err != nil {\n\t\treturn fmt.Errorf(\"failed to create consolidate check deps: %w\", err)\n\t}\n\tfullConfig, err := getFullConfig(bootInfo.Configs, l1PreimageOracle, depSet)\n\tif err != nil {\n\t\treturn fmt.Errorf(\"failed to get full config set: %w\", err)\n\t}\n\tlinker := depset.LinkerFromConfig(fullConfig)\n\tfor i, chain := range superRoot.Chains {\n\t\t// Do not check chains that have been replaced with a deposits-only block.\n\t\t// They are already cross-safe because deposits-only blocks cannot contain executing messages.\n\t\tif consolidateState.isReplaced(chain.ChainID) {\n\t\t\tcontinue\n\t\t}\n\n\t\tprogress := consolidateState.PendingProgress[i]\n\t\toptimisticBlock, _ := l2PreimageOracle.ReceiptsByBlockHash(progress.BlockHash, chain.ChainID)\n\n\t\tcandidate := supervisortypes.BlockSeal{\n\t\t\tHash:      progress.BlockHash,\n\t\t\tNumber:    optimisticBlock.NumberU64(),\n\t\t\tTimestamp: optimisticBlock.Time(),\n\t\t}\n\t\tif err := checkHazards(logger, deps, linker, candidate, chain.ChainID); err != nil {\n\t\t\tif !isInvalidMessageError(err) {\n\t\t\t\treturn err\n\t\t\t}\n\t\t\t// Invalid executing message found. Replace with a deposit only block\n\t\t\treplacementBlockHash, outputRoot, err := buildDepositOnlyBlock(\n\t\t\t\tlogger,\n\t\t\t\tbootInfo,\n\t\t\t\tl1PreimageOracle,\n\t\t\t\tl2PreimageOracle,\n\t\t\t\tchain,\n\t\t\t\ttasks,\n\t\t\t\toptimisticBlock,\n\t\t\t\t// Update the preimage oracle database with the replaced block data\n\t\t\t\tl2PreimageOracle.KeyValueStore(),\n\t\t\t)\n\t\t\tif err != nil {\n\t\t\t\treturn err\n\t\t\t}\n\t\t\tlogger.Info(\n\t\t\t\t\"Replaced block\",\n\t\t\t\t\"chain\", chain.ChainID,\n\t\t\t\t\"replacedBlock\", eth.ToBlockID(optimisticBlock),\n\t\t\t\t\"replacementBlockHash\", replacementBlockHash,\n\t\t\t\t\"outputRoot\", outputRoot,\n\t\t\t\t\"replacedOutputRoot\", chain.Output,\n\t\t\t)\n\t\t\tsuperRoot.Chains[i].Output = outputRoot\n\t\t\tconsolidateState.setReplaced(i, chain.ChainID, outputRoot, replacementBlockHash)\n\t\t\t// Indicate that there was an invalid block so we have to re-check all chains.\n\t\t\t// The re-check will pick up invalid messages in any chains we haven't gotten to yet so don't waste time now.\n\t\t\treturn ErrInvalidBlockReplacement\n\t\t}\n\t}\n\treturn nil\n}\n\nfunc isInvalidMessageError(err error) bool {\n\treturn errors.Is(err, supervisortypes.ErrConflict) || errors.Is(err, supervisortypes.ErrUnknownChain)\n}\n\ntype ConsolidateCheckDeps interface {\n\tcross.UnsafeFrontierCheckDeps\n\tcross.CycleCheckDeps\n\tcross.UnsafeStartDeps\n}\n\nfunc checkHazards(logger log.Logger, deps ConsolidateCheckDeps, linker depset.LinkChecker, candidate supervisortypes.BlockSeal, chainID eth.ChainID) error {\n\thazards, err := cross.CrossUnsafeHazards(deps, linker, logger, chainID, candidate)\n\tif err != nil {\n\t\treturn err\n\t}\n\tif err := cross.HazardCycleChecks(deps, candidate.Timestamp, hazards); err != nil {\n\t\treturn err\n\t}\n\treturn nil\n}\n\ntype consolidateCheckDeps struct {\n\toracle      l2.Oracle\n\tdepset      depset.DependencySet\n\tcanonBlocks map[eth.ChainID]*l2.FastCanonicalBlockHeaderOracle\n\n\tconsolidateState *consolidateState\n}\n\nfunc newConsolidateCheckDeps(\n\tdepset depset.DependencySet,\n\tconfigSource boot.ConfigSource,\n\ttransitionState *types.TransitionState,\n\tchains []eth.ChainIDAndOutput,\n\toracle l2.Oracle,\n\tconsolidateState *consolidateState,\n) (*consolidateCheckDeps, error) {\n\t// TODO(#14415): handle case where dep set changes in a given timestamp\n\tcanonBlocks := make(map[eth.ChainID]*l2.FastCanonicalBlockHeaderOracle)\n\tfor i, chain := range chains {\n\t\tprogress := transitionState.PendingProgress[i]\n\t\t// This is the optimistic head. It's OK if it's replaced by a deposits-only block.\n\t\t// Because by then the replacement block won't be used for hazard checks.\n\t\thead, err := fetchOptimisticBlock(oracle, progress.BlockHash, chain)\n\t\tif err != nil {\n\t\t\treturn nil, fmt.Errorf(\"failed to fetch optimistic block for chain %v: %w\", chain.ChainID, err)\n\t\t}\n\t\tblockByHash := func(hash common.Hash) *ethtypes.Block {\n\t\t\treturn oracle.BlockByHash(hash, chain.ChainID)\n\t\t}\n\t\tl2ChainConfig, err := configSource.ChainConfig(chain.ChainID)\n\t\tif err != nil {\n\t\t\treturn nil, fmt.Errorf(\"no chain config available for chain ID %v: %w\", chain.ChainID, err)\n\t\t}\n\t\tfallback := l2.NewCanonicalBlockHeaderOracle(head.Header(), blockByHash)\n\t\tcanonBlocks[chain.ChainID] = l2.NewFastCanonicalBlockHeaderOracle(head.Header(), blockByHash, l2ChainConfig, oracle, rawdb.NewMemoryDatabase(), fallback)\n\t}\n\n\treturn &consolidateCheckDeps{\n\t\toracle:           oracle,\n\t\tdepset:           depset,\n\t\tcanonBlocks:      canonBlocks,\n\t\tconsolidateState: consolidateState,\n\t}, nil\n}\n\nfunc fetchOptimisticBlock(oracle l2.Oracle, blockHash common.Hash, chain eth.ChainIDAndOutput) (*ethtypes.Block, error) {\n\tagreedOutput := oracle.OutputByRoot(common.Hash(chain.Output), chain.ChainID)\n\tagreedOutputV0, ok := agreedOutput.(*eth.OutputV0)\n\tif !ok {\n\t\treturn nil, fmt.Errorf(\"%w: version: %d\", l2.ErrUnsupportedL2Output, agreedOutput.Version())\n\t}\n\treturn oracle.BlockDataByHash(agreedOutputV0.BlockHash, blockHash, chain.ChainID), nil\n}\n\nfunc (d *consolidateCheckDeps) Contains(chain eth.ChainID, query supervisortypes.ContainsQuery) (includedIn supervisortypes.BlockSeal, err error) {\n\t// We can assume the oracle has the block the executing message is in\n\tblock, err := d.CanonBlockByNumber(d.oracle, query.BlockNum, chain)\n\tif err != nil {\n\t\treturn supervisortypes.BlockSeal{}, err\n\t}\n\tif block.Time() != query.Timestamp {\n\t\treturn supervisortypes.BlockSeal{}, fmt.Errorf(\"block timestamp mismatch: %d != %d: %w\", block.Time(), query.Timestamp, supervisortypes.ErrConflict)\n\t}\n\t_, receipts := d.oracle.ReceiptsByBlockHash(block.Hash(), chain)\n\tvar current uint32\n\tfor _, receipt := range receipts {\n\t\tfor i, log := range receipt.Logs {\n\t\t\tif current+uint32(i) == query.LogIdx {\n\t\t\t\tchecksum := supervisortypes.ChecksumArgs{\n\t\t\t\t\tBlockNumber: query.BlockNum,\n\t\t\t\t\tLogIndex:    query.LogIdx,\n\t\t\t\t\tTimestamp:   query.Timestamp,\n\t\t\t\t\tChainID:     chain,\n\t\t\t\t\tLogHash:     logToLogHash(log),\n\t\t\t\t}.Checksum()\n\t\t\t\tif checksum != query.Checksum {\n\t\t\t\t\treturn supervisortypes.BlockSeal{}, fmt.Errorf(\"checksum mismatch: %s != %s: %w\", checksum, query.Checksum, supervisortypes.ErrConflict)\n\t\t\t\t} else {\n\t\t\t\t\treturn supervisortypes.BlockSeal{\n\t\t\t\t\t\tHash:      block.Hash(),\n\t\t\t\t\t\tNumber:    block.NumberU64(),\n\t\t\t\t\t\tTimestamp: block.Time(),\n\t\t\t\t\t}, nil\n\t\t\t\t}\n\t\t\t}\n\t\t}\n\t\tcurrent += uint32(len(receipt.Logs))\n\t}\n\treturn supervisortypes.BlockSeal{}, fmt.Errorf(\"log not found: %w\", supervisortypes.ErrConflict)\n}\n\nfunc logToLogHash(l *ethtypes.Log) common.Hash {\n\tpayloadHash := crypto.Keccak256Hash(supervisortypes.LogToMessagePayload(l))\n\treturn supervisortypes.PayloadHashToLogHash(payloadHash, l.Address)\n}\n\nfunc (d *consolidateCheckDeps) IsCrossUnsafe(chainID eth.ChainID, block eth.BlockID) error {\n\t// Assumed to be cross-unsafe. And hazard checks will catch any future blocks prior to calling this\n\treturn nil\n}\n\nfunc (d *consolidateCheckDeps) IsLocalUnsafe(chainID eth.ChainID, block eth.BlockID) error {\n\t// Always assumed to be local-unsafe\n\treturn nil\n}\n\nfunc (d *consolidateCheckDeps) FindBlockID(chainID eth.ChainID, num uint64) (blockID eth.BlockID, err error) {\n\tblock, err := d.CanonBlockByNumber(d.oracle, num, chainID)\n\tif err != nil {\n\t\treturn eth.BlockID{}, err\n\t}\n\treturn eth.BlockID{\n\t\tHash:   block.Hash(),\n\t\tNumber: block.NumberU64(),\n\t}, nil\n}\n\nfunc (d *consolidateCheckDeps) OpenBlock(\n\tchainID eth.ChainID,\n\tblockNum uint64,\n) (ref eth.BlockRef, logCount uint32, execMsgs map[uint32]*supervisortypes.ExecutingMessage, err error) {\n\tblock, err := d.CanonBlockByNumber(d.oracle, blockNum, chainID)\n\tif err != nil {\n\t\treturn eth.BlockRef{}, 0, nil, err\n\t}\n\tref = eth.BlockRef{\n\t\tHash:   block.Hash(),\n\t\tNumber: block.NumberU64(),\n\t}\n\tif execMsgs, logCount, ok := d.consolidateState.getCachedExecMsgs(block.Hash()); ok {\n\t\treturn ref, logCount, execMsgs, nil\n\t}\n\n\t_, receipts := d.oracle.ReceiptsByBlockHash(block.Hash(), chainID)\n\texecMsgs, logCount, err = ReceiptsToExecutingMessages(receipts)\n\tif err != nil {\n\t\treturn eth.BlockRef{}, 0, nil, err\n\t}\n\td.consolidateState.setCachedExecMsgs(block.Hash(), execMsgs, logCount)\n\treturn ref, logCount, execMsgs, nil\n}\n\nfunc (d *consolidateCheckDeps) CanonBlockByNumber(oracle l2.Oracle, blockNum uint64, chainID eth.ChainID) (*ethtypes.Block, error) {\n\thead := d.canonBlocks[chainID].GetHeaderByNumber(blockNum)\n\tif head == nil {\n\t\treturn nil, fmt.Errorf(\"head not found for chain %v: %w\", chainID, supervisortypes.ErrConflict)\n\t}\n\treturn d.oracle.BlockByHash(head.Hash(), chainID), nil\n}\n\nvar _ ConsolidateCheckDeps = (*consolidateCheckDeps)(nil)\n\nfunc buildDepositOnlyBlock(\n\tlogger log.Logger,\n\tbootInfo *boot.BootInfoInterop,\n\tl1PreimageOracle l1.Oracle,\n\tl2PreimageOracle l2.Oracle,\n\tchainAgreedPrestate eth.ChainIDAndOutput,\n\ttasks taskExecutor,\n\toptimisticBlock *ethtypes.Block,\n\tdb l2.KeyValueStore,\n) (common.Hash, eth.Bytes32, error) {\n\trollupCfg, err := bootInfo.Configs.RollupConfig(chainAgreedPrestate.ChainID)\n\tif err != nil {\n\t\treturn common.Hash{}, eth.Bytes32{}, fmt.Errorf(\"no rollup config available for chain ID %v: %w\", chainAgreedPrestate.ChainID, err)\n\t}\n\tl2ChainConfig, err := bootInfo.Configs.ChainConfig(chainAgreedPrestate.ChainID)\n\tif err != nil {\n\t\treturn common.Hash{}, eth.Bytes32{}, fmt.Errorf(\"no chain config available for chain ID %v: %w\", chainAgreedPrestate.ChainID, err)\n\t}\n\tblockHash, outputRoot, err := tasks.BuildDepositOnlyBlock(\n\t\tlogger,\n\t\trollupCfg,\n\t\tl2ChainConfig,\n\t\tbootInfo.L1Head,\n\t\tchainAgreedPrestate.Output,\n\t\tl1PreimageOracle,\n\t\tl2PreimageOracle,\n\t\toptimisticBlock,\n\t\tdb,\n\t)\n\tif err != nil {\n\t\treturn common.Hash{}, eth.Bytes32{}, err\n\t}\n\treturn blockHash, outputRoot, nil\n}",
+  "resolutions": {
+    "437dcc6cbc847e9a": {
+      "status": "differs",
+      "coveredLines": 395,
+      "match": {
+        "origin": "stack",
+        "collection": "optimism",
+        "relation": {
+          "type": "template",
+          "template": "gnosisSafeModules/LivenessGuard"
+        },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "consolidate.go",
+        "similarity": 0.936,
+        "reportId": "optimism/cantina-interop-op-program-2025-03",
+        "repository": "ethereum-optimism/optimism",
+        "path": "op-program/client/interop/consolidate.go",
+        "commit": "6707100b11d57a460408e3cef675fc7c5fc5008e",
+        "commitTimestamp": "2025-05-06T02:41:09Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/6707100b11d57a460408e3cef675fc7c5fc5008e/op-program/client/interop/consolidate.go",
+        "auditStatus": "partially_audited_with_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Fix review of PR 15709 (audit optimisations, fixes 3.5.10 and 3.5.12; 3.2.2 remains acknowledged); only the fix changes were verified.",
+        "majorFindings": 1,
+        "findingIds": ["3.2.2"],
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 5
+      },
+      "diff": {
+        "added": 26,
+        "removed": 20,
+        "ignoredAdded": 2,
+        "ignoredRemoved": 7,
+        "unchanged": 395,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 23,
+            "oldLines": 12,
+            "newStart": 23,
+            "newLines": 12,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 23,
+                "newLine": 23,
+                "text": "var ErrInvalidBlockReplacement = errors.New(\"invalid block replacement error\")"
+              },
+              { "type": " ", "oldLine": 24, "newLine": 24, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 25,
+                "newLine": 25,
+                "text": "// ReceiptsToExecutingMessages returns the executing messages in the receipts indexed by their position in the log."
+              },
+              {
+                "type": "-",
+                "oldLine": 26,
+                "text": "func ReceiptsToExecutingMessages(depset depset.ChainIndexFromID, receipts ethtypes.Receipts) (map[uint32]*supervisortypes.ExecutingMessage, uint32, error) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 26,
+                "text": "func ReceiptsToExecutingMessages(receipts ethtypes.Receipts) (map[uint32]*supervisortypes.ExecutingMessage, uint32, error) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 27,
+                "newLine": 27,
+                "text": "\texecMsgs := make(map[uint32]*supervisortypes.ExecutingMessage)"
+              },
+              {
+                "type": " ",
+                "oldLine": 28,
+                "newLine": 28,
+                "text": "\tvar curr uint32"
+              },
+              {
+                "type": " ",
+                "oldLine": 29,
+                "newLine": 29,
+                "text": "\tfor _, rcpt := range receipts {"
+              },
+              {
+                "type": " ",
+                "oldLine": 30,
+                "newLine": 30,
+                "text": "\t\tfor _, l := range rcpt.Logs {"
+              },
+              {
+                "type": "-",
+                "oldLine": 31,
+                "text": "\t\t\texecMsg, err := processors.DecodeExecutingMessageLog(l, depset)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 31,
+                "text": "\t\t\texecMsg, err := processors.DecodeExecutingMessageLog(l)",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 32,
+                "newLine": 32,
+                "text": "\t\t\tif err != nil {"
+              },
+              {
+                "type": " ",
+                "oldLine": 33,
+                "newLine": 33,
+                "text": "\t\t\t\treturn nil, 0, err"
+              },
+              { "type": " ", "oldLine": 34, "newLine": 34, "text": "\t\t\t}" }
+            ]
+          },
+          {
+            "oldStart": 147,
+            "oldLines": 15,
+            "newStart": 147,
+            "newLines": 19,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 147,
+                "newLine": 147,
+                "text": "\ttasks taskExecutor,"
+              },
+              {
+                "type": " ",
+                "oldLine": 148,
+                "newLine": 148,
+                "text": ") error {"
+              },
+              {
+                "type": " ",
+                "oldLine": 149,
+                "newLine": 149,
+                "text": "\t// The depset is the same for all chains. So it suffices to use any chain ID"
+              },
+              {
+                "type": "-",
+                "oldLine": 150,
+                "text": "\tdepset, err := bootInfo.Configs.DependencySet(superRoot.Chains[0].ChainID)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 150,
+                "text": "\tdepSet, err := bootInfo.Configs.DependencySet(superRoot.Chains[0].ChainID)",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 151,
+                "newLine": 151,
+                "text": "\tif err != nil {"
+              },
+              {
+                "type": " ",
+                "oldLine": 152,
+                "newLine": 152,
+                "text": "\t\treturn fmt.Errorf(\"failed to get dependency set: %w\", err)"
+              },
+              { "type": " ", "oldLine": 153, "newLine": 153, "text": "\t}" },
+              {
+                "type": "-",
+                "oldLine": 154,
+                "text": "\tdeps, err := newConsolidateCheckDeps(depset, bootInfo.Configs, consolidateState.TransitionState, superRoot.Chains, l2PreimageOracle, consolidateState)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 154,
+                "text": "\tdeps, err := newConsolidateCheckDeps(depSet, bootInfo.Configs, consolidateState.TransitionState, superRoot.Chains, l2PreimageOracle, consolidateState)",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 155,
+                "newLine": 155,
+                "text": "\tif err != nil {"
+              },
+              {
+                "type": " ",
+                "oldLine": 156,
+                "newLine": 156,
+                "text": "\t\treturn fmt.Errorf(\"failed to create consolidate check deps: %w\", err)"
+              },
+              { "type": " ", "oldLine": 157, "newLine": 157, "text": "\t}" },
+              { "type": "-", "oldLine": 158, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 158,
+                "text": "\tfullConfig, err := getFullConfig(bootInfo.Configs, l1PreimageOracle, depSet)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 159,
+                "text": "\tif err != nil {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 160,
+                "text": "\t\treturn fmt.Errorf(\"failed to get full config set: %w\", err)",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 161, "text": "\t}", "ignored": false },
+              {
+                "type": "+",
+                "newLine": 162,
+                "text": "\tlinker := depset.LinkerFromConfig(fullConfig)",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 159,
+                "newLine": 163,
+                "text": "\tfor i, chain := range superRoot.Chains {"
+              },
+              {
+                "type": " ",
+                "oldLine": 160,
+                "newLine": 164,
+                "text": "\t\t// Do not check chains that have been replaced with a deposits-only block."
+              },
+              {
+                "type": " ",
+                "oldLine": 161,
+                "newLine": 165,
+                "text": "\t\t// They are already cross-safe because deposits-only blocks cannot contain executing messages."
+              }
+            ]
+          },
+          {
+            "oldStart": 163,
+            "oldLines": 18,
+            "newStart": 167,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 163,
+                "newLine": 167,
+                "text": "\t\t\tcontinue"
+              },
+              { "type": " ", "oldLine": 164, "newLine": 168, "text": "\t\t}" },
+              { "type": " ", "oldLine": 165, "newLine": 169, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 166,
+                "text": "\t\tagreedOutput := l2PreimageOracle.OutputByRoot(common.Hash(chain.Output), chain.ChainID)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 167,
+                "text": "\t\tagreedOutputV0, ok := agreedOutput.(*eth.OutputV0)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 168,
+                "text": "\t\tif !ok {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 169,
+                "text": "\t\t\treturn fmt.Errorf(\"%w: version: %d\", l2.ErrUnsupportedL2Output, agreedOutput.Version())",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 170,
+                "text": "\t\t}",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 171,
+                "text": "\t\tagreedBlockHash := common.Hash(agreedOutputV0.BlockHash)",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 172, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 173,
+                "newLine": 170,
+                "text": "\t\tprogress := consolidateState.PendingProgress[i]"
+              },
+              {
+                "type": "-",
+                "oldLine": 174,
+                "text": "\t\t// It's possible that the optimistic block is not canonical.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 175,
+                "text": "\t\t// So we use the blockDataByHash hint to trigger a block rebuild to ensure that the block data, including receipts, are available.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 176,
+                "text": "\t\t_ = l2PreimageOracle.BlockDataByHash(agreedBlockHash, progress.BlockHash, chain.ChainID)",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 177, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 178,
+                "newLine": 171,
+                "text": "\t\toptimisticBlock, _ := l2PreimageOracle.ReceiptsByBlockHash(progress.BlockHash, chain.ChainID)"
+              },
+              { "type": " ", "oldLine": 179, "newLine": 172, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 180,
+                "newLine": 173,
+                "text": "\t\tcandidate := supervisortypes.BlockSeal{"
+              }
+            ]
+          },
+          {
+            "oldStart": 182,
+            "oldLines": 7,
+            "newStart": 175,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 182,
+                "newLine": 175,
+                "text": "\t\t\tNumber:    optimisticBlock.NumberU64(),"
+              },
+              {
+                "type": " ",
+                "oldLine": 183,
+                "newLine": 176,
+                "text": "\t\t\tTimestamp: optimisticBlock.Time(),"
+              },
+              { "type": " ", "oldLine": 184, "newLine": 177, "text": "\t\t}" },
+              {
+                "type": "-",
+                "oldLine": 185,
+                "text": "\t\tif err := checkHazards(logger, deps, candidate, chain.ChainID); err != nil {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 178,
+                "text": "\t\tif err := checkHazards(logger, deps, linker, candidate, chain.ChainID); err != nil {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 186,
+                "newLine": 179,
+                "text": "\t\t\tif !isInvalidMessageError(err) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 187,
+                "newLine": 180,
+                "text": "\t\t\t\treturn err"
+              },
+              { "type": " ", "oldLine": 188, "newLine": 181, "text": "\t\t\t}" }
+            ]
+          },
+          {
+            "oldStart": 212,
+            "oldLines": 7,
+            "newStart": 205,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 212,
+                "newLine": 205,
+                "text": "\t\t\tsuperRoot.Chains[i].Output = outputRoot"
+              },
+              {
+                "type": " ",
+                "oldLine": 213,
+                "newLine": 206,
+                "text": "\t\t\tconsolidateState.setReplaced(i, chain.ChainID, outputRoot, replacementBlockHash)"
+              },
+              {
+                "type": " ",
+                "oldLine": 214,
+                "newLine": 207,
+                "text": "\t\t\t// Indicate that there was an invalid block so we have to re-check all chains."
+              },
+              {
+                "type": "-",
+                "oldLine": 215,
+                "text": "\t\t\t// The re-check wil pick up invalid messages in any chains we haven't gotten to yet so don't waste time now.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 208,
+                "text": "\t\t\t// The re-check will pick up invalid messages in any chains we haven't gotten to yet so don't waste time now.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 216,
+                "newLine": 209,
+                "text": "\t\t\treturn ErrInvalidBlockReplacement"
+              },
+              { "type": " ", "oldLine": 217, "newLine": 210, "text": "\t\t}" },
+              { "type": " ", "oldLine": 218, "newLine": 211, "text": "\t}" }
+            ]
+          },
+          {
+            "oldStart": 229,
+            "oldLines": 12,
+            "newStart": 222,
+            "newLines": 12,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 229,
+                "newLine": 222,
+                "text": "\tcross.UnsafeStartDeps"
+              },
+              { "type": " ", "oldLine": 230, "newLine": 223, "text": "}" },
+              { "type": " ", "oldLine": 231, "newLine": 224, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 232,
+                "text": "func checkHazards(logger log.Logger, deps ConsolidateCheckDeps, candidate supervisortypes.BlockSeal, chainID eth.ChainID) error {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 233,
+                "text": "\thazards, err := cross.CrossUnsafeHazards(deps, logger, chainID, candidate)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 225,
+                "text": "func checkHazards(logger log.Logger, deps ConsolidateCheckDeps, linker depset.LinkChecker, candidate supervisortypes.BlockSeal, chainID eth.ChainID) error {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 226,
+                "text": "\thazards, err := cross.CrossUnsafeHazards(deps, linker, logger, chainID, candidate)",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 234,
+                "newLine": 227,
+                "text": "\tif err != nil {"
+              },
+              {
+                "type": " ",
+                "oldLine": 235,
+                "newLine": 228,
+                "text": "\t\treturn err"
+              },
+              { "type": " ", "oldLine": 236, "newLine": 229, "text": "\t}" },
+              {
+                "type": "-",
+                "oldLine": 237,
+                "text": "\tif err := cross.HazardCycleChecks(deps.DependencySet(), deps, candidate.Timestamp, hazards); err != nil {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 230,
+                "text": "\tif err := cross.HazardCycleChecks(deps, candidate.Timestamp, hazards); err != nil {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 238,
+                "newLine": 231,
+                "text": "\t\treturn err"
+              },
+              { "type": " ", "oldLine": 239, "newLine": 232, "text": "\t}" },
+              {
+                "type": " ",
+                "oldLine": 240,
+                "newLine": 233,
+                "text": "\treturn nil"
+              }
+            ]
+          },
+          {
+            "oldStart": 262,
+            "oldLines": 7,
+            "newStart": 255,
+            "newLines": 10,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 262,
+                "newLine": 255,
+                "text": "\t\tprogress := transitionState.PendingProgress[i]"
+              },
+              {
+                "type": " ",
+                "oldLine": 263,
+                "newLine": 256,
+                "text": "\t\t// This is the optimistic head. It's OK if it's replaced by a deposits-only block."
+              },
+              {
+                "type": " ",
+                "oldLine": 264,
+                "newLine": 257,
+                "text": "\t\t// Because by then the replacement block won't be used for hazard checks."
+              },
+              {
+                "type": "-",
+                "oldLine": 265,
+                "text": "\t\thead := oracle.BlockByHash(progress.BlockHash, chain.ChainID)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 258,
+                "text": "\t\thead, err := fetchOptimisticBlock(oracle, progress.BlockHash, chain)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 259,
+                "text": "\t\tif err != nil {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 260,
+                "text": "\t\t\treturn nil, fmt.Errorf(\"failed to fetch optimistic block for chain %v: %w\", chain.ChainID, err)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 261,
+                "text": "\t\t}",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 266,
+                "newLine": 262,
+                "text": "\t\tblockByHash := func(hash common.Hash) *ethtypes.Block {"
+              },
+              {
+                "type": " ",
+                "oldLine": 267,
+                "newLine": 263,
+                "text": "\t\t\treturn oracle.BlockByHash(hash, chain.ChainID)"
+              },
+              { "type": " ", "oldLine": 268, "newLine": 264, "text": "\t\t}" }
+            ]
+          },
+          {
+            "oldStart": 282,
+            "oldLines": 6,
+            "newStart": 278,
+            "newLines": 15,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 282,
+                "newLine": 278,
+                "text": "\t}, nil"
+              },
+              { "type": " ", "oldLine": 283, "newLine": 279, "text": "}" },
+              { "type": " ", "oldLine": 284, "newLine": 280, "text": "" },
+              {
+                "type": "+",
+                "newLine": 281,
+                "text": "func fetchOptimisticBlock(oracle l2.Oracle, blockHash common.Hash, chain eth.ChainIDAndOutput) (*ethtypes.Block, error) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 282,
+                "text": "\tagreedOutput := oracle.OutputByRoot(common.Hash(chain.Output), chain.ChainID)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 283,
+                "text": "\tagreedOutputV0, ok := agreedOutput.(*eth.OutputV0)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 284,
+                "text": "\tif !ok {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 285,
+                "text": "\t\treturn nil, fmt.Errorf(\"%w: version: %d\", l2.ErrUnsupportedL2Output, agreedOutput.Version())",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 286, "text": "\t}", "ignored": false },
+              {
+                "type": "+",
+                "newLine": 287,
+                "text": "\treturn oracle.BlockDataByHash(agreedOutputV0.BlockHash, blockHash, chain.ChainID), nil",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 288, "text": "}", "ignored": false },
+              { "type": "+", "newLine": 289, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 285,
+                "newLine": 290,
+                "text": "func (d *consolidateCheckDeps) Contains(chain eth.ChainID, query supervisortypes.ContainsQuery) (includedIn supervisortypes.BlockSeal, err error) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 286,
+                "newLine": 291,
+                "text": "\t// We can assume the oracle has the block the executing message is in"
+              },
+              {
+                "type": " ",
+                "oldLine": 287,
+                "newLine": 292,
+                "text": "\tblock, err := d.CanonBlockByNumber(d.oracle, query.BlockNum, chain)"
+              }
+            ]
+          },
+          {
+            "oldStart": 362,
+            "oldLines": 7,
+            "newStart": 367,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 362, "newLine": 367, "text": "\t}" },
+              { "type": " ", "oldLine": 363, "newLine": 368, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 364,
+                "newLine": 369,
+                "text": "\t_, receipts := d.oracle.ReceiptsByBlockHash(block.Hash(), chainID)"
+              },
+              {
+                "type": "-",
+                "oldLine": 365,
+                "text": "\texecMsgs, logCount, err = ReceiptsToExecutingMessages(d.depset, receipts)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 370,
+                "text": "\texecMsgs, logCount, err = ReceiptsToExecutingMessages(receipts)",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 366,
+                "newLine": 371,
+                "text": "\tif err != nil {"
+              },
+              {
+                "type": " ",
+                "oldLine": 367,
+                "newLine": 372,
+                "text": "\t\treturn eth.BlockRef{}, 0, nil, err"
+              },
+              { "type": " ", "oldLine": 368, "newLine": 373, "text": "\t}" }
+            ]
+          },
+          {
+            "oldStart": 370,
+            "oldLines": 10,
+            "newStart": 375,
+            "newLines": 6,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 370,
+                "newLine": 375,
+                "text": "\treturn ref, logCount, execMsgs, nil"
+              },
+              { "type": " ", "oldLine": 371, "newLine": 376, "text": "}" },
+              { "type": " ", "oldLine": 372, "newLine": 377, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 373,
+                "text": "func (d *consolidateCheckDeps) DependencySet() depset.DependencySet {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 374,
+                "text": "\treturn d.depset",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 375, "text": "}", "ignored": false },
+              { "type": "-", "oldLine": 376, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 377,
+                "newLine": 378,
+                "text": "func (d *consolidateCheckDeps) CanonBlockByNumber(oracle l2.Oracle, blockNum uint64, chainID eth.ChainID) (*ethtypes.Block, error) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 378,
+                "newLine": 379,
+                "text": "\thead := d.canonBlocks[chainID].GetHeaderByNumber(blockNum)"
+              },
+              {
+                "type": " ",
+                "oldLine": 379,
+                "newLine": 380,
+                "text": "\tif head == nil {"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "1f5c32d18cf7148d": {
+      "status": "differs",
+      "coveredLines": 395,
+      "match": {
+        "origin": "stack",
+        "collection": "optimism",
+        "relation": {
+          "type": "template",
+          "template": "gnosisSafeModules/LivenessGuard"
+        },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "consolidate.go",
+        "similarity": 0.936,
+        "reportId": "optimism/cantina-interop-op-program-2025-03",
+        "repository": "ethereum-optimism/optimism",
+        "path": "op-program/client/interop/consolidate.go",
+        "commit": "6707100b11d57a460408e3cef675fc7c5fc5008e",
+        "commitTimestamp": "2025-05-06T02:41:09Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/6707100b11d57a460408e3cef675fc7c5fc5008e/op-program/client/interop/consolidate.go",
+        "auditStatus": "partially_audited_with_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Fix review of PR 15709 (audit optimisations, fixes 3.5.10 and 3.5.12; 3.2.2 remains acknowledged); only the fix changes were verified.",
+        "majorFindings": 1,
+        "findingIds": ["3.2.2"],
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 5
+      },
+      "diff": {
+        "added": 26,
+        "removed": 20,
+        "ignoredAdded": 2,
+        "ignoredRemoved": 7,
+        "unchanged": 395,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 23,
+            "oldLines": 12,
+            "newStart": 23,
+            "newLines": 12,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 23,
+                "newLine": 23,
+                "text": "var ErrInvalidBlockReplacement = errors.New(\"invalid block replacement error\")"
+              },
+              { "type": " ", "oldLine": 24, "newLine": 24, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 25,
+                "newLine": 25,
+                "text": "// ReceiptsToExecutingMessages returns the executing messages in the receipts indexed by their position in the log."
+              },
+              {
+                "type": "-",
+                "oldLine": 26,
+                "text": "func ReceiptsToExecutingMessages(depset depset.ChainIndexFromID, receipts ethtypes.Receipts) (map[uint32]*supervisortypes.ExecutingMessage, uint32, error) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 26,
+                "text": "func ReceiptsToExecutingMessages(receipts ethtypes.Receipts) (map[uint32]*supervisortypes.ExecutingMessage, uint32, error) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 27,
+                "newLine": 27,
+                "text": "\texecMsgs := make(map[uint32]*supervisortypes.ExecutingMessage)"
+              },
+              {
+                "type": " ",
+                "oldLine": 28,
+                "newLine": 28,
+                "text": "\tvar curr uint32"
+              },
+              {
+                "type": " ",
+                "oldLine": 29,
+                "newLine": 29,
+                "text": "\tfor _, rcpt := range receipts {"
+              },
+              {
+                "type": " ",
+                "oldLine": 30,
+                "newLine": 30,
+                "text": "\t\tfor _, l := range rcpt.Logs {"
+              },
+              {
+                "type": "-",
+                "oldLine": 31,
+                "text": "\t\t\texecMsg, err := processors.DecodeExecutingMessageLog(l, depset)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 31,
+                "text": "\t\t\texecMsg, err := processors.DecodeExecutingMessageLog(l)",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 32,
+                "newLine": 32,
+                "text": "\t\t\tif err != nil {"
+              },
+              {
+                "type": " ",
+                "oldLine": 33,
+                "newLine": 33,
+                "text": "\t\t\t\treturn nil, 0, err"
+              },
+              { "type": " ", "oldLine": 34, "newLine": 34, "text": "\t\t\t}" }
+            ]
+          },
+          {
+            "oldStart": 147,
+            "oldLines": 15,
+            "newStart": 147,
+            "newLines": 19,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 147,
+                "newLine": 147,
+                "text": "\ttasks taskExecutor,"
+              },
+              {
+                "type": " ",
+                "oldLine": 148,
+                "newLine": 148,
+                "text": ") error {"
+              },
+              {
+                "type": " ",
+                "oldLine": 149,
+                "newLine": 149,
+                "text": "\t// The depset is the same for all chains. So it suffices to use any chain ID"
+              },
+              {
+                "type": "-",
+                "oldLine": 150,
+                "text": "\tdepset, err := bootInfo.Configs.DependencySet(superRoot.Chains[0].ChainID)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 150,
+                "text": "\tdepSet, err := bootInfo.Configs.DependencySet(superRoot.Chains[0].ChainID)",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 151,
+                "newLine": 151,
+                "text": "\tif err != nil {"
+              },
+              {
+                "type": " ",
+                "oldLine": 152,
+                "newLine": 152,
+                "text": "\t\treturn fmt.Errorf(\"failed to get dependency set: %w\", err)"
+              },
+              { "type": " ", "oldLine": 153, "newLine": 153, "text": "\t}" },
+              {
+                "type": "-",
+                "oldLine": 154,
+                "text": "\tdeps, err := newConsolidateCheckDeps(depset, bootInfo.Configs, consolidateState.TransitionState, superRoot.Chains, l2PreimageOracle, consolidateState)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 154,
+                "text": "\tdeps, err := newConsolidateCheckDeps(depSet, bootInfo.Configs, consolidateState.TransitionState, superRoot.Chains, l2PreimageOracle, consolidateState)",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 155,
+                "newLine": 155,
+                "text": "\tif err != nil {"
+              },
+              {
+                "type": " ",
+                "oldLine": 156,
+                "newLine": 156,
+                "text": "\t\treturn fmt.Errorf(\"failed to create consolidate check deps: %w\", err)"
+              },
+              { "type": " ", "oldLine": 157, "newLine": 157, "text": "\t}" },
+              { "type": "-", "oldLine": 158, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 158,
+                "text": "\tfullConfig, err := getFullConfig(bootInfo.Configs, l1PreimageOracle, depSet)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 159,
+                "text": "\tif err != nil {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 160,
+                "text": "\t\treturn fmt.Errorf(\"failed to get full config set: %w\", err)",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 161, "text": "\t}", "ignored": false },
+              {
+                "type": "+",
+                "newLine": 162,
+                "text": "\tlinker := depset.LinkerFromConfig(fullConfig)",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 159,
+                "newLine": 163,
+                "text": "\tfor i, chain := range superRoot.Chains {"
+              },
+              {
+                "type": " ",
+                "oldLine": 160,
+                "newLine": 164,
+                "text": "\t\t// Do not check chains that have been replaced with a deposits-only block."
+              },
+              {
+                "type": " ",
+                "oldLine": 161,
+                "newLine": 165,
+                "text": "\t\t// They are already cross-safe because deposits-only blocks cannot contain executing messages."
+              }
+            ]
+          },
+          {
+            "oldStart": 163,
+            "oldLines": 18,
+            "newStart": 167,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 163,
+                "newLine": 167,
+                "text": "\t\t\tcontinue"
+              },
+              { "type": " ", "oldLine": 164, "newLine": 168, "text": "\t\t}" },
+              { "type": " ", "oldLine": 165, "newLine": 169, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 166,
+                "text": "\t\tagreedOutput := l2PreimageOracle.OutputByRoot(common.Hash(chain.Output), chain.ChainID)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 167,
+                "text": "\t\tagreedOutputV0, ok := agreedOutput.(*eth.OutputV0)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 168,
+                "text": "\t\tif !ok {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 169,
+                "text": "\t\t\treturn fmt.Errorf(\"%w: version: %d\", l2.ErrUnsupportedL2Output, agreedOutput.Version())",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 170,
+                "text": "\t\t}",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 171,
+                "text": "\t\tagreedBlockHash := common.Hash(agreedOutputV0.BlockHash)",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 172, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 173,
+                "newLine": 170,
+                "text": "\t\tprogress := consolidateState.PendingProgress[i]"
+              },
+              {
+                "type": "-",
+                "oldLine": 174,
+                "text": "\t\t// It's possible that the optimistic block is not canonical.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 175,
+                "text": "\t\t// So we use the blockDataByHash hint to trigger a block rebuild to ensure that the block data, including receipts, are available.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 176,
+                "text": "\t\t_ = l2PreimageOracle.BlockDataByHash(agreedBlockHash, progress.BlockHash, chain.ChainID)",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 177, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 178,
+                "newLine": 171,
+                "text": "\t\toptimisticBlock, _ := l2PreimageOracle.ReceiptsByBlockHash(progress.BlockHash, chain.ChainID)"
+              },
+              { "type": " ", "oldLine": 179, "newLine": 172, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 180,
+                "newLine": 173,
+                "text": "\t\tcandidate := supervisortypes.BlockSeal{"
+              }
+            ]
+          },
+          {
+            "oldStart": 182,
+            "oldLines": 7,
+            "newStart": 175,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 182,
+                "newLine": 175,
+                "text": "\t\t\tNumber:    optimisticBlock.NumberU64(),"
+              },
+              {
+                "type": " ",
+                "oldLine": 183,
+                "newLine": 176,
+                "text": "\t\t\tTimestamp: optimisticBlock.Time(),"
+              },
+              { "type": " ", "oldLine": 184, "newLine": 177, "text": "\t\t}" },
+              {
+                "type": "-",
+                "oldLine": 185,
+                "text": "\t\tif err := checkHazards(logger, deps, candidate, chain.ChainID); err != nil {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 178,
+                "text": "\t\tif err := checkHazards(logger, deps, linker, candidate, chain.ChainID); err != nil {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 186,
+                "newLine": 179,
+                "text": "\t\t\tif !isInvalidMessageError(err) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 187,
+                "newLine": 180,
+                "text": "\t\t\t\treturn err"
+              },
+              { "type": " ", "oldLine": 188, "newLine": 181, "text": "\t\t\t}" }
+            ]
+          },
+          {
+            "oldStart": 212,
+            "oldLines": 7,
+            "newStart": 205,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 212,
+                "newLine": 205,
+                "text": "\t\t\tsuperRoot.Chains[i].Output = outputRoot"
+              },
+              {
+                "type": " ",
+                "oldLine": 213,
+                "newLine": 206,
+                "text": "\t\t\tconsolidateState.setReplaced(i, chain.ChainID, outputRoot, replacementBlockHash)"
+              },
+              {
+                "type": " ",
+                "oldLine": 214,
+                "newLine": 207,
+                "text": "\t\t\t// Indicate that there was an invalid block so we have to re-check all chains."
+              },
+              {
+                "type": "-",
+                "oldLine": 215,
+                "text": "\t\t\t// The re-check wil pick up invalid messages in any chains we haven't gotten to yet so don't waste time now.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 208,
+                "text": "\t\t\t// The re-check will pick up invalid messages in any chains we haven't gotten to yet so don't waste time now.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 216,
+                "newLine": 209,
+                "text": "\t\t\treturn ErrInvalidBlockReplacement"
+              },
+              { "type": " ", "oldLine": 217, "newLine": 210, "text": "\t\t}" },
+              { "type": " ", "oldLine": 218, "newLine": 211, "text": "\t}" }
+            ]
+          },
+          {
+            "oldStart": 229,
+            "oldLines": 12,
+            "newStart": 222,
+            "newLines": 12,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 229,
+                "newLine": 222,
+                "text": "\tcross.UnsafeStartDeps"
+              },
+              { "type": " ", "oldLine": 230, "newLine": 223, "text": "}" },
+              { "type": " ", "oldLine": 231, "newLine": 224, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 232,
+                "text": "func checkHazards(logger log.Logger, deps ConsolidateCheckDeps, candidate supervisortypes.BlockSeal, chainID eth.ChainID) error {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 233,
+                "text": "\thazards, err := cross.CrossUnsafeHazards(deps, logger, chainID, candidate)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 225,
+                "text": "func checkHazards(logger log.Logger, deps ConsolidateCheckDeps, linker depset.LinkChecker, candidate supervisortypes.BlockSeal, chainID eth.ChainID) error {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 226,
+                "text": "\thazards, err := cross.CrossUnsafeHazards(deps, linker, logger, chainID, candidate)",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 234,
+                "newLine": 227,
+                "text": "\tif err != nil {"
+              },
+              {
+                "type": " ",
+                "oldLine": 235,
+                "newLine": 228,
+                "text": "\t\treturn err"
+              },
+              { "type": " ", "oldLine": 236, "newLine": 229, "text": "\t}" },
+              {
+                "type": "-",
+                "oldLine": 237,
+                "text": "\tif err := cross.HazardCycleChecks(deps.DependencySet(), deps, candidate.Timestamp, hazards); err != nil {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 230,
+                "text": "\tif err := cross.HazardCycleChecks(deps, candidate.Timestamp, hazards); err != nil {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 238,
+                "newLine": 231,
+                "text": "\t\treturn err"
+              },
+              { "type": " ", "oldLine": 239, "newLine": 232, "text": "\t}" },
+              {
+                "type": " ",
+                "oldLine": 240,
+                "newLine": 233,
+                "text": "\treturn nil"
+              }
+            ]
+          },
+          {
+            "oldStart": 262,
+            "oldLines": 7,
+            "newStart": 255,
+            "newLines": 10,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 262,
+                "newLine": 255,
+                "text": "\t\tprogress := transitionState.PendingProgress[i]"
+              },
+              {
+                "type": " ",
+                "oldLine": 263,
+                "newLine": 256,
+                "text": "\t\t// This is the optimistic head. It's OK if it's replaced by a deposits-only block."
+              },
+              {
+                "type": " ",
+                "oldLine": 264,
+                "newLine": 257,
+                "text": "\t\t// Because by then the replacement block won't be used for hazard checks."
+              },
+              {
+                "type": "-",
+                "oldLine": 265,
+                "text": "\t\thead := oracle.BlockByHash(progress.BlockHash, chain.ChainID)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 258,
+                "text": "\t\thead, err := fetchOptimisticBlock(oracle, progress.BlockHash, chain)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 259,
+                "text": "\t\tif err != nil {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 260,
+                "text": "\t\t\treturn nil, fmt.Errorf(\"failed to fetch optimistic block for chain %v: %w\", chain.ChainID, err)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 261,
+                "text": "\t\t}",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 266,
+                "newLine": 262,
+                "text": "\t\tblockByHash := func(hash common.Hash) *ethtypes.Block {"
+              },
+              {
+                "type": " ",
+                "oldLine": 267,
+                "newLine": 263,
+                "text": "\t\t\treturn oracle.BlockByHash(hash, chain.ChainID)"
+              },
+              { "type": " ", "oldLine": 268, "newLine": 264, "text": "\t\t}" }
+            ]
+          },
+          {
+            "oldStart": 282,
+            "oldLines": 6,
+            "newStart": 278,
+            "newLines": 15,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 282,
+                "newLine": 278,
+                "text": "\t}, nil"
+              },
+              { "type": " ", "oldLine": 283, "newLine": 279, "text": "}" },
+              { "type": " ", "oldLine": 284, "newLine": 280, "text": "" },
+              {
+                "type": "+",
+                "newLine": 281,
+                "text": "func fetchOptimisticBlock(oracle l2.Oracle, blockHash common.Hash, chain eth.ChainIDAndOutput) (*ethtypes.Block, error) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 282,
+                "text": "\tagreedOutput := oracle.OutputByRoot(common.Hash(chain.Output), chain.ChainID)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 283,
+                "text": "\tagreedOutputV0, ok := agreedOutput.(*eth.OutputV0)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 284,
+                "text": "\tif !ok {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 285,
+                "text": "\t\treturn nil, fmt.Errorf(\"%w: version: %d\", l2.ErrUnsupportedL2Output, agreedOutput.Version())",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 286, "text": "\t}", "ignored": false },
+              {
+                "type": "+",
+                "newLine": 287,
+                "text": "\treturn oracle.BlockDataByHash(agreedOutputV0.BlockHash, blockHash, chain.ChainID), nil",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 288, "text": "}", "ignored": false },
+              { "type": "+", "newLine": 289, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 285,
+                "newLine": 290,
+                "text": "func (d *consolidateCheckDeps) Contains(chain eth.ChainID, query supervisortypes.ContainsQuery) (includedIn supervisortypes.BlockSeal, err error) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 286,
+                "newLine": 291,
+                "text": "\t// We can assume the oracle has the block the executing message is in"
+              },
+              {
+                "type": " ",
+                "oldLine": 287,
+                "newLine": 292,
+                "text": "\tblock, err := d.CanonBlockByNumber(d.oracle, query.BlockNum, chain)"
+              }
+            ]
+          },
+          {
+            "oldStart": 362,
+            "oldLines": 7,
+            "newStart": 367,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 362, "newLine": 367, "text": "\t}" },
+              { "type": " ", "oldLine": 363, "newLine": 368, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 364,
+                "newLine": 369,
+                "text": "\t_, receipts := d.oracle.ReceiptsByBlockHash(block.Hash(), chainID)"
+              },
+              {
+                "type": "-",
+                "oldLine": 365,
+                "text": "\texecMsgs, logCount, err = ReceiptsToExecutingMessages(d.depset, receipts)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 370,
+                "text": "\texecMsgs, logCount, err = ReceiptsToExecutingMessages(receipts)",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 366,
+                "newLine": 371,
+                "text": "\tif err != nil {"
+              },
+              {
+                "type": " ",
+                "oldLine": 367,
+                "newLine": 372,
+                "text": "\t\treturn eth.BlockRef{}, 0, nil, err"
+              },
+              { "type": " ", "oldLine": 368, "newLine": 373, "text": "\t}" }
+            ]
+          },
+          {
+            "oldStart": 370,
+            "oldLines": 10,
+            "newStart": 375,
+            "newLines": 6,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 370,
+                "newLine": 375,
+                "text": "\treturn ref, logCount, execMsgs, nil"
+              },
+              { "type": " ", "oldLine": 371, "newLine": 376, "text": "}" },
+              { "type": " ", "oldLine": 372, "newLine": 377, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 373,
+                "text": "func (d *consolidateCheckDeps) DependencySet() depset.DependencySet {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 374,
+                "text": "\treturn d.depset",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 375, "text": "}", "ignored": false },
+              { "type": "-", "oldLine": 376, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 377,
+                "newLine": 378,
+                "text": "func (d *consolidateCheckDeps) CanonBlockByNumber(oracle l2.Oracle, blockNum uint64, chainID eth.ChainID) (*ethtypes.Block, error) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 378,
+                "newLine": 379,
+                "text": "\thead := d.canonBlocks[chainID].GetHeaderByNumber(blockNum)"
+              },
+              {
+                "type": " ",
+                "oldLine": 379,
+                "newLine": 380,
+                "text": "\tif head == nil {"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

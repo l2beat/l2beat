@@ -565,6 +565,1972 @@
         ]
       },
       "warnings": []
+    },
+    "44ad4cf96e2ef6f0": {
+      "status": "differs",
+      "coveredLines": 40,
+      "match": {
+        "origin": "stack",
+        "collection": "sp1",
+        "relation": {
+          "type": "template",
+          "template": "succinct/OPSuccinct/AccessManager"
+        },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "build_compress_vks.rs",
+        "similarity": 0.778,
+        "reportId": "sp1/zellic-sp1-design-review-2024",
+        "repository": "succinctlabs/sp1",
+        "path": "crates/prover/scripts/build_compress_vks.rs",
+        "commit": "15be73d3acae3718a0acc529ed566f6a448b1c0e",
+        "commitTimestamp": "2024-11-27T02:59:17Z",
+        "url": "https://github.com/succinctlabs/sp1/blob/15be73d3acae3718a0acc529ed566f6a448b1c0e/crates/prover/scripts/build_compress_vks.rs",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "Initial audit",
+        "coverage": "Design-level review only (explicitly not a code audit): RV32IM specification compliance and the register/low-memory aliasing at addresses 0x0-0x1f, focused mostly on load and store instruction behaviour; soundness/completeness of the ZK proofs and circuits and correctness of implementation details were out of scope.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 10,
+        "removed": 10,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 40,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 3,
+            "oldLines": 25,
+            "newStart": 3,
+            "newLines": 25,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "use clap::Parser;"
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "use sp1_core_machine::utils::setup_logger;"
+              },
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 5,
+                "text": "use sp1_prover::{"
+              },
+              {
+                "type": "-",
+                "oldLine": 6,
+                "text": "    components::DefaultProverComponents, shapes::build_vk_map_to_file, REDUCE_BATCH_SIZE,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 6,
+                "text": "    components::CpuProverComponents, shapes::build_vk_map_to_file, REDUCE_BATCH_SIZE,",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 7, "newLine": 7, "text": "};" },
+              { "type": " ", "oldLine": 8, "newLine": 8, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 9,
+                "text": "#[derive(Parser, Debug)]"
+              },
+              {
+                "type": "-",
+                "oldLine": 10,
+                "text": "#[clap(author, version, about, long_about = None)]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 10,
+                "text": "#[command(author, version, about, long_about = None)]",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 11,
+                "newLine": 11,
+                "text": "struct Args {"
+              },
+              {
+                "type": "-",
+                "oldLine": 12,
+                "text": "    #[clap(short, long)]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 12,
+                "text": "    #[arg(short, long)]",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 13,
+                "newLine": 13,
+                "text": "    build_dir: PathBuf,"
+              },
+              {
+                "type": "-",
+                "oldLine": 14,
+                "text": "    #[clap(short, long, default_value_t = false)]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 14,
+                "text": "    #[arg(short, long, default_value_t = false)]",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 15,
+                "newLine": 15,
+                "text": "    dummy: bool,"
+              },
+              {
+                "type": "-",
+                "oldLine": 16,
+                "text": "    #[clap(short, long, default_value_t = REDUCE_BATCH_SIZE)]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 16,
+                "text": "    #[arg(short, long, default_value_t = REDUCE_BATCH_SIZE)]",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 17,
+                "newLine": 17,
+                "text": "    reduce_batch_size: usize,"
+              },
+              {
+                "type": "-",
+                "oldLine": 18,
+                "text": "    #[clap(short, long, default_value_t = 1)]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 18,
+                "text": "    #[arg(short, long, default_value_t = 1)]",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 19,
+                "newLine": 19,
+                "text": "    num_compiler_workers: usize,"
+              },
+              {
+                "type": "-",
+                "oldLine": 20,
+                "text": "    #[clap(short, long, default_value_t = 1)]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 20,
+                "text": "    #[arg(short, long, default_value_t = 1)]",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 21,
+                "newLine": 21,
+                "text": "    num_setup_workers: usize,"
+              },
+              {
+                "type": "-",
+                "oldLine": 22,
+                "text": "    #[clap(short, long)]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 22,
+                "text": "    #[arg(short, long)]",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 23,
+                "newLine": 23,
+                "text": "    start: Option<usize>,"
+              },
+              {
+                "type": "-",
+                "oldLine": 24,
+                "text": "    #[clap(short, long)]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 24,
+                "text": "    #[arg(short, long)]",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 25,
+                "newLine": 25,
+                "text": "    end: Option<usize>,"
+              },
+              { "type": " ", "oldLine": 26, "newLine": 26, "text": "}" },
+              { "type": " ", "oldLine": 27, "newLine": 27, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 37,
+            "oldLines": 7,
+            "newStart": 37,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 37,
+                "newLine": 37,
+                "text": "    let range_start = args.start;"
+              },
+              {
+                "type": " ",
+                "oldLine": 38,
+                "newLine": 38,
+                "text": "    let range_end = args.end;"
+              },
+              { "type": " ", "oldLine": 39, "newLine": 39, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 40,
+                "text": "    build_vk_map_to_file::<DefaultProverComponents>(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 40,
+                "text": "    build_vk_map_to_file::<CpuProverComponents>(",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 41,
+                "newLine": 41,
+                "text": "        build_dir,"
+              },
+              {
+                "type": " ",
+                "oldLine": 42,
+                "newLine": 42,
+                "text": "        reduce_batch_size,"
+              },
+              {
+                "type": " ",
+                "oldLine": 43,
+                "newLine": 43,
+                "text": "        dummy,"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "437dcc6cbc847e9a": {
+      "status": "differs",
+      "coveredLines": 40,
+      "match": {
+        "origin": "library",
+        "collection": "sp1",
+        "relation": { "type": "library" },
+        "rank": 3,
+        "matchedBy": "name",
+        "auditedName": "build_compress_vks.rs",
+        "similarity": 0.778,
+        "reportId": "sp1/zellic-sp1-design-review-2024",
+        "repository": "succinctlabs/sp1",
+        "path": "crates/prover/scripts/build_compress_vks.rs",
+        "commit": "15be73d3acae3718a0acc529ed566f6a448b1c0e",
+        "commitTimestamp": "2024-11-27T02:59:17Z",
+        "url": "https://github.com/succinctlabs/sp1/blob/15be73d3acae3718a0acc529ed566f6a448b1c0e/crates/prover/scripts/build_compress_vks.rs",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "Initial audit",
+        "coverage": "Design-level review only (explicitly not a code audit): RV32IM specification compliance and the register/low-memory aliasing at addresses 0x0-0x1f, focused mostly on load and store instruction behaviour; soundness/completeness of the ZK proofs and circuits and correctness of implementation details were out of scope.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 10,
+        "removed": 10,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 40,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 3,
+            "oldLines": 25,
+            "newStart": 3,
+            "newLines": 25,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "use clap::Parser;"
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "use sp1_core_machine::utils::setup_logger;"
+              },
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 5,
+                "text": "use sp1_prover::{"
+              },
+              {
+                "type": "-",
+                "oldLine": 6,
+                "text": "    components::DefaultProverComponents, shapes::build_vk_map_to_file, REDUCE_BATCH_SIZE,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 6,
+                "text": "    components::CpuProverComponents, shapes::build_vk_map_to_file, REDUCE_BATCH_SIZE,",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 7, "newLine": 7, "text": "};" },
+              { "type": " ", "oldLine": 8, "newLine": 8, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 9,
+                "text": "#[derive(Parser, Debug)]"
+              },
+              {
+                "type": "-",
+                "oldLine": 10,
+                "text": "#[clap(author, version, about, long_about = None)]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 10,
+                "text": "#[command(author, version, about, long_about = None)]",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 11,
+                "newLine": 11,
+                "text": "struct Args {"
+              },
+              {
+                "type": "-",
+                "oldLine": 12,
+                "text": "    #[clap(short, long)]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 12,
+                "text": "    #[arg(short, long)]",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 13,
+                "newLine": 13,
+                "text": "    build_dir: PathBuf,"
+              },
+              {
+                "type": "-",
+                "oldLine": 14,
+                "text": "    #[clap(short, long, default_value_t = false)]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 14,
+                "text": "    #[arg(short, long, default_value_t = false)]",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 15,
+                "newLine": 15,
+                "text": "    dummy: bool,"
+              },
+              {
+                "type": "-",
+                "oldLine": 16,
+                "text": "    #[clap(short, long, default_value_t = REDUCE_BATCH_SIZE)]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 16,
+                "text": "    #[arg(short, long, default_value_t = REDUCE_BATCH_SIZE)]",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 17,
+                "newLine": 17,
+                "text": "    reduce_batch_size: usize,"
+              },
+              {
+                "type": "-",
+                "oldLine": 18,
+                "text": "    #[clap(short, long, default_value_t = 1)]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 18,
+                "text": "    #[arg(short, long, default_value_t = 1)]",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 19,
+                "newLine": 19,
+                "text": "    num_compiler_workers: usize,"
+              },
+              {
+                "type": "-",
+                "oldLine": 20,
+                "text": "    #[clap(short, long, default_value_t = 1)]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 20,
+                "text": "    #[arg(short, long, default_value_t = 1)]",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 21,
+                "newLine": 21,
+                "text": "    num_setup_workers: usize,"
+              },
+              {
+                "type": "-",
+                "oldLine": 22,
+                "text": "    #[clap(short, long)]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 22,
+                "text": "    #[arg(short, long)]",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 23,
+                "newLine": 23,
+                "text": "    start: Option<usize>,"
+              },
+              {
+                "type": "-",
+                "oldLine": 24,
+                "text": "    #[clap(short, long)]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 24,
+                "text": "    #[arg(short, long)]",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 25,
+                "newLine": 25,
+                "text": "    end: Option<usize>,"
+              },
+              { "type": " ", "oldLine": 26, "newLine": 26, "text": "}" },
+              { "type": " ", "oldLine": 27, "newLine": 27, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 37,
+            "oldLines": 7,
+            "newStart": 37,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 37,
+                "newLine": 37,
+                "text": "    let range_start = args.start;"
+              },
+              {
+                "type": " ",
+                "oldLine": 38,
+                "newLine": 38,
+                "text": "    let range_end = args.end;"
+              },
+              { "type": " ", "oldLine": 39, "newLine": 39, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 40,
+                "text": "    build_vk_map_to_file::<DefaultProverComponents>(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 40,
+                "text": "    build_vk_map_to_file::<CpuProverComponents>(",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 41,
+                "newLine": 41,
+                "text": "        build_dir,"
+              },
+              {
+                "type": " ",
+                "oldLine": 42,
+                "newLine": 42,
+                "text": "        reduce_batch_size,"
+              },
+              {
+                "type": " ",
+                "oldLine": 43,
+                "newLine": 43,
+                "text": "        dummy,"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "5d5f82d91c09d4ec": {
+      "status": "differs",
+      "coveredLines": 40,
+      "match": {
+        "origin": "library",
+        "collection": "sp1",
+        "relation": { "type": "library" },
+        "rank": 3,
+        "matchedBy": "name",
+        "auditedName": "build_compress_vks.rs",
+        "similarity": 0.778,
+        "reportId": "sp1/zellic-sp1-design-review-2024",
+        "repository": "succinctlabs/sp1",
+        "path": "crates/prover/scripts/build_compress_vks.rs",
+        "commit": "15be73d3acae3718a0acc529ed566f6a448b1c0e",
+        "commitTimestamp": "2024-11-27T02:59:17Z",
+        "url": "https://github.com/succinctlabs/sp1/blob/15be73d3acae3718a0acc529ed566f6a448b1c0e/crates/prover/scripts/build_compress_vks.rs",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "Initial audit",
+        "coverage": "Design-level review only (explicitly not a code audit): RV32IM specification compliance and the register/low-memory aliasing at addresses 0x0-0x1f, focused mostly on load and store instruction behaviour; soundness/completeness of the ZK proofs and circuits and correctness of implementation details were out of scope.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 10,
+        "removed": 10,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 40,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 3,
+            "oldLines": 25,
+            "newStart": 3,
+            "newLines": 25,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "use clap::Parser;"
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "use sp1_core_machine::utils::setup_logger;"
+              },
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 5,
+                "text": "use sp1_prover::{"
+              },
+              {
+                "type": "-",
+                "oldLine": 6,
+                "text": "    components::DefaultProverComponents, shapes::build_vk_map_to_file, REDUCE_BATCH_SIZE,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 6,
+                "text": "    components::CpuProverComponents, shapes::build_vk_map_to_file, REDUCE_BATCH_SIZE,",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 7, "newLine": 7, "text": "};" },
+              { "type": " ", "oldLine": 8, "newLine": 8, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 9,
+                "text": "#[derive(Parser, Debug)]"
+              },
+              {
+                "type": "-",
+                "oldLine": 10,
+                "text": "#[clap(author, version, about, long_about = None)]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 10,
+                "text": "#[command(author, version, about, long_about = None)]",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 11,
+                "newLine": 11,
+                "text": "struct Args {"
+              },
+              {
+                "type": "-",
+                "oldLine": 12,
+                "text": "    #[clap(short, long)]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 12,
+                "text": "    #[arg(short, long)]",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 13,
+                "newLine": 13,
+                "text": "    build_dir: PathBuf,"
+              },
+              {
+                "type": "-",
+                "oldLine": 14,
+                "text": "    #[clap(short, long, default_value_t = false)]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 14,
+                "text": "    #[arg(short, long, default_value_t = false)]",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 15,
+                "newLine": 15,
+                "text": "    dummy: bool,"
+              },
+              {
+                "type": "-",
+                "oldLine": 16,
+                "text": "    #[clap(short, long, default_value_t = REDUCE_BATCH_SIZE)]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 16,
+                "text": "    #[arg(short, long, default_value_t = REDUCE_BATCH_SIZE)]",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 17,
+                "newLine": 17,
+                "text": "    reduce_batch_size: usize,"
+              },
+              {
+                "type": "-",
+                "oldLine": 18,
+                "text": "    #[clap(short, long, default_value_t = 1)]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 18,
+                "text": "    #[arg(short, long, default_value_t = 1)]",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 19,
+                "newLine": 19,
+                "text": "    num_compiler_workers: usize,"
+              },
+              {
+                "type": "-",
+                "oldLine": 20,
+                "text": "    #[clap(short, long, default_value_t = 1)]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 20,
+                "text": "    #[arg(short, long, default_value_t = 1)]",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 21,
+                "newLine": 21,
+                "text": "    num_setup_workers: usize,"
+              },
+              {
+                "type": "-",
+                "oldLine": 22,
+                "text": "    #[clap(short, long)]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 22,
+                "text": "    #[arg(short, long)]",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 23,
+                "newLine": 23,
+                "text": "    start: Option<usize>,"
+              },
+              {
+                "type": "-",
+                "oldLine": 24,
+                "text": "    #[clap(short, long)]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 24,
+                "text": "    #[arg(short, long)]",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 25,
+                "newLine": 25,
+                "text": "    end: Option<usize>,"
+              },
+              { "type": " ", "oldLine": 26, "newLine": 26, "text": "}" },
+              { "type": " ", "oldLine": 27, "newLine": 27, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 37,
+            "oldLines": 7,
+            "newStart": 37,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 37,
+                "newLine": 37,
+                "text": "    let range_start = args.start;"
+              },
+              {
+                "type": " ",
+                "oldLine": 38,
+                "newLine": 38,
+                "text": "    let range_end = args.end;"
+              },
+              { "type": " ", "oldLine": 39, "newLine": 39, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 40,
+                "text": "    build_vk_map_to_file::<DefaultProverComponents>(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 40,
+                "text": "    build_vk_map_to_file::<CpuProverComponents>(",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 41,
+                "newLine": 41,
+                "text": "        build_dir,"
+              },
+              {
+                "type": " ",
+                "oldLine": 42,
+                "newLine": 42,
+                "text": "        reduce_batch_size,"
+              },
+              {
+                "type": " ",
+                "oldLine": 43,
+                "newLine": 43,
+                "text": "        dummy,"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "e3b0c44298fc1c14": {
+      "status": "differs",
+      "coveredLines": 40,
+      "match": {
+        "origin": "library",
+        "collection": "sp1",
+        "relation": { "type": "library" },
+        "rank": 3,
+        "matchedBy": "name",
+        "auditedName": "build_compress_vks.rs",
+        "similarity": 0.778,
+        "reportId": "sp1/zellic-sp1-design-review-2024",
+        "repository": "succinctlabs/sp1",
+        "path": "crates/prover/scripts/build_compress_vks.rs",
+        "commit": "15be73d3acae3718a0acc529ed566f6a448b1c0e",
+        "commitTimestamp": "2024-11-27T02:59:17Z",
+        "url": "https://github.com/succinctlabs/sp1/blob/15be73d3acae3718a0acc529ed566f6a448b1c0e/crates/prover/scripts/build_compress_vks.rs",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "Initial audit",
+        "coverage": "Design-level review only (explicitly not a code audit): RV32IM specification compliance and the register/low-memory aliasing at addresses 0x0-0x1f, focused mostly on load and store instruction behaviour; soundness/completeness of the ZK proofs and circuits and correctness of implementation details were out of scope.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 10,
+        "removed": 10,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 40,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 3,
+            "oldLines": 25,
+            "newStart": 3,
+            "newLines": 25,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "use clap::Parser;"
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "use sp1_core_machine::utils::setup_logger;"
+              },
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 5,
+                "text": "use sp1_prover::{"
+              },
+              {
+                "type": "-",
+                "oldLine": 6,
+                "text": "    components::DefaultProverComponents, shapes::build_vk_map_to_file, REDUCE_BATCH_SIZE,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 6,
+                "text": "    components::CpuProverComponents, shapes::build_vk_map_to_file, REDUCE_BATCH_SIZE,",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 7, "newLine": 7, "text": "};" },
+              { "type": " ", "oldLine": 8, "newLine": 8, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 9,
+                "text": "#[derive(Parser, Debug)]"
+              },
+              {
+                "type": "-",
+                "oldLine": 10,
+                "text": "#[clap(author, version, about, long_about = None)]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 10,
+                "text": "#[command(author, version, about, long_about = None)]",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 11,
+                "newLine": 11,
+                "text": "struct Args {"
+              },
+              {
+                "type": "-",
+                "oldLine": 12,
+                "text": "    #[clap(short, long)]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 12,
+                "text": "    #[arg(short, long)]",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 13,
+                "newLine": 13,
+                "text": "    build_dir: PathBuf,"
+              },
+              {
+                "type": "-",
+                "oldLine": 14,
+                "text": "    #[clap(short, long, default_value_t = false)]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 14,
+                "text": "    #[arg(short, long, default_value_t = false)]",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 15,
+                "newLine": 15,
+                "text": "    dummy: bool,"
+              },
+              {
+                "type": "-",
+                "oldLine": 16,
+                "text": "    #[clap(short, long, default_value_t = REDUCE_BATCH_SIZE)]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 16,
+                "text": "    #[arg(short, long, default_value_t = REDUCE_BATCH_SIZE)]",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 17,
+                "newLine": 17,
+                "text": "    reduce_batch_size: usize,"
+              },
+              {
+                "type": "-",
+                "oldLine": 18,
+                "text": "    #[clap(short, long, default_value_t = 1)]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 18,
+                "text": "    #[arg(short, long, default_value_t = 1)]",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 19,
+                "newLine": 19,
+                "text": "    num_compiler_workers: usize,"
+              },
+              {
+                "type": "-",
+                "oldLine": 20,
+                "text": "    #[clap(short, long, default_value_t = 1)]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 20,
+                "text": "    #[arg(short, long, default_value_t = 1)]",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 21,
+                "newLine": 21,
+                "text": "    num_setup_workers: usize,"
+              },
+              {
+                "type": "-",
+                "oldLine": 22,
+                "text": "    #[clap(short, long)]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 22,
+                "text": "    #[arg(short, long)]",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 23,
+                "newLine": 23,
+                "text": "    start: Option<usize>,"
+              },
+              {
+                "type": "-",
+                "oldLine": 24,
+                "text": "    #[clap(short, long)]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 24,
+                "text": "    #[arg(short, long)]",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 25,
+                "newLine": 25,
+                "text": "    end: Option<usize>,"
+              },
+              { "type": " ", "oldLine": 26, "newLine": 26, "text": "}" },
+              { "type": " ", "oldLine": 27, "newLine": 27, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 37,
+            "oldLines": 7,
+            "newStart": 37,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 37,
+                "newLine": 37,
+                "text": "    let range_start = args.start;"
+              },
+              {
+                "type": " ",
+                "oldLine": 38,
+                "newLine": 38,
+                "text": "    let range_end = args.end;"
+              },
+              { "type": " ", "oldLine": 39, "newLine": 39, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 40,
+                "text": "    build_vk_map_to_file::<DefaultProverComponents>(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 40,
+                "text": "    build_vk_map_to_file::<CpuProverComponents>(",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 41,
+                "newLine": 41,
+                "text": "        build_dir,"
+              },
+              {
+                "type": " ",
+                "oldLine": 42,
+                "newLine": 42,
+                "text": "        reduce_batch_size,"
+              },
+              {
+                "type": " ",
+                "oldLine": 43,
+                "newLine": 43,
+                "text": "        dummy,"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "d79ad2713a1d64a9": {
+      "status": "differs",
+      "coveredLines": 40,
+      "match": {
+        "origin": "stack",
+        "collection": "sp1",
+        "relation": {
+          "type": "template",
+          "template": "succinct/OPSuccinct/OPSuccinctL2OutputOracle_mantle"
+        },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "build_compress_vks.rs",
+        "similarity": 0.778,
+        "reportId": "sp1/zellic-sp1-design-review-2024",
+        "repository": "succinctlabs/sp1",
+        "path": "crates/prover/scripts/build_compress_vks.rs",
+        "commit": "15be73d3acae3718a0acc529ed566f6a448b1c0e",
+        "commitTimestamp": "2024-11-27T02:59:17Z",
+        "url": "https://github.com/succinctlabs/sp1/blob/15be73d3acae3718a0acc529ed566f6a448b1c0e/crates/prover/scripts/build_compress_vks.rs",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "Initial audit",
+        "coverage": "Design-level review only (explicitly not a code audit): RV32IM specification compliance and the register/low-memory aliasing at addresses 0x0-0x1f, focused mostly on load and store instruction behaviour; soundness/completeness of the ZK proofs and circuits and correctness of implementation details were out of scope.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 10,
+        "removed": 10,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 40,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 3,
+            "oldLines": 25,
+            "newStart": 3,
+            "newLines": 25,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "use clap::Parser;"
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "use sp1_core_machine::utils::setup_logger;"
+              },
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 5,
+                "text": "use sp1_prover::{"
+              },
+              {
+                "type": "-",
+                "oldLine": 6,
+                "text": "    components::DefaultProverComponents, shapes::build_vk_map_to_file, REDUCE_BATCH_SIZE,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 6,
+                "text": "    components::CpuProverComponents, shapes::build_vk_map_to_file, REDUCE_BATCH_SIZE,",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 7, "newLine": 7, "text": "};" },
+              { "type": " ", "oldLine": 8, "newLine": 8, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 9,
+                "text": "#[derive(Parser, Debug)]"
+              },
+              {
+                "type": "-",
+                "oldLine": 10,
+                "text": "#[clap(author, version, about, long_about = None)]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 10,
+                "text": "#[command(author, version, about, long_about = None)]",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 11,
+                "newLine": 11,
+                "text": "struct Args {"
+              },
+              {
+                "type": "-",
+                "oldLine": 12,
+                "text": "    #[clap(short, long)]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 12,
+                "text": "    #[arg(short, long)]",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 13,
+                "newLine": 13,
+                "text": "    build_dir: PathBuf,"
+              },
+              {
+                "type": "-",
+                "oldLine": 14,
+                "text": "    #[clap(short, long, default_value_t = false)]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 14,
+                "text": "    #[arg(short, long, default_value_t = false)]",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 15,
+                "newLine": 15,
+                "text": "    dummy: bool,"
+              },
+              {
+                "type": "-",
+                "oldLine": 16,
+                "text": "    #[clap(short, long, default_value_t = REDUCE_BATCH_SIZE)]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 16,
+                "text": "    #[arg(short, long, default_value_t = REDUCE_BATCH_SIZE)]",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 17,
+                "newLine": 17,
+                "text": "    reduce_batch_size: usize,"
+              },
+              {
+                "type": "-",
+                "oldLine": 18,
+                "text": "    #[clap(short, long, default_value_t = 1)]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 18,
+                "text": "    #[arg(short, long, default_value_t = 1)]",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 19,
+                "newLine": 19,
+                "text": "    num_compiler_workers: usize,"
+              },
+              {
+                "type": "-",
+                "oldLine": 20,
+                "text": "    #[clap(short, long, default_value_t = 1)]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 20,
+                "text": "    #[arg(short, long, default_value_t = 1)]",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 21,
+                "newLine": 21,
+                "text": "    num_setup_workers: usize,"
+              },
+              {
+                "type": "-",
+                "oldLine": 22,
+                "text": "    #[clap(short, long)]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 22,
+                "text": "    #[arg(short, long)]",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 23,
+                "newLine": 23,
+                "text": "    start: Option<usize>,"
+              },
+              {
+                "type": "-",
+                "oldLine": 24,
+                "text": "    #[clap(short, long)]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 24,
+                "text": "    #[arg(short, long)]",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 25,
+                "newLine": 25,
+                "text": "    end: Option<usize>,"
+              },
+              { "type": " ", "oldLine": 26, "newLine": 26, "text": "}" },
+              { "type": " ", "oldLine": 27, "newLine": 27, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 37,
+            "oldLines": 7,
+            "newStart": 37,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 37,
+                "newLine": 37,
+                "text": "    let range_start = args.start;"
+              },
+              {
+                "type": " ",
+                "oldLine": 38,
+                "newLine": 38,
+                "text": "    let range_end = args.end;"
+              },
+              { "type": " ", "oldLine": 39, "newLine": 39, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 40,
+                "text": "    build_vk_map_to_file::<DefaultProverComponents>(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 40,
+                "text": "    build_vk_map_to_file::<CpuProverComponents>(",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 41,
+                "newLine": 41,
+                "text": "        build_dir,"
+              },
+              {
+                "type": " ",
+                "oldLine": 42,
+                "newLine": 42,
+                "text": "        reduce_batch_size,"
+              },
+              {
+                "type": " ",
+                "oldLine": 43,
+                "newLine": 43,
+                "text": "        dummy,"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "2295595c4243408b": {
+      "status": "differs",
+      "coveredLines": 40,
+      "match": {
+        "origin": "stack",
+        "collection": "sp1",
+        "relation": { "type": "template", "template": "succinct/SP1Verifier" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "build_compress_vks.rs",
+        "similarity": 0.778,
+        "reportId": "sp1/zellic-sp1-design-review-2024",
+        "repository": "succinctlabs/sp1",
+        "path": "crates/prover/scripts/build_compress_vks.rs",
+        "commit": "15be73d3acae3718a0acc529ed566f6a448b1c0e",
+        "commitTimestamp": "2024-11-27T02:59:17Z",
+        "url": "https://github.com/succinctlabs/sp1/blob/15be73d3acae3718a0acc529ed566f6a448b1c0e/crates/prover/scripts/build_compress_vks.rs",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "Initial audit",
+        "coverage": "Design-level review only (explicitly not a code audit): RV32IM specification compliance and the register/low-memory aliasing at addresses 0x0-0x1f, focused mostly on load and store instruction behaviour; soundness/completeness of the ZK proofs and circuits and correctness of implementation details were out of scope.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 10,
+        "removed": 10,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 40,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 3,
+            "oldLines": 25,
+            "newStart": 3,
+            "newLines": 25,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "use clap::Parser;"
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "use sp1_core_machine::utils::setup_logger;"
+              },
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 5,
+                "text": "use sp1_prover::{"
+              },
+              {
+                "type": "-",
+                "oldLine": 6,
+                "text": "    components::DefaultProverComponents, shapes::build_vk_map_to_file, REDUCE_BATCH_SIZE,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 6,
+                "text": "    components::CpuProverComponents, shapes::build_vk_map_to_file, REDUCE_BATCH_SIZE,",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 7, "newLine": 7, "text": "};" },
+              { "type": " ", "oldLine": 8, "newLine": 8, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 9,
+                "text": "#[derive(Parser, Debug)]"
+              },
+              {
+                "type": "-",
+                "oldLine": 10,
+                "text": "#[clap(author, version, about, long_about = None)]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 10,
+                "text": "#[command(author, version, about, long_about = None)]",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 11,
+                "newLine": 11,
+                "text": "struct Args {"
+              },
+              {
+                "type": "-",
+                "oldLine": 12,
+                "text": "    #[clap(short, long)]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 12,
+                "text": "    #[arg(short, long)]",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 13,
+                "newLine": 13,
+                "text": "    build_dir: PathBuf,"
+              },
+              {
+                "type": "-",
+                "oldLine": 14,
+                "text": "    #[clap(short, long, default_value_t = false)]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 14,
+                "text": "    #[arg(short, long, default_value_t = false)]",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 15,
+                "newLine": 15,
+                "text": "    dummy: bool,"
+              },
+              {
+                "type": "-",
+                "oldLine": 16,
+                "text": "    #[clap(short, long, default_value_t = REDUCE_BATCH_SIZE)]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 16,
+                "text": "    #[arg(short, long, default_value_t = REDUCE_BATCH_SIZE)]",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 17,
+                "newLine": 17,
+                "text": "    reduce_batch_size: usize,"
+              },
+              {
+                "type": "-",
+                "oldLine": 18,
+                "text": "    #[clap(short, long, default_value_t = 1)]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 18,
+                "text": "    #[arg(short, long, default_value_t = 1)]",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 19,
+                "newLine": 19,
+                "text": "    num_compiler_workers: usize,"
+              },
+              {
+                "type": "-",
+                "oldLine": 20,
+                "text": "    #[clap(short, long, default_value_t = 1)]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 20,
+                "text": "    #[arg(short, long, default_value_t = 1)]",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 21,
+                "newLine": 21,
+                "text": "    num_setup_workers: usize,"
+              },
+              {
+                "type": "-",
+                "oldLine": 22,
+                "text": "    #[clap(short, long)]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 22,
+                "text": "    #[arg(short, long)]",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 23,
+                "newLine": 23,
+                "text": "    start: Option<usize>,"
+              },
+              {
+                "type": "-",
+                "oldLine": 24,
+                "text": "    #[clap(short, long)]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 24,
+                "text": "    #[arg(short, long)]",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 25,
+                "newLine": 25,
+                "text": "    end: Option<usize>,"
+              },
+              { "type": " ", "oldLine": 26, "newLine": 26, "text": "}" },
+              { "type": " ", "oldLine": 27, "newLine": 27, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 37,
+            "oldLines": 7,
+            "newStart": 37,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 37,
+                "newLine": 37,
+                "text": "    let range_start = args.start;"
+              },
+              {
+                "type": " ",
+                "oldLine": 38,
+                "newLine": 38,
+                "text": "    let range_end = args.end;"
+              },
+              { "type": " ", "oldLine": 39, "newLine": 39, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 40,
+                "text": "    build_vk_map_to_file::<DefaultProverComponents>(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 40,
+                "text": "    build_vk_map_to_file::<CpuProverComponents>(",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 41,
+                "newLine": 41,
+                "text": "        build_dir,"
+              },
+              {
+                "type": " ",
+                "oldLine": 42,
+                "newLine": 42,
+                "text": "        reduce_batch_size,"
+              },
+              {
+                "type": " ",
+                "oldLine": 43,
+                "newLine": 43,
+                "text": "        dummy,"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "d80a56c5abf9208b": {
+      "status": "differs",
+      "coveredLines": 40,
+      "match": {
+        "origin": "library",
+        "collection": "sp1",
+        "relation": { "type": "library" },
+        "rank": 3,
+        "matchedBy": "name",
+        "auditedName": "build_compress_vks.rs",
+        "similarity": 0.778,
+        "reportId": "sp1/zellic-sp1-design-review-2024",
+        "repository": "succinctlabs/sp1",
+        "path": "crates/prover/scripts/build_compress_vks.rs",
+        "commit": "15be73d3acae3718a0acc529ed566f6a448b1c0e",
+        "commitTimestamp": "2024-11-27T02:59:17Z",
+        "url": "https://github.com/succinctlabs/sp1/blob/15be73d3acae3718a0acc529ed566f6a448b1c0e/crates/prover/scripts/build_compress_vks.rs",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "Initial audit",
+        "coverage": "Design-level review only (explicitly not a code audit): RV32IM specification compliance and the register/low-memory aliasing at addresses 0x0-0x1f, focused mostly on load and store instruction behaviour; soundness/completeness of the ZK proofs and circuits and correctness of implementation details were out of scope.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 10,
+        "removed": 10,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 40,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 3,
+            "oldLines": 25,
+            "newStart": 3,
+            "newLines": 25,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "use clap::Parser;"
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "use sp1_core_machine::utils::setup_logger;"
+              },
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 5,
+                "text": "use sp1_prover::{"
+              },
+              {
+                "type": "-",
+                "oldLine": 6,
+                "text": "    components::DefaultProverComponents, shapes::build_vk_map_to_file, REDUCE_BATCH_SIZE,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 6,
+                "text": "    components::CpuProverComponents, shapes::build_vk_map_to_file, REDUCE_BATCH_SIZE,",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 7, "newLine": 7, "text": "};" },
+              { "type": " ", "oldLine": 8, "newLine": 8, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 9,
+                "text": "#[derive(Parser, Debug)]"
+              },
+              {
+                "type": "-",
+                "oldLine": 10,
+                "text": "#[clap(author, version, about, long_about = None)]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 10,
+                "text": "#[command(author, version, about, long_about = None)]",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 11,
+                "newLine": 11,
+                "text": "struct Args {"
+              },
+              {
+                "type": "-",
+                "oldLine": 12,
+                "text": "    #[clap(short, long)]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 12,
+                "text": "    #[arg(short, long)]",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 13,
+                "newLine": 13,
+                "text": "    build_dir: PathBuf,"
+              },
+              {
+                "type": "-",
+                "oldLine": 14,
+                "text": "    #[clap(short, long, default_value_t = false)]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 14,
+                "text": "    #[arg(short, long, default_value_t = false)]",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 15,
+                "newLine": 15,
+                "text": "    dummy: bool,"
+              },
+              {
+                "type": "-",
+                "oldLine": 16,
+                "text": "    #[clap(short, long, default_value_t = REDUCE_BATCH_SIZE)]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 16,
+                "text": "    #[arg(short, long, default_value_t = REDUCE_BATCH_SIZE)]",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 17,
+                "newLine": 17,
+                "text": "    reduce_batch_size: usize,"
+              },
+              {
+                "type": "-",
+                "oldLine": 18,
+                "text": "    #[clap(short, long, default_value_t = 1)]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 18,
+                "text": "    #[arg(short, long, default_value_t = 1)]",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 19,
+                "newLine": 19,
+                "text": "    num_compiler_workers: usize,"
+              },
+              {
+                "type": "-",
+                "oldLine": 20,
+                "text": "    #[clap(short, long, default_value_t = 1)]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 20,
+                "text": "    #[arg(short, long, default_value_t = 1)]",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 21,
+                "newLine": 21,
+                "text": "    num_setup_workers: usize,"
+              },
+              {
+                "type": "-",
+                "oldLine": 22,
+                "text": "    #[clap(short, long)]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 22,
+                "text": "    #[arg(short, long)]",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 23,
+                "newLine": 23,
+                "text": "    start: Option<usize>,"
+              },
+              {
+                "type": "-",
+                "oldLine": 24,
+                "text": "    #[clap(short, long)]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 24,
+                "text": "    #[arg(short, long)]",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 25,
+                "newLine": 25,
+                "text": "    end: Option<usize>,"
+              },
+              { "type": " ", "oldLine": 26, "newLine": 26, "text": "}" },
+              { "type": " ", "oldLine": 27, "newLine": 27, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 37,
+            "oldLines": 7,
+            "newStart": 37,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 37,
+                "newLine": 37,
+                "text": "    let range_start = args.start;"
+              },
+              {
+                "type": " ",
+                "oldLine": 38,
+                "newLine": 38,
+                "text": "    let range_end = args.end;"
+              },
+              { "type": " ", "oldLine": 39, "newLine": 39, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 40,
+                "text": "    build_vk_map_to_file::<DefaultProverComponents>(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 40,
+                "text": "    build_vk_map_to_file::<CpuProverComponents>(",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 41,
+                "newLine": 41,
+                "text": "        build_dir,"
+              },
+              {
+                "type": " ",
+                "oldLine": 42,
+                "newLine": 42,
+                "text": "        reduce_batch_size,"
+              },
+              {
+                "type": " ",
+                "oldLine": 43,
+                "newLine": 43,
+                "text": "        dummy,"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
     }
   }
 }

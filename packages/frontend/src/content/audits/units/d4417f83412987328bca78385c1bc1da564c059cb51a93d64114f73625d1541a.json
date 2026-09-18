@@ -32,6 +32,36 @@
         "totalVersions": 1
       },
       "warnings": []
+    },
+    "437dcc6cbc847e9a": {
+      "status": "identical",
+      "coveredLines": 203,
+      "match": {
+        "origin": "stack",
+        "collection": "optimism",
+        "relation": {
+          "type": "template",
+          "template": "opstack/AddressManager"
+        },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "Proxy",
+        "similarity": 1,
+        "reportId": "optimism/openzeppelin-bedrock-periphery-2022-09",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts-bedrock/contracts/universal/Proxy.sol",
+        "commit": "93d3bd411a8ae75702539ac9c5fe00bad21d4104",
+        "commitTimestamp": "2022-07-21T16:50:18Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/93d3bd411a8ae75702539ac9c5fe00bad21d4104/packages/contracts-bedrock/contracts/universal/Proxy.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Full review of the listed file at the audited commit. Fix commits live in the inaccessible optimism-audit-fixes repository and are not recorded.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "warnings": []
     }
   }
 }

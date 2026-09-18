@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "8b408e6ac1ed196ed807e81b186eb60db674705039d8397cbff7b585d78f41d1",
+  "name": "index.ts",
+  "kind": "program",
+  "lines": 34,
+  "source": "import { Circomkit } from \"circomkit\";\nimport { poseidon } from \"../../../../node_modules/maci-crypto/build/ts/hashing.js\";\n\nexport interface Commitment {\n  value: bigint;\n  label: bigint;\n  nullifier: bigint;\n  secret: bigint;\n}\n\nexport const circomkit = new Circomkit({\n  verbose: false,\n  protocol: \"groth16\",\n  include: [\"../../node_modules/circomlib/circuits\", \"../../node_modules/maci-circuits/circom\"],\n});\n\nexport function hashCommitment(input: Commitment): [bigint, bigint] {\n  const precommitment = poseidon([BigInt(input.nullifier), BigInt(input.secret)]);\n  const nullifierHash = poseidon([BigInt(input.nullifier)]);\n  const commitmentHash = poseidon([BigInt(input.value), BigInt(input.label), precommitment]);\n  return [commitmentHash, nullifierHash];\n}\n\nexport function randomBigInt(): bigint {\n  return BigInt(Math.floor(Math.random() * Number.MAX_SAFE_INTEGER));\n}\n\nexport function padSiblings(siblings: bigint[], targetDepth: number): bigint[] {\n  const paddedSiblings = [...siblings];\n  while (paddedSiblings.length < targetDepth) {\n    paddedSiblings.push(BigInt(0));\n  }\n  return paddedSiblings;\n}",
+  "resolutions": {
+    "cbbcf694abda362c": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

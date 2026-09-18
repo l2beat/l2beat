@@ -673,6 +673,173 @@
         ]
       },
       "warnings": []
+    },
+    "437dcc6cbc847e9a": {
+      "status": "differs",
+      "coveredLines": 329,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "EnumerableSet",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/utils/structs/EnumerableSet.sol",
+        "commit": "b5a3e693e7eeca8d5f608460fd8beeee8e332b03",
+        "commitTimestamp": "2023-08-08T06:22:59Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/b5a3e693e7eeca8d5f608460fd8beeee8e332b03/contracts/utils/structs/EnumerableSet.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "audit",
+        "coverage": "Only the changes to the file between versions 4.9 and 5.0 were reviewed at the Phase 4 audit commit (diff-only review).",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 9
+      },
+      "diff": {
+        "added": 1,
+        "removed": 6,
+        "ignoredAdded": 1,
+        "ignoredRemoved": 4,
+        "unchanged": 329,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 177,
+            "oldLines": 15,
+            "newStart": 177,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 177,
+                "newLine": 177,
+                "text": "     * uncallable if the set grows to a point where copying to memory consumes too much gas to fit in a block."
+              },
+              {
+                "type": " ",
+                "oldLine": 178,
+                "newLine": 178,
+                "text": "     */"
+              },
+              {
+                "type": " ",
+                "oldLine": 179,
+                "newLine": 179,
+                "text": "    function values(Bytes32Set storage set) internal view returns (bytes32[] memory) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 180,
+                "text": "        bytes32[] memory store = _values(set._inner);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 181,
+                "text": "        bytes32[] memory result;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 182, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 183,
+                "text": "        /// @solidity memory-safe-assembly",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 184,
+                "text": "        assembly {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 185,
+                "text": "            result := store",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 186,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 187, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 188,
+                "text": "        return result;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 180,
+                "text": "        return _values(set._inner);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 189, "newLine": 181, "text": "    }" },
+              { "type": " ", "oldLine": 190, "newLine": 182, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 191,
+                "newLine": 183,
+                "text": "    // AddressSet"
+              }
+            ]
+          },
+          {
+            "oldStart": 296,
+            "oldLines": 7,
+            "newStart": 288,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 296, "newLine": 288, "text": "    }" },
+              { "type": " ", "oldLine": 297, "newLine": 289, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 298,
+                "newLine": 290,
+                "text": "    /**"
+              },
+              {
+                "type": "-",
+                "oldLine": 299,
+                "text": "     * @dev Returns the number of values in the set. O(1).",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 291,
+                "text": "     * @dev Returns the number of values on the set. O(1).",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 300,
+                "newLine": 292,
+                "text": "     */"
+              },
+              {
+                "type": " ",
+                "oldLine": 301,
+                "newLine": 293,
+                "text": "    function length(UintSet storage set) internal view returns (uint256) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 302,
+                "newLine": 294,
+                "text": "        return _length(set._inner);"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
     }
   }
 }

@@ -86,6 +86,293 @@
         "totalVersions": 3
       },
       "warnings": []
+    },
+    "437dcc6cbc847e9a": {
+      "status": "identical",
+      "coveredLines": 20,
+      "match": {
+        "origin": "other",
+        "collection": "bob",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "identity",
+        "auditedName": "Arithmetic",
+        "similarity": 1,
+        "reportId": "bob/veridise-kailua-2025-02",
+        "repository": "boundless-xyz/kailua",
+        "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "commit": "27dec82b67de1051df9258b36f8366ebf308e5bf",
+        "commitTimestamp": "2025-02-06T07:42:16Z",
+        "url": "https://github.com/boundless-xyz/kailua/blob/27dec82b67de1051df9258b36f8366ebf308e5bf/crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix commit",
+        "coverage": "Confirmed fix commit for V-KLA-VUL-004 (contract nits).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "warnings": []
+    },
+    "a8bf4a329bb46967": {
+      "status": "identical",
+      "coveredLines": 20,
+      "match": {
+        "origin": "other",
+        "collection": "bob",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "identity",
+        "auditedName": "Arithmetic",
+        "similarity": 1,
+        "reportId": "bob/veridise-kailua-2025-02",
+        "repository": "boundless-xyz/kailua",
+        "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "commit": "27dec82b67de1051df9258b36f8366ebf308e5bf",
+        "commitTimestamp": "2025-02-06T07:42:16Z",
+        "url": "https://github.com/boundless-xyz/kailua/blob/27dec82b67de1051df9258b36f8366ebf308e5bf/crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix commit",
+        "coverage": "Confirmed fix commit for V-KLA-VUL-004 (contract nits).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "warnings": []
+    },
+    "d79ad2713a1d64a9": {
+      "status": "identical",
+      "coveredLines": 28,
+      "match": {
+        "origin": "other",
+        "collection": "bob",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "identity",
+        "auditedName": "Arithmetic",
+        "similarity": 1,
+        "reportId": "bob/veridise-kailua-2025-02",
+        "repository": "boundless-xyz/kailua",
+        "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "commit": "27dec82b67de1051df9258b36f8366ebf308e5bf",
+        "commitTimestamp": "2025-02-06T07:42:16Z",
+        "url": "https://github.com/boundless-xyz/kailua/blob/27dec82b67de1051df9258b36f8366ebf308e5bf/crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix commit",
+        "coverage": "Confirmed fix commit for V-KLA-VUL-004 (contract nits).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 19,
+        "ignoredRemoved": 11,
+        "unchanged": 28,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 19,
+            "newStart": 1,
+            "newLines": 27,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "library Arithmetic {"
+              },
+              {
+                "type": "-",
+                "oldLine": 2,
+                "text": "    /// @notice Clamps a value between a minimum and maximum.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 3,
+                "text": "    /// @param _value The value to clamp.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 4,
+                "text": "    /// @param _min   The minimum value.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 5,
+                "text": "    /// @param _max   The maximum value.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 6,
+                "text": "    /// @return The clamped value.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 2, "text": "    /**", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "     * @notice Clamps a value between a minimum and maximum.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 4, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 5,
+                "text": "     * @param _value The value to clamp.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 6,
+                "text": "     * @param _min   The minimum value.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 7,
+                "text": "     * @param _max   The maximum value.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 8, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 9,
+                "text": "     * @return The clamped value.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 10,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 7,
+                "newLine": 11,
+                "text": "    function clamp(int256 _value, int256 _min, int256 _max) internal pure returns (int256) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 8,
+                "newLine": 12,
+                "text": "        return SignedMath.min(SignedMath.max(_value, _min), _max);"
+              },
+              { "type": " ", "oldLine": 9, "newLine": 13, "text": "    }" },
+              { "type": " ", "oldLine": 10, "newLine": 14, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 11,
+                "text": "    /// @notice (c)oefficient (d)enominator (exp)onentiation function.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 12,
+                "text": "    ///         Returns the result of: c * (1 - 1/d)^exp.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 13,
+                "text": "    /// @param _coefficient Coefficient of the function.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 14,
+                "text": "    /// @param _denominator Fractional denominator.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 15,
+                "text": "    /// @param _exponent    Power function exponent.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 16,
+                "text": "    /// @return Result of c * (1 - 1/d)^exp.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 15,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 16,
+                "text": "     * @notice (c)oefficient (d)enominator (exp)onentiation function.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 17,
+                "text": "     *         Returns the result of: c * (1 - 1/d)^exp.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 18, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 19,
+                "text": "     * @param _coefficient Coefficient of the function.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 20,
+                "text": "     * @param _denominator Fractional denominator.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 21,
+                "text": "     * @param _exponent    Power function exponent.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 22, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 23,
+                "text": "     * @return Result of c * (1 - 1/d)^exp.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 24,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 17,
+                "newLine": 25,
+                "text": "    function cdexp(int256 _coefficient, int256 _denominator, int256 _exponent) internal pure returns (int256) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 18,
+                "newLine": 26,
+                "text": "        return (_coefficient * (FixedPointMathLib.powWad(1e18 - (1e18 / _denominator), _exponent * 1e18))) / 1e18;"
+              },
+              { "type": " ", "oldLine": 19, "newLine": 27, "text": "    }" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
     }
   }
 }

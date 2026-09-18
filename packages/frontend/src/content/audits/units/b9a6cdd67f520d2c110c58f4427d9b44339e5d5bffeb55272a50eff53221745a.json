@@ -660,6 +660,661 @@
         ]
       },
       "warnings": []
+    },
+    "d80a56c5abf9208b": {
+      "status": "differs",
+      "coveredLines": 570,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "Checkpoints",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2024-10-v5.1",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/utils/structs/Checkpoints.sol",
+        "commit": "aba9ff61ac6d610eab12b1528c6f22f98dbb4dd3",
+        "commitTimestamp": "2024-07-24T08:37:16Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/aba9ff61ac6d610eab12b1528c6f22f98dbb4dd3/contracts/utils/structs/Checkpoints.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "initial audit - phase 1",
+        "coverage": "Phase 1 review limited to the changes introduced in this previously audited (v5.0.0) contract; the diff since v5.0.0 was reviewed, not the full file.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 14
+      },
+      "diff": {
+        "added": 15,
+        "removed": 21,
+        "ignoredAdded": 3,
+        "ignoredRemoved": 0,
+        "unchanged": 570,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 89,
+            "oldLines": 7,
+            "newStart": 89,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 89,
+                "newLine": 89,
+                "text": "        if (pos == 0) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 90,
+                "newLine": 90,
+                "text": "            return (false, 0, 0);"
+              },
+              {
+                "type": " ",
+                "oldLine": 91,
+                "newLine": 91,
+                "text": "        } else {"
+              },
+              {
+                "type": "-",
+                "oldLine": 92,
+                "text": "            Checkpoint224 storage ckpt = _unsafeAccess(self._checkpoints, pos - 1);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 92,
+                "text": "            Checkpoint224 memory ckpt = _unsafeAccess(self._checkpoints, pos - 1);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 93,
+                "newLine": 93,
+                "text": "            return (true, ckpt._key, ckpt._value);"
+              },
+              {
+                "type": " ",
+                "oldLine": 94,
+                "newLine": 94,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 95, "newLine": 95, "text": "    }" }
+            ]
+          },
+          {
+            "oldStart": 116,
+            "oldLines": 22,
+            "newStart": 116,
+            "newLines": 21,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 116,
+                "newLine": 116,
+                "text": "        uint256 pos = self.length;"
+              },
+              { "type": " ", "oldLine": 117, "newLine": 117, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 118,
+                "newLine": 118,
+                "text": "        if (pos > 0) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 119,
+                "text": "            Checkpoint224 storage last = _unsafeAccess(self, pos - 1);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 120,
+                "text": "            uint32 lastKey = last._key;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 121,
+                "text": "            uint224 lastValue = last._value;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 119,
+                "text": "            // Copying to memory is important here.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 120,
+                "text": "            Checkpoint224 memory last = _unsafeAccess(self, pos - 1);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 122, "newLine": 121, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 123,
+                "newLine": 122,
+                "text": "            // Checkpoint keys must be non-decreasing."
+              },
+              {
+                "type": "-",
+                "oldLine": 124,
+                "text": "            if (lastKey > key) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 123,
+                "text": "            if (last._key > key) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 125,
+                "newLine": 124,
+                "text": "                revert CheckpointUnorderedInsertion();"
+              },
+              {
+                "type": " ",
+                "oldLine": 126,
+                "newLine": 125,
+                "text": "            }"
+              },
+              { "type": " ", "oldLine": 127, "newLine": 126, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 128,
+                "newLine": 127,
+                "text": "            // Update or push new checkpoint"
+              },
+              {
+                "type": "-",
+                "oldLine": 129,
+                "text": "            if (lastKey == key) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 128,
+                "text": "            if (last._key == key) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 130,
+                "newLine": 129,
+                "text": "                _unsafeAccess(self, pos - 1)._value = value;"
+              },
+              {
+                "type": " ",
+                "oldLine": 131,
+                "newLine": 130,
+                "text": "            } else {"
+              },
+              {
+                "type": " ",
+                "oldLine": 132,
+                "newLine": 131,
+                "text": "                self.push(Checkpoint224({_key: key, _value: value}));"
+              },
+              {
+                "type": " ",
+                "oldLine": 133,
+                "newLine": 132,
+                "text": "            }"
+              },
+              {
+                "type": "-",
+                "oldLine": 134,
+                "text": "            return (lastValue, value);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 133,
+                "text": "            return (last._value, value);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 135,
+                "newLine": 134,
+                "text": "        } else {"
+              },
+              {
+                "type": " ",
+                "oldLine": 136,
+                "newLine": 135,
+                "text": "            self.push(Checkpoint224({_key: key, _value: value}));"
+              },
+              {
+                "type": " ",
+                "oldLine": 137,
+                "newLine": 136,
+                "text": "            return (0, value);"
+              }
+            ]
+          },
+          {
+            "oldStart": 283,
+            "oldLines": 7,
+            "newStart": 282,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 283,
+                "newLine": 282,
+                "text": "        if (pos == 0) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 284,
+                "newLine": 283,
+                "text": "            return (false, 0, 0);"
+              },
+              {
+                "type": " ",
+                "oldLine": 285,
+                "newLine": 284,
+                "text": "        } else {"
+              },
+              {
+                "type": "-",
+                "oldLine": 286,
+                "text": "            Checkpoint208 storage ckpt = _unsafeAccess(self._checkpoints, pos - 1);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 285,
+                "text": "            Checkpoint208 memory ckpt = _unsafeAccess(self._checkpoints, pos - 1);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 287,
+                "newLine": 286,
+                "text": "            return (true, ckpt._key, ckpt._value);"
+              },
+              {
+                "type": " ",
+                "oldLine": 288,
+                "newLine": 287,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 289, "newLine": 288, "text": "    }" }
+            ]
+          },
+          {
+            "oldStart": 310,
+            "oldLines": 22,
+            "newStart": 309,
+            "newLines": 21,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 310,
+                "newLine": 309,
+                "text": "        uint256 pos = self.length;"
+              },
+              { "type": " ", "oldLine": 311, "newLine": 310, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 312,
+                "newLine": 311,
+                "text": "        if (pos > 0) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 313,
+                "text": "            Checkpoint208 storage last = _unsafeAccess(self, pos - 1);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 314,
+                "text": "            uint48 lastKey = last._key;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 315,
+                "text": "            uint208 lastValue = last._value;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 312,
+                "text": "            // Copying to memory is important here.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 313,
+                "text": "            Checkpoint208 memory last = _unsafeAccess(self, pos - 1);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 316, "newLine": 314, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 317,
+                "newLine": 315,
+                "text": "            // Checkpoint keys must be non-decreasing."
+              },
+              {
+                "type": "-",
+                "oldLine": 318,
+                "text": "            if (lastKey > key) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 316,
+                "text": "            if (last._key > key) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 319,
+                "newLine": 317,
+                "text": "                revert CheckpointUnorderedInsertion();"
+              },
+              {
+                "type": " ",
+                "oldLine": 320,
+                "newLine": 318,
+                "text": "            }"
+              },
+              { "type": " ", "oldLine": 321, "newLine": 319, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 322,
+                "newLine": 320,
+                "text": "            // Update or push new checkpoint"
+              },
+              {
+                "type": "-",
+                "oldLine": 323,
+                "text": "            if (lastKey == key) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 321,
+                "text": "            if (last._key == key) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 324,
+                "newLine": 322,
+                "text": "                _unsafeAccess(self, pos - 1)._value = value;"
+              },
+              {
+                "type": " ",
+                "oldLine": 325,
+                "newLine": 323,
+                "text": "            } else {"
+              },
+              {
+                "type": " ",
+                "oldLine": 326,
+                "newLine": 324,
+                "text": "                self.push(Checkpoint208({_key: key, _value: value}));"
+              },
+              {
+                "type": " ",
+                "oldLine": 327,
+                "newLine": 325,
+                "text": "            }"
+              },
+              {
+                "type": "-",
+                "oldLine": 328,
+                "text": "            return (lastValue, value);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 326,
+                "text": "            return (last._value, value);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 329,
+                "newLine": 327,
+                "text": "        } else {"
+              },
+              {
+                "type": " ",
+                "oldLine": 330,
+                "newLine": 328,
+                "text": "            self.push(Checkpoint208({_key: key, _value: value}));"
+              },
+              {
+                "type": " ",
+                "oldLine": 331,
+                "newLine": 329,
+                "text": "            return (0, value);"
+              }
+            ]
+          },
+          {
+            "oldStart": 477,
+            "oldLines": 7,
+            "newStart": 475,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 477,
+                "newLine": 475,
+                "text": "        if (pos == 0) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 478,
+                "newLine": 476,
+                "text": "            return (false, 0, 0);"
+              },
+              {
+                "type": " ",
+                "oldLine": 479,
+                "newLine": 477,
+                "text": "        } else {"
+              },
+              {
+                "type": "-",
+                "oldLine": 480,
+                "text": "            Checkpoint160 storage ckpt = _unsafeAccess(self._checkpoints, pos - 1);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 478,
+                "text": "            Checkpoint160 memory ckpt = _unsafeAccess(self._checkpoints, pos - 1);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 481,
+                "newLine": 479,
+                "text": "            return (true, ckpt._key, ckpt._value);"
+              },
+              {
+                "type": " ",
+                "oldLine": 482,
+                "newLine": 480,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 483, "newLine": 481, "text": "    }" }
+            ]
+          },
+          {
+            "oldStart": 504,
+            "oldLines": 22,
+            "newStart": 502,
+            "newLines": 21,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 504,
+                "newLine": 502,
+                "text": "        uint256 pos = self.length;"
+              },
+              { "type": " ", "oldLine": 505, "newLine": 503, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 506,
+                "newLine": 504,
+                "text": "        if (pos > 0) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 507,
+                "text": "            Checkpoint160 storage last = _unsafeAccess(self, pos - 1);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 508,
+                "text": "            uint96 lastKey = last._key;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 509,
+                "text": "            uint160 lastValue = last._value;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 505,
+                "text": "            // Copying to memory is important here.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 506,
+                "text": "            Checkpoint160 memory last = _unsafeAccess(self, pos - 1);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 510, "newLine": 507, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 511,
+                "newLine": 508,
+                "text": "            // Checkpoint keys must be non-decreasing."
+              },
+              {
+                "type": "-",
+                "oldLine": 512,
+                "text": "            if (lastKey > key) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 509,
+                "text": "            if (last._key > key) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 513,
+                "newLine": 510,
+                "text": "                revert CheckpointUnorderedInsertion();"
+              },
+              {
+                "type": " ",
+                "oldLine": 514,
+                "newLine": 511,
+                "text": "            }"
+              },
+              { "type": " ", "oldLine": 515, "newLine": 512, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 516,
+                "newLine": 513,
+                "text": "            // Update or push new checkpoint"
+              },
+              {
+                "type": "-",
+                "oldLine": 517,
+                "text": "            if (lastKey == key) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 514,
+                "text": "            if (last._key == key) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 518,
+                "newLine": 515,
+                "text": "                _unsafeAccess(self, pos - 1)._value = value;"
+              },
+              {
+                "type": " ",
+                "oldLine": 519,
+                "newLine": 516,
+                "text": "            } else {"
+              },
+              {
+                "type": " ",
+                "oldLine": 520,
+                "newLine": 517,
+                "text": "                self.push(Checkpoint160({_key: key, _value: value}));"
+              },
+              {
+                "type": " ",
+                "oldLine": 521,
+                "newLine": 518,
+                "text": "            }"
+              },
+              {
+                "type": "-",
+                "oldLine": 522,
+                "text": "            return (lastValue, value);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 519,
+                "text": "            return (last._value, value);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 523,
+                "newLine": 520,
+                "text": "        } else {"
+              },
+              {
+                "type": " ",
+                "oldLine": 524,
+                "newLine": 521,
+                "text": "            self.push(Checkpoint160({_key: key, _value: value}));"
+              },
+              {
+                "type": " ",
+                "oldLine": 525,
+                "newLine": 522,
+                "text": "            return (0, value);"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
     }
   }
 }

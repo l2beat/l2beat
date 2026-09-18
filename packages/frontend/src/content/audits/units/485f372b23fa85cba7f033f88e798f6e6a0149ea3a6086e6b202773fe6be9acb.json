@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "485f372b23fa85cba7f033f88e798f6e6a0149ea3a6086e6b202773fe6be9acb",
+  "name": "local.go",
+  "kind": "program",
+  "lines": 76,
+  "source": "package kvstore\n\nimport (\n\t\"encoding/binary\"\n\t\"encoding/json\"\n\t\"errors\"\n\n\t\"github.com/ethereum-optimism/optimism/op-program/client/boot\"\n\t\"github.com/ethereum-optimism/optimism/op-program/host/config\"\n\t\"github.com/ethereum-optimism/optimism/op-service/eth\"\n\t\"github.com/ethereum/go-ethereum/common\"\n)\n\ntype LocalPreimageSource struct {\n\tconfig *config.Config\n}\n\nfunc NewLocalPreimageSource(config *config.Config) *LocalPreimageSource {\n\treturn &LocalPreimageSource{config}\n}\n\nvar (\n\tl1HeadKey             = boot.L1HeadLocalIndex.PreimageKey()\n\tl2OutputRootKey       = boot.L2OutputRootLocalIndex.PreimageKey()\n\tl2ClaimKey            = boot.L2ClaimLocalIndex.PreimageKey()\n\tl2ClaimBlockNumberKey = boot.L2ClaimBlockNumberLocalIndex.PreimageKey()\n\tl2ChainIDKey          = boot.L2ChainIDLocalIndex.PreimageKey()\n\tl2ChainConfigKey      = boot.L2ChainConfigLocalIndex.PreimageKey()\n\trollupKey             = boot.RollupConfigLocalIndex.PreimageKey()\n\tdependencySetKey      = boot.DependencySetLocalIndex.PreimageKey()\n\tl1ChainConfigKey      = boot.L1ChainConfigLocalIndex.PreimageKey()\n)\n\nfunc (s *LocalPreimageSource) Get(key common.Hash) ([]byte, error) {\n\tswitch [32]byte(key) {\n\tcase l1HeadKey:\n\t\treturn s.config.L1Head.Bytes(), nil\n\tcase l2OutputRootKey:\n\t\treturn s.config.L2OutputRoot.Bytes(), nil\n\tcase l2ClaimKey:\n\t\treturn s.config.L2Claim.Bytes(), nil\n\tcase l2ClaimBlockNumberKey:\n\t\treturn binary.BigEndian.AppendUint64(nil, s.config.L2ClaimBlockNumber), nil\n\tcase l2ChainIDKey:\n\t\treturn binary.BigEndian.AppendUint64(nil, eth.EvilChainIDToUInt64(s.config.L2ChainID)), nil\n\tcase l2ChainConfigKey:\n\t\tif s.config.L2ChainID != boot.CustomChainIDIndicator {\n\t\t\treturn nil, ErrNotFound\n\t\t}\n\t\tif s.config.InteropEnabled {\n\t\t\treturn json.Marshal(s.config.L2ChainConfigs)\n\t\t}\n\t\treturn json.Marshal(s.config.L2ChainConfigs[0])\n\tcase rollupKey:\n\t\tif s.config.L2ChainID != boot.CustomChainIDIndicator {\n\t\t\treturn nil, ErrNotFound\n\t\t}\n\t\tif s.config.InteropEnabled {\n\t\t\treturn json.Marshal(s.config.Rollups)\n\t\t}\n\t\treturn json.Marshal(s.config.Rollups[0])\n\tcase dependencySetKey:\n\t\tif !s.config.InteropEnabled {\n\t\t\treturn nil, errors.New(\"host is not configured to serve dependencySet local keys\")\n\t\t}\n\t\treturn json.Marshal(s.config.DependencySet)\n\tcase l1ChainConfigKey:\n\t\t// NOTE: We check the L2 chain ID again to determine if we are using custom configs\n\t\tif s.config.L2ChainID != boot.CustomChainIDIndicator {\n\t\t\treturn nil, ErrNotFound\n\t\t}\n\t\treturn json.Marshal(s.config.L1ChainConfig)\n\tdefault:\n\t\treturn nil, ErrNotFound\n\t}\n}",
+  "resolutions": {
+    "437dcc6cbc847e9a": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "1f5c32d18cf7148d": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

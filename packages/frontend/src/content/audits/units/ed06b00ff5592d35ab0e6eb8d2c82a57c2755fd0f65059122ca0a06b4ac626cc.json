@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "ed06b00ff5592d35ab0e6eb8d2c82a57c2755fd0f65059122ca0a06b4ac626cc",
+  "name": "config.go",
+  "kind": "program",
+  "lines": 22,
+  "source": "package interop\n\nimport (\n\t\"github.com/ethereum-optimism/optimism/op-program/client/boot\"\n\t\"github.com/ethereum-optimism/optimism/op-program/client/l1\"\n\t\"github.com/ethereum-optimism/optimism/op-supervisor/supervisor/backend/depset\"\n)\n\n// getFullConfig creates a new depset.FullConfigSet using the boot-info config sources,\n// and a L1 preimage oracle to load the L1 block info of the rollup anchor blocks.\nfunc getFullConfig(c boot.ConfigSource, l1PreimageOracle l1.Oracle, depSet depset.DependencySet) (depset.FullConfigSet, error) {\n\tconfigs := make(depset.StaticRollupConfigSet)\n\tfor _, chID := range depSet.Chains() {\n\t\trollupCfg, err := c.RollupConfig(chID)\n\t\tif err != nil {\n\t\t\treturn nil, err\n\t\t}\n\t\tl1Header := l1PreimageOracle.HeaderByBlockHash(rollupCfg.Genesis.L1.Hash)\n\t\tconfigs[chID] = depset.StaticRollupConfigFromRollupConfig(rollupCfg, l1Header.Time())\n\t}\n\treturn depset.NewFullConfigSetMerged(configs, depSet)\n}",
+  "resolutions": {
+    "437dcc6cbc847e9a": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "1f5c32d18cf7148d": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

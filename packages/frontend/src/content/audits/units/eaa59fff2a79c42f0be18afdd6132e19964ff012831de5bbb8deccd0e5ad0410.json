@@ -283,6 +283,338 @@
         ]
       },
       "warnings": []
+    },
+    "d80a56c5abf9208b": {
+      "status": "library",
+      "coveredLines": 15,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "IERC721Receiver",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/token/ERC721/IERC721Receiver.sol",
+        "commit": "b027c3541c03348767b62d45721eaa7d50f02b65",
+        "commitTimestamp": "2023-07-19T19:13:00Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/b027c3541c03348767b62d45721eaa7d50f02b65/contracts/token/ERC721/IERC721Receiver.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "audit",
+        "coverage": "Full review of the file at the Phase 3 audit commit.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 2,
+        "ignoredRemoved": 1,
+        "unchanged": 15,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 4,
+            "oldLines": 7,
+            "newStart": 4,
+            "newLines": 8,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "     * by `operator` from `from`, this function is called."
+              },
+              { "type": " ", "oldLine": 5, "newLine": 5, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 6,
+                "newLine": 6,
+                "text": "     * It must return its Solidity selector to confirm the token transfer."
+              },
+              {
+                "type": "-",
+                "oldLine": 7,
+                "text": "     * If any other value is returned or the interface is not implemented by the recipient, the transfer will be reverted.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 7,
+                "text": "     * If any other value is returned or the interface is not implemented by the recipient, the transfer will be",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 8,
+                "text": "     * reverted.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 8, "newLine": 9, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 10,
+                "text": "     * The selector can be obtained in Solidity with `IERC721Receiver.onERC721Received.selector`."
+              },
+              { "type": " ", "oldLine": 10, "newLine": 11, "text": "     */" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "437dcc6cbc847e9a": {
+      "status": "library",
+      "coveredLines": 14,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "IERC721Receiver",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/token/ERC721/IERC721Receiver.sol",
+        "commit": "b027c3541c03348767b62d45721eaa7d50f02b65",
+        "commitTimestamp": "2023-07-19T19:13:00Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/b027c3541c03348767b62d45721eaa7d50f02b65/contracts/token/ERC721/IERC721Receiver.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "audit",
+        "coverage": "Full review of the file at the Phase 3 audit commit.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "warnings": []
+    },
+    "e3b0c44298fc1c14": {
+      "status": "library",
+      "coveredLines": 14,
+      "match": {
+        "origin": "library",
+        "collection": "openzeppelin",
+        "relation": { "type": "library" },
+        "rank": 3,
+        "matchedBy": "identity",
+        "auditedName": "IERC721Receiver",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/token/ERC721/IERC721Receiver.sol",
+        "commit": "b027c3541c03348767b62d45721eaa7d50f02b65",
+        "commitTimestamp": "2023-07-19T19:13:00Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/b027c3541c03348767b62d45721eaa7d50f02b65/contracts/token/ERC721/IERC721Receiver.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "audit",
+        "coverage": "Full review of the file at the Phase 3 audit commit.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "warnings": []
+    },
+    "d79ad2713a1d64a9": {
+      "status": "library",
+      "coveredLines": 15,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "IERC721Receiver",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/token/ERC721/IERC721Receiver.sol",
+        "commit": "b027c3541c03348767b62d45721eaa7d50f02b65",
+        "commitTimestamp": "2023-07-19T19:13:00Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/b027c3541c03348767b62d45721eaa7d50f02b65/contracts/token/ERC721/IERC721Receiver.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "audit",
+        "coverage": "Full review of the file at the Phase 3 audit commit.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 2,
+        "ignoredRemoved": 1,
+        "unchanged": 15,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 4,
+            "oldLines": 7,
+            "newStart": 4,
+            "newLines": 8,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "     * by `operator` from `from`, this function is called."
+              },
+              { "type": " ", "oldLine": 5, "newLine": 5, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 6,
+                "newLine": 6,
+                "text": "     * It must return its Solidity selector to confirm the token transfer."
+              },
+              {
+                "type": "-",
+                "oldLine": 7,
+                "text": "     * If any other value is returned or the interface is not implemented by the recipient, the transfer will be reverted.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 7,
+                "text": "     * If any other value is returned or the interface is not implemented by the recipient, the transfer will be",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 8,
+                "text": "     * reverted.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 8, "newLine": 9, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 10,
+                "text": "     * The selector can be obtained in Solidity with `IERC721Receiver.onERC721Received.selector`."
+              },
+              { "type": " ", "oldLine": 10, "newLine": 11, "text": "     */" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "5d5f82d91c09d4ec": {
+      "status": "library",
+      "coveredLines": 14,
+      "match": {
+        "origin": "library",
+        "collection": "openzeppelin",
+        "relation": { "type": "library" },
+        "rank": 3,
+        "matchedBy": "identity",
+        "auditedName": "IERC721Receiver",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/token/ERC721/IERC721Receiver.sol",
+        "commit": "b027c3541c03348767b62d45721eaa7d50f02b65",
+        "commitTimestamp": "2023-07-19T19:13:00Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/b027c3541c03348767b62d45721eaa7d50f02b65/contracts/token/ERC721/IERC721Receiver.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "audit",
+        "coverage": "Full review of the file at the Phase 3 audit commit.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 1,
+        "ignoredRemoved": 1,
+        "unchanged": 14,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 6,
+            "oldLines": 7,
+            "newStart": 6,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 6,
+                "newLine": 6,
+                "text": "     * It must return its Solidity selector to confirm the token transfer."
+              },
+              {
+                "type": " ",
+                "oldLine": 7,
+                "newLine": 7,
+                "text": "     * If any other value is returned or the interface is not implemented by the recipient, the transfer will be reverted."
+              },
+              { "type": " ", "oldLine": 8, "newLine": 8, "text": "     *" },
+              {
+                "type": "-",
+                "oldLine": 9,
+                "text": "     * The selector can be obtained in Solidity with `IERC721Receiver.onERC721Received.selector`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 9,
+                "text": "     * The selector can be obtained in Solidity with `IERC721.onERC721Received.selector`.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 10, "newLine": 10, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 11,
+                "newLine": 11,
+                "text": "    function onERC721Received(address operator, address from, uint256 tokenId, bytes calldata data)"
+              },
+              {
+                "type": " ",
+                "oldLine": 12,
+                "newLine": 12,
+                "text": "        external"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "2295595c4243408b": {
+      "status": "library",
+      "coveredLines": 14,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "IERC721Receiver",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/token/ERC721/IERC721Receiver.sol",
+        "commit": "b027c3541c03348767b62d45721eaa7d50f02b65",
+        "commitTimestamp": "2023-07-19T19:13:00Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/b027c3541c03348767b62d45721eaa7d50f02b65/contracts/token/ERC721/IERC721Receiver.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "audit",
+        "coverage": "Full review of the file at the Phase 3 audit commit.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "warnings": []
     }
   }
 }

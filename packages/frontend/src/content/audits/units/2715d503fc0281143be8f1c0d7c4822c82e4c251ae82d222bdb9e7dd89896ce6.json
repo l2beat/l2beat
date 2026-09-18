@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "2715d503fc0281143be8f1c0d7c4822c82e4c251ae82d222bdb9e7dd89896ce6",
+  "name": "README.md",
+  "kind": "program",
+  "lines": 86,
+  "source": "# Privacy Pool Circuits\n\nThis package contains the zero-knowledge circuit implementations for the Privacy Pool protocol. The circuits are written in Circom and are designed to work together to enable private withdrawals with membership proofs.\n\n## Circuit Architecture\n\nThe protocol implements three main circuits that work together:\n\n### Withdrawal Circuit\n\nThe withdrawal circuit verifies that a user can privately withdraw funds from the protocol. It takes as input:\n\n- The withdrawal amount and details\n- The unique related commitments identifier (label)\n- A state root and ASP (Association Set Provider) root\n- A proof of inclusion in the state tree\n- A proof of inclusion in the ASP tree\n- Nullifier and commitment secrets\n\nThe circuit ensures the withdrawal is valid by verifying:\n\n- The user knows the preimage of the commitment\n- The commitment exists in the state tree\n- The comimtment label is included in the ASP tree\n- The withdrawal amount is valid and matches the commitment\n\n### LeanIMT Circuit\n\nThe LeanIMT (Lean Incremental Merkle Tree) circuit handles merkle tree operations. It implements an optimized merkle tree that:\n\n- Supports dynamic depth\n- Optimizes node computations by propagating single child values\n- Verifies inclusion proofs efficiently\n\n### Commitment Circuit\n\nThe commitment circuit manages the hashing and verification of commitments. It:\n\n- Computes commitment hashes from input values and secrets\n- Generates nullifier hashes for preventing double-spending\n- Creates precommitment hashes for privacy preservation\n\n## Development\n\n### Prerequisites\n\n- Node.js 20+\n- Yarn\n- circom 2.2.0+\n\n### Building\n\n```bash\n# Compile circuits\nyarn compile\n```\n\n### Testing\n\n```bash\n# Run circuit tests\nyarn test\n```\n\n### Generating Groth16 Solidity verifiers\n\n```bash\n# Generate verifier for the withdrawal circuit\nyarn gencontract:withdraw\n```\n\n```bash\n# Generate verifier for the commitment circuit\nyarn gencontract:commitment\n```\n\n## Directory Structure\n\n```\ncircuits/\n├── circuits/\n│   ├── commitment.circom     # Commitment circuit\n│   ├── merkleTree.circom     # LeanIMT circuit\n│   └── withdraw.circom       # Withdrawal circuit\n└── tests/                    # Circuit tests\n```",
+  "resolutions": {
+    "cbbcf694abda362c": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

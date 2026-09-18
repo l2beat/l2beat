@@ -12,6 +12,8 @@ export interface ZkSourceEntry {
   address?: string
   /** Directory inside the project's zk cache holding the fetched sources. */
   path: string
+  /** Shared directory relative to the zk cache root. Falls back to the old per-project path. */
+  cachePath?: string
   /** Repository the sources were fetched from, canonical `owner/repo`. */
   repository: string
   /** Repository-relative path of the fetched tree or file. */
@@ -43,7 +45,9 @@ export function listZkSourceFiles(
   projectId: string,
   entry: ZkSourceEntry,
 ): ZkSourceFile[] {
-  const root = path.join(zkProjectDir(zkCacheDir, projectId), entry.path)
+  const root = entry.cachePath
+    ? path.join(zkCacheDir, entry.cachePath)
+    : path.join(zkProjectDir(zkCacheDir, projectId), entry.path)
   if (!existsSync(root)) return []
   return walk(root)
     .filter((f) => !f.endsWith('.json') && isTextFile(f))
@@ -51,7 +55,8 @@ export function listZkSourceFiles(
       const below = path.relative(root, file).split(path.sep).join('/')
       return {
         file,
-        relativePath: path.relative(zkCacheDir, file).split(path.sep).join('/'),
+        // Keep the path project-local even when the physical checkout is shared.
+        relativePath: path.posix.join(projectId, entry.path, below),
         repoPath: entry.repoPath.endsWith(below)
           ? entry.repoPath
           : path.posix.join(entry.repoPath, below),

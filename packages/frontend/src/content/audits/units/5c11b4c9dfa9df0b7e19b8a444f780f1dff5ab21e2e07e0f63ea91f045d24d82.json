@@ -228,6 +228,412 @@
         "totalVersions": 3
       },
       "warnings": []
+    },
+    "437dcc6cbc847e9a": {
+      "status": "identical",
+      "coveredLines": 206,
+      "match": {
+        "origin": "other",
+        "collection": "bob",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "identity",
+        "auditedName": "Address",
+        "similarity": 1,
+        "reportId": "bob/veridise-kailua-2025-02",
+        "repository": "boundless-xyz/kailua",
+        "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "commit": "27dec82b67de1051df9258b36f8366ebf308e5bf",
+        "commitTimestamp": "2025-02-06T07:42:16Z",
+        "url": "https://github.com/boundless-xyz/kailua/blob/27dec82b67de1051df9258b36f8366ebf308e5bf/crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix commit",
+        "coverage": "Confirmed fix commit for V-KLA-VUL-004 (contract nits).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "warnings": []
+    },
+    "d80a56c5abf9208b": {
+      "status": "identical",
+      "coveredLines": 206,
+      "match": {
+        "origin": "other",
+        "collection": "bob",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "identity",
+        "auditedName": "Address",
+        "similarity": 1,
+        "reportId": "bob/veridise-kailua-2025-02",
+        "repository": "boundless-xyz/kailua",
+        "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "commit": "27dec82b67de1051df9258b36f8366ebf308e5bf",
+        "commitTimestamp": "2025-02-06T07:42:16Z",
+        "url": "https://github.com/boundless-xyz/kailua/blob/27dec82b67de1051df9258b36f8366ebf308e5bf/crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix commit",
+        "coverage": "Confirmed fix commit for V-KLA-VUL-004 (contract nits).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 1,
+        "ignoredRemoved": 1,
+        "unchanged": 206,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 193,
+            "oldLines": 7,
+            "newStart": 193,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 193,
+                "newLine": 193,
+                "text": "            // Look for revert reason and bubble it up if present"
+              },
+              {
+                "type": " ",
+                "oldLine": 194,
+                "newLine": 194,
+                "text": "            if (returndata.length > 0) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 195,
+                "newLine": 195,
+                "text": "                // The easiest way to bubble the revert reason is using memory via assembly"
+              },
+              {
+                "type": "-",
+                "oldLine": 196,
+                "text": "                /// @solidity memory-safe-assembly",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 196, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 197,
+                "newLine": 197,
+                "text": "                assembly {"
+              },
+              {
+                "type": " ",
+                "oldLine": 198,
+                "newLine": 198,
+                "text": "                    let returndata_size := mload(returndata)"
+              },
+              {
+                "type": " ",
+                "oldLine": 199,
+                "newLine": 199,
+                "text": "                    revert(add(32, returndata), returndata_size)"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "13052b7adc791062": {
+      "status": "identical",
+      "coveredLines": 206,
+      "match": {
+        "origin": "other",
+        "collection": "bob",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "identity",
+        "auditedName": "Address",
+        "similarity": 1,
+        "reportId": "bob/veridise-kailua-2025-02",
+        "repository": "boundless-xyz/kailua",
+        "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "commit": "27dec82b67de1051df9258b36f8366ebf308e5bf",
+        "commitTimestamp": "2025-02-06T07:42:16Z",
+        "url": "https://github.com/boundless-xyz/kailua/blob/27dec82b67de1051df9258b36f8366ebf308e5bf/crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix commit",
+        "coverage": "Confirmed fix commit for V-KLA-VUL-004 (contract nits).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 1,
+        "ignoredRemoved": 1,
+        "unchanged": 206,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 193,
+            "oldLines": 7,
+            "newStart": 193,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 193,
+                "newLine": 193,
+                "text": "            // Look for revert reason and bubble it up if present"
+              },
+              {
+                "type": " ",
+                "oldLine": 194,
+                "newLine": 194,
+                "text": "            if (returndata.length > 0) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 195,
+                "newLine": 195,
+                "text": "                // The easiest way to bubble the revert reason is using memory via assembly"
+              },
+              {
+                "type": "-",
+                "oldLine": 196,
+                "text": "                /// @solidity memory-safe-assembly",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 196, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 197,
+                "newLine": 197,
+                "text": "                assembly {"
+              },
+              {
+                "type": " ",
+                "oldLine": 198,
+                "newLine": 198,
+                "text": "                    let returndata_size := mload(returndata)"
+              },
+              {
+                "type": " ",
+                "oldLine": 199,
+                "newLine": 199,
+                "text": "                    revert(add(32, returndata), returndata_size)"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "d79ad2713a1d64a9": {
+      "status": "identical",
+      "coveredLines": 206,
+      "match": {
+        "origin": "other",
+        "collection": "bob",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "identity",
+        "auditedName": "Address",
+        "similarity": 1,
+        "reportId": "bob/veridise-kailua-2025-02",
+        "repository": "boundless-xyz/kailua",
+        "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "commit": "27dec82b67de1051df9258b36f8366ebf308e5bf",
+        "commitTimestamp": "2025-02-06T07:42:16Z",
+        "url": "https://github.com/boundless-xyz/kailua/blob/27dec82b67de1051df9258b36f8366ebf308e5bf/crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix commit",
+        "coverage": "Confirmed fix commit for V-KLA-VUL-004 (contract nits).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "warnings": []
+    },
+    "2295595c4243408b": {
+      "status": "identical",
+      "coveredLines": 206,
+      "match": {
+        "origin": "other",
+        "collection": "bob",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "identity",
+        "auditedName": "Address",
+        "similarity": 1,
+        "reportId": "bob/veridise-kailua-2025-02",
+        "repository": "boundless-xyz/kailua",
+        "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "commit": "27dec82b67de1051df9258b36f8366ebf308e5bf",
+        "commitTimestamp": "2025-02-06T07:42:16Z",
+        "url": "https://github.com/boundless-xyz/kailua/blob/27dec82b67de1051df9258b36f8366ebf308e5bf/crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix commit",
+        "coverage": "Confirmed fix commit for V-KLA-VUL-004 (contract nits).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 1,
+        "ignoredRemoved": 1,
+        "unchanged": 206,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 193,
+            "oldLines": 7,
+            "newStart": 193,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 193,
+                "newLine": 193,
+                "text": "            // Look for revert reason and bubble it up if present"
+              },
+              {
+                "type": " ",
+                "oldLine": 194,
+                "newLine": 194,
+                "text": "            if (returndata.length > 0) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 195,
+                "newLine": 195,
+                "text": "                // The easiest way to bubble the revert reason is using memory via assembly"
+              },
+              {
+                "type": "-",
+                "oldLine": 196,
+                "text": "                /// @solidity memory-safe-assembly",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 196, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 197,
+                "newLine": 197,
+                "text": "                assembly {"
+              },
+              {
+                "type": " ",
+                "oldLine": 198,
+                "newLine": 198,
+                "text": "                    let returndata_size := mload(returndata)"
+              },
+              {
+                "type": " ",
+                "oldLine": 199,
+                "newLine": 199,
+                "text": "                    revert(add(32, returndata), returndata_size)"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "e3b0c44298fc1c14": {
+      "status": "identical",
+      "coveredLines": 206,
+      "match": {
+        "origin": "other",
+        "collection": "bob",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "identity",
+        "auditedName": "Address",
+        "similarity": 1,
+        "reportId": "bob/veridise-kailua-2025-02",
+        "repository": "boundless-xyz/kailua",
+        "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "commit": "27dec82b67de1051df9258b36f8366ebf308e5bf",
+        "commitTimestamp": "2025-02-06T07:42:16Z",
+        "url": "https://github.com/boundless-xyz/kailua/blob/27dec82b67de1051df9258b36f8366ebf308e5bf/crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix commit",
+        "coverage": "Confirmed fix commit for V-KLA-VUL-004 (contract nits).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 1,
+        "ignoredRemoved": 1,
+        "unchanged": 206,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 193,
+            "oldLines": 7,
+            "newStart": 193,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 193,
+                "newLine": 193,
+                "text": "            // Look for revert reason and bubble it up if present"
+              },
+              {
+                "type": " ",
+                "oldLine": 194,
+                "newLine": 194,
+                "text": "            if (returndata.length > 0) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 195,
+                "newLine": 195,
+                "text": "                // The easiest way to bubble the revert reason is using memory via assembly"
+              },
+              {
+                "type": "-",
+                "oldLine": 196,
+                "text": "                /// @solidity memory-safe-assembly",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 196, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 197,
+                "newLine": 197,
+                "text": "                assembly {"
+              },
+              {
+                "type": " ",
+                "oldLine": 198,
+                "newLine": 198,
+                "text": "                    let returndata_size := mload(returndata)"
+              },
+              {
+                "type": " ",
+                "oldLine": 199,
+                "newLine": 199,
+                "text": "                    revert(add(32, returndata), returndata_size)"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
     }
   }
 }

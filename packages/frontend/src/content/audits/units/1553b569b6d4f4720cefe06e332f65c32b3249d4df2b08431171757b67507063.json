@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "1553b569b6d4f4720cefe06e332f65c32b3249d4df2b08431171757b67507063",
+  "name": "stub_oracle.go",
+  "kind": "program",
+  "lines": 124,
+  "source": "package test\n\nimport (\n\t\"testing\"\n\n\t\"github.com/ethereum-optimism/optimism/op-service/eth\"\n\t\"github.com/ethereum/go-ethereum/common\"\n\t\"github.com/ethereum/go-ethereum/core/rawdb\"\n\t\"github.com/ethereum/go-ethereum/core/types\"\n\t\"github.com/ethereum/go-ethereum/ethdb\"\n)\n\n// Same as l2.StateOracle but need to use our own copy to avoid dependency loops\ntype stateOracle interface {\n\tNodeByHash(nodeHash common.Hash) []byte\n\tCodeByHash(codeHash common.Hash) []byte\n}\n\ntype StubBlockOracle struct {\n\tt       *testing.T\n\tBlocks  map[common.Hash]*types.Block\n\tOutputs map[common.Hash]eth.Output\n\tstateOracle\n}\n\nfunc NewStubOracle(t *testing.T) (*StubBlockOracle, *StubStateOracle) {\n\tstateOracle := NewStubStateOracle(t)\n\tblockOracle := StubBlockOracle{\n\t\tt:           t,\n\t\tBlocks:      make(map[common.Hash]*types.Block),\n\t\tOutputs:     make(map[common.Hash]eth.Output),\n\t\tstateOracle: stateOracle,\n\t}\n\treturn &blockOracle, stateOracle\n}\n\nfunc NewStubOracleWithBlocks(t *testing.T, chain []*types.Block, outputs []eth.Output, db ethdb.Database) *StubBlockOracle {\n\tblocks := make(map[common.Hash]*types.Block, len(chain))\n\tfor _, block := range chain {\n\t\tblocks[block.Hash()] = block\n\t}\n\to := make(map[common.Hash]eth.Output, len(outputs))\n\tfor _, output := range outputs {\n\t\to[common.Hash(eth.OutputRoot(output))] = output\n\t}\n\treturn &StubBlockOracle{\n\t\tt:           t,\n\t\tBlocks:      blocks,\n\t\tOutputs:     o,\n\t\tstateOracle: &KvStateOracle{t: t, Source: db},\n\t}\n}\n\nfunc (o StubBlockOracle) BlockByHash(blockHash common.Hash) *types.Block {\n\tblock, ok := o.Blocks[blockHash]\n\tif !ok {\n\t\to.t.Fatalf(\"requested unknown block %s\", blockHash)\n\t}\n\treturn block\n}\n\nfunc (o StubBlockOracle) OutputByRoot(root common.Hash) eth.Output {\n\toutput, ok := o.Outputs[root]\n\tif !ok {\n\t\to.t.Fatalf(\"requested unknown output root %s\", root)\n\t}\n\treturn output\n}\n\n// KvStateOracle loads data from a source ethdb.KeyValueStore\ntype KvStateOracle struct {\n\tt      *testing.T\n\tSource ethdb.KeyValueStore\n}\n\nfunc NewKvStateOracle(t *testing.T, db ethdb.KeyValueStore) *KvStateOracle {\n\treturn &KvStateOracle{\n\t\tt:      t,\n\t\tSource: db,\n\t}\n}\n\nfunc (o *KvStateOracle) NodeByHash(nodeHash common.Hash) []byte {\n\tval, err := o.Source.Get(nodeHash.Bytes())\n\tif err != nil {\n\t\to.t.Fatalf(\"error retrieving node %v: %v\", nodeHash, err)\n\t}\n\treturn val\n}\n\nfunc (o *KvStateOracle) CodeByHash(hash common.Hash) []byte {\n\treturn rawdb.ReadCode(o.Source, hash)\n}\n\nfunc NewStubStateOracle(t *testing.T) *StubStateOracle {\n\treturn &StubStateOracle{\n\t\tt:    t,\n\t\tData: make(map[common.Hash][]byte),\n\t\tCode: make(map[common.Hash][]byte),\n\t}\n}\n\n// StubStateOracle is a StateOracle implementation that reads from simple maps\ntype StubStateOracle struct {\n\tt    *testing.T\n\tData map[common.Hash][]byte\n\tCode map[common.Hash][]byte\n}\n\nfunc (o *StubStateOracle) NodeByHash(nodeHash common.Hash) []byte {\n\tdata, ok := o.Data[nodeHash]\n\tif !ok {\n\t\to.t.Fatalf(\"no value for node %v\", nodeHash)\n\t}\n\treturn data\n}\n\nfunc (o *StubStateOracle) CodeByHash(hash common.Hash) []byte {\n\tdata, ok := o.Code[hash]\n\tif !ok {\n\t\to.t.Fatalf(\"no value for code %v\", hash)\n\t}\n\treturn data\n}",
+  "resolutions": {
+    "437dcc6cbc847e9a": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "bb55951394276893": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

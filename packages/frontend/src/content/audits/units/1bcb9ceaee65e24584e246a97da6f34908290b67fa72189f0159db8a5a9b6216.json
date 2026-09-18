@@ -178,6 +178,1044 @@
         ]
       },
       "warnings": []
+    },
+    "d80a56c5abf9208b": {
+      "status": "differs",
+      "coveredLines": 331,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "similarity",
+        "auditedName": "Math",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2022-10-ERC4626",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/utils/math/Math.sol",
+        "commit": "827c8cc12dd45d0c72ee4086716b486405691d99",
+        "commitTimestamp": "2022-11-09T22:12:51Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/827c8cc12dd45d0c72ee4086716b486405691d99/contracts/utils/math/Math.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Verification of the N-04 fix only (added missing require error message).",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 12
+      },
+      "diff": {
+        "added": 1,
+        "removed": 1,
+        "ignoredAdded": 4,
+        "ignoredRemoved": 1,
+        "unchanged": 331,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 4,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "library Math {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "library MathUpgradeable {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "    enum Rounding {"
+              },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "        Down, // Toward negative infinity"
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "        Up, // Toward infinity"
+              }
+            ]
+          },
+          {
+            "oldStart": 60,
+            "oldLines": 6,
+            "newStart": 60,
+            "newLines": 9,
+            "lines": [
+              { "type": " ", "oldLine": 60, "newLine": 60, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 61,
+                "newLine": 61,
+                "text": "            // Handle non-overflow cases, 256 by 256 division."
+              },
+              {
+                "type": " ",
+                "oldLine": 62,
+                "newLine": 62,
+                "text": "            if (prod1 == 0) {"
+              },
+              {
+                "type": "+",
+                "newLine": 63,
+                "text": "                // Solidity will revert if denominator == 0, unlike the div opcode on its own.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 64,
+                "text": "                // The surrounding unchecked block does not change this fact.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 65,
+                "text": "                // See https://docs.soliditylang.org/en/latest/control-structures.html#checked-or-unchecked-arithmetic.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 63,
+                "newLine": 66,
+                "text": "                return prod0 / denominator;"
+              },
+              {
+                "type": " ",
+                "oldLine": 64,
+                "newLine": 67,
+                "text": "            }"
+              },
+              { "type": " ", "oldLine": 65, "newLine": 68, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 317,
+            "oldLines": 7,
+            "newStart": 320,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 317, "newLine": 320, "text": "    }" },
+              { "type": " ", "oldLine": 318, "newLine": 321, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 319,
+                "newLine": 322,
+                "text": "    /**"
+              },
+              {
+                "type": "-",
+                "oldLine": 320,
+                "text": "     * @dev Return the log in base 10, following the selected rounding direction, of a positive value.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 323,
+                "text": "     * @dev Return the log in base 256, following the selected rounding direction, of a positive value.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 321,
+                "newLine": 324,
+                "text": "     * Returns 0 if given 0."
+              },
+              {
+                "type": " ",
+                "oldLine": 322,
+                "newLine": 325,
+                "text": "     */"
+              },
+              {
+                "type": " ",
+                "oldLine": 323,
+                "newLine": 326,
+                "text": "    function log256(uint256 value, Rounding rounding) internal pure returns (uint256) {"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "437dcc6cbc847e9a": {
+      "status": "differs",
+      "coveredLines": 331,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "similarity",
+        "auditedName": "Math",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2022-10-ERC4626",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/utils/math/Math.sol",
+        "commit": "827c8cc12dd45d0c72ee4086716b486405691d99",
+        "commitTimestamp": "2022-11-09T22:12:51Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/827c8cc12dd45d0c72ee4086716b486405691d99/contracts/utils/math/Math.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Verification of the N-04 fix only (added missing require error message).",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 12
+      },
+      "diff": {
+        "added": 1,
+        "removed": 1,
+        "ignoredAdded": 4,
+        "ignoredRemoved": 1,
+        "unchanged": 331,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 4,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "library Math {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "library MathUpgradeable {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "    enum Rounding {"
+              },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "        Down, // Toward negative infinity"
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "        Up, // Toward infinity"
+              }
+            ]
+          },
+          {
+            "oldStart": 60,
+            "oldLines": 6,
+            "newStart": 60,
+            "newLines": 9,
+            "lines": [
+              { "type": " ", "oldLine": 60, "newLine": 60, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 61,
+                "newLine": 61,
+                "text": "            // Handle non-overflow cases, 256 by 256 division."
+              },
+              {
+                "type": " ",
+                "oldLine": 62,
+                "newLine": 62,
+                "text": "            if (prod1 == 0) {"
+              },
+              {
+                "type": "+",
+                "newLine": 63,
+                "text": "                // Solidity will revert if denominator == 0, unlike the div opcode on its own.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 64,
+                "text": "                // The surrounding unchecked block does not change this fact.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 65,
+                "text": "                // See https://docs.soliditylang.org/en/latest/control-structures.html#checked-or-unchecked-arithmetic.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 63,
+                "newLine": 66,
+                "text": "                return prod0 / denominator;"
+              },
+              {
+                "type": " ",
+                "oldLine": 64,
+                "newLine": 67,
+                "text": "            }"
+              },
+              { "type": " ", "oldLine": 65, "newLine": 68, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 317,
+            "oldLines": 7,
+            "newStart": 320,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 317, "newLine": 320, "text": "    }" },
+              { "type": " ", "oldLine": 318, "newLine": 321, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 319,
+                "newLine": 322,
+                "text": "    /**"
+              },
+              {
+                "type": "-",
+                "oldLine": 320,
+                "text": "     * @dev Return the log in base 10, following the selected rounding direction, of a positive value.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 323,
+                "text": "     * @dev Return the log in base 256, following the selected rounding direction, of a positive value.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 321,
+                "newLine": 324,
+                "text": "     * Returns 0 if given 0."
+              },
+              {
+                "type": " ",
+                "oldLine": 322,
+                "newLine": 325,
+                "text": "     */"
+              },
+              {
+                "type": " ",
+                "oldLine": 323,
+                "newLine": 326,
+                "text": "    function log256(uint256 value, Rounding rounding) internal pure returns (uint256) {"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "5d5f82d91c09d4ec": {
+      "status": "differs",
+      "coveredLines": 331,
+      "match": {
+        "origin": "library",
+        "collection": "openzeppelin",
+        "relation": { "type": "library" },
+        "rank": 3,
+        "matchedBy": "similarity",
+        "auditedName": "Math",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2022-10-ERC4626",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/utils/math/Math.sol",
+        "commit": "827c8cc12dd45d0c72ee4086716b486405691d99",
+        "commitTimestamp": "2022-11-09T22:12:51Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/827c8cc12dd45d0c72ee4086716b486405691d99/contracts/utils/math/Math.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Verification of the N-04 fix only (added missing require error message).",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 12
+      },
+      "diff": {
+        "added": 1,
+        "removed": 1,
+        "ignoredAdded": 4,
+        "ignoredRemoved": 1,
+        "unchanged": 331,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 4,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "library Math {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "library MathUpgradeable {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "    enum Rounding {"
+              },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "        Down, // Toward negative infinity"
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "        Up, // Toward infinity"
+              }
+            ]
+          },
+          {
+            "oldStart": 60,
+            "oldLines": 6,
+            "newStart": 60,
+            "newLines": 9,
+            "lines": [
+              { "type": " ", "oldLine": 60, "newLine": 60, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 61,
+                "newLine": 61,
+                "text": "            // Handle non-overflow cases, 256 by 256 division."
+              },
+              {
+                "type": " ",
+                "oldLine": 62,
+                "newLine": 62,
+                "text": "            if (prod1 == 0) {"
+              },
+              {
+                "type": "+",
+                "newLine": 63,
+                "text": "                // Solidity will revert if denominator == 0, unlike the div opcode on its own.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 64,
+                "text": "                // The surrounding unchecked block does not change this fact.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 65,
+                "text": "                // See https://docs.soliditylang.org/en/latest/control-structures.html#checked-or-unchecked-arithmetic.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 63,
+                "newLine": 66,
+                "text": "                return prod0 / denominator;"
+              },
+              {
+                "type": " ",
+                "oldLine": 64,
+                "newLine": 67,
+                "text": "            }"
+              },
+              { "type": " ", "oldLine": 65, "newLine": 68, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 317,
+            "oldLines": 7,
+            "newStart": 320,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 317, "newLine": 320, "text": "    }" },
+              { "type": " ", "oldLine": 318, "newLine": 321, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 319,
+                "newLine": 322,
+                "text": "    /**"
+              },
+              {
+                "type": "-",
+                "oldLine": 320,
+                "text": "     * @dev Return the log in base 10, following the selected rounding direction, of a positive value.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 323,
+                "text": "     * @dev Return the log in base 256, following the selected rounding direction, of a positive value.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 321,
+                "newLine": 324,
+                "text": "     * Returns 0 if given 0."
+              },
+              {
+                "type": " ",
+                "oldLine": 322,
+                "newLine": 325,
+                "text": "     */"
+              },
+              {
+                "type": " ",
+                "oldLine": 323,
+                "newLine": 326,
+                "text": "    function log256(uint256 value, Rounding rounding) internal pure returns (uint256) {"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "e3b0c44298fc1c14": {
+      "status": "differs",
+      "coveredLines": 331,
+      "match": {
+        "origin": "library",
+        "collection": "openzeppelin",
+        "relation": { "type": "library" },
+        "rank": 3,
+        "matchedBy": "similarity",
+        "auditedName": "Math",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2022-10-ERC4626",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/utils/math/Math.sol",
+        "commit": "827c8cc12dd45d0c72ee4086716b486405691d99",
+        "commitTimestamp": "2022-11-09T22:12:51Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/827c8cc12dd45d0c72ee4086716b486405691d99/contracts/utils/math/Math.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Verification of the N-04 fix only (added missing require error message).",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 12
+      },
+      "diff": {
+        "added": 1,
+        "removed": 1,
+        "ignoredAdded": 4,
+        "ignoredRemoved": 1,
+        "unchanged": 331,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 4,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "library Math {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "library MathUpgradeable {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "    enum Rounding {"
+              },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "        Down, // Toward negative infinity"
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "        Up, // Toward infinity"
+              }
+            ]
+          },
+          {
+            "oldStart": 60,
+            "oldLines": 6,
+            "newStart": 60,
+            "newLines": 9,
+            "lines": [
+              { "type": " ", "oldLine": 60, "newLine": 60, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 61,
+                "newLine": 61,
+                "text": "            // Handle non-overflow cases, 256 by 256 division."
+              },
+              {
+                "type": " ",
+                "oldLine": 62,
+                "newLine": 62,
+                "text": "            if (prod1 == 0) {"
+              },
+              {
+                "type": "+",
+                "newLine": 63,
+                "text": "                // Solidity will revert if denominator == 0, unlike the div opcode on its own.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 64,
+                "text": "                // The surrounding unchecked block does not change this fact.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 65,
+                "text": "                // See https://docs.soliditylang.org/en/latest/control-structures.html#checked-or-unchecked-arithmetic.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 63,
+                "newLine": 66,
+                "text": "                return prod0 / denominator;"
+              },
+              {
+                "type": " ",
+                "oldLine": 64,
+                "newLine": 67,
+                "text": "            }"
+              },
+              { "type": " ", "oldLine": 65, "newLine": 68, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 317,
+            "oldLines": 7,
+            "newStart": 320,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 317, "newLine": 320, "text": "    }" },
+              { "type": " ", "oldLine": 318, "newLine": 321, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 319,
+                "newLine": 322,
+                "text": "    /**"
+              },
+              {
+                "type": "-",
+                "oldLine": 320,
+                "text": "     * @dev Return the log in base 10, following the selected rounding direction, of a positive value.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 323,
+                "text": "     * @dev Return the log in base 256, following the selected rounding direction, of a positive value.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 321,
+                "newLine": 324,
+                "text": "     * Returns 0 if given 0."
+              },
+              {
+                "type": " ",
+                "oldLine": 322,
+                "newLine": 325,
+                "text": "     */"
+              },
+              {
+                "type": " ",
+                "oldLine": 323,
+                "newLine": 326,
+                "text": "    function log256(uint256 value, Rounding rounding) internal pure returns (uint256) {"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "2295595c4243408b": {
+      "status": "differs",
+      "coveredLines": 331,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "similarity",
+        "auditedName": "Math",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2022-10-ERC4626",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/utils/math/Math.sol",
+        "commit": "827c8cc12dd45d0c72ee4086716b486405691d99",
+        "commitTimestamp": "2022-11-09T22:12:51Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/827c8cc12dd45d0c72ee4086716b486405691d99/contracts/utils/math/Math.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Verification of the N-04 fix only (added missing require error message).",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 12
+      },
+      "diff": {
+        "added": 1,
+        "removed": 1,
+        "ignoredAdded": 4,
+        "ignoredRemoved": 1,
+        "unchanged": 331,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 4,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "library Math {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "library MathUpgradeable {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "    enum Rounding {"
+              },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "        Down, // Toward negative infinity"
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "        Up, // Toward infinity"
+              }
+            ]
+          },
+          {
+            "oldStart": 60,
+            "oldLines": 6,
+            "newStart": 60,
+            "newLines": 9,
+            "lines": [
+              { "type": " ", "oldLine": 60, "newLine": 60, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 61,
+                "newLine": 61,
+                "text": "            // Handle non-overflow cases, 256 by 256 division."
+              },
+              {
+                "type": " ",
+                "oldLine": 62,
+                "newLine": 62,
+                "text": "            if (prod1 == 0) {"
+              },
+              {
+                "type": "+",
+                "newLine": 63,
+                "text": "                // Solidity will revert if denominator == 0, unlike the div opcode on its own.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 64,
+                "text": "                // The surrounding unchecked block does not change this fact.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 65,
+                "text": "                // See https://docs.soliditylang.org/en/latest/control-structures.html#checked-or-unchecked-arithmetic.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 63,
+                "newLine": 66,
+                "text": "                return prod0 / denominator;"
+              },
+              {
+                "type": " ",
+                "oldLine": 64,
+                "newLine": 67,
+                "text": "            }"
+              },
+              { "type": " ", "oldLine": 65, "newLine": 68, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 317,
+            "oldLines": 7,
+            "newStart": 320,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 317, "newLine": 320, "text": "    }" },
+              { "type": " ", "oldLine": 318, "newLine": 321, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 319,
+                "newLine": 322,
+                "text": "    /**"
+              },
+              {
+                "type": "-",
+                "oldLine": 320,
+                "text": "     * @dev Return the log in base 10, following the selected rounding direction, of a positive value.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 323,
+                "text": "     * @dev Return the log in base 256, following the selected rounding direction, of a positive value.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 321,
+                "newLine": 324,
+                "text": "     * Returns 0 if given 0."
+              },
+              {
+                "type": " ",
+                "oldLine": 322,
+                "newLine": 325,
+                "text": "     */"
+              },
+              {
+                "type": " ",
+                "oldLine": 323,
+                "newLine": 326,
+                "text": "    function log256(uint256 value, Rounding rounding) internal pure returns (uint256) {"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "13052b7adc791062": {
+      "status": "differs",
+      "coveredLines": 331,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "similarity",
+        "auditedName": "Math",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2022-10-ERC4626",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/utils/math/Math.sol",
+        "commit": "827c8cc12dd45d0c72ee4086716b486405691d99",
+        "commitTimestamp": "2022-11-09T22:12:51Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/827c8cc12dd45d0c72ee4086716b486405691d99/contracts/utils/math/Math.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Verification of the N-04 fix only (added missing require error message).",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 12
+      },
+      "diff": {
+        "added": 1,
+        "removed": 1,
+        "ignoredAdded": 4,
+        "ignoredRemoved": 1,
+        "unchanged": 331,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 4,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "library Math {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "library MathUpgradeable {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "    enum Rounding {"
+              },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "        Down, // Toward negative infinity"
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "        Up, // Toward infinity"
+              }
+            ]
+          },
+          {
+            "oldStart": 60,
+            "oldLines": 6,
+            "newStart": 60,
+            "newLines": 9,
+            "lines": [
+              { "type": " ", "oldLine": 60, "newLine": 60, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 61,
+                "newLine": 61,
+                "text": "            // Handle non-overflow cases, 256 by 256 division."
+              },
+              {
+                "type": " ",
+                "oldLine": 62,
+                "newLine": 62,
+                "text": "            if (prod1 == 0) {"
+              },
+              {
+                "type": "+",
+                "newLine": 63,
+                "text": "                // Solidity will revert if denominator == 0, unlike the div opcode on its own.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 64,
+                "text": "                // The surrounding unchecked block does not change this fact.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 65,
+                "text": "                // See https://docs.soliditylang.org/en/latest/control-structures.html#checked-or-unchecked-arithmetic.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 63,
+                "newLine": 66,
+                "text": "                return prod0 / denominator;"
+              },
+              {
+                "type": " ",
+                "oldLine": 64,
+                "newLine": 67,
+                "text": "            }"
+              },
+              { "type": " ", "oldLine": 65, "newLine": 68, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 317,
+            "oldLines": 7,
+            "newStart": 320,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 317, "newLine": 320, "text": "    }" },
+              { "type": " ", "oldLine": 318, "newLine": 321, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 319,
+                "newLine": 322,
+                "text": "    /**"
+              },
+              {
+                "type": "-",
+                "oldLine": 320,
+                "text": "     * @dev Return the log in base 10, following the selected rounding direction, of a positive value.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 323,
+                "text": "     * @dev Return the log in base 256, following the selected rounding direction, of a positive value.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 321,
+                "newLine": 324,
+                "text": "     * Returns 0 if given 0."
+              },
+              {
+                "type": " ",
+                "oldLine": 322,
+                "newLine": 325,
+                "text": "     */"
+              },
+              {
+                "type": " ",
+                "oldLine": 323,
+                "newLine": 326,
+                "text": "    function log256(uint256 value, Rounding rounding) internal pure returns (uint256) {"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
     }
   }
 }

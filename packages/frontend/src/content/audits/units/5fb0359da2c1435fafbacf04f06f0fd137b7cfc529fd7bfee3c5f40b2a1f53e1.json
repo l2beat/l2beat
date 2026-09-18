@@ -20,6 +20,16 @@
       "status": "unaudited",
       "coveredLines": 0,
       "warnings": []
+    },
+    "e3b0c44298fc1c14": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "d80a56c5abf9208b": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
     }
   }
 }

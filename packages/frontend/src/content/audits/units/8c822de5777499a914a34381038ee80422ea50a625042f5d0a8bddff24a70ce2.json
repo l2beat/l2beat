@@ -149,6 +149,66 @@
         "totalVersions": 5
       },
       "warnings": []
+    },
+    "437dcc6cbc847e9a": {
+      "status": "identical",
+      "coveredLines": 16,
+      "match": {
+        "origin": "stack",
+        "collection": "optimism",
+        "relation": {
+          "type": "template",
+          "template": "gnosisSafeModules/LivenessGuard"
+        },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "LocalPreimageKey",
+        "similarity": 1,
+        "reportId": "optimism/cantina-upgrade20-2026-08",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts-bedrock/src/dispute/lib/Types.sol",
+        "commit": "7799a2464f23b4e19abd5e29843545f960e677be",
+        "commitTimestamp": "2026-07-31T01:27:36Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/7799a2464f23b4e19abd5e29843545f960e677be/packages/contracts-bedrock/src/dispute/lib/Types.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Upgrade 20 review of the file at commit 7799a246 (Aug 6-12, 2026). No Critical/High/Medium findings in the report. No findings located in this file.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 5
+      },
+      "warnings": []
+    },
+    "d79ad2713a1d64a9": {
+      "status": "identical",
+      "coveredLines": 16,
+      "match": {
+        "origin": "stack",
+        "collection": "optimism",
+        "relation": {
+          "type": "template",
+          "template": "opstack/AddressManager"
+        },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "LocalPreimageKey",
+        "similarity": 1,
+        "reportId": "optimism/cantina-upgrade20-2026-08",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts-bedrock/src/dispute/lib/Types.sol",
+        "commit": "7799a2464f23b4e19abd5e29843545f960e677be",
+        "commitTimestamp": "2026-07-31T01:27:36Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/7799a2464f23b4e19abd5e29843545f960e677be/packages/contracts-bedrock/src/dispute/lib/Types.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Upgrade 20 review of the file at commit 7799a246 (Aug 6-12, 2026). No Critical/High/Medium findings in the report. No findings located in this file.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 5
+      },
+      "warnings": []
     }
   }
 }

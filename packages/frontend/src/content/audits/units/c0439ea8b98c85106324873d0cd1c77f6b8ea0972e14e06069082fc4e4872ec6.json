@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "c0439ea8b98c85106324873d0cd1c77f6b8ea0972e14e06069082fc4e4872ec6",
+  "name": "internal.rs",
+  "kind": "program",
+  "lines": 73,
+  "source": "use std::sync::Arc;\n\nuse sp1_prover_types::ArtifactClient;\n\nuse crate::{\n    verify::SP1Verifier,\n    worker::{SP1Controller, SP1ProverEngine, WorkerClient},\n    SP1ProverComponents,\n};\n\nstruct SP1WorkerInner<A, W, C: SP1ProverComponents> {\n    controller: SP1Controller<A, W>,\n    prover_engine: SP1ProverEngine<A, W, C>,\n    verifier: SP1Verifier,\n}\n\n/// A worker that can be used to run tasks for the SP1 distributed prover.\n///\n/// # Type Parameters\n///\n/// - `A`: The artifact client type.\n/// - `W`: The worker client type.\n/// - `C`: The prover components type.\npub struct SP1Worker<A, W, C: SP1ProverComponents> {\n    inner: Arc<SP1WorkerInner<A, W, C>>,\n}\n\nimpl<A, W, C: SP1ProverComponents> Clone for SP1Worker<A, W, C> {\n    fn clone(&self) -> Self {\n        Self { inner: self.inner.clone() }\n    }\n}\n\nimpl<A: ArtifactClient, W: WorkerClient, C: SP1ProverComponents> SP1Worker<A, W, C> {\n    /// Create a new worker.\n    pub fn new(\n        controller: SP1Controller<A, W>,\n        prover_engine: SP1ProverEngine<A, W, C>,\n        verifier: SP1Verifier,\n    ) -> Self {\n        Self { inner: Arc::new(SP1WorkerInner { controller, prover_engine, verifier }) }\n    }\n\n    /// Get a reference to the underlying controller.\n    #[inline]\n    pub fn controller(&self) -> &SP1Controller<A, W> {\n        &self.inner.controller\n    }\n\n    /// Get a reference to the underlying prover engine.\n    #[inline]\n    pub fn prover_engine(&self) -> &SP1ProverEngine<A, W, C> {\n        &self.inner.prover_engine\n    }\n\n    /// Get a reference to the underlying verifier.\n    #[inline]\n    pub fn verifier(&self) -> &SP1Verifier {\n        &self.inner.verifier\n    }\n\n    /// Get a reference to the underlying artifact client.\n    #[inline]\n    pub fn artifact_client(&self) -> &A {\n        &self.inner.controller.artifact_client\n    }\n\n    /// Get a reference to the underlying worker client.\n    #[inline]\n    pub fn worker_client(&self) -> &W {\n        &self.inner.controller.worker_client\n    }\n}",
+  "resolutions": {
+    "44ad4cf96e2ef6f0": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "437dcc6cbc847e9a": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "5d5f82d91c09d4ec": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "e3b0c44298fc1c14": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "d79ad2713a1d64a9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "2295595c4243408b": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "d80a56c5abf9208b": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

@@ -371,6 +371,189 @@
         ]
       },
       "warnings": []
+    },
+    "437dcc6cbc847e9a": {
+      "status": "differs",
+      "coveredLines": 77,
+      "match": {
+        "origin": "stack",
+        "collection": "optimism",
+        "relation": {
+          "type": "template",
+          "template": "opstack/AnchorStateRegistry_post13"
+        },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "L1CrossDomainMessenger",
+        "similarity": 0.938,
+        "reportId": "optimism/cantina-u17-2025-10",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts-bedrock/src/L1/L1CrossDomainMessenger.sol",
+        "commit": "aeed7033f7f739d8ecd4bd70a42ff09013bbc91e",
+        "commitTimestamp": "2025-10-16T14:37:42Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/aeed7033f7f739d8ecd4bd70a42ff09013bbc91e/packages/contracts-bedrock/src/L1/L1CrossDomainMessenger.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Full review of the file as part of the u17 (op-contracts/v5.0.0) upgrade review; keccak256 hash listed in the report appendix.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 14
+      },
+      "diff": {
+        "added": 3,
+        "removed": 3,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 77,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 6,
+            "oldLines": 7,
+            "newStart": 6,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 6, "newLine": 6, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 7,
+                "newLine": 7,
+                "text": "    /// @notice Contract of the OptimismPortal."
+              },
+              {
+                "type": " ",
+                "oldLine": 8,
+                "newLine": 8,
+                "text": "    /// @custom:network-specific"
+              },
+              {
+                "type": "-",
+                "oldLine": 9,
+                "text": "    IOptimismPortal public portal;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 9,
+                "text": "    IOptimismPortal2 public portal;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 10, "newLine": 10, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 11,
+                "newLine": 11,
+                "text": "    /// @custom:legacy"
+              },
+              {
+                "type": " ",
+                "oldLine": 12,
+                "newLine": 12,
+                "text": "    /// @custom:spacer systemConfig"
+              }
+            ]
+          },
+          {
+            "oldStart": 28,
+            "oldLines": 7,
+            "newStart": 28,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 28,
+                "newLine": 28,
+                "text": "    /// @notice Initializes the contract."
+              },
+              {
+                "type": " ",
+                "oldLine": 29,
+                "newLine": 29,
+                "text": "    /// @param _systemConfig Contract of the SystemConfig contract on this network."
+              },
+              {
+                "type": " ",
+                "oldLine": 30,
+                "newLine": 30,
+                "text": "    /// @param _portal Contract of the OptimismPortal contract on this network."
+              },
+              {
+                "type": "-",
+                "oldLine": 31,
+                "text": "    function initialize(ISystemConfig _systemConfig, IOptimismPortal _portal) external reinitializer(initVersion()) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 31,
+                "text": "    function initialize(ISystemConfig _systemConfig, IOptimismPortal2 _portal) external reinitializer(initVersion()) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 32,
+                "newLine": 32,
+                "text": "        // Initialization transactions must come from the ProxyAdmin or its owner."
+              },
+              {
+                "type": " ",
+                "oldLine": 33,
+                "newLine": 33,
+                "text": "        _assertOnlyProxyAdminOrProxyAdminOwner();"
+              },
+              { "type": " ", "oldLine": 34, "newLine": 34, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 53,
+            "oldLines": 7,
+            "newStart": 53,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 53,
+                "newLine": 53,
+                "text": "    ///         Public getter is legacy and will be removed in the future. Use `portal()` instead."
+              },
+              {
+                "type": " ",
+                "oldLine": 54,
+                "newLine": 54,
+                "text": "    /// @return Contract of the OptimismPortal on this chain."
+              },
+              {
+                "type": " ",
+                "oldLine": 55,
+                "newLine": 55,
+                "text": "    /// @custom:legacy"
+              },
+              {
+                "type": "-",
+                "oldLine": 56,
+                "text": "    function PORTAL() external view returns (IOptimismPortal) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 56,
+                "text": "    function PORTAL() external view returns (IOptimismPortal2) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 57,
+                "newLine": 57,
+                "text": "        return portal;"
+              },
+              { "type": " ", "oldLine": 58, "newLine": 58, "text": "    }" },
+              { "type": " ", "oldLine": 59, "newLine": 59, "text": "" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
     }
   }
 }

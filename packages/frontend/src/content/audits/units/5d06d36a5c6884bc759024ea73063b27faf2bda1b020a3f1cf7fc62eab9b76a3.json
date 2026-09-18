@@ -32,6 +32,33 @@
         "totalVersions": 9
       },
       "warnings": []
+    },
+    "d80a56c5abf9208b": {
+      "status": "library",
+      "coveredLines": 400,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "TimelockController",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2023-05-v4.9",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/governance/TimelockController.sol",
+        "commit": "01f5abc8622981ba436be09c3515568aa0c141b9",
+        "commitTimestamp": "2023-04-13T15:01:22Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/01f5abc8622981ba436be09c3515568aa0c141b9/contracts/governance/TimelockController.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Review of the changes to this file introduced by pull request #4176 addressing audit findings.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 9
+      },
+      "warnings": []
     }
   }
 }

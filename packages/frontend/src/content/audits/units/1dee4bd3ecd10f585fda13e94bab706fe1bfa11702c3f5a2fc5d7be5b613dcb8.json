@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "1dee4bd3ecd10f585fda13e94bab706fe1bfa11702c3f5a2fc5d7be5b613dcb8",
+  "name": "Cargo.toml",
+  "kind": "program",
+  "lines": 19,
+  "source": "[package]\nname = \"aggregation\"\nversion.workspace = true\nlicense.workspace = true\nedition.workspace = true\nauthors.workspace = true\nhomepage.workspace = true\nrepository.workspace = true\n\n[dependencies]\nsha2.workspace = true\nsp1-zkvm.workspace = true\nsp1-lib.workspace = true\nop-succinct-client-utils.workspace = true\nalloy-consensus.workspace = true\nalloy-primitives.workspace = true\nalloy-sol-types.workspace = true\nserde_cbor.workspace = true\nbincode.workspace = true",
+  "resolutions": {
+    "44ad4cf96e2ef6f0": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "437dcc6cbc847e9a": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "d79ad2713a1d64a9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

@@ -59,6 +59,412 @@
         "totalVersions": 9
       },
       "warnings": []
+    },
+    "13052b7adc791062": {
+      "status": "library",
+      "coveredLines": 134,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "TransparentUpgradeableProxy",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2023-05-v4.9",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/proxy/transparent/TransparentUpgradeableProxy.sol",
+        "commit": "6982dd1bd411be75ce45144e91609c995460065f",
+        "commitTimestamp": "2023-05-09T15:35:39Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/6982dd1bd411be75ce45144e91609c995460065f/contracts/proxy/transparent/TransparentUpgradeableProxy.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Review of the changes to this file introduced by pull request #4224 addressing audit findings.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 9
+      },
+      "warnings": []
+    },
+    "d80a56c5abf9208b": {
+      "status": "library",
+      "coveredLines": 132,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "TransparentUpgradeableProxy",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2023-05-v4.9",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/proxy/transparent/TransparentUpgradeableProxy.sol",
+        "commit": "6982dd1bd411be75ce45144e91609c995460065f",
+        "commitTimestamp": "2023-05-09T15:35:39Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/6982dd1bd411be75ce45144e91609c995460065f/contracts/proxy/transparent/TransparentUpgradeableProxy.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Review of the changes to this file introduced by pull request #4224 addressing audit findings.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 9
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 2,
+        "unchanged": 132,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 117,
+            "oldLines": 8,
+            "newStart": 117,
+            "newLines": 6,
+            "lines": [
+              { "type": " ", "oldLine": 117, "newLine": 117, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 118,
+                "newLine": 118,
+                "text": "    /**"
+              },
+              {
+                "type": " ",
+                "oldLine": 119,
+                "newLine": 119,
+                "text": "     * @dev Returns the current admin."
+              },
+              {
+                "type": "-",
+                "oldLine": 120,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 121,
+                "text": "     * CAUTION: This function is deprecated. Use {ERC1967Upgrade-_getAdmin} instead.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 122,
+                "newLine": 120,
+                "text": "     */"
+              },
+              {
+                "type": " ",
+                "oldLine": 123,
+                "newLine": 121,
+                "text": "    function _admin() internal view virtual returns (address) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 124,
+                "newLine": 122,
+                "text": "        return _getAdmin();"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "5d5f82d91c09d4ec": {
+      "status": "library",
+      "coveredLines": 134,
+      "match": {
+        "origin": "library",
+        "collection": "openzeppelin",
+        "relation": { "type": "library" },
+        "rank": 3,
+        "matchedBy": "identity",
+        "auditedName": "TransparentUpgradeableProxy",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2023-05-v4.9",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/proxy/transparent/TransparentUpgradeableProxy.sol",
+        "commit": "6982dd1bd411be75ce45144e91609c995460065f",
+        "commitTimestamp": "2023-05-09T15:35:39Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/6982dd1bd411be75ce45144e91609c995460065f/contracts/proxy/transparent/TransparentUpgradeableProxy.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Review of the changes to this file introduced by pull request #4224 addressing audit findings.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 9
+      },
+      "warnings": []
+    },
+    "d79ad2713a1d64a9": {
+      "status": "library",
+      "coveredLines": 132,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "TransparentUpgradeableProxy",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2023-05-v4.9",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/proxy/transparent/TransparentUpgradeableProxy.sol",
+        "commit": "6982dd1bd411be75ce45144e91609c995460065f",
+        "commitTimestamp": "2023-05-09T15:35:39Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/6982dd1bd411be75ce45144e91609c995460065f/contracts/proxy/transparent/TransparentUpgradeableProxy.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Review of the changes to this file introduced by pull request #4224 addressing audit findings.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 9
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 2,
+        "unchanged": 132,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 117,
+            "oldLines": 8,
+            "newStart": 117,
+            "newLines": 6,
+            "lines": [
+              { "type": " ", "oldLine": 117, "newLine": 117, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 118,
+                "newLine": 118,
+                "text": "    /**"
+              },
+              {
+                "type": " ",
+                "oldLine": 119,
+                "newLine": 119,
+                "text": "     * @dev Returns the current admin."
+              },
+              {
+                "type": "-",
+                "oldLine": 120,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 121,
+                "text": "     * CAUTION: This function is deprecated. Use {ERC1967Upgrade-_getAdmin} instead.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 122,
+                "newLine": 120,
+                "text": "     */"
+              },
+              {
+                "type": " ",
+                "oldLine": 123,
+                "newLine": 121,
+                "text": "    function _admin() internal view virtual returns (address) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 124,
+                "newLine": 122,
+                "text": "        return _getAdmin();"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "437dcc6cbc847e9a": {
+      "status": "library",
+      "coveredLines": 132,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "TransparentUpgradeableProxy",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2023-05-v4.9",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/proxy/transparent/TransparentUpgradeableProxy.sol",
+        "commit": "6982dd1bd411be75ce45144e91609c995460065f",
+        "commitTimestamp": "2023-05-09T15:35:39Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/6982dd1bd411be75ce45144e91609c995460065f/contracts/proxy/transparent/TransparentUpgradeableProxy.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Review of the changes to this file introduced by pull request #4224 addressing audit findings.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 9
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 2,
+        "unchanged": 132,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 117,
+            "oldLines": 8,
+            "newStart": 117,
+            "newLines": 6,
+            "lines": [
+              { "type": " ", "oldLine": 117, "newLine": 117, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 118,
+                "newLine": 118,
+                "text": "    /**"
+              },
+              {
+                "type": " ",
+                "oldLine": 119,
+                "newLine": 119,
+                "text": "     * @dev Returns the current admin."
+              },
+              {
+                "type": "-",
+                "oldLine": 120,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 121,
+                "text": "     * CAUTION: This function is deprecated. Use {ERC1967Upgrade-_getAdmin} instead.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 122,
+                "newLine": 120,
+                "text": "     */"
+              },
+              {
+                "type": " ",
+                "oldLine": 123,
+                "newLine": 121,
+                "text": "    function _admin() internal view virtual returns (address) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 124,
+                "newLine": 122,
+                "text": "        return _getAdmin();"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "2295595c4243408b": {
+      "status": "library",
+      "coveredLines": 132,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "TransparentUpgradeableProxy",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2023-05-v4.9",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/proxy/transparent/TransparentUpgradeableProxy.sol",
+        "commit": "6982dd1bd411be75ce45144e91609c995460065f",
+        "commitTimestamp": "2023-05-09T15:35:39Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/6982dd1bd411be75ce45144e91609c995460065f/contracts/proxy/transparent/TransparentUpgradeableProxy.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Review of the changes to this file introduced by pull request #4224 addressing audit findings.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 9
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 2,
+        "unchanged": 132,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 117,
+            "oldLines": 8,
+            "newStart": 117,
+            "newLines": 6,
+            "lines": [
+              { "type": " ", "oldLine": 117, "newLine": 117, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 118,
+                "newLine": 118,
+                "text": "    /**"
+              },
+              {
+                "type": " ",
+                "oldLine": 119,
+                "newLine": 119,
+                "text": "     * @dev Returns the current admin."
+              },
+              {
+                "type": "-",
+                "oldLine": 120,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 121,
+                "text": "     * CAUTION: This function is deprecated. Use {ERC1967Upgrade-_getAdmin} instead.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 122,
+                "newLine": 120,
+                "text": "     */"
+              },
+              {
+                "type": " ",
+                "oldLine": 123,
+                "newLine": 121,
+                "text": "    function _admin() internal view virtual returns (address) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 124,
+                "newLine": 122,
+                "text": "        return _getAdmin();"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
     }
   }
 }

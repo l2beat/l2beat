@@ -521,6 +521,522 @@
         ]
       },
       "warnings": []
+    },
+    "d80a56c5abf9208b": {
+      "status": "library",
+      "coveredLines": 1144,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "SafeCast",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2026-02-v5.6",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/utils/math/SafeCast.sol",
+        "commit": "5fd1781b1454fd1ef8e722282f86f9293cacf256",
+        "commitTimestamp": "2026-02-27T15:00:00Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/5fd1781b1454fd1ef8e722282f86f9293cacf256/contracts/utils/math/SafeCast.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Review of the fixes to the audit findings; the report states this commit reflects the final state of the audited codebase including all implemented resolutions.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 6
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 3,
+        "ignoredRemoved": 3,
+        "unchanged": 1144,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 11,
+            "newStart": 1,
+            "newLines": 11,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "library SafeCast {"
+              },
+              { "type": " ", "oldLine": 2, "newLine": 2, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 3,
+                "text": "     * @dev Value doesn't fit in a uint of `bits` size.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "     * @dev Value doesn't fit in an uint of `bits` size.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 4, "newLine": 4, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 5,
+                "text": "    error SafeCastOverflowedUintDowncast(uint8 bits, uint256 value);"
+              },
+              { "type": " ", "oldLine": 6, "newLine": 6, "text": "" },
+              { "type": " ", "oldLine": 7, "newLine": 7, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 8,
+                "text": "     * @dev An int value doesn't fit in a uint of `bits` size.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 8,
+                "text": "     * @dev An int value doesn't fit in an uint of `bits` size.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 9, "newLine": 9, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 10,
+                "newLine": 10,
+                "text": "    error SafeCastOverflowedIntToUint(int256 value);"
+              },
+              { "type": " ", "oldLine": 11, "newLine": 11, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 15,
+            "oldLines": 7,
+            "newStart": 15,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 15,
+                "newLine": 15,
+                "text": "    error SafeCastOverflowedIntDowncast(uint8 bits, int256 value);"
+              },
+              { "type": " ", "oldLine": 16, "newLine": 16, "text": "" },
+              { "type": " ", "oldLine": 17, "newLine": 17, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 18,
+                "text": "     * @dev A uint value doesn't fit in an int of `bits` size.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 18,
+                "text": "     * @dev An uint value doesn't fit in an int of `bits` size.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 19, "newLine": 19, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 20,
+                "newLine": 20,
+                "text": "    error SafeCastOverflowedUintToInt(uint256 value);"
+              },
+              { "type": " ", "oldLine": 21, "newLine": 21, "text": "" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "437dcc6cbc847e9a": {
+      "status": "library",
+      "coveredLines": 1144,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "SafeCast",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2026-02-v5.6",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/utils/math/SafeCast.sol",
+        "commit": "5fd1781b1454fd1ef8e722282f86f9293cacf256",
+        "commitTimestamp": "2026-02-27T15:00:00Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/5fd1781b1454fd1ef8e722282f86f9293cacf256/contracts/utils/math/SafeCast.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Review of the fixes to the audit findings; the report states this commit reflects the final state of the audited codebase including all implemented resolutions.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 6
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 3,
+        "ignoredRemoved": 3,
+        "unchanged": 1144,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 11,
+            "newStart": 1,
+            "newLines": 11,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "library SafeCast {"
+              },
+              { "type": " ", "oldLine": 2, "newLine": 2, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 3,
+                "text": "     * @dev Value doesn't fit in a uint of `bits` size.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "     * @dev Value doesn't fit in an uint of `bits` size.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 4, "newLine": 4, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 5,
+                "text": "    error SafeCastOverflowedUintDowncast(uint8 bits, uint256 value);"
+              },
+              { "type": " ", "oldLine": 6, "newLine": 6, "text": "" },
+              { "type": " ", "oldLine": 7, "newLine": 7, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 8,
+                "text": "     * @dev An int value doesn't fit in a uint of `bits` size.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 8,
+                "text": "     * @dev An int value doesn't fit in an uint of `bits` size.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 9, "newLine": 9, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 10,
+                "newLine": 10,
+                "text": "    error SafeCastOverflowedIntToUint(int256 value);"
+              },
+              { "type": " ", "oldLine": 11, "newLine": 11, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 15,
+            "oldLines": 7,
+            "newStart": 15,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 15,
+                "newLine": 15,
+                "text": "    error SafeCastOverflowedIntDowncast(uint8 bits, int256 value);"
+              },
+              { "type": " ", "oldLine": 16, "newLine": 16, "text": "" },
+              { "type": " ", "oldLine": 17, "newLine": 17, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 18,
+                "text": "     * @dev A uint value doesn't fit in an int of `bits` size.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 18,
+                "text": "     * @dev An uint value doesn't fit in an int of `bits` size.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 19, "newLine": 19, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 20,
+                "newLine": 20,
+                "text": "    error SafeCastOverflowedUintToInt(uint256 value);"
+              },
+              { "type": " ", "oldLine": 21, "newLine": 21, "text": "" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "2295595c4243408b": {
+      "status": "library",
+      "coveredLines": 1144,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "SafeCast",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2026-02-v5.6",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/utils/math/SafeCast.sol",
+        "commit": "5fd1781b1454fd1ef8e722282f86f9293cacf256",
+        "commitTimestamp": "2026-02-27T15:00:00Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/5fd1781b1454fd1ef8e722282f86f9293cacf256/contracts/utils/math/SafeCast.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Review of the fixes to the audit findings; the report states this commit reflects the final state of the audited codebase including all implemented resolutions.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 6
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 3,
+        "ignoredRemoved": 3,
+        "unchanged": 1144,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 11,
+            "newStart": 1,
+            "newLines": 11,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "library SafeCast {"
+              },
+              { "type": " ", "oldLine": 2, "newLine": 2, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 3,
+                "text": "     * @dev Value doesn't fit in a uint of `bits` size.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "     * @dev Value doesn't fit in an uint of `bits` size.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 4, "newLine": 4, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 5,
+                "text": "    error SafeCastOverflowedUintDowncast(uint8 bits, uint256 value);"
+              },
+              { "type": " ", "oldLine": 6, "newLine": 6, "text": "" },
+              { "type": " ", "oldLine": 7, "newLine": 7, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 8,
+                "text": "     * @dev An int value doesn't fit in a uint of `bits` size.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 8,
+                "text": "     * @dev An int value doesn't fit in an uint of `bits` size.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 9, "newLine": 9, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 10,
+                "newLine": 10,
+                "text": "    error SafeCastOverflowedIntToUint(int256 value);"
+              },
+              { "type": " ", "oldLine": 11, "newLine": 11, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 15,
+            "oldLines": 7,
+            "newStart": 15,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 15,
+                "newLine": 15,
+                "text": "    error SafeCastOverflowedIntDowncast(uint8 bits, int256 value);"
+              },
+              { "type": " ", "oldLine": 16, "newLine": 16, "text": "" },
+              { "type": " ", "oldLine": 17, "newLine": 17, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 18,
+                "text": "     * @dev A uint value doesn't fit in an int of `bits` size.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 18,
+                "text": "     * @dev An uint value doesn't fit in an int of `bits` size.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 19, "newLine": 19, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 20,
+                "newLine": 20,
+                "text": "    error SafeCastOverflowedUintToInt(uint256 value);"
+              },
+              { "type": " ", "oldLine": 21, "newLine": 21, "text": "" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "5d5f82d91c09d4ec": {
+      "status": "library",
+      "coveredLines": 1144,
+      "match": {
+        "origin": "library",
+        "collection": "openzeppelin",
+        "relation": { "type": "library" },
+        "rank": 3,
+        "matchedBy": "identity",
+        "auditedName": "SafeCast",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2026-02-v5.6",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/utils/math/SafeCast.sol",
+        "commit": "5fd1781b1454fd1ef8e722282f86f9293cacf256",
+        "commitTimestamp": "2026-02-27T15:00:00Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/5fd1781b1454fd1ef8e722282f86f9293cacf256/contracts/utils/math/SafeCast.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Review of the fixes to the audit findings; the report states this commit reflects the final state of the audited codebase including all implemented resolutions.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 6
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 3,
+        "ignoredRemoved": 3,
+        "unchanged": 1144,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 11,
+            "newStart": 1,
+            "newLines": 11,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "library SafeCast {"
+              },
+              { "type": " ", "oldLine": 2, "newLine": 2, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 3,
+                "text": "     * @dev Value doesn't fit in a uint of `bits` size.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "     * @dev Value doesn't fit in an uint of `bits` size.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 4, "newLine": 4, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 5,
+                "text": "    error SafeCastOverflowedUintDowncast(uint8 bits, uint256 value);"
+              },
+              { "type": " ", "oldLine": 6, "newLine": 6, "text": "" },
+              { "type": " ", "oldLine": 7, "newLine": 7, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 8,
+                "text": "     * @dev An int value doesn't fit in a uint of `bits` size.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 8,
+                "text": "     * @dev An int value doesn't fit in an uint of `bits` size.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 9, "newLine": 9, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 10,
+                "newLine": 10,
+                "text": "    error SafeCastOverflowedIntToUint(int256 value);"
+              },
+              { "type": " ", "oldLine": 11, "newLine": 11, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 15,
+            "oldLines": 7,
+            "newStart": 15,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 15,
+                "newLine": 15,
+                "text": "    error SafeCastOverflowedIntDowncast(uint8 bits, int256 value);"
+              },
+              { "type": " ", "oldLine": 16, "newLine": 16, "text": "" },
+              { "type": " ", "oldLine": 17, "newLine": 17, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 18,
+                "text": "     * @dev A uint value doesn't fit in an int of `bits` size.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 18,
+                "text": "     * @dev An uint value doesn't fit in an int of `bits` size.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 19, "newLine": 19, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 20,
+                "newLine": 20,
+                "text": "    error SafeCastOverflowedUintToInt(uint256 value);"
+              },
+              { "type": " ", "oldLine": 21, "newLine": 21, "text": "" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
     }
   }
 }

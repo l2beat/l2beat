@@ -431,6 +431,432 @@
         ]
       },
       "warnings": []
+    },
+    "d80a56c5abf9208b": {
+      "status": "library",
+      "coveredLines": 177,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "SafeERC20",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2024-10-v5.1",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/token/ERC20/utils/SafeERC20.sol",
+        "commit": "aba9ff61ac6d610eab12b1528c6f22f98dbb4dd3",
+        "commitTimestamp": "2024-07-24T08:37:16Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/aba9ff61ac6d610eab12b1528c6f22f98dbb4dd3/contracts/token/ERC20/utils/SafeERC20.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "initial audit - phase 1",
+        "coverage": "Phase 1 review limited to the changes introduced in this previously audited (v5.0.0) contract; the diff since v5.0.0 was reviewed, not the full file.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 10
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 14,
+        "ignoredRemoved": 0,
+        "unchanged": 177,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 28,
+            "oldLines": 6,
+            "newStart": 28,
+            "newLines": 11,
+            "lines": [
+              { "type": " ", "oldLine": 28, "newLine": 28, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 29,
+                "newLine": 29,
+                "text": "     * @dev Increase the calling contract's allowance toward `spender` by `value`. If `token` returns no value,"
+              },
+              {
+                "type": " ",
+                "oldLine": 30,
+                "newLine": 30,
+                "text": "     * non-reverting calls are assumed to be successful."
+              },
+              { "type": "+", "newLine": 31, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 32,
+                "text": "     * IMPORTANT: If the token implements ERC-7674 (ERC-20 with temporary allowance), and if the \"client\"",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 33,
+                "text": "     * smart contract uses ERC-7674 to set temporary allowances, then the \"client\" smart contract should avoid using",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 34,
+                "text": "     * this function. Performing a {safeIncreaseAllowance} or {safeDecreaseAllowance} operation on a token contract",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 35,
+                "text": "     * that has a non-zero temporary allowance (for that particular owner-spender) will result in unexpected behavior.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 31, "newLine": 36, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 32,
+                "newLine": 37,
+                "text": "    function safeIncreaseAllowance(IERC20 token, address spender, uint256 value) internal {"
+              },
+              {
+                "type": " ",
+                "oldLine": 33,
+                "newLine": 38,
+                "text": "        uint256 oldAllowance = token.allowance(address(this), spender);"
+              }
+            ]
+          },
+          {
+            "oldStart": 37,
+            "oldLines": 6,
+            "newStart": 42,
+            "newLines": 11,
+            "lines": [
+              { "type": " ", "oldLine": 37, "newLine": 42, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 38,
+                "newLine": 43,
+                "text": "     * @dev Decrease the calling contract's allowance toward `spender` by `requestedDecrease`. If `token` returns no"
+              },
+              {
+                "type": " ",
+                "oldLine": 39,
+                "newLine": 44,
+                "text": "     * value, non-reverting calls are assumed to be successful."
+              },
+              { "type": "+", "newLine": 45, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 46,
+                "text": "     * IMPORTANT: If the token implements ERC-7674 (ERC-20 with temporary allowance), and if the \"client\"",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 47,
+                "text": "     * smart contract uses ERC-7674 to set temporary allowances, then the \"client\" smart contract should avoid using",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 48,
+                "text": "     * this function. Performing a {safeIncreaseAllowance} or {safeDecreaseAllowance} operation on a token contract",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 49,
+                "text": "     * that has a non-zero temporary allowance (for that particular owner-spender) will result in unexpected behavior.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 40, "newLine": 50, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 41,
+                "newLine": 51,
+                "text": "    function safeDecreaseAllowance(IERC20 token, address spender, uint256 requestedDecrease) internal {"
+              },
+              {
+                "type": " ",
+                "oldLine": 42,
+                "newLine": 52,
+                "text": "        unchecked {"
+              }
+            ]
+          },
+          {
+            "oldStart": 52,
+            "oldLines": 6,
+            "newStart": 62,
+            "newLines": 10,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 52,
+                "newLine": 62,
+                "text": "     * @dev Set the calling contract's allowance toward `spender` to `value`. If `token` returns no value,"
+              },
+              {
+                "type": " ",
+                "oldLine": 53,
+                "newLine": 63,
+                "text": "     * non-reverting calls are assumed to be successful. Meant to be used with tokens that require the approval"
+              },
+              {
+                "type": " ",
+                "oldLine": 54,
+                "newLine": 64,
+                "text": "     * to be set to zero before setting it to a non-zero value, such as USDT."
+              },
+              { "type": "+", "newLine": 65, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 66,
+                "text": "     * NOTE: If the token implements ERC-7674, this function will not modify any temporary allowance. This function",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 67,
+                "text": "     * only sets the \"standard\" allowance. Any temporary allowance will remain active, in addition to the value being",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 68,
+                "text": "     * set here.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 55, "newLine": 69, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 56,
+                "newLine": 70,
+                "text": "    function forceApprove(IERC20 token, address spender, uint256 value) internal {"
+              },
+              {
+                "type": " ",
+                "oldLine": 57,
+                "newLine": 71,
+                "text": "        bytes memory approvalCall = abi.encodeCall(token.approve, (spender, value));"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "437dcc6cbc847e9a": {
+      "status": "library",
+      "coveredLines": 177,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "SafeERC20",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2024-10-v5.1",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/token/ERC20/utils/SafeERC20.sol",
+        "commit": "aba9ff61ac6d610eab12b1528c6f22f98dbb4dd3",
+        "commitTimestamp": "2024-07-24T08:37:16Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/aba9ff61ac6d610eab12b1528c6f22f98dbb4dd3/contracts/token/ERC20/utils/SafeERC20.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "initial audit - phase 1",
+        "coverage": "Phase 1 review limited to the changes introduced in this previously audited (v5.0.0) contract; the diff since v5.0.0 was reviewed, not the full file.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 10
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 14,
+        "ignoredRemoved": 0,
+        "unchanged": 177,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 28,
+            "oldLines": 6,
+            "newStart": 28,
+            "newLines": 11,
+            "lines": [
+              { "type": " ", "oldLine": 28, "newLine": 28, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 29,
+                "newLine": 29,
+                "text": "     * @dev Increase the calling contract's allowance toward `spender` by `value`. If `token` returns no value,"
+              },
+              {
+                "type": " ",
+                "oldLine": 30,
+                "newLine": 30,
+                "text": "     * non-reverting calls are assumed to be successful."
+              },
+              { "type": "+", "newLine": 31, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 32,
+                "text": "     * IMPORTANT: If the token implements ERC-7674 (ERC-20 with temporary allowance), and if the \"client\"",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 33,
+                "text": "     * smart contract uses ERC-7674 to set temporary allowances, then the \"client\" smart contract should avoid using",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 34,
+                "text": "     * this function. Performing a {safeIncreaseAllowance} or {safeDecreaseAllowance} operation on a token contract",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 35,
+                "text": "     * that has a non-zero temporary allowance (for that particular owner-spender) will result in unexpected behavior.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 31, "newLine": 36, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 32,
+                "newLine": 37,
+                "text": "    function safeIncreaseAllowance(IERC20 token, address spender, uint256 value) internal {"
+              },
+              {
+                "type": " ",
+                "oldLine": 33,
+                "newLine": 38,
+                "text": "        uint256 oldAllowance = token.allowance(address(this), spender);"
+              }
+            ]
+          },
+          {
+            "oldStart": 37,
+            "oldLines": 6,
+            "newStart": 42,
+            "newLines": 11,
+            "lines": [
+              { "type": " ", "oldLine": 37, "newLine": 42, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 38,
+                "newLine": 43,
+                "text": "     * @dev Decrease the calling contract's allowance toward `spender` by `requestedDecrease`. If `token` returns no"
+              },
+              {
+                "type": " ",
+                "oldLine": 39,
+                "newLine": 44,
+                "text": "     * value, non-reverting calls are assumed to be successful."
+              },
+              { "type": "+", "newLine": 45, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 46,
+                "text": "     * IMPORTANT: If the token implements ERC-7674 (ERC-20 with temporary allowance), and if the \"client\"",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 47,
+                "text": "     * smart contract uses ERC-7674 to set temporary allowances, then the \"client\" smart contract should avoid using",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 48,
+                "text": "     * this function. Performing a {safeIncreaseAllowance} or {safeDecreaseAllowance} operation on a token contract",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 49,
+                "text": "     * that has a non-zero temporary allowance (for that particular owner-spender) will result in unexpected behavior.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 40, "newLine": 50, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 41,
+                "newLine": 51,
+                "text": "    function safeDecreaseAllowance(IERC20 token, address spender, uint256 requestedDecrease) internal {"
+              },
+              {
+                "type": " ",
+                "oldLine": 42,
+                "newLine": 52,
+                "text": "        unchecked {"
+              }
+            ]
+          },
+          {
+            "oldStart": 52,
+            "oldLines": 6,
+            "newStart": 62,
+            "newLines": 10,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 52,
+                "newLine": 62,
+                "text": "     * @dev Set the calling contract's allowance toward `spender` to `value`. If `token` returns no value,"
+              },
+              {
+                "type": " ",
+                "oldLine": 53,
+                "newLine": 63,
+                "text": "     * non-reverting calls are assumed to be successful. Meant to be used with tokens that require the approval"
+              },
+              {
+                "type": " ",
+                "oldLine": 54,
+                "newLine": 64,
+                "text": "     * to be set to zero before setting it to a non-zero value, such as USDT."
+              },
+              { "type": "+", "newLine": 65, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 66,
+                "text": "     * NOTE: If the token implements ERC-7674, this function will not modify any temporary allowance. This function",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 67,
+                "text": "     * only sets the \"standard\" allowance. Any temporary allowance will remain active, in addition to the value being",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 68,
+                "text": "     * set here.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 55, "newLine": 69, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 56,
+                "newLine": 70,
+                "text": "    function forceApprove(IERC20 token, address spender, uint256 value) internal {"
+              },
+              {
+                "type": " ",
+                "oldLine": 57,
+                "newLine": 71,
+                "text": "        bytes memory approvalCall = abi.encodeCall(token.approve, (spender, value));"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
     }
   }
 }

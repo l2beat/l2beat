@@ -517,6 +517,639 @@
         "totalVersions": 3
       },
       "warnings": []
+    },
+    "d80a56c5abf9208b": {
+      "status": "library",
+      "coveredLines": 11,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "IERC165",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/utils/introspection/IERC165.sol",
+        "commit": "b027c3541c03348767b62d45721eaa7d50f02b65",
+        "commitTimestamp": "2023-07-19T19:13:00Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/b027c3541c03348767b62d45721eaa7d50f02b65/contracts/utils/introspection/IERC165.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "audit",
+        "coverage": "Only the changes to the file between versions 4.9 and 5.0 were reviewed at the Phase 3 audit commit (diff-only review).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 1,
+        "ignoredRemoved": 1,
+        "unchanged": 11,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 2,
+            "oldLines": 7,
+            "newStart": 2,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 2, "newLine": 2, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "     * @dev Returns true if this contract implements the interface defined by"
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "     * `interfaceId`. See the corresponding"
+              },
+              {
+                "type": "-",
+                "oldLine": 5,
+                "text": "     * https://eips.ethereum.org/EIPS/eip-165#how-interfaces-are-identified[EIP section]",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 5,
+                "text": "     * https://eips.ethereum.org/EIPS/eip-165#how-interfaces-are-identified[ERC section]",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 6,
+                "newLine": 6,
+                "text": "     * to learn more about how these ids are created."
+              },
+              { "type": " ", "oldLine": 7, "newLine": 7, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 8,
+                "newLine": 8,
+                "text": "     * This function call must use less than 30 000 gas."
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "437dcc6cbc847e9a": {
+      "status": "library",
+      "coveredLines": 11,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "IERC165",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/utils/introspection/IERC165.sol",
+        "commit": "b027c3541c03348767b62d45721eaa7d50f02b65",
+        "commitTimestamp": "2023-07-19T19:13:00Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/b027c3541c03348767b62d45721eaa7d50f02b65/contracts/utils/introspection/IERC165.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "audit",
+        "coverage": "Only the changes to the file between versions 4.9 and 5.0 were reviewed at the Phase 3 audit commit (diff-only review).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 1,
+        "ignoredRemoved": 1,
+        "unchanged": 11,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 2,
+            "oldLines": 7,
+            "newStart": 2,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 2, "newLine": 2, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "     * @dev Returns true if this contract implements the interface defined by"
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "     * `interfaceId`. See the corresponding"
+              },
+              {
+                "type": "-",
+                "oldLine": 5,
+                "text": "     * https://eips.ethereum.org/EIPS/eip-165#how-interfaces-are-identified[EIP section]",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 5,
+                "text": "     * https://eips.ethereum.org/EIPS/eip-165#how-interfaces-are-identified[ERC section]",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 6,
+                "newLine": 6,
+                "text": "     * to learn more about how these ids are created."
+              },
+              { "type": " ", "oldLine": 7, "newLine": 7, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 8,
+                "newLine": 8,
+                "text": "     * This function call must use less than 30 000 gas."
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "13052b7adc791062": {
+      "status": "library",
+      "coveredLines": 11,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "IERC165",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/utils/introspection/IERC165.sol",
+        "commit": "b027c3541c03348767b62d45721eaa7d50f02b65",
+        "commitTimestamp": "2023-07-19T19:13:00Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/b027c3541c03348767b62d45721eaa7d50f02b65/contracts/utils/introspection/IERC165.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "audit",
+        "coverage": "Only the changes to the file between versions 4.9 and 5.0 were reviewed at the Phase 3 audit commit (diff-only review).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "warnings": []
+    },
+    "5d5f82d91c09d4ec": {
+      "status": "library",
+      "coveredLines": 11,
+      "match": {
+        "origin": "stack",
+        "collection": "safe",
+        "relation": { "type": "template", "template": "GnosisSafe" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "IERC165",
+        "similarity": 1,
+        "reportId": "safe/certora-safe-1-3-0",
+        "repository": "safe-fndn/safe-smart-account",
+        "path": "contracts/interfaces/IERC165.sol",
+        "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
+        "commitTimestamp": "2021-11-17T16:53:12Z",
+        "url": "https://github.com/safe-fndn/safe-smart-account/blob/767ef36bba88bdbc0c9fe3708a4290cabef4c376/contracts/interfaces/IERC165.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "Manual audit",
+        "coverage": "Full manual review of the scoped source.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 3,
+        "ignoredRemoved": 3,
+        "unchanged": 11,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 8,
+            "newStart": 1,
+            "newLines": 8,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "interface IERC165 {"
+              },
+              { "type": " ", "oldLine": 2, "newLine": 2, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 3,
+                "text": "     * @dev Returns true if this contract implements the interface defined by",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 4,
+                "text": "     * `interfaceId`. See the corresponding",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 5,
+                "text": "     * https://eips.ethereum.org/EIPS/eip-165#how-interfaces-are-identified[EIP section]",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "     * @dev Returns true if this contract implements the interface defined by `interfaceId`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 4,
+                "text": "     * See the corresponding EIP section",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 5,
+                "text": "     * https://eips.ethereum.org/EIPS/eip-165#how-interfaces-are-identified",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 6,
+                "newLine": 6,
+                "text": "     * to learn more about how these ids are created."
+              },
+              { "type": " ", "oldLine": 7, "newLine": 7, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 8,
+                "newLine": 8,
+                "text": "     * This function call must use less than 30 000 gas."
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "17b794d2d7a7faed": {
+      "status": "library",
+      "coveredLines": 11,
+      "match": {
+        "origin": "stack",
+        "collection": "safe",
+        "relation": { "type": "template", "template": "GnosisSafe" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "IERC165",
+        "similarity": 1,
+        "reportId": "safe/certora-safe-1-3-0",
+        "repository": "safe-fndn/safe-smart-account",
+        "path": "contracts/interfaces/IERC165.sol",
+        "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
+        "commitTimestamp": "2021-11-17T16:53:12Z",
+        "url": "https://github.com/safe-fndn/safe-smart-account/blob/767ef36bba88bdbc0c9fe3708a4290cabef4c376/contracts/interfaces/IERC165.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "Manual audit",
+        "coverage": "Full manual review of the scoped source.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 3,
+        "ignoredRemoved": 3,
+        "unchanged": 11,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 8,
+            "newStart": 1,
+            "newLines": 8,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "interface IERC165 {"
+              },
+              { "type": " ", "oldLine": 2, "newLine": 2, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 3,
+                "text": "     * @dev Returns true if this contract implements the interface defined by",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 4,
+                "text": "     * `interfaceId`. See the corresponding",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 5,
+                "text": "     * https://eips.ethereum.org/EIPS/eip-165#how-interfaces-are-identified[EIP section]",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "     * @dev Returns true if this contract implements the interface defined by `interfaceId`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 4,
+                "text": "     * See the corresponding EIP section",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 5,
+                "text": "     * https://eips.ethereum.org/EIPS/eip-165#how-interfaces-are-identified",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 6,
+                "newLine": 6,
+                "text": "     * to learn more about how these ids are created."
+              },
+              { "type": " ", "oldLine": 7, "newLine": 7, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 8,
+                "newLine": 8,
+                "text": "     * This function call must use less than 30 000 gas."
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "657c8b86adb58ba2": {
+      "status": "library",
+      "coveredLines": 11,
+      "match": {
+        "origin": "stack",
+        "collection": "safe",
+        "relation": { "type": "template", "template": "GnosisSafe" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "IERC165",
+        "similarity": 1,
+        "reportId": "safe/certora-safe-1-3-0",
+        "repository": "safe-fndn/safe-smart-account",
+        "path": "contracts/interfaces/IERC165.sol",
+        "commit": "767ef36bba88bdbc0c9fe3708a4290cabef4c376",
+        "commitTimestamp": "2021-11-17T16:53:12Z",
+        "url": "https://github.com/safe-fndn/safe-smart-account/blob/767ef36bba88bdbc0c9fe3708a4290cabef4c376/contracts/interfaces/IERC165.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "Manual audit",
+        "coverage": "Full manual review of the scoped source.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 3,
+        "ignoredRemoved": 3,
+        "unchanged": 11,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 8,
+            "newStart": 1,
+            "newLines": 8,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "interface IERC165 {"
+              },
+              { "type": " ", "oldLine": 2, "newLine": 2, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 3,
+                "text": "     * @dev Returns true if this contract implements the interface defined by",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 4,
+                "text": "     * `interfaceId`. See the corresponding",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 5,
+                "text": "     * https://eips.ethereum.org/EIPS/eip-165#how-interfaces-are-identified[EIP section]",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "     * @dev Returns true if this contract implements the interface defined by `interfaceId`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 4,
+                "text": "     * See the corresponding EIP section",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 5,
+                "text": "     * https://eips.ethereum.org/EIPS/eip-165#how-interfaces-are-identified",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 6,
+                "newLine": 6,
+                "text": "     * to learn more about how these ids are created."
+              },
+              { "type": " ", "oldLine": 7, "newLine": 7, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 8,
+                "newLine": 8,
+                "text": "     * This function call must use less than 30 000 gas."
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "e3b0c44298fc1c14": {
+      "status": "library",
+      "coveredLines": 11,
+      "match": {
+        "origin": "library",
+        "collection": "openzeppelin",
+        "relation": { "type": "library" },
+        "rank": 3,
+        "matchedBy": "identity",
+        "auditedName": "IERC165",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/utils/introspection/IERC165.sol",
+        "commit": "b027c3541c03348767b62d45721eaa7d50f02b65",
+        "commitTimestamp": "2023-07-19T19:13:00Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/b027c3541c03348767b62d45721eaa7d50f02b65/contracts/utils/introspection/IERC165.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "audit",
+        "coverage": "Only the changes to the file between versions 4.9 and 5.0 were reviewed at the Phase 3 audit commit (diff-only review).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "warnings": []
+    },
+    "d79ad2713a1d64a9": {
+      "status": "library",
+      "coveredLines": 11,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "IERC165",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/utils/introspection/IERC165.sol",
+        "commit": "b027c3541c03348767b62d45721eaa7d50f02b65",
+        "commitTimestamp": "2023-07-19T19:13:00Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/b027c3541c03348767b62d45721eaa7d50f02b65/contracts/utils/introspection/IERC165.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "audit",
+        "coverage": "Only the changes to the file between versions 4.9 and 5.0 were reviewed at the Phase 3 audit commit (diff-only review).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 1,
+        "ignoredRemoved": 1,
+        "unchanged": 11,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 2,
+            "oldLines": 7,
+            "newStart": 2,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 2, "newLine": 2, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "     * @dev Returns true if this contract implements the interface defined by"
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "     * `interfaceId`. See the corresponding"
+              },
+              {
+                "type": "-",
+                "oldLine": 5,
+                "text": "     * https://eips.ethereum.org/EIPS/eip-165#how-interfaces-are-identified[EIP section]",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 5,
+                "text": "     * https://eips.ethereum.org/EIPS/eip-165#how-interfaces-are-identified[ERC section]",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 6,
+                "newLine": 6,
+                "text": "     * to learn more about how these ids are created."
+              },
+              { "type": " ", "oldLine": 7, "newLine": 7, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 8,
+                "newLine": 8,
+                "text": "     * This function call must use less than 30 000 gas."
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "2295595c4243408b": {
+      "status": "library",
+      "coveredLines": 11,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "IERC165",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/utils/introspection/IERC165.sol",
+        "commit": "b027c3541c03348767b62d45721eaa7d50f02b65",
+        "commitTimestamp": "2023-07-19T19:13:00Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/b027c3541c03348767b62d45721eaa7d50f02b65/contracts/utils/introspection/IERC165.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "audit",
+        "coverage": "Only the changes to the file between versions 4.9 and 5.0 were reviewed at the Phase 3 audit commit (diff-only review).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "warnings": []
     }
   }
 }

@@ -32,6 +32,33 @@
         "totalVersions": 2
       },
       "warnings": []
+    },
+    "d80a56c5abf9208b": {
+      "status": "identical",
+      "coveredLines": 69,
+      "match": {
+        "origin": "other",
+        "collection": "scroll",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "identity",
+        "auditedName": "OwnableBase",
+        "similarity": 1,
+        "reportId": "scroll/openzeppelin-scroll-layer2-audit-2023-07",
+        "repository": "scroll-tech/scroll",
+        "path": "contracts/src/libraries/common/OwnableBase.sol",
+        "commit": "3bc8a3f5c6ac816ddffadca41024331dcf4d3064",
+        "commitTimestamp": "2023-05-22T07:41:40Z",
+        "url": "https://github.com/scroll-tech/scroll/blob/3bc8a3f5c6ac816ddffadca41024331dcf4d3064/contracts/src/libraries/common/OwnableBase.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Full file review at audit commit.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "warnings": []
     }
   }
 }

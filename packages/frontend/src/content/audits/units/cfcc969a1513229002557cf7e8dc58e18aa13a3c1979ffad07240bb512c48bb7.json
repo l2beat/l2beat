@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "cfcc969a1513229002557cf7e8dc58e18aa13a3c1979ffad07240bb512c48bb7",
+  "name": "chaincfg.go",
+  "kind": "program",
+  "lines": 41,
+  "source": "package chainconfig\n\nimport (\n\t\"fmt\"\n\n\t\"github.com/ethereum-optimism/optimism/op-node/rollup\"\n\t\"github.com/ethereum/go-ethereum/params\"\n)\n\nvar OPGoerliChainConfig, OPSepoliaChainConfig, OPMainnetChainConfig *params.ChainConfig\n\nfunc init() {\n\tmustLoadConfig := func(chainID uint64) *params.ChainConfig {\n\t\tcfg, err := params.LoadOPStackChainConfig(chainID)\n\t\tif err != nil {\n\t\t\tpanic(err)\n\t\t}\n\t\treturn cfg\n\t}\n\tOPGoerliChainConfig = mustLoadConfig(420)\n\tOPSepoliaChainConfig = mustLoadConfig(11155420)\n\tOPMainnetChainConfig = mustLoadConfig(10)\n}\n\nvar L2ChainConfigsByChainID = map[uint64]*params.ChainConfig{\n\t420:      OPGoerliChainConfig,\n\t11155420: OPSepoliaChainConfig,\n\t10:       OPMainnetChainConfig,\n}\n\nfunc RollupConfigByChainID(chainID uint64) (*rollup.Config, error) {\n\tconfig, err := rollup.LoadOPStackRollupConfig(chainID)\n\tif err != nil {\n\t\treturn nil, fmt.Errorf(\"failed to get rollup config for chain ID %d: %w\", chainID, err)\n\t}\n\treturn config, nil\n}\n\nfunc ChainConfigByChainID(chainID uint64) (*params.ChainConfig, error) {\n\treturn params.LoadOPStackChainConfig(chainID)\n}",
+  "resolutions": {
+    "437dcc6cbc847e9a": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "bb55951394276893": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

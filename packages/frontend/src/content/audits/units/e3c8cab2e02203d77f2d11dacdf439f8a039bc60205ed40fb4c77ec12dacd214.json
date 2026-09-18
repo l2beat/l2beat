@@ -152,6 +152,66 @@
         "totalVersions": 3
       },
       "warnings": []
+    },
+    "437dcc6cbc847e9a": {
+      "status": "identical",
+      "coveredLines": 87,
+      "match": {
+        "origin": "stack",
+        "collection": "optimism",
+        "relation": {
+          "type": "template",
+          "template": "gnosisSafeModules/LivenessGuard"
+        },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "ProxyAdminOwnedBase",
+        "similarity": 1,
+        "reportId": "optimism/spearbit-interop-portal-2025-05",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts-bedrock/src/L1/ProxyAdminOwnedBase.sol",
+        "commit": "4fc9181a73795334f0c657a79ea8177b8de1814c",
+        "commitTimestamp": "2025-05-14T18:56:06Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/4fc9181a73795334f0c657a79ea8177b8de1814c/packages/contracts-bedrock/src/L1/ProxyAdminOwnedBase.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Fix commit for 5.3.8 item 10, verified by Spearbit; items 6 and 7 acknowledged.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "warnings": []
+    },
+    "d79ad2713a1d64a9": {
+      "status": "identical",
+      "coveredLines": 87,
+      "match": {
+        "origin": "stack",
+        "collection": "optimism",
+        "relation": {
+          "type": "template",
+          "template": "opstack/AddressManager"
+        },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "ProxyAdminOwnedBase",
+        "similarity": 1,
+        "reportId": "optimism/spearbit-interop-portal-2025-05",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts-bedrock/src/L1/ProxyAdminOwnedBase.sol",
+        "commit": "4fc9181a73795334f0c657a79ea8177b8de1814c",
+        "commitTimestamp": "2025-05-14T18:56:06Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/4fc9181a73795334f0c657a79ea8177b8de1814c/packages/contracts-bedrock/src/L1/ProxyAdminOwnedBase.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Fix commit for 5.3.8 item 10, verified by Spearbit; items 6 and 7 acknowledged.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "warnings": []
     }
   }
 }

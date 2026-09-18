@@ -32,6 +32,33 @@
         "totalVersions": 2
       },
       "warnings": []
+    },
+    "d80a56c5abf9208b": {
+      "status": "identical",
+      "coveredLines": 27,
+      "match": {
+        "origin": "other",
+        "collection": "scroll",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "identity",
+        "auditedName": "IL2ScrollMessenger",
+        "similarity": 1,
+        "reportId": "scroll/openzeppelin-scroll-gasswap-multiverifier-weth-diff-audit-2023-08",
+        "repository": "scroll-tech/scroll",
+        "path": "contracts/src/L2/IL2ScrollMessenger.sol",
+        "commit": "b7a02fbe54cf14fb0149df520343bf0195e00c99",
+        "commitTimestamp": "2023-07-25T16:30:22Z",
+        "url": "https://github.com/scroll-tech/scroll/blob/b7a02fbe54cf14fb0149df520343bf0195e00c99/contracts/src/L2/IL2ScrollMessenger.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "PR #673 partial fix of N-05 (indexed event parameters). Note: commit timestamp (2023-07-25T16:30Z) precedes the audited commit and is on a diverged branch. Only the fix was reviewed in context; develop branch changed between audit start and fix review.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "warnings": []
     }
   }
 }

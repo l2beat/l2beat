@@ -7,9 +7,6 @@ Compares the smart contract sources deployed onchain (l2beat discovery output in
 The store format lives in `src/contract` and is the only thing consumers (the frontend) depend on.
 
 ```sh
-# optional: fetch zk verifier / program sources referenced by the project's config
-pnpm --filter @l2beat/audit-diff cli fetch-zk --project ethscriptions
-
 pnpm --filter @l2beat/audit-diff generate \
   --dataset ~/Documents/repos/audit-dataset \
   --out ../frontend/src/content/audits \
@@ -21,6 +18,11 @@ pnpm --filter @l2beat/audit-diff generate --dataset ~/Documents/repos/audit-data
 # drop unit records no project references
 pnpm --filter @l2beat/audit-diff cli gc --out <dir>
 ```
+
+`generate` reads each project's verifier and program declarations from the
+config database and caches their source trees automatically. Run `fetch-zk`
+explicitly only to force-refresh cached trees whose configured GitHub URL has
+not changed.
 
 Requires Foundry (`forge fmt`) to format deployed sources with the dataset's `foundry.toml`;
 without it the comparison still works but diffs may show style differences.

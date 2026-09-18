@@ -447,6 +447,471 @@
         ]
       },
       "warnings": []
+    },
+    "437dcc6cbc847e9a": {
+      "status": "differs",
+      "coveredLines": 81,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "Initializable",
+        "similarity": 1,
+        "reportId": "openzeppelin/formal-verification__fv__reports__2022-05",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/proxy/utils/Initializable.sol",
+        "commit": "109778c17c7020618ea4e035efb9f0f9b82d43ca",
+        "commitTimestamp": "2022-06-14T18:38:04Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/109778c17c7020618ea4e035efb9f0f9b82d43ca/contracts/proxy/utils/Initializable.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "formal verification",
+        "coverage": "Certora formal verification of 13 CVL rules/invariants on the initializer/reinitializer state machine, run on two harnesses (flat and multi-inheriting) with storage visibility munged; coverage is limited to the specified properties.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 8
+      },
+      "diff": {
+        "added": 1,
+        "removed": 1,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 81,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 22,
+            "oldLines": 7,
+            "newStart": 22,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 22,
+                "text": "    modifier initializer() {"
+              },
+              {
+                "type": " ",
+                "oldLine": 23,
+                "newLine": 23,
+                "text": "        bool isTopLevelCall = !_initializing;"
+              },
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 24,
+                "text": "        require("
+              },
+              {
+                "type": "-",
+                "oldLine": 25,
+                "text": "            (isTopLevelCall && _initialized < 1) || (!Address.isContract(address(this)) && _initialized == 1),",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 25,
+                "text": "            (isTopLevelCall && _initialized < 1) || (!AddressUpgradeable.isContract(address(this)) && _initialized == 1),",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 26,
+                "newLine": 26,
+                "text": "            \"Initializable: contract is already initialized\""
+              },
+              {
+                "type": " ",
+                "oldLine": 27,
+                "newLine": 27,
+                "text": "        );"
+              },
+              {
+                "type": " ",
+                "oldLine": 28,
+                "newLine": 28,
+                "text": "        _initialized = 1;"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "d80a56c5abf9208b": {
+      "status": "differs",
+      "coveredLines": 81,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "Initializable",
+        "similarity": 1,
+        "reportId": "openzeppelin/formal-verification__fv__reports__2022-05",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/proxy/utils/Initializable.sol",
+        "commit": "109778c17c7020618ea4e035efb9f0f9b82d43ca",
+        "commitTimestamp": "2022-06-14T18:38:04Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/109778c17c7020618ea4e035efb9f0f9b82d43ca/contracts/proxy/utils/Initializable.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "formal verification",
+        "coverage": "Certora formal verification of 13 CVL rules/invariants on the initializer/reinitializer state machine, run on two harnesses (flat and multi-inheriting) with storage visibility munged; coverage is limited to the specified properties.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 8
+      },
+      "diff": {
+        "added": 1,
+        "removed": 1,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 81,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 22,
+            "oldLines": 7,
+            "newStart": 22,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 22,
+                "text": "    modifier initializer() {"
+              },
+              {
+                "type": " ",
+                "oldLine": 23,
+                "newLine": 23,
+                "text": "        bool isTopLevelCall = !_initializing;"
+              },
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 24,
+                "text": "        require("
+              },
+              {
+                "type": "-",
+                "oldLine": 25,
+                "text": "            (isTopLevelCall && _initialized < 1) || (!Address.isContract(address(this)) && _initialized == 1),",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 25,
+                "text": "            (isTopLevelCall && _initialized < 1) || (!AddressUpgradeable.isContract(address(this)) && _initialized == 1),",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 26,
+                "newLine": 26,
+                "text": "            \"Initializable: contract is already initialized\""
+              },
+              {
+                "type": " ",
+                "oldLine": 27,
+                "newLine": 27,
+                "text": "        );"
+              },
+              {
+                "type": " ",
+                "oldLine": 28,
+                "newLine": 28,
+                "text": "        _initialized = 1;"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "13052b7adc791062": {
+      "status": "differs",
+      "coveredLines": 81,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "Initializable",
+        "similarity": 1,
+        "reportId": "openzeppelin/formal-verification__fv__reports__2022-05",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/proxy/utils/Initializable.sol",
+        "commit": "109778c17c7020618ea4e035efb9f0f9b82d43ca",
+        "commitTimestamp": "2022-06-14T18:38:04Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/109778c17c7020618ea4e035efb9f0f9b82d43ca/contracts/proxy/utils/Initializable.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "formal verification",
+        "coverage": "Certora formal verification of 13 CVL rules/invariants on the initializer/reinitializer state machine, run on two harnesses (flat and multi-inheriting) with storage visibility munged; coverage is limited to the specified properties.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 8
+      },
+      "diff": {
+        "added": 1,
+        "removed": 1,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 81,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 22,
+            "oldLines": 7,
+            "newStart": 22,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 22,
+                "text": "    modifier initializer() {"
+              },
+              {
+                "type": " ",
+                "oldLine": 23,
+                "newLine": 23,
+                "text": "        bool isTopLevelCall = !_initializing;"
+              },
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 24,
+                "text": "        require("
+              },
+              {
+                "type": "-",
+                "oldLine": 25,
+                "text": "            (isTopLevelCall && _initialized < 1) || (!Address.isContract(address(this)) && _initialized == 1),",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 25,
+                "text": "            (isTopLevelCall && _initialized < 1) || (!AddressUpgradeable.isContract(address(this)) && _initialized == 1),",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 26,
+                "newLine": 26,
+                "text": "            \"Initializable: contract is already initialized\""
+              },
+              {
+                "type": " ",
+                "oldLine": 27,
+                "newLine": 27,
+                "text": "        );"
+              },
+              {
+                "type": " ",
+                "oldLine": 28,
+                "newLine": 28,
+                "text": "        _initialized = 1;"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "d79ad2713a1d64a9": {
+      "status": "differs",
+      "coveredLines": 81,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "Initializable",
+        "similarity": 1,
+        "reportId": "openzeppelin/formal-verification__fv__reports__2022-05",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/proxy/utils/Initializable.sol",
+        "commit": "109778c17c7020618ea4e035efb9f0f9b82d43ca",
+        "commitTimestamp": "2022-06-14T18:38:04Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/109778c17c7020618ea4e035efb9f0f9b82d43ca/contracts/proxy/utils/Initializable.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "formal verification",
+        "coverage": "Certora formal verification of 13 CVL rules/invariants on the initializer/reinitializer state machine, run on two harnesses (flat and multi-inheriting) with storage visibility munged; coverage is limited to the specified properties.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 8
+      },
+      "diff": {
+        "added": 1,
+        "removed": 1,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 81,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 22,
+            "oldLines": 7,
+            "newStart": 22,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 22,
+                "text": "    modifier initializer() {"
+              },
+              {
+                "type": " ",
+                "oldLine": 23,
+                "newLine": 23,
+                "text": "        bool isTopLevelCall = !_initializing;"
+              },
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 24,
+                "text": "        require("
+              },
+              {
+                "type": "-",
+                "oldLine": 25,
+                "text": "            (isTopLevelCall && _initialized < 1) || (!Address.isContract(address(this)) && _initialized == 1),",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 25,
+                "text": "            (isTopLevelCall && _initialized < 1) || (!AddressUpgradeable.isContract(address(this)) && _initialized == 1),",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 26,
+                "newLine": 26,
+                "text": "            \"Initializable: contract is already initialized\""
+              },
+              {
+                "type": " ",
+                "oldLine": 27,
+                "newLine": 27,
+                "text": "        );"
+              },
+              {
+                "type": " ",
+                "oldLine": 28,
+                "newLine": 28,
+                "text": "        _initialized = 1;"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "2295595c4243408b": {
+      "status": "differs",
+      "coveredLines": 81,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "Initializable",
+        "similarity": 1,
+        "reportId": "openzeppelin/formal-verification__fv__reports__2022-05",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/proxy/utils/Initializable.sol",
+        "commit": "109778c17c7020618ea4e035efb9f0f9b82d43ca",
+        "commitTimestamp": "2022-06-14T18:38:04Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/109778c17c7020618ea4e035efb9f0f9b82d43ca/contracts/proxy/utils/Initializable.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "formal verification",
+        "coverage": "Certora formal verification of 13 CVL rules/invariants on the initializer/reinitializer state machine, run on two harnesses (flat and multi-inheriting) with storage visibility munged; coverage is limited to the specified properties.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 8
+      },
+      "diff": {
+        "added": 1,
+        "removed": 1,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 81,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 22,
+            "oldLines": 7,
+            "newStart": 22,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 22,
+                "text": "    modifier initializer() {"
+              },
+              {
+                "type": " ",
+                "oldLine": 23,
+                "newLine": 23,
+                "text": "        bool isTopLevelCall = !_initializing;"
+              },
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 24,
+                "text": "        require("
+              },
+              {
+                "type": "-",
+                "oldLine": 25,
+                "text": "            (isTopLevelCall && _initialized < 1) || (!Address.isContract(address(this)) && _initialized == 1),",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 25,
+                "text": "            (isTopLevelCall && _initialized < 1) || (!AddressUpgradeable.isContract(address(this)) && _initialized == 1),",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 26,
+                "newLine": 26,
+                "text": "            \"Initializable: contract is already initialized\""
+              },
+              {
+                "type": " ",
+                "oldLine": 27,
+                "newLine": 27,
+                "text": "        );"
+              },
+              {
+                "type": " ",
+                "oldLine": 28,
+                "newLine": 28,
+                "text": "        _initialized = 1;"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
     }
   }
 }

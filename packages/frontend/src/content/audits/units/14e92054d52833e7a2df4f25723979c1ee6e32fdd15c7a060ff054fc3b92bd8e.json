@@ -290,6 +290,576 @@
         ]
       },
       "warnings": []
+    },
+    "437dcc6cbc847e9a": {
+      "status": "differs",
+      "coveredLines": 34,
+      "match": {
+        "origin": "other",
+        "collection": "bob",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "name",
+        "auditedName": "Constants",
+        "similarity": 0.99,
+        "reportId": "bob/veridise-kailua-2025-02",
+        "repository": "boundless-xyz/kailua",
+        "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "commit": "27dec82b67de1051df9258b36f8366ebf308e5bf",
+        "commitTimestamp": "2025-02-06T07:42:16Z",
+        "url": "https://github.com/boundless-xyz/kailua/blob/27dec82b67de1051df9258b36f8366ebf308e5bf/crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix commit",
+        "coverage": "Confirmed fix commit for V-KLA-VUL-004 (contract nits).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 0,
+        "removed": 3,
+        "ignoredAdded": 17,
+        "ignoredRemoved": 17,
+        "unchanged": 34,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 28,
+            "newStart": 1,
+            "newLines": 25,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "library Constants {"
+              },
+              {
+                "type": "-",
+                "oldLine": 2,
+                "text": "    /// @notice Special address to be used as the tx origin for gas estimation calls in the",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 3,
+                "text": "    ///         OptimismPortal and CrossDomainMessenger calls. You only need to use this address if",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 4,
+                "text": "    ///         the minimum gas limit specified by the user is not actually enough to execute the",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 5,
+                "text": "    ///         given message and you're attempting to estimate the actual necessary gas limit. We",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 6,
+                "text": "    ///         use address(1) because it's the ecrecover precompile and therefore guaranteed to",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 7,
+                "text": "    ///         never have any code on any EVM chain.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 2, "text": "    /**", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "     * @notice Special address to be used as the tx origin for gas estimation calls in the",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 4,
+                "text": "     *         OptimismPortal and CrossDomainMessenger calls. You only need to use this address if",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 5,
+                "text": "     *         the minimum gas limit specified by the user is not actually enough to execute the",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 6,
+                "text": "     *         given message and you're attempting to estimate the actual necessary gas limit. We",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 7,
+                "text": "     *         use address(1) because it's the ecrecover precompile and therefore guaranteed to",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 8,
+                "text": "     *         never have any code on any EVM chain.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 9, "text": "     */", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 8,
+                "newLine": 10,
+                "text": "    address internal constant ESTIMATION_ADDRESS = address(1);"
+              },
+              { "type": " ", "oldLine": 9, "newLine": 11, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 10,
+                "text": "    /// @notice Value used for the L2 sender storage slot in both the OptimismPortal and the",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 11,
+                "text": "    ///         CrossDomainMessenger contracts before an actual sender is set. This value is",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 12,
+                "text": "    ///         non-zero to reduce the gas cost of message passing transactions.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 12,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 13,
+                "text": "     * @notice Value used for the L2 sender storage slot in both the OptimismPortal and the",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 14,
+                "text": "     *         CrossDomainMessenger contracts before an actual sender is set. This value is",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 15,
+                "text": "     *         non-zero to reduce the gas cost of message passing transactions.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 16,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 13,
+                "newLine": 17,
+                "text": "    address internal constant DEFAULT_L2_SENDER = 0x000000000000000000000000000000000000dEaD;"
+              },
+              { "type": " ", "oldLine": 14, "newLine": 18, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 15,
+                "text": "    /// @notice The storage slot that holds the address of a proxy implementation.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 16,
+                "text": "    /// @dev `bytes32(uint256(keccak256('eip1967.proxy.implementation')) - 1)`",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 17,
+                "text": "    bytes32 internal constant PROXY_IMPLEMENTATION_ADDRESS =",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 18,
+                "text": "        0x360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 19, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 20,
+                "text": "    /// @notice The storage slot that holds the address of the owner.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 21,
+                "text": "    /// @dev `bytes32(uint256(keccak256('eip1967.proxy.admin')) - 1)`",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 22,
+                "text": "    bytes32 internal constant PROXY_OWNER_ADDRESS = 0xb53127684a568b3173ae13b9f8a6016e243e63b6e8ee1178d6a717850b5d6103;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 23, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 24,
+                "text": "    /// @notice Returns the default values for the ResourceConfig. These are the recommended values",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 25,
+                "text": "    ///         for a production network.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 19,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 20,
+                "text": "     * @notice Returns the default values for the ResourceConfig. These are the recommended values",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 21,
+                "text": "     *         for a production network.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 22,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 26,
+                "newLine": 23,
+                "text": "    function DEFAULT_RESOURCE_CONFIG() internal pure returns (ResourceMetering.ResourceConfig memory) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 27,
+                "newLine": 24,
+                "text": "        ResourceMetering.ResourceConfig memory config = ResourceMetering.ResourceConfig({"
+              },
+              {
+                "type": " ",
+                "oldLine": 28,
+                "newLine": 25,
+                "text": "            maxResourceLimit: 20_000_000,"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "d79ad2713a1d64a9": {
+      "status": "differs",
+      "coveredLines": 34,
+      "match": {
+        "origin": "other",
+        "collection": "bob",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "name",
+        "auditedName": "Constants",
+        "similarity": 0.99,
+        "reportId": "bob/veridise-kailua-2025-02",
+        "repository": "boundless-xyz/kailua",
+        "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "commit": "27dec82b67de1051df9258b36f8366ebf308e5bf",
+        "commitTimestamp": "2025-02-06T07:42:16Z",
+        "url": "https://github.com/boundless-xyz/kailua/blob/27dec82b67de1051df9258b36f8366ebf308e5bf/crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix commit",
+        "coverage": "Confirmed fix commit for V-KLA-VUL-004 (contract nits).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 0,
+        "removed": 3,
+        "ignoredAdded": 17,
+        "ignoredRemoved": 17,
+        "unchanged": 34,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 28,
+            "newStart": 1,
+            "newLines": 25,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "library Constants {"
+              },
+              {
+                "type": "-",
+                "oldLine": 2,
+                "text": "    /// @notice Special address to be used as the tx origin for gas estimation calls in the",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 3,
+                "text": "    ///         OptimismPortal and CrossDomainMessenger calls. You only need to use this address if",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 4,
+                "text": "    ///         the minimum gas limit specified by the user is not actually enough to execute the",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 5,
+                "text": "    ///         given message and you're attempting to estimate the actual necessary gas limit. We",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 6,
+                "text": "    ///         use address(1) because it's the ecrecover precompile and therefore guaranteed to",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 7,
+                "text": "    ///         never have any code on any EVM chain.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 2, "text": "    /**", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "     * @notice Special address to be used as the tx origin for gas estimation calls in the",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 4,
+                "text": "     *         OptimismPortal and CrossDomainMessenger calls. You only need to use this address if",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 5,
+                "text": "     *         the minimum gas limit specified by the user is not actually enough to execute the",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 6,
+                "text": "     *         given message and you're attempting to estimate the actual necessary gas limit. We",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 7,
+                "text": "     *         use address(1) because it's the ecrecover precompile and therefore guaranteed to",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 8,
+                "text": "     *         never have any code on any EVM chain.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 9, "text": "     */", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 8,
+                "newLine": 10,
+                "text": "    address internal constant ESTIMATION_ADDRESS = address(1);"
+              },
+              { "type": " ", "oldLine": 9, "newLine": 11, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 10,
+                "text": "    /// @notice Value used for the L2 sender storage slot in both the OptimismPortal and the",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 11,
+                "text": "    ///         CrossDomainMessenger contracts before an actual sender is set. This value is",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 12,
+                "text": "    ///         non-zero to reduce the gas cost of message passing transactions.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 12,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 13,
+                "text": "     * @notice Value used for the L2 sender storage slot in both the OptimismPortal and the",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 14,
+                "text": "     *         CrossDomainMessenger contracts before an actual sender is set. This value is",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 15,
+                "text": "     *         non-zero to reduce the gas cost of message passing transactions.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 16,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 13,
+                "newLine": 17,
+                "text": "    address internal constant DEFAULT_L2_SENDER = 0x000000000000000000000000000000000000dEaD;"
+              },
+              { "type": " ", "oldLine": 14, "newLine": 18, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 15,
+                "text": "    /// @notice The storage slot that holds the address of a proxy implementation.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 16,
+                "text": "    /// @dev `bytes32(uint256(keccak256('eip1967.proxy.implementation')) - 1)`",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 17,
+                "text": "    bytes32 internal constant PROXY_IMPLEMENTATION_ADDRESS =",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 18,
+                "text": "        0x360894a13ba1a3210667c828492db98dca3e2076cc3735a920a3ca505d382bbc;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 19, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 20,
+                "text": "    /// @notice The storage slot that holds the address of the owner.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 21,
+                "text": "    /// @dev `bytes32(uint256(keccak256('eip1967.proxy.admin')) - 1)`",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 22,
+                "text": "    bytes32 internal constant PROXY_OWNER_ADDRESS = 0xb53127684a568b3173ae13b9f8a6016e243e63b6e8ee1178d6a717850b5d6103;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 23, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 24,
+                "text": "    /// @notice Returns the default values for the ResourceConfig. These are the recommended values",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 25,
+                "text": "    ///         for a production network.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 19,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 20,
+                "text": "     * @notice Returns the default values for the ResourceConfig. These are the recommended values",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 21,
+                "text": "     *         for a production network.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 22,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 26,
+                "newLine": 23,
+                "text": "    function DEFAULT_RESOURCE_CONFIG() internal pure returns (ResourceMetering.ResourceConfig memory) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 27,
+                "newLine": 24,
+                "text": "        ResourceMetering.ResourceConfig memory config = ResourceMetering.ResourceConfig({"
+              },
+              {
+                "type": " ",
+                "oldLine": 28,
+                "newLine": 25,
+                "text": "            maxResourceLimit: 20_000_000,"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
     }
   }
 }

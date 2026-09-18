@@ -560,6 +560,378 @@
         ]
       },
       "warnings": []
+    },
+    "437dcc6cbc847e9a": {
+      "status": "differs",
+      "coveredLines": 51,
+      "match": {
+        "origin": "stack",
+        "collection": "optimism",
+        "relation": {
+          "type": "template",
+          "template": "gnosisSafeModules/LivenessGuard"
+        },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "Lib_AddressManager",
+        "similarity": 0.56,
+        "reportId": "optimism/openzeppelin-ovm-rollup-2021-03",
+        "repository": "ben-chain/contracts-v2",
+        "path": "contracts/optimistic-ethereum/libraries/resolver/Lib_AddressManager.sol",
+        "commit": "a935e276f5620b40802b52721e3474232e458f72",
+        "commitTimestamp": "2021-04-12T01:08:09Z",
+        "url": "https://github.com/ben-chain/contracts-v2/blob/a935e276f5620b40802b52721e3474232e458f72/contracts/optimistic-ethereum/libraries/resolver/Lib_AddressManager.sol",
+        "auditStatus": "audited_with_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Second audited commit (last 3 weeks). Same directory scope and exclusions as the first commit; C01 and H01 fixes from the archived repository are contained in this commit, L02/L04/N01 are fixed here per the report.",
+        "majorFindings": 2,
+        "findingIds": ["C02", "C04"],
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 7,
+        "removed": 5,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 51,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 4,
+            "oldLines": 7,
+            "newStart": 4,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "     * Events *"
+              },
+              { "type": " ", "oldLine": 5, "newLine": 5, "text": "     *" },
+              { "type": " ", "oldLine": 6, "newLine": 6, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 7,
+                "text": "    event AddressSet(string _name, address _newAddress);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 7,
+                "text": "    event AddressSet(string indexed _name, address _newAddress, address _oldAddress);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 8, "newLine": 8, "text": "" },
+              { "type": " ", "oldLine": 9, "newLine": 9, "text": "    /**" },
+              { "type": " ", "oldLine": 10, "newLine": 10, "text": "     *" }
+            ]
+          },
+          {
+            "oldStart": 24,
+            "oldLines": 10,
+            "newStart": 24,
+            "newLines": 12,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 24,
+                "text": "     * @param _name String name to associate an address with."
+              },
+              {
+                "type": " ",
+                "oldLine": 25,
+                "newLine": 25,
+                "text": "     * @param _address Address to associate with the name."
+              },
+              { "type": " ", "oldLine": 26, "newLine": 26, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 27,
+                "text": "    function setAddress(string memory _name, address _address) public onlyOwner {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 28,
+                "text": "        addresses[_getNameHash(_name)] = _address;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 27,
+                "text": "    function setAddress(string memory _name, address _address) external onlyOwner {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 28,
+                "text": "        bytes32 nameHash = _getNameHash(_name);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 29,
+                "text": "        address oldAddress = addresses[nameHash];",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 30,
+                "text": "        addresses[nameHash] = _address;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 29, "newLine": 31, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 30,
+                "text": "        emit AddressSet(_name, _address);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 32,
+                "text": "        emit AddressSet(_name, _address, oldAddress);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 31, "newLine": 33, "text": "    }" },
+              { "type": " ", "oldLine": 32, "newLine": 34, "text": "" },
+              { "type": " ", "oldLine": 33, "newLine": 35, "text": "    /**" }
+            ]
+          },
+          {
+            "oldStart": 35,
+            "oldLines": 7,
+            "newStart": 37,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 35,
+                "newLine": 37,
+                "text": "     * @param _name Name to retrieve an address for."
+              },
+              {
+                "type": " ",
+                "oldLine": 36,
+                "newLine": 38,
+                "text": "     * @return Address associated with the given name."
+              },
+              { "type": " ", "oldLine": 37, "newLine": 39, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 38,
+                "text": "    function getAddress(string memory _name) public view returns (address) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 40,
+                "text": "    function getAddress(string memory _name) external view returns (address) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 39,
+                "newLine": 41,
+                "text": "        return addresses[_getNameHash(_name)];"
+              },
+              { "type": " ", "oldLine": 40, "newLine": 42, "text": "    }" },
+              { "type": " ", "oldLine": 41, "newLine": 43, "text": "" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "d79ad2713a1d64a9": {
+      "status": "differs",
+      "coveredLines": 51,
+      "match": {
+        "origin": "stack",
+        "collection": "optimism",
+        "relation": {
+          "type": "template",
+          "template": "opstack/AddressManager"
+        },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "Lib_AddressManager",
+        "similarity": 0.56,
+        "reportId": "optimism/openzeppelin-ovm-rollup-2021-03",
+        "repository": "ben-chain/contracts-v2",
+        "path": "contracts/optimistic-ethereum/libraries/resolver/Lib_AddressManager.sol",
+        "commit": "a935e276f5620b40802b52721e3474232e458f72",
+        "commitTimestamp": "2021-04-12T01:08:09Z",
+        "url": "https://github.com/ben-chain/contracts-v2/blob/a935e276f5620b40802b52721e3474232e458f72/contracts/optimistic-ethereum/libraries/resolver/Lib_AddressManager.sol",
+        "auditStatus": "audited_with_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Second audited commit (last 3 weeks). Same directory scope and exclusions as the first commit; C01 and H01 fixes from the archived repository are contained in this commit, L02/L04/N01 are fixed here per the report.",
+        "majorFindings": 2,
+        "findingIds": ["C02", "C04"],
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 7,
+        "removed": 5,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 51,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 4,
+            "oldLines": 7,
+            "newStart": 4,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "     * Events *"
+              },
+              { "type": " ", "oldLine": 5, "newLine": 5, "text": "     *" },
+              { "type": " ", "oldLine": 6, "newLine": 6, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 7,
+                "text": "    event AddressSet(string _name, address _newAddress);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 7,
+                "text": "    event AddressSet(string indexed _name, address _newAddress, address _oldAddress);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 8, "newLine": 8, "text": "" },
+              { "type": " ", "oldLine": 9, "newLine": 9, "text": "    /**" },
+              { "type": " ", "oldLine": 10, "newLine": 10, "text": "     *" }
+            ]
+          },
+          {
+            "oldStart": 24,
+            "oldLines": 10,
+            "newStart": 24,
+            "newLines": 12,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 24,
+                "text": "     * @param _name String name to associate an address with."
+              },
+              {
+                "type": " ",
+                "oldLine": 25,
+                "newLine": 25,
+                "text": "     * @param _address Address to associate with the name."
+              },
+              { "type": " ", "oldLine": 26, "newLine": 26, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 27,
+                "text": "    function setAddress(string memory _name, address _address) public onlyOwner {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 28,
+                "text": "        addresses[_getNameHash(_name)] = _address;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 27,
+                "text": "    function setAddress(string memory _name, address _address) external onlyOwner {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 28,
+                "text": "        bytes32 nameHash = _getNameHash(_name);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 29,
+                "text": "        address oldAddress = addresses[nameHash];",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 30,
+                "text": "        addresses[nameHash] = _address;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 29, "newLine": 31, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 30,
+                "text": "        emit AddressSet(_name, _address);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 32,
+                "text": "        emit AddressSet(_name, _address, oldAddress);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 31, "newLine": 33, "text": "    }" },
+              { "type": " ", "oldLine": 32, "newLine": 34, "text": "" },
+              { "type": " ", "oldLine": 33, "newLine": 35, "text": "    /**" }
+            ]
+          },
+          {
+            "oldStart": 35,
+            "oldLines": 7,
+            "newStart": 37,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 35,
+                "newLine": 37,
+                "text": "     * @param _name Name to retrieve an address for."
+              },
+              {
+                "type": " ",
+                "oldLine": 36,
+                "newLine": 38,
+                "text": "     * @return Address associated with the given name."
+              },
+              { "type": " ", "oldLine": 37, "newLine": 39, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 38,
+                "text": "    function getAddress(string memory _name) public view returns (address) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 40,
+                "text": "    function getAddress(string memory _name) external view returns (address) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 39,
+                "newLine": 41,
+                "text": "        return addresses[_getNameHash(_name)];"
+              },
+              { "type": " ", "oldLine": 40, "newLine": 42, "text": "    }" },
+              { "type": " ", "oldLine": 41, "newLine": 43, "text": "" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
     }
   }
 }

@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "4edf25080feddd933dc39ad441d9135bb5709d8bdb7440037adbe3fd8da118f8",
+  "name": "validate_test.go",
+  "kind": "program",
+  "lines": 30,
+  "source": "package claim\n\nimport (\n\t\"testing\"\n\n\t\"github.com/stretchr/testify/require\"\n\n\t\"github.com/ethereum/go-ethereum/log\"\n\n\t\"github.com/ethereum-optimism/optimism/op-service/eth\"\n\t\"github.com/ethereum-optimism/optimism/op-service/testlog\"\n)\n\nfunc TestValidateClaim(t *testing.T) {\n\tt.Run(\"Valid\", func(t *testing.T) {\n\t\texpected := eth.Bytes32{0x11}\n\t\tactual := eth.Bytes32{0x11}\n\t\tlogger := testlog.Logger(t, log.LevelError)\n\t\terr := ValidateClaim(logger, expected, actual)\n\t\trequire.NoError(t, err)\n\t})\n\n\tt.Run(\"Invalid\", func(t *testing.T) {\n\t\texpected := eth.Bytes32{0x11}\n\t\tactual := eth.Bytes32{0x22}\n\t\tlogger := testlog.Logger(t, log.LevelError)\n\t\terr := ValidateClaim(logger, expected, actual)\n\t\trequire.ErrorIs(t, err, ErrClaimNotValid)\n\t})\n}",
+  "resolutions": {
+    "437dcc6cbc847e9a": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "1f5c32d18cf7148d": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

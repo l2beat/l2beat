@@ -62,6 +62,36 @@
         "totalVersions": 2
       },
       "warnings": []
+    },
+    "437dcc6cbc847e9a": {
+      "status": "identical",
+      "coveredLines": 137,
+      "match": {
+        "origin": "stack",
+        "collection": "optimism",
+        "relation": {
+          "type": "template",
+          "template": "gnosisSafeModules/LivenessGuard"
+        },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "LivenessGuard",
+        "similarity": 1,
+        "reportId": "optimism/cantina-safe-extensions-2024-06",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts-bedrock/src/Safe/LivenessGuard.sol",
+        "commit": "48393a6a1ea32efac65bb3ce6617cf101ad88225",
+        "commitTimestamp": "2024-05-10T05:04:52Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/48393a6a1ea32efac65bb3ce6617cf101ad88225/packages/contracts-bedrock/src/Safe/LivenessGuard.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Competition on the Security Council Safe extensions; the report prints no commit, this revision is the only GitHub permalink it contains (finding 3.1.5). Only Medium findings are reproduced.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 2
+      },
+      "warnings": []
     }
   }
 }

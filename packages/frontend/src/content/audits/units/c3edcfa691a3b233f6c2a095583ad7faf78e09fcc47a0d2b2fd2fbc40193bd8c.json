@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "c3edcfa691a3b233f6c2a095583ad7faf78e09fcc47a0d2b2fd2fbc40193bd8c",
+  "name": "local_test.go",
+  "kind": "program",
+  "lines": 57,
+  "source": "package kvstore\n\nimport (\n\t\"encoding/binary\"\n\t\"encoding/json\"\n\t\"testing\"\n\n\t\"github.com/ethereum-optimism/optimism/op-node/chaincfg\"\n\tpreimage \"github.com/ethereum-optimism/optimism/op-preimage\"\n\t\"github.com/ethereum-optimism/optimism/op-program/host/config\"\n\t\"github.com/ethereum/go-ethereum/common\"\n\t\"github.com/ethereum/go-ethereum/params\"\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc TestLocalPreimageSource(t *testing.T) {\n\tcfg := &config.Config{\n\t\tRollup:             chaincfg.Goerli,\n\t\tL1Head:             common.HexToHash(\"0x1111\"),\n\t\tL2OutputRoot:       common.HexToHash(\"0x2222\"),\n\t\tL2Claim:            common.HexToHash(\"0x3333\"),\n\t\tL2ClaimBlockNumber: 1234,\n\t\tL2ChainConfig:      params.GoerliChainConfig,\n\t}\n\tsource := NewLocalPreimageSource(cfg)\n\ttests := []struct {\n\t\tname     string\n\t\tkey      common.Hash\n\t\texpected []byte\n\t}{\n\t\t{\"L1Head\", l1HeadKey, cfg.L1Head.Bytes()},\n\t\t{\"L2OutputRoot\", l2OutputRootKey, cfg.L2OutputRoot.Bytes()},\n\t\t{\"L2Claim\", l2ClaimKey, cfg.L2Claim.Bytes()},\n\t\t{\"L2ClaimBlockNumber\", l2ClaimBlockNumberKey, binary.BigEndian.AppendUint64(nil, cfg.L2ClaimBlockNumber)},\n\t\t{\"L2ChainID\", l2ChainIDKey, binary.BigEndian.AppendUint64(nil, cfg.L2ChainConfig.ChainID.Uint64())},\n\t\t{\"Rollup\", rollupKey, asJson(t, cfg.Rollup)},\n\t\t{\"ChainConfig\", l2ChainConfigKey, asJson(t, cfg.L2ChainConfig)},\n\t\t{\"Unknown\", preimage.LocalIndexKey(1000).PreimageKey(), nil},\n\t}\n\tfor _, test := range tests {\n\t\tt.Run(test.name, func(t *testing.T) {\n\t\t\tresult, err := source.Get(test.key)\n\t\t\tif test.expected == nil {\n\t\t\t\trequire.ErrorIs(t, err, ErrNotFound)\n\t\t\t} else {\n\t\t\t\trequire.NoError(t, err)\n\t\t\t}\n\t\t\trequire.Equal(t, test.expected, result)\n\t\t})\n\t}\n}\n\nfunc asJson(t *testing.T, v any) []byte {\n\td, err := json.Marshal(v)\n\trequire.NoError(t, err)\n\treturn d\n}",
+  "resolutions": {
+    "437dcc6cbc847e9a": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "bb55951394276893": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

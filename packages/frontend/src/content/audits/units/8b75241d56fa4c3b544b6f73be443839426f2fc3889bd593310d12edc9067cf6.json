@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "8b75241d56fa4c3b544b6f73be443839426f2fc3889bd593310d12edc9067cf6",
+  "name": "db.go",
+  "kind": "program",
+  "lines": 117,
+  "source": "package mpt\n\nimport \"github.com/ethereum/go-ethereum/ethdb\"\n\ntype Hooks struct {\n\tGet    func(key []byte) []byte\n\tPut    func(key []byte, value []byte)\n\tDelete func(key []byte)\n}\n\n// DB implements the ethdb.Database to back the StateDB of Geth.\ntype DB struct {\n\tdb Hooks\n}\n\nfunc (p *DB) Has(key []byte) (bool, error) {\n\tpanic(\"not supported\")\n}\n\nfunc (p *DB) Get(key []byte) ([]byte, error) {\n\treturn p.db.Get(key), nil\n}\n\nfunc (p *DB) Put(key []byte, value []byte) error {\n\tp.db.Put(key, value)\n\treturn nil\n}\n\nfunc (p DB) Delete(key []byte) error {\n\tp.db.Delete(key)\n\treturn nil\n}\n\nfunc (p DB) Stat(property string) (string, error) {\n\tpanic(\"not supported\")\n}\n\nfunc (p DB) NewBatch() ethdb.Batch {\n\tpanic(\"not supported\")\n}\n\nfunc (p DB) NewBatchWithSize(size int) ethdb.Batch {\n\tpanic(\"not supported\")\n}\n\nfunc (p DB) NewIterator(prefix []byte, start []byte) ethdb.Iterator {\n\tpanic(\"not supported\")\n}\n\nfunc (p DB) Compact(start []byte, limit []byte) error {\n\treturn nil // no-op\n}\n\nfunc (p DB) NewSnapshot() (ethdb.Snapshot, error) {\n\tpanic(\"not supported\")\n}\n\nfunc (p DB) Close() error {\n\treturn nil\n}\n\n// We implement the full ethdb.Database bloat because the StateDB takes this full interface,\n// even though it only uses the KeyValue subset.\n\nfunc (p *DB) HasAncient(kind string, number uint64) (bool, error) {\n\tpanic(\"not supported\")\n}\n\nfunc (p *DB) Ancient(kind string, number uint64) ([]byte, error) {\n\tpanic(\"not supported\")\n}\n\nfunc (p *DB) AncientRange(kind string, start, count, maxBytes uint64) ([][]byte, error) {\n\tpanic(\"not supported\")\n}\n\nfunc (p *DB) Ancients() (uint64, error) {\n\tpanic(\"not supported\")\n}\n\nfunc (p *DB) Tail() (uint64, error) {\n\tpanic(\"not supported\")\n}\n\nfunc (p *DB) AncientSize(kind string) (uint64, error) {\n\tpanic(\"not supported\")\n}\n\nfunc (p *DB) ReadAncients(fn func(ethdb.AncientReaderOp) error) (err error) {\n\tpanic(\"not supported\")\n}\n\nfunc (p *DB) ModifyAncients(f func(ethdb.AncientWriteOp) error) (int64, error) {\n\tpanic(\"not supported\")\n}\n\nfunc (p *DB) TruncateHead(n uint64) (uint64, error) {\n\tpanic(\"not supported\")\n}\n\nfunc (p *DB) TruncateTail(n uint64) (uint64, error) {\n\tpanic(\"not supported\")\n}\n\nfunc (p *DB) Sync() error {\n\tpanic(\"not supported\")\n}\n\nfunc (p *DB) MigrateTable(s string, f func([]byte) ([]byte, error)) error {\n\tpanic(\"not supported\")\n}\n\nfunc (p *DB) AncientDatadir() (string, error) {\n\tpanic(\"not supported\")\n}\n\nvar _ ethdb.Database = (*DB)(nil)",
+  "resolutions": {
+    "437dcc6cbc847e9a": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "bb55951394276893": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

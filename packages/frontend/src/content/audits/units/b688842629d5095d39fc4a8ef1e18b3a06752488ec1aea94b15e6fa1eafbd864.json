@@ -1,0 +1,70 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "b688842629d5095d39fc4a8ef1e18b3a06752488ec1aea94b15e6fa1eafbd864",
+  "name": "roots.go",
+  "kind": "program",
+  "lines": 71,
+  "source": "package types\n\nimport (\n\t\"fmt\"\n\n\t\"github.com/ethereum-optimism/optimism/op-service/eth\"\n\t\"github.com/ethereum/go-ethereum/common\"\n\t\"github.com/ethereum/go-ethereum/crypto\"\n\t\"github.com/ethereum/go-ethereum/rlp\"\n)\n\nvar (\n\tIntermediateTransitionVersion = byte(255)\n)\n\ntype OptimisticBlock struct {\n\tBlockHash  common.Hash\n\tOutputRoot eth.Bytes32\n}\n\ntype TransitionState struct {\n\tSuperRoot       []byte\n\tPendingProgress []OptimisticBlock\n\tStep            uint64\n}\n\nfunc (t *TransitionState) String() string {\n\treturn fmt.Sprintf(\"{SuperRoot: %x, PendingProgress: %v, Step: %d}\", t.SuperRoot, t.PendingProgress, t.Step)\n}\n\nfunc (i *TransitionState) Version() byte {\n\treturn IntermediateTransitionVersion\n}\n\nfunc (i *TransitionState) Marshal() []byte {\n\trlpData, err := rlp.EncodeToBytes(i)\n\tif err != nil {\n\t\tpanic(err)\n\t}\n\treturn append([]byte{IntermediateTransitionVersion}, rlpData...)\n}\n\nfunc (i *TransitionState) Hash() common.Hash {\n\tdata := i.Marshal()\n\treturn crypto.Keccak256Hash(data)\n}\n\nfunc UnmarshalTransitionState(data []byte) (*TransitionState, error) {\n\tif len(data) == 0 {\n\t\treturn nil, eth.ErrInvalidSuperRoot\n\t}\n\tswitch data[0] {\n\tcase IntermediateTransitionVersion:\n\t\treturn unmarshalTransitionState(data)\n\tcase eth.SuperRootVersionV1:\n\t\treturn &TransitionState{SuperRoot: data}, nil\n\tdefault:\n\t\treturn nil, eth.ErrInvalidSuperRootVersion\n\t}\n}\n\nfunc unmarshalTransitionState(data []byte) (*TransitionState, error) {\n\tif len(data) == 0 {\n\t\treturn nil, eth.ErrInvalidSuperRoot\n\t}\n\tvar state TransitionState\n\tif err := rlp.DecodeBytes(data[1:], &state); err != nil {\n\t\treturn nil, err\n\t}\n\treturn &state, nil\n}",
+  "resolutions": {
+    "437dcc6cbc847e9a": {
+      "status": "identical",
+      "coveredLines": 71,
+      "match": {
+        "origin": "stack",
+        "collection": "optimism",
+        "relation": {
+          "type": "template",
+          "template": "gnosisSafeModules/LivenessGuard"
+        },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "roots.go",
+        "similarity": 1,
+        "reportId": "optimism/cantina-interop-op-program-2025-03",
+        "repository": "ethereum-optimism/optimism",
+        "path": "op-program/client/interop/types/roots.go",
+        "commit": "7c67713745f11cfd6a55962585d879c190db8511",
+        "commitTimestamp": "2025-05-06T02:55:50Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/7c67713745f11cfd6a55962585d879c190db8511/op-program/client/interop/types/roots.go",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Fix review of PR 15708 (super root length checks and function rename, fixes 3.5.6); only the fix changes were verified.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "warnings": []
+    },
+    "1f5c32d18cf7148d": {
+      "status": "identical",
+      "coveredLines": 71,
+      "match": {
+        "origin": "stack",
+        "collection": "optimism",
+        "relation": {
+          "type": "template",
+          "template": "gnosisSafeModules/LivenessGuard"
+        },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "roots.go",
+        "similarity": 1,
+        "reportId": "optimism/cantina-interop-op-program-2025-03",
+        "repository": "ethereum-optimism/optimism",
+        "path": "op-program/client/interop/types/roots.go",
+        "commit": "7c67713745f11cfd6a55962585d879c190db8511",
+        "commitTimestamp": "2025-05-06T02:55:50Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/7c67713745f11cfd6a55962585d879c190db8511/op-program/client/interop/types/roots.go",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Fix review of PR 15708 (super root length checks and function rename, fixes 3.5.6); only the fix changes were verified.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "warnings": []
+    }
+  }
+}

@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "fd7cca3f9af56c996cfc0cff858436c52afbb0a337e68f869acf03a8d9e20528",
+  "name": "directory.go",
+  "kind": "program",
+  "lines": 86,
+  "source": "package kvstore\n\nimport (\n\t\"encoding/hex\"\n\t\"errors\"\n\t\"fmt\"\n\t\"io\"\n\t\"os\"\n\t\"path\"\n\t\"sync\"\n\n\t\"github.com/ethereum/go-ethereum/common\"\n)\n\n// directoryKV is a disk-backed key-value store, every key-value pair is a hex-encoded .txt file, with the value as content.\n// directoryKV is safe for concurrent use with a single directoryKV instance.\n// directoryKV is safe for concurrent use between different directoryKV instances of the same disk directory as long as the\n// file system supports atomic renames.\ntype directoryKV struct {\n\tsync.RWMutex\n\tpath string\n}\n\n// newDirectoryKV creates a directoryKV that puts/gets pre-images as files in the given directory path.\n// The path must exist, or subsequent Put/Get calls will error when it does not.\nfunc newDirectoryKV(path string) *directoryKV {\n\treturn &directoryKV{path: path}\n}\n\n// pathKey returns the file path for the given key.\n// This is composed of the first characters of the non-0x-prefixed hex key as a directory, and the rest as the file name.\nfunc (d *directoryKV) pathKey(k common.Hash) string {\n\tkey := k.String()\n\tdir, name := key[2:6], key[6:]\n\treturn path.Join(d.path, dir, name+\".txt\")\n}\n\nfunc (d *directoryKV) Put(k common.Hash, v []byte) error {\n\td.Lock()\n\tdefer d.Unlock()\n\tf, err := openTempFile(d.path, k.String()+\".txt.*\")\n\tif err != nil {\n\t\treturn fmt.Errorf(\"failed to open temp file for pre-image %s: %w\", k, err)\n\t}\n\tdefer os.Remove(f.Name()) // Clean up the temp file if it doesn't actually get moved into place\n\tif _, err := f.Write([]byte(hex.EncodeToString(v))); err != nil {\n\t\t_ = f.Close()\n\t\treturn fmt.Errorf(\"failed to write pre-image %s to disk: %w\", k, err)\n\t}\n\tif err := f.Close(); err != nil {\n\t\treturn fmt.Errorf(\"failed to close temp pre-image %s file: %w\", k, err)\n\t}\n\n\ttargetFile := d.pathKey(k)\n\tif err := os.MkdirAll(path.Dir(targetFile), 0777); err != nil {\n\t\treturn fmt.Errorf(\"failed to create parent directory for pre-image %s: %w\", f.Name(), err)\n\t}\n\tif err := os.Rename(f.Name(), targetFile); err != nil {\n\t\treturn fmt.Errorf(\"failed to move temp file %v to final destination %v: %w\", f.Name(), targetFile, err)\n\t}\n\treturn nil\n}\n\nfunc (d *directoryKV) Get(k common.Hash) ([]byte, error) {\n\td.RLock()\n\tdefer d.RUnlock()\n\tf, err := os.OpenFile(d.pathKey(k), os.O_RDONLY, filePermission)\n\tif err != nil {\n\t\tif errors.Is(err, os.ErrNotExist) {\n\t\t\treturn nil, ErrNotFound\n\t\t}\n\t\treturn nil, fmt.Errorf(\"failed to open pre-image file %s: %w\", k, err)\n\t}\n\tdefer f.Close() // fine to ignore closing error here\n\tdat, err := io.ReadAll(f)\n\tif err != nil {\n\t\treturn nil, fmt.Errorf(\"failed to read pre-image from file %s: %w\", k, err)\n\t}\n\treturn hex.DecodeString(string(dat))\n}\n\nfunc (d *directoryKV) Close() error {\n\treturn nil\n}\n\nvar _ KV = (*directoryKV)(nil)",
+  "resolutions": {
+    "437dcc6cbc847e9a": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "1f5c32d18cf7148d": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

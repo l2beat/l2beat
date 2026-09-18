@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "cd751377d336ec8130d36bca5ab0286d421645e76f273e41a98a26920942f8aa",
+  "name": "error.rs",
+  "kind": "program",
+  "lines": 84,
+  "source": "use anyhow::anyhow;\nuse slop_futures::pipeline::SubmitError;\nuse sp1_core_executor::ExecutionError;\nuse sp1_core_machine::utils::SP1CoreProverError;\nuse tonic::Code;\n\n#[derive(Debug)]\npub enum TaskError {\n    Retryable(anyhow::Error),\n    Fatal(anyhow::Error),\n    Execution(ExecutionError),\n}\n\nimpl From<anyhow::Error> for TaskError {\n    fn from(err: anyhow::Error) -> Self {\n        if err.is::<reqwest::Error>() {\n            Self::Retryable(err)\n        } else if err.is::<tonic::Status>() {\n            err.downcast::<tonic::Status>().unwrap().into()\n        } else {\n            Self::Fatal(err)\n        }\n    }\n}\n\nimpl From<tonic::Status> for TaskError {\n    fn from(err: tonic::Status) -> Self {\n        match err.code() {\n            Code::Internal\n            | Code::Unavailable\n            | Code::Unknown\n            | Code::Cancelled\n            | Code::DeadlineExceeded\n            | Code::ResourceExhausted\n            | Code::Aborted\n            | Code::DataLoss => Self::Retryable(err.into()),\n            _ => Self::Fatal(err.into()),\n        }\n    }\n}\n\nimpl From<SP1CoreProverError> for TaskError {\n    fn from(err: SP1CoreProverError) -> Self {\n        Self::Fatal(err.into())\n    }\n}\n\nimpl From<ExecutionError> for TaskError {\n    fn from(err: ExecutionError) -> Self {\n        Self::Execution(err)\n    }\n}\n\nimpl From<eyre::Report> for TaskError {\n    fn from(err: eyre::Report) -> Self {\n        Self::Fatal(anyhow!(Box::new(err)))\n    }\n}\n\nimpl From<SubmitError> for TaskError {\n    fn from(err: SubmitError) -> Self {\n        Self::Fatal(anyhow!(err))\n    }\n}\n\nimpl std::error::Error for TaskError {\n    fn description(&self) -> &str {\n        match self {\n            TaskError::Retryable(_) => \"Retryable\",\n            TaskError::Fatal(_) => \"Fatal\",\n            TaskError::Execution(_) => \"Execution\",\n        }\n    }\n}\n\nimpl std::fmt::Display for TaskError {\n    fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {\n        match self {\n            TaskError::Retryable(err) => write!(f, \"Retryable: {}\", err),\n            TaskError::Fatal(err) => write!(f, \"Fatal: {}\", err),\n            TaskError::Execution(err) => write!(f, \"Execution: {}\", err),\n        }\n    }\n}",
+  "resolutions": {
+    "44ad4cf96e2ef6f0": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "437dcc6cbc847e9a": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "5d5f82d91c09d4ec": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "e3b0c44298fc1c14": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "d79ad2713a1d64a9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "2295595c4243408b": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "d80a56c5abf9208b": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

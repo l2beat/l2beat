@@ -523,6 +523,1825 @@
         ]
       },
       "warnings": []
+    },
+    "44ad4cf96e2ef6f0": {
+      "status": "differs",
+      "coveredLines": 197,
+      "match": {
+        "origin": "stack",
+        "collection": "sp1",
+        "relation": {
+          "type": "template",
+          "template": "succinct/OPSuccinct/AccessManager"
+        },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "utils.rs",
+        "similarity": 0.941,
+        "reportId": "sp1/zellic-sp1-design-review-2024",
+        "repository": "succinctlabs/sp1",
+        "path": "crates/prover/src/utils.rs",
+        "commit": "15be73d3acae3718a0acc529ed566f6a448b1c0e",
+        "commitTimestamp": "2024-11-27T02:59:17Z",
+        "url": "https://github.com/succinctlabs/sp1/blob/15be73d3acae3718a0acc529ed566f6a448b1c0e/crates/prover/src/utils.rs",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "Initial audit",
+        "coverage": "Design-level review only (explicitly not a code audit): RV32IM specification compliance and the register/low-memory aliasing at addresses 0x0-0x1f, focused mostly on load and store instruction behaviour; soundness/completeness of the ZK proofs and circuits and correctness of implementation details were out of scope.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 13,
+        "removed": 7,
+        "ignoredAdded": 1,
+        "ignoredRemoved": 1,
+        "unchanged": 197,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 59,
+            "oldLines": 25,
+            "newStart": 59,
+            "newLines": 31,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 59,
+                "newLine": 59,
+                "text": "    hash.hash_slice(&input)"
+              },
+              { "type": " ", "oldLine": 60, "newLine": 60, "text": "}" },
+              { "type": " ", "oldLine": 61, "newLine": 61, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 62,
+                "text": "pub fn assert_root_public_values_valid(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 62,
+                "text": "pub fn is_root_public_values_valid(",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 63,
+                "newLine": 63,
+                "text": "    config: &InnerSC,"
+              },
+              {
+                "type": " ",
+                "oldLine": 64,
+                "newLine": 64,
+                "text": "    public_values: &RootPublicValues<BabyBear>,"
+              },
+              { "type": "-", "oldLine": 65, "text": ") {", "ignored": false },
+              {
+                "type": "+",
+                "newLine": 65,
+                "text": ") -> bool {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 66,
+                "newLine": 66,
+                "text": "    let expected_digest = root_public_values_digest(config, public_values);"
+              },
+              {
+                "type": " ",
+                "oldLine": 67,
+                "newLine": 67,
+                "text": "    for (value, expected) in public_values.digest().iter().copied().zip_eq(expected_digest) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 68,
+                "text": "        assert_eq!(value, expected);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 68,
+                "text": "        if value != expected {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 69,
+                "text": "            return false;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 70,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 69, "newLine": 71, "text": "    }" },
+              {
+                "type": "+",
+                "newLine": 72,
+                "text": "    true",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 70, "newLine": 73, "text": "}" },
+              { "type": " ", "oldLine": 71, "newLine": 74, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 72,
+                "text": "/// Assert that the digest of the public values is correct.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 73,
+                "text": "pub fn assert_recursion_public_values_valid(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 75,
+                "text": "/// Check if the digest of the public values is correct.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 76,
+                "text": "pub fn is_recursion_public_values_valid(",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 74,
+                "newLine": 77,
+                "text": "    config: &InnerSC,"
+              },
+              {
+                "type": " ",
+                "oldLine": 75,
+                "newLine": 78,
+                "text": "    public_values: &RecursionPublicValues<BabyBear>,"
+              },
+              { "type": "-", "oldLine": 76, "text": ") {", "ignored": false },
+              {
+                "type": "+",
+                "newLine": 79,
+                "text": ") -> bool {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 77,
+                "newLine": 80,
+                "text": "    let expected_digest = recursion_public_values_digest(config, public_values);"
+              },
+              {
+                "type": " ",
+                "oldLine": 78,
+                "newLine": 81,
+                "text": "    for (value, expected) in public_values.digest.iter().copied().zip_eq(expected_digest) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 79,
+                "text": "        assert_eq!(value, expected);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 82,
+                "text": "        if value != expected {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 83,
+                "text": "            return false;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 84,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 80, "newLine": 85, "text": "    }" },
+              {
+                "type": "+",
+                "newLine": 86,
+                "text": "    true",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 81, "newLine": 87, "text": "}" },
+              { "type": " ", "oldLine": 82, "newLine": 88, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 83,
+                "newLine": 89,
+                "text": "/// Get the committed values Bn Poseidon2 digest this reduce proof is representing."
+              }
+            ]
+          },
+          {
+            "oldStart": 116,
+            "oldLines": 7,
+            "newStart": 122,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 116, "newLine": 122, "text": "}" },
+              { "type": " ", "oldLine": 117, "newLine": 123, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 118,
+                "newLine": 124,
+                "text": "pub fn words_to_bytes<T: Copy>(words: &[Word<T>]) -> Vec<T> {"
+              },
+              {
+                "type": "-",
+                "oldLine": 119,
+                "text": "    return words.iter().flat_map(|word| word.0).collect();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 125,
+                "text": "    words.iter().flat_map(|word| word.0).collect()",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 120, "newLine": 126, "text": "}" },
+              { "type": " ", "oldLine": 121, "newLine": 127, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 122,
+                "newLine": 128,
+                "text": "/// Convert 8 BabyBear words into a Bn254Fr field element by shifting by 31 bits each time. The last"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "437dcc6cbc847e9a": {
+      "status": "differs",
+      "coveredLines": 197,
+      "match": {
+        "origin": "library",
+        "collection": "sp1",
+        "relation": { "type": "library" },
+        "rank": 3,
+        "matchedBy": "name",
+        "auditedName": "utils.rs",
+        "similarity": 0.941,
+        "reportId": "sp1/zellic-sp1-design-review-2024",
+        "repository": "succinctlabs/sp1",
+        "path": "crates/prover/src/utils.rs",
+        "commit": "15be73d3acae3718a0acc529ed566f6a448b1c0e",
+        "commitTimestamp": "2024-11-27T02:59:17Z",
+        "url": "https://github.com/succinctlabs/sp1/blob/15be73d3acae3718a0acc529ed566f6a448b1c0e/crates/prover/src/utils.rs",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "Initial audit",
+        "coverage": "Design-level review only (explicitly not a code audit): RV32IM specification compliance and the register/low-memory aliasing at addresses 0x0-0x1f, focused mostly on load and store instruction behaviour; soundness/completeness of the ZK proofs and circuits and correctness of implementation details were out of scope.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 13,
+        "removed": 7,
+        "ignoredAdded": 1,
+        "ignoredRemoved": 1,
+        "unchanged": 197,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 59,
+            "oldLines": 25,
+            "newStart": 59,
+            "newLines": 31,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 59,
+                "newLine": 59,
+                "text": "    hash.hash_slice(&input)"
+              },
+              { "type": " ", "oldLine": 60, "newLine": 60, "text": "}" },
+              { "type": " ", "oldLine": 61, "newLine": 61, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 62,
+                "text": "pub fn assert_root_public_values_valid(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 62,
+                "text": "pub fn is_root_public_values_valid(",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 63,
+                "newLine": 63,
+                "text": "    config: &InnerSC,"
+              },
+              {
+                "type": " ",
+                "oldLine": 64,
+                "newLine": 64,
+                "text": "    public_values: &RootPublicValues<BabyBear>,"
+              },
+              { "type": "-", "oldLine": 65, "text": ") {", "ignored": false },
+              {
+                "type": "+",
+                "newLine": 65,
+                "text": ") -> bool {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 66,
+                "newLine": 66,
+                "text": "    let expected_digest = root_public_values_digest(config, public_values);"
+              },
+              {
+                "type": " ",
+                "oldLine": 67,
+                "newLine": 67,
+                "text": "    for (value, expected) in public_values.digest().iter().copied().zip_eq(expected_digest) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 68,
+                "text": "        assert_eq!(value, expected);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 68,
+                "text": "        if value != expected {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 69,
+                "text": "            return false;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 70,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 69, "newLine": 71, "text": "    }" },
+              {
+                "type": "+",
+                "newLine": 72,
+                "text": "    true",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 70, "newLine": 73, "text": "}" },
+              { "type": " ", "oldLine": 71, "newLine": 74, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 72,
+                "text": "/// Assert that the digest of the public values is correct.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 73,
+                "text": "pub fn assert_recursion_public_values_valid(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 75,
+                "text": "/// Check if the digest of the public values is correct.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 76,
+                "text": "pub fn is_recursion_public_values_valid(",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 74,
+                "newLine": 77,
+                "text": "    config: &InnerSC,"
+              },
+              {
+                "type": " ",
+                "oldLine": 75,
+                "newLine": 78,
+                "text": "    public_values: &RecursionPublicValues<BabyBear>,"
+              },
+              { "type": "-", "oldLine": 76, "text": ") {", "ignored": false },
+              {
+                "type": "+",
+                "newLine": 79,
+                "text": ") -> bool {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 77,
+                "newLine": 80,
+                "text": "    let expected_digest = recursion_public_values_digest(config, public_values);"
+              },
+              {
+                "type": " ",
+                "oldLine": 78,
+                "newLine": 81,
+                "text": "    for (value, expected) in public_values.digest.iter().copied().zip_eq(expected_digest) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 79,
+                "text": "        assert_eq!(value, expected);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 82,
+                "text": "        if value != expected {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 83,
+                "text": "            return false;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 84,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 80, "newLine": 85, "text": "    }" },
+              {
+                "type": "+",
+                "newLine": 86,
+                "text": "    true",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 81, "newLine": 87, "text": "}" },
+              { "type": " ", "oldLine": 82, "newLine": 88, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 83,
+                "newLine": 89,
+                "text": "/// Get the committed values Bn Poseidon2 digest this reduce proof is representing."
+              }
+            ]
+          },
+          {
+            "oldStart": 116,
+            "oldLines": 7,
+            "newStart": 122,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 116, "newLine": 122, "text": "}" },
+              { "type": " ", "oldLine": 117, "newLine": 123, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 118,
+                "newLine": 124,
+                "text": "pub fn words_to_bytes<T: Copy>(words: &[Word<T>]) -> Vec<T> {"
+              },
+              {
+                "type": "-",
+                "oldLine": 119,
+                "text": "    return words.iter().flat_map(|word| word.0).collect();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 125,
+                "text": "    words.iter().flat_map(|word| word.0).collect()",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 120, "newLine": 126, "text": "}" },
+              { "type": " ", "oldLine": 121, "newLine": 127, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 122,
+                "newLine": 128,
+                "text": "/// Convert 8 BabyBear words into a Bn254Fr field element by shifting by 31 bits each time. The last"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "5d5f82d91c09d4ec": {
+      "status": "differs",
+      "coveredLines": 197,
+      "match": {
+        "origin": "library",
+        "collection": "sp1",
+        "relation": { "type": "library" },
+        "rank": 3,
+        "matchedBy": "name",
+        "auditedName": "utils.rs",
+        "similarity": 0.941,
+        "reportId": "sp1/zellic-sp1-design-review-2024",
+        "repository": "succinctlabs/sp1",
+        "path": "crates/prover/src/utils.rs",
+        "commit": "15be73d3acae3718a0acc529ed566f6a448b1c0e",
+        "commitTimestamp": "2024-11-27T02:59:17Z",
+        "url": "https://github.com/succinctlabs/sp1/blob/15be73d3acae3718a0acc529ed566f6a448b1c0e/crates/prover/src/utils.rs",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "Initial audit",
+        "coverage": "Design-level review only (explicitly not a code audit): RV32IM specification compliance and the register/low-memory aliasing at addresses 0x0-0x1f, focused mostly on load and store instruction behaviour; soundness/completeness of the ZK proofs and circuits and correctness of implementation details were out of scope.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 13,
+        "removed": 7,
+        "ignoredAdded": 1,
+        "ignoredRemoved": 1,
+        "unchanged": 197,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 59,
+            "oldLines": 25,
+            "newStart": 59,
+            "newLines": 31,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 59,
+                "newLine": 59,
+                "text": "    hash.hash_slice(&input)"
+              },
+              { "type": " ", "oldLine": 60, "newLine": 60, "text": "}" },
+              { "type": " ", "oldLine": 61, "newLine": 61, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 62,
+                "text": "pub fn assert_root_public_values_valid(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 62,
+                "text": "pub fn is_root_public_values_valid(",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 63,
+                "newLine": 63,
+                "text": "    config: &InnerSC,"
+              },
+              {
+                "type": " ",
+                "oldLine": 64,
+                "newLine": 64,
+                "text": "    public_values: &RootPublicValues<BabyBear>,"
+              },
+              { "type": "-", "oldLine": 65, "text": ") {", "ignored": false },
+              {
+                "type": "+",
+                "newLine": 65,
+                "text": ") -> bool {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 66,
+                "newLine": 66,
+                "text": "    let expected_digest = root_public_values_digest(config, public_values);"
+              },
+              {
+                "type": " ",
+                "oldLine": 67,
+                "newLine": 67,
+                "text": "    for (value, expected) in public_values.digest().iter().copied().zip_eq(expected_digest) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 68,
+                "text": "        assert_eq!(value, expected);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 68,
+                "text": "        if value != expected {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 69,
+                "text": "            return false;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 70,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 69, "newLine": 71, "text": "    }" },
+              {
+                "type": "+",
+                "newLine": 72,
+                "text": "    true",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 70, "newLine": 73, "text": "}" },
+              { "type": " ", "oldLine": 71, "newLine": 74, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 72,
+                "text": "/// Assert that the digest of the public values is correct.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 73,
+                "text": "pub fn assert_recursion_public_values_valid(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 75,
+                "text": "/// Check if the digest of the public values is correct.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 76,
+                "text": "pub fn is_recursion_public_values_valid(",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 74,
+                "newLine": 77,
+                "text": "    config: &InnerSC,"
+              },
+              {
+                "type": " ",
+                "oldLine": 75,
+                "newLine": 78,
+                "text": "    public_values: &RecursionPublicValues<BabyBear>,"
+              },
+              { "type": "-", "oldLine": 76, "text": ") {", "ignored": false },
+              {
+                "type": "+",
+                "newLine": 79,
+                "text": ") -> bool {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 77,
+                "newLine": 80,
+                "text": "    let expected_digest = recursion_public_values_digest(config, public_values);"
+              },
+              {
+                "type": " ",
+                "oldLine": 78,
+                "newLine": 81,
+                "text": "    for (value, expected) in public_values.digest.iter().copied().zip_eq(expected_digest) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 79,
+                "text": "        assert_eq!(value, expected);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 82,
+                "text": "        if value != expected {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 83,
+                "text": "            return false;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 84,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 80, "newLine": 85, "text": "    }" },
+              {
+                "type": "+",
+                "newLine": 86,
+                "text": "    true",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 81, "newLine": 87, "text": "}" },
+              { "type": " ", "oldLine": 82, "newLine": 88, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 83,
+                "newLine": 89,
+                "text": "/// Get the committed values Bn Poseidon2 digest this reduce proof is representing."
+              }
+            ]
+          },
+          {
+            "oldStart": 116,
+            "oldLines": 7,
+            "newStart": 122,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 116, "newLine": 122, "text": "}" },
+              { "type": " ", "oldLine": 117, "newLine": 123, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 118,
+                "newLine": 124,
+                "text": "pub fn words_to_bytes<T: Copy>(words: &[Word<T>]) -> Vec<T> {"
+              },
+              {
+                "type": "-",
+                "oldLine": 119,
+                "text": "    return words.iter().flat_map(|word| word.0).collect();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 125,
+                "text": "    words.iter().flat_map(|word| word.0).collect()",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 120, "newLine": 126, "text": "}" },
+              { "type": " ", "oldLine": 121, "newLine": 127, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 122,
+                "newLine": 128,
+                "text": "/// Convert 8 BabyBear words into a Bn254Fr field element by shifting by 31 bits each time. The last"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "e3b0c44298fc1c14": {
+      "status": "differs",
+      "coveredLines": 197,
+      "match": {
+        "origin": "library",
+        "collection": "sp1",
+        "relation": { "type": "library" },
+        "rank": 3,
+        "matchedBy": "name",
+        "auditedName": "utils.rs",
+        "similarity": 0.941,
+        "reportId": "sp1/zellic-sp1-design-review-2024",
+        "repository": "succinctlabs/sp1",
+        "path": "crates/prover/src/utils.rs",
+        "commit": "15be73d3acae3718a0acc529ed566f6a448b1c0e",
+        "commitTimestamp": "2024-11-27T02:59:17Z",
+        "url": "https://github.com/succinctlabs/sp1/blob/15be73d3acae3718a0acc529ed566f6a448b1c0e/crates/prover/src/utils.rs",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "Initial audit",
+        "coverage": "Design-level review only (explicitly not a code audit): RV32IM specification compliance and the register/low-memory aliasing at addresses 0x0-0x1f, focused mostly on load and store instruction behaviour; soundness/completeness of the ZK proofs and circuits and correctness of implementation details were out of scope.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 13,
+        "removed": 7,
+        "ignoredAdded": 1,
+        "ignoredRemoved": 1,
+        "unchanged": 197,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 59,
+            "oldLines": 25,
+            "newStart": 59,
+            "newLines": 31,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 59,
+                "newLine": 59,
+                "text": "    hash.hash_slice(&input)"
+              },
+              { "type": " ", "oldLine": 60, "newLine": 60, "text": "}" },
+              { "type": " ", "oldLine": 61, "newLine": 61, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 62,
+                "text": "pub fn assert_root_public_values_valid(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 62,
+                "text": "pub fn is_root_public_values_valid(",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 63,
+                "newLine": 63,
+                "text": "    config: &InnerSC,"
+              },
+              {
+                "type": " ",
+                "oldLine": 64,
+                "newLine": 64,
+                "text": "    public_values: &RootPublicValues<BabyBear>,"
+              },
+              { "type": "-", "oldLine": 65, "text": ") {", "ignored": false },
+              {
+                "type": "+",
+                "newLine": 65,
+                "text": ") -> bool {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 66,
+                "newLine": 66,
+                "text": "    let expected_digest = root_public_values_digest(config, public_values);"
+              },
+              {
+                "type": " ",
+                "oldLine": 67,
+                "newLine": 67,
+                "text": "    for (value, expected) in public_values.digest().iter().copied().zip_eq(expected_digest) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 68,
+                "text": "        assert_eq!(value, expected);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 68,
+                "text": "        if value != expected {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 69,
+                "text": "            return false;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 70,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 69, "newLine": 71, "text": "    }" },
+              {
+                "type": "+",
+                "newLine": 72,
+                "text": "    true",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 70, "newLine": 73, "text": "}" },
+              { "type": " ", "oldLine": 71, "newLine": 74, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 72,
+                "text": "/// Assert that the digest of the public values is correct.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 73,
+                "text": "pub fn assert_recursion_public_values_valid(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 75,
+                "text": "/// Check if the digest of the public values is correct.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 76,
+                "text": "pub fn is_recursion_public_values_valid(",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 74,
+                "newLine": 77,
+                "text": "    config: &InnerSC,"
+              },
+              {
+                "type": " ",
+                "oldLine": 75,
+                "newLine": 78,
+                "text": "    public_values: &RecursionPublicValues<BabyBear>,"
+              },
+              { "type": "-", "oldLine": 76, "text": ") {", "ignored": false },
+              {
+                "type": "+",
+                "newLine": 79,
+                "text": ") -> bool {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 77,
+                "newLine": 80,
+                "text": "    let expected_digest = recursion_public_values_digest(config, public_values);"
+              },
+              {
+                "type": " ",
+                "oldLine": 78,
+                "newLine": 81,
+                "text": "    for (value, expected) in public_values.digest.iter().copied().zip_eq(expected_digest) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 79,
+                "text": "        assert_eq!(value, expected);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 82,
+                "text": "        if value != expected {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 83,
+                "text": "            return false;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 84,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 80, "newLine": 85, "text": "    }" },
+              {
+                "type": "+",
+                "newLine": 86,
+                "text": "    true",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 81, "newLine": 87, "text": "}" },
+              { "type": " ", "oldLine": 82, "newLine": 88, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 83,
+                "newLine": 89,
+                "text": "/// Get the committed values Bn Poseidon2 digest this reduce proof is representing."
+              }
+            ]
+          },
+          {
+            "oldStart": 116,
+            "oldLines": 7,
+            "newStart": 122,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 116, "newLine": 122, "text": "}" },
+              { "type": " ", "oldLine": 117, "newLine": 123, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 118,
+                "newLine": 124,
+                "text": "pub fn words_to_bytes<T: Copy>(words: &[Word<T>]) -> Vec<T> {"
+              },
+              {
+                "type": "-",
+                "oldLine": 119,
+                "text": "    return words.iter().flat_map(|word| word.0).collect();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 125,
+                "text": "    words.iter().flat_map(|word| word.0).collect()",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 120, "newLine": 126, "text": "}" },
+              { "type": " ", "oldLine": 121, "newLine": 127, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 122,
+                "newLine": 128,
+                "text": "/// Convert 8 BabyBear words into a Bn254Fr field element by shifting by 31 bits each time. The last"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "d79ad2713a1d64a9": {
+      "status": "differs",
+      "coveredLines": 197,
+      "match": {
+        "origin": "stack",
+        "collection": "sp1",
+        "relation": {
+          "type": "template",
+          "template": "succinct/OPSuccinct/OPSuccinctL2OutputOracle_mantle"
+        },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "utils.rs",
+        "similarity": 0.941,
+        "reportId": "sp1/zellic-sp1-design-review-2024",
+        "repository": "succinctlabs/sp1",
+        "path": "crates/prover/src/utils.rs",
+        "commit": "15be73d3acae3718a0acc529ed566f6a448b1c0e",
+        "commitTimestamp": "2024-11-27T02:59:17Z",
+        "url": "https://github.com/succinctlabs/sp1/blob/15be73d3acae3718a0acc529ed566f6a448b1c0e/crates/prover/src/utils.rs",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "Initial audit",
+        "coverage": "Design-level review only (explicitly not a code audit): RV32IM specification compliance and the register/low-memory aliasing at addresses 0x0-0x1f, focused mostly on load and store instruction behaviour; soundness/completeness of the ZK proofs and circuits and correctness of implementation details were out of scope.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 13,
+        "removed": 7,
+        "ignoredAdded": 1,
+        "ignoredRemoved": 1,
+        "unchanged": 197,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 59,
+            "oldLines": 25,
+            "newStart": 59,
+            "newLines": 31,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 59,
+                "newLine": 59,
+                "text": "    hash.hash_slice(&input)"
+              },
+              { "type": " ", "oldLine": 60, "newLine": 60, "text": "}" },
+              { "type": " ", "oldLine": 61, "newLine": 61, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 62,
+                "text": "pub fn assert_root_public_values_valid(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 62,
+                "text": "pub fn is_root_public_values_valid(",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 63,
+                "newLine": 63,
+                "text": "    config: &InnerSC,"
+              },
+              {
+                "type": " ",
+                "oldLine": 64,
+                "newLine": 64,
+                "text": "    public_values: &RootPublicValues<BabyBear>,"
+              },
+              { "type": "-", "oldLine": 65, "text": ") {", "ignored": false },
+              {
+                "type": "+",
+                "newLine": 65,
+                "text": ") -> bool {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 66,
+                "newLine": 66,
+                "text": "    let expected_digest = root_public_values_digest(config, public_values);"
+              },
+              {
+                "type": " ",
+                "oldLine": 67,
+                "newLine": 67,
+                "text": "    for (value, expected) in public_values.digest().iter().copied().zip_eq(expected_digest) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 68,
+                "text": "        assert_eq!(value, expected);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 68,
+                "text": "        if value != expected {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 69,
+                "text": "            return false;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 70,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 69, "newLine": 71, "text": "    }" },
+              {
+                "type": "+",
+                "newLine": 72,
+                "text": "    true",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 70, "newLine": 73, "text": "}" },
+              { "type": " ", "oldLine": 71, "newLine": 74, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 72,
+                "text": "/// Assert that the digest of the public values is correct.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 73,
+                "text": "pub fn assert_recursion_public_values_valid(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 75,
+                "text": "/// Check if the digest of the public values is correct.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 76,
+                "text": "pub fn is_recursion_public_values_valid(",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 74,
+                "newLine": 77,
+                "text": "    config: &InnerSC,"
+              },
+              {
+                "type": " ",
+                "oldLine": 75,
+                "newLine": 78,
+                "text": "    public_values: &RecursionPublicValues<BabyBear>,"
+              },
+              { "type": "-", "oldLine": 76, "text": ") {", "ignored": false },
+              {
+                "type": "+",
+                "newLine": 79,
+                "text": ") -> bool {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 77,
+                "newLine": 80,
+                "text": "    let expected_digest = recursion_public_values_digest(config, public_values);"
+              },
+              {
+                "type": " ",
+                "oldLine": 78,
+                "newLine": 81,
+                "text": "    for (value, expected) in public_values.digest.iter().copied().zip_eq(expected_digest) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 79,
+                "text": "        assert_eq!(value, expected);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 82,
+                "text": "        if value != expected {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 83,
+                "text": "            return false;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 84,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 80, "newLine": 85, "text": "    }" },
+              {
+                "type": "+",
+                "newLine": 86,
+                "text": "    true",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 81, "newLine": 87, "text": "}" },
+              { "type": " ", "oldLine": 82, "newLine": 88, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 83,
+                "newLine": 89,
+                "text": "/// Get the committed values Bn Poseidon2 digest this reduce proof is representing."
+              }
+            ]
+          },
+          {
+            "oldStart": 116,
+            "oldLines": 7,
+            "newStart": 122,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 116, "newLine": 122, "text": "}" },
+              { "type": " ", "oldLine": 117, "newLine": 123, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 118,
+                "newLine": 124,
+                "text": "pub fn words_to_bytes<T: Copy>(words: &[Word<T>]) -> Vec<T> {"
+              },
+              {
+                "type": "-",
+                "oldLine": 119,
+                "text": "    return words.iter().flat_map(|word| word.0).collect();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 125,
+                "text": "    words.iter().flat_map(|word| word.0).collect()",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 120, "newLine": 126, "text": "}" },
+              { "type": " ", "oldLine": 121, "newLine": 127, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 122,
+                "newLine": 128,
+                "text": "/// Convert 8 BabyBear words into a Bn254Fr field element by shifting by 31 bits each time. The last"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "2295595c4243408b": {
+      "status": "differs",
+      "coveredLines": 197,
+      "match": {
+        "origin": "stack",
+        "collection": "sp1",
+        "relation": { "type": "template", "template": "succinct/SP1Verifier" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "utils.rs",
+        "similarity": 0.941,
+        "reportId": "sp1/zellic-sp1-design-review-2024",
+        "repository": "succinctlabs/sp1",
+        "path": "crates/prover/src/utils.rs",
+        "commit": "15be73d3acae3718a0acc529ed566f6a448b1c0e",
+        "commitTimestamp": "2024-11-27T02:59:17Z",
+        "url": "https://github.com/succinctlabs/sp1/blob/15be73d3acae3718a0acc529ed566f6a448b1c0e/crates/prover/src/utils.rs",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "Initial audit",
+        "coverage": "Design-level review only (explicitly not a code audit): RV32IM specification compliance and the register/low-memory aliasing at addresses 0x0-0x1f, focused mostly on load and store instruction behaviour; soundness/completeness of the ZK proofs and circuits and correctness of implementation details were out of scope.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 13,
+        "removed": 7,
+        "ignoredAdded": 1,
+        "ignoredRemoved": 1,
+        "unchanged": 197,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 59,
+            "oldLines": 25,
+            "newStart": 59,
+            "newLines": 31,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 59,
+                "newLine": 59,
+                "text": "    hash.hash_slice(&input)"
+              },
+              { "type": " ", "oldLine": 60, "newLine": 60, "text": "}" },
+              { "type": " ", "oldLine": 61, "newLine": 61, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 62,
+                "text": "pub fn assert_root_public_values_valid(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 62,
+                "text": "pub fn is_root_public_values_valid(",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 63,
+                "newLine": 63,
+                "text": "    config: &InnerSC,"
+              },
+              {
+                "type": " ",
+                "oldLine": 64,
+                "newLine": 64,
+                "text": "    public_values: &RootPublicValues<BabyBear>,"
+              },
+              { "type": "-", "oldLine": 65, "text": ") {", "ignored": false },
+              {
+                "type": "+",
+                "newLine": 65,
+                "text": ") -> bool {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 66,
+                "newLine": 66,
+                "text": "    let expected_digest = root_public_values_digest(config, public_values);"
+              },
+              {
+                "type": " ",
+                "oldLine": 67,
+                "newLine": 67,
+                "text": "    for (value, expected) in public_values.digest().iter().copied().zip_eq(expected_digest) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 68,
+                "text": "        assert_eq!(value, expected);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 68,
+                "text": "        if value != expected {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 69,
+                "text": "            return false;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 70,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 69, "newLine": 71, "text": "    }" },
+              {
+                "type": "+",
+                "newLine": 72,
+                "text": "    true",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 70, "newLine": 73, "text": "}" },
+              { "type": " ", "oldLine": 71, "newLine": 74, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 72,
+                "text": "/// Assert that the digest of the public values is correct.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 73,
+                "text": "pub fn assert_recursion_public_values_valid(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 75,
+                "text": "/// Check if the digest of the public values is correct.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 76,
+                "text": "pub fn is_recursion_public_values_valid(",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 74,
+                "newLine": 77,
+                "text": "    config: &InnerSC,"
+              },
+              {
+                "type": " ",
+                "oldLine": 75,
+                "newLine": 78,
+                "text": "    public_values: &RecursionPublicValues<BabyBear>,"
+              },
+              { "type": "-", "oldLine": 76, "text": ") {", "ignored": false },
+              {
+                "type": "+",
+                "newLine": 79,
+                "text": ") -> bool {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 77,
+                "newLine": 80,
+                "text": "    let expected_digest = recursion_public_values_digest(config, public_values);"
+              },
+              {
+                "type": " ",
+                "oldLine": 78,
+                "newLine": 81,
+                "text": "    for (value, expected) in public_values.digest.iter().copied().zip_eq(expected_digest) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 79,
+                "text": "        assert_eq!(value, expected);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 82,
+                "text": "        if value != expected {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 83,
+                "text": "            return false;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 84,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 80, "newLine": 85, "text": "    }" },
+              {
+                "type": "+",
+                "newLine": 86,
+                "text": "    true",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 81, "newLine": 87, "text": "}" },
+              { "type": " ", "oldLine": 82, "newLine": 88, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 83,
+                "newLine": 89,
+                "text": "/// Get the committed values Bn Poseidon2 digest this reduce proof is representing."
+              }
+            ]
+          },
+          {
+            "oldStart": 116,
+            "oldLines": 7,
+            "newStart": 122,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 116, "newLine": 122, "text": "}" },
+              { "type": " ", "oldLine": 117, "newLine": 123, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 118,
+                "newLine": 124,
+                "text": "pub fn words_to_bytes<T: Copy>(words: &[Word<T>]) -> Vec<T> {"
+              },
+              {
+                "type": "-",
+                "oldLine": 119,
+                "text": "    return words.iter().flat_map(|word| word.0).collect();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 125,
+                "text": "    words.iter().flat_map(|word| word.0).collect()",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 120, "newLine": 126, "text": "}" },
+              { "type": " ", "oldLine": 121, "newLine": 127, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 122,
+                "newLine": 128,
+                "text": "/// Convert 8 BabyBear words into a Bn254Fr field element by shifting by 31 bits each time. The last"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "d80a56c5abf9208b": {
+      "status": "differs",
+      "coveredLines": 197,
+      "match": {
+        "origin": "library",
+        "collection": "sp1",
+        "relation": { "type": "library" },
+        "rank": 3,
+        "matchedBy": "name",
+        "auditedName": "utils.rs",
+        "similarity": 0.941,
+        "reportId": "sp1/zellic-sp1-design-review-2024",
+        "repository": "succinctlabs/sp1",
+        "path": "crates/prover/src/utils.rs",
+        "commit": "15be73d3acae3718a0acc529ed566f6a448b1c0e",
+        "commitTimestamp": "2024-11-27T02:59:17Z",
+        "url": "https://github.com/succinctlabs/sp1/blob/15be73d3acae3718a0acc529ed566f6a448b1c0e/crates/prover/src/utils.rs",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "Initial audit",
+        "coverage": "Design-level review only (explicitly not a code audit): RV32IM specification compliance and the register/low-memory aliasing at addresses 0x0-0x1f, focused mostly on load and store instruction behaviour; soundness/completeness of the ZK proofs and circuits and correctness of implementation details were out of scope.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 13,
+        "removed": 7,
+        "ignoredAdded": 1,
+        "ignoredRemoved": 1,
+        "unchanged": 197,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 59,
+            "oldLines": 25,
+            "newStart": 59,
+            "newLines": 31,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 59,
+                "newLine": 59,
+                "text": "    hash.hash_slice(&input)"
+              },
+              { "type": " ", "oldLine": 60, "newLine": 60, "text": "}" },
+              { "type": " ", "oldLine": 61, "newLine": 61, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 62,
+                "text": "pub fn assert_root_public_values_valid(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 62,
+                "text": "pub fn is_root_public_values_valid(",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 63,
+                "newLine": 63,
+                "text": "    config: &InnerSC,"
+              },
+              {
+                "type": " ",
+                "oldLine": 64,
+                "newLine": 64,
+                "text": "    public_values: &RootPublicValues<BabyBear>,"
+              },
+              { "type": "-", "oldLine": 65, "text": ") {", "ignored": false },
+              {
+                "type": "+",
+                "newLine": 65,
+                "text": ") -> bool {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 66,
+                "newLine": 66,
+                "text": "    let expected_digest = root_public_values_digest(config, public_values);"
+              },
+              {
+                "type": " ",
+                "oldLine": 67,
+                "newLine": 67,
+                "text": "    for (value, expected) in public_values.digest().iter().copied().zip_eq(expected_digest) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 68,
+                "text": "        assert_eq!(value, expected);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 68,
+                "text": "        if value != expected {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 69,
+                "text": "            return false;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 70,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 69, "newLine": 71, "text": "    }" },
+              {
+                "type": "+",
+                "newLine": 72,
+                "text": "    true",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 70, "newLine": 73, "text": "}" },
+              { "type": " ", "oldLine": 71, "newLine": 74, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 72,
+                "text": "/// Assert that the digest of the public values is correct.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 73,
+                "text": "pub fn assert_recursion_public_values_valid(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 75,
+                "text": "/// Check if the digest of the public values is correct.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 76,
+                "text": "pub fn is_recursion_public_values_valid(",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 74,
+                "newLine": 77,
+                "text": "    config: &InnerSC,"
+              },
+              {
+                "type": " ",
+                "oldLine": 75,
+                "newLine": 78,
+                "text": "    public_values: &RecursionPublicValues<BabyBear>,"
+              },
+              { "type": "-", "oldLine": 76, "text": ") {", "ignored": false },
+              {
+                "type": "+",
+                "newLine": 79,
+                "text": ") -> bool {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 77,
+                "newLine": 80,
+                "text": "    let expected_digest = recursion_public_values_digest(config, public_values);"
+              },
+              {
+                "type": " ",
+                "oldLine": 78,
+                "newLine": 81,
+                "text": "    for (value, expected) in public_values.digest.iter().copied().zip_eq(expected_digest) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 79,
+                "text": "        assert_eq!(value, expected);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 82,
+                "text": "        if value != expected {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 83,
+                "text": "            return false;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 84,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 80, "newLine": 85, "text": "    }" },
+              {
+                "type": "+",
+                "newLine": 86,
+                "text": "    true",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 81, "newLine": 87, "text": "}" },
+              { "type": " ", "oldLine": 82, "newLine": 88, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 83,
+                "newLine": 89,
+                "text": "/// Get the committed values Bn Poseidon2 digest this reduce proof is representing."
+              }
+            ]
+          },
+          {
+            "oldStart": 116,
+            "oldLines": 7,
+            "newStart": 122,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 116, "newLine": 122, "text": "}" },
+              { "type": " ", "oldLine": 117, "newLine": 123, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 118,
+                "newLine": 124,
+                "text": "pub fn words_to_bytes<T: Copy>(words: &[Word<T>]) -> Vec<T> {"
+              },
+              {
+                "type": "-",
+                "oldLine": 119,
+                "text": "    return words.iter().flat_map(|word| word.0).collect();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 125,
+                "text": "    words.iter().flat_map(|word| word.0).collect()",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 120, "newLine": 126, "text": "}" },
+              { "type": " ", "oldLine": 121, "newLine": 127, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 122,
+                "newLine": 128,
+                "text": "/// Convert 8 BabyBear words into a Bn254Fr field element by shifting by 31 bits each time. The last"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
     }
   }
 }

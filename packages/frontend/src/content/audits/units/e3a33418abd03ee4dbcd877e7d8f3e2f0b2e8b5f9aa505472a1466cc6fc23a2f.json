@@ -288,6 +288,289 @@
         ]
       },
       "warnings": []
+    },
+    "2295595c4243408b": {
+      "status": "library",
+      "coveredLines": 477,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "Arrays",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2024-10-v5.1",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/utils/Arrays.sol",
+        "commit": "04e0df30aaf341bed5398012e3a8740bddeb6e04",
+        "commitTimestamp": "2024-08-29T16:00:08Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/04e0df30aaf341bed5398012e3a8740bddeb6e04/contracts/utils/Arrays.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Fix review of pull request #5172 (resolving N-09, N-13); only the fix changes to this file were reviewed.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 8
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 9,
+        "ignoredRemoved": 3,
+        "unchanged": 477,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 12,
+            "oldLines": 6,
+            "newStart": 12,
+            "newLines": 8,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 12,
+                "newLine": 12,
+                "text": "     * array. Using it in view functions that are executed through `eth_call` is safe, but one should be very careful"
+              },
+              {
+                "type": " ",
+                "oldLine": 13,
+                "newLine": 13,
+                "text": "     * when executing this as part of a transaction. If the array being sorted is too large, the sort operation may"
+              },
+              {
+                "type": " ",
+                "oldLine": 14,
+                "newLine": 14,
+                "text": "     * consume more gas than is available in a block, leading to potential DoS."
+              },
+              { "type": "+", "newLine": 15, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 16,
+                "text": "     * IMPORTANT: Consider memory side-effects when using custom comparator functions that access memory in an unsafe way.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 15, "newLine": 17, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 16,
+                "newLine": 18,
+                "text": "    function sort(uint256[] memory array, function(uint256, uint256) pure returns (bool) comp)"
+              },
+              {
+                "type": " ",
+                "oldLine": 17,
+                "newLine": 19,
+                "text": "        internal"
+              }
+            ]
+          },
+          {
+            "oldStart": 40,
+            "oldLines": 6,
+            "newStart": 42,
+            "newLines": 8,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 40,
+                "newLine": 42,
+                "text": "     * array. Using it in view functions that are executed through `eth_call` is safe, but one should be very careful"
+              },
+              {
+                "type": " ",
+                "oldLine": 41,
+                "newLine": 43,
+                "text": "     * when executing this as part of a transaction. If the array being sorted is too large, the sort operation may"
+              },
+              {
+                "type": " ",
+                "oldLine": 42,
+                "newLine": 44,
+                "text": "     * consume more gas than is available in a block, leading to potential DoS."
+              },
+              { "type": "+", "newLine": 45, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 46,
+                "text": "     * IMPORTANT: Consider memory side-effects when using custom comparator functions that access memory in an unsafe way.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 43, "newLine": 47, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 44,
+                "newLine": 48,
+                "text": "    function sort(address[] memory array, function(address, address) pure returns (bool) comp)"
+              },
+              {
+                "type": " ",
+                "oldLine": 45,
+                "newLine": 49,
+                "text": "        internal"
+              }
+            ]
+          },
+          {
+            "oldStart": 68,
+            "oldLines": 6,
+            "newStart": 72,
+            "newLines": 8,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 68,
+                "newLine": 72,
+                "text": "     * array. Using it in view functions that are executed through `eth_call` is safe, but one should be very careful"
+              },
+              {
+                "type": " ",
+                "oldLine": 69,
+                "newLine": 73,
+                "text": "     * when executing this as part of a transaction. If the array being sorted is too large, the sort operation may"
+              },
+              {
+                "type": " ",
+                "oldLine": 70,
+                "newLine": 74,
+                "text": "     * consume more gas than is available in a block, leading to potential DoS."
+              },
+              { "type": "+", "newLine": 75, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 76,
+                "text": "     * IMPORTANT: Consider memory side-effects when using custom comparator functions that access memory in an unsafe way.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 71, "newLine": 77, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 72,
+                "newLine": 78,
+                "text": "    function sort(bytes32[] memory array, function(bytes32, bytes32) pure returns (bool) comp)"
+              },
+              {
+                "type": " ",
+                "oldLine": 73,
+                "newLine": 79,
+                "text": "        internal"
+              }
+            ]
+          },
+          {
+            "oldStart": 437,
+            "oldLines": 7,
+            "newStart": 443,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 437, "newLine": 443, "text": "    }" },
+              { "type": " ", "oldLine": 438, "newLine": 444, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 439,
+                "newLine": 445,
+                "text": "    /**"
+              },
+              {
+                "type": "-",
+                "oldLine": 440,
+                "text": "     * @dev Helper to set the length of an dynamic array. Directly writing to `.length` is forbidden.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 446,
+                "text": "     * @dev Helper to set the length of a dynamic array. Directly writing to `.length` is forbidden.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 441, "newLine": 447, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 442,
+                "newLine": 448,
+                "text": "     * WARNING: this does not clear elements if length is reduced, of initialize elements if length is increased."
+              },
+              { "type": " ", "oldLine": 443, "newLine": 449, "text": "     */" }
+            ]
+          },
+          {
+            "oldStart": 448,
+            "oldLines": 7,
+            "newStart": 454,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 448, "newLine": 454, "text": "    }" },
+              { "type": " ", "oldLine": 449, "newLine": 455, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 450,
+                "newLine": 456,
+                "text": "    /**"
+              },
+              {
+                "type": "-",
+                "oldLine": 451,
+                "text": "     * @dev Helper to set the length of an dynamic array. Directly writing to `.length` is forbidden.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 457,
+                "text": "     * @dev Helper to set the length of a dynamic array. Directly writing to `.length` is forbidden.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 452, "newLine": 458, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 453,
+                "newLine": 459,
+                "text": "     * WARNING: this does not clear elements if length is reduced, of initialize elements if length is increased."
+              },
+              { "type": " ", "oldLine": 454, "newLine": 460, "text": "     */" }
+            ]
+          },
+          {
+            "oldStart": 459,
+            "oldLines": 7,
+            "newStart": 465,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 459, "newLine": 465, "text": "    }" },
+              { "type": " ", "oldLine": 460, "newLine": 466, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 461,
+                "newLine": 467,
+                "text": "    /**"
+              },
+              {
+                "type": "-",
+                "oldLine": 462,
+                "text": "     * @dev Helper to set the length of an dynamic array. Directly writing to `.length` is forbidden.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 468,
+                "text": "     * @dev Helper to set the length of a dynamic array. Directly writing to `.length` is forbidden.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 463, "newLine": 469, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 464,
+                "newLine": 470,
+                "text": "     * WARNING: this does not clear elements if length is reduced, of initialize elements if length is increased."
+              },
+              { "type": " ", "oldLine": 465, "newLine": 471, "text": "     */" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
     }
   }
 }

@@ -86,6 +86,60 @@
         "totalVersions": 8
       },
       "warnings": []
+    },
+    "437dcc6cbc847e9a": {
+      "status": "library",
+      "coveredLines": 129,
+      "match": {
+        "origin": "stack",
+        "collection": "safe",
+        "relation": { "type": "template", "template": "GnosisSafe" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "ModuleManager",
+        "similarity": 1,
+        "reportId": "safe/g0-safe-1-1-1",
+        "repository": "safe-fndn/safe-smart-account",
+        "path": "contracts/base/ModuleManager.sol",
+        "commit": "2df0b2e0ad5d0f7ab5423e7f5baa72b2456d32ae",
+        "commitTimestamp": "2019-12-09T21:54:52Z",
+        "url": "https://github.com/safe-fndn/safe-smart-account/blob/2df0b2e0ad5d0f7ab5423e7f5baa72b2456d32ae/contracts/base/ModuleManager.sol",
+        "auditStatus": "partially_audited_with_no_major_findings",
+        "reviewPhase": "v1.1.1 review",
+        "coverage": "Review of v1.1.1 changes and the report appendix issues.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 8
+      },
+      "warnings": []
+    },
+    "d80a56c5abf9208b": {
+      "status": "library",
+      "coveredLines": 129,
+      "match": {
+        "origin": "stack",
+        "collection": "safe",
+        "relation": { "type": "template", "template": "GnosisSafe" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "ModuleManager",
+        "similarity": 1,
+        "reportId": "safe/g0-safe-1-1-1",
+        "repository": "safe-fndn/safe-smart-account",
+        "path": "contracts/base/ModuleManager.sol",
+        "commit": "2df0b2e0ad5d0f7ab5423e7f5baa72b2456d32ae",
+        "commitTimestamp": "2019-12-09T21:54:52Z",
+        "url": "https://github.com/safe-fndn/safe-smart-account/blob/2df0b2e0ad5d0f7ab5423e7f5baa72b2456d32ae/contracts/base/ModuleManager.sol",
+        "auditStatus": "partially_audited_with_no_major_findings",
+        "reviewPhase": "v1.1.1 review",
+        "coverage": "Review of v1.1.1 changes and the report appendix issues.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 8
+      },
+      "warnings": []
     }
   }
 }

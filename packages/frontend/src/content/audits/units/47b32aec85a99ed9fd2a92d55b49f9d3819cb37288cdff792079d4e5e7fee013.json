@@ -97,6 +97,98 @@
         ]
       },
       "warnings": []
+    },
+    "437dcc6cbc847e9a": {
+      "status": "differs",
+      "coveredLines": 63,
+      "match": {
+        "origin": "stack",
+        "collection": "optimism",
+        "relation": {
+          "type": "template",
+          "template": "opstack/AnchorStateRegistry_post13"
+        },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "Constants",
+        "similarity": 1,
+        "reportId": "optimism/cantina-upgrade20-2026-08",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts-bedrock/src/libraries/Constants.sol",
+        "commit": "7799a2464f23b4e19abd5e29843545f960e677be",
+        "commitTimestamp": "2026-07-31T01:27:36Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/7799a2464f23b4e19abd5e29843545f960e677be/packages/contracts-bedrock/src/libraries/Constants.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Upgrade 20 review of the file at commit 7799a246 (Aug 6-12, 2026). No Critical/High/Medium findings in the report. No findings located in this file.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "diff": {
+        "added": 0,
+        "removed": 1,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 2,
+        "unchanged": 63,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 47,
+            "oldLines": 9,
+            "newStart": 47,
+            "newLines": 6,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 47,
+                "newLine": 47,
+                "text": "    /// @notice Current bundle artifact path for Network Upgrade Transaction bundles."
+              },
+              {
+                "type": " ",
+                "oldLine": 48,
+                "newLine": 48,
+                "text": "    string internal constant CURRENT_BUNDLE_PATH = \"snapshots/upgrades/current-upgrade-bundle.json\";"
+              },
+              { "type": " ", "oldLine": 49, "newLine": 49, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 50,
+                "text": "    /// @notice Placeholder anchor root historically used for permissioned initial deployments.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 51,
+                "text": "    bytes32 internal constant PLACEHOLDER_STARTING_ANCHOR_ROOT = bytes32(hex\"dead\");",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 52, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 53,
+                "newLine": 50,
+                "text": "    /// @notice Returns the default values for the ResourceConfig. These are the recommended values"
+              },
+              {
+                "type": " ",
+                "oldLine": 54,
+                "newLine": 51,
+                "text": "    ///         for a production network."
+              },
+              {
+                "type": " ",
+                "oldLine": 55,
+                "newLine": 52,
+                "text": "    function DEFAULT_RESOURCE_CONFIG() internal pure returns (IResourceMetering.ResourceConfig memory) {"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
     }
   }
 }

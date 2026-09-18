@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "898c1762598410bb200bb7f21930e09774fe5a92b6463620347b7d0302861318",
+  "name": "vk_worker.rs",
+  "kind": "program",
+  "lines": 53,
+  "source": "use sp1_hypercube::{log2_ceil_usize, prover::ProverSemaphore};\nuse sp1_prover_types::ArtifactClient;\n\nuse crate::{\n    shapes::build_vk_map,\n    worker::{RawTaskRequest, ShrinkProver, TaskError, VkeyMapChunkInput, VkeyMapChunkOutput},\n    SP1ProverComponents,\n};\nuse std::sync::Arc;\n\npub struct RecursionVkWorker<C: SP1ProverComponents> {\n    pub recursion_prover: Arc<C::RecursionProver>,\n    pub recursion_permits: ProverSemaphore,\n    pub shrink_prover: Arc<ShrinkProver<C>>,\n}\n\nimpl<C: SP1ProverComponents> Clone for RecursionVkWorker<C> {\n    fn clone(&self) -> Self {\n        Self {\n            recursion_prover: self.recursion_prover.clone(),\n            recursion_permits: self.recursion_permits.clone(),\n            shrink_prover: self.shrink_prover.clone(),\n        }\n    }\n}\n\npub async fn run_vk_generation<A: ArtifactClient, C: SP1ProverComponents>(\n    worker: Arc<RecursionVkWorker<C>>,\n    request: RawTaskRequest,\n    client: A,\n) -> Result<(), TaskError> {\n    let RawTaskRequest { inputs, outputs, .. } = request;\n\n    let VkeyMapChunkInput { indices, reduce_batch_size, total_inputs } =\n        client.download(&inputs[0]).await?;\n\n    let (vk_set, panic_indices) = build_vk_map::<A, C>(\n        false,\n        1,\n        1,\n        Some(indices),\n        reduce_batch_size,\n        log2_ceil_usize(total_inputs),\n        worker,\n    )\n    .await;\n\n    let output = VkeyMapChunkOutput { vk_set, panic_indices };\n\n    client.upload(&outputs[0], &output).await?;\n\n    Ok(())\n}",
+  "resolutions": {
+    "44ad4cf96e2ef6f0": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "437dcc6cbc847e9a": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "5d5f82d91c09d4ec": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "e3b0c44298fc1c14": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "d79ad2713a1d64a9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "2295595c4243408b": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "d80a56c5abf9208b": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

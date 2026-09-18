@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "ff8f7d0e4c56128f11a4674f910e758d637e8313a617a65e65cbe9c7a27a7759",
+  "name": "cache_test.go",
+  "kind": "program",
+  "lines": 73,
+  "source": "package l1\n\nimport (\n\t\"math/rand\"\n\t\"testing\"\n\n\t\"github.com/ethereum-optimism/optimism/op-program/client/l1/test\"\n\t\"github.com/ethereum-optimism/optimism/op-service/eth\"\n\t\"github.com/ethereum-optimism/optimism/op-service/testutils\"\n\t\"github.com/stretchr/testify/require\"\n)\n\n// Should implement Oracle\nvar _ Oracle = (*CachingOracle)(nil)\n\nfunc TestCachingOracle_HeaderByBlockHash(t *testing.T) {\n\trng := rand.New(rand.NewSource(1))\n\tstub := test.NewStubOracle(t)\n\toracle := NewCachingOracle(stub)\n\tblock := testutils.RandomBlockInfo(rng)\n\n\t// Initial call retrieves from the stub\n\tstub.Blocks[block.Hash()] = block\n\tresult := oracle.HeaderByBlockHash(block.Hash())\n\trequire.Equal(t, block, result)\n\n\t// Later calls should retrieve from cache\n\tdelete(stub.Blocks, block.Hash())\n\tresult = oracle.HeaderByBlockHash(block.Hash())\n\trequire.Equal(t, block, result)\n}\n\nfunc TestCachingOracle_TransactionsByBlockHash(t *testing.T) {\n\trng := rand.New(rand.NewSource(1))\n\tstub := test.NewStubOracle(t)\n\toracle := NewCachingOracle(stub)\n\tblock, _ := testutils.RandomBlock(rng, 3)\n\n\t// Initial call retrieves from the stub\n\tstub.Blocks[block.Hash()] = eth.BlockToInfo(block)\n\tstub.Txs[block.Hash()] = block.Transactions()\n\tactualBlock, actualTxs := oracle.TransactionsByBlockHash(block.Hash())\n\trequire.Equal(t, eth.BlockToInfo(block), actualBlock)\n\trequire.Equal(t, block.Transactions(), actualTxs)\n\n\t// Later calls should retrieve from cache\n\tdelete(stub.Blocks, block.Hash())\n\tdelete(stub.Txs, block.Hash())\n\tactualBlock, actualTxs = oracle.TransactionsByBlockHash(block.Hash())\n\trequire.Equal(t, eth.BlockToInfo(block), actualBlock)\n\trequire.Equal(t, block.Transactions(), actualTxs)\n}\n\nfunc TestCachingOracle_ReceiptsByBlockHash(t *testing.T) {\n\trng := rand.New(rand.NewSource(1))\n\tstub := test.NewStubOracle(t)\n\toracle := NewCachingOracle(stub)\n\tblock, rcpts := testutils.RandomBlock(rng, 3)\n\n\t// Initial call retrieves from the stub\n\tstub.Blocks[block.Hash()] = eth.BlockToInfo(block)\n\tstub.Rcpts[block.Hash()] = rcpts\n\tactualBlock, actualRcpts := oracle.ReceiptsByBlockHash(block.Hash())\n\trequire.Equal(t, eth.BlockToInfo(block), actualBlock)\n\trequire.EqualValues(t, rcpts, actualRcpts)\n\n\t// Later calls should retrieve from cache\n\tdelete(stub.Blocks, block.Hash())\n\tdelete(stub.Rcpts, block.Hash())\n\tactualBlock, actualRcpts = oracle.ReceiptsByBlockHash(block.Hash())\n\trequire.Equal(t, eth.BlockToInfo(block), actualBlock)\n\trequire.EqualValues(t, rcpts, actualRcpts)\n}",
+  "resolutions": {
+    "437dcc6cbc847e9a": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "bb55951394276893": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

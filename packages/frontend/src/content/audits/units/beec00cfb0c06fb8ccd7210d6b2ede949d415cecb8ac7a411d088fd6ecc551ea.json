@@ -32,6 +32,87 @@
         "totalVersions": 14
       },
       "warnings": []
+    },
+    "d80a56c5abf9208b": {
+      "status": "library",
+      "coveredLines": 76,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "Strings",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2023-05-v4.9",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/utils/Strings.sol",
+        "commit": "91df66c4a9dfd0425ff923cbeb3a20155f1355ea",
+        "commitTimestamp": "2023-04-21T11:35:07Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/91df66c4a9dfd0425ff923cbeb3a20155f1355ea/contracts/utils/Strings.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Full review of the file as part of the Contracts 4.9 release audit.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 14
+      },
+      "warnings": []
+    },
+    "437dcc6cbc847e9a": {
+      "status": "library",
+      "coveredLines": 76,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "Strings",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2023-05-v4.9",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/utils/Strings.sol",
+        "commit": "91df66c4a9dfd0425ff923cbeb3a20155f1355ea",
+        "commitTimestamp": "2023-04-21T11:35:07Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/91df66c4a9dfd0425ff923cbeb3a20155f1355ea/contracts/utils/Strings.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Full review of the file as part of the Contracts 4.9 release audit.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 14
+      },
+      "warnings": []
+    },
+    "e3b0c44298fc1c14": {
+      "status": "library",
+      "coveredLines": 76,
+      "match": {
+        "origin": "library",
+        "collection": "openzeppelin",
+        "relation": { "type": "library" },
+        "rank": 3,
+        "matchedBy": "identity",
+        "auditedName": "Strings",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2023-05-v4.9",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/utils/Strings.sol",
+        "commit": "91df66c4a9dfd0425ff923cbeb3a20155f1355ea",
+        "commitTimestamp": "2023-04-21T11:35:07Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/91df66c4a9dfd0425ff923cbeb3a20155f1355ea/contracts/utils/Strings.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Full review of the file as part of the Contracts 4.9 release audit.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 14
+      },
+      "warnings": []
     }
   }
 }

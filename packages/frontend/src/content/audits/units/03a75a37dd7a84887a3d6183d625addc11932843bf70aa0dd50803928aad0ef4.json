@@ -122,6 +122,66 @@
         "totalVersions": 13
       },
       "warnings": []
+    },
+    "437dcc6cbc847e9a": {
+      "status": "identical",
+      "coveredLines": 322,
+      "match": {
+        "origin": "stack",
+        "collection": "optimism",
+        "relation": {
+          "type": "template",
+          "template": "gnosisSafeModules/LivenessGuard"
+        },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "AnchorStateRegistry",
+        "similarity": 1,
+        "reportId": "optimism/spearbit-upgrade16-2025-05",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts-bedrock/src/dispute/AnchorStateRegistry.sol",
+        "commit": "54c19f6acb7a6d3505f884bae601733d3d54a3a6",
+        "commitTimestamp": "2025-06-11T23:26:49Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/54c19f6acb7a6d3505f884bae601733d3d54a3a6/packages/contracts-bedrock/src/dispute/AnchorStateRegistry.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "re-audit",
+        "coverage": "Commit stated in the report header (tag op-contracts/v4.0.0, the proposal branch built on 7cd84fed with the PR 15939 audit fixes backported); the final Upgrade 16 state of the file.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 13
+      },
+      "warnings": []
+    },
+    "d79ad2713a1d64a9": {
+      "status": "identical",
+      "coveredLines": 322,
+      "match": {
+        "origin": "stack",
+        "collection": "optimism",
+        "relation": {
+          "type": "template",
+          "template": "opstack/AddressManager"
+        },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "AnchorStateRegistry",
+        "similarity": 1,
+        "reportId": "optimism/spearbit-upgrade16-2025-05",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts-bedrock/src/dispute/AnchorStateRegistry.sol",
+        "commit": "54c19f6acb7a6d3505f884bae601733d3d54a3a6",
+        "commitTimestamp": "2025-06-11T23:26:49Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/54c19f6acb7a6d3505f884bae601733d3d54a3a6/packages/contracts-bedrock/src/dispute/AnchorStateRegistry.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "re-audit",
+        "coverage": "Commit stated in the report header (tag op-contracts/v4.0.0, the proposal branch built on 7cd84fed with the PR 15939 audit fixes backported); the final Upgrade 16 state of the file.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 13
+      },
+      "warnings": []
     }
   }
 }

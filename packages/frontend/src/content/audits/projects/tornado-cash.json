@@ -2,7 +2,7 @@
   "schemaVersion": 2,
   "projectId": "tornado-cash",
   "slug": "tornado-cash",
-  "generatedAt": 1789642638,
+  "generatedAt": 1789647079,
   "datasetRevision": "46018b80ce082d30d802c931c2f7ed961738b662",
   "discoveryTimestamp": 1787307944,
   "contractSelection": "all",
@@ -69,24 +69,24 @@
     ]
   },
   "summary": {
-    "contracts": 45,
+    "contracts": 46,
     "contractsWithoutSource": 4,
     "units": {
       "identical": 21,
       "library": 34,
-      "differs": 189,
+      "differs": 191,
       "unaudited": 248
     },
     "uniqueUnits": {
       "identical": 8,
       "library": 16,
-      "differs": 34,
+      "differs": 36,
       "unaudited": 78
     },
     "lines": {
-      "total": 35681,
-      "covered": 16621,
-      "uncovered": 19060
+      "total": 35799,
+      "covered": 16719,
+      "uncovered": 19080
     }
   },
   "reportIds": [
@@ -100,6 +100,7 @@
     "safe/g0-safe-allowance-v0-1-0",
     "safe/nethermind-safe-allowance-v1-0-0",
     "tornado-cash/abdk-tornado-anonymity-mining-recheck-2020-12-22",
+    "tornado-cash/abdk-tornado-circuit-audit-2019-11-25",
     "tornado-cash/abdk-tornado-smart-contract-audit-2019-11-19",
     "uniswapv3/abdk-uniswap-v3-core-2021-03",
     "uniswapv3/trailofbits-uniswap-v3-core-2021-03"
@@ -15284,6 +15285,142 @@
                 "ignoredAdded": 1,
                 "ignoredRemoved": 1,
                 "unchanged": 57,
+                "ignoredOnly": false
+              },
+              "warnings": []
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "name": "Tornado Cash verifier v2.1",
+      "address": "0xce172ce1F20EC0B3728c9965470eaf994A03557A",
+      "chain": "eth",
+      "zk": {
+        "type": "verifier",
+        "link": "https://github.com/tornadocash/tornado-core/tree/v2.1/circuits",
+        "commit": "a533ad9ffb62163a42d4fa9a09984c5dd4e5c41d"
+      },
+      "noSource": false,
+      "summary": {
+        "contracts": 1,
+        "contractsWithoutSource": 0,
+        "units": {
+          "identical": 0,
+          "library": 0,
+          "differs": 2,
+          "unaudited": 0
+        },
+        "uniqueUnits": {
+          "identical": 0,
+          "library": 0,
+          "differs": 2,
+          "unaudited": 0
+        },
+        "lines": {
+          "total": 118,
+          "covered": 98,
+          "uncovered": 20
+        }
+      },
+      "files": [
+        {
+          "path": "tornado-cash/verifier-Tornado_Cash_verifier_v2.1-201a6b13/merkleTree.circom",
+          "role": "program",
+          "lines": 52,
+          "units": [
+            {
+              "unitHash": "0c85ed98d3b61919010cb74c59352a77fc0c878251bc0eb13da56a32eade95d5",
+              "contextKey": "f9658cd3a9a22004",
+              "name": "merkleTree.circom",
+              "kind": "program",
+              "startLine": 1,
+              "endLine": 51,
+              "lines": 51,
+              "status": "differs",
+              "coveredLines": 44,
+              "match": {
+                "origin": "own",
+                "collection": "tornado-cash",
+                "relation": {
+                  "type": "own"
+                },
+                "rank": 0,
+                "matchedBy": "name",
+                "auditedName": "merkleTree.circom",
+                "similarity": 0.822,
+                "reportId": "tornado-cash/abdk-tornado-circuit-audit-2019-11-25",
+                "repository": "peppersec/tornado-mixer",
+                "path": "circuits/merkleTree.circom",
+                "commit": "f8cd3fea1eb5664dd0f8b3e4b83ac6e0c0ba3371",
+                "commitTimestamp": "2019-11-03T08:41:05Z",
+                "url": "https://github.com/peppersec/tornado-mixer/blob/f8cd3fea1eb5664dd0f8b3e4b83ac6e0c0ba3371/circuits/merkleTree.circom",
+                "auditStatus": "audited_with_no_major_findings",
+                "reviewPhase": "remediation review",
+                "coverage": "full file",
+                "majorFindings": 0,
+                "isLatestVersion": true,
+                "laterAuditedVersionExists": false,
+                "totalVersions": 4
+              },
+              "diffStats": {
+                "added": 7,
+                "removed": 6,
+                "ignoredAdded": 0,
+                "ignoredRemoved": 0,
+                "unchanged": 44,
+                "ignoredOnly": false
+              },
+              "warnings": []
+            }
+          ]
+        },
+        {
+          "path": "tornado-cash/verifier-Tornado_Cash_verifier_v2.1-201a6b13/withdraw.circom",
+          "role": "program",
+          "lines": 68,
+          "units": [
+            {
+              "unitHash": "d224c9c15019cf913bf4176e5676ef18a0e18c6f16fc707afbff366a971bbaa8",
+              "contextKey": "f9658cd3a9a22004",
+              "name": "withdraw.circom",
+              "kind": "program",
+              "startLine": 1,
+              "endLine": 67,
+              "lines": 67,
+              "status": "differs",
+              "coveredLines": 54,
+              "match": {
+                "origin": "own",
+                "collection": "tornado-cash",
+                "relation": {
+                  "type": "own"
+                },
+                "rank": 0,
+                "matchedBy": "name",
+                "auditedName": "withdraw.circom",
+                "similarity": 0.82,
+                "reportId": "tornado-cash/abdk-tornado-circuit-audit-2019-11-25",
+                "repository": "peppersec/tornado-mixer",
+                "path": "circuits/withdraw.circom",
+                "commit": "f8cd3fea1eb5664dd0f8b3e4b83ac6e0c0ba3371",
+                "commitTimestamp": "2019-11-03T08:41:05Z",
+                "url": "https://github.com/peppersec/tornado-mixer/blob/f8cd3fea1eb5664dd0f8b3e4b83ac6e0c0ba3371/circuits/withdraw.circom",
+                "auditStatus": "audited_with_no_major_findings",
+                "reviewPhase": "remediation review",
+                "coverage": "full file",
+                "majorFindings": 0,
+                "isLatestVersion": true,
+                "laterAuditedVersionExists": false,
+                "totalVersions": 4
+              },
+              "diffStats": {
+                "added": 13,
+                "removed": 5,
+                "ignoredAdded": 4,
+                "ignoredRemoved": 0,
+                "unchanged": 54,
                 "ignoredOnly": false
               },
               "warnings": []

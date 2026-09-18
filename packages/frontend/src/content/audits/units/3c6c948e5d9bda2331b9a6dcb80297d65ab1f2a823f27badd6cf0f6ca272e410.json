@@ -1,0 +1,25 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "3c6c948e5d9bda2331b9a6dcb80297d65ab1f2a823f27badd6cf0f6ca272e410",
+  "name": "kv_test.go",
+  "kind": "program",
+  "lines": 53,
+  "source": "package kvstore\n\nimport (\n\t\"testing\"\n\n\t\"github.com/ethereum/go-ethereum/common\"\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc kvTest(t *testing.T, kv KV) {\n\tt.Run(\"roundtrip\", func(t *testing.T) {\n\t\tt.Parallel()\n\t\t_, err := kv.Get(common.Hash{0xaa})\n\t\trequire.Equal(t, err, ErrNotFound, \"file (in new tmp dir) does not exist yet\")\n\n\t\trequire.NoError(t, kv.Put(common.Hash{0xaa}, []byte(\"hello world\")))\n\t\tdat, err := kv.Get(common.Hash{0xaa})\n\t\trequire.NoError(t, err, \"pre-image must exist now\")\n\t\trequire.Equal(t, \"hello world\", string(dat), \"pre-image must match\")\n\t})\n\n\tt.Run(\"empty pre-image\", func(t *testing.T) {\n\t\tt.Parallel()\n\t\trequire.NoError(t, kv.Put(common.Hash{0xbb}, []byte{}))\n\t\tdat, err := kv.Get(common.Hash{0xbb})\n\t\trequire.NoError(t, err, \"pre-image must exist now\")\n\t\trequire.Zero(t, len(dat), \"pre-image must be empty\")\n\t})\n\n\tt.Run(\"zero pre-image key\", func(t *testing.T) {\n\t\tt.Parallel()\n\t\t// in case we give a pre-image a special empty key. If it was a hash then we wouldn't know the pre-image.\n\t\trequire.NoError(t, kv.Put(common.Hash{}, []byte(\"hello\")))\n\t\tdat, err := kv.Get(common.Hash{})\n\t\trequire.NoError(t, err, \"pre-image must exist now\")\n\t\trequire.Equal(t, \"hello\", string(dat), \"pre-image must match\")\n\t})\n\n\tt.Run(\"non-string value\", func(t *testing.T) {\n\t\tt.Parallel()\n\t\t// in case we give a pre-image a special empty key. If it was a hash then we wouldn't know the pre-image.\n\t\trequire.NoError(t, kv.Put(common.Hash{0xcc}, []byte{4, 2}))\n\t\tdat, err := kv.Get(common.Hash{0xcc})\n\t\trequire.NoError(t, err, \"pre-image must exist now\")\n\t\trequire.Equal(t, []byte{4, 2}, dat, \"pre-image must match\")\n\t})\n\n\tt.Run(\"allowing multiple writes for same pre-image\", func(t *testing.T) {\n\t\tt.Parallel()\n\t\trequire.NoError(t, kv.Put(common.Hash{0xdd}, []byte{4, 2}))\n\t\trequire.NoError(t, kv.Put(common.Hash{0xdd}, []byte{4, 2}))\n\t})\n}",
+  "resolutions": {
+    "437dcc6cbc847e9a": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "bb55951394276893": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "1f5c32d18cf7148d": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

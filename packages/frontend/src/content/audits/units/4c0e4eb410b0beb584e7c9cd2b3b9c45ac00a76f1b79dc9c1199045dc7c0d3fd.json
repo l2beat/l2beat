@@ -70,6 +70,396 @@
         ]
       },
       "warnings": []
+    },
+    "d80a56c5abf9208b": {
+      "status": "differs",
+      "coveredLines": 34,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "similarity",
+        "auditedName": "SignedMath",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/utils/math/SignedMath.sol",
+        "commit": "b5a3e693e7eeca8d5f608460fd8beeee8e332b03",
+        "commitTimestamp": "2023-08-08T06:22:59Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/b5a3e693e7eeca8d5f608460fd8beeee8e332b03/contracts/utils/math/SignedMath.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "audit",
+        "coverage": "Only the changes to the file between versions 4.9 and 5.0 were reviewed at the Phase 4 audit commit (diff-only review).",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 1,
+        "removed": 1,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 34,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 4,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "library SignedMath {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "library SignedMathUpgradeable {",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 2, "newLine": 2, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "     * @dev Returns the largest of two signed numbers."
+              },
+              { "type": " ", "oldLine": 4, "newLine": 4, "text": "     */" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "437dcc6cbc847e9a": {
+      "status": "differs",
+      "coveredLines": 34,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "similarity",
+        "auditedName": "SignedMath",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/utils/math/SignedMath.sol",
+        "commit": "b5a3e693e7eeca8d5f608460fd8beeee8e332b03",
+        "commitTimestamp": "2023-08-08T06:22:59Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/b5a3e693e7eeca8d5f608460fd8beeee8e332b03/contracts/utils/math/SignedMath.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "audit",
+        "coverage": "Only the changes to the file between versions 4.9 and 5.0 were reviewed at the Phase 4 audit commit (diff-only review).",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 1,
+        "removed": 1,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 34,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 4,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "library SignedMath {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "library SignedMathUpgradeable {",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 2, "newLine": 2, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "     * @dev Returns the largest of two signed numbers."
+              },
+              { "type": " ", "oldLine": 4, "newLine": 4, "text": "     */" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "5d5f82d91c09d4ec": {
+      "status": "differs",
+      "coveredLines": 34,
+      "match": {
+        "origin": "library",
+        "collection": "openzeppelin",
+        "relation": { "type": "library" },
+        "rank": 3,
+        "matchedBy": "similarity",
+        "auditedName": "SignedMath",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/utils/math/SignedMath.sol",
+        "commit": "b5a3e693e7eeca8d5f608460fd8beeee8e332b03",
+        "commitTimestamp": "2023-08-08T06:22:59Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/b5a3e693e7eeca8d5f608460fd8beeee8e332b03/contracts/utils/math/SignedMath.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "audit",
+        "coverage": "Only the changes to the file between versions 4.9 and 5.0 were reviewed at the Phase 4 audit commit (diff-only review).",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 1,
+        "removed": 1,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 34,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 4,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "library SignedMath {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "library SignedMathUpgradeable {",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 2, "newLine": 2, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "     * @dev Returns the largest of two signed numbers."
+              },
+              { "type": " ", "oldLine": 4, "newLine": 4, "text": "     */" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "e3b0c44298fc1c14": {
+      "status": "differs",
+      "coveredLines": 34,
+      "match": {
+        "origin": "library",
+        "collection": "openzeppelin",
+        "relation": { "type": "library" },
+        "rank": 3,
+        "matchedBy": "similarity",
+        "auditedName": "SignedMath",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/utils/math/SignedMath.sol",
+        "commit": "b5a3e693e7eeca8d5f608460fd8beeee8e332b03",
+        "commitTimestamp": "2023-08-08T06:22:59Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/b5a3e693e7eeca8d5f608460fd8beeee8e332b03/contracts/utils/math/SignedMath.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "audit",
+        "coverage": "Only the changes to the file between versions 4.9 and 5.0 were reviewed at the Phase 4 audit commit (diff-only review).",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 1,
+        "removed": 1,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 34,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 4,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "library SignedMath {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "library SignedMathUpgradeable {",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 2, "newLine": 2, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "     * @dev Returns the largest of two signed numbers."
+              },
+              { "type": " ", "oldLine": 4, "newLine": 4, "text": "     */" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "2295595c4243408b": {
+      "status": "differs",
+      "coveredLines": 34,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "similarity",
+        "auditedName": "SignedMath",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/utils/math/SignedMath.sol",
+        "commit": "b5a3e693e7eeca8d5f608460fd8beeee8e332b03",
+        "commitTimestamp": "2023-08-08T06:22:59Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/b5a3e693e7eeca8d5f608460fd8beeee8e332b03/contracts/utils/math/SignedMath.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "audit",
+        "coverage": "Only the changes to the file between versions 4.9 and 5.0 were reviewed at the Phase 4 audit commit (diff-only review).",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 1,
+        "removed": 1,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 34,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 4,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "library SignedMath {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "library SignedMathUpgradeable {",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 2, "newLine": 2, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "     * @dev Returns the largest of two signed numbers."
+              },
+              { "type": " ", "oldLine": 4, "newLine": 4, "text": "     */" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "13052b7adc791062": {
+      "status": "differs",
+      "coveredLines": 34,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "similarity",
+        "auditedName": "SignedMath",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/utils/math/SignedMath.sol",
+        "commit": "b5a3e693e7eeca8d5f608460fd8beeee8e332b03",
+        "commitTimestamp": "2023-08-08T06:22:59Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/b5a3e693e7eeca8d5f608460fd8beeee8e332b03/contracts/utils/math/SignedMath.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "audit",
+        "coverage": "Only the changes to the file between versions 4.9 and 5.0 were reviewed at the Phase 4 audit commit (diff-only review).",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 1,
+        "removed": 1,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 34,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 4,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "library SignedMath {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "library SignedMathUpgradeable {",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 2, "newLine": 2, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "     * @dev Returns the largest of two signed numbers."
+              },
+              { "type": " ", "oldLine": 4, "newLine": 4, "text": "     */" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
     }
   }
 }

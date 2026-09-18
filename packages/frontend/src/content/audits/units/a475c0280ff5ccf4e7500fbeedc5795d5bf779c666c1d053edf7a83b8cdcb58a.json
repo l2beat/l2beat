@@ -32,6 +32,60 @@
         "totalVersions": 4
       },
       "warnings": []
+    },
+    "437dcc6cbc847e9a": {
+      "status": "identical",
+      "coveredLines": 329,
+      "match": {
+        "origin": "other",
+        "collection": "celo",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "identity",
+        "auditedName": "CrossDomainMessenger",
+        "similarity": 1,
+        "reportId": "celo/nethermind-nm-0561-celo-custom-gas-token-2025-07-01",
+        "repository": "celo-org/optimism",
+        "path": "packages/contracts-bedrock/src/universal/CrossDomainMessenger.sol",
+        "commit": "cdba802eb5e374fa3aa387deaa3243f219f821a1",
+        "commitTimestamp": "2025-06-04T09:35:46Z",
+        "url": "https://github.com/celo-org/optimism/blob/cdba802eb5e374fa3aa387deaa3243f219f821a1/packages/contracts-bedrock/src/universal/CrossDomainMessenger.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "security review",
+        "coverage": "Celo custom gas token diff vs op-contracts/v2.0.0 only",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 4
+      },
+      "warnings": []
+    },
+    "a8bf4a329bb46967": {
+      "status": "identical",
+      "coveredLines": 329,
+      "match": {
+        "origin": "other",
+        "collection": "celo",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "identity",
+        "auditedName": "CrossDomainMessenger",
+        "similarity": 1,
+        "reportId": "celo/nethermind-nm-0561-celo-custom-gas-token-2025-07-01",
+        "repository": "celo-org/optimism",
+        "path": "packages/contracts-bedrock/src/universal/CrossDomainMessenger.sol",
+        "commit": "cdba802eb5e374fa3aa387deaa3243f219f821a1",
+        "commitTimestamp": "2025-06-04T09:35:46Z",
+        "url": "https://github.com/celo-org/optimism/blob/cdba802eb5e374fa3aa387deaa3243f219f821a1/packages/contracts-bedrock/src/universal/CrossDomainMessenger.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "security review",
+        "coverage": "Celo custom gas token diff vs op-contracts/v2.0.0 only",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 4
+      },
+      "warnings": []
     }
   }
 }

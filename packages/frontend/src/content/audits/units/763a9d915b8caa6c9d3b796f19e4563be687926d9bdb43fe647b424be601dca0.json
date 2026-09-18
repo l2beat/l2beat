@@ -59,6 +59,33 @@
         "totalVersions": 2
       },
       "warnings": []
+    },
+    "437dcc6cbc847e9a": {
+      "status": "identical",
+      "coveredLines": 76,
+      "match": {
+        "origin": "other",
+        "collection": "celo",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "identity",
+        "auditedName": "IOptimismPortal2",
+        "similarity": 1,
+        "reportId": "celo/hashlock-celo-optimism-superchain-2026-02",
+        "repository": "celo-org/optimism",
+        "path": "packages/contracts-bedrock/interfaces/L1/IOptimismPortal2.sol",
+        "commit": "c138180e992f54502a62e3fcf803eb701e38b990",
+        "commitTimestamp": "2026-01-20T14:26:35Z",
+        "url": "https://github.com/celo-org/optimism/blob/c138180e992f54502a62e3fcf803eb701e38b990/packages/contracts-bedrock/interfaces/L1/IOptimismPortal2.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "full file in celo-contracts/v5.0.0 line (Celo CGT changes vs op-deployer/v0.5.2)",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "warnings": []
     }
   }
 }

@@ -169,6 +169,88 @@
         ]
       },
       "warnings": []
+    },
+    "d80a56c5abf9208b": {
+      "status": "identical",
+      "coveredLines": 77,
+      "match": {
+        "origin": "other",
+        "collection": "bob",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "identity",
+        "auditedName": "RiscZeroVerifierRouter",
+        "similarity": 1,
+        "reportId": "bob/veridise-kailua-2025-02",
+        "repository": "boundless-xyz/kailua",
+        "path": "crates/contracts/foundry/src/vendor/FlatR0ImportV1.2.0.sol",
+        "commit": "27dec82b67de1051df9258b36f8366ebf308e5bf",
+        "commitTimestamp": "2025-02-06T07:42:16Z",
+        "url": "https://github.com/boundless-xyz/kailua/blob/27dec82b67de1051df9258b36f8366ebf308e5bf/crates/contracts/foundry/src/vendor/FlatR0ImportV1.2.0.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix commit",
+        "coverage": "Confirmed fix commit for V-KLA-VUL-004 (contract nits).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 1,
+        "unchanged": 77,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 8,
+            "oldLines": 7,
+            "newStart": 8,
+            "newLines": 6,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 8,
+                "newLine": 8,
+                "text": "    /// @notice A \"tombstone\" value used to mark verifier entries that have been removed from the mapping."
+              },
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 9,
+                "text": "    IRiscZeroVerifier internal constant TOMBSTONE = IRiscZeroVerifier(address(1));"
+              },
+              { "type": " ", "oldLine": 10, "newLine": 10, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 11,
+                "text": "    //0xe4ea6542",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 12,
+                "newLine": 11,
+                "text": "    /// @notice Error raised when attempting to verify a receipt with a selector that is not"
+              },
+              {
+                "type": " ",
+                "oldLine": 13,
+                "newLine": 12,
+                "text": "    ///         registered on this router. Generally, this indicates a version mismatch where the"
+              },
+              {
+                "type": " ",
+                "oldLine": 14,
+                "newLine": 13,
+                "text": "    ///         prover generated a receipt with version of the zkVM that does not match any"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
     }
   }
 }

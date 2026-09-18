@@ -86,6 +86,60 @@
         "totalVersions": 10
       },
       "warnings": []
+    },
+    "437dcc6cbc847e9a": {
+      "status": "library",
+      "coveredLines": 43,
+      "match": {
+        "origin": "stack",
+        "collection": "safe",
+        "relation": { "type": "template", "template": "GnosisSafe" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "SignatureDecoder",
+        "similarity": 1,
+        "reportId": "safe/certora-safe-allowance-v1-0-0",
+        "repository": "safe-fndn/safe-modules",
+        "path": "modules/allowances/contracts/SignatureDecoder.sol",
+        "commit": "252e864496d3a7659195ab5b4418985678887ece",
+        "commitTimestamp": "2026-02-05T09:02:26Z",
+        "url": "https://github.com/safe-fndn/safe-modules/blob/252e864496d3a7659195ab5b4418985678887ece/modules/allowances/contracts/SignatureDecoder.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "Initial review",
+        "coverage": "Full manual review of the scoped source.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 10
+      },
+      "warnings": []
+    },
+    "d80a56c5abf9208b": {
+      "status": "library",
+      "coveredLines": 43,
+      "match": {
+        "origin": "stack",
+        "collection": "safe",
+        "relation": { "type": "template", "template": "GnosisSafe" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "SignatureDecoder",
+        "similarity": 1,
+        "reportId": "safe/certora-safe-allowance-v1-0-0",
+        "repository": "safe-fndn/safe-modules",
+        "path": "modules/allowances/contracts/SignatureDecoder.sol",
+        "commit": "252e864496d3a7659195ab5b4418985678887ece",
+        "commitTimestamp": "2026-02-05T09:02:26Z",
+        "url": "https://github.com/safe-fndn/safe-modules/blob/252e864496d3a7659195ab5b4418985678887ece/modules/allowances/contracts/SignatureDecoder.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "Initial review",
+        "coverage": "Full manual review of the scoped source.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 10
+      },
+      "warnings": []
     }
   }
 }

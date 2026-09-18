@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "30df00f7e44120634ccb6c79cd22c3a2ba2bdb9d25766b26d3e936e0487e6523",
+  "name": "db.go",
+  "kind": "program",
+  "lines": 103,
+  "source": "package l2\n\nimport (\n\t\"bytes\"\n\t\"errors\"\n\t\"fmt\"\n\n\t\"github.com/ethereum-optimism/optimism/op-service/eth\"\n\t\"github.com/ethereum/go-ethereum/common\"\n\t\"github.com/ethereum/go-ethereum/core/rawdb\"\n\t\"github.com/ethereum/go-ethereum/ethdb\"\n)\n\nvar codePrefixedKeyLength = common.HashLength + len(rawdb.CodePrefix)\n\nvar ErrInvalidKeyLength = errors.New(\"pre-images must be identified by 32-byte hash keys\")\n\n// KeyValueStore is a subset of the ethdb.KeyValueStore interface that's required for block processing.\ntype KeyValueStore interface {\n\tethdb.KeyValueReader\n\tethdb.Batcher\n\t// Put inserts the given value into the key-value data store.\n\tPut(key []byte, value []byte) error\n}\n\ntype OracleKeyValueStore struct {\n\tdb      KeyValueStore\n\toracle  StateOracle\n\tchainID eth.ChainID\n}\n\nfunc NewOracleBackedDB(kv KeyValueStore, oracle StateOracle, chainID eth.ChainID) *OracleKeyValueStore {\n\treturn &OracleKeyValueStore{\n\t\tdb:      kv,\n\t\toracle:  oracle,\n\t\tchainID: chainID,\n\t}\n}\n\nfunc (o *OracleKeyValueStore) Get(key []byte) ([]byte, error) {\n\thas, err := o.db.Has(key)\n\tif err != nil {\n\t\treturn nil, fmt.Errorf(\"checking in-memory db: %w\", err)\n\t}\n\tif has {\n\t\treturn o.db.Get(key)\n\t}\n\n\tif len(key) == codePrefixedKeyLength && bytes.HasPrefix(key, rawdb.CodePrefix) {\n\t\tkey = key[len(rawdb.CodePrefix):]\n\t\treturn o.oracle.CodeByHash(*(*[common.HashLength]byte)(key), o.chainID), nil\n\t}\n\tif len(key) != common.HashLength {\n\t\treturn nil, ErrInvalidKeyLength\n\t}\n\treturn o.oracle.NodeByHash(*(*[common.HashLength]byte)(key), o.chainID), nil\n}\n\nfunc (o *OracleKeyValueStore) NewBatch() ethdb.Batch {\n\treturn o.db.NewBatch()\n}\n\nfunc (o *OracleKeyValueStore) NewBatchWithSize(size int) ethdb.Batch {\n\treturn o.db.NewBatchWithSize(size)\n}\n\nfunc (o *OracleKeyValueStore) Put(key []byte, value []byte) error {\n\treturn o.db.Put(key, value)\n}\n\nfunc (o *OracleKeyValueStore) Close() error {\n\treturn nil\n}\n\n// Remaining methods are unused when accessing the state for block processing so leaving unimplemented.\n\nfunc (o *OracleKeyValueStore) SyncKeyValue() error {\n\tpanic(\"not supported\")\n}\n\nfunc (o *OracleKeyValueStore) Has(key []byte) (bool, error) {\n\tpanic(\"not supported\")\n}\n\nfunc (o *OracleKeyValueStore) Delete(key []byte) error {\n\tpanic(\"not supported\")\n}\n\nfunc (o *OracleKeyValueStore) DeleteRange(start, end []byte) error {\n\tpanic(\"not supported\")\n}\n\nfunc (o *OracleKeyValueStore) Stat() (string, error) {\n\tpanic(\"not supported\")\n}\n\nfunc (o *OracleKeyValueStore) NewIterator(prefix []byte, start []byte) ethdb.Iterator {\n\tpanic(\"not supported\")\n}\n\nfunc (o *OracleKeyValueStore) Compact(start []byte, limit []byte) error {\n\tpanic(\"not supported\")\n}",
+  "resolutions": {
+    "437dcc6cbc847e9a": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "1f5c32d18cf7148d": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

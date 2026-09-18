@@ -333,6 +333,810 @@
         ]
       },
       "warnings": []
+    },
+    "d80a56c5abf9208b": {
+      "status": "differs",
+      "coveredLines": 603,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "Checkpoints",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2024-10-v5.1",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/utils/structs/Checkpoints.sol",
+        "commit": "9756730617a2b27ea205c273dc947a9368fa5f6c",
+        "commitTimestamp": "2024-09-18T17:28:19Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/9756730617a2b27ea205c273dc947a9368fa5f6c/contracts/utils/structs/Checkpoints.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Fix review of pull request #5177 (resolving N-05); only the fix changes to this file were reviewed.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 14
+      },
+      "diff": {
+        "added": 3,
+        "removed": 3,
+        "ignoredAdded": 3,
+        "ignoredRemoved": 3,
+        "unchanged": 603,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 98,
+            "oldLines": 7,
+            "newStart": 98,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 98, "newLine": 98, "text": "    }" },
+              { "type": " ", "oldLine": 99, "newLine": 99, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 100,
+                "newLine": 100,
+                "text": "    /**"
+              },
+              {
+                "type": "-",
+                "oldLine": 101,
+                "text": "     * @dev Returns the number of checkpoint.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 101,
+                "text": "     * @dev Returns the number of checkpoints.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 102,
+                "newLine": 102,
+                "text": "     */"
+              },
+              {
+                "type": " ",
+                "oldLine": 103,
+                "newLine": 103,
+                "text": "    function length(Trace224 storage self) internal view returns (uint256) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 104,
+                "newLine": 104,
+                "text": "        return self._checkpoints.length;"
+              }
+            ]
+          },
+          {
+            "oldStart": 133,
+            "oldLines": 7,
+            "newStart": 133,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 133, "newLine": 133, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 134,
+                "newLine": 134,
+                "text": "            // Update or push new checkpoint"
+              },
+              {
+                "type": " ",
+                "oldLine": 135,
+                "newLine": 135,
+                "text": "            if (lastKey == key) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 136,
+                "text": "                _unsafeAccess(self, pos - 1)._value = value;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 136,
+                "text": "                last._value = value;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 137,
+                "newLine": 137,
+                "text": "            } else {"
+              },
+              {
+                "type": " ",
+                "oldLine": 138,
+                "newLine": 138,
+                "text": "                self.push(Checkpoint224({_key: key, _value: value}));"
+              },
+              {
+                "type": " ",
+                "oldLine": 139,
+                "newLine": 139,
+                "text": "            }"
+              }
+            ]
+          },
+          {
+            "oldStart": 298,
+            "oldLines": 7,
+            "newStart": 298,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 298, "newLine": 298, "text": "    }" },
+              { "type": " ", "oldLine": 299, "newLine": 299, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 300,
+                "newLine": 300,
+                "text": "    /**"
+              },
+              {
+                "type": "-",
+                "oldLine": 301,
+                "text": "     * @dev Returns the number of checkpoint.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 301,
+                "text": "     * @dev Returns the number of checkpoints.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 302,
+                "newLine": 302,
+                "text": "     */"
+              },
+              {
+                "type": " ",
+                "oldLine": 303,
+                "newLine": 303,
+                "text": "    function length(Trace208 storage self) internal view returns (uint256) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 304,
+                "newLine": 304,
+                "text": "        return self._checkpoints.length;"
+              }
+            ]
+          },
+          {
+            "oldStart": 333,
+            "oldLines": 7,
+            "newStart": 333,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 333, "newLine": 333, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 334,
+                "newLine": 334,
+                "text": "            // Update or push new checkpoint"
+              },
+              {
+                "type": " ",
+                "oldLine": 335,
+                "newLine": 335,
+                "text": "            if (lastKey == key) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 336,
+                "text": "                _unsafeAccess(self, pos - 1)._value = value;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 336,
+                "text": "                last._value = value;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 337,
+                "newLine": 337,
+                "text": "            } else {"
+              },
+              {
+                "type": " ",
+                "oldLine": 338,
+                "newLine": 338,
+                "text": "                self.push(Checkpoint208({_key: key, _value: value}));"
+              },
+              {
+                "type": " ",
+                "oldLine": 339,
+                "newLine": 339,
+                "text": "            }"
+              }
+            ]
+          },
+          {
+            "oldStart": 498,
+            "oldLines": 7,
+            "newStart": 498,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 498, "newLine": 498, "text": "    }" },
+              { "type": " ", "oldLine": 499, "newLine": 499, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 500,
+                "newLine": 500,
+                "text": "    /**"
+              },
+              {
+                "type": "-",
+                "oldLine": 501,
+                "text": "     * @dev Returns the number of checkpoint.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 501,
+                "text": "     * @dev Returns the number of checkpoints.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 502,
+                "newLine": 502,
+                "text": "     */"
+              },
+              {
+                "type": " ",
+                "oldLine": 503,
+                "newLine": 503,
+                "text": "    function length(Trace160 storage self) internal view returns (uint256) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 504,
+                "newLine": 504,
+                "text": "        return self._checkpoints.length;"
+              }
+            ]
+          },
+          {
+            "oldStart": 533,
+            "oldLines": 7,
+            "newStart": 533,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 533, "newLine": 533, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 534,
+                "newLine": 534,
+                "text": "            // Update or push new checkpoint"
+              },
+              {
+                "type": " ",
+                "oldLine": 535,
+                "newLine": 535,
+                "text": "            if (lastKey == key) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 536,
+                "text": "                _unsafeAccess(self, pos - 1)._value = value;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 536,
+                "text": "                last._value = value;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 537,
+                "newLine": 537,
+                "text": "            } else {"
+              },
+              {
+                "type": " ",
+                "oldLine": 538,
+                "newLine": 538,
+                "text": "                self.push(Checkpoint160({_key: key, _value: value}));"
+              },
+              {
+                "type": " ",
+                "oldLine": 539,
+                "newLine": 539,
+                "text": "            }"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "5d5f82d91c09d4ec": {
+      "status": "differs",
+      "coveredLines": 603,
+      "match": {
+        "origin": "library",
+        "collection": "openzeppelin",
+        "relation": { "type": "library" },
+        "rank": 3,
+        "matchedBy": "name",
+        "auditedName": "Checkpoints",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2024-10-v5.1",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/utils/structs/Checkpoints.sol",
+        "commit": "9756730617a2b27ea205c273dc947a9368fa5f6c",
+        "commitTimestamp": "2024-09-18T17:28:19Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/9756730617a2b27ea205c273dc947a9368fa5f6c/contracts/utils/structs/Checkpoints.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Fix review of pull request #5177 (resolving N-05); only the fix changes to this file were reviewed.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 14
+      },
+      "diff": {
+        "added": 3,
+        "removed": 3,
+        "ignoredAdded": 6,
+        "ignoredRemoved": 6,
+        "unchanged": 603,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 52,
+            "oldLines": 7,
+            "newStart": 52,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 52,
+                "newLine": 52,
+                "text": "     * @dev Returns the value in the last (most recent) checkpoint with key lower or equal than the search key, or zero"
+              },
+              {
+                "type": " ",
+                "oldLine": 53,
+                "newLine": 53,
+                "text": "     * if there is none."
+              },
+              { "type": " ", "oldLine": 54, "newLine": 54, "text": "     *" },
+              {
+                "type": "-",
+                "oldLine": 55,
+                "text": "     * NOTE: This is a variant of {upperLookup} that is optimised to find \"recent\" checkpoint (checkpoints with high",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 55,
+                "text": "     * NOTE: This is a variant of {upperLookup} that is optimized to find \"recent\" checkpoint (checkpoints with high",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 56,
+                "newLine": 56,
+                "text": "     * keys)."
+              },
+              { "type": " ", "oldLine": 57, "newLine": 57, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 58,
+                "newLine": 58,
+                "text": "    function upperLookupRecent(Trace224 storage self, uint32 key) internal view returns (uint224) {"
+              }
+            ]
+          },
+          {
+            "oldStart": 98,
+            "oldLines": 7,
+            "newStart": 98,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 98, "newLine": 98, "text": "    }" },
+              { "type": " ", "oldLine": 99, "newLine": 99, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 100,
+                "newLine": 100,
+                "text": "    /**"
+              },
+              {
+                "type": "-",
+                "oldLine": 101,
+                "text": "     * @dev Returns the number of checkpoint.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 101,
+                "text": "     * @dev Returns the number of checkpoints.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 102,
+                "newLine": 102,
+                "text": "     */"
+              },
+              {
+                "type": " ",
+                "oldLine": 103,
+                "newLine": 103,
+                "text": "    function length(Trace224 storage self) internal view returns (uint256) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 104,
+                "newLine": 104,
+                "text": "        return self._checkpoints.length;"
+              }
+            ]
+          },
+          {
+            "oldStart": 133,
+            "oldLines": 7,
+            "newStart": 133,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 133, "newLine": 133, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 134,
+                "newLine": 134,
+                "text": "            // Update or push new checkpoint"
+              },
+              {
+                "type": " ",
+                "oldLine": 135,
+                "newLine": 135,
+                "text": "            if (lastKey == key) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 136,
+                "text": "                _unsafeAccess(self, pos - 1)._value = value;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 136,
+                "text": "                last._value = value;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 137,
+                "newLine": 137,
+                "text": "            } else {"
+              },
+              {
+                "type": " ",
+                "oldLine": 138,
+                "newLine": 138,
+                "text": "                self.push(Checkpoint224({_key: key, _value: value}));"
+              },
+              {
+                "type": " ",
+                "oldLine": 139,
+                "newLine": 139,
+                "text": "            }"
+              }
+            ]
+          },
+          {
+            "oldStart": 252,
+            "oldLines": 7,
+            "newStart": 252,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 252,
+                "newLine": 252,
+                "text": "     * @dev Returns the value in the last (most recent) checkpoint with key lower or equal than the search key, or zero"
+              },
+              {
+                "type": " ",
+                "oldLine": 253,
+                "newLine": 253,
+                "text": "     * if there is none."
+              },
+              { "type": " ", "oldLine": 254, "newLine": 254, "text": "     *" },
+              {
+                "type": "-",
+                "oldLine": 255,
+                "text": "     * NOTE: This is a variant of {upperLookup} that is optimised to find \"recent\" checkpoint (checkpoints with high",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 255,
+                "text": "     * NOTE: This is a variant of {upperLookup} that is optimized to find \"recent\" checkpoint (checkpoints with high",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 256,
+                "newLine": 256,
+                "text": "     * keys)."
+              },
+              {
+                "type": " ",
+                "oldLine": 257,
+                "newLine": 257,
+                "text": "     */"
+              },
+              {
+                "type": " ",
+                "oldLine": 258,
+                "newLine": 258,
+                "text": "    function upperLookupRecent(Trace208 storage self, uint48 key) internal view returns (uint208) {"
+              }
+            ]
+          },
+          {
+            "oldStart": 298,
+            "oldLines": 7,
+            "newStart": 298,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 298, "newLine": 298, "text": "    }" },
+              { "type": " ", "oldLine": 299, "newLine": 299, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 300,
+                "newLine": 300,
+                "text": "    /**"
+              },
+              {
+                "type": "-",
+                "oldLine": 301,
+                "text": "     * @dev Returns the number of checkpoint.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 301,
+                "text": "     * @dev Returns the number of checkpoints.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 302,
+                "newLine": 302,
+                "text": "     */"
+              },
+              {
+                "type": " ",
+                "oldLine": 303,
+                "newLine": 303,
+                "text": "    function length(Trace208 storage self) internal view returns (uint256) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 304,
+                "newLine": 304,
+                "text": "        return self._checkpoints.length;"
+              }
+            ]
+          },
+          {
+            "oldStart": 333,
+            "oldLines": 7,
+            "newStart": 333,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 333, "newLine": 333, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 334,
+                "newLine": 334,
+                "text": "            // Update or push new checkpoint"
+              },
+              {
+                "type": " ",
+                "oldLine": 335,
+                "newLine": 335,
+                "text": "            if (lastKey == key) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 336,
+                "text": "                _unsafeAccess(self, pos - 1)._value = value;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 336,
+                "text": "                last._value = value;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 337,
+                "newLine": 337,
+                "text": "            } else {"
+              },
+              {
+                "type": " ",
+                "oldLine": 338,
+                "newLine": 338,
+                "text": "                self.push(Checkpoint208({_key: key, _value: value}));"
+              },
+              {
+                "type": " ",
+                "oldLine": 339,
+                "newLine": 339,
+                "text": "            }"
+              }
+            ]
+          },
+          {
+            "oldStart": 452,
+            "oldLines": 7,
+            "newStart": 452,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 452,
+                "newLine": 452,
+                "text": "     * @dev Returns the value in the last (most recent) checkpoint with key lower or equal than the search key, or zero"
+              },
+              {
+                "type": " ",
+                "oldLine": 453,
+                "newLine": 453,
+                "text": "     * if there is none."
+              },
+              { "type": " ", "oldLine": 454, "newLine": 454, "text": "     *" },
+              {
+                "type": "-",
+                "oldLine": 455,
+                "text": "     * NOTE: This is a variant of {upperLookup} that is optimised to find \"recent\" checkpoint (checkpoints with high",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 455,
+                "text": "     * NOTE: This is a variant of {upperLookup} that is optimized to find \"recent\" checkpoint (checkpoints with high",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 456,
+                "newLine": 456,
+                "text": "     * keys)."
+              },
+              {
+                "type": " ",
+                "oldLine": 457,
+                "newLine": 457,
+                "text": "     */"
+              },
+              {
+                "type": " ",
+                "oldLine": 458,
+                "newLine": 458,
+                "text": "    function upperLookupRecent(Trace160 storage self, uint96 key) internal view returns (uint160) {"
+              }
+            ]
+          },
+          {
+            "oldStart": 498,
+            "oldLines": 7,
+            "newStart": 498,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 498, "newLine": 498, "text": "    }" },
+              { "type": " ", "oldLine": 499, "newLine": 499, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 500,
+                "newLine": 500,
+                "text": "    /**"
+              },
+              {
+                "type": "-",
+                "oldLine": 501,
+                "text": "     * @dev Returns the number of checkpoint.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 501,
+                "text": "     * @dev Returns the number of checkpoints.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 502,
+                "newLine": 502,
+                "text": "     */"
+              },
+              {
+                "type": " ",
+                "oldLine": 503,
+                "newLine": 503,
+                "text": "    function length(Trace160 storage self) internal view returns (uint256) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 504,
+                "newLine": 504,
+                "text": "        return self._checkpoints.length;"
+              }
+            ]
+          },
+          {
+            "oldStart": 533,
+            "oldLines": 7,
+            "newStart": 533,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 533, "newLine": 533, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 534,
+                "newLine": 534,
+                "text": "            // Update or push new checkpoint"
+              },
+              {
+                "type": " ",
+                "oldLine": 535,
+                "newLine": 535,
+                "text": "            if (lastKey == key) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 536,
+                "text": "                _unsafeAccess(self, pos - 1)._value = value;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 536,
+                "text": "                last._value = value;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 537,
+                "newLine": 537,
+                "text": "            } else {"
+              },
+              {
+                "type": " ",
+                "oldLine": 538,
+                "newLine": 538,
+                "text": "                self.push(Checkpoint160({_key: key, _value: value}));"
+              },
+              {
+                "type": " ",
+                "oldLine": 539,
+                "newLine": 539,
+                "text": "            }"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
     }
   }
 }

@@ -375,6 +375,376 @@
         ]
       },
       "warnings": []
+    },
+    "437dcc6cbc847e9a": {
+      "status": "differs",
+      "coveredLines": 133,
+      "match": {
+        "origin": "other",
+        "collection": "bob",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "name",
+        "auditedName": "SafeCall",
+        "similarity": 0.865,
+        "reportId": "bob/veridise-kailua-2025-02",
+        "repository": "boundless-xyz/kailua",
+        "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "commit": "27dec82b67de1051df9258b36f8366ebf308e5bf",
+        "commitTimestamp": "2025-02-06T07:42:16Z",
+        "url": "https://github.com/boundless-xyz/kailua/blob/27dec82b67de1051df9258b36f8366ebf308e5bf/crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix commit",
+        "coverage": "Confirmed fix commit for V-KLA-VUL-004 (contract nits).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 13,
+        "removed": 8,
+        "ignoredAdded": 9,
+        "ignoredRemoved": 0,
+        "unchanged": 133,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 4,
+            "oldLines": 10,
+            "newStart": 4,
+            "newLines": 9,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "    /// @param _target   Address to call"
+              },
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 5,
+                "text": "    /// @param _gas      Amount of gas to pass to the call"
+              },
+              {
+                "type": " ",
+                "oldLine": 6,
+                "newLine": 6,
+                "text": "    /// @param _value    Amount of value to pass to the call"
+              },
+              {
+                "type": "-",
+                "oldLine": 7,
+                "text": "    function send(address _target, uint256 _gas, uint256 _value) internal returns (bool) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 8,
+                "text": "        bool _success;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 7,
+                "text": "    function send(address _target, uint256 _gas, uint256 _value) internal returns (bool success_) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 8,
+                "text": "        assembly {"
+              },
+              {
+                "type": "-",
+                "oldLine": 10,
+                "text": "            _success :=",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 9,
+                "text": "            success_ :=",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 11,
+                "newLine": 10,
+                "text": "                call("
+              },
+              {
+                "type": " ",
+                "oldLine": 12,
+                "newLine": 11,
+                "text": "                    _gas, // gas"
+              },
+              {
+                "type": " ",
+                "oldLine": 13,
+                "newLine": 12,
+                "text": "                    _target, // recipient"
+              }
+            ]
+          },
+          {
+            "oldStart": 18,
+            "oldLines": 18,
+            "newStart": 17,
+            "newLines": 26,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 18,
+                "newLine": 17,
+                "text": "                    0 // outlen"
+              },
+              {
+                "type": " ",
+                "oldLine": 19,
+                "newLine": 18,
+                "text": "                )"
+              },
+              {
+                "type": " ",
+                "oldLine": 20,
+                "newLine": 19,
+                "text": "        }"
+              },
+              {
+                "type": "-",
+                "oldLine": 21,
+                "text": "        return _success;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 22, "newLine": 20, "text": "    }" },
+              { "type": " ", "oldLine": 23, "newLine": 21, "text": "" },
+              {
+                "type": "+",
+                "newLine": 22,
+                "text": "    /// @notice Perform a low level call with all gas without copying any returndata",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 23,
+                "text": "    /// @param _target   Address to call",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 24,
+                "text": "    /// @param _value    Amount of value to pass to the call",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 25,
+                "text": "    function send(address _target, uint256 _value) internal returns (bool success_) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 26,
+                "text": "        success_ = send(_target, gasleft(), _value);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 27, "text": "    }", "ignored": false },
+              { "type": "+", "newLine": 28, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 29,
+                "text": "    /// @notice Perform a low level call without copying any returndata"
+              },
+              {
+                "type": " ",
+                "oldLine": 25,
+                "newLine": 30,
+                "text": "    /// @param _target   Address to call"
+              },
+              {
+                "type": " ",
+                "oldLine": 26,
+                "newLine": 31,
+                "text": "    /// @param _gas      Amount of gas to pass to the call"
+              },
+              {
+                "type": " ",
+                "oldLine": 27,
+                "newLine": 32,
+                "text": "    /// @param _value    Amount of value to pass to the call"
+              },
+              {
+                "type": " ",
+                "oldLine": 28,
+                "newLine": 33,
+                "text": "    /// @param _calldata Calldata to pass to the call"
+              },
+              {
+                "type": "-",
+                "oldLine": 29,
+                "text": "    function call(address _target, uint256 _gas, uint256 _value, bytes memory _calldata) internal returns (bool) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 30,
+                "text": "        bool _success;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 34,
+                "text": "    function call(address _target, uint256 _gas, uint256 _value, bytes memory _calldata)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 35,
+                "text": "        internal",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 36,
+                "text": "        returns (bool success_)",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 37, "text": "    {", "ignored": false },
+              {
+                "type": " ",
+                "oldLine": 31,
+                "newLine": 38,
+                "text": "        assembly {"
+              },
+              {
+                "type": "-",
+                "oldLine": 32,
+                "text": "            _success :=",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 39,
+                "text": "            success_ :=",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 33,
+                "newLine": 40,
+                "text": "                call("
+              },
+              {
+                "type": " ",
+                "oldLine": 34,
+                "newLine": 41,
+                "text": "                    _gas, // gas"
+              },
+              {
+                "type": " ",
+                "oldLine": 35,
+                "newLine": 42,
+                "text": "                    _target, // recipient"
+              }
+            ]
+          },
+          {
+            "oldStart": 40,
+            "oldLines": 9,
+            "newStart": 47,
+            "newLines": 16,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 40,
+                "newLine": 47,
+                "text": "                    0 // outlen"
+              },
+              {
+                "type": " ",
+                "oldLine": 41,
+                "newLine": 48,
+                "text": "                )"
+              },
+              {
+                "type": " ",
+                "oldLine": 42,
+                "newLine": 49,
+                "text": "        }"
+              },
+              {
+                "type": "-",
+                "oldLine": 43,
+                "text": "        return _success;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 44, "newLine": 50, "text": "    }" },
+              { "type": " ", "oldLine": 45, "newLine": 51, "text": "" },
+              {
+                "type": "+",
+                "newLine": 52,
+                "text": "    /// @notice Perform a low level call without copying any returndata",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 53,
+                "text": "    /// @param _target   Address to call",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 54,
+                "text": "    /// @param _value    Amount of value to pass to the call",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 55,
+                "text": "    /// @param _calldata Calldata to pass to the call",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 56,
+                "text": "    function call(address _target, uint256 _value, bytes memory _calldata) internal returns (bool success_) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 57,
+                "text": "        success_ = call({_target: _target, _gas: gasleft(), _value: _value, _calldata: _calldata});",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 58, "text": "    }", "ignored": false },
+              { "type": "+", "newLine": 59, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 46,
+                "newLine": 60,
+                "text": "    /// @notice Helper function to determine if there is sufficient gas remaining within the context"
+              },
+              {
+                "type": " ",
+                "oldLine": 47,
+                "newLine": 61,
+                "text": "    ///         to guarantee that the minimum gas requirement for a call will be met as well as"
+              },
+              {
+                "type": " ",
+                "oldLine": 48,
+                "newLine": 62,
+                "text": "    ///         optionally reserving a specified amount of gas for after the call has concluded."
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
     }
   }
 }

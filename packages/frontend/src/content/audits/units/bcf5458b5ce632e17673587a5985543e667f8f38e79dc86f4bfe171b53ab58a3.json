@@ -113,6 +113,87 @@
         "totalVersions": 7
       },
       "warnings": []
+    },
+    "437dcc6cbc847e9a": {
+      "status": "library",
+      "coveredLines": 72,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "MessageHashUtils",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/utils/cryptography/MessageHashUtils.sol",
+        "commit": "7282b506fd168d01c3f7b42d90bf83f4b288623d",
+        "commitTimestamp": "2023-09-08T00:14:59Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/7282b506fd168d01c3f7b42d90bf83f4b288623d/contracts/utils/cryptography/MessageHashUtils.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Fix review limited to the changes of pull request #4581 (head commit).",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 7
+      },
+      "warnings": []
+    },
+    "d80a56c5abf9208b": {
+      "status": "library",
+      "coveredLines": 72,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "MessageHashUtils",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/utils/cryptography/MessageHashUtils.sol",
+        "commit": "7282b506fd168d01c3f7b42d90bf83f4b288623d",
+        "commitTimestamp": "2023-09-08T00:14:59Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/7282b506fd168d01c3f7b42d90bf83f4b288623d/contracts/utils/cryptography/MessageHashUtils.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Fix review limited to the changes of pull request #4581 (head commit).",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 7
+      },
+      "warnings": []
+    },
+    "2295595c4243408b": {
+      "status": "library",
+      "coveredLines": 72,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "MessageHashUtils",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/utils/cryptography/MessageHashUtils.sol",
+        "commit": "7282b506fd168d01c3f7b42d90bf83f4b288623d",
+        "commitTimestamp": "2023-09-08T00:14:59Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/7282b506fd168d01c3f7b42d90bf83f4b288623d/contracts/utils/cryptography/MessageHashUtils.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Fix review limited to the changes of pull request #4581 (head commit).",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 7
+      },
+      "warnings": []
     }
   }
 }

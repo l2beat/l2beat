@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "6f22d0bfa4f89e50c251f68ac0cd4205b3050e7bb471cd54374d1013ec6c79e1",
+  "name": "validate.go",
+  "kind": "program",
+  "lines": 20,
+  "source": "package claim\n\nimport (\n\t\"errors\"\n\t\"fmt\"\n\n\t\"github.com/ethereum/go-ethereum/log\"\n\n\t\"github.com/ethereum-optimism/optimism/op-service/eth\"\n)\n\nvar ErrClaimNotValid = errors.New(\"invalid claim\")\n\nfunc ValidateClaim(log log.Logger, claimedOutputRoot eth.Bytes32, outputRoot eth.Bytes32) error {\n\tlog.Info(\"Validating claim\", \"output\", outputRoot, \"claim\", claimedOutputRoot)\n\tif claimedOutputRoot != outputRoot {\n\t\treturn fmt.Errorf(\"%w: claim: %v actual: %v\", ErrClaimNotValid, claimedOutputRoot, outputRoot)\n\t}\n\treturn nil\n}",
+  "resolutions": {
+    "437dcc6cbc847e9a": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "1f5c32d18cf7148d": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

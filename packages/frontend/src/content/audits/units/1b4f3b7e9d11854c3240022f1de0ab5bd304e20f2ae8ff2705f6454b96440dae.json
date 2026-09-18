@@ -251,6 +251,252 @@
         ]
       },
       "warnings": []
+    },
+    "d80a56c5abf9208b": {
+      "status": "library",
+      "coveredLines": 283,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "ERC20",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2026-02-v5.6",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/token/ERC20/ERC20.sol",
+        "commit": "5fd1781b1454fd1ef8e722282f86f9293cacf256",
+        "commitTimestamp": "2026-02-27T15:00:00Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/5fd1781b1454fd1ef8e722282f86f9293cacf256/contracts/token/ERC20/ERC20.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Review of the fixes to the audit findings; the report states this commit reflects the final state of the audited codebase including all implemented resolutions.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 9
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 11,
+        "ignoredRemoved": 5,
+        "unchanged": 283,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 50,
+            "oldLines": 12,
+            "newStart": 50,
+            "newLines": 16,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 50,
+                "newLine": 50,
+                "text": "        return 18;"
+              },
+              { "type": " ", "oldLine": 51, "newLine": 51, "text": "    }" },
+              { "type": " ", "oldLine": 52, "newLine": 52, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 53,
+                "text": "    /// @inheritdoc IERC20",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 53,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 54,
+                "text": "     * @dev See {IERC20-totalSupply}.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 55,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 54,
+                "newLine": 56,
+                "text": "    function totalSupply() public view virtual returns (uint256) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 55,
+                "newLine": 57,
+                "text": "        return _totalSupply;"
+              },
+              { "type": " ", "oldLine": 56, "newLine": 58, "text": "    }" },
+              { "type": " ", "oldLine": 57, "newLine": 59, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 58,
+                "text": "    /// @inheritdoc IERC20",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 60,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 61,
+                "text": "     * @dev See {IERC20-balanceOf}.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 62,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 59,
+                "newLine": 63,
+                "text": "    function balanceOf(address account) public view virtual returns (uint256) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 60,
+                "newLine": 64,
+                "text": "        return _balances[account];"
+              },
+              { "type": " ", "oldLine": 61, "newLine": 65, "text": "    }" }
+            ]
+          },
+          {
+            "oldStart": 74,
+            "oldLines": 7,
+            "newStart": 78,
+            "newLines": 9,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 74,
+                "newLine": 78,
+                "text": "        return true;"
+              },
+              { "type": " ", "oldLine": 75, "newLine": 79, "text": "    }" },
+              { "type": " ", "oldLine": 76, "newLine": 80, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 77,
+                "text": "    /// @inheritdoc IERC20",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 81,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 82,
+                "text": "     * @dev See {IERC20-allowance}.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 83,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 78,
+                "newLine": 84,
+                "text": "    function allowance(address owner, address spender) public view virtual returns (uint256) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 79,
+                "newLine": 85,
+                "text": "        return _allowances[owner][spender];"
+              },
+              { "type": " ", "oldLine": 80, "newLine": 86, "text": "    }" }
+            ]
+          },
+          {
+            "oldStart": 228,
+            "oldLines": 10,
+            "newStart": 234,
+            "newLines": 10,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 228,
+                "newLine": 234,
+                "text": "     * @dev Variant of {_approve} with an optional flag to enable or disable the {Approval} event."
+              },
+              { "type": " ", "oldLine": 229, "newLine": 235, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 230,
+                "newLine": 236,
+                "text": "     * By default (when calling {_approve}) the flag is set to true. On the other hand, approval changes made by"
+              },
+              {
+                "type": "-",
+                "oldLine": 231,
+                "text": "     * `_spendAllowance` during the `transferFrom` operation sets the flag to false. This saves gas by not emitting any",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 237,
+                "text": "     * `_spendAllowance` during the `transferFrom` operation set the flag to false. This saves gas by not emitting any",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 232,
+                "newLine": 238,
+                "text": "     * `Approval` event during `transferFrom` operations."
+              },
+              { "type": " ", "oldLine": 233, "newLine": 239, "text": "     *" },
+              {
+                "type": "-",
+                "oldLine": 234,
+                "text": "     * Anyone who wishes to continue emitting `Approval` events on the `transferFrom` operation can force the flag to",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 240,
+                "text": "     * Anyone who wishes to continue emitting `Approval` events on the`transferFrom` operation can force the flag to",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 235,
+                "newLine": 241,
+                "text": "     * true using the following override:"
+              },
+              { "type": " ", "oldLine": 236, "newLine": 242, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 237,
+                "newLine": 243,
+                "text": "     * ```solidity"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
     }
   }
 }

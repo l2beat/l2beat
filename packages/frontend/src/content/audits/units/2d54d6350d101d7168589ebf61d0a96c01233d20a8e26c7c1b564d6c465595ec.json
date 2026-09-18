@@ -171,6 +171,338 @@
         ]
       },
       "warnings": []
+    },
+    "d80a56c5abf9208b": {
+      "status": "library",
+      "coveredLines": 163,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "ERC1967Utils",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2026-02-v5.6",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/proxy/ERC1967/ERC1967Utils.sol",
+        "commit": "5fd1781b1454fd1ef8e722282f86f9293cacf256",
+        "commitTimestamp": "2026-02-27T15:00:00Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/5fd1781b1454fd1ef8e722282f86f9293cacf256/contracts/proxy/ERC1967/ERC1967Utils.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Review of the fixes to the audit findings; the report states this commit reflects the final state of the audited codebase including all implemented resolutions.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 7
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 1,
+        "ignoredRemoved": 1,
+        "unchanged": 163,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 72,
+            "oldLines": 7,
+            "newStart": 72,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 72,
+                "newLine": 72,
+                "text": "     * @dev Returns the current admin."
+              },
+              { "type": " ", "oldLine": 73, "newLine": 73, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 74,
+                "newLine": 74,
+                "text": "     * TIP: To get this value clients can read directly from the storage slot shown below (specified by ERC-1967) using"
+              },
+              {
+                "type": "-",
+                "oldLine": 75,
+                "text": "     * the https://ethereum.org/developers/docs/apis/json-rpc/#eth_getstorageat[`eth_getStorageAt`] RPC call.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 75,
+                "text": "     * the https://eth.wiki/json-rpc/API#eth_getstorageat[`eth_getStorageAt`] RPC call.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 76,
+                "newLine": 76,
+                "text": "     * `0xb53127684a568b3173ae13b9f8a6016e243e63b6e8ee1178d6a717850b5d6103`"
+              },
+              { "type": " ", "oldLine": 77, "newLine": 77, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 78,
+                "newLine": 78,
+                "text": "    function getAdmin() internal view returns (address) {"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "437dcc6cbc847e9a": {
+      "status": "library",
+      "coveredLines": 163,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "ERC1967Utils",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2026-02-v5.6",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/proxy/ERC1967/ERC1967Utils.sol",
+        "commit": "5fd1781b1454fd1ef8e722282f86f9293cacf256",
+        "commitTimestamp": "2026-02-27T15:00:00Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/5fd1781b1454fd1ef8e722282f86f9293cacf256/contracts/proxy/ERC1967/ERC1967Utils.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Review of the fixes to the audit findings; the report states this commit reflects the final state of the audited codebase including all implemented resolutions.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 7
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 1,
+        "ignoredRemoved": 1,
+        "unchanged": 163,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 72,
+            "oldLines": 7,
+            "newStart": 72,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 72,
+                "newLine": 72,
+                "text": "     * @dev Returns the current admin."
+              },
+              { "type": " ", "oldLine": 73, "newLine": 73, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 74,
+                "newLine": 74,
+                "text": "     * TIP: To get this value clients can read directly from the storage slot shown below (specified by ERC-1967) using"
+              },
+              {
+                "type": "-",
+                "oldLine": 75,
+                "text": "     * the https://ethereum.org/developers/docs/apis/json-rpc/#eth_getstorageat[`eth_getStorageAt`] RPC call.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 75,
+                "text": "     * the https://eth.wiki/json-rpc/API#eth_getstorageat[`eth_getStorageAt`] RPC call.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 76,
+                "newLine": 76,
+                "text": "     * `0xb53127684a568b3173ae13b9f8a6016e243e63b6e8ee1178d6a717850b5d6103`"
+              },
+              { "type": " ", "oldLine": 77, "newLine": 77, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 78,
+                "newLine": 78,
+                "text": "    function getAdmin() internal view returns (address) {"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "2295595c4243408b": {
+      "status": "library",
+      "coveredLines": 163,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "ERC1967Utils",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2026-02-v5.6",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/proxy/ERC1967/ERC1967Utils.sol",
+        "commit": "5fd1781b1454fd1ef8e722282f86f9293cacf256",
+        "commitTimestamp": "2026-02-27T15:00:00Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/5fd1781b1454fd1ef8e722282f86f9293cacf256/contracts/proxy/ERC1967/ERC1967Utils.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Review of the fixes to the audit findings; the report states this commit reflects the final state of the audited codebase including all implemented resolutions.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 7
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 1,
+        "ignoredRemoved": 1,
+        "unchanged": 163,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 72,
+            "oldLines": 7,
+            "newStart": 72,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 72,
+                "newLine": 72,
+                "text": "     * @dev Returns the current admin."
+              },
+              { "type": " ", "oldLine": 73, "newLine": 73, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 74,
+                "newLine": 74,
+                "text": "     * TIP: To get this value clients can read directly from the storage slot shown below (specified by ERC-1967) using"
+              },
+              {
+                "type": "-",
+                "oldLine": 75,
+                "text": "     * the https://ethereum.org/developers/docs/apis/json-rpc/#eth_getstorageat[`eth_getStorageAt`] RPC call.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 75,
+                "text": "     * the https://eth.wiki/json-rpc/API#eth_getstorageat[`eth_getStorageAt`] RPC call.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 76,
+                "newLine": 76,
+                "text": "     * `0xb53127684a568b3173ae13b9f8a6016e243e63b6e8ee1178d6a717850b5d6103`"
+              },
+              { "type": " ", "oldLine": 77, "newLine": 77, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 78,
+                "newLine": 78,
+                "text": "    function getAdmin() internal view returns (address) {"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "5d5f82d91c09d4ec": {
+      "status": "library",
+      "coveredLines": 163,
+      "match": {
+        "origin": "library",
+        "collection": "openzeppelin",
+        "relation": { "type": "library" },
+        "rank": 3,
+        "matchedBy": "identity",
+        "auditedName": "ERC1967Utils",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2026-02-v5.6",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/proxy/ERC1967/ERC1967Utils.sol",
+        "commit": "5fd1781b1454fd1ef8e722282f86f9293cacf256",
+        "commitTimestamp": "2026-02-27T15:00:00Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/5fd1781b1454fd1ef8e722282f86f9293cacf256/contracts/proxy/ERC1967/ERC1967Utils.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Review of the fixes to the audit findings; the report states this commit reflects the final state of the audited codebase including all implemented resolutions.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 7
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 1,
+        "ignoredRemoved": 1,
+        "unchanged": 163,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 72,
+            "oldLines": 7,
+            "newStart": 72,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 72,
+                "newLine": 72,
+                "text": "     * @dev Returns the current admin."
+              },
+              { "type": " ", "oldLine": 73, "newLine": 73, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 74,
+                "newLine": 74,
+                "text": "     * TIP: To get this value clients can read directly from the storage slot shown below (specified by ERC-1967) using"
+              },
+              {
+                "type": "-",
+                "oldLine": 75,
+                "text": "     * the https://ethereum.org/developers/docs/apis/json-rpc/#eth_getstorageat[`eth_getStorageAt`] RPC call.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 75,
+                "text": "     * the https://eth.wiki/json-rpc/API#eth_getstorageat[`eth_getStorageAt`] RPC call.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 76,
+                "newLine": 76,
+                "text": "     * `0xb53127684a568b3173ae13b9f8a6016e243e63b6e8ee1178d6a717850b5d6103`"
+              },
+              { "type": " ", "oldLine": 77, "newLine": 77, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 78,
+                "newLine": 78,
+                "text": "    function getAdmin() internal view returns (address) {"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
     }
   }
 }

@@ -192,6 +192,193 @@
         ]
       },
       "warnings": []
+    },
+    "437dcc6cbc847e9a": {
+      "status": "differs",
+      "coveredLines": 26,
+      "match": {
+        "origin": "stack",
+        "collection": "optimism",
+        "relation": {
+          "type": "template",
+          "template": "gnosisSafeModules/LivenessGuard"
+        },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "L1BlockNumber",
+        "similarity": 0.904,
+        "reportId": "optimism/openzeppelin-bedrock-bridge-2022-05",
+        "repository": "ethereum-optimism/optimistic-specs",
+        "path": "packages/contracts/contracts/L2/L1BlockNumber.sol",
+        "commit": "8cbaf02ed6a7ecbad1b86e5ea1781566031ff694",
+        "commitTimestamp": "2022-05-16T22:29:31Z",
+        "url": "https://github.com/ethereum-optimism/optimistic-specs/blob/8cbaf02ed6a7ecbad1b86e5ea1781566031ff694/packages/contracts/contracts/L2/L1BlockNumber.sol",
+        "auditStatus": "partially_audited_with_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Two further days completing the review of the new version; C-01, H-01 and N-07 verified fixed, H-02 (StandardBridge token refunds) found at this commit.",
+        "majorFindings": 1,
+        "findingIds": ["H-02"],
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 3,
+        "removed": 2,
+        "ignoredAdded": 7,
+        "ignoredRemoved": 0,
+        "unchanged": 26,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 9,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "contract L1BlockNumber {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "contract L1BlockNumber is ISemver {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 2,
+                "text": "    /// @notice Semantic version.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "    /// @custom:semver 1.1.1-beta.1",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 4,
+                "text": "    string public constant version = \"1.1.1-beta.1\";",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 5, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 6,
+                "text": "    /// @notice Returns the L1 block number.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 7,
+                "text": "    receive() external payable {"
+              },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 8,
+                "text": "        uint256 l1BlockNumber = getL1BlockNumber();"
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 9,
+                "text": "        assembly {"
+              }
+            ]
+          },
+          {
+            "oldStart": 7,
+            "oldLines": 6,
+            "newStart": 12,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 7, "newLine": 12, "text": "        }" },
+              { "type": " ", "oldLine": 8, "newLine": 13, "text": "    }" },
+              { "type": " ", "oldLine": 9, "newLine": 14, "text": "" },
+              {
+                "type": "+",
+                "newLine": 15,
+                "text": "    /// @notice Returns the L1 block number.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 10,
+                "newLine": 16,
+                "text": "    fallback() external payable {"
+              },
+              {
+                "type": " ",
+                "oldLine": 11,
+                "newLine": 17,
+                "text": "        uint256 l1BlockNumber = getL1BlockNumber();"
+              },
+              {
+                "type": " ",
+                "oldLine": 12,
+                "newLine": 18,
+                "text": "        assembly {"
+              }
+            ]
+          },
+          {
+            "oldStart": 15,
+            "oldLines": 7,
+            "newStart": 21,
+            "newLines": 9,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 15,
+                "newLine": 21,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 16, "newLine": 22, "text": "    }" },
+              { "type": " ", "oldLine": 17, "newLine": 23, "text": "" },
+              {
+                "type": "+",
+                "newLine": 24,
+                "text": "    /// @notice Retrieves the latest L1 block number.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 25,
+                "text": "    /// @return Latest L1 block number.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 18,
+                "newLine": 26,
+                "text": "    function getL1BlockNumber() public view returns (uint256) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 19,
+                "text": "        return L1Block(Lib_BedrockPredeployAddresses.L1_BLOCK_ATTRIBUTES).number();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 27,
+                "text": "        return L1Block(Predeploys.L1_BLOCK_ATTRIBUTES).number();",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 20, "newLine": 28, "text": "    }" },
+              { "type": " ", "oldLine": 21, "newLine": 29, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
     }
   }
 }

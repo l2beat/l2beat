@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "d4c133a861415922df3e134831c429aa70beb8f10c3fb75af83acac73bf33a30",
+  "name": "format.go",
+  "kind": "program",
+  "lines": 69,
+  "source": "package kvstore\n\nimport (\n\t\"errors\"\n\t\"fmt\"\n\t\"os\"\n\t\"path/filepath\"\n\t\"slices\"\n\n\t\"github.com/ethereum-optimism/optimism/op-program/host/types\"\n\t\"github.com/ethereum/go-ethereum/log\"\n)\n\nconst formatFilename = \"kvformat\"\n\nvar (\n\tErrFormatUnavailable = errors.New(\"format unavailable\")\n\tErrUnsupportedFormat = errors.New(\"unsupported format\")\n)\n\nfunc recordKVFormat(dir string, format types.DataFormat) error {\n\treturn os.WriteFile(filepath.Join(dir, formatFilename), []byte(format), 0o644)\n}\n\nfunc readKVFormat(dir string) (types.DataFormat, error) {\n\tdata, err := os.ReadFile(filepath.Join(dir, formatFilename))\n\tif errors.Is(err, os.ErrNotExist) {\n\t\treturn \"\", ErrFormatUnavailable\n\t} else if err != nil {\n\t\treturn \"\", fmt.Errorf(\"failed to read kv format: %w\", err)\n\t}\n\tformat := types.DataFormat(data)\n\tif !slices.Contains(types.SupportedDataFormats, format) {\n\t\treturn \"\", fmt.Errorf(\"%w: %s\", ErrUnsupportedFormat, format)\n\t}\n\treturn format, nil\n}\n\n// NewDiskKV creates a new KV implementation. If the specified directly contains an existing KV store\n// that has the format recorded, the recorded format is used ensuring compatibility with the existing data.\n// If the directory does not contain existing data or doesn't have the format recorded, defaultFormat is used\n// which may result in the existing data being unused.\n// If the existing data records a format that is not supported, an error is returned.\n// The format is automatically recorded if it wasn't previously stored.\nfunc NewDiskKV(logger log.Logger, dir string, defaultFormat types.DataFormat) (KV, error) {\n\tformat, err := readKVFormat(dir)\n\tif errors.Is(err, ErrFormatUnavailable) {\n\t\tformat = defaultFormat\n\t\tlogger.Info(\"Creating disk storage\", \"datadir\", dir, \"format\", format)\n\t\tif err := recordKVFormat(dir, format); err != nil {\n\t\t\treturn nil, fmt.Errorf(\"failed to record new kv store format: %w\", err)\n\t\t}\n\t} else if err != nil {\n\t\treturn nil, err\n\t} else {\n\t\tlogger.Info(\"Using existing disk storage\", \"datadir\", dir, \"format\", format)\n\t}\n\n\tswitch format {\n\tcase types.DataFormatFile:\n\t\treturn newFileKV(dir), nil\n\tcase types.DataFormatDirectory:\n\t\treturn newDirectoryKV(dir), nil\n\tcase types.DataFormatPebble:\n\t\treturn newPebbleKV(dir), nil\n\tdefault:\n\t\treturn nil, fmt.Errorf(\"invalid data format: %s\", format)\n\t}\n}",
+  "resolutions": {
+    "437dcc6cbc847e9a": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "1f5c32d18cf7148d": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

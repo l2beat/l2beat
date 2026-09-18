@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "928db5c0d1773667235a4a95c3cf6447deb16a1b45ae635181d70c240c387081",
+  "name": "index.ts",
+  "kind": "program",
+  "lines": 40,
+  "source": "import { Circomkit } from \"circomkit\";\n\nasync function main() {\n  // create circomkit\n  const circomkit = new Circomkit({\n    protocol: \"groth16\",\n    include: [\"../../node_modules/circomlib/circuits\", \"../../node_modules/maci-circuits/circom\"],\n    inspect: true,\n  });\n\n  // artifacts output at `build/commitment` directory\n  await circomkit.compile(\"commitment\", {\n    file: \"commitment\",\n    template: \"CommitmentHasher\",\n    pubs: [\"value\", \"label\"],\n  });\n\n  // artifacts output at `build/withdraw` directory\n  await circomkit.compile(\"withdraw\", {\n    file: \"withdraw\",\n    template: \"Withdraw\",\n    params: [32],\n    pubs: [\"withdrawnValue\", \"stateRoot\", \"stateTreeDepth\", \"ASPRoot\", \"ASPTreeDepth\", \"context\"],\n  });\n\n  // artifacts output at `build/merkleTree` directory\n  await circomkit.compile(\"merkleTree\", {\n    file: \"merkleTree\",\n    template: \"LeanIMTInclusionProof\",\n    params: [32],\n    pubs: [\"leaf\", \"leafIndex\", \"siblings\", \"actualDepth\"],\n  });\n}\n\nmain()\n  .then(() => process.exit(0))\n  .catch((e) => {\n    console.error(e);\n    process.exit(1);\n  });",
+  "resolutions": {
+    "cbbcf694abda362c": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

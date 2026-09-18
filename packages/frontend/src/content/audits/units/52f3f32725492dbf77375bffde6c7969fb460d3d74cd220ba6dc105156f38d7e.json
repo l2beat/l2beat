@@ -363,6 +363,397 @@
         ]
       },
       "warnings": []
+    },
+    "d79ad2713a1d64a9": {
+      "status": "identical",
+      "coveredLines": 276,
+      "match": {
+        "origin": "stack",
+        "collection": "optimism",
+        "relation": {
+          "type": "template",
+          "template": "opstack/AddressManager"
+        },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "L1ChugSplashProxy",
+        "similarity": 1,
+        "reportId": "optimism/openzeppelin-bedrock-periphery-2022-09",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts/contracts/chugsplash/L1ChugSplashProxy.sol",
+        "commit": "93d3bd411a8ae75702539ac9c5fe00bad21d4104",
+        "commitTimestamp": "2022-07-21T16:50:18Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/93d3bd411a8ae75702539ac9c5fe00bad21d4104/packages/contracts/contracts/chugsplash/L1ChugSplashProxy.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Full review of the listed file at the audited commit. Fix commits live in the inaccessible optimism-audit-fixes repository and are not recorded.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "warnings": []
+    },
+    "437dcc6cbc847e9a": {
+      "status": "identical",
+      "coveredLines": 268,
+      "match": {
+        "origin": "stack",
+        "collection": "optimism",
+        "relation": {
+          "type": "template",
+          "template": "opstack/Layer2/L2CrossDomainMessenger"
+        },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "L1ChugSplashProxy",
+        "similarity": 1,
+        "reportId": "optimism/openzeppelin-bedrock-periphery-2022-09",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts/contracts/chugsplash/L1ChugSplashProxy.sol",
+        "commit": "93d3bd411a8ae75702539ac9c5fe00bad21d4104",
+        "commitTimestamp": "2022-07-21T16:50:18Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/93d3bd411a8ae75702539ac9c5fe00bad21d4104/packages/contracts/contracts/chugsplash/L1ChugSplashProxy.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Full review of the listed file at the audited commit. Fix commits live in the inaccessible optimism-audit-fixes repository and are not recorded.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 8,
+        "unchanged": 268,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 75,
+            "oldLines": 7,
+            "newStart": 75,
+            "newLines": 6,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 75,
+                "newLine": 75,
+                "text": "     * keep track of the current owner in order to make an eth_call that doesn't trigger the"
+              },
+              {
+                "type": " ",
+                "oldLine": 76,
+                "newLine": 76,
+                "text": "     * proxied contract."
+              },
+              { "type": " ", "oldLine": 77, "newLine": 77, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 78,
+                "text": "    // slither-disable-next-line incorrect-modifier",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 79,
+                "newLine": 78,
+                "text": "    modifier proxyCallIfNotOwner() {"
+              },
+              {
+                "type": " ",
+                "oldLine": 80,
+                "newLine": 79,
+                "text": "        if (msg.sender == _getOwner() || msg.sender == address(0)) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 81,
+                "newLine": 80,
+                "text": "            _;"
+              }
+            ]
+          },
+          {
+            "oldStart": 90,
+            "oldLines": 8,
+            "newStart": 89,
+            "newLines": 6,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 90,
+                "newLine": 89,
+                "text": "     * Fallback Function *"
+              },
+              { "type": " ", "oldLine": 91, "newLine": 90, "text": "     *" },
+              { "type": " ", "oldLine": 92, "newLine": 91, "text": "     */" },
+              { "type": "-", "oldLine": 93, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 94,
+                "text": "    // slither-disable-next-line locked-ether",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 95,
+                "newLine": 92,
+                "text": "    fallback() external payable {"
+              },
+              {
+                "type": " ",
+                "oldLine": 96,
+                "newLine": 93,
+                "text": "        // Proxy call by default."
+              },
+              {
+                "type": " ",
+                "oldLine": 97,
+                "newLine": 94,
+                "text": "        _doProxyCall();"
+              }
+            ]
+          },
+          {
+            "oldStart": 110,
+            "oldLines": 7,
+            "newStart": 107,
+            "newLines": 6,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 110,
+                "newLine": 107,
+                "text": "     * us a lot more freedom on the client side. Can only be triggered by the contract owner."
+              },
+              {
+                "type": " ",
+                "oldLine": 111,
+                "newLine": 108,
+                "text": "     * @param _code New contract code to run inside this contract."
+              },
+              {
+                "type": " ",
+                "oldLine": 112,
+                "newLine": 109,
+                "text": "     */"
+              },
+              {
+                "type": "-",
+                "oldLine": 113,
+                "text": "    // slither-disable-next-line external-function",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 114,
+                "newLine": 110,
+                "text": "    function setCode(bytes memory _code) public proxyCallIfNotOwner {"
+              },
+              {
+                "type": " ",
+                "oldLine": 115,
+                "newLine": 111,
+                "text": "        // Get the code hash of the current implementation."
+              },
+              {
+                "type": " ",
+                "oldLine": 116,
+                "newLine": 112,
+                "text": "        address implementation = _getImplementation();"
+              }
+            ]
+          },
+          {
+            "oldStart": 147,
+            "oldLines": 7,
+            "newStart": 143,
+            "newLines": 6,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 147,
+                "newLine": 143,
+                "text": "     * @param _key Storage key to modify."
+              },
+              {
+                "type": " ",
+                "oldLine": 148,
+                "newLine": 144,
+                "text": "     * @param _value New value for the storage key."
+              },
+              {
+                "type": " ",
+                "oldLine": 149,
+                "newLine": 145,
+                "text": "     */"
+              },
+              {
+                "type": "-",
+                "oldLine": 150,
+                "text": "    // slither-disable-next-line external-function",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 151,
+                "newLine": 146,
+                "text": "    function setStorage(bytes32 _key, bytes32 _value) public proxyCallIfNotOwner {"
+              },
+              {
+                "type": " ",
+                "oldLine": 152,
+                "newLine": 147,
+                "text": "        assembly {"
+              },
+              {
+                "type": " ",
+                "oldLine": 153,
+                "newLine": 148,
+                "text": "            sstore(_key, _value)"
+              }
+            ]
+          },
+          {
+            "oldStart": 158,
+            "oldLines": 7,
+            "newStart": 153,
+            "newLines": 6,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 158,
+                "newLine": 153,
+                "text": "     * Changes the owner of the proxy contract. Only callable by the owner."
+              },
+              {
+                "type": " ",
+                "oldLine": 159,
+                "newLine": 154,
+                "text": "     * @param _owner New owner of the proxy contract."
+              },
+              {
+                "type": " ",
+                "oldLine": 160,
+                "newLine": 155,
+                "text": "     */"
+              },
+              {
+                "type": "-",
+                "oldLine": 161,
+                "text": "    // slither-disable-next-line external-function",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 162,
+                "newLine": 156,
+                "text": "    function setOwner(address _owner) public proxyCallIfNotOwner {"
+              },
+              {
+                "type": " ",
+                "oldLine": 163,
+                "newLine": 157,
+                "text": "        _setOwner(_owner);"
+              },
+              { "type": " ", "oldLine": 164, "newLine": 158, "text": "    }" }
+            ]
+          },
+          {
+            "oldStart": 168,
+            "oldLines": 7,
+            "newStart": 162,
+            "newLines": 6,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 168,
+                "newLine": 162,
+                "text": "     * eth_call and setting the \"from\" address to address(0)."
+              },
+              {
+                "type": " ",
+                "oldLine": 169,
+                "newLine": 163,
+                "text": "     * @return Owner address."
+              },
+              {
+                "type": " ",
+                "oldLine": 170,
+                "newLine": 164,
+                "text": "     */"
+              },
+              {
+                "type": "-",
+                "oldLine": 171,
+                "text": "    // slither-disable-next-line external-function",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 172,
+                "newLine": 165,
+                "text": "    function getOwner() public proxyCallIfNotOwner returns (address) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 173,
+                "newLine": 166,
+                "text": "        return _getOwner();"
+              },
+              { "type": " ", "oldLine": 174, "newLine": 167, "text": "    }" }
+            ]
+          },
+          {
+            "oldStart": 178,
+            "oldLines": 7,
+            "newStart": 171,
+            "newLines": 6,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 178,
+                "newLine": 171,
+                "text": "     * eth_call and setting the \"from\" address to address(0)."
+              },
+              {
+                "type": " ",
+                "oldLine": 179,
+                "newLine": 172,
+                "text": "     * @return Implementation address."
+              },
+              {
+                "type": " ",
+                "oldLine": 180,
+                "newLine": 173,
+                "text": "     */"
+              },
+              {
+                "type": "-",
+                "oldLine": 181,
+                "text": "    // slither-disable-next-line external-function",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 182,
+                "newLine": 174,
+                "text": "    function getImplementation() public proxyCallIfNotOwner returns (address) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 183,
+                "newLine": 175,
+                "text": "        return _getImplementation();"
+              },
+              { "type": " ", "oldLine": 184, "newLine": 176, "text": "    }" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
     }
   }
 }

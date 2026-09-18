@@ -32,6 +32,33 @@
         "totalVersions": 2
       },
       "warnings": []
+    },
+    "d80a56c5abf9208b": {
+      "status": "identical",
+      "coveredLines": 72,
+      "match": {
+        "origin": "other",
+        "collection": "scroll",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "identity",
+        "auditedName": "IScrollMessenger",
+        "similarity": 1,
+        "reportId": "scroll/openzeppelin-scroll-bridge-gas-optimizations-audit-2024-02",
+        "repository": "scroll-tech/scroll",
+        "path": "contracts/src/libraries/IScrollMessenger.sol",
+        "commit": "45e1305de5f7a1dc5aadadd7d3bb6726a5dee949",
+        "commitTimestamp": "2024-01-08T03:05:16Z",
+        "url": "https://github.com/scroll-tech/scroll/blob/45e1305de5f7a1dc5aadadd7d3bb6726a5dee949/contracts/src/libraries/IScrollMessenger.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "initial audit (diff)",
+        "coverage": "Diff audit of pull request #1011 (bridge gas optimizations) at its reviewed commit; changes outside the pull request were out of scope.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "warnings": []
     }
   }
 }

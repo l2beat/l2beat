@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "cb4978e0ac5972acaee5026d88c23b157230ab6a668fa93409fe34c8f4ab6d8e",
+  "name": "trie_test.go",
+  "kind": "program",
+  "lines": 65,
+  "source": "package mpt\n\nimport (\n\t\"fmt\"\n\t\"math/rand\"\n\t\"testing\"\n\n\t\"github.com/stretchr/testify/require\"\n\n\t\"github.com/ethereum/go-ethereum/common\"\n\t\"github.com/ethereum/go-ethereum/common/hexutil\"\n\t\"github.com/ethereum/go-ethereum/crypto\"\n)\n\ntype trieCase struct {\n\tname     string\n\telements []hexutil.Bytes\n}\n\nfunc (tc *trieCase) run(t *testing.T) {\n\troot, preimages := WriteTrie(tc.elements)\n\tbyHash := make(map[common.Hash][]byte)\n\tfor _, v := range preimages {\n\t\tk := crypto.Keccak256Hash(v)\n\t\tbyHash[k] = v\n\t}\n\tresults := ReadTrie(root, func(key common.Hash) []byte {\n\t\tv, ok := byHash[key]\n\t\tif !ok {\n\t\t\tpanic(fmt.Errorf(\"missing key %s\", key))\n\t\t}\n\t\treturn v\n\t})\n\trequire.Equal(t, len(tc.elements), len(results), \"expected equal amount of values\")\n\tfor i, result := range results {\n\t\t// hex encoded for debugging readability\n\t\trequire.Equal(t, tc.elements[i].String(), result.String(),\n\t\t\t\"value %d does not match, expected equal value data\", i)\n\t}\n}\n\nfunc TestListTrieRoundtrip(t *testing.T) {\n\ttestCases := []trieCase{\n\t\t{name: \"empty list\", elements: []hexutil.Bytes{}},\n\t\t{name: \"nil list\", elements: nil},\n\t\t{name: \"simple\", elements: []hexutil.Bytes{[]byte(\"hello\"), []byte(\"world\")}},\n\t}\n\trng := rand.New(rand.NewSource(1234))\n\t// add some randomized cases\n\tfor i := 0; i < 30; i++ {\n\t\tn := rng.Intn(300)\n\t\telems := make([]hexutil.Bytes, n)\n\t\tfor i := range elems {\n\t\t\tlength := 1 + rng.Intn(300) // empty items not allowed\n\t\t\tdata := make([]byte, length)\n\t\t\trng.Read(data[:])\n\t\t\telems[i] = data\n\t\t}\n\t\ttestCases = append(testCases, trieCase{name: fmt.Sprintf(\"rand_%d\", i), elements: elems})\n\t}\n\n\tfor _, tc := range testCases {\n\t\tt.Run(tc.name, tc.run)\n\t}\n}",
+  "resolutions": {
+    "437dcc6cbc847e9a": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "bb55951394276893": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

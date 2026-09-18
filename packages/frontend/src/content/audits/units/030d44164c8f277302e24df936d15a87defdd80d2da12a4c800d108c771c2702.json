@@ -1,0 +1,4501 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "030d44164c8f277302e24df936d15a87defdd80d2da12a4c800d108c771c2702",
+  "name": "Cargo.toml",
+  "kind": "program",
+  "lines": 112,
+  "source": "[package]\nname = \"sp1-prover\"\ndescription = \"The SP1 prover implementation\"\nreadme = \"../../README.md\"\nversion = { workspace = true }\nedition = { workspace = true }\nlicense = { workspace = true }\nrepository = { workspace = true }\nkeywords = { workspace = true }\ncategories = { workspace = true }\n\n[dependencies]\nsp1-recursion-compiler = { workspace = true }\nsp1-prover-types = { workspace = true }\nsp1-verifier = { workspace = true }\n\nsp1-recursion-circuit = { workspace = true }\nsp1-recursion-machine = { workspace = true }\nsp1-recursion-executor = { workspace = true }\nsp1-jit = { workspace = true }\nsp1-recursion-gnark-ffi = { workspace = true }\nsp1-core-machine = { workspace = true }\nsp1-derive = { workspace = true }\n\nslop-challenger = { workspace = true }\nslop-basefold = { workspace = true }\nsp1-hypercube = { workspace = true }\nslop-air = { workspace = true }\nslop-jagged = { workspace = true }\nslop-futures = { workspace = true }\nslop-symmetric = { workspace = true }\nslop-multilinear = { workspace = true }\nsp1-core-executor = { workspace = true }\nsp1-primitives = { workspace = true }\nslop-algebra = { workspace = true }\nslop-bn254 = { workspace = true }\nslop-stacked = { workspace = true }\n# slop-util = { workspace = true }\nbincode = { workspace = true }\nserde = { workspace = true, features = [\"derive\", \"rc\"] }\nitertools = { workspace = true }\ntracing = { workspace = true }\ntracing-subscriber = { workspace = true }\ntracing-appender = { workspace = true }\nserde_json = { workspace = true }\nclap = { workspace = true, features = [\"derive\", \"env\"] }\nanyhow = { workspace = true }\ndirs = { workspace = true }\ntokio = { workspace = true, features = [\n    \"macros\",\n    \"rt\",\n    \"sync\",\n    \"fs\",\n    \"process\",\n] }\nfutures = { workspace = true }\nserial_test = { workspace = true }\nnum-bigint = { workspace = true }\nthiserror = { workspace = true }\nsysinfo = { workspace = true }\nlru = { workspace = true }\neyre = { workspace = true }\nhashbrown = { workspace = true, features = [\"inline-more\"] }\nenum-map = { workspace = true }\neither = { workspace = true }\nstatic_assertions = { workspace = true }\nrand = { workspace = true }\nmti = { workspace = true }\nopentelemetry = { workspace = true }\npin-project = { workspace = true }\ntonic = { workspace = true }\nreqwest = { workspace = true, features = [\"stream\"] }\nindicatif = { workspace = true }\ntempfile = { workspace = true }\nsha2 = { workspace = true }\nhex = { workspace = true }\n\n[build-dependencies]\ndownloader = { workspace = true, features = [\"rustls-tls\", \"verify\"] }\nsha2 = { workspace = true }\nhex = { workspace = true }\n\n[dev-dependencies]\ntest-artifacts = { path = \"../test-artifacts\" }\nanyhow = { workspace = true }\n\n[[bin]]\nname = \"build_recursion_vks\"\npath = \"scripts/build_recursion_vks.rs\"\nrequired-features = [\"tokio/rt-multi-thread\"]\n\n[[bin]]\nname = \"post_trusted_setup\"\npath = \"scripts/post_trusted_setup.rs\"\n\n[[bin]]\nname = \"build_groth16_bn254\"\npath = \"scripts/build_groth16_bn254.rs\"\n\n[[bin]]\nname = \"build_plonk_bn254\"\npath = \"scripts/build_plonk_bn254.rs\"\n\n[features]\nnative-gnark = [\"sp1-recursion-gnark-ffi/native\"]\ndebug = [\"sp1-core-machine/debug\"]\nbigint-rug = [\"sp1-core-machine/bigint-rug\"]\nexperimental = []\nprofiling = [\"sp1-core-executor/profiling\", \"sp1-jit/profiling\"]\n\n[lints]\nworkspace = true",
+  "resolutions": {
+    "44ad4cf96e2ef6f0": {
+      "status": "differs",
+      "coveredLines": 46,
+      "match": {
+        "origin": "stack",
+        "collection": "sp1",
+        "relation": {
+          "type": "template",
+          "template": "succinct/OPSuccinct/AccessManager"
+        },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "Cargo.toml",
+        "similarity": 0.352,
+        "reportId": "sp1/zellic-sp1-design-review-2024",
+        "repository": "succinctlabs/sp1",
+        "path": "crates/prover/Cargo.toml",
+        "commit": "15be73d3acae3718a0acc529ed566f6a448b1c0e",
+        "commitTimestamp": "2024-11-27T02:59:17Z",
+        "url": "https://github.com/succinctlabs/sp1/blob/15be73d3acae3718a0acc529ed566f6a448b1c0e/crates/prover/Cargo.toml",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "Initial audit",
+        "coverage": "Design-level review only (explicitly not a code audit): RV32IM specification compliance and the register/low-memory aliasing at addresses 0x0-0x1f, focused mostly on load and store instruction behaviour; soundness/completeness of the ZK proofs and circuits and correctness of implementation details were out of scope.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 66,
+        "removed": 40,
+        "ignoredAdded": 9,
+        "ignoredRemoved": 10,
+        "unchanged": 46,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 6,
+            "newStart": 1,
+            "newLines": 6,
+            "lines": [
+              { "type": " ", "oldLine": 1, "newLine": 1, "text": "[package]" },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "name = \"sp1-prover\""
+              },
+              {
+                "type": "-",
+                "oldLine": 3,
+                "text": "description = \"SP1 is a performant, 100% open-source, contributor-friendly zkVM.\"",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "description = \"The SP1 prover implementation\"",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "readme = \"../../README.md\""
+              },
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 5,
+                "text": "version = { workspace = true }"
+              },
+              {
+                "type": " ",
+                "oldLine": 6,
+                "newLine": 6,
+                "text": "edition = { workspace = true }"
+              }
+            ]
+          },
+          {
+            "oldStart": 10,
+            "oldLines": 78,
+            "newStart": 10,
+            "newLines": 103,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 10,
+                "newLine": 10,
+                "text": "categories = { workspace = true }"
+              },
+              { "type": " ", "oldLine": 11, "newLine": 11, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 12,
+                "newLine": 12,
+                "text": "[dependencies]"
+              },
+              {
+                "type": "-",
+                "oldLine": 13,
+                "text": "p3-matrix = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 14,
+                "newLine": 13,
+                "text": "sp1-recursion-compiler = { workspace = true }"
+              },
+              {
+                "type": "-",
+                "oldLine": 15,
+                "text": "sp1-recursion-core = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 14,
+                "text": "sp1-prover-types = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 15,
+                "text": "sp1-verifier = { workspace = true }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 16, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 16,
+                "newLine": 17,
+                "text": "sp1-recursion-circuit = { workspace = true }"
+              },
+              {
+                "type": "+",
+                "newLine": 18,
+                "text": "sp1-recursion-machine = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 19,
+                "text": "sp1-recursion-executor = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 20,
+                "text": "sp1-jit = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 17,
+                "newLine": 21,
+                "text": "sp1-recursion-gnark-ffi = { workspace = true }"
+              },
+              {
+                "type": " ",
+                "oldLine": 18,
+                "newLine": 22,
+                "text": "sp1-core-machine = { workspace = true }"
+              },
+              {
+                "type": "-",
+                "oldLine": 19,
+                "text": "sp1-stark = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 20,
+                "text": "p3-symmetric = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 23,
+                "text": "sp1-derive = { workspace = true }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 24, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 25,
+                "text": "slop-challenger = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 26,
+                "text": "slop-basefold = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 27,
+                "text": "sp1-hypercube = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 28,
+                "text": "slop-air = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 29,
+                "text": "slop-jagged = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 30,
+                "text": "slop-futures = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 31,
+                "text": "slop-symmetric = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 32,
+                "text": "slop-multilinear = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 21,
+                "newLine": 33,
+                "text": "sp1-core-executor = { workspace = true }"
+              },
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 34,
+                "text": "sp1-primitives = { workspace = true }"
+              },
+              {
+                "type": "-",
+                "oldLine": 23,
+                "text": "p3-field = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 24,
+                "text": "p3-challenger = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 25,
+                "text": "p3-baby-bear = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 26,
+                "text": "p3-bn254-fr = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 27,
+                "text": "p3-commit = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 28,
+                "text": "bincode = \"1.3.3\"",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 35,
+                "text": "slop-algebra = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 36,
+                "text": "slop-bn254 = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 37,
+                "text": "slop-stacked = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 38,
+                "text": "# slop-util = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 39,
+                "text": "bincode = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 29,
+                "newLine": 40,
+                "text": "serde = { workspace = true, features = [\"derive\", \"rc\"] }"
+              },
+              {
+                "type": " ",
+                "oldLine": 30,
+                "newLine": 41,
+                "text": "itertools = { workspace = true }"
+              },
+              {
+                "type": " ",
+                "oldLine": 31,
+                "newLine": 42,
+                "text": "tracing = { workspace = true }"
+              },
+              {
+                "type": " ",
+                "oldLine": 32,
+                "newLine": 43,
+                "text": "tracing-subscriber = { workspace = true }"
+              },
+              {
+                "type": "-",
+                "oldLine": 33,
+                "text": "tracing-appender = \"0.2.3\"",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 44,
+                "text": "tracing-appender = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 34,
+                "newLine": 45,
+                "text": "serde_json = { workspace = true }"
+              },
+              {
+                "type": "-",
+                "oldLine": 35,
+                "text": "clap = { version = \"4.5.9\", features = [\"derive\", \"env\"] }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 36,
+                "text": "anyhow = \"1.0.83\"",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 37,
+                "text": "dirs = \"5.0.1\"",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 38,
+                "text": "serial_test = \"3.1.1\"",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 39,
+                "text": "num-bigint = \"0.4.6\"",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 40,
+                "text": "thiserror = \"1.0.63\"",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 41,
+                "text": "lru = \"0.12.4\"",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 42,
+                "text": "eyre = \"0.6.12\"",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 43,
+                "text": "test-artifacts = { workspace = true, optional = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 46,
+                "text": "clap = { workspace = true, features = [\"derive\", \"env\"] }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 47,
+                "text": "anyhow = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 48,
+                "text": "dirs = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 49,
+                "text": "tokio = { workspace = true, features = [",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 50,
+                "text": "    \"macros\",",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 51,
+                "text": "    \"rt\",",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 52,
+                "text": "    \"sync\",",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 53,
+                "text": "    \"fs\",",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 54,
+                "text": "    \"process\",",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 55, "text": "] }", "ignored": false },
+              {
+                "type": "+",
+                "newLine": 56,
+                "text": "futures = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 57,
+                "text": "serial_test = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 58,
+                "text": "num-bigint = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 59,
+                "text": "thiserror = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 60,
+                "text": "sysinfo = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 61,
+                "text": "lru = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 62,
+                "text": "eyre = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 63,
+                "text": "hashbrown = { workspace = true, features = [\"inline-more\"] }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 64,
+                "text": "enum-map = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 65,
+                "text": "either = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 66,
+                "text": "static_assertions = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 67,
+                "text": "rand = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 68,
+                "text": "mti = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 69,
+                "text": "opentelemetry = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 70,
+                "text": "pin-project = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 71,
+                "text": "tonic = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 72,
+                "text": "reqwest = { workspace = true, features = [\"stream\"] }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 73,
+                "text": "indicatif = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 74,
+                "text": "tempfile = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 75,
+                "text": "sha2 = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 76,
+                "text": "hex = { workspace = true }",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 44, "newLine": 77, "text": "" },
+              {
+                "type": "+",
+                "newLine": 78,
+                "text": "[build-dependencies]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 79,
+                "text": "downloader = { workspace = true, features = [\"rustls-tls\", \"verify\"] }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 80,
+                "text": "sha2 = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 81,
+                "text": "hex = { workspace = true }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 82, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 45,
+                "newLine": 83,
+                "text": "[dev-dependencies]"
+              },
+              {
+                "type": "-",
+                "oldLine": 46,
+                "text": "test-artifacts = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 84,
+                "text": "test-artifacts = { path = \"../test-artifacts\" }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 85,
+                "text": "anyhow = { workspace = true }",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 47, "newLine": 86, "text": "" },
+              { "type": " ", "oldLine": 48, "newLine": 87, "text": "[[bin]]" },
+              {
+                "type": "-",
+                "oldLine": 49,
+                "text": "name = \"build_plonk_bn254\"",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 50,
+                "text": "path = \"scripts/build_plonk_bn254.rs\"",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 88,
+                "text": "name = \"build_recursion_vks\"",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 89,
+                "text": "path = \"scripts/build_recursion_vks.rs\"",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 90,
+                "text": "required-features = [\"tokio/rt-multi-thread\"]",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 51, "newLine": 91, "text": "" },
+              { "type": " ", "oldLine": 52, "newLine": 92, "text": "[[bin]]" },
+              {
+                "type": "-",
+                "oldLine": 53,
+                "text": "name = \"build_groth16_bn254\"",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 54,
+                "text": "path = \"scripts/build_groth16_bn254.rs\"",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 55, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 56,
+                "text": "[[bin]]",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 57,
+                "text": "name = \"build_compress_vks\"",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 58,
+                "text": "path = \"scripts/build_compress_vks.rs\"",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 59, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 60,
+                "text": "[[bin]]",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 61,
+                "newLine": 93,
+                "text": "name = \"post_trusted_setup\""
+              },
+              {
+                "type": " ",
+                "oldLine": 62,
+                "newLine": 94,
+                "text": "path = \"scripts/post_trusted_setup.rs\""
+              },
+              { "type": " ", "oldLine": 63, "newLine": 95, "text": "" },
+              { "type": " ", "oldLine": 64, "newLine": 96, "text": "[[bin]]" },
+              {
+                "type": "-",
+                "oldLine": 65,
+                "text": "name = \"e2e\"",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 66,
+                "text": "path = \"scripts/e2e.rs\"",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 97,
+                "text": "name = \"build_groth16_bn254\"",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 98,
+                "text": "path = \"scripts/build_groth16_bn254.rs\"",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 67, "newLine": 99, "text": "" },
+              { "type": " ", "oldLine": 68, "newLine": 100, "text": "[[bin]]" },
+              {
+                "type": "-",
+                "oldLine": 69,
+                "text": "name = \"fibonacci_groth16\"",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 70,
+                "text": "path = \"scripts/fibonacci_groth16.rs\"",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 71,
+                "text": "required-features = [\"export-tests\"]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 101,
+                "text": "name = \"build_plonk_bn254\"",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 102,
+                "text": "path = \"scripts/build_plonk_bn254.rs\"",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 72, "newLine": 103, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 73,
+                "text": "[[bin]]",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 74,
+                "text": "name = \"fibonacci_sweep\"",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 75,
+                "text": "path = \"scripts/fibonacci_sweep.rs\"",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 76,
+                "text": "required-features = [\"export-tests\"]",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 77, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 78,
+                "text": "[[bin]]",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 79,
+                "text": "name = \"tendermint_sweep\"",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 80,
+                "text": "path = \"scripts/tendermint_sweep.rs\"",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 81,
+                "text": "required-features = [\"export-tests\"]",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 82, "text": "", "ignored": true },
+              { "type": "-", "oldLine": 83, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 84,
+                "newLine": 104,
+                "text": "[features]"
+              },
+              {
+                "type": " ",
+                "oldLine": 85,
+                "newLine": 105,
+                "text": "native-gnark = [\"sp1-recursion-gnark-ffi/native\"]"
+              },
+              {
+                "type": "-",
+                "oldLine": 86,
+                "text": "export-tests = [\"dep:test-artifacts\"]",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 87,
+                "text": "debug = [\"sp1-core-machine/debug\"]",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 106,
+                "text": "debug = [\"sp1-core-machine/debug\"]",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 107,
+                "text": "bigint-rug = [\"sp1-core-machine/bigint-rug\"]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 108,
+                "text": "experimental = []",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 109,
+                "text": "profiling = [\"sp1-core-executor/profiling\", \"sp1-jit/profiling\"]",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 110, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 111,
+                "text": "[lints]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 112,
+                "text": "workspace = true",
+                "ignored": false
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "5d5f82d91c09d4ec": {
+      "status": "differs",
+      "coveredLines": 46,
+      "match": {
+        "origin": "library",
+        "collection": "sp1",
+        "relation": { "type": "library" },
+        "rank": 3,
+        "matchedBy": "name",
+        "auditedName": "Cargo.toml",
+        "similarity": 0.352,
+        "reportId": "sp1/zellic-sp1-design-review-2024",
+        "repository": "succinctlabs/sp1",
+        "path": "crates/prover/Cargo.toml",
+        "commit": "15be73d3acae3718a0acc529ed566f6a448b1c0e",
+        "commitTimestamp": "2024-11-27T02:59:17Z",
+        "url": "https://github.com/succinctlabs/sp1/blob/15be73d3acae3718a0acc529ed566f6a448b1c0e/crates/prover/Cargo.toml",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "Initial audit",
+        "coverage": "Design-level review only (explicitly not a code audit): RV32IM specification compliance and the register/low-memory aliasing at addresses 0x0-0x1f, focused mostly on load and store instruction behaviour; soundness/completeness of the ZK proofs and circuits and correctness of implementation details were out of scope.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 66,
+        "removed": 40,
+        "ignoredAdded": 9,
+        "ignoredRemoved": 10,
+        "unchanged": 46,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 6,
+            "newStart": 1,
+            "newLines": 6,
+            "lines": [
+              { "type": " ", "oldLine": 1, "newLine": 1, "text": "[package]" },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "name = \"sp1-prover\""
+              },
+              {
+                "type": "-",
+                "oldLine": 3,
+                "text": "description = \"SP1 is a performant, 100% open-source, contributor-friendly zkVM.\"",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "description = \"The SP1 prover implementation\"",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "readme = \"../../README.md\""
+              },
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 5,
+                "text": "version = { workspace = true }"
+              },
+              {
+                "type": " ",
+                "oldLine": 6,
+                "newLine": 6,
+                "text": "edition = { workspace = true }"
+              }
+            ]
+          },
+          {
+            "oldStart": 10,
+            "oldLines": 78,
+            "newStart": 10,
+            "newLines": 103,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 10,
+                "newLine": 10,
+                "text": "categories = { workspace = true }"
+              },
+              { "type": " ", "oldLine": 11, "newLine": 11, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 12,
+                "newLine": 12,
+                "text": "[dependencies]"
+              },
+              {
+                "type": "-",
+                "oldLine": 13,
+                "text": "p3-matrix = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 14,
+                "newLine": 13,
+                "text": "sp1-recursion-compiler = { workspace = true }"
+              },
+              {
+                "type": "-",
+                "oldLine": 15,
+                "text": "sp1-recursion-core = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 14,
+                "text": "sp1-prover-types = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 15,
+                "text": "sp1-verifier = { workspace = true }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 16, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 16,
+                "newLine": 17,
+                "text": "sp1-recursion-circuit = { workspace = true }"
+              },
+              {
+                "type": "+",
+                "newLine": 18,
+                "text": "sp1-recursion-machine = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 19,
+                "text": "sp1-recursion-executor = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 20,
+                "text": "sp1-jit = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 17,
+                "newLine": 21,
+                "text": "sp1-recursion-gnark-ffi = { workspace = true }"
+              },
+              {
+                "type": " ",
+                "oldLine": 18,
+                "newLine": 22,
+                "text": "sp1-core-machine = { workspace = true }"
+              },
+              {
+                "type": "-",
+                "oldLine": 19,
+                "text": "sp1-stark = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 20,
+                "text": "p3-symmetric = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 23,
+                "text": "sp1-derive = { workspace = true }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 24, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 25,
+                "text": "slop-challenger = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 26,
+                "text": "slop-basefold = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 27,
+                "text": "sp1-hypercube = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 28,
+                "text": "slop-air = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 29,
+                "text": "slop-jagged = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 30,
+                "text": "slop-futures = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 31,
+                "text": "slop-symmetric = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 32,
+                "text": "slop-multilinear = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 21,
+                "newLine": 33,
+                "text": "sp1-core-executor = { workspace = true }"
+              },
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 34,
+                "text": "sp1-primitives = { workspace = true }"
+              },
+              {
+                "type": "-",
+                "oldLine": 23,
+                "text": "p3-field = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 24,
+                "text": "p3-challenger = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 25,
+                "text": "p3-baby-bear = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 26,
+                "text": "p3-bn254-fr = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 27,
+                "text": "p3-commit = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 28,
+                "text": "bincode = \"1.3.3\"",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 35,
+                "text": "slop-algebra = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 36,
+                "text": "slop-bn254 = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 37,
+                "text": "slop-stacked = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 38,
+                "text": "# slop-util = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 39,
+                "text": "bincode = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 29,
+                "newLine": 40,
+                "text": "serde = { workspace = true, features = [\"derive\", \"rc\"] }"
+              },
+              {
+                "type": " ",
+                "oldLine": 30,
+                "newLine": 41,
+                "text": "itertools = { workspace = true }"
+              },
+              {
+                "type": " ",
+                "oldLine": 31,
+                "newLine": 42,
+                "text": "tracing = { workspace = true }"
+              },
+              {
+                "type": " ",
+                "oldLine": 32,
+                "newLine": 43,
+                "text": "tracing-subscriber = { workspace = true }"
+              },
+              {
+                "type": "-",
+                "oldLine": 33,
+                "text": "tracing-appender = \"0.2.3\"",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 44,
+                "text": "tracing-appender = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 34,
+                "newLine": 45,
+                "text": "serde_json = { workspace = true }"
+              },
+              {
+                "type": "-",
+                "oldLine": 35,
+                "text": "clap = { version = \"4.5.9\", features = [\"derive\", \"env\"] }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 36,
+                "text": "anyhow = \"1.0.83\"",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 37,
+                "text": "dirs = \"5.0.1\"",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 38,
+                "text": "serial_test = \"3.1.1\"",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 39,
+                "text": "num-bigint = \"0.4.6\"",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 40,
+                "text": "thiserror = \"1.0.63\"",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 41,
+                "text": "lru = \"0.12.4\"",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 42,
+                "text": "eyre = \"0.6.12\"",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 43,
+                "text": "test-artifacts = { workspace = true, optional = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 46,
+                "text": "clap = { workspace = true, features = [\"derive\", \"env\"] }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 47,
+                "text": "anyhow = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 48,
+                "text": "dirs = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 49,
+                "text": "tokio = { workspace = true, features = [",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 50,
+                "text": "    \"macros\",",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 51,
+                "text": "    \"rt\",",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 52,
+                "text": "    \"sync\",",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 53,
+                "text": "    \"fs\",",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 54,
+                "text": "    \"process\",",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 55, "text": "] }", "ignored": false },
+              {
+                "type": "+",
+                "newLine": 56,
+                "text": "futures = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 57,
+                "text": "serial_test = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 58,
+                "text": "num-bigint = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 59,
+                "text": "thiserror = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 60,
+                "text": "sysinfo = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 61,
+                "text": "lru = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 62,
+                "text": "eyre = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 63,
+                "text": "hashbrown = { workspace = true, features = [\"inline-more\"] }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 64,
+                "text": "enum-map = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 65,
+                "text": "either = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 66,
+                "text": "static_assertions = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 67,
+                "text": "rand = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 68,
+                "text": "mti = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 69,
+                "text": "opentelemetry = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 70,
+                "text": "pin-project = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 71,
+                "text": "tonic = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 72,
+                "text": "reqwest = { workspace = true, features = [\"stream\"] }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 73,
+                "text": "indicatif = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 74,
+                "text": "tempfile = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 75,
+                "text": "sha2 = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 76,
+                "text": "hex = { workspace = true }",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 44, "newLine": 77, "text": "" },
+              {
+                "type": "+",
+                "newLine": 78,
+                "text": "[build-dependencies]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 79,
+                "text": "downloader = { workspace = true, features = [\"rustls-tls\", \"verify\"] }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 80,
+                "text": "sha2 = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 81,
+                "text": "hex = { workspace = true }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 82, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 45,
+                "newLine": 83,
+                "text": "[dev-dependencies]"
+              },
+              {
+                "type": "-",
+                "oldLine": 46,
+                "text": "test-artifacts = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 84,
+                "text": "test-artifacts = { path = \"../test-artifacts\" }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 85,
+                "text": "anyhow = { workspace = true }",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 47, "newLine": 86, "text": "" },
+              { "type": " ", "oldLine": 48, "newLine": 87, "text": "[[bin]]" },
+              {
+                "type": "-",
+                "oldLine": 49,
+                "text": "name = \"build_plonk_bn254\"",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 50,
+                "text": "path = \"scripts/build_plonk_bn254.rs\"",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 88,
+                "text": "name = \"build_recursion_vks\"",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 89,
+                "text": "path = \"scripts/build_recursion_vks.rs\"",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 90,
+                "text": "required-features = [\"tokio/rt-multi-thread\"]",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 51, "newLine": 91, "text": "" },
+              { "type": " ", "oldLine": 52, "newLine": 92, "text": "[[bin]]" },
+              {
+                "type": "-",
+                "oldLine": 53,
+                "text": "name = \"build_groth16_bn254\"",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 54,
+                "text": "path = \"scripts/build_groth16_bn254.rs\"",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 55, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 56,
+                "text": "[[bin]]",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 57,
+                "text": "name = \"build_compress_vks\"",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 58,
+                "text": "path = \"scripts/build_compress_vks.rs\"",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 59, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 60,
+                "text": "[[bin]]",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 61,
+                "newLine": 93,
+                "text": "name = \"post_trusted_setup\""
+              },
+              {
+                "type": " ",
+                "oldLine": 62,
+                "newLine": 94,
+                "text": "path = \"scripts/post_trusted_setup.rs\""
+              },
+              { "type": " ", "oldLine": 63, "newLine": 95, "text": "" },
+              { "type": " ", "oldLine": 64, "newLine": 96, "text": "[[bin]]" },
+              {
+                "type": "-",
+                "oldLine": 65,
+                "text": "name = \"e2e\"",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 66,
+                "text": "path = \"scripts/e2e.rs\"",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 97,
+                "text": "name = \"build_groth16_bn254\"",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 98,
+                "text": "path = \"scripts/build_groth16_bn254.rs\"",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 67, "newLine": 99, "text": "" },
+              { "type": " ", "oldLine": 68, "newLine": 100, "text": "[[bin]]" },
+              {
+                "type": "-",
+                "oldLine": 69,
+                "text": "name = \"fibonacci_groth16\"",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 70,
+                "text": "path = \"scripts/fibonacci_groth16.rs\"",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 71,
+                "text": "required-features = [\"export-tests\"]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 101,
+                "text": "name = \"build_plonk_bn254\"",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 102,
+                "text": "path = \"scripts/build_plonk_bn254.rs\"",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 72, "newLine": 103, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 73,
+                "text": "[[bin]]",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 74,
+                "text": "name = \"fibonacci_sweep\"",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 75,
+                "text": "path = \"scripts/fibonacci_sweep.rs\"",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 76,
+                "text": "required-features = [\"export-tests\"]",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 77, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 78,
+                "text": "[[bin]]",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 79,
+                "text": "name = \"tendermint_sweep\"",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 80,
+                "text": "path = \"scripts/tendermint_sweep.rs\"",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 81,
+                "text": "required-features = [\"export-tests\"]",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 82, "text": "", "ignored": true },
+              { "type": "-", "oldLine": 83, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 84,
+                "newLine": 104,
+                "text": "[features]"
+              },
+              {
+                "type": " ",
+                "oldLine": 85,
+                "newLine": 105,
+                "text": "native-gnark = [\"sp1-recursion-gnark-ffi/native\"]"
+              },
+              {
+                "type": "-",
+                "oldLine": 86,
+                "text": "export-tests = [\"dep:test-artifacts\"]",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 87,
+                "text": "debug = [\"sp1-core-machine/debug\"]",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 106,
+                "text": "debug = [\"sp1-core-machine/debug\"]",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 107,
+                "text": "bigint-rug = [\"sp1-core-machine/bigint-rug\"]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 108,
+                "text": "experimental = []",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 109,
+                "text": "profiling = [\"sp1-core-executor/profiling\", \"sp1-jit/profiling\"]",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 110, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 111,
+                "text": "[lints]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 112,
+                "text": "workspace = true",
+                "ignored": false
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "d79ad2713a1d64a9": {
+      "status": "differs",
+      "coveredLines": 46,
+      "match": {
+        "origin": "stack",
+        "collection": "sp1",
+        "relation": {
+          "type": "template",
+          "template": "succinct/OPSuccinct/OPSuccinctL2OutputOracle_mantle"
+        },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "Cargo.toml",
+        "similarity": 0.352,
+        "reportId": "sp1/zellic-sp1-design-review-2024",
+        "repository": "succinctlabs/sp1",
+        "path": "crates/prover/Cargo.toml",
+        "commit": "15be73d3acae3718a0acc529ed566f6a448b1c0e",
+        "commitTimestamp": "2024-11-27T02:59:17Z",
+        "url": "https://github.com/succinctlabs/sp1/blob/15be73d3acae3718a0acc529ed566f6a448b1c0e/crates/prover/Cargo.toml",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "Initial audit",
+        "coverage": "Design-level review only (explicitly not a code audit): RV32IM specification compliance and the register/low-memory aliasing at addresses 0x0-0x1f, focused mostly on load and store instruction behaviour; soundness/completeness of the ZK proofs and circuits and correctness of implementation details were out of scope.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 66,
+        "removed": 40,
+        "ignoredAdded": 9,
+        "ignoredRemoved": 10,
+        "unchanged": 46,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 6,
+            "newStart": 1,
+            "newLines": 6,
+            "lines": [
+              { "type": " ", "oldLine": 1, "newLine": 1, "text": "[package]" },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "name = \"sp1-prover\""
+              },
+              {
+                "type": "-",
+                "oldLine": 3,
+                "text": "description = \"SP1 is a performant, 100% open-source, contributor-friendly zkVM.\"",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "description = \"The SP1 prover implementation\"",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "readme = \"../../README.md\""
+              },
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 5,
+                "text": "version = { workspace = true }"
+              },
+              {
+                "type": " ",
+                "oldLine": 6,
+                "newLine": 6,
+                "text": "edition = { workspace = true }"
+              }
+            ]
+          },
+          {
+            "oldStart": 10,
+            "oldLines": 78,
+            "newStart": 10,
+            "newLines": 103,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 10,
+                "newLine": 10,
+                "text": "categories = { workspace = true }"
+              },
+              { "type": " ", "oldLine": 11, "newLine": 11, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 12,
+                "newLine": 12,
+                "text": "[dependencies]"
+              },
+              {
+                "type": "-",
+                "oldLine": 13,
+                "text": "p3-matrix = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 14,
+                "newLine": 13,
+                "text": "sp1-recursion-compiler = { workspace = true }"
+              },
+              {
+                "type": "-",
+                "oldLine": 15,
+                "text": "sp1-recursion-core = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 14,
+                "text": "sp1-prover-types = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 15,
+                "text": "sp1-verifier = { workspace = true }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 16, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 16,
+                "newLine": 17,
+                "text": "sp1-recursion-circuit = { workspace = true }"
+              },
+              {
+                "type": "+",
+                "newLine": 18,
+                "text": "sp1-recursion-machine = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 19,
+                "text": "sp1-recursion-executor = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 20,
+                "text": "sp1-jit = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 17,
+                "newLine": 21,
+                "text": "sp1-recursion-gnark-ffi = { workspace = true }"
+              },
+              {
+                "type": " ",
+                "oldLine": 18,
+                "newLine": 22,
+                "text": "sp1-core-machine = { workspace = true }"
+              },
+              {
+                "type": "-",
+                "oldLine": 19,
+                "text": "sp1-stark = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 20,
+                "text": "p3-symmetric = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 23,
+                "text": "sp1-derive = { workspace = true }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 24, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 25,
+                "text": "slop-challenger = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 26,
+                "text": "slop-basefold = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 27,
+                "text": "sp1-hypercube = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 28,
+                "text": "slop-air = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 29,
+                "text": "slop-jagged = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 30,
+                "text": "slop-futures = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 31,
+                "text": "slop-symmetric = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 32,
+                "text": "slop-multilinear = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 21,
+                "newLine": 33,
+                "text": "sp1-core-executor = { workspace = true }"
+              },
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 34,
+                "text": "sp1-primitives = { workspace = true }"
+              },
+              {
+                "type": "-",
+                "oldLine": 23,
+                "text": "p3-field = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 24,
+                "text": "p3-challenger = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 25,
+                "text": "p3-baby-bear = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 26,
+                "text": "p3-bn254-fr = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 27,
+                "text": "p3-commit = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 28,
+                "text": "bincode = \"1.3.3\"",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 35,
+                "text": "slop-algebra = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 36,
+                "text": "slop-bn254 = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 37,
+                "text": "slop-stacked = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 38,
+                "text": "# slop-util = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 39,
+                "text": "bincode = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 29,
+                "newLine": 40,
+                "text": "serde = { workspace = true, features = [\"derive\", \"rc\"] }"
+              },
+              {
+                "type": " ",
+                "oldLine": 30,
+                "newLine": 41,
+                "text": "itertools = { workspace = true }"
+              },
+              {
+                "type": " ",
+                "oldLine": 31,
+                "newLine": 42,
+                "text": "tracing = { workspace = true }"
+              },
+              {
+                "type": " ",
+                "oldLine": 32,
+                "newLine": 43,
+                "text": "tracing-subscriber = { workspace = true }"
+              },
+              {
+                "type": "-",
+                "oldLine": 33,
+                "text": "tracing-appender = \"0.2.3\"",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 44,
+                "text": "tracing-appender = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 34,
+                "newLine": 45,
+                "text": "serde_json = { workspace = true }"
+              },
+              {
+                "type": "-",
+                "oldLine": 35,
+                "text": "clap = { version = \"4.5.9\", features = [\"derive\", \"env\"] }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 36,
+                "text": "anyhow = \"1.0.83\"",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 37,
+                "text": "dirs = \"5.0.1\"",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 38,
+                "text": "serial_test = \"3.1.1\"",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 39,
+                "text": "num-bigint = \"0.4.6\"",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 40,
+                "text": "thiserror = \"1.0.63\"",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 41,
+                "text": "lru = \"0.12.4\"",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 42,
+                "text": "eyre = \"0.6.12\"",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 43,
+                "text": "test-artifacts = { workspace = true, optional = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 46,
+                "text": "clap = { workspace = true, features = [\"derive\", \"env\"] }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 47,
+                "text": "anyhow = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 48,
+                "text": "dirs = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 49,
+                "text": "tokio = { workspace = true, features = [",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 50,
+                "text": "    \"macros\",",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 51,
+                "text": "    \"rt\",",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 52,
+                "text": "    \"sync\",",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 53,
+                "text": "    \"fs\",",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 54,
+                "text": "    \"process\",",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 55, "text": "] }", "ignored": false },
+              {
+                "type": "+",
+                "newLine": 56,
+                "text": "futures = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 57,
+                "text": "serial_test = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 58,
+                "text": "num-bigint = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 59,
+                "text": "thiserror = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 60,
+                "text": "sysinfo = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 61,
+                "text": "lru = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 62,
+                "text": "eyre = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 63,
+                "text": "hashbrown = { workspace = true, features = [\"inline-more\"] }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 64,
+                "text": "enum-map = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 65,
+                "text": "either = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 66,
+                "text": "static_assertions = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 67,
+                "text": "rand = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 68,
+                "text": "mti = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 69,
+                "text": "opentelemetry = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 70,
+                "text": "pin-project = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 71,
+                "text": "tonic = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 72,
+                "text": "reqwest = { workspace = true, features = [\"stream\"] }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 73,
+                "text": "indicatif = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 74,
+                "text": "tempfile = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 75,
+                "text": "sha2 = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 76,
+                "text": "hex = { workspace = true }",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 44, "newLine": 77, "text": "" },
+              {
+                "type": "+",
+                "newLine": 78,
+                "text": "[build-dependencies]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 79,
+                "text": "downloader = { workspace = true, features = [\"rustls-tls\", \"verify\"] }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 80,
+                "text": "sha2 = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 81,
+                "text": "hex = { workspace = true }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 82, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 45,
+                "newLine": 83,
+                "text": "[dev-dependencies]"
+              },
+              {
+                "type": "-",
+                "oldLine": 46,
+                "text": "test-artifacts = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 84,
+                "text": "test-artifacts = { path = \"../test-artifacts\" }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 85,
+                "text": "anyhow = { workspace = true }",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 47, "newLine": 86, "text": "" },
+              { "type": " ", "oldLine": 48, "newLine": 87, "text": "[[bin]]" },
+              {
+                "type": "-",
+                "oldLine": 49,
+                "text": "name = \"build_plonk_bn254\"",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 50,
+                "text": "path = \"scripts/build_plonk_bn254.rs\"",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 88,
+                "text": "name = \"build_recursion_vks\"",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 89,
+                "text": "path = \"scripts/build_recursion_vks.rs\"",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 90,
+                "text": "required-features = [\"tokio/rt-multi-thread\"]",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 51, "newLine": 91, "text": "" },
+              { "type": " ", "oldLine": 52, "newLine": 92, "text": "[[bin]]" },
+              {
+                "type": "-",
+                "oldLine": 53,
+                "text": "name = \"build_groth16_bn254\"",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 54,
+                "text": "path = \"scripts/build_groth16_bn254.rs\"",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 55, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 56,
+                "text": "[[bin]]",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 57,
+                "text": "name = \"build_compress_vks\"",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 58,
+                "text": "path = \"scripts/build_compress_vks.rs\"",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 59, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 60,
+                "text": "[[bin]]",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 61,
+                "newLine": 93,
+                "text": "name = \"post_trusted_setup\""
+              },
+              {
+                "type": " ",
+                "oldLine": 62,
+                "newLine": 94,
+                "text": "path = \"scripts/post_trusted_setup.rs\""
+              },
+              { "type": " ", "oldLine": 63, "newLine": 95, "text": "" },
+              { "type": " ", "oldLine": 64, "newLine": 96, "text": "[[bin]]" },
+              {
+                "type": "-",
+                "oldLine": 65,
+                "text": "name = \"e2e\"",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 66,
+                "text": "path = \"scripts/e2e.rs\"",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 97,
+                "text": "name = \"build_groth16_bn254\"",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 98,
+                "text": "path = \"scripts/build_groth16_bn254.rs\"",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 67, "newLine": 99, "text": "" },
+              { "type": " ", "oldLine": 68, "newLine": 100, "text": "[[bin]]" },
+              {
+                "type": "-",
+                "oldLine": 69,
+                "text": "name = \"fibonacci_groth16\"",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 70,
+                "text": "path = \"scripts/fibonacci_groth16.rs\"",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 71,
+                "text": "required-features = [\"export-tests\"]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 101,
+                "text": "name = \"build_plonk_bn254\"",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 102,
+                "text": "path = \"scripts/build_plonk_bn254.rs\"",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 72, "newLine": 103, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 73,
+                "text": "[[bin]]",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 74,
+                "text": "name = \"fibonacci_sweep\"",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 75,
+                "text": "path = \"scripts/fibonacci_sweep.rs\"",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 76,
+                "text": "required-features = [\"export-tests\"]",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 77, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 78,
+                "text": "[[bin]]",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 79,
+                "text": "name = \"tendermint_sweep\"",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 80,
+                "text": "path = \"scripts/tendermint_sweep.rs\"",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 81,
+                "text": "required-features = [\"export-tests\"]",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 82, "text": "", "ignored": true },
+              { "type": "-", "oldLine": 83, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 84,
+                "newLine": 104,
+                "text": "[features]"
+              },
+              {
+                "type": " ",
+                "oldLine": 85,
+                "newLine": 105,
+                "text": "native-gnark = [\"sp1-recursion-gnark-ffi/native\"]"
+              },
+              {
+                "type": "-",
+                "oldLine": 86,
+                "text": "export-tests = [\"dep:test-artifacts\"]",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 87,
+                "text": "debug = [\"sp1-core-machine/debug\"]",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 106,
+                "text": "debug = [\"sp1-core-machine/debug\"]",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 107,
+                "text": "bigint-rug = [\"sp1-core-machine/bigint-rug\"]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 108,
+                "text": "experimental = []",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 109,
+                "text": "profiling = [\"sp1-core-executor/profiling\", \"sp1-jit/profiling\"]",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 110, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 111,
+                "text": "[lints]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 112,
+                "text": "workspace = true",
+                "ignored": false
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "2295595c4243408b": {
+      "status": "differs",
+      "coveredLines": 46,
+      "match": {
+        "origin": "stack",
+        "collection": "sp1",
+        "relation": { "type": "template", "template": "succinct/SP1Verifier" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "Cargo.toml",
+        "similarity": 0.352,
+        "reportId": "sp1/zellic-sp1-design-review-2024",
+        "repository": "succinctlabs/sp1",
+        "path": "crates/prover/Cargo.toml",
+        "commit": "15be73d3acae3718a0acc529ed566f6a448b1c0e",
+        "commitTimestamp": "2024-11-27T02:59:17Z",
+        "url": "https://github.com/succinctlabs/sp1/blob/15be73d3acae3718a0acc529ed566f6a448b1c0e/crates/prover/Cargo.toml",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "Initial audit",
+        "coverage": "Design-level review only (explicitly not a code audit): RV32IM specification compliance and the register/low-memory aliasing at addresses 0x0-0x1f, focused mostly on load and store instruction behaviour; soundness/completeness of the ZK proofs and circuits and correctness of implementation details were out of scope.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 66,
+        "removed": 40,
+        "ignoredAdded": 9,
+        "ignoredRemoved": 10,
+        "unchanged": 46,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 6,
+            "newStart": 1,
+            "newLines": 6,
+            "lines": [
+              { "type": " ", "oldLine": 1, "newLine": 1, "text": "[package]" },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "name = \"sp1-prover\""
+              },
+              {
+                "type": "-",
+                "oldLine": 3,
+                "text": "description = \"SP1 is a performant, 100% open-source, contributor-friendly zkVM.\"",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "description = \"The SP1 prover implementation\"",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "readme = \"../../README.md\""
+              },
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 5,
+                "text": "version = { workspace = true }"
+              },
+              {
+                "type": " ",
+                "oldLine": 6,
+                "newLine": 6,
+                "text": "edition = { workspace = true }"
+              }
+            ]
+          },
+          {
+            "oldStart": 10,
+            "oldLines": 78,
+            "newStart": 10,
+            "newLines": 103,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 10,
+                "newLine": 10,
+                "text": "categories = { workspace = true }"
+              },
+              { "type": " ", "oldLine": 11, "newLine": 11, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 12,
+                "newLine": 12,
+                "text": "[dependencies]"
+              },
+              {
+                "type": "-",
+                "oldLine": 13,
+                "text": "p3-matrix = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 14,
+                "newLine": 13,
+                "text": "sp1-recursion-compiler = { workspace = true }"
+              },
+              {
+                "type": "-",
+                "oldLine": 15,
+                "text": "sp1-recursion-core = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 14,
+                "text": "sp1-prover-types = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 15,
+                "text": "sp1-verifier = { workspace = true }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 16, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 16,
+                "newLine": 17,
+                "text": "sp1-recursion-circuit = { workspace = true }"
+              },
+              {
+                "type": "+",
+                "newLine": 18,
+                "text": "sp1-recursion-machine = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 19,
+                "text": "sp1-recursion-executor = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 20,
+                "text": "sp1-jit = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 17,
+                "newLine": 21,
+                "text": "sp1-recursion-gnark-ffi = { workspace = true }"
+              },
+              {
+                "type": " ",
+                "oldLine": 18,
+                "newLine": 22,
+                "text": "sp1-core-machine = { workspace = true }"
+              },
+              {
+                "type": "-",
+                "oldLine": 19,
+                "text": "sp1-stark = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 20,
+                "text": "p3-symmetric = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 23,
+                "text": "sp1-derive = { workspace = true }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 24, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 25,
+                "text": "slop-challenger = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 26,
+                "text": "slop-basefold = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 27,
+                "text": "sp1-hypercube = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 28,
+                "text": "slop-air = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 29,
+                "text": "slop-jagged = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 30,
+                "text": "slop-futures = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 31,
+                "text": "slop-symmetric = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 32,
+                "text": "slop-multilinear = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 21,
+                "newLine": 33,
+                "text": "sp1-core-executor = { workspace = true }"
+              },
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 34,
+                "text": "sp1-primitives = { workspace = true }"
+              },
+              {
+                "type": "-",
+                "oldLine": 23,
+                "text": "p3-field = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 24,
+                "text": "p3-challenger = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 25,
+                "text": "p3-baby-bear = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 26,
+                "text": "p3-bn254-fr = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 27,
+                "text": "p3-commit = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 28,
+                "text": "bincode = \"1.3.3\"",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 35,
+                "text": "slop-algebra = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 36,
+                "text": "slop-bn254 = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 37,
+                "text": "slop-stacked = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 38,
+                "text": "# slop-util = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 39,
+                "text": "bincode = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 29,
+                "newLine": 40,
+                "text": "serde = { workspace = true, features = [\"derive\", \"rc\"] }"
+              },
+              {
+                "type": " ",
+                "oldLine": 30,
+                "newLine": 41,
+                "text": "itertools = { workspace = true }"
+              },
+              {
+                "type": " ",
+                "oldLine": 31,
+                "newLine": 42,
+                "text": "tracing = { workspace = true }"
+              },
+              {
+                "type": " ",
+                "oldLine": 32,
+                "newLine": 43,
+                "text": "tracing-subscriber = { workspace = true }"
+              },
+              {
+                "type": "-",
+                "oldLine": 33,
+                "text": "tracing-appender = \"0.2.3\"",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 44,
+                "text": "tracing-appender = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 34,
+                "newLine": 45,
+                "text": "serde_json = { workspace = true }"
+              },
+              {
+                "type": "-",
+                "oldLine": 35,
+                "text": "clap = { version = \"4.5.9\", features = [\"derive\", \"env\"] }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 36,
+                "text": "anyhow = \"1.0.83\"",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 37,
+                "text": "dirs = \"5.0.1\"",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 38,
+                "text": "serial_test = \"3.1.1\"",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 39,
+                "text": "num-bigint = \"0.4.6\"",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 40,
+                "text": "thiserror = \"1.0.63\"",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 41,
+                "text": "lru = \"0.12.4\"",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 42,
+                "text": "eyre = \"0.6.12\"",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 43,
+                "text": "test-artifacts = { workspace = true, optional = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 46,
+                "text": "clap = { workspace = true, features = [\"derive\", \"env\"] }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 47,
+                "text": "anyhow = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 48,
+                "text": "dirs = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 49,
+                "text": "tokio = { workspace = true, features = [",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 50,
+                "text": "    \"macros\",",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 51,
+                "text": "    \"rt\",",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 52,
+                "text": "    \"sync\",",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 53,
+                "text": "    \"fs\",",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 54,
+                "text": "    \"process\",",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 55, "text": "] }", "ignored": false },
+              {
+                "type": "+",
+                "newLine": 56,
+                "text": "futures = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 57,
+                "text": "serial_test = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 58,
+                "text": "num-bigint = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 59,
+                "text": "thiserror = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 60,
+                "text": "sysinfo = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 61,
+                "text": "lru = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 62,
+                "text": "eyre = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 63,
+                "text": "hashbrown = { workspace = true, features = [\"inline-more\"] }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 64,
+                "text": "enum-map = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 65,
+                "text": "either = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 66,
+                "text": "static_assertions = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 67,
+                "text": "rand = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 68,
+                "text": "mti = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 69,
+                "text": "opentelemetry = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 70,
+                "text": "pin-project = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 71,
+                "text": "tonic = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 72,
+                "text": "reqwest = { workspace = true, features = [\"stream\"] }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 73,
+                "text": "indicatif = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 74,
+                "text": "tempfile = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 75,
+                "text": "sha2 = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 76,
+                "text": "hex = { workspace = true }",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 44, "newLine": 77, "text": "" },
+              {
+                "type": "+",
+                "newLine": 78,
+                "text": "[build-dependencies]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 79,
+                "text": "downloader = { workspace = true, features = [\"rustls-tls\", \"verify\"] }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 80,
+                "text": "sha2 = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 81,
+                "text": "hex = { workspace = true }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 82, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 45,
+                "newLine": 83,
+                "text": "[dev-dependencies]"
+              },
+              {
+                "type": "-",
+                "oldLine": 46,
+                "text": "test-artifacts = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 84,
+                "text": "test-artifacts = { path = \"../test-artifacts\" }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 85,
+                "text": "anyhow = { workspace = true }",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 47, "newLine": 86, "text": "" },
+              { "type": " ", "oldLine": 48, "newLine": 87, "text": "[[bin]]" },
+              {
+                "type": "-",
+                "oldLine": 49,
+                "text": "name = \"build_plonk_bn254\"",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 50,
+                "text": "path = \"scripts/build_plonk_bn254.rs\"",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 88,
+                "text": "name = \"build_recursion_vks\"",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 89,
+                "text": "path = \"scripts/build_recursion_vks.rs\"",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 90,
+                "text": "required-features = [\"tokio/rt-multi-thread\"]",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 51, "newLine": 91, "text": "" },
+              { "type": " ", "oldLine": 52, "newLine": 92, "text": "[[bin]]" },
+              {
+                "type": "-",
+                "oldLine": 53,
+                "text": "name = \"build_groth16_bn254\"",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 54,
+                "text": "path = \"scripts/build_groth16_bn254.rs\"",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 55, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 56,
+                "text": "[[bin]]",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 57,
+                "text": "name = \"build_compress_vks\"",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 58,
+                "text": "path = \"scripts/build_compress_vks.rs\"",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 59, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 60,
+                "text": "[[bin]]",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 61,
+                "newLine": 93,
+                "text": "name = \"post_trusted_setup\""
+              },
+              {
+                "type": " ",
+                "oldLine": 62,
+                "newLine": 94,
+                "text": "path = \"scripts/post_trusted_setup.rs\""
+              },
+              { "type": " ", "oldLine": 63, "newLine": 95, "text": "" },
+              { "type": " ", "oldLine": 64, "newLine": 96, "text": "[[bin]]" },
+              {
+                "type": "-",
+                "oldLine": 65,
+                "text": "name = \"e2e\"",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 66,
+                "text": "path = \"scripts/e2e.rs\"",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 97,
+                "text": "name = \"build_groth16_bn254\"",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 98,
+                "text": "path = \"scripts/build_groth16_bn254.rs\"",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 67, "newLine": 99, "text": "" },
+              { "type": " ", "oldLine": 68, "newLine": 100, "text": "[[bin]]" },
+              {
+                "type": "-",
+                "oldLine": 69,
+                "text": "name = \"fibonacci_groth16\"",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 70,
+                "text": "path = \"scripts/fibonacci_groth16.rs\"",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 71,
+                "text": "required-features = [\"export-tests\"]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 101,
+                "text": "name = \"build_plonk_bn254\"",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 102,
+                "text": "path = \"scripts/build_plonk_bn254.rs\"",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 72, "newLine": 103, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 73,
+                "text": "[[bin]]",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 74,
+                "text": "name = \"fibonacci_sweep\"",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 75,
+                "text": "path = \"scripts/fibonacci_sweep.rs\"",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 76,
+                "text": "required-features = [\"export-tests\"]",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 77, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 78,
+                "text": "[[bin]]",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 79,
+                "text": "name = \"tendermint_sweep\"",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 80,
+                "text": "path = \"scripts/tendermint_sweep.rs\"",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 81,
+                "text": "required-features = [\"export-tests\"]",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 82, "text": "", "ignored": true },
+              { "type": "-", "oldLine": 83, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 84,
+                "newLine": 104,
+                "text": "[features]"
+              },
+              {
+                "type": " ",
+                "oldLine": 85,
+                "newLine": 105,
+                "text": "native-gnark = [\"sp1-recursion-gnark-ffi/native\"]"
+              },
+              {
+                "type": "-",
+                "oldLine": 86,
+                "text": "export-tests = [\"dep:test-artifacts\"]",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 87,
+                "text": "debug = [\"sp1-core-machine/debug\"]",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 106,
+                "text": "debug = [\"sp1-core-machine/debug\"]",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 107,
+                "text": "bigint-rug = [\"sp1-core-machine/bigint-rug\"]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 108,
+                "text": "experimental = []",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 109,
+                "text": "profiling = [\"sp1-core-executor/profiling\", \"sp1-jit/profiling\"]",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 110, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 111,
+                "text": "[lints]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 112,
+                "text": "workspace = true",
+                "ignored": false
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "d80a56c5abf9208b": {
+      "status": "differs",
+      "coveredLines": 46,
+      "match": {
+        "origin": "library",
+        "collection": "sp1",
+        "relation": { "type": "library" },
+        "rank": 3,
+        "matchedBy": "name",
+        "auditedName": "Cargo.toml",
+        "similarity": 0.352,
+        "reportId": "sp1/zellic-sp1-design-review-2024",
+        "repository": "succinctlabs/sp1",
+        "path": "crates/prover/Cargo.toml",
+        "commit": "15be73d3acae3718a0acc529ed566f6a448b1c0e",
+        "commitTimestamp": "2024-11-27T02:59:17Z",
+        "url": "https://github.com/succinctlabs/sp1/blob/15be73d3acae3718a0acc529ed566f6a448b1c0e/crates/prover/Cargo.toml",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "Initial audit",
+        "coverage": "Design-level review only (explicitly not a code audit): RV32IM specification compliance and the register/low-memory aliasing at addresses 0x0-0x1f, focused mostly on load and store instruction behaviour; soundness/completeness of the ZK proofs and circuits and correctness of implementation details were out of scope.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 66,
+        "removed": 40,
+        "ignoredAdded": 9,
+        "ignoredRemoved": 10,
+        "unchanged": 46,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 6,
+            "newStart": 1,
+            "newLines": 6,
+            "lines": [
+              { "type": " ", "oldLine": 1, "newLine": 1, "text": "[package]" },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "name = \"sp1-prover\""
+              },
+              {
+                "type": "-",
+                "oldLine": 3,
+                "text": "description = \"SP1 is a performant, 100% open-source, contributor-friendly zkVM.\"",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "description = \"The SP1 prover implementation\"",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "readme = \"../../README.md\""
+              },
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 5,
+                "text": "version = { workspace = true }"
+              },
+              {
+                "type": " ",
+                "oldLine": 6,
+                "newLine": 6,
+                "text": "edition = { workspace = true }"
+              }
+            ]
+          },
+          {
+            "oldStart": 10,
+            "oldLines": 78,
+            "newStart": 10,
+            "newLines": 103,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 10,
+                "newLine": 10,
+                "text": "categories = { workspace = true }"
+              },
+              { "type": " ", "oldLine": 11, "newLine": 11, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 12,
+                "newLine": 12,
+                "text": "[dependencies]"
+              },
+              {
+                "type": "-",
+                "oldLine": 13,
+                "text": "p3-matrix = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 14,
+                "newLine": 13,
+                "text": "sp1-recursion-compiler = { workspace = true }"
+              },
+              {
+                "type": "-",
+                "oldLine": 15,
+                "text": "sp1-recursion-core = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 14,
+                "text": "sp1-prover-types = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 15,
+                "text": "sp1-verifier = { workspace = true }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 16, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 16,
+                "newLine": 17,
+                "text": "sp1-recursion-circuit = { workspace = true }"
+              },
+              {
+                "type": "+",
+                "newLine": 18,
+                "text": "sp1-recursion-machine = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 19,
+                "text": "sp1-recursion-executor = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 20,
+                "text": "sp1-jit = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 17,
+                "newLine": 21,
+                "text": "sp1-recursion-gnark-ffi = { workspace = true }"
+              },
+              {
+                "type": " ",
+                "oldLine": 18,
+                "newLine": 22,
+                "text": "sp1-core-machine = { workspace = true }"
+              },
+              {
+                "type": "-",
+                "oldLine": 19,
+                "text": "sp1-stark = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 20,
+                "text": "p3-symmetric = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 23,
+                "text": "sp1-derive = { workspace = true }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 24, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 25,
+                "text": "slop-challenger = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 26,
+                "text": "slop-basefold = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 27,
+                "text": "sp1-hypercube = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 28,
+                "text": "slop-air = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 29,
+                "text": "slop-jagged = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 30,
+                "text": "slop-futures = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 31,
+                "text": "slop-symmetric = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 32,
+                "text": "slop-multilinear = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 21,
+                "newLine": 33,
+                "text": "sp1-core-executor = { workspace = true }"
+              },
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 34,
+                "text": "sp1-primitives = { workspace = true }"
+              },
+              {
+                "type": "-",
+                "oldLine": 23,
+                "text": "p3-field = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 24,
+                "text": "p3-challenger = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 25,
+                "text": "p3-baby-bear = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 26,
+                "text": "p3-bn254-fr = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 27,
+                "text": "p3-commit = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 28,
+                "text": "bincode = \"1.3.3\"",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 35,
+                "text": "slop-algebra = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 36,
+                "text": "slop-bn254 = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 37,
+                "text": "slop-stacked = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 38,
+                "text": "# slop-util = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 39,
+                "text": "bincode = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 29,
+                "newLine": 40,
+                "text": "serde = { workspace = true, features = [\"derive\", \"rc\"] }"
+              },
+              {
+                "type": " ",
+                "oldLine": 30,
+                "newLine": 41,
+                "text": "itertools = { workspace = true }"
+              },
+              {
+                "type": " ",
+                "oldLine": 31,
+                "newLine": 42,
+                "text": "tracing = { workspace = true }"
+              },
+              {
+                "type": " ",
+                "oldLine": 32,
+                "newLine": 43,
+                "text": "tracing-subscriber = { workspace = true }"
+              },
+              {
+                "type": "-",
+                "oldLine": 33,
+                "text": "tracing-appender = \"0.2.3\"",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 44,
+                "text": "tracing-appender = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 34,
+                "newLine": 45,
+                "text": "serde_json = { workspace = true }"
+              },
+              {
+                "type": "-",
+                "oldLine": 35,
+                "text": "clap = { version = \"4.5.9\", features = [\"derive\", \"env\"] }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 36,
+                "text": "anyhow = \"1.0.83\"",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 37,
+                "text": "dirs = \"5.0.1\"",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 38,
+                "text": "serial_test = \"3.1.1\"",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 39,
+                "text": "num-bigint = \"0.4.6\"",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 40,
+                "text": "thiserror = \"1.0.63\"",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 41,
+                "text": "lru = \"0.12.4\"",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 42,
+                "text": "eyre = \"0.6.12\"",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 43,
+                "text": "test-artifacts = { workspace = true, optional = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 46,
+                "text": "clap = { workspace = true, features = [\"derive\", \"env\"] }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 47,
+                "text": "anyhow = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 48,
+                "text": "dirs = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 49,
+                "text": "tokio = { workspace = true, features = [",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 50,
+                "text": "    \"macros\",",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 51,
+                "text": "    \"rt\",",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 52,
+                "text": "    \"sync\",",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 53,
+                "text": "    \"fs\",",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 54,
+                "text": "    \"process\",",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 55, "text": "] }", "ignored": false },
+              {
+                "type": "+",
+                "newLine": 56,
+                "text": "futures = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 57,
+                "text": "serial_test = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 58,
+                "text": "num-bigint = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 59,
+                "text": "thiserror = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 60,
+                "text": "sysinfo = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 61,
+                "text": "lru = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 62,
+                "text": "eyre = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 63,
+                "text": "hashbrown = { workspace = true, features = [\"inline-more\"] }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 64,
+                "text": "enum-map = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 65,
+                "text": "either = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 66,
+                "text": "static_assertions = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 67,
+                "text": "rand = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 68,
+                "text": "mti = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 69,
+                "text": "opentelemetry = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 70,
+                "text": "pin-project = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 71,
+                "text": "tonic = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 72,
+                "text": "reqwest = { workspace = true, features = [\"stream\"] }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 73,
+                "text": "indicatif = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 74,
+                "text": "tempfile = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 75,
+                "text": "sha2 = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 76,
+                "text": "hex = { workspace = true }",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 44, "newLine": 77, "text": "" },
+              {
+                "type": "+",
+                "newLine": 78,
+                "text": "[build-dependencies]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 79,
+                "text": "downloader = { workspace = true, features = [\"rustls-tls\", \"verify\"] }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 80,
+                "text": "sha2 = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 81,
+                "text": "hex = { workspace = true }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 82, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 45,
+                "newLine": 83,
+                "text": "[dev-dependencies]"
+              },
+              {
+                "type": "-",
+                "oldLine": 46,
+                "text": "test-artifacts = { workspace = true }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 84,
+                "text": "test-artifacts = { path = \"../test-artifacts\" }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 85,
+                "text": "anyhow = { workspace = true }",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 47, "newLine": 86, "text": "" },
+              { "type": " ", "oldLine": 48, "newLine": 87, "text": "[[bin]]" },
+              {
+                "type": "-",
+                "oldLine": 49,
+                "text": "name = \"build_plonk_bn254\"",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 50,
+                "text": "path = \"scripts/build_plonk_bn254.rs\"",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 88,
+                "text": "name = \"build_recursion_vks\"",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 89,
+                "text": "path = \"scripts/build_recursion_vks.rs\"",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 90,
+                "text": "required-features = [\"tokio/rt-multi-thread\"]",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 51, "newLine": 91, "text": "" },
+              { "type": " ", "oldLine": 52, "newLine": 92, "text": "[[bin]]" },
+              {
+                "type": "-",
+                "oldLine": 53,
+                "text": "name = \"build_groth16_bn254\"",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 54,
+                "text": "path = \"scripts/build_groth16_bn254.rs\"",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 55, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 56,
+                "text": "[[bin]]",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 57,
+                "text": "name = \"build_compress_vks\"",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 58,
+                "text": "path = \"scripts/build_compress_vks.rs\"",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 59, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 60,
+                "text": "[[bin]]",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 61,
+                "newLine": 93,
+                "text": "name = \"post_trusted_setup\""
+              },
+              {
+                "type": " ",
+                "oldLine": 62,
+                "newLine": 94,
+                "text": "path = \"scripts/post_trusted_setup.rs\""
+              },
+              { "type": " ", "oldLine": 63, "newLine": 95, "text": "" },
+              { "type": " ", "oldLine": 64, "newLine": 96, "text": "[[bin]]" },
+              {
+                "type": "-",
+                "oldLine": 65,
+                "text": "name = \"e2e\"",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 66,
+                "text": "path = \"scripts/e2e.rs\"",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 97,
+                "text": "name = \"build_groth16_bn254\"",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 98,
+                "text": "path = \"scripts/build_groth16_bn254.rs\"",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 67, "newLine": 99, "text": "" },
+              { "type": " ", "oldLine": 68, "newLine": 100, "text": "[[bin]]" },
+              {
+                "type": "-",
+                "oldLine": 69,
+                "text": "name = \"fibonacci_groth16\"",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 70,
+                "text": "path = \"scripts/fibonacci_groth16.rs\"",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 71,
+                "text": "required-features = [\"export-tests\"]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 101,
+                "text": "name = \"build_plonk_bn254\"",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 102,
+                "text": "path = \"scripts/build_plonk_bn254.rs\"",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 72, "newLine": 103, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 73,
+                "text": "[[bin]]",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 74,
+                "text": "name = \"fibonacci_sweep\"",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 75,
+                "text": "path = \"scripts/fibonacci_sweep.rs\"",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 76,
+                "text": "required-features = [\"export-tests\"]",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 77, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 78,
+                "text": "[[bin]]",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 79,
+                "text": "name = \"tendermint_sweep\"",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 80,
+                "text": "path = \"scripts/tendermint_sweep.rs\"",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 81,
+                "text": "required-features = [\"export-tests\"]",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 82, "text": "", "ignored": true },
+              { "type": "-", "oldLine": 83, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 84,
+                "newLine": 104,
+                "text": "[features]"
+              },
+              {
+                "type": " ",
+                "oldLine": 85,
+                "newLine": 105,
+                "text": "native-gnark = [\"sp1-recursion-gnark-ffi/native\"]"
+              },
+              {
+                "type": "-",
+                "oldLine": 86,
+                "text": "export-tests = [\"dep:test-artifacts\"]",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 87,
+                "text": "debug = [\"sp1-core-machine/debug\"]",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 106,
+                "text": "debug = [\"sp1-core-machine/debug\"]",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 107,
+                "text": "bigint-rug = [\"sp1-core-machine/bigint-rug\"]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 108,
+                "text": "experimental = []",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 109,
+                "text": "profiling = [\"sp1-core-executor/profiling\", \"sp1-jit/profiling\"]",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 110, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 111,
+                "text": "[lints]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 112,
+                "text": "workspace = true",
+                "ignored": false
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

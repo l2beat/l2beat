@@ -154,6 +154,155 @@
         ]
       },
       "warnings": []
+    },
+    "437dcc6cbc847e9a": {
+      "status": "differs",
+      "coveredLines": 111,
+      "match": {
+        "origin": "stack",
+        "collection": "optimism",
+        "relation": {
+          "type": "template",
+          "template": "gnosisSafeModules/LivenessGuard"
+        },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "OptimismMintableERC20Factory",
+        "similarity": 0.992,
+        "reportId": "optimism/cantina-u17-2025-10",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts-bedrock/src/universal/OptimismMintableERC20Factory.sol",
+        "commit": "aeed7033f7f739d8ecd4bd70a42ff09013bbc91e",
+        "commitTimestamp": "2025-10-16T14:37:42Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/aeed7033f7f739d8ecd4bd70a42ff09013bbc91e/packages/contracts-bedrock/src/universal/OptimismMintableERC20Factory.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Full review of the file as part of the u17 (op-contracts/v5.0.0) upgrade review; keccak256 hash listed in the report appendix.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "diff": {
+        "added": 3,
+        "removed": 3,
+        "ignoredAdded": 1,
+        "ignoredRemoved": 1,
+        "unchanged": 111,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 33,
+            "oldLines": 17,
+            "newStart": 33,
+            "newLines": 17,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 33,
+                "newLine": 33,
+                "text": "    ///         the OptimismMintableERC20 token contract since this contract"
+              },
+              {
+                "type": " ",
+                "oldLine": 34,
+                "newLine": 34,
+                "text": "    ///         is responsible for deploying OptimismMintableERC20 contracts."
+              },
+              {
+                "type": " ",
+                "oldLine": 35,
+                "newLine": 35,
+                "text": "    /// @notice Semantic version."
+              },
+              {
+                "type": "-",
+                "oldLine": 36,
+                "text": "    /// @custom:semver 1.10.2",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 37,
+                "text": "    string public constant version = \"1.10.2\";",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 36,
+                "text": "    /// @custom:semver 1.10.1-beta.1",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 37,
+                "text": "    string public constant version = \"1.10.1-beta.2\";",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 38, "newLine": 38, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 39,
+                "newLine": 39,
+                "text": "    /// @notice Constructs the OptimismMintableERC20Factory contract."
+              },
+              {
+                "type": " ",
+                "oldLine": 40,
+                "newLine": 40,
+                "text": "    constructor() {"
+              },
+              {
+                "type": "-",
+                "oldLine": 41,
+                "text": "        _disableInitializers();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 41,
+                "text": "        initialize({_bridge: address(0)});",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 42, "newLine": 42, "text": "    }" },
+              { "type": " ", "oldLine": 43, "newLine": 43, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 44,
+                "newLine": 44,
+                "text": "    /// @notice Initializes the contract."
+              },
+              {
+                "type": " ",
+                "oldLine": 45,
+                "newLine": 45,
+                "text": "    /// @param _bridge Address of the StandardBridge on this chain."
+              },
+              {
+                "type": "-",
+                "oldLine": 46,
+                "text": "    function initialize(address _bridge) external initializer {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 46,
+                "text": "    function initialize(address _bridge) public initializer {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 47,
+                "newLine": 47,
+                "text": "        bridge = _bridge;"
+              },
+              { "type": " ", "oldLine": 48, "newLine": 48, "text": "    }" },
+              { "type": " ", "oldLine": 49, "newLine": 49, "text": "" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
     }
   }
 }

@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "ae3ca1739738d95f3f46365fbf12ad72b3dc09fa492d942b89fe6b44a9887076",
+  "name": "main.go",
+  "kind": "program",
+  "lines": 69,
+  "source": "package main\n\nimport (\n\t\"os\"\n\n\t\"github.com/ethereum-optimism/optimism/op-program/host\"\n\t\"github.com/ethereum-optimism/optimism/op-program/host/config\"\n\t\"github.com/ethereum-optimism/optimism/op-program/host/flags\"\n\t\"github.com/ethereum-optimism/optimism/op-program/host/version\"\n\topservice \"github.com/ethereum-optimism/optimism/op-service\"\n\toplog \"github.com/ethereum-optimism/optimism/op-service/log\"\n\t\"github.com/ethereum/go-ethereum/log\"\n\t\"github.com/urfave/cli/v2\"\n)\n\nvar (\n\tGitCommit = \"\"\n\tGitDate   = \"\"\n)\n\n// VersionWithMeta holds the textual version string including the metadata.\nvar VersionWithMeta = opservice.FormatVersion(version.Version, GitCommit, GitDate, version.Meta)\n\nfunc main() {\n\targs := os.Args\n\tif err := run(args, host.Main); err != nil {\n\t\tlog.Crit(\"Application failed\", \"err\", err)\n\t}\n}\n\ntype ConfigAction func(log log.Logger, config *config.Config) error\n\n// run parses the supplied args to create a config.Config instance, sets up logging\n// then calls the supplied ConfigAction.\n// This allows testing the translation from CLI arguments to Config\nfunc run(args []string, action ConfigAction) error {\n\t// Set up logger with a default INFO level in case we fail to parse flags,\n\t// otherwise the final critical log won't show what the parsing error was.\n\toplog.SetupDefaults()\n\n\tapp := cli.NewApp()\n\tapp.Version = VersionWithMeta\n\tapp.Flags = flags.Flags\n\tapp.Name = \"op-program\"\n\tapp.Usage = \"Optimism Fault Proof Program\"\n\tapp.Description = \"The Optimism Fault Proof Program fault proof program that runs through the rollup state-transition to verify an L2 output from L1 inputs.\"\n\tapp.Action = func(ctx *cli.Context) error {\n\t\tlogger, err := setupLogging(ctx)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\tlogger.Info(\"Starting fault proof program\", \"version\", VersionWithMeta)\n\n\t\tcfg, err := config.NewConfigFromCLI(logger, ctx)\n\t\tif err != nil {\n\t\t\treturn err\n\t\t}\n\t\treturn action(logger, cfg)\n\t}\n\n\treturn app.Run(args)\n}\n\nfunc setupLogging(ctx *cli.Context) (log.Logger, error) {\n\tlogCfg := oplog.ReadCLIConfig(ctx)\n\tlogger := oplog.NewLogger(oplog.AppOut(ctx), logCfg)\n\toplog.SetGlobalLogHandler(logger.GetHandler())\n\treturn logger, nil\n}",
+  "resolutions": {
+    "437dcc6cbc847e9a": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "bb55951394276893": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

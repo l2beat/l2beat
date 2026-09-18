@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "2e6ed45ddc191d5f4306607c24ba418b19edfe15ad1c1518faea0449df8bffde",
+  "name": "beacon_hash",
+  "kind": "program",
+  "lines": 1,
+  "source": "c87bd495d8ccfe9fb4158ee26d47e5ca2bcd4e853f80c9fdebf7e2921630e6e5",
+  "resolutions": {
+    "cbbcf694abda362c": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

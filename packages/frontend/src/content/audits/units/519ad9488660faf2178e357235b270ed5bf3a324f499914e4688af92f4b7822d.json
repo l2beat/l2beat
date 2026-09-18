@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "519ad9488660faf2178e357235b270ed5bf3a324f499914e4688af92f4b7822d",
+  "name": "run-compat.sh",
+  "kind": "program",
+  "lines": 16,
+  "source": "#!/bin/bash\nset -euo pipefail\n\nSCRIPTS_DIR=$(cd \"$(dirname \"${BASH_SOURCE[0]}\")\" && pwd)\nCOMPAT_DIR=\"${SCRIPTS_DIR}/../temp/compat\"\n\nTESTNAME=\"${1?Must specify compat file to run}\"\nBASEURL=\"${2:-https://github.com/ethereum-optimism/chain-test-data/releases/download/2025-04-24}\"\n\nURL=\"${BASEURL}/${TESTNAME}.tar.bz\"\n\nmkdir -p \"${COMPAT_DIR}\"\ncurl --etag-save \"${COMPAT_DIR}/${TESTNAME}-etag.txt\" --etag-compare \"${COMPAT_DIR}/${TESTNAME}-etag.txt\" -L --fail -o \"${COMPAT_DIR}/${TESTNAME}.tar.bz\" \"${URL}\"\ntar jxf \"${COMPAT_DIR}/${TESTNAME}.tar.bz\" -C \"${COMPAT_DIR}\"\n# shellcheck disable=SC2046\n\"${SCRIPTS_DIR}/../bin/op-program\" --data.format=pebble $(cat \"${COMPAT_DIR}/${TESTNAME}/args.txt\")",
+  "resolutions": {
+    "437dcc6cbc847e9a": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "1f5c32d18cf7148d": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

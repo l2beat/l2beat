@@ -294,6 +294,295 @@
         ]
       },
       "warnings": []
+    },
+    "ac5dcc09144e4f4d": {
+      "status": "differs",
+      "coveredLines": 38,
+      "match": {
+        "origin": "stack",
+        "collection": "sp1",
+        "relation": { "type": "template", "template": "succinct/SP1Verifier" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "SP1Verifier",
+        "similarity": 0.828,
+        "reportId": "sp1/veridise-sp1-recursion-and-contracts-2024",
+        "repository": "succinctlabs/sp1-contracts",
+        "path": "contracts/src/v1.0.7-testnet/SP1Verifier.sol",
+        "commit": "73c2a8df0c816bf743e9d960e7b14b8e37635578",
+        "commitTimestamp": "2024-07-04T20:55:42Z",
+        "url": "https://github.com/succinctlabs/sp1-contracts/blob/73c2a8df0c816bf743e9d960e7b14b8e37635578/contracts/src/v1.0.7-testnet/SP1Verifier.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "Audit of sp1-contracts (July 05 - July 06, 2024)",
+        "coverage": "Manual review of the Solidity verifier interface, SP1VerifierGateway and mock verifier; the generated per-version PlonkVerifier/SP1Verifier contracts are inside the scoped directory but are not discussed. Only Low (V-SP1-VUL-008, centralization) and Warning (V-SP1-VUL-011) findings.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "diff": {
+        "added": 6,
+        "removed": 8,
+        "ignoredAdded": 4,
+        "ignoredRemoved": 1,
+        "unchanged": 38,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 4,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "contract SP1Verifier is PlonkVerifier, ISP1VerifierWithHash {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "contract SP1Verifier is Groth16Verifier, ISP1VerifierWithHash {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "    /// @notice Thrown when the verifier selector from this proof does not match the one in this"
+              },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "    /// verifier. This indicates that this proof was sent to the wrong verifier."
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "    /// @param received The verifier selector from the first 4 bytes of the proof."
+              }
+            ]
+          },
+          {
+            "oldStart": 9,
+            "oldLines": 12,
+            "newStart": 9,
+            "newLines": 12,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 9,
+                "text": "    error InvalidProof();"
+              },
+              { "type": " ", "oldLine": 10, "newLine": 10, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 11,
+                "newLine": 11,
+                "text": "    function VERSION() external pure returns (string memory) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 12,
+                "text": "        return \"v1.0.7-testnet\";",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 12,
+                "text": "        return \"v5.0.0\";",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 13, "newLine": 13, "text": "    }" },
+              { "type": " ", "oldLine": 14, "newLine": 14, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 15,
+                "newLine": 15,
+                "text": "    /// @inheritdoc ISP1VerifierWithHash"
+              },
+              {
+                "type": " ",
+                "oldLine": 16,
+                "newLine": 16,
+                "text": "    function VERIFIER_HASH() public pure returns (bytes32) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 17,
+                "text": "        return 0x8c5bc5e47d8cb77f864aee881f8b66cc2457d46bd0b81b315bf82ccfadf78c50;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 17,
+                "text": "        return 0xa4594c59bbc142f3b81c3ecb7f50a7c34bc9af7c4c444b5d48b795427e285913;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 18, "newLine": 18, "text": "    }" },
+              { "type": " ", "oldLine": 19, "newLine": 19, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 20,
+                "newLine": 20,
+                "text": "    /// @notice Hashes the public values to a field elements inside Bn254."
+              }
+            ]
+          },
+          {
+            "oldStart": 23,
+            "oldLines": 7,
+            "newStart": 23,
+            "newLines": 10,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 23,
+                "newLine": 23,
+                "text": "        return sha256(publicValues) & bytes32(uint256((1 << 253) - 1));"
+              },
+              { "type": " ", "oldLine": 24, "newLine": 24, "text": "    }" },
+              { "type": " ", "oldLine": 25, "newLine": 25, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 26,
+                "text": "    /// @inheritdoc ISP1Verifier",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 26,
+                "text": "    /// @notice Verifies a proof with given public values and vkey.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 27,
+                "text": "    /// @param programVKey The verification key for the RISC-V program.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 28,
+                "text": "    /// @param publicValues The public values encoded as bytes.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 29,
+                "text": "    /// @param proofBytes The proof of the program execution the SP1 zkVM encoded as bytes.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 27,
+                "newLine": 30,
+                "text": "    function verifyProof(bytes32 programVKey, bytes calldata publicValues, bytes calldata proofBytes) external view {"
+              },
+              {
+                "type": " ",
+                "oldLine": 28,
+                "newLine": 31,
+                "text": "        bytes4 receivedSelector = bytes4(proofBytes[:4]);"
+              },
+              {
+                "type": " ",
+                "oldLine": 29,
+                "newLine": 32,
+                "text": "        bytes4 expectedSelector = bytes4(VERIFIER_HASH());"
+              }
+            ]
+          },
+          {
+            "oldStart": 32,
+            "oldLines": 12,
+            "newStart": 35,
+            "newLines": 10,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 32,
+                "newLine": 35,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 33, "newLine": 36, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 34,
+                "newLine": 37,
+                "text": "        bytes32 publicValuesDigest = hashPublicValues(publicValues);"
+              },
+              {
+                "type": "-",
+                "oldLine": 35,
+                "text": "        uint256[] memory inputs = new uint256[](2);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 38,
+                "text": "        uint256[2] memory inputs;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 36,
+                "newLine": 39,
+                "text": "        inputs[0] = uint256(programVKey);"
+              },
+              {
+                "type": " ",
+                "oldLine": 37,
+                "newLine": 40,
+                "text": "        inputs[1] = uint256(publicValuesDigest);"
+              },
+              {
+                "type": "-",
+                "oldLine": 38,
+                "text": "        bool success = this.Verify(proofBytes[4:], inputs);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 39,
+                "text": "        if (!success) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 40,
+                "text": "            revert InvalidProof();",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 41,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 41,
+                "text": "        uint256[8] memory proof = abi.decode(proofBytes[4:], (uint256[8]));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 42,
+                "text": "        this.Verify(proof, inputs);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 42, "newLine": 43, "text": "    }" },
+              { "type": " ", "oldLine": 43, "newLine": 44, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
     }
   }
 }

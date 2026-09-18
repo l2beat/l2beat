@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "a81731625312ff1037512cd9f0956781033bdd859b89bbcb7dca2c1e57f43e04",
+  "name": "hints.go",
+  "kind": "program",
+  "lines": 65,
+  "source": "package l1\n\nimport (\n\t\"github.com/ethereum/go-ethereum/common\"\n\t\"github.com/ethereum/go-ethereum/common/hexutil\"\n\n\tpreimage \"github.com/ethereum-optimism/optimism/op-preimage\"\n)\n\nconst (\n\tHintL1BlockHeader  = \"l1-block-header\"\n\tHintL1Transactions = \"l1-transactions\"\n\tHintL1Receipts     = \"l1-receipts\"\n\tHintL1Blob         = \"l1-blob\"\n\tHintL1Precompile   = \"l1-precompile\"\n\tHintL1PrecompileV2 = \"l1-precompile-v2\"\n)\n\ntype BlockHeaderHint common.Hash\n\nvar _ preimage.Hint = BlockHeaderHint{}\n\nfunc (l BlockHeaderHint) Hint() string {\n\treturn HintL1BlockHeader + \" \" + (common.Hash)(l).String()\n}\n\ntype TransactionsHint common.Hash\n\nvar _ preimage.Hint = TransactionsHint{}\n\nfunc (l TransactionsHint) Hint() string {\n\treturn HintL1Transactions + \" \" + (common.Hash)(l).String()\n}\n\ntype ReceiptsHint common.Hash\n\nvar _ preimage.Hint = ReceiptsHint{}\n\nfunc (l ReceiptsHint) Hint() string {\n\treturn HintL1Receipts + \" \" + (common.Hash)(l).String()\n}\n\ntype BlobHint []byte\n\nvar _ preimage.Hint = BlobHint{}\n\nfunc (l BlobHint) Hint() string {\n\treturn HintL1Blob + \" \" + hexutil.Encode(l)\n}\n\ntype PrecompileHint []byte\n\nvar _ preimage.Hint = PrecompileHint{}\n\nfunc (l PrecompileHint) Hint() string {\n\treturn HintL1Precompile + \" \" + hexutil.Encode(l)\n}\n\ntype PrecompileHintV2 []byte\n\nvar _ preimage.Hint = PrecompileHintV2{}\n\nfunc (l PrecompileHintV2) Hint() string {\n\treturn HintL1PrecompileV2 + \" \" + hexutil.Encode(l)\n}",
+  "resolutions": {
+    "437dcc6cbc847e9a": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "1f5c32d18cf7148d": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

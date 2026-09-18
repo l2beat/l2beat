@@ -299,6 +299,300 @@
         ]
       },
       "warnings": []
+    },
+    "d80a56c5abf9208b": {
+      "status": "differs",
+      "coveredLines": 36,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "ERC165",
+        "similarity": 0.63,
+        "reportId": "openzeppelin/contracts__audits__2018-10",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/introspection/ERC165.sol",
+        "commit": "6d415c508be94ef8391ed6525df365452466da76",
+        "commitTimestamp": "2018-10-19T20:42:20Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/6d415c508be94ef8391ed6525df365452466da76/contracts/introspection/ERC165.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Synthesized fix-review snapshot: master at the squash-merge of the last cited fix PR #1438, which contains every fix PR #1329-#1449 cited per finding; the Critical BreakInvariantBounty frontrunning issue was remediated by removing the contract in #1424. The report does not name a re-reviewed commit.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 4
+      },
+      "diff": {
+        "added": 6,
+        "removed": 6,
+        "ignoredAdded": 18,
+        "ignoredRemoved": 11,
+        "unchanged": 36,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 35,
+            "newStart": 1,
+            "newLines": 42,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "contract ERC165 is IERC165 {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 2,
+                "text": "    bytes4 private constant _InterfaceId_ERC165 = 0x01ffc9a7;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 3, "text": "    /**", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 4,
+                "text": "     * 0x01ffc9a7 ===",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 5,
+                "text": "     *   bytes4(keccak256('supportsInterface(bytes4)'))",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "abstract contract ERC165 is IERC165 {",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 2, "text": "    /*", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "     * bytes4(keccak256('supportsInterface(bytes4)')) == 0x01ffc9a7",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 6, "newLine": 4, "text": "     */" },
+              {
+                "type": "+",
+                "newLine": 5,
+                "text": "    bytes4 private constant _INTERFACE_ID_ERC165 = 0x01ffc9a7;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 7, "newLine": 6, "text": "" },
+              { "type": " ", "oldLine": 8, "newLine": 7, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 9,
+                "text": "     * @dev a mapping of interface id to whether or not it's supported",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 8,
+                "text": "     * @dev Mapping of interface ids to whether or not it's supported.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 10, "newLine": 9, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 11,
+                "newLine": 10,
+                "text": "    mapping(bytes4 => bool) private _supportedInterfaces;"
+              },
+              { "type": " ", "oldLine": 12, "newLine": 11, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 13,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 14,
+                "text": "     * @dev A contract implementing SupportsInterfaceWithLookup",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 15,
+                "text": "     * implement ERC165 itself",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 16,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 17,
+                "text": "    constructor() internal {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 18,
+                "text": "        _registerInterface(_InterfaceId_ERC165);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 12,
+                "text": "    constructor() {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 13,
+                "text": "        // Derived contracts need only register support for their own interfaces,",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 14,
+                "text": "        // we register support for ERC165 itself here",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 15,
+                "text": "        _registerInterface(_INTERFACE_ID_ERC165);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 19, "newLine": 16, "text": "    }" },
+              { "type": " ", "oldLine": 20, "newLine": 17, "text": "" },
+              { "type": " ", "oldLine": 21, "newLine": 18, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 22,
+                "text": "     * @dev implement supportsInterface(bytes4) using a lookup table",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 19,
+                "text": "     * @dev See {IERC165-supportsInterface}.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 20, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 21,
+                "text": "     * Time complexity O(1), guaranteed to always use less than 30 000 gas.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 23, "newLine": 22, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 24,
+                "text": "    function supportsInterface(bytes4 interfaceId) external view returns (bool) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 23,
+                "text": "    function supportsInterface(bytes4 interfaceId) public view virtual override returns (bool) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 25,
+                "newLine": 24,
+                "text": "        return _supportedInterfaces[interfaceId];"
+              },
+              { "type": " ", "oldLine": 26, "newLine": 25, "text": "    }" },
+              { "type": " ", "oldLine": 27, "newLine": 26, "text": "" },
+              { "type": " ", "oldLine": 28, "newLine": 27, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 29,
+                "text": "     * @dev internal method for registering an interface",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 28,
+                "text": "     * @dev Registers the contract as an implementer of the interface defined by",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 29,
+                "text": "     * `interfaceId`. Support of the actual ERC165 interface is automatic and",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 30,
+                "text": "     * registering its interface id is not required.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 31, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 32,
+                "text": "     * See {IERC165-supportsInterface}.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 33, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 34,
+                "text": "     * Requirements:",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 35, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 36,
+                "text": "     * - `interfaceId` cannot be the ERC165 invalid interface (`0xffffffff`).",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 30, "newLine": 37, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 31,
+                "text": "    function _registerInterface(bytes4 interfaceId) internal {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 32,
+                "text": "        require(interfaceId != 0xffffffff);",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 38,
+                "text": "    function _registerInterface(bytes4 interfaceId) internal virtual {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 39,
+                "text": "        require(interfaceId != 0xffffffff, \"ERC165: invalid interface id\");",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 33,
+                "newLine": 40,
+                "text": "        _supportedInterfaces[interfaceId] = true;"
+              },
+              { "type": " ", "oldLine": 34, "newLine": 41, "text": "    }" },
+              { "type": " ", "oldLine": 35, "newLine": 42, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
     }
   }
 }

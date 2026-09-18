@@ -198,6 +198,199 @@
         ]
       },
       "warnings": []
+    },
+    "d80a56c5abf9208b": {
+      "status": "differs",
+      "coveredLines": 332,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "EnumerableSet",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/utils/structs/EnumerableSet.sol",
+        "commit": "a0b1e9c064be8d0746fca663799a650b8d3d7031",
+        "commitTimestamp": "2023-09-06T23:57:26Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/a0b1e9c064be8d0746fca663799a650b8d3d7031/contracts/utils/structs/EnumerableSet.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Fix review limited to the changes of pull request #4577 (head commit).",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 9
+      },
+      "diff": {
+        "added": 3,
+        "removed": 3,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 3,
+        "unchanged": 332,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 180,
+            "oldLines": 8,
+            "newStart": 180,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 180,
+                "newLine": 180,
+                "text": "        bytes32[] memory store = _values(set._inner);"
+              },
+              {
+                "type": " ",
+                "oldLine": 181,
+                "newLine": 181,
+                "text": "        bytes32[] memory result;"
+              },
+              { "type": " ", "oldLine": 182, "newLine": 182, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 183,
+                "text": "        /// @solidity memory-safe-assembly",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 184,
+                "text": "        assembly {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 183,
+                "text": "        assembly (\"memory-safe\") {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 185,
+                "newLine": 184,
+                "text": "            result := store"
+              },
+              {
+                "type": " ",
+                "oldLine": 186,
+                "newLine": 185,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 187, "newLine": 186, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 254,
+            "oldLines": 8,
+            "newStart": 253,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 254,
+                "newLine": 253,
+                "text": "        bytes32[] memory store = _values(set._inner);"
+              },
+              {
+                "type": " ",
+                "oldLine": 255,
+                "newLine": 254,
+                "text": "        address[] memory result;"
+              },
+              { "type": " ", "oldLine": 256, "newLine": 255, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 257,
+                "text": "        /// @solidity memory-safe-assembly",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 258,
+                "text": "        assembly {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 256,
+                "text": "        assembly (\"memory-safe\") {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 259,
+                "newLine": 257,
+                "text": "            result := store"
+              },
+              {
+                "type": " ",
+                "oldLine": 260,
+                "newLine": 258,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 261, "newLine": 259, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 328,
+            "oldLines": 8,
+            "newStart": 326,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 328,
+                "newLine": 326,
+                "text": "        bytes32[] memory store = _values(set._inner);"
+              },
+              {
+                "type": " ",
+                "oldLine": 329,
+                "newLine": 327,
+                "text": "        uint256[] memory result;"
+              },
+              { "type": " ", "oldLine": 330, "newLine": 328, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 331,
+                "text": "        /// @solidity memory-safe-assembly",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 332,
+                "text": "        assembly {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 329,
+                "text": "        assembly (\"memory-safe\") {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 333,
+                "newLine": 330,
+                "text": "            result := store"
+              },
+              {
+                "type": " ",
+                "oldLine": 334,
+                "newLine": 331,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 335, "newLine": 332, "text": "" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
     }
   }
 }

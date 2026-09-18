@@ -86,6 +86,552 @@
         "totalVersions": 2
       },
       "warnings": []
+    },
+    "437dcc6cbc847e9a": {
+      "status": "library",
+      "coveredLines": 58,
+      "match": {
+        "origin": "stack",
+        "collection": "safe",
+        "relation": { "type": "template", "template": "GnosisSafe" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "SafeMath",
+        "similarity": 1,
+        "reportId": "safe/g0-safe-allowance-v0-1-0",
+        "repository": "safe-fndn/safe-modules",
+        "path": "recurring_transfers/contracts/external/SafeMath.sol",
+        "commit": "b531c8db9ded1fa72c8459078ebe4e88a2501bae",
+        "commitTimestamp": "2020-10-20T11:39:38Z",
+        "url": "https://github.com/safe-fndn/safe-modules/blob/b531c8db9ded1fa72c8459078ebe4e88a2501bae/recurring_transfers/contracts/external/SafeMath.sol",
+        "auditStatus": "partially_audited_with_no_major_findings",
+        "reviewPhase": "Fix review",
+        "coverage": "Review limited to the three reported fixes.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "warnings": []
+    },
+    "5d5f82d91c09d4ec": {
+      "status": "library",
+      "coveredLines": 59,
+      "match": {
+        "origin": "stack",
+        "collection": "safe",
+        "relation": { "type": "template", "template": "GnosisSafe" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "SafeMath",
+        "similarity": 1,
+        "reportId": "safe/g0-safe-allowance-v0-1-0",
+        "repository": "safe-fndn/safe-modules",
+        "path": "recurring_transfers/contracts/external/SafeMath.sol",
+        "commit": "b531c8db9ded1fa72c8459078ebe4e88a2501bae",
+        "commitTimestamp": "2020-10-20T11:39:38Z",
+        "url": "https://github.com/safe-fndn/safe-modules/blob/b531c8db9ded1fa72c8459078ebe4e88a2501bae/recurring_transfers/contracts/external/SafeMath.sol",
+        "auditStatus": "partially_audited_with_no_major_findings",
+        "reviewPhase": "Fix review",
+        "coverage": "Review limited to the three reported fixes.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 7,
+        "ignoredRemoved": 6,
+        "unchanged": 59,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 6,
+            "newStart": 1,
+            "newLines": 6,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "library SafeMath {"
+              },
+              { "type": " ", "oldLine": 2, "newLine": 2, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 3,
+                "text": "     * @dev Multiplies two numbers, reverts on overflow.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "     * @dev Multiplies two unsigned integers, reverts on overflow.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 4, "newLine": 4, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 5,
+                "text": "    function mul(uint256 a, uint256 b) internal pure returns (uint256) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 6,
+                "newLine": 6,
+                "text": "        // Gas optimization: this is cheaper than requiring 'a' not being zero, but the"
+              }
+            ]
+          },
+          {
+            "oldStart": 17,
+            "oldLines": 10,
+            "newStart": 17,
+            "newLines": 11,
+            "lines": [
+              { "type": " ", "oldLine": 17, "newLine": 17, "text": "    }" },
+              { "type": " ", "oldLine": 18, "newLine": 18, "text": "" },
+              { "type": " ", "oldLine": 19, "newLine": 19, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 20,
+                "text": "     * @dev Integer division of two numbers truncating the quotient, reverts on division by zero.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 20,
+                "text": "     * @dev Integer division of two unsigned integers truncating the quotient, reverts on division by zero.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 21, "newLine": 21, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 22,
+                "text": "    function div(uint256 a, uint256 b) internal pure returns (uint256) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 23,
+                "text": "        require(b > 0); // Solidity only automatically asserts when dividing by 0",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 23,
+                "text": "        // Solidity only automatically asserts when dividing by 0",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 24,
+                "text": "        require(b > 0);",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 25,
+                "text": "        uint256 c = a / b;"
+              },
+              {
+                "type": " ",
+                "oldLine": 25,
+                "newLine": 26,
+                "text": "        // assert(a == b * c + a % b); // There is no case in which this doesn't hold"
+              },
+              { "type": " ", "oldLine": 26, "newLine": 27, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 28,
+            "oldLines": 7,
+            "newStart": 29,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 28, "newLine": 29, "text": "    }" },
+              { "type": " ", "oldLine": 29, "newLine": 30, "text": "" },
+              { "type": " ", "oldLine": 30, "newLine": 31, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 31,
+                "text": "     * @dev Subtracts two numbers, reverts on overflow (i.e. if subtrahend is greater than minuend).",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 32,
+                "text": "     * @dev Subtracts two unsigned integers, reverts on overflow (i.e. if subtrahend is greater than minuend).",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 32, "newLine": 33, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 33,
+                "newLine": 34,
+                "text": "    function sub(uint256 a, uint256 b) internal pure returns (uint256) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 34,
+                "newLine": 35,
+                "text": "        require(b <= a);"
+              }
+            ]
+          },
+          {
+            "oldStart": 38,
+            "oldLines": 7,
+            "newStart": 39,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 38, "newLine": 39, "text": "    }" },
+              { "type": " ", "oldLine": 39, "newLine": 40, "text": "" },
+              { "type": " ", "oldLine": 40, "newLine": 41, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 41,
+                "text": "     * @dev Adds two numbers, reverts on overflow.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 42,
+                "text": "     * @dev Adds two unsigned integers, reverts on overflow.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 42, "newLine": 43, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 43,
+                "newLine": 44,
+                "text": "    function add(uint256 a, uint256 b) internal pure returns (uint256) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 44,
+                "newLine": 45,
+                "text": "        uint256 c = a + b;"
+              }
+            ]
+          },
+          {
+            "oldStart": 48,
+            "oldLines": 7,
+            "newStart": 49,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 48, "newLine": 49, "text": "    }" },
+              { "type": " ", "oldLine": 49, "newLine": 50, "text": "" },
+              { "type": " ", "oldLine": 50, "newLine": 51, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 51,
+                "text": "     * @dev Divides two numbers and returns the remainder (unsigned integer modulo),",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 52,
+                "text": "     * @dev Divides two unsigned integers and returns the remainder (unsigned integer modulo),",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 52,
+                "newLine": 53,
+                "text": "     * reverts when dividing by zero."
+              },
+              { "type": " ", "oldLine": 53, "newLine": 54, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 54,
+                "newLine": 55,
+                "text": "    function mod(uint256 a, uint256 b) internal pure returns (uint256) {"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "e3b0c44298fc1c14": {
+      "status": "library",
+      "coveredLines": 59,
+      "match": {
+        "origin": "library",
+        "collection": "safe",
+        "relation": { "type": "library" },
+        "rank": 3,
+        "matchedBy": "identity",
+        "auditedName": "SafeMath",
+        "similarity": 1,
+        "reportId": "safe/g0-safe-allowance-v0-1-0",
+        "repository": "safe-fndn/safe-modules",
+        "path": "recurring_transfers/contracts/external/SafeMath.sol",
+        "commit": "b531c8db9ded1fa72c8459078ebe4e88a2501bae",
+        "commitTimestamp": "2020-10-20T11:39:38Z",
+        "url": "https://github.com/safe-fndn/safe-modules/blob/b531c8db9ded1fa72c8459078ebe4e88a2501bae/recurring_transfers/contracts/external/SafeMath.sol",
+        "auditStatus": "partially_audited_with_no_major_findings",
+        "reviewPhase": "Fix review",
+        "coverage": "Review limited to the three reported fixes.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 7,
+        "ignoredRemoved": 6,
+        "unchanged": 59,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 6,
+            "newStart": 1,
+            "newLines": 6,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "library SafeMath {"
+              },
+              { "type": " ", "oldLine": 2, "newLine": 2, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 3,
+                "text": "     * @dev Multiplies two numbers, reverts on overflow.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "     * @dev Multiplies two unsigned integers, reverts on overflow.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 4, "newLine": 4, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 5,
+                "text": "    function mul(uint256 a, uint256 b) internal pure returns (uint256) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 6,
+                "newLine": 6,
+                "text": "        // Gas optimization: this is cheaper than requiring 'a' not being zero, but the"
+              }
+            ]
+          },
+          {
+            "oldStart": 17,
+            "oldLines": 10,
+            "newStart": 17,
+            "newLines": 11,
+            "lines": [
+              { "type": " ", "oldLine": 17, "newLine": 17, "text": "    }" },
+              { "type": " ", "oldLine": 18, "newLine": 18, "text": "" },
+              { "type": " ", "oldLine": 19, "newLine": 19, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 20,
+                "text": "     * @dev Integer division of two numbers truncating the quotient, reverts on division by zero.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 20,
+                "text": "     * @dev Integer division of two unsigned integers truncating the quotient, reverts on division by zero.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 21, "newLine": 21, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 22,
+                "text": "    function div(uint256 a, uint256 b) internal pure returns (uint256) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 23,
+                "text": "        require(b > 0); // Solidity only automatically asserts when dividing by 0",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 23,
+                "text": "        // Solidity only automatically asserts when dividing by 0",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 24,
+                "text": "        require(b > 0);",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 25,
+                "text": "        uint256 c = a / b;"
+              },
+              {
+                "type": " ",
+                "oldLine": 25,
+                "newLine": 26,
+                "text": "        // assert(a == b * c + a % b); // There is no case in which this doesn't hold"
+              },
+              { "type": " ", "oldLine": 26, "newLine": 27, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 28,
+            "oldLines": 7,
+            "newStart": 29,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 28, "newLine": 29, "text": "    }" },
+              { "type": " ", "oldLine": 29, "newLine": 30, "text": "" },
+              { "type": " ", "oldLine": 30, "newLine": 31, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 31,
+                "text": "     * @dev Subtracts two numbers, reverts on overflow (i.e. if subtrahend is greater than minuend).",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 32,
+                "text": "     * @dev Subtracts two unsigned integers, reverts on overflow (i.e. if subtrahend is greater than minuend).",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 32, "newLine": 33, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 33,
+                "newLine": 34,
+                "text": "    function sub(uint256 a, uint256 b) internal pure returns (uint256) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 34,
+                "newLine": 35,
+                "text": "        require(b <= a);"
+              }
+            ]
+          },
+          {
+            "oldStart": 38,
+            "oldLines": 7,
+            "newStart": 39,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 38, "newLine": 39, "text": "    }" },
+              { "type": " ", "oldLine": 39, "newLine": 40, "text": "" },
+              { "type": " ", "oldLine": 40, "newLine": 41, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 41,
+                "text": "     * @dev Adds two numbers, reverts on overflow.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 42,
+                "text": "     * @dev Adds two unsigned integers, reverts on overflow.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 42, "newLine": 43, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 43,
+                "newLine": 44,
+                "text": "    function add(uint256 a, uint256 b) internal pure returns (uint256) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 44,
+                "newLine": 45,
+                "text": "        uint256 c = a + b;"
+              }
+            ]
+          },
+          {
+            "oldStart": 48,
+            "oldLines": 7,
+            "newStart": 49,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 48, "newLine": 49, "text": "    }" },
+              { "type": " ", "oldLine": 49, "newLine": 50, "text": "" },
+              { "type": " ", "oldLine": 50, "newLine": 51, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 51,
+                "text": "     * @dev Divides two numbers and returns the remainder (unsigned integer modulo),",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 52,
+                "text": "     * @dev Divides two unsigned integers and returns the remainder (unsigned integer modulo),",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 52,
+                "newLine": 53,
+                "text": "     * reverts when dividing by zero."
+              },
+              { "type": " ", "oldLine": 53, "newLine": 54, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 54,
+                "newLine": 55,
+                "text": "    function mod(uint256 a, uint256 b) internal pure returns (uint256) {"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "d80a56c5abf9208b": {
+      "status": "library",
+      "coveredLines": 58,
+      "match": {
+        "origin": "stack",
+        "collection": "safe",
+        "relation": { "type": "template", "template": "GnosisSafe" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "SafeMath",
+        "similarity": 1,
+        "reportId": "safe/g0-safe-allowance-v0-1-0",
+        "repository": "safe-fndn/safe-modules",
+        "path": "recurring_transfers/contracts/external/SafeMath.sol",
+        "commit": "b531c8db9ded1fa72c8459078ebe4e88a2501bae",
+        "commitTimestamp": "2020-10-20T11:39:38Z",
+        "url": "https://github.com/safe-fndn/safe-modules/blob/b531c8db9ded1fa72c8459078ebe4e88a2501bae/recurring_transfers/contracts/external/SafeMath.sol",
+        "auditStatus": "partially_audited_with_no_major_findings",
+        "reviewPhase": "Fix review",
+        "coverage": "Review limited to the three reported fixes.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "warnings": []
     }
   }
 }

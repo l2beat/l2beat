@@ -2097,6 +2097,383 @@
         ]
       },
       "warnings": []
+    },
+    "437dcc6cbc847e9a": {
+      "status": "differs",
+      "coveredLines": 289,
+      "match": {
+        "origin": "stack",
+        "collection": "optimism",
+        "relation": {
+          "type": "template",
+          "template": "opstack/AddressManager"
+        },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "CrossDomainMessenger",
+        "similarity": 1,
+        "reportId": "optimism/trust-superchainconfig-upgrade-2024-01",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts-bedrock/src/universal/CrossDomainMessenger.sol",
+        "commit": "81b56fee40f96c798174115c375f41c3d2ff9d40",
+        "commitTimestamp": "2024-01-08T19:01:54Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/81b56fee40f96c798174115c375f41c3d2ff9d40/packages/contracts-bedrock/src/universal/CrossDomainMessenger.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Mitigation review commit named by the report.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 11
+      },
+      "diff": {
+        "added": 1,
+        "removed": 8,
+        "ignoredAdded": 3,
+        "ignoredRemoved": 17,
+        "unchanged": 289,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 53,
+            "oldLines": 9,
+            "newStart": 53,
+            "newLines": 9,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 53,
+                "newLine": 53,
+                "text": "    mapping(bytes32 => bool) public failedMessages;"
+              },
+              { "type": " ", "oldLine": 54, "newLine": 54, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 55,
+                "newLine": 55,
+                "text": "    /// @notice Reserve extra slots in the storage layout for future upgrades."
+              },
+              {
+                "type": "-",
+                "oldLine": 56,
+                "text": "    ///         A gap size of 44 was chosen here, so that the first slot used in a child contract",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 57,
+                "text": "    ///         would be 1 plus a multiple of 50.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 58,
+                "text": "    uint256[44] private __gap;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 56,
+                "text": "    ///         A gap size of 41 was chosen here, so that the first slot used in a child contract",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 57,
+                "text": "    ///         would be a multiple of 50.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 58,
+                "text": "    uint256[42] private __gap;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 59, "newLine": 59, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 60,
+                "newLine": 60,
+                "text": "    /// @notice Emitted whenever a message is sent to the other chain."
+              },
+              {
+                "type": " ",
+                "oldLine": 61,
+                "newLine": 61,
+                "text": "    /// @param target       Address of the recipient of the message."
+              }
+            ]
+          },
+          {
+            "oldStart": 130,
+            "oldLines": 10,
+            "newStart": 130,
+            "newLines": 6,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 130,
+                "newLine": 130,
+                "text": "        uint256 _minGasLimit,"
+              },
+              {
+                "type": " ",
+                "oldLine": 131,
+                "newLine": 131,
+                "text": "        bytes calldata _message"
+              },
+              {
+                "type": " ",
+                "oldLine": 132,
+                "newLine": 132,
+                "text": "    ) external payable {"
+              },
+              {
+                "type": "-",
+                "oldLine": 133,
+                "text": "        // On L1 this function will check the Portal for its paused status.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 134,
+                "text": "        // On L2 this function should be a no-op, because paused will always return false.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 135,
+                "text": "        require(paused() == false, \"CrossDomainMessenger: paused\");",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 136, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 137,
+                "newLine": 133,
+                "text": "        (, uint16 version) = Encoding.decodeVersionedNonce(_nonce);"
+              },
+              {
+                "type": " ",
+                "oldLine": 138,
+                "newLine": 134,
+                "text": "        require(version < 2, \"CrossDomainMessenger: only version 0 or 1 messages are supported at this time\");"
+              },
+              { "type": " ", "oldLine": 139, "newLine": 135, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 199,
+            "oldLines": 9,
+            "newStart": 195,
+            "newLines": 6,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 199,
+                "newLine": 195,
+                "text": "        xDomainMsgSender = Constants.DEFAULT_L2_SENDER;"
+              },
+              { "type": " ", "oldLine": 200, "newLine": 196, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 201,
+                "newLine": 197,
+                "text": "        if (success) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 202,
+                "text": "            // This check is identical to one above, but it ensures that the same message cannot be relayed",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 203,
+                "text": "            // twice, and adds a layer of protection against rentrancy.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 204,
+                "text": "            assert(successfulMessages[versionedHash] == false);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 205,
+                "newLine": 198,
+                "text": "            successfulMessages[versionedHash] = true;"
+              },
+              {
+                "type": " ",
+                "oldLine": 206,
+                "newLine": 199,
+                "text": "            emit RelayedMessage(versionedHash);"
+              },
+              {
+                "type": " ",
+                "oldLine": 207,
+                "newLine": 200,
+                "text": "        } else {"
+              }
+            ]
+          },
+          {
+            "oldStart": 268,
+            "oldLines": 13,
+            "newStart": 261,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 268,
+                "newLine": 261,
+                "text": "    /// @notice Initializer."
+              },
+              {
+                "type": " ",
+                "oldLine": 269,
+                "newLine": 262,
+                "text": "    // solhint-disable-next-line func-name-mixedcase"
+              },
+              {
+                "type": " ",
+                "oldLine": 270,
+                "newLine": 263,
+                "text": "    function __CrossDomainMessenger_init() internal onlyInitializing {"
+              },
+              {
+                "type": "-",
+                "oldLine": 271,
+                "text": "        // We only want to set the xDomainMsgSender to the default value if it hasn't been initialized yet,",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 272,
+                "text": "        // meaning that this is a fresh contract deployment.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 273,
+                "text": "        // This prevents resetting the xDomainMsgSender to the default value during an upgrade, which would enable",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 274,
+                "text": "        // a reentrant withdrawal to sandwhich the upgrade replay a withdrawal twice.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 275,
+                "text": "        if (xDomainMsgSender == address(0)) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 276,
+                "text": "            xDomainMsgSender = Constants.DEFAULT_L2_SENDER;",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 277,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 264,
+                "text": "        xDomainMsgSender = Constants.DEFAULT_L2_SENDER;",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 278, "newLine": 265, "text": "    }" },
+              { "type": " ", "oldLine": 279, "newLine": 266, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 280,
+                "newLine": 267,
+                "text": "    /// @notice Sends a low-level message to the other messenger. Needs to be implemented by child"
+              }
+            ]
+          },
+          {
+            "oldStart": 300,
+            "oldLines": 12,
+            "newStart": 287,
+            "newLines": 4,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 300,
+                "newLine": 287,
+                "text": "    /// @param _target Address of the contract to check."
+              },
+              {
+                "type": " ",
+                "oldLine": 301,
+                "newLine": 288,
+                "text": "    /// @return Whether or not the address is an unsafe system address."
+              },
+              {
+                "type": " ",
+                "oldLine": 302,
+                "newLine": 289,
+                "text": "    function _isUnsafeTarget(address _target) internal view virtual returns (bool);"
+              },
+              { "type": "-", "oldLine": 303, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 304,
+                "text": "    /// @notice This function should return true if the contract is paused.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 305,
+                "text": "    ///         On L1 this function will check the SuperchainConfig for its paused status.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 306,
+                "text": "    ///         On L2 this function should be a no-op.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 307,
+                "text": "    /// @return Whether or not the contract is paused.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 308,
+                "text": "    function paused() public view virtual returns (bool) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 309,
+                "text": "        return false;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 310,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 311, "newLine": 290, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
     }
   }
 }

@@ -1,0 +1,35 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "d995ea2e7f6928bc025941071ada9b20cee9069a8f0d6e84159c18d7300b9388",
+  "name": "deferred.rs",
+  "kind": "program",
+  "lines": 127,
+  "source": "use std::borrow::Borrow;\n\nuse serde::{Deserialize, Serialize};\nuse slop_algebra::{AbstractField, PrimeField32};\n\nuse sp1_hypercube::{\n    air::{ShardRange, POSEIDON_NUM_WORDS},\n    MerkleProof, SP1PcsProofInner, SP1RecursionProof,\n};\nuse sp1_primitives::{hash_deferred_proof, SP1Field, SP1GlobalContext};\nuse sp1_prover_types::{Artifact, ArtifactClient, TaskType};\nuse sp1_recursion_circuit::machine::SP1ShapedWitnessValues;\nuse sp1_recursion_executor::{RecursionPublicValues, DIGEST_SIZE};\nuse tokio::sync::mpsc::UnboundedSender;\n\nuse crate::{\n    utils::words_to_bytes,\n    worker::{ProofData, RecursionDeferredTaskRequest, TaskContext, TaskError, WorkerClient},\n};\n\n#[derive(Clone, Serialize, Deserialize)]\npub struct SP1DeferredData {\n    pub input: SP1ShapedWitnessValues<SP1GlobalContext, SP1PcsProofInner>,\n    pub vk_merkle_proofs: Vec<MerkleProof<SP1GlobalContext>>,\n    pub start_reconstruct_deferred_digest: [SP1Field; POSEIDON_NUM_WORDS],\n    pub deferred_proof_index: SP1Field,\n}\n\npub struct DeferredInputs {\n    inputs: Vec<SP1DeferredData>,\n    deferred_digest: [SP1Field; DIGEST_SIZE],\n}\n\nimpl DeferredInputs {\n    pub fn new(\n        deferred_proofs: impl IntoIterator<Item = SP1RecursionProof<SP1GlobalContext, SP1PcsProofInner>>,\n    ) -> Self {\n        let initial_deferred_digest = Self::initial_deferred_digest();\n        // Prepare the inputs for the deferred proofs recursive verification.\n        let mut deferred_digest = initial_deferred_digest;\n        let mut deferred_inputs = Vec::new();\n\n        for (index, proof) in deferred_proofs.into_iter().enumerate() {\n            let vks_and_proofs = vec![(proof.vk.clone(), proof.proof.clone())];\n            let merkle_proofs = vec![proof.vk_merkle_proof.clone()];\n\n            let input = SP1ShapedWitnessValues { vks_and_proofs, is_complete: true };\n\n            deferred_inputs.push(SP1DeferredData {\n                input,\n                start_reconstruct_deferred_digest: deferred_digest,\n                vk_merkle_proofs: merkle_proofs,\n                deferred_proof_index: SP1Field::from_canonical_usize(index),\n            });\n\n            deferred_digest = hash_deferred_proofs(deferred_digest, &[proof]);\n        }\n        DeferredInputs { inputs: deferred_inputs, deferred_digest }\n    }\n\n    pub fn initial_deferred_digest() -> [SP1Field; DIGEST_SIZE] {\n        [SP1Field::zero(); DIGEST_SIZE]\n    }\n\n    pub fn num_deferred_proofs(&self) -> usize {\n        self.inputs.len()\n    }\n\n    pub fn deferred_digest(&self) -> [SP1Field; DIGEST_SIZE] {\n        self.deferred_digest\n    }\n\n    pub async fn emit_deferred_tasks(\n        self,\n        common_input: Artifact,\n        context: TaskContext,\n        core_proofs_tx: UnboundedSender<ProofData>,\n        artifact_client: impl ArtifactClient,\n        worker_client: impl WorkerClient,\n    ) -> Result<(), TaskError> {\n        for input in self.inputs {\n            // Calculate the range of the deferred proof.\n            let prev_deferred_proof = input.deferred_proof_index.as_canonical_u32() as u64;\n            let deferred_proof = prev_deferred_proof + input.input.vks_and_proofs.len() as u64;\n            let range = ShardRange::deferred(prev_deferred_proof, deferred_proof);\n            // Upload the input\n            let deferred_data = artifact_client.create_artifact()?;\n            artifact_client.upload(&deferred_data, input).await?;\n            // Create the output artifact\n            let output = artifact_client.create_artifact()?;\n\n            let task_request = RecursionDeferredTaskRequest {\n                common_input: common_input.clone(),\n                deferred_data,\n                output: output.clone(),\n                context: context.clone(),\n            };\n            let task_request = task_request.into_raw()?;\n            let task_id =\n                worker_client.submit_task(TaskType::RecursionDeferred, task_request).await?;\n            // Send the id and output to the channel.\n            let proof_data = ProofData { task_id, range, proof: output };\n            core_proofs_tx\n                .send(proof_data)\n                .map_err(|_| TaskError::Fatal(anyhow::anyhow!(\"Controller panicked, failed to send deferred proof data to core proofs channel\")))?;\n        }\n        Ok(())\n    }\n}\n\npub fn hash_deferred_proofs(\n    prev_digest: [SP1Field; DIGEST_SIZE],\n    deferred_proofs: &[SP1RecursionProof<SP1GlobalContext, SP1PcsProofInner>],\n) -> [SP1Field; 8] {\n    let mut digest = prev_digest;\n    for proof in deferred_proofs.iter() {\n        let pv: &RecursionPublicValues<SP1Field> = proof.proof.public_values.as_slice().borrow();\n        let committed_values_digest = words_to_bytes(&pv.committed_value_digest);\n\n        digest = hash_deferred_proof(\n            &digest,\n            &pv.sp1_vk_digest,\n            &committed_values_digest.try_into().unwrap(),\n        );\n    }\n    digest\n}",
+  "resolutions": {
+    "44ad4cf96e2ef6f0": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "5d5f82d91c09d4ec": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "d79ad2713a1d64a9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "2295595c4243408b": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "d80a56c5abf9208b": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

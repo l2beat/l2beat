@@ -32,6 +32,259 @@
         "totalVersions": 3
       },
       "warnings": []
+    },
+    "d80a56c5abf9208b": {
+      "status": "library",
+      "coveredLines": 34,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "ProxyAdmin",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/proxy/transparent/ProxyAdmin.sol",
+        "commit": "8cb5200797e2ff322d3632be6c9df80e72dd8fed",
+        "commitTimestamp": "2023-08-04T17:04:22Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/8cb5200797e2ff322d3632be6c9df80e72dd8fed/contracts/proxy/transparent/ProxyAdmin.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Fix review limited to the changes of pull request #4502 (head commit).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 4,
+        "ignoredRemoved": 4,
+        "unchanged": 34,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 9,
+            "newStart": 1,
+            "newLines": 9,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "contract ProxyAdmin is Ownable {"
+              },
+              { "type": " ", "oldLine": 2, "newLine": 2, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 3,
+                "text": "     * @dev The version of the upgrade interface of the contract. If this getter is missing, both `upgrade(address)`",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 4,
+                "text": "     * and `upgradeAndCall(address,bytes)` are present, and `upgradeTo` must be used if no function should be called,",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 5,
+                "text": "     * while `upgradeAndCall` will invoke the `receive` function if the second argument is the empty byte string.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 6,
+                "text": "     * If the getter returns `\"5.0.0\"`, only `upgradeAndCall(address,bytes)` is present, and the second argument must",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "     * @dev The version of the upgrade interface of the contract. If this getter is missing, both `upgrade(address,address)`",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 4,
+                "text": "     * and `upgradeAndCall(address,address,bytes)` are present, and `upgrade` must be used if no function should be called,",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 5,
+                "text": "     * while `upgradeAndCall` will invoke the `receive` function if the third argument is the empty byte string.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 6,
+                "text": "     * If the getter returns `\"5.0.0\"`, only `upgradeAndCall(address,address,bytes)` is present, and the third argument must",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 7,
+                "newLine": 7,
+                "text": "     * be the empty byte string if no function should be called, making it impossible to invoke the `receive` function"
+              },
+              {
+                "type": " ",
+                "oldLine": 8,
+                "newLine": 8,
+                "text": "     * during an upgrade."
+              },
+              { "type": " ", "oldLine": 9, "newLine": 9, "text": "     */" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "437dcc6cbc847e9a": {
+      "status": "library",
+      "coveredLines": 34,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "ProxyAdmin",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/proxy/transparent/ProxyAdmin.sol",
+        "commit": "8cb5200797e2ff322d3632be6c9df80e72dd8fed",
+        "commitTimestamp": "2023-08-04T17:04:22Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/8cb5200797e2ff322d3632be6c9df80e72dd8fed/contracts/proxy/transparent/ProxyAdmin.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Fix review limited to the changes of pull request #4502 (head commit).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 4,
+        "ignoredRemoved": 4,
+        "unchanged": 34,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 9,
+            "newStart": 1,
+            "newLines": 9,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "contract ProxyAdmin is Ownable {"
+              },
+              { "type": " ", "oldLine": 2, "newLine": 2, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 3,
+                "text": "     * @dev The version of the upgrade interface of the contract. If this getter is missing, both `upgrade(address)`",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 4,
+                "text": "     * and `upgradeAndCall(address,bytes)` are present, and `upgradeTo` must be used if no function should be called,",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 5,
+                "text": "     * while `upgradeAndCall` will invoke the `receive` function if the second argument is the empty byte string.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 6,
+                "text": "     * If the getter returns `\"5.0.0\"`, only `upgradeAndCall(address,bytes)` is present, and the second argument must",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "     * @dev The version of the upgrade interface of the contract. If this getter is missing, both `upgrade(address,address)`",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 4,
+                "text": "     * and `upgradeAndCall(address,address,bytes)` are present, and `upgrade` must be used if no function should be called,",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 5,
+                "text": "     * while `upgradeAndCall` will invoke the `receive` function if the third argument is the empty byte string.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 6,
+                "text": "     * If the getter returns `\"5.0.0\"`, only `upgradeAndCall(address,address,bytes)` is present, and the third argument must",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 7,
+                "newLine": 7,
+                "text": "     * be the empty byte string if no function should be called, making it impossible to invoke the `receive` function"
+              },
+              {
+                "type": " ",
+                "oldLine": 8,
+                "newLine": 8,
+                "text": "     * during an upgrade."
+              },
+              { "type": " ", "oldLine": 9, "newLine": 9, "text": "     */" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "2295595c4243408b": {
+      "status": "library",
+      "coveredLines": 34,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "ProxyAdmin",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2023-10-v5.0",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/proxy/transparent/ProxyAdmin.sol",
+        "commit": "8cb5200797e2ff322d3632be6c9df80e72dd8fed",
+        "commitTimestamp": "2023-08-04T17:04:22Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/8cb5200797e2ff322d3632be6c9df80e72dd8fed/contracts/proxy/transparent/ProxyAdmin.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Fix review limited to the changes of pull request #4502 (head commit).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "warnings": []
     }
   }
 }

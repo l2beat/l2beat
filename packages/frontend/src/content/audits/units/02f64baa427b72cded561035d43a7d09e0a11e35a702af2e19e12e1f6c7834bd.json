@@ -102,6 +102,103 @@
         ]
       },
       "warnings": []
+    },
+    "437dcc6cbc847e9a": {
+      "status": "differs",
+      "coveredLines": 69,
+      "match": {
+        "origin": "other",
+        "collection": "bob",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "name",
+        "auditedName": "Types",
+        "similarity": 0.974,
+        "reportId": "bob/veridise-kailua-2025-02",
+        "repository": "boundless-xyz/kailua",
+        "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "commit": "27dec82b67de1051df9258b36f8366ebf308e5bf",
+        "commitTimestamp": "2025-02-06T07:42:16Z",
+        "url": "https://github.com/boundless-xyz/kailua/blob/27dec82b67de1051df9258b36f8366ebf308e5bf/crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix commit",
+        "coverage": "Confirmed fix commit for V-KLA-VUL-004 (contract nits).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 4,
+        "removed": 0,
+        "ignoredAdded": 4,
+        "ignoredRemoved": 0,
+        "unchanged": 69,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 62,
+            "oldLines": 4,
+            "newStart": 62,
+            "newLines": 12,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 62,
+                "newLine": 62,
+                "text": "        uint256 gasLimit;"
+              },
+              {
+                "type": " ",
+                "oldLine": 63,
+                "newLine": 63,
+                "text": "        bytes data;"
+              },
+              { "type": " ", "oldLine": 64, "newLine": 64, "text": "    }" },
+              { "type": "+", "newLine": 65, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 66,
+                "text": "    /// @notice Enum representing where the FeeVault withdraws funds to.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 67,
+                "text": "    /// @custom:value L1 FeeVault withdraws funds to L1.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 68,
+                "text": "    /// @custom:value L2 FeeVault withdraws funds to L2.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 69,
+                "text": "    enum WithdrawalNetwork {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 70,
+                "text": "        L1,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 71,
+                "text": "        L2",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 72, "text": "    }", "ignored": false },
+              { "type": " ", "oldLine": 65, "newLine": 73, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
     }
   }
 }

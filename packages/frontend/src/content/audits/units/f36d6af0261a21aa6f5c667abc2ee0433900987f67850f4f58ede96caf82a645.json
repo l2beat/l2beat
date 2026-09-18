@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "f36d6af0261a21aa6f5c667abc2ee0433900987f67850f4f58ede96caf82a645",
+  "name": "Makefile",
+  "kind": "program",
+  "lines": 55,
+  "source": "GITCOMMIT ?= $(shell git rev-parse HEAD)\nGITDATE ?= $(shell git show -s --format='%ct')\nVERSION := v0.0.0\n\nLDFLAGSSTRING +=-X main.GitCommit=$(GITCOMMIT)\nLDFLAGSSTRING +=-X main.GitDate=$(GITDATE)\nLDFLAGSSTRING +=-X github.com/ethereum-optimism/optimism/op-program/version.Version=$(VERSION)\nLDFLAGSSTRING +=-X github.com/ethereum-optimism/optimism/op-program/version.Meta=$(VERSION_META)\nLDFLAGS := -ldflags \"$(LDFLAGSSTRING)\"\n\nCOMPAT_DIR := temp/compat\n\nop-program: \\\n\top-program-host \\\n\top-program-client \\\n\top-program-client-mips\n\nop-program-host:\n\tenv GO111MODULE=on GOOS=$(TARGETOS) GOARCH=$(TARGETARCH) go build -v $(LDFLAGS) -o ./bin/op-program ./host/cmd/main.go\n\nop-program-client:\n\tenv GO111MODULE=on GOOS=$(TARGETOS) GOARCH=$(TARGETARCH) go build -v $(LDFLAGS) -o ./bin/op-program-client ./client/cmd/main.go\n\nop-program-client-mips:\n\tenv GO111MODULE=on GOOS=linux GOARCH=mips GOMIPS=softfloat go build -v $(LDFLAGS) -o ./bin/op-program-client.elf ./client/cmd/main.go\n\t# verify output with: readelf -h bin/op-program-client.elf\n\t# result is mips32, big endian, R3000\n\nclean:\n\trm -rf bin \"$(COMPAT_DIR)\"\n\ntest:\n\tgo test -v ./...\n\nverify-goerli: op-program-host op-program-client\n\tenv GO111MODULE=on go run ./verify/cmd/goerli.go --l1 $$L1URL --l2 $$L2URL\n\ncapture-goerli-verify: op-program-host op-program-client\n\trm -rf \"$(COMPAT_DIR)/goerli\" \"$(COMPAT_DIR)/goerli.tar.bz\"\n\tenv GO111MODULE=on go run ./verify/cmd/goerli.go --l1 $$L1URL --l2 $$L2URL --datadir \"$(COMPAT_DIR)/goerli\"\n\ttar jcf \"$(COMPAT_DIR)/goerli.tar.bz\" -C \"$(COMPAT_DIR)\" goerli\n\ncapture-chain-test-data: capture-goerli-verify\n\nrun-goerli-verify: op-program-host op-program-client\n\tmkdir -p \"$(COMPAT_DIR)\"\n\tcurl -L -o \"$(COMPAT_DIR)/goerli.tar.bz\" https://github.com/ethereum-optimism/chain-test-data/releases/download/2023-10-11/goerli.tar.bz\n\ttar jxf \"$(COMPAT_DIR)/goerli.tar.bz\" -C \"$(COMPAT_DIR)\"\n\t./bin/op-program `cat \"$(COMPAT_DIR)/goerli/args.txt\"`\n\n.PHONY: \\\n\top-program \\\n\tclean \\\n\ttest \\\n\tlint",
+  "resolutions": {
+    "bb55951394276893": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "437dcc6cbc847e9a": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

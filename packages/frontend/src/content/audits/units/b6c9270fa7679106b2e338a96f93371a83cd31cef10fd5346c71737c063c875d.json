@@ -1,0 +1,20 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "b6c9270fa7679106b2e338a96f93371a83cd31cef10fd5346c71737c063c875d",
+  "name": "format_test.go",
+  "kind": "program",
+  "lines": 66,
+  "source": "package kvstore\n\nimport (\n\t\"fmt\"\n\t\"testing\"\n\n\t\"github.com/ethereum-optimism/optimism/op-program/host/types\"\n\t\"github.com/ethereum-optimism/optimism/op-service/testlog\"\n\t\"github.com/ethereum/go-ethereum/common\"\n\t\"github.com/ethereum/go-ethereum/log\"\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc TestRecordAndReadKVFormat(t *testing.T) {\n\tfor _, format := range types.SupportedDataFormats {\n\t\tformat := format\n\t\tt.Run(string(format), func(t *testing.T) {\n\t\t\tdir := t.TempDir()\n\t\t\trequire.NoError(t, recordKVFormat(dir, format))\n\t\t\tactual, err := readKVFormat(dir)\n\t\t\trequire.NoError(t, err)\n\t\t\trequire.Equal(t, format, actual)\n\t\t})\n\t}\n\n\tt.Run(\"Unsupported\", func(t *testing.T) {\n\t\tdir := t.TempDir()\n\t\trequire.NoError(t, recordKVFormat(dir, \"nope\"))\n\t\t_, err := readKVFormat(dir)\n\t\trequire.ErrorIs(t, err, ErrUnsupportedFormat)\n\t})\n\n\tt.Run(\"NotRecorded\", func(t *testing.T) {\n\t\tdir := t.TempDir()\n\t\t_, err := readKVFormat(dir)\n\t\trequire.ErrorIs(t, err, ErrFormatUnavailable)\n\t})\n}\n\nfunc TestNewDiskKV(t *testing.T) {\n\tfor _, existingFormat := range types.SupportedDataFormats {\n\t\texistingFormat := existingFormat\n\n\t\tfor _, specifiedFormat := range types.SupportedDataFormats {\n\t\t\tspecifiedFormat := specifiedFormat\n\t\t\tt.Run(fmt.Sprintf(\"%v->%v\", existingFormat, specifiedFormat), func(t *testing.T) {\n\t\t\t\tdir := t.TempDir()\n\t\t\t\tlogger := testlog.Logger(t, log.LevelError)\n\t\t\t\thash := common.Hash{0xaa}\n\t\t\t\tvalue := []byte{1, 2, 3, 4, 5, 6}\n\t\t\t\tkv1, err := NewDiskKV(logger, dir, existingFormat)\n\t\t\t\trequire.NoError(t, err)\n\t\t\t\trequire.NoError(t, kv1.Put(hash, value))\n\t\t\t\trequire.NoError(t, kv1.Close())\n\n\t\t\t\t// Should use existing format\n\t\t\t\tkv2, err := NewDiskKV(logger, dir, specifiedFormat)\n\t\t\t\trequire.NoError(t, err)\n\t\t\t\tactual, err := kv2.Get(hash)\n\t\t\t\trequire.NoError(t, err)\n\t\t\t\trequire.Equal(t, value, actual)\n\t\t\t\trequire.NoError(t, kv2.Close())\n\t\t\t})\n\t\t}\n\t}\n}",
+  "resolutions": {
+    "437dcc6cbc847e9a": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "1f5c32d18cf7148d": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

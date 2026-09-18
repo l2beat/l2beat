@@ -151,6 +151,152 @@
         ]
       },
       "warnings": []
+    },
+    "437dcc6cbc847e9a": {
+      "status": "differs",
+      "coveredLines": 173,
+      "match": {
+        "origin": "other",
+        "collection": "bob",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "name",
+        "auditedName": "Groth16Verifier",
+        "similarity": 1,
+        "reportId": "bob/veridise-kailua-2025-02",
+        "repository": "boundless-xyz/kailua",
+        "path": "crates/contracts/foundry/src/vendor/FlatR0ImportV1.2.0.sol",
+        "commit": "27dec82b67de1051df9258b36f8366ebf308e5bf",
+        "commitTimestamp": "2025-02-06T07:42:16Z",
+        "url": "https://github.com/boundless-xyz/kailua/blob/27dec82b67de1051df9258b36f8366ebf308e5bf/crates/contracts/foundry/src/vendor/FlatR0ImportV1.2.0.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix commit",
+        "coverage": "Confirmed fix commit for V-KLA-VUL-004 (contract nits).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 0,
+        "removed": 1,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 1,
+        "unchanged": 173,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 163,
+            "oldLines": 8,
+            "newStart": 163,
+            "newLines": 6,
+            "lines": [
+              { "type": " ", "oldLine": 163, "newLine": 163, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 164,
+                "newLine": 164,
+                "text": "            checkField(calldataload(add(_pubSignals, 128)))"
+              },
+              { "type": " ", "oldLine": 165, "newLine": 165, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 166,
+                "text": "            checkField(calldataload(add(_pubSignals, 160)))",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 167, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 168,
+                "newLine": 166,
+                "text": "            // Validate all evaluations"
+              },
+              {
+                "type": " ",
+                "oldLine": 169,
+                "newLine": 167,
+                "text": "            let isValid := checkPairing(_pA, _pB, _pC, _pubSignals, pMem)"
+              },
+              { "type": " ", "oldLine": 170, "newLine": 168, "text": "" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "d80a56c5abf9208b": {
+      "status": "differs",
+      "coveredLines": 173,
+      "match": {
+        "origin": "other",
+        "collection": "bob",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "name",
+        "auditedName": "Groth16Verifier",
+        "similarity": 1,
+        "reportId": "bob/veridise-kailua-2025-02",
+        "repository": "boundless-xyz/kailua",
+        "path": "crates/contracts/foundry/src/vendor/FlatR0ImportV1.2.0.sol",
+        "commit": "27dec82b67de1051df9258b36f8366ebf308e5bf",
+        "commitTimestamp": "2025-02-06T07:42:16Z",
+        "url": "https://github.com/boundless-xyz/kailua/blob/27dec82b67de1051df9258b36f8366ebf308e5bf/crates/contracts/foundry/src/vendor/FlatR0ImportV1.2.0.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix commit",
+        "coverage": "Confirmed fix commit for V-KLA-VUL-004 (contract nits).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 0,
+        "removed": 1,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 1,
+        "unchanged": 173,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 163,
+            "oldLines": 8,
+            "newStart": 163,
+            "newLines": 6,
+            "lines": [
+              { "type": " ", "oldLine": 163, "newLine": 163, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 164,
+                "newLine": 164,
+                "text": "            checkField(calldataload(add(_pubSignals, 128)))"
+              },
+              { "type": " ", "oldLine": 165, "newLine": 165, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 166,
+                "text": "            checkField(calldataload(add(_pubSignals, 160)))",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 167, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 168,
+                "newLine": 166,
+                "text": "            // Validate all evaluations"
+              },
+              {
+                "type": " ",
+                "oldLine": 169,
+                "newLine": 167,
+                "text": "            let isValid := checkPairing(_pA, _pB, _pC, _pubSignals, pMem)"
+              },
+              { "type": " ", "oldLine": 170, "newLine": 168, "text": "" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
     }
   }
 }

@@ -179,6 +179,510 @@
         ]
       },
       "warnings": []
+    },
+    "d80a56c5abf9208b": {
+      "status": "differs",
+      "coveredLines": 20,
+      "match": {
+        "origin": "other",
+        "collection": "bob",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "name",
+        "auditedName": "AddressAliasHelper",
+        "similarity": 0.788,
+        "reportId": "bob/veridise-kailua-2025-02",
+        "repository": "boundless-xyz/kailua",
+        "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "commit": "27dec82b67de1051df9258b36f8366ebf308e5bf",
+        "commitTimestamp": "2025-02-06T07:42:16Z",
+        "url": "https://github.com/boundless-xyz/kailua/blob/27dec82b67de1051df9258b36f8366ebf308e5bf/crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix commit",
+        "coverage": "Confirmed fix commit for V-KLA-VUL-004 (contract nits).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 3,
+        "removed": 3,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 20,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 5,
+            "newStart": 1,
+            "newLines": 5,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "library AddressAliasHelper {"
+              },
+              {
+                "type": "-",
+                "oldLine": 2,
+                "text": "    uint160 constant offset = uint160(0x1111000000000000000000000000000000001111);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 2,
+                "text": "    uint160 internal constant OFFSET = uint160(0x1111000000000000000000000000000000001111);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 3, "newLine": 3, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "    /// @notice Utility function that converts the address in the L1 that submitted a tx to"
+              },
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 5,
+                "text": "    /// the inbox to the msg.sender viewed in the L2"
+              }
+            ]
+          },
+          {
+            "oldStart": 7,
+            "oldLines": 7,
+            "newStart": 7,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 7,
+                "newLine": 7,
+                "text": "    /// @return l2Address L2 address as viewed in msg.sender"
+              },
+              {
+                "type": " ",
+                "oldLine": 8,
+                "newLine": 8,
+                "text": "    function applyL1ToL2Alias(address l1Address) internal pure returns (address l2Address) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 9,
+                "text": "        unchecked {"
+              },
+              {
+                "type": "-",
+                "oldLine": 10,
+                "text": "            l2Address = address(uint160(l1Address) + offset);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 10,
+                "text": "            l2Address = address(uint160(l1Address) + OFFSET);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 11,
+                "newLine": 11,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 12, "newLine": 12, "text": "    }" },
+              { "type": " ", "oldLine": 13, "newLine": 13, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 17,
+            "oldLines": 7,
+            "newStart": 17,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 17,
+                "newLine": 17,
+                "text": "    /// @return l1Address the address in the L1 that triggered the tx to L2"
+              },
+              {
+                "type": " ",
+                "oldLine": 18,
+                "newLine": 18,
+                "text": "    function undoL1ToL2Alias(address l2Address) internal pure returns (address l1Address) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 19,
+                "newLine": 19,
+                "text": "        unchecked {"
+              },
+              {
+                "type": "-",
+                "oldLine": 20,
+                "text": "            l1Address = address(uint160(l2Address) - offset);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 20,
+                "text": "            l1Address = address(uint160(l2Address) - OFFSET);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 21,
+                "newLine": 21,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 22, "newLine": 22, "text": "    }" },
+              { "type": " ", "oldLine": 23, "newLine": 23, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "13052b7adc791062": {
+      "status": "differs",
+      "coveredLines": 20,
+      "match": {
+        "origin": "other",
+        "collection": "bob",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "name",
+        "auditedName": "AddressAliasHelper",
+        "similarity": 0.788,
+        "reportId": "bob/veridise-kailua-2025-02",
+        "repository": "boundless-xyz/kailua",
+        "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "commit": "27dec82b67de1051df9258b36f8366ebf308e5bf",
+        "commitTimestamp": "2025-02-06T07:42:16Z",
+        "url": "https://github.com/boundless-xyz/kailua/blob/27dec82b67de1051df9258b36f8366ebf308e5bf/crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix commit",
+        "coverage": "Confirmed fix commit for V-KLA-VUL-004 (contract nits).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 3,
+        "removed": 3,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 20,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 5,
+            "newStart": 1,
+            "newLines": 5,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "library AddressAliasHelper {"
+              },
+              {
+                "type": "-",
+                "oldLine": 2,
+                "text": "    uint160 constant offset = uint160(0x1111000000000000000000000000000000001111);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 2,
+                "text": "    uint160 internal constant OFFSET = uint160(0x1111000000000000000000000000000000001111);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 3, "newLine": 3, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "    /// @notice Utility function that converts the address in the L1 that submitted a tx to"
+              },
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 5,
+                "text": "    /// the inbox to the msg.sender viewed in the L2"
+              }
+            ]
+          },
+          {
+            "oldStart": 7,
+            "oldLines": 7,
+            "newStart": 7,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 7,
+                "newLine": 7,
+                "text": "    /// @return l2Address L2 address as viewed in msg.sender"
+              },
+              {
+                "type": " ",
+                "oldLine": 8,
+                "newLine": 8,
+                "text": "    function applyL1ToL2Alias(address l1Address) internal pure returns (address l2Address) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 9,
+                "text": "        unchecked {"
+              },
+              {
+                "type": "-",
+                "oldLine": 10,
+                "text": "            l2Address = address(uint160(l1Address) + offset);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 10,
+                "text": "            l2Address = address(uint160(l1Address) + OFFSET);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 11,
+                "newLine": 11,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 12, "newLine": 12, "text": "    }" },
+              { "type": " ", "oldLine": 13, "newLine": 13, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 17,
+            "oldLines": 7,
+            "newStart": 17,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 17,
+                "newLine": 17,
+                "text": "    /// @return l1Address the address in the L1 that triggered the tx to L2"
+              },
+              {
+                "type": " ",
+                "oldLine": 18,
+                "newLine": 18,
+                "text": "    function undoL1ToL2Alias(address l2Address) internal pure returns (address l1Address) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 19,
+                "newLine": 19,
+                "text": "        unchecked {"
+              },
+              {
+                "type": "-",
+                "oldLine": 20,
+                "text": "            l1Address = address(uint160(l2Address) - offset);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 20,
+                "text": "            l1Address = address(uint160(l2Address) - OFFSET);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 21,
+                "newLine": 21,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 22, "newLine": 22, "text": "    }" },
+              { "type": " ", "oldLine": 23, "newLine": 23, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "2295595c4243408b": {
+      "status": "differs",
+      "coveredLines": 20,
+      "match": {
+        "origin": "other",
+        "collection": "bob",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "name",
+        "auditedName": "AddressAliasHelper",
+        "similarity": 0.788,
+        "reportId": "bob/veridise-kailua-2025-02",
+        "repository": "boundless-xyz/kailua",
+        "path": "crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "commit": "27dec82b67de1051df9258b36f8366ebf308e5bf",
+        "commitTimestamp": "2025-02-06T07:42:16Z",
+        "url": "https://github.com/boundless-xyz/kailua/blob/27dec82b67de1051df9258b36f8366ebf308e5bf/crates/contracts/foundry/src/vendor/FlatOPImportV1.4.0.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix commit",
+        "coverage": "Confirmed fix commit for V-KLA-VUL-004 (contract nits).",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 3,
+        "removed": 3,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 20,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 5,
+            "newStart": 1,
+            "newLines": 5,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "library AddressAliasHelper {"
+              },
+              {
+                "type": "-",
+                "oldLine": 2,
+                "text": "    uint160 constant offset = uint160(0x1111000000000000000000000000000000001111);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 2,
+                "text": "    uint160 internal constant OFFSET = uint160(0x1111000000000000000000000000000000001111);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 3, "newLine": 3, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "    /// @notice Utility function that converts the address in the L1 that submitted a tx to"
+              },
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 5,
+                "text": "    /// the inbox to the msg.sender viewed in the L2"
+              }
+            ]
+          },
+          {
+            "oldStart": 7,
+            "oldLines": 7,
+            "newStart": 7,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 7,
+                "newLine": 7,
+                "text": "    /// @return l2Address L2 address as viewed in msg.sender"
+              },
+              {
+                "type": " ",
+                "oldLine": 8,
+                "newLine": 8,
+                "text": "    function applyL1ToL2Alias(address l1Address) internal pure returns (address l2Address) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 9,
+                "text": "        unchecked {"
+              },
+              {
+                "type": "-",
+                "oldLine": 10,
+                "text": "            l2Address = address(uint160(l1Address) + offset);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 10,
+                "text": "            l2Address = address(uint160(l1Address) + OFFSET);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 11,
+                "newLine": 11,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 12, "newLine": 12, "text": "    }" },
+              { "type": " ", "oldLine": 13, "newLine": 13, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 17,
+            "oldLines": 7,
+            "newStart": 17,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 17,
+                "newLine": 17,
+                "text": "    /// @return l1Address the address in the L1 that triggered the tx to L2"
+              },
+              {
+                "type": " ",
+                "oldLine": 18,
+                "newLine": 18,
+                "text": "    function undoL1ToL2Alias(address l2Address) internal pure returns (address l1Address) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 19,
+                "newLine": 19,
+                "text": "        unchecked {"
+              },
+              {
+                "type": "-",
+                "oldLine": 20,
+                "text": "            l1Address = address(uint160(l2Address) - offset);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 20,
+                "text": "            l1Address = address(uint160(l2Address) - OFFSET);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 21,
+                "newLine": 21,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 22, "newLine": 22, "text": "    }" },
+              { "type": " ", "oldLine": 23, "newLine": 23, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
     }
   }
 }

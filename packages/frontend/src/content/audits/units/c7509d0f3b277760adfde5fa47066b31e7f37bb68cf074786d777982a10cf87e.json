@@ -1,0 +1,45 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "c7509d0f3b277760adfde5fa47066b31e7f37bb68cf074786d777982a10cf87e",
+  "name": "README.md",
+  "kind": "program",
+  "lines": 9,
+  "source": "# sp1-prover\n\nThe SP1 prover implementation.\n\nProvides the main prover interface for generating SP1 proofs, coordinating between the executor, constraint system, and proof generation components.\n\n---\n\nPart of [SP1](https://github.com/succinctlabs/sp1), a performant zkVM.",
+  "resolutions": {
+    "44ad4cf96e2ef6f0": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "437dcc6cbc847e9a": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "5d5f82d91c09d4ec": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "e3b0c44298fc1c14": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "d79ad2713a1d64a9": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "2295595c4243408b": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    },
+    "d80a56c5abf9208b": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

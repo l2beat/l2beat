@@ -1,0 +1,15 @@
+{
+  "schemaVersion": 2,
+  "unitHash": "a485bf6862e649ceb6edd5fa68ae7669a0c9451fb2b2cc55bbf386cbe8771514",
+  "name": "Cargo.toml",
+  "kind": "program",
+  "lines": 43,
+  "source": "[package]\nname = \"range-eigenda\"\nversion = \"0.1.0\"\nlicense.workspace = true\nedition.workspace = true\nauthors.workspace = true\nhomepage.workspace = true\nrepository.workspace = true\n\n[dependencies]\n# general\nrkyv.workspace = true\nserde_cbor.workspace = true\n\n# kona\nkona-proof.workspace = true\n\n# celo-kona\ncelo-proof.workspace = true\n\n# hokulea\nhokulea-proof.workspace = true\nhokulea-zkvm-verification.workspace = true\ncanoe-sp1-cc-verifier.workspace = true\n\n# sp1\nsp1-zkvm.workspace = true\n\n# op-succinct\nop-succinct-client-utils.workspace = true\nop-succinct-eigenda-client-utils.workspace = true\nop-succinct-range-utils = { workspace = true, features = [\n    \"tracing-subscriber\",\n] }\n\n# celo eigenda registry\ncelo-eigenda-registry.workspace = true\n\n# `tracing-subscriber` feature dependencies\ntracing-subscriber = { workspace = true, optional = true }\n\n[features]\ntracing-subscriber = [\"dep:tracing-subscriber\"]",
+  "resolutions": {
+    "44ad4cf96e2ef6f0": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

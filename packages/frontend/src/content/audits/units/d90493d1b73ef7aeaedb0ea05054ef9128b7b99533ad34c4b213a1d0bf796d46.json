@@ -251,6 +251,575 @@
         ]
       },
       "warnings": []
+    },
+    "d80a56c5abf9208b": {
+      "status": "differs",
+      "coveredLines": 79,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "ShortStrings",
+        "similarity": 0.974,
+        "reportId": "openzeppelin/contracts__audits__2026-02-v5.6",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/utils/ShortStrings.sol",
+        "commit": "5fd1781b1454fd1ef8e722282f86f9293cacf256",
+        "commitTimestamp": "2026-02-27T15:00:00Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/5fd1781b1454fd1ef8e722282f86f9293cacf256/contracts/utils/ShortStrings.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Review of the fixes to the audit findings; the report states this commit reflects the final state of the audited codebase including all implemented resolutions.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 4
+      },
+      "diff": {
+        "added": 4,
+        "removed": 4,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 79,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 12,
+            "oldLines": 7,
+            "newStart": 12,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 12, "newLine": 12, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 13,
+                "newLine": 13,
+                "text": "    function toShortString(string memory str) internal pure returns (ShortString) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 14,
+                "newLine": 14,
+                "text": "        bytes memory bstr = bytes(str);"
+              },
+              {
+                "type": "-",
+                "oldLine": 15,
+                "text": "        if (bstr.length > 0x1f) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 15,
+                "text": "        if (bstr.length > 31) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 16,
+                "newLine": 16,
+                "text": "            revert StringTooLong(str);"
+              },
+              {
+                "type": " ",
+                "oldLine": 17,
+                "newLine": 17,
+                "text": "        }"
+              },
+              {
+                "type": " ",
+                "oldLine": 18,
+                "newLine": 18,
+                "text": "        return ShortString.wrap(bytes32(uint256(bytes32(bstr)) | bstr.length));"
+              }
+            ]
+          },
+          {
+            "oldStart": 24,
+            "oldLines": 7,
+            "newStart": 24,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 24,
+                "text": "    function toString(ShortString sstr) internal pure returns (string memory) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 25,
+                "newLine": 25,
+                "text": "        uint256 len = byteLength(sstr);"
+              },
+              {
+                "type": " ",
+                "oldLine": 26,
+                "newLine": 26,
+                "text": "        // using `new string(len)` would work locally but is not memory safe."
+              },
+              {
+                "type": "-",
+                "oldLine": 27,
+                "text": "        string memory str = new string(0x20);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 27,
+                "text": "        string memory str = new string(32);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 28,
+                "newLine": 28,
+                "text": "        assembly (\"memory-safe\") {"
+              },
+              {
+                "type": " ",
+                "oldLine": 29,
+                "newLine": 29,
+                "text": "            mstore(str, len)"
+              },
+              {
+                "type": " ",
+                "oldLine": 30,
+                "newLine": 30,
+                "text": "            mstore(add(str, 0x20), sstr)"
+              }
+            ]
+          },
+          {
+            "oldStart": 37,
+            "oldLines": 7,
+            "newStart": 37,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 37, "newLine": 37, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 38,
+                "newLine": 38,
+                "text": "    function byteLength(ShortString sstr) internal pure returns (uint256) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 39,
+                "newLine": 39,
+                "text": "        uint256 result = uint256(ShortString.unwrap(sstr)) & 0xFF;"
+              },
+              {
+                "type": "-",
+                "oldLine": 40,
+                "text": "        if (result > 0x1f) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 40,
+                "text": "        if (result > 31) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 41,
+                "newLine": 41,
+                "text": "            revert InvalidShortString();"
+              },
+              {
+                "type": " ",
+                "oldLine": 42,
+                "newLine": 42,
+                "text": "        }"
+              },
+              {
+                "type": " ",
+                "oldLine": 43,
+                "newLine": 43,
+                "text": "        return result;"
+              }
+            ]
+          },
+          {
+            "oldStart": 47,
+            "oldLines": 7,
+            "newStart": 47,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 47,
+                "newLine": 47,
+                "text": "     * @dev Encode a string into a `ShortString`, or write it to storage if it is too long."
+              },
+              { "type": " ", "oldLine": 48, "newLine": 48, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 49,
+                "newLine": 49,
+                "text": "    function toShortStringWithFallback(string memory value, string storage store) internal returns (ShortString) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 50,
+                "text": "        if (bytes(value).length < 0x20) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 50,
+                "text": "        if (bytes(value).length < 32) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 51,
+                "newLine": 51,
+                "text": "            return toShortString(value);"
+              },
+              {
+                "type": " ",
+                "oldLine": 52,
+                "newLine": 52,
+                "text": "        } else {"
+              },
+              {
+                "type": " ",
+                "oldLine": 53,
+                "newLine": 53,
+                "text": "            StorageSlot.getStringSlot(store).value = value;"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "437dcc6cbc847e9a": {
+      "status": "differs",
+      "coveredLines": 79,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "ShortStrings",
+        "similarity": 0.974,
+        "reportId": "openzeppelin/contracts__audits__2026-02-v5.6",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/utils/ShortStrings.sol",
+        "commit": "5fd1781b1454fd1ef8e722282f86f9293cacf256",
+        "commitTimestamp": "2026-02-27T15:00:00Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/5fd1781b1454fd1ef8e722282f86f9293cacf256/contracts/utils/ShortStrings.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Review of the fixes to the audit findings; the report states this commit reflects the final state of the audited codebase including all implemented resolutions.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 4
+      },
+      "diff": {
+        "added": 4,
+        "removed": 4,
+        "ignoredAdded": 2,
+        "ignoredRemoved": 2,
+        "unchanged": 79,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 12,
+            "oldLines": 7,
+            "newStart": 12,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 12, "newLine": 12, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 13,
+                "newLine": 13,
+                "text": "    function toShortString(string memory str) internal pure returns (ShortString) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 14,
+                "newLine": 14,
+                "text": "        bytes memory bstr = bytes(str);"
+              },
+              {
+                "type": "-",
+                "oldLine": 15,
+                "text": "        if (bstr.length > 0x1f) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 15,
+                "text": "        if (bstr.length > 31) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 16,
+                "newLine": 16,
+                "text": "            revert StringTooLong(str);"
+              },
+              {
+                "type": " ",
+                "oldLine": 17,
+                "newLine": 17,
+                "text": "        }"
+              },
+              {
+                "type": " ",
+                "oldLine": 18,
+                "newLine": 18,
+                "text": "        return ShortString.wrap(bytes32(uint256(bytes32(bstr)) | bstr.length));"
+              }
+            ]
+          },
+          {
+            "oldStart": 24,
+            "oldLines": 7,
+            "newStart": 24,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 24,
+                "text": "    function toString(ShortString sstr) internal pure returns (string memory) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 25,
+                "newLine": 25,
+                "text": "        uint256 len = byteLength(sstr);"
+              },
+              {
+                "type": " ",
+                "oldLine": 26,
+                "newLine": 26,
+                "text": "        // using `new string(len)` would work locally but is not memory safe."
+              },
+              {
+                "type": "-",
+                "oldLine": 27,
+                "text": "        string memory str = new string(0x20);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 27,
+                "text": "        string memory str = new string(32);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 28,
+                "newLine": 28,
+                "text": "        assembly (\"memory-safe\") {"
+              },
+              {
+                "type": " ",
+                "oldLine": 29,
+                "newLine": 29,
+                "text": "            mstore(str, len)"
+              },
+              {
+                "type": " ",
+                "oldLine": 30,
+                "newLine": 30,
+                "text": "            mstore(add(str, 0x20), sstr)"
+              }
+            ]
+          },
+          {
+            "oldStart": 37,
+            "oldLines": 7,
+            "newStart": 37,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 37, "newLine": 37, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 38,
+                "newLine": 38,
+                "text": "    function byteLength(ShortString sstr) internal pure returns (uint256) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 39,
+                "newLine": 39,
+                "text": "        uint256 result = uint256(ShortString.unwrap(sstr)) & 0xFF;"
+              },
+              {
+                "type": "-",
+                "oldLine": 40,
+                "text": "        if (result > 0x1f) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 40,
+                "text": "        if (result > 31) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 41,
+                "newLine": 41,
+                "text": "            revert InvalidShortString();"
+              },
+              {
+                "type": " ",
+                "oldLine": 42,
+                "newLine": 42,
+                "text": "        }"
+              },
+              {
+                "type": " ",
+                "oldLine": 43,
+                "newLine": 43,
+                "text": "        return result;"
+              }
+            ]
+          },
+          {
+            "oldStart": 47,
+            "oldLines": 7,
+            "newStart": 47,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 47,
+                "newLine": 47,
+                "text": "     * @dev Encode a string into a `ShortString`, or write it to storage if it is too long."
+              },
+              { "type": " ", "oldLine": 48, "newLine": 48, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 49,
+                "newLine": 49,
+                "text": "    function toShortStringWithFallback(string memory value, string storage store) internal returns (ShortString) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 50,
+                "text": "        if (bytes(value).length < 0x20) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 50,
+                "text": "        if (bytes(value).length < 32) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 51,
+                "newLine": 51,
+                "text": "            return toShortString(value);"
+              },
+              {
+                "type": " ",
+                "oldLine": 52,
+                "newLine": 52,
+                "text": "        } else {"
+              },
+              {
+                "type": " ",
+                "oldLine": 53,
+                "newLine": 53,
+                "text": "            StorageSlot.getStringSlot(store).value = value;"
+              }
+            ]
+          },
+          {
+            "oldStart": 56,
+            "oldLines": 7,
+            "newStart": 56,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 56, "newLine": 56, "text": "    }" },
+              { "type": " ", "oldLine": 57, "newLine": 57, "text": "" },
+              { "type": " ", "oldLine": 58, "newLine": 58, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 59,
+                "text": "     * @dev Decode a string that was encoded to `ShortString` or written to storage using {toShortStringWithFallback}.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 59,
+                "text": "     * @dev Decode a string that was encoded to `ShortString` or written to storage using {setWithFallback}.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 60, "newLine": 60, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 61,
+                "newLine": 61,
+                "text": "    function toStringWithFallback(ShortString value, string storage store) internal pure returns (string memory) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 62,
+                "newLine": 62,
+                "text": "        if (ShortString.unwrap(value) != FALLBACK_SENTINEL) {"
+              }
+            ]
+          },
+          {
+            "oldStart": 68,
+            "oldLines": 7,
+            "newStart": 68,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 68, "newLine": 68, "text": "" },
+              { "type": " ", "oldLine": 69, "newLine": 69, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 70,
+                "newLine": 70,
+                "text": "     * @dev Return the length of a string that was encoded to `ShortString` or written to storage using"
+              },
+              {
+                "type": "-",
+                "oldLine": 71,
+                "text": "     * {toShortStringWithFallback}.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 71,
+                "text": "     * {setWithFallback}.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 72, "newLine": 72, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 73,
+                "newLine": 73,
+                "text": "     * WARNING: This will return the \"byte length\" of the string. This may not reflect the actual length in terms of"
+              },
+              {
+                "type": " ",
+                "oldLine": 74,
+                "newLine": 74,
+                "text": "     * actual characters as the UTF-8 encoding of a single character can span over multiple bytes."
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
     }
   }
 }

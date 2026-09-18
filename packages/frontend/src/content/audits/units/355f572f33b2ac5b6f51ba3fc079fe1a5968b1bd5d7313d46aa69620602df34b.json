@@ -32,6 +32,33 @@
         "totalVersions": 1
       },
       "warnings": []
+    },
+    "437dcc6cbc847e9a": {
+      "status": "identical",
+      "coveredLines": 45,
+      "match": {
+        "origin": "other",
+        "collection": "ethscriptions",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "identity",
+        "auditedName": "Constants",
+        "similarity": 1,
+        "reportId": "ethscriptions/zellic-facet-bridge-2024-11-04",
+        "repository": "0xFacet/facet-optimism",
+        "path": "packages/contracts-bedrock/src/libraries/Constants.sol",
+        "commit": "331bb685d91447e76b79aee34fea5d668a77e925",
+        "commitTimestamp": "2024-10-02T15:07:32Z",
+        "url": "https://github.com/0xFacet/facet-optimism/blob/331bb685d91447e76b79aee34fea5d668a77e925/packages/contracts-bedrock/src/libraries/Constants.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "primary review",
+        "coverage": "full file",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "warnings": []
     }
   }
 }

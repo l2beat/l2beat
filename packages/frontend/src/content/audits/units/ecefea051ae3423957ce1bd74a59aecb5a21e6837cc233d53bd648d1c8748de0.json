@@ -148,6 +148,105 @@
         ]
       },
       "warnings": []
+    },
+    "13052b7adc791062": {
+      "status": "identical",
+      "coveredLines": 38,
+      "match": {
+        "origin": "other",
+        "collection": "scroll",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "identity",
+        "auditedName": "WithdrawTrieVerifier",
+        "similarity": 1,
+        "reportId": "scroll/zellic-scroll-bridge-rollup-audit-2023-09",
+        "repository": "scroll-tech/scroll",
+        "path": "contracts/src/libraries/verifier/WithdrawTrieVerifier.sol",
+        "commit": "2323dd0daa117bc9ce1f0e4a1c1c3bba4d661947",
+        "commitTimestamp": "2023-07-10T17:02:58Z",
+        "url": "https://github.com/scroll-tech/scroll/blob/2323dd0daa117bc9ce1f0e4a1c1c3bba4d661947/contracts/src/libraries/verifier/WithdrawTrieVerifier.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "re-audit (diff review)",
+        "coverage": "Review focused on changes since the May 2023 assessment commit cb6a609366e5f6b808dfd9bba01a1c7c6e07f6fa; threat model for unchanged parts is in the previous report.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 4
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 5,
+        "ignoredRemoved": 0,
+        "unchanged": 38,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 9,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "library WithdrawTrieVerifier {"
+              },
+              {
+                "type": "+",
+                "newLine": 2,
+                "text": "    /// @dev Verify the merkle proof given root, leaf node and proof.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "    /// @param _root The expected root node hash of the withdraw trie.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 4,
+                "text": "    /// @param _hash The leaf node hash of the withdraw trie.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 5,
+                "text": "    /// @param _nonce The index of the leaf node from left to right, starting from 0.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 6,
+                "text": "    /// @param _proof The concatenated merkle proof verified the leaf node.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 7,
+                "text": "    function verifyMerkleProof(bytes32 _root, bytes32 _hash, uint256 _nonce, bytes memory _proof)"
+              },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 8,
+                "text": "        internal"
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 9,
+                "text": "        pure"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
     }
   }
 }

@@ -92,6 +92,36 @@
         "totalVersions": 23
       },
       "warnings": []
+    },
+    "437dcc6cbc847e9a": {
+      "status": "identical",
+      "coveredLines": 604,
+      "match": {
+        "origin": "stack",
+        "collection": "optimism",
+        "relation": {
+          "type": "template",
+          "template": "gnosisSafeModules/LivenessGuard"
+        },
+        "rank": 2,
+        "matchedBy": "identity",
+        "auditedName": "OptimismPortal2",
+        "similarity": 1,
+        "reportId": "optimism/cantina-u17-2025-10",
+        "repository": "ethereum-optimism/optimism",
+        "path": "packages/contracts-bedrock/src/L1/OptimismPortal2.sol",
+        "commit": "aeed7033f7f739d8ecd4bd70a42ff09013bbc91e",
+        "commitTimestamp": "2025-10-16T14:37:42Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/aeed7033f7f739d8ecd4bd70a42ff09013bbc91e/packages/contracts-bedrock/src/L1/OptimismPortal2.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Full review of the file as part of the u17 (op-contracts/v5.0.0) upgrade review; keccak256 hash listed in the report appendix.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 23
+      },
+      "warnings": []
     }
   }
 }

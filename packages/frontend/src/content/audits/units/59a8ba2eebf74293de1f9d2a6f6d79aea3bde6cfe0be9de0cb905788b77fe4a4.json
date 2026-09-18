@@ -96,6 +96,124 @@
         ]
       },
       "warnings": []
+    },
+    "e3b0c44298fc1c14": {
+      "status": "library",
+      "coveredLines": 24,
+      "match": {
+        "origin": "library",
+        "collection": "openzeppelin",
+        "relation": { "type": "library" },
+        "rank": 3,
+        "matchedBy": "identity",
+        "auditedName": "Math",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2018-10",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/math/Math.sol",
+        "commit": "6d415c508be94ef8391ed6525df365452466da76",
+        "commitTimestamp": "2018-10-19T20:42:20Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/6d415c508be94ef8391ed6525df365452466da76/contracts/math/Math.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Synthesized fix-review snapshot: master at the squash-merge of the last cited fix PR #1438, which contains every fix PR #1329-#1449 cited per finding; the Critical BreakInvariantBounty frontrunning issue was remediated by removing the contract in #1424. The report does not name a re-reviewed commit.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 12
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 2,
+        "ignoredRemoved": 3,
+        "unchanged": 24,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 14,
+            "oldLines": 9,
+            "newStart": 14,
+            "newLines": 8,
+            "lines": [
+              { "type": " ", "oldLine": 14, "newLine": 14, "text": "    }" },
+              { "type": " ", "oldLine": 15, "newLine": 15, "text": "" },
+              { "type": " ", "oldLine": 16, "newLine": 16, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 17,
+                "text": "     * @dev Calculates the average of two numbers. Since these are integers,",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 18,
+                "text": "     * averages of an even and odd number cannot be represented, and will be",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 19,
+                "text": "     * rounded down.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 17,
+                "text": "     * @dev Returns the average of two numbers. The result is rounded towards",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 18,
+                "text": "     * zero.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 20, "newLine": 19, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 21,
+                "newLine": 20,
+                "text": "    function average(uint256 a, uint256 b) internal pure returns (uint256) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 21,
+                "text": "        // (a + b) / 2 can overflow, so we distribute"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "5d5f82d91c09d4ec": {
+      "status": "library",
+      "coveredLines": 25,
+      "match": {
+        "origin": "library",
+        "collection": "openzeppelin",
+        "relation": { "type": "library" },
+        "rank": 3,
+        "matchedBy": "identity",
+        "auditedName": "Math",
+        "similarity": 1,
+        "reportId": "openzeppelin/contracts__audits__2018-10",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/math/Math.sol",
+        "commit": "6d415c508be94ef8391ed6525df365452466da76",
+        "commitTimestamp": "2018-10-19T20:42:20Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/6d415c508be94ef8391ed6525df365452466da76/contracts/math/Math.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Synthesized fix-review snapshot: master at the squash-merge of the last cited fix PR #1438, which contains every fix PR #1329-#1449 cited per finding; the Critical BreakInvariantBounty frontrunning issue was remediated by removing the contract in #1424. The report does not name a re-reviewed commit.",
+        "majorFindings": 0,
+        "isLatestVersion": false,
+        "laterAuditedVersionExists": true,
+        "totalVersions": 12
+      },
+      "warnings": []
     }
   }
 }

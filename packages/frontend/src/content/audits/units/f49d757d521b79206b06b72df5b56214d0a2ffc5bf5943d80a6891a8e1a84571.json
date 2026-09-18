@@ -1565,6 +1565,3014 @@
         ]
       },
       "warnings": []
+    },
+    "437dcc6cbc847e9a": {
+      "status": "differs",
+      "coveredLines": 124,
+      "match": {
+        "origin": "stack",
+        "collection": "optimism",
+        "relation": {
+          "type": "template",
+          "template": "opstack/Layer2/L2CrossDomainMessenger"
+        },
+        "rank": 2,
+        "matchedBy": "similarity",
+        "auditedName": "Lib_SafeMathWrapper",
+        "similarity": 0.675,
+        "reportId": "optimism/openzeppelin-ovm-rollup-2021-03",
+        "repository": "ben-chain/contracts-v2",
+        "path": "contracts/optimistic-ethereum/libraries/wrappers/Lib_SafeMathWrapper.sol",
+        "commit": "a935e276f5620b40802b52721e3474232e458f72",
+        "commitTimestamp": "2021-04-12T01:08:09Z",
+        "url": "https://github.com/ben-chain/contracts-v2/blob/a935e276f5620b40802b52721e3474232e458f72/contracts/optimistic-ethereum/libraries/wrappers/Lib_SafeMathWrapper.sol",
+        "auditStatus": "audited_with_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Second audited commit (last 3 weeks). Same directory scope and exclusions as the first commit; C01 and H01 fixes from the archived repository are contained in this commit, L02/L04/N01 are fixed here per the report.",
+        "majorFindings": 2,
+        "findingIds": ["C02", "C04"],
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "diff": {
+        "added": 17,
+        "removed": 17,
+        "ignoredAdded": 7,
+        "ignoredRemoved": 8,
+        "unchanged": 124,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 4,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "library Lib_SafeMathWrapper {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "library SafeMath {",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 2, "newLine": 2, "text": "    /**" },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "     * @dev Returns the addition of two unsigned integers, reverting on"
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "     * overflow."
+              }
+            ]
+          },
+          {
+            "oldStart": 6,
+            "oldLines": 12,
+            "newStart": 6,
+            "newLines": 11,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 6,
+                "newLine": 6,
+                "text": "     * Counterpart to Solidity's `+` operator."
+              },
+              { "type": " ", "oldLine": 7, "newLine": 7, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 8,
+                "newLine": 8,
+                "text": "     * Requirements:"
+              },
+              { "type": "-", "oldLine": 9, "text": "     *", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 10,
+                "newLine": 9,
+                "text": "     * - Addition cannot overflow."
+              },
+              { "type": " ", "oldLine": 11, "newLine": 10, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 12,
+                "text": "    function add(uint256 a, uint256 b) internal returns (uint256) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 11,
+                "text": "    function add(uint256 a, uint256 b) internal pure returns (uint256) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 13,
+                "newLine": 12,
+                "text": "        uint256 c = a + b;"
+              },
+              {
+                "type": "-",
+                "oldLine": 14,
+                "text": "        Lib_SafeExecutionManagerWrapper.safeREQUIRE(c >= a, \"Lib_SafeMathWrapper: addition overflow\");",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 13,
+                "text": "        require(c >= a, \"SafeMath: addition overflow\");",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 15, "newLine": 14, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 16,
+                "newLine": 15,
+                "text": "        return c;"
+              },
+              { "type": " ", "oldLine": 17, "newLine": 16, "text": "    }" }
+            ]
+          },
+          {
+            "oldStart": 23,
+            "oldLines": 11,
+            "newStart": 22,
+            "newLines": 10,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 23,
+                "newLine": 22,
+                "text": "     * Counterpart to Solidity's `-` operator."
+              },
+              { "type": " ", "oldLine": 24, "newLine": 23, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 25,
+                "newLine": 24,
+                "text": "     * Requirements:"
+              },
+              { "type": "-", "oldLine": 26, "text": "     *", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 27,
+                "newLine": 25,
+                "text": "     * - Subtraction cannot overflow."
+              },
+              { "type": " ", "oldLine": 28, "newLine": 26, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 29,
+                "text": "    function sub(uint256 a, uint256 b) internal returns (uint256) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 30,
+                "text": "        return sub(a, b, \"Lib_SafeMathWrapper: subtraction overflow\");",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 27,
+                "text": "    function sub(uint256 a, uint256 b) internal pure returns (uint256) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 28,
+                "text": "        return sub(a, b, \"SafeMath: subtraction overflow\");",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 31, "newLine": 29, "text": "    }" },
+              { "type": " ", "oldLine": 32, "newLine": 30, "text": "" },
+              { "type": " ", "oldLine": 33, "newLine": 31, "text": "    /**" }
+            ]
+          },
+          {
+            "oldStart": 37,
+            "oldLines": 11,
+            "newStart": 35,
+            "newLines": 12,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 37,
+                "newLine": 35,
+                "text": "     * Counterpart to Solidity's `-` operator."
+              },
+              { "type": " ", "oldLine": 38, "newLine": 36, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 39,
+                "newLine": 37,
+                "text": "     * Requirements:"
+              },
+              { "type": "-", "oldLine": 40, "text": "     *", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 41,
+                "newLine": 38,
+                "text": "     * - Subtraction cannot overflow."
+              },
+              { "type": "+", "newLine": 39, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 40,
+                "text": "     * _Available since v2.4.0._",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 42, "newLine": 41, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 43,
+                "text": "    function sub(uint256 a, uint256 b, string memory errorMessage) internal returns (uint256) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 44,
+                "text": "        Lib_SafeExecutionManagerWrapper.safeREQUIRE(b <= a, errorMessage);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 42,
+                "text": "    function sub(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 43,
+                "text": "        require(b <= a, errorMessage);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 45,
+                "newLine": 44,
+                "text": "        uint256 c = a - b;"
+              },
+              { "type": " ", "oldLine": 46, "newLine": 45, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 47,
+                "newLine": 46,
+                "text": "        return c;"
+              }
+            ]
+          },
+          {
+            "oldStart": 54,
+            "oldLines": 10,
+            "newStart": 53,
+            "newLines": 9,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 54,
+                "newLine": 53,
+                "text": "     * Counterpart to Solidity's `*` operator."
+              },
+              { "type": " ", "oldLine": 55, "newLine": 54, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 56,
+                "newLine": 55,
+                "text": "     * Requirements:"
+              },
+              { "type": "-", "oldLine": 57, "text": "     *", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 58,
+                "newLine": 56,
+                "text": "     * - Multiplication cannot overflow."
+              },
+              { "type": " ", "oldLine": 59, "newLine": 57, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 60,
+                "text": "    function mul(uint256 a, uint256 b) internal returns (uint256) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 58,
+                "text": "    function mul(uint256 a, uint256 b) internal pure returns (uint256) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 61,
+                "newLine": 59,
+                "text": "        // Gas optimization: this is cheaper than requiring 'a' not being zero, but the"
+              },
+              {
+                "type": " ",
+                "oldLine": 62,
+                "newLine": 60,
+                "text": "        // benefit is lost if 'b' is also tested."
+              },
+              {
+                "type": " ",
+                "oldLine": 63,
+                "newLine": 61,
+                "text": "        // See: https://github.com/OpenZeppelin/openzeppelin-contracts/pull/522"
+              }
+            ]
+          },
+          {
+            "oldStart": 66,
+            "oldLines": 7,
+            "newStart": 64,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 66,
+                "newLine": 64,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 67, "newLine": 65, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 68,
+                "newLine": 66,
+                "text": "        uint256 c = a * b;"
+              },
+              {
+                "type": "-",
+                "oldLine": 69,
+                "text": "        Lib_SafeExecutionManagerWrapper.safeREQUIRE(c / a == b, \"Lib_SafeMathWrapper: multiplication overflow\");",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 67,
+                "text": "        require(c / a == b, \"SafeMath: multiplication overflow\");",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 70, "newLine": 68, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 71,
+                "newLine": 69,
+                "text": "        return c;"
+              },
+              { "type": " ", "oldLine": 72, "newLine": 70, "text": "    }" }
+            ]
+          },
+          {
+            "oldStart": 80,
+            "oldLines": 11,
+            "newStart": 78,
+            "newLines": 10,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 80,
+                "newLine": 78,
+                "text": "     * uses an invalid opcode to revert (consuming all remaining gas)."
+              },
+              { "type": " ", "oldLine": 81, "newLine": 79, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 82,
+                "newLine": 80,
+                "text": "     * Requirements:"
+              },
+              { "type": "-", "oldLine": 83, "text": "     *", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 84,
+                "newLine": 81,
+                "text": "     * - The divisor cannot be zero."
+              },
+              { "type": " ", "oldLine": 85, "newLine": 82, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 86,
+                "text": "    function div(uint256 a, uint256 b) internal returns (uint256) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 87,
+                "text": "        return div(a, b, \"Lib_SafeMathWrapper: division by zero\");",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 83,
+                "text": "    function div(uint256 a, uint256 b) internal pure returns (uint256) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 84,
+                "text": "        return div(a, b, \"SafeMath: division by zero\");",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 88, "newLine": 85, "text": "    }" },
+              { "type": " ", "oldLine": 89, "newLine": 86, "text": "" },
+              { "type": " ", "oldLine": 90, "newLine": 87, "text": "    /**" }
+            ]
+          },
+          {
+            "oldStart": 96,
+            "oldLines": 11,
+            "newStart": 93,
+            "newLines": 13,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 96,
+                "newLine": 93,
+                "text": "     * uses an invalid opcode to revert (consuming all remaining gas)."
+              },
+              { "type": " ", "oldLine": 97, "newLine": 94, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 98,
+                "newLine": 95,
+                "text": "     * Requirements:"
+              },
+              { "type": "-", "oldLine": 99, "text": "     *", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 100,
+                "newLine": 96,
+                "text": "     * - The divisor cannot be zero."
+              },
+              { "type": "+", "newLine": 97, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 98,
+                "text": "     * _Available since v2.4.0._",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 101, "newLine": 99, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 102,
+                "text": "    function div(uint256 a, uint256 b, string memory errorMessage) internal returns (uint256) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 103,
+                "text": "        Lib_SafeExecutionManagerWrapper.safeREQUIRE(b > 0, errorMessage);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 100,
+                "text": "    function div(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 101,
+                "text": "        // Solidity only automatically asserts when dividing by 0",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 102,
+                "text": "        require(b > 0, errorMessage);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 104,
+                "newLine": 103,
+                "text": "        uint256 c = a / b;"
+              },
+              {
+                "type": " ",
+                "oldLine": 105,
+                "newLine": 104,
+                "text": "        // assert(a == b * c + a % b); // There is no case in which this doesn't hold"
+              },
+              { "type": " ", "oldLine": 106, "newLine": 105, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 116,
+            "oldLines": 11,
+            "newStart": 115,
+            "newLines": 10,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 116,
+                "newLine": 115,
+                "text": "     * invalid opcode to revert (consuming all remaining gas)."
+              },
+              { "type": " ", "oldLine": 117, "newLine": 116, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 118,
+                "newLine": 117,
+                "text": "     * Requirements:"
+              },
+              {
+                "type": "-",
+                "oldLine": 119,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 120,
+                "newLine": 118,
+                "text": "     * - The divisor cannot be zero."
+              },
+              {
+                "type": " ",
+                "oldLine": 121,
+                "newLine": 119,
+                "text": "     */"
+              },
+              {
+                "type": "-",
+                "oldLine": 122,
+                "text": "    function mod(uint256 a, uint256 b) internal returns (uint256) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 123,
+                "text": "        return mod(a, b, \"Lib_SafeMathWrapper: modulo by zero\");",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 120,
+                "text": "    function mod(uint256 a, uint256 b) internal pure returns (uint256) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 121,
+                "text": "        return mod(a, b, \"SafeMath: modulo by zero\");",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 124, "newLine": 122, "text": "    }" },
+              { "type": " ", "oldLine": 125, "newLine": 123, "text": "" },
+              { "type": " ", "oldLine": 126, "newLine": 124, "text": "    /**" }
+            ]
+          },
+          {
+            "oldStart": 132,
+            "oldLines": 11,
+            "newStart": 130,
+            "newLines": 12,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 132,
+                "newLine": 130,
+                "text": "     * invalid opcode to revert (consuming all remaining gas)."
+              },
+              { "type": " ", "oldLine": 133, "newLine": 131, "text": "     *" },
+              {
+                "type": " ",
+                "oldLine": 134,
+                "newLine": 132,
+                "text": "     * Requirements:"
+              },
+              {
+                "type": "-",
+                "oldLine": 135,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 136,
+                "newLine": 133,
+                "text": "     * - The divisor cannot be zero."
+              },
+              {
+                "type": "+",
+                "newLine": 134,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 135,
+                "text": "     * _Available since v2.4.0._",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 137,
+                "newLine": 136,
+                "text": "     */"
+              },
+              {
+                "type": "-",
+                "oldLine": 138,
+                "text": "    function mod(uint256 a, uint256 b, string memory errorMessage) internal returns (uint256) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 139,
+                "text": "        Lib_SafeExecutionManagerWrapper.safeREQUIRE(b != 0, errorMessage);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 137,
+                "text": "    function mod(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 138,
+                "text": "        require(b != 0, errorMessage);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 140,
+                "newLine": 139,
+                "text": "        return a % b;"
+              },
+              { "type": " ", "oldLine": 141, "newLine": 140, "text": "    }" },
+              { "type": " ", "oldLine": 142, "newLine": 141, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "5d5f82d91c09d4ec": {
+      "status": "differs",
+      "coveredLines": 130,
+      "match": {
+        "origin": "stack",
+        "collection": "safe",
+        "relation": { "type": "template", "template": "GnosisSafe" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "SafeMath",
+        "similarity": 0.574,
+        "reportId": "safe/g0-safe-allowance-v0-1-0",
+        "repository": "safe-fndn/safe-modules",
+        "path": "recurring_transfers/contracts/external/SafeMath.sol",
+        "commit": "b531c8db9ded1fa72c8459078ebe4e88a2501bae",
+        "commitTimestamp": "2020-10-20T11:39:38Z",
+        "url": "https://github.com/safe-fndn/safe-modules/blob/b531c8db9ded1fa72c8459078ebe4e88a2501bae/recurring_transfers/contracts/external/SafeMath.sol",
+        "auditStatus": "partially_audited_with_no_major_findings",
+        "reviewPhase": "Fix review",
+        "coverage": "Review limited to the three reported fixes.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 2
+      },
+      "diff": {
+        "added": 12,
+        "removed": 3,
+        "ignoredAdded": 95,
+        "ignoredRemoved": 20,
+        "unchanged": 130,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 58,
+            "newStart": 1,
+            "newLines": 142,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "library SafeMath {"
+              },
+              { "type": " ", "oldLine": 2, "newLine": 2, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 3,
+                "text": "     * @dev Multiplies two numbers, reverts on overflow.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "     * @dev Returns the addition of two unsigned integers, reverting on",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 4,
+                "text": "     * overflow.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 5, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 6,
+                "text": "     * Counterpart to Solidity's `+` operator.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 7, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 8,
+                "text": "     * Requirements:",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 9, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 10,
+                "text": "     * - Addition cannot overflow.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 4, "newLine": 11, "text": "     */" },
+              {
+                "type": "+",
+                "newLine": 12,
+                "text": "    function add(uint256 a, uint256 b) internal pure returns (uint256) {",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 13,
+                "text": "        uint256 c = a + b;",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 14,
+                "text": "        require(c >= a, \"SafeMath: addition overflow\");",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 15, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 16,
+                "text": "        return c;",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 17, "text": "    }", "ignored": false },
+              { "type": "+", "newLine": 18, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 19,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 20,
+                "text": "     * @dev Returns the subtraction of two unsigned integers, reverting on",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 21,
+                "text": "     * overflow (when the result is negative).",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 22, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 23,
+                "text": "     * Counterpart to Solidity's `-` operator.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 24, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 25,
+                "text": "     * Requirements:",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 26, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 27,
+                "text": "     * - Subtraction cannot overflow.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 28,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 29,
+                "text": "    function sub(uint256 a, uint256 b) internal pure returns (uint256) {",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 30,
+                "text": "        return sub(a, b, \"SafeMath: subtraction overflow\");",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 31, "text": "    }", "ignored": false },
+              { "type": "+", "newLine": 32, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 33,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 34,
+                "text": "     * @dev Returns the subtraction of two unsigned integers, reverting with custom message on",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 35,
+                "text": "     * overflow (when the result is negative).",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 36, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 37,
+                "text": "     * Counterpart to Solidity's `-` operator.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 38, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 39,
+                "text": "     * Requirements:",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 40, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 41,
+                "text": "     * - Subtraction cannot overflow.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 42,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 43,
+                "text": "    function sub(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 44,
+                "text": "        require(b <= a, errorMessage);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 45,
+                "text": "        uint256 c = a - b;",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 46, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 47,
+                "text": "        return c;",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 48, "text": "    }", "ignored": false },
+              { "type": "+", "newLine": 49, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 50,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 51,
+                "text": "     * @dev Returns the multiplication of two unsigned integers, reverting on",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 52,
+                "text": "     * overflow.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 53, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 54,
+                "text": "     * Counterpart to Solidity's `*` operator.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 55, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 56,
+                "text": "     * Requirements:",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 57, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 58,
+                "text": "     * - Multiplication cannot overflow.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 59,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 60,
+                "text": "    function mul(uint256 a, uint256 b) internal pure returns (uint256) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 6,
+                "newLine": 61,
+                "text": "        // Gas optimization: this is cheaper than requiring 'a' not being zero, but the"
+              },
+              {
+                "type": " ",
+                "oldLine": 7,
+                "newLine": 62,
+                "text": "        // benefit is lost if 'b' is also tested."
+              },
+              {
+                "type": "-",
+                "oldLine": 8,
+                "text": "        // See: https://github.com/OpenZeppelin/openzeppelin-solidity/pull/522",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 63,
+                "text": "        // See: https://github.com/OpenZeppelin/openzeppelin-contracts/pull/522",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 64,
+                "text": "        if (a == 0) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 10,
+                "newLine": 65,
+                "text": "            return 0;"
+              },
+              {
+                "type": " ",
+                "oldLine": 11,
+                "newLine": 66,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 12, "newLine": 67, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 13,
+                "newLine": 68,
+                "text": "        uint256 c = a * b;"
+              },
+              {
+                "type": "-",
+                "oldLine": 14,
+                "text": "        require(c / a == b);",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 69,
+                "text": "        require(c / a == b, \"SafeMath: multiplication overflow\");",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 15, "newLine": 70, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 16,
+                "newLine": 71,
+                "text": "        return c;"
+              },
+              { "type": " ", "oldLine": 17, "newLine": 72, "text": "    }" },
+              { "type": " ", "oldLine": 18, "newLine": 73, "text": "" },
+              { "type": " ", "oldLine": 19, "newLine": 74, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 20,
+                "text": "     * @dev Integer division of two numbers truncating the quotient, reverts on division by zero.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 75,
+                "text": "     * @dev Returns the integer division of two unsigned integers. Reverts on",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 76,
+                "text": "     * division by zero. The result is rounded towards zero.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 77, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 78,
+                "text": "     * Counterpart to Solidity's `/` operator. Note: this function uses a",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 79,
+                "text": "     * `revert` opcode (which leaves remaining gas untouched) while Solidity",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 80,
+                "text": "     * uses an invalid opcode to revert (consuming all remaining gas).",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 81, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 82,
+                "text": "     * Requirements:",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 83, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 84,
+                "text": "     * - The divisor cannot be zero.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 21, "newLine": 85, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 86,
+                "text": "    function div(uint256 a, uint256 b) internal pure returns (uint256) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 23,
+                "text": "        require(b > 0); // Solidity only automatically asserts when dividing by 0",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 24,
+                "text": "        uint256 c = a / b;",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 25,
+                "text": "        // assert(a == b * c + a % b); // There is no case in which this doesn't hold",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 26, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 27,
+                "text": "        return c;",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 87,
+                "text": "        return div(a, b, \"SafeMath: division by zero\");",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 28, "newLine": 88, "text": "    }" },
+              { "type": " ", "oldLine": 29, "newLine": 89, "text": "" },
+              { "type": " ", "oldLine": 30, "newLine": 90, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 31,
+                "text": "     * @dev Subtracts two numbers, reverts on overflow (i.e. if subtrahend is greater than minuend).",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 91,
+                "text": "     * @dev Returns the integer division of two unsigned integers. Reverts with custom message on",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 92,
+                "text": "     * division by zero. The result is rounded towards zero.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 93, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 94,
+                "text": "     * Counterpart to Solidity's `/` operator. Note: this function uses a",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 95,
+                "text": "     * `revert` opcode (which leaves remaining gas untouched) while Solidity",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 96,
+                "text": "     * uses an invalid opcode to revert (consuming all remaining gas).",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 97, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 98,
+                "text": "     * Requirements:",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 99, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 100,
+                "text": "     * - The divisor cannot be zero.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 32, "newLine": 101, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 33,
+                "text": "    function sub(uint256 a, uint256 b) internal pure returns (uint256) {",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 34,
+                "text": "        require(b <= a);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 35,
+                "text": "        uint256 c = a - b;",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 102,
+                "text": "    function div(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 103,
+                "text": "        require(b > 0, errorMessage);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 104,
+                "text": "        uint256 c = a / b;",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 105,
+                "text": "        // assert(a == b * c + a % b); // There is no case in which this doesn't hold",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 36, "newLine": 106, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 37,
+                "newLine": 107,
+                "text": "        return c;"
+              },
+              { "type": " ", "oldLine": 38, "newLine": 108, "text": "    }" },
+              { "type": " ", "oldLine": 39, "newLine": 109, "text": "" },
+              { "type": " ", "oldLine": 40, "newLine": 110, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 41,
+                "text": "     * @dev Adds two numbers, reverts on overflow.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 111,
+                "text": "     * @dev Returns the remainder of dividing two unsigned integers. (unsigned integer modulo),",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 112,
+                "text": "     * Reverts when dividing by zero.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 113,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 114,
+                "text": "     * Counterpart to Solidity's `%` operator. This function uses a `revert`",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 115,
+                "text": "     * opcode (which leaves remaining gas untouched) while Solidity uses an",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 116,
+                "text": "     * invalid opcode to revert (consuming all remaining gas).",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 117,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 118,
+                "text": "     * Requirements:",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 119,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 120,
+                "text": "     * - The divisor cannot be zero.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 42, "newLine": 121, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 43,
+                "text": "    function add(uint256 a, uint256 b) internal pure returns (uint256) {",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 44,
+                "text": "        uint256 c = a + b;",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 45,
+                "text": "        require(c >= a);",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 46, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 47,
+                "text": "        return c;",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 122,
+                "text": "    function mod(uint256 a, uint256 b) internal pure returns (uint256) {",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 123,
+                "text": "        return mod(a, b, \"SafeMath: modulo by zero\");",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 48, "newLine": 124, "text": "    }" },
+              { "type": " ", "oldLine": 49, "newLine": 125, "text": "" },
+              { "type": " ", "oldLine": 50, "newLine": 126, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 51,
+                "text": "     * @dev Divides two numbers and returns the remainder (unsigned integer modulo),",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 52,
+                "text": "     * reverts when dividing by zero.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 127,
+                "text": "     * @dev Returns the remainder of dividing two unsigned integers. (unsigned integer modulo),",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 128,
+                "text": "     * Reverts with custom message when dividing by zero.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 129,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 130,
+                "text": "     * Counterpart to Solidity's `%` operator. This function uses a `revert`",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 131,
+                "text": "     * opcode (which leaves remaining gas untouched) while Solidity uses an",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 132,
+                "text": "     * invalid opcode to revert (consuming all remaining gas).",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 133,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 134,
+                "text": "     * Requirements:",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 135,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 136,
+                "text": "     * - The divisor cannot be zero.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 53, "newLine": 137, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 54,
+                "text": "    function mod(uint256 a, uint256 b) internal pure returns (uint256) {",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 55,
+                "text": "        require(b != 0);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 138,
+                "text": "    function mod(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 139,
+                "text": "        require(b != 0, errorMessage);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 56,
+                "newLine": 140,
+                "text": "        return a % b;"
+              },
+              { "type": " ", "oldLine": 57, "newLine": 141, "text": "    }" },
+              { "type": " ", "oldLine": 58, "newLine": 142, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "e3b0c44298fc1c14": {
+      "status": "differs",
+      "coveredLines": 130,
+      "match": {
+        "origin": "library",
+        "collection": "openzeppelin",
+        "relation": { "type": "library" },
+        "rank": 3,
+        "matchedBy": "name",
+        "auditedName": "SafeMath",
+        "similarity": 0.574,
+        "reportId": "openzeppelin/contracts__audits__2018-10",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/math/SafeMath.sol",
+        "commit": "6d415c508be94ef8391ed6525df365452466da76",
+        "commitTimestamp": "2018-10-19T20:42:20Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/6d415c508be94ef8391ed6525df365452466da76/contracts/math/SafeMath.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Synthesized fix-review snapshot: master at the squash-merge of the last cited fix PR #1438, which contains every fix PR #1329-#1449 cited per finding; the Critical BreakInvariantBounty frontrunning issue was remediated by removing the contract in #1424. The report does not name a re-reviewed commit.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 12,
+        "removed": 3,
+        "ignoredAdded": 95,
+        "ignoredRemoved": 20,
+        "unchanged": 130,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 58,
+            "newStart": 1,
+            "newLines": 142,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "library SafeMath {"
+              },
+              { "type": " ", "oldLine": 2, "newLine": 2, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 3,
+                "text": "     * @dev Multiplies two numbers, reverts on overflow.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "     * @dev Returns the addition of two unsigned integers, reverting on",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 4,
+                "text": "     * overflow.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 5, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 6,
+                "text": "     * Counterpart to Solidity's `+` operator.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 7, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 8,
+                "text": "     * Requirements:",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 9, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 10,
+                "text": "     * - Addition cannot overflow.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 4, "newLine": 11, "text": "     */" },
+              {
+                "type": "+",
+                "newLine": 12,
+                "text": "    function add(uint256 a, uint256 b) internal pure returns (uint256) {",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 13,
+                "text": "        uint256 c = a + b;",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 14,
+                "text": "        require(c >= a, \"SafeMath: addition overflow\");",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 15, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 16,
+                "text": "        return c;",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 17, "text": "    }", "ignored": false },
+              { "type": "+", "newLine": 18, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 19,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 20,
+                "text": "     * @dev Returns the subtraction of two unsigned integers, reverting on",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 21,
+                "text": "     * overflow (when the result is negative).",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 22, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 23,
+                "text": "     * Counterpart to Solidity's `-` operator.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 24, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 25,
+                "text": "     * Requirements:",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 26, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 27,
+                "text": "     * - Subtraction cannot overflow.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 28,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 29,
+                "text": "    function sub(uint256 a, uint256 b) internal pure returns (uint256) {",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 30,
+                "text": "        return sub(a, b, \"SafeMath: subtraction overflow\");",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 31, "text": "    }", "ignored": false },
+              { "type": "+", "newLine": 32, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 33,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 34,
+                "text": "     * @dev Returns the subtraction of two unsigned integers, reverting with custom message on",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 35,
+                "text": "     * overflow (when the result is negative).",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 36, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 37,
+                "text": "     * Counterpart to Solidity's `-` operator.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 38, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 39,
+                "text": "     * Requirements:",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 40, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 41,
+                "text": "     * - Subtraction cannot overflow.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 42,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 43,
+                "text": "    function sub(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 44,
+                "text": "        require(b <= a, errorMessage);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 45,
+                "text": "        uint256 c = a - b;",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 46, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 47,
+                "text": "        return c;",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 48, "text": "    }", "ignored": false },
+              { "type": "+", "newLine": 49, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 50,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 51,
+                "text": "     * @dev Returns the multiplication of two unsigned integers, reverting on",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 52,
+                "text": "     * overflow.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 53, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 54,
+                "text": "     * Counterpart to Solidity's `*` operator.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 55, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 56,
+                "text": "     * Requirements:",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 57, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 58,
+                "text": "     * - Multiplication cannot overflow.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 59,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 60,
+                "text": "    function mul(uint256 a, uint256 b) internal pure returns (uint256) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 6,
+                "newLine": 61,
+                "text": "        // Gas optimization: this is cheaper than requiring 'a' not being zero, but the"
+              },
+              {
+                "type": " ",
+                "oldLine": 7,
+                "newLine": 62,
+                "text": "        // benefit is lost if 'b' is also tested."
+              },
+              {
+                "type": "-",
+                "oldLine": 8,
+                "text": "        // See: https://github.com/OpenZeppelin/openzeppelin-solidity/pull/522",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 63,
+                "text": "        // See: https://github.com/OpenZeppelin/openzeppelin-contracts/pull/522",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 64,
+                "text": "        if (a == 0) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 10,
+                "newLine": 65,
+                "text": "            return 0;"
+              },
+              {
+                "type": " ",
+                "oldLine": 11,
+                "newLine": 66,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 12, "newLine": 67, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 13,
+                "newLine": 68,
+                "text": "        uint256 c = a * b;"
+              },
+              {
+                "type": "-",
+                "oldLine": 14,
+                "text": "        require(c / a == b);",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 69,
+                "text": "        require(c / a == b, \"SafeMath: multiplication overflow\");",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 15, "newLine": 70, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 16,
+                "newLine": 71,
+                "text": "        return c;"
+              },
+              { "type": " ", "oldLine": 17, "newLine": 72, "text": "    }" },
+              { "type": " ", "oldLine": 18, "newLine": 73, "text": "" },
+              { "type": " ", "oldLine": 19, "newLine": 74, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 20,
+                "text": "     * @dev Integer division of two numbers truncating the quotient, reverts on division by zero.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 75,
+                "text": "     * @dev Returns the integer division of two unsigned integers. Reverts on",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 76,
+                "text": "     * division by zero. The result is rounded towards zero.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 77, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 78,
+                "text": "     * Counterpart to Solidity's `/` operator. Note: this function uses a",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 79,
+                "text": "     * `revert` opcode (which leaves remaining gas untouched) while Solidity",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 80,
+                "text": "     * uses an invalid opcode to revert (consuming all remaining gas).",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 81, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 82,
+                "text": "     * Requirements:",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 83, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 84,
+                "text": "     * - The divisor cannot be zero.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 21, "newLine": 85, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 86,
+                "text": "    function div(uint256 a, uint256 b) internal pure returns (uint256) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 23,
+                "text": "        require(b > 0); // Solidity only automatically asserts when dividing by 0",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 24,
+                "text": "        uint256 c = a / b;",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 25,
+                "text": "        // assert(a == b * c + a % b); // There is no case in which this doesn't hold",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 26, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 27,
+                "text": "        return c;",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 87,
+                "text": "        return div(a, b, \"SafeMath: division by zero\");",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 28, "newLine": 88, "text": "    }" },
+              { "type": " ", "oldLine": 29, "newLine": 89, "text": "" },
+              { "type": " ", "oldLine": 30, "newLine": 90, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 31,
+                "text": "     * @dev Subtracts two numbers, reverts on overflow (i.e. if subtrahend is greater than minuend).",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 91,
+                "text": "     * @dev Returns the integer division of two unsigned integers. Reverts with custom message on",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 92,
+                "text": "     * division by zero. The result is rounded towards zero.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 93, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 94,
+                "text": "     * Counterpart to Solidity's `/` operator. Note: this function uses a",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 95,
+                "text": "     * `revert` opcode (which leaves remaining gas untouched) while Solidity",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 96,
+                "text": "     * uses an invalid opcode to revert (consuming all remaining gas).",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 97, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 98,
+                "text": "     * Requirements:",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 99, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 100,
+                "text": "     * - The divisor cannot be zero.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 32, "newLine": 101, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 33,
+                "text": "    function sub(uint256 a, uint256 b) internal pure returns (uint256) {",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 34,
+                "text": "        require(b <= a);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 35,
+                "text": "        uint256 c = a - b;",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 102,
+                "text": "    function div(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 103,
+                "text": "        require(b > 0, errorMessage);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 104,
+                "text": "        uint256 c = a / b;",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 105,
+                "text": "        // assert(a == b * c + a % b); // There is no case in which this doesn't hold",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 36, "newLine": 106, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 37,
+                "newLine": 107,
+                "text": "        return c;"
+              },
+              { "type": " ", "oldLine": 38, "newLine": 108, "text": "    }" },
+              { "type": " ", "oldLine": 39, "newLine": 109, "text": "" },
+              { "type": " ", "oldLine": 40, "newLine": 110, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 41,
+                "text": "     * @dev Adds two numbers, reverts on overflow.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 111,
+                "text": "     * @dev Returns the remainder of dividing two unsigned integers. (unsigned integer modulo),",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 112,
+                "text": "     * Reverts when dividing by zero.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 113,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 114,
+                "text": "     * Counterpart to Solidity's `%` operator. This function uses a `revert`",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 115,
+                "text": "     * opcode (which leaves remaining gas untouched) while Solidity uses an",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 116,
+                "text": "     * invalid opcode to revert (consuming all remaining gas).",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 117,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 118,
+                "text": "     * Requirements:",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 119,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 120,
+                "text": "     * - The divisor cannot be zero.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 42, "newLine": 121, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 43,
+                "text": "    function add(uint256 a, uint256 b) internal pure returns (uint256) {",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 44,
+                "text": "        uint256 c = a + b;",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 45,
+                "text": "        require(c >= a);",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 46, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 47,
+                "text": "        return c;",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 122,
+                "text": "    function mod(uint256 a, uint256 b) internal pure returns (uint256) {",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 123,
+                "text": "        return mod(a, b, \"SafeMath: modulo by zero\");",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 48, "newLine": 124, "text": "    }" },
+              { "type": " ", "oldLine": 49, "newLine": 125, "text": "" },
+              { "type": " ", "oldLine": 50, "newLine": 126, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 51,
+                "text": "     * @dev Divides two numbers and returns the remainder (unsigned integer modulo),",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 52,
+                "text": "     * reverts when dividing by zero.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 127,
+                "text": "     * @dev Returns the remainder of dividing two unsigned integers. (unsigned integer modulo),",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 128,
+                "text": "     * Reverts with custom message when dividing by zero.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 129,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 130,
+                "text": "     * Counterpart to Solidity's `%` operator. This function uses a `revert`",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 131,
+                "text": "     * opcode (which leaves remaining gas untouched) while Solidity uses an",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 132,
+                "text": "     * invalid opcode to revert (consuming all remaining gas).",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 133,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 134,
+                "text": "     * Requirements:",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 135,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 136,
+                "text": "     * - The divisor cannot be zero.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 53, "newLine": 137, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 54,
+                "text": "    function mod(uint256 a, uint256 b) internal pure returns (uint256) {",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 55,
+                "text": "        require(b != 0);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 138,
+                "text": "    function mod(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 139,
+                "text": "        require(b != 0, errorMessage);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 56,
+                "newLine": 140,
+                "text": "        return a % b;"
+              },
+              { "type": " ", "oldLine": 57, "newLine": 141, "text": "    }" },
+              { "type": " ", "oldLine": 58, "newLine": 142, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    },
+    "d80a56c5abf9208b": {
+      "status": "differs",
+      "coveredLines": 129,
+      "match": {
+        "origin": "stack",
+        "collection": "openzeppelin",
+        "relation": { "type": "template", "template": "global/ProxyAdmin" },
+        "rank": 2,
+        "matchedBy": "name",
+        "auditedName": "SafeMath",
+        "similarity": 0.574,
+        "reportId": "openzeppelin/contracts__audits__2018-10",
+        "repository": "OpenZeppelin/openzeppelin-contracts",
+        "path": "contracts/math/SafeMath.sol",
+        "commit": "6d415c508be94ef8391ed6525df365452466da76",
+        "commitTimestamp": "2018-10-19T20:42:20Z",
+        "url": "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/6d415c508be94ef8391ed6525df365452466da76/contracts/math/SafeMath.sol",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Synthesized fix-review snapshot: master at the squash-merge of the last cited fix PR #1438, which contains every fix PR #1329-#1449 cited per finding; the Critical BreakInvariantBounty frontrunning issue was remediated by removing the contract in #1424. The report does not name a re-reviewed commit.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 3
+      },
+      "diff": {
+        "added": 12,
+        "removed": 3,
+        "ignoredAdded": 94,
+        "ignoredRemoved": 20,
+        "unchanged": 129,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 58,
+            "newStart": 1,
+            "newLines": 141,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "library SafeMath {"
+              },
+              { "type": " ", "oldLine": 2, "newLine": 2, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 3,
+                "text": "     * @dev Multiplies two numbers, reverts on overflow.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "     * @dev Returns the addition of two unsigned integers, reverting on",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 4,
+                "text": "     * overflow.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 5, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 6,
+                "text": "     * Counterpart to Solidity's `+` operator.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 7, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 8,
+                "text": "     * Requirements:",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 9,
+                "text": "     * - Addition cannot overflow.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 4, "newLine": 10, "text": "     */" },
+              {
+                "type": "+",
+                "newLine": 11,
+                "text": "    function add(uint256 a, uint256 b) internal pure returns (uint256) {",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 12,
+                "text": "        uint256 c = a + b;",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 13,
+                "text": "        require(c >= a, \"SafeMath: addition overflow\");",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 14, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 15,
+                "text": "        return c;",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 16, "text": "    }", "ignored": false },
+              { "type": "+", "newLine": 17, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 18,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 19,
+                "text": "     * @dev Returns the subtraction of two unsigned integers, reverting on",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 20,
+                "text": "     * overflow (when the result is negative).",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 21, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 22,
+                "text": "     * Counterpart to Solidity's `-` operator.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 23, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 24,
+                "text": "     * Requirements:",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 25,
+                "text": "     * - Subtraction cannot overflow.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 26,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 27,
+                "text": "    function sub(uint256 a, uint256 b) internal pure returns (uint256) {",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 28,
+                "text": "        return sub(a, b, \"SafeMath: subtraction overflow\");",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 29, "text": "    }", "ignored": false },
+              { "type": "+", "newLine": 30, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 31,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 32,
+                "text": "     * @dev Returns the subtraction of two unsigned integers, reverting with custom message on",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 33,
+                "text": "     * overflow (when the result is negative).",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 34, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 35,
+                "text": "     * Counterpart to Solidity's `-` operator.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 36, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 37,
+                "text": "     * Requirements:",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 38,
+                "text": "     * - Subtraction cannot overflow.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 39, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 40,
+                "text": "     * _Available since v2.4.0._",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 41,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 42,
+                "text": "    function sub(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 43,
+                "text": "        require(b <= a, errorMessage);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 44,
+                "text": "        uint256 c = a - b;",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 45, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 46,
+                "text": "        return c;",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 47, "text": "    }", "ignored": false },
+              { "type": "+", "newLine": 48, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 49,
+                "text": "    /**",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 50,
+                "text": "     * @dev Returns the multiplication of two unsigned integers, reverting on",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 51,
+                "text": "     * overflow.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 52, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 53,
+                "text": "     * Counterpart to Solidity's `*` operator.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 54, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 55,
+                "text": "     * Requirements:",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 56,
+                "text": "     * - Multiplication cannot overflow.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 57,
+                "text": "     */",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 58,
+                "text": "    function mul(uint256 a, uint256 b) internal pure returns (uint256) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 6,
+                "newLine": 59,
+                "text": "        // Gas optimization: this is cheaper than requiring 'a' not being zero, but the"
+              },
+              {
+                "type": " ",
+                "oldLine": 7,
+                "newLine": 60,
+                "text": "        // benefit is lost if 'b' is also tested."
+              },
+              {
+                "type": "-",
+                "oldLine": 8,
+                "text": "        // See: https://github.com/OpenZeppelin/openzeppelin-solidity/pull/522",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 61,
+                "text": "        // See: https://github.com/OpenZeppelin/openzeppelin-contracts/pull/522",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 62,
+                "text": "        if (a == 0) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 10,
+                "newLine": 63,
+                "text": "            return 0;"
+              },
+              {
+                "type": " ",
+                "oldLine": 11,
+                "newLine": 64,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 12, "newLine": 65, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 13,
+                "newLine": 66,
+                "text": "        uint256 c = a * b;"
+              },
+              {
+                "type": "-",
+                "oldLine": 14,
+                "text": "        require(c / a == b);",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 67,
+                "text": "        require(c / a == b, \"SafeMath: multiplication overflow\");",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 15, "newLine": 68, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 16,
+                "newLine": 69,
+                "text": "        return c;"
+              },
+              { "type": " ", "oldLine": 17, "newLine": 70, "text": "    }" },
+              { "type": " ", "oldLine": 18, "newLine": 71, "text": "" },
+              { "type": " ", "oldLine": 19, "newLine": 72, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 20,
+                "text": "     * @dev Integer division of two numbers truncating the quotient, reverts on division by zero.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 73,
+                "text": "     * @dev Returns the integer division of two unsigned integers. Reverts on",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 74,
+                "text": "     * division by zero. The result is rounded towards zero.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 75, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 76,
+                "text": "     * Counterpart to Solidity's `/` operator. Note: this function uses a",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 77,
+                "text": "     * `revert` opcode (which leaves remaining gas untouched) while Solidity",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 78,
+                "text": "     * uses an invalid opcode to revert (consuming all remaining gas).",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 79, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 80,
+                "text": "     * Requirements:",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 81,
+                "text": "     * - The divisor cannot be zero.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 21, "newLine": 82, "text": "     */" },
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 83,
+                "text": "    function div(uint256 a, uint256 b) internal pure returns (uint256) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 23,
+                "text": "        require(b > 0); // Solidity only automatically asserts when dividing by 0",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 24,
+                "text": "        uint256 c = a / b;",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 25,
+                "text": "        // assert(a == b * c + a % b); // There is no case in which this doesn't hold",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 26, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 27,
+                "text": "        return c;",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 84,
+                "text": "        return div(a, b, \"SafeMath: division by zero\");",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 28, "newLine": 85, "text": "    }" },
+              { "type": " ", "oldLine": 29, "newLine": 86, "text": "" },
+              { "type": " ", "oldLine": 30, "newLine": 87, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 31,
+                "text": "     * @dev Subtracts two numbers, reverts on overflow (i.e. if subtrahend is greater than minuend).",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 88,
+                "text": "     * @dev Returns the integer division of two unsigned integers. Reverts with custom message on",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 89,
+                "text": "     * division by zero. The result is rounded towards zero.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 90, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 91,
+                "text": "     * Counterpart to Solidity's `/` operator. Note: this function uses a",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 92,
+                "text": "     * `revert` opcode (which leaves remaining gas untouched) while Solidity",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 93,
+                "text": "     * uses an invalid opcode to revert (consuming all remaining gas).",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 94, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 95,
+                "text": "     * Requirements:",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 96,
+                "text": "     * - The divisor cannot be zero.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 97, "text": "     *", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 98,
+                "text": "     * _Available since v2.4.0._",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 32, "newLine": 99, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 33,
+                "text": "    function sub(uint256 a, uint256 b) internal pure returns (uint256) {",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 34,
+                "text": "        require(b <= a);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 35,
+                "text": "        uint256 c = a - b;",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 100,
+                "text": "    function div(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 101,
+                "text": "        // Solidity only automatically asserts when dividing by 0",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 102,
+                "text": "        require(b > 0, errorMessage);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 103,
+                "text": "        uint256 c = a / b;",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 104,
+                "text": "        // assert(a == b * c + a % b); // There is no case in which this doesn't hold",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 36, "newLine": 105, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 37,
+                "newLine": 106,
+                "text": "        return c;"
+              },
+              { "type": " ", "oldLine": 38, "newLine": 107, "text": "    }" },
+              { "type": " ", "oldLine": 39, "newLine": 108, "text": "" },
+              { "type": " ", "oldLine": 40, "newLine": 109, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 41,
+                "text": "     * @dev Adds two numbers, reverts on overflow.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 110,
+                "text": "     * @dev Returns the remainder of dividing two unsigned integers. (unsigned integer modulo),",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 111,
+                "text": "     * Reverts when dividing by zero.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 112,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 113,
+                "text": "     * Counterpart to Solidity's `%` operator. This function uses a `revert`",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 114,
+                "text": "     * opcode (which leaves remaining gas untouched) while Solidity uses an",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 115,
+                "text": "     * invalid opcode to revert (consuming all remaining gas).",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 116,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 117,
+                "text": "     * Requirements:",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 118,
+                "text": "     * - The divisor cannot be zero.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 42, "newLine": 119, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 43,
+                "text": "    function add(uint256 a, uint256 b) internal pure returns (uint256) {",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 44,
+                "text": "        uint256 c = a + b;",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 45,
+                "text": "        require(c >= a);",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 46, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 47,
+                "text": "        return c;",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 120,
+                "text": "    function mod(uint256 a, uint256 b) internal pure returns (uint256) {",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 121,
+                "text": "        return mod(a, b, \"SafeMath: modulo by zero\");",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 48, "newLine": 122, "text": "    }" },
+              { "type": " ", "oldLine": 49, "newLine": 123, "text": "" },
+              { "type": " ", "oldLine": 50, "newLine": 124, "text": "    /**" },
+              {
+                "type": "-",
+                "oldLine": 51,
+                "text": "     * @dev Divides two numbers and returns the remainder (unsigned integer modulo),",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 52,
+                "text": "     * reverts when dividing by zero.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 125,
+                "text": "     * @dev Returns the remainder of dividing two unsigned integers. (unsigned integer modulo),",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 126,
+                "text": "     * Reverts with custom message when dividing by zero.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 127,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 128,
+                "text": "     * Counterpart to Solidity's `%` operator. This function uses a `revert`",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 129,
+                "text": "     * opcode (which leaves remaining gas untouched) while Solidity uses an",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 130,
+                "text": "     * invalid opcode to revert (consuming all remaining gas).",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 131,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 132,
+                "text": "     * Requirements:",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 133,
+                "text": "     * - The divisor cannot be zero.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 134,
+                "text": "     *",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 135,
+                "text": "     * _Available since v2.4.0._",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 53, "newLine": 136, "text": "     */" },
+              {
+                "type": "-",
+                "oldLine": 54,
+                "text": "    function mod(uint256 a, uint256 b) internal pure returns (uint256) {",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 55,
+                "text": "        require(b != 0);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 137,
+                "text": "    function mod(uint256 a, uint256 b, string memory errorMessage) internal pure returns (uint256) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 138,
+                "text": "        require(b != 0, errorMessage);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 56,
+                "newLine": 139,
+                "text": "        return a % b;"
+              },
+              { "type": " ", "oldLine": 57, "newLine": 140, "text": "    }" },
+              { "type": " ", "oldLine": 58, "newLine": 141, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
     }
   }
 }

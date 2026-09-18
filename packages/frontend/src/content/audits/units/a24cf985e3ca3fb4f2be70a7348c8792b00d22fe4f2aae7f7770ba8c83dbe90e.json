@@ -32,6 +32,33 @@
         "totalVersions": 1
       },
       "warnings": []
+    },
+    "d80a56c5abf9208b": {
+      "status": "identical",
+      "coveredLines": 3,
+      "match": {
+        "origin": "other",
+        "collection": "aztecnetwork",
+        "relation": { "type": "name" },
+        "rank": 4,
+        "matchedBy": "identity",
+        "auditedName": "IVerifier",
+        "similarity": 1,
+        "reportId": "aztecnetwork/cantina-payload-2026-03-05",
+        "repository": "AztecProtocol/aztec-packages",
+        "path": "l1-contracts/src/alpha/AlphaVerifier.sol",
+        "commit": "ed3f61d61745bcd895056ee49e4c6a849928d19e",
+        "commitTimestamp": "2026-02-27T09:20:07Z",
+        "url": "https://github.com/AztecProtocol/aztec-packages/blob/ed3f61d61745bcd895056ee49e4c6a849928d19e/l1-contracts/src/alpha/AlphaVerifier.sol",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "security review",
+        "coverage": "full file",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "warnings": []
     }
   }
 }
