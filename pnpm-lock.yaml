@@ -1181,9 +1181,6 @@ importers:
       uuid:
         specifier: ^11.0.2
         version: 11.1.0
-      viem:
-        specifier: ^2.21.36
-        version: 2.31.6(typescript@7.0.2)(zod@3.24.1)
     devDependencies:
       '@l2beat/typescript-config':
         specifier: workspace:*

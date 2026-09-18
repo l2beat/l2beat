@@ -1,19 +1,28 @@
 import { ethers } from 'ethers'
-import {
-  decodeAbiParameters,
-  parseAbiItem,
-  parseAbiParameters,
-} from 'viem/utils'
 import type { Method, Operation } from '../../types'
 import { defineMethod } from '../defineMethod'
 
+interface UserOperation {
+  sender: string
+  initCode: string
+  callData: string
+}
+
+interface Call {
+  to: string
+  data: string
+}
+
+interface TargetCall {
+  target: string
+  data: string
+}
+
 export const ERC4337_methods: Method[] = [
   defineMethod(
-    parseAbiItem(
-      'function handleOps((address sender, uint256 nonce, bytes initCode, bytes callData, uint256 callGasLimit, uint256 verificationGasLimit, uint256 preVerificationGas, uint256 maxFeePerGas, uint256 maxPriorityFeePerGas, bytes paymasterAndData, bytes signature)[] calldata ops, address beneficiary)',
-    ),
+    'function handleOps(tuple(address sender, uint256 nonce, bytes initCode, bytes callData, uint256 callGasLimit, uint256 verificationGasLimit, uint256 preVerificationGas, uint256 maxFeePerGas, uint256 maxPriorityFeePerGas, bytes paymasterAndData, bytes signature)[] calldata ops, address beneficiary)',
     ([ops]) => {
-      return ops.flatMap((op) => {
+      return ops.flatMap((op: UserOperation) => {
         const operations: Operation[] = []
         if (op.initCode && op.initCode !== '0x') {
           operations.push({
@@ -33,11 +42,9 @@ export const ERC4337_methods: Method[] = [
     'ERC-4337:EntryPoint0.6.0',
   ),
   defineMethod(
-    parseAbiItem(
-      'function handleOps((address sender, uint256 nonce, bytes initCode, bytes callData, bytes32 accountGasLimits, uint256 preVerificationGas, bytes32 gasFees, bytes paymasterAndData, bytes signature)[] calldata ops, address beneficiary)',
-    ),
+    'function handleOps(tuple(address sender, uint256 nonce, bytes initCode, bytes callData, bytes32 accountGasLimits, uint256 preVerificationGas, bytes32 gasFees, bytes paymasterAndData, bytes signature)[] calldata ops, address beneficiary)',
     ([ops]) => {
-      return ops.flatMap((op) => {
+      return ops.flatMap((op: UserOperation) => {
         const operations: Operation[] = []
         if (op.initCode && op.initCode !== '0x') {
           operations.push({
@@ -57,11 +64,9 @@ export const ERC4337_methods: Method[] = [
     'ERC-4337:EntryPoint0.7.0',
   ),
   defineMethod(
-    parseAbiItem(
-      'function handleOps((address sender, uint256 nonce, bytes initCode, bytes callData, bytes32 accountGasLimits, uint256 preVerificationGas, bytes32 gasFees, bytes paymasterAndData, bytes signature)[] calldata ops, address beneficiary)',
-    ),
+    'function handleOps(tuple(address sender, uint256 nonce, bytes initCode, bytes callData, bytes32 accountGasLimits, uint256 preVerificationGas, bytes32 gasFees, bytes paymasterAndData, bytes signature)[] calldata ops, address beneficiary)',
     ([ops]) => {
-      return ops.flatMap((op) => {
+      return ops.flatMap((op: UserOperation) => {
         const operations: Operation[] = []
         if (op.initCode && op.initCode !== '0x') {
           operations.push({
@@ -81,7 +86,7 @@ export const ERC4337_methods: Method[] = [
     'ERC-4337:EntryPoint0.8.0',
   ),
   defineMethod(
-    parseAbiItem('function executeBatch(address[] addresses, bytes[] inputs)'),
+    'function executeBatch(address[] addresses, bytes[] inputs)',
     ([addresses, inputs]) => {
       if (addresses.length !== inputs.length) {
         return []
@@ -95,18 +100,16 @@ export const ERC4337_methods: Method[] = [
     'SmartAccount',
   ),
   defineMethod(
-    parseAbiItem('function execute(address,uint256,bytes)'),
+    'function execute(address,uint256,bytes)',
     ([to, , calldata]) => {
       return [{ type: 'recursive', calldata, to }]
     },
     'SmartAccount',
   ),
   defineMethod(
-    parseAbiItem(
-      'function executeBatch((address to, uint256 value, bytes data)[] calls)',
-    ),
+    'function executeBatch(tuple(address to, uint256 value, bytes data)[] calls)',
     ([calls]) => {
-      return calls.map((call) => ({
+      return calls.map((call: Call) => ({
         type: 'recursive',
         calldata: call.data,
         to: call.to,
@@ -115,11 +118,9 @@ export const ERC4337_methods: Method[] = [
     'SmartAccount',
   ),
   defineMethod(
-    parseAbiItem(
-      'function execute4337Ops((address target, uint256 value, bytes data)[] calls)',
-    ),
+    'function execute4337Ops(tuple(address target, uint256 value, bytes data)[] calls)',
     ([calls]) => {
-      return calls.map((call) => ({
+      return calls.map((call: TargetCall) => ({
         type: 'recursive',
         calldata: call.data,
         to: call.target,
@@ -128,9 +129,7 @@ export const ERC4337_methods: Method[] = [
     'SmartAccount',
   ),
   defineMethod(
-    parseAbiItem(
-      'function executeBatch(address[] targets, uint256[] values, bytes[] inputs)',
-    ),
+    'function executeBatch(address[] targets, uint256[] values, bytes[] inputs)',
     ([targets, , inputs]) => {
       return inputs.map((input: string, index: number) => ({
         type: 'recursive',
@@ -141,9 +140,7 @@ export const ERC4337_methods: Method[] = [
     'SmartAccount',
   ),
   defineMethod(
-    parseAbiItem(
-      'function executeBatch(address[] targets, uint256[] values, bytes[] inputs)',
-    ),
+    'function executeBatch(address[] targets, uint256[] values, bytes[] inputs)',
     ([targets, , inputs]) => {
       return inputs.map((input: string, index: number) => ({
         type: 'recursive',
@@ -154,9 +151,7 @@ export const ERC4337_methods: Method[] = [
     'SmartAccount',
   ),
   defineMethod(
-    parseAbiItem(
-      'function executeBatch(address[] targets, uint256[] values, bytes[] inputs)',
-    ),
+    'function executeBatch(address[] targets, uint256[] values, bytes[] inputs)',
     ([targets, , inputs]) => {
       return inputs.map((input: string, index: number) => ({
         type: 'recursive',
@@ -167,9 +162,7 @@ export const ERC4337_methods: Method[] = [
     'SmartAccount',
   ),
   defineMethod(
-    parseAbiItem(
-      'function execute((address target, uint256 value, bytes data) execution)',
-    ),
+    'function execute(tuple(address target, uint256 value, bytes data) execution)',
     ([execution]) => {
       return [
         {
@@ -182,9 +175,7 @@ export const ERC4337_methods: Method[] = [
     'SmartAccount',
   ),
   defineMethod(
-    parseAbiItem(
-      'function executeBatch_y6U(address[] dest, uint256[] value, bytes[] func)',
-    ),
+    'function executeBatch_y6U(address[] dest, uint256[] value, bytes[] func)',
     ([dest, , func]) => {
       return func.map((input: string, index: number) => ({
         type: 'recursive',
@@ -195,16 +186,14 @@ export const ERC4337_methods: Method[] = [
     'SmartAccount',
   ),
   defineMethod(
-    parseAbiItem('function execute(bytes32 execMode, bytes executionCalldata)'),
+    'function execute(bytes32 execMode, bytes executionCalldata)',
     ([execMode, executionCalldata]) => {
       return decodeCalldata(execMode, executionCalldata)
     },
     'SmartAccount',
   ),
   defineMethod(
-    parseAbiItem(
-      'function executeAndRevert(address to, uint256 value, bytes data, uint8 operation)',
-    ),
+    'function executeAndRevert(address to, uint256 value, bytes data, uint8 operation)',
     ([to, , data]) => {
       return [
         {
@@ -217,9 +206,7 @@ export const ERC4337_methods: Method[] = [
     'SmartAccount',
   ),
   defineMethod(
-    parseAbiItem(
-      'function execute(address to, uint256 value, bytes memory data, uint8 _operation)',
-    ),
+    'function execute(address to, uint256 value, bytes memory data, uint8 _operation)',
     ([to, , data]) => {
       return [
         {
@@ -232,9 +219,7 @@ export const ERC4337_methods: Method[] = [
     'SmartAccount',
   ),
   defineMethod(
-    parseAbiItem(
-      'function execTransactionFromEntrypoint(address to, uint256 value, bytes data)',
-    ),
+    'function execTransactionFromEntrypoint(address to, uint256 value, bytes data)',
     ([to, , data]) => {
       return [
         {
@@ -247,7 +232,7 @@ export const ERC4337_methods: Method[] = [
     'SmartAccount',
   ),
   defineMethod(
-    parseAbiItem('function execute_ncC(address to, uint256 value, bytes data)'),
+    'function execute_ncC(address to, uint256 value, bytes data)',
     ([to, , data]) => {
       return [
         {
@@ -260,9 +245,7 @@ export const ERC4337_methods: Method[] = [
     'SmartAccount',
   ),
   defineMethod(
-    parseAbiItem(
-      'function executeUserOpWithErrorString(address to, uint256 value, bytes data, uint8 operation)',
-    ),
+    'function executeUserOpWithErrorString(address to, uint256 value, bytes data, uint8 operation)',
     ([to, , data]) => {
       return [
         {
@@ -274,9 +257,7 @@ export const ERC4337_methods: Method[] = [
     },
   ),
   defineMethod(
-    parseAbiItem(
-      'function executeBySender((address to, uint256 value, bytes data)[] calls)',
-    ),
+    'function executeBySender(tuple(address to, uint256 value, bytes data)[] calls)',
     ([calls]) => {
       return calls.map((call: { to: string; data: string }) => ({
         type: 'recursive',
@@ -286,9 +267,7 @@ export const ERC4337_methods: Method[] = [
     },
   ),
   defineMethod(
-    parseAbiItem(
-      'function executeWithoutChainIdValidation(bytes[] calldata calls)',
-    ),
+    'function executeWithoutChainIdValidation(bytes[] calldata calls)',
     ([calls]) => {
       return calls.map((call: string) => ({
         type: 'recursive',
@@ -298,9 +277,7 @@ export const ERC4337_methods: Method[] = [
     },
   ),
   defineMethod(
-    parseAbiItem(
-      'function installValidation(bytes25 validationConfig, bytes4[] calldata selectors, bytes calldata installData, bytes[] calldata hooks)',
-    ),
+    'function installValidation(bytes25 validationConfig, bytes4[] calldata selectors, bytes calldata installData, bytes[] calldata hooks)',
     ([, , installData]) => {
       // installData is bytes calldata containing the installation payload
       // It will be recursively decoded; target address is embedded within
@@ -317,9 +294,7 @@ export const ERC4337_methods: Method[] = [
     },
   ),
   defineMethod(
-    parseAbiItem(
-      'function executeComposable((address,uint256,bytes4,(uint8,bytes,(uint8,bytes)[])[],(uint8,bytes)[])[])',
-    ),
+    'function executeComposable(tuple(address,uint256,bytes4,tuple(uint8,bytes,tuple(uint8,bytes)[])[],tuple(uint8,bytes)[])[])',
     ([executions]) => {
       // ComposableExecution struct mapping:
       // [0] address to          - target contract address
@@ -401,20 +376,20 @@ function decodeCalldata(
     if (callType === CALLTYPE_BATCH) {
       const operations: Operation[] = []
 
-      const decodedParams = decodeAbiParameters(
-        parseAbiParameters(
-          '(address target, uint256 value, bytes callData)[] executions',
-        ),
+      const decodedParams = ethers.utils.defaultAbiCoder.decode(
+        ['tuple(address target, uint256 value, bytes callData)[]'],
         executionCalldata,
       )
 
-      decodedParams[0].forEach((value) => {
-        operations.push({
-          type: 'recursive',
-          calldata: value.callData,
-          to: value.target,
-        })
-      })
+      decodedParams[0].forEach(
+        (value: { target: string; callData: string }) => {
+          operations.push({
+            type: 'recursive',
+            calldata: value.callData,
+            to: value.target,
+          })
+        },
+      )
 
       return operations
     }
