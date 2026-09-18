@@ -8,7 +8,7 @@
   "tasks": {
     "build": {
       "dependsOn": ["^build", "db:generate-types"],
-      "outputs": ["build/**", ".next/**", "!.next/cache/**", "dist/**"]
+      "outputs": ["build/**", "dist/**"]
     },
     "db:generate-types": {
       "outputs": ["src/kysely/generated/**"]
