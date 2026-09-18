@@ -153,6 +153,7 @@ export const privacyPools: BaseProject = {
   },
   privacyInfo: {
     category: PRIVACY_CATEGORIES.pool,
+    trackedOn: ['ethereum'],
     tokens: getPrivacyTokens(),
     relayerTracking: {
       type: 'onchainEvents',

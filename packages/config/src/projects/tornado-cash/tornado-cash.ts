@@ -184,6 +184,7 @@ export const tornadoCash: BaseProject = {
   },
   privacyInfo: {
     category: PRIVACY_CATEGORIES.pool,
+    trackedOn: ['ethereum'],
     tokens: getPrivacyTokens(),
     relayerTracking: {
       type: 'onchainEvents',

@@ -393,8 +393,31 @@ describe('getProjects', () => {
   })
 
   describe('privacy projects', () => {
+    const chainNames = new Set(
+      projects.flatMap((p) => (p.chainConfig ? [p.chainConfig.name] : [])),
+    )
+
     for (const project of projects) {
       if (!project.privacyInfo) continue
+
+      const trackedOn = project.privacyInfo.trackedOn
+
+      it(`${project.id} is tracked on at least one chain`, () => {
+        expect(trackedOn.length).toBeGreaterThan(0)
+      })
+
+      it(`${project.id} has no duplicate trackedOn chains`, () => {
+        expect(new Set(trackedOn).size).toEqual(trackedOn.length)
+      })
+
+      it(`${project.id} trackedOn chains all have a chainConfig`, () => {
+        for (const chain of trackedOn) {
+          assert(
+            chainNames.has(chain),
+            `${project.id} privacyInfo.trackedOn: no project has chainConfig.name "${chain}"`,
+          )
+        }
+      })
 
       it(`${project.id} has at most one zk catalog trusted setup entry`, () => {
         expect(

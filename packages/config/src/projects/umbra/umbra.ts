@@ -107,6 +107,7 @@ export const umbra: BaseProject = {
   },
   privacyInfo: {
     category: PRIVACY_CATEGORIES.stealthAddress,
+    trackedOn: ['ethereum'],
     tokens: privacyTokens,
     anonymitySet: {
       type: 'not-applicable',

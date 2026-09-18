@@ -241,6 +241,7 @@ export const railgun: BaseProject = {
   },
   privacyInfo: {
     category: PRIVACY_CATEGORIES.shieldedLedger,
+    trackedOn: ['ethereum'],
     tokens: privacyTokens,
     relayerTracking: {
       type: 'railgunWaku',

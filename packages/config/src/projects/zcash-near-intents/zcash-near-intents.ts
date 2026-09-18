@@ -61,6 +61,7 @@ export const zcashNearIntents: BaseProject = {
   },
   privacyInfo: {
     category: PRIVACY_CATEGORIES.shieldedLedger,
+    trackedOn: ['ethereum'],
     tokens: [],
     zkCatalogId: ProjectId('zcash'),
     anonymitySet: {

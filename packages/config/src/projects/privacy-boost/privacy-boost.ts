@@ -306,6 +306,7 @@ export const privacyBoost: BaseProject = {
   privacyInfo: {
     category: PRIVACY_CATEGORIES.shieldedLedger,
     tokens: privacyTokens,
+    trackedOn: ['optimism'],
     exitWindow: {
       value: 'None',
       sentiment: 'bad',

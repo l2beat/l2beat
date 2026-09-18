@@ -124,6 +124,7 @@ export const strk20: BaseProject = {
   },
   privacyInfo: {
     category: PRIVACY_CATEGORIES.shieldedLedger,
+    trackedOn: ['starknet'],
     tokens: getPrivacyTokens(),
     zkCatalogId: ProjectId('stwo'),
     exitWindow: {
