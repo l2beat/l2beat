@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { SUPPORTED_CHAINS } from '@/chains'
-import { Stats, type StatsApiRequest, type StatsWithChain } from '@/types'
+import { API, type StatsWithChain } from '@/types'
+import { getErrorMessage } from '@/utils/getErrorMessage'
 import { postApi } from '@/utils/postApi'
 import { BlockCountInput, type InputMode } from './BlockCountInput'
 import { ChainDropdown } from './ChainDropdown'
@@ -84,11 +85,11 @@ export function StatsForm({
           currentBatchSize = blocksLeftToFetch
         }
 
-        const batch = await getBatch(
+        const batch = await postApi(API.stats, {
           chainId,
-          currentBatchSize,
-          currentLastFetched,
-        )
+          count: currentBatchSize,
+          lastFetched: currentLastFetched,
+        })
         currentLastFetched = batch.startBlock
 
         setLoadedCount((loadedCount) => loadedCount + currentBatchSize)
@@ -99,20 +100,11 @@ export function StatsForm({
         blocksLeftToFetch -= currentBatchSize
       }
     } catch (err) {
-      setErrorMessage((err as Error).message)
+      setErrorMessage(getErrorMessage(err))
     }
 
     setIsLoading(false)
     setLoadedCount(0)
-  }
-
-  const getBatch = async (
-    chainId: string,
-    count: number,
-    lastFetched?: number,
-  ): Promise<Stats> => {
-    const request: StatsApiRequest = { chainId, count, lastFetched }
-    return await postApi('stats', request, Stats)
   }
 
   return (

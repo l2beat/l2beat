@@ -1,10 +1,7 @@
 import { useEffect, useState } from 'react'
 import { SUPPORTED_CHAINS } from '@/chains'
-import {
-  type BlockWithChain,
-  CountedBlock,
-  type UserOperationsApiRequest,
-} from '@/types'
+import { API, type BlockWithChain } from '@/types'
+import { getErrorMessage } from '@/utils/getErrorMessage'
 import { postApi } from '@/utils/postApi'
 import { BlockNumberInput } from './BlockNumberInput'
 import { ChainDropdown } from './ChainDropdown'
@@ -63,15 +60,14 @@ export function BlockForm({
         throw new Error(`Unsupported chain: ${chainId}`)
       }
 
-      const request: UserOperationsApiRequest = {
+      const block = await postApi(API.uops, {
         chainId,
         blockNumber: Number(blockNumber),
-      }
-      const block = await postApi('uops', request, CountedBlock)
+      })
       onComplete({ ...block, chain })
     } catch (err) {
       console.log(err)
-      setErrorMessage((err as Error).message)
+      setErrorMessage(getErrorMessage(err))
     }
     setIsLoading(false)
   }

@@ -1,21 +1,28 @@
-import type { Parser } from '@l2beat/validate'
-import { ApiError } from '@/types'
+import { ApiError, type Endpoint } from '@/types'
 
-export async function postApi<Output>(
-  endpoint: 'latest' | 'uops' | 'stats',
-  input: unknown,
-  Output: Parser<Output>,
+export async function postApi<Input, Output>(
+  endpoint: Endpoint<Input, Output>,
+  request: Input,
 ): Promise<Output> {
-  const res = await fetch(`/api/${endpoint}`, {
+  const res = await fetch(`/api${endpoint.path}`, {
     method: 'POST',
     // express.json() ignores bodies without this header
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify(input),
+    body: JSON.stringify(request),
   })
 
-  const body: unknown = await res.json()
-  if (res.status !== 200) {
-    throw new Error(ApiError.parse(body).message)
+  if (!res.ok) {
+    throw new Error(await readErrorMessage(res))
   }
-  return Output.parse(body)
+  return endpoint.Response.parse(await res.json())
+}
+
+// Failures may come from a proxy rather than our API, so the body is not
+// guaranteed to be an ApiError or even JSON.
+async function readErrorMessage(res: Response): Promise<string> {
+  const body: unknown = await res.json().catch(() => undefined)
+  const error = ApiError.safeParse(body)
+  return error.success
+    ? error.data.message
+    : `Request failed: ${res.status} ${res.statusText}`
 }

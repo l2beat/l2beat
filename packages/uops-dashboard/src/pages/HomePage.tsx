@@ -13,10 +13,6 @@ export default function HomePage() {
       : 'UOPS Explorer - L2BEAT'
   }, [block])
 
-  const handleSetTransactions = (block: BlockWithChain | undefined) => {
-    setBlock(block)
-  }
-
   return (
     <>
       <main>
@@ -28,7 +24,7 @@ export default function HomePage() {
           compare overall number of transactions to user operations. By clicking
           the magnifier icon you can get the latest block number.
         </p>
-        <BlockForm onComplete={handleSetTransactions} />
+        <BlockForm onComplete={setBlock} />
         {block && (
           <>
             <BlockDetails block={block} />

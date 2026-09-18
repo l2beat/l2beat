@@ -1,4 +1,4 @@
-import { type Validator, v } from '@l2beat/validate'
+import { type Parser, type Validator, v } from '@l2beat/validate'
 import type { Chain } from './chains'
 
 const BlockNumber = v
@@ -8,27 +8,6 @@ const BlockNumber = v
 const BlockCount = v
   .number()
   .check((n) => Number.isInteger(n) && n > 0, 'Expected a positive integer')
-
-export type UserOperationsApiRequest = v.infer<typeof UserOperationsApiRequest>
-export const UserOperationsApiRequest = v.object({
-  chainId: v.string(),
-  blockNumber: BlockNumber,
-})
-
-export type LatestBlockApiRequest = v.infer<typeof LatestBlockApiRequest>
-export const LatestBlockApiRequest = v.object({
-  chainId: v.string(),
-})
-
-export type StatsApiRequest = v.infer<typeof StatsApiRequest>
-export const StatsApiRequest = v.object({
-  chainId: v.string(),
-  count: BlockCount,
-  lastFetched: BlockNumber.optional(),
-})
-
-export type LatestBlockApiResponse = v.infer<typeof LatestBlockApiResponse>
-export const LatestBlockApiResponse = v.number()
 
 export type ApiError = v.infer<typeof ApiError>
 export const ApiError = v.object({
@@ -120,3 +99,33 @@ export type StatResults = Omit<Stats, keyof StatParams>
 export type BlockWithChain = CountedBlock & { chain: Chain }
 
 export type StatsWithChain = Stats & { chain: Chain }
+
+export interface Endpoint<Request, Response> {
+  path: string
+  Request: Parser<Request>
+  Response: Parser<Response>
+}
+
+// Single source of truth for the wire contract: the server validates requests
+// and the client validates responses against the very same schemas.
+export const API = {
+  latest: {
+    path: '/latest',
+    Request: v.object({ chainId: v.string() }),
+    Response: v.number(),
+  },
+  uops: {
+    path: '/uops',
+    Request: v.object({ chainId: v.string(), blockNumber: BlockNumber }),
+    Response: CountedBlock,
+  },
+  stats: {
+    path: '/stats',
+    Request: v.object({
+      chainId: v.string(),
+      count: BlockCount,
+      lastFetched: BlockNumber.optional(),
+    }),
+    Response: Stats,
+  },
+} satisfies Record<string, Endpoint<unknown, unknown>>
