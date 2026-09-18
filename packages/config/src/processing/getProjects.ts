@@ -53,7 +53,18 @@ import { getStage } from './utils/getStage'
 import { getVM } from './utils/getVM'
 
 const daBridges = refactored.filter((p) => p.daBridge)
+
+// Reading every tvs.json, diffHistory.md and discovered.json takes ~800ms, and
+// runConfigAdjustments is already one-shot, so a second call can only return
+// the same projects.
+let projects: BaseProject[] | undefined
+
 export function getProjects(): BaseProject[] {
+  projects ??= buildProjects()
+  return projects
+}
+
+function buildProjects(): BaseProject[] {
   runConfigAdjustments()
   const now = UnixTime.now()
 
