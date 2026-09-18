@@ -142,6 +142,16 @@ export const searchBarPages = withIndex([
     tags: ['pages', 'interop', 'interoperability', 'intent-bridges'],
     href: '/interop/intent-bridges',
   },
+  ...(env.CLIENT_SIDE_TOKENS_PAGE
+    ? [
+        {
+          category: 'other' as const,
+          name: 'Tokens',
+          tags: ['pages', 'tokens', 'interop'],
+          href: '/tokens',
+        },
+      ]
+    : []),
   {
     category: 'zkCatalog',
     name: 'ZK Catalog',
