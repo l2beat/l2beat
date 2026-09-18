@@ -1,5 +1,6 @@
 import { layoutRelationsGraph } from '~/components/projects/sections/interop/onchain-deployments/relations-graph/layoutRelationsGraph'
 import { getRelationsNodeSize } from '~/components/projects/sections/interop/onchain-deployments/relations-graph/nodeSize'
+import { isAdjacentRow } from '~/components/projects/sections/interop/onchain-deployments/relations-graph/routeRelationsEdges'
 import type {
   TokenGraphTile,
   TokenGraphTileEdge,
@@ -8,26 +9,47 @@ import type {
 
 export const VIEW_WIDTH = 320
 export const VIEW_HEIGHT = 132
-export const X_PADDING = 12
-export const Y_PADDING = 14
 export const BASE_RADIUS = 6
-export const LINE_GAP = 0.5
 export const MAX_CLUSTER_ICONS = 5
+const X_PADDING = 12
+const Y_PADDING = 14
+const LINE_GAP = 0.5
 const MIN_GAP = 3
+const MIN_ROW_GAP = 2
+const VIEW_EDGE_INSET = 3
+
+const BUS_CLEARANCE_RATIO = 0.3
+const MIN_BUS_CLEARANCE = 3
+const MAX_BUS_CLEARANCE = 6
+const MIN_BUS_ROOM = 5
+const MIN_DEPARTURE = 1.5
+const MAX_DEPARTURE = 4
+const LANE_GAP = 7
+const LANE_STEP = 1.5
+
+const CLUSTER = {
+  iconDiameter: 8.5,
+  iconStep: 6.5,
+  charWidth: 4,
+  countPadding: 5,
+  countGap: 3,
+  horizontalPadding: 10,
+}
 
 /** Sizing by node count; scale is the desired one before width/height caps. */
 const LARGE_GRAPH = {
   maxNodes: Number.POSITIVE_INFINITY,
   scale: 1,
   span: VIEW_HEIGHT - Y_PADDING * 2,
+  twoRowSpan: VIEW_HEIGHT - Y_PADDING * 2,
   maxGap: 16,
 }
 const SIZE_BUCKETS = [
-  { maxNodes: 1, scale: 3, span: 82, maxGap: 40 },
-  { maxNodes: 3, scale: 2.3, span: 82, maxGap: 40 },
-  { maxNodes: 5, scale: 1.8, span: 84, maxGap: 30 },
-  { maxNodes: 8, scale: 1.45, span: 90, maxGap: 16 },
-  { maxNodes: 12, scale: 1.18, span: 96, maxGap: 16 },
+  { maxNodes: 1, scale: 3, span: 82, twoRowSpan: 58, maxGap: 40 },
+  { maxNodes: 3, scale: 2.3, span: 82, twoRowSpan: 58, maxGap: 40 },
+  { maxNodes: 5, scale: 1.8, span: 84, twoRowSpan: 58, maxGap: 30 },
+  { maxNodes: 8, scale: 1.45, span: 90, twoRowSpan: 58, maxGap: 16 },
+  { maxNodes: 12, scale: 1.18, span: 96, twoRowSpan: 96, maxGap: 16 },
   LARGE_GRAPH,
 ]
 
@@ -121,8 +143,8 @@ function getScale(nodeCount: number, rows: TokenGraphTileNode[][]): number {
 
 function getVerticalSpan(nodeCount: number, rowCount: number): number {
   if (rowCount <= 1) return 0
-  if (rowCount === 2 && nodeCount <= 8) return 58
-  return getSizeBucket(nodeCount).span
+  const bucket = getSizeBucket(nodeCount)
+  return rowCount === 2 ? bucket.twoRowSpan : bucket.span
 }
 
 function getRowCenters(halfHeights: number[], span: number): number[] {
@@ -156,7 +178,7 @@ function placeRow(halfWidths: number[], nodeCount: number): number[] {
   const gap =
     halfWidths.length > 1
       ? Math.max(
-          2,
+          MIN_ROW_GAP,
           Math.min(maxGap, (available - total) / (halfWidths.length - 1)),
         )
       : 0
@@ -174,7 +196,7 @@ interface RowGroup {
   targets: Mark[]
 }
 
-/** Source drops to a bus above each backed row; deeper rows go via a side lane. */
+// Not `routeRelationsEdges`: at thumbnail size one bus per source row reads, one per edge does not.
 function buildPaths(
   edges: TokenGraphTileEdge[],
   marks: ReadonlyMap<string, Mark>,
@@ -202,15 +224,21 @@ function buildPaths(
           ...targets.map((target) => target.y - target.radius - LINE_GAP),
         )
         const available = Math.max(0, targetY - startY)
-        const clearance = Math.max(3, Math.min(6, available * 0.3))
+        const clearance = Math.max(
+          MIN_BUS_CLEARANCE,
+          Math.min(MAX_BUS_CLEARANCE, available * BUS_CLEARANCE_RATIO),
+        )
         return {
           row,
-          busY: available > 5 ? targetY - clearance : startY + available / 2,
+          busY:
+            available > MIN_BUS_ROOM
+              ? targetY - clearance
+              : startY + available / 2,
           targets,
         }
       })
 
-    const adjacent = groups.find((group) => group.row === from.row + 1)
+    const adjacent = groups.find((group) => isAdjacentRow(from.row, group.row))
     const deep = groups.filter((group) => group !== adjacent)
     if (adjacent) paths.push(`M ${from.x} ${startY} V ${adjacent.busY}`)
 
@@ -221,7 +249,11 @@ function buildPaths(
       const deepestBusY = Math.max(...deep.map((group) => group.busY))
       const limit = adjacent ? Math.min(adjacent.busY, firstBusY) : firstBusY
       const departureY =
-        startY + Math.max(1.5, Math.min(4, Math.max(0, limit - startY) / 2))
+        startY +
+        Math.max(
+          MIN_DEPARTURE,
+          Math.min(MAX_DEPARTURE, Math.max(0, limit - startY) / 2),
+        )
       paths.push(
         adjacent
           ? `M ${from.x} ${departureY} H ${laneX} V ${deepestBusY}`
@@ -263,9 +295,9 @@ function getSideLane(
     from.x + from.halfWidth,
     ...passed.map((mark) => mark.x + mark.halfWidth),
   )
-  const laneGap = 7 + lane * 1.5
-  const left = Math.max(3, leftEdge - laneGap)
-  const right = Math.min(VIEW_WIDTH - 3, rightEdge + laneGap)
+  const laneGap = LANE_GAP + lane * LANE_STEP
+  const left = Math.max(VIEW_EDGE_INSET, leftEdge - laneGap)
+  const right = Math.min(VIEW_WIDTH - VIEW_EDGE_INSET, rightEdge + laneGap)
   const targetXs = groups.flatMap((group) =>
     group.targets.map((target) => target.x),
   )
@@ -292,14 +324,18 @@ export function getClusterMetrics(
   const scale = radius / BASE_RADIUS
   const shown = Math.min(MAX_CLUSTER_ICONS, node.chains.length)
   const remaining = node.chains.length - shown
-  const iconDiameter = 8.5 * scale
-  const iconStep = 6.5 * scale
+  const iconDiameter = CLUSTER.iconDiameter * scale
+  const iconStep = CLUSTER.iconStep * scale
   const iconsWidth = iconDiameter + (shown - 1) * iconStep
   const countWidth =
-    remaining > 0 ? (String(remaining).length * 4 + 5) * scale : 0
-  const contentWidth = iconsWidth + (remaining > 0 ? 3 * scale : 0) + countWidth
+    remaining > 0
+      ? (String(remaining).length * CLUSTER.charWidth + CLUSTER.countPadding) *
+        scale
+      : 0
+  const contentWidth =
+    iconsWidth + (remaining > 0 ? CLUSTER.countGap * scale : 0) + countWidth
   return {
-    width: contentWidth + 10 * scale,
+    width: contentWidth + CLUSTER.horizontalPadding * scale,
     contentWidth,
     iconDiameter,
     iconStep,

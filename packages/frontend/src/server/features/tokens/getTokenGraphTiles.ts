@@ -1,12 +1,13 @@
-import { unique } from '@l2beat/shared-pure'
+import type { Project } from '@l2beat/config'
+import { type UnixTime, unique } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { getTokenDb } from '~/server/tokenDb'
 import { FrontendInMemoryCache } from '~/utils/FrontendInMemoryCache'
 import { manifest } from '~/utils/Manifest'
 import { getActiveInteropAbstractTokens } from '../layer2s/interop/token/getInteropAbstractTokens'
+import { getPairStatsParams } from '../layer2s/interop/token/getInteropTokenPairStats'
 import { getChainDisplayInfo } from '../layer2s/interop/token/getInteropTokenRelationsGraph'
-import { getTokenGraphPairStatsParams } from '../layer2s/interop/token/getTokenGraphPairStatsParams'
 import { createInteropProjectResolver } from '../layer2s/interop/utils/createInteropProjectResolver'
 import { getAggregatedInteropSnapshotTimestamp } from '../layer2s/interop/utils/getAggregatedInteropTimestamp'
 import { getActiveInteropChainIds } from '../layer2s/interop/utils/getInteropChains'
@@ -34,6 +35,11 @@ export async function getTokenGraphTiles(): Promise<TokenGraphTile[]> {
 
 async function getTokenGraphTilesData(): Promise<TokenGraphTile[]> {
   const tokenDb = getTokenDb()
+  const [snapshotTimestamp, { projectsWithChains, interopProjects }] =
+    await Promise.all([
+      getAggregatedInteropSnapshotTimestamp(),
+      getRelationsGraphProjects(),
+    ])
   const [
     tokens,
     assignments,
@@ -41,15 +47,13 @@ async function getTokenGraphTilesData(): Promise<TokenGraphTile[]> {
     volumeByTokenId,
     tokensWithPage,
     pairStatsByTokenId,
-    [projectsWithChains, interopProjects],
   ] = await Promise.all([
     tokenDb.abstractToken.getAllSummaries(),
     tokenDb.deployedToken.getAllAssignments(),
     tokenDb.tokenRelation.getAllRoutes(),
-    getVolumeByTokenId(),
+    getVolumeByTokenId(snapshotTimestamp),
     getActiveInteropAbstractTokens(),
-    getPairStatsByTokenId(),
-    getRelationsGraphProjects(),
+    getPairStatsByTokenId(snapshotTimestamp, interopProjects),
   ])
 
   const deployments = assignments.flatMap(
@@ -76,8 +80,13 @@ async function getTokenGraphTilesData(): Promise<TokenGraphTile[]> {
   })
 }
 
-async function getPairStatsByTokenId() {
-  const params = await getTokenGraphPairStatsParams()
+async function getPairStatsByTokenId(
+  snapshotTimestamp: UnixTime | undefined,
+  projects: Project<'interopConfig'>[],
+) {
+  const params = snapshotTimestamp
+    ? getPairStatsParams(snapshotTimestamp, projects)
+    : undefined
   if (!params) return undefined
   const rows = await getDb().interopTransfer.getAllDeployedTokenPairStats(
     params.timeRange,
@@ -86,8 +95,9 @@ async function getPairStatsByTokenId() {
   return Map.groupBy(rows, (row) => row.abstractTokenId)
 }
 
-async function getVolumeByTokenId(): Promise<Map<string, number>> {
-  const snapshotTimestamp = await getAggregatedInteropSnapshotTimestamp()
+async function getVolumeByTokenId(
+  snapshotTimestamp: UnixTime | undefined,
+): Promise<Map<string, number>> {
   if (!snapshotTimestamp) return new Map()
 
   const chainIds = getActiveInteropChainIds()

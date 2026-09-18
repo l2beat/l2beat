@@ -1,11 +1,11 @@
 import { useInfiniteQuery } from '@tanstack/react-query'
 import { useMemo } from 'react'
 import { Skeleton } from '~/components/core/Skeleton'
-import { NoDataBanner } from '~/components/NoDataBanner'
 import {
   InfiniteScrollTrigger,
   useInfiniteScrollTrigger,
-} from '~/pages/interop/components/tokens/infiniteScroll'
+} from '~/components/InfiniteScroll'
+import { NoDataBanner } from '~/components/NoDataBanner'
 import type { TokenGraphTile } from '~/server/features/tokens/buildTokenGraphTiles'
 import { useTRPC } from '~/trpc/React'
 import { TokenGraphTileCard } from './TokenGraphTileCard'

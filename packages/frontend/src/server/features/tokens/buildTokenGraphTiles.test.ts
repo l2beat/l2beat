@@ -64,20 +64,7 @@ describe(buildTokenGraphTiles.name, () => {
       plugin === 'cctp-v2'
         ? [project('cctp'), project('circle')]
         : [project('cctp')]
-    const [tile] = buildTokenGraphTiles({
-      tokens: [usdc],
-      deployments: [usdcEthereum, usdcNova, usdcBase, usdcOptimism],
-      routes: [
-        route(usdcEthereum, usdcNova, 'cctp-v2', 'burnAndMint'),
-        route(usdcEthereum, usdcBase, 'cctp-v1', 'lockAndMint', 'A'),
-      ],
-      volumeByTokenId: new Map(),
-      linkableTokenIds: new Set([usdc.id]),
-      chainInfo,
-      resolveProjects,
-      activeChainIds: new Set(['ethereum', 'nova']),
-      pairStatsByTokenId: undefined,
-    })
+    const tile = buildUsdcTile(resolveProjects)
 
     expect(tile).toEqual({
       id: usdc.id,
@@ -86,7 +73,6 @@ describe(buildTokenGraphTiles.name, () => {
       iconUrl: TOKEN_PLACEHOLDER_ICON_URL,
       href: '/interop/tokens/usdc01/circle/usdc',
       volume: null,
-      // Optimism has no relation and is left out.
       deploymentsCount: 3,
       chainsCount: 3,
       bridgesCount: 2,
@@ -100,7 +86,6 @@ describe(buildTokenGraphTiles.name, () => {
           {
             id: 'ethereum|0xe1',
             volume: null,
-            // Display-name order, not id order.
             chains: [
               { id: 'nova', iconUrl: 'nova.png' },
               { id: 'ethereum', iconUrl: 'eth.png' },
@@ -110,6 +95,28 @@ describe(buildTokenGraphTiles.name, () => {
         edges: [{ backer: 'ethereum|0xe1', backed: 'base|0xb1' }],
       },
     })
+  })
+
+  it('leaves out deployments without a relation', () => {
+    const tile = buildUsdcTile()
+
+    expect(tile?.deploymentsCount).toEqual(3)
+    expect(tile?.graph.nodes.map((node) => node.id)).toEqual([
+      'base|0xb1',
+      'ethereum|0xe1',
+    ])
+  })
+
+  it('orders cluster chains by display name', () => {
+    const tile = buildUsdcTile()
+    const cluster = tile?.graph.nodes.find(
+      (node) => node.id === 'ethereum|0xe1',
+    )
+
+    expect(cluster?.chains.map((chain) => chain.id)).toEqual([
+      'nova',
+      'ethereum',
+    ])
   })
 
   it('gives nodes the volume the full graph sorts by', () => {
@@ -142,6 +149,24 @@ describe(buildTokenGraphTiles.name, () => {
     ])
   })
 })
+
+function buildUsdcTile(resolveProjects: InteropProjectResolver = () => []) {
+  const [tile] = buildTokenGraphTiles({
+    tokens: [usdc],
+    deployments: [usdcEthereum, usdcNova, usdcBase, usdcOptimism],
+    routes: [
+      route(usdcEthereum, usdcNova, 'cctp-v2', 'burnAndMint'),
+      route(usdcEthereum, usdcBase, 'cctp-v1', 'lockAndMint', 'A'),
+    ],
+    volumeByTokenId: new Map(),
+    linkableTokenIds: new Set([usdc.id]),
+    chainInfo,
+    resolveProjects,
+    activeChainIds: new Set(['ethereum', 'nova']),
+    pairStatsByTokenId: undefined,
+  })
+  return tile
+}
 
 function deployment(chain: string, address: string, abstractTokenId: string) {
   return { chain, address, abstractTokenId }

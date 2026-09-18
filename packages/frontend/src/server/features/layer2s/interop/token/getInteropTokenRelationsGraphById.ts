@@ -1,7 +1,11 @@
+import type { UnixTime } from '@l2beat/shared-pure'
 import { FrontendInMemoryCache } from '~/utils/FrontendInMemoryCache'
 import { getAggregatedInteropSnapshotTimestamp } from '../utils/getAggregatedInteropTimestamp'
 import { getActiveInteropChainIds } from '../utils/getInteropChains'
-import { getRelationsGraphProjects } from '../utils/getRelationsGraphProjects'
+import {
+  getRelationsGraphProjects,
+  type RelationsGraphProjects,
+} from '../utils/getRelationsGraphProjects'
 import { getInteropTokenOnchainDeployments } from './getInteropTokenOnchainDeployments'
 import { getInteropTokenPairStats } from './getInteropTokenPairStats'
 import {
@@ -13,9 +17,14 @@ const relationsGraphCache = new FrontendInMemoryCache(
   'getInteropTokenRelationsGraphById',
 )
 
-/** For callers without their own cache, like the tRPC procedure. */
-export function getCachedInteropTokenRelationsGraphById(
+export interface InteropTokenRelationsGraphContext {
+  snapshotTimestamp?: UnixTime
+  projects?: RelationsGraphProjects
+}
+
+export function getInteropTokenRelationsGraphById(
   tokenId: string,
+  context: InteropTokenRelationsGraphContext = {},
 ): Promise<InteropTokenRelationsGraph | undefined> {
   return relationsGraphCache.get(
     {
@@ -23,17 +32,18 @@ export function getCachedInteropTokenRelationsGraphById(
       ttl: 5 * 60,
       staleWhileRevalidate: 25 * 60,
     },
-    () => getInteropTokenRelationsGraphById(tokenId),
+    () => loadInteropTokenRelationsGraph(tokenId, context),
   )
 }
 
-export async function getInteropTokenRelationsGraphById(
+async function loadInteropTokenRelationsGraph(
   tokenId: string,
+  context: InteropTokenRelationsGraphContext,
 ): Promise<InteropTokenRelationsGraph | undefined> {
-  const [snapshotTimestamp, [projectsWithChains, interopProjects]] =
+  const [snapshotTimestamp, { projectsWithChains, interopProjects }] =
     await Promise.all([
-      getAggregatedInteropSnapshotTimestamp(),
-      getRelationsGraphProjects(),
+      context.snapshotTimestamp ?? getAggregatedInteropSnapshotTimestamp(),
+      context.projects ?? getRelationsGraphProjects(),
     ])
   const [{ deployments, routes }, pairStats] = await Promise.all([
     getInteropTokenOnchainDeployments(tokenId, getActiveInteropChainIds()),
