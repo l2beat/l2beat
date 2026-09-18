@@ -1,7 +1,7 @@
 {
   "name": "xlayer",
   "timestamp": 1789554702,
-  "configHash": "0x0afb59e7a855d310cf7a8ad457e77a2ce4c7a6422a540f37c39a282c6687449b",
+  "configHash": "0xc79953b0fb0706c5f2080bcbed4583fd52b58d6aecb195ebf9bdc79381eb47db",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -1001,15 +1001,20 @@
       "name": "OwnerContract",
       "address": "eth:0xe58C365Da30c746204022e61482bBE828cAA9091",
       "type": "Contract",
-      "unverified": true,
+      "sourceHashes": [
+        "0x30cc972c943afe1d0ae168d0ff682153ea14360e08c012a3af63352e541fed04"
+      ],
       "proxyType": "immutable",
-      "description": "Unverified contract through which its owner can execute arbitrary calls.",
+      "description": "Contract through which its owner can execute arbitrary calls and delegatecalls.",
       "deployerAddress": "eth:0xAd9bCE315bF77C0Ade22097199953381C6Cc72eE",
       "sinceTimestamp": 1761567071,
       "sinceBlock": 23668694,
-      "values": { "$immutable": true },
+      "values": {
+        "$immutable": true,
+        "owner": "eth:0x6eE7BDa7AF04F61ccf93aB4b8DB2289aBe76C6aA"
+      },
       "implementationNames": {
-        "eth:0xe58C365Da30c746204022e61482bBE828cAA9091": ""
+        "eth:0xe58C365Da30c746204022e61482bBE828cAA9091": "Transactor"
       }
     },
     {
@@ -2037,6 +2042,14 @@
       "function simulateAndRevert(address targetContract, bytes calldataPayload)",
       "function swapOwner(address prevOwner, address oldOwner, address newOwner)"
     ],
+    "eth:0xe58C365Da30c746204022e61482bBE828cAA9091": [
+      "constructor(address _owner)",
+      "event OwnerUpdated(address indexed user, address indexed newOwner)",
+      "function CALL(address _target, bytes _data, uint256 _value) payable returns (bool success_, bytes data_)",
+      "function DELEGATECALL(address _target, bytes _data) payable returns (bool success_, bytes data_)",
+      "function owner() view returns (address)",
+      "function setOwner(address newOwner)"
+    ],
     "eth:0xe78543A6bE59F5561717B69a2AD7c83DA9249572": [
       "constructor()",
       "error ProxyAdminOwnedBase_NotProxyAdmin()",
@@ -2429,7 +2442,7 @@
     "succinct/OPSuccinct/OPSuccinctFaultDisputeGame": "0x941ed16f5158ec2fcfd64540f5eff08a11a298d3514f88b190f9902846dbf225"
   },
   "usedBlockNumbers": { "ethereum": 25989455 },
-  "permissionsConfigHash": "0x38478f85543e0cc079c786be976eb95aa8c15897e0a7df5d5923e12fd9f141e2",
+  "permissionsConfigHash": "0x6b3689437924f97035b40a21ebb45a19d0da5e4dcf7ac0d29d322c8d16d3e767",
   "modelledAgainst": {
     "shared-polygon-cdk": "0x0d5794bec779188b01680dec2a4f15feb405643223811ce01ae41842a263cb27",
     "shared-sp1": "0x2e84e1ff84b5975e2af157e2590c2c72b31b7d3524b767661f01d8ae0b955540"
@@ -2728,6 +2741,22 @@
           "permission": "interact",
           "from": "eth:0x98BA64d8c8Dd33bD75F2154214BFd849d0D5c17B",
           "description": "Allowed to add or remove proposers and challengers, and transfer ownership of the AccessManager.",
+          "role": ".owner"
+        },
+        {
+          "permission": "upgrade",
+          "from": "eth:0x6a95D7aaC3d41761426761Af031C5034B7b347d4",
+          "role": "admin",
+          "via": [
+            { "address": "eth:0xC6901aBf8D39079d6b028dA550BB643f10840552" },
+            { "address": "eth:0xe58C365Da30c746204022e61482bBE828cAA9091" }
+          ]
+        }
+      ],
+      "directlyReceivedPermissions": [
+        {
+          "permission": "act",
+          "from": "eth:0xe58C365Da30c746204022e61482bBE828cAA9091",
           "role": ".owner"
         }
       ]
@@ -3031,16 +3060,6 @@
       ]
     },
     "eth:0xe58C365Da30c746204022e61482bBE828cAA9091": {
-      "receivedPermissions": [
-        {
-          "permission": "upgrade",
-          "from": "eth:0x6a95D7aaC3d41761426761Af031C5034B7b347d4",
-          "role": "admin",
-          "via": [
-            { "address": "eth:0xC6901aBf8D39079d6b028dA550BB643f10840552" }
-          ]
-        }
-      ],
       "directlyReceivedPermissions": [
         {
           "permission": "act",

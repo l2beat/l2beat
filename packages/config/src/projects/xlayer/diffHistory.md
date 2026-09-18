@@ -1,6 +1,6 @@
-Generated with discovered.json: 0x6abb5359968d87e254cc8a30c17123cb30b154fc
+Generated with discovered.json: 0x754ec9765b21dc21f2866ad7e83fe335cb310cff
 
-# Diff at Fri, 18 Sep 2026 07:47:30 GMT:
+# Diff at Fri, 18 Sep 2026 07:55:47 GMT:
 
 - author: vincfurc (<vincfurc@users.noreply.github.com>)
 - comparing to: main@15431f7683a0de5d516e42fa21c223b42652e15d block: 1782911432
@@ -19,6 +19,14 @@ New `TimelockController` (OpenZeppelin v5.7.0, 1h delay): Xlayer Multisig is pro
     +++ description: None
       directlyReceivedPermissions.7:
 -        {"permission":"upgrade","from":"eth:0x9D4c8FAEadDdDeeE1Ed0c92dAbAD815c2484f675","role":"admin"}
+    }
+```
+
+```diff
+    EOA (eth:0x6eE7BDa7AF04F61ccf93aB4b8DB2289aBe76C6aA) {
+    +++ description: None
+      receivedPermissions.2:
+-        {"permission":"interact","from":"eth:0x9D4c8FAEadDdDeeE1Ed0c92dAbAD815c2484f675","description":"set the dispute game implementation and initial bond for any game type.","role":".owner","via":[{"address":"eth:0xe58C365Da30c746204022e61482bBE828cAA9091"}]}
     }
 ```
 
@@ -65,8 +73,8 @@ New `TimelockController` (OpenZeppelin v5.7.0, 1h delay): Xlayer Multisig is pro
 
 ```diff
     contract OwnerContract (eth:0xe58C365Da30c746204022e61482bBE828cAA9091) [N/A] {
-    +++ description: Unverified contract through which its owner can execute arbitrary calls.
-      receivedPermissions.0:
+    +++ description: Contract through which its owner can execute arbitrary calls and delegatecalls.
+      directlyReceivedPermissions.1:
 -        {"permission":"interact","from":"eth:0x9D4c8FAEadDdDeeE1Ed0c92dAbAD815c2484f675","description":"set the dispute game implementation and initial bond for any game type.","role":".owner"}
     }
 ```
@@ -98,12 +106,35 @@ or/and contracts becoming verified, not from differences found during
 discovery. Values are for block 1782911432 (main branch discovery), not current.
 
 ```diff
+    EOA (eth:0x6eE7BDa7AF04F61ccf93aB4b8DB2289aBe76C6aA) {
+    +++ description: None
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0x9D4c8FAEadDdDeeE1Ed0c92dAbAD815c2484f675","description":"set the dispute game implementation and initial bond for any game type.","role":".owner","via":[{"address":"eth:0xe58C365Da30c746204022e61482bBE828cAA9091"}]}
+      receivedPermissions.3:
++        {"permission":"upgrade","from":"eth:0x6a95D7aaC3d41761426761Af031C5034B7b347d4","role":"admin","via":[{"address":"eth:0xC6901aBf8D39079d6b028dA550BB643f10840552"},{"address":"eth:0xe58C365Da30c746204022e61482bBE828cAA9091"}]}
+      directlyReceivedPermissions:
++        [{"permission":"act","from":"eth:0xe58C365Da30c746204022e61482bBE828cAA9091","role":".owner"}]
+    }
+```
+
+```diff
     contract OwnerContract (eth:0xe58C365Da30c746204022e61482bBE828cAA9091) [N/A] {
-    +++ description: Unverified contract through which its owner can execute arbitrary calls.
-      receivedPermissions.0:
+    +++ description: Contract through which its owner can execute arbitrary calls and delegatecalls.
+      unverified:
+-        true
+      values.owner:
++        "eth:0x6eE7BDa7AF04F61ccf93aB4b8DB2289aBe76C6aA"
+      implementationNames.eth:0xe58C365Da30c746204022e61482bBE828cAA9091:
+-        ""
++        "Transactor"
+      receivedPermissions:
+-        [{"permission":"upgrade","from":"eth:0x6a95D7aaC3d41761426761Af031C5034B7b347d4","role":"admin","via":[{"address":"eth:0xC6901aBf8D39079d6b028dA550BB643f10840552"}]}]
+      directlyReceivedPermissions.1:
 +        {"permission":"interact","from":"eth:0x9D4c8FAEadDdDeeE1Ed0c92dAbAD815c2484f675","description":"set the dispute game implementation and initial bond for any game type.","role":".owner"}
+      sourceHashes:
++        ["0x30cc972c943afe1d0ae168d0ff682153ea14360e08c012a3af63352e541fed04"]
       description:
-+        "Unverified contract through which its owner can execute arbitrary calls."
++        "Contract through which its owner can execute arbitrary calls and delegatecalls."
     }
 ```
 
