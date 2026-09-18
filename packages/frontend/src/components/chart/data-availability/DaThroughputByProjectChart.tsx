@@ -1,4 +1,3 @@
-'use client'
 import type { Milestone } from '@l2beat/config'
 import { UnixTime } from '@l2beat/shared-pure'
 import sum from 'lodash/sum'

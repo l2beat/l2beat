@@ -1,5 +1,5 @@
 import { Flowbite } from 'flowbite-react'
-import { MainNavbar } from './navbar'
+import { MainNavbar } from './Navbar'
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (

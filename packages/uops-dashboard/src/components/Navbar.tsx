@@ -1,15 +1,11 @@
-'use client'
-
 import { Navbar } from 'flowbite-react'
-import Link from 'next/link'
-import { usePathname } from 'next/navigation'
-import { Logo } from './logo'
+import { Logo } from './Logo'
 
 export function MainNavbar() {
-  const currentPath = usePathname()
+  const currentPath = window.location.pathname
   return (
     <Navbar fluid rounded>
-      <Navbar.Brand as={Link} href="https://l2beat.com">
+      <Navbar.Brand href="https://l2beat.com">
         <Logo />
         <span className="ml-5 self-center whitespace-nowrap font-semibold text-xl dark:text-white">
           User Operations
@@ -17,10 +13,10 @@ export function MainNavbar() {
       </Navbar.Brand>
       <Navbar.Toggle />
       <Navbar.Collapse>
-        <Navbar.Link as={Link} href="/" active={currentPath === '/'}>
+        <Navbar.Link href="/" active={currentPath === '/'}>
           Details
         </Navbar.Link>
-        <Navbar.Link as={Link} href="/stats" active={currentPath === '/stats'}>
+        <Navbar.Link href="/stats" active={currentPath === '/stats'}>
           Statistics
         </Navbar.Link>
       </Navbar.Collapse>

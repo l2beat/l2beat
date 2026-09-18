@@ -1,6 +1,6 @@
 {
   "name": "lighter-robinhood",
-  "timestamp": 1787570584,
+  "timestamp": 1789726631,
   "configHash": "0x6b9c542dd9e592ac08872c370b9333a9484c78b5005902c5a58d0a22398d65c4",
   "entries": [
     {
@@ -35,8 +35,7 @@
         "0x897bcb49a87330dfd6cf64b3848b2ecf503f7720b70c8c08b942741f952d681d"
       ],
       "proxyType": "immutable",
-      "description": "Governance contract functioning like an upgrade timelock for downstream contracts. The current delay is 21d and can be entirely skipped by robinhood:0x4972E0CaCb2AC45644BA054838e96fF4f6f7eFDb. In practice every upgrade so far has been fast-tracked: the security council zeroes the notice period right before each upgrade is finished.",
-      "critical": true,
+      "description": "Governance contract functioning like an upgrade timelock for downstream contracts. The current delay is 21d and can be entirely skipped by robinhood:0x4972E0CaCb2AC45644BA054838e96fF4f6f7eFDb.",
       "deployerAddress": "robinhood:0x42cDb51c23D03c69c05Fa691c3B5517Ace876213",
       "sinceTimestamp": 1782477747,
       "sinceBlock": 229410,
@@ -55,18 +54,13 @@
         "securityCouncilAddress": "robinhood:0x4972E0CaCb2AC45644BA054838e96fF4f6f7eFDb",
         "upgradeStartTimestamp": 0,
         "upgradeStatus": 0,
-        "versionId": 5,
+        "versionId": 6,
         "zkLighterProxy": "robinhood:0x94bAB9693Ba2f6358507eFfcbd372b0660AFfF9d"
       },
       "fieldMeta": {
         "getMaster": { "severity": "HIGH" },
         "approvedUpgradeNoticePeriodFmt": {
-          "description": "upgrade delay, can be skipped by the 'securityCouncil' role (and routinely is: it is zeroed shortly before each upgrade completes, then restored).",
-          "severity": "HIGH"
-        },
-        "managedContracts": {
-          "severity": "HIGH",
-          "description": "The proxies whose implementations this gatekeeper can upgrade."
+          "description": "upgrade delay, can be skipped by the 'securityCouncil' role."
         }
       },
       "implementationNames": {
@@ -87,8 +81,6 @@
         "0xcedbddf6ef097d451ba200328780c0cc492b65383f8dc44e760ec70eee4f8850"
       ],
       "proxyType": "immutable",
-      "description": "Verifies the zk proofs that let users exit their funds directly on L1 while the system is in desert mode (escape hatch).",
-      "critical": true,
       "deployerAddress": "robinhood:0x42cDb51c23D03c69c05Fa691c3B5517Ace876213",
       "sinceTimestamp": 1784265403,
       "sinceBlock": 11861471,
@@ -137,7 +129,7 @@
         "getChainId": 4663,
         "GnosisSafe_modules": [],
         "multisigThreshold": "3 of 5 (60%)",
-        "nonce": 7,
+        "nonce": 21,
         "VERSION": "1.4.1"
       },
       "implementationNames": {
@@ -160,7 +152,6 @@
         "0x3a35ceb50e1870902c0afbda8de806932d6a7168c2e27af00ca755fc5db60b93"
       ],
       "proxyType": "zkLighter proxy",
-      "critical": true,
       "ignoreInWatchMode": [
         "committedBatchesCount",
         "committedPriorityRequestCount",
@@ -188,21 +179,21 @@
           "robinhood:0xDa2B59fFB41485a6f21E14e479AE7B7AB29a997c"
         ],
         "additionalZkLighter": "robinhood:0xDa2B59fFB41485a6f21E14e479AE7B7AB29a997c",
-        "committedBatchesCount": 77512,
-        "committedPriorityRequestCount": 28820,
+        "committedBatchesCount": 113046,
+        "committedPriorityRequestCount": 71743,
         "desertMode": false,
         "desertVerifier": "robinhood:0x56aeED6920DBB9E198C2C0072147A45684A06E10",
-        "executedBatchesCount": 77506,
-        "executedOnChainBatchesCount": 6800,
-        "executedPriorityRequestCount": 28816,
+        "executedBatchesCount": 113040,
+        "executedOnChainBatchesCount": 19810,
+        "executedPriorityRequestCount": 71736,
         "getMaster": "robinhood:0x43CfF77CD060A155dCe5deb12B93b875f69F2716",
         "getTarget": "robinhood:0x82DE5B1161C93afDFE21bA0D5343f01Cd7401d90",
         "governance": "robinhood:0xf6F6Bd6eEA2b9A2041328732CcAe4c5e1DD278B7",
         "insuranceFundOperator": "robinhood:0x6cCdD1f3f599C69fA74eeDc3dab28559fe99aB0A",
-        "lastAccountIndex": 16903,
-        "lastVerifiedEndBlockNumber": 13063685,
-        "lastVerifiedStateRoot": "0x426aeb56f0a663e6781491506082cfe9d2abfd5191c30de95ae1ea8fc6cd1d13",
-        "lastVerifiedValidiumRoot": "0x70dd9fae1d03d3a423c3410b5fd043e58439319649b4e534238938768602cf38",
+        "lastAccountIndex": 28821,
+        "lastVerifiedEndBlockNumber": 24067444,
+        "lastVerifiedStateRoot": "0xc2dd41177f0fd119d4fc1d53a4101a864c3211872b861187cd0d220348ed4052",
+        "lastVerifiedValidiumRoot": "0x9518557fbc9347c5e58bce1f86a3631b7d8b9b9271db8f4ef97bd28be89e1d0e",
         "MAX_ACCOUNT_INDEX": 281474976710654,
         "MAX_API_KEY_INDEX": 254,
         "MAX_ASSET_INDEX": 62,
@@ -224,15 +215,15 @@
         "MIN_STAKING_SHARES_TO_MINT_OR_BURN": 1,
         "NATIVE_ASSET_INDEX": 1,
         "NIL_ACCOUNT_INDEX": 281474976710655,
-        "openPriorityRequestCount": 5,
-        "pendingOnChainBatchesCount": 4,
+        "openPriorityRequestCount": 10,
+        "pendingOnChainBatchesCount": 5,
         "PRIORITY_EXPIRATION": 1209600,
         "QUOTE_ASSET_INDEX": 3,
-        "stateRoot": "0x426aeb56f0a663e6781491506082cfe9d2abfd5191c30de95ae1ea8fc6cd1d13",
+        "stateRoot": "0x030a65443cad83225b1dbe9bf01ee260dad90efa382d1e68fecb8501ba7d23ef",
         "treasury": "robinhood:0xAc71eC137c892d02d531e48cEb1D060f9C9AC357",
-        "validiumRoot": "0x70dd9fae1d03d3a423c3410b5fd043e58439319649b4e534238938768602cf38",
-        "verifiedBatchesCount": 77506,
-        "verifiedPriorityRequestCount": 28816,
+        "validiumRoot": "0x83a3b0d494ebbada4df833110933b992c9cfc2bbbb1d926e8330ac73c88a0a9f",
+        "verifiedBatchesCount": 113041,
+        "verifiedPriorityRequestCount": 71736,
         "verifier": "robinhood:0xe1aFBE2D670eFF0e7C8A41F080792C011916ac31"
       },
       "fieldMeta": {
@@ -266,28 +257,25 @@
       "name": "ZkLighterVerifier",
       "address": "robinhood:0xe1aFBE2D670eFF0e7C8A41F080792C011916ac31",
       "type": "Contract",
-      "template": "lighter/ZkLighterVerifier",
       "sourceHashes": [
         "0x317a8c60bf36af0b293fad7aaf9ae5d178a0c2ea316b493b5c8b962d4daea6f6",
-        "0xe9918698c11cc35630c3cd99d564142087c3968ded02116451208d19007b069a"
+        "0xa54f86e01624213bae74fb0e5155537807b948cb043a804c3b2acb905aa631d1"
       ],
       "proxyType": "EIP1967 proxy",
-      "description": "The main ZK verifier of Lighter, settles the proofs of correct L2 state transition in the case of normal rollup operation.",
-      "critical": true,
       "deployerAddress": "robinhood:0x42cDb51c23D03c69c05Fa691c3B5517Ace876213",
       "sinceTimestamp": 1782477747,
       "sinceBlock": 229410,
       "values": {
         "$admin": "robinhood:0x43CfF77CD060A155dCe5deb12B93b875f69F2716",
-        "$implementation": "robinhood:0x61CA82e45F5a57d00E66b522Be72D8bA41e634Aa",
+        "$implementation": "robinhood:0xCBF92533F5816c6Ee0e4250F4E138b3f49962EF2",
         "$pastUpgrades": [],
         "$upgradeCount": 0,
         "getMaster": "robinhood:0x43CfF77CD060A155dCe5deb12B93b875f69F2716",
-        "getTarget": "robinhood:0x61CA82e45F5a57d00E66b522Be72D8bA41e634Aa"
+        "getTarget": "robinhood:0xCBF92533F5816c6Ee0e4250F4E138b3f49962EF2"
       },
       "implementationNames": {
         "robinhood:0xe1aFBE2D670eFF0e7C8A41F080792C011916ac31": "Proxy",
-        "robinhood:0x61CA82e45F5a57d00E66b522Be72D8bA41e634Aa": "ZkLighterVerifier"
+        "robinhood:0xCBF92533F5816c6Ee0e4250F4E138b3f49962EF2": "ZkLighterVerifier"
       }
     },
     {
@@ -301,7 +289,6 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Manages the list of validators and the network governor.",
-      "critical": true,
       "deployerAddress": "robinhood:0x42cDb51c23D03c69c05Fa691c3B5517Ace876213",
       "sinceTimestamp": 1782477747,
       "sinceBlock": 229410,
@@ -474,11 +461,6 @@
       "function initialize(bytes)",
       "function upgrade(bytes upgradeParameters)"
     ],
-    "robinhood:0x61CA82e45F5a57d00E66b522Be72D8bA41e634Aa": [
-      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
-      "function initialize(bytes)",
-      "function upgrade(bytes upgradeParameters)"
-    ],
     "robinhood:0x82DE5B1161C93afDFE21bA0D5343f01Cd7401d90": [
       "constructor()",
       "error ZkLighter_BatchNotInOnChainQueue()",
@@ -626,6 +608,11 @@
       "function upgrade(bytes) pure",
       "function upgradeTarget(address newTarget, bytes newTargetUpgradeParameters)"
     ],
+    "robinhood:0xCBF92533F5816c6Ee0e4250F4E138b3f49962EF2": [
+      "function Verify(bytes proof, uint256[] public_inputs) view returns (bool success)",
+      "function initialize(bytes)",
+      "function upgrade(bytes upgradeParameters)"
+    ],
     "robinhood:0xDa2B59fFB41485a6f21E14e479AE7B7AB29a997c": [
       "error AdditionalZkLighter_AccountIsNotRegistered()",
       "error AdditionalZkLighter_Error()",
@@ -741,10 +728,9 @@
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "lighter/Governance": "0x4e9f04516598b2c63a839e9e92296b4c684dadcc7a872a6e7ba64e3413d7cdec",
-    "lighter/UpgradeGatekeeper": "0x72341d695123479e7b06142a86f758d7b9488ac1cb776c7411630080ba1e9a59",
-    "lighter/ZkLighterVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
+    "lighter/UpgradeGatekeeper": "0x72341d695123479e7b06142a86f758d7b9488ac1cb776c7411630080ba1e9a59"
   },
-  "usedBlockNumbers": { "robinhood": 44827049 },
+  "usedBlockNumbers": { "robinhood": 66146640 },
   "permissionsConfigHash": "0x4311265ccf3b973dbc8aa741ea7b57b1a475526868fe3ca1b48d368669ccb08d",
   "permissions": {
     "robinhood:0x114E0f5a71D169DdfBAef41160A0Ac789f7015cA": {

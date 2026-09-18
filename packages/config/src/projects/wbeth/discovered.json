@@ -1,6 +1,6 @@
 {
   "name": "wbeth",
-  "timestamp": 1789472833,
+  "timestamp": 1789673382,
   "configHash": "0x7ad15a182713907fda47d613cde8413976b7732c26150ca7043569a7950fe6bb",
   "entries": [
     {
@@ -38,7 +38,7 @@
         "0xd663ae7a15ea08c64afc0cb0731de2d2d666ecb2d37cbcaced506785f017ea42"
       ],
       "proxyType": "ZeppelinOS proxy",
-      "description": "Redemption queue for wBETH. The token contract records a claim here when a holder burns wBETH; the claim becomes payable once ETH has been allocated to it (automatically on request if the queue already holds enough, otherwise by the operator) and the lock time of 10d has passed. Only ETH sent by the token operator or the rechargeAddress counts toward allocation; the contract has no way to pull ETH from validators. 136 claims have been recorded so far. The operator can also send any surplus ETH back to the ethBackAddress.",
+      "description": "Redemption queue for wBETH. The token contract records a claim here when a holder burns wBETH; the claim becomes payable once ETH has been allocated to it (automatically on request if the queue already holds enough, otherwise by the operator) and the lock time of 10d has passed. Only ETH sent by the token operator or the rechargeAddress counts toward allocation; the contract has no way to pull ETH from validators. The operator can also send any surplus ETH back to the ethBackAddress.",
       "ignoreInWatchMode": [
         "nextIndex",
         "startAllocatedEthIndex",
@@ -56,7 +56,7 @@
         "$pastUpgrades": [],
         "$upgradeCount": 0,
         "admin": "eth:0xA3eE6926edcce93BacF05F4222c243c4d9F6d853",
-        "availableAllocateAmount": "1551833591640621882",
+        "availableAllocateAmount": "94341833592113279736",
         "blacklister": "eth:0x099d699C07Bbc8eE6eB5703746063E04B2aA62A7",
         "ethBackAddress": "eth:0x26ad6395DABF271fD9bFDC82d7377261930E6B86",
         "ethStaked": 0,
@@ -67,13 +67,13 @@
         "MAX_LOOP_NUM": 1000,
         "MIN_LOCK_TIME": 172800,
         "needEthAmount": 0,
-        "nextIndex": 136,
+        "nextIndex": 137,
         "operatorAddress": "eth:0x2B59215778e99035CF38663454eF1240a7AE70F5",
         "owner": "eth:0x099d699C07Bbc8eE6eB5703746063E04B2aA62A7",
         "paused": false,
         "pauser": "eth:0x099d699C07Bbc8eE6eB5703746063E04B2aA62A7",
         "rechargeAddress": "eth:0x3E4BD5FB2fCeF981BAFd1D164f838DFC31370Fb1",
-        "startAllocatedEthIndex": 136,
+        "startAllocatedEthIndex": 137,
         "WBETH_TOKEN_ADDRESS": "eth:0xa2E3356610840701BDf5611a53974510Ae27E2e1"
       },
       "fieldMeta": {
@@ -160,7 +160,7 @@
         "0x89b0ba88a99fce084372ca5e86ffa01b398032fae95dae34ac7b962f66b6a02e"
       ],
       "proxyType": "ZeppelinOS proxy",
-      "description": "Liquid staking token (wBETH) built on Circle's FiatToken code with a staking layer on top. Anyone can mint by sending ETH to deposit(), receiving ETH ÷ exchangeRate tokens; the ETH stays in this contract until the operator moves it to the ethReceiver. Redemption is requestWithdrawEth(): the tokens are burned at the current rate and an ETH claim is recorded in the unwrap contract. Neither path is open while the token is paused or the caller is blacklisted. The exchange rate is a single storage value written by the oracle address, bounded only to be at least 1e18. Configured minters can additionally mint tokens with no ETH backing, up to their allowance; 3175313719288555978183752 is the live supply.",
+      "description": "Liquid staking token (wBETH) built on Circle's FiatToken code with a staking layer on top. Anyone can mint by sending ETH to deposit(), receiving ETH ÷ exchangeRate tokens; the ETH stays in this contract until the operator moves it to the ethReceiver. Redemption is requestWithdrawEth(): the tokens are burned at the current rate and an ETH claim is recorded in the unwrap contract. Neither path is open while the token is paused or the caller is blacklisted. The exchange rate is a single storage value written by the oracle address, bounded only to be at least 1e18. Configured minters can additionally mint tokens with no ETH backing, up to their allowance.",
       "ignoreInWatchMode": ["totalSupply", "exchangeRate"],
       "deployerAddress": "eth:0x86Fd4673527F9d5999C5e490Ab98766c0CFA8801",
       "sinceTimestamp": 1681902323,
@@ -189,7 +189,7 @@
         "currency": "ETH",
         "decimals": 18,
         "ethReceiver": "eth:0x26ad6395DABF271fD9bFDC82d7377261930E6B86",
-        "exchangeRate": "1.106471762212",
+        "exchangeRate": "1.10660666736",
         "implementation": "eth:0x9E021c9607bD3ADB7424D3b25a2D35763ff180BB",
         "masterMinter": "eth:0x099d699C07Bbc8eE6eB5703746063E04B2aA62A7",
         "minters": ["eth:0xb05a6449f383a1A43A172970858B97394FEcDAD6"],
@@ -201,7 +201,7 @@
         "pauser": "eth:0x099d699C07Bbc8eE6eB5703746063E04B2aA62A7",
         "rescuer": "eth:0x0000000000000000000000000000000000000000",
         "symbol": "wBETH",
-        "totalSupply": "3175313719288555978183752",
+        "totalSupply": "3175316724611129562586418",
         "version": "2"
       },
       "fieldMeta": {
@@ -539,7 +539,7 @@
     "wbeth/UnwrapTokenV1ETH": "0x89f75c83a04007813f7a6e064a17bc2bef63b03fe5ab3ec6bdd7372578154b14",
     "wbeth/WrapTokenV3ETH": "0x49732aee04baa0e994a33265af990039b9b2e38aeff872b635d167a9a49c1b68"
   },
-  "usedBlockNumbers": { "ethereum": 25982658 },
+  "usedBlockNumbers": { "ethereum": 25999309 },
   "permissionsConfigHash": "0xfd60d5a8e890e4194051f0ee2c4d97bae85636b992bd6af7a53689d21c5f89e6",
   "permissions": {
     "eth:0x099d699C07Bbc8eE6eB5703746063E04B2aA62A7": {

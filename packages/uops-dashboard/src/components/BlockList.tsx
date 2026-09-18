@@ -1,7 +1,7 @@
 import type { Chain } from '@/chains'
 import type { BlockRatio } from '@/types'
-import { BatchIcon } from './icons/batchIcon'
-import { UnknownIcon } from './icons/unknownIcon'
+import { BatchIcon } from './icons/BatchIcon'
+import { UnknownIcon } from './icons/UnknownIcon'
 
 export function BlockList({
   blocks,

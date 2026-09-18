@@ -23,6 +23,7 @@ import type { MilestonesAndIncidentsSectionProps } from './MilestonesAndIncident
 import type { ExtendedProjectSectionProps } from './ProjectSection'
 import type { PermissionsSectionProps } from './permissions/PermissionsSection'
 import type { PrivacyAdversariesSectionProps } from './privacy/PrivacyAdversariesSection'
+import type { PrivacyAnonymitySetSectionProps } from './privacy/PrivacyAnonymitySetSection'
 import type { PrivacyAssetsBreakdownSectionProps } from './privacy/PrivacyAssetsBreakdownSection'
 import type { PrivacyFlowsSectionProps } from './privacy/PrivacyFlowsSection'
 import type { ProgramHashesSectionProps } from './program-hashes/ProgramHashesSection'
@@ -77,6 +78,7 @@ export type SectionId =
   | 'interop-protocols'
   | 'onchain-deployments'
   | 'privacy-tvl'
+  | 'privacy-anonymity-set'
   | 'privacy-flows'
   | 'privacy-assets-breakdown'
   | 'privacy-adversaries'
@@ -289,6 +291,11 @@ interface ProjectDetailsPrivacyFlowsSection {
   props: ProjectDetailsProps<PrivacyFlowsSectionProps>
 }
 
+interface ProjectDetailsPrivacyAnonymitySetSection {
+  type: 'PrivacyAnonymitySetSection'
+  props: ProjectDetailsProps<PrivacyAnonymitySetSectionProps>
+}
+
 interface ProjectDetailsPrivacyAdversariesSection {
   type: 'PrivacyAdversariesSection'
   props: ProjectDetailsProps<PrivacyAdversariesSectionProps>
@@ -347,6 +354,7 @@ export type ProjectDetailsSection = {
   | ProjectDetailsUpdatesSection
   | ProjectDetailsTvsValueSection
   | ProjectDetailsPrivacyFlowsSection
+  | ProjectDetailsPrivacyAnonymitySetSection
   | ProjectDetailsPrivacyAssetsBreakdownSection
   | ProjectDetailsPrivacyAdversariesSection
   | ProjectDetailsExternalDependenciesSection

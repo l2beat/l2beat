@@ -1,71 +1,54 @@
-Generated with discovered.json: 0xd506454298a9e69d427a72db4c272ae2025c6d9d
+Generated with discovered.json: 0xa92a24c47f9fc448cb23677dd789d3e12d52e3e7
 
-# Diff at Fri, 18 Sep 2026 10:24:51 GMT:
+# Diff at Fri, 18 Sep 2026 10:40:29 GMT:
 
-- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@e2faf827d006bceee5fb0904599ba325066c7674 block: 1787570584
-- current timestamp: 1787570584
+- author: Sergey Shemyakov (<sergey.shemyakov@l2beat.com>)
+- comparing to: main@d903624f4bbcd7c3db85ae1858dfd3303fa28c5c block: 1787570584
+- current timestamp: 1789726631
 
 ## Description
 
-critical contracts and severities for the ossification perimeter
+Upgraded lighter verifier on robinhood. The new version is not yet reproduced from the sources. The .sol sources were missing from the blockscout and sourcify, I reconstructed and submitted them.
 
-## Config/verification related changes
-
-Following changes come from updates made to the config file,
-or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 1787570584 (main branch discovery), not current.
+## Watched changes
 
 ```diff
     contract UpgradeGatekeeper (robinhood:0x43CfF77CD060A155dCe5deb12B93b875f69F2716) [lighter/UpgradeGatekeeper] {
-    +++ description: Governance contract functioning like an upgrade timelock for downstream contracts. The current delay is 21d and can be entirely skipped by robinhood:0x4972E0CaCb2AC45644BA054838e96fF4f6f7eFDb. In practice every upgrade so far has been fast-tracked: the security council zeroes the notice period right before each upgrade is finished.
-      description:
--        "Governance contract functioning like an upgrade timelock for downstream contracts. The current delay is 21d and can be entirely skipped by robinhood:0x4972E0CaCb2AC45644BA054838e96fF4f6f7eFDb."
-+        "Governance contract functioning like an upgrade timelock for downstream contracts. The current delay is 21d and can be entirely skipped by robinhood:0x4972E0CaCb2AC45644BA054838e96fF4f6f7eFDb. In practice every upgrade so far has been fast-tracked: the security council zeroes the notice period right before each upgrade is finished."
-      fieldMeta.approvedUpgradeNoticePeriodFmt.description:
--        "upgrade delay, can be skipped by the 'securityCouncil' role."
-+        "upgrade delay, can be skipped by the 'securityCouncil' role (and routinely is: it is zeroed shortly before each upgrade completes, then restored)."
-      fieldMeta.approvedUpgradeNoticePeriodFmt.severity:
-+        "HIGH"
-      fieldMeta.managedContracts:
-+        {"severity":"HIGH","description":"The proxies whose implementations this gatekeeper can upgrade."}
-      critical:
-+        true
+    +++ description: Governance contract functioning like an upgrade timelock for downstream contracts. The current delay is 21d and can be entirely skipped by robinhood:0x4972E0CaCb2AC45644BA054838e96fF4f6f7eFDb.
+      values.versionId:
+-        5
++        6
     }
 ```
 
 ```diff
-    contract DesertVerifier (robinhood:0x56aeED6920DBB9E198C2C0072147A45684A06E10) [N/A] {
-    +++ description: Verifies the zk proofs that let users exit their funds directly on L1 while the system is in desert mode (escape hatch).
-      description:
-+        "Verifies the zk proofs that let users exit their funds directly on L1 while the system is in desert mode (escape hatch)."
-      critical:
-+        true
-    }
-```
-
-```diff
-    contract Lighter (robinhood:0x94bAB9693Ba2f6358507eFfcbd372b0660AFfF9d) [N/A] {
+    contract ZkLighterVerifier (robinhood:0xe1aFBE2D670eFF0e7C8A41F080792C011916ac31) [N/A] {
     +++ description: None
-      critical:
-+        true
+      template:
+-        "lighter/ZkLighterVerifier"
+      sourceHashes.1:
+-        "0xe9918698c11cc35630c3cd99d564142087c3968ded02116451208d19007b069a"
++        "0xa54f86e01624213bae74fb0e5155537807b948cb043a804c3b2acb905aa631d1"
+      description:
+-        "The main ZK verifier of Lighter, settles the proofs of correct L2 state transition in the case of normal rollup operation."
+      values.$implementation:
+-        "robinhood:0x61CA82e45F5a57d00E66b522Be72D8bA41e634Aa"
++        "robinhood:0xCBF92533F5816c6Ee0e4250F4E138b3f49962EF2"
+      values.getTarget:
+-        "robinhood:0x61CA82e45F5a57d00E66b522Be72D8bA41e634Aa"
++        "robinhood:0xCBF92533F5816c6Ee0e4250F4E138b3f49962EF2"
+      implementationNames.robinhood:0x61CA82e45F5a57d00E66b522Be72D8bA41e634Aa:
+-        "ZkLighterVerifier"
+      implementationNames.robinhood:0xCBF92533F5816c6Ee0e4250F4E138b3f49962EF2:
++        "ZkLighterVerifier"
     }
 ```
 
-```diff
-    contract ZkLighterVerifier (robinhood:0xe1aFBE2D670eFF0e7C8A41F080792C011916ac31) [lighter/ZkLighterVerifier] {
-    +++ description: The main ZK verifier of Lighter, settles the proofs of correct L2 state transition in the case of normal rollup operation.
-      critical:
-+        true
-    }
-```
+## Source code changes
 
 ```diff
-    contract Governance (robinhood:0xf6F6Bd6eEA2b9A2041328732CcAe4c5e1DD278B7) [lighter/Governance] {
-    +++ description: Manages the list of validators and the network governor.
-      critical:
-+        true
-    }
+.../ZkLighterVerifier/ZkLighterVerifier.sol                    | 10 +++++-----
+ 1 file changed, 5 insertions(+), 5 deletions(-)
 ```
 
 Generated with discovered.json: 0x47e75ff0c9912a7d053b3b4d514b89f6d0bd8c35
