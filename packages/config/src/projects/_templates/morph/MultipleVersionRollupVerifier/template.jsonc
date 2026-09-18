@@ -1,6 +1,8 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "Used to update the verifier and keep track of current and old versions. Routes to a registered verifier by batch index, so that every batch is verified by the latest verifier that is enabled for this batch.",
+  // Verifier registry: decides which zk verifier validates each batch during challenges.
+  "critical": true,
   "ignoreMethods": ["getVerifier", "legacyVerifiersLength"],
   "fields": {
     "verifierVersions": {
@@ -11,6 +13,8 @@
       }
     },
     "latestVerifier": {
+      // Registering a new verifier changes what is accepted as a valid state transition proof.
+      "severity": "HIGH",
       "handler": {
         "type": "array",
         "maxLength": 20,
@@ -19,6 +23,7 @@
       "edit": ["map", ["shape", "startBatchIndex", "verifier"]]
     },
     "owner": {
+      "severity": "HIGH",
       "permissions": [
         {
           "type": "interact",

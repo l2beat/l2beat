@@ -8,6 +8,10 @@
   ],
   "names": { "eth:0x91F4be0C264FAFA1fEd75c4440910Cba2cAd98e8": "LyraMultisig" },
   "overrides": {
+    "eth:0xC845F9C4004EB35a8bde8ad89C4760a9c0e65CAB": {
+      // AddressManager of this chain: its owner can repoint the ResolvedDelegateProxy implementations
+      "critical": true
+    },
     // OPContractsManagerV2 (shared upgrade tooling). Ignored so discovery
     // doesn't follow it into bare implementations; authority is the ProxyAdmin owner.
     "eth:0xbfb9219d933ec96Ac99C4f3D7231eFE43757811F": {

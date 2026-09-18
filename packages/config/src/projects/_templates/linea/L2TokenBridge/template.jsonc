@@ -1,6 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "TokenBridge",
+  "critical": true,
   "description": "Contract used to bridge and escrow ERC-20 tokens.",
   "fields": {
     "accessControl": { "handler": { "type": "accessControl" } },
@@ -17,7 +18,7 @@
       ]
     },
     "isPaused_GENERAL": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "handler": {
         "type": "call",
         "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
@@ -25,7 +26,7 @@
       }
     },
     "isPaused_L1_L2": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "handler": {
         "type": "call",
         "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
@@ -33,7 +34,7 @@
       }
     },
     "isPaused_L2_L1": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "handler": {
         "type": "call",
         "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
@@ -41,7 +42,7 @@
       }
     },
     "isPaused_BLOB_SUBMISSION": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "handler": {
         "type": "call",
         "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
@@ -49,7 +50,7 @@
       }
     },
     "isPaused_CALLDATA_SUBMISSION": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "handler": {
         "type": "call",
         "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
@@ -57,7 +58,7 @@
       }
     },
     "isPaused_FINALIZATION": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "handler": {
         "type": "call",
         "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
@@ -65,7 +66,7 @@
       }
     },
     "isPaused_INITIATE_TOKEN_BRIDGING": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "handler": {
         "type": "call",
         "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",
@@ -73,7 +74,7 @@
       }
     },
     "isPaused_COMPLETE_TOKEN_BRIDGING": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "handler": {
         "type": "call",
         "method": "function isPaused(uint8 _pauseType) view returns (bool pauseTypeIsPaused)",

@@ -18,6 +18,7 @@
       ],
       "proxyType": "immutable",
       "description": "The PreimageOracle contract is used to load the required data from L1 for a dispute game.",
+      "critical": true,
       "deployerAddress": "eth:0x1D0519EeD308BcD49e4ebc149284F83ebC275284",
       "sinceTimestamp": 1740762647,
       "sinceBlock": 21946249,
@@ -80,6 +81,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages the `PAUSED_SLOT`, a boolean value indicating whether the local chain is paused, and `GUARDIAN_SLOT`, the address of the guardian which can pause and unpause the system.",
+      "critical": true,
       "deployerAddress": "eth:0x9e4d3d601b76a68aD306D9863698F0894cD052bd",
       "sinceTimestamp": 1764923939,
       "sinceBlock": 23945622,
@@ -100,6 +102,7 @@
         "PAUSED_SLOT": "0x54176ff9944c4784e5857ec4e5ef560a462c483bf534eda43f91bb01a470b1b6",
         "version": "1.2.0"
       },
+      "fieldMeta": { "paused": { "severity": "MEDIUM" } },
       "implementationNames": {
         "eth:0x2cF123e0328AF3Ae81c331A029a5f837Dc2231ad": "Proxy",
         "eth:0x4da82a327773965b8d4D85Fa3dB8249b387458E7": "SuperchainConfig"
@@ -259,6 +262,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contract designed to hold the bonded ETH for each game. It is designed as a wrapper around WETH to allow an owner to function as a backstop if a game would incorrectly distribute funds.",
+      "critical": true,
       "ignoreInWatchMode": ["totalSupply"],
       "deployerAddress": "eth:0x0a1C5E42e423fab63746d375B84d3Fe4cAf9b513",
       "sinceTimestamp": 1753168943,
@@ -298,6 +302,10 @@
         "totalSupply": 0,
         "version": "1.3.0"
       },
+      "fieldMeta": {
+        "$admin": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0x6d4A27F3eb196E4d039a5EE5B510Cc4C89b7eA9a": "Proxy",
         "eth:0x5e40B9231B86984b5150507046e354dbFbeD3d9e": "DelayedWETH"
@@ -324,6 +332,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains the latest confirmed state root that can be used as a starting point in a dispute game.",
+      "critical": true,
       "ignoreInWatchMode": ["anchorGame", "getAnchorRoot"],
       "deployerAddress": "eth:0xa4000bDD2bB92ce6750b31F1eeda47Bd1cB8e6e4",
       "sinceTimestamp": 1753370939,
@@ -472,6 +481,7 @@
         "isUpgrading": false,
         "owner": "eth:0x3c54Be307E15258E51d42E585831bD7E04BBc03b"
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0xc684075a7Cc997Aa2e72152c330BDAc73FeacbDF": "ProxyAdmin"
       }
@@ -486,6 +496,7 @@
       ],
       "proxyType": "immutable",
       "description": "Same as FaultDisputeGame, but only two permissioned addresses are designated as proposer and challenger.",
+      "critical": true,
       "deployerAddress": "eth:0xBA8Dc81a29c4d9bE2630d1158B60179A50D2A95c",
       "sinceTimestamp": 1765193879,
       "sinceBlock": 23967834,
@@ -534,7 +545,7 @@
       },
       "fieldMeta": {
         "absolutePrestateDecoded": {
-          "description": "Prestate tag for known prestates."
+          "description": "Prestate tag for known prestates. On clones-with-immutable-args implementations this reads 0 from the bare impl; the authoritative prestate lives in the DisputeGameFactory gameArgs (HIGH-watched there)."
         }
       },
       "implementationNames": {
@@ -587,6 +598,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Contains configuration parameters such as the Sequencer address, gas limit on this chain and the unsafe block signer address.",
+      "critical": true,
       "ignoreInWatchMode": ["scalar", "overhead"],
       "deployerAddress": "eth:0xD23d1DAF772BDc525842Ebf2B379A305d89DC914",
       "sinceTimestamp": 1715609063,
@@ -700,7 +712,10 @@
         },
         "eip1559Denominator": {
           "description": "volatility param: lower denominator -> quicker fee changes on L2"
-        }
+        },
+        "$admin": { "severity": "HIGH" },
+        "batcherHash": { "severity": "LOW" },
+        "owner": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0xC975862927797812371A9Fb631f83F8f5e2240D5": "Proxy",
@@ -719,6 +734,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.",
+      "critical": true,
       "ignoreInWatchMode": [
         "permissionedGamesTotal",
         "gameCount",
@@ -770,7 +786,9 @@
         "gameImpls": { "severity": "HIGH" },
         "game1337": { "severity": "HIGH" },
         "game2000": { "severity": "HIGH" },
-        "game42": { "severity": "HIGH" }
+        "game42": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" },
+        "wethFromDGF": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0xD2922A726501f027a5a5AC122BEc92bCfb437662": "Proxy",
@@ -806,6 +824,7 @@
         "isUpgrading": false,
         "owner": "eth:0x3c54Be307E15258E51d42E585831bD7E04BBc03b"
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0xDa5C416025D5eED8440667C5E80A7c35c2F56220": "ProxyAdmin"
       }
@@ -820,6 +839,7 @@
       ],
       "proxyType": "immutable",
       "description": "Legacy contract used to manage a mapping of string names to addresses. Modern OP stack uses a different standard proxy system instead, but this contract is still necessary for backwards compatibility with several older contracts.",
+      "critical": true,
       "deployerAddress": "eth:0xD23d1DAF772BDc525842Ebf2B379A305d89DC914",
       "sinceTimestamp": 1715609063,
       "sinceBlock": 19861572,
@@ -827,6 +847,7 @@
         "$immutable": true,
         "owner": "eth:0xc684075a7Cc997Aa2e72152c330BDAc73FeacbDF"
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0xEa4165C5CDCA155779803A113d8391b741bA5228": "AddressManager"
       },
@@ -901,6 +922,7 @@
       ],
       "proxyType": "immutable",
       "description": "The MIPS contract is used to execute the final step of the dispute game which objectively determines the winner of the dispute.",
+      "critical": true,
       "deployerAddress": "eth:0x1D0519EeD308BcD49e4ebc149284F83ebC275284",
       "sinceTimestamp": 1741217219,
       "sinceBlock": 21983963,
@@ -924,6 +946,7 @@
       ],
       "proxyType": "resolved delegate proxy",
       "description": "Sends messages from host chain to this chain, and relays messages back onto host chain. In the event that a message sent from host chain to this chain is rejected for exceeding this chain's epoch gas limit, it can be resubmitted via this contract's replay function.",
+      "critical": true,
       "ignoreInWatchMode": ["messageNonce"],
       "deployerAddress": "eth:0xD23d1DAF772BDc525842Ebf2B379A305d89DC914",
       "sinceTimestamp": 1715609063,
@@ -1007,6 +1030,7 @@
         "TX_BASE_GAS": 21000,
         "version": "2.6.0"
       },
+      "fieldMeta": { "$admin": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0xf80be9f7a74ab776b69d3F0dC5C08c39b3A0bA19": "ResolvedDelegateProxy",
         "eth:0x5D5a095665886119693F0B41d8DFeE78da033e8B": "L1CrossDomainMessenger"

@@ -1,5 +1,6 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "critical": true,
   "description": "Yield provider adaptor, delegatecalled by the YieldManager, that deploys rollup ETH into a Lido V3 staking vault (stVault) and its beacon chain validators. Withdrawals back to the reserve are requested via EIP-7002 partial validator withdrawals, so refilling the reserve is subject to beacon chain latency; while the reserve is in deficit anyone can trigger them with a validator proof.",
   "ignoreRelatives": ["STETH"],
   "ignoreMethods": [

@@ -1,0 +1,12 @@
+{
+  "events": [
+    {
+      "timestamp": 1769709767,
+      "type": "state",
+      "contract": "eth:0xeb61c3FA03544021cf76412eFb9D0Ce7D8c0290d",
+      "transaction": "0xe645c321243c794f026d48c4972993f73c9201da9e9644a41e767c26d0d81d69",
+      "updateId": "3ff7e570",
+      "reason": "RollupProxy: anyTrustFastConfirmer changed (0x0000000000000000000000000000000000000000 -> 0x6d9BbB2e3E7d13727deb2249E13B9D86A62CbcE0)."
+    }
+  ]
+}

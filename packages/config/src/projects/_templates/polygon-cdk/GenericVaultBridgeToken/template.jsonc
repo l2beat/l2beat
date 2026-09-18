@@ -19,10 +19,31 @@
     "previewWithdraw"
   ],
   "fields": {
+    // vault-bridge escrows are outside the ossification perimeter (TVS counts them
+    // with additional trust assumptions): important state is MEDIUM so changes
+    // surface without touching the clock.
     "accessControl": {
+      "severity": "MEDIUM",
       "handler": {
         "type": "accessControl"
       }
+    },
+    "yieldVault": {
+      "severity": "MEDIUM",
+      "description": "external vault where the underlying backing assets are deposited to generate yield."
+    },
+    "yieldRecipient": {
+      "severity": "MEDIUM"
+    },
+    "migrationManager": {
+      "severity": "MEDIUM"
+    },
+    "minimumReservePercentage": {
+      "severity": "MEDIUM",
+      "description": "share of the underlying that must stay in reserve instead of being deposited into the yield vault."
+    },
+    "paused": {
+      "severity": "MEDIUM"
     }
   }
 }

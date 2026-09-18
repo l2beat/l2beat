@@ -1,8 +1,11 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "Contract keeping track of stakers which act as sequencers/proposes. It is responsible for staker registration and withdrawals and for verifying BLS signatures of stakers (currently not implemented).",
+  // Defines the permissioned operator set (sequencers/proposers) and their stake/slashing rules.
+  "critical": true,
   "ignoreMethods": ["getStakers", "stakerSet"],
   "fields": {
+    // Identity churn inside the unchanged staker role is not HIGH.
     "getActiveStakers": {
       "permissions": [
         {
@@ -11,7 +14,24 @@
         }
       ]
     },
+    "rollupContract": {
+      "severity": "HIGH"
+    },
+    // Bond every sequencer/proposer posts, slashed when their batch is successfully challenged.
+    "stakingValue": {
+      "severity": "HIGH"
+    },
+    // Deposit required to challenge a state root. Raising it prices out challengers
+    // and lets an invalid batch finalize.
+    "challengeDeposit": {
+      "severity": "HIGH"
+    },
+    // Blocks a staker must wait before withdrawing its bond after exiting.
+    "withdrawalLockBlocks": {
+      "severity": "HIGH"
+    },
     "owner": {
+      "severity": "HIGH",
       "permissions": [
         {
           "type": "interact",

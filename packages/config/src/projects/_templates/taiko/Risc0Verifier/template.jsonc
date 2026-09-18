@@ -1,10 +1,12 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "TaikoRisc0Verifier",
+  "critical": true,
   "description": "Gating router contract to verify batches using RISC Zero.",
   "category": "core",
   "fields": {
     "owner": {
+      "severity": "HIGH",
       "permissions": [
         {
           "type": "interact",

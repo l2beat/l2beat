@@ -103,6 +103,7 @@
       ],
       "proxyType": "immutable",
       "description": "Compound-style timelock. Its admin can queue, cancel, and execute transactions. A queued transaction becomes executable after 2d and remains executable for a 14d grace period. The delay can be changed only through the timelock itself and must remain between 2d and 1mo. After the one-time admin initialization path has been used, changing the admin requires a timelocked self-call; there is no emergency bypass.",
+      "critical": true,
       "deployerAddress": "eth:0x41653c7d61609D856f29355E404F310Ec4142Cfb",
       "sinceTimestamp": 1600107105,
       "sinceBlock": 10861678,
@@ -121,6 +122,10 @@
       },
       "fieldMeta": {
         "admin": { "severity": "HIGH" },
+        "pendingAdmin": {
+          "severity": "HIGH",
+          "description": "Address nominated to become timelock admin. It can accept the role without another action by the current admin."
+        },
         "delay": {
           "severity": "HIGH",
           "description": "Seconds every queued transaction must wait before execution."
@@ -194,6 +199,7 @@
       ],
       "proxyType": "immutable",
       "description": "ERC20 governance token with checkpoint voting. Its constructor mints a fixed initial supply; the minter can mint at most 2% of supply per mint, with a minimum interval of 1y. Votes count only when delegated.",
+      "critical": true,
       "ignoreInWatchMode": ["totalSupply"],
       "deployerAddress": "eth:0x41653c7d61609D856f29355E404F310Ec4142Cfb",
       "sinceTimestamp": 1600107086,
@@ -229,6 +235,7 @@
       ],
       "proxyType": "call implementation proxy",
       "description": "Upgradeable Governor Bravo governance proxy. Holders with more than the current proposal threshold of 1,000,000 UNI can create proposals. Voting begins 13,140 blocks after proposal creation and lasts 40,320 blocks; success requires more for-votes than against-votes and at least 40,000,000 UNI voting for. Successful proposals are queued in the configured timelock. The proxy admin can replace the implementation or nominate a new admin.",
+      "critical": true,
       "ignoreInWatchMode": ["proposalCount"],
       "deployerAddress": "eth:0xCf2a39493f5193e8eE0D0e8DBf78a92a4EF293c4",
       "sinceTimestamp": 1629421922,
@@ -269,10 +276,15 @@
           "description": "Address nominated to become proxy admin. It can accept the role without another action by the current admin."
         },
         "votingDelay": {
+          "severity": "HIGH",
           "description": "Blocks between proposal submission and voting start."
         },
-        "votingPeriod": { "description": "Voting duration in blocks." },
+        "votingPeriod": {
+          "severity": "HIGH",
+          "description": "Voting duration in blocks."
+        },
         "proposalThreshold": {
+          "severity": "HIGH",
           "description": "Delegated voting tokens required to submit a proposal."
         },
         "quorumVotes": {
@@ -374,6 +386,7 @@
         "owner": "eth:0x1a9C8182C09F50C8318d769245beA52c32BE35BC",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0xbd123D5b1E148266154F5722C1d059D70059Cf93": "ProxyAdmin"
       }
@@ -972,7 +985,7 @@
     "uniswapv3/Firepit": "0x703007707cf394ab3f48090fd6cd3adedcb5be8fcbef542951bb894deb4bb6bb",
     "uniswapv3/GovernorBravoDelegate": "0x9ca92383f49c288964c4b86cb695c9713fcf6aa7601b2848c7477a196622544f",
     "uniswapv3/Permit2": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "uniswapv3/Timelock": "0x652fc9e6608bc27d2068eecbf83b1f8bbcd89efeb5c71c1388cff293b918cf91",
+    "uniswapv3/Timelock": "0x1af830301f6824613ae3ac5bc1428e6ec237408b962a514f16babc65c102702a",
     "uniswapv3/TokenJar": "0x4e5cdb5291d4fadb56003b4d078f44feb9eccfad71889bf91f3a931e6a042c03",
     "uniswapv3/Uni": "0x0552485ac57ab489375e7de7a08024b2601c9d94bf2db3e2f65878c444c1545f",
     "uniswapv3/UniversalRouter": "0xb38b0e27c2dad3559972735c0287a36cc053ec43cfdb7e72f84c76c7fc6cbc1d",

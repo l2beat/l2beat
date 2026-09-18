@@ -1,14 +1,33 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "Contract used to send L1 -> L2 and relay messages from L2. It allows to replay failed messages and to drop skipped messages. L1 -> L2 messages sent using this contract pay for L2 gas on L1 and will have the aliased address of this contract as the sender.",
+  // Validates L2 -> L1 withdrawal messages against the Rollup and escrows the canonical ETH.
+  "critical": true,
   "ignoreMethods": ["prevReplayIndex"],
   "ignoreInWatchMode": ["messageNonce"],
-  "owner": {
-    "permissions": [
-      {
-        "type": "interact",
-        "description": "set critical configs and contract references and pause/unpause."
-      }
-    ]
+  "fields": {
+    "owner": {
+      "severity": "HIGH",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "set critical configs and contract references and pause/unpause."
+        }
+      ]
+    },
+    // Rollup reference used to validate withdrawal proofs against finalized state roots.
+    "rollup": {
+      "severity": "HIGH"
+    },
+    "messageQueue": {
+      "severity": "HIGH"
+    },
+    // The L2 messenger address accepted as the only valid message counterparty.
+    "counterpart": {
+      "severity": "HIGH"
+    },
+    "paused": {
+      "severity": "MEDIUM"
+    }
   }
 }

@@ -18,6 +18,7 @@
       ],
       "proxyType": "immutable",
       "description": "Verifier contract for SP1 proofs (v5.0.0).",
+      "critical": true,
       "deployerAddress": "eth:0xBaB2c2aF5b91695e65955DA60d63aD1b2aE81126",
       "sinceTimestamp": 1748550023,
       "sinceBlock": 22590744,
@@ -55,6 +56,7 @@
       ],
       "proxyType": "immutable",
       "description": "This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.",
+      "critical": true,
       "deployerAddress": "eth:0x23B0caA3782b5CE6Be7A54655A5DD2791335EAFC",
       "sinceTimestamp": 1767733343,
       "sinceBlock": 24178194,
@@ -76,11 +78,13 @@
       },
       "fieldMeta": {
         "activeVerifiers": {
-          "description": "Verifiers that are routed to by their selector and not frozen."
+          "description": "Verifiers that are routed to by their selector and not frozen.",
+          "severity": "HIGH"
         },
         "allVerifiers": {
           "description": "All verifiers that were ever routed to by this gateway."
-        }
+        },
+        "owner": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0xa236E6E31d94b613923d18313f534CE5b6b98eE1": "SP1VerifierGateway"
@@ -96,6 +100,7 @@
       ],
       "proxyType": "immutable",
       "description": "Core rollup contract that manages the state of the rollup and its ZK fault proof system.",
+      "critical": true,
       "ignoreInWatchMode": [
         "getProposalsLength",
         "anchorL2BlockNumber",
@@ -199,6 +204,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Core Ethscriptions NFT contract that manages ethscription ownership and metadata on L2.",
+      "critical": true,
       "ignoreInWatchMode": ["totalSupply"],
       "deployerAddress": "ethscr:0x0000000000000000000000000000000000000000",
       "sinceTimestamp": 1686755075,
@@ -228,6 +234,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "L2 predeploy that automatically sends ethscription state snapshots to L1 via the L2ToL1MessagePasser whenever an ethscription is created or transferred.",
+      "critical": true,
       "deployerAddress": "ethscr:0x0000000000000000000000000000000000000000",
       "sinceTimestamp": 1686755075,
       "sinceBlock": 0,
@@ -252,6 +259,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "L2 predeploy for passing messages from L2 to L1. Messages are automatically sent by the EthscriptionsProver when ethscriptions are created or transferred.",
+      "critical": true,
       "ignoreInWatchMode": ["messageNonce"],
       "deployerAddress": "ethscr:0x0000000000000000000000000000000000000000",
       "sinceTimestamp": 1686755075,
@@ -278,6 +286,7 @@
       ],
       "proxyType": "immutable",
       "description": "ProxyAdmin predeploy that manages proxy upgrades for L2 predeploys.",
+      "critical": true,
       "deployerAddress": "ethscr:0x0000000000000000000000000000000000000000",
       "sinceTimestamp": 1686755075,
       "sinceBlock": 0,

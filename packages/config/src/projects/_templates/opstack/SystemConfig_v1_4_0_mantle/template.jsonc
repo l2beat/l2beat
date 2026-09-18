@@ -1,10 +1,12 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "SystemConfig",
+  "critical": true,
   "description": "Contains configuration parameters such as the batch submitter (Sequencer) address, the L2 gas limit, the unsafe block signer address and the Arsia fee/gas mechanics (base/blob scalars, EIP-1559 params, minimum base fee, DA footprint gas scalar and EIP-7706-style operator fee).",
   "fields": {
     // this overrides the batcherHash method return type (bytes32 -> address) so our discovery detects it as an address
     "batcherHash": {
+      "severity": "LOW",
       "permissions": [
         {
           "type": "interact",
@@ -18,6 +20,9 @@
       }
     },
     "opStackDA": {
+      // heuristic detection from recent batcher txs; can flap between blob
+      // and alt-DA readings, so MEDIUM (review + monitor) instead of HIGH.
+      "severity": "MEDIUM",
       "handler": {
         "type": "opStackDA",
         "sequencerAddress": "{{ batcherHash }}"
@@ -34,6 +39,7 @@
       "severity": "LOW"
     },
     "owner": {
+      "severity": "HIGH",
       "permissions": [
         {
           "type": "interact",

@@ -1,3 +1,81 @@
+Generated with discovered.json: 0xb7a7d721ef6c43bb9ea9b69683a443ba6bc3d55d
+
+# Diff at Fri, 18 Sep 2026 10:24:49 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e2faf827d006bceee5fb0904599ba325066c7674 block: 1769601454
+- current timestamp: 1769601454
+
+## Description
+
+critical contracts and severities for the ossification perimeter
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1769601454 (main branch discovery), not current.
+
+```diff
+    contract SP1Verifier (eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459) [succinct/SP1Verifier] {
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+      critical:
++        true
+    }
+```
+
+```diff
+    contract SP1VerifierGateway (eth:0xa236E6E31d94b613923d18313f534CE5b6b98eE1) [succinct/SP1VerifierGateway] {
+    +++ description: This contract is the router for zk proof verification. It stores the mapping between identifiers and the address of onchain verifier contracts, routing each identifier to the corresponding verifier contract.
+      fieldMeta.activeVerifiers.severity:
++        "HIGH"
+      fieldMeta.owner:
++        {"severity":"HIGH"}
+      critical:
++        true
+    }
+```
+
+```diff
+    contract Rollup (eth:0xA9Bbcad27E1571AAFAD89F953c81c8A1440A0b8b) [facet/Rollup] {
+    +++ description: Core rollup contract that manages the state of the rollup and its ZK fault proof system.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract Ethscriptions (ethscr:0x3300000000000000000000000000000000000001) [N/A] {
+    +++ description: Core Ethscriptions NFT contract that manages ethscription ownership and metadata on L2.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract EthscriptionsProver (ethscr:0x3300000000000000000000000000000000000003) [N/A] {
+    +++ description: L2 predeploy that automatically sends ethscription state snapshots to L1 via the L2ToL1MessagePasser whenever an ethscription is created or transferred.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract L2ToL1MessagePasser (ethscr:0x4200000000000000000000000000000000000016) [N/A] {
+    +++ description: L2 predeploy for passing messages from L2 to L1. Messages are automatically sent by the EthscriptionsProver when ethscriptions are created or transferred.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract Proxy (ethscr:0x4200000000000000000000000000000000000018) [N/A] {
+    +++ description: ProxyAdmin predeploy that manages proxy upgrades for L2 predeploys.
+      critical:
++        true
+    }
+```
+
 Generated with discovered.json: 0x2dc93fce2a662a45aec94f546c0363a684f011af
 
 # Diff at Tue, 09 Jun 2026 12:43:33 GMT:

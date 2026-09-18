@@ -1,6 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "Staking",
+  "critical": true,
   "description": "RAIL staking contract that tracks delegated voting power, enforces a {{STAKE_LOCKTIME_fmt}} unstake delay, and snapshots staking balances for governance every {{SNAPSHOT_INTERVAL_fmt}}. Its parameters define the governance voting system.",
   "category": "gov",
   "ignoreMethods": [

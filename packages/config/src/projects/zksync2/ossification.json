@@ -1,0 +1,18 @@
+{
+  "events": [
+    {
+      "timestamp": 1741764383,
+      "type": "state",
+      "contract": "eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d",
+      "transaction": "0x0a7e6ae7bdb680aef0261b21078159725b4cdb88146cf75a82838c0884c80e65",
+      "reason": "Raised the Matter Labs Multisig threshold from 4/6 to 5/7; the Safe owns the EraMultisigValidator and its ProxyAdmin and is itself outside the perimeter."
+    },
+    {
+      "timestamp": 1782830483,
+      "type": "state",
+      "contract": "eth:0xdC26B08F0335b68721F64001C38b05D0BC9B539d",
+      "transaction": "0x7242d8cba18a9e6487e807d6f7833b96ac1c3a35519d242077c6c2483e84ea5d",
+      "reason": "Reduced the Matter Labs Multisig threshold from 5/7 to 4/6; the Safe owns the EraMultisigValidator and its ProxyAdmin and is itself outside the perimeter."
+    }
+  ]
+}

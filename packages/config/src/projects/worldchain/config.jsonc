@@ -8,6 +8,10 @@
   ],
   "names": { "eth:0x2ba529D229FDc1DA08e67F536588aE45932d030A": "Burn Caller" },
   "overrides": {
+    "eth:0x5891090d5085679714cb0e62f74950a3c19146a8": {
+      // AddressManager of this chain: its owner can repoint the ResolvedDelegateProxy implementations
+      "critical": true
+    },
     // OPContractsManagerV2 (shared upgrade tooling). Ignored so discovery
     // doesn't follow it into bare implementations; authority is the ProxyAdminOwner.
     "eth:0x9Ce712Ff84E02659846dc6450BB9b7642fE8bE5D": {

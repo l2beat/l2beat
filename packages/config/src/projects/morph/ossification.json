@@ -1,0 +1,332 @@
+{
+  "events": [
+    {
+      "timestamp": 1729344671,
+      "type": "state",
+      "contract": "eth:0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a",
+      "transaction": "0x36a7df601164eedf392ba4497a6b6f01a7bc632eeacbb87e836c48289e456687",
+      "reason": "Registered the first token-to-escrow mapping in the L1GatewayRouter (WETH to the dedicated WETH gateway), directing WETH deposits to that escrow (before discovery coverage)."
+    },
+    {
+      "timestamp": 1729486715,
+      "type": "state",
+      "contract": "eth:0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF",
+      "transaction": "0x54aa127b9f7b7f7bec9aeacb587ee3e71a25340b905261a08926ad09070fa8a0",
+      "reason": "Lowered the gas cap for enqueued L1 to L2 transactions from 100M to 30M, tightening the forced-inclusion path (before discovery coverage)."
+    },
+    {
+      "timestamp": 1729506215,
+      "type": "state",
+      "contract": "eth:0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a",
+      "transaction": "0xfb556a92305a2bca49b01ed1afa595be68d31e0f4f152bb0901cce438feb82d8",
+      "reason": "Mapped WBTC and USDT to the standard ERC20 escrow in the L1GatewayRouter, directing their deposits to that escrow (before discovery coverage)."
+    },
+    {
+      "timestamp": 1729518383,
+      "type": "state",
+      "contract": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+      "transaction": "0x68ccefa5c1a93b8c363a18cfa799e6cdf0b210beb3585cb1cb0d5a2f2d7cdc6f",
+      "reason": "Raised the batch finalization period from 15 minutes to 2 days, changing how long a proposed state root can be challenged before withdrawals settle (before discovery coverage)."
+    },
+    {
+      "timestamp": 1729568783,
+      "type": "state",
+      "contract": "eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7",
+      "transaction": "0xda8ed1404f246a50ccebe835c8430403447f9dec0bcff90568d4da9d9ef504af",
+      "reason": "Lowered the deposit required to challenge a state root from 1 ETH to 1 wei (before discovery coverage)."
+    },
+    {
+      "timestamp": 1729656527,
+      "type": "state",
+      "contract": "eth:0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a",
+      "transaction": "0x6c824b746dbc5de52cee5cfc848deaf4db8394ef15e7b49f9b642fe60e2d95e3",
+      "reason": "Mapped a token (SERC20 0xC7c5...2504) to the custom ERC20 escrow in the L1GatewayRouter (before discovery coverage)."
+    },
+    {
+      "timestamp": 1729764539,
+      "type": "state",
+      "contract": "eth:0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304",
+      "transaction": "0xf7c5eeddf8f74d3dbf0870a1b968a6cd30855070bd6af40ac7b1f356c27bb1d4",
+      "reason": "Handed control of the live canonical messenger from the deployer EOA to Morph Multisig 2 (before discovery coverage)."
+    },
+    {
+      "timestamp": 1729764971,
+      "type": "state",
+      "contract": "eth:0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF",
+      "transaction": "0xf7baa902274bef145f9544c971a577d40ec7165d64db9fbe955a957bd4fdc4af",
+      "reason": "Handed control of the live L1 message queue from the deployer EOA to Morph Multisig 2 (before discovery coverage)."
+    },
+    {
+      "timestamp": 1729764983,
+      "type": "state",
+      "contract": "eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7",
+      "transaction": "0x43af54686d38e8ccc217ae9b2c341aa8485a41a5ae911171b1ba63d163fd9d05",
+      "reason": "Handed control of the live staking contract, which admits sequencers and proposers, from the deployer EOA to Morph Multisig 2 (before discovery coverage)."
+    },
+    {
+      "timestamp": 1729765019,
+      "type": "state",
+      "contract": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+      "transaction": "0xd8145714d15b100dae28a6dbbd0759a74e43ba7591220a113fb826fa0e2a2932",
+      "reason": "Handed control of the live rollup contract from the deployer EOA to Morph Multisig 2 (before discovery coverage)."
+    },
+    {
+      "timestamp": 1729765031,
+      "type": "state",
+      "contract": "eth:0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a",
+      "transaction": "0xd35c0d464ece4347193e4e6204bf15f7227886ceeafb8592789ad192c01ee797",
+      "reason": "Handed control of the live gateway router, which maps tokens to escrows, from the deployer EOA to Morph Multisig 2 (before discovery coverage)."
+    },
+    {
+      "timestamp": 1729765043,
+      "type": "state",
+      "contract": "eth:0x1C1Ffb5828c3A48B54E8910F1c75256a498aDE68",
+      "transaction": "0x8d5913d48f7b209bab369e09355439837b4b718f8c7f305741b7e7a89896fe23",
+      "reason": "Handed control of the live ETH gateway from the deployer EOA to Morph Multisig 2 (before discovery coverage)."
+    },
+    {
+      "timestamp": 1729765055,
+      "type": "state",
+      "contract": "eth:0x44c28f61A5C2Dd24Fc71D7Df8E85e18af4ab2Bd8",
+      "transaction": "0x8d5bee8827c6e490524a7b685333c0562440c484a853e37d7d85da9834d34afd",
+      "reason": "Handed control of the live standard ERC20 escrow from the deployer EOA to Morph Multisig 2 (before discovery coverage)."
+    },
+    {
+      "timestamp": 1729765067,
+      "type": "state",
+      "contract": "eth:0xA534BAdd09b4C62B7B1C32C41dF310AA17b52ef1",
+      "transaction": "0x9c03d68dd90561c09c0c80fddb9db56ce67942c4f0a257baeee2b7e936d3e248",
+      "reason": "Handed control of the live custom ERC20 escrow from the deployer EOA to Morph Multisig 2 (before discovery coverage)."
+    },
+    {
+      "timestamp": 1729765139,
+      "type": "state",
+      "contract": "eth:0xc5Fa3b8968c7FAbEeA2B530a20b88d0C2eD8abb7",
+      "transaction": "0xd2b7e9ea76123204053dda100ca2c5aab6487e8b9ea1c1f1f38723cf46ab9aa6",
+      "reason": "Handed control of the live enforced transaction gateway from the deployer EOA to Morph Multisig 2 (before discovery coverage)."
+    },
+    {
+      "timestamp": 1730260763,
+      "type": "state",
+      "contract": "eth:0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a",
+      "transaction": "0xf0582f6aa3645048d5d14f70b548e4c5ddc57d76ab2cdf0e7cf2046b82590627",
+      "reason": "Mapped DAI to the custom ERC20 escrow in the L1GatewayRouter (before discovery coverage)."
+    },
+    {
+      "timestamp": 1730270651,
+      "type": "state",
+      "contract": "eth:0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a",
+      "transaction": "0xc6d9307f4055f62e89f29cc82405b4ca8c9779620f18718bb0a1ea186c6f8eea",
+      "reason": "Mapped wstETH to a dedicated wstETH escrow (0xA00B...2575) in the L1GatewayRouter (before discovery coverage)."
+    },
+    {
+      "timestamp": 1730279147,
+      "type": "state",
+      "contract": "eth:0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a",
+      "transaction": "0xc9528f5cd9b311d438be5febaf92e42f455af5a3ba6e26f929a4d39ba774dfae",
+      "reason": "Mapped USDC to the first USDC escrow (L1USDCGatewayLegacy) in the L1GatewayRouter (before discovery coverage)."
+    },
+    {
+      "timestamp": 1730280155,
+      "type": "state",
+      "contract": "eth:0x31110622D6CA24c9FF307d6ae1715F16E47F16A0",
+      "transaction": "0xc6026a4d11bd220301f25a55e233642f7eb563bc2dbc1555631b212c9ede45da",
+      "reason": "Handed the ProxyAdmin that can upgrade every core contract from the deployer EOA to Morph Multisig 2 (before discovery coverage)."
+    },
+    {
+      "timestamp": 1730455703,
+      "type": "state",
+      "contract": "eth:0xc9045350712A1DCC3A74Eca18Bc985424Bbe7535",
+      "transaction": "0x10fc169df1b2a25a23601bb026ef4110e3874455ea723b8daefcc5ccb849b76c",
+      "reason": "Handed control of the first USDC escrow from the deployer EOA to Morph Multisig 2 (before discovery coverage)."
+    },
+    {
+      "timestamp": 1731558191,
+      "type": "state",
+      "contract": "eth:0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a",
+      "transaction": "0x124964e4cc7337eb35f4cf5afd136e5819cc0ff3f0b280befb6c1b58170c0102",
+      "reason": "Re-pointed the USDC mapping in the L1GatewayRouter from the first USDC escrow (L1USDCGatewayLegacy) to the new L1USDCGateway, moving where USDC deposits are held (before discovery coverage)."
+    },
+    {
+      "timestamp": 1731581219,
+      "type": "state",
+      "contract": "eth:0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a",
+      "transaction": "0x39e00bf6632ae0ab7e44db1463534ad2dae5775f3a3094ac5f10312b4049899d",
+      "reason": "Mapped three tokens (MTK 0x9364...bb14 and SERC20 0x1292...95cd, 0x9776...E555) to dedicated escrows (0x6C5C...9388, 0x5B2F...a6cC) in the L1GatewayRouter (before discovery coverage)."
+    },
+    {
+      "timestamp": 1731911627,
+      "type": "state",
+      "contract": "eth:0x2C8314f5AADa5D7a9D32eeFebFc43aCCAbe1b289",
+      "transaction": "0x303e035638bb0d8f676d28b587ca2ffa2ad5e2c4ac27ca61286462ffde716dff",
+      "reason": "Handed control of the active USDC escrow from the deployer EOA to Morph Multisig 2 (before discovery coverage)."
+    },
+    {
+      "timestamp": 1733748707,
+      "type": "state",
+      "contract": "eth:0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a",
+      "transaction": "0xfaefd56dddd923757cda7da1771ebd25071df50f8d510d4d41eaa7fb1e4e4ea4",
+      "reason": "Mapped BGB to the standard ERC20 escrow in the L1GatewayRouter (before discovery coverage)."
+    },
+    {
+      "timestamp": 1733895167,
+      "type": "state",
+      "contract": "eth:0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a",
+      "transaction": "0x656f2cbbc3882100274aebdf909acc0e7f22a9b6f50136c61312411659b7fe16",
+      "reason": "Mapped MX and GT to the standard ERC20 escrow in the L1GatewayRouter (before discovery coverage)."
+    },
+    {
+      "timestamp": 1735652267,
+      "type": "state",
+      "contract": "eth:0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a",
+      "transaction": "0xf5df8cc3dc9f21d548914fe3bf789266e53c3851829accaa3b55dbd690e3b220",
+      "reason": "Mapped HTX and HT to the standard ERC20 escrow in the L1GatewayRouter (before discovery coverage)."
+    },
+    {
+      "timestamp": 1737445727,
+      "type": "state",
+      "contract": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+      "transaction": "0x80195b688012d4af1dce58bf302b62dd9ac2a22364fc830d75506c6a9650e827",
+      "updateId": "a9360a3b",
+      "reason": "Switched the Rollup's verifier from the original single verifier (0x87c1...dcf6) to the MultipleVersionRollupVerifier router, changing which contract validates state-transition proofs (UpdateVerifier)."
+    },
+    {
+      "timestamp": 1737455087,
+      "type": "state",
+      "contract": "eth:0x31110622D6CA24c9FF307d6ae1715F16E47F16A0",
+      "transaction": "0x4c82ceb6cbb9c52d52b80b6040c86949e103f3989e2479c220ab5f844d3a68e2",
+      "updateId": "a9360a3b",
+      "reason": "Moved the core ProxyAdmin, which can upgrade every core contract, from Morph Multisig 2 to Morph Multisig 1 (OwnershipTransferred)."
+    },
+    {
+      "timestamp": 1737504695,
+      "type": "state",
+      "contract": "eth:0x5d1584c27b4aD233283c6da1ca1B825d6f220EC1",
+      "transaction": "0x4d29fb21c74c16a489039e79e2d12f903d7bd87a16d820d97a31aed1cdd2bb72",
+      "reason": "Handed control of the MultipleVersionRollupVerifier, which decides which zk verifier validates each batch, from the deployer EOA to Morph Multisig 2 (happened before the contract entered discovery)."
+    },
+    {
+      "timestamp": 1747030703,
+      "type": "state",
+      "contract": "eth:0x5d1584c27b4aD233283c6da1ca1B825d6f220EC1",
+      "transaction": "0x13809b5a9765bfd402754ada4a56817a3913ee592438809c0c7442284ce66d69",
+      "updateId": "e4a70468",
+      "reason": "Registered a new zk verifier (0x4006...f953, version 2) in the MultipleVersionRollupVerifier from batch 20230, changing which proofs are accepted (UpdateVerifier)."
+    },
+    {
+      "timestamp": 1763737343,
+      "type": "state",
+      "contract": "eth:0x5d1584c27b4aD233283c6da1ca1B825d6f220EC1",
+      "transaction": "0x7f45f1e95a8fcaf459d84b3aef46e5128519dd9c31087a2da1440f1c93109aa0",
+      "updateId": "1d922498",
+      "reason": "Registered a new zk verifier (0x045d...0423, version 2) in the MultipleVersionRollupVerifier from batch 45847 (UpdateVerifier)."
+    },
+    {
+      "timestamp": 1763742311,
+      "type": "state",
+      "contract": "eth:0x5d1584c27b4aD233283c6da1ca1B825d6f220EC1",
+      "transaction": "0xa89f7a0a4ccc3adbd02f6839d96e4ce85490ac0d55bf5f96a44796c9d7de0729",
+      "reason": "Re-registered zk verifier 0x045d...0423 under version 1 in the MultipleVersionRollupVerifier from batch 45847 (UpdateVerifier)."
+    },
+    {
+      "timestamp": 1763747459,
+      "type": "state",
+      "contract": "eth:0x5d1584c27b4aD233283c6da1ca1B825d6f220EC1",
+      "transaction": "0x59e9866b8f2e858a158cb85dcbe81f63f46b99ca53802b8525f0ffb75881a47c",
+      "reason": "Registered zk verifier 0xce86...b3d5 (version 1) in the MultipleVersionRollupVerifier from batch 45847 (UpdateVerifier)."
+    },
+    {
+      "timestamp": 1763748551,
+      "type": "state",
+      "contract": "eth:0x5d1584c27b4aD233283c6da1ca1B825d6f220EC1",
+      "transaction": "0x5b0cb2560197089e83052190df5b1b4adc810999afb379d616cd500e3af9ddb6",
+      "reason": "Re-registered zk verifier 0x045d...0423 (version 1) in the MultipleVersionRollupVerifier from batch 45847, reverting the previous registration (UpdateVerifier)."
+    },
+    {
+      "timestamp": 1768208819,
+      "type": "state",
+      "contract": "eth:0x5d1584c27b4aD233283c6da1ca1B825d6f220EC1",
+      "transaction": "0xe189c82ba4fa640858ddaff7d7f2b8b6dd690634369261ed3a90529a92fe0854",
+      "updateId": "e59936ee",
+      "reason": "Registered a new zk verifier (0x5ff1...2d70, version 1) in the MultipleVersionRollupVerifier from batch 47944 (UpdateVerifier)."
+    },
+    {
+      "timestamp": 1772103443,
+      "type": "state",
+      "contract": "eth:0x31110622D6CA24c9FF307d6ae1715F16E47F16A0",
+      "transaction": "0xa5de6d545082581da0b03abde960ed98c51f8a4ef1bf20704094029a23aa4691",
+      "updateId": "e1a5c3a0",
+      "reason": "Moved the core ProxyAdmin, which can upgrade every core contract, from Morph Multisig 1 to the TimelockController (OwnershipTransferred)."
+    },
+    {
+      "timestamp": 1775699999,
+      "type": "state",
+      "contract": "eth:0x5d1584c27b4aD233283c6da1ca1B825d6f220EC1",
+      "transaction": "0x060e89b3fec4fd16d5e98282bb0f75492d30da3478c8a95de8f3d52194db7d2e",
+      "updateId": "9e6da537",
+      "reason": "Registered a new zk verifier (0x059a...fa63, version 1) in the MultipleVersionRollupVerifier from batch 51566 (UpdateVerifier)."
+    },
+    {
+      "timestamp": 1779354407,
+      "type": "state",
+      "contract": "eth:0x5d1584c27b4aD233283c6da1ca1B825d6f220EC1",
+      "transaction": "0xe77f7aa49f9733757a445ad9dbd04e5bd9e4b572e18adb830a892c78b0dc298a",
+      "updateId": "2ff16c37",
+      "reason": "Registered the SP1 ZkEvmVerifierV1 0x9774...4624 (version 1) in the MultipleVersionRollupVerifier from batch 53283 (UpdateVerifier)."
+    },
+    {
+      "timestamp": 1780559831,
+      "type": "state",
+      "contract": "eth:0x5d1584c27b4aD233283c6da1ca1B825d6f220EC1",
+      "transaction": "0x367dca9b8ba14204b0ad6af4fb20ff52000049c352565b4052e8493558912a08",
+      "updateId": "171a57ae",
+      "reason": "Registered the current SP1 ZkEvmVerifierV1 0xD9F2...d692 (version 2) in the MultipleVersionRollupVerifier from batch 54332 (UpdateVerifier)."
+    },
+    {
+      "timestamp": 1785410831,
+      "type": "state",
+      "contract": "eth:0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304",
+      "transaction": "0x01f81161ff81afa9220f0195ff0a973c34ba0af6a04ee404fc096181dd1900ab",
+      "updateId": "98f2ec73",
+      "reason": "Moved control of the canonical messenger, whose owner can re-point the rollup reference, from Morph Multisig 2 (3 of 5) to Morph Multisig 1 (4 of 6) (OwnershipTransferred)."
+    },
+    {
+      "timestamp": 1785410867,
+      "type": "state",
+      "contract": "eth:0x2C8314f5AADa5D7a9D32eeFebFc43aCCAbe1b289",
+      "transaction": "0x7144c29f4f226ff875abf2e54fb966fb834ece5c21e3973211b83269acc86332",
+      "reason": "Moved control of the active USDC escrow from Morph Multisig 2 (3 of 5) to Morph Multisig 1 (4 of 6); the escrow was outside discovery until this review."
+    },
+    {
+      "timestamp": 1786500551,
+      "type": "state",
+      "contract": "eth:0x5d1584c27b4aD233283c6da1ca1B825d6f220EC1",
+      "transaction": "0x487ad1bbd0505568bc91758244f18ee42e57b539f42f5ee951628b3c173302ea",
+      "updateId": "17fdba45",
+      "reason": "Moved control of the MultipleVersionRollupVerifier, whose owner registers the zk verifiers used for new batches, from Morph Multisig 2 (3 of 5) to Morph Multisig 1 (4 of 6) (OwnershipTransferred)."
+    },
+    {
+      "timestamp": 1786502411,
+      "type": "state",
+      "contract": "eth:0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a",
+      "transaction": "0x3cfc208107f3242a55686b3ecbe27eba208f2af3b5fd993feec6c2e09a0a3df4",
+      "updateId": "17fdba45",
+      "reason": "Moved control of the L1GatewayRouter, whose owner maps tokens to escrows, from Morph Multisig 2 (3 of 5) to Morph Multisig 1 (4 of 6) (OwnershipTransferred)."
+    },
+    {
+      "timestamp": 1786502579,
+      "type": "state",
+      "contract": "eth:0xA534BAdd09b4C62B7B1C32C41dF310AA17b52ef1",
+      "transaction": "0x95bb3f471f468778dacc292b4f177008e2dc7c4df501f94a78ce4a56bcb225cb",
+      "reason": "Moved control of the custom ERC20 escrow from Morph Multisig 2 (3 of 5) to Morph Multisig 1 (4 of 6); the escrow was outside discovery until this review."
+    },
+    {
+      "timestamp": 1786503011,
+      "type": "state",
+      "contract": "eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60",
+      "transaction": "0x338db42d231e1ae442daddaade174b2a20b31f2455586fbcb56862238ab34082",
+      "updateId": "17fdba45",
+      "reason": "Moved control of the Rollup, whose owner can pause, revert unfinalized batches, change the proof window, finalization period and verifier, from Morph Multisig 2 (3 of 5) to Morph Multisig 1 (4 of 6) (OwnershipTransferred)."
+    }
+  ]
+}

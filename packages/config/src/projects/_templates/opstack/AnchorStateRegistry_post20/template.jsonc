@@ -1,6 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "AnchorStateRegistry",
+  "critical": true,
   "description": "Contains the latest confirmed state root that can be used as a starting point in a dispute game. This variant stores respectedGameType, retirementTimestamp, and disputeGameFinalityDelaySeconds locally and drops the legacy *FromGame fields, since the AggregateVerifier model does not expose vm()/weth()/absolutePrestate() on its game implementation.",
   "ignoreInWatchMode": ["anchorGame", "getAnchorRoot"],
   "ignoreRelatives": ["anchorGame"],
@@ -17,6 +18,9 @@
     }
   },
   "fields": {
+    "$admin": {
+      "severity": "HIGH"
+    },
     "respectedGameType": {
       "severity": "HIGH"
     },
@@ -29,9 +33,6 @@
       "edit": ["format", "DisputeGameMap"]
     },
     "retirementTimestamp": {
-      "severity": "HIGH"
-    },
-    "disputeGameFinalityDelaySeconds": {
       "severity": "HIGH"
     }
   }

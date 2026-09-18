@@ -1,0 +1,12 @@
+{
+  "events": [
+    {
+      "timestamp": 1781027771,
+      "type": "state",
+      "contract": "eth:0xE3cbE3A636AB6A754e9e41B12b09d09Ce9E53Db3",
+      "transaction": "0xaa6158996d8ef9d84ec262c8cda920f71b51e91bd67d17cbac82c657e36a4300",
+      "updateId": "2c23e76e",
+      "reason": "Granted the SECURITY_AGENT role of the USDC Bridge to a third agent (eth:0x27aFEd9831209B58Cf24fa241E028dD1e80Fb17D) that can halt deposits and throttle withdrawals to 0%; executed by Paradex Multisig 2 as SECURITY_ADMIN."
+    }
+  ]
+}

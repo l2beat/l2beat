@@ -2,6 +2,7 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "The main rollup contract. It processes L2 batches, manages token deposits and withdrawals, allows users to submit censorship-resistant L2 transactions and controls desert mode (escape hatch). Logic is split between two contracts because of code-size limits, many operations are delegated to AdditionalZKLighter.",
   "displayName": "Lighter",
+  "critical": true,
   "ignoreInWatchMode": [
     "committedBatchesCount",
     "committedPriorityRequestCount",
@@ -30,13 +31,24 @@
       "severity": "HIGH"
     },
     "governance": {
+      "severity": "HIGH",
       "handler": { "type": "storage", "slot": 6, "returnType": "address" }
     },
     "additionalZkLighter": {
       "handler": { "type": "storage", "slot": 7, "returnType": "address" }
     },
     "stateRootUpgradeVerifier": {
+      "severity": "HIGH",
+      "description": "If set to a non-zero address, a governor can replace the current state root with any new one accompanied by a proof this verifier accepts (the pointer self-clears after one use).",
       "handler": { "type": "storage", "slot": 494, "returnType": "address" }
+    },
+    "treasury": {
+      "severity": "MEDIUM",
+      "description": "L1 address bound to the treasury account (accountIndex 0) that collects trading fees on L2."
+    },
+    "insuranceFundOperator": {
+      "severity": "MEDIUM",
+      "description": "L1 address bound to the insurance fund account that backstops trading losses on L2."
     },
     "createdMarketsPostSpot": {
       "handler": {
@@ -58,8 +70,12 @@
       },
       "edit": ["map", ["format", "Bytes32ToString"]]
     },
-    "desertMode": { "severity": "HIGH" },
+    "desertMode": {
+      "severity": "HIGH",
+      "description": "One-way escape-hatch state: once activated (after an expired, uncensorable priority request), normal operation halts permanently and users exit via desert-mode proofs."
+    },
     "assetConfigUSDC": {
+      "severity": "MEDIUM",
       "handler": {
         "type": "call",
         "method": "function assetConfigs(uint16) view returns (address tokenAddress, uint8 withdrawalsEnabled, uint56 extensionMultiplier, uint128 tickSize, uint64 depositCapTicks, uint64 minDepositTicks)",
@@ -67,6 +83,7 @@
       }
     },
     "assetConfigETH": {
+      "severity": "MEDIUM",
       "handler": {
         "type": "call",
         "method": "function assetConfigs(uint16) view returns (address tokenAddress, uint8 withdrawalsEnabled, uint56 extensionMultiplier, uint128 tickSize, uint64 depositCapTicks, uint64 minDepositTicks)",
