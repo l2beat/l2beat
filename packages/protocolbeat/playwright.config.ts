@@ -12,6 +12,7 @@ const PORT = 2022
 export default defineConfig({
   testDir: './e2e',
   testMatch: '**/*.e2e.ts',
+  workers: process.env.CI ? 4 : undefined,
   use: {
     baseURL: process.env.BASE_URL ?? `http://localhost:${PORT}`,
   },
