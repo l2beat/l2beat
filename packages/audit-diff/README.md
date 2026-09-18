@@ -19,8 +19,9 @@ pnpm --filter @l2beat/audit-diff generate --dataset ~/Documents/repos/audit-data
 pnpm --filter @l2beat/audit-diff cli gc --out <dir>
 ```
 
-`generate` reads each project's verifier and program declarations from the
-config database and caches their source trees automatically. Run `fetch-zk`
+`generate` reads each project's ZK program declarations from the config
+database and caches their source trees automatically. Verifier sources are
+temporarily excluded from this prototype. Run `fetch-zk`
 explicitly only to force-refresh cached trees whose configured GitHub URL has
 not changed.
 

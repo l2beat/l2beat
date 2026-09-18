@@ -100,6 +100,24 @@
       "reportFile": "Veridise - Kailua Security Audit (Feb 2025).md",
       "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/bob/reports/Veridise%20-%20Kailua%20Security%20Audit%20(Feb%202025).pdf"
     },
+    "bob/veridise-kailua-2025-06": {
+      "id": "bob/veridise-kailua-2025-06",
+      "collection": "bob",
+      "title": "Veridise Auditing Report for Kailua Protocol (June 2025)",
+      "auditor": "Veridise",
+      "reportDate": "2025-06-16",
+      "reportFile": "Veridise - Kailua Security Audit (Jun 2025).md",
+      "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/bob/reports/Veridise%20-%20Kailua%20Security%20Audit%20(Jun%202025).pdf"
+    },
+    "bob/veridise-kailua-2025-10": {
+      "id": "bob/veridise-kailua-2025-10",
+      "collection": "bob",
+      "title": "Veridise Auditing Report for Kailua (October 2025)",
+      "auditor": "Veridise",
+      "reportDate": "2025-11-04",
+      "reportFile": "Veridise - Kailua Security Audit (Oct 2025).md",
+      "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/bob/reports/Veridise%20-%20Kailua%20Security%20Audit%20(Oct%202025).pdf"
+    },
     "bob/veridise-kailua-2026-02": {
       "id": "bob/veridise-kailua-2026-02",
       "collection": "bob",
@@ -432,6 +450,15 @@
       "reportDate": "2025-05-07",
       "reportFile": "2025_03-Interop-OpProgram-Cantina.md",
       "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/optimism/reports/2025_03-Interop-OpProgram-Cantina.pdf"
+    },
+    "optimism/cantina-kona-2026-03": {
+      "id": "optimism/cantina-kona-2026-03",
+      "collection": "optimism",
+      "title": "Coinbase: Kona Security Review",
+      "auditor": "Cantina",
+      "reportDate": "2026-03-28",
+      "reportFile": "2026_03-Kona-Cantina.md",
+      "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/optimism/reports/2026_03-Kona-Cantina.pdf"
     },
     "optimism/cantina-mcp-l1-2024-02": {
       "id": "optimism/cantina-mcp-l1-2024-02",
@@ -1000,6 +1027,15 @@
       "reportFile": "solmate-v6__audits__v6-Fixed-Point-Solutions.md",
       "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/_libs/solmate/reports/solmate-v6__audits__v6-Fixed-Point-Solutions.pdf"
     },
+    "sp1/cantina-sp1-competition-2024": {
+      "id": "sp1/cantina-sp1-competition-2024",
+      "collection": "sp1",
+      "title": "Succinct sp1 Competition (Cantina)",
+      "auditor": "Cantina",
+      "reportDate": "2024-07-19",
+      "reportFile": "sp1__audits__cantina.md",
+      "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/_libs/sp1/reports/sp1__audits__cantina.pdf"
+    },
     "sp1/code4rena-sp1-hypercube-2025": {
       "id": "sp1/code4rena-sp1-hypercube-2025",
       "collection": "sp1",
@@ -1008,6 +1044,24 @@
       "reportDate": null,
       "reportFile": "sp1__audits__code4rena.md",
       "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/_libs/sp1/reports/sp1__audits__code4rena.pdf"
+    },
+    "sp1/kalos-rkm0959-recursion-vm-2024": {
+      "id": "sp1/kalos-rkm0959-recursion-vm-2024",
+      "collection": "sp1",
+      "title": "SP1 Audit Report - Recursion VM",
+      "auditor": "rkm0959 / KALOS",
+      "reportDate": null,
+      "reportFile": "sp1__audits__kalos.md",
+      "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/_libs/sp1/reports/sp1__audits__kalos.md"
+    },
+    "sp1/rkm0959-sp1-v3-2024": {
+      "id": "sp1/rkm0959-sp1-v3-2024",
+      "collection": "sp1",
+      "title": "SP1 V3 Audit Report",
+      "auditor": "rkm0959",
+      "reportDate": null,
+      "reportFile": "sp1__audits__rkm0959.md",
+      "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/_libs/sp1/reports/sp1__audits__rkm0959.md"
     },
     "sp1/veridise-sp1-recursion-and-contracts-2024": {
       "id": "sp1/veridise-sp1-recursion-and-contracts-2024",
@@ -1026,6 +1080,15 @@
       "reportDate": "2024-12-04",
       "reportFile": "sp1__audits__zellic.md",
       "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/_libs/sp1/reports/sp1__audits__zellic.pdf"
+    },
+    "sp1/zellic-sp1-hypercube-2025": {
+      "id": "sp1/zellic-sp1-hypercube-2025",
+      "collection": "sp1",
+      "title": "Hypercube Protocol Cryptographic Security Assessment",
+      "auditor": "Zellic",
+      "reportDate": "2025-12-23",
+      "reportFile": "sp1__audits__hypercube-zellic.md",
+      "url": "https://github.com/sergeyshemyakov/audit-dataset/blob/main/_libs/sp1/reports/sp1__audits__hypercube-zellic.pdf"
     },
     "tornado-cash/abdk-tornado-anonymity-mining-recheck-2020-12-22": {
       "id": "tornado-cash/abdk-tornado-anonymity-mining-recheck-2020-12-22",

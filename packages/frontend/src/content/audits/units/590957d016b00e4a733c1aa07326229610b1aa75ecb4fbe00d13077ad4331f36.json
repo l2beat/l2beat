@@ -1,0 +1,1 @@
+{"schemaVersion":2,"unitHash":"590957d016b00e4a733c1aa07326229610b1aa75ecb4fbe00d13077ad4331f36","name":".gitignore","kind":"program","lines":5,"source":"devnets/specs/*\noptimism-package\nkona-test-logs\nbuilder_jwt.hex\ntmp/","resolutions":{"9fa846564f4071bd":{"status":"unaudited","coveredLines":0,"warnings":[]}}}

@@ -1,0 +1,1 @@
+{"schemaVersion":2,"unitHash":"effebe7cbf2cff2102d3debf9c65b38d4a85e1bfe8b39469aa9be8d047812733","name":".dockerignore","kind":"program","lines":7,"source":"target/\nbook/\nassets/\nmonorepo/\n.config/\n.github/\ntests/","resolutions":{"9fa846564f4071bd":{"status":"unaudited","coveredLines":0,"warnings":[]}}}

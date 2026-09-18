@@ -1,0 +1,1 @@
+{"schemaVersion":2,"unitHash":"f6ae8524a1bd2c3b86f41ed3367faa462ecd8ceeddf33a24b07060b7d07192c9","name":"SECURITY.md","kind":"program","lines":5,"source":"# Security Policy\n\n## Reporting a Vulnerability\n\nContact security at oplabs.co.","resolutions":{"9fa846564f4071bd":{"status":"unaudited","coveredLines":0,"warnings":[]}}}

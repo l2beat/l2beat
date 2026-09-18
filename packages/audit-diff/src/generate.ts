@@ -190,8 +190,8 @@ export function generateProject(
     }
   })
 
-  // zk verifiers and programs synchronized from config; one whole-file unit per
-  // source, matched by identity or by repository path suffix.
+  // zk programs synchronized from config; one whole-file unit per source,
+  // matched by identity or by repository path suffix.
   for (const entry of readZkSources(options.zkCacheDir, options.projectId)) {
     const [chain, address] = entry.address?.includes(':')
       ? (entry.address.split(':') as [string, string])

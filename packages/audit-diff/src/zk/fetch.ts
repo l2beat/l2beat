@@ -27,18 +27,7 @@ export interface FetchZkOptions {
 
 export interface ZkProject {
   contracts?: {
-    zkVerifiers?: { toString(): string }[]
     programHashes?: { title: string; programUrl?: string }[]
-  }
-}
-
-export interface ZkCatalogProject {
-  zkCatalogInfo: {
-    verifierHashes: {
-      name: string
-      sourceLink?: string
-      knownDeployments: { address: { toString(): string } }[]
-    }[]
   }
 }
 
@@ -68,18 +57,16 @@ export interface GitHubTree {
 }
 
 /**
- * Fetches the sources of a project's zk verifiers and programs into
+ * Fetches the sources of a project's zk programs into
  * `.cache/zk/<project>/` with a `zk-sources.json`, replacing the dataset's old
  * `deployed-contracts/_zk` convention.
  *
- * Verifier sources come from `zkCatalogInfo.verifierHashes[].sourceLink` of
- * the zk catalog project whose `knownDeployments` contain one of the
- * project's `contracts.zkVerifiers` addresses. Program sources come from
- * `contracts.programHashes[].programUrl`.
+ * Program sources come from `contracts.programHashes[].programUrl`.
+ * Verifier source diffs are intentionally disabled for the prototype because
+ * repository-level source links produce noisy and misleading comparisons.
  */
 export class ZkSourceSync {
   private readonly ps: ProjectService
-  private catalog: ZkCatalogProject[] | undefined
   private readonly materialized = new Map<string, SharedSourceMetadata>()
 
   constructor(private readonly options: Omit<FetchZkOptions, 'projectId'>) {
@@ -106,16 +93,7 @@ export class ZkSourceSync {
       return
     }
 
-    const hasVerifiers = (project.contracts?.zkVerifiers?.length ?? 0) > 0
-    if (hasVerifiers && !this.catalog) {
-      this.catalog = (await this.ps.getProjects({
-        select: ['zkCatalogInfo'],
-      })) as ZkCatalogProject[]
-    }
-    const wanted = getZkSourceRequests(
-      project,
-      hasVerifiers ? (this.catalog ?? []) : [],
-    )
+    const wanted = getZkSourceRequests(project)
     const entries: ZkSourceEntry[] = []
     for (const item of wanted) {
       const tree = parseGitHubUrl(item.link)
@@ -216,30 +194,10 @@ function configDatabasePath(projectsDir: string): string {
   return dbPath
 }
 
-export function getZkSourceRequests(
-  project: ZkProject,
-  catalog: ZkCatalogProject[],
-): ZkSourceRequest[] {
+export function getZkSourceRequests(project: ZkProject): ZkSourceRequest[] {
   const wanted: ZkSourceRequest[] = []
-  const verifierAddresses = new Set(
-    (project.contracts?.zkVerifiers ?? []).map((a) => a.toString()),
-  )
-  if (verifierAddresses.size > 0) {
-    for (const entry of catalog) {
-      for (const verifier of entry.zkCatalogInfo.verifierHashes) {
-        const deployment = verifier.knownDeployments.find((d) =>
-          verifierAddresses.has(d.address.toString()),
-        )
-        if (!deployment || !verifier.sourceLink) continue
-        wanted.push({
-          type: 'verifier',
-          name: verifier.name,
-          link: verifier.sourceLink,
-          address: deployment.address.toString(),
-        })
-      }
-    }
-  }
+  // TODO: Reintroduce verifier source fetching once the prototype has a
+  // verifier-specific source selection and comparison strategy.
   for (const program of project.contracts?.programHashes ?? []) {
     if (program.programUrl) {
       wanted.push({

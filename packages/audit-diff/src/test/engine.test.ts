@@ -85,51 +85,38 @@ describe('deployed', () => {
 })
 
 describe('zk sources', () => {
-  it('derives verifier and program sources from project config', () => {
-    const address = { toString: () => 'eth:0x1234' }
-    const requests = getZkSourceRequests(
-      {
-        contracts: {
-          zkVerifiers: [address],
-          programHashes: [
-            {
-              title: 'Range program',
-              programUrl:
-                'https://github.com/example/program/tree/v1.0.0/range',
-            },
-            { title: 'Unknown program' },
-          ],
-        },
-      },
-      [
-        {
-          zkCatalogInfo: {
-            verifierHashes: [
-              {
-                name: 'Verifier v1',
-                sourceLink:
-                  'https://github.com/example/verifier/tree/v1.0.0/src',
-                knownDeployments: [{ address }],
-              },
-            ],
+  it('derives only program sources from project config', () => {
+    const requests = getZkSourceRequests({
+      contracts: {
+        programHashes: [
+          {
+            title: 'Range program',
+            programUrl: 'https://github.com/example/program/tree/v1.0.0/range',
           },
-        },
-      ],
-    )
+          { title: 'Unknown program' },
+        ],
+      },
+    })
 
     expect(requests).toEqual([
-      {
-        type: 'verifier',
-        name: 'Verifier v1',
-        link: 'https://github.com/example/verifier/tree/v1.0.0/src',
-        address: 'eth:0x1234',
-      },
       {
         type: 'program',
         name: 'Range program',
         link: 'https://github.com/example/program/tree/v1.0.0/range',
       },
     ])
+  })
+
+  it('ignores verifier declarations', () => {
+    const project = {
+      contracts: {
+        zkVerifiers: [{ toString: () => 'eth:0x1234' }],
+        programHashes: [],
+      },
+    }
+    const requests = getZkSourceRequests(project)
+
+    expect(requests).toEqual([])
   })
 
   it('parses blob anchors and resolves refs containing slashes', () => {
