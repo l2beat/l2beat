@@ -1,5 +1,6 @@
 import type { ChainSpecificAddress } from '@l2beat/shared-pure'
 import merge from 'lodash/merge'
+import mergeWith from 'lodash/mergeWith'
 import { type StructureConfig, StructureContract } from './StructureConfig'
 
 export type StructureContractOverrides = StructureContract & {
@@ -33,7 +34,9 @@ export function makeEntryStructureConfig(
       // side.
       const ignoreAllRelatives =
         values.ignoreRelatives === true || this.ignoreRelatives === true
-      const merged = StructureContract.parse(merge({}, values, this))
+      const merged = StructureContract.parse(
+        mergeWith({}, values, this, replaceHandler),
+      )
       if (ignoreAllRelatives) {
         merged.ignoreRelatives = true
       }
@@ -44,4 +47,11 @@ export function makeEntryStructureConfig(
     },
   }
   return result
+}
+
+function replaceHandler(_: unknown, override: unknown, key: string) {
+  if (key === 'handler') {
+    return override
+  }
+  return undefined
 }
