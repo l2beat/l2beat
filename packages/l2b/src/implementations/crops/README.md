@@ -1,18 +1,7 @@
 # Crop attestations from a Safe
 
-The set of projects the garden shows is published to [EAS] as a single
-attestation. The attester is a **Safe**, so publishing is a multisig
-transaction: `l2b` builds calldata, the Safe owners execute it, and `l2b`
-records what happened. No command here holds a key or sends a transaction.
 
 [EAS]: https://attest.org
-
-```
-  l2b crops-attest          Safe UI              l2b crops-record       git
-  ───────────────────  →  ─────────────────  →  ──────────────────  →  ──────
-  plan + calldata         owners execute        ledger from the        commit
-  (read-only)             the transaction       tx hash
-```
 
 | command | writes | what it does |
 | --- | --- | --- |
@@ -26,13 +15,7 @@ of onchain state, committed so the API needs no RPC call.
 ## What gets attested
 
 **The projects the garden shows**, which is not the same as the projects that
-have been reviewed: a single red crop keeps a project off `/garden`, and it is
-left out of the attestation too. The rule is `qualifiesForGarden` in
-`@l2beat/config`, called by the site, by crops-api and by `crops-attest`
-alike, so what is attested onchain cannot drift from what the page shows.
-
-A project whose evaluation changes from red to amber therefore joins the next
-revision on its own, with no change here.
+have been reviewed.
 
 ## Configuration
 
@@ -43,17 +26,6 @@ rpc. Edit that file; [`easConfig.ts`](./easConfig.ts) only gives it types.
 
 `--network`, `--safe` and `--rpc-url` override it per run, and
 `L2B_CROPS_SAFE` / `L2B_RPC_URL` are read from the environment.
-
-> The schema string appears in the config file and once more in `easConfig.ts`,
-> because viem derives the payload's TypeScript types from a literal and a
-> value read from JSON is only `string`. The module refuses to load if the two
-> disagree, so they cannot quietly drift.
-
-> **Anonymity.** While the attestations live on a testnet, nothing onchain may
-> tie them to L2BEAT — `l2b` refuses to build calldata whose payload names us
-> (see [`anonymity.ts`](./anonymity.ts)). That guard reads the payload only; it
-> cannot check the Safe. **A Safe's owners are public onchain**, so use a Safe
-> whose owners are throwaway addresses with no history that links them to us.
 
 ## Step 1 — build the calldata
 
