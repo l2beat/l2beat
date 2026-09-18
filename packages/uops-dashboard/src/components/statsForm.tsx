@@ -1,6 +1,7 @@
 import { useState } from 'react'
 import { SUPPORTED_CHAINS } from '@/chains'
-import type { ApiError, Stats, StatsApiRequest, StatsWithChain } from '@/types'
+import type { Stats, StatsApiRequest, StatsWithChain } from '@/types'
+import { postApi } from '@/utils/postApi'
 import { BlockCountInput, type InputMode } from './blockCountInput'
 import { ChainDropdown } from './chainDropdown'
 import { ErrorModal } from './errorModal'
@@ -110,23 +111,8 @@ export function StatsForm({
     count: number,
     lastFetched?: number,
   ): Promise<Stats> => {
-    const res = await fetch(`${window.location.origin}/api/stats`, {
-      method: 'POST',
-      body: JSON.stringify({
-        chainId,
-        count,
-        lastFetched,
-      } as StatsApiRequest),
-    })
-
-    const body = await res.json()
-    if (res.status !== 200) {
-      const error = body as ApiError
-      throw new Error(error.message)
-    }
-
-    const stats = body as Stats
-    return stats
+    const request: StatsApiRequest = { chainId, count, lastFetched }
+    return await postApi<Stats>('stats', request)
   }
 
   return (

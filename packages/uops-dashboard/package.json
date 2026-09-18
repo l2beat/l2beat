@@ -3,10 +3,10 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
-    "dev": "pnpm prebuild&& next dev --turbopack",
+    "dev": "pnpm prebuild && tsx watch src/server/index.dev.ts",
     "prebuild": "pnpm build:config && node ./scripts/getChains.mjs",
-    "build": "next build",
-    "start": "next start",
+    "build": "vite build && esbuild src/server/index.ts --bundle --platform=node --packages=external --outfile=dist/server/index.js",
+    "start": "NODE_ENV=production node dist/server/index.js",
     "format": "biome format .",
     "format:fix": "biome format --write .",
     "lint:fix": "biome check --formatter-enabled=false --write .",
@@ -16,29 +16,34 @@
     "build:config": "cd ../config && pnpm build"
   },
   "dependencies": {
-    "@l2beat/validate": "workspace:*",
     "@l2beat/backend-tools": "workspace:*",
     "@l2beat/shared": "workspace:*",
     "@l2beat/shared-pure": "workspace:*",
+    "@l2beat/validate": "workspace:*",
+    "clsx": "^2.1.1",
     "ethers": "^5.7.2",
+    "express": "^5.0.0",
     "flowbite-react": "^0.10.1",
-    "next": "15.0.5",
     "react": "19.0.0",
     "react-dom": "19.0.0",
-    "uuid": "^10.0.0",
-    "clsx": "^2.1.1",
-    "tailwind-merge": "^2.3.0"
+    "tailwind-merge": "^2.3.0",
+    "uuid": "^10.0.0"
   },
   "devDependencies": {
-    "@l2beat/typescript-config": "workspace:*",
     "@l2beat/config": "workspace:*",
+    "@l2beat/typescript-config": "workspace:*",
+    "@types/express": "^5.0.0",
     "@types/node": "^20",
     "@types/react": "19.0.10",
     "@types/react-dom": "19.0.4",
     "@types/uuid": "^10.0.0",
+    "@vitejs/plugin-react-swc": "^3.7.1",
+    "esbuild": "^0.25.1",
     "postcss": "^8",
     "tailwindcss": "^3.4.0",
-    "typescript": "^5"
+    "tsx": "^4.9.3",
+    "typescript": "^5",
+    "vite": "^5.4.10"
   },
   "overrides": {
     "@types/react": "19.0.10",

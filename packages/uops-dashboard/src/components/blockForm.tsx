@@ -1,12 +1,11 @@
-import { usePathname, useRouter, useSearchParams } from 'next/navigation'
 import { useEffect, useState } from 'react'
 import { SUPPORTED_CHAINS } from '@/chains'
 import type {
-  ApiError,
   BlockWithChain,
   CountedBlock,
   UserOperationsApiRequest,
 } from '@/types'
+import { postApi } from '@/utils/postApi'
 import { BlockNumberInput } from './blockNumberInput'
 import { ChainDropdown } from './chainDropdown'
 import { ErrorModal } from './errorModal'
@@ -23,12 +22,7 @@ export function BlockForm({
   const [isLoading, setIsLoading] = useState(false)
   const [errorMessage, setErrorMessage] = useState('')
 
-  const searchParams = useSearchParams()
-  const pathname = usePathname()
-  const { replace } = useRouter()
-
   useEffect(() => {
-    // useSearchParams return empty values on first render
     const urlParams = new URLSearchParams(window.location.search)
     const chainParam = urlParams.get('chain')
     const blockParam = urlParams.get('block')
@@ -55,42 +49,29 @@ export function BlockForm({
     e.preventDefault()
     getBlock(chainId, blockNumber)
 
-    const params = new URLSearchParams(searchParams)
+    const params = new URLSearchParams(window.location.search)
     params.set('chain', chainId)
     params.set('block', blockNumber)
-    replace(`${pathname}?${params.toString()}`)
+    window.history.replaceState(null, '', `?${params.toString()}`)
   }
 
   const getBlock = async (chainId: string, blockNumber: string) => {
     setIsLoading(true)
     try {
-      const res = await fetch(`${window.location.origin}/api/uops`, {
-        method: 'POST',
-        body: JSON.stringify({
-          chainId,
-          blockNumber: Number(blockNumber),
-        } as UserOperationsApiRequest),
-      })
-
-      const body = await res.json()
-      if (res.status === 200) {
-        const block = body as CountedBlock
-        const chain = SUPPORTED_CHAINS.find((c) => c.id === chainId)
-
-        if (!chain) {
-          throw new Error(`Unsupported chain: ${chain}`)
-        }
-
-        onComplete({
-          ...block,
-          chain,
-        })
-      } else {
-        const error = body as ApiError
-        setErrorMessage(error.message)
+      const chain = SUPPORTED_CHAINS.find((c) => c.id === chainId)
+      if (!chain) {
+        throw new Error(`Unsupported chain: ${chainId}`)
       }
+
+      const request: UserOperationsApiRequest = {
+        chainId,
+        blockNumber: Number(blockNumber),
+      }
+      const block = await postApi<CountedBlock>('uops', request)
+      onComplete({ ...block, chain })
     } catch (err) {
       console.log(err)
+      setErrorMessage((err as Error).message)
     }
     setIsLoading(false)
   }
