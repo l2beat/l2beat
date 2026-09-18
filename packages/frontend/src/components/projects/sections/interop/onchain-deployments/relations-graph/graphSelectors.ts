@@ -7,8 +7,18 @@ import type {
   InteropTokenRelationsNode,
 } from '~/server/features/layer2s/interop/token/getInteropTokenRelationsGraph'
 
-export function edgeKey(edge: { from: string; to: string }): string {
-  return `${edge.from}->${edge.to}`
+export interface RelationsPath {
+  nodes: InteropTokenRelationsNode[]
+  edges: InteropTokenRelationsEdge[]
+  /** False when cut short by the depth limit or a cycle. */
+  complete: boolean
+}
+
+const MAX_PATH_DEPTH = 10
+const MAX_PATHS = 16
+
+export function edgeKey(edge: { backer: string; backed: string }): string {
+  return `${edge.backer}->${edge.backed}`
 }
 
 export function isCluster(node: InteropTokenRelationsNode): boolean {
@@ -32,7 +42,9 @@ export function describeNode(node: InteropTokenRelationsNode): string {
 export function getUnconnectedIds(
   graph: InteropTokenRelationsGraph,
 ): Set<string> {
-  const related = new Set(graph.edges.flatMap((edge) => [edge.from, edge.to]))
+  const related = new Set(
+    graph.edges.flatMap((edge) => [edge.backer, edge.backed]),
+  )
   return new Set(
     graph.nodes
       .filter((node) => !isCluster(node) && !related.has(node.id))
@@ -50,31 +62,21 @@ export function getActiveBacking(
   const queue = [activeId]
   for (const current of queue) {
     for (const edge of edges) {
-      if (edge.to !== current) continue
+      if (edge.backed !== current) continue
       edgeKeys.add(edgeKey(edge))
-      if (!nodeIds.has(edge.from)) {
-        nodeIds.add(edge.from)
-        queue.push(edge.from)
+      if (!nodeIds.has(edge.backer)) {
+        nodeIds.add(edge.backer)
+        queue.push(edge.backer)
       }
     }
   }
   for (const edge of edges) {
-    if (edge.from !== activeId) continue
+    if (edge.backer !== activeId) continue
     edgeKeys.add(edgeKey(edge))
-    nodeIds.add(edge.to)
+    nodeIds.add(edge.backed)
   }
   return { nodeIds, edgeKeys }
 }
-
-export interface RelationsPath {
-  nodes: InteropTokenRelationsNode[]
-  edges: InteropTokenRelationsEdge[]
-  /** False when cut short by the depth limit or a cycle. */
-  complete: boolean
-}
-
-const MAX_PATH_DEPTH = 10
-const MAX_PATHS = 16
 
 /**
  * Paths from the node to its sources (`backing`, source first) or to the
@@ -90,8 +92,8 @@ export function getRelationsPaths(
   if (!start) return []
   const [at, next] =
     direction === 'backing'
-      ? (['to', 'from'] as const)
-      : (['from', 'to'] as const)
+      ? (['backed', 'backer'] as const)
+      : (['backer', 'backed'] as const)
 
   const walk = (
     current: InteropTokenRelationsNode,
@@ -206,8 +208,8 @@ export function getDirectlyBackedNodes(
   const nodesById = new Map(graph.nodes.map((node) => [node.id, node]))
   return graph.edges
     .flatMap((edge) => {
-      if (edge.from !== nodeId) return []
-      const node = nodesById.get(edge.to)
+      if (edge.backer !== nodeId) return []
+      const node = nodesById.get(edge.backed)
       return node ? [{ node, bridges: edge.bridges }] : []
     })
     .toSorted((a, b) => (b.node.volume ?? -1) - (a.node.volume ?? -1))

@@ -70,7 +70,7 @@ export function RelationsDiagram({
     focusX,
     containerRef,
   )
-  const pan = useDragToPan(camera, setCamera)
+  const pan = useDragToPan(camera, setCamera, containerRef)
 
   const [hoveredId, setHoveredId] = useState<string>()
   const activeId = hoveredId ?? selectedNodeId
@@ -79,9 +79,9 @@ export function RelationsDiagram({
     [graph.edges, activeId],
   )
   const sourceIds = useMemo(() => {
-    const backed = new Set(graph.edges.map((edge) => edge.to))
+    const backed = new Set(graph.edges.map((edge) => edge.backed))
     return new Set(
-      graph.edges.map((edge) => edge.from).filter((id) => !backed.has(id)),
+      graph.edges.map((edge) => edge.backer).filter((id) => !backed.has(id)),
     )
   }, [graph.edges])
 

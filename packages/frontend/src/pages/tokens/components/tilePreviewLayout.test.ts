@@ -14,7 +14,7 @@ describe(buildPreview.name, () => {
     const preview = buildPreview(
       graph(
         ['src', ...targets],
-        targets.map((to) => ({ from: 'src', to })),
+        targets.map((to) => ({ backer: 'src', backed: to })),
       ),
     )
 
@@ -30,7 +30,7 @@ describe(buildPreview.name, () => {
     const preview = buildPreview(
       graph(
         ids,
-        ids.slice(1).map((to, i) => ({ from: ids[i] as string, to })),
+        ids.slice(1).map((to, i) => ({ backer: ids[i] as string, backed: to })),
       ),
     )
 
@@ -39,7 +39,9 @@ describe(buildPreview.name, () => {
   })
 
   it('draws small graphs larger than the base size', () => {
-    const preview = buildPreview(graph(['a', 'b'], [{ from: 'a', to: 'b' }]))
+    const preview = buildPreview(
+      graph(['a', 'b'], [{ backer: 'a', backed: 'b' }]),
+    )
 
     expect(preview.scale).toBeGreaterThan(1)
     expectInsideViewport(preview)

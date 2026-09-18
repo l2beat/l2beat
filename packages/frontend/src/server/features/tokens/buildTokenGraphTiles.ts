@@ -27,9 +27,8 @@ export interface TokenGraphTileNode {
 }
 
 export interface TokenGraphTileEdge {
-  /** `from` backs `to`. */
-  from: string
-  to: string
+  backer: string
+  backed: string
 }
 
 export interface TokenGraphTile {
@@ -108,7 +107,9 @@ export function buildTokenGraphTiles({
       deploymentsByToken.get(token.id) ?? [],
       routesByToken.get(token.id) ?? [],
     )
-    const related = new Set(graph.edges.flatMap((edge) => [edge.from, edge.to]))
+    const related = new Set(
+      graph.edges.flatMap((edge) => [edge.backer, edge.backed]),
+    )
     const nodes = graph.nodes.filter(
       (node) => node.members.length > 1 || related.has(node.id),
     )
@@ -150,7 +151,10 @@ export function buildTokenGraphTiles({
               iconUrl: chainInfo.get(chain)?.iconUrl,
             })),
         })),
-        edges: graph.edges.map((edge) => ({ from: edge.from, to: edge.to })),
+        edges: graph.edges.map((edge) => ({
+          backer: edge.backer,
+          backed: edge.backed,
+        })),
       },
     })
   }

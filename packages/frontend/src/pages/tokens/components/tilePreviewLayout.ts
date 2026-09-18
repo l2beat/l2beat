@@ -54,9 +54,9 @@ export function buildPreview(graph: TokenGraphTile['graph']): {
   scale: number
 } {
   const { nodes, edges } = graph
-  const backed = new Set(edges.map((edge) => edge.to))
+  const backed = new Set(edges.map((edge) => edge.backed))
   const sourceIds = new Set(
-    edges.map((edge) => edge.from).filter((id) => !backed.has(id)),
+    edges.map((edge) => edge.backer).filter((id) => !backed.has(id)),
   )
 
   const rows = getRows(graph)
@@ -208,8 +208,8 @@ function buildPaths(
 ): string[] {
   const outgoing = Map.groupBy(
     edges.flatMap((edge) => {
-      const target = marks.get(edge.to)
-      return target ? [{ from: edge.from, target }] : []
+      const target = marks.get(edge.backed)
+      return target ? [{ from: edge.backer, target }] : []
     }),
     (edge) => edge.from,
   )

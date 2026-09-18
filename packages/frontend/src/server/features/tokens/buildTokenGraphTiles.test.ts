@@ -107,7 +107,7 @@ describe(buildTokenGraphTiles.name, () => {
             ],
           },
         ],
-        edges: [{ from: 'ethereum|0xe1', to: 'base|0xb1' }],
+        edges: [{ backer: 'ethereum|0xe1', backed: 'base|0xb1' }],
       },
     })
   })

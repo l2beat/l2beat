@@ -18,10 +18,6 @@ import {
 } from './nodeSize'
 import { shortAddress, Volume } from './RelationsPrimitives'
 
-function getShownMembers(node: InteropTokenRelationsNode) {
-  return node.deployments.slice(0, getShownMemberCount(node.deployments.length))
-}
-
 interface Props {
   node: InteropTokenRelationsNode
   box: NodeBox
@@ -64,7 +60,7 @@ export function RelationsNode({
         'focus-visible:outline-2 focus-visible:outline-brand/50',
         isSelected ? 'border-brand ring-1 ring-brand' : 'border-divider',
         isUnconnected && 'border-dashed',
-        isSource && 'outline outline-4 outline-brand/20 outline-offset-2',
+        isSource && 'outline-4 outline-brand/20 outline-offset-2',
         isDimmed && 'opacity-20',
       )}
       onClick={(event) => {
@@ -187,4 +183,8 @@ function Bridges({
       </span>
     </span>
   )
+}
+
+function getShownMembers(node: InteropTokenRelationsNode) {
+  return node.deployments.slice(0, getShownMemberCount(node.deployments.length))
 }

@@ -10,7 +10,11 @@ import {
   createInteropProjectResolver,
   type InteropProjectResolver,
 } from '../utils/createInteropProjectResolver'
-import { deploymentTransferKey, transferTokenKey } from '../utils/deploymentKey'
+import {
+  deploymentTransferKey,
+  type Endpoint,
+  transferTokenKey,
+} from '../utils/deploymentKey'
 import { INTEROP_CHAIN_DETAILS } from '../utils/interopChainDetails'
 import {
   buildTokenRelationsGraph,
@@ -49,9 +53,8 @@ export interface InteropTokenRelationsNode extends InteropTokenStats {
 }
 
 export interface InteropTokenRelationsEdge {
-  /** `from` backs `to`. */
-  from: string
-  to: string
+  backer: string
+  backed: string
   bridges: ProjectIconListItem[]
 }
 
@@ -137,8 +140,8 @@ export function getInteropTokenRelationsGraph(
         .sort((a, b) => (b.volume ?? -1) - (a.volume ?? -1)),
     })),
     edges: graph.edges.map((edge) => ({
-      from: edge.from,
-      to: edge.to,
+      backer: edge.backer,
+      backed: edge.backed,
       bridges: resolveBridges(edge.sources),
     })),
   }
@@ -223,7 +226,7 @@ export function getNodeStats<T extends { chain: string; address: string }>(
 /** Count a transfer once per group, even when both endpoints belong to it. */
 function aggregateStats(
   rows: InteropTransferDeployedTokenPairStats[],
-  groupOf: (side: { chain: string; address: string }) => string | undefined,
+  groupOf: (side: Endpoint) => string | undefined,
 ): Map<string, InteropTokenStats> {
   const sums = new Map<
     string,

@@ -135,8 +135,8 @@ function getMockTokenGraphTiles(): TokenGraphTile[] {
           { id: 'optimism|0x0b2c', chains: [chain('optimism')], volume: null },
         ],
         edges: [
-          { from: 'arbitrum|0xaf88', to: 'base|0x8335' },
-          { from: 'arbitrum|0xaf88', to: 'optimism|0x0b2c' },
+          { backer: 'arbitrum|0xaf88', backed: 'base|0x8335' },
+          { backer: 'arbitrum|0xaf88', backed: 'optimism|0x0b2c' },
         ],
       },
     },
@@ -158,8 +158,8 @@ function getMockTokenGraphTiles(): TokenGraphTile[] {
           { id: 'optimism|0x94b0', chains: [chain('optimism')], volume: null },
         ],
         edges: [
-          { from: 'ethereum|0xdac1', to: 'arbitrum|0xfd08' },
-          { from: 'arbitrum|0xfd08', to: 'optimism|0x94b0' },
+          { backer: 'ethereum|0xdac1', backed: 'arbitrum|0xfd08' },
+          { backer: 'arbitrum|0xfd08', backed: 'optimism|0x94b0' },
         ],
       },
     },

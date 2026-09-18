@@ -170,8 +170,8 @@ describe(getInteropTokenRelationsGraph.name, () => {
     ])
     expect(graph.edges).toEqual([
       {
-        from: 'arbitrum|0xa1',
-        to: 'base|0xb1',
+        backer: 'arbitrum|0xa1',
+        backed: 'base|0xb1',
         bridges: [
           {
             id: ProjectId('base'),

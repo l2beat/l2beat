@@ -1,4 +1,5 @@
-import { INTEROP_TRANSFER_RETENTION, UnixTime } from '@l2beat/shared-pure'
+import { INTEROP_TRANSFER_RETENTION } from '@l2beat/database'
+import { UnixTime } from '@l2beat/shared-pure'
 import { ps } from '~/server/projects'
 import { getAggregatedInteropSnapshotTimestamp } from '../utils/getAggregatedInteropTimestamp'
 import { getActiveInteropChainIds } from '../utils/getInteropChains'

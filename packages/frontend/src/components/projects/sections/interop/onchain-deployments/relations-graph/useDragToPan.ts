@@ -1,4 +1,4 @@
-import { type PointerEvent, useRef } from 'react'
+import { type PointerEvent, type RefObject, useEffect, useRef } from 'react'
 import type { Camera } from './relationsCamera'
 
 /** Pointer travel below this still counts as a click. */
@@ -21,12 +21,25 @@ interface Point {
 export function useDragToPan(
   camera: Camera,
   setCamera: (camera: Camera) => void,
+  containerRef: RefObject<HTMLElement | null>,
 ) {
   const pointers = useRef(new Map<number, Point>())
   const anchor = useRef<
     { centroid: Point; camera: Camera; moved: boolean } | undefined
   >(undefined)
   const suppressClick = useRef(false)
+
+  // Native listener: React's touch handlers are passive, so only this can
+  // stop `touch-action: pan-y` from scrolling the page under a two-finger pan.
+  useEffect(() => {
+    const element = containerRef.current
+    if (!element) return
+    const onTouchMove = (event: TouchEvent) => {
+      if (event.touches.length >= 2 && event.cancelable) event.preventDefault()
+    }
+    element.addEventListener('touchmove', onTouchMove, { passive: false })
+    return () => element.removeEventListener('touchmove', onTouchMove)
+  }, [containerRef])
 
   const centroid = (): Point => {
     const points = [...pointers.current.values()]

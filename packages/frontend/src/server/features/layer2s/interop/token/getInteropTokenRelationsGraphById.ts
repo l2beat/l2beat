@@ -1,4 +1,3 @@
-import { env } from '~/env'
 import { FrontendInMemoryCache } from '~/utils/FrontendInMemoryCache'
 import { getAggregatedInteropSnapshotTimestamp } from '../utils/getAggregatedInteropTimestamp'
 import { getActiveInteropChainIds } from '../utils/getInteropChains'
@@ -33,12 +32,14 @@ export async function getInteropTokenRelationsGraphById(
 ): Promise<InteropTokenRelationsGraph | undefined> {
   const [snapshotTimestamp, [projectsWithChains, interopProjects]] =
     await Promise.all([
-      env.MOCK ? undefined : getAggregatedInteropSnapshotTimestamp(),
+      getAggregatedInteropSnapshotTimestamp(),
       getRelationsGraphProjects(),
     ])
   const [{ deployments, routes }, pairStats] = await Promise.all([
     getInteropTokenOnchainDeployments(tokenId, getActiveInteropChainIds()),
-    getInteropTokenPairStats(tokenId, snapshotTimestamp, interopProjects),
+    snapshotTimestamp
+      ? getInteropTokenPairStats(tokenId, snapshotTimestamp, interopProjects)
+      : undefined,
   ])
   if (deployments.length === 0) return undefined
 
