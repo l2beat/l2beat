@@ -111,6 +111,38 @@ describe(EthereumAddress.name, () => {
     })
   })
 
+  describe(EthereumAddress.tryParse.name, () => {
+    it('returns the checksummed value', () => {
+      expect(
+        EthereumAddress.tryParse('0xabcdabcd12345678abcdabcd12345678abcdabcd'),
+      ).toEqual(
+        '0xAbCdABCd12345678abcDabCd12345678ABcdaBcd' as unknown as EthereumAddress,
+      )
+    })
+
+    it('returns undefined instead of throwing', () => {
+      const invalid = [
+        'foo',
+        '',
+        'OptimismPortal',
+        '0x123',
+        '0xAbCdABCd12345678abcDabCd12345678ABcdaBcD',
+        'eth:0xAbCdABCd12345678abcDabCd12345678ABcdaBcd',
+      ]
+      for (const value of invalid) {
+        expect(EthereumAddress.tryParse(value)).toEqual(undefined)
+        expect(() => EthereumAddress(value)).toThrow(TypeError)
+      }
+    })
+
+    it('agrees with the constructor on valid values', () => {
+      for (let i = 0; i < 64; i++) {
+        const value = EthereumAddress.random()
+        expect(EthereumAddress.tryParse(value)).toEqual(EthereumAddress(value))
+      }
+    })
+  })
+
   it('properly checks ignoring case', () => {
     expect(
       EthereumAddress.checkIgnoringCase(
