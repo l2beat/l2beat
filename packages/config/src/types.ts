@@ -1058,8 +1058,12 @@ export type ProjectExternalDependency =
 // #region privacy data
 
 export interface ProjectPrivacyInfo {
-  /** Each chain needs a project with a matching chainConfig for its icon. */
-  deployedOn: string[]
+  /**
+   * Chains on which L2BEAT tracks this protocol's deployment, mostly through
+   * project discovery. Each chain needs a project with a matching chainConfig
+   * for its icon.
+   */
+  trackedOn: string[]
   tokens: ProjectPrivacyToken[]
   /**
    * A project tracks relayers either through onchain events or through

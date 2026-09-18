@@ -20,7 +20,7 @@ interface ChainProject {
   defiInfo?: ProjectDefiInfo | undefined
 }
 
-export function getPrivacyDeployedChains(
+export function getPrivacyTrackedChains(
   chainNames: string[],
   projects: ChainProject[],
   daLayers: { id: ProjectId; slug: string }[],

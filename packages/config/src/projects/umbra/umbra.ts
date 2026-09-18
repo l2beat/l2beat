@@ -103,14 +103,7 @@ export const umbra: BaseProject = {
     badges: [],
   },
   privacyInfo: {
-    deployedOn: [
-      'ethereum',
-      'optimism',
-      'arbitrum',
-      'polygonpos',
-      'gnosis',
-      'base',
-    ],
+    trackedOn: ['ethereum'],
     tokens: privacyTokens,
     summaryTrackedItemName: 'token',
     anonymitySet: {

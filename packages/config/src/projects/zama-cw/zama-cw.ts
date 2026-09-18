@@ -185,7 +185,7 @@ export const zamaCw: BaseProject = {
     warnings: [],
   },
   privacyInfo: {
-    deployedOn: ['ethereum'],
+    trackedOn: ['ethereum'],
     tokens: privacyTokens,
     summaryTrackedItemName: 'token',
     anonymitySet: {

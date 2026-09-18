@@ -1,7 +1,7 @@
 import { expect } from 'earl'
-import { getPrivacyDeployedChains } from './getPrivacyDeployedChains'
+import { getPrivacyTrackedChains } from './getPrivacyTrackedChains'
 
-describe(getPrivacyDeployedChains.name, () => {
+describe(getPrivacyTrackedChains.name, () => {
   const ethereum = {
     slug: 'ethereum',
     name: 'Ethereum',
@@ -21,7 +21,7 @@ describe(getPrivacyDeployedChains.name, () => {
   const projects = [ethereum, polygon, arbitrum]
 
   it('resolves chain names in configured order', () => {
-    const result = getPrivacyDeployedChains(
+    const result = getPrivacyTrackedChains(
       ['polygonpos', 'ethereum'],
       projects,
       [],
@@ -31,12 +31,12 @@ describe(getPrivacyDeployedChains.name, () => {
   })
 
   it('uses the project slug for the icon', () => {
-    const [result] = getPrivacyDeployedChains(['polygonpos'], projects, [])
+    const [result] = getPrivacyTrackedChains(['polygonpos'], projects, [])
     expect(result?.iconUrl).toEqual('/icons/polygon-pos.png')
   })
 
   it('links only chains that have a project page', () => {
-    const [ethereumChain, arbitrumChain] = getPrivacyDeployedChains(
+    const [ethereumChain, arbitrumChain] = getPrivacyTrackedChains(
       ['ethereum', 'arbitrum'],
       projects,
       [],
@@ -46,7 +46,7 @@ describe(getPrivacyDeployedChains.name, () => {
   })
 
   it('skips chains without a matching chainConfig', () => {
-    const result = getPrivacyDeployedChains(
+    const result = getPrivacyTrackedChains(
       ['ethereum', 'unknown'],
       projects,
       [],

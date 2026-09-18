@@ -55,7 +55,7 @@ export interface ProjectPrivacyEntry {
   assetsCount: number
   hasTvl: boolean
   attributes: PrivacyAttribute[]
-  deployedOn: ProjectIconListItem[]
+  trackedOn: ProjectIconListItem[]
   exitWindow: PrivacyExitWindow
   trustedSetup: PrivacyTrustedSetupSummary
   privacy: PrivacySummaryValue
@@ -323,7 +323,7 @@ export async function getPrivacyProjectEntry(
     assetsCount: details.assets.length,
     hasTvl: details.hasTvl,
     attributes: details.attributes,
-    deployedOn: details.deployedOn,
+    trackedOn: details.trackedOn,
     exitWindow: details.exitWindow,
     trustedSetup: toTrustedSetupSummaryValue(
       getPrivacyTrustedSetup(details.trustedSetups),

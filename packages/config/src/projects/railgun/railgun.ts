@@ -238,7 +238,7 @@ export const railgun: BaseProject = {
     ],
   },
   privacyInfo: {
-    deployedOn: ['ethereum', 'arbitrum', 'base', 'bsc', 'polygonpos'],
+    trackedOn: ['ethereum'],
     tokens: privacyTokens,
     relayerTracking: {
       type: 'railgunWaku',

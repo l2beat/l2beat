@@ -400,21 +400,21 @@ describe('getProjects', () => {
     for (const project of projects) {
       if (!project.privacyInfo) continue
 
-      const deployedOn = project.privacyInfo.deployedOn
+      const trackedOn = project.privacyInfo.trackedOn
 
-      it(`${project.id} is deployed on at least one chain`, () => {
-        expect(deployedOn.length).toBeGreaterThan(0)
+      it(`${project.id} is tracked on at least one chain`, () => {
+        expect(trackedOn.length).toBeGreaterThan(0)
       })
 
-      it(`${project.id} has no duplicate deployedOn chains`, () => {
-        expect(new Set(deployedOn).size).toEqual(deployedOn.length)
+      it(`${project.id} has no duplicate trackedOn chains`, () => {
+        expect(new Set(trackedOn).size).toEqual(trackedOn.length)
       })
 
-      it(`${project.id} deployedOn chains all have a chainConfig`, () => {
-        for (const chain of deployedOn) {
+      it(`${project.id} trackedOn chains all have a chainConfig`, () => {
+        for (const chain of trackedOn) {
           assert(
             chainNames.has(chain),
-            `${project.id} privacyInfo.deployedOn: no project has chainConfig.name "${chain}"`,
+            `${project.id} privacyInfo.trackedOn: no project has chainConfig.name "${chain}"`,
           )
         }
       })
