@@ -142,5 +142,25 @@ describe(makeEntryStructureConfig.name, () => {
       })
       expect(config.fields?.sequencerInbox?.template).toEqual('from override')
     })
+
+    it('merges a contract field that is itself named handler', () => {
+      const config = mergeTemplateIntoOverride(
+        { fields: { handler: { template: 'from override' } } },
+        {
+          fields: {
+            handler: {
+              handler: { type: 'storage', slot: 1 },
+              template: 'from template',
+            },
+          },
+        },
+      )
+
+      expect(config.fields?.handler?.handler).toEqual({
+        type: 'storage',
+        slot: 1,
+      })
+      expect(config.fields?.handler?.template).toEqual('from override')
+    })
   })
 })

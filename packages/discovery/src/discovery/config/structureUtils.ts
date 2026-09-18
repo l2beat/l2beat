@@ -1,7 +1,10 @@
 import type { ChainSpecificAddress } from '@l2beat/shared-pure'
 import merge from 'lodash/merge'
-import mergeWith from 'lodash/mergeWith'
-import { type StructureConfig, StructureContract } from './StructureConfig'
+import {
+  type StructureConfig,
+  StructureContract,
+  type StructureContractField,
+} from './StructureConfig'
 
 export type StructureContractOverrides = StructureContract & {
   address: ChainSpecificAddress
@@ -34,9 +37,10 @@ export function makeEntryStructureConfig(
       // side.
       const ignoreAllRelatives =
         values.ignoreRelatives === true || this.ignoreRelatives === true
-      const merged = StructureContract.parse(
-        mergeWith({}, values, this, replaceHandler),
-      )
+      const merged = StructureContract.parse({
+        ...merge({}, values, this),
+        fields: mergeFields(values.fields, this.fields),
+      })
       if (ignoreAllRelatives) {
         merged.ignoreRelatives = true
       }
@@ -49,9 +53,22 @@ export function makeEntryStructureConfig(
   return result
 }
 
-function replaceHandler(_: unknown, override: unknown, key: string) {
-  if (key === 'handler') {
-    return override
+function mergeFields(
+  templateFields: Record<string, StructureContractField>,
+  overrideFields: Record<string, StructureContractField>,
+): Record<string, StructureContractField> {
+  const names = new Set([
+    ...Object.keys(templateFields),
+    ...Object.keys(overrideFields),
+  ])
+  const result: Record<string, StructureContractField> = {}
+  for (const name of names) {
+    const overrideField = overrideFields[name]
+    const field = merge({}, templateFields[name], overrideField)
+    if (overrideField?.handler !== undefined) {
+      field.handler = overrideField.handler
+    }
+    result[name] = field
   }
-  return undefined
+  return result
 }
