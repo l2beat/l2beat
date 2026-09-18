@@ -1,6 +1,6 @@
 {
   "name": "vector",
-  "timestamp": 1786359830,
+  "timestamp": 1789656330,
   "configHash": "0xbe9d01dcb88d0b8eb832345d9a645515c6ddfd453813a1dee6a603b00822fabd",
   "entries": [
     {
@@ -37,10 +37,7 @@
         "accessControl": {
           "DEFAULT_ADMIN_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
-            "members": [
-              "eth:0xDEd0000E32f8F40414d3ab3a830f735a3553E18e",
-              "eth:0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666"
-            ]
+            "members": ["eth:0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666"]
           },
           "TIMELOCK_ROLE": {
             "adminRole": "DEFAULT_ADMIN_ROLE",
@@ -60,9 +57,9 @@
         "headerRangeCommitmentTreeSize": 2048,
         "headerRangeFunctionId_deprecated": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "isRelayerApproved": true,
-        "latestAuthoritySetId": 838,
-        "latestBlock": 3312384,
-        "relayers": ["eth:0x27BF7DE579c5779DbFbB8e9d69999E4D1370787D"],
+        "latestAuthoritySetId": 880,
+        "latestBlock": 3474048,
+        "relayers": ["eth:0x7EBe0bf025ca5993551cE6CEe3f541B24FDF7c35"],
         "rotateFunctionId_deprecated": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "TIMELOCK_ROLE": "0xf66846415d2bf9eabda9e84793ff9c0ea96d87f50fc41e66aa16469c6a442f05",
         "timelocks": ["eth:0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666"],
@@ -120,7 +117,7 @@
         "feePerByte": 0,
         "feeRecipient": "eth:0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666",
         "fees": 0,
-        "messageId": 1843,
+        "messageId": 1879,
         "owner": "eth:0x45828180bbE489350D621d002968A0585406d487",
         "paused": false,
         "pauserAC": ["eth:0x1a5BA9447D02Ddaf7bcB5594Fc27dE2Daf588930"],
@@ -176,11 +173,6 @@
     },
     {
       "address": "eth:0x1fbABAbDcFE0b40a9B5D2aDB054fB74F8fE985f5",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0x27BF7DE579c5779DbFbB8e9d69999E4D1370787D",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -287,6 +279,11 @@
       "proxyType": "EOA"
     },
     {
+      "address": "eth:0x7EBe0bf025ca5993551cE6CEe3f541B24FDF7c35",
+      "type": "EOA",
+      "proxyType": "EOA"
+    },
+    {
       "name": "Avail Multisig 1",
       "address": "eth:0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666",
       "type": "Contract",
@@ -317,7 +314,7 @@
         "getChainId": 1,
         "GnosisSafe_modules": [],
         "multisigThreshold": "4 of 7 (57%)",
-        "nonce": 16,
+        "nonce": 19,
         "VERSION": "1.3.0"
       },
       "implementationNames": {
@@ -332,11 +329,6 @@
     },
     {
       "address": "eth:0xBe1D614F13662Aff0a2Ec1e76f9c82D332Ae78A2",
-      "type": "EOA",
-      "proxyType": "EOA"
-    },
-    {
-      "address": "eth:0xDEd0000E32f8F40414d3ab3a830f735a3553E18e",
       "type": "EOA",
       "proxyType": "EOA"
     },
@@ -642,10 +634,10 @@
     "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
     "global/TimelockController": "0x67edad38b59e4cfe883d5d3aea9856bddd5bbd9694ea78e137c09c8f3cd953d7",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
-    "succinct/SP1Vector": "0xfa432768402e63bf3829db629a75b9b795d90d28bde6ae5d3971689687185dd9"
+    "succinct/SP1Vector": "0x726d693de65ff63629181e9a27ee8342d7521ac412c6676152f27dd13bb195ad"
   },
-  "usedBlockNumbers": { "ethereum": 25724173 },
-  "permissionsConfigHash": "0x963797723609b2818a865e9cdb694617471c1fa5eaba41826d9596fdaab4ba33",
+  "usedBlockNumbers": { "ethereum": 25997891 },
+  "permissionsConfigHash": "0x62792e057c9758251bfd67a8ad76330e68ad77afd2134214f1f523126dad10c6",
   "modelledAgainst": {
     "shared-sp1": "0x2e84e1ff84b5975e2af157e2590c2c72b31b7d3524b767661f01d8ae0b955540"
   },
@@ -657,16 +649,6 @@
           "from": "eth:0x054fd961708D8E2B9c10a63F6157c74458889F0a",
           "description": "pause the bridge.",
           "role": ".pauserAC"
-        }
-      ]
-    },
-    "eth:0x27BF7DE579c5779DbFbB8e9d69999E4D1370787D": {
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x02993cdC11213985b9B13224f3aF289F03bf298d",
-          "description": "it is a ‘Relayer’ and can call commitHeaderRange() to commit block ranges to the Vector contract. Since adding and removing Relayers emits no events, there can be more relayers than are presented here.",
-          "role": ".relayers"
         }
       ]
     },
@@ -697,6 +679,16 @@
           "from": "eth:0x45828180bbE489350D621d002968A0585406d487",
           "description": "manage all access control roles.",
           "role": ".defaultAdminAC"
+        }
+      ]
+    },
+    "eth:0x7EBe0bf025ca5993551cE6CEe3f541B24FDF7c35": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x02993cdC11213985b9B13224f3aF289F03bf298d",
+          "description": "it is a ‘Relayer’ and can call commitHeaderRange() to commit block ranges to the Vector contract. Since adding and removing Relayers emits no events, there can be more relayers than are presented here.",
+          "role": ".relayers"
         }
       ]
     },

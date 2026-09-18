@@ -3,5 +3,11 @@
   "displayName": "EtherFiOracle",
   "category": "gov",
   "description": "Committee oracle: members submit periodic reports (beacon balances, rewards, withdrawal amounts) that reach consensus before EtherFiAdmin applies them.",
+  "ignoreInWatchMode": [
+    "blockStampForNextReport",
+    "lastPublishedReportRefBlock",
+    "lastPublishedReportRefSlot",
+    "slotForNextReport"
+  ],
   "ignoreMethods": ["proxiableUUID"]
 }
