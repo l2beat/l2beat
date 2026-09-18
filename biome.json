@@ -173,7 +173,7 @@
   },
   "overrides": [
     {
-      "includes": ["**/test/**/*.ts", "**/*.test.ts"],
+      "includes": ["**/test/**/*.ts", "**/*.test.ts", "**/*.e2e.ts"],
       "linter": {
         "rules": {
           "style": {
