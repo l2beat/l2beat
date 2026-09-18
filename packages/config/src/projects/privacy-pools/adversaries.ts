@@ -9,7 +9,7 @@ const WEBSITE =
 export const privacyPoolsAdversaries = definePrivacyAdversaries({
   promise: {
     protects: 'linkage',
-    text: 'Hides which deposit funds which withdrawal, for deposits approved by the permissioned association set provider. Everything else is public.',
+    text: 'Hides which deposit funds which withdrawal, for deposits approved by the permissioned ASP. Everything else is public.',
   },
   cells: {
     publicObserver: {
@@ -27,7 +27,7 @@ export const privacyPoolsAdversaries = definePrivacyAdversaries({
     },
     chainAnalyst: {
       sentiment: 'good',
-      exposure: `The approved set at any block is public, so the candidates for a withdrawal are known exactly and matched by amount and timing. Any amount is allowed, so an unusual one pairs a deposit with its withdrawal. ${S.walletFingerprint('relayer')}`,
+      exposure: `The approved set at any block is public, bounding the anonymity set. Any amount is allowed, so an unusual one pairs a deposit with its withdrawal. ${S.walletFingerprint('relayer')}`,
       advice: `${S.largeAnonymitySet} ${S.commonAmounts} ${S.freshExit}`,
       sources: [
         {
