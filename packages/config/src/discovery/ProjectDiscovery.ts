@@ -16,12 +16,12 @@ import {
 import {
   assert,
   ChainSpecificAddress,
+  EthereumAddress,
   type LegacyTokenBridgedUsing,
   notUndefined,
   UnixTime,
   unique,
 } from '@l2beat/shared-pure'
-import { utils } from 'ethers'
 import groupBy from 'lodash/groupBy'
 import isString from 'lodash/isString'
 import uniqBy from 'lodash/uniqBy'
@@ -335,11 +335,11 @@ export class ProjectDiscovery {
   }
 
   getContract(identifier: string): EntryParameters {
-    try {
-      identifier = identifier.includes(':')
-        ? identifier
-        : utils.getAddress(identifier)
-    } catch {
+    const address = identifier.includes(':')
+      ? identifier
+      : EthereumAddress.tryParse(identifier)
+
+    if (address === undefined) {
       const contracts = this.getContractByName(identifier)
 
       assert(
@@ -354,10 +354,10 @@ export class ProjectDiscovery {
       return contracts[0]
     }
 
-    const contract = this.getContractByAddress(ChainSpecificAddress(identifier))
+    const contract = this.getContractByAddress(ChainSpecificAddress(address))
     assert(
       contract,
-      `No contract of ${identifier} address found (${this.projectName})`,
+      `No contract of ${address} address found (${this.projectName})`,
     )
 
     return contract
@@ -368,21 +368,21 @@ export class ProjectDiscovery {
   }
 
   hasContract(identifier: string): boolean {
-    try {
-      identifier = utils.getAddress(identifier)
-    } catch {
+    const address = EthereumAddress.tryParse(identifier)
+
+    if (address === undefined) {
       const contracts = this.getContractByName(identifier)
       return contracts.length === 1
     }
 
-    const contract = this.getContractByAddress(ChainSpecificAddress(identifier))
+    const contract = this.getContractByAddress(ChainSpecificAddress(address))
     return contract !== undefined
   }
 
   getEOA(identifier: string): EntryParameters {
-    try {
-      identifier = utils.getAddress(identifier)
-    } catch {
+    const address = EthereumAddress.tryParse(identifier)
+
+    if (address === undefined) {
       const eoas = this.getEOAByName(identifier)
 
       assert(
@@ -397,8 +397,8 @@ export class ProjectDiscovery {
       return eoas[0]
     }
 
-    const eoa = this.getEOAByAddress(identifier)
-    assert(eoa, `No eoa of ${identifier} address found (${this.projectName})`)
+    const eoa = this.getEOAByAddress(address)
+    assert(eoa, `No eoa of ${address} address found (${this.projectName})`)
 
     return eoa
   }
