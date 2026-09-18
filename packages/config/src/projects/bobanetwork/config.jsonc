@@ -4,6 +4,10 @@
   "import": ["../globalConfig.jsonc"],
   "initialAddresses": ["eth:0x158Fd5715F16Ac1F2Dc959A299B383aAaf9B59EB"],
   "overrides": {
+    "eth:0x8376ac6C3f73a25Dd994E0b0669ca7ee0C02F089": {
+      // AddressManager of this chain: its owner can repoint the ResolvedDelegateProxy implementations
+      "critical": true
+    },
     "eth:0xF45a5f1e36fCeA3Cc830A98c6c3C5ceA7d6af852": {
       "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"]
     },

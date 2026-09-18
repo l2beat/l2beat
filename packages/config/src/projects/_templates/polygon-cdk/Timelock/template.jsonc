@@ -2,6 +2,8 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "Timelock",
   "category": "gov",
+  // the upgrade authority path of the Agglayer core contracts (via the SharedProxyAdmin).
+  "critical": true,
   "description": "A timelock with access control. In the case of an activated emergency state in the {{polygonZkEVM}}, all transactions through this timelock are immediately executable. The current minimum delay is {{getMinDelayFormatted}}.",
   "ignoreMethods": [
     "CANCELLER_ROLE",
@@ -32,6 +34,7 @@
       ]
     },
     "getMinDelayFormatted": {
+      "severity": "HIGH",
       "handler": {
         "type": "call",
         "method": "getMinDelay",

@@ -1,0 +1,12 @@
+{
+  "events": [
+    {
+      "timestamp": 1788925163,
+      "type": "state",
+      "contract": "eth:0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481",
+      "transaction": "0x8acafda3cc768374758a53973e916dd550000e138dc4c76e564e11a7c0f63ad8",
+      "updateId": "2437125d",
+      "reason": "OPSuccinctL2OutputOracle: aggregationVkey changed (0x0063d017f049d215e2cda7f7826d7c1a8176a678203d6f74a731fc331cc16377 -> 0x005ec5d81cbc4a9a70334f16cb0078d55ae20da550819bd0)."
+    }
+  ]
+}

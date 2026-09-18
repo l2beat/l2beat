@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xb881149b6ef352583cdee70dbdf20dbeba853b75
+
+# Diff at Fri, 18 Sep 2026 10:24:49 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e2faf827d006bceee5fb0904599ba325066c7674 block: 1789471900
+- current timestamp: 1789471900
+
+## Description
+
+critical contracts and severities for the ossification perimeter
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1789471900 (main branch discovery), not current.
+
+```diff
+    contract BridgeRouter ProxyAdmin (eth:0xD7e65A32bEd4ce8cc57Ec188F2bBb8016dc4b1cd) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
+
 Generated with discovered.json: 0xa44b245a39180228671ad0500cc864b0b93fcf3c
 
 # Diff at Tue, 15 Sep 2026 11:32:54 GMT:

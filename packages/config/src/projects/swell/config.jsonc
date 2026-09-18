@@ -8,6 +8,10 @@
     "eth:0xecf3376512EDAcA4FBB63d2c67d12a0397d24121"
   ],
   "overrides": {
+    "eth:0xa54a84f17c2180148c762D79bC57BdfF7FdAFC8A": {
+      // AddressManager of this chain: its owner can repoint the ResolvedDelegateProxy implementations
+      "critical": true
+    },
     "eth:0x87690676786cDc8cCA75A472e483AF7C8F2f0F57": {
       "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"],
       "fields": {

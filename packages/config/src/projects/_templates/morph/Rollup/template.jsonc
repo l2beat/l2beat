@@ -1,6 +1,10 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "The main contract of the Morph rollup. Allows to post transaction data and state roots and implements the the proof system. Sequencing and proposing are behind a whitelist. If the EnforcedTxGateway is not paused, any sequencer must include at least one L1 -> L2 message in their proposal if the oldest message is > {{getMinDelayFormatted}} old. If the Sequencers are censoring or down for more than {{getMinDelayFormatted}}, users can permissionlessly propose and prove via `commitBatchWithProof()`.",
+  // Core protocol contract: batch commitment, state root finalization and the
+  // challenge/proof system all live here - a code or config change can alter
+  // how withdrawals are validated.
+  "critical": true,
   "ignoreMethods": [
     "batchChallengedSuccess",
     "batchDataStore",
@@ -20,6 +24,29 @@
     "lastFinalizedBatchIndex"
   ],
   "fields": {
+    // The verifier route deciding which zk proofs are accepted in challenges.
+    "verifier": {
+      "severity": "HIGH"
+    },
+    // Delay after which a committed batch (and its withdrawals) becomes final if unchallenged.
+    "finalizationPeriodSeconds": {
+      "severity": "HIGH"
+    },
+    // Time a challenged proposer has to submit a validity proof before the batch is deleted.
+    "proofWindow": {
+      "severity": "HIGH"
+    },
+    // Defines the permissioned staker set allowed to sequence and propose.
+    "l1StakingContract": {
+      "severity": "HIGH"
+    },
+    // Queue enforcing L1 -> L2 message inclusion (forced transactions).
+    "messageQueue": {
+      "severity": "HIGH"
+    },
+    "paused": {
+      "severity": "MEDIUM"
+    },
     "challengers": {
       "handler": {
         "type": "event",
@@ -37,7 +64,10 @@
         }
       ]
     },
+    // Controller of pausing, batch reverts, the proof window, the finalization
+    // period and the verifier pointer.
     "owner": {
+      "severity": "HIGH",
       "permissions": [
         {
           "type": "interact",
@@ -47,6 +77,8 @@
     },
     "getMinDelayFormatted": {
       "description": "commitBatchWithProof() can be called if any:\n1. last committed batch + rollupDelayPeriod < now\n2. oldest enqueued msg + rollupDelayPeriod < now",
+      // Threshold after which sequencing/proposing become permissionless (censorship escape hatch).
+      "severity": "HIGH",
       "handler": { "type": "call", "method": "rollupDelayPeriod", "args": [] },
       "edit": ["format", "FormatSeconds"]
     }

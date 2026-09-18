@@ -1,0 +1,722 @@
+{
+  "events": [
+    {
+      "timestamp": 1715408795,
+      "type": "code",
+      "contract": "eth:0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a",
+      "transaction": "0x416560cd96dc75ccffebe889e8d1ab3e08b33f814dc4a2bf7c6f9555071d1f6f",
+      "reason": "Upgraded the implementation of the (since retired, pre-Shasta) TaikoL1 inbox that verified L2 state transitions and held bonds."
+    },
+    {
+      "timestamp": 1715408795,
+      "type": "code",
+      "contract": "eth:0x579A8d63a2Db646284CBFE31FE5082c9989E985c",
+      "transaction": "0x416560cd96dc75ccffebe889e8d1ab3e08b33f814dc4a2bf7c6f9555071d1f6f",
+      "reason": "Upgraded the implementation of the (since retired) GuardianMinorityProver, the tier verifier whose proofs overrode SGX/ZK proofs."
+    },
+    {
+      "timestamp": 1715408795,
+      "type": "code",
+      "contract": "eth:0x579f40D0BE111b823962043702cabe6Aaa290780",
+      "transaction": "0x416560cd96dc75ccffebe889e8d1ab3e08b33f814dc4a2bf7c6f9555071d1f6f",
+      "reason": "Upgraded the implementation of the (since retired) L1RollupAddressManager that resolved the trusted tier verifiers and rollup contracts for TaikoL1."
+    },
+    {
+      "timestamp": 1715408795,
+      "type": "code",
+      "contract": "eth:0xb0f3186FC1963f774f52ff455DC86aEdD0b31F81",
+      "transaction": "0x416560cd96dc75ccffebe889e8d1ab3e08b33f814dc4a2bf7c6f9555071d1f6f",
+      "reason": "Upgraded the implementation of the (since retired) tier-system SgxVerifier that validated SGX-proven state transitions."
+    },
+    {
+      "timestamp": 1715408795,
+      "type": "code",
+      "contract": "eth:0xE3D777143Ea25A6E031d1e921F396750885f43aC",
+      "transaction": "0x416560cd96dc75ccffebe889e8d1ab3e08b33f814dc4a2bf7c6f9555071d1f6f",
+      "reason": "Upgraded the implementation of the (since retired) GuardianProver, the top-tier verifier whose proofs overrode all other tiers."
+    },
+    {
+      "timestamp": 1715408795,
+      "type": "code",
+      "contract": "eth:0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa",
+      "transaction": "0x416560cd96dc75ccffebe889e8d1ab3e08b33f814dc4a2bf7c6f9555071d1f6f",
+      "reason": "Upgraded the implementation of the (since retired) L1SharedAddressManager that resolved the trusted SignalService and vault addresses for the Bridge."
+    },
+    {
+      "timestamp": 1715746175,
+      "type": "code",
+      "contract": "eth:0x579A8d63a2Db646284CBFE31FE5082c9989E985c",
+      "transaction": "0x8030569e293baddbc4e8b26688a1ecf14a231d86c90e9d02dad1e919ea2f3964",
+      "reason": "Upgraded the implementation of the (since retired) GuardianMinorityProver, the tier verifier whose proofs overrode SGX/ZK proofs."
+    },
+    {
+      "timestamp": 1715746175,
+      "type": "code",
+      "contract": "eth:0xE3D777143Ea25A6E031d1e921F396750885f43aC",
+      "transaction": "0x8030569e293baddbc4e8b26688a1ecf14a231d86c90e9d02dad1e919ea2f3964",
+      "reason": "Upgraded the implementation of the (since retired) GuardianProver, the top-tier verifier whose proofs overrode all other tiers."
+    },
+    {
+      "timestamp": 1716300911,
+      "type": "code",
+      "contract": "eth:0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a",
+      "transaction": "0xaed098ad0c93113e401f61358f963501f40a046c5b5b659a1610f10120a9a86b",
+      "reason": "Upgraded the implementation of the (since retired, pre-Shasta) TaikoL1 inbox that verified L2 state transitions and held bonds."
+    },
+    {
+      "timestamp": 1716358991,
+      "type": "code",
+      "contract": "eth:0x579A8d63a2Db646284CBFE31FE5082c9989E985c",
+      "transaction": "0x5a60c5815947a199cc84e1bc75539e01a202597b20c1f87bd9d02f8be6453abd",
+      "reason": "Upgraded the implementation of the (since retired) GuardianMinorityProver, the tier verifier whose proofs overrode SGX/ZK proofs."
+    },
+    {
+      "timestamp": 1716358991,
+      "type": "code",
+      "contract": "eth:0xE3D777143Ea25A6E031d1e921F396750885f43aC",
+      "transaction": "0x5a60c5815947a199cc84e1bc75539e01a202597b20c1f87bd9d02f8be6453abd",
+      "reason": "Upgraded the implementation of the (since retired) GuardianProver, the top-tier verifier whose proofs overrode all other tiers."
+    },
+    {
+      "timestamp": 1716722231,
+      "type": "code",
+      "contract": "eth:0x579f40D0BE111b823962043702cabe6Aaa290780",
+      "transaction": "0xe1ef58455de0b0331228e487d54720290ed8a73f709d2146bd43330d4a360bd3",
+      "reason": "Upgraded the implementation of the (since retired) L1RollupAddressManager that resolved the trusted tier verifiers and rollup contracts for TaikoL1."
+    },
+    {
+      "timestamp": 1716722231,
+      "type": "code",
+      "contract": "eth:0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa",
+      "transaction": "0xe1ef58455de0b0331228e487d54720290ed8a73f709d2146bd43330d4a360bd3",
+      "reason": "Upgraded the implementation of the (since retired) L1SharedAddressManager that resolved the trusted SignalService and vault addresses for the Bridge."
+    },
+    {
+      "timestamp": 1716827831,
+      "type": "code",
+      "contract": "eth:0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a",
+      "transaction": "0x187cc99e9bcf2a94f723cf52d85b74b79bdb3872681e2a3808cadbbc3ba301e2",
+      "reason": "Upgraded the implementation of the (since retired, pre-Shasta) TaikoL1 inbox that verified L2 state transitions and held bonds."
+    },
+    {
+      "timestamp": 1716873491,
+      "type": "code",
+      "contract": "eth:0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a",
+      "transaction": "0xa603b6d55457e64e18ddae684bfd14948452cdd7b927dd22bf0b83045e8fd028",
+      "reason": "Upgraded the implementation of the (since retired, pre-Shasta) TaikoL1 inbox that verified L2 state transitions and held bonds."
+    },
+    {
+      "timestamp": 1717481411,
+      "type": "code",
+      "contract": "eth:0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a",
+      "updateId": "b287d48e",
+      "transaction": "0x2c455ae888a23c232bb5c7603657eda010ffadc602a74e626332bc06eaaa3b78",
+      "reason": "Upgraded the implementation of the (since retired, pre-Shasta) TaikoL1 inbox that verified L2 state transitions and held bonds."
+    },
+    {
+      "timestamp": 1717663871,
+      "type": "code",
+      "contract": "eth:0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a",
+      "updateId": "e2633393",
+      "transaction": "0x8de1631a25b337c1e702f9ce9d9ab8a3b626922441855e959b2d79dae40bd131",
+      "reason": "Upgraded the implementation of the (since retired, pre-Shasta) TaikoL1 inbox that verified L2 state transitions and held bonds."
+    },
+    {
+      "timestamp": 1717663871,
+      "type": "code",
+      "contract": "eth:0x579A8d63a2Db646284CBFE31FE5082c9989E985c",
+      "updateId": "e2633393",
+      "transaction": "0x8de1631a25b337c1e702f9ce9d9ab8a3b626922441855e959b2d79dae40bd131",
+      "reason": "Upgraded the implementation of the (since retired) GuardianMinorityProver, the tier verifier whose proofs overrode SGX/ZK proofs."
+    },
+    {
+      "timestamp": 1717663871,
+      "type": "code",
+      "contract": "eth:0x579f40D0BE111b823962043702cabe6Aaa290780",
+      "updateId": "e2633393",
+      "transaction": "0x8de1631a25b337c1e702f9ce9d9ab8a3b626922441855e959b2d79dae40bd131",
+      "reason": "Upgraded the implementation of the (since retired) L1RollupAddressManager that resolved the trusted tier verifiers and rollup contracts for TaikoL1."
+    },
+    {
+      "timestamp": 1717663871,
+      "type": "code",
+      "contract": "eth:0x91f67118DD47d502B1f0C354D0611997B022f29E",
+      "transaction": "0x8de1631a25b337c1e702f9ce9d9ab8a3b626922441855e959b2d79dae40bd131",
+      "reason": "Upgraded the implementation of the (since retired) QuotaManager that enforced per-token withdrawal limits on the Bridge."
+    },
+    {
+      "timestamp": 1717663871,
+      "type": "code",
+      "contract": "eth:0xb0f3186FC1963f774f52ff455DC86aEdD0b31F81",
+      "updateId": "e2633393",
+      "transaction": "0x8de1631a25b337c1e702f9ce9d9ab8a3b626922441855e959b2d79dae40bd131",
+      "reason": "Upgraded the implementation of the (since retired) tier-system SgxVerifier that validated SGX-proven state transitions."
+    },
+    {
+      "timestamp": 1717663871,
+      "type": "code",
+      "contract": "eth:0xE3D777143Ea25A6E031d1e921F396750885f43aC",
+      "updateId": "e2633393",
+      "transaction": "0x8de1631a25b337c1e702f9ce9d9ab8a3b626922441855e959b2d79dae40bd131",
+      "reason": "Upgraded the implementation of the (since retired) GuardianProver, the top-tier verifier whose proofs overrode all other tiers."
+    },
+    {
+      "timestamp": 1717732931,
+      "type": "code",
+      "contract": "eth:0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a",
+      "transaction": "0x0bbf7d1258c646f41a02a92a55825b1ebfd3659577d0f2b57b462f8895e23a04",
+      "reason": "Upgraded the implementation of the (since retired, pre-Shasta) TaikoL1 inbox that verified L2 state transitions and held bonds."
+    },
+    {
+      "timestamp": 1717749635,
+      "type": "code",
+      "contract": "eth:0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a",
+      "updateId": "1ede5389",
+      "transaction": "0xdb5e926c96d112ce1389da77a927fba6c7d04a711839b9e14777530ebcf83914",
+      "reason": "Upgraded the implementation of the (since retired, pre-Shasta) TaikoL1 inbox that verified L2 state transitions and held bonds."
+    },
+    {
+      "timestamp": 1719903815,
+      "type": "code",
+      "contract": "eth:0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a",
+      "updateId": "6e2c88a0",
+      "transaction": "0x13f54109cb7f7507ad03562b06ea8d8b472043186e44252302583bc64acfb20b",
+      "reason": "Upgraded the implementation of the (since retired, pre-Shasta) TaikoL1 inbox that verified L2 state transitions and held bonds."
+    },
+    {
+      "timestamp": 1719930659,
+      "type": "code",
+      "contract": "eth:0x579f40D0BE111b823962043702cabe6Aaa290780",
+      "updateId": "6e2c88a0",
+      "transaction": "0x9f787086b4c5e6887eb1d27c286069bcbbcabb1d7ed9f69ab3121c4681cf4b2c",
+      "reason": "Upgraded the implementation of the (since retired) L1RollupAddressManager that resolved the trusted tier verifiers and rollup contracts for TaikoL1."
+    },
+    {
+      "timestamp": 1720874075,
+      "type": "code",
+      "contract": "eth:0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a",
+      "updateId": "d5817b5e",
+      "transaction": "0xdf3f0cb2eaca00484c30a5c63fafe8036a9e0f71bd4bab216504bee0f5bfb83f",
+      "reason": "Upgraded the implementation of the (since retired, pre-Shasta) TaikoL1 inbox that verified L2 state transitions and held bonds."
+    },
+    {
+      "timestamp": 1721140223,
+      "type": "code",
+      "contract": "eth:0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a",
+      "updateId": "bf28d6a1",
+      "transaction": "0x7d584f0a645cad61e634f64ffaf7e1bbfb92749878eb25b39ce0e5cf698897c7",
+      "reason": "Upgraded the implementation of the (since retired, pre-Shasta) TaikoL1 inbox that verified L2 state transitions and held bonds."
+    },
+    {
+      "timestamp": 1721140223,
+      "type": "code",
+      "contract": "eth:0x579f40D0BE111b823962043702cabe6Aaa290780",
+      "updateId": "bf28d6a1",
+      "transaction": "0x7d584f0a645cad61e634f64ffaf7e1bbfb92749878eb25b39ce0e5cf698897c7",
+      "reason": "Upgraded the implementation of the (since retired) L1RollupAddressManager that resolved the trusted tier verifiers and rollup contracts for TaikoL1."
+    },
+    {
+      "timestamp": 1721140223,
+      "type": "code",
+      "contract": "eth:0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa",
+      "updateId": "bf28d6a1",
+      "transaction": "0x7d584f0a645cad61e634f64ffaf7e1bbfb92749878eb25b39ce0e5cf698897c7",
+      "reason": "Upgraded the implementation of the (since retired) L1SharedAddressManager that resolved the trusted SignalService and vault addresses for the Bridge."
+    },
+    {
+      "timestamp": 1721197175,
+      "type": "code",
+      "contract": "eth:0x579A8d63a2Db646284CBFE31FE5082c9989E985c",
+      "updateId": "bf28d6a1",
+      "transaction": "0x170617251f2345eda4bcbd29e316caa0b014602a44244c60b963382ac7da7748",
+      "reason": "Upgraded the implementation of the (since retired) GuardianMinorityProver, the tier verifier whose proofs overrode SGX/ZK proofs."
+    },
+    {
+      "timestamp": 1721197175,
+      "type": "code",
+      "contract": "eth:0xb0f3186FC1963f774f52ff455DC86aEdD0b31F81",
+      "updateId": "bf28d6a1",
+      "transaction": "0x170617251f2345eda4bcbd29e316caa0b014602a44244c60b963382ac7da7748",
+      "reason": "Upgraded the implementation of the (since retired) tier-system SgxVerifier that validated SGX-proven state transitions."
+    },
+    {
+      "timestamp": 1721197175,
+      "type": "code",
+      "contract": "eth:0xE3D777143Ea25A6E031d1e921F396750885f43aC",
+      "updateId": "bf28d6a1",
+      "transaction": "0x170617251f2345eda4bcbd29e316caa0b014602a44244c60b963382ac7da7748",
+      "reason": "Upgraded the implementation of the (since retired) GuardianProver, the top-tier verifier whose proofs overrode all other tiers."
+    },
+    {
+      "timestamp": 1721356979,
+      "type": "code",
+      "contract": "eth:0xb0f3186FC1963f774f52ff455DC86aEdD0b31F81",
+      "updateId": "46dff8f0",
+      "transaction": "0x2e246e4b4637c4bf13dccea873a30e35e704bafa7f02e30c877ecec7d786e662",
+      "reason": "Upgraded the implementation of the (since retired) tier-system SgxVerifier that validated SGX-proven state transitions."
+    },
+    {
+      "timestamp": 1729065323,
+      "type": "code",
+      "contract": "eth:0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a",
+      "updateId": "a96fdad5",
+      "transaction": "0x8778064404816273804d74c97b051f3865bc03062cfa4b0e9567f4556ad31981",
+      "reason": "Upgraded the implementation of the (since retired, pre-Shasta) TaikoL1 inbox that verified L2 state transitions and held bonds."
+    },
+    {
+      "timestamp": 1730452835,
+      "type": "code",
+      "contract": "eth:0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a",
+      "transaction": "0x13ea4d044a313cf667d16514465e6b96227ef7198bda7b19c70eefee44e9bccd",
+      "reason": "Upgraded the implementation of the (since retired, pre-Shasta) TaikoL1 inbox that verified L2 state transitions and held bonds."
+    },
+    {
+      "timestamp": 1730452835,
+      "type": "code",
+      "contract": "eth:0x579A8d63a2Db646284CBFE31FE5082c9989E985c",
+      "updateId": "38328c2f",
+      "transaction": "0x13ea4d044a313cf667d16514465e6b96227ef7198bda7b19c70eefee44e9bccd",
+      "reason": "Upgraded the implementation of the (since retired) GuardianMinorityProver, the tier verifier whose proofs overrode SGX/ZK proofs."
+    },
+    {
+      "timestamp": 1730452835,
+      "type": "code",
+      "contract": "eth:0x579f40D0BE111b823962043702cabe6Aaa290780",
+      "transaction": "0x13ea4d044a313cf667d16514465e6b96227ef7198bda7b19c70eefee44e9bccd",
+      "reason": "Upgraded the implementation of the (since retired) L1RollupAddressManager that resolved the trusted tier verifiers and rollup contracts for TaikoL1."
+    },
+    {
+      "timestamp": 1730452835,
+      "type": "code",
+      "contract": "eth:0xb0f3186FC1963f774f52ff455DC86aEdD0b31F81",
+      "updateId": "38328c2f",
+      "transaction": "0x13ea4d044a313cf667d16514465e6b96227ef7198bda7b19c70eefee44e9bccd",
+      "reason": "Upgraded the implementation of the (since retired) tier-system SgxVerifier that validated SGX-proven state transitions."
+    },
+    {
+      "timestamp": 1730452835,
+      "type": "code",
+      "contract": "eth:0xE3D777143Ea25A6E031d1e921F396750885f43aC",
+      "updateId": "38328c2f",
+      "transaction": "0x13ea4d044a313cf667d16514465e6b96227ef7198bda7b19c70eefee44e9bccd",
+      "reason": "Upgraded the implementation of the (since retired) GuardianProver, the top-tier verifier whose proofs overrode all other tiers."
+    },
+    {
+      "timestamp": 1730452835,
+      "type": "code",
+      "contract": "eth:0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa",
+      "updateId": "38328c2f",
+      "transaction": "0x13ea4d044a313cf667d16514465e6b96227ef7198bda7b19c70eefee44e9bccd",
+      "reason": "Upgraded the implementation of the (since retired) L1SharedAddressManager that resolved the trusted SignalService and vault addresses for the Bridge."
+    },
+    {
+      "timestamp": 1730549099,
+      "type": "code",
+      "contract": "eth:0x579f40D0BE111b823962043702cabe6Aaa290780",
+      "updateId": "38328c2f",
+      "transaction": "0xf26d0526aa4b8225c603720ce0dc016803188b959c50677d5446087d1f2c4e60",
+      "reason": "Upgraded the implementation of the (since retired) L1RollupAddressManager that resolved the trusted tier verifiers and rollup contracts for TaikoL1."
+    },
+    {
+      "timestamp": 1730610923,
+      "type": "code",
+      "contract": "eth:0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a",
+      "updateId": "38328c2f",
+      "transaction": "0x78ca7c7d9c7e5aa9c5e6ab80e0229289a8d3bc8df2c2b9ba6baa74a0f60a0703",
+      "reason": "Upgraded the implementation of the (since retired, pre-Shasta) TaikoL1 inbox that verified L2 state transitions and held bonds."
+    },
+    {
+      "timestamp": 1731054947,
+      "type": "code",
+      "contract": "eth:0x579f40D0BE111b823962043702cabe6Aaa290780",
+      "transaction": "0x5d46840df79d8df508880675e7ea549e9b46137f597ca520c3e0c979439441d1",
+      "reason": "Upgraded the implementation of the (since retired) L1RollupAddressManager that resolved the trusted tier verifiers and rollup contracts for TaikoL1."
+    },
+    {
+      "timestamp": 1731216107,
+      "type": "code",
+      "contract": "eth:0x579f40D0BE111b823962043702cabe6Aaa290780",
+      "updateId": "a83164a8",
+      "transaction": "0x43353a74df973d8f6a379b5c8815ac80935a5099f8ab93a4aa204eb5ef2c663e",
+      "reason": "Upgraded the implementation of the (since retired) L1RollupAddressManager that resolved the trusted tier verifiers and rollup contracts for TaikoL1."
+    },
+    {
+      "timestamp": 1731252767,
+      "type": "code",
+      "contract": "eth:0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a",
+      "transaction": "0xa9e285d0f2cc84161ac3fc28962003779e9a618271bd6a54b16fb4001ede5b38",
+      "reason": "Upgraded the implementation of the (since retired, pre-Shasta) TaikoL1 inbox that verified L2 state transitions and held bonds."
+    },
+    {
+      "timestamp": 1731253583,
+      "type": "code",
+      "contract": "eth:0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a",
+      "transaction": "0x5efedb806fca83936c58f9e4d30644257ce3a529239131b0b19f630320bcfb04",
+      "reason": "Upgraded the implementation of the (since retired, pre-Shasta) TaikoL1 inbox that verified L2 state transitions and held bonds."
+    },
+    {
+      "timestamp": 1731255023,
+      "type": "code",
+      "contract": "eth:0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a",
+      "updateId": "a83164a8",
+      "transaction": "0x5eb57ab352b3e3c1ddbc3fe468d582901b88c6a137ce49b0d70857d5218d626d",
+      "reason": "Upgraded the implementation of the (since retired, pre-Shasta) TaikoL1 inbox that verified L2 state transitions and held bonds."
+    },
+    {
+      "timestamp": 1734921911,
+      "type": "code",
+      "contract": "eth:0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a",
+      "transaction": "0xfa949022e61921e108974e73130e94fc5120463f2c537d26626e5cee2120c944",
+      "reason": "Upgraded the implementation of the (since retired, pre-Shasta) TaikoL1 inbox that verified L2 state transitions and held bonds."
+    },
+    {
+      "timestamp": 1734921911,
+      "type": "code",
+      "contract": "eth:0x579f40D0BE111b823962043702cabe6Aaa290780",
+      "updateId": "9326eb49",
+      "transaction": "0xfa949022e61921e108974e73130e94fc5120463f2c537d26626e5cee2120c944",
+      "reason": "Upgraded the implementation of the (since retired) L1RollupAddressManager that resolved the trusted tier verifiers and rollup contracts for TaikoL1."
+    },
+    {
+      "timestamp": 1734923555,
+      "type": "code",
+      "contract": "eth:0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a",
+      "updateId": "9326eb49",
+      "transaction": "0xe66aba9f8bfcd86dc0ae32416862ca61a51c47f8ec747799e65f155ef27eeb20",
+      "reason": "Upgraded the implementation of the (since retired, pre-Shasta) TaikoL1 inbox that verified L2 state transitions and held bonds."
+    },
+    {
+      "timestamp": 1734965747,
+      "type": "code",
+      "contract": "eth:0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a",
+      "updateId": "a66aba2e",
+      "transaction": "0x9c2f36af40c0004110041fc45d980b73b0c8dde8064713a55aeb6f69fca77a99",
+      "reason": "Upgraded the implementation of the (since retired, pre-Shasta) TaikoL1 inbox that verified L2 state transitions and held bonds."
+    },
+    {
+      "timestamp": 1735049951,
+      "type": "code",
+      "contract": "eth:0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a",
+      "updateId": "2d84825c",
+      "transaction": "0x77871837d1749b22a7991da475e657baa4371937f5a8cb094d4e170db000cb25",
+      "reason": "Upgraded the implementation of the (since retired, pre-Shasta) TaikoL1 inbox that verified L2 state transitions and held bonds."
+    },
+    {
+      "timestamp": 1739429867,
+      "type": "code",
+      "contract": "eth:0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a",
+      "updateId": "4f615b6f",
+      "transaction": "0xc0e8ec30d1479ca2414d4d28a09a543c2845247d80387f78c179d663ffe55c3c",
+      "reason": "Upgraded the implementation of the (since retired, pre-Shasta) TaikoL1 inbox that verified L2 state transitions and held bonds."
+    },
+    {
+      "timestamp": 1740626843,
+      "type": "code",
+      "contract": "eth:0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a",
+      "updateId": "e32a44c7",
+      "transaction": "0x6368890b9aa2f87c6a6b727efdd8af0ea357a11460b546d8a7f3e19e38a34e41",
+      "reason": "Upgraded the implementation of the (since retired, pre-Shasta) TaikoL1 inbox that verified L2 state transitions and held bonds."
+    },
+    {
+      "timestamp": 1747268747,
+      "type": "code",
+      "contract": "eth:0x05d88855361808fA1d7fc28084Ef3fCa191c4e03",
+      "transaction": "0xb5b74868eb84c8bbeada5d84156f885bb05c7170c0fd8e4bd50b68a65f0c8446",
+      "reason": "Upgraded the implementation of the (since retired, Pacaya) ForcedInclusionStore that gated every batch proposal through TaikoWrapper."
+    },
+    {
+      "timestamp": 1747268759,
+      "type": "code",
+      "contract": "eth:0xB16931e78d0cE3c9298bbEEf3b5e2276D34b8da1",
+      "transaction": "0x0d65cd40703200e2a85d3e2c230e23889a51af84fdc475b40844c00e4e48e72f",
+      "reason": "Upgraded the implementation of the (since retired, Pacaya) multi-proof VerifierGateway that routed each proof type to its verifier."
+    },
+    {
+      "timestamp": 1747282823,
+      "type": "state",
+      "contract": "eth:0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC",
+      "transaction": "0xb2682b2e04c9976d3f632e8b78671fb3a588890845367ccf1f654b8e8e9ead09",
+      "reason": "Raised the threshold of the Taiko Multisig from 3 to 4; at that block the Safe was the owner of the MainnetBridge (and of TaikoL1, SignalService and the vaults). The Safe itself is outside the perimeter."
+    },
+    {
+      "timestamp": 1747298447,
+      "type": "code",
+      "contract": "eth:0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a",
+      "transaction": "0x97789b6668d0a287b1f57bb6c8e23cce62308fb887139faeb0f06b77855995fd",
+      "reason": "Upgraded the implementation of the (since retired, pre-Shasta) TaikoL1 inbox that verified L2 state transitions and held bonds."
+    },
+    {
+      "timestamp": 1747362983,
+      "type": "code",
+      "contract": "eth:0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a",
+      "updateId": "167b8dff",
+      "transaction": "0x78f766ae83ce94ef2293c9c7d81ae514e8fa0a79fbce1530c3c68d7624708795",
+      "reason": "Upgraded the implementation of the (since retired, pre-Shasta) TaikoL1 inbox that verified L2 state transitions and held bonds."
+    },
+    {
+      "timestamp": 1748997623,
+      "type": "code",
+      "contract": "eth:0xbee1040D0Aab17AE19454384904525aE4A3602B9",
+      "updateId": "136d39c0",
+      "transaction": "0xbdc86ada3808a5987cd1f4bbc49ecd2d7e577bf90642956442a3d14cffa827ec",
+      "reason": "Upgraded the implementation of the (since retired, Pacaya) SP1VerifierGateway, the entry contract for SP1 batch proofs."
+    },
+    {
+      "timestamp": 1749700235,
+      "type": "code",
+      "contract": "eth:0x73Ee496dA20e5C65340c040B0D8c3C891C1f74AE",
+      "updateId": "e8c7b9d2",
+      "transaction": "0x2b9250ebdcf10b1a1ec658e5cc9e7fd9aa19dd32573e6ab5bc036499682dea3a",
+      "reason": "Upgraded the implementation of the (since retired, Pacaya) Risc0VerifierGateway, the entry contract for RISC Zero batch proofs."
+    },
+    {
+      "timestamp": 1752542435,
+      "type": "code",
+      "contract": "eth:0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a",
+      "updateId": "9c15da27",
+      "transaction": "0xffedb70a513e71486c3a47079508d3ba87ae5362e7efb3300febac1be69276bc",
+      "reason": "Upgraded the implementation of the (since retired, pre-Shasta) TaikoL1 inbox that verified L2 state transitions and held bonds."
+    },
+    {
+      "timestamp": 1753329371,
+      "type": "code",
+      "contract": "eth:0x73Ee496dA20e5C65340c040B0D8c3C891C1f74AE",
+      "transaction": "0x95d0cfffe42dc984ce8b24104a28d1083100ab638bb4fe396d1a145c17460db9",
+      "reason": "Upgraded the implementation of the (since retired, Pacaya) Risc0VerifierGateway, the entry contract for RISC Zero batch proofs."
+    },
+    {
+      "timestamp": 1754913371,
+      "type": "code",
+      "contract": "eth:0xD5AA0e20e8A6e9b04F080Cf8797410fafAa9688a",
+      "transaction": "0x1000b14e86d8db17931f65e877e2eb13cb3990d0a129eee1aff21ce6ba96d2cf",
+      "reason": "Upgraded the implementation of the (since retired, Pacaya) PreconfRouter, the exclusive proposal route for whitelisted preconf operators."
+    },
+    {
+      "timestamp": 1754919911,
+      "type": "code",
+      "contract": "eth:0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a",
+      "updateId": "ca91bdf8",
+      "transaction": "0xbfd772cb4571eb6275f23d4fd8c7eb1502462b55821ee59dae0d15ab3325fc22",
+      "reason": "Upgraded the implementation of the (since retired, pre-Shasta) TaikoL1 inbox that verified L2 state transitions and held bonds."
+    },
+    {
+      "timestamp": 1754919911,
+      "type": "code",
+      "contract": "eth:0x9F9D2fC7abe74C79f86F0D1212107692430eef72",
+      "updateId": "ca91bdf8",
+      "transaction": "0xbfd772cb4571eb6275f23d4fd8c7eb1502462b55821ee59dae0d15ab3325fc22",
+      "reason": "Upgraded the implementation of the (since retired, Pacaya) TaikoWrapper, the sole entry point for batch proposals into TaikoL1."
+    },
+    {
+      "timestamp": 1755136523,
+      "type": "state",
+      "contract": "eth:0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a",
+      "transaction": "0x9888aa4ec088ca3558b16e7ef0a94f7ebcf6164f592969fdd40bd3cc2b8eb74c",
+      "reason": "Raised the threshold of the Taiko Multisig from 4 to 5; at that block the Safe was still the owner of TaikoL1 and of the Pacaya verifier gateways. The Safe itself is outside the perimeter."
+    },
+    {
+      "timestamp": 1756244927,
+      "type": "code",
+      "contract": "eth:0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a",
+      "updateId": "709bc2e7",
+      "transaction": "0x27f89b30a14fdf2c6adb42c5722f4ac403eefde7d26f6a64bdfd4a86458a0c00",
+      "reason": "Upgraded the implementation of the (since retired, pre-Shasta) TaikoL1 inbox that verified L2 state transitions and held bonds."
+    },
+    {
+      "timestamp": 1756244927,
+      "type": "code",
+      "contract": "eth:0x9F9D2fC7abe74C79f86F0D1212107692430eef72",
+      "updateId": "709bc2e7",
+      "transaction": "0x27f89b30a14fdf2c6adb42c5722f4ac403eefde7d26f6a64bdfd4a86458a0c00",
+      "reason": "Upgraded the implementation of the (since retired, Pacaya) TaikoWrapper, the sole entry point for batch proposals into TaikoL1."
+    },
+    {
+      "timestamp": 1756244927,
+      "type": "code",
+      "contract": "eth:0xD5AA0e20e8A6e9b04F080Cf8797410fafAa9688a",
+      "updateId": "709bc2e7",
+      "transaction": "0x27f89b30a14fdf2c6adb42c5722f4ac403eefde7d26f6a64bdfd4a86458a0c00",
+      "reason": "Upgraded the implementation of the (since retired, Pacaya) PreconfRouter, the exclusive proposal route for whitelisted preconf operators."
+    },
+    {
+      "timestamp": 1756261223,
+      "type": "state",
+      "contract": "eth:0x73Ee496dA20e5C65340c040B0D8c3C891C1f74AE",
+      "transaction": "0xc6aa14245e3b593f4e37ce6decef8719eae07bdd79d3099c48ea73fc85bc3290",
+      "reason": "Changed the trusted RISC Zero image IDs on the then-live Risc0VerifierGateway; a trusted image defines which proofs finalize state roots."
+    },
+    {
+      "timestamp": 1756261223,
+      "type": "state",
+      "contract": "eth:0xbee1040D0Aab17AE19454384904525aE4A3602B9",
+      "transaction": "0xc6aa14245e3b593f4e37ce6decef8719eae07bdd79d3099c48ea73fc85bc3290",
+      "reason": "Changed the trusted SP1 program hashes on the then-live SP1VerifierGateway; a trusted program defines which proofs finalize state roots."
+    },
+    {
+      "timestamp": 1764720995,
+      "type": "code",
+      "contract": "eth:0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a",
+      "updateId": "c64c6e2d",
+      "transaction": "0x22ad3111b2e282663d8ee67b9a1e8c64add6a87f1e1f0e89dd589619ad42cce4",
+      "reason": "Upgraded the implementation of the (since retired, pre-Shasta) TaikoL1 inbox that verified L2 state transitions and held bonds."
+    },
+    {
+      "timestamp": 1764814439,
+      "type": "state",
+      "contract": "eth:0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261",
+      "updateId": "c074de1f",
+      "transaction": "0xbdd083f6c9905230ec66b00863175112f2dbad532a6bd34d5982752587d1c5dd",
+      "reason": "DAO proposal changed the trusted SGX enclave measurements (mrEnclaves) in the DCAP attestation contract used by the SGX verifiers."
+    },
+    {
+      "timestamp": 1764814439,
+      "type": "code",
+      "contract": "eth:0x73Ee496dA20e5C65340c040B0D8c3C891C1f74AE",
+      "updateId": "c074de1f",
+      "transaction": "0xbdd083f6c9905230ec66b00863175112f2dbad532a6bd34d5982752587d1c5dd",
+      "reason": "Upgraded the implementation of the (since retired, Pacaya) Risc0VerifierGateway, the entry contract for RISC Zero batch proofs. The same proposal also changed its trusted RISC Zero image IDs."
+    },
+    {
+      "timestamp": 1764814439,
+      "type": "state",
+      "contract": "eth:0x8d7C954960a36a7596d7eA4945dDf891967ca8A3",
+      "updateId": "c074de1f",
+      "transaction": "0xbdd083f6c9905230ec66b00863175112f2dbad532a6bd34d5982752587d1c5dd",
+      "reason": "DAO proposal changed the trusted SGX enclave measurements (mrEnclaves) in the DCAP attestation contract used by the SGX verifiers."
+    },
+    {
+      "timestamp": 1764814439,
+      "type": "state",
+      "contract": "eth:0xbee1040D0Aab17AE19454384904525aE4A3602B9",
+      "updateId": "c074de1f",
+      "transaction": "0xbdd083f6c9905230ec66b00863175112f2dbad532a6bd34d5982752587d1c5dd",
+      "reason": "DAO proposal changed the trusted SP1 program hashes on the then-live SP1VerifierGateway."
+    },
+    {
+      "timestamp": 1764814439,
+      "type": "code",
+      "contract": "eth:0xD5AA0e20e8A6e9b04F080Cf8797410fafAa9688a",
+      "updateId": "c074de1f",
+      "transaction": "0xbdd083f6c9905230ec66b00863175112f2dbad532a6bd34d5982752587d1c5dd",
+      "reason": "Upgraded the implementation of the (since retired, Pacaya) PreconfRouter, the exclusive proposal route for whitelisted preconf operators."
+    },
+    {
+      "timestamp": 1774964687,
+      "type": "state",
+      "contract": "eth:0x059dAF31F571da48Ab4e74Ae12F64f907681Cd8b",
+      "transaction": "0xb132692b255fb1ff670b37d162af03de5151fa1e77811bf009ba276e4a9a2f36",
+      "reason": "Shasta upgrade proposal set the trusted RISC Zero image IDs on the TaikoRisc0Verifier; a trusted image defines which proofs finalize state roots."
+    },
+    {
+      "timestamp": 1774964687,
+      "type": "code",
+      "contract": "eth:0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a",
+      "updateId": "3bedf566",
+      "transaction": "0xb132692b255fb1ff670b37d162af03de5151fa1e77811bf009ba276e4a9a2f36",
+      "reason": "Shasta upgrade proposal upgraded the (since retired) TaikoL1 inbox to its final pre-Shasta implementation."
+    },
+    {
+      "timestamp": 1774964687,
+      "type": "state",
+      "contract": "eth:0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261",
+      "updateId": "3bedf566",
+      "transaction": "0xb132692b255fb1ff670b37d162af03de5151fa1e77811bf009ba276e4a9a2f36",
+      "reason": "Shasta upgrade proposal changed the trusted SGX enclave measurements (mrEnclaves) in the DCAP attestation contract."
+    },
+    {
+      "timestamp": 1774964687,
+      "type": "state",
+      "contract": "eth:0x8d7C954960a36a7596d7eA4945dDf891967ca8A3",
+      "updateId": "3bedf566",
+      "transaction": "0xb132692b255fb1ff670b37d162af03de5151fa1e77811bf009ba276e4a9a2f36",
+      "reason": "Shasta upgrade proposal changed the trusted SGX enclave measurements (mrEnclaves) in the DCAP attestation contract."
+    },
+    {
+      "timestamp": 1774964687,
+      "type": "state",
+      "contract": "eth:0x96337327648dcFA22b014009cf10A2D5E2F305f6",
+      "transaction": "0xb132692b255fb1ff670b37d162af03de5151fa1e77811bf009ba276e4a9a2f36",
+      "reason": "Shasta upgrade proposal set the trusted SP1 program verification keys on the then-live TaikoSP1Verifier; a trusted vkey defines which proofs finalize state roots."
+    },
+    {
+      "timestamp": 1775208959,
+      "type": "state",
+      "contract": "eth:0x059dAF31F571da48Ab4e74Ae12F64f907681Cd8b",
+      "updateId": "613479a6",
+      "transaction": "0x8c1f0bfa4a492d1f78ff1a4dcd8886fa5476d8aa59531a6bd199de2fbad19948",
+      "reason": "Emergency proposal replaced trusted RISC Zero image IDs on the TaikoRisc0Verifier."
+    },
+    {
+      "timestamp": 1775208959,
+      "type": "state",
+      "contract": "eth:0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261",
+      "updateId": "613479a6",
+      "transaction": "0x8c1f0bfa4a492d1f78ff1a4dcd8886fa5476d8aa59531a6bd199de2fbad19948",
+      "reason": "Emergency proposal changed the trusted SGX enclave measurements (mrEnclaves) in the DCAP attestation contract."
+    },
+    {
+      "timestamp": 1775208959,
+      "type": "state",
+      "contract": "eth:0x8d7C954960a36a7596d7eA4945dDf891967ca8A3",
+      "updateId": "613479a6",
+      "transaction": "0x8c1f0bfa4a492d1f78ff1a4dcd8886fa5476d8aa59531a6bd199de2fbad19948",
+      "reason": "Emergency proposal changed the trusted SGX enclave measurements (mrEnclaves) in the DCAP attestation contract."
+    },
+    {
+      "timestamp": 1775208959,
+      "type": "state",
+      "contract": "eth:0x96337327648dcFA22b014009cf10A2D5E2F305f6",
+      "updateId": "613479a6",
+      "transaction": "0x8c1f0bfa4a492d1f78ff1a4dcd8886fa5476d8aa59531a6bd199de2fbad19948",
+      "reason": "Emergency proposal replaced trusted SP1 program verification keys on the then-live TaikoSP1Verifier."
+    },
+    {
+      "timestamp": 1780627823,
+      "type": "state",
+      "contract": "eth:0x059dAF31F571da48Ab4e74Ae12F64f907681Cd8b",
+      "updateId": "e91cf682",
+      "transaction": "0x5f25fce8314f9a98209b0787b5f457c71bee1c342fccf2e7a7a4bddf9c349393",
+      "reason": "DAO proposal replaced trusted RISC Zero image IDs on the TaikoRisc0Verifier."
+    },
+    {
+      "timestamp": 1780627823,
+      "type": "state",
+      "contract": "eth:0x96337327648dcFA22b014009cf10A2D5E2F305f6",
+      "updateId": "e91cf682",
+      "transaction": "0x5f25fce8314f9a98209b0787b5f457c71bee1c342fccf2e7a7a4bddf9c349393",
+      "reason": "DAO proposal replaced trusted SP1 program verification keys on the then-live TaikoSP1Verifier."
+    },
+    {
+      "timestamp": 1785761183,
+      "type": "state",
+      "contract": "eth:0x059dAF31F571da48Ab4e74Ae12F64f907681Cd8b",
+      "updateId": "ebe21a45",
+      "transaction": "0x64875b5b84b41b520551854696c0ce408fb3e0aa2ede604cc95a5919b6140ea7",
+      "reason": "DAO proposal replaced trusted RISC Zero image IDs on the TaikoRisc0Verifier (bundled with the MainnetInbox upgrade and the ZkRequiredVerifier rollout)."
+    },
+    {
+      "timestamp": 1785761183,
+      "type": "state",
+      "contract": "eth:0x0ffa4A625ED9DB32B70F99180FD00759fc3e9261",
+      "updateId": "ebe21a45",
+      "transaction": "0x64875b5b84b41b520551854696c0ce408fb3e0aa2ede604cc95a5919b6140ea7",
+      "reason": "DAO proposal changed the trusted SGX enclave measurements (mrEnclaves) in the DCAP attestation contract used by the SGX verifiers."
+    },
+    {
+      "timestamp": 1785761183,
+      "type": "state",
+      "contract": "eth:0x73A0Db393ef87ce781ac7957bE10D6628432100F",
+      "updateId": "ebe21a45",
+      "transaction": "0x64875b5b84b41b520551854696c0ce408fb3e0aa2ede604cc95a5919b6140ea7",
+      "reason": "DAO proposal replaced trusted SP1 program verification keys on the TaikoSP1Verifier (bundled with the MainnetInbox upgrade and the ZkRequiredVerifier rollout)."
+    },
+    {
+      "timestamp": 1785761183,
+      "type": "state",
+      "contract": "eth:0x8d7C954960a36a7596d7eA4945dDf891967ca8A3",
+      "updateId": "ebe21a45",
+      "transaction": "0x64875b5b84b41b520551854696c0ce408fb3e0aa2ede604cc95a5919b6140ea7",
+      "reason": "DAO proposal changed the trusted SGX enclave measurements (mrEnclaves) in the DCAP attestation contract used by the SGX verifiers."
+    }
+  ]
+}

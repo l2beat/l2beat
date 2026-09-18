@@ -7,7 +7,7 @@
       "description": "Forced inclusions are disabled in this implementation: saveForcedInclusion() always reverts and propose() only accepts zero forced inclusions.",
       "severity": "HIGH"
     },
-    "paused": { "severity": "HIGH" },
+    "paused": { "severity": "MEDIUM" },
     "getCurrentForcedInclusionFee": { "severity": "HIGH" },
     "owner": {
       "permissions": [

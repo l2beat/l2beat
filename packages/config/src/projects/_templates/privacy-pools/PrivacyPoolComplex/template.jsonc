@@ -1,6 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "PrivacyPoolComplex",
+  "critical": true,
   "category": "core",
   "description": "ERC20 Privacy Pool that escrows one asset for one scope. Withdrawals and ragequits depend on the linked Groth16 verifiers and on the latest association-set root in the Entrypoint.",
   "ignoreInWatchMode": [
@@ -15,6 +16,18 @@
   "fields": {
     "SCOPE": {
       "description": "Unique scope identifier that the Entrypoint uses to map relayed withdrawals to this pool."
+    },
+    "WITHDRAWAL_VERIFIER": {
+      "description": "Groth16 verifier that authorizes withdrawals from this pool.",
+      "severity": "HIGH"
+    },
+    "RAGEQUIT_VERIFIER": {
+      "description": "Groth16 verifier that authorizes ragequits (original-depositor exits) from this pool.",
+      "severity": "HIGH"
+    },
+    "ENTRYPOINT": {
+      "description": "Entrypoint whose latest association-set root every withdrawal proof must match.",
+      "severity": "HIGH"
     },
     "dead": {
       "description": "If true, the pool has been irreversibly wound down and no longer accepts new deposits.",

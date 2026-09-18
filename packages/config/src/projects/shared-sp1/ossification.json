@@ -1,0 +1,167 @@
+{
+  "events": [
+    {
+      "timestamp": 1720099295,
+      "type": "state",
+      "contract": "eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
+      "transaction": "0x145d5b31d9c1220a7130429c6f70604f5cb21fd0c9d186c70396f5c38f79855c",
+      "reason": "Registered SP1Verifier (eth:0xfE2bb0Ad7F2c44Bd1289234Af08aD6FDEC0d54a2) under selector 0x801c66ac in the SP1VerifierGateway (RouteAdded) right after deployment, adding a new verifier to the proof-verification path."
+    },
+    {
+      "timestamp": 1720099343,
+      "type": "state",
+      "contract": "eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
+      "transaction": "0xab84719b80be4049b1d4544667f9dd727cce804294e16e8bc1966724e8cae21c",
+      "reason": "Registered SP1Verifier (eth:0x331b350dDA287d0A65ce43103984CD44cb4Da9f0) under selector 0x8c5bc5e4 in the SP1VerifierGateway (RouteAdded) right after deployment, adding a new verifier to the proof-verification path."
+    },
+    {
+      "timestamp": 1721270315,
+      "type": "state",
+      "contract": "eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
+      "transaction": "0xb9b6ed0fae1f56b55505b1fa15aece7b96d1b9f0d604e11cbccb504772a4a32e",
+      "reason": "Registered SP1Verifier (eth:0x36B353776AF6EF3A2bD707049e783F52c4209017) under selector 0xfedc1fcc in the SP1VerifierGateway (RouteAdded), adding a new verifier to the proof-verification path."
+    },
+    {
+      "timestamp": 1721688299,
+      "type": "state",
+      "contract": "eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
+      "transaction": "0xc7cf7f15616703b4e23b724c8b246d9b1e38b916301ec17cf941c1758ba2298e",
+      "reason": "Froze the route for selector 0x8c5bc5e4 to SP1Verifier eth:0x331b350dDA287d0A65ce43103984CD44cb4Da9f0 in the SP1VerifierGateway (RouteFrozen), permanently removing that verifier from the proof-verification path."
+    },
+    {
+      "timestamp": 1721688719,
+      "type": "state",
+      "contract": "eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
+      "transaction": "0xea95a26fb8e4e82cec96b19a3f9db1f3d7b119b5e97fdaf7b70e027ccf54dafe",
+      "reason": "Froze the route for selector 0x801c66ac to SP1Verifier eth:0xfE2bb0Ad7F2c44Bd1289234Af08aD6FDEC0d54a2 in the SP1VerifierGateway (RouteFrozen), permanently removing that verifier from the proof-verification path."
+    },
+    {
+      "timestamp": 1721692331,
+      "type": "state",
+      "contract": "eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
+      "transaction": "0x49f9b69032a68e94aef7e5bad39bbb4ea0cccc27301e2f53c7b9a1078898977a",
+      "reason": "Transferred ownership of the SP1VerifierGateway (controls route additions and freezes) from eth:0xded0000e32f8f40414d3ab3a830f735a3553e18e to eth:0xbab2c2af5b91695e65955da60d63ad1b2ae81126 (OwnershipTransferred)."
+    },
+    {
+      "timestamp": 1722645791,
+      "type": "state",
+      "contract": "eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
+      "transaction": "0xd6f2ce6be420d3e2aa70b9a3501e427b8f66b62318c4b80510014a80678db9fa",
+      "reason": "Registered SP1Verifier (eth:0xc350F063C13a3Ca21331610fe159E697a5c9c2FB) under selector 0xc430ff7f in the SP1VerifierGateway (RouteAdded), adding a new verifier to the proof-verification path."
+    },
+    {
+      "timestamp": 1724115575,
+      "type": "state",
+      "contract": "eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
+      "transaction": "0xd8958acc6d2264ecca57a3d951fe85755bee2208023c0e0d54eab854a1597293",
+      "reason": "Froze the route for selector 0xfedc1fcc to SP1Verifier eth:0x36B353776AF6EF3A2bD707049e783F52c4209017 in the SP1VerifierGateway (RouteFrozen), permanently removing that verifier from the proof-verification path."
+    },
+    {
+      "timestamp": 1724793467,
+      "type": "state",
+      "contract": "eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
+      "transaction": "0x50f1624b99eaeea182c8e5240b00ac85f9c83ff06283c178b80d4731d140390a",
+      "reason": "Transferred ownership of the SP1VerifierGateway (controls route additions and freezes) from eth:0xbab2c2af5b91695e65955da60d63ad1b2ae81126 to eth:0xcafef00d348adbd57c37d1b77e0619c6244c6878 (OwnershipTransferred)."
+    },
+    {
+      "timestamp": 1725474371,
+      "type": "state",
+      "contract": "eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
+      "transaction": "0xaa720c5eb4f6493e6ce9bde2febf4186078cab9549233d3f4f5a14dca49b65a7",
+      "reason": "Registered SP1Verifier (eth:0x6B6A7Ded061567d8A56279801DEA5cFB79be5bFc) under selector 0xc865c1b6 in the SP1VerifierGateway (RouteAdded), adding a new verifier to the proof-verification path."
+    },
+    {
+      "timestamp": 1725484715,
+      "type": "state",
+      "contract": "eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
+      "transaction": "0x2f37f7f0cce590c464cfbf357d947c51bc28de3acc067d2fc614ae5486c2e022",
+      "reason": "Froze the route for selector 0xc430ff7f to SP1Verifier eth:0xc350F063C13a3Ca21331610fe159E697a5c9c2FB in the SP1VerifierGateway (RouteFrozen), permanently removing that verifier from the proof-verification path."
+    },
+    {
+      "timestamp": 1726511747,
+      "type": "state",
+      "contract": "eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
+      "transaction": "0x542af1bcb838ab0b70b4a0b93a94ea8034c3b7f561a297c93cbe75b361232c4e",
+      "reason": "Registered SP1Verifier (eth:0x1764C29FBd94865198588f10FC75D4f6636d158d) under selector 0x4aca240a in the SP1VerifierGateway (RouteAdded), adding a new verifier to the proof-verification path."
+    },
+    {
+      "timestamp": 1726878323,
+      "type": "state",
+      "contract": "eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
+      "transaction": "0xe51affa730f74ff3afbf958080d2583ce3799602eadd602d836398ff63618639",
+      "reason": "Froze the route for selector 0xc865c1b6 to SP1Verifier eth:0x6B6A7Ded061567d8A56279801DEA5cFB79be5bFc in the SP1VerifierGateway (RouteFrozen), permanently removing that verifier from the proof-verification path."
+    },
+    {
+      "timestamp": 1729728863,
+      "type": "state",
+      "contract": "eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
+      "transaction": "0x1495afc112a7b327b04b97e4ed5b01fec86d9de19354751d1c71feac92f7c2cd",
+      "reason": "Registered SP1Verifier (eth:0x6A87EFd4e6B2Db1ed73129A8b9c51aaA583d49e3) under selector 0x09069090 in the SP1VerifierGateway (RouteAdded), adding a new verifier to the proof-verification path."
+    },
+    {
+      "timestamp": 1729728863,
+      "type": "state",
+      "contract": "eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
+      "transaction": "0x1495afc112a7b327b04b97e4ed5b01fec86d9de19354751d1c71feac92f7c2cd",
+      "reason": "Registered SP1Verifier (eth:0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16) under selector 0x54bdcae3 in the SP1VerifierGateway (RouteAdded), adding a new verifier to the proof-verification path."
+    },
+    {
+      "timestamp": 1730498375,
+      "type": "state",
+      "contract": "eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
+      "transaction": "0xa5d9819b39166cb3f278f56df5a0aaef83382fadbd3397b1bcef626519cdaccd",
+      "reason": "Froze the route for selector 0x09069090 to SP1Verifier eth:0x6A87EFd4e6B2Db1ed73129A8b9c51aaA583d49e3 in the SP1VerifierGateway (RouteFrozen), permanently removing that verifier from the proof-verification path."
+    },
+    {
+      "timestamp": 1731025967,
+      "type": "state",
+      "contract": "eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
+      "transaction": "0xa2b49fb3647b8e9f7129bf8c22d1573bac9b975afe7cd5c7cd3258b33a0c97a3",
+      "reason": "Froze the route for selector 0x4aca240a to SP1Verifier eth:0x1764C29FBd94865198588f10FC75D4f6636d158d in the SP1VerifierGateway (RouteFrozen), permanently removing that verifier from the proof-verification path."
+    },
+    {
+      "timestamp": 1735951931,
+      "type": "state",
+      "contract": "eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
+      "transaction": "0xdf1cdd2422df4356c7b79c2f276e3476f003fa1a56bed26d1328b60e7fea0e13",
+      "reason": "Registered SP1Verifier (eth:0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63) under selector 0x1b34fe11 in the SP1VerifierGateway (RouteAdded), adding a new verifier to the proof-verification path."
+    },
+    {
+      "timestamp": 1736970023,
+      "type": "state",
+      "contract": "eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
+      "transaction": "0x7dd26bc3c14d206fa16a5679efe29e881564010d3e63a8720c8188c283cdc7c6",
+      "reason": "Froze the route for selector 0x54bdcae3 to SP1Verifier eth:0xd2832Cf1fC8bA210FfABF62Db9A8781153131d16 in the SP1VerifierGateway (RouteFrozen), permanently removing that verifier from the proof-verification path."
+    },
+    {
+      "timestamp": 1748558771,
+      "type": "state",
+      "contract": "eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
+      "transaction": "0x58d09a350a33949ff777b5ec4dc31b915029b1df95c0ee095951a7a8ebae35bf",
+      "reason": "Registered SP1Verifier (eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459) under selector 0xd4e8ecd2 in the SP1VerifierGateway (RouteAdded), adding a new verifier to the proof-verification path."
+    },
+    {
+      "timestamp": 1750785371,
+      "type": "state",
+      "contract": "eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
+      "transaction": "0xf34005e0745bb168467f4d0b124ceb17b689a8a2d89de2726d1fcc0620e8f26f",
+      "reason": "Froze the route for selector 0x1b34fe11 to SP1Verifier eth:0xE00a3cBFC45241b33c0A44C78e26168CBc55EC63 in the SP1VerifierGateway (RouteFrozen), permanently removing that verifier from the proof-verification path."
+    },
+    {
+      "timestamp": 1771445567,
+      "type": "state",
+      "contract": "eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
+      "updateId": "eeb61c0d",
+      "transaction": "0xbb4c93b7377b1df69b9ed980d05ef7c7126b0aa221edcaa61790aafe456743eb",
+      "reason": "Registered SP1Verifier v6.0.0 (eth:0x8a0fd5e825D14368d90Fe68F31fceAe3E17AFc5C) under selector 0xbb1a6f29 in the SP1VerifierGateway (RouteAdded), adding a new verifier to the proof-verification path."
+    },
+    {
+      "timestamp": 1776370439,
+      "type": "state",
+      "contract": "eth:0x3B6041173B80E77f038f3F2C0f9744f04837185e",
+      "updateId": "13fde891",
+      "transaction": "0xc3a2e684bea302a0f8bd11ab21ad8e7feb49e0f4453d4341f4688081e79a927b",
+      "reason": "Registered SP1Verifier v6.1 Plonk (eth:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A) under selector 0x5a093a2f in the SP1VerifierGateway (RouteAdded), adding a new verifier to the proof-verification path."
+    }
+  ]
+}

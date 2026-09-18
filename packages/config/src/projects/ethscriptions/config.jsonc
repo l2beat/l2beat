@@ -15,9 +15,23 @@
     "ethscr:0x3300000000000000000000000000000000000003": "EthscriptionsProver"
   },
   "overrides": {
+    "eth:0xA9Bbcad27E1571AAFAD89F953c81c8A1440A0b8b": {
+      // Rollup: core protocol and proof verification path, owner sets proposer whitelist
+      "critical": true
+    },
+    "eth:0xa236E6E31d94b613923d18313f534CE5b6b98eE1": {
+      // SP1VerifierGateway: immutable VERIFIER of the Rollup (ownership renounced, routes frozen)
+      "critical": true
+    },
+    "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459": {
+      // SP1Verifier v5.0.0: the only active route in the gateway
+      "critical": true
+    },
     "ethscr:0x4200000000000000000000000000000000000018": {
       "proxyType": "immutable",
-      "description": "ProxyAdmin predeploy that manages proxy upgrades for L2 predeploys."
+      "description": "ProxyAdmin predeploy that manages proxy upgrades for L2 predeploys.",
+      // upgrade mechanism of the Ethscriptions, EthscriptionsProver and L2ToL1MessagePasser predeploys
+      "critical": true
     },
     "ethscr:0xDeaDDEaDDeAdDeAdDEAdDEaddeAddEAdDEAd0001": {
       "ignoreDiscovery": true
@@ -39,6 +53,8 @@
     },
     "ethscr:0x3300000000000000000000000000000000000001": {
       "description": "Core Ethscriptions NFT contract that manages ethscription ownership and metadata on L2.",
+      // canonical L2 ownership registry of ethscriptions, the protected asset of the chain (no bridge)
+      "critical": true,
       "ignoreMethods": [
         "exists",
         "tokenIdToEthscriptionId",
@@ -52,10 +68,14 @@
       "ignoreInWatchMode": ["totalSupply"]
     },
     "ethscr:0x3300000000000000000000000000000000000003": {
-      "description": "L2 predeploy that automatically sends ethscription state snapshots to L1 via the L2ToL1MessagePasser whenever an ethscription is created or transferred."
+      "description": "L2 predeploy that automatically sends ethscription state snapshots to L1 via the L2ToL1MessagePasser whenever an ethscription is created or transferred.",
+      // produces the state snapshots that feed the L2ToL1MessagePasser
+      "critical": true
     },
     "ethscr:0x4200000000000000000000000000000000000016": {
       "description": "L2 predeploy for passing messages from L2 to L1. Messages are automatically sent by the EthscriptionsProver when ethscriptions are created or transferred.",
+      // its state is part of the L2 output settled by the Rollup
+      "critical": true,
       "ignoreInWatchMode": ["messageNonce"]
     }
   }

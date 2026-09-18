@@ -296,11 +296,13 @@
       },
       "fieldMeta": {
         "activeVerifiers": {
-          "description": "Verifiers that are routed to by their selector and not frozen."
+          "description": "Verifiers that are routed to by their selector and not frozen.",
+          "severity": "HIGH"
         },
         "allVerifiers": {
           "description": "All verifiers that were ever routed to by this gateway."
-        }
+        },
+        "owner": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x70C7FdB9e543bD15cd392df04e6d4BD05AfD8A66": "SP1VerifierGateway"
@@ -327,6 +329,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Deprecated entry point to deposit ERC20 tokens from host chain to this chain. Currently just holds ETH that the Facet multisig can withdraw.",
+      "critical": true,
       "deployerAddress": "eth:0x23B0caA3782b5CE6Be7A54655A5DD2791335EAFC",
       "sinceTimestamp": 1733855519,
       "sinceBlock": 21373913,
@@ -375,11 +378,13 @@
       },
       "fieldMeta": {
         "activeVerifiers": {
-          "description": "Verifiers that are routed to by their selector and not frozen."
+          "description": "Verifiers that are routed to by their selector and not frozen.",
+          "severity": "HIGH"
         },
         "allVerifiers": {
           "description": "All verifiers that were ever routed to by this gateway."
-        }
+        },
+        "owner": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0xa236E6E31d94b613923d18313f534CE5b6b98eE1": "SP1VerifierGateway"

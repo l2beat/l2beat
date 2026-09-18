@@ -1,0 +1,28 @@
+{
+  "events": [
+    {
+      "timestamp": 1756750079,
+      "type": "state",
+      "contract": "eth:0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
+      "transaction": "0x856ed5c86e3be13f40909ef103ed61137a987e309f38f4c3948cc954e0c3c409",
+      "updateId": "b57bb0df",
+      "reason": "Starkware Multisig 1 executed a matured DelayedExecutor batch on the Starknet core that changed the Starknet OS programHash, the aggregatorProgramHash and the configHash: these hashes decide which state-transition proofs the core accepts from the SHARP verifier."
+    },
+    {
+      "timestamp": 1765378643,
+      "type": "state",
+      "contract": "eth:0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
+      "transaction": "0xe627b588bbc8ec522bf8ac76f0b6b0f4a2f43847fd42c7a5526f74e623c571f4",
+      "updateId": "10e44fc3",
+      "reason": "Starkware Multisig 1 executed a matured DelayedExecutor batch on the Starknet core that changed the Starknet OS programHash and the aggregatorProgramHash: these hashes decide which state-transition proofs the core accepts from the SHARP verifier."
+    },
+    {
+      "timestamp": 1783559567,
+      "type": "state",
+      "contract": "eth:0xc662c410C0ECf747543f5bA90660f6ABeBD9C8c4",
+      "transaction": "0x1cb0539554280c12c187b73ed0f973108b2b5a26949612dac8921aae68cc875c",
+      "updateId": "9d5a75e1",
+      "reason": "Starkware Multisig 1 executed a matured DelayedExecutor batch on the Starknet core that changed the Starknet OS programHash, the aggregatorProgramHash and the configHash (Starknet OS config V4): these hashes decide which state-transition proofs the core accepts from the SHARP verifier."
+    }
+  ]
+}

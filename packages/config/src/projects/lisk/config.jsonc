@@ -9,6 +9,10 @@
     "eth:0xEb99c8c87c5e0C2dCb01E2A1E35AA01f5889F677" // EURC escrow
   ],
   "overrides": {
+    "eth:0x2dF7057d3F25212E51aFEA8dA628668229Ea423f": {
+      // AddressManager of this chain: its owner can repoint the ResolvedDelegateProxy implementations
+      "critical": true
+    },
     "eth:0x0CF7D3706a27CCE2017aEB11E8a9c8b5388c282C": {
       "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"]
     },

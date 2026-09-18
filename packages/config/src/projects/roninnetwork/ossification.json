@@ -1,0 +1,84 @@
+{
+  "events": [
+    {
+      "timestamp": 1779285407,
+      "type": "state",
+      "contract": "eth:0x45dA2CD511DA5FEAa535eBF166E628314a65843a",
+      "transaction": "0xf79de2d13a0457e371f15ce8483129baf8ffc37b95fbe59112e6312d10347bea",
+      "updateId": "3f3ba4f2",
+      "reason": "Rotated the DisputeGameFactory owner from the Conduit Multisig to the joint Ronin/Conduit Safe (OwnershipTransferred)."
+    },
+    {
+      "timestamp": 1779285407,
+      "type": "state",
+      "contract": "eth:0x757077Ddf12B652430DCE8fF3e4c749F5Ca861fC",
+      "transaction": "0xf79de2d13a0457e371f15ce8483129baf8ffc37b95fbe59112e6312d10347bea",
+      "updateId": "3f3ba4f2",
+      "reason": "Rotated the owner of the ProxyAdmin that can upgrade the core Ronin contracts from the Conduit Multisig to the joint Ronin/Conduit Safe (OwnershipTransferred)."
+    },
+    {
+      "timestamp": 1779285407,
+      "type": "state",
+      "contract": "eth:0x502e993a5aFC9fE59b00B07ee500729D71092E34",
+      "transaction": "0xf79de2d13a0457e371f15ce8483129baf8ffc37b95fbe59112e6312d10347bea",
+      "updateId": "3f3ba4f2",
+      "reason": "Rotated the owner of the ProxyAdmin that can upgrade the SuperchainConfig fork holding Ronin's pause authority from the Conduit Multisig to the joint Ronin/Conduit Safe (OwnershipTransferred)."
+    },
+    {
+      "timestamp": 1779285407,
+      "type": "state",
+      "contract": "eth:0xc4f4F908C36C8119f1FBd52CebbDB30C6f2a23C1",
+      "transaction": "0xf79de2d13a0457e371f15ce8483129baf8ffc37b95fbe59112e6312d10347bea",
+      "updateId": "3f3ba4f2",
+      "reason": "Rotated the SystemConfig owner (sequencer and gas configuration authority) from the Conduit Multisig to the joint Ronin/Conduit Safe (OwnershipTransferred)."
+    },
+    {
+      "timestamp": 1780066583,
+      "type": "state",
+      "contract": "eth:0x45dA2CD511DA5FEAa535eBF166E628314a65843a",
+      "transaction": "0x1d1d7aef207d5a85e7477e3c38850782f2c655c1f27eb86b14d237a4fcb3fc66",
+      "updateId": "8d0ae0ed",
+      "reason": "Registered the Kailua KailuaTreasury as the type 1337 dispute game implementation (ImplementationSet); deployed but not yet the respected game type."
+    },
+    {
+      "timestamp": 1782901175,
+      "type": "state",
+      "contract": "eth:0x45dA2CD511DA5FEAa535eBF166E628314a65843a",
+      "transaction": "0x07bf7a192a2ea3b5324ef5cef339715fc6b972b261463e751f39a3f7bb2ae72d",
+      "updateId": "f6059a61",
+      "reason": "Repointed the type 1337 dispute game implementation to the KailuaGame as part of the Kailua cutover (ImplementationSet)."
+    },
+    {
+      "timestamp": 1782901175,
+      "type": "state",
+      "contract": "eth:0x0B95fF1d1B113bac3E29Ac0BBF2089126C9aE81A",
+      "transaction": "0x07bf7a192a2ea3b5324ef5cef339715fc6b972b261463e751f39a3f7bb2ae72d",
+      "updateId": "f6059a61",
+      "reason": "Moved the respected game type from the PermissionedDisputeGame (1) to the Kailua ZK fault-proof game (1337) in the AnchorStateRegistry (RespectedGameTypeSet); withdrawals now clear through RISC Zero-proven dispute games."
+    },
+    {
+      "timestamp": 1782901175,
+      "type": "state",
+      "contract": "eth:0x652CD53eCf9466E5Fb00D0E11d6CBf6469a56D77",
+      "transaction": "0x07bf7a192a2ea3b5324ef5cef339715fc6b972b261463e751f39a3f7bb2ae72d",
+      "updateId": "f6059a61",
+      "reason": "Moved the respected game type from the PermissionedDisputeGame (1) to the Kailua ZK fault-proof game (1337); the OptimismPortal2 reads it from the AnchorStateRegistry set in this tx."
+    },
+    {
+      "timestamp": 1788777107,
+      "type": "state",
+      "contract": "eth:0x0B95fF1d1B113bac3E29Ac0BBF2089126C9aE81A",
+      "transaction": "0x7f1b70133a82bfc754095412ea556b3582bc2be189f1dbe26f1718827cded482",
+      "updateId": "8c7d17d4",
+      "reason": "Moved the respected game type back from the Kailua ZK game (1337) to the PermissionedDisputeGame (1) in the AnchorStateRegistry (RespectedGameTypeSet via the Ronin/Conduit Safe); withdrawals again clear through the permissioned game."
+    },
+    {
+      "timestamp": 1788777107,
+      "type": "state",
+      "contract": "eth:0x652CD53eCf9466E5Fb00D0E11d6CBf6469a56D77",
+      "transaction": "0x7f1b70133a82bfc754095412ea556b3582bc2be189f1dbe26f1718827cded482",
+      "updateId": "8c7d17d4",
+      "reason": "Moved the respected game type back from the Kailua ZK game (1337) to the PermissionedDisputeGame (1); the OptimismPortal2 reads it from the AnchorStateRegistry set in this tx."
+    }
+  ]
+}

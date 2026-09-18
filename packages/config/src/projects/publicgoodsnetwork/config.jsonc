@@ -4,5 +4,11 @@
   "import": ["../globalConfig.jsonc"],
   "archived": true,
   "initialAddresses": ["eth:0xD0204B9527C1bA7bD765Fa5CCD9355d38338272b"],
+  "overrides": {
+    "eth:0x09d5DbA52F0ee2C4A5E94FD5C802bD74Ca9cAD3e": {
+      // AddressManager of this chain: its owner can repoint the ResolvedDelegateProxy implementations
+      "critical": true
+    }
+  },
   "names": { "eth:0x39E13D1AB040F6EA58CE19998edCe01B3C365f84": "PgnMultisig" }
 }

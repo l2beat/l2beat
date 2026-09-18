@@ -15,6 +15,10 @@
     "eth:0xf0AE006C6f810831DA1d2A061288575fB5082144": "Funki"
   },
   "overrides": {
+    "eth:0x5a4ebF927338EA6af377caEee99C85088908f57D": {
+      // AddressManager of this chain: its owner can repoint the ResolvedDelegateProxy implementations
+      "critical": true
+    },
     "eth:0x2Dc9d2Cb1Ba0b8A46AE252ab4FBE1ad5C5c3B795": {
       "ignoreDiscovery": true
     },

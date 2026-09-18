@@ -11,16 +11,18 @@
     "eth:0xd7da1c25e915438720692bc55eb3a7170ca90321", // SC: standardMultisig
     "eth:0x989E348275b659d36f8751ea1c10D146211650BE", // OptimisticTokenVotingPlugin
     // "eth:0x68d30f47F19c07bCCEf4Ac7FAE2Dc12FCa3e0dC9", // TaikoLabs Prover, ignored post shasta
-    "eth:0x6f21C543a4aF5189eBdb0723827577e1EF57ef1f"
-    // "taiko:0x1670000000000000000000000000000000000001", // TODO: uncomment L2 contracts after the hack is resolved and rpc is back
-    // "taiko:0x1670000000000000000000000000000000010001",
-    // "taiko:0x1670000000000000000000000000000000000002"
+    "eth:0x6f21C543a4aF5189eBdb0723827577e1EF57ef1f",
+    "taiko:0x1670000000000000000000000000000000000001",
+    "taiko:0x1670000000000000000000000000000000010001",
+    "taiko:0x1670000000000000000000000000000000000002"
   ],
   "names": {},
   "overrides": {
     "eth:0x06a9Ab27c7e2255df1815E6CC0168d7755Feb19a": {
       // this is the pre-shasta mainnetInbox, ignored post shasta
-      "ignoreDiscovery": true
+      "ignoreDiscovery": true,
+      // ossification: retired TaikoL1 (core inbox / state machine), critical until it was dropped from discovery (diffHistory 613479a6)
+      "critical": { "untilTimestamp": 1775747881 }
     },
     "eth:0x280eAbfd252f017B78e15b69580F249F45FB55Fa": {
       "description": "Implementation contract for DAOFallbackProposer",
@@ -60,6 +62,8 @@
       "ignoreMethods": ["proxiableUUID"]
     },
     "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319": {
+      // RiscZeroVerifierRouter: dispatches RISC0 seals to registered verifiers (shared risc0 template, flagged per-project)
+      "critical": true,
       "fields": {
         "verifier": {
           "handler": {
@@ -76,6 +80,90 @@
     },
     "eth:0x6268d189E011Aa53A2f09A1FE159445BeB3d878E": {
       "category": "spam"
+    },
+    // --- ossification criticality overrides (shared or untemplated contracts) ---
+    "eth:0x75Ba76403b13b26AD1beC70D6eE937314eeaCD0a": {
+      // active TaikoDAOController: owner/admin of the inbox, bridge, vaults, signal service and verifier gateways
+      // (template-level flag would also hit the deprecated controller 0xfC3C..., which holds no permissions)
+      "critical": true
+    },
+    "eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711": {
+      // TimelockController (global template): manages RiscZeroVerifierRouter roles and can add/remove verifiers
+      "critical": true
+    },
+    // active RISC0 verifier fleet registered in the RiscZeroVerifierRouter (shared risc0/taiko groth16 templates, flagged per-project);
+    // permanently estopped entries (0x44c2..., 0x68dC..., 0xDa8f...) and their wrapped verifiers are deliberately not flagged
+    "eth:0x9F9994Eb4Cb5200198FEfb470f8b50301662e696": {
+      // active RiscZeroVerifierEmergencyStop (selector 0x73c457ba)
+      "critical": true
+    },
+    "eth:0x2a098988600d87650Fb061FfAff08B97149Fa84D": {
+      // RiscZeroGroth16Verifier v3.0.0 behind the active estop 0x9F99...
+      "critical": true
+    },
+    "eth:0x1efDd13f831ceeEa14940806705A53D3211CD698": {
+      // active RiscZeroVerifierEmergencyStop (selector 0xbb001d44)
+      "critical": true
+    },
+    "eth:0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9": {
+      // RiscZeroGroth16Verifier v2.2.0 behind the active estop 0x1efD...
+      "critical": true
+    },
+    "eth:0x844D5f01161E3559d36f23d0Aa9E9620949aF782": {
+      // active RiscZeroVerifierEmergencyStop (selector 0x242f9d5b)
+      "critical": true
+    },
+    "eth:0x5005aBa3DFf7C940fcc1e48DccCAD611a80eEB85": {
+      // RiscZeroSetVerifier behind the active estop 0x844D...
+      "critical": true
+    },
+    // --- ossification: retired critical contracts (keep their change history; untilTimestamp = time they left the perimeter) ---
+    // tier-system era (deleted in diffHistory 167b8dff, 2025-05-28)
+    "eth:0x579f40D0BE111b823962043702cabe6Aaa290780": {
+      // L1RollupAddressManager: resolved TaikoL1's trusted tier verifiers (remapping acted as an upgrade)
+      "critical": { "untilTimestamp": 1748432039 }
+    },
+    "eth:0xE3D777143Ea25A6E031d1e921F396750885f43aC": {
+      // GuardianProver: top-tier verifier overriding all other tiers
+      "critical": { "untilTimestamp": 1748432039 }
+    },
+    "eth:0x579A8d63a2Db646284CBFE31FE5082c9989E985c": {
+      // GuardianMinorityProver: tier verifier overriding SGX/ZK proofs
+      "critical": { "untilTimestamp": 1748432039 }
+    },
+    "eth:0xb0f3186FC1963f774f52ff455DC86aEdD0b31F81": {
+      // tier-system SgxVerifier
+      "critical": { "untilTimestamp": 1748432039 }
+    },
+    // Pacaya era (dropped from discovery with the Shasta config change, diffHistory 613479a6, 2026-04-09)
+    "eth:0xbee1040D0Aab17AE19454384904525aE4A3602B9": {
+      // SP1VerifierGateway: entry contract for SP1 batch proofs (trustedPrograms)
+      "critical": { "untilTimestamp": 1775747881 }
+    },
+    "eth:0x73Ee496dA20e5C65340c040B0D8c3C891C1f74AE": {
+      // Risc0VerifierGateway: entry contract for RISC Zero batch proofs (trustedImages)
+      "critical": { "untilTimestamp": 1775747881 }
+    },
+    "eth:0xB16931e78d0cE3c9298bbEEf3b5e2276D34b8da1": {
+      // VerifierGateway (ComposeVerifier): routed each proof type to its verifier
+      "critical": { "untilTimestamp": 1775747881 }
+    },
+    "eth:0x9F9D2fC7abe74C79f86F0D1212107692430eef72": {
+      // TaikoWrapper: sole entry point for batch proposals, enforced forced inclusion
+      "critical": { "untilTimestamp": 1775747881 }
+    },
+    "eth:0x05d88855361808fA1d7fc28084Ef3fCa191c4e03": {
+      // ForcedInclusionStore: mandatory dependency of every batch proposal
+      "critical": { "untilTimestamp": 1775747881 }
+    },
+    "eth:0xD5AA0e20e8A6e9b04F080Cf8797410fafAa9688a": {
+      // PreconfRouter: exclusive proposal route for whitelisted preconf operators
+      "critical": { "untilTimestamp": 1775747881 }
+    },
+    // shared-era resolver (deleted in diffHistory 423dca4a, 2026-06-30)
+    "eth:0xEf9EaA1dd30a9AA1df01c36411b5F082aA65fBaa": {
+      // L1SharedAddressManager: resolved the Bridge's trusted SignalService/vault addresses (remapping acted as an upgrade)
+      "critical": { "untilTimestamp": 1782824701 }
     }
   }
 }

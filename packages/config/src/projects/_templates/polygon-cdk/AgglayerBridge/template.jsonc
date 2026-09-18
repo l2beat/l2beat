@@ -1,6 +1,8 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "The shared bridge contract, escrowing user funds sent to Agglayer chains. It is usually mirrored on each chain and can be used to transfer both ERC20 assets and arbitrary messages.",
+  // the shared escrow custodying canonical assets of all connected Agglayer chains.
+  "critical": true,
   "ignoreMethods": [
     "claimedBitMap",
     "depositCount",
@@ -14,8 +16,11 @@
   ],
   "fields": {
     "isEmergencyState": {
+      // plain pause (no authority-path change on the bridge itself): MEDIUM per the
+      // cohort pause doctrine; the manager-side isEmergencyState stays HIGH because
+      // it also unlocks instant upgrades through the timelock.
       "description": "pauses the bridge, managed by the PolygonRollupManager.",
-      "severity": "HIGH"
+      "severity": "MEDIUM"
     },
     "proxiedTokensManager": {
       "description": "is the default proxy admin of all newly deployed wrapped tokens (tokens bridged from other chains to this chain). this permission is enforced by the proxy bytecode in the wrappedTokenBytecodeStorer.",

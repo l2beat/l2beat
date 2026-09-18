@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xd8b1a7f7c7e535a4fbf80f226a17bcefa1315cc0
+
+# Diff at Fri, 18 Sep 2026 09:34:57 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@d903624f4bbcd7c3db85ae1858dfd3303fa28c5c block: 1784806565
+- current timestamp: 1784806565
+
+## Description
+
+scroll: critical contracts and severities for the ossification perimeter
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1784806565 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (eth:0xDc7009bCAabD4069391C0aa9445D58a759fE1c7d) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
+
 Generated with discovered.json: 0x3be47c549f01631569fbe29e9b811667f57b2133
 
 # Diff at Mon, 07 Sep 2026 08:38:05 GMT:

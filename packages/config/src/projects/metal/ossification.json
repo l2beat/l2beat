@@ -1,0 +1,20 @@
+{
+  "events": [
+    {
+      "timestamp": 1789395323,
+      "type": "state",
+      "contract": "eth:0x7BFfF391A2dbbDc68A259792AC9748F50FcDE93E",
+      "transaction": "0xa5888be651d314fc0de435d6bef7f2c934c2c9f0328cb6af7b86210d966ac551",
+      "updateId": "6cb33a1c",
+      "reason": "DisputeGameFactory: owner changed (owner; 0x0000000000000000000000005a0aae59d09fccbddb6c6cceb07b7279367c3d2a 0x000000000000000000000)."
+    },
+    {
+      "timestamp": 1789407803,
+      "type": "state",
+      "contract": "eth:0x7BFfF391A2dbbDc68A259792AC9748F50FcDE93E",
+      "transaction": "0x828a400a0e3fbbb002bcea09bab6bcceed7b4996bd56cd6bde234256de417661",
+      "updateId": "6cb33a1c",
+      "reason": "DisputeGameFactory: dispute game implementation set (permissionedGameArgs; 0x000000000000000000000000e1dffcbe4e22b813f26d2106d943c102e7cab87e 0x000000000000000000000)."
+    }
+  ]
+}
