@@ -62,7 +62,7 @@ export class ProjectDiscovery {
   private readonly contracts: EntryParameters[]
   private readonly eoas: EntryParameters[]
   private readonly entryByAddress: Map<ChainSpecificAddress, EntryParameters>
-  private readonly entriesByName: Record<string, EntryParameters[]>
+  private readonly entriesByName: Map<string, EntryParameters[]>
   private readonly safeNamesByMember: Record<string, (string | undefined)[]>
   private readonly reachableEntries: EntryParameters[]
   private readonly reachableAddresses: Set<ChainSpecificAddress>
@@ -102,7 +102,7 @@ export class ProjectDiscovery {
     this.contracts = this.entries.filter((e) => e.type === 'Contract')
     this.eoas = this.entries.filter((e) => e.type === 'EOA')
     this.entryByAddress = indexByAddress(this.entries)
-    this.entriesByName = groupBy(this.entries, (entry) => entry.name)
+    this.entriesByName = indexByName(this.entries)
     this.safeNamesByMember = indexSafeNamesByMember(this.entries)
 
     // A reference points at one specific deployment inside a shared module, it
@@ -720,7 +720,7 @@ export class ProjectDiscovery {
     name: string,
     type: EntryParameters['type'],
   ): EntryParameters[] {
-    const named = this.entriesByName[name] ?? []
+    const named = this.entriesByName.get(name) ?? []
     return named.filter((entry) => entry.type === type)
   }
 
@@ -1115,6 +1115,24 @@ function indexByAddress(
       existing.type === entry.type,
       `Address ${entry.address} is both a ${existing.type} and a ${entry.type}`,
     )
+  }
+  return index
+}
+
+function indexByName(
+  entries: EntryParameters[],
+): Map<string, EntryParameters[]> {
+  const index = new Map<string, EntryParameters[]>()
+  for (const entry of entries) {
+    if (entry.name === undefined) {
+      continue
+    }
+    const named = index.get(entry.name)
+    if (named === undefined) {
+      index.set(entry.name, [entry])
+    } else {
+      named.push(entry)
+    }
   }
   return index
 }
