@@ -185,6 +185,18 @@ export async function getPrivacyProjectEntry(
     })
   }
 
+  if (details.hasAnonymitySet) {
+    sections.push({
+      type: 'PrivacyAnonymitySetSection',
+      props: {
+        id: 'privacy-anonymity-set',
+        title: 'Anonymity sets',
+        defaultRange: defaultChartRange,
+        project: chartProject,
+      },
+    })
+  }
+
   if (hasTrackedAssets) {
     sections.push({
       type: 'PrivacyFlowsSection',

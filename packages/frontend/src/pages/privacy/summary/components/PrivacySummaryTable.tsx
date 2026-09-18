@@ -24,10 +24,12 @@ import {
 } from '~/components/table/sorting/sortTableValues'
 import { TableLink } from '~/components/table/TableLink'
 import { useTable } from '~/hooks/useTable'
+import { ANONYMITY_SET_WINDOW_DAYS } from '~/server/features/privacy/anonymity-set/calculateAnonymitySets'
 import type { PrivacySummaryEntry } from '~/server/features/privacy/getPrivacySummaryEntries'
 import { PrivacyAdversaryDots } from '../../adversaries/PrivacyAdversaryDots'
 import { getPrivacyAdversariesTableValue } from '../../adversaries/privacyAdversaryUi'
 import { PRIVACY_ASSESSMENT } from '../../privacyAssessment'
+import { AnonymitySetCell } from './AnonymitySetCell'
 import { DotWithLabel } from './DotWithLabel'
 import { PrivacyAssessmentCell } from './PrivacyAssessmentCell'
 import { PrivacyTrustedSetupCell } from './PrivacyTrustedSetupCell'
@@ -158,6 +160,27 @@ const columns = [
         'Total USD value of all deposits over the last 30 days, based on configured token prices.',
     },
   }),
+  columnHelper.accessor(
+    (entry) =>
+      entry.anonymitySet.status === 'available'
+        ? entry.anonymitySet.value
+        : undefined,
+    {
+      id: 'anonymitySet',
+      header: `${ANONYMITY_SET_WINDOW_DAYS}D anon. set`,
+      cell: (ctx) => (
+        <AnonymitySetCell
+          anonymitySet={ctx.row.original.anonymitySet}
+          projectName={ctx.row.original.name}
+        />
+      ),
+      sortUndefined: 'last',
+      meta: {
+        align: 'right',
+        tooltip: `Largest configured anonymity set: unique deposit senders during the last ${ANONYMITY_SET_WINDOW_DAYS} complete UTC days.`,
+      },
+    },
+  ),
   columnHelper.accessor(
     (entry) => getPrivacyAdversariesTableValue(entry.adversaries),
     {

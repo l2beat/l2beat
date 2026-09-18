@@ -11,6 +11,7 @@ const calloutVariants = cva('flex items-start rounded-lg', {
       yellow: 'bg-yellow-700/20',
       blue: 'bg-blue-700/20',
       gray: 'bg-gray-500/20',
+      purple: 'bg-purple-500/20',
     },
     small: {
       true: 'gap-2 rounded text-sm',
