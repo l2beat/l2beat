@@ -77,6 +77,7 @@ export type {
 } from './repositories/InteropRecentPricesRepository'
 export {
   hasAnyInteropTransferFinancialsFilter,
+  INTEROP_TRANSFER_RETENTION,
   type InteropSuspiciousTransferRecord,
   type InteropTokenRouteRecord,
   type InteropTransferDeployedTokenPairStats,

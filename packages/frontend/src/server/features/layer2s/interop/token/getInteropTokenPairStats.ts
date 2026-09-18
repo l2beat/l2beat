@@ -1,24 +1,22 @@
 import type { Project } from '@l2beat/config'
-import type { InteropTransferDeployedTokenPairStats } from '@l2beat/database'
 import {
-  Address32,
   INTEROP_TRANSFER_RETENTION,
-  UnixTime,
-} from '@l2beat/shared-pure'
+  type InteropTransferDeployedTokenPairStats,
+} from '@l2beat/database'
+import { Address32, UnixTime } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
 import { getInteropChains } from '../utils/getInteropChains'
 
-/** Past 24h transfer stats per deployment pair, or undefined without a snapshot. */
+/** Past 24h transfer stats per deployment pair, or undefined once the raw transfers are gone. */
 export async function getInteropTokenPairStats(
   tokenId: string,
-  snapshotTimestamp: UnixTime | undefined,
+  snapshotTimestamp: UnixTime,
   projects: Project<'interopConfig'>[],
 ): Promise<InteropTransferDeployedTokenPairStats[] | undefined> {
   if (env.MOCK) {
     return MOCK_INTEROP_TOKEN_PAIR_STATS
   }
-  if (!snapshotTimestamp) return undefined
   const from = snapshotTimestamp - UnixTime.DAY
   // Aggregates outlive raw transfers, so an aggregates timestamp override can
   // point at a day the cleaner has already emptied.

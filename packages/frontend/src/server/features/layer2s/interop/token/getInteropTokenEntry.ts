@@ -11,7 +11,6 @@ export function getInteropTokenEntry(
   tokenId: string,
   interopChains: InteropChainWithIcon[],
   deploymentsCount: number,
-  /** Undefined when the token has no deployments. */
   relationsGraph: InteropTokenRelationsGraph | undefined,
 ): InteropTokenEntry {
   const sections: ProjectDetailsSection[] = [

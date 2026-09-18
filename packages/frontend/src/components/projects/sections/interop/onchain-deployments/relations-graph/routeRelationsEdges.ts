@@ -31,17 +31,20 @@ export function routeRelationsEdges(
 
   const result = new Map<string, EdgePath>()
   for (const edge of edges) {
-    const from = layout.boxes.get(edge.from)
-    const to = layout.boxes.get(edge.to)
-    if (!from || !to) continue
+    const backer = layout.boxes.get(edge.backer)
+    const backed = layout.boxes.get(edge.backed)
+    if (!backer || !backed) continue
 
-    const startX = from.x + from.width / 2
-    const startY = from.y + from.height
-    const endX = to.x + to.width * (ports.get(edgeKey(edge)) ?? 0.5)
-    const endY = to.y
+    const startX = backer.x + backer.width / 2
+    const startY = backer.y + backer.height
+    const endX = backed.x + backed.width * (ports.get(edgeKey(edge)) ?? 0.5)
+    const endY = backed.y
     const busY = endY - BUS_OFFSET
 
-    if (layout.rowOf.get(edge.to) === (layout.rowOf.get(edge.from) ?? 0) + 1) {
+    if (
+      layout.rowOf.get(edge.backed) ===
+      (layout.rowOf.get(edge.backer) ?? 0) + 1
+    ) {
       result.set(edgeKey(edge), {
         path: `M ${startX} ${startY} V ${busY} H ${endX} V ${endY}`,
         midX: endX,
@@ -50,7 +53,7 @@ export function routeRelationsEdges(
       continue
     }
 
-    const lane = lanes.get(edge.from) ?? { side: 'left', index: 0 }
+    const lane = lanes.get(edge.backer) ?? { side: 'left', index: 0 }
     const laneX =
       lane.side === 'left'
         ? LANE_MARGIN + lane.index * LANE_STEP
@@ -72,14 +75,14 @@ function getTargetPorts(
 ): Map<string, number> {
   const incoming = new Map<string, LayoutEdge[]>()
   for (const edge of edges) {
-    incoming.set(edge.to, [...(incoming.get(edge.to) ?? []), edge])
+    incoming.set(edge.backed, [...(incoming.get(edge.backed) ?? []), edge])
   }
   const result = new Map<string, number>()
   for (const group of incoming.values()) {
     const ordered = group.toSorted(
       (a, b) =>
-        (boxes.get(a.from)?.x ?? 0) - (boxes.get(b.from)?.x ?? 0) ||
-        a.from.localeCompare(b.from),
+        (boxes.get(a.backer)?.x ?? 0) - (boxes.get(b.backer)?.x ?? 0) ||
+        a.backer.localeCompare(b.backer),
     )
     ordered.forEach((edge, index) =>
       result.set(edgeKey(edge), (index + 1) / (ordered.length + 1)),
@@ -95,7 +98,7 @@ function getSourceLanes(
 ): Map<string, { side: 'left' | 'right'; index: number }> {
   const count = { left: 0, right: 0 }
   return new Map(
-    [...new Set(edges.map((edge) => edge.from))].toSorted().map((id) => {
+    [...new Set(edges.map((edge) => edge.backer))].toSorted().map((id) => {
       const box = boxes.get(id)
       const centerX = box ? box.x + box.width / 2 : 0
       const side = centerX <= worldWidth / 2 ? 'left' : 'right'

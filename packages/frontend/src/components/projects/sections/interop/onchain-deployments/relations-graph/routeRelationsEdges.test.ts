@@ -5,8 +5,8 @@ import { routeRelationsEdges } from './routeRelationsEdges'
 describe(routeRelationsEdges.name, () => {
   it('spreads incoming edges over the target top and joins them on a bus', () => {
     const edges = [
-      { from: 'S1', to: 'T' },
-      { from: 'S2', to: 'T' },
+      { backer: 'S1', backed: 'T' },
+      { backer: 'S2', backed: 'T' },
     ]
     const layout = layoutRelationsGraph(
       [node('S1', 2), node('S2', 1), node('T', 1)],
@@ -21,9 +21,9 @@ describe(routeRelationsEdges.name, () => {
 
   it('routes an edge that skips a row through a side lane', () => {
     const edges = [
-      { from: 'S', to: 'M' },
-      { from: 'M', to: 'T' },
-      { from: 'S', to: 'T' },
+      { backer: 'S', backed: 'M' },
+      { backer: 'M', backed: 'T' },
+      { backer: 'S', backed: 'T' },
     ]
     const layout = layoutRelationsGraph(
       [node('S', 3), node('M', 2), node('T', 1)],

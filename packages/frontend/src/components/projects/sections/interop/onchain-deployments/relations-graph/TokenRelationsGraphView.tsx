@@ -14,7 +14,10 @@ import {
   DrawerTitle,
 } from '~/components/core/Drawer'
 import { useBreakpoint } from '~/hooks/useBreakpoint'
-import type { InteropTokenRelationsGraph } from '~/server/features/layer2s/interop/token/getInteropTokenRelationsGraph'
+import type {
+  InteropTokenRelationsGraph,
+  InteropTokenRelationsNode,
+} from '~/server/features/layer2s/interop/token/getInteropTokenRelationsGraph'
 import { cn } from '~/utils/cn'
 import { getUnconnectedIds } from './graphSelectors'
 import { RelationsDetails } from './RelationsDetails'
@@ -50,35 +53,16 @@ export function TokenRelationsGraphView({
     setSelectedNodeId(id)
   }
 
-  const details = selectedNode && (
-    <RelationsDetails
-      graph={graph}
-      node={selectedNode}
-      onSelectNode={selectNode}
-      onClose={() => setSelectedNodeId(undefined)}
-    />
-  )
-  const diagram = (
-    className: string,
-    onExpand?: () => void,
-    wrapperClassName?: string,
-  ) => (
-    <div className={cn('relative', wrapperClassName)}>
-      <RelationsDiagram
-        graph={visibleGraph}
-        unconnectedIds={unconnectedIds}
-        selectedNodeId={selectedNodeId}
-        onSelectNode={selectNode}
-        onExpand={onExpand}
-        className={className}
-      />
-      {!isMobile && details && (
-        <aside className="absolute top-3 right-3 bottom-3 w-[min(88%,340px)]">
-          {details}
-        </aside>
-      )}
-    </div>
-  )
+  const closeDetails = () => setSelectedNodeId(undefined)
+  const paneProps = {
+    graph,
+    visibleGraph,
+    unconnectedIds,
+    selectedNodeId,
+    detailsNode: isMobile ? undefined : selectedNode,
+    onSelectNode: selectNode,
+    onCloseDetails: closeDetails,
+  }
 
   return (
     <div>
@@ -95,26 +79,34 @@ export function TokenRelationsGraphView({
         )}
       </div>
 
-      {!isExpanded &&
-        diagram(
-          'h-[380px] md:h-[520px]',
-          isMobile ? undefined : () => setIsExpanded(true),
-        )}
+      {!isExpanded && (
+        <DiagramPane
+          {...paneProps}
+          className="h-[380px] md:h-[520px]"
+          onExpand={isMobile ? undefined : () => setIsExpanded(true)}
+        />
+      )}
 
       {isMobile && (
         <Drawer
           open={selectedNode !== undefined}
-          onOpenChange={(open) => !open && setSelectedNodeId(undefined)}
+          onOpenChange={(open) => !open && closeDetails()}
         >
           <DrawerContent
             className="max-h-[85vh]"
-            contentClassName="overflow-y-auto"
+            contentClassName="overflow-y-auto px-0"
           >
             <DrawerTitle className="sr-only">Deployment details</DrawerTitle>
             <DrawerDescription className="sr-only">
               Activity and backing relations of the selected deployment.
             </DrawerDescription>
-            {details}
+            {selectedNode && (
+              <RelationsDetails
+                graph={graph}
+                node={selectedNode}
+                onSelectNode={selectNode}
+              />
+            )}
           </DrawerContent>
         </Drawer>
       )}
@@ -127,9 +119,61 @@ export function TokenRelationsGraphView({
             others.
           </DialogDescription>
           <DialogClose />
-          {diagram('h-full', undefined, 'min-h-0 flex-1')}
+          <DiagramPane
+            {...paneProps}
+            className="h-full"
+            wrapperClassName="min-h-0 flex-1"
+          />
         </DialogContent>
       </Dialog>
+    </div>
+  )
+}
+
+function DiagramPane({
+  graph,
+  visibleGraph,
+  unconnectedIds,
+  selectedNodeId,
+  detailsNode,
+  onSelectNode,
+  onCloseDetails,
+  onExpand,
+  className,
+  wrapperClassName,
+}: {
+  graph: InteropTokenRelationsGraph
+  visibleGraph: InteropTokenRelationsGraph
+  unconnectedIds: ReadonlySet<string>
+  selectedNodeId: string | undefined
+  detailsNode: InteropTokenRelationsNode | undefined
+  onSelectNode: (id: string | undefined) => void
+  onCloseDetails: () => void
+  onExpand?: () => void
+  className: string
+  wrapperClassName?: string
+}) {
+  return (
+    <div className={cn('relative', wrapperClassName)}>
+      <RelationsDiagram
+        graph={visibleGraph}
+        unconnectedIds={unconnectedIds}
+        selectedNodeId={selectedNodeId}
+        onSelectNode={onSelectNode}
+        onExpand={onExpand}
+        className={className}
+      />
+      {detailsNode && (
+        <aside className="absolute top-3 right-3 bottom-3 w-[min(88%,340px)]">
+          <RelationsDetails
+            graph={graph}
+            node={detailsNode}
+            onSelectNode={onSelectNode}
+            onClose={onCloseDetails}
+            className="overflow-y-auto rounded-lg border border-divider shadow-xl"
+          />
+        </aside>
+      )}
     </div>
   )
 }

@@ -3,6 +3,7 @@ import {
   type TokenRelationRoute,
 } from '@l2beat/database'
 import { expect } from 'earl'
+import type { Endpoint } from '../utils/deploymentKey'
 import { buildTokenRelationsGraph } from './buildTokenRelationsGraph'
 
 const ethereum = { chain: 'ethereum', address: '0xE1' }
@@ -62,8 +63,8 @@ describe(buildTokenRelationsGraph.name, () => {
 
     expect(graph.edges).toEqual([
       {
-        from: 'arbitrum|0xa1',
-        to: 'base|0xb1',
+        backer: 'arbitrum|0xa1',
+        backed: 'base|0xb1',
         sources: [
           {
             plugin: 'opstack',
@@ -122,8 +123,8 @@ describe(buildTokenRelationsGraph.name, () => {
 
     expect(graph.edges).toEqual([
       {
-        from: 'ethereum|0xe1',
-        to: 'arbitrum|0xa1',
+        backer: 'ethereum|0xe1',
+        backed: 'arbitrum|0xa1',
         sources: [
           {
             plugin: 'manual',
@@ -149,11 +150,11 @@ describe(buildTokenRelationsGraph.name, () => {
 })
 
 function route(
-  a: { chain: string; address: string },
-  b: { chain: string; address: string },
+  a: Endpoint,
+  b: Endpoint,
   plugin: string,
   bridgeType: TokenRelationRoute['bridgeType'],
-  locked?: { chain: string; address: string },
+  locked?: Endpoint,
 ): TokenRelationRoute {
   return normalizeTokenRelation({
     tokenAChain: a.chain,

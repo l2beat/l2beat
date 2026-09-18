@@ -25,10 +25,9 @@ export type DeploymentRow = InteropTokenDeploymentView & BasicTableRow
 const columnHelper = createColumnHelper<DeploymentRow>()
 export const interopTokenOnchainDeploymentsColumns = [
   columnHelper.accessor((_, index) => index + 1, {
-    id: 'index',
     header: '#',
     cell: (ctx) => <IndexCell>{ctx.row.index + 1}</IndexCell>,
-    enableSorting: false,
+    sortDescFirst: false,
     meta: {
       headClassName: 'w-0',
     },
@@ -40,7 +39,7 @@ export const interopTokenOnchainDeploymentsColumns = [
     cell: (ctx) => {
       const chain = ctx.row.original.chain
       return (
-        <div className="flex items-center gap-2 whitespace-nowrap font-bold">
+        <div className="flex w-max items-center gap-2 whitespace-nowrap font-bold">
           {chain.iconUrl && (
             <img
               className="size-5 rounded-full bg-white shadow"
@@ -65,7 +64,7 @@ export const interopTokenOnchainDeploymentsColumns = [
         return <span className="font-medium text-label-value-15">{label}</span>
       }
       return (
-        <div className="flex items-center gap-1">
+        <div className="flex w-max items-center gap-1">
           <CustomLink href={explorerUrl} className="text-label-value-15">
             {label}
           </CustomLink>

@@ -16,9 +16,8 @@ export interface TokenRelationsGraphNode<T> {
 }
 
 export interface TokenRelationsGraphEdge {
-  /** `from` backs `to`. */
-  from: string
-  to: string
+  backer: string
+  backed: string
   sources: TokenRelationsGraphSource[]
 }
 
@@ -64,19 +63,23 @@ export function buildTokenRelationsGraph<T extends Endpoint>(
       continue
     }
     if (route.lockedToken === null) continue
-    const from = groupOf.get(endpointKey(route, route.lockedToken)) as string
-    const to = groupOf.get(
+    const backer = groupOf.get(endpointKey(route, route.lockedToken)) as string
+    const backed = groupOf.get(
       endpointKey(route, route.lockedToken === 'A' ? 'B' : 'A'),
     ) as string
-    if (from === to) continue
-    const edge = edges.get(edgeId(from, to)) ?? { from, to, sources: [] }
+    if (backer === backed) continue
+    const edge = edges.get(edgeId(backer, backed)) ?? {
+      backer,
+      backed,
+      sources: [],
+    }
     addSource(edge.sources, route)
-    edges.set(edgeId(from, to), edge)
+    edges.set(edgeId(backer, backed), edge)
   }
   for (const edge of [...edges.values()]) {
-    if (edges.has(edgeId(edge.to, edge.from))) {
-      edges.delete(edgeId(edge.from, edge.to))
-      edges.delete(edgeId(edge.to, edge.from))
+    if (edges.has(edgeId(edge.backed, edge.backer))) {
+      edges.delete(edgeId(edge.backer, edge.backed))
+      edges.delete(edgeId(edge.backed, edge.backer))
     }
   }
 
@@ -90,13 +93,14 @@ export function buildTokenRelationsGraph<T extends Endpoint>(
       }))
       .toSorted((a, b) => a.id.localeCompare(b.id)),
     edges: [...edges.values()].toSorted(
-      (a, b) => a.from.localeCompare(b.from) || a.to.localeCompare(b.to),
+      (a, b) =>
+        a.backer.localeCompare(b.backer) || a.backed.localeCompare(b.backed),
     ),
   }
 }
 
-function edgeId(from: string, to: string): string {
-  return `${from}->${to}`
+function edgeId(backer: string, backed: string): string {
+  return `${backer}->${backed}`
 }
 
 function endpointKey(route: TokenRelationRoute, slot: 'A' | 'B'): string {
