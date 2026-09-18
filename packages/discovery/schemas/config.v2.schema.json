@@ -731,6 +731,7 @@
             "propertyNames": { "type": "string" },
             "additionalProperties": { "type": "string" }
           },
+          "preferManualSourcePaths": { "type": "boolean" },
           "types": {
             "type": "object",
             "propertyNames": { "type": "string" },
