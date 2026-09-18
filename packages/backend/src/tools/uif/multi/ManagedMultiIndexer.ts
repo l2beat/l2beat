@@ -20,6 +20,7 @@ export abstract class ManagedMultiIndexer<T> extends ChildIndexer {
   private ranges: ConfigurationRange<T>[] = []
   private readonly indexerId: string
   private serializeConfiguration: (value: T) => string
+  private readonly quarantinedConfigurations = new Set<string>()
 
   constructor(
     readonly options: ManagedMultiIndexerOptions<T>,
@@ -150,10 +151,65 @@ export abstract class ManagedMultiIndexer<T> extends ChildIndexer {
         'Returned height must be between from and to (both inclusive).',
       )
 
-      await this.updateConfigurationsCurrentHeight(safeHeight)
+      const quarantined = configurations.filter((c) =>
+        this.quarantinedConfigurations.has(c.id),
+      )
+
+      if (quarantined.length === 0) {
+        await this.updateConfigurationsCurrentHeight(safeHeight)
+      } else {
+        this.logger.warn(
+          'Not advancing current height of quarantined configurations',
+          {
+            quarantined: quarantined.length,
+            safeHeight,
+          },
+        )
+        await this.options.indexerService.updateConfigurationsCurrentHeightByIds(
+          this.indexerId,
+          configurations
+            .filter((c) => !this.quarantinedConfigurations.has(c.id))
+            .map((c) => c.id),
+          safeHeight,
+        )
+      }
 
       return safeHeight
     })
+  }
+
+  /**
+   * Quarantines a configuration for the remainder of this process's lifetime.
+   *
+   * A quarantined configuration is excluded from current height advancement,
+   * so its currentHeight stays at the last successfully synced height while
+   * other configurations and the indexer itself keep advancing. This way a
+   * problem with a single configuration does not block the whole indexer and
+   * no data is permanently lost.
+   *
+   * After a restart the indexer resumes from the lowest configuration height
+   * (see mergeConfigurations) and backfills only the configurations that were
+   * left behind (see toRanges), so a quarantined configuration heals
+   * automatically once the underlying problem is resolved.
+   *
+   * Implementations should skip fetching data for quarantined configurations
+   * (see isConfigurationQuarantined) to avoid pointless requests until the
+   * next restart.
+   */
+  protected quarantineConfiguration(configurationId: string) {
+    this.quarantinedConfigurations.add(configurationId)
+    this.logger.warn('Configuration quarantined until restart', {
+      configurationId,
+      quarantined: this.quarantinedConfigurations.size,
+    })
+  }
+
+  protected isConfigurationQuarantined(configurationId: string): boolean {
+    return this.quarantinedConfigurations.has(configurationId)
+  }
+
+  protected quarantinedConfigurationsCount(): number {
+    return this.quarantinedConfigurations.size
   }
 
   findRange(from: number): ConfigurationRange<T> {
