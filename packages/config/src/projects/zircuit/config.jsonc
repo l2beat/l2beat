@@ -23,12 +23,14 @@
       // spec (deployer 0x4210..0006, nonce 0). On Zircuit that nonce was spent
       // in 2025 on an L2ToL1MessagePasser, so the Jovian code was set there with
       // no creation transaction. Sourcify (the only explorer for this chain)
-      // still serves the old L2ToL1MessagePasser match and cannot supersede it.
-      // Manually verified instead: the deployed runtime code hashes to
+      // still serves the old L2ToL1MessagePasser match, and a new verification
+      // is not expected to replace it, as there is no creation code to match.
+      // The path below is a manual label, NOT an integrity check: discovery
+      // neither fetches it nor compares it with the bytecode. It was checked
+      // by hand: the deployed runtime code hashes to
       // 0x5f885ca815d2cf27a203123e50b8ae204fdca910b6995d90b2d7700cbb9240d1, the
       // L1Block code hash given by the Jovian spec, which builds it from the
-      // commit linked below
-      // (https://specs.optimism.io/protocol/jovian/derivation.html).
+      // linked commit (https://specs.optimism.io/protocol/jovian/derivation.html).
       // The manual source carries no ABI, so the getters are declared here.
       // Drop this override once the implementation changes.
       "preferManualSourcePaths": true,
