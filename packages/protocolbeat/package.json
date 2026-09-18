@@ -15,7 +15,8 @@
     "lint": "biome check --formatter-enabled=false .",
     "typecheck": "tsc --noEmit",
     "test": "mocha",
-    "test:watch": "mocha --watch"
+    "test:watch": "mocha --watch",
+    "test:e2e": "pnpm build && playwright test"
   },
   "dependencies": {
     "@l2beat/shared-pure": "workspace:*",
@@ -53,6 +54,7 @@
     "@types/ansi-html": "^0.0.0",
     "@vitejs/plugin-react-swc": "^3.7.1",
     "autoprefixer": "^10.4.20",
+    "playwright": "^1.60.0",
     "postcss": "^8.4.47",
     "tailwindcss": "^3.4.14",
     "vite": "^5.4.10"
