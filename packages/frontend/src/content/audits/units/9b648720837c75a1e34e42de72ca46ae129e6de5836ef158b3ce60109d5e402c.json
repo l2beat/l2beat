@@ -1,1 +1,15 @@
-{"schemaVersion":2,"unitHash":"9b648720837c75a1e34e42de72ca46ae129e6de5836ef158b3ce60109d5e402c","name":"error.rs","kind":"program","lines":15,"source":"//! Error type when building the discovery service.\n\nuse derive_more::From;\nuse thiserror::Error;\n\n/// An error that can occur when building the discovery service.\n#[derive(Debug, Clone, PartialEq, From, Eq, Error)]\npub enum Discv5BuilderError {\n    /// Could not create the discovery service.\n    #[error(\"could not create discovery service: {0}\")]\n    Discv5CreationFailed(String),\n    /// Failed to build the ENR.\n    #[error(\"failed to build ENR\")]\n    EnrBuildFailed,\n}","resolutions":{"9fa846564f4071bd":{"status":"unaudited","coveredLines":0,"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "9b648720837c75a1e34e42de72ca46ae129e6de5836ef158b3ce60109d5e402c",
+  "name": "error.rs",
+  "kind": "program",
+  "lines": 15,
+  "source": "//! Error type when building the discovery service.\n\nuse derive_more::From;\nuse thiserror::Error;\n\n/// An error that can occur when building the discovery service.\n#[derive(Debug, Clone, PartialEq, From, Eq, Error)]\npub enum Discv5BuilderError {\n    /// Could not create the discovery service.\n    #[error(\"could not create discovery service: {0}\")]\n    Discv5CreationFailed(String),\n    /// Failed to build the ENR.\n    #[error(\"failed to build ENR\")]\n    EnrBuildFailed,\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

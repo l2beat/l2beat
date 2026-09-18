@@ -1,1 +1,15 @@
-{"schemaVersion":2,"unitHash":"94c75682f43da576df91ba9b23d74cade68ee238bbaf6ed0edce80caee3c112d","name":"mod.rs","kind":"program","lines":4,"source":"//! Integration tests for the node actors.\n\npub(crate) mod generator;\nmod network;","resolutions":{"9fa846564f4071bd":{"status":"unaudited","coveredLines":0,"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "94c75682f43da576df91ba9b23d74cade68ee238bbaf6ed0edce80caee3c112d",
+  "name": "mod.rs",
+  "kind": "program",
+  "lines": 4,
+  "source": "//! Integration tests for the node actors.\n\npub(crate) mod generator;\nmod network;",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

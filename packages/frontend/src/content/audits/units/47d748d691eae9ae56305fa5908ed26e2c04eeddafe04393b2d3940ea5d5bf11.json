@@ -1,1 +1,15 @@
-{"schemaVersion":2,"unitHash":"47d748d691eae9ae56305fa5908ed26e2c04eeddafe04393b2d3940ea5d5bf11","name":"error.rs","kind":"program","lines":21,"source":"//! Error type for the [`EngineActor`].\n//!\n//! [`EngineActor`]: super::EngineActor\n\nuse kona_engine::{EngineResetError, EngineTaskErrors};\n\n/// An error from the [`EngineActor`].\n///\n/// [`EngineActor`]: super::EngineActor\n#[derive(thiserror::Error, Debug)]\npub enum EngineError {\n    /// Closed channel error.\n    #[error(\"a channel has been closed unexpectedly\")]\n    ChannelClosed,\n    /// Engine reset error.\n    #[error(transparent)]\n    EngineReset(#[from] EngineResetError),\n    /// Engine task error.\n    #[error(transparent)]\n    EngineTask(#[from] EngineTaskErrors),\n}","resolutions":{"9fa846564f4071bd":{"status":"unaudited","coveredLines":0,"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "47d748d691eae9ae56305fa5908ed26e2c04eeddafe04393b2d3940ea5d5bf11",
+  "name": "error.rs",
+  "kind": "program",
+  "lines": 21,
+  "source": "//! Error type for the [`EngineActor`].\n//!\n//! [`EngineActor`]: super::EngineActor\n\nuse kona_engine::{EngineResetError, EngineTaskErrors};\n\n/// An error from the [`EngineActor`].\n///\n/// [`EngineActor`]: super::EngineActor\n#[derive(thiserror::Error, Debug)]\npub enum EngineError {\n    /// Closed channel error.\n    #[error(\"a channel has been closed unexpectedly\")]\n    ChannelClosed,\n    /// Engine reset error.\n    #[error(transparent)]\n    EngineReset(#[from] EngineResetError),\n    /// Engine task error.\n    #[error(transparent)]\n    EngineTask(#[from] EngineTaskErrors),\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

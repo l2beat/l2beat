@@ -1,1 +1,37 @@
-{"schemaVersion":2,"unitHash":"2c188d2d3600069651ffde78bd365d49d5184a182ce3bae3cdea2969b1967d77","name":"mod.rs","kind":"program","lines":51,"source":"//! Test Utilities for `kona-derive`.\n\nmod pipeline;\npub use pipeline::{\n    TestAttributesQueue, TestBatchProvider, TestBatchStream, TestChannelProvider,\n    TestChannelReader, TestFrameQueue, TestL1Retrieval, TestNextAttributes, TestPipeline,\n    TestPollingTraversal, new_test_pipeline,\n};\n\nmod traversal;\npub use traversal::TraversalTestHelper;\n\nmod blob_provider;\npub use blob_provider::TestBlobProvider;\n\nmod chain_providers;\npub use chain_providers::{TestChainProvider, TestL2ChainProvider, TestProviderError};\n\nmod data_availability_provider;\npub use data_availability_provider::TestDAP;\n\nmod batch_provider;\npub use batch_provider::TestNextBatchProvider;\n\nmod attributes_queue;\npub use attributes_queue::{\n    TestAttributesBuilder, TestAttributesProvider, new_test_attributes_provider,\n};\n\nmod batch_stream;\npub use batch_stream::TestBatchStreamProvider;\n\nmod channel_provider;\npub use channel_provider::TestNextFrameProvider;\n\nmod channel_reader;\npub use channel_reader::TestChannelReaderProvider;\n\nmod frame_queue;\npub use frame_queue::TestFrameQueueProvider;\n\nmod tracing;\npub use tracing::{CollectingLayer, TraceStorage};\n\nmod sys_config_fetcher;\npub use sys_config_fetcher::{TestSystemConfigL2Fetcher, TestSystemConfigL2FetcherError};\n\nmod frames;\npub use frames::{FrameQueueAsserter, FrameQueueBuilder};\n\nmod macros;","resolutions":{"9fa846564f4071bd":{"status":"identical","coveredLines":51,"match":{"origin":"own","collection":"optimism","relation":{"type":"own"},"rank":0,"matchedBy":"identity","auditedName":"mod.rs","similarity":1,"reportId":"optimism/cantina-kona-2026-03","repository":"op-rs/kona","path":"crates/protocol/derive/src/test_utils/mod.rs","commit":"86910c9112437bbb849eca28961f813c5450e103","commitTimestamp":"2025-12-15T17:17:05Z","url":"https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/crates/protocol/derive/src/test_utils/mod.rs","auditStatus":"audited_with_no_major_findings","reviewPhase":"initial audit","coverage":"Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). kona-derive derivation pipeline (stages, sources, traversal, attributes). Medium findings 3.3.1 and 3.3.2 (pipeline/core.rs, stages/l1_retrieval.rs) and numerous Low/Informational findings located here; no Critical/High.","majorFindings":0,"isLatestVersion":true,"laterAuditedVersionExists":false,"totalVersions":1},"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "2c188d2d3600069651ffde78bd365d49d5184a182ce3bae3cdea2969b1967d77",
+  "name": "mod.rs",
+  "kind": "program",
+  "lines": 51,
+  "source": "//! Test Utilities for `kona-derive`.\n\nmod pipeline;\npub use pipeline::{\n    TestAttributesQueue, TestBatchProvider, TestBatchStream, TestChannelProvider,\n    TestChannelReader, TestFrameQueue, TestL1Retrieval, TestNextAttributes, TestPipeline,\n    TestPollingTraversal, new_test_pipeline,\n};\n\nmod traversal;\npub use traversal::TraversalTestHelper;\n\nmod blob_provider;\npub use blob_provider::TestBlobProvider;\n\nmod chain_providers;\npub use chain_providers::{TestChainProvider, TestL2ChainProvider, TestProviderError};\n\nmod data_availability_provider;\npub use data_availability_provider::TestDAP;\n\nmod batch_provider;\npub use batch_provider::TestNextBatchProvider;\n\nmod attributes_queue;\npub use attributes_queue::{\n    TestAttributesBuilder, TestAttributesProvider, new_test_attributes_provider,\n};\n\nmod batch_stream;\npub use batch_stream::TestBatchStreamProvider;\n\nmod channel_provider;\npub use channel_provider::TestNextFrameProvider;\n\nmod channel_reader;\npub use channel_reader::TestChannelReaderProvider;\n\nmod frame_queue;\npub use frame_queue::TestFrameQueueProvider;\n\nmod tracing;\npub use tracing::{CollectingLayer, TraceStorage};\n\nmod sys_config_fetcher;\npub use sys_config_fetcher::{TestSystemConfigL2Fetcher, TestSystemConfigL2FetcherError};\n\nmod frames;\npub use frames::{FrameQueueAsserter, FrameQueueBuilder};\n\nmod macros;",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "identical",
+      "coveredLines": 51,
+      "match": {
+        "origin": "own",
+        "collection": "optimism",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "mod.rs",
+        "similarity": 1,
+        "reportId": "optimism/cantina-kona-2026-03",
+        "repository": "op-rs/kona",
+        "path": "crates/protocol/derive/src/test_utils/mod.rs",
+        "commit": "86910c9112437bbb849eca28961f813c5450e103",
+        "commitTimestamp": "2025-12-15T17:17:05Z",
+        "url": "https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/crates/protocol/derive/src/test_utils/mod.rs",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). kona-derive derivation pipeline (stages, sources, traversal, attributes). Medium findings 3.3.1 and 3.3.2 (pipeline/core.rs, stages/l1_retrieval.rs) and numerous Low/Informational findings located here; no Critical/High.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "warnings": []
+    }
+  }
+}

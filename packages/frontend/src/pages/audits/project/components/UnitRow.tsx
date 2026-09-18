@@ -1,18 +1,18 @@
 import { formatInteger } from '@l2beat/shared-pure'
 import { useState } from 'react'
 import {
+  AUDIT_STATUS_META,
+  formatFindingIds,
+  hasUnresolvedMajorFinding,
+  MAJOR_FINDING_DESCRIPTION,
+} from '~/components/audits/auditStatus'
+import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
 import type { AuditsUnitEntry } from '~/server/features/audits/types'
 import { cn } from '~/utils/cn'
-import {
-  AUDIT_STATUS_META,
-  formatFindingIds,
-  hasUnresolvedMajorFinding,
-  MAJOR_FINDING_DESCRIPTION,
-} from '../../components/auditStatus'
 import { UnitDetails } from './UnitDetails'
 
 const KIND_LABEL: Record<AuditsUnitEntry['kind'], string> = {

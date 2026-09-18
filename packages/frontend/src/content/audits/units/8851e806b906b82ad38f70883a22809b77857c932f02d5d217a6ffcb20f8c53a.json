@@ -1,1 +1,15 @@
-{"schemaVersion":2,"unitHash":"8851e806b906b82ad38f70883a22809b77857c932f02d5d217a6ffcb20f8c53a","name":"traits.rs","kind":"program","lines":25,"source":"//! Traits for working with protocol types.\n\nuse alloc::boxed::Box;\nuse async_trait::async_trait;\nuse core::fmt::Display;\nuse op_alloy_consensus::OpBlock;\n\nuse crate::L2BlockInfo;\n\n/// Describes the functionality of a data source that fetches safe blocks.\n#[async_trait]\npub trait BatchValidationProvider {\n    /// The error type for the [`BatchValidationProvider`].\n    type Error: Display;\n\n    /// Returns the [`L2BlockInfo`] given a block number.\n    ///\n    /// Errors if the block does not exist.\n    async fn l2_block_info_by_number(&mut self, number: u64) -> Result<L2BlockInfo, Self::Error>;\n\n    /// Returns the [`OpBlock`] for a given number.\n    ///\n    /// Errors if no block is available for the given block number.\n    async fn block_by_number(&mut self, number: u64) -> Result<OpBlock, Self::Error>;\n}","resolutions":{"9fa846564f4071bd":{"status":"unaudited","coveredLines":0,"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "8851e806b906b82ad38f70883a22809b77857c932f02d5d217a6ffcb20f8c53a",
+  "name": "traits.rs",
+  "kind": "program",
+  "lines": 25,
+  "source": "//! Traits for working with protocol types.\n\nuse alloc::boxed::Box;\nuse async_trait::async_trait;\nuse core::fmt::Display;\nuse op_alloy_consensus::OpBlock;\n\nuse crate::L2BlockInfo;\n\n/// Describes the functionality of a data source that fetches safe blocks.\n#[async_trait]\npub trait BatchValidationProvider {\n    /// The error type for the [`BatchValidationProvider`].\n    type Error: Display;\n\n    /// Returns the [`L2BlockInfo`] given a block number.\n    ///\n    /// Errors if the block does not exist.\n    async fn l2_block_info_by_number(&mut self, number: u64) -> Result<L2BlockInfo, Self::Error>;\n\n    /// Returns the [`OpBlock`] for a given number.\n    ///\n    /// Errors if no block is available for the given block number.\n    async fn block_by_number(&mut self, number: u64) -> Result<OpBlock, Self::Error>;\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

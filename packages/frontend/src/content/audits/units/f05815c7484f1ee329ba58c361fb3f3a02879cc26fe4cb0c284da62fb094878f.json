@@ -1,1 +1,37 @@
-{"schemaVersion":2,"unitHash":"f05815c7484f1ee329ba58c361fb3f3a02879cc26fe4cb0c284da62fb094878f","name":"mod.rs","kind":"program","lines":17,"source":"//! Error types for the kona derivation pipeline.\n//!\n//! This module contains comprehensive error types for the derivation pipeline, organized\n//! by severity and category. The error system provides detailed context for debugging\n//! and enables sophisticated error handling and recovery strategies.\n\nmod attributes;\npub use attributes::BuilderError;\n\nmod stages;\npub use stages::BatchDecompressionError;\n\nmod pipeline;\npub use pipeline::{PipelineEncodingError, PipelineError, PipelineErrorKind, ResetError};\n\nmod sources;\npub use sources::{BlobDecodingError, BlobProviderError};","resolutions":{"9fa846564f4071bd":{"status":"identical","coveredLines":17,"match":{"origin":"own","collection":"optimism","relation":{"type":"own"},"rank":0,"matchedBy":"identity","auditedName":"mod.rs","similarity":1,"reportId":"optimism/cantina-kona-2026-03","repository":"op-rs/kona","path":"crates/protocol/derive/src/errors/mod.rs","commit":"86910c9112437bbb849eca28961f813c5450e103","commitTimestamp":"2025-12-15T17:17:05Z","url":"https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/crates/protocol/derive/src/errors/mod.rs","auditStatus":"audited_with_no_major_findings","reviewPhase":"initial audit","coverage":"Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). kona-derive derivation pipeline (stages, sources, traversal, attributes). Medium findings 3.3.1 and 3.3.2 (pipeline/core.rs, stages/l1_retrieval.rs) and numerous Low/Informational findings located here; no Critical/High.","majorFindings":0,"isLatestVersion":true,"laterAuditedVersionExists":false,"totalVersions":1},"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "f05815c7484f1ee329ba58c361fb3f3a02879cc26fe4cb0c284da62fb094878f",
+  "name": "mod.rs",
+  "kind": "program",
+  "lines": 17,
+  "source": "//! Error types for the kona derivation pipeline.\n//!\n//! This module contains comprehensive error types for the derivation pipeline, organized\n//! by severity and category. The error system provides detailed context for debugging\n//! and enables sophisticated error handling and recovery strategies.\n\nmod attributes;\npub use attributes::BuilderError;\n\nmod stages;\npub use stages::BatchDecompressionError;\n\nmod pipeline;\npub use pipeline::{PipelineEncodingError, PipelineError, PipelineErrorKind, ResetError};\n\nmod sources;\npub use sources::{BlobDecodingError, BlobProviderError};",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "identical",
+      "coveredLines": 17,
+      "match": {
+        "origin": "own",
+        "collection": "optimism",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "mod.rs",
+        "similarity": 1,
+        "reportId": "optimism/cantina-kona-2026-03",
+        "repository": "op-rs/kona",
+        "path": "crates/protocol/derive/src/errors/mod.rs",
+        "commit": "86910c9112437bbb849eca28961f813c5450e103",
+        "commitTimestamp": "2025-12-15T17:17:05Z",
+        "url": "https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/crates/protocol/derive/src/errors/mod.rs",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). kona-derive derivation pipeline (stages, sources, traversal, attributes). Medium findings 3.3.1 and 3.3.2 (pipeline/core.rs, stages/l1_retrieval.rs) and numerous Low/Informational findings located here; no Critical/High.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "warnings": []
+    }
+  }
+}

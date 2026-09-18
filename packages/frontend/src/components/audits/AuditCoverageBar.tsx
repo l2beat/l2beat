@@ -1,16 +1,16 @@
 import { formatInteger } from '@l2beat/shared-pure'
+import {
+  AUDIT_STATUS_META,
+  AUDIT_STATUS_ORDER,
+  formatShare,
+  totalUnits,
+} from '~/components/audits/auditStatus'
 import { Breakdown } from '~/components/breakdown/Breakdown'
 import type {
   AuditCoverageNumbers,
   AuditStatusCounts,
 } from '~/server/features/audits/types'
 import { cn } from '~/utils/cn'
-import {
-  AUDIT_STATUS_META,
-  AUDIT_STATUS_ORDER,
-  formatShare,
-  totalUnits,
-} from './auditStatus'
 
 /** Stacked bar of deployed unit instances per status. */
 export function UnitStatusBar({

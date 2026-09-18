@@ -1,1 +1,15 @@
-{"schemaVersion":2,"unitHash":"b8009a4cb8255a535db411b3957af84c503ff5ac1add59f772a0fdcdea4bcd96","name":".gitignore","kind":"program","lines":46,"source":"# MacOS dust\n.DS_Store\n\n# Rust target\ntarget/\n\n# Ignore VSCode Configuration\n.vscode/\n\n# Monorepo workspace\nmonorepo/\n\n# Release artifacts\ndist/\n\n# vocs node_modules\ndocs/node_modules\n\n# `optimism-package` workspace\noptimism-package/\n\n# Environment Variables\n.env\n\n# kona-host data-dir\ndata/\n\n# Ignore jwt hex tokens\njwt.hex\n\n# FPVM artifacts\nstate.bin.gz\nmeta.json\nout.json\n\n# Prestate artifacts\nprestate-artifacts-*\n\n# IDE specific\n.idea\n\n# rustc bug report\nrustc-ice-*\n\n# logfiles\n*.log","resolutions":{"9fa846564f4071bd":{"status":"unaudited","coveredLines":0,"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "b8009a4cb8255a535db411b3957af84c503ff5ac1add59f772a0fdcdea4bcd96",
+  "name": ".gitignore",
+  "kind": "program",
+  "lines": 46,
+  "source": "# MacOS dust\n.DS_Store\n\n# Rust target\ntarget/\n\n# Ignore VSCode Configuration\n.vscode/\n\n# Monorepo workspace\nmonorepo/\n\n# Release artifacts\ndist/\n\n# vocs node_modules\ndocs/node_modules\n\n# `optimism-package` workspace\noptimism-package/\n\n# Environment Variables\n.env\n\n# kona-host data-dir\ndata/\n\n# Ignore jwt hex tokens\njwt.hex\n\n# FPVM artifacts\nstate.bin.gz\nmeta.json\nout.json\n\n# Prestate artifacts\nprestate-artifacts-*\n\n# IDE specific\n.idea\n\n# rustc bug report\nrustc-ice-*\n\n# logfiles\n*.log",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

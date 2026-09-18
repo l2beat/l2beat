@@ -1,1 +1,553 @@
-{"schemaVersion":2,"unitHash":"6dcf4b361e1943432fd8a4679626f66f802f666ed299596acef117a2cdc87311","name":"test_utils.rs","kind":"program","lines":404,"source":"//! Test utilities for the executor.\n\nuse crate::{BlockBuildingOutcome, ExecutorResult, StatelessL2Builder, TrieDBProvider};\nuse alloy_consensus::Header;\nuse alloy_op_evm::OpEvmFactory;\nuse alloy_primitives::{B256, Bytes, Sealable};\nuse alloy_provider::{Provider, RootProvider, network::primitives::BlockTransactions};\nuse alloy_rlp::Decodable;\nuse alloy_rpc_client::RpcClient;\nuse alloy_rpc_types_engine::PayloadAttributes;\nuse alloy_transport_http::{Client, Http};\nuse kona_genesis::RollupConfig;\nuse kona_mpt::{NoopTrieHinter, TrieNode, TrieProvider};\nuse kona_registry::ROLLUP_CONFIGS;\nuse op_alloy_rpc_types_engine::OpPayloadAttributes;\nuse rocksdb::{DB, Options};\nuse serde::{Deserialize, Serialize};\nuse std::{path::PathBuf, sync::Arc};\nuse tokio::{fs, runtime::Handle, sync::Mutex};\n\n/// A loaded executor test fixture and its backing temporary fixture directory.\n#[derive(Debug)]\npub struct LoadedExecutorTestFixture {\n    /// Keeps the untarred fixture directory alive while the `RocksDB` provider is open.\n    pub fixture_dir: tempfile::TempDir,\n    /// The deserialized fixture metadata and payload.\n    pub fixture: ExecutorTestFixture,\n    /// Trie/database provider backed by the fixture's key-value store.\n    pub provider: DiskTrieNodeProvider,\n}\n\n/// Loads a [`ExecutorTestFixture`] stored at the passed `fixture_path`.\npub async fn load_test_fixture(fixture_path: PathBuf) -> LoadedExecutorTestFixture {\n    let fixture_dir = tempfile::tempdir().expect(\"Failed to create temporary directory\");\n    tokio::process::Command::new(\"tar\")\n        .arg(\"-xvf\")\n        .arg(fixture_path.as_path())\n        .arg(\"-C\")\n        .arg(fixture_dir.path())\n        .arg(\"--strip-components=1\")\n        .output()\n        .await\n        .expect(\"Failed to untar fixture\");\n\n    let mut options = Options::default();\n    options.set_compression_type(rocksdb::DBCompressionType::Snappy);\n    options.create_if_missing(true);\n    let kv_store = DB::open(&options, fixture_dir.path().join(\"kv\"))\n        .unwrap_or_else(|e| panic!(\"Failed to open database at {fixture_dir:?}: {e}\"));\n    let provider = DiskTrieNodeProvider::new(kv_store);\n    let fixture: ExecutorTestFixture =\n        serde_json::from_slice(&fs::read(fixture_dir.path().join(\"fixture.json\")).await.unwrap())\n            .expect(\"Failed to deserialize fixture\");\n\n    LoadedExecutorTestFixture { fixture_dir, fixture, provider }\n}\n\n/// Executes a loaded fixture, optionally overriding SDM activation for the run.\npub fn execute_loaded_fixture(\n    loaded: LoadedExecutorTestFixture,\n    sdm_active_override: Option<bool>,\n) -> ExecutorResult<BlockBuildingOutcome<op_alloy_consensus::OpReceiptEnvelope>> {\n    let LoadedExecutorTestFixture { fixture_dir: _fixture_dir, fixture, provider } = loaded;\n    let ExecutorTestFixture { rollup_config, parent_header, executing_payload, .. } = fixture;\n\n    let mut executor = StatelessL2Builder::new(\n        &rollup_config,\n        OpEvmFactory::<alloy_op_evm::OpTx>::default(),\n        alloy_op_evm::block::OpAlloyReceiptBuilder::default(),\n        provider,\n        NoopTrieHinter,\n        parent_header.seal_slow(),\n    );\n    executor.set_sdm_active_override(sdm_active_override);\n\n    executor.build_block(executing_payload)\n}\n\n/// Executes a [`ExecutorTestFixture`] stored at the passed `fixture_path` and asserts that the\n/// produced block hash matches the expected block hash.\npub async fn run_test_fixture(fixture_path: PathBuf) {\n    let loaded = load_test_fixture(fixture_path).await;\n    let expected_block_hash = loaded.fixture.expected_block_hash;\n    let outcome = execute_loaded_fixture(loaded, None).unwrap();\n\n    assert_eq!(\n        outcome.header.hash(),\n        expected_block_hash,\n        \"Produced header does not match the expected header\"\n    );\n}\n\n/// The test fixture format for the [`StatelessL2Builder`].\n#[derive(Debug, Serialize, Deserialize)]\npub struct ExecutorTestFixture {\n    /// The rollup configuration for the executing chain.\n    pub rollup_config: RollupConfig,\n    /// The parent block header.\n    pub parent_header: Header,\n    /// The executing payload attributes.\n    pub executing_payload: OpPayloadAttributes,\n    /// The expected block hash\n    pub expected_block_hash: B256,\n}\n\n/// A test fixture creator for the [`StatelessL2Builder`].\n#[derive(Debug)]\npub struct ExecutorTestFixtureCreator {\n    /// The RPC provider for the L2 execution layer.\n    pub provider: RootProvider,\n    /// The block number to create the test fixture for.\n    pub block_number: u64,\n    /// The key value store for the test fixture.\n    pub kv_store: Arc<Mutex<rocksdb::DB>>,\n    /// The data directory for the test fixture.\n    pub data_dir: PathBuf,\n}\n\nimpl ExecutorTestFixtureCreator {\n    /// Creates a new [`ExecutorTestFixtureCreator`] with the given parameters.\n    pub fn new(provider_url: &str, block_number: u64, base_fixture_directory: PathBuf) -> Self {\n        let base = base_fixture_directory.join(format!(\"block-{block_number}\"));\n\n        let url = provider_url.parse().expect(\"Invalid provider URL\");\n        let http = Http::<Client>::new(url);\n        let provider = RootProvider::new(RpcClient::new(http, false));\n\n        let mut options = Options::default();\n        options.set_compression_type(rocksdb::DBCompressionType::Snappy);\n        options.create_if_missing(true);\n        let db = DB::open(&options, base.join(\"kv\").as_path())\n            .unwrap_or_else(|e| panic!(\"Failed to open database at {base:?}: {e}\"));\n\n        Self { provider, block_number, kv_store: Arc::new(Mutex::new(db)), data_dir: base }\n    }\n}\n\nimpl ExecutorTestFixtureCreator {\n    /// Create a static test fixture with the configuration provided.\n    pub async fn create_static_fixture(self) {\n        let chain_id = self.provider.get_chain_id().await.expect(\"Failed to get chain ID\");\n        let rollup_config = ROLLUP_CONFIGS.get(&chain_id).expect(\"Rollup config not found\");\n\n        let executing_block = self\n            .provider\n            .get_block_by_number(self.block_number.into())\n            .await\n            .expect(\"Failed to get parent block\")\n            .expect(\"Block not found\");\n        let parent_block = self\n            .provider\n            .get_block_by_number((self.block_number - 1).into())\n            .await\n            .expect(\"Failed to get parent block\")\n            .expect(\"Block not found\");\n\n        let executing_header = executing_block.header;\n        let parent_header = parent_block.header.inner.seal_slow();\n\n        let encoded_executing_transactions = match executing_block.transactions {\n            BlockTransactions::Hashes(transactions) => {\n                let mut encoded_transactions = Vec::with_capacity(transactions.len());\n                for tx_hash in transactions {\n                    let tx = self\n                        .provider\n                        .client()\n                        .request::<&[B256; 1], Bytes>(\"debug_getRawTransaction\", &[tx_hash])\n                        .await\n                        .expect(\"Block not found\");\n                    encoded_transactions.push(tx);\n                }\n                encoded_transactions\n            }\n            _ => panic!(\"Only BlockTransactions::Hashes are supported.\"),\n        };\n\n        let payload_attrs = OpPayloadAttributes {\n            payload_attributes: PayloadAttributes {\n                timestamp: executing_header.timestamp,\n                parent_beacon_block_root: executing_header.parent_beacon_block_root,\n                prev_randao: executing_header.mix_hash,\n                withdrawals: Default::default(),\n                suggested_fee_recipient: executing_header.beneficiary,\n                slot_number: Default::default(),\n            },\n            gas_limit: Some(executing_header.gas_limit),\n            transactions: Some(encoded_executing_transactions),\n            no_tx_pool: None,\n            eip_1559_params: rollup_config.is_holocene_active(executing_header.timestamp).then(\n                || {\n                    executing_header.extra_data[1..9]\n                        .try_into()\n                        .expect(\"Invalid header format for Holocene\")\n                },\n            ),\n            min_base_fee: rollup_config.is_jovian_active(executing_header.timestamp).then(|| {\n                // The min base fee is the bytes 9-17 of the extra data.\n                executing_header.extra_data[9..17]\n                    .try_into()\n                    .map(u64::from_be_bytes)\n                    .expect(\"Invalid header format for Jovian\")\n            }),\n        };\n\n        let fixture_path = self.data_dir.join(\"fixture.json\");\n        let fixture = ExecutorTestFixture {\n            rollup_config: rollup_config.clone(),\n            parent_header: parent_header.inner().clone(),\n            executing_payload: payload_attrs.clone(),\n            expected_block_hash: executing_header.hash_slow(),\n        };\n\n        let mut executor = StatelessL2Builder::new(\n            rollup_config,\n            OpEvmFactory::<alloy_op_evm::OpTx>::default(),\n            alloy_op_evm::block::OpAlloyReceiptBuilder::default(),\n            self,\n            NoopTrieHinter,\n            parent_header,\n        );\n        let outcome = executor.build_block(payload_attrs).expect(\"Failed to execute block\");\n\n        assert_eq!(\n            outcome.header.inner(),\n            &executing_header.inner,\n            \"Produced header does not match the expected header\"\n        );\n        fs::write(fixture_path.as_path(), serde_json::to_vec(&fixture).unwrap()).await.unwrap();\n\n        // Tar the fixture.\n        let data_dir = fixture_path.parent().unwrap();\n        tokio::process::Command::new(\"tar\")\n            .arg(\"-czf\")\n            .arg(data_dir.with_extension(\"tar.gz\").file_name().unwrap())\n            .arg(data_dir.file_name().unwrap())\n            .current_dir(data_dir.parent().unwrap())\n            .output()\n            .await\n            .expect(\"Failed to tar fixture\");\n\n        // Remove the leftover directory.\n        fs::remove_dir_all(data_dir).await.expect(\"Failed to remove temporary directory\");\n    }\n}\n\nimpl TrieProvider for ExecutorTestFixtureCreator {\n    type Error = TestTrieNodeProviderError;\n\n    fn trie_node_by_hash(&self, key: B256) -> Result<TrieNode, Self::Error> {\n        // Fetch the preimage from the L2 chain provider.\n        let preimage: Bytes = tokio::task::block_in_place(move || {\n            Handle::current().block_on(async {\n                let preimage: Bytes = self\n                    .provider\n                    .client()\n                    .request(\"debug_dbGet\", &[key])\n                    .await\n                    .map_err(|_| TestTrieNodeProviderError::PreimageNotFound)?;\n\n                self.kv_store\n                    .lock()\n                    .await\n                    .put(key, preimage.clone())\n                    .map_err(|_| TestTrieNodeProviderError::KVStore)?;\n\n                Ok(preimage)\n            })\n        })?;\n\n        // Decode the preimage into a trie node.\n        TrieNode::decode(&mut preimage.as_ref()).map_err(TestTrieNodeProviderError::Rlp)\n    }\n}\n\nimpl TrieDBProvider for ExecutorTestFixtureCreator {\n    fn bytecode_by_hash(&self, hash: B256) -> Result<Bytes, Self::Error> {\n        // geth hashdb scheme code hash key prefix\n        const CODE_PREFIX: u8 = b'c';\n\n        // Fetch the preimage from the L2 chain provider.\n        let preimage: Bytes = tokio::task::block_in_place(move || {\n            Handle::current().block_on(async {\n                // Attempt to fetch the code from the L2 chain provider.\n                let code_hash = [&[CODE_PREFIX], hash.as_slice()].concat();\n                let code = self\n                    .provider\n                    .client()\n                    .request::<&[Bytes; 1], Bytes>(\"debug_dbGet\", &[code_hash.into()])\n                    .await;\n\n                // Check if the first attempt to fetch the code failed. If it did, try fetching the\n                // code hash preimage without the geth hashdb scheme prefix.\n                let code = match code {\n                    Ok(code) => code,\n                    Err(_) => self\n                        .provider\n                        .client()\n                        .request::<&[B256; 1], Bytes>(\"debug_dbGet\", &[hash])\n                        .await\n                        .map_err(|_| TestTrieNodeProviderError::PreimageNotFound)?,\n                };\n\n                self.kv_store\n                    .lock()\n                    .await\n                    .put(hash, code.clone())\n                    .map_err(|_| TestTrieNodeProviderError::KVStore)?;\n\n                Ok(code)\n            })\n        })?;\n\n        Ok(preimage)\n    }\n\n    fn header_by_hash(&self, hash: B256) -> Result<Header, Self::Error> {\n        let encoded_header: Bytes = tokio::task::block_in_place(move || {\n            Handle::current().block_on(async {\n                let preimage: Bytes = self\n                    .provider\n                    .client()\n                    .request(\"debug_getRawHeader\", &[hash])\n                    .await\n                    .map_err(|_| TestTrieNodeProviderError::PreimageNotFound)?;\n\n                self.kv_store\n                    .lock()\n                    .await\n                    .put(hash, preimage.clone())\n                    .map_err(|_| TestTrieNodeProviderError::KVStore)?;\n\n                Ok(preimage)\n            })\n        })?;\n\n        // Decode the Header.\n        Header::decode(&mut encoded_header.as_ref()).map_err(TestTrieNodeProviderError::Rlp)\n    }\n}\n\n/// A simple [`TrieDBProvider`] that reads data from a disk-based key-value store.\n#[derive(Debug)]\npub struct DiskTrieNodeProvider {\n    kv_store: DB,\n}\n\nimpl DiskTrieNodeProvider {\n    /// Creates a new [`DiskTrieNodeProvider`] with the given [`rocksdb`] K/V store.\n    pub const fn new(kv_store: DB) -> Self {\n        Self { kv_store }\n    }\n}\n\nimpl TrieProvider for DiskTrieNodeProvider {\n    type Error = TestTrieNodeProviderError;\n\n    fn trie_node_by_hash(&self, key: B256) -> Result<TrieNode, Self::Error> {\n        TrieNode::decode(\n            &mut self\n                .kv_store\n                .get(key)\n                .map_err(|_| TestTrieNodeProviderError::PreimageNotFound)?\n                .ok_or(TestTrieNodeProviderError::PreimageNotFound)?\n                .as_slice(),\n        )\n        .map_err(TestTrieNodeProviderError::Rlp)\n    }\n}\n\nimpl TrieDBProvider for DiskTrieNodeProvider {\n    fn bytecode_by_hash(&self, code_hash: B256) -> Result<Bytes, Self::Error> {\n        self.kv_store\n            .get(code_hash)\n            .map_err(|_| TestTrieNodeProviderError::PreimageNotFound)?\n            .map(Bytes::from)\n            .ok_or(TestTrieNodeProviderError::PreimageNotFound)\n    }\n\n    fn header_by_hash(&self, hash: B256) -> Result<Header, Self::Error> {\n        Header::decode(\n            &mut self\n                .kv_store\n                .get(hash)\n                .map_err(|_| TestTrieNodeProviderError::PreimageNotFound)?\n                .ok_or(TestTrieNodeProviderError::PreimageNotFound)?\n                .as_slice(),\n        )\n        .map_err(TestTrieNodeProviderError::Rlp)\n    }\n}\n\n/// An error type for the [`DiskTrieNodeProvider`] and [`ExecutorTestFixtureCreator`].\n#[derive(Debug, thiserror::Error)]\npub enum TestTrieNodeProviderError {\n    /// The preimage was not found in the key-value store.\n    #[error(\"Preimage not found\")]\n    PreimageNotFound,\n    /// Failed to decode the RLP-encoded data.\n    #[error(\"Failed to decode RLP: {0}\")]\n    Rlp(alloy_rlp::Error),\n    /// Failed to write back to the key-value store.\n    #[error(\"Failed to write back to key value store\")]\n    KVStore,\n}","resolutions":{"9fa846564f4071bd":{"status":"differs","coveredLines":373,"match":{"origin":"own","collection":"optimism","relation":{"type":"own"},"rank":0,"matchedBy":"name","auditedName":"test_utils.rs","similarity":0.936,"reportId":"optimism/cantina-kona-2026-03","repository":"op-rs/kona","path":"crates/proof/executor/src/test_utils.rs","commit":"86910c9112437bbb849eca28961f813c5450e103","commitTimestamp":"2025-12-15T17:17:05Z","url":"https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/crates/proof/executor/src/test_utils.rs","auditStatus":"audited_with_no_major_findings","reviewPhase":"initial audit","coverage":"Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). kona-executor block builder; Low finding 3.4.2 (util.rs) and Informational 3.5.18 (builder/core.rs) located here.","majorFindings":0,"isLatestVersion":true,"laterAuditedVersionExists":false,"totalVersions":1},"diff":{"added":31,"removed":8,"ignoredAdded":12,"ignoredRemoved":3,"unchanged":373,"ignoredOnly":false,"hunks":[{"oldStart":1,"oldLines":6,"newStart":1,"newLines":6,"lines":[{"type":" ","oldLine":1,"newLine":1,"text":"//! Test utilities for the executor."},{"type":" ","oldLine":2,"newLine":2,"text":""},{"type":"-","oldLine":3,"text":"use crate::{StatelessL2Builder, TrieDBProvider};","ignored":false},{"type":"+","newLine":3,"text":"use crate::{BlockBuildingOutcome, ExecutorResult, StatelessL2Builder, TrieDBProvider};","ignored":false},{"type":" ","oldLine":4,"newLine":4,"text":"use alloy_consensus::Header;"},{"type":" ","oldLine":5,"newLine":5,"text":"use alloy_op_evm::OpEvmFactory;"},{"type":" ","oldLine":6,"newLine":6,"text":"use alloy_primitives::{B256, Bytes, Sealable};"}]},{"oldStart":18,"oldLines":10,"newStart":18,"newLines":19,"lines":[{"type":" ","oldLine":18,"newLine":18,"text":"use std::{path::PathBuf, sync::Arc};"},{"type":" ","oldLine":19,"newLine":19,"text":"use tokio::{fs, runtime::Handle, sync::Mutex};"},{"type":" ","oldLine":20,"newLine":20,"text":""},{"type":"-","oldLine":21,"text":"/// Executes a [ExecutorTestFixture] stored at the passed `fixture_path` and asserts that the","ignored":true},{"type":"-","oldLine":22,"text":"/// produced block hash matches the expected block hash.","ignored":true},{"type":"-","oldLine":23,"text":"pub async fn run_test_fixture(fixture_path: PathBuf) {","ignored":false},{"type":"-","oldLine":24,"text":"    // First, untar the fixture.","ignored":true},{"type":"+","newLine":21,"text":"/// A loaded executor test fixture and its backing temporary fixture directory.","ignored":true},{"type":"+","newLine":22,"text":"#[derive(Debug)]","ignored":false},{"type":"+","newLine":23,"text":"pub struct LoadedExecutorTestFixture {","ignored":false},{"type":"+","newLine":24,"text":"    /// Keeps the untarred fixture directory alive while the `RocksDB` provider is open.","ignored":true},{"type":"+","newLine":25,"text":"    pub fixture_dir: tempfile::TempDir,","ignored":false},{"type":"+","newLine":26,"text":"    /// The deserialized fixture metadata and payload.","ignored":true},{"type":"+","newLine":27,"text":"    pub fixture: ExecutorTestFixture,","ignored":false},{"type":"+","newLine":28,"text":"    /// Trie/database provider backed by the fixture's key-value store.","ignored":true},{"type":"+","newLine":29,"text":"    pub provider: DiskTrieNodeProvider,","ignored":false},{"type":"+","newLine":30,"text":"}","ignored":false},{"type":"+","newLine":31,"text":"","ignored":true},{"type":"+","newLine":32,"text":"/// Loads a [`ExecutorTestFixture`] stored at the passed `fixture_path`.","ignored":true},{"type":"+","newLine":33,"text":"pub async fn load_test_fixture(fixture_path: PathBuf) -> LoadedExecutorTestFixture {","ignored":false},{"type":" ","oldLine":25,"newLine":34,"text":"    let fixture_dir = tempfile::tempdir().expect(\"Failed to create temporary directory\");"},{"type":" ","oldLine":26,"newLine":35,"text":"    tokio::process::Command::new(\"tar\")"},{"type":" ","oldLine":27,"newLine":36,"text":"        .arg(\"-xvf\")"}]},{"oldStart":43,"oldLines":19,"newStart":52,"newLines":40,"lines":[{"type":" ","oldLine":43,"newLine":52,"text":"        serde_json::from_slice(&fs::read(fixture_dir.path().join(\"fixture.json\")).await.unwrap())"},{"type":" ","oldLine":44,"newLine":53,"text":"            .expect(\"Failed to deserialize fixture\");"},{"type":" ","oldLine":45,"newLine":54,"text":""},{"type":"+","newLine":55,"text":"    LoadedExecutorTestFixture { fixture_dir, fixture, provider }","ignored":false},{"type":"+","newLine":56,"text":"}","ignored":false},{"type":"+","newLine":57,"text":"","ignored":true},{"type":"+","newLine":58,"text":"/// Executes a loaded fixture, optionally overriding SDM activation for the run.","ignored":true},{"type":"+","newLine":59,"text":"pub fn execute_loaded_fixture(","ignored":false},{"type":"+","newLine":60,"text":"    loaded: LoadedExecutorTestFixture,","ignored":false},{"type":"+","newLine":61,"text":"    sdm_active_override: Option<bool>,","ignored":false},{"type":"+","newLine":62,"text":") -> ExecutorResult<BlockBuildingOutcome<op_alloy_consensus::OpReceiptEnvelope>> {","ignored":false},{"type":"+","newLine":63,"text":"    let LoadedExecutorTestFixture { fixture_dir: _fixture_dir, fixture, provider } = loaded;","ignored":false},{"type":"+","newLine":64,"text":"    let ExecutorTestFixture { rollup_config, parent_header, executing_payload, .. } = fixture;","ignored":false},{"type":"+","newLine":65,"text":"","ignored":true},{"type":" ","oldLine":46,"newLine":66,"text":"    let mut executor = StatelessL2Builder::new("},{"type":"-","oldLine":47,"text":"        &fixture.rollup_config,","ignored":false},{"type":"-","oldLine":48,"text":"        OpEvmFactory::default(),","ignored":false},{"type":"+","newLine":67,"text":"        &rollup_config,","ignored":false},{"type":"+","newLine":68,"text":"        OpEvmFactory::<alloy_op_evm::OpTx>::default(),","ignored":false},{"type":"+","newLine":69,"text":"        alloy_op_evm::block::OpAlloyReceiptBuilder::default(),","ignored":false},{"type":" ","oldLine":49,"newLine":70,"text":"        provider,"},{"type":" ","oldLine":50,"newLine":71,"text":"        NoopTrieHinter,"},{"type":"-","oldLine":51,"text":"        fixture.parent_header.seal_slow(),","ignored":false},{"type":"+","newLine":72,"text":"        parent_header.seal_slow(),","ignored":false},{"type":" ","oldLine":52,"newLine":73,"text":"    );"},{"type":"+","newLine":74,"text":"    executor.set_sdm_active_override(sdm_active_override);","ignored":false},{"type":" ","oldLine":53,"newLine":75,"text":""},{"type":"-","oldLine":54,"text":"    let outcome = executor.build_block(fixture.executing_payload).unwrap();","ignored":false},{"type":"+","newLine":76,"text":"    executor.build_block(executing_payload)","ignored":false},{"type":"+","newLine":77,"text":"}","ignored":false},{"type":" ","oldLine":55,"newLine":78,"text":""},{"type":"+","newLine":79,"text":"/// Executes a [`ExecutorTestFixture`] stored at the passed `fixture_path` and asserts that the","ignored":true},{"type":"+","newLine":80,"text":"/// produced block hash matches the expected block hash.","ignored":true},{"type":"+","newLine":81,"text":"pub async fn run_test_fixture(fixture_path: PathBuf) {","ignored":false},{"type":"+","newLine":82,"text":"    let loaded = load_test_fixture(fixture_path).await;","ignored":false},{"type":"+","newLine":83,"text":"    let expected_block_hash = loaded.fixture.expected_block_hash;","ignored":false},{"type":"+","newLine":84,"text":"    let outcome = execute_loaded_fixture(loaded, None).unwrap();","ignored":false},{"type":"+","newLine":85,"text":"","ignored":true},{"type":" ","oldLine":56,"newLine":86,"text":"    assert_eq!("},{"type":" ","oldLine":57,"newLine":87,"text":"        outcome.header.hash(),"},{"type":"-","oldLine":58,"text":"        fixture.expected_block_hash,","ignored":false},{"type":"+","newLine":88,"text":"        expected_block_hash,","ignored":false},{"type":" ","oldLine":59,"newLine":89,"text":"        \"Produced header does not match the expected header\""},{"type":" ","oldLine":60,"newLine":90,"text":"    );"},{"type":" ","oldLine":61,"newLine":91,"text":"}"}]},{"oldStart":151,"oldLines":6,"newStart":181,"newLines":7,"lines":[{"type":" ","oldLine":151,"newLine":181,"text":"                prev_randao: executing_header.mix_hash,"},{"type":" ","oldLine":152,"newLine":182,"text":"                withdrawals: Default::default(),"},{"type":" ","oldLine":153,"newLine":183,"text":"                suggested_fee_recipient: executing_header.beneficiary,"},{"type":"+","newLine":184,"text":"                slot_number: Default::default(),","ignored":false},{"type":" ","oldLine":154,"newLine":185,"text":"            },"},{"type":" ","oldLine":155,"newLine":186,"text":"            gas_limit: Some(executing_header.gas_limit),"},{"type":" ","oldLine":156,"newLine":187,"text":"            transactions: Some(encoded_executing_transactions),"}]},{"oldStart":181,"oldLines":7,"newStart":212,"newLines":8,"lines":[{"type":" ","oldLine":181,"newLine":212,"text":""},{"type":" ","oldLine":182,"newLine":213,"text":"        let mut executor = StatelessL2Builder::new("},{"type":" ","oldLine":183,"newLine":214,"text":"            rollup_config,"},{"type":"-","oldLine":184,"text":"            OpEvmFactory::default(),","ignored":false},{"type":"+","newLine":215,"text":"            OpEvmFactory::<alloy_op_evm::OpTx>::default(),","ignored":false},{"type":"+","newLine":216,"text":"            alloy_op_evm::block::OpAlloyReceiptBuilder::default(),","ignored":false},{"type":" ","oldLine":185,"newLine":217,"text":"            self,"},{"type":" ","oldLine":186,"newLine":218,"text":"            NoopTrieHinter,"},{"type":" ","oldLine":187,"newLine":219,"text":"            parent_header,"}]}]},"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "6dcf4b361e1943432fd8a4679626f66f802f666ed299596acef117a2cdc87311",
+  "name": "test_utils.rs",
+  "kind": "program",
+  "lines": 404,
+  "source": "//! Test utilities for the executor.\n\nuse crate::{BlockBuildingOutcome, ExecutorResult, StatelessL2Builder, TrieDBProvider};\nuse alloy_consensus::Header;\nuse alloy_op_evm::OpEvmFactory;\nuse alloy_primitives::{B256, Bytes, Sealable};\nuse alloy_provider::{Provider, RootProvider, network::primitives::BlockTransactions};\nuse alloy_rlp::Decodable;\nuse alloy_rpc_client::RpcClient;\nuse alloy_rpc_types_engine::PayloadAttributes;\nuse alloy_transport_http::{Client, Http};\nuse kona_genesis::RollupConfig;\nuse kona_mpt::{NoopTrieHinter, TrieNode, TrieProvider};\nuse kona_registry::ROLLUP_CONFIGS;\nuse op_alloy_rpc_types_engine::OpPayloadAttributes;\nuse rocksdb::{DB, Options};\nuse serde::{Deserialize, Serialize};\nuse std::{path::PathBuf, sync::Arc};\nuse tokio::{fs, runtime::Handle, sync::Mutex};\n\n/// A loaded executor test fixture and its backing temporary fixture directory.\n#[derive(Debug)]\npub struct LoadedExecutorTestFixture {\n    /// Keeps the untarred fixture directory alive while the `RocksDB` provider is open.\n    pub fixture_dir: tempfile::TempDir,\n    /// The deserialized fixture metadata and payload.\n    pub fixture: ExecutorTestFixture,\n    /// Trie/database provider backed by the fixture's key-value store.\n    pub provider: DiskTrieNodeProvider,\n}\n\n/// Loads a [`ExecutorTestFixture`] stored at the passed `fixture_path`.\npub async fn load_test_fixture(fixture_path: PathBuf) -> LoadedExecutorTestFixture {\n    let fixture_dir = tempfile::tempdir().expect(\"Failed to create temporary directory\");\n    tokio::process::Command::new(\"tar\")\n        .arg(\"-xvf\")\n        .arg(fixture_path.as_path())\n        .arg(\"-C\")\n        .arg(fixture_dir.path())\n        .arg(\"--strip-components=1\")\n        .output()\n        .await\n        .expect(\"Failed to untar fixture\");\n\n    let mut options = Options::default();\n    options.set_compression_type(rocksdb::DBCompressionType::Snappy);\n    options.create_if_missing(true);\n    let kv_store = DB::open(&options, fixture_dir.path().join(\"kv\"))\n        .unwrap_or_else(|e| panic!(\"Failed to open database at {fixture_dir:?}: {e}\"));\n    let provider = DiskTrieNodeProvider::new(kv_store);\n    let fixture: ExecutorTestFixture =\n        serde_json::from_slice(&fs::read(fixture_dir.path().join(\"fixture.json\")).await.unwrap())\n            .expect(\"Failed to deserialize fixture\");\n\n    LoadedExecutorTestFixture { fixture_dir, fixture, provider }\n}\n\n/// Executes a loaded fixture, optionally overriding SDM activation for the run.\npub fn execute_loaded_fixture(\n    loaded: LoadedExecutorTestFixture,\n    sdm_active_override: Option<bool>,\n) -> ExecutorResult<BlockBuildingOutcome<op_alloy_consensus::OpReceiptEnvelope>> {\n    let LoadedExecutorTestFixture { fixture_dir: _fixture_dir, fixture, provider } = loaded;\n    let ExecutorTestFixture { rollup_config, parent_header, executing_payload, .. } = fixture;\n\n    let mut executor = StatelessL2Builder::new(\n        &rollup_config,\n        OpEvmFactory::<alloy_op_evm::OpTx>::default(),\n        alloy_op_evm::block::OpAlloyReceiptBuilder::default(),\n        provider,\n        NoopTrieHinter,\n        parent_header.seal_slow(),\n    );\n    executor.set_sdm_active_override(sdm_active_override);\n\n    executor.build_block(executing_payload)\n}\n\n/// Executes a [`ExecutorTestFixture`] stored at the passed `fixture_path` and asserts that the\n/// produced block hash matches the expected block hash.\npub async fn run_test_fixture(fixture_path: PathBuf) {\n    let loaded = load_test_fixture(fixture_path).await;\n    let expected_block_hash = loaded.fixture.expected_block_hash;\n    let outcome = execute_loaded_fixture(loaded, None).unwrap();\n\n    assert_eq!(\n        outcome.header.hash(),\n        expected_block_hash,\n        \"Produced header does not match the expected header\"\n    );\n}\n\n/// The test fixture format for the [`StatelessL2Builder`].\n#[derive(Debug, Serialize, Deserialize)]\npub struct ExecutorTestFixture {\n    /// The rollup configuration for the executing chain.\n    pub rollup_config: RollupConfig,\n    /// The parent block header.\n    pub parent_header: Header,\n    /// The executing payload attributes.\n    pub executing_payload: OpPayloadAttributes,\n    /// The expected block hash\n    pub expected_block_hash: B256,\n}\n\n/// A test fixture creator for the [`StatelessL2Builder`].\n#[derive(Debug)]\npub struct ExecutorTestFixtureCreator {\n    /// The RPC provider for the L2 execution layer.\n    pub provider: RootProvider,\n    /// The block number to create the test fixture for.\n    pub block_number: u64,\n    /// The key value store for the test fixture.\n    pub kv_store: Arc<Mutex<rocksdb::DB>>,\n    /// The data directory for the test fixture.\n    pub data_dir: PathBuf,\n}\n\nimpl ExecutorTestFixtureCreator {\n    /// Creates a new [`ExecutorTestFixtureCreator`] with the given parameters.\n    pub fn new(provider_url: &str, block_number: u64, base_fixture_directory: PathBuf) -> Self {\n        let base = base_fixture_directory.join(format!(\"block-{block_number}\"));\n\n        let url = provider_url.parse().expect(\"Invalid provider URL\");\n        let http = Http::<Client>::new(url);\n        let provider = RootProvider::new(RpcClient::new(http, false));\n\n        let mut options = Options::default();\n        options.set_compression_type(rocksdb::DBCompressionType::Snappy);\n        options.create_if_missing(true);\n        let db = DB::open(&options, base.join(\"kv\").as_path())\n            .unwrap_or_else(|e| panic!(\"Failed to open database at {base:?}: {e}\"));\n\n        Self { provider, block_number, kv_store: Arc::new(Mutex::new(db)), data_dir: base }\n    }\n}\n\nimpl ExecutorTestFixtureCreator {\n    /// Create a static test fixture with the configuration provided.\n    pub async fn create_static_fixture(self) {\n        let chain_id = self.provider.get_chain_id().await.expect(\"Failed to get chain ID\");\n        let rollup_config = ROLLUP_CONFIGS.get(&chain_id).expect(\"Rollup config not found\");\n\n        let executing_block = self\n            .provider\n            .get_block_by_number(self.block_number.into())\n            .await\n            .expect(\"Failed to get parent block\")\n            .expect(\"Block not found\");\n        let parent_block = self\n            .provider\n            .get_block_by_number((self.block_number - 1).into())\n            .await\n            .expect(\"Failed to get parent block\")\n            .expect(\"Block not found\");\n\n        let executing_header = executing_block.header;\n        let parent_header = parent_block.header.inner.seal_slow();\n\n        let encoded_executing_transactions = match executing_block.transactions {\n            BlockTransactions::Hashes(transactions) => {\n                let mut encoded_transactions = Vec::with_capacity(transactions.len());\n                for tx_hash in transactions {\n                    let tx = self\n                        .provider\n                        .client()\n                        .request::<&[B256; 1], Bytes>(\"debug_getRawTransaction\", &[tx_hash])\n                        .await\n                        .expect(\"Block not found\");\n                    encoded_transactions.push(tx);\n                }\n                encoded_transactions\n            }\n            _ => panic!(\"Only BlockTransactions::Hashes are supported.\"),\n        };\n\n        let payload_attrs = OpPayloadAttributes {\n            payload_attributes: PayloadAttributes {\n                timestamp: executing_header.timestamp,\n                parent_beacon_block_root: executing_header.parent_beacon_block_root,\n                prev_randao: executing_header.mix_hash,\n                withdrawals: Default::default(),\n                suggested_fee_recipient: executing_header.beneficiary,\n                slot_number: Default::default(),\n            },\n            gas_limit: Some(executing_header.gas_limit),\n            transactions: Some(encoded_executing_transactions),\n            no_tx_pool: None,\n            eip_1559_params: rollup_config.is_holocene_active(executing_header.timestamp).then(\n                || {\n                    executing_header.extra_data[1..9]\n                        .try_into()\n                        .expect(\"Invalid header format for Holocene\")\n                },\n            ),\n            min_base_fee: rollup_config.is_jovian_active(executing_header.timestamp).then(|| {\n                // The min base fee is the bytes 9-17 of the extra data.\n                executing_header.extra_data[9..17]\n                    .try_into()\n                    .map(u64::from_be_bytes)\n                    .expect(\"Invalid header format for Jovian\")\n            }),\n        };\n\n        let fixture_path = self.data_dir.join(\"fixture.json\");\n        let fixture = ExecutorTestFixture {\n            rollup_config: rollup_config.clone(),\n            parent_header: parent_header.inner().clone(),\n            executing_payload: payload_attrs.clone(),\n            expected_block_hash: executing_header.hash_slow(),\n        };\n\n        let mut executor = StatelessL2Builder::new(\n            rollup_config,\n            OpEvmFactory::<alloy_op_evm::OpTx>::default(),\n            alloy_op_evm::block::OpAlloyReceiptBuilder::default(),\n            self,\n            NoopTrieHinter,\n            parent_header,\n        );\n        let outcome = executor.build_block(payload_attrs).expect(\"Failed to execute block\");\n\n        assert_eq!(\n            outcome.header.inner(),\n            &executing_header.inner,\n            \"Produced header does not match the expected header\"\n        );\n        fs::write(fixture_path.as_path(), serde_json::to_vec(&fixture).unwrap()).await.unwrap();\n\n        // Tar the fixture.\n        let data_dir = fixture_path.parent().unwrap();\n        tokio::process::Command::new(\"tar\")\n            .arg(\"-czf\")\n            .arg(data_dir.with_extension(\"tar.gz\").file_name().unwrap())\n            .arg(data_dir.file_name().unwrap())\n            .current_dir(data_dir.parent().unwrap())\n            .output()\n            .await\n            .expect(\"Failed to tar fixture\");\n\n        // Remove the leftover directory.\n        fs::remove_dir_all(data_dir).await.expect(\"Failed to remove temporary directory\");\n    }\n}\n\nimpl TrieProvider for ExecutorTestFixtureCreator {\n    type Error = TestTrieNodeProviderError;\n\n    fn trie_node_by_hash(&self, key: B256) -> Result<TrieNode, Self::Error> {\n        // Fetch the preimage from the L2 chain provider.\n        let preimage: Bytes = tokio::task::block_in_place(move || {\n            Handle::current().block_on(async {\n                let preimage: Bytes = self\n                    .provider\n                    .client()\n                    .request(\"debug_dbGet\", &[key])\n                    .await\n                    .map_err(|_| TestTrieNodeProviderError::PreimageNotFound)?;\n\n                self.kv_store\n                    .lock()\n                    .await\n                    .put(key, preimage.clone())\n                    .map_err(|_| TestTrieNodeProviderError::KVStore)?;\n\n                Ok(preimage)\n            })\n        })?;\n\n        // Decode the preimage into a trie node.\n        TrieNode::decode(&mut preimage.as_ref()).map_err(TestTrieNodeProviderError::Rlp)\n    }\n}\n\nimpl TrieDBProvider for ExecutorTestFixtureCreator {\n    fn bytecode_by_hash(&self, hash: B256) -> Result<Bytes, Self::Error> {\n        // geth hashdb scheme code hash key prefix\n        const CODE_PREFIX: u8 = b'c';\n\n        // Fetch the preimage from the L2 chain provider.\n        let preimage: Bytes = tokio::task::block_in_place(move || {\n            Handle::current().block_on(async {\n                // Attempt to fetch the code from the L2 chain provider.\n                let code_hash = [&[CODE_PREFIX], hash.as_slice()].concat();\n                let code = self\n                    .provider\n                    .client()\n                    .request::<&[Bytes; 1], Bytes>(\"debug_dbGet\", &[code_hash.into()])\n                    .await;\n\n                // Check if the first attempt to fetch the code failed. If it did, try fetching the\n                // code hash preimage without the geth hashdb scheme prefix.\n                let code = match code {\n                    Ok(code) => code,\n                    Err(_) => self\n                        .provider\n                        .client()\n                        .request::<&[B256; 1], Bytes>(\"debug_dbGet\", &[hash])\n                        .await\n                        .map_err(|_| TestTrieNodeProviderError::PreimageNotFound)?,\n                };\n\n                self.kv_store\n                    .lock()\n                    .await\n                    .put(hash, code.clone())\n                    .map_err(|_| TestTrieNodeProviderError::KVStore)?;\n\n                Ok(code)\n            })\n        })?;\n\n        Ok(preimage)\n    }\n\n    fn header_by_hash(&self, hash: B256) -> Result<Header, Self::Error> {\n        let encoded_header: Bytes = tokio::task::block_in_place(move || {\n            Handle::current().block_on(async {\n                let preimage: Bytes = self\n                    .provider\n                    .client()\n                    .request(\"debug_getRawHeader\", &[hash])\n                    .await\n                    .map_err(|_| TestTrieNodeProviderError::PreimageNotFound)?;\n\n                self.kv_store\n                    .lock()\n                    .await\n                    .put(hash, preimage.clone())\n                    .map_err(|_| TestTrieNodeProviderError::KVStore)?;\n\n                Ok(preimage)\n            })\n        })?;\n\n        // Decode the Header.\n        Header::decode(&mut encoded_header.as_ref()).map_err(TestTrieNodeProviderError::Rlp)\n    }\n}\n\n/// A simple [`TrieDBProvider`] that reads data from a disk-based key-value store.\n#[derive(Debug)]\npub struct DiskTrieNodeProvider {\n    kv_store: DB,\n}\n\nimpl DiskTrieNodeProvider {\n    /// Creates a new [`DiskTrieNodeProvider`] with the given [`rocksdb`] K/V store.\n    pub const fn new(kv_store: DB) -> Self {\n        Self { kv_store }\n    }\n}\n\nimpl TrieProvider for DiskTrieNodeProvider {\n    type Error = TestTrieNodeProviderError;\n\n    fn trie_node_by_hash(&self, key: B256) -> Result<TrieNode, Self::Error> {\n        TrieNode::decode(\n            &mut self\n                .kv_store\n                .get(key)\n                .map_err(|_| TestTrieNodeProviderError::PreimageNotFound)?\n                .ok_or(TestTrieNodeProviderError::PreimageNotFound)?\n                .as_slice(),\n        )\n        .map_err(TestTrieNodeProviderError::Rlp)\n    }\n}\n\nimpl TrieDBProvider for DiskTrieNodeProvider {\n    fn bytecode_by_hash(&self, code_hash: B256) -> Result<Bytes, Self::Error> {\n        self.kv_store\n            .get(code_hash)\n            .map_err(|_| TestTrieNodeProviderError::PreimageNotFound)?\n            .map(Bytes::from)\n            .ok_or(TestTrieNodeProviderError::PreimageNotFound)\n    }\n\n    fn header_by_hash(&self, hash: B256) -> Result<Header, Self::Error> {\n        Header::decode(\n            &mut self\n                .kv_store\n                .get(hash)\n                .map_err(|_| TestTrieNodeProviderError::PreimageNotFound)?\n                .ok_or(TestTrieNodeProviderError::PreimageNotFound)?\n                .as_slice(),\n        )\n        .map_err(TestTrieNodeProviderError::Rlp)\n    }\n}\n\n/// An error type for the [`DiskTrieNodeProvider`] and [`ExecutorTestFixtureCreator`].\n#[derive(Debug, thiserror::Error)]\npub enum TestTrieNodeProviderError {\n    /// The preimage was not found in the key-value store.\n    #[error(\"Preimage not found\")]\n    PreimageNotFound,\n    /// Failed to decode the RLP-encoded data.\n    #[error(\"Failed to decode RLP: {0}\")]\n    Rlp(alloy_rlp::Error),\n    /// Failed to write back to the key-value store.\n    #[error(\"Failed to write back to key value store\")]\n    KVStore,\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "differs",
+      "coveredLines": 373,
+      "match": {
+        "origin": "own",
+        "collection": "optimism",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "test_utils.rs",
+        "similarity": 0.936,
+        "reportId": "optimism/cantina-kona-2026-03",
+        "repository": "op-rs/kona",
+        "path": "crates/proof/executor/src/test_utils.rs",
+        "commit": "86910c9112437bbb849eca28961f813c5450e103",
+        "commitTimestamp": "2025-12-15T17:17:05Z",
+        "url": "https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/crates/proof/executor/src/test_utils.rs",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). kona-executor block builder; Low finding 3.4.2 (util.rs) and Informational 3.5.18 (builder/core.rs) located here.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 31,
+        "removed": 8,
+        "ignoredAdded": 12,
+        "ignoredRemoved": 3,
+        "unchanged": 373,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 6,
+            "newStart": 1,
+            "newLines": 6,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "//! Test utilities for the executor."
+              },
+              { "type": " ", "oldLine": 2, "newLine": 2, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 3,
+                "text": "use crate::{StatelessL2Builder, TrieDBProvider};",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "use crate::{BlockBuildingOutcome, ExecutorResult, StatelessL2Builder, TrieDBProvider};",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "use alloy_consensus::Header;"
+              },
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 5,
+                "text": "use alloy_op_evm::OpEvmFactory;"
+              },
+              {
+                "type": " ",
+                "oldLine": 6,
+                "newLine": 6,
+                "text": "use alloy_primitives::{B256, Bytes, Sealable};"
+              }
+            ]
+          },
+          {
+            "oldStart": 18,
+            "oldLines": 10,
+            "newStart": 18,
+            "newLines": 19,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 18,
+                "newLine": 18,
+                "text": "use std::{path::PathBuf, sync::Arc};"
+              },
+              {
+                "type": " ",
+                "oldLine": 19,
+                "newLine": 19,
+                "text": "use tokio::{fs, runtime::Handle, sync::Mutex};"
+              },
+              { "type": " ", "oldLine": 20, "newLine": 20, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 21,
+                "text": "/// Executes a [ExecutorTestFixture] stored at the passed `fixture_path` and asserts that the",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 22,
+                "text": "/// produced block hash matches the expected block hash.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 23,
+                "text": "pub async fn run_test_fixture(fixture_path: PathBuf) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 24,
+                "text": "    // First, untar the fixture.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 21,
+                "text": "/// A loaded executor test fixture and its backing temporary fixture directory.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 22,
+                "text": "#[derive(Debug)]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 23,
+                "text": "pub struct LoadedExecutorTestFixture {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 24,
+                "text": "    /// Keeps the untarred fixture directory alive while the `RocksDB` provider is open.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 25,
+                "text": "    pub fixture_dir: tempfile::TempDir,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 26,
+                "text": "    /// The deserialized fixture metadata and payload.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 27,
+                "text": "    pub fixture: ExecutorTestFixture,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 28,
+                "text": "    /// Trie/database provider backed by the fixture's key-value store.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 29,
+                "text": "    pub provider: DiskTrieNodeProvider,",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 30, "text": "}", "ignored": false },
+              { "type": "+", "newLine": 31, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 32,
+                "text": "/// Loads a [`ExecutorTestFixture`] stored at the passed `fixture_path`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 33,
+                "text": "pub async fn load_test_fixture(fixture_path: PathBuf) -> LoadedExecutorTestFixture {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 25,
+                "newLine": 34,
+                "text": "    let fixture_dir = tempfile::tempdir().expect(\"Failed to create temporary directory\");"
+              },
+              {
+                "type": " ",
+                "oldLine": 26,
+                "newLine": 35,
+                "text": "    tokio::process::Command::new(\"tar\")"
+              },
+              {
+                "type": " ",
+                "oldLine": 27,
+                "newLine": 36,
+                "text": "        .arg(\"-xvf\")"
+              }
+            ]
+          },
+          {
+            "oldStart": 43,
+            "oldLines": 19,
+            "newStart": 52,
+            "newLines": 40,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 43,
+                "newLine": 52,
+                "text": "        serde_json::from_slice(&fs::read(fixture_dir.path().join(\"fixture.json\")).await.unwrap())"
+              },
+              {
+                "type": " ",
+                "oldLine": 44,
+                "newLine": 53,
+                "text": "            .expect(\"Failed to deserialize fixture\");"
+              },
+              { "type": " ", "oldLine": 45, "newLine": 54, "text": "" },
+              {
+                "type": "+",
+                "newLine": 55,
+                "text": "    LoadedExecutorTestFixture { fixture_dir, fixture, provider }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 56, "text": "}", "ignored": false },
+              { "type": "+", "newLine": 57, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 58,
+                "text": "/// Executes a loaded fixture, optionally overriding SDM activation for the run.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 59,
+                "text": "pub fn execute_loaded_fixture(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 60,
+                "text": "    loaded: LoadedExecutorTestFixture,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 61,
+                "text": "    sdm_active_override: Option<bool>,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 62,
+                "text": ") -> ExecutorResult<BlockBuildingOutcome<op_alloy_consensus::OpReceiptEnvelope>> {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 63,
+                "text": "    let LoadedExecutorTestFixture { fixture_dir: _fixture_dir, fixture, provider } = loaded;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 64,
+                "text": "    let ExecutorTestFixture { rollup_config, parent_header, executing_payload, .. } = fixture;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 65, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 46,
+                "newLine": 66,
+                "text": "    let mut executor = StatelessL2Builder::new("
+              },
+              {
+                "type": "-",
+                "oldLine": 47,
+                "text": "        &fixture.rollup_config,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 48,
+                "text": "        OpEvmFactory::default(),",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 67,
+                "text": "        &rollup_config,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 68,
+                "text": "        OpEvmFactory::<alloy_op_evm::OpTx>::default(),",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 69,
+                "text": "        alloy_op_evm::block::OpAlloyReceiptBuilder::default(),",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 49,
+                "newLine": 70,
+                "text": "        provider,"
+              },
+              {
+                "type": " ",
+                "oldLine": 50,
+                "newLine": 71,
+                "text": "        NoopTrieHinter,"
+              },
+              {
+                "type": "-",
+                "oldLine": 51,
+                "text": "        fixture.parent_header.seal_slow(),",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 72,
+                "text": "        parent_header.seal_slow(),",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 52, "newLine": 73, "text": "    );" },
+              {
+                "type": "+",
+                "newLine": 74,
+                "text": "    executor.set_sdm_active_override(sdm_active_override);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 53, "newLine": 75, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 54,
+                "text": "    let outcome = executor.build_block(fixture.executing_payload).unwrap();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 76,
+                "text": "    executor.build_block(executing_payload)",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 77, "text": "}", "ignored": false },
+              { "type": " ", "oldLine": 55, "newLine": 78, "text": "" },
+              {
+                "type": "+",
+                "newLine": 79,
+                "text": "/// Executes a [`ExecutorTestFixture`] stored at the passed `fixture_path` and asserts that the",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 80,
+                "text": "/// produced block hash matches the expected block hash.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 81,
+                "text": "pub async fn run_test_fixture(fixture_path: PathBuf) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 82,
+                "text": "    let loaded = load_test_fixture(fixture_path).await;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 83,
+                "text": "    let expected_block_hash = loaded.fixture.expected_block_hash;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 84,
+                "text": "    let outcome = execute_loaded_fixture(loaded, None).unwrap();",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 85, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 56,
+                "newLine": 86,
+                "text": "    assert_eq!("
+              },
+              {
+                "type": " ",
+                "oldLine": 57,
+                "newLine": 87,
+                "text": "        outcome.header.hash(),"
+              },
+              {
+                "type": "-",
+                "oldLine": 58,
+                "text": "        fixture.expected_block_hash,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 88,
+                "text": "        expected_block_hash,",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 59,
+                "newLine": 89,
+                "text": "        \"Produced header does not match the expected header\""
+              },
+              { "type": " ", "oldLine": 60, "newLine": 90, "text": "    );" },
+              { "type": " ", "oldLine": 61, "newLine": 91, "text": "}" }
+            ]
+          },
+          {
+            "oldStart": 151,
+            "oldLines": 6,
+            "newStart": 181,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 151,
+                "newLine": 181,
+                "text": "                prev_randao: executing_header.mix_hash,"
+              },
+              {
+                "type": " ",
+                "oldLine": 152,
+                "newLine": 182,
+                "text": "                withdrawals: Default::default(),"
+              },
+              {
+                "type": " ",
+                "oldLine": 153,
+                "newLine": 183,
+                "text": "                suggested_fee_recipient: executing_header.beneficiary,"
+              },
+              {
+                "type": "+",
+                "newLine": 184,
+                "text": "                slot_number: Default::default(),",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 154,
+                "newLine": 185,
+                "text": "            },"
+              },
+              {
+                "type": " ",
+                "oldLine": 155,
+                "newLine": 186,
+                "text": "            gas_limit: Some(executing_header.gas_limit),"
+              },
+              {
+                "type": " ",
+                "oldLine": 156,
+                "newLine": 187,
+                "text": "            transactions: Some(encoded_executing_transactions),"
+              }
+            ]
+          },
+          {
+            "oldStart": 181,
+            "oldLines": 7,
+            "newStart": 212,
+            "newLines": 8,
+            "lines": [
+              { "type": " ", "oldLine": 181, "newLine": 212, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 182,
+                "newLine": 213,
+                "text": "        let mut executor = StatelessL2Builder::new("
+              },
+              {
+                "type": " ",
+                "oldLine": 183,
+                "newLine": 214,
+                "text": "            rollup_config,"
+              },
+              {
+                "type": "-",
+                "oldLine": 184,
+                "text": "            OpEvmFactory::default(),",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 215,
+                "text": "            OpEvmFactory::<alloy_op_evm::OpTx>::default(),",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 216,
+                "text": "            alloy_op_evm::block::OpAlloyReceiptBuilder::default(),",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 185,
+                "newLine": 217,
+                "text": "            self,"
+              },
+              {
+                "type": " ",
+                "oldLine": 186,
+                "newLine": 218,
+                "text": "            NoopTrieHinter,"
+              },
+              {
+                "type": " ",
+                "oldLine": 187,
+                "newLine": 219,
+                "text": "            parent_header,"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

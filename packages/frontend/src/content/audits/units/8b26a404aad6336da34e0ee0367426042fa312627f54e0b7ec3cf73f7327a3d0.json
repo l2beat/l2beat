@@ -1,1 +1,1052 @@
-{"schemaVersion":2,"unitHash":"8b26a404aad6336da34e0ee0367426042fa312627f54e0b7ec3cf73f7327a3d0","name":"channel_reader.rs","kind":"program","lines":308,"source":"//! This module contains the `ChannelReader` struct.\n\nuse crate::{\n    BatchStreamProvider, OriginAdvancer, OriginProvider, PipelineError, PipelineResult, Stage,\n};\nuse alloc::{boxed::Box, sync::Arc};\nuse alloy_eips::BlockNumHash;\nuse alloy_primitives::Bytes;\nuse async_trait::async_trait;\nuse core::fmt::Debug;\nuse kona_genesis::{\n    MAX_RLP_BYTES_PER_CHANNEL_BEDROCK, MAX_RLP_BYTES_PER_CHANNEL_FJORD, RollupConfig, SystemConfig,\n};\nuse kona_protocol::{Batch, BatchReader, BlockInfo};\nuse tracing::{debug, warn};\n\n/// The [`ChannelReader`] provider trait.\n#[async_trait]\npub trait ChannelReaderProvider {\n    /// Pulls the next piece of data from the channel bank. Note that it attempts to pull data out\n    /// of the channel bank prior to loading data in (unlike most other stages). This is to\n    /// ensure maintain consistency around channel bank pruning which depends upon the order\n    /// of operations.\n    async fn next_data(&mut self) -> PipelineResult<Option<Bytes>>;\n}\n\n/// [`ChannelReader`] is a stateful stage that reads [`Batch`]es from `Channel`s.\n///\n/// The [`ChannelReader`] pulls `Channel`s from the channel bank as raw data\n/// and pipes it into a `BatchReader`. Since the raw data is compressed,\n/// the `BatchReader` first decompresses the data using the first bytes as\n/// a compression algorithm identifier.\n///\n/// Once the data is decompressed, it is decoded into a `Batch` and passed\n/// to the next stage in the pipeline.\n#[derive(Debug)]\npub struct ChannelReader<P>\nwhere\n    P: ChannelReaderProvider + OriginAdvancer + OriginProvider + Stage + Debug,\n{\n    /// The previous stage of the derivation pipeline.\n    pub prev: P,\n    /// The batch reader.\n    pub next_batch: Option<BatchReader>,\n    /// The rollup configuration.\n    pub cfg: Arc<RollupConfig>,\n}\n\nimpl<P> ChannelReader<P>\nwhere\n    P: ChannelReaderProvider + OriginAdvancer + OriginProvider + Stage + Debug,\n{\n    /// Create a new [`ChannelReader`] stage.\n    pub const fn new(prev: P, cfg: Arc<RollupConfig>) -> Self {\n        Self { prev, next_batch: None, cfg }\n    }\n\n    /// Creates the batch reader from available channel data.\n    async fn set_batch_reader(&mut self) -> PipelineResult<()> {\n        if self.next_batch.is_none() {\n            let channel =\n                self.prev.next_data().await?.ok_or(PipelineError::ChannelReaderEmpty.temp())?;\n\n            let origin = self.prev.origin().ok_or(PipelineError::MissingOrigin.crit())?;\n            let max_rlp_bytes_per_channel = if self.cfg.is_fjord_active(origin.timestamp) {\n                MAX_RLP_BYTES_PER_CHANNEL_FJORD\n            } else {\n                MAX_RLP_BYTES_PER_CHANNEL_BEDROCK\n            };\n\n            self.next_batch = Some(BatchReader::new(\n                &channel[..],\n                max_rlp_bytes_per_channel as usize,\n                origin.timestamp,\n            ));\n            kona_macros::set!(gauge, crate::metrics::Metrics::PIPELINE_BATCH_READER_SET, 1);\n        }\n        Ok(())\n    }\n\n    /// Forces the read to continue with the next channel, resetting any\n    /// decoding / decompression state to a fresh start.\n    pub fn next_channel(&mut self) {\n        self.next_batch = None;\n        kona_macros::set!(gauge, crate::metrics::Metrics::PIPELINE_BATCH_READER_SET, 0);\n    }\n}\n\n#[async_trait]\nimpl<P> OriginAdvancer for ChannelReader<P>\nwhere\n    P: ChannelReaderProvider + OriginAdvancer + OriginProvider + Stage + Send + Debug,\n{\n    async fn advance_origin(&mut self) -> PipelineResult<()> {\n        self.prev.advance_origin().await\n    }\n}\n\n#[async_trait]\nimpl<P> BatchStreamProvider for ChannelReader<P>\nwhere\n    P: ChannelReaderProvider + OriginAdvancer + OriginProvider + Stage + Send + Debug,\n{\n    /// This method is called by the `BatchStream` if an invalid span batch is found.\n    /// In the case of an invalid span batch, the associated channel must be flushed.\n    ///\n    /// See: <https://specs.optimism.io/protocol/holocene/derivation.html#span-batches>\n    ///\n    /// SAFETY: Only called post-holocene activation.\n    fn flush(&mut self) {\n        debug!(target: \"channel_reader\", \"[POST-HOLOCENE] Flushing channel\");\n        self.next_channel();\n    }\n\n    async fn next_batch(&mut self) -> PipelineResult<Batch> {\n        if let Err(e) = self.set_batch_reader().await {\n            debug!(target: \"channel_reader\", \"Failed to set batch reader: {:?}\", e);\n            self.next_channel();\n            return Err(e);\n        }\n\n        // SAFETY: The batch reader must be set above.\n        let next_batch = self.next_batch.as_mut().expect(\"Batch reader must be set\");\n        match next_batch.decompress() {\n            Ok(()) => {\n                // Record the decompressed size and type.\n                let _size = next_batch.decompressed.len() as f64;\n                let _ty = if next_batch.brotli_used {\n                    BatchReader::CHANNEL_VERSION_BROTLI\n                } else {\n                    BatchReader::ZLIB_DEFLATE_COMPRESSION_METHOD\n                };\n                kona_macros::set!(\n                    gauge,\n                    crate::metrics::Metrics::PIPELINE_LATEST_DECOMPRESSED_BATCH_SIZE,\n                    _size\n                );\n                kona_macros::set!(\n                    gauge,\n                    crate::metrics::Metrics::PIPELINE_LATEST_DECOMPRESSED_BATCH_TYPE,\n                    _ty as f64\n                );\n            }\n            Err(err) => {\n                debug!(target: \"channel_reader\", ?err, \"Failed to decompress batch\");\n                self.next_channel();\n                return Err(PipelineError::NotEnoughData.temp());\n            }\n        }\n\n        // Read the next batch from the reader's decompressed data\n        match next_batch.next_batch(self.cfg.as_ref()).ok_or(PipelineError::NotEnoughData.temp()) {\n            Ok(batch) => {\n                kona_macros::inc!(\n                    gauge,\n                    crate::metrics::Metrics::PIPELINE_READ_BATCHES,\n                    \"type\" => batch.to_string(),\n                );\n                Ok(batch)\n            }\n            Err(e) => {\n                self.next_channel();\n                Err(e)\n            }\n        }\n    }\n}\n\nimpl<P> OriginProvider for ChannelReader<P>\nwhere\n    P: ChannelReaderProvider + OriginAdvancer + OriginProvider + Stage + Debug,\n{\n    fn origin(&self) -> Option<BlockInfo> {\n        self.prev.origin()\n    }\n}\n\n#[async_trait]\nimpl<P> Stage for ChannelReader<P>\nwhere\n    P: ChannelReaderProvider + OriginAdvancer + OriginProvider + Stage + Debug + Send,\n{\n    async fn reset(\n        &mut self,\n        l1_origin: BlockNumHash,\n        system_config: SystemConfig,\n    ) -> PipelineResult<()> {\n        self.prev.reset(l1_origin, system_config).await?;\n        self.next_channel();\n        Ok(())\n    }\n\n    async fn activate(&mut self) -> PipelineResult<()> {\n        self.prev.activate().await?;\n        self.next_channel();\n        Ok(())\n    }\n\n    async fn flush_channel(&mut self) -> PipelineResult<()> {\n        warn!(target: \"channel_reader\", \"Flushed channel\");\n        self.next_batch = None;\n        kona_macros::set!(gauge, crate::metrics::Metrics::PIPELINE_BATCH_READER_SET, 0);\n        Ok(())\n    }\n\n    async fn provide_block(&mut self, block: BlockInfo) -> PipelineResult<()> {\n        self.prev.provide_block(block).await\n    }\n}\n\n#[cfg(test)]\nmod test {\n    use super::*;\n    use crate::{errors::PipelineErrorKind, test_utils::TestChannelReaderProvider};\n    use alloc::vec;\n    use kona_genesis::HardForkConfig;\n\n    fn new_compressed_batch_data() -> Bytes {\n        let file_contents =\n            alloc::string::String::from_utf8_lossy(include_bytes!(\"../../../testdata/batch.hex\"));\n        let file_contents = &(&*file_contents)[..file_contents.len() - 1];\n        let data = alloy_primitives::hex::decode(file_contents).unwrap();\n        data.into()\n    }\n\n    #[tokio::test]\n    async fn test_flush_channel_reader() {\n        let mock = TestChannelReaderProvider::new(vec![Ok(Some(new_compressed_batch_data()))]);\n        let mut reader = ChannelReader::new(mock, Arc::new(RollupConfig::default()));\n        reader.next_batch = Some(BatchReader::new(\n            new_compressed_batch_data(),\n            MAX_RLP_BYTES_PER_CHANNEL_FJORD as usize,\n            0,\n        ));\n        reader.flush_channel().await.unwrap();\n        assert!(reader.next_batch.is_none());\n    }\n\n    #[tokio::test]\n    async fn test_reset_channel_reader() {\n        let mock = TestChannelReaderProvider::new(vec![Ok(None)]);\n        let mut reader = ChannelReader::new(mock, Arc::new(RollupConfig::default()));\n        reader.next_batch = Some(BatchReader::new(\n            vec![0x00, 0x01, 0x02],\n            MAX_RLP_BYTES_PER_CHANNEL_FJORD as usize,\n            0,\n        ));\n        assert!(!reader.prev.reset);\n        reader.reset(BlockNumHash::default(), SystemConfig::default()).await.unwrap();\n        assert!(reader.next_batch.is_none());\n        assert!(reader.prev.reset);\n    }\n\n    #[tokio::test]\n    async fn test_next_batch_batch_reader_set_fails() {\n        let mock = TestChannelReaderProvider::new(vec![Err(PipelineError::Eof.temp())]);\n        let mut reader = ChannelReader::new(mock, Arc::new(RollupConfig::default()));\n        assert_eq!(reader.next_batch().await, Err(PipelineError::Eof.temp()));\n        assert!(reader.next_batch.is_none());\n    }\n\n    #[tokio::test]\n    async fn test_next_batch_batch_reader_no_data() {\n        let mock = TestChannelReaderProvider::new(vec![Ok(None)]);\n        let mut reader = ChannelReader::new(mock, Arc::new(RollupConfig::default()));\n        assert!(matches!(\n            reader.next_batch().await.unwrap_err(),\n            PipelineErrorKind::Temporary(PipelineError::ChannelReaderEmpty)\n        ));\n        assert!(reader.next_batch.is_none());\n    }\n\n    #[tokio::test]\n    async fn test_next_batch_batch_reader_not_enough_data() {\n        let mut first = new_compressed_batch_data();\n        let second = first.split_to(first.len() / 2);\n        let mock = TestChannelReaderProvider::new(vec![Ok(Some(first)), Ok(Some(second))]);\n        let mut reader = ChannelReader::new(mock, Arc::new(RollupConfig::default()));\n        assert_eq!(reader.next_batch().await, Err(PipelineError::NotEnoughData.temp()));\n        assert!(reader.next_batch.is_none());\n    }\n\n    #[tokio::test]\n    async fn test_next_batch_succeeds() {\n        let raw = new_compressed_batch_data();\n        let mock = TestChannelReaderProvider::new(vec![Ok(Some(raw))]);\n        let mut reader = ChannelReader::new(mock, Arc::new(RollupConfig::default()));\n        let res = reader.next_batch().await.unwrap();\n        matches!(res, Batch::Span(_));\n        assert!(reader.next_batch.is_some());\n    }\n\n    #[tokio::test]\n    async fn test_flush_post_holocene() {\n        let raw = new_compressed_batch_data();\n        let config = Arc::new(RollupConfig {\n            hardforks: HardForkConfig { holocene_time: Some(0), ..Default::default() },\n            ..Default::default()\n        });\n        let mock = TestChannelReaderProvider::new(vec![Ok(Some(raw))]);\n        let mut reader = ChannelReader::new(mock, config);\n        let res = reader.next_batch().await.unwrap();\n        matches!(res, Batch::Span(_));\n        assert!(reader.next_batch.is_some());\n        reader.flush();\n        assert!(reader.next_batch.is_none());\n    }\n}","resolutions":{"9fa846564f4071bd":{"status":"differs","coveredLines":271,"match":{"origin":"own","collection":"optimism","relation":{"type":"own"},"rank":0,"matchedBy":"name","auditedName":"channel_reader.rs","similarity":0.852,"reportId":"optimism/cantina-kona-2026-03","repository":"op-rs/kona","path":"crates/protocol/derive/src/stages/channel/channel_reader.rs","commit":"86910c9112437bbb849eca28961f813c5450e103","commitTimestamp":"2025-12-15T17:17:05Z","url":"https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/crates/protocol/derive/src/stages/channel/channel_reader.rs","auditStatus":"audited_with_no_major_findings","reviewPhase":"initial audit","coverage":"Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). kona-derive derivation pipeline (stages, sources, traversal, attributes). Medium findings 3.3.1 and 3.3.2 (pipeline/core.rs, stages/l1_retrieval.rs) and numerous Low/Informational findings located here; no Critical/High.","majorFindings":0,"isLatestVersion":true,"laterAuditedVersionExists":false,"totalVersions":1},"diff":{"added":37,"removed":26,"ignoredAdded":12,"ignoredRemoved":9,"unchanged":271,"ignoredOnly":false,"hunks":[{"oldStart":1,"oldLines":15,"newStart":1,"newLines":15,"lines":[{"type":" ","oldLine":1,"newLine":1,"text":"//! This module contains the `ChannelReader` struct."},{"type":" ","oldLine":2,"newLine":2,"text":""},{"type":" ","oldLine":3,"newLine":3,"text":"use crate::{"},{"type":"-","oldLine":4,"text":"    BatchStreamProvider, OriginAdvancer, OriginProvider, PipelineError, PipelineResult, Signal,","ignored":false},{"type":"-","oldLine":5,"text":"    SignalReceiver,","ignored":false},{"type":"+","newLine":4,"text":"    BatchStreamProvider, OriginAdvancer, OriginProvider, PipelineError, PipelineResult, Stage,","ignored":false},{"type":" ","oldLine":6,"newLine":5,"text":"};"},{"type":" ","oldLine":7,"newLine":6,"text":"use alloc::{boxed::Box, sync::Arc};"},{"type":"+","newLine":7,"text":"use alloy_eips::BlockNumHash;","ignored":false},{"type":" ","oldLine":8,"newLine":8,"text":"use alloy_primitives::Bytes;"},{"type":" ","oldLine":9,"newLine":9,"text":"use async_trait::async_trait;"},{"type":" ","oldLine":10,"newLine":10,"text":"use core::fmt::Debug;"},{"type":" ","oldLine":11,"newLine":11,"text":"use kona_genesis::{"},{"type":"-","oldLine":12,"text":"    MAX_RLP_BYTES_PER_CHANNEL_BEDROCK, MAX_RLP_BYTES_PER_CHANNEL_FJORD, RollupConfig,","ignored":false},{"type":"+","newLine":12,"text":"    MAX_RLP_BYTES_PER_CHANNEL_BEDROCK, MAX_RLP_BYTES_PER_CHANNEL_FJORD, RollupConfig, SystemConfig,","ignored":false},{"type":" ","oldLine":13,"newLine":13,"text":"};"},{"type":" ","oldLine":14,"newLine":14,"text":"use kona_protocol::{Batch, BatchReader, BlockInfo};"},{"type":" ","oldLine":15,"newLine":15,"text":"use tracing::{debug, warn};"}]},{"oldStart":36,"oldLines":7,"newStart":36,"newLines":7,"lines":[{"type":" ","oldLine":36,"newLine":36,"text":"#[derive(Debug)]"},{"type":" ","oldLine":37,"newLine":37,"text":"pub struct ChannelReader<P>"},{"type":" ","oldLine":38,"newLine":38,"text":"where"},{"type":"-","oldLine":39,"text":"    P: ChannelReaderProvider + OriginAdvancer + OriginProvider + SignalReceiver + Debug,","ignored":false},{"type":"+","newLine":39,"text":"    P: ChannelReaderProvider + OriginAdvancer + OriginProvider + Stage + Debug,","ignored":false},{"type":" ","oldLine":40,"newLine":40,"text":"{"},{"type":" ","oldLine":41,"newLine":41,"text":"    /// The previous stage of the derivation pipeline."},{"type":" ","oldLine":42,"newLine":42,"text":"    pub prev: P,"}]},{"oldStart":48,"oldLines":7,"newStart":48,"newLines":7,"lines":[{"type":" ","oldLine":48,"newLine":48,"text":""},{"type":" ","oldLine":49,"newLine":49,"text":"impl<P> ChannelReader<P>"},{"type":" ","oldLine":50,"newLine":50,"text":"where"},{"type":"-","oldLine":51,"text":"    P: ChannelReaderProvider + OriginAdvancer + OriginProvider + SignalReceiver + Debug,","ignored":false},{"type":"+","newLine":51,"text":"    P: ChannelReaderProvider + OriginAdvancer + OriginProvider + Stage + Debug,","ignored":false},{"type":" ","oldLine":52,"newLine":52,"text":"{"},{"type":" ","oldLine":53,"newLine":53,"text":"    /// Create a new [`ChannelReader`] stage."},{"type":" ","oldLine":54,"newLine":54,"text":"    pub const fn new(prev: P, cfg: Arc<RollupConfig>) -> Self {"}]},{"oldStart":68,"oldLines":8,"newStart":68,"newLines":11,"lines":[{"type":" ","oldLine":68,"newLine":68,"text":"                MAX_RLP_BYTES_PER_CHANNEL_BEDROCK"},{"type":" ","oldLine":69,"newLine":69,"text":"            };"},{"type":" ","oldLine":70,"newLine":70,"text":""},{"type":"-","oldLine":71,"text":"            self.next_batch =","ignored":false},{"type":"-","oldLine":72,"text":"                Some(BatchReader::new(&channel[..], max_rlp_bytes_per_channel as usize));","ignored":false},{"type":"+","newLine":71,"text":"            self.next_batch = Some(BatchReader::new(","ignored":false},{"type":"+","newLine":72,"text":"                &channel[..],","ignored":false},{"type":"+","newLine":73,"text":"                max_rlp_bytes_per_channel as usize,","ignored":false},{"type":"+","newLine":74,"text":"                origin.timestamp,","ignored":false},{"type":"+","newLine":75,"text":"            ));","ignored":false},{"type":" ","oldLine":73,"newLine":76,"text":"            kona_macros::set!(gauge, crate::metrics::Metrics::PIPELINE_BATCH_READER_SET, 1);"},{"type":" ","oldLine":74,"newLine":77,"text":"        }"},{"type":" ","oldLine":75,"newLine":78,"text":"        Ok(())"}]},{"oldStart":86,"oldLines":7,"newStart":89,"newLines":7,"lines":[{"type":" ","oldLine":86,"newLine":89,"text":"#[async_trait]"},{"type":" ","oldLine":87,"newLine":90,"text":"impl<P> OriginAdvancer for ChannelReader<P>"},{"type":" ","oldLine":88,"newLine":91,"text":"where"},{"type":"-","oldLine":89,"text":"    P: ChannelReaderProvider + OriginAdvancer + OriginProvider + SignalReceiver + Send + Debug,","ignored":false},{"type":"+","newLine":92,"text":"    P: ChannelReaderProvider + OriginAdvancer + OriginProvider + Stage + Send + Debug,","ignored":false},{"type":" ","oldLine":90,"newLine":93,"text":"{"},{"type":" ","oldLine":91,"newLine":94,"text":"    async fn advance_origin(&mut self) -> PipelineResult<()> {"},{"type":" ","oldLine":92,"newLine":95,"text":"        self.prev.advance_origin().await"}]},{"oldStart":96,"oldLines":9,"newStart":99,"newLines":9,"lines":[{"type":" ","oldLine":96,"newLine":99,"text":"#[async_trait]"},{"type":" ","oldLine":97,"newLine":100,"text":"impl<P> BatchStreamProvider for ChannelReader<P>"},{"type":" ","oldLine":98,"newLine":101,"text":"where"},{"type":"-","oldLine":99,"text":"    P: ChannelReaderProvider + OriginAdvancer + OriginProvider + SignalReceiver + Send + Debug,","ignored":false},{"type":"+","newLine":102,"text":"    P: ChannelReaderProvider + OriginAdvancer + OriginProvider + Stage + Send + Debug,","ignored":false},{"type":" ","oldLine":100,"newLine":103,"text":"{"},{"type":"-","oldLine":101,"text":"    /// This method is called by the BatchStream if an invalid span batch is found.","ignored":true},{"type":"+","newLine":104,"text":"    /// This method is called by the `BatchStream` if an invalid span batch is found.","ignored":true},{"type":" ","oldLine":102,"newLine":105,"text":"    /// In the case of an invalid span batch, the associated channel must be flushed."},{"type":" ","oldLine":103,"newLine":106,"text":"    ///"},{"type":" ","oldLine":104,"newLine":107,"text":"    /// See: <https://specs.optimism.io/protocol/holocene/derivation.html#span-batches>"}]},{"oldStart":121,"oldLines":8,"newStart":124,"newLines":8,"lines":[{"type":" ","oldLine":121,"newLine":124,"text":"        match next_batch.decompress() {"},{"type":" ","oldLine":122,"newLine":125,"text":"            Ok(()) => {"},{"type":" ","oldLine":123,"newLine":126,"text":"                // Record the decompressed size and type."},{"type":"-","oldLine":124,"text":"                let size = next_batch.decompressed.len() as f64;","ignored":false},{"type":"-","oldLine":125,"text":"                let ty = if next_batch.brotli_used {","ignored":false},{"type":"+","newLine":127,"text":"                let _size = next_batch.decompressed.len() as f64;","ignored":false},{"type":"+","newLine":128,"text":"                let _ty = if next_batch.brotli_used {","ignored":false},{"type":" ","oldLine":126,"newLine":129,"text":"                    BatchReader::CHANNEL_VERSION_BROTLI"},{"type":" ","oldLine":127,"newLine":130,"text":"                } else {"},{"type":" ","oldLine":128,"newLine":131,"text":"                    BatchReader::ZLIB_DEFLATE_COMPRESSION_METHOD"}]},{"oldStart":130,"oldLines":12,"newStart":133,"newLines":12,"lines":[{"type":" ","oldLine":130,"newLine":133,"text":"                kona_macros::set!("},{"type":" ","oldLine":131,"newLine":134,"text":"                    gauge,"},{"type":" ","oldLine":132,"newLine":135,"text":"                    crate::metrics::Metrics::PIPELINE_LATEST_DECOMPRESSED_BATCH_SIZE,"},{"type":"-","oldLine":133,"text":"                    size","ignored":false},{"type":"+","newLine":136,"text":"                    _size","ignored":false},{"type":" ","oldLine":134,"newLine":137,"text":"                );"},{"type":" ","oldLine":135,"newLine":138,"text":"                kona_macros::set!("},{"type":" ","oldLine":136,"newLine":139,"text":"                    gauge,"},{"type":" ","oldLine":137,"newLine":140,"text":"                    crate::metrics::Metrics::PIPELINE_LATEST_DECOMPRESSED_BATCH_TYPE,"},{"type":"-","oldLine":138,"text":"                    ty as f64","ignored":false},{"type":"+","newLine":141,"text":"                    _ty as f64","ignored":false},{"type":" ","oldLine":139,"newLine":142,"text":"                );"},{"type":" ","oldLine":140,"newLine":143,"text":"            }"},{"type":" ","oldLine":141,"newLine":144,"text":"            Err(err) => {"}]},{"oldStart":165,"oldLines":7,"newStart":168,"newLines":7,"lines":[{"type":" ","oldLine":165,"newLine":168,"text":""},{"type":" ","oldLine":166,"newLine":169,"text":"impl<P> OriginProvider for ChannelReader<P>"},{"type":" ","oldLine":167,"newLine":170,"text":"where"},{"type":"-","oldLine":168,"text":"    P: ChannelReaderProvider + OriginAdvancer + OriginProvider + SignalReceiver + Debug,","ignored":false},{"type":"+","newLine":171,"text":"    P: ChannelReaderProvider + OriginAdvancer + OriginProvider + Stage + Debug,","ignored":false},{"type":" ","oldLine":169,"newLine":172,"text":"{"},{"type":" ","oldLine":170,"newLine":173,"text":"    fn origin(&self) -> Option<BlockInfo> {"},{"type":" ","oldLine":171,"newLine":174,"text":"        self.prev.origin()"}]},{"oldStart":173,"oldLines":33,"newStart":176,"newLines":42,"lines":[{"type":" ","oldLine":173,"newLine":176,"text":"}"},{"type":" ","oldLine":174,"newLine":177,"text":""},{"type":" ","oldLine":175,"newLine":178,"text":"#[async_trait]"},{"type":"-","oldLine":176,"text":"impl<P> SignalReceiver for ChannelReader<P>","ignored":false},{"type":"+","newLine":179,"text":"impl<P> Stage for ChannelReader<P>","ignored":false},{"type":" ","oldLine":177,"newLine":180,"text":"where"},{"type":"-","oldLine":178,"text":"    P: ChannelReaderProvider + OriginAdvancer + OriginProvider + SignalReceiver + Debug + Send,","ignored":false},{"type":"+","newLine":181,"text":"    P: ChannelReaderProvider + OriginAdvancer + OriginProvider + Stage + Debug + Send,","ignored":false},{"type":" ","oldLine":179,"newLine":182,"text":"{"},{"type":"-","oldLine":180,"text":"    async fn signal(&mut self, signal: Signal) -> PipelineResult<()> {","ignored":false},{"type":"-","oldLine":181,"text":"        match signal {","ignored":false},{"type":"-","oldLine":182,"text":"            Signal::FlushChannel => {","ignored":false},{"type":"-","oldLine":183,"text":"                // Drop the current in-progress channel.","ignored":true},{"type":"-","oldLine":184,"text":"                warn!(target: \"channel_reader\", \"Flushed channel\");","ignored":true},{"type":"-","oldLine":185,"text":"                self.next_batch = None;","ignored":true},{"type":"-","oldLine":186,"text":"                kona_macros::set!(gauge, crate::metrics::Metrics::PIPELINE_BATCH_READER_SET, 0);","ignored":true},{"type":"-","oldLine":187,"text":"            }","ignored":true},{"type":"-","oldLine":188,"text":"            s => {","ignored":false},{"type":"-","oldLine":189,"text":"                self.prev.signal(s).await?;","ignored":false},{"type":"-","oldLine":190,"text":"                self.next_channel();","ignored":true},{"type":"-","oldLine":191,"text":"            }","ignored":true},{"type":"-","oldLine":192,"text":"        }","ignored":true},{"type":"+","newLine":183,"text":"    async fn reset(","ignored":false},{"type":"+","newLine":184,"text":"        &mut self,","ignored":false},{"type":"+","newLine":185,"text":"        l1_origin: BlockNumHash,","ignored":false},{"type":"+","newLine":186,"text":"        system_config: SystemConfig,","ignored":false},{"type":"+","newLine":187,"text":"    ) -> PipelineResult<()> {","ignored":false},{"type":"+","newLine":188,"text":"        self.prev.reset(l1_origin, system_config).await?;","ignored":false},{"type":"+","newLine":189,"text":"        self.next_channel();","ignored":true},{"type":" ","oldLine":193,"newLine":190,"text":"        Ok(())"},{"type":" ","oldLine":194,"newLine":191,"text":"    }"},{"type":"+","newLine":192,"text":"","ignored":true},{"type":"+","newLine":193,"text":"    async fn activate(&mut self) -> PipelineResult<()> {","ignored":false},{"type":"+","newLine":194,"text":"        self.prev.activate().await?;","ignored":false},{"type":"+","newLine":195,"text":"        self.next_channel();","ignored":true},{"type":"+","newLine":196,"text":"        Ok(())","ignored":false},{"type":"+","newLine":197,"text":"    }","ignored":true},{"type":"+","newLine":198,"text":"","ignored":true},{"type":"+","newLine":199,"text":"    async fn flush_channel(&mut self) -> PipelineResult<()> {","ignored":false},{"type":"+","newLine":200,"text":"        warn!(target: \"channel_reader\", \"Flushed channel\");","ignored":true},{"type":"+","newLine":201,"text":"        self.next_batch = None;","ignored":true},{"type":"+","newLine":202,"text":"        kona_macros::set!(gauge, crate::metrics::Metrics::PIPELINE_BATCH_READER_SET, 0);","ignored":true},{"type":"+","newLine":203,"text":"        Ok(())","ignored":false},{"type":"+","newLine":204,"text":"    }","ignored":true},{"type":"+","newLine":205,"text":"","ignored":true},{"type":"+","newLine":206,"text":"    async fn provide_block(&mut self, block: BlockInfo) -> PipelineResult<()> {","ignored":false},{"type":"+","newLine":207,"text":"        self.prev.provide_block(block).await","ignored":false},{"type":"+","newLine":208,"text":"    }","ignored":true},{"type":" ","oldLine":195,"newLine":209,"text":"}"},{"type":" ","oldLine":196,"newLine":210,"text":""},{"type":" ","oldLine":197,"newLine":211,"text":"#[cfg(test)]"},{"type":" ","oldLine":198,"newLine":212,"text":"mod test {"},{"type":" ","oldLine":199,"newLine":213,"text":"    use super::*;"},{"type":"-","oldLine":200,"text":"    use crate::{","ignored":false},{"type":"-","oldLine":201,"text":"        errors::PipelineErrorKind, test_utils::TestChannelReaderProvider, types::ResetSignal,","ignored":false},{"type":"-","oldLine":202,"text":"    };","ignored":false},{"type":"+","newLine":214,"text":"    use crate::{errors::PipelineErrorKind, test_utils::TestChannelReaderProvider};","ignored":false},{"type":" ","oldLine":203,"newLine":215,"text":"    use alloc::vec;"},{"type":" ","oldLine":204,"newLine":216,"text":"    use kona_genesis::HardForkConfig;"},{"type":" ","oldLine":205,"newLine":217,"text":""}]},{"oldStart":218,"oldLines":8,"newStart":230,"newLines":9,"lines":[{"type":" ","oldLine":218,"newLine":230,"text":"        reader.next_batch = Some(BatchReader::new("},{"type":" ","oldLine":219,"newLine":231,"text":"            new_compressed_batch_data(),"},{"type":" ","oldLine":220,"newLine":232,"text":"            MAX_RLP_BYTES_PER_CHANNEL_FJORD as usize,"},{"type":"+","newLine":233,"text":"            0,","ignored":false},{"type":" ","oldLine":221,"newLine":234,"text":"        ));"},{"type":"-","oldLine":222,"text":"        reader.signal(Signal::FlushChannel).await.unwrap();","ignored":false},{"type":"+","newLine":235,"text":"        reader.flush_channel().await.unwrap();","ignored":false},{"type":" ","oldLine":223,"newLine":236,"text":"        assert!(reader.next_batch.is_none());"},{"type":" ","oldLine":224,"newLine":237,"text":"    }"},{"type":" ","oldLine":225,"newLine":238,"text":""}]},{"oldStart":230,"oldLines":9,"newStart":243,"newLines":10,"lines":[{"type":" ","oldLine":230,"newLine":243,"text":"        reader.next_batch = Some(BatchReader::new("},{"type":" ","oldLine":231,"newLine":244,"text":"            vec![0x00, 0x01, 0x02],"},{"type":" ","oldLine":232,"newLine":245,"text":"            MAX_RLP_BYTES_PER_CHANNEL_FJORD as usize,"},{"type":"+","newLine":246,"text":"            0,","ignored":false},{"type":" ","oldLine":233,"newLine":247,"text":"        ));"},{"type":" ","oldLine":234,"newLine":248,"text":"        assert!(!reader.prev.reset);"},{"type":"-","oldLine":235,"text":"        reader.signal(ResetSignal::default().signal()).await.unwrap();","ignored":false},{"type":"+","newLine":249,"text":"        reader.reset(BlockNumHash::default(), SystemConfig::default()).await.unwrap();","ignored":false},{"type":" ","oldLine":236,"newLine":250,"text":"        assert!(reader.next_batch.is_none());"},{"type":" ","oldLine":237,"newLine":251,"text":"        assert!(reader.prev.reset);"},{"type":" ","oldLine":238,"newLine":252,"text":"    }"}]}]},"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "8b26a404aad6336da34e0ee0367426042fa312627f54e0b7ec3cf73f7327a3d0",
+  "name": "channel_reader.rs",
+  "kind": "program",
+  "lines": 308,
+  "source": "//! This module contains the `ChannelReader` struct.\n\nuse crate::{\n    BatchStreamProvider, OriginAdvancer, OriginProvider, PipelineError, PipelineResult, Stage,\n};\nuse alloc::{boxed::Box, sync::Arc};\nuse alloy_eips::BlockNumHash;\nuse alloy_primitives::Bytes;\nuse async_trait::async_trait;\nuse core::fmt::Debug;\nuse kona_genesis::{\n    MAX_RLP_BYTES_PER_CHANNEL_BEDROCK, MAX_RLP_BYTES_PER_CHANNEL_FJORD, RollupConfig, SystemConfig,\n};\nuse kona_protocol::{Batch, BatchReader, BlockInfo};\nuse tracing::{debug, warn};\n\n/// The [`ChannelReader`] provider trait.\n#[async_trait]\npub trait ChannelReaderProvider {\n    /// Pulls the next piece of data from the channel bank. Note that it attempts to pull data out\n    /// of the channel bank prior to loading data in (unlike most other stages). This is to\n    /// ensure maintain consistency around channel bank pruning which depends upon the order\n    /// of operations.\n    async fn next_data(&mut self) -> PipelineResult<Option<Bytes>>;\n}\n\n/// [`ChannelReader`] is a stateful stage that reads [`Batch`]es from `Channel`s.\n///\n/// The [`ChannelReader`] pulls `Channel`s from the channel bank as raw data\n/// and pipes it into a `BatchReader`. Since the raw data is compressed,\n/// the `BatchReader` first decompresses the data using the first bytes as\n/// a compression algorithm identifier.\n///\n/// Once the data is decompressed, it is decoded into a `Batch` and passed\n/// to the next stage in the pipeline.\n#[derive(Debug)]\npub struct ChannelReader<P>\nwhere\n    P: ChannelReaderProvider + OriginAdvancer + OriginProvider + Stage + Debug,\n{\n    /// The previous stage of the derivation pipeline.\n    pub prev: P,\n    /// The batch reader.\n    pub next_batch: Option<BatchReader>,\n    /// The rollup configuration.\n    pub cfg: Arc<RollupConfig>,\n}\n\nimpl<P> ChannelReader<P>\nwhere\n    P: ChannelReaderProvider + OriginAdvancer + OriginProvider + Stage + Debug,\n{\n    /// Create a new [`ChannelReader`] stage.\n    pub const fn new(prev: P, cfg: Arc<RollupConfig>) -> Self {\n        Self { prev, next_batch: None, cfg }\n    }\n\n    /// Creates the batch reader from available channel data.\n    async fn set_batch_reader(&mut self) -> PipelineResult<()> {\n        if self.next_batch.is_none() {\n            let channel =\n                self.prev.next_data().await?.ok_or(PipelineError::ChannelReaderEmpty.temp())?;\n\n            let origin = self.prev.origin().ok_or(PipelineError::MissingOrigin.crit())?;\n            let max_rlp_bytes_per_channel = if self.cfg.is_fjord_active(origin.timestamp) {\n                MAX_RLP_BYTES_PER_CHANNEL_FJORD\n            } else {\n                MAX_RLP_BYTES_PER_CHANNEL_BEDROCK\n            };\n\n            self.next_batch = Some(BatchReader::new(\n                &channel[..],\n                max_rlp_bytes_per_channel as usize,\n                origin.timestamp,\n            ));\n            kona_macros::set!(gauge, crate::metrics::Metrics::PIPELINE_BATCH_READER_SET, 1);\n        }\n        Ok(())\n    }\n\n    /// Forces the read to continue with the next channel, resetting any\n    /// decoding / decompression state to a fresh start.\n    pub fn next_channel(&mut self) {\n        self.next_batch = None;\n        kona_macros::set!(gauge, crate::metrics::Metrics::PIPELINE_BATCH_READER_SET, 0);\n    }\n}\n\n#[async_trait]\nimpl<P> OriginAdvancer for ChannelReader<P>\nwhere\n    P: ChannelReaderProvider + OriginAdvancer + OriginProvider + Stage + Send + Debug,\n{\n    async fn advance_origin(&mut self) -> PipelineResult<()> {\n        self.prev.advance_origin().await\n    }\n}\n\n#[async_trait]\nimpl<P> BatchStreamProvider for ChannelReader<P>\nwhere\n    P: ChannelReaderProvider + OriginAdvancer + OriginProvider + Stage + Send + Debug,\n{\n    /// This method is called by the `BatchStream` if an invalid span batch is found.\n    /// In the case of an invalid span batch, the associated channel must be flushed.\n    ///\n    /// See: <https://specs.optimism.io/protocol/holocene/derivation.html#span-batches>\n    ///\n    /// SAFETY: Only called post-holocene activation.\n    fn flush(&mut self) {\n        debug!(target: \"channel_reader\", \"[POST-HOLOCENE] Flushing channel\");\n        self.next_channel();\n    }\n\n    async fn next_batch(&mut self) -> PipelineResult<Batch> {\n        if let Err(e) = self.set_batch_reader().await {\n            debug!(target: \"channel_reader\", \"Failed to set batch reader: {:?}\", e);\n            self.next_channel();\n            return Err(e);\n        }\n\n        // SAFETY: The batch reader must be set above.\n        let next_batch = self.next_batch.as_mut().expect(\"Batch reader must be set\");\n        match next_batch.decompress() {\n            Ok(()) => {\n                // Record the decompressed size and type.\n                let _size = next_batch.decompressed.len() as f64;\n                let _ty = if next_batch.brotli_used {\n                    BatchReader::CHANNEL_VERSION_BROTLI\n                } else {\n                    BatchReader::ZLIB_DEFLATE_COMPRESSION_METHOD\n                };\n                kona_macros::set!(\n                    gauge,\n                    crate::metrics::Metrics::PIPELINE_LATEST_DECOMPRESSED_BATCH_SIZE,\n                    _size\n                );\n                kona_macros::set!(\n                    gauge,\n                    crate::metrics::Metrics::PIPELINE_LATEST_DECOMPRESSED_BATCH_TYPE,\n                    _ty as f64\n                );\n            }\n            Err(err) => {\n                debug!(target: \"channel_reader\", ?err, \"Failed to decompress batch\");\n                self.next_channel();\n                return Err(PipelineError::NotEnoughData.temp());\n            }\n        }\n\n        // Read the next batch from the reader's decompressed data\n        match next_batch.next_batch(self.cfg.as_ref()).ok_or(PipelineError::NotEnoughData.temp()) {\n            Ok(batch) => {\n                kona_macros::inc!(\n                    gauge,\n                    crate::metrics::Metrics::PIPELINE_READ_BATCHES,\n                    \"type\" => batch.to_string(),\n                );\n                Ok(batch)\n            }\n            Err(e) => {\n                self.next_channel();\n                Err(e)\n            }\n        }\n    }\n}\n\nimpl<P> OriginProvider for ChannelReader<P>\nwhere\n    P: ChannelReaderProvider + OriginAdvancer + OriginProvider + Stage + Debug,\n{\n    fn origin(&self) -> Option<BlockInfo> {\n        self.prev.origin()\n    }\n}\n\n#[async_trait]\nimpl<P> Stage for ChannelReader<P>\nwhere\n    P: ChannelReaderProvider + OriginAdvancer + OriginProvider + Stage + Debug + Send,\n{\n    async fn reset(\n        &mut self,\n        l1_origin: BlockNumHash,\n        system_config: SystemConfig,\n    ) -> PipelineResult<()> {\n        self.prev.reset(l1_origin, system_config).await?;\n        self.next_channel();\n        Ok(())\n    }\n\n    async fn activate(&mut self) -> PipelineResult<()> {\n        self.prev.activate().await?;\n        self.next_channel();\n        Ok(())\n    }\n\n    async fn flush_channel(&mut self) -> PipelineResult<()> {\n        warn!(target: \"channel_reader\", \"Flushed channel\");\n        self.next_batch = None;\n        kona_macros::set!(gauge, crate::metrics::Metrics::PIPELINE_BATCH_READER_SET, 0);\n        Ok(())\n    }\n\n    async fn provide_block(&mut self, block: BlockInfo) -> PipelineResult<()> {\n        self.prev.provide_block(block).await\n    }\n}\n\n#[cfg(test)]\nmod test {\n    use super::*;\n    use crate::{errors::PipelineErrorKind, test_utils::TestChannelReaderProvider};\n    use alloc::vec;\n    use kona_genesis::HardForkConfig;\n\n    fn new_compressed_batch_data() -> Bytes {\n        let file_contents =\n            alloc::string::String::from_utf8_lossy(include_bytes!(\"../../../testdata/batch.hex\"));\n        let file_contents = &(&*file_contents)[..file_contents.len() - 1];\n        let data = alloy_primitives::hex::decode(file_contents).unwrap();\n        data.into()\n    }\n\n    #[tokio::test]\n    async fn test_flush_channel_reader() {\n        let mock = TestChannelReaderProvider::new(vec![Ok(Some(new_compressed_batch_data()))]);\n        let mut reader = ChannelReader::new(mock, Arc::new(RollupConfig::default()));\n        reader.next_batch = Some(BatchReader::new(\n            new_compressed_batch_data(),\n            MAX_RLP_BYTES_PER_CHANNEL_FJORD as usize,\n            0,\n        ));\n        reader.flush_channel().await.unwrap();\n        assert!(reader.next_batch.is_none());\n    }\n\n    #[tokio::test]\n    async fn test_reset_channel_reader() {\n        let mock = TestChannelReaderProvider::new(vec![Ok(None)]);\n        let mut reader = ChannelReader::new(mock, Arc::new(RollupConfig::default()));\n        reader.next_batch = Some(BatchReader::new(\n            vec![0x00, 0x01, 0x02],\n            MAX_RLP_BYTES_PER_CHANNEL_FJORD as usize,\n            0,\n        ));\n        assert!(!reader.prev.reset);\n        reader.reset(BlockNumHash::default(), SystemConfig::default()).await.unwrap();\n        assert!(reader.next_batch.is_none());\n        assert!(reader.prev.reset);\n    }\n\n    #[tokio::test]\n    async fn test_next_batch_batch_reader_set_fails() {\n        let mock = TestChannelReaderProvider::new(vec![Err(PipelineError::Eof.temp())]);\n        let mut reader = ChannelReader::new(mock, Arc::new(RollupConfig::default()));\n        assert_eq!(reader.next_batch().await, Err(PipelineError::Eof.temp()));\n        assert!(reader.next_batch.is_none());\n    }\n\n    #[tokio::test]\n    async fn test_next_batch_batch_reader_no_data() {\n        let mock = TestChannelReaderProvider::new(vec![Ok(None)]);\n        let mut reader = ChannelReader::new(mock, Arc::new(RollupConfig::default()));\n        assert!(matches!(\n            reader.next_batch().await.unwrap_err(),\n            PipelineErrorKind::Temporary(PipelineError::ChannelReaderEmpty)\n        ));\n        assert!(reader.next_batch.is_none());\n    }\n\n    #[tokio::test]\n    async fn test_next_batch_batch_reader_not_enough_data() {\n        let mut first = new_compressed_batch_data();\n        let second = first.split_to(first.len() / 2);\n        let mock = TestChannelReaderProvider::new(vec![Ok(Some(first)), Ok(Some(second))]);\n        let mut reader = ChannelReader::new(mock, Arc::new(RollupConfig::default()));\n        assert_eq!(reader.next_batch().await, Err(PipelineError::NotEnoughData.temp()));\n        assert!(reader.next_batch.is_none());\n    }\n\n    #[tokio::test]\n    async fn test_next_batch_succeeds() {\n        let raw = new_compressed_batch_data();\n        let mock = TestChannelReaderProvider::new(vec![Ok(Some(raw))]);\n        let mut reader = ChannelReader::new(mock, Arc::new(RollupConfig::default()));\n        let res = reader.next_batch().await.unwrap();\n        matches!(res, Batch::Span(_));\n        assert!(reader.next_batch.is_some());\n    }\n\n    #[tokio::test]\n    async fn test_flush_post_holocene() {\n        let raw = new_compressed_batch_data();\n        let config = Arc::new(RollupConfig {\n            hardforks: HardForkConfig { holocene_time: Some(0), ..Default::default() },\n            ..Default::default()\n        });\n        let mock = TestChannelReaderProvider::new(vec![Ok(Some(raw))]);\n        let mut reader = ChannelReader::new(mock, config);\n        let res = reader.next_batch().await.unwrap();\n        matches!(res, Batch::Span(_));\n        assert!(reader.next_batch.is_some());\n        reader.flush();\n        assert!(reader.next_batch.is_none());\n    }\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "differs",
+      "coveredLines": 271,
+      "match": {
+        "origin": "own",
+        "collection": "optimism",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "channel_reader.rs",
+        "similarity": 0.852,
+        "reportId": "optimism/cantina-kona-2026-03",
+        "repository": "op-rs/kona",
+        "path": "crates/protocol/derive/src/stages/channel/channel_reader.rs",
+        "commit": "86910c9112437bbb849eca28961f813c5450e103",
+        "commitTimestamp": "2025-12-15T17:17:05Z",
+        "url": "https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/crates/protocol/derive/src/stages/channel/channel_reader.rs",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). kona-derive derivation pipeline (stages, sources, traversal, attributes). Medium findings 3.3.1 and 3.3.2 (pipeline/core.rs, stages/l1_retrieval.rs) and numerous Low/Informational findings located here; no Critical/High.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 37,
+        "removed": 26,
+        "ignoredAdded": 12,
+        "ignoredRemoved": 9,
+        "unchanged": 271,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 15,
+            "newStart": 1,
+            "newLines": 15,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "//! This module contains the `ChannelReader` struct."
+              },
+              { "type": " ", "oldLine": 2, "newLine": 2, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "use crate::{"
+              },
+              {
+                "type": "-",
+                "oldLine": 4,
+                "text": "    BatchStreamProvider, OriginAdvancer, OriginProvider, PipelineError, PipelineResult, Signal,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 5,
+                "text": "    SignalReceiver,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 4,
+                "text": "    BatchStreamProvider, OriginAdvancer, OriginProvider, PipelineError, PipelineResult, Stage,",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 6, "newLine": 5, "text": "};" },
+              {
+                "type": " ",
+                "oldLine": 7,
+                "newLine": 6,
+                "text": "use alloc::{boxed::Box, sync::Arc};"
+              },
+              {
+                "type": "+",
+                "newLine": 7,
+                "text": "use alloy_eips::BlockNumHash;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 8,
+                "newLine": 8,
+                "text": "use alloy_primitives::Bytes;"
+              },
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 9,
+                "text": "use async_trait::async_trait;"
+              },
+              {
+                "type": " ",
+                "oldLine": 10,
+                "newLine": 10,
+                "text": "use core::fmt::Debug;"
+              },
+              {
+                "type": " ",
+                "oldLine": 11,
+                "newLine": 11,
+                "text": "use kona_genesis::{"
+              },
+              {
+                "type": "-",
+                "oldLine": 12,
+                "text": "    MAX_RLP_BYTES_PER_CHANNEL_BEDROCK, MAX_RLP_BYTES_PER_CHANNEL_FJORD, RollupConfig,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 12,
+                "text": "    MAX_RLP_BYTES_PER_CHANNEL_BEDROCK, MAX_RLP_BYTES_PER_CHANNEL_FJORD, RollupConfig, SystemConfig,",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 13, "newLine": 13, "text": "};" },
+              {
+                "type": " ",
+                "oldLine": 14,
+                "newLine": 14,
+                "text": "use kona_protocol::{Batch, BatchReader, BlockInfo};"
+              },
+              {
+                "type": " ",
+                "oldLine": 15,
+                "newLine": 15,
+                "text": "use tracing::{debug, warn};"
+              }
+            ]
+          },
+          {
+            "oldStart": 36,
+            "oldLines": 7,
+            "newStart": 36,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 36,
+                "newLine": 36,
+                "text": "#[derive(Debug)]"
+              },
+              {
+                "type": " ",
+                "oldLine": 37,
+                "newLine": 37,
+                "text": "pub struct ChannelReader<P>"
+              },
+              { "type": " ", "oldLine": 38, "newLine": 38, "text": "where" },
+              {
+                "type": "-",
+                "oldLine": 39,
+                "text": "    P: ChannelReaderProvider + OriginAdvancer + OriginProvider + SignalReceiver + Debug,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 39,
+                "text": "    P: ChannelReaderProvider + OriginAdvancer + OriginProvider + Stage + Debug,",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 40, "newLine": 40, "text": "{" },
+              {
+                "type": " ",
+                "oldLine": 41,
+                "newLine": 41,
+                "text": "    /// The previous stage of the derivation pipeline."
+              },
+              {
+                "type": " ",
+                "oldLine": 42,
+                "newLine": 42,
+                "text": "    pub prev: P,"
+              }
+            ]
+          },
+          {
+            "oldStart": 48,
+            "oldLines": 7,
+            "newStart": 48,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 48, "newLine": 48, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 49,
+                "newLine": 49,
+                "text": "impl<P> ChannelReader<P>"
+              },
+              { "type": " ", "oldLine": 50, "newLine": 50, "text": "where" },
+              {
+                "type": "-",
+                "oldLine": 51,
+                "text": "    P: ChannelReaderProvider + OriginAdvancer + OriginProvider + SignalReceiver + Debug,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 51,
+                "text": "    P: ChannelReaderProvider + OriginAdvancer + OriginProvider + Stage + Debug,",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 52, "newLine": 52, "text": "{" },
+              {
+                "type": " ",
+                "oldLine": 53,
+                "newLine": 53,
+                "text": "    /// Create a new [`ChannelReader`] stage."
+              },
+              {
+                "type": " ",
+                "oldLine": 54,
+                "newLine": 54,
+                "text": "    pub const fn new(prev: P, cfg: Arc<RollupConfig>) -> Self {"
+              }
+            ]
+          },
+          {
+            "oldStart": 68,
+            "oldLines": 8,
+            "newStart": 68,
+            "newLines": 11,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 68,
+                "newLine": 68,
+                "text": "                MAX_RLP_BYTES_PER_CHANNEL_BEDROCK"
+              },
+              {
+                "type": " ",
+                "oldLine": 69,
+                "newLine": 69,
+                "text": "            };"
+              },
+              { "type": " ", "oldLine": 70, "newLine": 70, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 71,
+                "text": "            self.next_batch =",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 72,
+                "text": "                Some(BatchReader::new(&channel[..], max_rlp_bytes_per_channel as usize));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 71,
+                "text": "            self.next_batch = Some(BatchReader::new(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 72,
+                "text": "                &channel[..],",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 73,
+                "text": "                max_rlp_bytes_per_channel as usize,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 74,
+                "text": "                origin.timestamp,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 75,
+                "text": "            ));",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 73,
+                "newLine": 76,
+                "text": "            kona_macros::set!(gauge, crate::metrics::Metrics::PIPELINE_BATCH_READER_SET, 1);"
+              },
+              {
+                "type": " ",
+                "oldLine": 74,
+                "newLine": 77,
+                "text": "        }"
+              },
+              {
+                "type": " ",
+                "oldLine": 75,
+                "newLine": 78,
+                "text": "        Ok(())"
+              }
+            ]
+          },
+          {
+            "oldStart": 86,
+            "oldLines": 7,
+            "newStart": 89,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 86,
+                "newLine": 89,
+                "text": "#[async_trait]"
+              },
+              {
+                "type": " ",
+                "oldLine": 87,
+                "newLine": 90,
+                "text": "impl<P> OriginAdvancer for ChannelReader<P>"
+              },
+              { "type": " ", "oldLine": 88, "newLine": 91, "text": "where" },
+              {
+                "type": "-",
+                "oldLine": 89,
+                "text": "    P: ChannelReaderProvider + OriginAdvancer + OriginProvider + SignalReceiver + Send + Debug,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 92,
+                "text": "    P: ChannelReaderProvider + OriginAdvancer + OriginProvider + Stage + Send + Debug,",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 90, "newLine": 93, "text": "{" },
+              {
+                "type": " ",
+                "oldLine": 91,
+                "newLine": 94,
+                "text": "    async fn advance_origin(&mut self) -> PipelineResult<()> {"
+              },
+              {
+                "type": " ",
+                "oldLine": 92,
+                "newLine": 95,
+                "text": "        self.prev.advance_origin().await"
+              }
+            ]
+          },
+          {
+            "oldStart": 96,
+            "oldLines": 9,
+            "newStart": 99,
+            "newLines": 9,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 96,
+                "newLine": 99,
+                "text": "#[async_trait]"
+              },
+              {
+                "type": " ",
+                "oldLine": 97,
+                "newLine": 100,
+                "text": "impl<P> BatchStreamProvider for ChannelReader<P>"
+              },
+              { "type": " ", "oldLine": 98, "newLine": 101, "text": "where" },
+              {
+                "type": "-",
+                "oldLine": 99,
+                "text": "    P: ChannelReaderProvider + OriginAdvancer + OriginProvider + SignalReceiver + Send + Debug,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 102,
+                "text": "    P: ChannelReaderProvider + OriginAdvancer + OriginProvider + Stage + Send + Debug,",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 100, "newLine": 103, "text": "{" },
+              {
+                "type": "-",
+                "oldLine": 101,
+                "text": "    /// This method is called by the BatchStream if an invalid span batch is found.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 104,
+                "text": "    /// This method is called by the `BatchStream` if an invalid span batch is found.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 102,
+                "newLine": 105,
+                "text": "    /// In the case of an invalid span batch, the associated channel must be flushed."
+              },
+              {
+                "type": " ",
+                "oldLine": 103,
+                "newLine": 106,
+                "text": "    ///"
+              },
+              {
+                "type": " ",
+                "oldLine": 104,
+                "newLine": 107,
+                "text": "    /// See: <https://specs.optimism.io/protocol/holocene/derivation.html#span-batches>"
+              }
+            ]
+          },
+          {
+            "oldStart": 121,
+            "oldLines": 8,
+            "newStart": 124,
+            "newLines": 8,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 121,
+                "newLine": 124,
+                "text": "        match next_batch.decompress() {"
+              },
+              {
+                "type": " ",
+                "oldLine": 122,
+                "newLine": 125,
+                "text": "            Ok(()) => {"
+              },
+              {
+                "type": " ",
+                "oldLine": 123,
+                "newLine": 126,
+                "text": "                // Record the decompressed size and type."
+              },
+              {
+                "type": "-",
+                "oldLine": 124,
+                "text": "                let size = next_batch.decompressed.len() as f64;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 125,
+                "text": "                let ty = if next_batch.brotli_used {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 127,
+                "text": "                let _size = next_batch.decompressed.len() as f64;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 128,
+                "text": "                let _ty = if next_batch.brotli_used {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 126,
+                "newLine": 129,
+                "text": "                    BatchReader::CHANNEL_VERSION_BROTLI"
+              },
+              {
+                "type": " ",
+                "oldLine": 127,
+                "newLine": 130,
+                "text": "                } else {"
+              },
+              {
+                "type": " ",
+                "oldLine": 128,
+                "newLine": 131,
+                "text": "                    BatchReader::ZLIB_DEFLATE_COMPRESSION_METHOD"
+              }
+            ]
+          },
+          {
+            "oldStart": 130,
+            "oldLines": 12,
+            "newStart": 133,
+            "newLines": 12,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 130,
+                "newLine": 133,
+                "text": "                kona_macros::set!("
+              },
+              {
+                "type": " ",
+                "oldLine": 131,
+                "newLine": 134,
+                "text": "                    gauge,"
+              },
+              {
+                "type": " ",
+                "oldLine": 132,
+                "newLine": 135,
+                "text": "                    crate::metrics::Metrics::PIPELINE_LATEST_DECOMPRESSED_BATCH_SIZE,"
+              },
+              {
+                "type": "-",
+                "oldLine": 133,
+                "text": "                    size",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 136,
+                "text": "                    _size",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 134,
+                "newLine": 137,
+                "text": "                );"
+              },
+              {
+                "type": " ",
+                "oldLine": 135,
+                "newLine": 138,
+                "text": "                kona_macros::set!("
+              },
+              {
+                "type": " ",
+                "oldLine": 136,
+                "newLine": 139,
+                "text": "                    gauge,"
+              },
+              {
+                "type": " ",
+                "oldLine": 137,
+                "newLine": 140,
+                "text": "                    crate::metrics::Metrics::PIPELINE_LATEST_DECOMPRESSED_BATCH_TYPE,"
+              },
+              {
+                "type": "-",
+                "oldLine": 138,
+                "text": "                    ty as f64",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 141,
+                "text": "                    _ty as f64",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 139,
+                "newLine": 142,
+                "text": "                );"
+              },
+              {
+                "type": " ",
+                "oldLine": 140,
+                "newLine": 143,
+                "text": "            }"
+              },
+              {
+                "type": " ",
+                "oldLine": 141,
+                "newLine": 144,
+                "text": "            Err(err) => {"
+              }
+            ]
+          },
+          {
+            "oldStart": 165,
+            "oldLines": 7,
+            "newStart": 168,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 165, "newLine": 168, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 166,
+                "newLine": 169,
+                "text": "impl<P> OriginProvider for ChannelReader<P>"
+              },
+              { "type": " ", "oldLine": 167, "newLine": 170, "text": "where" },
+              {
+                "type": "-",
+                "oldLine": 168,
+                "text": "    P: ChannelReaderProvider + OriginAdvancer + OriginProvider + SignalReceiver + Debug,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 171,
+                "text": "    P: ChannelReaderProvider + OriginAdvancer + OriginProvider + Stage + Debug,",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 169, "newLine": 172, "text": "{" },
+              {
+                "type": " ",
+                "oldLine": 170,
+                "newLine": 173,
+                "text": "    fn origin(&self) -> Option<BlockInfo> {"
+              },
+              {
+                "type": " ",
+                "oldLine": 171,
+                "newLine": 174,
+                "text": "        self.prev.origin()"
+              }
+            ]
+          },
+          {
+            "oldStart": 173,
+            "oldLines": 33,
+            "newStart": 176,
+            "newLines": 42,
+            "lines": [
+              { "type": " ", "oldLine": 173, "newLine": 176, "text": "}" },
+              { "type": " ", "oldLine": 174, "newLine": 177, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 175,
+                "newLine": 178,
+                "text": "#[async_trait]"
+              },
+              {
+                "type": "-",
+                "oldLine": 176,
+                "text": "impl<P> SignalReceiver for ChannelReader<P>",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 179,
+                "text": "impl<P> Stage for ChannelReader<P>",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 177, "newLine": 180, "text": "where" },
+              {
+                "type": "-",
+                "oldLine": 178,
+                "text": "    P: ChannelReaderProvider + OriginAdvancer + OriginProvider + SignalReceiver + Debug + Send,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 181,
+                "text": "    P: ChannelReaderProvider + OriginAdvancer + OriginProvider + Stage + Debug + Send,",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 179, "newLine": 182, "text": "{" },
+              {
+                "type": "-",
+                "oldLine": 180,
+                "text": "    async fn signal(&mut self, signal: Signal) -> PipelineResult<()> {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 181,
+                "text": "        match signal {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 182,
+                "text": "            Signal::FlushChannel => {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 183,
+                "text": "                // Drop the current in-progress channel.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 184,
+                "text": "                warn!(target: \"channel_reader\", \"Flushed channel\");",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 185,
+                "text": "                self.next_batch = None;",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 186,
+                "text": "                kona_macros::set!(gauge, crate::metrics::Metrics::PIPELINE_BATCH_READER_SET, 0);",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 187,
+                "text": "            }",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 188,
+                "text": "            s => {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 189,
+                "text": "                self.prev.signal(s).await?;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 190,
+                "text": "                self.next_channel();",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 191,
+                "text": "            }",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 192,
+                "text": "        }",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 183,
+                "text": "    async fn reset(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 184,
+                "text": "        &mut self,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 185,
+                "text": "        l1_origin: BlockNumHash,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 186,
+                "text": "        system_config: SystemConfig,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 187,
+                "text": "    ) -> PipelineResult<()> {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 188,
+                "text": "        self.prev.reset(l1_origin, system_config).await?;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 189,
+                "text": "        self.next_channel();",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 193,
+                "newLine": 190,
+                "text": "        Ok(())"
+              },
+              { "type": " ", "oldLine": 194, "newLine": 191, "text": "    }" },
+              { "type": "+", "newLine": 192, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 193,
+                "text": "    async fn activate(&mut self) -> PipelineResult<()> {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 194,
+                "text": "        self.prev.activate().await?;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 195,
+                "text": "        self.next_channel();",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 196,
+                "text": "        Ok(())",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 197, "text": "    }", "ignored": true },
+              { "type": "+", "newLine": 198, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 199,
+                "text": "    async fn flush_channel(&mut self) -> PipelineResult<()> {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 200,
+                "text": "        warn!(target: \"channel_reader\", \"Flushed channel\");",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 201,
+                "text": "        self.next_batch = None;",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 202,
+                "text": "        kona_macros::set!(gauge, crate::metrics::Metrics::PIPELINE_BATCH_READER_SET, 0);",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 203,
+                "text": "        Ok(())",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 204, "text": "    }", "ignored": true },
+              { "type": "+", "newLine": 205, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 206,
+                "text": "    async fn provide_block(&mut self, block: BlockInfo) -> PipelineResult<()> {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 207,
+                "text": "        self.prev.provide_block(block).await",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 208, "text": "    }", "ignored": true },
+              { "type": " ", "oldLine": 195, "newLine": 209, "text": "}" },
+              { "type": " ", "oldLine": 196, "newLine": 210, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 197,
+                "newLine": 211,
+                "text": "#[cfg(test)]"
+              },
+              {
+                "type": " ",
+                "oldLine": 198,
+                "newLine": 212,
+                "text": "mod test {"
+              },
+              {
+                "type": " ",
+                "oldLine": 199,
+                "newLine": 213,
+                "text": "    use super::*;"
+              },
+              {
+                "type": "-",
+                "oldLine": 200,
+                "text": "    use crate::{",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 201,
+                "text": "        errors::PipelineErrorKind, test_utils::TestChannelReaderProvider, types::ResetSignal,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 202,
+                "text": "    };",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 214,
+                "text": "    use crate::{errors::PipelineErrorKind, test_utils::TestChannelReaderProvider};",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 203,
+                "newLine": 215,
+                "text": "    use alloc::vec;"
+              },
+              {
+                "type": " ",
+                "oldLine": 204,
+                "newLine": 216,
+                "text": "    use kona_genesis::HardForkConfig;"
+              },
+              { "type": " ", "oldLine": 205, "newLine": 217, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 218,
+            "oldLines": 8,
+            "newStart": 230,
+            "newLines": 9,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 218,
+                "newLine": 230,
+                "text": "        reader.next_batch = Some(BatchReader::new("
+              },
+              {
+                "type": " ",
+                "oldLine": 219,
+                "newLine": 231,
+                "text": "            new_compressed_batch_data(),"
+              },
+              {
+                "type": " ",
+                "oldLine": 220,
+                "newLine": 232,
+                "text": "            MAX_RLP_BYTES_PER_CHANNEL_FJORD as usize,"
+              },
+              {
+                "type": "+",
+                "newLine": 233,
+                "text": "            0,",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 221,
+                "newLine": 234,
+                "text": "        ));"
+              },
+              {
+                "type": "-",
+                "oldLine": 222,
+                "text": "        reader.signal(Signal::FlushChannel).await.unwrap();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 235,
+                "text": "        reader.flush_channel().await.unwrap();",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 223,
+                "newLine": 236,
+                "text": "        assert!(reader.next_batch.is_none());"
+              },
+              { "type": " ", "oldLine": 224, "newLine": 237, "text": "    }" },
+              { "type": " ", "oldLine": 225, "newLine": 238, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 230,
+            "oldLines": 9,
+            "newStart": 243,
+            "newLines": 10,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 230,
+                "newLine": 243,
+                "text": "        reader.next_batch = Some(BatchReader::new("
+              },
+              {
+                "type": " ",
+                "oldLine": 231,
+                "newLine": 244,
+                "text": "            vec![0x00, 0x01, 0x02],"
+              },
+              {
+                "type": " ",
+                "oldLine": 232,
+                "newLine": 245,
+                "text": "            MAX_RLP_BYTES_PER_CHANNEL_FJORD as usize,"
+              },
+              {
+                "type": "+",
+                "newLine": 246,
+                "text": "            0,",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 233,
+                "newLine": 247,
+                "text": "        ));"
+              },
+              {
+                "type": " ",
+                "oldLine": 234,
+                "newLine": 248,
+                "text": "        assert!(!reader.prev.reset);"
+              },
+              {
+                "type": "-",
+                "oldLine": 235,
+                "text": "        reader.signal(ResetSignal::default().signal()).await.unwrap();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 249,
+                "text": "        reader.reset(BlockNumHash::default(), SystemConfig::default()).await.unwrap();",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 236,
+                "newLine": 250,
+                "text": "        assert!(reader.next_batch.is_none());"
+              },
+              {
+                "type": " ",
+                "oldLine": 237,
+                "newLine": 251,
+                "text": "        assert!(reader.prev.reset);"
+              },
+              { "type": " ", "oldLine": 238, "newLine": 252, "text": "    }" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

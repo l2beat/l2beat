@@ -1,1 +1,15 @@
-{"schemaVersion":2,"unitHash":"ff5fbf5aad30f73f07be6be6a94724df5ad82bfa3e2516279f1ae786ceeca910","name":"mod.rs","kind":"program","lines":9,"source":"//! Backend for the preimage server.\n\nmod offline;\npub use offline::OfflineHostBackend;\n\nmod online;\npub use online::{HintHandler, OnlineHostBackend, OnlineHostBackendCfg};\n\npub(crate) mod util;","resolutions":{"9fa846564f4071bd":{"status":"unaudited","coveredLines":0,"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "ff5fbf5aad30f73f07be6be6a94724df5ad82bfa3e2516279f1ae786ceeca910",
+  "name": "mod.rs",
+  "kind": "program",
+  "lines": 9,
+  "source": "//! Backend for the preimage server.\n\nmod offline;\npub use offline::OfflineHostBackend;\n\nmod online;\npub use online::{HintHandler, OnlineHostBackend, OnlineHostBackendCfg};\n\npub(crate) mod util;",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

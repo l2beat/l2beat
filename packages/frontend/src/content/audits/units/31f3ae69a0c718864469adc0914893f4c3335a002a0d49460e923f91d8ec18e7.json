@@ -1,1 +1,15 @@
-{"schemaVersion":2,"unitHash":"31f3ae69a0c718864469adc0914893f4c3335a002a0d49460e923f91d8ec18e7","name":"README.md","kind":"program","lines":3,"source":"# `kona-client`\n\nThis binary contains the client program for executing the Optimism rollup state transition.","resolutions":{"9fa846564f4071bd":{"status":"unaudited","coveredLines":0,"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "31f3ae69a0c718864469adc0914893f4c3335a002a0d49460e923f91d8ec18e7",
+  "name": "README.md",
+  "kind": "program",
+  "lines": 3,
+  "source": "# `kona-client`\n\nThis binary contains the client program for executing the Optimism rollup state transition.",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

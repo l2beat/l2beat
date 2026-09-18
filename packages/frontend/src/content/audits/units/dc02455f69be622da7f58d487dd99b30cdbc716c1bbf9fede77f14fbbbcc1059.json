@@ -1,1 +1,224 @@
-{"schemaVersion":2,"unitHash":"dc02455f69be622da7f58d487dd99b30cdbc716c1bbf9fede77f14fbbbcc1059","name":"mod.rs","kind":"program","lines":53,"source":"//! Contains stages pertaining to the processing of [`Batch`]es.\n//!\n//! Sitting after the [`ChannelReader`](crate::stages::channel::ChannelReader) stage, the\n//! [`BatchStream`] and [`BatchProvider`] stages are responsible for validating and ordering the\n//! [`Batch`]es. The [`BatchStream`] stage is responsible for streaming\n//! [`SingleBatch`](kona_protocol::SingleBatch)es from [`SpanBatch`](kona_protocol::SpanBatch)es,\n//! while the [`BatchProvider`] stage is responsible for ordering and validating the [`Batch`]es\n//! for the [`AttributesQueue`](crate::stages::attributes_queue::AttributesQueue) stage.\n\nuse crate::types::PipelineResult;\nuse alloc::boxed::Box;\nuse async_trait::async_trait;\nuse kona_protocol::{Batch, BlockInfo, L2BlockInfo};\n\nmod batch_stream;\npub use batch_stream::{BatchStream, BatchStreamProvider};\n\nmod batch_queue;\npub use batch_queue::BatchQueue;\n\nmod batch_validator;\npub use batch_validator::BatchValidator;\n\nmod batch_provider;\npub use batch_provider::BatchProvider;\n\n/// Provides [`Batch`]es for the [`BatchQueue`] and [`BatchValidator`] stages.\n#[async_trait]\npub trait NextBatchProvider {\n    /// Returns the next [`Batch`] in the [`ChannelReader`] stage, if the stage is not complete.\n    /// This function can only be called once while the stage is in progress, and will return\n    /// [`None`] on subsequent calls unless the stage is reset or complete. If the stage is\n    /// complete and the batch has been consumed, an [PipelineError::Eof] error is returned.\n    ///\n    /// [`ChannelReader`]: crate::stages::ChannelReader\n    /// [PipelineError::Eof]: crate::errors::PipelineError::Eof\n    async fn next_batch(\n        &mut self,\n        parent: L2BlockInfo,\n        l1_origins: &[BlockInfo],\n    ) -> PipelineResult<Batch>;\n\n    /// Returns the number of [`SingleBatch`]es that are currently buffered in the [`BatchStream`]\n    /// from a [`SpanBatch`].\n    ///\n    /// [`SpanBatch`]: kona_protocol::SpanBatch\n    /// [`SingleBatch`]: kona_protocol::SingleBatch\n    fn span_buffer_size(&self) -> usize;\n\n    /// Allows the stage to flush the buffer in the [`crate::stages::BatchStream`]\n    /// if an invalid single batch is found. Pre-holocene hardfork, this will be a no-op.\n    fn flush(&mut self);\n}","resolutions":{"9fa846564f4071bd":{"status":"identical","coveredLines":53,"match":{"origin":"own","collection":"optimism","relation":{"type":"own"},"rank":0,"matchedBy":"identity","auditedName":"mod.rs","similarity":1,"reportId":"optimism/cantina-kona-2026-03","repository":"op-rs/kona","path":"crates/protocol/derive/src/stages/batch/mod.rs","commit":"86910c9112437bbb849eca28961f813c5450e103","commitTimestamp":"2025-12-15T17:17:05Z","url":"https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/crates/protocol/derive/src/stages/batch/mod.rs","auditStatus":"audited_with_no_major_findings","reviewPhase":"initial audit","coverage":"Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). kona-derive derivation pipeline (stages, sources, traversal, attributes). Medium findings 3.3.1 and 3.3.2 (pipeline/core.rs, stages/l1_retrieval.rs) and numerous Low/Informational findings located here; no Critical/High.","majorFindings":0,"isLatestVersion":true,"laterAuditedVersionExists":false,"totalVersions":1},"diff":{"added":0,"removed":0,"ignoredAdded":8,"ignoredRemoved":13,"unchanged":53,"ignoredOnly":true,"hunks":[{"oldStart":1,"oldLines":16,"newStart":1,"newLines":11,"lines":[{"type":"-","oldLine":1,"text":"//! Contains stages pertaining to the processing of [Batch]es.","ignored":true},{"type":"+","newLine":1,"text":"//! Contains stages pertaining to the processing of [`Batch`]es.","ignored":true},{"type":" ","oldLine":2,"newLine":2,"text":"//!"},{"type":"-","oldLine":3,"text":"//! Sitting after the [ChannelReader] stage, the [`BatchStream`] and [`BatchProvider`] stages are","ignored":true},{"type":"-","oldLine":4,"text":"//! responsible for validating and ordering the [Batch]es. The [`BatchStream`] stage is","ignored":true},{"type":"-","oldLine":5,"text":"//! responsible for streaming [SingleBatch]es from [SpanBatch]es, while the [`BatchProvider`]","ignored":true},{"type":"-","oldLine":6,"text":"//! stage is responsible for ordering and validating the [Batch]es for the [AttributesQueue]","ignored":true},{"type":"-","oldLine":7,"text":"//! stage.","ignored":true},{"type":"-","oldLine":8,"text":"//!","ignored":true},{"type":"-","oldLine":9,"text":"//! [Batch]: kona_protocol::Batch","ignored":true},{"type":"-","oldLine":10,"text":"//! [SingleBatch]: kona_protocol::SingleBatch","ignored":true},{"type":"-","oldLine":11,"text":"//! [SpanBatch]: kona_protocol::SpanBatch","ignored":true},{"type":"-","oldLine":12,"text":"//! [ChannelReader]: crate::stages::channel::ChannelReader","ignored":true},{"type":"-","oldLine":13,"text":"//! [AttributesQueue]: crate::stages::attributes_queue::AttributesQueue","ignored":true},{"type":"+","newLine":3,"text":"//! Sitting after the [`ChannelReader`](crate::stages::channel::ChannelReader) stage, the","ignored":true},{"type":"+","newLine":4,"text":"//! [`BatchStream`] and [`BatchProvider`] stages are responsible for validating and ordering the","ignored":true},{"type":"+","newLine":5,"text":"//! [`Batch`]es. The [`BatchStream`] stage is responsible for streaming","ignored":true},{"type":"+","newLine":6,"text":"//! [`SingleBatch`](kona_protocol::SingleBatch)es from [`SpanBatch`](kona_protocol::SpanBatch)es,","ignored":true},{"type":"+","newLine":7,"text":"//! while the [`BatchProvider`] stage is responsible for ordering and validating the [`Batch`]es","ignored":true},{"type":"+","newLine":8,"text":"//! for the [`AttributesQueue`](crate::stages::attributes_queue::AttributesQueue) stage.","ignored":true},{"type":" ","oldLine":14,"newLine":9,"text":""},{"type":" ","oldLine":15,"newLine":10,"text":"use crate::types::PipelineResult;"},{"type":" ","oldLine":16,"newLine":11,"text":"use alloc::boxed::Box;"}]},{"oldStart":52,"oldLines":7,"newStart":47,"newLines":7,"lines":[{"type":" ","oldLine":52,"newLine":47,"text":"    /// [`SingleBatch`]: kona_protocol::SingleBatch"},{"type":" ","oldLine":53,"newLine":48,"text":"    fn span_buffer_size(&self) -> usize;"},{"type":" ","oldLine":54,"newLine":49,"text":""},{"type":"-","oldLine":55,"text":"    /// Allows the stage to flush the buffer in the [crate::stages::BatchStream]","ignored":true},{"type":"+","newLine":50,"text":"    /// Allows the stage to flush the buffer in the [`crate::stages::BatchStream`]","ignored":true},{"type":" ","oldLine":56,"newLine":51,"text":"    /// if an invalid single batch is found. Pre-holocene hardfork, this will be a no-op."},{"type":" ","oldLine":57,"newLine":52,"text":"    fn flush(&mut self);"},{"type":" ","oldLine":58,"newLine":53,"text":"}"}]}]},"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "dc02455f69be622da7f58d487dd99b30cdbc716c1bbf9fede77f14fbbbcc1059",
+  "name": "mod.rs",
+  "kind": "program",
+  "lines": 53,
+  "source": "//! Contains stages pertaining to the processing of [`Batch`]es.\n//!\n//! Sitting after the [`ChannelReader`](crate::stages::channel::ChannelReader) stage, the\n//! [`BatchStream`] and [`BatchProvider`] stages are responsible for validating and ordering the\n//! [`Batch`]es. The [`BatchStream`] stage is responsible for streaming\n//! [`SingleBatch`](kona_protocol::SingleBatch)es from [`SpanBatch`](kona_protocol::SpanBatch)es,\n//! while the [`BatchProvider`] stage is responsible for ordering and validating the [`Batch`]es\n//! for the [`AttributesQueue`](crate::stages::attributes_queue::AttributesQueue) stage.\n\nuse crate::types::PipelineResult;\nuse alloc::boxed::Box;\nuse async_trait::async_trait;\nuse kona_protocol::{Batch, BlockInfo, L2BlockInfo};\n\nmod batch_stream;\npub use batch_stream::{BatchStream, BatchStreamProvider};\n\nmod batch_queue;\npub use batch_queue::BatchQueue;\n\nmod batch_validator;\npub use batch_validator::BatchValidator;\n\nmod batch_provider;\npub use batch_provider::BatchProvider;\n\n/// Provides [`Batch`]es for the [`BatchQueue`] and [`BatchValidator`] stages.\n#[async_trait]\npub trait NextBatchProvider {\n    /// Returns the next [`Batch`] in the [`ChannelReader`] stage, if the stage is not complete.\n    /// This function can only be called once while the stage is in progress, and will return\n    /// [`None`] on subsequent calls unless the stage is reset or complete. If the stage is\n    /// complete and the batch has been consumed, an [PipelineError::Eof] error is returned.\n    ///\n    /// [`ChannelReader`]: crate::stages::ChannelReader\n    /// [PipelineError::Eof]: crate::errors::PipelineError::Eof\n    async fn next_batch(\n        &mut self,\n        parent: L2BlockInfo,\n        l1_origins: &[BlockInfo],\n    ) -> PipelineResult<Batch>;\n\n    /// Returns the number of [`SingleBatch`]es that are currently buffered in the [`BatchStream`]\n    /// from a [`SpanBatch`].\n    ///\n    /// [`SpanBatch`]: kona_protocol::SpanBatch\n    /// [`SingleBatch`]: kona_protocol::SingleBatch\n    fn span_buffer_size(&self) -> usize;\n\n    /// Allows the stage to flush the buffer in the [`crate::stages::BatchStream`]\n    /// if an invalid single batch is found. Pre-holocene hardfork, this will be a no-op.\n    fn flush(&mut self);\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "identical",
+      "coveredLines": 53,
+      "match": {
+        "origin": "own",
+        "collection": "optimism",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "mod.rs",
+        "similarity": 1,
+        "reportId": "optimism/cantina-kona-2026-03",
+        "repository": "op-rs/kona",
+        "path": "crates/protocol/derive/src/stages/batch/mod.rs",
+        "commit": "86910c9112437bbb849eca28961f813c5450e103",
+        "commitTimestamp": "2025-12-15T17:17:05Z",
+        "url": "https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/crates/protocol/derive/src/stages/batch/mod.rs",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). kona-derive derivation pipeline (stages, sources, traversal, attributes). Medium findings 3.3.1 and 3.3.2 (pipeline/core.rs, stages/l1_retrieval.rs) and numerous Low/Informational findings located here; no Critical/High.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 8,
+        "ignoredRemoved": 13,
+        "unchanged": 53,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 16,
+            "newStart": 1,
+            "newLines": 11,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "//! Contains stages pertaining to the processing of [Batch]es.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "//! Contains stages pertaining to the processing of [`Batch`]es.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 2, "newLine": 2, "text": "//!" },
+              {
+                "type": "-",
+                "oldLine": 3,
+                "text": "//! Sitting after the [ChannelReader] stage, the [`BatchStream`] and [`BatchProvider`] stages are",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 4,
+                "text": "//! responsible for validating and ordering the [Batch]es. The [`BatchStream`] stage is",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 5,
+                "text": "//! responsible for streaming [SingleBatch]es from [SpanBatch]es, while the [`BatchProvider`]",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 6,
+                "text": "//! stage is responsible for ordering and validating the [Batch]es for the [AttributesQueue]",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 7,
+                "text": "//! stage.",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 8, "text": "//!", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 9,
+                "text": "//! [Batch]: kona_protocol::Batch",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 10,
+                "text": "//! [SingleBatch]: kona_protocol::SingleBatch",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 11,
+                "text": "//! [SpanBatch]: kona_protocol::SpanBatch",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 12,
+                "text": "//! [ChannelReader]: crate::stages::channel::ChannelReader",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 13,
+                "text": "//! [AttributesQueue]: crate::stages::attributes_queue::AttributesQueue",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "//! Sitting after the [`ChannelReader`](crate::stages::channel::ChannelReader) stage, the",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 4,
+                "text": "//! [`BatchStream`] and [`BatchProvider`] stages are responsible for validating and ordering the",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 5,
+                "text": "//! [`Batch`]es. The [`BatchStream`] stage is responsible for streaming",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 6,
+                "text": "//! [`SingleBatch`](kona_protocol::SingleBatch)es from [`SpanBatch`](kona_protocol::SpanBatch)es,",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 7,
+                "text": "//! while the [`BatchProvider`] stage is responsible for ordering and validating the [`Batch`]es",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 8,
+                "text": "//! for the [`AttributesQueue`](crate::stages::attributes_queue::AttributesQueue) stage.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 14, "newLine": 9, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 15,
+                "newLine": 10,
+                "text": "use crate::types::PipelineResult;"
+              },
+              {
+                "type": " ",
+                "oldLine": 16,
+                "newLine": 11,
+                "text": "use alloc::boxed::Box;"
+              }
+            ]
+          },
+          {
+            "oldStart": 52,
+            "oldLines": 7,
+            "newStart": 47,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 52,
+                "newLine": 47,
+                "text": "    /// [`SingleBatch`]: kona_protocol::SingleBatch"
+              },
+              {
+                "type": " ",
+                "oldLine": 53,
+                "newLine": 48,
+                "text": "    fn span_buffer_size(&self) -> usize;"
+              },
+              { "type": " ", "oldLine": 54, "newLine": 49, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 55,
+                "text": "    /// Allows the stage to flush the buffer in the [crate::stages::BatchStream]",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 50,
+                "text": "    /// Allows the stage to flush the buffer in the [`crate::stages::BatchStream`]",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 56,
+                "newLine": 51,
+                "text": "    /// if an invalid single batch is found. Pre-holocene hardfork, this will be a no-op."
+              },
+              {
+                "type": " ",
+                "oldLine": 57,
+                "newLine": 52,
+                "text": "    fn flush(&mut self);"
+              },
+              { "type": " ", "oldLine": 58, "newLine": 53, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

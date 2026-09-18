@@ -1,1 +1,86 @@
-{"schemaVersion":2,"unitHash":"09f199558f110f196e6dab8d4dac3fbfaa2af497b2dbd5ed148eaa4cc282d85b","name":"mod.rs","kind":"program","lines":5,"source":"//! This module contains raw syscall bindings for the `MIPS64r2` target architecture, as well as a\n//! high-level implementation of the [`crate::BasicKernelInterface`] trait for the `Cannon` kernel.\n\npub(crate) mod io;\nmod syscall;","resolutions":{"9fa846564f4071bd":{"status":"identical","coveredLines":5,"match":{"origin":"own","collection":"optimism","relation":{"type":"own"},"rank":0,"matchedBy":"identity","auditedName":"mod.rs","similarity":1,"reportId":"optimism/cantina-kona-2026-03","repository":"op-rs/kona","path":"crates/proof/std-fpvm/src/mips64/mod.rs","commit":"86910c9112437bbb849eca28961f813c5450e103","commitTimestamp":"2025-12-15T17:17:05Z","url":"https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/crates/proof/std-fpvm/src/mips64/mod.rs","auditStatus":"audited_with_no_major_findings","reviewPhase":"initial audit","coverage":"Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). FPVM std I/O and syscall layer (mips64, riscv64); Informational finding 3.5.6 (channel.rs) located here.","majorFindings":0,"isLatestVersion":true,"laterAuditedVersionExists":false,"totalVersions":1},"diff":{"added":0,"removed":0,"ignoredAdded":1,"ignoredRemoved":1,"unchanged":5,"ignoredOnly":true,"hunks":[{"oldStart":1,"oldLines":5,"newStart":1,"newLines":5,"lines":[{"type":" ","oldLine":1,"newLine":1,"text":"//! This module contains raw syscall bindings for the `MIPS64r2` target architecture, as well as a"},{"type":"-","oldLine":2,"text":"//! high-level implementation of the [crate::BasicKernelInterface] trait for the `Cannon` kernel.","ignored":true},{"type":"+","newLine":2,"text":"//! high-level implementation of the [`crate::BasicKernelInterface`] trait for the `Cannon` kernel.","ignored":true},{"type":" ","oldLine":3,"newLine":3,"text":""},{"type":" ","oldLine":4,"newLine":4,"text":"pub(crate) mod io;"},{"type":" ","oldLine":5,"newLine":5,"text":"mod syscall;"}]}]},"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "09f199558f110f196e6dab8d4dac3fbfaa2af497b2dbd5ed148eaa4cc282d85b",
+  "name": "mod.rs",
+  "kind": "program",
+  "lines": 5,
+  "source": "//! This module contains raw syscall bindings for the `MIPS64r2` target architecture, as well as a\n//! high-level implementation of the [`crate::BasicKernelInterface`] trait for the `Cannon` kernel.\n\npub(crate) mod io;\nmod syscall;",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "identical",
+      "coveredLines": 5,
+      "match": {
+        "origin": "own",
+        "collection": "optimism",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "mod.rs",
+        "similarity": 1,
+        "reportId": "optimism/cantina-kona-2026-03",
+        "repository": "op-rs/kona",
+        "path": "crates/proof/std-fpvm/src/mips64/mod.rs",
+        "commit": "86910c9112437bbb849eca28961f813c5450e103",
+        "commitTimestamp": "2025-12-15T17:17:05Z",
+        "url": "https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/crates/proof/std-fpvm/src/mips64/mod.rs",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). FPVM std I/O and syscall layer (mips64, riscv64); Informational finding 3.5.6 (channel.rs) located here.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 1,
+        "ignoredRemoved": 1,
+        "unchanged": 5,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 5,
+            "newStart": 1,
+            "newLines": 5,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "//! This module contains raw syscall bindings for the `MIPS64r2` target architecture, as well as a"
+              },
+              {
+                "type": "-",
+                "oldLine": 2,
+                "text": "//! high-level implementation of the [crate::BasicKernelInterface] trait for the `Cannon` kernel.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 2,
+                "text": "//! high-level implementation of the [`crate::BasicKernelInterface`] trait for the `Cannon` kernel.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 3, "newLine": 3, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "pub(crate) mod io;"
+              },
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 5,
+                "text": "mod syscall;"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

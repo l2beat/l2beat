@@ -1,1 +1,15 @@
-{"schemaVersion":2,"unitHash":"1806cd1ea91c0e094c57c3658dc431d5d965e44f8650b628287f779b997a8c1f","name":"entrypoint.sh","kind":"program","lines":3,"source":"#!/bin/bash\n\nexec \"${BIN_TARGET}\" \"$@\"","resolutions":{"9fa846564f4071bd":{"status":"unaudited","coveredLines":0,"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "1806cd1ea91c0e094c57c3658dc431d5d965e44f8650b628287f779b997a8c1f",
+  "name": "entrypoint.sh",
+  "kind": "program",
+  "lines": 3,
+  "source": "#!/bin/bash\n\nexec \"${BIN_TARGET}\" \"$@\"",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

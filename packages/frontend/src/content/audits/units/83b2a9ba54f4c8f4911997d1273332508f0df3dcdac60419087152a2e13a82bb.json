@@ -1,1 +1,80 @@
-{"schemaVersion":2,"unitHash":"83b2a9ba54f4c8f4911997d1273332508f0df3dcdac60419087152a2e13a82bb","name":"mod.rs","kind":"program","lines":20,"source":"//! This module contains all of the traits describing functionality of portions of the derivation\n//! pipeline.\n\nmod pipeline;\npub use pipeline::Pipeline;\n\nmod providers;\npub use providers::{BatchValidationProviderDerive, ChainProvider, L2ChainProvider};\n\nmod attributes;\npub use attributes::{AttributesBuilder, AttributesProvider, NextAttributes};\n\nmod data_sources;\npub use data_sources::{BlobProvider, DataAvailabilityProvider};\n\nmod reset;\npub use reset::ResetProvider;\n\nmod stages;\npub use stages::{OriginAdvancer, OriginProvider, SignalReceiver, Stage};","resolutions":{"9fa846564f4071bd":{"status":"differs","coveredLines":19,"match":{"origin":"own","collection":"optimism","relation":{"type":"own"},"rank":0,"matchedBy":"name","auditedName":"mod.rs","similarity":0.917,"reportId":"optimism/cantina-kona-2026-03","repository":"op-rs/kona","path":"crates/protocol/derive/src/traits/mod.rs","commit":"86910c9112437bbb849eca28961f813c5450e103","commitTimestamp":"2025-12-15T17:17:05Z","url":"https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/crates/protocol/derive/src/traits/mod.rs","auditStatus":"audited_with_no_major_findings","reviewPhase":"initial audit","coverage":"Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). kona-derive derivation pipeline (stages, sources, traversal, attributes). Medium findings 3.3.1 and 3.3.2 (pipeline/core.rs, stages/l1_retrieval.rs) and numerous Low/Informational findings located here; no Critical/High.","majorFindings":0,"isLatestVersion":true,"laterAuditedVersionExists":false,"totalVersions":1},"diff":{"added":1,"removed":1,"ignoredAdded":0,"ignoredRemoved":0,"unchanged":19,"ignoredOnly":false,"hunks":[{"oldStart":17,"oldLines":4,"newStart":17,"newLines":4,"lines":[{"type":" ","oldLine":17,"newLine":17,"text":"pub use reset::ResetProvider;"},{"type":" ","oldLine":18,"newLine":18,"text":""},{"type":" ","oldLine":19,"newLine":19,"text":"mod stages;"},{"type":"-","oldLine":20,"text":"pub use stages::{OriginAdvancer, OriginProvider, SignalReceiver};","ignored":false},{"type":"+","newLine":20,"text":"pub use stages::{OriginAdvancer, OriginProvider, SignalReceiver, Stage};","ignored":false}]}]},"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "83b2a9ba54f4c8f4911997d1273332508f0df3dcdac60419087152a2e13a82bb",
+  "name": "mod.rs",
+  "kind": "program",
+  "lines": 20,
+  "source": "//! This module contains all of the traits describing functionality of portions of the derivation\n//! pipeline.\n\nmod pipeline;\npub use pipeline::Pipeline;\n\nmod providers;\npub use providers::{BatchValidationProviderDerive, ChainProvider, L2ChainProvider};\n\nmod attributes;\npub use attributes::{AttributesBuilder, AttributesProvider, NextAttributes};\n\nmod data_sources;\npub use data_sources::{BlobProvider, DataAvailabilityProvider};\n\nmod reset;\npub use reset::ResetProvider;\n\nmod stages;\npub use stages::{OriginAdvancer, OriginProvider, SignalReceiver, Stage};",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "differs",
+      "coveredLines": 19,
+      "match": {
+        "origin": "own",
+        "collection": "optimism",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "mod.rs",
+        "similarity": 0.917,
+        "reportId": "optimism/cantina-kona-2026-03",
+        "repository": "op-rs/kona",
+        "path": "crates/protocol/derive/src/traits/mod.rs",
+        "commit": "86910c9112437bbb849eca28961f813c5450e103",
+        "commitTimestamp": "2025-12-15T17:17:05Z",
+        "url": "https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/crates/protocol/derive/src/traits/mod.rs",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). kona-derive derivation pipeline (stages, sources, traversal, attributes). Medium findings 3.3.1 and 3.3.2 (pipeline/core.rs, stages/l1_retrieval.rs) and numerous Low/Informational findings located here; no Critical/High.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 1,
+        "removed": 1,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 19,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 17,
+            "oldLines": 4,
+            "newStart": 17,
+            "newLines": 4,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 17,
+                "newLine": 17,
+                "text": "pub use reset::ResetProvider;"
+              },
+              { "type": " ", "oldLine": 18, "newLine": 18, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 19,
+                "newLine": 19,
+                "text": "mod stages;"
+              },
+              {
+                "type": "-",
+                "oldLine": 20,
+                "text": "pub use stages::{OriginAdvancer, OriginProvider, SignalReceiver};",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 20,
+                "text": "pub use stages::{OriginAdvancer, OriginProvider, SignalReceiver, Stage};",
+                "ignored": false
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

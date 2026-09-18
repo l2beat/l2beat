@@ -1,1 +1,15 @@
-{"schemaVersion":2,"unitHash":"28ffbdfab7a1e97ddbaecbcea2686d2882d91e7b7732d75c7e0934d00e0e2db0","name":"Cargo.toml","kind":"program","lines":35,"source":"[package]\nname = \"kona-serde\"\nversion = \"0.2.2\"\ndescription = \"Serde related helpers for kona\"\n\nedition.workspace = true\nrust-version.workspace = true\nauthors.workspace = true\nlicense.workspace = true\nhomepage.workspace = true\nrepository.workspace = true\nexclude.workspace = true\n\n[lints]\nworkspace = true\n\n[dependencies]\nalloy-primitives = { workspace = true, features = [\"serde\"] }\nserde.workspace = true\nserde_json = { workspace = true, features = [\"alloc\"] }\n\n[dev-dependencies]\ntoml = { workspace = true, features = [\"parse\"] }\n\n[package.metadata.cargo-udeps.ignore]\ndevelopment = [\"toml\"]\n\n[features]\ndefault = []\nstd = [\n\t\"alloy-primitives/serde\",\n\t\"alloy-primitives/std\",\n\t\"serde/std\",\n\t\"serde_json/std\",\n]","resolutions":{"9fa846564f4071bd":{"status":"unaudited","coveredLines":0,"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "28ffbdfab7a1e97ddbaecbcea2686d2882d91e7b7732d75c7e0934d00e0e2db0",
+  "name": "Cargo.toml",
+  "kind": "program",
+  "lines": 35,
+  "source": "[package]\nname = \"kona-serde\"\nversion = \"0.2.2\"\ndescription = \"Serde related helpers for kona\"\n\nedition.workspace = true\nrust-version.workspace = true\nauthors.workspace = true\nlicense.workspace = true\nhomepage.workspace = true\nrepository.workspace = true\nexclude.workspace = true\n\n[lints]\nworkspace = true\n\n[dependencies]\nalloy-primitives = { workspace = true, features = [\"serde\"] }\nserde.workspace = true\nserde_json = { workspace = true, features = [\"alloc\"] }\n\n[dev-dependencies]\ntoml = { workspace = true, features = [\"parse\"] }\n\n[package.metadata.cargo-udeps.ignore]\ndevelopment = [\"toml\"]\n\n[features]\ndefault = []\nstd = [\n\t\"alloy-primitives/serde\",\n\t\"alloy-primitives/std\",\n\t\"serde/std\",\n\t\"serde_json/std\",\n]",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

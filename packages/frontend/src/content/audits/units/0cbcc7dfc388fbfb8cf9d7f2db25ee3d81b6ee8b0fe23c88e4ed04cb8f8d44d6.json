@@ -1,1 +1,15 @@
-{"schemaVersion":2,"unitHash":"0cbcc7dfc388fbfb8cf9d7f2db25ee3d81b6ee8b0fe23c88e4ed04cb8f8d44d6","name":"nextest.toml","kind":"program","lines":2,"source":"[profile.ci.junit]\npath = \"junit.xml\"","resolutions":{"9fa846564f4071bd":{"status":"unaudited","coveredLines":0,"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "0cbcc7dfc388fbfb8cf9d7f2db25ee3d81b6ee8b0fe23c88e4ed04cb8f8d44d6",
+  "name": "nextest.toml",
+  "kind": "program",
+  "lines": 2,
+  "source": "[profile.ci.junit]\npath = \"junit.xml\"",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

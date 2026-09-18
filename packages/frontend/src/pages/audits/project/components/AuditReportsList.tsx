@@ -1,8 +1,16 @@
+import { useState } from 'react'
+import {
+  Collapsible,
+  CollapsibleContent,
+  CollapsibleTrigger,
+} from '~/components/core/Collapsible'
+import { ChevronIcon } from '~/icons/Chevron'
 import type {
   AuditMatchOrigin,
   AuditsContextEntry,
   AuditsReportEntry,
 } from '~/server/features/audits/types'
+import { cn } from '~/utils/cn'
 
 const ORIGIN_ORDER: AuditMatchOrigin[] = [
   'own',
@@ -27,6 +35,9 @@ export function AuditReportsList({
   reports: AuditsReportEntry[]
   context: AuditsContextEntry[]
 }) {
+  const [sharedOpen, setSharedOpen] = useState(false)
+  const ownReports = reports.filter((r) => r.origin === 'own')
+  const sharedReports = reports.filter((r) => r.origin !== 'own')
   return (
     <div className="flex flex-col gap-3">
       <h2 className="font-bold text-lg">Audit reports used</h2>
@@ -45,19 +56,41 @@ export function AuditReportsList({
           . Identical code is accepted from any collection in the dataset.
         </p>
       )}
-      {ORIGIN_ORDER.map((origin) => {
-        const group = reports.filter((r) => r.origin === origin)
-        if (group.length === 0 && origin !== 'own') return null
-        return (
-          <ReportGroup
-            key={origin}
-            title={ORIGIN_TITLE[origin]}
-            reports={group}
-            showCollection={origin !== 'own'}
-            empty="No project audit matched a deployed unit."
-          />
-        )
-      })}
+      <ReportGroup
+        title={ORIGIN_TITLE.own}
+        reports={ownReports}
+        showCollection={false}
+        empty="No project audit matched a deployed unit."
+      />
+      {sharedReports.length > 0 && (
+        <Collapsible open={sharedOpen} onOpenChange={setSharedOpen}>
+          <CollapsibleTrigger className="flex items-center gap-1.5 font-medium text-secondary text-xs hover:text-primary">
+            <ChevronIcon
+              className={cn(
+                'size-3 transition-transform',
+                sharedOpen ? 'rotate-0' : '-rotate-90',
+              )}
+            />
+            {sharedOpen ? 'Hide' : 'Show'} {sharedReports.length} other{' '}
+            {sharedReports.length === 1 ? 'audit' : 'audits'} used as evidence
+            (upstream code, stacks, standard libraries and other projects)
+          </CollapsibleTrigger>
+          <CollapsibleContent className="flex flex-col gap-3 pt-3">
+            {ORIGIN_ORDER.filter((origin) => origin !== 'own').map((origin) => {
+              const group = reports.filter((r) => r.origin === origin)
+              if (group.length === 0) return null
+              return (
+                <ReportGroup
+                  key={origin}
+                  title={ORIGIN_TITLE[origin]}
+                  reports={group}
+                  showCollection
+                />
+              )
+            })}
+          </CollapsibleContent>
+        </Collapsible>
+      )}
     </div>
   )
 }

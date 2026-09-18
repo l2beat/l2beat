@@ -1,1 +1,93 @@
-{"schemaVersion":2,"unitHash":"63ba79593c0d5e5e1507dde266ac6c5926a7da25d03dd6221f3d8d3f835ae259","name":"mod.rs","kind":"program","lines":5,"source":"//! Module containing the [`AttributesBuilder`](crate::traits::AttributesBuilder) trait\n//! implementations.\n\nmod stateful;\npub use stateful::StatefulAttributesBuilder;","resolutions":{"9fa846564f4071bd":{"status":"identical","coveredLines":5,"match":{"origin":"own","collection":"optimism","relation":{"type":"own"},"rank":0,"matchedBy":"identity","auditedName":"mod.rs","similarity":1,"reportId":"optimism/cantina-kona-2026-03","repository":"op-rs/kona","path":"crates/protocol/derive/src/attributes/mod.rs","commit":"86910c9112437bbb849eca28961f813c5450e103","commitTimestamp":"2025-12-15T17:17:05Z","url":"https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/crates/protocol/derive/src/attributes/mod.rs","auditStatus":"audited_with_no_major_findings","reviewPhase":"initial audit","coverage":"Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). kona-derive derivation pipeline (stages, sources, traversal, attributes). Medium findings 3.3.1 and 3.3.2 (pipeline/core.rs, stages/l1_retrieval.rs) and numerous Low/Informational findings located here; no Critical/High.","majorFindings":0,"isLatestVersion":true,"laterAuditedVersionExists":false,"totalVersions":1},"diff":{"added":0,"removed":0,"ignoredAdded":2,"ignoredRemoved":3,"unchanged":5,"ignoredOnly":true,"hunks":[{"oldStart":1,"oldLines":6,"newStart":1,"newLines":5,"lines":[{"type":"-","oldLine":1,"text":"//! Module containing the [AttributesBuilder] trait implementations.","ignored":true},{"type":"-","oldLine":2,"text":"//!","ignored":true},{"type":"-","oldLine":3,"text":"//! [AttributesBuilder]: crate::traits::AttributesBuilder","ignored":true},{"type":"+","newLine":1,"text":"//! Module containing the [`AttributesBuilder`](crate::traits::AttributesBuilder) trait","ignored":true},{"type":"+","newLine":2,"text":"//! implementations.","ignored":true},{"type":" ","oldLine":4,"newLine":3,"text":""},{"type":" ","oldLine":5,"newLine":4,"text":"mod stateful;"},{"type":" ","oldLine":6,"newLine":5,"text":"pub use stateful::StatefulAttributesBuilder;"}]}]},"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "63ba79593c0d5e5e1507dde266ac6c5926a7da25d03dd6221f3d8d3f835ae259",
+  "name": "mod.rs",
+  "kind": "program",
+  "lines": 5,
+  "source": "//! Module containing the [`AttributesBuilder`](crate::traits::AttributesBuilder) trait\n//! implementations.\n\nmod stateful;\npub use stateful::StatefulAttributesBuilder;",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "identical",
+      "coveredLines": 5,
+      "match": {
+        "origin": "own",
+        "collection": "optimism",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "mod.rs",
+        "similarity": 1,
+        "reportId": "optimism/cantina-kona-2026-03",
+        "repository": "op-rs/kona",
+        "path": "crates/protocol/derive/src/attributes/mod.rs",
+        "commit": "86910c9112437bbb849eca28961f813c5450e103",
+        "commitTimestamp": "2025-12-15T17:17:05Z",
+        "url": "https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/crates/protocol/derive/src/attributes/mod.rs",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). kona-derive derivation pipeline (stages, sources, traversal, attributes). Medium findings 3.3.1 and 3.3.2 (pipeline/core.rs, stages/l1_retrieval.rs) and numerous Low/Informational findings located here; no Critical/High.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 2,
+        "ignoredRemoved": 3,
+        "unchanged": 5,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 6,
+            "newStart": 1,
+            "newLines": 5,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "//! Module containing the [AttributesBuilder] trait implementations.",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 2, "text": "//!", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 3,
+                "text": "//! [AttributesBuilder]: crate::traits::AttributesBuilder",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "//! Module containing the [`AttributesBuilder`](crate::traits::AttributesBuilder) trait",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 2,
+                "text": "//! implementations.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 4, "newLine": 3, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 4,
+                "text": "mod stateful;"
+              },
+              {
+                "type": " ",
+                "oldLine": 6,
+                "newLine": 5,
+                "text": "pub use stateful::StatefulAttributesBuilder;"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

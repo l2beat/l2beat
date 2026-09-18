@@ -1,1 +1,15 @@
-{"schemaVersion":2,"unitHash":"a3fc16e22d2496d1d21e7ea748b944708ba991da8fa2b7337116b4a8bb50caf1","name":"README.md","kind":"program","lines":24,"source":"## `kona-genesis`\n\nGenesis types for Optimism.\n\n### Usage\n\n_By default, `kona-genesis` enables both `std` and `serde` features._\n\nIf you're working in a `no_std` environment (like [`kona`][kona]), disable default features like so.\n\n```toml\n[dependencies]\nkona-genesis = { version = \"x.y.z\", default-features = false, features = [\"serde\"] }\n```\n\n#### Rollup Config\n\n`kona-genesis` exports a `RollupConfig`, the primary genesis type for Optimism Consensus.\n\n\n<!-- Links -->\n\n[alloy-genesis]: https://github.com/alloy-rs\n[kona]: https://github.com/ethereum-optimism/optimism/blob/develop/rust/kona/Cargo.toml#L137","resolutions":{"9fa846564f4071bd":{"status":"unaudited","coveredLines":0,"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "a3fc16e22d2496d1d21e7ea748b944708ba991da8fa2b7337116b4a8bb50caf1",
+  "name": "README.md",
+  "kind": "program",
+  "lines": 24,
+  "source": "## `kona-genesis`\n\nGenesis types for Optimism.\n\n### Usage\n\n_By default, `kona-genesis` enables both `std` and `serde` features._\n\nIf you're working in a `no_std` environment (like [`kona`][kona]), disable default features like so.\n\n```toml\n[dependencies]\nkona-genesis = { version = \"x.y.z\", default-features = false, features = [\"serde\"] }\n```\n\n#### Rollup Config\n\n`kona-genesis` exports a `RollupConfig`, the primary genesis type for Optimism Consensus.\n\n\n<!-- Links -->\n\n[alloy-genesis]: https://github.com/alloy-rs\n[kona]: https://github.com/ethereum-optimism/optimism/blob/develop/rust/kona/Cargo.toml#L137",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

@@ -1,1 +1,15 @@
-{"schemaVersion":2,"unitHash":"9e697d0e6db49259d50d1394ee01e885e45e70ffbd45692c704878ccca2e9b2c","name":"kona-node.dockerfile","kind":"program","lines":14,"source":"FROM ubuntu:latest\n\nRUN apt-get update -y && apt-get upgrade -y && apt install -y ca-certificates\n\nWORKDIR /\n\nCOPY kona-node/kona/target/release/kona-node /usr/local/bin\n\nRUN mkdir -p /11155420\n\nCOPY kona-node/bootstores/sepolia.json /11155420/bootstore.json\nCOPY jwttoken/jwt.hex /\n\nENTRYPOINT [ \"kona-node\" ]","resolutions":{"9fa846564f4071bd":{"status":"unaudited","coveredLines":0,"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "9e697d0e6db49259d50d1394ee01e885e45e70ffbd45692c704878ccca2e9b2c",
+  "name": "kona-node.dockerfile",
+  "kind": "program",
+  "lines": 14,
+  "source": "FROM ubuntu:latest\n\nRUN apt-get update -y && apt-get upgrade -y && apt install -y ca-certificates\n\nWORKDIR /\n\nCOPY kona-node/kona/target/release/kona-node /usr/local/bin\n\nRUN mkdir -p /11155420\n\nCOPY kona-node/bootstores/sepolia.json /11155420/bootstore.json\nCOPY jwttoken/jwt.hex /\n\nENTRYPOINT [ \"kona-node\" ]",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

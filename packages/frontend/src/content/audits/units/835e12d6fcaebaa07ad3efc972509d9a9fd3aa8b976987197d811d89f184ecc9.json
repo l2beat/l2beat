@@ -1,1 +1,15 @@
-{"schemaVersion":2,"unitHash":"835e12d6fcaebaa07ad3efc972509d9a9fd3aa8b976987197d811d89f184ecc9","name":"integration.rs","kind":"program","lines":4,"source":"//! Integration tests for the node service crate.\n\n/// Tests for the node actors.\nmod actors;","resolutions":{"9fa846564f4071bd":{"status":"unaudited","coveredLines":0,"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "835e12d6fcaebaa07ad3efc972509d9a9fd3aa8b976987197d811d89f184ecc9",
+  "name": "integration.rs",
+  "kind": "program",
+  "lines": 4,
+  "source": "//! Integration tests for the node service crate.\n\n/// Tests for the node actors.\nmod actors;",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

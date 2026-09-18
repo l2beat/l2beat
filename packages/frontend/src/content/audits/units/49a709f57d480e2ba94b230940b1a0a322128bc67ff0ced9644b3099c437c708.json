@@ -1,1 +1,459 @@
-{"schemaVersion":2,"unitHash":"49a709f57d480e2ba94b230940b1a0a322128bc67ff0ced9644b3099c437c708","name":"core.rs","kind":"program","lines":333,"source":"//! The driver of the kona derivation pipeline.\n\nuse crate::{DriverError, DriverPipeline, DriverResult, Executor, PipelineCursor, TipCursor};\nuse alloc::{sync::Arc, vec::Vec};\nuse alloy_consensus::BlockBody;\nuse alloy_primitives::{B256, Bytes};\nuse alloy_rlp::Decodable;\nuse core::fmt::Debug;\nuse kona_derive::{Pipeline, PipelineError, PipelineErrorKind, Signal, SignalReceiver};\nuse kona_executor::BlockBuildingOutcome;\nuse kona_genesis::RollupConfig;\nuse kona_protocol::L2BlockInfo;\nuse op_alloy_consensus::{OpBlock, OpTxEnvelope, OpTxType};\nuse spin::RwLock;\n\n/// The Rollup Driver entrypoint.\n///\n/// The [`Driver`] is the main coordination component for the rollup derivation and execution\n/// process. It manages the interaction between the derivation pipeline and block executor\n/// to produce verified L2 blocks from L1 data.\n///\n/// ## Architecture\n/// The driver operates with three main components:\n/// - **Pipeline**: Derives L2 block attributes from L1 data\n/// - **Executor**: Builds and executes L2 blocks from attributes\n/// - **Cursor**: Tracks the current state of derivation progress\n///\n/// ## Usage Pattern\n/// ```text\n/// 1. Initialize driver with cursor, executor, and pipeline\n/// 2. Call wait_for_executor() to ensure readiness\n/// 3. Call advance_to_target() to derive blocks up to target\n/// 4. Driver coordinates pipeline stepping and block execution\n/// 5. Updates cursor with progress and maintains safe head artifacts\n/// ```\n///\n/// ## Error Handling\n/// The driver handles various error scenarios:\n/// - Pipeline derivation failures (temporary, reset, critical)\n/// - Block execution failures (with Holocene deposit-only retry)\n/// - L1 data exhaustion (graceful halt)\n/// - Interop mode considerations\n#[derive(Debug)]\npub struct Driver<E, DP, P>\nwhere\n    E: Executor + Send + Sync + Debug,\n    DP: DriverPipeline<P> + Send + Sync + Debug,\n    P: Pipeline + SignalReceiver + Send + Sync + Debug,\n{\n    /// Marker for the pipeline type parameter.\n    ///\n    /// This phantom data ensures type safety while allowing the driver\n    /// to work with different pipeline implementations.\n    _marker: core::marker::PhantomData<P>,\n    /// Cursor tracking the current L2 derivation state and safe head.\n    ///\n    /// The cursor maintains the current position in the derivation process,\n    /// including the L2 safe head, output root, and L1 origin. It's wrapped\n    /// in an `Arc<RwLock<_>>` for thread-safe shared access.\n    pub cursor: Arc<RwLock<PipelineCursor>>,\n    /// The block executor responsible for building and executing L2 blocks.\n    ///\n    /// The executor takes payload attributes from the pipeline and produces\n    /// complete blocks with execution results and state changes.\n    pub executor: E,\n    /// The derivation pipeline that produces block attributes from L1 data.\n    ///\n    /// The pipeline abstracts the complex derivation logic and provides\n    /// a high-level interface for producing sequential block attributes.\n    pub pipeline: DP,\n    /// Cached execution artifacts and transactions from the most recent safe head.\n    ///\n    /// This cache contains the [`BlockBuildingOutcome`] and raw transaction data\n    /// from the last successfully executed block. It's used for efficiency and\n    /// debugging purposes. `None` when no block has been executed yet.\n    pub safe_head_artifacts: Option<(BlockBuildingOutcome<E::Receipt>, Vec<Bytes>)>,\n}\n\nimpl<E, DP, P> Driver<E, DP, P>\nwhere\n    E: Executor + Send + Sync + Debug,\n    DP: DriverPipeline<P> + Send + Sync + Debug,\n    P: Pipeline + SignalReceiver + Send + Sync + Debug,\n{\n    /// Creates a new [`Driver`] instance.\n    ///\n    /// Initializes the driver with the provided cursor, executor, and pipeline components.\n    /// The driver starts with no cached safe head artifacts.\n    ///\n    /// # Arguments\n    /// * `cursor` - Shared cursor for tracking derivation state\n    /// * `executor` - Block executor for building and executing L2 blocks\n    /// * `pipeline` - Derivation pipeline for producing block attributes\n    ///\n    /// # Returns\n    /// A new [`Driver`] instance ready for operation after calling [`Self::wait_for_executor`].\n    ///\n    /// # Usage\n    /// ```rust,ignore\n    /// let driver = Driver::new(cursor, executor, pipeline);\n    /// driver.wait_for_executor().await;\n    /// let result = driver.advance_to_target(&config, Some(target_block)).await;\n    /// ```\n    pub const fn new(cursor: Arc<RwLock<PipelineCursor>>, executor: E, pipeline: DP) -> Self {\n        Self {\n            _marker: core::marker::PhantomData,\n            cursor,\n            executor,\n            pipeline,\n            safe_head_artifacts: None,\n        }\n    }\n\n    /// Waits until the executor is ready for block processing.\n    ///\n    /// This method blocks until the underlying executor has completed any necessary\n    /// initialization or synchronization required before it can begin processing\n    /// payload attributes and executing blocks.\n    ///\n    /// # Usage\n    /// Must be called after creating the driver and before calling [`Self::advance_to_target`].\n    /// This ensures the executor is in a valid state for block execution.\n    ///\n    /// # Example\n    /// ```rust,ignore\n    /// let mut driver = Driver::new(cursor, executor, pipeline);\n    /// driver.wait_for_executor().await;  // Required before derivation\n    /// ```\n    pub async fn wait_for_executor(&mut self) {\n        self.executor.wait_until_ready().await;\n    }\n\n    /// Advances the derivation pipeline to the target block number.\n    ///\n    /// This is the main driver method that coordinates the derivation pipeline and block\n    /// executor to produce L2 blocks up to the specified target. It handles the complete\n    /// lifecycle of block derivation including pipeline stepping, block execution, error\n    /// recovery, and state updates.\n    ///\n    /// # Arguments\n    /// * `cfg` - The rollup configuration containing chain parameters and activation heights\n    /// * `target` - Optional target block number. If `None`, derives indefinitely until data source\n    ///   is exhausted or an error occurs\n    ///\n    /// # Returns\n    /// * `Ok((l2_safe_head, output_root))` - Tuple containing the final [`L2BlockInfo`] and output\n    ///   root hash when target is reached or derivation completes\n    /// * `Err(DriverError)` - Various error conditions that prevent further derivation\n    ///\n    /// # Errors\n    /// This method can fail with several error types:\n    ///\n    /// ## Pipeline Errors\n    /// - **`EndOfSource` (Critical)**: L1 data source exhausted\n    ///   - In interop mode: Returns error immediately for caller handling\n    ///   - In normal mode: Adjusts target to current safe head and halts gracefully\n    /// - **Temporary**: Insufficient data, automatically retried\n    /// - **Reset**: Reorg detected, pipeline reset and derivation continues\n    /// - **Other Critical**: Fatal pipeline errors that stop derivation\n    ///\n    /// ## Execution Errors\n    /// - **Pre-Holocene**: Block execution failures cause block to be discarded\n    /// - **Holocene+**: Failed blocks are retried as deposit-only blocks\n    ///   - Strips non-deposit transactions and flushes invalidated channel\n    ///   - If deposit-only block also fails, returns critical error\n    ///\n    /// ## Other Errors\n    /// - **`MissingOrigin`**: Pipeline origin not available when expected\n    /// - **`BlockConversion`**: Failed to convert block format\n    /// - **RLP**: Failed to decode transaction data\n    ///\n    /// # Behavior Details\n    ///\n    /// ## Main Loop\n    /// The method operates in a continuous loop:\n    /// 1. Check if target block number reached (if specified)\n    /// 2. Produce payload attributes from pipeline\n    /// 3. Execute payload with executor\n    /// 4. Handle execution failures with retry logic\n    /// 5. Construct complete block and update cursor\n    /// 6. Cache artifacts and continue\n    ///\n    /// ## Target Handling\n    /// - If `target` is `Some(n)`: Stops when safe head reaches block `n`\n    /// - If `target` is `None`: Continues until data exhausted or critical error\n    /// - Target can be dynamically adjusted if data source is exhausted\n    ///\n    /// ## State Updates\n    /// Each successful block updates:\n    /// - Pipeline cursor with new L1 origin and L2 safe head\n    /// - Executor safe head for next block building\n    /// - Cached artifacts for the most recent block\n    /// - Output root computation for verification\n    ///\n    /// # Usage Pattern\n    /// ```rust,ignore\n    /// // Derive to specific block\n    /// let (safe_head, output_root) = driver\n    ///     .advance_to_target(&rollup_config, Some(100))\n    ///     .await?;\n    ///\n    /// // Derive until data exhausted\n    /// let (final_head, output_root) = driver\n    ///     .advance_to_target(&rollup_config, None)\n    ///     .await?;\n    /// ```\n    ///\n    /// # Panics\n    /// This method does not explicitly panic, but may propagate panics from:\n    /// - `RwLock` poisoning (if another thread panicked while holding the cursor lock)\n    /// - Executor or pipeline implementation panics\n    /// - Arithmetic overflow in block number operations (highly unlikely)\n    pub async fn advance_to_target(\n        &mut self,\n        cfg: &RollupConfig,\n        mut target: Option<u64>,\n    ) -> DriverResult<(L2BlockInfo, B256), E::Error> {\n        loop {\n            // Check if we have reached the target block number.\n            let pipeline_cursor = self.cursor.read();\n            let tip_cursor = pipeline_cursor.tip();\n            if let Some(tb) = target &&\n                tip_cursor.l2_safe_head.block_info.number >= tb\n            {\n                info!(target: \"client\", \"Derivation complete, reached L2 safe head.\");\n                return Ok((tip_cursor.l2_safe_head, tip_cursor.l2_safe_head_output_root));\n            }\n\n            let mut attributes = match self.pipeline.produce_payload(tip_cursor.l2_safe_head).await\n            {\n                Ok(attrs) => attrs.take_inner(),\n                Err(PipelineErrorKind::Critical(PipelineError::EndOfSource)) => {\n                    warn!(target: \"client\", \"Exhausted data source; Halting derivation and using current safe head.\");\n\n                    // Adjust the target block number to the current safe head, as no more blocks\n                    // can be produced.\n                    if target.is_some() {\n                        target = Some(tip_cursor.l2_safe_head.block_info.number);\n                    };\n\n                    // If we are in interop mode, this error must be handled by the caller.\n                    // Otherwise, we continue the loop to halt derivation on the next iteration.\n                    if cfg.is_interop_active(self.cursor.read().l2_safe_head().block_info.timestamp)\n                    {\n                        return Err(PipelineError::EndOfSource.crit().into());\n                    }\n                    continue;\n                }\n                Err(e) => {\n                    error!(target: \"client\", \"Failed to produce payload: {:?}\", e);\n                    return Err(DriverError::Pipeline(e));\n                }\n            };\n\n            self.executor.update_safe_head(tip_cursor.l2_safe_head_header.clone());\n            let outcome = match self.executor.execute_payload(attributes.clone()).await {\n                Ok(outcome) => outcome,\n                Err(e) => {\n                    error!(target: \"client\", \"Failed to execute L2 block: {}\", e);\n\n                    if cfg.is_holocene_active(attributes.payload_attributes.timestamp) {\n                        // Retry with a deposit-only block.\n                        warn!(target: \"client\", \"Flushing current channel and retrying deposit only block\");\n\n                        // Flush the current batch and channel - if a block was replaced with a\n                        // deposit-only block due to execution failure, the\n                        // batch and channel it is contained in is forwards\n                        // invalidated.\n                        self.pipeline.signal(Signal::FlushChannel).await?;\n\n                        // Strip out all transactions that are not deposits.\n                        attributes.transactions = attributes.transactions.map(|txs| {\n                            txs.into_iter()\n                                .filter(|tx| !tx.is_empty() && tx[0] == OpTxType::Deposit as u8)\n                                .collect::<Vec<_>>()\n                        });\n\n                        // Retry the execution.\n                        self.executor.update_safe_head(tip_cursor.l2_safe_head_header.clone());\n                        match self.executor.execute_payload(attributes.clone()).await {\n                            Ok(header) => header,\n                            Err(e) => {\n                                error!(\n                                    target: \"client\",\n                                    \"Critical - Failed to execute deposit-only block: {e}\",\n                                );\n                                return Err(DriverError::Executor(e));\n                            }\n                        }\n                    } else {\n                        // Pre-Holocene, discard the block if execution fails.\n                        continue;\n                    }\n                }\n            };\n\n            // Construct the block.\n            let block = OpBlock {\n                header: outcome.header.inner().clone(),\n                body: BlockBody {\n                    transactions: attributes\n                        .transactions\n                        .as_ref()\n                        .unwrap_or(&Vec::new())\n                        .iter()\n                        .map(|tx| OpTxEnvelope::decode(&mut tx.as_ref()).map_err(DriverError::Rlp))\n                        .collect::<DriverResult<Vec<OpTxEnvelope>, E::Error>>()?,\n                    ommers: Vec::new(),\n                    withdrawals: None,\n                },\n            };\n\n            // Get the pipeline origin and update the tip cursor.\n            let origin = self.pipeline.origin().ok_or(PipelineError::MissingOrigin.crit())?;\n            let l2_info = L2BlockInfo::from_block_and_genesis(\n                &block,\n                &self.pipeline.rollup_config().genesis,\n            )?;\n            let tip_cursor = TipCursor::new(\n                l2_info,\n                outcome.header.clone(),\n                self.executor.compute_output_root().map_err(DriverError::Executor)?,\n            );\n\n            // Advance the derivation pipeline cursor\n            drop(pipeline_cursor);\n            self.cursor.write().advance(origin, tip_cursor);\n\n            // Update the latest safe head artifacts.\n            self.safe_head_artifacts = Some((outcome, attributes.transactions.unwrap_or_default()));\n        }\n    }\n}","resolutions":{"9fa846564f4071bd":{"status":"differs","coveredLines":327,"match":{"origin":"own","collection":"optimism","relation":{"type":"own"},"rank":0,"matchedBy":"name","auditedName":"core.rs","similarity":0.948,"reportId":"optimism/cantina-kona-2026-03","repository":"op-rs/kona","path":"crates/proof/driver/src/core.rs","commit":"86910c9112437bbb849eca28961f813c5450e103","commitTimestamp":"2025-12-15T17:17:05Z","url":"https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/crates/proof/driver/src/core.rs","auditStatus":"audited_with_no_major_findings","reviewPhase":"initial audit","coverage":"Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). Proof driver, cursor and pipeline; Low findings 3.4.10, 3.4.11, 3.4.19 and Informational 3.5.10 located here.","majorFindings":0,"isLatestVersion":true,"laterAuditedVersionExists":false,"totalVersions":1},"diff":{"added":6,"removed":6,"ignoredAdded":7,"ignoredRemoved":7,"unchanged":327,"ignoredOnly":false,"hunks":[{"oldStart":73,"oldLines":7,"newStart":73,"newLines":7,"lines":[{"type":" ","oldLine":73,"newLine":73,"text":"    /// This cache contains the [`BlockBuildingOutcome`] and raw transaction data"},{"type":" ","oldLine":74,"newLine":74,"text":"    /// from the last successfully executed block. It's used for efficiency and"},{"type":" ","oldLine":75,"newLine":75,"text":"    /// debugging purposes. `None` when no block has been executed yet."},{"type":"-","oldLine":76,"text":"    pub safe_head_artifacts: Option<(BlockBuildingOutcome, Vec<Bytes>)>,","ignored":false},{"type":"+","newLine":76,"text":"    pub safe_head_artifacts: Option<(BlockBuildingOutcome<E::Receipt>, Vec<Bytes>)>,","ignored":false},{"type":" ","oldLine":77,"newLine":77,"text":"}"},{"type":" ","oldLine":78,"newLine":78,"text":""},{"type":" ","oldLine":79,"newLine":79,"text":"impl<E, DP, P> Driver<E, DP, P>"}]},{"oldStart":151,"oldLines":7,"newStart":151,"newLines":7,"lines":[{"type":" ","oldLine":151,"newLine":151,"text":"    /// This method can fail with several error types:"},{"type":" ","oldLine":152,"newLine":152,"text":"    ///"},{"type":" ","oldLine":153,"newLine":153,"text":"    /// ## Pipeline Errors"},{"type":"-","oldLine":154,"text":"    /// - **EndOfSource (Critical)**: L1 data source exhausted","ignored":true},{"type":"+","newLine":154,"text":"    /// - **`EndOfSource` (Critical)**: L1 data source exhausted","ignored":true},{"type":" ","oldLine":155,"newLine":155,"text":"    ///   - In interop mode: Returns error immediately for caller handling"},{"type":" ","oldLine":156,"newLine":156,"text":"    ///   - In normal mode: Adjusts target to current safe head and halts gracefully"},{"type":" ","oldLine":157,"newLine":157,"text":"    /// - **Temporary**: Insufficient data, automatically retried"}]},{"oldStart":165,"oldLines":8,"newStart":165,"newLines":8,"lines":[{"type":" ","oldLine":165,"newLine":165,"text":"    ///   - If deposit-only block also fails, returns critical error"},{"type":" ","oldLine":166,"newLine":166,"text":"    ///"},{"type":" ","oldLine":167,"newLine":167,"text":"    /// ## Other Errors"},{"type":"-","oldLine":168,"text":"    /// - **MissingOrigin**: Pipeline origin not available when expected","ignored":true},{"type":"-","oldLine":169,"text":"    /// - **BlockConversion**: Failed to convert block format","ignored":true},{"type":"+","newLine":168,"text":"    /// - **`MissingOrigin`**: Pipeline origin not available when expected","ignored":true},{"type":"+","newLine":169,"text":"    /// - **`BlockConversion`**: Failed to convert block format","ignored":true},{"type":" ","oldLine":170,"newLine":170,"text":"    /// - **RLP**: Failed to decode transaction data"},{"type":" ","oldLine":171,"newLine":171,"text":"    ///"},{"type":" ","oldLine":172,"newLine":172,"text":"    /// # Behavior Details"}]},{"oldStart":207,"oldLines":7,"newStart":207,"newLines":7,"lines":[{"type":" ","oldLine":207,"newLine":207,"text":"    ///"},{"type":" ","oldLine":208,"newLine":208,"text":"    /// # Panics"},{"type":" ","oldLine":209,"newLine":209,"text":"    /// This method does not explicitly panic, but may propagate panics from:"},{"type":"-","oldLine":210,"text":"    /// - RwLock poisoning (if another thread panicked while holding the cursor lock)","ignored":true},{"type":"+","newLine":210,"text":"    /// - `RwLock` poisoning (if another thread panicked while holding the cursor lock)","ignored":true},{"type":" ","oldLine":211,"newLine":211,"text":"    /// - Executor or pipeline implementation panics"},{"type":" ","oldLine":212,"newLine":212,"text":"    /// - Arithmetic overflow in block number operations (highly unlikely)"},{"type":" ","oldLine":213,"newLine":213,"text":"    pub async fn advance_to_target("}]},{"oldStart":219,"oldLines":11,"newStart":219,"newLines":11,"lines":[{"type":" ","oldLine":219,"newLine":219,"text":"            // Check if we have reached the target block number."},{"type":" ","oldLine":220,"newLine":220,"text":"            let pipeline_cursor = self.cursor.read();"},{"type":" ","oldLine":221,"newLine":221,"text":"            let tip_cursor = pipeline_cursor.tip();"},{"type":"-","oldLine":222,"text":"            if let Some(tb) = target {","ignored":false},{"type":"-","oldLine":223,"text":"                if tip_cursor.l2_safe_head.block_info.number >= tb {","ignored":false},{"type":"-","oldLine":224,"text":"                    info!(target: \"client\", \"Derivation complete, reached L2 safe head.\");","ignored":true},{"type":"-","oldLine":225,"text":"                    return Ok((tip_cursor.l2_safe_head, tip_cursor.l2_safe_head_output_root));","ignored":true},{"type":"-","oldLine":226,"text":"                }","ignored":false},{"type":"+","newLine":222,"text":"            if let Some(tb) = target &&","ignored":false},{"type":"+","newLine":223,"text":"                tip_cursor.l2_safe_head.block_info.number >= tb","ignored":false},{"type":"+","newLine":224,"text":"            {","ignored":false},{"type":"+","newLine":225,"text":"                info!(target: \"client\", \"Derivation complete, reached L2 safe head.\");","ignored":true},{"type":"+","newLine":226,"text":"                return Ok((tip_cursor.l2_safe_head, tip_cursor.l2_safe_head_output_root));","ignored":true},{"type":" ","oldLine":227,"newLine":227,"text":"            }"},{"type":" ","oldLine":228,"newLine":228,"text":""},{"type":" ","oldLine":229,"newLine":229,"text":"            let mut attributes = match self.pipeline.produce_payload(tip_cursor.l2_safe_head).await"}]},{"oldStart":240,"oldLines":11,"newStart":240,"newLines":11,"lines":[{"type":" ","oldLine":240,"newLine":240,"text":""},{"type":" ","oldLine":241,"newLine":241,"text":"                    // If we are in interop mode, this error must be handled by the caller."},{"type":" ","oldLine":242,"newLine":242,"text":"                    // Otherwise, we continue the loop to halt derivation on the next iteration."},{"type":"-","oldLine":243,"text":"                    if cfg.is_interop_active(self.cursor.read().l2_safe_head().block_info.number) {","ignored":false},{"type":"+","newLine":243,"text":"                    if cfg.is_interop_active(self.cursor.read().l2_safe_head().block_info.timestamp)","ignored":false},{"type":"+","newLine":244,"text":"                    {","ignored":false},{"type":" ","oldLine":244,"newLine":245,"text":"                        return Err(PipelineError::EndOfSource.crit().into());"},{"type":"-","oldLine":245,"text":"                    } else {","ignored":false},{"type":"-","oldLine":246,"text":"                        continue;","ignored":true},{"type":" ","oldLine":247,"newLine":246,"text":"                    }"},{"type":"+","newLine":247,"text":"                    continue;","ignored":true},{"type":" ","oldLine":248,"newLine":248,"text":"                }"},{"type":" ","oldLine":249,"newLine":249,"text":"                Err(e) => {"},{"type":" ","oldLine":250,"newLine":250,"text":"                    error!(target: \"client\", \"Failed to produce payload: {:?}\", e);"}]}]},"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "49a709f57d480e2ba94b230940b1a0a322128bc67ff0ced9644b3099c437c708",
+  "name": "core.rs",
+  "kind": "program",
+  "lines": 333,
+  "source": "//! The driver of the kona derivation pipeline.\n\nuse crate::{DriverError, DriverPipeline, DriverResult, Executor, PipelineCursor, TipCursor};\nuse alloc::{sync::Arc, vec::Vec};\nuse alloy_consensus::BlockBody;\nuse alloy_primitives::{B256, Bytes};\nuse alloy_rlp::Decodable;\nuse core::fmt::Debug;\nuse kona_derive::{Pipeline, PipelineError, PipelineErrorKind, Signal, SignalReceiver};\nuse kona_executor::BlockBuildingOutcome;\nuse kona_genesis::RollupConfig;\nuse kona_protocol::L2BlockInfo;\nuse op_alloy_consensus::{OpBlock, OpTxEnvelope, OpTxType};\nuse spin::RwLock;\n\n/// The Rollup Driver entrypoint.\n///\n/// The [`Driver`] is the main coordination component for the rollup derivation and execution\n/// process. It manages the interaction between the derivation pipeline and block executor\n/// to produce verified L2 blocks from L1 data.\n///\n/// ## Architecture\n/// The driver operates with three main components:\n/// - **Pipeline**: Derives L2 block attributes from L1 data\n/// - **Executor**: Builds and executes L2 blocks from attributes\n/// - **Cursor**: Tracks the current state of derivation progress\n///\n/// ## Usage Pattern\n/// ```text\n/// 1. Initialize driver with cursor, executor, and pipeline\n/// 2. Call wait_for_executor() to ensure readiness\n/// 3. Call advance_to_target() to derive blocks up to target\n/// 4. Driver coordinates pipeline stepping and block execution\n/// 5. Updates cursor with progress and maintains safe head artifacts\n/// ```\n///\n/// ## Error Handling\n/// The driver handles various error scenarios:\n/// - Pipeline derivation failures (temporary, reset, critical)\n/// - Block execution failures (with Holocene deposit-only retry)\n/// - L1 data exhaustion (graceful halt)\n/// - Interop mode considerations\n#[derive(Debug)]\npub struct Driver<E, DP, P>\nwhere\n    E: Executor + Send + Sync + Debug,\n    DP: DriverPipeline<P> + Send + Sync + Debug,\n    P: Pipeline + SignalReceiver + Send + Sync + Debug,\n{\n    /// Marker for the pipeline type parameter.\n    ///\n    /// This phantom data ensures type safety while allowing the driver\n    /// to work with different pipeline implementations.\n    _marker: core::marker::PhantomData<P>,\n    /// Cursor tracking the current L2 derivation state and safe head.\n    ///\n    /// The cursor maintains the current position in the derivation process,\n    /// including the L2 safe head, output root, and L1 origin. It's wrapped\n    /// in an `Arc<RwLock<_>>` for thread-safe shared access.\n    pub cursor: Arc<RwLock<PipelineCursor>>,\n    /// The block executor responsible for building and executing L2 blocks.\n    ///\n    /// The executor takes payload attributes from the pipeline and produces\n    /// complete blocks with execution results and state changes.\n    pub executor: E,\n    /// The derivation pipeline that produces block attributes from L1 data.\n    ///\n    /// The pipeline abstracts the complex derivation logic and provides\n    /// a high-level interface for producing sequential block attributes.\n    pub pipeline: DP,\n    /// Cached execution artifacts and transactions from the most recent safe head.\n    ///\n    /// This cache contains the [`BlockBuildingOutcome`] and raw transaction data\n    /// from the last successfully executed block. It's used for efficiency and\n    /// debugging purposes. `None` when no block has been executed yet.\n    pub safe_head_artifacts: Option<(BlockBuildingOutcome<E::Receipt>, Vec<Bytes>)>,\n}\n\nimpl<E, DP, P> Driver<E, DP, P>\nwhere\n    E: Executor + Send + Sync + Debug,\n    DP: DriverPipeline<P> + Send + Sync + Debug,\n    P: Pipeline + SignalReceiver + Send + Sync + Debug,\n{\n    /// Creates a new [`Driver`] instance.\n    ///\n    /// Initializes the driver with the provided cursor, executor, and pipeline components.\n    /// The driver starts with no cached safe head artifacts.\n    ///\n    /// # Arguments\n    /// * `cursor` - Shared cursor for tracking derivation state\n    /// * `executor` - Block executor for building and executing L2 blocks\n    /// * `pipeline` - Derivation pipeline for producing block attributes\n    ///\n    /// # Returns\n    /// A new [`Driver`] instance ready for operation after calling [`Self::wait_for_executor`].\n    ///\n    /// # Usage\n    /// ```rust,ignore\n    /// let driver = Driver::new(cursor, executor, pipeline);\n    /// driver.wait_for_executor().await;\n    /// let result = driver.advance_to_target(&config, Some(target_block)).await;\n    /// ```\n    pub const fn new(cursor: Arc<RwLock<PipelineCursor>>, executor: E, pipeline: DP) -> Self {\n        Self {\n            _marker: core::marker::PhantomData,\n            cursor,\n            executor,\n            pipeline,\n            safe_head_artifacts: None,\n        }\n    }\n\n    /// Waits until the executor is ready for block processing.\n    ///\n    /// This method blocks until the underlying executor has completed any necessary\n    /// initialization or synchronization required before it can begin processing\n    /// payload attributes and executing blocks.\n    ///\n    /// # Usage\n    /// Must be called after creating the driver and before calling [`Self::advance_to_target`].\n    /// This ensures the executor is in a valid state for block execution.\n    ///\n    /// # Example\n    /// ```rust,ignore\n    /// let mut driver = Driver::new(cursor, executor, pipeline);\n    /// driver.wait_for_executor().await;  // Required before derivation\n    /// ```\n    pub async fn wait_for_executor(&mut self) {\n        self.executor.wait_until_ready().await;\n    }\n\n    /// Advances the derivation pipeline to the target block number.\n    ///\n    /// This is the main driver method that coordinates the derivation pipeline and block\n    /// executor to produce L2 blocks up to the specified target. It handles the complete\n    /// lifecycle of block derivation including pipeline stepping, block execution, error\n    /// recovery, and state updates.\n    ///\n    /// # Arguments\n    /// * `cfg` - The rollup configuration containing chain parameters and activation heights\n    /// * `target` - Optional target block number. If `None`, derives indefinitely until data source\n    ///   is exhausted or an error occurs\n    ///\n    /// # Returns\n    /// * `Ok((l2_safe_head, output_root))` - Tuple containing the final [`L2BlockInfo`] and output\n    ///   root hash when target is reached or derivation completes\n    /// * `Err(DriverError)` - Various error conditions that prevent further derivation\n    ///\n    /// # Errors\n    /// This method can fail with several error types:\n    ///\n    /// ## Pipeline Errors\n    /// - **`EndOfSource` (Critical)**: L1 data source exhausted\n    ///   - In interop mode: Returns error immediately for caller handling\n    ///   - In normal mode: Adjusts target to current safe head and halts gracefully\n    /// - **Temporary**: Insufficient data, automatically retried\n    /// - **Reset**: Reorg detected, pipeline reset and derivation continues\n    /// - **Other Critical**: Fatal pipeline errors that stop derivation\n    ///\n    /// ## Execution Errors\n    /// - **Pre-Holocene**: Block execution failures cause block to be discarded\n    /// - **Holocene+**: Failed blocks are retried as deposit-only blocks\n    ///   - Strips non-deposit transactions and flushes invalidated channel\n    ///   - If deposit-only block also fails, returns critical error\n    ///\n    /// ## Other Errors\n    /// - **`MissingOrigin`**: Pipeline origin not available when expected\n    /// - **`BlockConversion`**: Failed to convert block format\n    /// - **RLP**: Failed to decode transaction data\n    ///\n    /// # Behavior Details\n    ///\n    /// ## Main Loop\n    /// The method operates in a continuous loop:\n    /// 1. Check if target block number reached (if specified)\n    /// 2. Produce payload attributes from pipeline\n    /// 3. Execute payload with executor\n    /// 4. Handle execution failures with retry logic\n    /// 5. Construct complete block and update cursor\n    /// 6. Cache artifacts and continue\n    ///\n    /// ## Target Handling\n    /// - If `target` is `Some(n)`: Stops when safe head reaches block `n`\n    /// - If `target` is `None`: Continues until data exhausted or critical error\n    /// - Target can be dynamically adjusted if data source is exhausted\n    ///\n    /// ## State Updates\n    /// Each successful block updates:\n    /// - Pipeline cursor with new L1 origin and L2 safe head\n    /// - Executor safe head for next block building\n    /// - Cached artifacts for the most recent block\n    /// - Output root computation for verification\n    ///\n    /// # Usage Pattern\n    /// ```rust,ignore\n    /// // Derive to specific block\n    /// let (safe_head, output_root) = driver\n    ///     .advance_to_target(&rollup_config, Some(100))\n    ///     .await?;\n    ///\n    /// // Derive until data exhausted\n    /// let (final_head, output_root) = driver\n    ///     .advance_to_target(&rollup_config, None)\n    ///     .await?;\n    /// ```\n    ///\n    /// # Panics\n    /// This method does not explicitly panic, but may propagate panics from:\n    /// - `RwLock` poisoning (if another thread panicked while holding the cursor lock)\n    /// - Executor or pipeline implementation panics\n    /// - Arithmetic overflow in block number operations (highly unlikely)\n    pub async fn advance_to_target(\n        &mut self,\n        cfg: &RollupConfig,\n        mut target: Option<u64>,\n    ) -> DriverResult<(L2BlockInfo, B256), E::Error> {\n        loop {\n            // Check if we have reached the target block number.\n            let pipeline_cursor = self.cursor.read();\n            let tip_cursor = pipeline_cursor.tip();\n            if let Some(tb) = target &&\n                tip_cursor.l2_safe_head.block_info.number >= tb\n            {\n                info!(target: \"client\", \"Derivation complete, reached L2 safe head.\");\n                return Ok((tip_cursor.l2_safe_head, tip_cursor.l2_safe_head_output_root));\n            }\n\n            let mut attributes = match self.pipeline.produce_payload(tip_cursor.l2_safe_head).await\n            {\n                Ok(attrs) => attrs.take_inner(),\n                Err(PipelineErrorKind::Critical(PipelineError::EndOfSource)) => {\n                    warn!(target: \"client\", \"Exhausted data source; Halting derivation and using current safe head.\");\n\n                    // Adjust the target block number to the current safe head, as no more blocks\n                    // can be produced.\n                    if target.is_some() {\n                        target = Some(tip_cursor.l2_safe_head.block_info.number);\n                    };\n\n                    // If we are in interop mode, this error must be handled by the caller.\n                    // Otherwise, we continue the loop to halt derivation on the next iteration.\n                    if cfg.is_interop_active(self.cursor.read().l2_safe_head().block_info.timestamp)\n                    {\n                        return Err(PipelineError::EndOfSource.crit().into());\n                    }\n                    continue;\n                }\n                Err(e) => {\n                    error!(target: \"client\", \"Failed to produce payload: {:?}\", e);\n                    return Err(DriverError::Pipeline(e));\n                }\n            };\n\n            self.executor.update_safe_head(tip_cursor.l2_safe_head_header.clone());\n            let outcome = match self.executor.execute_payload(attributes.clone()).await {\n                Ok(outcome) => outcome,\n                Err(e) => {\n                    error!(target: \"client\", \"Failed to execute L2 block: {}\", e);\n\n                    if cfg.is_holocene_active(attributes.payload_attributes.timestamp) {\n                        // Retry with a deposit-only block.\n                        warn!(target: \"client\", \"Flushing current channel and retrying deposit only block\");\n\n                        // Flush the current batch and channel - if a block was replaced with a\n                        // deposit-only block due to execution failure, the\n                        // batch and channel it is contained in is forwards\n                        // invalidated.\n                        self.pipeline.signal(Signal::FlushChannel).await?;\n\n                        // Strip out all transactions that are not deposits.\n                        attributes.transactions = attributes.transactions.map(|txs| {\n                            txs.into_iter()\n                                .filter(|tx| !tx.is_empty() && tx[0] == OpTxType::Deposit as u8)\n                                .collect::<Vec<_>>()\n                        });\n\n                        // Retry the execution.\n                        self.executor.update_safe_head(tip_cursor.l2_safe_head_header.clone());\n                        match self.executor.execute_payload(attributes.clone()).await {\n                            Ok(header) => header,\n                            Err(e) => {\n                                error!(\n                                    target: \"client\",\n                                    \"Critical - Failed to execute deposit-only block: {e}\",\n                                );\n                                return Err(DriverError::Executor(e));\n                            }\n                        }\n                    } else {\n                        // Pre-Holocene, discard the block if execution fails.\n                        continue;\n                    }\n                }\n            };\n\n            // Construct the block.\n            let block = OpBlock {\n                header: outcome.header.inner().clone(),\n                body: BlockBody {\n                    transactions: attributes\n                        .transactions\n                        .as_ref()\n                        .unwrap_or(&Vec::new())\n                        .iter()\n                        .map(|tx| OpTxEnvelope::decode(&mut tx.as_ref()).map_err(DriverError::Rlp))\n                        .collect::<DriverResult<Vec<OpTxEnvelope>, E::Error>>()?,\n                    ommers: Vec::new(),\n                    withdrawals: None,\n                },\n            };\n\n            // Get the pipeline origin and update the tip cursor.\n            let origin = self.pipeline.origin().ok_or(PipelineError::MissingOrigin.crit())?;\n            let l2_info = L2BlockInfo::from_block_and_genesis(\n                &block,\n                &self.pipeline.rollup_config().genesis,\n            )?;\n            let tip_cursor = TipCursor::new(\n                l2_info,\n                outcome.header.clone(),\n                self.executor.compute_output_root().map_err(DriverError::Executor)?,\n            );\n\n            // Advance the derivation pipeline cursor\n            drop(pipeline_cursor);\n            self.cursor.write().advance(origin, tip_cursor);\n\n            // Update the latest safe head artifacts.\n            self.safe_head_artifacts = Some((outcome, attributes.transactions.unwrap_or_default()));\n        }\n    }\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "differs",
+      "coveredLines": 327,
+      "match": {
+        "origin": "own",
+        "collection": "optimism",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "core.rs",
+        "similarity": 0.948,
+        "reportId": "optimism/cantina-kona-2026-03",
+        "repository": "op-rs/kona",
+        "path": "crates/proof/driver/src/core.rs",
+        "commit": "86910c9112437bbb849eca28961f813c5450e103",
+        "commitTimestamp": "2025-12-15T17:17:05Z",
+        "url": "https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/crates/proof/driver/src/core.rs",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). Proof driver, cursor and pipeline; Low findings 3.4.10, 3.4.11, 3.4.19 and Informational 3.5.10 located here.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 6,
+        "removed": 6,
+        "ignoredAdded": 7,
+        "ignoredRemoved": 7,
+        "unchanged": 327,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 73,
+            "oldLines": 7,
+            "newStart": 73,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 73,
+                "newLine": 73,
+                "text": "    /// This cache contains the [`BlockBuildingOutcome`] and raw transaction data"
+              },
+              {
+                "type": " ",
+                "oldLine": 74,
+                "newLine": 74,
+                "text": "    /// from the last successfully executed block. It's used for efficiency and"
+              },
+              {
+                "type": " ",
+                "oldLine": 75,
+                "newLine": 75,
+                "text": "    /// debugging purposes. `None` when no block has been executed yet."
+              },
+              {
+                "type": "-",
+                "oldLine": 76,
+                "text": "    pub safe_head_artifacts: Option<(BlockBuildingOutcome, Vec<Bytes>)>,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 76,
+                "text": "    pub safe_head_artifacts: Option<(BlockBuildingOutcome<E::Receipt>, Vec<Bytes>)>,",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 77, "newLine": 77, "text": "}" },
+              { "type": " ", "oldLine": 78, "newLine": 78, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 79,
+                "newLine": 79,
+                "text": "impl<E, DP, P> Driver<E, DP, P>"
+              }
+            ]
+          },
+          {
+            "oldStart": 151,
+            "oldLines": 7,
+            "newStart": 151,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 151,
+                "newLine": 151,
+                "text": "    /// This method can fail with several error types:"
+              },
+              {
+                "type": " ",
+                "oldLine": 152,
+                "newLine": 152,
+                "text": "    ///"
+              },
+              {
+                "type": " ",
+                "oldLine": 153,
+                "newLine": 153,
+                "text": "    /// ## Pipeline Errors"
+              },
+              {
+                "type": "-",
+                "oldLine": 154,
+                "text": "    /// - **EndOfSource (Critical)**: L1 data source exhausted",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 154,
+                "text": "    /// - **`EndOfSource` (Critical)**: L1 data source exhausted",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 155,
+                "newLine": 155,
+                "text": "    ///   - In interop mode: Returns error immediately for caller handling"
+              },
+              {
+                "type": " ",
+                "oldLine": 156,
+                "newLine": 156,
+                "text": "    ///   - In normal mode: Adjusts target to current safe head and halts gracefully"
+              },
+              {
+                "type": " ",
+                "oldLine": 157,
+                "newLine": 157,
+                "text": "    /// - **Temporary**: Insufficient data, automatically retried"
+              }
+            ]
+          },
+          {
+            "oldStart": 165,
+            "oldLines": 8,
+            "newStart": 165,
+            "newLines": 8,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 165,
+                "newLine": 165,
+                "text": "    ///   - If deposit-only block also fails, returns critical error"
+              },
+              {
+                "type": " ",
+                "oldLine": 166,
+                "newLine": 166,
+                "text": "    ///"
+              },
+              {
+                "type": " ",
+                "oldLine": 167,
+                "newLine": 167,
+                "text": "    /// ## Other Errors"
+              },
+              {
+                "type": "-",
+                "oldLine": 168,
+                "text": "    /// - **MissingOrigin**: Pipeline origin not available when expected",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 169,
+                "text": "    /// - **BlockConversion**: Failed to convert block format",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 168,
+                "text": "    /// - **`MissingOrigin`**: Pipeline origin not available when expected",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 169,
+                "text": "    /// - **`BlockConversion`**: Failed to convert block format",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 170,
+                "newLine": 170,
+                "text": "    /// - **RLP**: Failed to decode transaction data"
+              },
+              {
+                "type": " ",
+                "oldLine": 171,
+                "newLine": 171,
+                "text": "    ///"
+              },
+              {
+                "type": " ",
+                "oldLine": 172,
+                "newLine": 172,
+                "text": "    /// # Behavior Details"
+              }
+            ]
+          },
+          {
+            "oldStart": 207,
+            "oldLines": 7,
+            "newStart": 207,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 207,
+                "newLine": 207,
+                "text": "    ///"
+              },
+              {
+                "type": " ",
+                "oldLine": 208,
+                "newLine": 208,
+                "text": "    /// # Panics"
+              },
+              {
+                "type": " ",
+                "oldLine": 209,
+                "newLine": 209,
+                "text": "    /// This method does not explicitly panic, but may propagate panics from:"
+              },
+              {
+                "type": "-",
+                "oldLine": 210,
+                "text": "    /// - RwLock poisoning (if another thread panicked while holding the cursor lock)",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 210,
+                "text": "    /// - `RwLock` poisoning (if another thread panicked while holding the cursor lock)",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 211,
+                "newLine": 211,
+                "text": "    /// - Executor or pipeline implementation panics"
+              },
+              {
+                "type": " ",
+                "oldLine": 212,
+                "newLine": 212,
+                "text": "    /// - Arithmetic overflow in block number operations (highly unlikely)"
+              },
+              {
+                "type": " ",
+                "oldLine": 213,
+                "newLine": 213,
+                "text": "    pub async fn advance_to_target("
+              }
+            ]
+          },
+          {
+            "oldStart": 219,
+            "oldLines": 11,
+            "newStart": 219,
+            "newLines": 11,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 219,
+                "newLine": 219,
+                "text": "            // Check if we have reached the target block number."
+              },
+              {
+                "type": " ",
+                "oldLine": 220,
+                "newLine": 220,
+                "text": "            let pipeline_cursor = self.cursor.read();"
+              },
+              {
+                "type": " ",
+                "oldLine": 221,
+                "newLine": 221,
+                "text": "            let tip_cursor = pipeline_cursor.tip();"
+              },
+              {
+                "type": "-",
+                "oldLine": 222,
+                "text": "            if let Some(tb) = target {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 223,
+                "text": "                if tip_cursor.l2_safe_head.block_info.number >= tb {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 224,
+                "text": "                    info!(target: \"client\", \"Derivation complete, reached L2 safe head.\");",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 225,
+                "text": "                    return Ok((tip_cursor.l2_safe_head, tip_cursor.l2_safe_head_output_root));",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 226,
+                "text": "                }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 222,
+                "text": "            if let Some(tb) = target &&",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 223,
+                "text": "                tip_cursor.l2_safe_head.block_info.number >= tb",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 224,
+                "text": "            {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 225,
+                "text": "                info!(target: \"client\", \"Derivation complete, reached L2 safe head.\");",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 226,
+                "text": "                return Ok((tip_cursor.l2_safe_head, tip_cursor.l2_safe_head_output_root));",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 227,
+                "newLine": 227,
+                "text": "            }"
+              },
+              { "type": " ", "oldLine": 228, "newLine": 228, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 229,
+                "newLine": 229,
+                "text": "            let mut attributes = match self.pipeline.produce_payload(tip_cursor.l2_safe_head).await"
+              }
+            ]
+          },
+          {
+            "oldStart": 240,
+            "oldLines": 11,
+            "newStart": 240,
+            "newLines": 11,
+            "lines": [
+              { "type": " ", "oldLine": 240, "newLine": 240, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 241,
+                "newLine": 241,
+                "text": "                    // If we are in interop mode, this error must be handled by the caller."
+              },
+              {
+                "type": " ",
+                "oldLine": 242,
+                "newLine": 242,
+                "text": "                    // Otherwise, we continue the loop to halt derivation on the next iteration."
+              },
+              {
+                "type": "-",
+                "oldLine": 243,
+                "text": "                    if cfg.is_interop_active(self.cursor.read().l2_safe_head().block_info.number) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 243,
+                "text": "                    if cfg.is_interop_active(self.cursor.read().l2_safe_head().block_info.timestamp)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 244,
+                "text": "                    {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 244,
+                "newLine": 245,
+                "text": "                        return Err(PipelineError::EndOfSource.crit().into());"
+              },
+              {
+                "type": "-",
+                "oldLine": 245,
+                "text": "                    } else {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 246,
+                "text": "                        continue;",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 247,
+                "newLine": 246,
+                "text": "                    }"
+              },
+              {
+                "type": "+",
+                "newLine": 247,
+                "text": "                    continue;",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 248,
+                "newLine": 248,
+                "text": "                }"
+              },
+              {
+                "type": " ",
+                "oldLine": 249,
+                "newLine": 249,
+                "text": "                Err(e) => {"
+              },
+              {
+                "type": " ",
+                "oldLine": 250,
+                "newLine": 250,
+                "text": "                    error!(target: \"client\", \"Failed to produce payload: {:?}\", e);"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

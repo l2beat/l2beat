@@ -1,1 +1,37 @@
-{"schemaVersion":2,"unitHash":"122b941ac40524d094b17cf9fea32a690f93136cc78e025a68666ba99bf4569c","name":"mod.rs","kind":"program","lines":22,"source":"//! Contains the [`PrecompileProvider`] implementation that serves FPVM-accelerated OP Stack\n//! precompiles.\n//!\n//! [`PrecompileProvider`]: revm::handler::PrecompileProvider\n\nmod provider;\npub(crate) use provider::OpFpvmPrecompiles;\n\nmod bls12_g1_add;\nmod bls12_g1_msm;\nmod bls12_g2_add;\nmod bls12_g2_msm;\nmod bls12_map_fp;\nmod bls12_map_fp2;\nmod bls12_pair;\nmod bn128_pair;\nmod ecrecover;\nmod kzg_point_eval;\nmod utils;\n\n#[cfg(test)]\nmod test_utils;","resolutions":{"9fa846564f4071bd":{"status":"identical","coveredLines":22,"match":{"origin":"own","collection":"optimism","relation":{"type":"own"},"rank":0,"matchedBy":"identity","auditedName":"mod.rs","similarity":1,"reportId":"optimism/cantina-kona-2026-03","repository":"op-rs/kona","path":"bin/client/src/fpvm_evm/precompiles/mod.rs","commit":"86910c9112437bbb849eca28961f813c5450e103","commitTimestamp":"2025-12-15T17:17:05Z","url":"https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/bin/client/src/fpvm_evm/precompiles/mod.rs","auditStatus":"audited_with_no_major_findings","reviewPhase":"initial audit","coverage":"Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). FPVM EVM factory and accelerated precompiles; finding 3.4.32 (Low) located in precompiles/provider.rs.","majorFindings":0,"isLatestVersion":true,"laterAuditedVersionExists":false,"totalVersions":1},"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "122b941ac40524d094b17cf9fea32a690f93136cc78e025a68666ba99bf4569c",
+  "name": "mod.rs",
+  "kind": "program",
+  "lines": 22,
+  "source": "//! Contains the [`PrecompileProvider`] implementation that serves FPVM-accelerated OP Stack\n//! precompiles.\n//!\n//! [`PrecompileProvider`]: revm::handler::PrecompileProvider\n\nmod provider;\npub(crate) use provider::OpFpvmPrecompiles;\n\nmod bls12_g1_add;\nmod bls12_g1_msm;\nmod bls12_g2_add;\nmod bls12_g2_msm;\nmod bls12_map_fp;\nmod bls12_map_fp2;\nmod bls12_pair;\nmod bn128_pair;\nmod ecrecover;\nmod kzg_point_eval;\nmod utils;\n\n#[cfg(test)]\nmod test_utils;",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "identical",
+      "coveredLines": 22,
+      "match": {
+        "origin": "own",
+        "collection": "optimism",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "mod.rs",
+        "similarity": 1,
+        "reportId": "optimism/cantina-kona-2026-03",
+        "repository": "op-rs/kona",
+        "path": "bin/client/src/fpvm_evm/precompiles/mod.rs",
+        "commit": "86910c9112437bbb849eca28961f813c5450e103",
+        "commitTimestamp": "2025-12-15T17:17:05Z",
+        "url": "https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/bin/client/src/fpvm_evm/precompiles/mod.rs",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). FPVM EVM factory and accelerated precompiles; finding 3.4.32 (Low) located in precompiles/provider.rs.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "warnings": []
+    }
+  }
+}

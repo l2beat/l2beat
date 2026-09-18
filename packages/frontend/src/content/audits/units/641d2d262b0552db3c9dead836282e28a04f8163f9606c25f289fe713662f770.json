@@ -1,1 +1,364 @@
-{"schemaVersion":2,"unitHash":"641d2d262b0552db3c9dead836282e28a04f8163f9606c25f289fe713662f770","name":"blob_provider.rs","kind":"program","lines":66,"source":"//! An implementation of the [`BlobProvider`] trait for tests.\n\nuse crate::{BlobProvider, errors::BlobProviderError};\nuse alloc::{boxed::Box, vec::Vec};\nuse alloy_eips::eip4844::Blob;\nuse alloy_primitives::{B256, map::HashMap};\nuse async_trait::async_trait;\nuse kona_protocol::BlockInfo;\n\n/// A mock blob provider for testing.\n#[derive(Debug, Clone, Default)]\npub struct TestBlobProvider {\n    /// Maps block hashes to blob data.\n    pub blobs: HashMap<B256, Blob>,\n    /// Whether the blob provider should return a generic backend error.\n    pub should_error: bool,\n    /// When `true`, `get_and_validate_blobs` returns `BlobProviderError::BlobNotFound`,\n    /// simulating a missed/orphaned beacon slot (HTTP 404 from the beacon node).\n    pub should_return_not_found: bool,\n    /// When `true`, `get_and_validate_blobs` appends one extra blob beyond those\n    /// requested, simulating a buggy provider that returns too many blobs (over-fill).\n    pub should_return_extra_blob: bool,\n}\n\nimpl TestBlobProvider {\n    /// Insert a blob into the mock blob provider.\n    pub fn insert_blob(&mut self, hash: B256, blob: Blob) {\n        self.blobs.insert(hash, blob);\n    }\n\n    /// Clears blobs from the mock blob provider.\n    pub fn clear(&mut self) {\n        self.blobs.clear();\n    }\n}\n\n#[async_trait]\nimpl BlobProvider for TestBlobProvider {\n    type Error = BlobProviderError;\n\n    async fn get_and_validate_blobs(\n        &mut self,\n        _block_ref: &BlockInfo,\n        blob_hashes: &[B256],\n    ) -> Result<Vec<Box<Blob>>, Self::Error> {\n        if self.should_error {\n            return Err(BlobProviderError::SlotDerivation);\n        }\n        if self.should_return_not_found {\n            return Err(BlobProviderError::BlobNotFound {\n                slot: 0,\n                reason: \"mock: slot not found\".into(),\n            });\n        }\n        let mut blobs = Vec::new();\n        for blob_hash in blob_hashes {\n            if let Some(data) = self.blobs.get(blob_hash) {\n                blobs.push(Box::new(*data));\n            }\n        }\n        if self.should_return_extra_blob {\n            blobs.push(Box::new(Blob::default()));\n        }\n        Ok(blobs)\n    }\n}","resolutions":{"9fa846564f4071bd":{"status":"differs","coveredLines":52,"match":{"origin":"own","collection":"optimism","relation":{"type":"own"},"rank":0,"matchedBy":"name","auditedName":"blob_provider.rs","similarity":0.809,"reportId":"optimism/cantina-kona-2026-03","repository":"op-rs/kona","path":"crates/protocol/derive/src/test_utils/blob_provider.rs","commit":"86910c9112437bbb849eca28961f813c5450e103","commitTimestamp":"2025-12-15T17:17:05Z","url":"https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/crates/protocol/derive/src/test_utils/blob_provider.rs","auditStatus":"audited_with_no_major_findings","reviewPhase":"initial audit","coverage":"Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). kona-derive derivation pipeline (stages, sources, traversal, attributes). Medium findings 3.3.1 and 3.3.2 (pipeline/core.rs, stages/l1_retrieval.rs) and numerous Low/Informational findings located here; no Critical/High.","majorFindings":0,"isLatestVersion":true,"laterAuditedVersionExists":false,"totalVersions":1},"diff":{"added":14,"removed":3,"ignoredAdded":6,"ignoredRemoved":2,"unchanged":52,"ignoredOnly":false,"hunks":[{"oldStart":1,"oldLines":8,"newStart":1,"newLines":8,"lines":[{"type":"-","oldLine":1,"text":"//! An implementation of the [BlobProvider] trait for tests.","ignored":true},{"type":"+","newLine":1,"text":"//! An implementation of the [`BlobProvider`] trait for tests.","ignored":true},{"type":" ","oldLine":2,"newLine":2,"text":""},{"type":" ","oldLine":3,"newLine":3,"text":"use crate::{BlobProvider, errors::BlobProviderError};"},{"type":" ","oldLine":4,"newLine":4,"text":"use alloc::{boxed::Box, vec::Vec};"},{"type":"-","oldLine":5,"text":"use alloy_eips::eip4844::{Blob, IndexedBlobHash};","ignored":false},{"type":"+","newLine":5,"text":"use alloy_eips::eip4844::Blob;","ignored":false},{"type":" ","oldLine":6,"newLine":6,"text":"use alloy_primitives::{B256, map::HashMap};"},{"type":" ","oldLine":7,"newLine":7,"text":"use async_trait::async_trait;"},{"type":" ","oldLine":8,"newLine":8,"text":"use kona_protocol::BlockInfo;"}]},{"oldStart":12,"oldLines":8,"newStart":12,"newLines":14,"lines":[{"type":" ","oldLine":12,"newLine":12,"text":"pub struct TestBlobProvider {"},{"type":" ","oldLine":13,"newLine":13,"text":"    /// Maps block hashes to blob data."},{"type":" ","oldLine":14,"newLine":14,"text":"    pub blobs: HashMap<B256, Blob>,"},{"type":"-","oldLine":15,"text":"    /// whether the blob provider should return an error.","ignored":true},{"type":"+","newLine":15,"text":"    /// Whether the blob provider should return a generic backend error.","ignored":true},{"type":" ","oldLine":16,"newLine":16,"text":"    pub should_error: bool,"},{"type":"+","newLine":17,"text":"    /// When `true`, `get_and_validate_blobs` returns `BlobProviderError::BlobNotFound`,","ignored":true},{"type":"+","newLine":18,"text":"    /// simulating a missed/orphaned beacon slot (HTTP 404 from the beacon node).","ignored":true},{"type":"+","newLine":19,"text":"    pub should_return_not_found: bool,","ignored":false},{"type":"+","newLine":20,"text":"    /// When `true`, `get_and_validate_blobs` appends one extra blob beyond those","ignored":true},{"type":"+","newLine":21,"text":"    /// requested, simulating a buggy provider that returns too many blobs (over-fill).","ignored":true},{"type":"+","newLine":22,"text":"    pub should_return_extra_blob: bool,","ignored":false},{"type":" ","oldLine":17,"newLine":23,"text":"}"},{"type":" ","oldLine":18,"newLine":24,"text":""},{"type":" ","oldLine":19,"newLine":25,"text":"impl TestBlobProvider {"}]},{"oldStart":35,"oldLines":17,"newStart":41,"newLines":26,"lines":[{"type":" ","oldLine":35,"newLine":41,"text":"    async fn get_and_validate_blobs("},{"type":" ","oldLine":36,"newLine":42,"text":"        &mut self,"},{"type":" ","oldLine":37,"newLine":43,"text":"        _block_ref: &BlockInfo,"},{"type":"-","oldLine":38,"text":"        blob_hashes: &[IndexedBlobHash],","ignored":false},{"type":"+","newLine":44,"text":"        blob_hashes: &[B256],","ignored":false},{"type":" ","oldLine":39,"newLine":45,"text":"    ) -> Result<Vec<Box<Blob>>, Self::Error> {"},{"type":" ","oldLine":40,"newLine":46,"text":"        if self.should_error {"},{"type":" ","oldLine":41,"newLine":47,"text":"            return Err(BlobProviderError::SlotDerivation);"},{"type":" ","oldLine":42,"newLine":48,"text":"        }"},{"type":"+","newLine":49,"text":"        if self.should_return_not_found {","ignored":false},{"type":"+","newLine":50,"text":"            return Err(BlobProviderError::BlobNotFound {","ignored":false},{"type":"+","newLine":51,"text":"                slot: 0,","ignored":false},{"type":"+","newLine":52,"text":"                reason: \"mock: slot not found\".into(),","ignored":false},{"type":"+","newLine":53,"text":"            });","ignored":false},{"type":"+","newLine":54,"text":"        }","ignored":false},{"type":" ","oldLine":43,"newLine":55,"text":"        let mut blobs = Vec::new();"},{"type":" ","oldLine":44,"newLine":56,"text":"        for blob_hash in blob_hashes {"},{"type":"-","oldLine":45,"text":"            if let Some(data) = self.blobs.get(&blob_hash.hash) {","ignored":false},{"type":"+","newLine":57,"text":"            if let Some(data) = self.blobs.get(blob_hash) {","ignored":false},{"type":" ","oldLine":46,"newLine":58,"text":"                blobs.push(Box::new(*data));"},{"type":" ","oldLine":47,"newLine":59,"text":"            }"},{"type":" ","oldLine":48,"newLine":60,"text":"        }"},{"type":"+","newLine":61,"text":"        if self.should_return_extra_blob {","ignored":false},{"type":"+","newLine":62,"text":"            blobs.push(Box::new(Blob::default()));","ignored":false},{"type":"+","newLine":63,"text":"        }","ignored":false},{"type":" ","oldLine":49,"newLine":64,"text":"        Ok(blobs)"},{"type":" ","oldLine":50,"newLine":65,"text":"    }"},{"type":" ","oldLine":51,"newLine":66,"text":"}"}]}]},"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "641d2d262b0552db3c9dead836282e28a04f8163f9606c25f289fe713662f770",
+  "name": "blob_provider.rs",
+  "kind": "program",
+  "lines": 66,
+  "source": "//! An implementation of the [`BlobProvider`] trait for tests.\n\nuse crate::{BlobProvider, errors::BlobProviderError};\nuse alloc::{boxed::Box, vec::Vec};\nuse alloy_eips::eip4844::Blob;\nuse alloy_primitives::{B256, map::HashMap};\nuse async_trait::async_trait;\nuse kona_protocol::BlockInfo;\n\n/// A mock blob provider for testing.\n#[derive(Debug, Clone, Default)]\npub struct TestBlobProvider {\n    /// Maps block hashes to blob data.\n    pub blobs: HashMap<B256, Blob>,\n    /// Whether the blob provider should return a generic backend error.\n    pub should_error: bool,\n    /// When `true`, `get_and_validate_blobs` returns `BlobProviderError::BlobNotFound`,\n    /// simulating a missed/orphaned beacon slot (HTTP 404 from the beacon node).\n    pub should_return_not_found: bool,\n    /// When `true`, `get_and_validate_blobs` appends one extra blob beyond those\n    /// requested, simulating a buggy provider that returns too many blobs (over-fill).\n    pub should_return_extra_blob: bool,\n}\n\nimpl TestBlobProvider {\n    /// Insert a blob into the mock blob provider.\n    pub fn insert_blob(&mut self, hash: B256, blob: Blob) {\n        self.blobs.insert(hash, blob);\n    }\n\n    /// Clears blobs from the mock blob provider.\n    pub fn clear(&mut self) {\n        self.blobs.clear();\n    }\n}\n\n#[async_trait]\nimpl BlobProvider for TestBlobProvider {\n    type Error = BlobProviderError;\n\n    async fn get_and_validate_blobs(\n        &mut self,\n        _block_ref: &BlockInfo,\n        blob_hashes: &[B256],\n    ) -> Result<Vec<Box<Blob>>, Self::Error> {\n        if self.should_error {\n            return Err(BlobProviderError::SlotDerivation);\n        }\n        if self.should_return_not_found {\n            return Err(BlobProviderError::BlobNotFound {\n                slot: 0,\n                reason: \"mock: slot not found\".into(),\n            });\n        }\n        let mut blobs = Vec::new();\n        for blob_hash in blob_hashes {\n            if let Some(data) = self.blobs.get(blob_hash) {\n                blobs.push(Box::new(*data));\n            }\n        }\n        if self.should_return_extra_blob {\n            blobs.push(Box::new(Blob::default()));\n        }\n        Ok(blobs)\n    }\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "differs",
+      "coveredLines": 52,
+      "match": {
+        "origin": "own",
+        "collection": "optimism",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "blob_provider.rs",
+        "similarity": 0.809,
+        "reportId": "optimism/cantina-kona-2026-03",
+        "repository": "op-rs/kona",
+        "path": "crates/protocol/derive/src/test_utils/blob_provider.rs",
+        "commit": "86910c9112437bbb849eca28961f813c5450e103",
+        "commitTimestamp": "2025-12-15T17:17:05Z",
+        "url": "https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/crates/protocol/derive/src/test_utils/blob_provider.rs",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). kona-derive derivation pipeline (stages, sources, traversal, attributes). Medium findings 3.3.1 and 3.3.2 (pipeline/core.rs, stages/l1_retrieval.rs) and numerous Low/Informational findings located here; no Critical/High.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 14,
+        "removed": 3,
+        "ignoredAdded": 6,
+        "ignoredRemoved": 2,
+        "unchanged": 52,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 8,
+            "newStart": 1,
+            "newLines": 8,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "//! An implementation of the [BlobProvider] trait for tests.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "//! An implementation of the [`BlobProvider`] trait for tests.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 2, "newLine": 2, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "use crate::{BlobProvider, errors::BlobProviderError};"
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "use alloc::{boxed::Box, vec::Vec};"
+              },
+              {
+                "type": "-",
+                "oldLine": 5,
+                "text": "use alloy_eips::eip4844::{Blob, IndexedBlobHash};",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 5,
+                "text": "use alloy_eips::eip4844::Blob;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 6,
+                "newLine": 6,
+                "text": "use alloy_primitives::{B256, map::HashMap};"
+              },
+              {
+                "type": " ",
+                "oldLine": 7,
+                "newLine": 7,
+                "text": "use async_trait::async_trait;"
+              },
+              {
+                "type": " ",
+                "oldLine": 8,
+                "newLine": 8,
+                "text": "use kona_protocol::BlockInfo;"
+              }
+            ]
+          },
+          {
+            "oldStart": 12,
+            "oldLines": 8,
+            "newStart": 12,
+            "newLines": 14,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 12,
+                "newLine": 12,
+                "text": "pub struct TestBlobProvider {"
+              },
+              {
+                "type": " ",
+                "oldLine": 13,
+                "newLine": 13,
+                "text": "    /// Maps block hashes to blob data."
+              },
+              {
+                "type": " ",
+                "oldLine": 14,
+                "newLine": 14,
+                "text": "    pub blobs: HashMap<B256, Blob>,"
+              },
+              {
+                "type": "-",
+                "oldLine": 15,
+                "text": "    /// whether the blob provider should return an error.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 15,
+                "text": "    /// Whether the blob provider should return a generic backend error.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 16,
+                "newLine": 16,
+                "text": "    pub should_error: bool,"
+              },
+              {
+                "type": "+",
+                "newLine": 17,
+                "text": "    /// When `true`, `get_and_validate_blobs` returns `BlobProviderError::BlobNotFound`,",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 18,
+                "text": "    /// simulating a missed/orphaned beacon slot (HTTP 404 from the beacon node).",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 19,
+                "text": "    pub should_return_not_found: bool,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 20,
+                "text": "    /// When `true`, `get_and_validate_blobs` appends one extra blob beyond those",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 21,
+                "text": "    /// requested, simulating a buggy provider that returns too many blobs (over-fill).",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 22,
+                "text": "    pub should_return_extra_blob: bool,",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 17, "newLine": 23, "text": "}" },
+              { "type": " ", "oldLine": 18, "newLine": 24, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 19,
+                "newLine": 25,
+                "text": "impl TestBlobProvider {"
+              }
+            ]
+          },
+          {
+            "oldStart": 35,
+            "oldLines": 17,
+            "newStart": 41,
+            "newLines": 26,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 35,
+                "newLine": 41,
+                "text": "    async fn get_and_validate_blobs("
+              },
+              {
+                "type": " ",
+                "oldLine": 36,
+                "newLine": 42,
+                "text": "        &mut self,"
+              },
+              {
+                "type": " ",
+                "oldLine": 37,
+                "newLine": 43,
+                "text": "        _block_ref: &BlockInfo,"
+              },
+              {
+                "type": "-",
+                "oldLine": 38,
+                "text": "        blob_hashes: &[IndexedBlobHash],",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 44,
+                "text": "        blob_hashes: &[B256],",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 39,
+                "newLine": 45,
+                "text": "    ) -> Result<Vec<Box<Blob>>, Self::Error> {"
+              },
+              {
+                "type": " ",
+                "oldLine": 40,
+                "newLine": 46,
+                "text": "        if self.should_error {"
+              },
+              {
+                "type": " ",
+                "oldLine": 41,
+                "newLine": 47,
+                "text": "            return Err(BlobProviderError::SlotDerivation);"
+              },
+              {
+                "type": " ",
+                "oldLine": 42,
+                "newLine": 48,
+                "text": "        }"
+              },
+              {
+                "type": "+",
+                "newLine": 49,
+                "text": "        if self.should_return_not_found {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 50,
+                "text": "            return Err(BlobProviderError::BlobNotFound {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 51,
+                "text": "                slot: 0,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 52,
+                "text": "                reason: \"mock: slot not found\".into(),",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 53,
+                "text": "            });",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 54,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 43,
+                "newLine": 55,
+                "text": "        let mut blobs = Vec::new();"
+              },
+              {
+                "type": " ",
+                "oldLine": 44,
+                "newLine": 56,
+                "text": "        for blob_hash in blob_hashes {"
+              },
+              {
+                "type": "-",
+                "oldLine": 45,
+                "text": "            if let Some(data) = self.blobs.get(&blob_hash.hash) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 57,
+                "text": "            if let Some(data) = self.blobs.get(blob_hash) {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 46,
+                "newLine": 58,
+                "text": "                blobs.push(Box::new(*data));"
+              },
+              {
+                "type": " ",
+                "oldLine": 47,
+                "newLine": 59,
+                "text": "            }"
+              },
+              {
+                "type": " ",
+                "oldLine": 48,
+                "newLine": 60,
+                "text": "        }"
+              },
+              {
+                "type": "+",
+                "newLine": 61,
+                "text": "        if self.should_return_extra_blob {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 62,
+                "text": "            blobs.push(Box::new(Blob::default()));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 63,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 49,
+                "newLine": 64,
+                "text": "        Ok(blobs)"
+              },
+              { "type": " ", "oldLine": 50, "newLine": 65, "text": "    }" },
+              { "type": " ", "oldLine": 51, "newLine": 66, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

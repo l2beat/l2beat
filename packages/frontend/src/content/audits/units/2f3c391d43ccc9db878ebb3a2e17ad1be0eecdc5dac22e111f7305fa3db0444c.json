@@ -1,1 +1,15 @@
-{"schemaVersion":2,"unitHash":"2f3c391d43ccc9db878ebb3a2e17ad1be0eecdc5dac22e111f7305fa3db0444c","name":"mod.rs","kind":"program","lines":16,"source":"//! Contains all the Span Batch Transaction Data types.\n\nmod wrapper;\npub use wrapper::{SpanBatchPostExecTransactionData, SpanBatchTransactionData};\n\nmod legacy;\npub use legacy::SpanBatchLegacyTransactionData;\n\nmod eip1559;\npub use eip1559::SpanBatchEip1559TransactionData;\n\nmod eip2930;\npub use eip2930::SpanBatchEip2930TransactionData;\n\nmod eip7702;\npub use eip7702::SpanBatchEip7702TransactionData;","resolutions":{"9fa846564f4071bd":{"status":"unaudited","coveredLines":0,"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "2f3c391d43ccc9db878ebb3a2e17ad1be0eecdc5dac22e111f7305fa3db0444c",
+  "name": "mod.rs",
+  "kind": "program",
+  "lines": 16,
+  "source": "//! Contains all the Span Batch Transaction Data types.\n\nmod wrapper;\npub use wrapper::{SpanBatchPostExecTransactionData, SpanBatchTransactionData};\n\nmod legacy;\npub use legacy::SpanBatchLegacyTransactionData;\n\nmod eip1559;\npub use eip1559::SpanBatchEip1559TransactionData;\n\nmod eip2930;\npub use eip2930::SpanBatchEip2930TransactionData;\n\nmod eip7702;\npub use eip7702::SpanBatchEip7702TransactionData;",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

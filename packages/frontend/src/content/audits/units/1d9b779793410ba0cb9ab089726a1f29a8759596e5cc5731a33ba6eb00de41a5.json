@@ -1,1 +1,15 @@
-{"schemaVersion":2,"unitHash":"1d9b779793410ba0cb9ab089726a1f29a8759596e5cc5731a33ba6eb00de41a5","name":"README.md","kind":"program","lines":29,"source":"# `fpvm-prestates`\n\nImages for creating reproducible `kona-client` prestate builds for supported fault proof virtual machines.\n\nCannon is built from the local monorepo source.\n\n## Usage\n\n### Build all reproducible `kona-client` + `cannon` prestate artifacts\n\n```sh\n# From the monorepo root\njust reproducible-prestate-kona\n```\n\nThis builds both supported variants:\n\n- `kona-client` into `rust/kona/prestate-artifacts-cannon`\n- `kona-client-int` into `rust/kona/prestate-artifacts-cannon-interop`\n\n### Build reproducible prestate artifacts for custom chains\n\nTo create a reproducible kona-client prestate build that supports custom or devnet chain configurations that are not in the superchain-registry:\n\n```sh\ncd rust\nKONA_CUSTOM_CONFIGS_DIR=<custom_config_dir> \\\n  just build-kona-reproducible-prestate-variant <kona-client|kona-client-int> <artifacts_output_dir>\n```","resolutions":{"9fa846564f4071bd":{"status":"unaudited","coveredLines":0,"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "1d9b779793410ba0cb9ab089726a1f29a8759596e5cc5731a33ba6eb00de41a5",
+  "name": "README.md",
+  "kind": "program",
+  "lines": 29,
+  "source": "# `fpvm-prestates`\n\nImages for creating reproducible `kona-client` prestate builds for supported fault proof virtual machines.\n\nCannon is built from the local monorepo source.\n\n## Usage\n\n### Build all reproducible `kona-client` + `cannon` prestate artifacts\n\n```sh\n# From the monorepo root\njust reproducible-prestate-kona\n```\n\nThis builds both supported variants:\n\n- `kona-client` into `rust/kona/prestate-artifacts-cannon`\n- `kona-client-int` into `rust/kona/prestate-artifacts-cannon-interop`\n\n### Build reproducible prestate artifacts for custom chains\n\nTo create a reproducible kona-client prestate build that supports custom or devnet chain configurations that are not in the superchain-registry:\n\n```sh\ncd rust\nKONA_CUSTOM_CONFIGS_DIR=<custom_config_dir> \\\n  just build-kona-reproducible-prestate-variant <kona-client|kona-client-int> <artifacts_output_dir>\n```",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

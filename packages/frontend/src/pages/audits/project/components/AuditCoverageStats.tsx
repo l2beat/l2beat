@@ -1,5 +1,17 @@
 import { formatInteger } from '@l2beat/shared-pure'
 import {
+  LineCoverageBar,
+  LineCoverageTooltipContent,
+  UnitStatusBar,
+  UnitStatusBarTooltipContent,
+} from '~/components/audits/AuditCoverageBar'
+import {
+  AUDIT_STATUS_META,
+  AUDIT_STATUS_ORDER,
+  formatShare,
+  totalUnits,
+} from '~/components/audits/auditStatus'
+import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
@@ -9,18 +21,6 @@ import type {
   AuditStatusCounts,
 } from '~/server/features/audits/types'
 import { cn } from '~/utils/cn'
-import {
-  LineCoverageBar,
-  LineCoverageTooltipContent,
-  UnitStatusBar,
-  UnitStatusBarTooltipContent,
-} from '../../components/AuditCoverageBar'
-import {
-  AUDIT_STATUS_META,
-  AUDIT_STATUS_ORDER,
-  formatShare,
-  totalUnits,
-} from '../../components/auditStatus'
 
 interface Props {
   coverage: AuditCoverageNumbers

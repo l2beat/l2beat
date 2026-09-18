@@ -1,1 +1,15 @@
-{"schemaVersion":2,"unitHash":"bfaa7371c2bb802806b31b5ae1627885c2b023fafae35b633aef3089fa4193cd","name":"mod.rs","kind":"program","lines":7,"source":"//! Consolidation Task\n\nmod error;\npub use error::ConsolidateTaskError;\n\nmod task;\npub use task::{ConsolidateInput, ConsolidateTask};","resolutions":{"9fa846564f4071bd":{"status":"unaudited","coveredLines":0,"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "bfaa7371c2bb802806b31b5ae1627885c2b023fafae35b633aef3089fa4193cd",
+  "name": "mod.rs",
+  "kind": "program",
+  "lines": 7,
+  "source": "//! Consolidation Task\n\nmod error;\npub use error::ConsolidateTaskError;\n\nmod task;\npub use task::{ConsolidateInput, ConsolidateTask};",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

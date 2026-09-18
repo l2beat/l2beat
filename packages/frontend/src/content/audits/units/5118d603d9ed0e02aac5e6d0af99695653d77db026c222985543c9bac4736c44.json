@@ -1,1 +1,15 @@
-{"schemaVersion":2,"unitHash":"5118d603d9ed0e02aac5e6d0af99695653d77db026c222985543c9bac4736c44","name":"dashboard.yml","kind":"program","lines":7,"source":"apiVersion: 1\n\nproviders:\n  - name: 'Folder'\n    allowUiUpdates: true\n    options:\n      path: /etc/grafana/provisioning/dashboards","resolutions":{"9fa846564f4071bd":{"status":"unaudited","coveredLines":0,"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "5118d603d9ed0e02aac5e6d0af99695653d77db026c222985543c9bac4736c44",
+  "name": "dashboard.yml",
+  "kind": "program",
+  "lines": 7,
+  "source": "apiVersion: 1\n\nproviders:\n  - name: 'Folder'\n    allowUiUpdates: true\n    options:\n      path: /etc/grafana/provisioning/dashboards",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

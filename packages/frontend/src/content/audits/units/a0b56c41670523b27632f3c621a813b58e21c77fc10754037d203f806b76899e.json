@@ -1,1 +1,15 @@
-{"schemaVersion":2,"unitHash":"a0b56c41670523b27632f3c621a813b58e21c77fc10754037d203f806b76899e","name":"lychee.toml","kind":"program","lines":21,"source":"# Config example at: https://github.com/lycheeverse/lychee/blob/master/lychee.example.toml\n\nverbose = \"debug\"\n\nno_progress = false\n\nexclude_all_private = false\n\n# Accept status codes - 403 is often returned by private repos instead of 404\naccept = [200, 403]\n\nexclude = [\n    'foo.bar',\n    'localhost',\n    '^https://github\\.com/ethereum-optimism/optimism/pull/',\n    '^https://www\\.intel\\.com/content/www/us/en/developer/tools/trust-domain-extensions/documentation\\.html',\n    'https://sepolia-optimism\\.etherscan\\.io'\n]\n\n# exclude_path values are ignored if cli <inputs> is glob pattern that matches\n# this list, at least in lycheeverse/lychee-action@v2","resolutions":{"9fa846564f4071bd":{"status":"unaudited","coveredLines":0,"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "a0b56c41670523b27632f3c621a813b58e21c77fc10754037d203f806b76899e",
+  "name": "lychee.toml",
+  "kind": "program",
+  "lines": 21,
+  "source": "# Config example at: https://github.com/lycheeverse/lychee/blob/master/lychee.example.toml\n\nverbose = \"debug\"\n\nno_progress = false\n\nexclude_all_private = false\n\n# Accept status codes - 403 is often returned by private repos instead of 404\naccept = [200, 403]\n\nexclude = [\n    'foo.bar',\n    'localhost',\n    '^https://github\\.com/ethereum-optimism/optimism/pull/',\n    '^https://www\\.intel\\.com/content/www/us/en/developer/tools/trust-domain-extensions/documentation\\.html',\n    'https://sepolia-optimism\\.etherscan\\.io'\n]\n\n# exclude_path values are ignored if cli <inputs> is glob pattern that matches\n# this list, at least in lycheeverse/lychee-action@v2",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

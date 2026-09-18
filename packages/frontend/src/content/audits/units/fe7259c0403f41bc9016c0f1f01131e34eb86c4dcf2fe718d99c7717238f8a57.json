@@ -1,1 +1,784 @@
-{"schemaVersion":2,"unitHash":"fe7259c0403f41bc9016c0f1f01131e34eb86c4dcf2fe718d99c7717238f8a57","name":"batch_stream.rs","kind":"program","lines":565,"source":"//! This module contains the `BatchStream` stage.\n\nuse crate::{\n    L2ChainProvider, NextBatchProvider, OriginAdvancer, OriginProvider, PipelineError,\n    PipelineResult, Stage,\n};\nuse alloc::{boxed::Box, collections::VecDeque, sync::Arc};\nuse alloy_eips::BlockNumHash;\nuse async_trait::async_trait;\nuse core::fmt::Debug;\nuse kona_genesis::{RollupConfig, SystemConfig};\nuse kona_protocol::{\n    Batch, BatchValidity, BatchWithInclusionBlock, BlockInfo, L2BlockInfo, SingleBatch, SpanBatch,\n    SpanBatchError,\n};\n\n/// Provides [`Batch`]es for the [`BatchStream`] stage.\n#[async_trait]\npub trait BatchStreamProvider {\n    /// Returns the next [`Batch`] in the [`BatchStream`] stage.\n    async fn next_batch(&mut self) -> PipelineResult<Batch>;\n\n    /// Drains the recent `Channel` if an invalid span batch is found post-holocene.\n    fn flush(&mut self);\n}\n\n/// [`BatchStream`] stage in the derivation pipeline.\n///\n/// This stage is introduced in the [`Holocene`] hardfork.\n/// It slots in between the [`ChannelReader`] and [`BatchQueue`]\n/// stages, buffering span batches until they are validated.\n///\n/// [`Holocene`]: https://specs.optimism.io/protocol/holocene/overview.html\n/// [`ChannelReader`]: crate::stages::ChannelReader\n/// [`BatchQueue`]: crate::stages::BatchQueue\n#[derive(Debug)]\npub struct BatchStream<P, BF>\nwhere\n    P: BatchStreamProvider + OriginAdvancer + OriginProvider + Stage + Debug,\n    BF: L2ChainProvider + Debug,\n{\n    /// The previous stage in the derivation pipeline.\n    pub prev: P,\n    /// There can only be a single staged span batch.\n    pub span: Option<SpanBatch>,\n    /// A buffer of single batches derived from the [`SpanBatch`].\n    pub buffer: VecDeque<SingleBatch>,\n    /// A reference to the rollup config, used to check\n    /// if the [`BatchStream`] stage should be activated.\n    pub config: Arc<RollupConfig>,\n    /// Used to validate the batches.\n    pub fetcher: BF,\n}\n\nimpl<P, BF> BatchStream<P, BF>\nwhere\n    P: BatchStreamProvider + OriginAdvancer + OriginProvider + Stage + Debug,\n    BF: L2ChainProvider + Debug,\n{\n    /// Create a new [`BatchStream`] stage.\n    pub const fn new(prev: P, config: Arc<RollupConfig>, fetcher: BF) -> Self {\n        Self { prev, span: None, buffer: VecDeque::new(), config, fetcher }\n    }\n\n    /// Returns if the [`BatchStream`] stage is active based on the\n    /// origin timestamp and holocene activation timestamp.\n    pub fn is_active(&self) -> PipelineResult<bool> {\n        let origin = self.prev.origin().ok_or(PipelineError::MissingOrigin.crit())?;\n        Ok(self.config.is_holocene_active(origin.timestamp))\n    }\n\n    /// Gets a [`SingleBatch`] from the in-memory buffer.\n    pub fn get_single_batch(\n        &mut self,\n        parent: L2BlockInfo,\n        l1_origins: &[BlockInfo],\n    ) -> Result<Option<SingleBatch>, SpanBatchError> {\n        trace!(target: \"batch_span\", \"Attempting to get a SingleBatch from buffer len: {}\", self.buffer.len());\n\n        self.try_hydrate_buffer(parent, l1_origins)?;\n        Ok(self.buffer.pop_front())\n    }\n\n    /// Hydrates the buffer with single batches derived from the span batch, if there is one\n    /// queued up.\n    pub fn try_hydrate_buffer(\n        &mut self,\n        parent: L2BlockInfo,\n        l1_origins: &[BlockInfo],\n    ) -> Result<(), SpanBatchError> {\n        if let Some(span) = self.span.take() {\n            self.buffer.extend(span.get_singular_batches(l1_origins, parent)?);\n        }\n        #[cfg(feature = \"metrics\")]\n        {\n            let batch_count = self.buffer.len() as f64;\n            kona_macros::set!(gauge, crate::metrics::Metrics::PIPELINE_BATCH_BUFFER, batch_count);\n            let batch_size = std::mem::size_of_val(&self.buffer) as f64;\n            kona_macros::set!(gauge, crate::metrics::Metrics::PIPELINE_BATCH_MEM, batch_size);\n        }\n        Ok(())\n    }\n}\n\n#[async_trait]\nimpl<P, BF> NextBatchProvider for BatchStream<P, BF>\nwhere\n    P: BatchStreamProvider + OriginAdvancer + OriginProvider + Stage + Send + Debug,\n    BF: L2ChainProvider + Send + Debug,\n{\n    fn flush(&mut self) {\n        if self.is_active().unwrap_or(false) {\n            self.prev.flush();\n            self.span = None;\n            self.buffer.clear();\n        }\n    }\n\n    fn span_buffer_size(&self) -> usize {\n        self.buffer.len()\n    }\n\n    async fn next_batch(\n        &mut self,\n        parent: L2BlockInfo,\n        l1_origins: &[BlockInfo],\n    ) -> PipelineResult<Batch> {\n        // If the stage is not active, \"pass\" the next batch\n        // through this stage to the BatchQueue stage.\n        if !self.is_active()? {\n            trace!(target: \"batch_span\", \"BatchStream stage is inactive, pass-through.\");\n            return self.prev.next_batch().await;\n        }\n\n        // If the buffer is empty, attempt to pull a batch from the previous stage.\n        if self.buffer.is_empty() {\n            // Safety: bubble up any errors from the batch reader.\n            let batch_with_inclusion = BatchWithInclusionBlock::new(\n                self.origin().ok_or(PipelineError::MissingOrigin.crit())?,\n                self.prev.next_batch().await?,\n            );\n\n            // If the next batch is a singular batch, it is immediately\n            // forwarded to the `BatchQueue` stage. Otherwise, we buffer\n            // the span batch in this stage if it passes the validity checks.\n            match batch_with_inclusion.batch {\n                Batch::Single(b) => return Ok(Batch::Single(b)),\n                Batch::Span(b) => {\n                    #[cfg(feature = \"metrics\")]\n                    let start = std::time::Instant::now();\n                    let (validity, _) = b\n                        .check_batch_prefix(\n                            self.config.as_ref(),\n                            l1_origins,\n                            parent,\n                            &batch_with_inclusion.inclusion_block,\n                            &mut self.fetcher,\n                        )\n                        .await;\n                    kona_macros::record!(\n                        histogram,\n                        crate::metrics::Metrics::PIPELINE_CHECK_BATCH_PREFIX,\n                        start.elapsed().as_secs_f64()\n                    );\n\n                    kona_macros::inc!(\n                        gauge,\n                        crate::metrics::Metrics::PIPELINE_BATCH_VALIDITY,\n                        \"validity\" => validity.to_string(),\n                    );\n\n                    match validity {\n                        BatchValidity::Accept => self.span = Some(b),\n                        BatchValidity::Drop(_) => {\n                            // Flush the stage.\n                            self.flush();\n\n                            return Err(PipelineError::NotEnoughData.temp());\n                        }\n                        BatchValidity::Past => {\n                            if !self.is_active()? {\n                                error!(target: \"batch_stream\", \"BatchValidity::Past is not allowed pre-holocene\");\n                                return Err(PipelineError::InvalidBatchValidity.crit());\n                            }\n\n                            return Err(PipelineError::NotEnoughData.temp());\n                        }\n                        BatchValidity::Undecided | BatchValidity::Future => {\n                            return Err(PipelineError::NotEnoughData.temp());\n                        }\n                    }\n                }\n            }\n        }\n\n        // Attempt to pull a SingleBatch out of the SpanBatch.\n        match self.get_single_batch(parent, l1_origins) {\n            Ok(Some(single_batch)) => Ok(Batch::Single(single_batch)),\n            Ok(None) => Err(PipelineError::NotEnoughData.temp()),\n            Err(e) => {\n                warn!(target: \"batch_span\", \"Extracting singular batches from span batch failed: {}\", e);\n                // If singular batch extraction fails, it should be handled the same as a\n                // dropped batch during span batch prefix checks.\n                self.flush();\n                Err(PipelineError::NotEnoughData.temp())\n            }\n        }\n    }\n}\n\n#[async_trait]\nimpl<P, BF> OriginAdvancer for BatchStream<P, BF>\nwhere\n    P: BatchStreamProvider + OriginAdvancer + OriginProvider + Stage + Send + Debug,\n    BF: L2ChainProvider + Send + Debug,\n{\n    async fn advance_origin(&mut self) -> PipelineResult<()> {\n        self.prev.advance_origin().await\n    }\n}\n\nimpl<P, BF> OriginProvider for BatchStream<P, BF>\nwhere\n    P: BatchStreamProvider + OriginAdvancer + OriginProvider + Stage + Debug,\n    BF: L2ChainProvider + Debug,\n{\n    fn origin(&self) -> Option<BlockInfo> {\n        self.prev.origin()\n    }\n}\n\n#[async_trait]\nimpl<P, BF> Stage for BatchStream<P, BF>\nwhere\n    P: BatchStreamProvider + OriginAdvancer + OriginProvider + Stage + Debug + Send,\n    BF: L2ChainProvider + Send + Debug,\n{\n    async fn reset(\n        &mut self,\n        l1_origin: BlockNumHash,\n        system_config: SystemConfig,\n    ) -> PipelineResult<()> {\n        self.prev.reset(l1_origin, system_config).await?;\n        self.buffer.clear();\n        self.span.take();\n        Ok(())\n    }\n\n    async fn activate(&mut self) -> PipelineResult<()> {\n        self.prev.activate().await?;\n        self.buffer.clear();\n        self.span.take();\n        Ok(())\n    }\n\n    async fn flush_channel(&mut self) -> PipelineResult<()> {\n        self.prev.flush_channel().await?;\n        self.buffer.clear();\n        self.span.take();\n        Ok(())\n    }\n\n    async fn provide_block(&mut self, block: BlockInfo) -> PipelineResult<()> {\n        self.prev.provide_block(block).await\n    }\n}\n\n#[cfg(test)]\nmod test {\n    use super::*;\n    use crate::test_utils::{\n        CollectingLayer, TestBatchStreamProvider, TestL2ChainProvider, TraceStorage,\n    };\n    use alloc::vec;\n    use alloy_consensus::{BlockBody, Header};\n    use alloy_eips::{BlockNumHash, NumHash};\n    use alloy_primitives::{FixedBytes, b256};\n    use kona_genesis::{ChainGenesis, HardForkConfig};\n    use kona_protocol::{SingleBatch, SpanBatchElement};\n    use op_alloy_consensus::OpBlock;\n    use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt};\n\n    #[tokio::test]\n    async fn test_batch_stream_flush() {\n        let config = Arc::new(RollupConfig {\n            hardforks: HardForkConfig { holocene_time: Some(0), ..Default::default() },\n            ..Default::default()\n        });\n        let prev = TestBatchStreamProvider::new(vec![]);\n        let mut stream = BatchStream::new(prev, config, TestL2ChainProvider::default());\n        stream.buffer.push_back(SingleBatch::default());\n        stream.span = Some(SpanBatch::default());\n        assert!(!stream.buffer.is_empty());\n        assert!(stream.span.is_some());\n        stream.flush();\n        assert!(stream.buffer.is_empty());\n        assert!(stream.span.is_none());\n    }\n\n    #[tokio::test]\n    async fn test_batch_stream_reset() {\n        let config = Arc::new(RollupConfig {\n            hardforks: HardForkConfig { holocene_time: Some(0), ..Default::default() },\n            ..Default::default()\n        });\n        let prev = TestBatchStreamProvider::new(vec![]);\n        let mut stream = BatchStream::new(prev, config.clone(), TestL2ChainProvider::default());\n        stream.buffer.push_back(SingleBatch::default());\n        stream.span = Some(SpanBatch::default());\n        assert!(!stream.prev.reset);\n        stream.reset(BlockNumHash::default(), SystemConfig::default()).await.unwrap();\n        assert!(stream.prev.reset);\n        assert!(stream.buffer.is_empty());\n        assert!(stream.span.is_none());\n    }\n\n    #[tokio::test]\n    async fn test_batch_stream_flush_channel() {\n        let config = Arc::new(RollupConfig {\n            hardforks: HardForkConfig { holocene_time: Some(0), ..Default::default() },\n            ..Default::default()\n        });\n        let prev = TestBatchStreamProvider::new(vec![]);\n        let mut stream = BatchStream::new(prev, config.clone(), TestL2ChainProvider::default());\n        stream.buffer.push_back(SingleBatch::default());\n        stream.span = Some(SpanBatch::default());\n        assert!(!stream.prev.flushed);\n        stream.flush_channel().await.unwrap();\n        assert!(stream.prev.flushed);\n        assert!(stream.buffer.is_empty());\n        assert!(stream.span.is_none());\n    }\n\n    #[tokio::test]\n    async fn test_batch_stream_inactive() {\n        let trace_store: TraceStorage = Default::default();\n        let layer = CollectingLayer::new(trace_store.clone());\n        tracing_subscriber::Registry::default().with(layer).init();\n\n        let data = vec![Ok(Batch::Single(SingleBatch::default()))];\n        let config = Arc::new(RollupConfig {\n            hardforks: HardForkConfig { holocene_time: Some(100), ..Default::default() },\n            ..Default::default()\n        });\n        let prev = TestBatchStreamProvider::new(data);\n        let mut stream = BatchStream::new(prev, config.clone(), TestL2ChainProvider::default());\n\n        // The stage should not be active.\n        assert!(!stream.is_active().unwrap());\n\n        // The next batch should be passed through to the [BatchQueue] stage.\n        let batch = stream.next_batch(Default::default(), &[]).await.unwrap();\n        assert_eq!(batch, Batch::Single(SingleBatch::default()));\n\n        let logs = trace_store.get_by_level(tracing::Level::TRACE);\n        assert_eq!(logs.len(), 1);\n        assert!(logs[0].contains(\"BatchStream stage is inactive, pass-through.\"));\n    }\n\n    #[tokio::test]\n    async fn test_span_buffer() {\n        let mock_batch = SpanBatch {\n            batches: vec![\n                SpanBatchElement { epoch_num: 1, timestamp: 2, ..Default::default() },\n                SpanBatchElement { epoch_num: 1, timestamp: 4, ..Default::default() },\n            ],\n            ..Default::default()\n        };\n        let mock_origins = [BlockInfo { number: 1, timestamp: 12, ..Default::default() }];\n\n        let data = vec![Ok(Batch::Span(mock_batch.clone()))];\n        let config = Arc::new(RollupConfig {\n            block_time: 2,\n            hardforks: HardForkConfig {\n                delta_time: Some(0),\n                holocene_time: Some(0),\n                ..Default::default()\n            },\n            ..Default::default()\n        });\n        let prev = TestBatchStreamProvider::new(data);\n        let provider = TestL2ChainProvider::default();\n        let mut stream = BatchStream::new(prev, config.clone(), provider);\n\n        // The stage should be active.\n        assert!(stream.is_active().unwrap());\n\n        // The next batches should be single batches derived from the span batch.\n        let batch = stream.next_batch(Default::default(), &mock_origins).await.unwrap();\n        if let Batch::Single(single) = batch {\n            assert_eq!(single.epoch_num, 1);\n            assert_eq!(single.timestamp, 2);\n        } else {\n            panic!(\"Wrong batch type\");\n        }\n\n        let batch = stream.next_batch(Default::default(), &mock_origins).await.unwrap();\n        if let Batch::Single(single) = batch {\n            assert_eq!(single.epoch_num, 1);\n            assert_eq!(single.timestamp, 4);\n        } else {\n            panic!(\"Wrong batch type\");\n        }\n\n        let err = stream.next_batch(Default::default(), &mock_origins).await.unwrap_err();\n        assert_eq!(err, PipelineError::Eof.temp());\n        assert_eq!(stream.span_buffer_size(), 0);\n        assert!(stream.span.is_none());\n\n        // Add more data into the provider, see if the buffer is re-hydrated.\n        stream.prev.batches.push(Ok(Batch::Span(mock_batch.clone())));\n\n        // The next batches should be single batches derived from the span batch.\n        let batch = stream.next_batch(Default::default(), &mock_origins).await.unwrap();\n        if let Batch::Single(single) = batch {\n            assert_eq!(single.epoch_num, 1);\n            assert_eq!(single.timestamp, 2);\n        } else {\n            panic!(\"Wrong batch type\");\n        }\n\n        let batch = stream.next_batch(Default::default(), &mock_origins).await.unwrap();\n        if let Batch::Single(single) = batch {\n            assert_eq!(single.epoch_num, 1);\n            assert_eq!(single.timestamp, 4);\n        } else {\n            panic!(\"Wrong batch type\");\n        }\n\n        let err = stream.next_batch(Default::default(), &mock_origins).await.unwrap_err();\n        assert_eq!(err, PipelineError::Eof.temp());\n        assert_eq!(stream.span_buffer_size(), 0);\n        assert!(stream.span.is_none());\n    }\n\n    #[tokio::test]\n    async fn test_span_batch_extraction_error_flushes_stage() {\n        let trace_store: TraceStorage = Default::default();\n        let layer = CollectingLayer::new(trace_store.clone());\n        tracing_subscriber::Registry::default().with(layer).init();\n\n        let parent_hash = b256!(\"1111111111111111111111111111111111111111000000000000000000000000\");\n        let l1_block_hash =\n            b256!(\"3333333333333333333333333333333333333333000000000000000000000000\");\n        let config = Arc::new(RollupConfig {\n            seq_window_size: 100,\n            block_time: 10,\n            hardforks: HardForkConfig {\n                delta_time: Some(0),\n                holocene_time: Some(0),\n                ..Default::default()\n            },\n            genesis: ChainGenesis {\n                l2: BlockNumHash { number: 40, hash: parent_hash },\n                ..Default::default()\n            },\n            ..Default::default()\n        });\n\n        let l1_block =\n            BlockInfo { number: 10, timestamp: 5, hash: l1_block_hash, ..Default::default() };\n        let l1_blocks = vec![l1_block];\n        let l2_safe_head = L2BlockInfo {\n            block_info: BlockInfo { number: 41, timestamp: 10, parent_hash, ..Default::default() },\n            l1_origin: l1_block.id(),\n            ..Default::default()\n        };\n        let l2_parent = L2BlockInfo {\n            block_info: BlockInfo {\n                number: 40,\n                hash: parent_hash,\n                timestamp: 0,\n                ..Default::default()\n            },\n            l1_origin: BlockNumHash { number: 9, ..Default::default() },\n            ..Default::default()\n        };\n        let op_block = OpBlock {\n            header: Header { number: 41, ..Default::default() },\n            body: BlockBody { transactions: vec![], ommers: vec![], withdrawals: None },\n        };\n\n        let span_batch = SpanBatch {\n            batches: vec![\n                SpanBatchElement { epoch_num: 9, timestamp: 10, ..Default::default() },\n                SpanBatchElement { epoch_num: 9, timestamp: 20, ..Default::default() },\n                SpanBatchElement { epoch_num: 10, timestamp: 30, ..Default::default() },\n            ],\n            parent_check: FixedBytes::<20>::from_slice(&parent_hash[..20]),\n            l1_origin_check: FixedBytes::<20>::from_slice(&l1_block_hash[..20]),\n            ..Default::default()\n        };\n\n        let mut prev = TestBatchStreamProvider::new(vec![Ok(Batch::Span(span_batch))]);\n        prev.origin = Some(l1_block);\n\n        let mut provider = TestL2ChainProvider::default();\n        provider.blocks.push(l2_parent);\n        provider.op_blocks.push(op_block);\n\n        let mut stream = BatchStream::new(prev, config, provider);\n        let err = stream.next_batch(l2_safe_head, &l1_blocks).await.unwrap_err();\n\n        assert_eq!(err, PipelineError::NotEnoughData.temp());\n        assert!(stream.span.is_none());\n        assert_eq!(stream.span_buffer_size(), 0);\n\n        let logs = trace_store.get_by_level(tracing::Level::WARN);\n        assert_eq!(logs.len(), 1);\n        assert!(logs[0].contains(\"Extracting singular batches from span batch failed: Future batch L1 origin before safe head\"));\n    }\n\n    #[tokio::test]\n    async fn test_single_batch_pass_through() {\n        let data = vec![Ok(Batch::Single(SingleBatch::default()))];\n        let config = Arc::new(RollupConfig {\n            hardforks: HardForkConfig { holocene_time: Some(0), ..Default::default() },\n            ..Default::default()\n        });\n        let prev = TestBatchStreamProvider::new(data);\n        let mut stream = BatchStream::new(prev, config.clone(), TestL2ChainProvider::default());\n\n        // The stage should be active.\n        assert!(stream.is_active().unwrap());\n\n        // The next batch should be passed through to the [BatchQueue] stage.\n        let batch = stream.next_batch(Default::default(), &[]).await.unwrap();\n        assert!(matches!(batch, Batch::Single(_)));\n        assert_eq!(stream.span_buffer_size(), 0);\n        assert!(stream.span.is_none());\n    }\n\n    #[tokio::test]\n    async fn test_past_span_batch() {\n        let mock_batch = SpanBatch {\n            batches: vec![\n                SpanBatchElement { epoch_num: 1, timestamp: 2, ..Default::default() },\n                SpanBatchElement { epoch_num: 1, timestamp: 4, ..Default::default() },\n            ],\n            ..Default::default()\n        };\n        let mock_origins = [BlockInfo { number: 1, timestamp: 12, ..Default::default() }];\n        let data = vec![Ok(Batch::Span(mock_batch))];\n\n        let config = Arc::new(RollupConfig {\n            hardforks: HardForkConfig { holocene_time: Some(0), ..Default::default() },\n            ..Default::default()\n        });\n        let prev = TestBatchStreamProvider::new(data);\n        let mut stream = BatchStream::new(prev, config.clone(), TestL2ChainProvider::default());\n\n        // The stage should be active.\n        assert!(stream.is_active().unwrap());\n\n        let parent = L2BlockInfo {\n            block_info: BlockInfo { number: 10, timestamp: 100, ..Default::default() },\n            l1_origin: NumHash::default(),\n            seq_num: 0,\n        };\n\n        // `next_batch` should return an error if the span batch is in the past.\n        let err = stream.next_batch(parent, &mock_origins).await.unwrap_err();\n        assert_eq!(err, PipelineError::NotEnoughData.temp());\n    }\n}","resolutions":{"9fa846564f4071bd":{"status":"differs","coveredLines":529,"match":{"origin":"own","collection":"optimism","relation":{"type":"own"},"rank":0,"matchedBy":"name","auditedName":"batch_stream.rs","similarity":0.941,"reportId":"optimism/cantina-kona-2026-03","repository":"op-rs/kona","path":"crates/protocol/derive/src/stages/batch/batch_stream.rs","commit":"86910c9112437bbb849eca28961f813c5450e103","commitTimestamp":"2025-12-15T17:17:05Z","url":"https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/crates/protocol/derive/src/stages/batch/batch_stream.rs","auditStatus":"audited_with_no_major_findings","reviewPhase":"initial audit","coverage":"Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). kona-derive derivation pipeline (stages, sources, traversal, attributes). Medium findings 3.3.1 and 3.3.2 (pipeline/core.rs, stages/l1_retrieval.rs) and numerous Low/Informational findings located here; no Critical/High.","majorFindings":0,"isLatestVersion":true,"laterAuditedVersionExists":false,"totalVersions":1},"diff":{"added":36,"removed":17,"ignoredAdded":3,"ignoredRemoved":0,"unchanged":529,"ignoredOnly":false,"hunks":[{"oldStart":2,"oldLines":12,"newStart":2,"newLines":13,"lines":[{"type":" ","oldLine":2,"newLine":2,"text":""},{"type":" ","oldLine":3,"newLine":3,"text":"use crate::{"},{"type":" ","oldLine":4,"newLine":4,"text":"    L2ChainProvider, NextBatchProvider, OriginAdvancer, OriginProvider, PipelineError,"},{"type":"-","oldLine":5,"text":"    PipelineResult, Signal, SignalReceiver,","ignored":false},{"type":"+","newLine":5,"text":"    PipelineResult, Stage,","ignored":false},{"type":" ","oldLine":6,"newLine":6,"text":"};"},{"type":" ","oldLine":7,"newLine":7,"text":"use alloc::{boxed::Box, collections::VecDeque, sync::Arc};"},{"type":"+","newLine":8,"text":"use alloy_eips::BlockNumHash;","ignored":false},{"type":" ","oldLine":8,"newLine":9,"text":"use async_trait::async_trait;"},{"type":" ","oldLine":9,"newLine":10,"text":"use core::fmt::Debug;"},{"type":"-","oldLine":10,"text":"use kona_genesis::RollupConfig;","ignored":false},{"type":"+","newLine":11,"text":"use kona_genesis::{RollupConfig, SystemConfig};","ignored":false},{"type":" ","oldLine":11,"newLine":12,"text":"use kona_protocol::{"},{"type":" ","oldLine":12,"newLine":13,"text":"    Batch, BatchValidity, BatchWithInclusionBlock, BlockInfo, L2BlockInfo, SingleBatch, SpanBatch,"},{"type":" ","oldLine":13,"newLine":14,"text":"    SpanBatchError,"}]},{"oldStart":35,"oldLines":7,"newStart":36,"newLines":7,"lines":[{"type":" ","oldLine":35,"newLine":36,"text":"#[derive(Debug)]"},{"type":" ","oldLine":36,"newLine":37,"text":"pub struct BatchStream<P, BF>"},{"type":" ","oldLine":37,"newLine":38,"text":"where"},{"type":"-","oldLine":38,"text":"    P: BatchStreamProvider + OriginAdvancer + OriginProvider + SignalReceiver + Debug,","ignored":false},{"type":"+","newLine":39,"text":"    P: BatchStreamProvider + OriginAdvancer + OriginProvider + Stage + Debug,","ignored":false},{"type":" ","oldLine":39,"newLine":40,"text":"    BF: L2ChainProvider + Debug,"},{"type":" ","oldLine":40,"newLine":41,"text":"{"},{"type":" ","oldLine":41,"newLine":42,"text":"    /// The previous stage in the derivation pipeline."}]},{"oldStart":53,"oldLines":7,"newStart":54,"newLines":7,"lines":[{"type":" ","oldLine":53,"newLine":54,"text":""},{"type":" ","oldLine":54,"newLine":55,"text":"impl<P, BF> BatchStream<P, BF>"},{"type":" ","oldLine":55,"newLine":56,"text":"where"},{"type":"-","oldLine":56,"text":"    P: BatchStreamProvider + OriginAdvancer + OriginProvider + SignalReceiver + Debug,","ignored":false},{"type":"+","newLine":57,"text":"    P: BatchStreamProvider + OriginAdvancer + OriginProvider + Stage + Debug,","ignored":false},{"type":" ","oldLine":57,"newLine":58,"text":"    BF: L2ChainProvider + Debug,"},{"type":" ","oldLine":58,"newLine":59,"text":"{"},{"type":" ","oldLine":59,"newLine":60,"text":"    /// Create a new [`BatchStream`] stage."}]},{"oldStart":104,"oldLines":7,"newStart":105,"newLines":7,"lines":[{"type":" ","oldLine":104,"newLine":105,"text":"#[async_trait]"},{"type":" ","oldLine":105,"newLine":106,"text":"impl<P, BF> NextBatchProvider for BatchStream<P, BF>"},{"type":" ","oldLine":106,"newLine":107,"text":"where"},{"type":"-","oldLine":107,"text":"    P: BatchStreamProvider + OriginAdvancer + OriginProvider + SignalReceiver + Send + Debug,","ignored":false},{"type":"+","newLine":108,"text":"    P: BatchStreamProvider + OriginAdvancer + OriginProvider + Stage + Send + Debug,","ignored":false},{"type":" ","oldLine":108,"newLine":109,"text":"    BF: L2ChainProvider + Send + Debug,"},{"type":" ","oldLine":109,"newLine":110,"text":"{"},{"type":" ","oldLine":110,"newLine":111,"text":"    fn flush(&mut self) {"}]},{"oldStart":170,"oldLines":7,"newStart":171,"newLines":7,"lines":[{"type":" ","oldLine":170,"newLine":171,"text":""},{"type":" ","oldLine":171,"newLine":172,"text":"                    match validity {"},{"type":" ","oldLine":172,"newLine":173,"text":"                        BatchValidity::Accept => self.span = Some(b),"},{"type":"-","oldLine":173,"text":"                        BatchValidity::Drop => {","ignored":false},{"type":"+","newLine":174,"text":"                        BatchValidity::Drop(_) => {","ignored":false},{"type":" ","oldLine":174,"newLine":175,"text":"                            // Flush the stage."},{"type":" ","oldLine":175,"newLine":176,"text":"                            self.flush();"},{"type":" ","oldLine":176,"newLine":177,"text":""}]},{"oldStart":210,"oldLines":7,"newStart":211,"newLines":7,"lines":[{"type":" ","oldLine":210,"newLine":211,"text":"#[async_trait]"},{"type":" ","oldLine":211,"newLine":212,"text":"impl<P, BF> OriginAdvancer for BatchStream<P, BF>"},{"type":" ","oldLine":212,"newLine":213,"text":"where"},{"type":"-","oldLine":213,"text":"    P: BatchStreamProvider + OriginAdvancer + OriginProvider + SignalReceiver + Send + Debug,","ignored":false},{"type":"+","newLine":214,"text":"    P: BatchStreamProvider + OriginAdvancer + OriginProvider + Stage + Send + Debug,","ignored":false},{"type":" ","oldLine":214,"newLine":215,"text":"    BF: L2ChainProvider + Send + Debug,"},{"type":" ","oldLine":215,"newLine":216,"text":"{"},{"type":" ","oldLine":216,"newLine":217,"text":"    async fn advance_origin(&mut self) -> PipelineResult<()> {"}]},{"oldStart":220,"oldLines":7,"newStart":221,"newLines":7,"lines":[{"type":" ","oldLine":220,"newLine":221,"text":""},{"type":" ","oldLine":221,"newLine":222,"text":"impl<P, BF> OriginProvider for BatchStream<P, BF>"},{"type":" ","oldLine":222,"newLine":223,"text":"where"},{"type":"-","oldLine":223,"text":"    P: BatchStreamProvider + OriginAdvancer + OriginProvider + SignalReceiver + Debug,","ignored":false},{"type":"+","newLine":224,"text":"    P: BatchStreamProvider + OriginAdvancer + OriginProvider + Stage + Debug,","ignored":false},{"type":" ","oldLine":224,"newLine":225,"text":"    BF: L2ChainProvider + Debug,"},{"type":" ","oldLine":225,"newLine":226,"text":"{"},{"type":" ","oldLine":226,"newLine":227,"text":"    fn origin(&self) -> Option<BlockInfo> {"}]},{"oldStart":229,"oldLines":25,"newStart":230,"newLines":46,"lines":[{"type":" ","oldLine":229,"newLine":230,"text":"}"},{"type":" ","oldLine":230,"newLine":231,"text":""},{"type":" ","oldLine":231,"newLine":232,"text":"#[async_trait]"},{"type":"-","oldLine":232,"text":"impl<P, BF> SignalReceiver for BatchStream<P, BF>","ignored":false},{"type":"+","newLine":233,"text":"impl<P, BF> Stage for BatchStream<P, BF>","ignored":false},{"type":" ","oldLine":233,"newLine":234,"text":"where"},{"type":"-","oldLine":234,"text":"    P: BatchStreamProvider + OriginAdvancer + OriginProvider + SignalReceiver + Debug + Send,","ignored":false},{"type":"+","newLine":235,"text":"    P: BatchStreamProvider + OriginAdvancer + OriginProvider + Stage + Debug + Send,","ignored":false},{"type":" ","oldLine":235,"newLine":236,"text":"    BF: L2ChainProvider + Send + Debug,"},{"type":" ","oldLine":236,"newLine":237,"text":"{"},{"type":"-","oldLine":237,"text":"    async fn signal(&mut self, signal: Signal) -> PipelineResult<()> {","ignored":false},{"type":"-","oldLine":238,"text":"        self.prev.signal(signal).await?;","ignored":false},{"type":"+","newLine":238,"text":"    async fn reset(","ignored":false},{"type":"+","newLine":239,"text":"        &mut self,","ignored":false},{"type":"+","newLine":240,"text":"        l1_origin: BlockNumHash,","ignored":false},{"type":"+","newLine":241,"text":"        system_config: SystemConfig,","ignored":false},{"type":"+","newLine":242,"text":"    ) -> PipelineResult<()> {","ignored":false},{"type":"+","newLine":243,"text":"        self.prev.reset(l1_origin, system_config).await?;","ignored":false},{"type":" ","oldLine":239,"newLine":244,"text":"        self.buffer.clear();"},{"type":" ","oldLine":240,"newLine":245,"text":"        self.span.take();"},{"type":" ","oldLine":241,"newLine":246,"text":"        Ok(())"},{"type":" ","oldLine":242,"newLine":247,"text":"    }"},{"type":"+","newLine":248,"text":"","ignored":true},{"type":"+","newLine":249,"text":"    async fn activate(&mut self) -> PipelineResult<()> {","ignored":false},{"type":"+","newLine":250,"text":"        self.prev.activate().await?;","ignored":false},{"type":"+","newLine":251,"text":"        self.buffer.clear();","ignored":false},{"type":"+","newLine":252,"text":"        self.span.take();","ignored":false},{"type":"+","newLine":253,"text":"        Ok(())","ignored":false},{"type":"+","newLine":254,"text":"    }","ignored":false},{"type":"+","newLine":255,"text":"","ignored":true},{"type":"+","newLine":256,"text":"    async fn flush_channel(&mut self) -> PipelineResult<()> {","ignored":false},{"type":"+","newLine":257,"text":"        self.prev.flush_channel().await?;","ignored":false},{"type":"+","newLine":258,"text":"        self.buffer.clear();","ignored":false},{"type":"+","newLine":259,"text":"        self.span.take();","ignored":false},{"type":"+","newLine":260,"text":"        Ok(())","ignored":false},{"type":"+","newLine":261,"text":"    }","ignored":false},{"type":"+","newLine":262,"text":"","ignored":true},{"type":"+","newLine":263,"text":"    async fn provide_block(&mut self, block: BlockInfo) -> PipelineResult<()> {","ignored":false},{"type":"+","newLine":264,"text":"        self.prev.provide_block(block).await","ignored":false},{"type":"+","newLine":265,"text":"    }","ignored":false},{"type":" ","oldLine":243,"newLine":266,"text":"}"},{"type":" ","oldLine":244,"newLine":267,"text":""},{"type":" ","oldLine":245,"newLine":268,"text":"#[cfg(test)]"},{"type":" ","oldLine":246,"newLine":269,"text":"mod test {"},{"type":" ","oldLine":247,"newLine":270,"text":"    use super::*;"},{"type":"-","oldLine":248,"text":"    use crate::{","ignored":false},{"type":"-","oldLine":249,"text":"        test_utils::{CollectingLayer, TestBatchStreamProvider, TestL2ChainProvider, TraceStorage},","ignored":false},{"type":"-","oldLine":250,"text":"        types::ResetSignal,","ignored":false},{"type":"+","newLine":271,"text":"    use crate::test_utils::{","ignored":false},{"type":"+","newLine":272,"text":"        CollectingLayer, TestBatchStreamProvider, TestL2ChainProvider, TraceStorage,","ignored":false},{"type":" ","oldLine":251,"newLine":273,"text":"    };"},{"type":" ","oldLine":252,"newLine":274,"text":"    use alloc::vec;"},{"type":" ","oldLine":253,"newLine":275,"text":"    use alloy_consensus::{BlockBody, Header};"}]},{"oldStart":286,"oldLines":7,"newStart":308,"newLines":7,"lines":[{"type":" ","oldLine":286,"newLine":308,"text":"        stream.buffer.push_back(SingleBatch::default());"},{"type":" ","oldLine":287,"newLine":309,"text":"        stream.span = Some(SpanBatch::default());"},{"type":" ","oldLine":288,"newLine":310,"text":"        assert!(!stream.prev.reset);"},{"type":"-","oldLine":289,"text":"        stream.signal(ResetSignal::default().signal()).await.unwrap();","ignored":false},{"type":"+","newLine":311,"text":"        stream.reset(BlockNumHash::default(), SystemConfig::default()).await.unwrap();","ignored":false},{"type":" ","oldLine":290,"newLine":312,"text":"        assert!(stream.prev.reset);"},{"type":" ","oldLine":291,"newLine":313,"text":"        assert!(stream.buffer.is_empty());"},{"type":" ","oldLine":292,"newLine":314,"text":"        assert!(stream.span.is_none());"}]},{"oldStart":303,"oldLines":7,"newStart":325,"newLines":7,"lines":[{"type":" ","oldLine":303,"newLine":325,"text":"        stream.buffer.push_back(SingleBatch::default());"},{"type":" ","oldLine":304,"newLine":326,"text":"        stream.span = Some(SpanBatch::default());"},{"type":" ","oldLine":305,"newLine":327,"text":"        assert!(!stream.prev.flushed);"},{"type":"-","oldLine":306,"text":"        stream.signal(Signal::FlushChannel).await.unwrap();","ignored":false},{"type":"+","newLine":328,"text":"        stream.flush_channel().await.unwrap();","ignored":false},{"type":" ","oldLine":307,"newLine":329,"text":"        assert!(stream.prev.flushed);"},{"type":" ","oldLine":308,"newLine":330,"text":"        assert!(stream.buffer.is_empty());"},{"type":" ","oldLine":309,"newLine":331,"text":"        assert!(stream.span.is_none());"}]}]},"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "fe7259c0403f41bc9016c0f1f01131e34eb86c4dcf2fe718d99c7717238f8a57",
+  "name": "batch_stream.rs",
+  "kind": "program",
+  "lines": 565,
+  "source": "//! This module contains the `BatchStream` stage.\n\nuse crate::{\n    L2ChainProvider, NextBatchProvider, OriginAdvancer, OriginProvider, PipelineError,\n    PipelineResult, Stage,\n};\nuse alloc::{boxed::Box, collections::VecDeque, sync::Arc};\nuse alloy_eips::BlockNumHash;\nuse async_trait::async_trait;\nuse core::fmt::Debug;\nuse kona_genesis::{RollupConfig, SystemConfig};\nuse kona_protocol::{\n    Batch, BatchValidity, BatchWithInclusionBlock, BlockInfo, L2BlockInfo, SingleBatch, SpanBatch,\n    SpanBatchError,\n};\n\n/// Provides [`Batch`]es for the [`BatchStream`] stage.\n#[async_trait]\npub trait BatchStreamProvider {\n    /// Returns the next [`Batch`] in the [`BatchStream`] stage.\n    async fn next_batch(&mut self) -> PipelineResult<Batch>;\n\n    /// Drains the recent `Channel` if an invalid span batch is found post-holocene.\n    fn flush(&mut self);\n}\n\n/// [`BatchStream`] stage in the derivation pipeline.\n///\n/// This stage is introduced in the [`Holocene`] hardfork.\n/// It slots in between the [`ChannelReader`] and [`BatchQueue`]\n/// stages, buffering span batches until they are validated.\n///\n/// [`Holocene`]: https://specs.optimism.io/protocol/holocene/overview.html\n/// [`ChannelReader`]: crate::stages::ChannelReader\n/// [`BatchQueue`]: crate::stages::BatchQueue\n#[derive(Debug)]\npub struct BatchStream<P, BF>\nwhere\n    P: BatchStreamProvider + OriginAdvancer + OriginProvider + Stage + Debug,\n    BF: L2ChainProvider + Debug,\n{\n    /// The previous stage in the derivation pipeline.\n    pub prev: P,\n    /// There can only be a single staged span batch.\n    pub span: Option<SpanBatch>,\n    /// A buffer of single batches derived from the [`SpanBatch`].\n    pub buffer: VecDeque<SingleBatch>,\n    /// A reference to the rollup config, used to check\n    /// if the [`BatchStream`] stage should be activated.\n    pub config: Arc<RollupConfig>,\n    /// Used to validate the batches.\n    pub fetcher: BF,\n}\n\nimpl<P, BF> BatchStream<P, BF>\nwhere\n    P: BatchStreamProvider + OriginAdvancer + OriginProvider + Stage + Debug,\n    BF: L2ChainProvider + Debug,\n{\n    /// Create a new [`BatchStream`] stage.\n    pub const fn new(prev: P, config: Arc<RollupConfig>, fetcher: BF) -> Self {\n        Self { prev, span: None, buffer: VecDeque::new(), config, fetcher }\n    }\n\n    /// Returns if the [`BatchStream`] stage is active based on the\n    /// origin timestamp and holocene activation timestamp.\n    pub fn is_active(&self) -> PipelineResult<bool> {\n        let origin = self.prev.origin().ok_or(PipelineError::MissingOrigin.crit())?;\n        Ok(self.config.is_holocene_active(origin.timestamp))\n    }\n\n    /// Gets a [`SingleBatch`] from the in-memory buffer.\n    pub fn get_single_batch(\n        &mut self,\n        parent: L2BlockInfo,\n        l1_origins: &[BlockInfo],\n    ) -> Result<Option<SingleBatch>, SpanBatchError> {\n        trace!(target: \"batch_span\", \"Attempting to get a SingleBatch from buffer len: {}\", self.buffer.len());\n\n        self.try_hydrate_buffer(parent, l1_origins)?;\n        Ok(self.buffer.pop_front())\n    }\n\n    /// Hydrates the buffer with single batches derived from the span batch, if there is one\n    /// queued up.\n    pub fn try_hydrate_buffer(\n        &mut self,\n        parent: L2BlockInfo,\n        l1_origins: &[BlockInfo],\n    ) -> Result<(), SpanBatchError> {\n        if let Some(span) = self.span.take() {\n            self.buffer.extend(span.get_singular_batches(l1_origins, parent)?);\n        }\n        #[cfg(feature = \"metrics\")]\n        {\n            let batch_count = self.buffer.len() as f64;\n            kona_macros::set!(gauge, crate::metrics::Metrics::PIPELINE_BATCH_BUFFER, batch_count);\n            let batch_size = std::mem::size_of_val(&self.buffer) as f64;\n            kona_macros::set!(gauge, crate::metrics::Metrics::PIPELINE_BATCH_MEM, batch_size);\n        }\n        Ok(())\n    }\n}\n\n#[async_trait]\nimpl<P, BF> NextBatchProvider for BatchStream<P, BF>\nwhere\n    P: BatchStreamProvider + OriginAdvancer + OriginProvider + Stage + Send + Debug,\n    BF: L2ChainProvider + Send + Debug,\n{\n    fn flush(&mut self) {\n        if self.is_active().unwrap_or(false) {\n            self.prev.flush();\n            self.span = None;\n            self.buffer.clear();\n        }\n    }\n\n    fn span_buffer_size(&self) -> usize {\n        self.buffer.len()\n    }\n\n    async fn next_batch(\n        &mut self,\n        parent: L2BlockInfo,\n        l1_origins: &[BlockInfo],\n    ) -> PipelineResult<Batch> {\n        // If the stage is not active, \"pass\" the next batch\n        // through this stage to the BatchQueue stage.\n        if !self.is_active()? {\n            trace!(target: \"batch_span\", \"BatchStream stage is inactive, pass-through.\");\n            return self.prev.next_batch().await;\n        }\n\n        // If the buffer is empty, attempt to pull a batch from the previous stage.\n        if self.buffer.is_empty() {\n            // Safety: bubble up any errors from the batch reader.\n            let batch_with_inclusion = BatchWithInclusionBlock::new(\n                self.origin().ok_or(PipelineError::MissingOrigin.crit())?,\n                self.prev.next_batch().await?,\n            );\n\n            // If the next batch is a singular batch, it is immediately\n            // forwarded to the `BatchQueue` stage. Otherwise, we buffer\n            // the span batch in this stage if it passes the validity checks.\n            match batch_with_inclusion.batch {\n                Batch::Single(b) => return Ok(Batch::Single(b)),\n                Batch::Span(b) => {\n                    #[cfg(feature = \"metrics\")]\n                    let start = std::time::Instant::now();\n                    let (validity, _) = b\n                        .check_batch_prefix(\n                            self.config.as_ref(),\n                            l1_origins,\n                            parent,\n                            &batch_with_inclusion.inclusion_block,\n                            &mut self.fetcher,\n                        )\n                        .await;\n                    kona_macros::record!(\n                        histogram,\n                        crate::metrics::Metrics::PIPELINE_CHECK_BATCH_PREFIX,\n                        start.elapsed().as_secs_f64()\n                    );\n\n                    kona_macros::inc!(\n                        gauge,\n                        crate::metrics::Metrics::PIPELINE_BATCH_VALIDITY,\n                        \"validity\" => validity.to_string(),\n                    );\n\n                    match validity {\n                        BatchValidity::Accept => self.span = Some(b),\n                        BatchValidity::Drop(_) => {\n                            // Flush the stage.\n                            self.flush();\n\n                            return Err(PipelineError::NotEnoughData.temp());\n                        }\n                        BatchValidity::Past => {\n                            if !self.is_active()? {\n                                error!(target: \"batch_stream\", \"BatchValidity::Past is not allowed pre-holocene\");\n                                return Err(PipelineError::InvalidBatchValidity.crit());\n                            }\n\n                            return Err(PipelineError::NotEnoughData.temp());\n                        }\n                        BatchValidity::Undecided | BatchValidity::Future => {\n                            return Err(PipelineError::NotEnoughData.temp());\n                        }\n                    }\n                }\n            }\n        }\n\n        // Attempt to pull a SingleBatch out of the SpanBatch.\n        match self.get_single_batch(parent, l1_origins) {\n            Ok(Some(single_batch)) => Ok(Batch::Single(single_batch)),\n            Ok(None) => Err(PipelineError::NotEnoughData.temp()),\n            Err(e) => {\n                warn!(target: \"batch_span\", \"Extracting singular batches from span batch failed: {}\", e);\n                // If singular batch extraction fails, it should be handled the same as a\n                // dropped batch during span batch prefix checks.\n                self.flush();\n                Err(PipelineError::NotEnoughData.temp())\n            }\n        }\n    }\n}\n\n#[async_trait]\nimpl<P, BF> OriginAdvancer for BatchStream<P, BF>\nwhere\n    P: BatchStreamProvider + OriginAdvancer + OriginProvider + Stage + Send + Debug,\n    BF: L2ChainProvider + Send + Debug,\n{\n    async fn advance_origin(&mut self) -> PipelineResult<()> {\n        self.prev.advance_origin().await\n    }\n}\n\nimpl<P, BF> OriginProvider for BatchStream<P, BF>\nwhere\n    P: BatchStreamProvider + OriginAdvancer + OriginProvider + Stage + Debug,\n    BF: L2ChainProvider + Debug,\n{\n    fn origin(&self) -> Option<BlockInfo> {\n        self.prev.origin()\n    }\n}\n\n#[async_trait]\nimpl<P, BF> Stage for BatchStream<P, BF>\nwhere\n    P: BatchStreamProvider + OriginAdvancer + OriginProvider + Stage + Debug + Send,\n    BF: L2ChainProvider + Send + Debug,\n{\n    async fn reset(\n        &mut self,\n        l1_origin: BlockNumHash,\n        system_config: SystemConfig,\n    ) -> PipelineResult<()> {\n        self.prev.reset(l1_origin, system_config).await?;\n        self.buffer.clear();\n        self.span.take();\n        Ok(())\n    }\n\n    async fn activate(&mut self) -> PipelineResult<()> {\n        self.prev.activate().await?;\n        self.buffer.clear();\n        self.span.take();\n        Ok(())\n    }\n\n    async fn flush_channel(&mut self) -> PipelineResult<()> {\n        self.prev.flush_channel().await?;\n        self.buffer.clear();\n        self.span.take();\n        Ok(())\n    }\n\n    async fn provide_block(&mut self, block: BlockInfo) -> PipelineResult<()> {\n        self.prev.provide_block(block).await\n    }\n}\n\n#[cfg(test)]\nmod test {\n    use super::*;\n    use crate::test_utils::{\n        CollectingLayer, TestBatchStreamProvider, TestL2ChainProvider, TraceStorage,\n    };\n    use alloc::vec;\n    use alloy_consensus::{BlockBody, Header};\n    use alloy_eips::{BlockNumHash, NumHash};\n    use alloy_primitives::{FixedBytes, b256};\n    use kona_genesis::{ChainGenesis, HardForkConfig};\n    use kona_protocol::{SingleBatch, SpanBatchElement};\n    use op_alloy_consensus::OpBlock;\n    use tracing_subscriber::{layer::SubscriberExt, util::SubscriberInitExt};\n\n    #[tokio::test]\n    async fn test_batch_stream_flush() {\n        let config = Arc::new(RollupConfig {\n            hardforks: HardForkConfig { holocene_time: Some(0), ..Default::default() },\n            ..Default::default()\n        });\n        let prev = TestBatchStreamProvider::new(vec![]);\n        let mut stream = BatchStream::new(prev, config, TestL2ChainProvider::default());\n        stream.buffer.push_back(SingleBatch::default());\n        stream.span = Some(SpanBatch::default());\n        assert!(!stream.buffer.is_empty());\n        assert!(stream.span.is_some());\n        stream.flush();\n        assert!(stream.buffer.is_empty());\n        assert!(stream.span.is_none());\n    }\n\n    #[tokio::test]\n    async fn test_batch_stream_reset() {\n        let config = Arc::new(RollupConfig {\n            hardforks: HardForkConfig { holocene_time: Some(0), ..Default::default() },\n            ..Default::default()\n        });\n        let prev = TestBatchStreamProvider::new(vec![]);\n        let mut stream = BatchStream::new(prev, config.clone(), TestL2ChainProvider::default());\n        stream.buffer.push_back(SingleBatch::default());\n        stream.span = Some(SpanBatch::default());\n        assert!(!stream.prev.reset);\n        stream.reset(BlockNumHash::default(), SystemConfig::default()).await.unwrap();\n        assert!(stream.prev.reset);\n        assert!(stream.buffer.is_empty());\n        assert!(stream.span.is_none());\n    }\n\n    #[tokio::test]\n    async fn test_batch_stream_flush_channel() {\n        let config = Arc::new(RollupConfig {\n            hardforks: HardForkConfig { holocene_time: Some(0), ..Default::default() },\n            ..Default::default()\n        });\n        let prev = TestBatchStreamProvider::new(vec![]);\n        let mut stream = BatchStream::new(prev, config.clone(), TestL2ChainProvider::default());\n        stream.buffer.push_back(SingleBatch::default());\n        stream.span = Some(SpanBatch::default());\n        assert!(!stream.prev.flushed);\n        stream.flush_channel().await.unwrap();\n        assert!(stream.prev.flushed);\n        assert!(stream.buffer.is_empty());\n        assert!(stream.span.is_none());\n    }\n\n    #[tokio::test]\n    async fn test_batch_stream_inactive() {\n        let trace_store: TraceStorage = Default::default();\n        let layer = CollectingLayer::new(trace_store.clone());\n        tracing_subscriber::Registry::default().with(layer).init();\n\n        let data = vec![Ok(Batch::Single(SingleBatch::default()))];\n        let config = Arc::new(RollupConfig {\n            hardforks: HardForkConfig { holocene_time: Some(100), ..Default::default() },\n            ..Default::default()\n        });\n        let prev = TestBatchStreamProvider::new(data);\n        let mut stream = BatchStream::new(prev, config.clone(), TestL2ChainProvider::default());\n\n        // The stage should not be active.\n        assert!(!stream.is_active().unwrap());\n\n        // The next batch should be passed through to the [BatchQueue] stage.\n        let batch = stream.next_batch(Default::default(), &[]).await.unwrap();\n        assert_eq!(batch, Batch::Single(SingleBatch::default()));\n\n        let logs = trace_store.get_by_level(tracing::Level::TRACE);\n        assert_eq!(logs.len(), 1);\n        assert!(logs[0].contains(\"BatchStream stage is inactive, pass-through.\"));\n    }\n\n    #[tokio::test]\n    async fn test_span_buffer() {\n        let mock_batch = SpanBatch {\n            batches: vec![\n                SpanBatchElement { epoch_num: 1, timestamp: 2, ..Default::default() },\n                SpanBatchElement { epoch_num: 1, timestamp: 4, ..Default::default() },\n            ],\n            ..Default::default()\n        };\n        let mock_origins = [BlockInfo { number: 1, timestamp: 12, ..Default::default() }];\n\n        let data = vec![Ok(Batch::Span(mock_batch.clone()))];\n        let config = Arc::new(RollupConfig {\n            block_time: 2,\n            hardforks: HardForkConfig {\n                delta_time: Some(0),\n                holocene_time: Some(0),\n                ..Default::default()\n            },\n            ..Default::default()\n        });\n        let prev = TestBatchStreamProvider::new(data);\n        let provider = TestL2ChainProvider::default();\n        let mut stream = BatchStream::new(prev, config.clone(), provider);\n\n        // The stage should be active.\n        assert!(stream.is_active().unwrap());\n\n        // The next batches should be single batches derived from the span batch.\n        let batch = stream.next_batch(Default::default(), &mock_origins).await.unwrap();\n        if let Batch::Single(single) = batch {\n            assert_eq!(single.epoch_num, 1);\n            assert_eq!(single.timestamp, 2);\n        } else {\n            panic!(\"Wrong batch type\");\n        }\n\n        let batch = stream.next_batch(Default::default(), &mock_origins).await.unwrap();\n        if let Batch::Single(single) = batch {\n            assert_eq!(single.epoch_num, 1);\n            assert_eq!(single.timestamp, 4);\n        } else {\n            panic!(\"Wrong batch type\");\n        }\n\n        let err = stream.next_batch(Default::default(), &mock_origins).await.unwrap_err();\n        assert_eq!(err, PipelineError::Eof.temp());\n        assert_eq!(stream.span_buffer_size(), 0);\n        assert!(stream.span.is_none());\n\n        // Add more data into the provider, see if the buffer is re-hydrated.\n        stream.prev.batches.push(Ok(Batch::Span(mock_batch.clone())));\n\n        // The next batches should be single batches derived from the span batch.\n        let batch = stream.next_batch(Default::default(), &mock_origins).await.unwrap();\n        if let Batch::Single(single) = batch {\n            assert_eq!(single.epoch_num, 1);\n            assert_eq!(single.timestamp, 2);\n        } else {\n            panic!(\"Wrong batch type\");\n        }\n\n        let batch = stream.next_batch(Default::default(), &mock_origins).await.unwrap();\n        if let Batch::Single(single) = batch {\n            assert_eq!(single.epoch_num, 1);\n            assert_eq!(single.timestamp, 4);\n        } else {\n            panic!(\"Wrong batch type\");\n        }\n\n        let err = stream.next_batch(Default::default(), &mock_origins).await.unwrap_err();\n        assert_eq!(err, PipelineError::Eof.temp());\n        assert_eq!(stream.span_buffer_size(), 0);\n        assert!(stream.span.is_none());\n    }\n\n    #[tokio::test]\n    async fn test_span_batch_extraction_error_flushes_stage() {\n        let trace_store: TraceStorage = Default::default();\n        let layer = CollectingLayer::new(trace_store.clone());\n        tracing_subscriber::Registry::default().with(layer).init();\n\n        let parent_hash = b256!(\"1111111111111111111111111111111111111111000000000000000000000000\");\n        let l1_block_hash =\n            b256!(\"3333333333333333333333333333333333333333000000000000000000000000\");\n        let config = Arc::new(RollupConfig {\n            seq_window_size: 100,\n            block_time: 10,\n            hardforks: HardForkConfig {\n                delta_time: Some(0),\n                holocene_time: Some(0),\n                ..Default::default()\n            },\n            genesis: ChainGenesis {\n                l2: BlockNumHash { number: 40, hash: parent_hash },\n                ..Default::default()\n            },\n            ..Default::default()\n        });\n\n        let l1_block =\n            BlockInfo { number: 10, timestamp: 5, hash: l1_block_hash, ..Default::default() };\n        let l1_blocks = vec![l1_block];\n        let l2_safe_head = L2BlockInfo {\n            block_info: BlockInfo { number: 41, timestamp: 10, parent_hash, ..Default::default() },\n            l1_origin: l1_block.id(),\n            ..Default::default()\n        };\n        let l2_parent = L2BlockInfo {\n            block_info: BlockInfo {\n                number: 40,\n                hash: parent_hash,\n                timestamp: 0,\n                ..Default::default()\n            },\n            l1_origin: BlockNumHash { number: 9, ..Default::default() },\n            ..Default::default()\n        };\n        let op_block = OpBlock {\n            header: Header { number: 41, ..Default::default() },\n            body: BlockBody { transactions: vec![], ommers: vec![], withdrawals: None },\n        };\n\n        let span_batch = SpanBatch {\n            batches: vec![\n                SpanBatchElement { epoch_num: 9, timestamp: 10, ..Default::default() },\n                SpanBatchElement { epoch_num: 9, timestamp: 20, ..Default::default() },\n                SpanBatchElement { epoch_num: 10, timestamp: 30, ..Default::default() },\n            ],\n            parent_check: FixedBytes::<20>::from_slice(&parent_hash[..20]),\n            l1_origin_check: FixedBytes::<20>::from_slice(&l1_block_hash[..20]),\n            ..Default::default()\n        };\n\n        let mut prev = TestBatchStreamProvider::new(vec![Ok(Batch::Span(span_batch))]);\n        prev.origin = Some(l1_block);\n\n        let mut provider = TestL2ChainProvider::default();\n        provider.blocks.push(l2_parent);\n        provider.op_blocks.push(op_block);\n\n        let mut stream = BatchStream::new(prev, config, provider);\n        let err = stream.next_batch(l2_safe_head, &l1_blocks).await.unwrap_err();\n\n        assert_eq!(err, PipelineError::NotEnoughData.temp());\n        assert!(stream.span.is_none());\n        assert_eq!(stream.span_buffer_size(), 0);\n\n        let logs = trace_store.get_by_level(tracing::Level::WARN);\n        assert_eq!(logs.len(), 1);\n        assert!(logs[0].contains(\"Extracting singular batches from span batch failed: Future batch L1 origin before safe head\"));\n    }\n\n    #[tokio::test]\n    async fn test_single_batch_pass_through() {\n        let data = vec![Ok(Batch::Single(SingleBatch::default()))];\n        let config = Arc::new(RollupConfig {\n            hardforks: HardForkConfig { holocene_time: Some(0), ..Default::default() },\n            ..Default::default()\n        });\n        let prev = TestBatchStreamProvider::new(data);\n        let mut stream = BatchStream::new(prev, config.clone(), TestL2ChainProvider::default());\n\n        // The stage should be active.\n        assert!(stream.is_active().unwrap());\n\n        // The next batch should be passed through to the [BatchQueue] stage.\n        let batch = stream.next_batch(Default::default(), &[]).await.unwrap();\n        assert!(matches!(batch, Batch::Single(_)));\n        assert_eq!(stream.span_buffer_size(), 0);\n        assert!(stream.span.is_none());\n    }\n\n    #[tokio::test]\n    async fn test_past_span_batch() {\n        let mock_batch = SpanBatch {\n            batches: vec![\n                SpanBatchElement { epoch_num: 1, timestamp: 2, ..Default::default() },\n                SpanBatchElement { epoch_num: 1, timestamp: 4, ..Default::default() },\n            ],\n            ..Default::default()\n        };\n        let mock_origins = [BlockInfo { number: 1, timestamp: 12, ..Default::default() }];\n        let data = vec![Ok(Batch::Span(mock_batch))];\n\n        let config = Arc::new(RollupConfig {\n            hardforks: HardForkConfig { holocene_time: Some(0), ..Default::default() },\n            ..Default::default()\n        });\n        let prev = TestBatchStreamProvider::new(data);\n        let mut stream = BatchStream::new(prev, config.clone(), TestL2ChainProvider::default());\n\n        // The stage should be active.\n        assert!(stream.is_active().unwrap());\n\n        let parent = L2BlockInfo {\n            block_info: BlockInfo { number: 10, timestamp: 100, ..Default::default() },\n            l1_origin: NumHash::default(),\n            seq_num: 0,\n        };\n\n        // `next_batch` should return an error if the span batch is in the past.\n        let err = stream.next_batch(parent, &mock_origins).await.unwrap_err();\n        assert_eq!(err, PipelineError::NotEnoughData.temp());\n    }\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "differs",
+      "coveredLines": 529,
+      "match": {
+        "origin": "own",
+        "collection": "optimism",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "batch_stream.rs",
+        "similarity": 0.941,
+        "reportId": "optimism/cantina-kona-2026-03",
+        "repository": "op-rs/kona",
+        "path": "crates/protocol/derive/src/stages/batch/batch_stream.rs",
+        "commit": "86910c9112437bbb849eca28961f813c5450e103",
+        "commitTimestamp": "2025-12-15T17:17:05Z",
+        "url": "https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/crates/protocol/derive/src/stages/batch/batch_stream.rs",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). kona-derive derivation pipeline (stages, sources, traversal, attributes). Medium findings 3.3.1 and 3.3.2 (pipeline/core.rs, stages/l1_retrieval.rs) and numerous Low/Informational findings located here; no Critical/High.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 36,
+        "removed": 17,
+        "ignoredAdded": 3,
+        "ignoredRemoved": 0,
+        "unchanged": 529,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 2,
+            "oldLines": 12,
+            "newStart": 2,
+            "newLines": 13,
+            "lines": [
+              { "type": " ", "oldLine": 2, "newLine": 2, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "use crate::{"
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "    L2ChainProvider, NextBatchProvider, OriginAdvancer, OriginProvider, PipelineError,"
+              },
+              {
+                "type": "-",
+                "oldLine": 5,
+                "text": "    PipelineResult, Signal, SignalReceiver,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 5,
+                "text": "    PipelineResult, Stage,",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 6, "newLine": 6, "text": "};" },
+              {
+                "type": " ",
+                "oldLine": 7,
+                "newLine": 7,
+                "text": "use alloc::{boxed::Box, collections::VecDeque, sync::Arc};"
+              },
+              {
+                "type": "+",
+                "newLine": 8,
+                "text": "use alloy_eips::BlockNumHash;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 8,
+                "newLine": 9,
+                "text": "use async_trait::async_trait;"
+              },
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 10,
+                "text": "use core::fmt::Debug;"
+              },
+              {
+                "type": "-",
+                "oldLine": 10,
+                "text": "use kona_genesis::RollupConfig;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 11,
+                "text": "use kona_genesis::{RollupConfig, SystemConfig};",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 11,
+                "newLine": 12,
+                "text": "use kona_protocol::{"
+              },
+              {
+                "type": " ",
+                "oldLine": 12,
+                "newLine": 13,
+                "text": "    Batch, BatchValidity, BatchWithInclusionBlock, BlockInfo, L2BlockInfo, SingleBatch, SpanBatch,"
+              },
+              {
+                "type": " ",
+                "oldLine": 13,
+                "newLine": 14,
+                "text": "    SpanBatchError,"
+              }
+            ]
+          },
+          {
+            "oldStart": 35,
+            "oldLines": 7,
+            "newStart": 36,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 35,
+                "newLine": 36,
+                "text": "#[derive(Debug)]"
+              },
+              {
+                "type": " ",
+                "oldLine": 36,
+                "newLine": 37,
+                "text": "pub struct BatchStream<P, BF>"
+              },
+              { "type": " ", "oldLine": 37, "newLine": 38, "text": "where" },
+              {
+                "type": "-",
+                "oldLine": 38,
+                "text": "    P: BatchStreamProvider + OriginAdvancer + OriginProvider + SignalReceiver + Debug,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 39,
+                "text": "    P: BatchStreamProvider + OriginAdvancer + OriginProvider + Stage + Debug,",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 39,
+                "newLine": 40,
+                "text": "    BF: L2ChainProvider + Debug,"
+              },
+              { "type": " ", "oldLine": 40, "newLine": 41, "text": "{" },
+              {
+                "type": " ",
+                "oldLine": 41,
+                "newLine": 42,
+                "text": "    /// The previous stage in the derivation pipeline."
+              }
+            ]
+          },
+          {
+            "oldStart": 53,
+            "oldLines": 7,
+            "newStart": 54,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 53, "newLine": 54, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 54,
+                "newLine": 55,
+                "text": "impl<P, BF> BatchStream<P, BF>"
+              },
+              { "type": " ", "oldLine": 55, "newLine": 56, "text": "where" },
+              {
+                "type": "-",
+                "oldLine": 56,
+                "text": "    P: BatchStreamProvider + OriginAdvancer + OriginProvider + SignalReceiver + Debug,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 57,
+                "text": "    P: BatchStreamProvider + OriginAdvancer + OriginProvider + Stage + Debug,",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 57,
+                "newLine": 58,
+                "text": "    BF: L2ChainProvider + Debug,"
+              },
+              { "type": " ", "oldLine": 58, "newLine": 59, "text": "{" },
+              {
+                "type": " ",
+                "oldLine": 59,
+                "newLine": 60,
+                "text": "    /// Create a new [`BatchStream`] stage."
+              }
+            ]
+          },
+          {
+            "oldStart": 104,
+            "oldLines": 7,
+            "newStart": 105,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 104,
+                "newLine": 105,
+                "text": "#[async_trait]"
+              },
+              {
+                "type": " ",
+                "oldLine": 105,
+                "newLine": 106,
+                "text": "impl<P, BF> NextBatchProvider for BatchStream<P, BF>"
+              },
+              { "type": " ", "oldLine": 106, "newLine": 107, "text": "where" },
+              {
+                "type": "-",
+                "oldLine": 107,
+                "text": "    P: BatchStreamProvider + OriginAdvancer + OriginProvider + SignalReceiver + Send + Debug,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 108,
+                "text": "    P: BatchStreamProvider + OriginAdvancer + OriginProvider + Stage + Send + Debug,",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 108,
+                "newLine": 109,
+                "text": "    BF: L2ChainProvider + Send + Debug,"
+              },
+              { "type": " ", "oldLine": 109, "newLine": 110, "text": "{" },
+              {
+                "type": " ",
+                "oldLine": 110,
+                "newLine": 111,
+                "text": "    fn flush(&mut self) {"
+              }
+            ]
+          },
+          {
+            "oldStart": 170,
+            "oldLines": 7,
+            "newStart": 171,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 170, "newLine": 171, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 171,
+                "newLine": 172,
+                "text": "                    match validity {"
+              },
+              {
+                "type": " ",
+                "oldLine": 172,
+                "newLine": 173,
+                "text": "                        BatchValidity::Accept => self.span = Some(b),"
+              },
+              {
+                "type": "-",
+                "oldLine": 173,
+                "text": "                        BatchValidity::Drop => {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 174,
+                "text": "                        BatchValidity::Drop(_) => {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 174,
+                "newLine": 175,
+                "text": "                            // Flush the stage."
+              },
+              {
+                "type": " ",
+                "oldLine": 175,
+                "newLine": 176,
+                "text": "                            self.flush();"
+              },
+              { "type": " ", "oldLine": 176, "newLine": 177, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 210,
+            "oldLines": 7,
+            "newStart": 211,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 210,
+                "newLine": 211,
+                "text": "#[async_trait]"
+              },
+              {
+                "type": " ",
+                "oldLine": 211,
+                "newLine": 212,
+                "text": "impl<P, BF> OriginAdvancer for BatchStream<P, BF>"
+              },
+              { "type": " ", "oldLine": 212, "newLine": 213, "text": "where" },
+              {
+                "type": "-",
+                "oldLine": 213,
+                "text": "    P: BatchStreamProvider + OriginAdvancer + OriginProvider + SignalReceiver + Send + Debug,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 214,
+                "text": "    P: BatchStreamProvider + OriginAdvancer + OriginProvider + Stage + Send + Debug,",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 214,
+                "newLine": 215,
+                "text": "    BF: L2ChainProvider + Send + Debug,"
+              },
+              { "type": " ", "oldLine": 215, "newLine": 216, "text": "{" },
+              {
+                "type": " ",
+                "oldLine": 216,
+                "newLine": 217,
+                "text": "    async fn advance_origin(&mut self) -> PipelineResult<()> {"
+              }
+            ]
+          },
+          {
+            "oldStart": 220,
+            "oldLines": 7,
+            "newStart": 221,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 220, "newLine": 221, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 221,
+                "newLine": 222,
+                "text": "impl<P, BF> OriginProvider for BatchStream<P, BF>"
+              },
+              { "type": " ", "oldLine": 222, "newLine": 223, "text": "where" },
+              {
+                "type": "-",
+                "oldLine": 223,
+                "text": "    P: BatchStreamProvider + OriginAdvancer + OriginProvider + SignalReceiver + Debug,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 224,
+                "text": "    P: BatchStreamProvider + OriginAdvancer + OriginProvider + Stage + Debug,",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 224,
+                "newLine": 225,
+                "text": "    BF: L2ChainProvider + Debug,"
+              },
+              { "type": " ", "oldLine": 225, "newLine": 226, "text": "{" },
+              {
+                "type": " ",
+                "oldLine": 226,
+                "newLine": 227,
+                "text": "    fn origin(&self) -> Option<BlockInfo> {"
+              }
+            ]
+          },
+          {
+            "oldStart": 229,
+            "oldLines": 25,
+            "newStart": 230,
+            "newLines": 46,
+            "lines": [
+              { "type": " ", "oldLine": 229, "newLine": 230, "text": "}" },
+              { "type": " ", "oldLine": 230, "newLine": 231, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 231,
+                "newLine": 232,
+                "text": "#[async_trait]"
+              },
+              {
+                "type": "-",
+                "oldLine": 232,
+                "text": "impl<P, BF> SignalReceiver for BatchStream<P, BF>",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 233,
+                "text": "impl<P, BF> Stage for BatchStream<P, BF>",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 233, "newLine": 234, "text": "where" },
+              {
+                "type": "-",
+                "oldLine": 234,
+                "text": "    P: BatchStreamProvider + OriginAdvancer + OriginProvider + SignalReceiver + Debug + Send,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 235,
+                "text": "    P: BatchStreamProvider + OriginAdvancer + OriginProvider + Stage + Debug + Send,",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 235,
+                "newLine": 236,
+                "text": "    BF: L2ChainProvider + Send + Debug,"
+              },
+              { "type": " ", "oldLine": 236, "newLine": 237, "text": "{" },
+              {
+                "type": "-",
+                "oldLine": 237,
+                "text": "    async fn signal(&mut self, signal: Signal) -> PipelineResult<()> {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 238,
+                "text": "        self.prev.signal(signal).await?;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 238,
+                "text": "    async fn reset(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 239,
+                "text": "        &mut self,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 240,
+                "text": "        l1_origin: BlockNumHash,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 241,
+                "text": "        system_config: SystemConfig,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 242,
+                "text": "    ) -> PipelineResult<()> {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 243,
+                "text": "        self.prev.reset(l1_origin, system_config).await?;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 239,
+                "newLine": 244,
+                "text": "        self.buffer.clear();"
+              },
+              {
+                "type": " ",
+                "oldLine": 240,
+                "newLine": 245,
+                "text": "        self.span.take();"
+              },
+              {
+                "type": " ",
+                "oldLine": 241,
+                "newLine": 246,
+                "text": "        Ok(())"
+              },
+              { "type": " ", "oldLine": 242, "newLine": 247, "text": "    }" },
+              { "type": "+", "newLine": 248, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 249,
+                "text": "    async fn activate(&mut self) -> PipelineResult<()> {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 250,
+                "text": "        self.prev.activate().await?;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 251,
+                "text": "        self.buffer.clear();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 252,
+                "text": "        self.span.take();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 253,
+                "text": "        Ok(())",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 254,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 255, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 256,
+                "text": "    async fn flush_channel(&mut self) -> PipelineResult<()> {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 257,
+                "text": "        self.prev.flush_channel().await?;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 258,
+                "text": "        self.buffer.clear();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 259,
+                "text": "        self.span.take();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 260,
+                "text": "        Ok(())",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 261,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 262, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 263,
+                "text": "    async fn provide_block(&mut self, block: BlockInfo) -> PipelineResult<()> {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 264,
+                "text": "        self.prev.provide_block(block).await",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 265,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 243, "newLine": 266, "text": "}" },
+              { "type": " ", "oldLine": 244, "newLine": 267, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 245,
+                "newLine": 268,
+                "text": "#[cfg(test)]"
+              },
+              {
+                "type": " ",
+                "oldLine": 246,
+                "newLine": 269,
+                "text": "mod test {"
+              },
+              {
+                "type": " ",
+                "oldLine": 247,
+                "newLine": 270,
+                "text": "    use super::*;"
+              },
+              {
+                "type": "-",
+                "oldLine": 248,
+                "text": "    use crate::{",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 249,
+                "text": "        test_utils::{CollectingLayer, TestBatchStreamProvider, TestL2ChainProvider, TraceStorage},",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 250,
+                "text": "        types::ResetSignal,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 271,
+                "text": "    use crate::test_utils::{",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 272,
+                "text": "        CollectingLayer, TestBatchStreamProvider, TestL2ChainProvider, TraceStorage,",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 251, "newLine": 273, "text": "    };" },
+              {
+                "type": " ",
+                "oldLine": 252,
+                "newLine": 274,
+                "text": "    use alloc::vec;"
+              },
+              {
+                "type": " ",
+                "oldLine": 253,
+                "newLine": 275,
+                "text": "    use alloy_consensus::{BlockBody, Header};"
+              }
+            ]
+          },
+          {
+            "oldStart": 286,
+            "oldLines": 7,
+            "newStart": 308,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 286,
+                "newLine": 308,
+                "text": "        stream.buffer.push_back(SingleBatch::default());"
+              },
+              {
+                "type": " ",
+                "oldLine": 287,
+                "newLine": 309,
+                "text": "        stream.span = Some(SpanBatch::default());"
+              },
+              {
+                "type": " ",
+                "oldLine": 288,
+                "newLine": 310,
+                "text": "        assert!(!stream.prev.reset);"
+              },
+              {
+                "type": "-",
+                "oldLine": 289,
+                "text": "        stream.signal(ResetSignal::default().signal()).await.unwrap();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 311,
+                "text": "        stream.reset(BlockNumHash::default(), SystemConfig::default()).await.unwrap();",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 290,
+                "newLine": 312,
+                "text": "        assert!(stream.prev.reset);"
+              },
+              {
+                "type": " ",
+                "oldLine": 291,
+                "newLine": 313,
+                "text": "        assert!(stream.buffer.is_empty());"
+              },
+              {
+                "type": " ",
+                "oldLine": 292,
+                "newLine": 314,
+                "text": "        assert!(stream.span.is_none());"
+              }
+            ]
+          },
+          {
+            "oldStart": 303,
+            "oldLines": 7,
+            "newStart": 325,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 303,
+                "newLine": 325,
+                "text": "        stream.buffer.push_back(SingleBatch::default());"
+              },
+              {
+                "type": " ",
+                "oldLine": 304,
+                "newLine": 326,
+                "text": "        stream.span = Some(SpanBatch::default());"
+              },
+              {
+                "type": " ",
+                "oldLine": 305,
+                "newLine": 327,
+                "text": "        assert!(!stream.prev.flushed);"
+              },
+              {
+                "type": "-",
+                "oldLine": 306,
+                "text": "        stream.signal(Signal::FlushChannel).await.unwrap();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 328,
+                "text": "        stream.flush_channel().await.unwrap();",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 307,
+                "newLine": 329,
+                "text": "        assert!(stream.prev.flushed);"
+              },
+              {
+                "type": " ",
+                "oldLine": 308,
+                "newLine": 330,
+                "text": "        assert!(stream.buffer.is_empty());"
+              },
+              {
+                "type": " ",
+                "oldLine": 309,
+                "newLine": 331,
+                "text": "        assert!(stream.span.is_none());"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

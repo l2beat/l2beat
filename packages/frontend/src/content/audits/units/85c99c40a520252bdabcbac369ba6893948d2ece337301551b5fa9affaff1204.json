@@ -1,1 +1,15 @@
-{"schemaVersion":2,"unitHash":"85c99c40a520252bdabcbac369ba6893948d2ece337301551b5fa9affaff1204","name":"justfile","kind":"program","lines":48,"source":"DOCKER_JUSTFILE := source_directory()\n\n_docker_arch:\n  #!/bin/bash\n  if [[ -z \"$PLATFORMS\" ]]; then\n    echo $(docker system info --format '{{\"{{\"}}.OSType{{\"}}\"}}/{{\"{{\"}}.Architecture{{\"}}\"}}')\n  else\n    echo \"$PLATFORMS\"\n  fi\n\n# Builds an application image from the local repository.\nbuild-local bin_name image_tag='kona:local' load_flag='':\n  #!/bin/bash\n  export BIN_TARGET=\"{{bin_name}}\"\n  export DEFAULT_TAG=\"{{image_tag}}\"\n  export PLATFORMS=\"$(just _docker_arch)\"\n  export REPO_LOCATION=\"local\"\n\n  LOAD_FLAG=\"\"\n  if [[ \"{{load_flag}}\" == \"load\" ]]; then\n    LOAD_FLAG=\"--load\"\n  fi\n\n  (cd {{DOCKER_JUSTFILE}}/../../../ && docker buildx bake \\\n    --progress plain \\\n    -f kona/docker/docker-bake.hcl \\\n    $LOAD_FLAG \\\n    generic)\n\n# Builds an application image from a remote revision.\nbuild-remote bin_name git_tag='' image_tag='kona:local':\n  #!/bin/bash\n  export BIN_TARGET=\"{{bin_name}}\"\n  export DEFAULT_TAG=\"{{image_tag}}\"\n  export PLATFORMS=\"$(just _docker_arch)\"\n  export REPO_LOCATION=\"remote\"\n\n  # If no git tag is provided, use `main`\n  if [[ -z \"{{git_tag}}\" ]]; then\n    export GIT_REF_NAME=\"main\"\n  else\n    export GIT_REF_NAME=\"{{git_tag}}\"\n  fi\n\n  (cd {{DOCKER_JUSTFILE}}/../../../ && docker buildx bake \\\n    --progress plain \\\n    -f kona/docker/docker-bake.hcl \\\n    generic)","resolutions":{"9fa846564f4071bd":{"status":"unaudited","coveredLines":0,"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "85c99c40a520252bdabcbac369ba6893948d2ece337301551b5fa9affaff1204",
+  "name": "justfile",
+  "kind": "program",
+  "lines": 48,
+  "source": "DOCKER_JUSTFILE := source_directory()\n\n_docker_arch:\n  #!/bin/bash\n  if [[ -z \"$PLATFORMS\" ]]; then\n    echo $(docker system info --format '{{\"{{\"}}.OSType{{\"}}\"}}/{{\"{{\"}}.Architecture{{\"}}\"}}')\n  else\n    echo \"$PLATFORMS\"\n  fi\n\n# Builds an application image from the local repository.\nbuild-local bin_name image_tag='kona:local' load_flag='':\n  #!/bin/bash\n  export BIN_TARGET=\"{{bin_name}}\"\n  export DEFAULT_TAG=\"{{image_tag}}\"\n  export PLATFORMS=\"$(just _docker_arch)\"\n  export REPO_LOCATION=\"local\"\n\n  LOAD_FLAG=\"\"\n  if [[ \"{{load_flag}}\" == \"load\" ]]; then\n    LOAD_FLAG=\"--load\"\n  fi\n\n  (cd {{DOCKER_JUSTFILE}}/../../../ && docker buildx bake \\\n    --progress plain \\\n    -f kona/docker/docker-bake.hcl \\\n    $LOAD_FLAG \\\n    generic)\n\n# Builds an application image from a remote revision.\nbuild-remote bin_name git_tag='' image_tag='kona:local':\n  #!/bin/bash\n  export BIN_TARGET=\"{{bin_name}}\"\n  export DEFAULT_TAG=\"{{image_tag}}\"\n  export PLATFORMS=\"$(just _docker_arch)\"\n  export REPO_LOCATION=\"remote\"\n\n  # If no git tag is provided, use `main`\n  if [[ -z \"{{git_tag}}\" ]]; then\n    export GIT_REF_NAME=\"main\"\n  else\n    export GIT_REF_NAME=\"{{git_tag}}\"\n  fi\n\n  (cd {{DOCKER_JUSTFILE}}/../../../ && docker buildx bake \\\n    --progress plain \\\n    -f kona/docker/docker-bake.hcl \\\n    generic)",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

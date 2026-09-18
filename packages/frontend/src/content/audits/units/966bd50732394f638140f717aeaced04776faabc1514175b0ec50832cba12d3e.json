@@ -1,1 +1,15 @@
-{"schemaVersion":2,"unitHash":"966bd50732394f638140f717aeaced04776faabc1514175b0ec50832cba12d3e","name":"README.md","kind":"program","lines":3,"source":"## `kona-rpc`\n\nLow-level Optimism JSON-RPC server and client implementations.","resolutions":{"9fa846564f4071bd":{"status":"unaudited","coveredLines":0,"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "966bd50732394f638140f717aeaced04776faabc1514175b0ec50832cba12d3e",
+  "name": "README.md",
+  "kind": "program",
+  "lines": 3,
+  "source": "## `kona-rpc`\n\nLow-level Optimism JSON-RPC server and client implementations.",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

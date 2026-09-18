@@ -1,1 +1,15 @@
-{"schemaVersion":2,"unitHash":"d5e7a9b7e20886e80f45d35dba4e2ef4682b838374867c1cc09e8a235c0e3433","name":"mod.rs","kind":"program","lines":7,"source":"//! Global metrics for `kona-node`\n\nmod cli_opts;\npub use cli_opts::{CliMetrics, init_rollup_config_metrics};\n\nmod version;\npub use version::VersionInfo;","resolutions":{"9fa846564f4071bd":{"status":"unaudited","coveredLines":0,"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "d5e7a9b7e20886e80f45d35dba4e2ef4682b838374867c1cc09e8a235c0e3433",
+  "name": "mod.rs",
+  "kind": "program",
+  "lines": 7,
+  "source": "//! Global metrics for `kona-node`\n\nmod cli_opts;\npub use cli_opts::{CliMetrics, init_rollup_config_metrics};\n\nmod version;\npub use version::VersionInfo;",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

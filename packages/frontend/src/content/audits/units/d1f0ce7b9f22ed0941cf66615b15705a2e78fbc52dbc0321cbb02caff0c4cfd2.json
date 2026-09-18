@@ -1,1 +1,15 @@
-{"schemaVersion":2,"unitHash":"d1f0ce7b9f22ed0941cf66615b15705a2e78fbc52dbc0321cbb02caff0c4cfd2","name":"health.rs","kind":"program","lines":22,"source":"use async_trait::async_trait;\nuse jsonrpsee::core::RpcResult;\n\nuse crate::jsonrpsee::HealthzApiServer;\n\n/// A healthcheck response for the RPC server.\n#[derive(Debug, Clone, serde::Deserialize, serde::Serialize)]\npub struct HealthzResponse {\n    /// The application version.\n    pub version: String,\n}\n\n/// The healthz rpc server.\n#[derive(Debug, Clone)]\npub struct HealthzRpc {}\n\n#[async_trait]\nimpl HealthzApiServer for HealthzRpc {\n    async fn healthz(&self) -> RpcResult<HealthzResponse> {\n        Ok(HealthzResponse { version: env!(\"CARGO_PKG_VERSION\").to_string() })\n    }\n}","resolutions":{"9fa846564f4071bd":{"status":"unaudited","coveredLines":0,"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "d1f0ce7b9f22ed0941cf66615b15705a2e78fbc52dbc0321cbb02caff0c4cfd2",
+  "name": "health.rs",
+  "kind": "program",
+  "lines": 22,
+  "source": "use async_trait::async_trait;\nuse jsonrpsee::core::RpcResult;\n\nuse crate::jsonrpsee::HealthzApiServer;\n\n/// A healthcheck response for the RPC server.\n#[derive(Debug, Clone, serde::Deserialize, serde::Serialize)]\npub struct HealthzResponse {\n    /// The application version.\n    pub version: String,\n}\n\n/// The healthz rpc server.\n#[derive(Debug, Clone)]\npub struct HealthzRpc {}\n\n#[async_trait]\nimpl HealthzApiServer for HealthzRpc {\n    async fn healthz(&self) -> RpcResult<HealthzResponse> {\n        Ok(HealthzResponse { version: env!(\"CARGO_PKG_VERSION\").to_string() })\n    }\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

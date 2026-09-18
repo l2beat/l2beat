@@ -1,1 +1,15 @@
-{"schemaVersion":2,"unitHash":"d36d98eee61428702d84c318b4b51c10209149d29e2199d30cec43070283ec99","name":"test_util.rs","kind":"program","lines":35,"source":"use crate::{\n    SequencerActor,\n    actors::{\n        MockConductor, MockOriginSelector, MockSequencerEngineClient, MockUnsafePayloadGossipClient,\n    },\n};\nuse kona_derive::test_utils::TestAttributesBuilder;\nuse kona_genesis::RollupConfig;\nuse std::sync::Arc;\nuse tokio::sync::mpsc;\n\n// Returns a test SequencerActor with mocks that can be used or overridden.\npub(crate) fn test_actor() -> SequencerActor<\n    TestAttributesBuilder,\n    MockConductor,\n    MockOriginSelector,\n    MockSequencerEngineClient,\n    MockUnsafePayloadGossipClient,\n> {\n    // The sender is intentionally dropped, so the channel starts closed.\n    // If future tests need to send messages, keep the sender instead of dropping it.\n    let (_admin_api_tx, admin_api_rx) = mpsc::channel(20);\n    SequencerActor::new(\n        admin_api_rx,\n        TestAttributesBuilder { attributes: vec![] },\n        None,\n        MockSequencerEngineClient::new(),\n        true,\n        false,\n        MockOriginSelector::new(),\n        // tokio::time::interval requires a non-zero period; the default block_time is 0.\n        Arc::new(RollupConfig { block_time: 2, ..Default::default() }),\n        MockUnsafePayloadGossipClient::new(),\n    )\n}","resolutions":{"9fa846564f4071bd":{"status":"unaudited","coveredLines":0,"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "d36d98eee61428702d84c318b4b51c10209149d29e2199d30cec43070283ec99",
+  "name": "test_util.rs",
+  "kind": "program",
+  "lines": 35,
+  "source": "use crate::{\n    SequencerActor,\n    actors::{\n        MockConductor, MockOriginSelector, MockSequencerEngineClient, MockUnsafePayloadGossipClient,\n    },\n};\nuse kona_derive::test_utils::TestAttributesBuilder;\nuse kona_genesis::RollupConfig;\nuse std::sync::Arc;\nuse tokio::sync::mpsc;\n\n// Returns a test SequencerActor with mocks that can be used or overridden.\npub(crate) fn test_actor() -> SequencerActor<\n    TestAttributesBuilder,\n    MockConductor,\n    MockOriginSelector,\n    MockSequencerEngineClient,\n    MockUnsafePayloadGossipClient,\n> {\n    // The sender is intentionally dropped, so the channel starts closed.\n    // If future tests need to send messages, keep the sender instead of dropping it.\n    let (_admin_api_tx, admin_api_rx) = mpsc::channel(20);\n    SequencerActor::new(\n        admin_api_rx,\n        TestAttributesBuilder { attributes: vec![] },\n        None,\n        MockSequencerEngineClient::new(),\n        true,\n        false,\n        MockOriginSelector::new(),\n        // tokio::time::interval requires a non-zero period; the default block_time is 0.\n        Arc::new(RollupConfig { block_time: 2, ..Default::default() }),\n        MockUnsafePayloadGossipClient::new(),\n    )\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

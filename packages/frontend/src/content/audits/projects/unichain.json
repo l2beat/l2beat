@@ -2993,12 +2993,7 @@
                 "reviewPhase": "initial audit",
                 "coverage": "Contest scope file (six contracts, 1847 SLOC per the contest README); code links in the report pin this commit of the mirror repository. H-02 spans the FaultDisputeGame clock extension and the PreimageOracle challenge period.",
                 "majorFindings": 4,
-                "findingIds": [
-                  "H-02",
-                  "H-03",
-                  "H-04",
-                  "H-05"
-                ],
+                "findingIds": ["H-02", "H-03", "H-04", "H-05"],
                 "isLatestVersion": true,
                 "laterAuditedVersionExists": false,
                 "totalVersions": 2
@@ -11981,10 +11976,7 @@
                 "reviewPhase": "initial audit",
                 "coverage": "Second audited commit (last 3 weeks). Same directory scope and exclusions as the first commit; C01 and H01 fixes from the archived repository are contained in this commit, L02/L04/N01 are fixed here per the report.",
                 "majorFindings": 2,
-                "findingIds": [
-                  "C02",
-                  "C04"
-                ],
+                "findingIds": ["C02", "C04"],
                 "isLatestVersion": true,
                 "laterAuditedVersionExists": false,
                 "totalVersions": 2
@@ -15258,10 +15250,7 @@
                 "reviewPhase": "initial audit",
                 "coverage": "Second audited commit (last 3 weeks). Same directory scope and exclusions as the first commit; C01 and H01 fixes from the archived repository are contained in this commit, L02/L04/N01 are fixed here per the report.",
                 "majorFindings": 2,
-                "findingIds": [
-                  "C02",
-                  "C04"
-                ],
+                "findingIds": ["C02", "C04"],
                 "isLatestVersion": true,
                 "laterAuditedVersionExists": false,
                 "totalVersions": 3
@@ -18079,9 +18068,7 @@
                 "reviewPhase": "fix review",
                 "coverage": "Two further days completing the review of the new version; C-01, H-01 and N-07 verified fixed, H-02 (StandardBridge token refunds) found at this commit.",
                 "majorFindings": 1,
-                "findingIds": [
-                  "H-02"
-                ],
+                "findingIds": ["H-02"],
                 "isLatestVersion": true,
                 "laterAuditedVersionExists": false,
                 "totalVersions": 1
@@ -22135,9 +22122,7 @@
                 "reviewPhase": "fix review",
                 "coverage": "Fix review of PR 15709 (audit optimisations, fixes 3.5.10 and 3.5.12; 3.2.2 remains acknowledged); only the fix changes were verified.",
                 "majorFindings": 1,
-                "findingIds": [
-                  "3.2.2"
-                ],
+                "findingIds": ["3.2.2"],
                 "isLatestVersion": true,
                 "laterAuditedVersionExists": false,
                 "totalVersions": 5

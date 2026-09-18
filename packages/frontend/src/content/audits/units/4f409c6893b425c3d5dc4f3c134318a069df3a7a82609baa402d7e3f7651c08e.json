@@ -1,1 +1,283 @@
-{"schemaVersion":2,"unitHash":"4f409c6893b425c3d5dc4f3c134318a069df3a7a82609baa402d7e3f7651c08e","name":"mod.rs","kind":"program","lines":60,"source":"//! Contains various traversal stages for kona's derivation pipeline.\n//!\n//! The traversal stage sits at the bottom of the pipeline, and is responsible for\n//! providing the next block to the next stage in the pipeline.\n//!\n//! ## Types\n//!\n//! - [`IndexedTraversal`]: A passive traversal stage that receives the next block through a signal.\n//! - [`PollingTraversal`]: An active traversal stage that polls for the next block through its\n//!   provider.\n\nuse alloy_consensus::Receipt;\nuse alloy_primitives::Address;\nuse kona_genesis::SystemConfig;\n\nmod indexed;\npub use indexed::IndexedTraversal;\n\nmod polling;\npub use polling::PollingTraversal;\n\n/// The type of traversal stage used in the derivation pipeline.\n#[derive(Debug, Clone)]\npub enum TraversalStage {\n    /// A passive traversal stage that receives the next block through a signal.\n    Managed,\n    /// An active traversal stage that polls for the next block through its provider.\n    Polling,\n}\n\n/// Updates the system config with receipts, logging each applied update and any errors,\n/// and setting the appropriate metrics gauges.\nfn update_system_config_with_receipts(\n    system_config: &mut SystemConfig,\n    receipts: &[Receipt],\n    l1_system_config_address: Address,\n    ecotone_active: bool,\n    block_number: u64,\n) {\n    let (updates, errors) =\n        system_config.update_with_receipts(receipts, l1_system_config_address, ecotone_active);\n    for kind in &updates {\n        info!(target: \"traversal\", %kind, block_number, \"Applied system config update\");\n    }\n    if !updates.is_empty() {\n        kona_macros::set!(\n            gauge,\n            crate::Metrics::PIPELINE_LATEST_SYS_CONFIG_UPDATE,\n            block_number as f64\n        );\n    }\n    for err in &errors {\n        warn!(target: \"traversal\", ?err, \"Malformed system config update at block {block_number} (skipped)\");\n        kona_macros::set!(\n            gauge,\n            crate::Metrics::PIPELINE_SYS_CONFIG_UPDATE_ERROR,\n            block_number as f64\n        );\n    }\n}","resolutions":{"9fa846564f4071bd":{"status":"differs","coveredLines":29,"match":{"origin":"own","collection":"optimism","relation":{"type":"own"},"rank":0,"matchedBy":"name","auditedName":"mod.rs","similarity":0.367,"reportId":"optimism/cantina-kona-2026-03","repository":"op-rs/kona","path":"crates/protocol/derive/src/stages/traversal/mod.rs","commit":"86910c9112437bbb849eca28961f813c5450e103","commitTimestamp":"2025-12-15T17:17:05Z","url":"https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/crates/protocol/derive/src/stages/traversal/mod.rs","auditStatus":"audited_with_no_major_findings","reviewPhase":"initial audit","coverage":"Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). kona-derive derivation pipeline (stages, sources, traversal, attributes). Medium findings 3.3.1 and 3.3.2 (pipeline/core.rs, stages/l1_retrieval.rs) and numerous Low/Informational findings located here; no Critical/High.","majorFindings":0,"isLatestVersion":true,"laterAuditedVersionExists":false,"totalVersions":1},"diff":{"added":31,"removed":0,"ignoredAdded":4,"ignoredRemoved":0,"unchanged":29,"ignoredOnly":false,"hunks":[{"oldStart":9,"oldLines":6,"newStart":9,"newLines":10,"lines":[{"type":" ","oldLine":9,"newLine":9,"text":"//! - [`PollingTraversal`]: An active traversal stage that polls for the next block through its"},{"type":" ","oldLine":10,"newLine":10,"text":"//!   provider."},{"type":" ","oldLine":11,"newLine":11,"text":""},{"type":"+","newLine":12,"text":"use alloy_consensus::Receipt;","ignored":false},{"type":"+","newLine":13,"text":"use alloy_primitives::Address;","ignored":false},{"type":"+","newLine":14,"text":"use kona_genesis::SystemConfig;","ignored":false},{"type":"+","newLine":15,"text":"","ignored":true},{"type":" ","oldLine":12,"newLine":16,"text":"mod indexed;"},{"type":" ","oldLine":13,"newLine":17,"text":"pub use indexed::IndexedTraversal;"},{"type":" ","oldLine":14,"newLine":18,"text":""}]},{"oldStart":22,"oldLines":4,"newStart":26,"newLines":35,"lines":[{"type":" ","oldLine":22,"newLine":26,"text":"    Managed,"},{"type":" ","oldLine":23,"newLine":27,"text":"    /// An active traversal stage that polls for the next block through its provider."},{"type":" ","oldLine":24,"newLine":28,"text":"    Polling,"},{"type":"+","newLine":29,"text":"}","ignored":false},{"type":"+","newLine":30,"text":"","ignored":true},{"type":"+","newLine":31,"text":"/// Updates the system config with receipts, logging each applied update and any errors,","ignored":true},{"type":"+","newLine":32,"text":"/// and setting the appropriate metrics gauges.","ignored":true},{"type":"+","newLine":33,"text":"fn update_system_config_with_receipts(","ignored":false},{"type":"+","newLine":34,"text":"    system_config: &mut SystemConfig,","ignored":false},{"type":"+","newLine":35,"text":"    receipts: &[Receipt],","ignored":false},{"type":"+","newLine":36,"text":"    l1_system_config_address: Address,","ignored":false},{"type":"+","newLine":37,"text":"    ecotone_active: bool,","ignored":false},{"type":"+","newLine":38,"text":"    block_number: u64,","ignored":false},{"type":"+","newLine":39,"text":") {","ignored":false},{"type":"+","newLine":40,"text":"    let (updates, errors) =","ignored":false},{"type":"+","newLine":41,"text":"        system_config.update_with_receipts(receipts, l1_system_config_address, ecotone_active);","ignored":false},{"type":"+","newLine":42,"text":"    for kind in &updates {","ignored":false},{"type":"+","newLine":43,"text":"        info!(target: \"traversal\", %kind, block_number, \"Applied system config update\");","ignored":false},{"type":"+","newLine":44,"text":"    }","ignored":false},{"type":"+","newLine":45,"text":"    if !updates.is_empty() {","ignored":false},{"type":"+","newLine":46,"text":"        kona_macros::set!(","ignored":false},{"type":"+","newLine":47,"text":"            gauge,","ignored":false},{"type":"+","newLine":48,"text":"            crate::Metrics::PIPELINE_LATEST_SYS_CONFIG_UPDATE,","ignored":false},{"type":"+","newLine":49,"text":"            block_number as f64","ignored":false},{"type":"+","newLine":50,"text":"        );","ignored":false},{"type":"+","newLine":51,"text":"    }","ignored":false},{"type":"+","newLine":52,"text":"    for err in &errors {","ignored":false},{"type":"+","newLine":53,"text":"        warn!(target: \"traversal\", ?err, \"Malformed system config update at block {block_number} (skipped)\");","ignored":false},{"type":"+","newLine":54,"text":"        kona_macros::set!(","ignored":false},{"type":"+","newLine":55,"text":"            gauge,","ignored":false},{"type":"+","newLine":56,"text":"            crate::Metrics::PIPELINE_SYS_CONFIG_UPDATE_ERROR,","ignored":false},{"type":"+","newLine":57,"text":"            block_number as f64","ignored":false},{"type":"+","newLine":58,"text":"        );","ignored":false},{"type":"+","newLine":59,"text":"    }","ignored":false},{"type":" ","oldLine":25,"newLine":60,"text":"}"}]}]},"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "4f409c6893b425c3d5dc4f3c134318a069df3a7a82609baa402d7e3f7651c08e",
+  "name": "mod.rs",
+  "kind": "program",
+  "lines": 60,
+  "source": "//! Contains various traversal stages for kona's derivation pipeline.\n//!\n//! The traversal stage sits at the bottom of the pipeline, and is responsible for\n//! providing the next block to the next stage in the pipeline.\n//!\n//! ## Types\n//!\n//! - [`IndexedTraversal`]: A passive traversal stage that receives the next block through a signal.\n//! - [`PollingTraversal`]: An active traversal stage that polls for the next block through its\n//!   provider.\n\nuse alloy_consensus::Receipt;\nuse alloy_primitives::Address;\nuse kona_genesis::SystemConfig;\n\nmod indexed;\npub use indexed::IndexedTraversal;\n\nmod polling;\npub use polling::PollingTraversal;\n\n/// The type of traversal stage used in the derivation pipeline.\n#[derive(Debug, Clone)]\npub enum TraversalStage {\n    /// A passive traversal stage that receives the next block through a signal.\n    Managed,\n    /// An active traversal stage that polls for the next block through its provider.\n    Polling,\n}\n\n/// Updates the system config with receipts, logging each applied update and any errors,\n/// and setting the appropriate metrics gauges.\nfn update_system_config_with_receipts(\n    system_config: &mut SystemConfig,\n    receipts: &[Receipt],\n    l1_system_config_address: Address,\n    ecotone_active: bool,\n    block_number: u64,\n) {\n    let (updates, errors) =\n        system_config.update_with_receipts(receipts, l1_system_config_address, ecotone_active);\n    for kind in &updates {\n        info!(target: \"traversal\", %kind, block_number, \"Applied system config update\");\n    }\n    if !updates.is_empty() {\n        kona_macros::set!(\n            gauge,\n            crate::Metrics::PIPELINE_LATEST_SYS_CONFIG_UPDATE,\n            block_number as f64\n        );\n    }\n    for err in &errors {\n        warn!(target: \"traversal\", ?err, \"Malformed system config update at block {block_number} (skipped)\");\n        kona_macros::set!(\n            gauge,\n            crate::Metrics::PIPELINE_SYS_CONFIG_UPDATE_ERROR,\n            block_number as f64\n        );\n    }\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "differs",
+      "coveredLines": 29,
+      "match": {
+        "origin": "own",
+        "collection": "optimism",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "mod.rs",
+        "similarity": 0.367,
+        "reportId": "optimism/cantina-kona-2026-03",
+        "repository": "op-rs/kona",
+        "path": "crates/protocol/derive/src/stages/traversal/mod.rs",
+        "commit": "86910c9112437bbb849eca28961f813c5450e103",
+        "commitTimestamp": "2025-12-15T17:17:05Z",
+        "url": "https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/crates/protocol/derive/src/stages/traversal/mod.rs",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). kona-derive derivation pipeline (stages, sources, traversal, attributes). Medium findings 3.3.1 and 3.3.2 (pipeline/core.rs, stages/l1_retrieval.rs) and numerous Low/Informational findings located here; no Critical/High.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 31,
+        "removed": 0,
+        "ignoredAdded": 4,
+        "ignoredRemoved": 0,
+        "unchanged": 29,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 9,
+            "oldLines": 6,
+            "newStart": 9,
+            "newLines": 10,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 9,
+                "text": "//! - [`PollingTraversal`]: An active traversal stage that polls for the next block through its"
+              },
+              {
+                "type": " ",
+                "oldLine": 10,
+                "newLine": 10,
+                "text": "//!   provider."
+              },
+              { "type": " ", "oldLine": 11, "newLine": 11, "text": "" },
+              {
+                "type": "+",
+                "newLine": 12,
+                "text": "use alloy_consensus::Receipt;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 13,
+                "text": "use alloy_primitives::Address;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 14,
+                "text": "use kona_genesis::SystemConfig;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 15, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 12,
+                "newLine": 16,
+                "text": "mod indexed;"
+              },
+              {
+                "type": " ",
+                "oldLine": 13,
+                "newLine": 17,
+                "text": "pub use indexed::IndexedTraversal;"
+              },
+              { "type": " ", "oldLine": 14, "newLine": 18, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 22,
+            "oldLines": 4,
+            "newStart": 26,
+            "newLines": 35,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 26,
+                "text": "    Managed,"
+              },
+              {
+                "type": " ",
+                "oldLine": 23,
+                "newLine": 27,
+                "text": "    /// An active traversal stage that polls for the next block through its provider."
+              },
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 28,
+                "text": "    Polling,"
+              },
+              { "type": "+", "newLine": 29, "text": "}", "ignored": false },
+              { "type": "+", "newLine": 30, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 31,
+                "text": "/// Updates the system config with receipts, logging each applied update and any errors,",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 32,
+                "text": "/// and setting the appropriate metrics gauges.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 33,
+                "text": "fn update_system_config_with_receipts(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 34,
+                "text": "    system_config: &mut SystemConfig,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 35,
+                "text": "    receipts: &[Receipt],",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 36,
+                "text": "    l1_system_config_address: Address,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 37,
+                "text": "    ecotone_active: bool,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 38,
+                "text": "    block_number: u64,",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 39, "text": ") {", "ignored": false },
+              {
+                "type": "+",
+                "newLine": 40,
+                "text": "    let (updates, errors) =",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 41,
+                "text": "        system_config.update_with_receipts(receipts, l1_system_config_address, ecotone_active);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 42,
+                "text": "    for kind in &updates {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 43,
+                "text": "        info!(target: \"traversal\", %kind, block_number, \"Applied system config update\");",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 44, "text": "    }", "ignored": false },
+              {
+                "type": "+",
+                "newLine": 45,
+                "text": "    if !updates.is_empty() {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 46,
+                "text": "        kona_macros::set!(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 47,
+                "text": "            gauge,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 48,
+                "text": "            crate::Metrics::PIPELINE_LATEST_SYS_CONFIG_UPDATE,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 49,
+                "text": "            block_number as f64",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 50,
+                "text": "        );",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 51, "text": "    }", "ignored": false },
+              {
+                "type": "+",
+                "newLine": 52,
+                "text": "    for err in &errors {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 53,
+                "text": "        warn!(target: \"traversal\", ?err, \"Malformed system config update at block {block_number} (skipped)\");",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 54,
+                "text": "        kona_macros::set!(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 55,
+                "text": "            gauge,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 56,
+                "text": "            crate::Metrics::PIPELINE_SYS_CONFIG_UPDATE_ERROR,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 57,
+                "text": "            block_number as f64",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 58,
+                "text": "        );",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 59, "text": "    }", "ignored": false },
+              { "type": " ", "oldLine": 25, "newLine": 60, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

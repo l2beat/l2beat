@@ -1,1 +1,15 @@
-{"schemaVersion":2,"unitHash":"8ed804dc2bafdac5249a7e3a0969868008d5ccc57bbc5e246f6879cf134cabfe","name":"changelog.sh","kind":"program","lines":12,"source":"#!/usr/bin/env bash\nset -e -o pipefail\n\nroot=$(dirname \"$(dirname \"$0\")\")\ncmd=(git cliff --workdir \"$root\" --output \"$root/CHANGELOG.md\" \"$@\")\n\nif [ \"$DRY_RUN\" = \"true\" ]; then\n    echo \"skipping due to dry run: ${cmd[*]}\" >&2\n    exit 0\nelse\n    \"${cmd[@]}\"\nfi","resolutions":{"9fa846564f4071bd":{"status":"unaudited","coveredLines":0,"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "8ed804dc2bafdac5249a7e3a0969868008d5ccc57bbc5e246f6879cf134cabfe",
+  "name": "changelog.sh",
+  "kind": "program",
+  "lines": 12,
+  "source": "#!/usr/bin/env bash\nset -e -o pipefail\n\nroot=$(dirname \"$(dirname \"$0\")\")\ncmd=(git cliff --workdir \"$root\" --output \"$root/CHANGELOG.md\" \"$@\")\n\nif [ \"$DRY_RUN\" = \"true\" ]; then\n    echo \"skipping due to dry run: ${cmd[*]}\" >&2\n    exit 0\nelse\n    \"${cmd[@]}\"\nfi",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

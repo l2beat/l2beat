@@ -1,1 +1,37 @@
-{"schemaVersion":2,"unitHash":"2084afacabecc91ebcdf277ca3919c864b8751865abb493f0bf7283919b3bc37","name":"CHANGELOG.md","kind":"program","lines":65,"source":"# Changelog\n\nAll notable changes to this project will be documented in this file.\n\nThe format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),\nand this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).\n\n## [Unreleased]\n\n## [0.2.3](https://github.com/op-rs/kona/compare/kona-driver-v0.2.2...kona-driver-v0.2.3) - 2025-01-16\n\n### Added\n\n- *(client)* Interop binary (#903)\n\n### Other\n\n- Update Maili Deps (#908)\n\n## [0.2.2](https://github.com/op-rs/kona/compare/kona-driver-v0.2.1...kona-driver-v0.2.2) - 2025-01-13\n\n### Other\n\n- Move temporary error logs to lower level than WARN ([#897](https://github.com/op-rs/kona/pull/897))\n- *(deps)* Replace dep `alloy-rs/op-alloy-protocol`->`op-rs/maili-protocol` (#890)\n\n## [0.2.1](https://github.com/op-rs/kona/compare/kona-driver-v0.2.0...kona-driver-v0.2.1) - 2025-01-07\n\n### Fixed\n\n- op-rs rename (#883)\n\n## [0.2.0](https://github.com/op-rs/kona/compare/kona-driver-v0.1.0...kona-driver-v0.2.0) - 2024-12-03\n\n### Added\n\n- *(driver)* wait for engine ([#851](https://github.com/op-rs/kona/pull/851))\n- *(driver)* refines the executor interface for the driver ([#850](https://github.com/op-rs/kona/pull/850))\n\n### Fixed\n\n- bump ([#865](https://github.com/op-rs/kona/pull/865))\n\n### Other\n\n- *(driver)* advance with optional target ([#848](https://github.com/op-rs/kona/pull/848))\n- *(driver)* visibility ([#834](https://github.com/op-rs/kona/pull/834))\n\n## [0.0.1](https://github.com/op-rs/kona/compare/kona-driver-v0.0.0...kona-driver-v0.0.1) - 2024-11-20\n\n### Added\n\n- *(driver,client)* Pipeline Cursor Refactor ([#798](https://github.com/op-rs/kona/pull/798))\n- *(driver)* Abstract, Default Pipeline ([#796](https://github.com/op-rs/kona/pull/796))\n\n### Fixed\n\n- imports ([#829](https://github.com/op-rs/kona/pull/829))\n- *(client)* SyncStart Refactor ([#797](https://github.com/op-rs/kona/pull/797))\n\n### Other\n\n- *(driver)* use tracing macros ([#823](https://github.com/op-rs/kona/pull/823))\n- *(driver)* use tracing macros ([#822](https://github.com/op-rs/kona/pull/822))\n- *(workspace)* Migrate back to `thiserror` v2 ([#811](https://github.com/op-rs/kona/pull/811))","resolutions":{"9fa846564f4071bd":{"status":"identical","coveredLines":65,"match":{"origin":"own","collection":"optimism","relation":{"type":"own"},"rank":0,"matchedBy":"identity","auditedName":"CHANGELOG.md","similarity":1,"reportId":"optimism/cantina-kona-2026-03","repository":"op-rs/kona","path":"crates/proof/driver/CHANGELOG.md","commit":"86910c9112437bbb849eca28961f813c5450e103","commitTimestamp":"2025-12-15T17:17:05Z","url":"https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/crates/proof/driver/CHANGELOG.md","auditStatus":"audited_with_no_major_findings","reviewPhase":"initial audit","coverage":"Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). Proof driver, cursor and pipeline; Low findings 3.4.10, 3.4.11, 3.4.19 and Informational 3.5.10 located here.","majorFindings":0,"isLatestVersion":true,"laterAuditedVersionExists":false,"totalVersions":1},"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "2084afacabecc91ebcdf277ca3919c864b8751865abb493f0bf7283919b3bc37",
+  "name": "CHANGELOG.md",
+  "kind": "program",
+  "lines": 65,
+  "source": "# Changelog\n\nAll notable changes to this project will be documented in this file.\n\nThe format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),\nand this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).\n\n## [Unreleased]\n\n## [0.2.3](https://github.com/op-rs/kona/compare/kona-driver-v0.2.2...kona-driver-v0.2.3) - 2025-01-16\n\n### Added\n\n- *(client)* Interop binary (#903)\n\n### Other\n\n- Update Maili Deps (#908)\n\n## [0.2.2](https://github.com/op-rs/kona/compare/kona-driver-v0.2.1...kona-driver-v0.2.2) - 2025-01-13\n\n### Other\n\n- Move temporary error logs to lower level than WARN ([#897](https://github.com/op-rs/kona/pull/897))\n- *(deps)* Replace dep `alloy-rs/op-alloy-protocol`->`op-rs/maili-protocol` (#890)\n\n## [0.2.1](https://github.com/op-rs/kona/compare/kona-driver-v0.2.0...kona-driver-v0.2.1) - 2025-01-07\n\n### Fixed\n\n- op-rs rename (#883)\n\n## [0.2.0](https://github.com/op-rs/kona/compare/kona-driver-v0.1.0...kona-driver-v0.2.0) - 2024-12-03\n\n### Added\n\n- *(driver)* wait for engine ([#851](https://github.com/op-rs/kona/pull/851))\n- *(driver)* refines the executor interface for the driver ([#850](https://github.com/op-rs/kona/pull/850))\n\n### Fixed\n\n- bump ([#865](https://github.com/op-rs/kona/pull/865))\n\n### Other\n\n- *(driver)* advance with optional target ([#848](https://github.com/op-rs/kona/pull/848))\n- *(driver)* visibility ([#834](https://github.com/op-rs/kona/pull/834))\n\n## [0.0.1](https://github.com/op-rs/kona/compare/kona-driver-v0.0.0...kona-driver-v0.0.1) - 2024-11-20\n\n### Added\n\n- *(driver,client)* Pipeline Cursor Refactor ([#798](https://github.com/op-rs/kona/pull/798))\n- *(driver)* Abstract, Default Pipeline ([#796](https://github.com/op-rs/kona/pull/796))\n\n### Fixed\n\n- imports ([#829](https://github.com/op-rs/kona/pull/829))\n- *(client)* SyncStart Refactor ([#797](https://github.com/op-rs/kona/pull/797))\n\n### Other\n\n- *(driver)* use tracing macros ([#823](https://github.com/op-rs/kona/pull/823))\n- *(driver)* use tracing macros ([#822](https://github.com/op-rs/kona/pull/822))\n- *(workspace)* Migrate back to `thiserror` v2 ([#811](https://github.com/op-rs/kona/pull/811))",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "identical",
+      "coveredLines": 65,
+      "match": {
+        "origin": "own",
+        "collection": "optimism",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "CHANGELOG.md",
+        "similarity": 1,
+        "reportId": "optimism/cantina-kona-2026-03",
+        "repository": "op-rs/kona",
+        "path": "crates/proof/driver/CHANGELOG.md",
+        "commit": "86910c9112437bbb849eca28961f813c5450e103",
+        "commitTimestamp": "2025-12-15T17:17:05Z",
+        "url": "https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/crates/proof/driver/CHANGELOG.md",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). Proof driver, cursor and pipeline; Low findings 3.4.10, 3.4.11, 3.4.19 and Informational 3.5.10 located here.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "warnings": []
+    }
+  }
+}

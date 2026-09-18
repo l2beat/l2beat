@@ -1,1 +1,37 @@
-{"schemaVersion":2,"unitHash":"45470ef048adf9bf1651bd0bd96f3ac6716738e49431c04f757f2961a675ebd9","name":"mod.rs","kind":"program","lines":39,"source":"//! This module contains each stage of the derivation pipeline.\n//!\n//! It offers a high-level API to functionally apply each stage's output as an input to the next\n//! stage, until finally arriving at the produced execution payloads.\n//!\n//! **Stages:**\n//!\n//! 1. L1 Traversal\n//! 2. L1 Retrieval\n//! 3. Frame Queue\n//! 4. Channel Provider\n//! 5. Channel Reader (Batch Decoding)\n//! 6. Batch Stream (Introduced in the Holocene Hardfork)\n//! 7. Batch Queue\n//! 8. Payload Attributes Derivation\n//! 9. (Omitted) Engine Queue\n\nmod traversal;\npub use traversal::{IndexedTraversal, PollingTraversal, TraversalStage};\n\nmod l1_retrieval;\npub use l1_retrieval::{L1Retrieval, L1RetrievalProvider};\n\nmod frame_queue;\npub use frame_queue::{FrameQueue, FrameQueueProvider};\n\nmod channel;\npub use channel::{\n    ChannelAssembler, ChannelBank, ChannelProvider, ChannelReader, ChannelReaderProvider,\n    NextFrameProvider,\n};\n\nmod batch;\npub use batch::{\n    BatchProvider, BatchQueue, BatchStream, BatchStreamProvider, BatchValidator, NextBatchProvider,\n};\n\nmod attributes_queue;\npub use attributes_queue::AttributesQueue;","resolutions":{"9fa846564f4071bd":{"status":"identical","coveredLines":39,"match":{"origin":"own","collection":"optimism","relation":{"type":"own"},"rank":0,"matchedBy":"identity","auditedName":"mod.rs","similarity":1,"reportId":"optimism/cantina-kona-2026-03","repository":"op-rs/kona","path":"crates/protocol/derive/src/stages/mod.rs","commit":"86910c9112437bbb849eca28961f813c5450e103","commitTimestamp":"2025-12-15T17:17:05Z","url":"https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/crates/protocol/derive/src/stages/mod.rs","auditStatus":"audited_with_no_major_findings","reviewPhase":"initial audit","coverage":"Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). kona-derive derivation pipeline (stages, sources, traversal, attributes). Medium findings 3.3.1 and 3.3.2 (pipeline/core.rs, stages/l1_retrieval.rs) and numerous Low/Informational findings located here; no Critical/High.","majorFindings":0,"isLatestVersion":true,"laterAuditedVersionExists":false,"totalVersions":1},"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "45470ef048adf9bf1651bd0bd96f3ac6716738e49431c04f757f2961a675ebd9",
+  "name": "mod.rs",
+  "kind": "program",
+  "lines": 39,
+  "source": "//! This module contains each stage of the derivation pipeline.\n//!\n//! It offers a high-level API to functionally apply each stage's output as an input to the next\n//! stage, until finally arriving at the produced execution payloads.\n//!\n//! **Stages:**\n//!\n//! 1. L1 Traversal\n//! 2. L1 Retrieval\n//! 3. Frame Queue\n//! 4. Channel Provider\n//! 5. Channel Reader (Batch Decoding)\n//! 6. Batch Stream (Introduced in the Holocene Hardfork)\n//! 7. Batch Queue\n//! 8. Payload Attributes Derivation\n//! 9. (Omitted) Engine Queue\n\nmod traversal;\npub use traversal::{IndexedTraversal, PollingTraversal, TraversalStage};\n\nmod l1_retrieval;\npub use l1_retrieval::{L1Retrieval, L1RetrievalProvider};\n\nmod frame_queue;\npub use frame_queue::{FrameQueue, FrameQueueProvider};\n\nmod channel;\npub use channel::{\n    ChannelAssembler, ChannelBank, ChannelProvider, ChannelReader, ChannelReaderProvider,\n    NextFrameProvider,\n};\n\nmod batch;\npub use batch::{\n    BatchProvider, BatchQueue, BatchStream, BatchStreamProvider, BatchValidator, NextBatchProvider,\n};\n\nmod attributes_queue;\npub use attributes_queue::AttributesQueue;",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "identical",
+      "coveredLines": 39,
+      "match": {
+        "origin": "own",
+        "collection": "optimism",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "mod.rs",
+        "similarity": 1,
+        "reportId": "optimism/cantina-kona-2026-03",
+        "repository": "op-rs/kona",
+        "path": "crates/protocol/derive/src/stages/mod.rs",
+        "commit": "86910c9112437bbb849eca28961f813c5450e103",
+        "commitTimestamp": "2025-12-15T17:17:05Z",
+        "url": "https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/crates/protocol/derive/src/stages/mod.rs",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). kona-derive derivation pipeline (stages, sources, traversal, attributes). Medium findings 3.3.1 and 3.3.2 (pipeline/core.rs, stages/l1_retrieval.rs) and numerous Low/Informational findings located here; no Critical/High.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "warnings": []
+    }
+  }
+}

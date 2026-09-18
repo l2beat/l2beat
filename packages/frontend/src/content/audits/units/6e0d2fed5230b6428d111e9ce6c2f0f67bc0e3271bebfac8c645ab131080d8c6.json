@@ -1,1 +1,744 @@
-{"schemaVersion":2,"unitHash":"6e0d2fed5230b6428d111e9ce6c2f0f67bc0e3271bebfac8c645ab131080d8c6","name":"kzg_point_eval.rs","kind":"program","lines":134,"source":"//! Contains the accelerated version of the KZG point evaluation precompile.\n\nuse crate::fpvm_evm::precompiles::utils::precompile_run;\nuse alloc::string::ToString;\nuse alloy_primitives::Address;\nuse kona_preimage::{HintWriterClient, PreimageOracleClient};\nuse revm::precompile::{EthPrecompileOutput, EthPrecompileResult, PrecompileHalt};\n\n/// Address of the KZG point evaluation precompile.\npub(crate) const KZG_POINT_EVAL_ADDR: Address = revm::precompile::u64_to_address(0x0A);\n\n/// Runs the FPVM-accelerated `kzgPointEval` precompile call.\npub(crate) fn fpvm_kzg_point_eval<H, O>(\n    input: &[u8],\n    gas_limit: u64,\n    hint_writer: &H,\n    oracle_reader: &O,\n) -> EthPrecompileResult\nwhere\n    H: HintWriterClient + Send + Sync,\n    O: PreimageOracleClient + Send + Sync,\n{\n    const GAS_COST: u64 = 50_000;\n    /// Oracle/L1 staticcall gas required by [EIP-7904](https://eips.ethereum.org/EIPS/eip-7904).\n    const KZG_ORACLE_GAS: u64 = 89_363;\n\n    if gas_limit < GAS_COST {\n        return Err(PrecompileHalt::OutOfGas);\n    }\n\n    if input.len() != 192 {\n        return Err(PrecompileHalt::BlobInvalidInputLength);\n    }\n\n    let result_data = kona_proof::block_on(precompile_run! {\n        hint_writer,\n        oracle_reader,\n        &[KZG_POINT_EVAL_ADDR.as_slice(), &KZG_ORACLE_GAS.to_be_bytes(), input]\n    })\n    .map_err(|e| PrecompileHalt::Other(e.to_string().into()))?;\n\n    Ok(EthPrecompileOutput::new(GAS_COST, result_data.into()))\n}\n\n#[cfg(test)]\nmod test {\n    use super::*;\n    use crate::fpvm_evm::precompiles::test_utils::{\n        execute_native_precompile, test_accelerated_precompile,\n        test_accelerated_precompile_capture_hint,\n    };\n    use alloy_eips::eip4844::VERSIONED_HASH_VERSION_KZG;\n    use alloy_primitives::hex;\n    use sha2::{Digest, Sha256};\n\n    fn valid_kzg_input() -> Vec<u8> {\n        let commitment = hex!(\"8f59a8d2a1a625a17f3fea0fe5eb8c896db3764f3185481bc22f91b4aaffcca25f26936857bc3a7c2539ea8ec3a952b7\").to_vec();\n        let mut versioned_hash = Sha256::digest(&commitment).to_vec();\n        versioned_hash[0] = VERSIONED_HASH_VERSION_KZG;\n        let z = hex!(\"73eda753299d7d483339d80809a1d80553bda402fffe5bfeffffffff00000000\").to_vec();\n        let y = hex!(\"1522a4a7f34e1ea350ae07c29c96c7e79655aa926122e95fe69fcbd932ca49e9\").to_vec();\n        let proof = hex!(\"a62ad71d14c5719385c0686f1871430475bf3a00f0aa3f7b8dd99a9abc2160744faf0070725e00b60ad9a026a15b1a8c\").to_vec();\n        [versioned_hash, z, y, commitment, proof].concat()\n    }\n\n    #[tokio::test(flavor = \"multi_thread\")]\n    async fn test_accelerated_kzg_point_eval() {\n        test_accelerated_precompile(|hint_writer, oracle_reader| {\n            let input = valid_kzg_input();\n\n            let expected_result = hex!(\"000000000000000000000000000000000000000000000000000000000000100073eda753299d7d483339d80809a1d80553bda402fffe5bfeffffffff00000001\");\n\n            let accelerated_result = fpvm_kzg_point_eval(&input, u64::MAX, hint_writer, oracle_reader).unwrap();\n            let native_result = execute_native_precompile(KZG_POINT_EVAL_ADDR, input, u64::MAX).unwrap();\n\n            assert_eq!(accelerated_result.bytes.as_ref(), expected_result.as_ref());\n            assert_eq!(accelerated_result.bytes, native_result.bytes);\n            assert_eq!(accelerated_result.gas_used, native_result.gas_used);\n        })\n        .await;\n    }\n\n    #[tokio::test(flavor = \"multi_thread\")]\n    async fn test_accelerated_kzg_point_eval_oracle_gas_carries_l1_cost() {\n        let recorded_gas_used: std::sync::Arc<std::sync::Mutex<Option<u64>>> =\n            std::sync::Arc::new(std::sync::Mutex::new(None));\n        let recorded_gas_used_in = recorded_gas_used.clone();\n\n        let captured =\n            test_accelerated_precompile_capture_hint(move |hint_writer, oracle_reader| {\n                let input = valid_kzg_input();\n                let result =\n                    fpvm_kzg_point_eval(&input, u64::MAX, hint_writer, oracle_reader).unwrap();\n                *recorded_gas_used_in.lock().unwrap() = Some(result.gas_used);\n            })\n            .await;\n\n        // Oracle hint must carry the current L1 KZG cost (EIP-7904: 89_363).\n        assert_eq!(captured.oracle_gas(), 89_363);\n        // L2 charge must remain unchanged (Cancun KZG = 50_000).\n        assert_eq!(recorded_gas_used.lock().unwrap().unwrap(), 50_000);\n    }\n\n    #[tokio::test(flavor = \"multi_thread\")]\n    async fn test_accelerated_kzg_point_eval_at_l2_gas_boundary() {\n        // OOG guard is `<` not `<=`, so gas_limit == GAS_COST must succeed.\n        test_accelerated_precompile(|hint_writer, oracle_reader| {\n            let input = valid_kzg_input();\n            let result = fpvm_kzg_point_eval(&input, 50_000, hint_writer, oracle_reader);\n            assert!(result.is_ok(), \"expected Ok at gas_limit == GAS_COST, got {result:?}\");\n        })\n        .await;\n    }\n\n    #[tokio::test(flavor = \"multi_thread\")]\n    async fn test_accelerated_kzg_point_eval_out_of_gas() {\n        test_accelerated_precompile(|hint_writer, oracle_reader| {\n            let accelerated_result =\n                fpvm_kzg_point_eval(&[], 0, hint_writer, oracle_reader).unwrap_err();\n            assert!(matches!(accelerated_result, PrecompileHalt::OutOfGas));\n        })\n        .await;\n    }\n\n    #[tokio::test(flavor = \"multi_thread\")]\n    async fn test_accelerated_kzg_point_eval_bad_input_size() {\n        test_accelerated_precompile(|hint_writer, oracle_reader| {\n            let accelerated_result =\n                fpvm_kzg_point_eval(&[], u64::MAX, hint_writer, oracle_reader).unwrap_err();\n            assert!(matches!(accelerated_result, PrecompileHalt::BlobInvalidInputLength));\n        })\n        .await;\n    }\n}","resolutions":{"9fa846564f4071bd":{"status":"differs","coveredLines":94,"match":{"origin":"own","collection":"optimism","relation":{"type":"own"},"rank":0,"matchedBy":"name","auditedName":"kzg_point_eval.rs","similarity":0.699,"reportId":"optimism/cantina-kona-2026-03","repository":"op-rs/kona","path":"bin/client/src/fpvm_evm/precompiles/kzg_point_eval.rs","commit":"86910c9112437bbb849eca28961f813c5450e103","commitTimestamp":"2025-12-15T17:17:05Z","url":"https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/bin/client/src/fpvm_evm/precompiles/kzg_point_eval.rs","auditStatus":"audited_with_no_major_findings","reviewPhase":"initial audit","coverage":"Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). FPVM EVM factory and accelerated precompiles; finding 3.4.32 (Low) located in precompiles/provider.rs.","majorFindings":0,"isLatestVersion":true,"laterAuditedVersionExists":false,"totalVersions":1},"diff":{"added":40,"removed":10,"ignoredAdded":15,"ignoredRemoved":7,"unchanged":94,"ignoredOnly":false,"hunks":[{"oldStart":4,"oldLines":7,"newStart":4,"newLines":7,"lines":[{"type":" ","oldLine":4,"newLine":4,"text":"use alloc::string::ToString;"},{"type":" ","oldLine":5,"newLine":5,"text":"use alloy_primitives::Address;"},{"type":" ","oldLine":6,"newLine":6,"text":"use kona_preimage::{HintWriterClient, PreimageOracleClient};"},{"type":"-","oldLine":7,"text":"use revm::precompile::{PrecompileError, PrecompileOutput, PrecompileResult};","ignored":false},{"type":"+","newLine":7,"text":"use revm::precompile::{EthPrecompileOutput, EthPrecompileResult, PrecompileHalt};","ignored":false},{"type":" ","oldLine":8,"newLine":8,"text":""},{"type":" ","oldLine":9,"newLine":9,"text":"/// Address of the KZG point evaluation precompile."},{"type":" ","oldLine":10,"newLine":10,"text":"pub(crate) const KZG_POINT_EVAL_ADDR: Address = revm::precompile::u64_to_address(0x0A);"}]},{"oldStart":15,"oldLines":29,"newStart":15,"newLines":31,"lines":[{"type":" ","oldLine":15,"newLine":15,"text":"    gas_limit: u64,"},{"type":" ","oldLine":16,"newLine":16,"text":"    hint_writer: &H,"},{"type":" ","oldLine":17,"newLine":17,"text":"    oracle_reader: &O,"},{"type":"-","oldLine":18,"text":") -> PrecompileResult","ignored":false},{"type":"+","newLine":18,"text":") -> EthPrecompileResult","ignored":false},{"type":" ","oldLine":19,"newLine":19,"text":"where"},{"type":" ","oldLine":20,"newLine":20,"text":"    H: HintWriterClient + Send + Sync,"},{"type":" ","oldLine":21,"newLine":21,"text":"    O: PreimageOracleClient + Send + Sync,"},{"type":" ","oldLine":22,"newLine":22,"text":"{"},{"type":" ","oldLine":23,"newLine":23,"text":"    const GAS_COST: u64 = 50_000;"},{"type":"+","newLine":24,"text":"    /// Oracle/L1 staticcall gas required by [EIP-7904](https://eips.ethereum.org/EIPS/eip-7904).","ignored":true},{"type":"+","newLine":25,"text":"    const KZG_ORACLE_GAS: u64 = 89_363;","ignored":false},{"type":" ","oldLine":24,"newLine":26,"text":""},{"type":" ","oldLine":25,"newLine":27,"text":"    if gas_limit < GAS_COST {"},{"type":"-","oldLine":26,"text":"        return Err(PrecompileError::OutOfGas);","ignored":false},{"type":"+","newLine":28,"text":"        return Err(PrecompileHalt::OutOfGas);","ignored":false},{"type":" ","oldLine":27,"newLine":29,"text":"    }"},{"type":" ","oldLine":28,"newLine":30,"text":""},{"type":" ","oldLine":29,"newLine":31,"text":"    if input.len() != 192 {"},{"type":"-","oldLine":30,"text":"        return Err(PrecompileError::BlobInvalidInputLength);","ignored":false},{"type":"+","newLine":32,"text":"        return Err(PrecompileHalt::BlobInvalidInputLength);","ignored":false},{"type":" ","oldLine":31,"newLine":33,"text":"    }"},{"type":" ","oldLine":32,"newLine":34,"text":""},{"type":" ","oldLine":33,"newLine":35,"text":"    let result_data = kona_proof::block_on(precompile_run! {"},{"type":" ","oldLine":34,"newLine":36,"text":"        hint_writer,"},{"type":" ","oldLine":35,"newLine":37,"text":"        oracle_reader,"},{"type":"-","oldLine":36,"text":"        &[KZG_POINT_EVAL_ADDR.as_slice(), &GAS_COST.to_be_bytes(), input]","ignored":false},{"type":"+","newLine":38,"text":"        &[KZG_POINT_EVAL_ADDR.as_slice(), &KZG_ORACLE_GAS.to_be_bytes(), input]","ignored":false},{"type":" ","oldLine":37,"newLine":39,"text":"    })"},{"type":"-","oldLine":38,"text":"    .map_err(|e| PrecompileError::Other(e.to_string().into()))?;","ignored":false},{"type":"+","newLine":40,"text":"    .map_err(|e| PrecompileHalt::Other(e.to_string().into()))?;","ignored":false},{"type":" ","oldLine":39,"newLine":41,"text":""},{"type":"-","oldLine":40,"text":"    Ok(PrecompileOutput::new(GAS_COST, result_data.into()))","ignored":false},{"type":"+","newLine":42,"text":"    Ok(EthPrecompileOutput::new(GAS_COST, result_data.into()))","ignored":false},{"type":" ","oldLine":41,"newLine":43,"text":"}"},{"type":" ","oldLine":42,"newLine":44,"text":""},{"type":" ","oldLine":43,"newLine":45,"text":"#[cfg(test)]"}]},{"oldStart":45,"oldLines":23,"newStart":47,"newLines":27,"lines":[{"type":" ","oldLine":45,"newLine":47,"text":"    use super::*;"},{"type":" ","oldLine":46,"newLine":48,"text":"    use crate::fpvm_evm::precompiles::test_utils::{"},{"type":" ","oldLine":47,"newLine":49,"text":"        execute_native_precompile, test_accelerated_precompile,"},{"type":"+","newLine":50,"text":"        test_accelerated_precompile_capture_hint,","ignored":false},{"type":" ","oldLine":48,"newLine":51,"text":"    };"},{"type":" ","oldLine":49,"newLine":52,"text":"    use alloy_eips::eip4844::VERSIONED_HASH_VERSION_KZG;"},{"type":" ","oldLine":50,"newLine":53,"text":"    use alloy_primitives::hex;"},{"type":" ","oldLine":51,"newLine":54,"text":"    use sha2::{Digest, Sha256};"},{"type":" ","oldLine":52,"newLine":55,"text":""},{"type":"+","newLine":56,"text":"    fn valid_kzg_input() -> Vec<u8> {","ignored":false},{"type":"+","newLine":57,"text":"        let commitment = hex!(\"8f59a8d2a1a625a17f3fea0fe5eb8c896db3764f3185481bc22f91b4aaffcca25f26936857bc3a7c2539ea8ec3a952b7\").to_vec();","ignored":true},{"type":"+","newLine":58,"text":"        let mut versioned_hash = Sha256::digest(&commitment).to_vec();","ignored":true},{"type":"+","newLine":59,"text":"        versioned_hash[0] = VERSIONED_HASH_VERSION_KZG;","ignored":true},{"type":"+","newLine":60,"text":"        let z = hex!(\"73eda753299d7d483339d80809a1d80553bda402fffe5bfeffffffff00000000\").to_vec();","ignored":true},{"type":"+","newLine":61,"text":"        let y = hex!(\"1522a4a7f34e1ea350ae07c29c96c7e79655aa926122e95fe69fcbd932ca49e9\").to_vec();","ignored":true},{"type":"+","newLine":62,"text":"        let proof = hex!(\"a62ad71d14c5719385c0686f1871430475bf3a00f0aa3f7b8dd99a9abc2160744faf0070725e00b60ad9a026a15b1a8c\").to_vec();","ignored":true},{"type":"+","newLine":63,"text":"        [versioned_hash, z, y, commitment, proof].concat()","ignored":false},{"type":"+","newLine":64,"text":"    }","ignored":false},{"type":"+","newLine":65,"text":"","ignored":true},{"type":" ","oldLine":53,"newLine":66,"text":"    #[tokio::test(flavor = \"multi_thread\")]"},{"type":" ","oldLine":54,"newLine":67,"text":"    async fn test_accelerated_kzg_point_eval() {"},{"type":" ","oldLine":55,"newLine":68,"text":"        test_accelerated_precompile(|hint_writer, oracle_reader| {"},{"type":"-","oldLine":56,"text":"            let commitment = hex!(\"8f59a8d2a1a625a17f3fea0fe5eb8c896db3764f3185481bc22f91b4aaffcca25f26936857bc3a7c2539ea8ec3a952b7\").to_vec();","ignored":true},{"type":"-","oldLine":57,"text":"            let mut versioned_hash = Sha256::digest(&commitment).to_vec();","ignored":true},{"type":"-","oldLine":58,"text":"            versioned_hash[0] = VERSIONED_HASH_VERSION_KZG;","ignored":true},{"type":"-","oldLine":59,"text":"            let z = hex!(\"73eda753299d7d483339d80809a1d80553bda402fffe5bfeffffffff00000000\").to_vec();","ignored":true},{"type":"-","oldLine":60,"text":"            let y = hex!(\"1522a4a7f34e1ea350ae07c29c96c7e79655aa926122e95fe69fcbd932ca49e9\").to_vec();","ignored":true},{"type":"-","oldLine":61,"text":"            let proof = hex!(\"a62ad71d14c5719385c0686f1871430475bf3a00f0aa3f7b8dd99a9abc2160744faf0070725e00b60ad9a026a15b1a8c\").to_vec();","ignored":true},{"type":"+","newLine":69,"text":"            let input = valid_kzg_input();","ignored":false},{"type":" ","oldLine":62,"newLine":70,"text":""},{"type":"-","oldLine":63,"text":"            let input = [versioned_hash, z, y, commitment, proof].concat();","ignored":false},{"type":"-","oldLine":64,"text":"","ignored":true},{"type":" ","oldLine":65,"newLine":71,"text":"            let expected_result = hex!(\"000000000000000000000000000000000000000000000000000000000000100073eda753299d7d483339d80809a1d80553bda402fffe5bfeffffffff00000001\");"},{"type":" ","oldLine":66,"newLine":72,"text":""},{"type":" ","oldLine":67,"newLine":73,"text":"            let accelerated_result = fpvm_kzg_point_eval(&input, u64::MAX, hint_writer, oracle_reader).unwrap();"}]},{"oldStart":75,"oldLines":11,"newStart":81,"newLines":43,"lines":[{"type":" ","oldLine":75,"newLine":81,"text":"    }"},{"type":" ","oldLine":76,"newLine":82,"text":""},{"type":" ","oldLine":77,"newLine":83,"text":"    #[tokio::test(flavor = \"multi_thread\")]"},{"type":"+","newLine":84,"text":"    async fn test_accelerated_kzg_point_eval_oracle_gas_carries_l1_cost() {","ignored":false},{"type":"+","newLine":85,"text":"        let recorded_gas_used: std::sync::Arc<std::sync::Mutex<Option<u64>>> =","ignored":false},{"type":"+","newLine":86,"text":"            std::sync::Arc::new(std::sync::Mutex::new(None));","ignored":false},{"type":"+","newLine":87,"text":"        let recorded_gas_used_in = recorded_gas_used.clone();","ignored":false},{"type":"+","newLine":88,"text":"","ignored":true},{"type":"+","newLine":89,"text":"        let captured =","ignored":false},{"type":"+","newLine":90,"text":"            test_accelerated_precompile_capture_hint(move |hint_writer, oracle_reader| {","ignored":false},{"type":"+","newLine":91,"text":"                let input = valid_kzg_input();","ignored":false},{"type":"+","newLine":92,"text":"                let result =","ignored":false},{"type":"+","newLine":93,"text":"                    fpvm_kzg_point_eval(&input, u64::MAX, hint_writer, oracle_reader).unwrap();","ignored":false},{"type":"+","newLine":94,"text":"                *recorded_gas_used_in.lock().unwrap() = Some(result.gas_used);","ignored":false},{"type":"+","newLine":95,"text":"            })","ignored":false},{"type":"+","newLine":96,"text":"            .await;","ignored":false},{"type":"+","newLine":97,"text":"","ignored":true},{"type":"+","newLine":98,"text":"        // Oracle hint must carry the current L1 KZG cost (EIP-7904: 89_363).","ignored":true},{"type":"+","newLine":99,"text":"        assert_eq!(captured.oracle_gas(), 89_363);","ignored":false},{"type":"+","newLine":100,"text":"        // L2 charge must remain unchanged (Cancun KZG = 50_000).","ignored":true},{"type":"+","newLine":101,"text":"        assert_eq!(recorded_gas_used.lock().unwrap().unwrap(), 50_000);","ignored":false},{"type":"+","newLine":102,"text":"    }","ignored":false},{"type":"+","newLine":103,"text":"","ignored":true},{"type":"+","newLine":104,"text":"    #[tokio::test(flavor = \"multi_thread\")]","ignored":false},{"type":"+","newLine":105,"text":"    async fn test_accelerated_kzg_point_eval_at_l2_gas_boundary() {","ignored":false},{"type":"+","newLine":106,"text":"        // OOG guard is `<` not `<=`, so gas_limit == GAS_COST must succeed.","ignored":true},{"type":"+","newLine":107,"text":"        test_accelerated_precompile(|hint_writer, oracle_reader| {","ignored":false},{"type":"+","newLine":108,"text":"            let input = valid_kzg_input();","ignored":false},{"type":"+","newLine":109,"text":"            let result = fpvm_kzg_point_eval(&input, 50_000, hint_writer, oracle_reader);","ignored":false},{"type":"+","newLine":110,"text":"            assert!(result.is_ok(), \"expected Ok at gas_limit == GAS_COST, got {result:?}\");","ignored":false},{"type":"+","newLine":111,"text":"        })","ignored":false},{"type":"+","newLine":112,"text":"        .await;","ignored":false},{"type":"+","newLine":113,"text":"    }","ignored":false},{"type":"+","newLine":114,"text":"","ignored":true},{"type":"+","newLine":115,"text":"    #[tokio::test(flavor = \"multi_thread\")]","ignored":false},{"type":" ","oldLine":78,"newLine":116,"text":"    async fn test_accelerated_kzg_point_eval_out_of_gas() {"},{"type":" ","oldLine":79,"newLine":117,"text":"        test_accelerated_precompile(|hint_writer, oracle_reader| {"},{"type":" ","oldLine":80,"newLine":118,"text":"            let accelerated_result ="},{"type":" ","oldLine":81,"newLine":119,"text":"                fpvm_kzg_point_eval(&[], 0, hint_writer, oracle_reader).unwrap_err();"},{"type":"-","oldLine":82,"text":"            assert!(matches!(accelerated_result, PrecompileError::OutOfGas));","ignored":false},{"type":"+","newLine":120,"text":"            assert!(matches!(accelerated_result, PrecompileHalt::OutOfGas));","ignored":false},{"type":" ","oldLine":83,"newLine":121,"text":"        })"},{"type":" ","oldLine":84,"newLine":122,"text":"        .await;"},{"type":" ","oldLine":85,"newLine":123,"text":"    }"}]},{"oldStart":89,"oldLines":7,"newStart":127,"newLines":7,"lines":[{"type":" ","oldLine":89,"newLine":127,"text":"        test_accelerated_precompile(|hint_writer, oracle_reader| {"},{"type":" ","oldLine":90,"newLine":128,"text":"            let accelerated_result ="},{"type":" ","oldLine":91,"newLine":129,"text":"                fpvm_kzg_point_eval(&[], u64::MAX, hint_writer, oracle_reader).unwrap_err();"},{"type":"-","oldLine":92,"text":"            assert!(matches!(accelerated_result, PrecompileError::BlobInvalidInputLength));","ignored":false},{"type":"+","newLine":130,"text":"            assert!(matches!(accelerated_result, PrecompileHalt::BlobInvalidInputLength));","ignored":false},{"type":" ","oldLine":93,"newLine":131,"text":"        })"},{"type":" ","oldLine":94,"newLine":132,"text":"        .await;"},{"type":" ","oldLine":95,"newLine":133,"text":"    }"}]}]},"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "6e0d2fed5230b6428d111e9ce6c2f0f67bc0e3271bebfac8c645ab131080d8c6",
+  "name": "kzg_point_eval.rs",
+  "kind": "program",
+  "lines": 134,
+  "source": "//! Contains the accelerated version of the KZG point evaluation precompile.\n\nuse crate::fpvm_evm::precompiles::utils::precompile_run;\nuse alloc::string::ToString;\nuse alloy_primitives::Address;\nuse kona_preimage::{HintWriterClient, PreimageOracleClient};\nuse revm::precompile::{EthPrecompileOutput, EthPrecompileResult, PrecompileHalt};\n\n/// Address of the KZG point evaluation precompile.\npub(crate) const KZG_POINT_EVAL_ADDR: Address = revm::precompile::u64_to_address(0x0A);\n\n/// Runs the FPVM-accelerated `kzgPointEval` precompile call.\npub(crate) fn fpvm_kzg_point_eval<H, O>(\n    input: &[u8],\n    gas_limit: u64,\n    hint_writer: &H,\n    oracle_reader: &O,\n) -> EthPrecompileResult\nwhere\n    H: HintWriterClient + Send + Sync,\n    O: PreimageOracleClient + Send + Sync,\n{\n    const GAS_COST: u64 = 50_000;\n    /// Oracle/L1 staticcall gas required by [EIP-7904](https://eips.ethereum.org/EIPS/eip-7904).\n    const KZG_ORACLE_GAS: u64 = 89_363;\n\n    if gas_limit < GAS_COST {\n        return Err(PrecompileHalt::OutOfGas);\n    }\n\n    if input.len() != 192 {\n        return Err(PrecompileHalt::BlobInvalidInputLength);\n    }\n\n    let result_data = kona_proof::block_on(precompile_run! {\n        hint_writer,\n        oracle_reader,\n        &[KZG_POINT_EVAL_ADDR.as_slice(), &KZG_ORACLE_GAS.to_be_bytes(), input]\n    })\n    .map_err(|e| PrecompileHalt::Other(e.to_string().into()))?;\n\n    Ok(EthPrecompileOutput::new(GAS_COST, result_data.into()))\n}\n\n#[cfg(test)]\nmod test {\n    use super::*;\n    use crate::fpvm_evm::precompiles::test_utils::{\n        execute_native_precompile, test_accelerated_precompile,\n        test_accelerated_precompile_capture_hint,\n    };\n    use alloy_eips::eip4844::VERSIONED_HASH_VERSION_KZG;\n    use alloy_primitives::hex;\n    use sha2::{Digest, Sha256};\n\n    fn valid_kzg_input() -> Vec<u8> {\n        let commitment = hex!(\"8f59a8d2a1a625a17f3fea0fe5eb8c896db3764f3185481bc22f91b4aaffcca25f26936857bc3a7c2539ea8ec3a952b7\").to_vec();\n        let mut versioned_hash = Sha256::digest(&commitment).to_vec();\n        versioned_hash[0] = VERSIONED_HASH_VERSION_KZG;\n        let z = hex!(\"73eda753299d7d483339d80809a1d80553bda402fffe5bfeffffffff00000000\").to_vec();\n        let y = hex!(\"1522a4a7f34e1ea350ae07c29c96c7e79655aa926122e95fe69fcbd932ca49e9\").to_vec();\n        let proof = hex!(\"a62ad71d14c5719385c0686f1871430475bf3a00f0aa3f7b8dd99a9abc2160744faf0070725e00b60ad9a026a15b1a8c\").to_vec();\n        [versioned_hash, z, y, commitment, proof].concat()\n    }\n\n    #[tokio::test(flavor = \"multi_thread\")]\n    async fn test_accelerated_kzg_point_eval() {\n        test_accelerated_precompile(|hint_writer, oracle_reader| {\n            let input = valid_kzg_input();\n\n            let expected_result = hex!(\"000000000000000000000000000000000000000000000000000000000000100073eda753299d7d483339d80809a1d80553bda402fffe5bfeffffffff00000001\");\n\n            let accelerated_result = fpvm_kzg_point_eval(&input, u64::MAX, hint_writer, oracle_reader).unwrap();\n            let native_result = execute_native_precompile(KZG_POINT_EVAL_ADDR, input, u64::MAX).unwrap();\n\n            assert_eq!(accelerated_result.bytes.as_ref(), expected_result.as_ref());\n            assert_eq!(accelerated_result.bytes, native_result.bytes);\n            assert_eq!(accelerated_result.gas_used, native_result.gas_used);\n        })\n        .await;\n    }\n\n    #[tokio::test(flavor = \"multi_thread\")]\n    async fn test_accelerated_kzg_point_eval_oracle_gas_carries_l1_cost() {\n        let recorded_gas_used: std::sync::Arc<std::sync::Mutex<Option<u64>>> =\n            std::sync::Arc::new(std::sync::Mutex::new(None));\n        let recorded_gas_used_in = recorded_gas_used.clone();\n\n        let captured =\n            test_accelerated_precompile_capture_hint(move |hint_writer, oracle_reader| {\n                let input = valid_kzg_input();\n                let result =\n                    fpvm_kzg_point_eval(&input, u64::MAX, hint_writer, oracle_reader).unwrap();\n                *recorded_gas_used_in.lock().unwrap() = Some(result.gas_used);\n            })\n            .await;\n\n        // Oracle hint must carry the current L1 KZG cost (EIP-7904: 89_363).\n        assert_eq!(captured.oracle_gas(), 89_363);\n        // L2 charge must remain unchanged (Cancun KZG = 50_000).\n        assert_eq!(recorded_gas_used.lock().unwrap().unwrap(), 50_000);\n    }\n\n    #[tokio::test(flavor = \"multi_thread\")]\n    async fn test_accelerated_kzg_point_eval_at_l2_gas_boundary() {\n        // OOG guard is `<` not `<=`, so gas_limit == GAS_COST must succeed.\n        test_accelerated_precompile(|hint_writer, oracle_reader| {\n            let input = valid_kzg_input();\n            let result = fpvm_kzg_point_eval(&input, 50_000, hint_writer, oracle_reader);\n            assert!(result.is_ok(), \"expected Ok at gas_limit == GAS_COST, got {result:?}\");\n        })\n        .await;\n    }\n\n    #[tokio::test(flavor = \"multi_thread\")]\n    async fn test_accelerated_kzg_point_eval_out_of_gas() {\n        test_accelerated_precompile(|hint_writer, oracle_reader| {\n            let accelerated_result =\n                fpvm_kzg_point_eval(&[], 0, hint_writer, oracle_reader).unwrap_err();\n            assert!(matches!(accelerated_result, PrecompileHalt::OutOfGas));\n        })\n        .await;\n    }\n\n    #[tokio::test(flavor = \"multi_thread\")]\n    async fn test_accelerated_kzg_point_eval_bad_input_size() {\n        test_accelerated_precompile(|hint_writer, oracle_reader| {\n            let accelerated_result =\n                fpvm_kzg_point_eval(&[], u64::MAX, hint_writer, oracle_reader).unwrap_err();\n            assert!(matches!(accelerated_result, PrecompileHalt::BlobInvalidInputLength));\n        })\n        .await;\n    }\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "differs",
+      "coveredLines": 94,
+      "match": {
+        "origin": "own",
+        "collection": "optimism",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "kzg_point_eval.rs",
+        "similarity": 0.699,
+        "reportId": "optimism/cantina-kona-2026-03",
+        "repository": "op-rs/kona",
+        "path": "bin/client/src/fpvm_evm/precompiles/kzg_point_eval.rs",
+        "commit": "86910c9112437bbb849eca28961f813c5450e103",
+        "commitTimestamp": "2025-12-15T17:17:05Z",
+        "url": "https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/bin/client/src/fpvm_evm/precompiles/kzg_point_eval.rs",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). FPVM EVM factory and accelerated precompiles; finding 3.4.32 (Low) located in precompiles/provider.rs.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 40,
+        "removed": 10,
+        "ignoredAdded": 15,
+        "ignoredRemoved": 7,
+        "unchanged": 94,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 4,
+            "oldLines": 7,
+            "newStart": 4,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "use alloc::string::ToString;"
+              },
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 5,
+                "text": "use alloy_primitives::Address;"
+              },
+              {
+                "type": " ",
+                "oldLine": 6,
+                "newLine": 6,
+                "text": "use kona_preimage::{HintWriterClient, PreimageOracleClient};"
+              },
+              {
+                "type": "-",
+                "oldLine": 7,
+                "text": "use revm::precompile::{PrecompileError, PrecompileOutput, PrecompileResult};",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 7,
+                "text": "use revm::precompile::{EthPrecompileOutput, EthPrecompileResult, PrecompileHalt};",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 8, "newLine": 8, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 9,
+                "text": "/// Address of the KZG point evaluation precompile."
+              },
+              {
+                "type": " ",
+                "oldLine": 10,
+                "newLine": 10,
+                "text": "pub(crate) const KZG_POINT_EVAL_ADDR: Address = revm::precompile::u64_to_address(0x0A);"
+              }
+            ]
+          },
+          {
+            "oldStart": 15,
+            "oldLines": 29,
+            "newStart": 15,
+            "newLines": 31,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 15,
+                "newLine": 15,
+                "text": "    gas_limit: u64,"
+              },
+              {
+                "type": " ",
+                "oldLine": 16,
+                "newLine": 16,
+                "text": "    hint_writer: &H,"
+              },
+              {
+                "type": " ",
+                "oldLine": 17,
+                "newLine": 17,
+                "text": "    oracle_reader: &O,"
+              },
+              {
+                "type": "-",
+                "oldLine": 18,
+                "text": ") -> PrecompileResult",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 18,
+                "text": ") -> EthPrecompileResult",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 19, "newLine": 19, "text": "where" },
+              {
+                "type": " ",
+                "oldLine": 20,
+                "newLine": 20,
+                "text": "    H: HintWriterClient + Send + Sync,"
+              },
+              {
+                "type": " ",
+                "oldLine": 21,
+                "newLine": 21,
+                "text": "    O: PreimageOracleClient + Send + Sync,"
+              },
+              { "type": " ", "oldLine": 22, "newLine": 22, "text": "{" },
+              {
+                "type": " ",
+                "oldLine": 23,
+                "newLine": 23,
+                "text": "    const GAS_COST: u64 = 50_000;"
+              },
+              {
+                "type": "+",
+                "newLine": 24,
+                "text": "    /// Oracle/L1 staticcall gas required by [EIP-7904](https://eips.ethereum.org/EIPS/eip-7904).",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 25,
+                "text": "    const KZG_ORACLE_GAS: u64 = 89_363;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 24, "newLine": 26, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 25,
+                "newLine": 27,
+                "text": "    if gas_limit < GAS_COST {"
+              },
+              {
+                "type": "-",
+                "oldLine": 26,
+                "text": "        return Err(PrecompileError::OutOfGas);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 28,
+                "text": "        return Err(PrecompileHalt::OutOfGas);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 27, "newLine": 29, "text": "    }" },
+              { "type": " ", "oldLine": 28, "newLine": 30, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 29,
+                "newLine": 31,
+                "text": "    if input.len() != 192 {"
+              },
+              {
+                "type": "-",
+                "oldLine": 30,
+                "text": "        return Err(PrecompileError::BlobInvalidInputLength);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 32,
+                "text": "        return Err(PrecompileHalt::BlobInvalidInputLength);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 31, "newLine": 33, "text": "    }" },
+              { "type": " ", "oldLine": 32, "newLine": 34, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 33,
+                "newLine": 35,
+                "text": "    let result_data = kona_proof::block_on(precompile_run! {"
+              },
+              {
+                "type": " ",
+                "oldLine": 34,
+                "newLine": 36,
+                "text": "        hint_writer,"
+              },
+              {
+                "type": " ",
+                "oldLine": 35,
+                "newLine": 37,
+                "text": "        oracle_reader,"
+              },
+              {
+                "type": "-",
+                "oldLine": 36,
+                "text": "        &[KZG_POINT_EVAL_ADDR.as_slice(), &GAS_COST.to_be_bytes(), input]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 38,
+                "text": "        &[KZG_POINT_EVAL_ADDR.as_slice(), &KZG_ORACLE_GAS.to_be_bytes(), input]",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 37, "newLine": 39, "text": "    })" },
+              {
+                "type": "-",
+                "oldLine": 38,
+                "text": "    .map_err(|e| PrecompileError::Other(e.to_string().into()))?;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 40,
+                "text": "    .map_err(|e| PrecompileHalt::Other(e.to_string().into()))?;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 39, "newLine": 41, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 40,
+                "text": "    Ok(PrecompileOutput::new(GAS_COST, result_data.into()))",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 42,
+                "text": "    Ok(EthPrecompileOutput::new(GAS_COST, result_data.into()))",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 41, "newLine": 43, "text": "}" },
+              { "type": " ", "oldLine": 42, "newLine": 44, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 43,
+                "newLine": 45,
+                "text": "#[cfg(test)]"
+              }
+            ]
+          },
+          {
+            "oldStart": 45,
+            "oldLines": 23,
+            "newStart": 47,
+            "newLines": 27,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 45,
+                "newLine": 47,
+                "text": "    use super::*;"
+              },
+              {
+                "type": " ",
+                "oldLine": 46,
+                "newLine": 48,
+                "text": "    use crate::fpvm_evm::precompiles::test_utils::{"
+              },
+              {
+                "type": " ",
+                "oldLine": 47,
+                "newLine": 49,
+                "text": "        execute_native_precompile, test_accelerated_precompile,"
+              },
+              {
+                "type": "+",
+                "newLine": 50,
+                "text": "        test_accelerated_precompile_capture_hint,",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 48, "newLine": 51, "text": "    };" },
+              {
+                "type": " ",
+                "oldLine": 49,
+                "newLine": 52,
+                "text": "    use alloy_eips::eip4844::VERSIONED_HASH_VERSION_KZG;"
+              },
+              {
+                "type": " ",
+                "oldLine": 50,
+                "newLine": 53,
+                "text": "    use alloy_primitives::hex;"
+              },
+              {
+                "type": " ",
+                "oldLine": 51,
+                "newLine": 54,
+                "text": "    use sha2::{Digest, Sha256};"
+              },
+              { "type": " ", "oldLine": 52, "newLine": 55, "text": "" },
+              {
+                "type": "+",
+                "newLine": 56,
+                "text": "    fn valid_kzg_input() -> Vec<u8> {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 57,
+                "text": "        let commitment = hex!(\"8f59a8d2a1a625a17f3fea0fe5eb8c896db3764f3185481bc22f91b4aaffcca25f26936857bc3a7c2539ea8ec3a952b7\").to_vec();",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 58,
+                "text": "        let mut versioned_hash = Sha256::digest(&commitment).to_vec();",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 59,
+                "text": "        versioned_hash[0] = VERSIONED_HASH_VERSION_KZG;",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 60,
+                "text": "        let z = hex!(\"73eda753299d7d483339d80809a1d80553bda402fffe5bfeffffffff00000000\").to_vec();",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 61,
+                "text": "        let y = hex!(\"1522a4a7f34e1ea350ae07c29c96c7e79655aa926122e95fe69fcbd932ca49e9\").to_vec();",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 62,
+                "text": "        let proof = hex!(\"a62ad71d14c5719385c0686f1871430475bf3a00f0aa3f7b8dd99a9abc2160744faf0070725e00b60ad9a026a15b1a8c\").to_vec();",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 63,
+                "text": "        [versioned_hash, z, y, commitment, proof].concat()",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 64, "text": "    }", "ignored": false },
+              { "type": "+", "newLine": 65, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 53,
+                "newLine": 66,
+                "text": "    #[tokio::test(flavor = \"multi_thread\")]"
+              },
+              {
+                "type": " ",
+                "oldLine": 54,
+                "newLine": 67,
+                "text": "    async fn test_accelerated_kzg_point_eval() {"
+              },
+              {
+                "type": " ",
+                "oldLine": 55,
+                "newLine": 68,
+                "text": "        test_accelerated_precompile(|hint_writer, oracle_reader| {"
+              },
+              {
+                "type": "-",
+                "oldLine": 56,
+                "text": "            let commitment = hex!(\"8f59a8d2a1a625a17f3fea0fe5eb8c896db3764f3185481bc22f91b4aaffcca25f26936857bc3a7c2539ea8ec3a952b7\").to_vec();",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 57,
+                "text": "            let mut versioned_hash = Sha256::digest(&commitment).to_vec();",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 58,
+                "text": "            versioned_hash[0] = VERSIONED_HASH_VERSION_KZG;",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 59,
+                "text": "            let z = hex!(\"73eda753299d7d483339d80809a1d80553bda402fffe5bfeffffffff00000000\").to_vec();",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 60,
+                "text": "            let y = hex!(\"1522a4a7f34e1ea350ae07c29c96c7e79655aa926122e95fe69fcbd932ca49e9\").to_vec();",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 61,
+                "text": "            let proof = hex!(\"a62ad71d14c5719385c0686f1871430475bf3a00f0aa3f7b8dd99a9abc2160744faf0070725e00b60ad9a026a15b1a8c\").to_vec();",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 69,
+                "text": "            let input = valid_kzg_input();",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 62, "newLine": 70, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 63,
+                "text": "            let input = [versioned_hash, z, y, commitment, proof].concat();",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 64, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 65,
+                "newLine": 71,
+                "text": "            let expected_result = hex!(\"000000000000000000000000000000000000000000000000000000000000100073eda753299d7d483339d80809a1d80553bda402fffe5bfeffffffff00000001\");"
+              },
+              { "type": " ", "oldLine": 66, "newLine": 72, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 67,
+                "newLine": 73,
+                "text": "            let accelerated_result = fpvm_kzg_point_eval(&input, u64::MAX, hint_writer, oracle_reader).unwrap();"
+              }
+            ]
+          },
+          {
+            "oldStart": 75,
+            "oldLines": 11,
+            "newStart": 81,
+            "newLines": 43,
+            "lines": [
+              { "type": " ", "oldLine": 75, "newLine": 81, "text": "    }" },
+              { "type": " ", "oldLine": 76, "newLine": 82, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 77,
+                "newLine": 83,
+                "text": "    #[tokio::test(flavor = \"multi_thread\")]"
+              },
+              {
+                "type": "+",
+                "newLine": 84,
+                "text": "    async fn test_accelerated_kzg_point_eval_oracle_gas_carries_l1_cost() {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 85,
+                "text": "        let recorded_gas_used: std::sync::Arc<std::sync::Mutex<Option<u64>>> =",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 86,
+                "text": "            std::sync::Arc::new(std::sync::Mutex::new(None));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 87,
+                "text": "        let recorded_gas_used_in = recorded_gas_used.clone();",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 88, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 89,
+                "text": "        let captured =",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 90,
+                "text": "            test_accelerated_precompile_capture_hint(move |hint_writer, oracle_reader| {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 91,
+                "text": "                let input = valid_kzg_input();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 92,
+                "text": "                let result =",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 93,
+                "text": "                    fpvm_kzg_point_eval(&input, u64::MAX, hint_writer, oracle_reader).unwrap();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 94,
+                "text": "                *recorded_gas_used_in.lock().unwrap() = Some(result.gas_used);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 95,
+                "text": "            })",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 96,
+                "text": "            .await;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 97, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 98,
+                "text": "        // Oracle hint must carry the current L1 KZG cost (EIP-7904: 89_363).",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 99,
+                "text": "        assert_eq!(captured.oracle_gas(), 89_363);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 100,
+                "text": "        // L2 charge must remain unchanged (Cancun KZG = 50_000).",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 101,
+                "text": "        assert_eq!(recorded_gas_used.lock().unwrap().unwrap(), 50_000);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 102,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 103, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 104,
+                "text": "    #[tokio::test(flavor = \"multi_thread\")]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 105,
+                "text": "    async fn test_accelerated_kzg_point_eval_at_l2_gas_boundary() {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 106,
+                "text": "        // OOG guard is `<` not `<=`, so gas_limit == GAS_COST must succeed.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 107,
+                "text": "        test_accelerated_precompile(|hint_writer, oracle_reader| {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 108,
+                "text": "            let input = valid_kzg_input();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 109,
+                "text": "            let result = fpvm_kzg_point_eval(&input, 50_000, hint_writer, oracle_reader);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 110,
+                "text": "            assert!(result.is_ok(), \"expected Ok at gas_limit == GAS_COST, got {result:?}\");",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 111,
+                "text": "        })",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 112,
+                "text": "        .await;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 113,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 114, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 115,
+                "text": "    #[tokio::test(flavor = \"multi_thread\")]",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 78,
+                "newLine": 116,
+                "text": "    async fn test_accelerated_kzg_point_eval_out_of_gas() {"
+              },
+              {
+                "type": " ",
+                "oldLine": 79,
+                "newLine": 117,
+                "text": "        test_accelerated_precompile(|hint_writer, oracle_reader| {"
+              },
+              {
+                "type": " ",
+                "oldLine": 80,
+                "newLine": 118,
+                "text": "            let accelerated_result ="
+              },
+              {
+                "type": " ",
+                "oldLine": 81,
+                "newLine": 119,
+                "text": "                fpvm_kzg_point_eval(&[], 0, hint_writer, oracle_reader).unwrap_err();"
+              },
+              {
+                "type": "-",
+                "oldLine": 82,
+                "text": "            assert!(matches!(accelerated_result, PrecompileError::OutOfGas));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 120,
+                "text": "            assert!(matches!(accelerated_result, PrecompileHalt::OutOfGas));",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 83,
+                "newLine": 121,
+                "text": "        })"
+              },
+              {
+                "type": " ",
+                "oldLine": 84,
+                "newLine": 122,
+                "text": "        .await;"
+              },
+              { "type": " ", "oldLine": 85, "newLine": 123, "text": "    }" }
+            ]
+          },
+          {
+            "oldStart": 89,
+            "oldLines": 7,
+            "newStart": 127,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 89,
+                "newLine": 127,
+                "text": "        test_accelerated_precompile(|hint_writer, oracle_reader| {"
+              },
+              {
+                "type": " ",
+                "oldLine": 90,
+                "newLine": 128,
+                "text": "            let accelerated_result ="
+              },
+              {
+                "type": " ",
+                "oldLine": 91,
+                "newLine": 129,
+                "text": "                fpvm_kzg_point_eval(&[], u64::MAX, hint_writer, oracle_reader).unwrap_err();"
+              },
+              {
+                "type": "-",
+                "oldLine": 92,
+                "text": "            assert!(matches!(accelerated_result, PrecompileError::BlobInvalidInputLength));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 130,
+                "text": "            assert!(matches!(accelerated_result, PrecompileHalt::BlobInvalidInputLength));",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 93,
+                "newLine": 131,
+                "text": "        })"
+              },
+              {
+                "type": " ",
+                "oldLine": 94,
+                "newLine": 132,
+                "text": "        .await;"
+              },
+              { "type": " ", "oldLine": 95, "newLine": 133, "text": "    }" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

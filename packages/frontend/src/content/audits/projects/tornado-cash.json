@@ -3416,9 +3416,7 @@
                 "reviewPhase": "recheck of changed contracts",
                 "coverage": "full file",
                 "majorFindings": 1,
-                "findingIds": [
-                  "CVF-4"
-                ],
+                "findingIds": ["CVF-4"],
                 "isLatestVersion": true,
                 "laterAuditedVersionExists": false,
                 "totalVersions": 1
@@ -3543,10 +3541,7 @@
                 "reviewPhase": "recheck of changed contracts",
                 "coverage": "full file",
                 "majorFindings": 2,
-                "findingIds": [
-                  "CVF-31",
-                  "CVF-32"
-                ],
+                "findingIds": ["CVF-31", "CVF-32"],
                 "isLatestVersion": true,
                 "laterAuditedVersionExists": false,
                 "totalVersions": 1
@@ -9100,9 +9095,7 @@
                 "reviewPhase": "recheck of changed contracts",
                 "coverage": "full file",
                 "majorFindings": 1,
-                "findingIds": [
-                  "CVF-4"
-                ],
+                "findingIds": ["CVF-4"],
                 "isLatestVersion": true,
                 "laterAuditedVersionExists": false,
                 "totalVersions": 1
@@ -9227,10 +9220,7 @@
                 "reviewPhase": "recheck of changed contracts",
                 "coverage": "full file",
                 "majorFindings": 2,
-                "findingIds": [
-                  "CVF-31",
-                  "CVF-32"
-                ],
+                "findingIds": ["CVF-31", "CVF-32"],
                 "isLatestVersion": true,
                 "laterAuditedVersionExists": false,
                 "totalVersions": 1
@@ -10842,9 +10832,7 @@
                 "unchanged": 5,
                 "ignoredOnly": false
               },
-              "warnings": [
-                "kind-mismatch"
-              ]
+              "warnings": ["kind-mismatch"]
             },
             {
               "unitHash": "fbadc680e9f078fb8caa49897bf982782c30c59d56fc47f724c9d37c529f008e",

@@ -1,5 +1,18 @@
 import { formatInteger } from '@l2beat/shared-pure'
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
+import {
+  LineCoverageBar,
+  LineCoverageTooltipContent,
+} from '~/components/audits/AuditCoverageBar'
+import {
+  AUDIT_STATUS_META,
+  AUDIT_STATUS_ORDER,
+  collectFindingIds,
+  formatShare,
+  hasUnresolvedMajorFinding,
+  MAJOR_FINDING_DESCRIPTION,
+} from '~/components/audits/auditStatus'
+import { contractAnchorId } from '~/components/audits/contractAnchor'
 import { Switch } from '~/components/core/Switch'
 import {
   Tooltip,
@@ -12,15 +25,6 @@ import type {
   AuditUnitStatus,
 } from '~/server/features/audits/types'
 import { cn } from '~/utils/cn'
-import { UnitStatusBar } from '../../components/AuditCoverageBar'
-import {
-  AUDIT_STATUS_META,
-  AUDIT_STATUS_ORDER,
-  collectFindingIds,
-  hasUnresolvedMajorFinding,
-  MAJOR_FINDING_DESCRIPTION,
-  totalUnits,
-} from '../../components/auditStatus'
 import { UnitRow } from './UnitRow'
 
 interface Props {
@@ -38,6 +42,12 @@ function rowKey(contract: AuditsContractEntry): string {
     : `${contract.chain}:${contract.address}`
 }
 
+function anchorOf(contract: AuditsContractEntry): string | undefined {
+  return contract.zk || !contract.address
+    ? undefined
+    : contractAnchorId(contract.chain, contract.address)
+}
+
 export function ContractCoverageList({ contracts }: Props) {
   const [statuses, setStatuses] = useState<Set<AuditUnitStatus>>(
     () => new Set(AUDIT_STATUS_ORDER),
@@ -47,6 +57,18 @@ export function ContractCoverageList({ contracts }: Props) {
   const [hideIgnoredChanges, setHideIgnoredChanges] = useState(true)
   const needle = search.trim().toLowerCase()
   const isSearching = needle !== ''
+
+  // Open and scroll to the contract addressed by the URL fragment.
+  useEffect(() => {
+    const hash = window.location.hash.slice(1).toLowerCase()
+    if (!hash) return
+    const target = contracts.find((c) => anchorOf(c) === hash)
+    if (!target) return
+    setOpen((prev) => new Set(prev).add(rowKey(target)))
+    requestAnimationFrame(() => {
+      document.getElementById(hash)?.scrollIntoView({ block: 'start' })
+    })
+  }, [contracts])
 
   // While a name filter is typed every contract is expanded and contracts
   // without a matching unit are hidden; clearing the filter restores the
@@ -183,8 +205,9 @@ export function ContractCoverageList({ contracts }: Props) {
           return (
             <div
               key={key}
+              id={anchorOf(contract)}
               className={cn(
-                'rounded-lg border',
+                'scroll-mt-14 rounded-lg border md:scroll-mt-10',
                 majorFindingUnits > 0 ? 'border-negative' : 'border-divider',
               )}
             >
@@ -254,7 +277,18 @@ export function ContractCoverageList({ contracts }: Props) {
                 </div>
                 <div className="max-md:hidden">
                   {!contract.noSource && (
-                    <UnitStatusBar counts={contract.coverage.units} />
+                    <Tooltip>
+                      <TooltipTrigger asChild>
+                        <div>
+                          <LineCoverageBar lines={contract.coverage.lines} />
+                        </div>
+                      </TooltipTrigger>
+                      <TooltipContent>
+                        <LineCoverageTooltipContent
+                          lines={contract.coverage.lines}
+                        />
+                      </TooltipContent>
+                    </Tooltip>
                   )}
                 </div>
                 <div className="text-right text-xs max-md:hidden">
@@ -263,8 +297,11 @@ export function ContractCoverageList({ contracts }: Props) {
                   ) : (
                     <>
                       <span className="font-medium">
-                        {formatInteger(totalUnits(contract.coverage.units))}{' '}
-                        units
+                        {formatShare(
+                          contract.coverage.lines.covered,
+                          contract.coverage.lines.total,
+                        )}{' '}
+                        covered
                       </span>
                       <span className="ml-2 text-secondary">
                         {formatInteger(contract.coverage.lines.covered)}/

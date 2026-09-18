@@ -1,1 +1,15 @@
-{"schemaVersion":2,"unitHash":"543fdd929055b957a13ac0c526212b90ad537ee412d9190da1d6e0dd4854179b","name":"Cargo.toml","kind":"program","lines":48,"source":"[package]\nname = \"kona-providers-local\"\nversion = \"0.1.0\"\ndescription = \"Local buffered provider for caching and reorg handling\"\n\nedition.workspace = true\nauthors.workspace = true\nlicense.workspace = true\nhomepage.workspace = true\nkeywords.workspace = true\ncategories.workspace = true\nrepository.workspace = true\nrust-version.workspace = true\n\n[lints]\nworkspace = true\n\n[dependencies]\n# Kona\nkona-derive.workspace = true\nkona-genesis.workspace = true\nkona-protocol.workspace = true\nkona-macros.workspace = true\n\n# Alloy\nalloy-consensus.workspace = true\nalloy-eips.workspace = true\nalloy-primitives.workspace = true\n\n# Op Alloy\nop-alloy-consensus.workspace = true\n\n# Standard library\nasync-trait.workspace = true\nlru.workspace = true\nthiserror.workspace = true\ntokio = { workspace = true, features = [\"sync\"] }\n\n# `metrics` feature\nmetrics = { workspace = true, optional = true }\n\n[dev-dependencies]\ntokio.workspace = true\nrstest.workspace = true\n\n[features]\ndefault = []\nmetrics = [ \"dep:metrics\", \"kona-derive/metrics\" ]","resolutions":{"9fa846564f4071bd":{"status":"unaudited","coveredLines":0,"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "543fdd929055b957a13ac0c526212b90ad537ee412d9190da1d6e0dd4854179b",
+  "name": "Cargo.toml",
+  "kind": "program",
+  "lines": 48,
+  "source": "[package]\nname = \"kona-providers-local\"\nversion = \"0.1.0\"\ndescription = \"Local buffered provider for caching and reorg handling\"\n\nedition.workspace = true\nauthors.workspace = true\nlicense.workspace = true\nhomepage.workspace = true\nkeywords.workspace = true\ncategories.workspace = true\nrepository.workspace = true\nrust-version.workspace = true\n\n[lints]\nworkspace = true\n\n[dependencies]\n# Kona\nkona-derive.workspace = true\nkona-genesis.workspace = true\nkona-protocol.workspace = true\nkona-macros.workspace = true\n\n# Alloy\nalloy-consensus.workspace = true\nalloy-eips.workspace = true\nalloy-primitives.workspace = true\n\n# Op Alloy\nop-alloy-consensus.workspace = true\n\n# Standard library\nasync-trait.workspace = true\nlru.workspace = true\nthiserror.workspace = true\ntokio = { workspace = true, features = [\"sync\"] }\n\n# `metrics` feature\nmetrics = { workspace = true, optional = true }\n\n[dev-dependencies]\ntokio.workspace = true\nrstest.workspace = true\n\n[features]\ndefault = []\nmetrics = [ \"dep:metrics\", \"kona-derive/metrics\" ]",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

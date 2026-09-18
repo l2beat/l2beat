@@ -1,1 +1,15 @@
-{"schemaVersion":2,"unitHash":"b5f23fe9da233efaef1c37fa81f8091aa54f73acdfd429d42e8672d16f3e8966","name":"config.rs","kind":"program","lines":20,"source":"//! Configuration for the [`SequencerActor`].\n//!\n//! [`SequencerActor`]: super::SequencerActor\n\nuse url::Url;\n\n/// Configuration for the [`SequencerActor`].\n///\n/// [`SequencerActor`]: super::SequencerActor\n#[derive(Default, Debug, Clone, PartialEq, Eq)]\npub struct SequencerConfig {\n    /// Whether or not the sequencer is enabled at startup.\n    pub sequencer_stopped: bool,\n    /// Whether or not the sequencer is in recovery mode.\n    pub sequencer_recovery_mode: bool,\n    /// The [`Url`] for the conductor RPC endpoint. If [`Some`], enables the conductor service.\n    pub conductor_rpc_url: Option<Url>,\n    /// The confirmation delay for the sequencer.\n    pub l1_conf_delay: u64,\n}","resolutions":{"9fa846564f4071bd":{"status":"unaudited","coveredLines":0,"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "b5f23fe9da233efaef1c37fa81f8091aa54f73acdfd429d42e8672d16f3e8966",
+  "name": "config.rs",
+  "kind": "program",
+  "lines": 20,
+  "source": "//! Configuration for the [`SequencerActor`].\n//!\n//! [`SequencerActor`]: super::SequencerActor\n\nuse url::Url;\n\n/// Configuration for the [`SequencerActor`].\n///\n/// [`SequencerActor`]: super::SequencerActor\n#[derive(Default, Debug, Clone, PartialEq, Eq)]\npub struct SequencerConfig {\n    /// Whether or not the sequencer is enabled at startup.\n    pub sequencer_stopped: bool,\n    /// Whether or not the sequencer is in recovery mode.\n    pub sequencer_recovery_mode: bool,\n    /// The [`Url`] for the conductor RPC endpoint. If [`Some`], enables the conductor service.\n    pub conductor_rpc_url: Option<Url>,\n    /// The confirmation delay for the sequencer.\n    pub l1_conf_delay: u64,\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

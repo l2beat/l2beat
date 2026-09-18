@@ -1,1 +1,357 @@
-{"schemaVersion":2,"unitHash":"05aa485563603e5da17d5b738745be9db4c2618203ec87d32000ba71f102dd66","name":"bls12_map_fp.rs","kind":"program","lines":102,"source":"//! Contains the accelerated precompile for the BLS12-381 curve FP to G1 Mapping.\n//!\n//! BLS12-381 is introduced in [EIP-2537](https://eips.ethereum.org/EIPS/eip-2537).\n//!\n//! For constants and logic, see the [revm implementation].\n//!\n//! [revm implementation]: https://github.com/bluealloy/revm/blob/main/crates/precompile/src/bls12_381/map_fp_to_g1.rs\n\nuse crate::fpvm_evm::precompiles::utils::precompile_run;\nuse alloc::string::ToString;\nuse kona_preimage::{HintWriterClient, PreimageOracleClient};\nuse revm::precompile::{\n    EthPrecompileOutput, EthPrecompileResult, PrecompileHalt, bls12_381,\n    bls12_381_const::{MAP_FP_TO_G1_BASE_GAS_FEE, PADDED_FP_LENGTH},\n};\n\n/// Performs an FPVM-accelerated BLS12-381 map fp check.\n///\n/// Notice, there is no input size limit for this precompile.\n/// See: <https://specs.optimism.io/protocol/isthmus/exec-engine.html#evm-changes>\npub(crate) fn fpvm_bls12_map_fp<H, O>(\n    input: &[u8],\n    gas_limit: u64,\n    hint_writer: &H,\n    oracle_reader: &O,\n) -> EthPrecompileResult\nwhere\n    H: HintWriterClient + Send + Sync,\n    O: PreimageOracleClient + Send + Sync,\n{\n    if MAP_FP_TO_G1_BASE_GAS_FEE > gas_limit {\n        return Err(PrecompileHalt::OutOfGas);\n    }\n\n    if input.len() != PADDED_FP_LENGTH {\n        return Err(PrecompileHalt::Other(\n            alloc::format!(\n                \"MAP_FP_TO_G1 input should be {PADDED_FP_LENGTH} bytes, was {}\",\n                input.len()\n            )\n            .into(),\n        ));\n    }\n\n    let precompile = bls12_381::map_fp_to_g1::PRECOMPILE;\n\n    let result_data = kona_proof::block_on(precompile_run! {\n        hint_writer,\n        oracle_reader,\n        &[precompile.address().as_slice(), &MAP_FP_TO_G1_BASE_GAS_FEE.to_be_bytes(), input]\n    })\n    .map_err(|e| PrecompileHalt::Other(e.to_string().into()))?;\n\n    Ok(EthPrecompileOutput::new(MAP_FP_TO_G1_BASE_GAS_FEE, result_data.into()))\n}\n\n#[cfg(test)]\nmod test {\n    use alloy_primitives::hex;\n\n    use super::*;\n    use crate::fpvm_evm::precompiles::test_utils::{\n        execute_native_precompile, test_accelerated_precompile,\n    };\n\n    #[tokio::test(flavor = \"multi_thread\")]\n    async fn test_accelerated_bls12_381_map_fp_g1() {\n        test_accelerated_precompile(|hint_writer, oracle_reader| {\n            // https://github.com/ethereum/execution-spec-tests/blob/a1c4eeff347a64ad6c5aedd51314d4ffc067346b/tests/prague/eip2537_bls_12_381_precompiles/vectors/map_fp_to_G1_bls.json\n            let input = hex!(\"00000000000000000000000000000000156c8a6a2c184569d69a76be144b5cdc5141d2d2ca4fe341f011e25e3969c55ad9e9b9ce2eb833c81a908e5fa4ac5f03\");\n            let expected = hex!(\"00000000000000000000000000000000184bb665c37ff561a89ec2122dd343f20e0f4cbcaec84e3c3052ea81d1834e192c426074b02ed3dca4e7676ce4ce48ba0000000000000000000000000000000004407b8d35af4dacc809927071fc0405218f1401a6d15af775810e4e460064bcc9468beeba82fdc751be70476c888bf3\");\n\n            let accelerated_result = fpvm_bls12_map_fp(&input, 5500, hint_writer, oracle_reader).unwrap();\n            let native_result = execute_native_precompile(*bls12_381::map_fp_to_g1::PRECOMPILE.address(), input, 5500).unwrap();\n\n            assert_eq!(accelerated_result.bytes.as_ref(), expected.as_ref());\n            assert_eq!(accelerated_result.bytes, native_result.bytes);\n            assert_eq!(accelerated_result.gas_used, native_result.gas_used);\n        })\n        .await;\n    }\n\n    #[tokio::test(flavor = \"multi_thread\")]\n    async fn test_accelerated_bls12_381_map_fp_g1_bad_gas_limit() {\n        test_accelerated_precompile(|hint_writer, oracle_reader| {\n            let accelerated_result =\n                fpvm_bls12_map_fp(&[], 0, hint_writer, oracle_reader).unwrap_err();\n            assert!(matches!(accelerated_result, PrecompileHalt::OutOfGas));\n        })\n        .await;\n    }\n\n    #[tokio::test(flavor = \"multi_thread\")]\n    async fn test_accelerated_bls12_381_map_fp_g1_bad_input_size() {\n        test_accelerated_precompile(|hint_writer, oracle_reader| {\n            let accelerated_result =\n                fpvm_bls12_map_fp(&[], u64::MAX, hint_writer, oracle_reader).unwrap_err();\n            assert!(matches!(accelerated_result, PrecompileHalt::Other(_)));\n        })\n        .await;\n    }\n}","resolutions":{"9fa846564f4071bd":{"status":"differs","coveredLines":94,"match":{"origin":"own","collection":"optimism","relation":{"type":"own"},"rank":0,"matchedBy":"name","auditedName":"bls12_map_fp.rs","similarity":0.896,"reportId":"optimism/cantina-kona-2026-03","repository":"op-rs/kona","path":"bin/client/src/fpvm_evm/precompiles/bls12_map_fp.rs","commit":"86910c9112437bbb849eca28961f813c5450e103","commitTimestamp":"2025-12-15T17:17:05Z","url":"https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/bin/client/src/fpvm_evm/precompiles/bls12_map_fp.rs","auditStatus":"audited_with_no_major_findings","reviewPhase":"initial audit","coverage":"Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). FPVM EVM factory and accelerated precompiles; finding 3.4.32 (Low) located in precompiles/provider.rs.","majorFindings":0,"isLatestVersion":true,"laterAuditedVersionExists":false,"totalVersions":1},"diff":{"added":8,"removed":8,"ignoredAdded":0,"ignoredRemoved":0,"unchanged":94,"ignoredOnly":false,"hunks":[{"oldStart":10,"oldLines":7,"newStart":10,"newLines":7,"lines":[{"type":" ","oldLine":10,"newLine":10,"text":"use alloc::string::ToString;"},{"type":" ","oldLine":11,"newLine":11,"text":"use kona_preimage::{HintWriterClient, PreimageOracleClient};"},{"type":" ","oldLine":12,"newLine":12,"text":"use revm::precompile::{"},{"type":"-","oldLine":13,"text":"    PrecompileError, PrecompileOutput, PrecompileResult, bls12_381,","ignored":false},{"type":"+","newLine":13,"text":"    EthPrecompileOutput, EthPrecompileResult, PrecompileHalt, bls12_381,","ignored":false},{"type":" ","oldLine":14,"newLine":14,"text":"    bls12_381_const::{MAP_FP_TO_G1_BASE_GAS_FEE, PADDED_FP_LENGTH},"},{"type":" ","oldLine":15,"newLine":15,"text":"};"},{"type":" ","oldLine":16,"newLine":16,"text":""}]},{"oldStart":23,"oldLines":17,"newStart":23,"newLines":17,"lines":[{"type":" ","oldLine":23,"newLine":23,"text":"    gas_limit: u64,"},{"type":" ","oldLine":24,"newLine":24,"text":"    hint_writer: &H,"},{"type":" ","oldLine":25,"newLine":25,"text":"    oracle_reader: &O,"},{"type":"-","oldLine":26,"text":") -> PrecompileResult","ignored":false},{"type":"+","newLine":26,"text":") -> EthPrecompileResult","ignored":false},{"type":" ","oldLine":27,"newLine":27,"text":"where"},{"type":" ","oldLine":28,"newLine":28,"text":"    H: HintWriterClient + Send + Sync,"},{"type":" ","oldLine":29,"newLine":29,"text":"    O: PreimageOracleClient + Send + Sync,"},{"type":" ","oldLine":30,"newLine":30,"text":"{"},{"type":" ","oldLine":31,"newLine":31,"text":"    if MAP_FP_TO_G1_BASE_GAS_FEE > gas_limit {"},{"type":"-","oldLine":32,"text":"        return Err(PrecompileError::OutOfGas);","ignored":false},{"type":"+","newLine":32,"text":"        return Err(PrecompileHalt::OutOfGas);","ignored":false},{"type":" ","oldLine":33,"newLine":33,"text":"    }"},{"type":" ","oldLine":34,"newLine":34,"text":""},{"type":" ","oldLine":35,"newLine":35,"text":"    if input.len() != PADDED_FP_LENGTH {"},{"type":"-","oldLine":36,"text":"        return Err(PrecompileError::Other(","ignored":false},{"type":"+","newLine":36,"text":"        return Err(PrecompileHalt::Other(","ignored":false},{"type":" ","oldLine":37,"newLine":37,"text":"            alloc::format!("},{"type":" ","oldLine":38,"newLine":38,"text":"                \"MAP_FP_TO_G1 input should be {PADDED_FP_LENGTH} bytes, was {}\","},{"type":" ","oldLine":39,"newLine":39,"text":"                input.len()"}]},{"oldStart":49,"oldLines":9,"newStart":49,"newLines":9,"lines":[{"type":" ","oldLine":49,"newLine":49,"text":"        oracle_reader,"},{"type":" ","oldLine":50,"newLine":50,"text":"        &[precompile.address().as_slice(), &MAP_FP_TO_G1_BASE_GAS_FEE.to_be_bytes(), input]"},{"type":" ","oldLine":51,"newLine":51,"text":"    })"},{"type":"-","oldLine":52,"text":"    .map_err(|e| PrecompileError::Other(e.to_string().into()))?;","ignored":false},{"type":"+","newLine":52,"text":"    .map_err(|e| PrecompileHalt::Other(e.to_string().into()))?;","ignored":false},{"type":" ","oldLine":53,"newLine":53,"text":""},{"type":"-","oldLine":54,"text":"    Ok(PrecompileOutput::new(MAP_FP_TO_G1_BASE_GAS_FEE, result_data.into()))","ignored":false},{"type":"+","newLine":54,"text":"    Ok(EthPrecompileOutput::new(MAP_FP_TO_G1_BASE_GAS_FEE, result_data.into()))","ignored":false},{"type":" ","oldLine":55,"newLine":55,"text":"}"},{"type":" ","oldLine":56,"newLine":56,"text":""},{"type":" ","oldLine":57,"newLine":57,"text":"#[cfg(test)]"}]},{"oldStart":85,"oldLines":7,"newStart":85,"newLines":7,"lines":[{"type":" ","oldLine":85,"newLine":85,"text":"        test_accelerated_precompile(|hint_writer, oracle_reader| {"},{"type":" ","oldLine":86,"newLine":86,"text":"            let accelerated_result ="},{"type":" ","oldLine":87,"newLine":87,"text":"                fpvm_bls12_map_fp(&[], 0, hint_writer, oracle_reader).unwrap_err();"},{"type":"-","oldLine":88,"text":"            assert!(matches!(accelerated_result, PrecompileError::OutOfGas));","ignored":false},{"type":"+","newLine":88,"text":"            assert!(matches!(accelerated_result, PrecompileHalt::OutOfGas));","ignored":false},{"type":" ","oldLine":89,"newLine":89,"text":"        })"},{"type":" ","oldLine":90,"newLine":90,"text":"        .await;"},{"type":" ","oldLine":91,"newLine":91,"text":"    }"}]},{"oldStart":95,"oldLines":7,"newStart":95,"newLines":7,"lines":[{"type":" ","oldLine":95,"newLine":95,"text":"        test_accelerated_precompile(|hint_writer, oracle_reader| {"},{"type":" ","oldLine":96,"newLine":96,"text":"            let accelerated_result ="},{"type":" ","oldLine":97,"newLine":97,"text":"                fpvm_bls12_map_fp(&[], u64::MAX, hint_writer, oracle_reader).unwrap_err();"},{"type":"-","oldLine":98,"text":"            assert!(matches!(accelerated_result, PrecompileError::Other(_)));","ignored":false},{"type":"+","newLine":98,"text":"            assert!(matches!(accelerated_result, PrecompileHalt::Other(_)));","ignored":false},{"type":" ","oldLine":99,"newLine":99,"text":"        })"},{"type":" ","oldLine":100,"newLine":100,"text":"        .await;"},{"type":" ","oldLine":101,"newLine":101,"text":"    }"}]}]},"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "05aa485563603e5da17d5b738745be9db4c2618203ec87d32000ba71f102dd66",
+  "name": "bls12_map_fp.rs",
+  "kind": "program",
+  "lines": 102,
+  "source": "//! Contains the accelerated precompile for the BLS12-381 curve FP to G1 Mapping.\n//!\n//! BLS12-381 is introduced in [EIP-2537](https://eips.ethereum.org/EIPS/eip-2537).\n//!\n//! For constants and logic, see the [revm implementation].\n//!\n//! [revm implementation]: https://github.com/bluealloy/revm/blob/main/crates/precompile/src/bls12_381/map_fp_to_g1.rs\n\nuse crate::fpvm_evm::precompiles::utils::precompile_run;\nuse alloc::string::ToString;\nuse kona_preimage::{HintWriterClient, PreimageOracleClient};\nuse revm::precompile::{\n    EthPrecompileOutput, EthPrecompileResult, PrecompileHalt, bls12_381,\n    bls12_381_const::{MAP_FP_TO_G1_BASE_GAS_FEE, PADDED_FP_LENGTH},\n};\n\n/// Performs an FPVM-accelerated BLS12-381 map fp check.\n///\n/// Notice, there is no input size limit for this precompile.\n/// See: <https://specs.optimism.io/protocol/isthmus/exec-engine.html#evm-changes>\npub(crate) fn fpvm_bls12_map_fp<H, O>(\n    input: &[u8],\n    gas_limit: u64,\n    hint_writer: &H,\n    oracle_reader: &O,\n) -> EthPrecompileResult\nwhere\n    H: HintWriterClient + Send + Sync,\n    O: PreimageOracleClient + Send + Sync,\n{\n    if MAP_FP_TO_G1_BASE_GAS_FEE > gas_limit {\n        return Err(PrecompileHalt::OutOfGas);\n    }\n\n    if input.len() != PADDED_FP_LENGTH {\n        return Err(PrecompileHalt::Other(\n            alloc::format!(\n                \"MAP_FP_TO_G1 input should be {PADDED_FP_LENGTH} bytes, was {}\",\n                input.len()\n            )\n            .into(),\n        ));\n    }\n\n    let precompile = bls12_381::map_fp_to_g1::PRECOMPILE;\n\n    let result_data = kona_proof::block_on(precompile_run! {\n        hint_writer,\n        oracle_reader,\n        &[precompile.address().as_slice(), &MAP_FP_TO_G1_BASE_GAS_FEE.to_be_bytes(), input]\n    })\n    .map_err(|e| PrecompileHalt::Other(e.to_string().into()))?;\n\n    Ok(EthPrecompileOutput::new(MAP_FP_TO_G1_BASE_GAS_FEE, result_data.into()))\n}\n\n#[cfg(test)]\nmod test {\n    use alloy_primitives::hex;\n\n    use super::*;\n    use crate::fpvm_evm::precompiles::test_utils::{\n        execute_native_precompile, test_accelerated_precompile,\n    };\n\n    #[tokio::test(flavor = \"multi_thread\")]\n    async fn test_accelerated_bls12_381_map_fp_g1() {\n        test_accelerated_precompile(|hint_writer, oracle_reader| {\n            // https://github.com/ethereum/execution-spec-tests/blob/a1c4eeff347a64ad6c5aedd51314d4ffc067346b/tests/prague/eip2537_bls_12_381_precompiles/vectors/map_fp_to_G1_bls.json\n            let input = hex!(\"00000000000000000000000000000000156c8a6a2c184569d69a76be144b5cdc5141d2d2ca4fe341f011e25e3969c55ad9e9b9ce2eb833c81a908e5fa4ac5f03\");\n            let expected = hex!(\"00000000000000000000000000000000184bb665c37ff561a89ec2122dd343f20e0f4cbcaec84e3c3052ea81d1834e192c426074b02ed3dca4e7676ce4ce48ba0000000000000000000000000000000004407b8d35af4dacc809927071fc0405218f1401a6d15af775810e4e460064bcc9468beeba82fdc751be70476c888bf3\");\n\n            let accelerated_result = fpvm_bls12_map_fp(&input, 5500, hint_writer, oracle_reader).unwrap();\n            let native_result = execute_native_precompile(*bls12_381::map_fp_to_g1::PRECOMPILE.address(), input, 5500).unwrap();\n\n            assert_eq!(accelerated_result.bytes.as_ref(), expected.as_ref());\n            assert_eq!(accelerated_result.bytes, native_result.bytes);\n            assert_eq!(accelerated_result.gas_used, native_result.gas_used);\n        })\n        .await;\n    }\n\n    #[tokio::test(flavor = \"multi_thread\")]\n    async fn test_accelerated_bls12_381_map_fp_g1_bad_gas_limit() {\n        test_accelerated_precompile(|hint_writer, oracle_reader| {\n            let accelerated_result =\n                fpvm_bls12_map_fp(&[], 0, hint_writer, oracle_reader).unwrap_err();\n            assert!(matches!(accelerated_result, PrecompileHalt::OutOfGas));\n        })\n        .await;\n    }\n\n    #[tokio::test(flavor = \"multi_thread\")]\n    async fn test_accelerated_bls12_381_map_fp_g1_bad_input_size() {\n        test_accelerated_precompile(|hint_writer, oracle_reader| {\n            let accelerated_result =\n                fpvm_bls12_map_fp(&[], u64::MAX, hint_writer, oracle_reader).unwrap_err();\n            assert!(matches!(accelerated_result, PrecompileHalt::Other(_)));\n        })\n        .await;\n    }\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "differs",
+      "coveredLines": 94,
+      "match": {
+        "origin": "own",
+        "collection": "optimism",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "bls12_map_fp.rs",
+        "similarity": 0.896,
+        "reportId": "optimism/cantina-kona-2026-03",
+        "repository": "op-rs/kona",
+        "path": "bin/client/src/fpvm_evm/precompiles/bls12_map_fp.rs",
+        "commit": "86910c9112437bbb849eca28961f813c5450e103",
+        "commitTimestamp": "2025-12-15T17:17:05Z",
+        "url": "https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/bin/client/src/fpvm_evm/precompiles/bls12_map_fp.rs",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). FPVM EVM factory and accelerated precompiles; finding 3.4.32 (Low) located in precompiles/provider.rs.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 8,
+        "removed": 8,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 94,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 10,
+            "oldLines": 7,
+            "newStart": 10,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 10,
+                "newLine": 10,
+                "text": "use alloc::string::ToString;"
+              },
+              {
+                "type": " ",
+                "oldLine": 11,
+                "newLine": 11,
+                "text": "use kona_preimage::{HintWriterClient, PreimageOracleClient};"
+              },
+              {
+                "type": " ",
+                "oldLine": 12,
+                "newLine": 12,
+                "text": "use revm::precompile::{"
+              },
+              {
+                "type": "-",
+                "oldLine": 13,
+                "text": "    PrecompileError, PrecompileOutput, PrecompileResult, bls12_381,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 13,
+                "text": "    EthPrecompileOutput, EthPrecompileResult, PrecompileHalt, bls12_381,",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 14,
+                "newLine": 14,
+                "text": "    bls12_381_const::{MAP_FP_TO_G1_BASE_GAS_FEE, PADDED_FP_LENGTH},"
+              },
+              { "type": " ", "oldLine": 15, "newLine": 15, "text": "};" },
+              { "type": " ", "oldLine": 16, "newLine": 16, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 23,
+            "oldLines": 17,
+            "newStart": 23,
+            "newLines": 17,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 23,
+                "newLine": 23,
+                "text": "    gas_limit: u64,"
+              },
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 24,
+                "text": "    hint_writer: &H,"
+              },
+              {
+                "type": " ",
+                "oldLine": 25,
+                "newLine": 25,
+                "text": "    oracle_reader: &O,"
+              },
+              {
+                "type": "-",
+                "oldLine": 26,
+                "text": ") -> PrecompileResult",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 26,
+                "text": ") -> EthPrecompileResult",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 27, "newLine": 27, "text": "where" },
+              {
+                "type": " ",
+                "oldLine": 28,
+                "newLine": 28,
+                "text": "    H: HintWriterClient + Send + Sync,"
+              },
+              {
+                "type": " ",
+                "oldLine": 29,
+                "newLine": 29,
+                "text": "    O: PreimageOracleClient + Send + Sync,"
+              },
+              { "type": " ", "oldLine": 30, "newLine": 30, "text": "{" },
+              {
+                "type": " ",
+                "oldLine": 31,
+                "newLine": 31,
+                "text": "    if MAP_FP_TO_G1_BASE_GAS_FEE > gas_limit {"
+              },
+              {
+                "type": "-",
+                "oldLine": 32,
+                "text": "        return Err(PrecompileError::OutOfGas);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 32,
+                "text": "        return Err(PrecompileHalt::OutOfGas);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 33, "newLine": 33, "text": "    }" },
+              { "type": " ", "oldLine": 34, "newLine": 34, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 35,
+                "newLine": 35,
+                "text": "    if input.len() != PADDED_FP_LENGTH {"
+              },
+              {
+                "type": "-",
+                "oldLine": 36,
+                "text": "        return Err(PrecompileError::Other(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 36,
+                "text": "        return Err(PrecompileHalt::Other(",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 37,
+                "newLine": 37,
+                "text": "            alloc::format!("
+              },
+              {
+                "type": " ",
+                "oldLine": 38,
+                "newLine": 38,
+                "text": "                \"MAP_FP_TO_G1 input should be {PADDED_FP_LENGTH} bytes, was {}\","
+              },
+              {
+                "type": " ",
+                "oldLine": 39,
+                "newLine": 39,
+                "text": "                input.len()"
+              }
+            ]
+          },
+          {
+            "oldStart": 49,
+            "oldLines": 9,
+            "newStart": 49,
+            "newLines": 9,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 49,
+                "newLine": 49,
+                "text": "        oracle_reader,"
+              },
+              {
+                "type": " ",
+                "oldLine": 50,
+                "newLine": 50,
+                "text": "        &[precompile.address().as_slice(), &MAP_FP_TO_G1_BASE_GAS_FEE.to_be_bytes(), input]"
+              },
+              { "type": " ", "oldLine": 51, "newLine": 51, "text": "    })" },
+              {
+                "type": "-",
+                "oldLine": 52,
+                "text": "    .map_err(|e| PrecompileError::Other(e.to_string().into()))?;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 52,
+                "text": "    .map_err(|e| PrecompileHalt::Other(e.to_string().into()))?;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 53, "newLine": 53, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 54,
+                "text": "    Ok(PrecompileOutput::new(MAP_FP_TO_G1_BASE_GAS_FEE, result_data.into()))",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 54,
+                "text": "    Ok(EthPrecompileOutput::new(MAP_FP_TO_G1_BASE_GAS_FEE, result_data.into()))",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 55, "newLine": 55, "text": "}" },
+              { "type": " ", "oldLine": 56, "newLine": 56, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 57,
+                "newLine": 57,
+                "text": "#[cfg(test)]"
+              }
+            ]
+          },
+          {
+            "oldStart": 85,
+            "oldLines": 7,
+            "newStart": 85,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 85,
+                "newLine": 85,
+                "text": "        test_accelerated_precompile(|hint_writer, oracle_reader| {"
+              },
+              {
+                "type": " ",
+                "oldLine": 86,
+                "newLine": 86,
+                "text": "            let accelerated_result ="
+              },
+              {
+                "type": " ",
+                "oldLine": 87,
+                "newLine": 87,
+                "text": "                fpvm_bls12_map_fp(&[], 0, hint_writer, oracle_reader).unwrap_err();"
+              },
+              {
+                "type": "-",
+                "oldLine": 88,
+                "text": "            assert!(matches!(accelerated_result, PrecompileError::OutOfGas));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 88,
+                "text": "            assert!(matches!(accelerated_result, PrecompileHalt::OutOfGas));",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 89,
+                "newLine": 89,
+                "text": "        })"
+              },
+              {
+                "type": " ",
+                "oldLine": 90,
+                "newLine": 90,
+                "text": "        .await;"
+              },
+              { "type": " ", "oldLine": 91, "newLine": 91, "text": "    }" }
+            ]
+          },
+          {
+            "oldStart": 95,
+            "oldLines": 7,
+            "newStart": 95,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 95,
+                "newLine": 95,
+                "text": "        test_accelerated_precompile(|hint_writer, oracle_reader| {"
+              },
+              {
+                "type": " ",
+                "oldLine": 96,
+                "newLine": 96,
+                "text": "            let accelerated_result ="
+              },
+              {
+                "type": " ",
+                "oldLine": 97,
+                "newLine": 97,
+                "text": "                fpvm_bls12_map_fp(&[], u64::MAX, hint_writer, oracle_reader).unwrap_err();"
+              },
+              {
+                "type": "-",
+                "oldLine": 98,
+                "text": "            assert!(matches!(accelerated_result, PrecompileError::Other(_)));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 98,
+                "text": "            assert!(matches!(accelerated_result, PrecompileHalt::Other(_)));",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 99,
+                "newLine": 99,
+                "text": "        })"
+              },
+              {
+                "type": " ",
+                "oldLine": 100,
+                "newLine": 100,
+                "text": "        .await;"
+              },
+              { "type": " ", "oldLine": 101, "newLine": 101, "text": "    }" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

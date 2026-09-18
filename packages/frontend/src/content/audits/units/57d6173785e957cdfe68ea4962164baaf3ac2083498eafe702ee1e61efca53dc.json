@@ -1,1 +1,15 @@
-{"schemaVersion":2,"unitHash":"57d6173785e957cdfe68ea4962164baaf3ac2083498eafe702ee1e61efca53dc","name":"error.rs","kind":"program","lines":18,"source":"use jsonrpsee::core::RegisterMethodError;\n\n/// An error returned by the [`crate::RpcActor`].\n#[derive(Debug, thiserror::Error)]\npub enum RpcActorError {\n    /// Failed to register the healthz endpoint.\n    #[error(\"Failed to register the healthz endpoint\")]\n    RegisterHealthz(#[from] RegisterMethodError),\n    /// Failed to launch the RPC server.\n    #[error(transparent)]\n    LaunchFailed(#[from] std::io::Error),\n    /// The [`crate::RpcActor`]'s RPC server stopped unexpectedly.\n    #[error(\"RPC server stopped unexpectedly\")]\n    ServerStopped,\n    /// Failed to stop the RPC server.\n    #[error(\"Failed to stop the RPC server\")]\n    StopFailed,\n}","resolutions":{"9fa846564f4071bd":{"status":"unaudited","coveredLines":0,"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "57d6173785e957cdfe68ea4962164baaf3ac2083498eafe702ee1e61efca53dc",
+  "name": "error.rs",
+  "kind": "program",
+  "lines": 18,
+  "source": "use jsonrpsee::core::RegisterMethodError;\n\n/// An error returned by the [`crate::RpcActor`].\n#[derive(Debug, thiserror::Error)]\npub enum RpcActorError {\n    /// Failed to register the healthz endpoint.\n    #[error(\"Failed to register the healthz endpoint\")]\n    RegisterHealthz(#[from] RegisterMethodError),\n    /// Failed to launch the RPC server.\n    #[error(transparent)]\n    LaunchFailed(#[from] std::io::Error),\n    /// The [`crate::RpcActor`]'s RPC server stopped unexpectedly.\n    #[error(\"RPC server stopped unexpectedly\")]\n    ServerStopped,\n    /// Failed to stop the RPC server.\n    #[error(\"Failed to stop the RPC server\")]\n    StopFailed,\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

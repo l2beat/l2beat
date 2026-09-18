@@ -1,1 +1,15 @@
-{"schemaVersion":2,"unitHash":"2bd542e43ecc206113ac7e96c22bf11c2d985859fcfd4e6c5ae597bd68372fb5","name":"lib.rs","kind":"program","lines":33,"source":"#![doc = include_str!(\"../README.md\")]\n#![doc(\n    html_logo_url = \"https://raw.githubusercontent.com/ethereum-optimism/optimism/develop/rust/kona/assets/square.png\",\n    html_favicon_url = \"https://raw.githubusercontent.com/ethereum-optimism/optimism/develop/rust/kona/assets/favicon.ico\"\n)]\n#![cfg_attr(docsrs, feature(doc_cfg))]\n\nmod error;\npub use error::{CliError, CliResult};\n\nmod flags;\npub use flags::{GlobalArgs, LogArgs, MetricsArgs, OverrideArgs};\n\nmod logs;\npub use logs::{FileLogConfig, LogConfig, LogRotation, StdoutLogConfig};\n\nmod clap;\npub use clap::cli_styles;\n\n#[cfg(feature = \"secrets\")]\nmod secrets;\n#[cfg(feature = \"secrets\")]\npub use secrets::{KeypairError, ParseKeyError, SecretKeyLoader};\n\npub mod backtrace;\n\nmod tracing;\npub use tracing::{LogFormat, init_test_tracing};\n\nmod prometheus;\npub use prometheus::init_prometheus_server;\n\npub mod sigsegv_handler;","resolutions":{"9fa846564f4071bd":{"status":"unaudited","coveredLines":0,"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "2bd542e43ecc206113ac7e96c22bf11c2d985859fcfd4e6c5ae597bd68372fb5",
+  "name": "lib.rs",
+  "kind": "program",
+  "lines": 33,
+  "source": "#![doc = include_str!(\"../README.md\")]\n#![doc(\n    html_logo_url = \"https://raw.githubusercontent.com/ethereum-optimism/optimism/develop/rust/kona/assets/square.png\",\n    html_favicon_url = \"https://raw.githubusercontent.com/ethereum-optimism/optimism/develop/rust/kona/assets/favicon.ico\"\n)]\n#![cfg_attr(docsrs, feature(doc_cfg))]\n\nmod error;\npub use error::{CliError, CliResult};\n\nmod flags;\npub use flags::{GlobalArgs, LogArgs, MetricsArgs, OverrideArgs};\n\nmod logs;\npub use logs::{FileLogConfig, LogConfig, LogRotation, StdoutLogConfig};\n\nmod clap;\npub use clap::cli_styles;\n\n#[cfg(feature = \"secrets\")]\nmod secrets;\n#[cfg(feature = \"secrets\")]\npub use secrets::{KeypairError, ParseKeyError, SecretKeyLoader};\n\npub mod backtrace;\n\nmod tracing;\npub use tracing::{LogFormat, init_test_tracing};\n\nmod prometheus;\npub use prometheus::init_prometheus_server;\n\npub mod sigsegv_handler;",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

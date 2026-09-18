@@ -1,1 +1,15 @@
-{"schemaVersion":2,"unitHash":"446a0638a3e721bc6caef4ed633f28211b568d63f71e43aeabf7cf55732bd07c","name":"Cargo.toml","kind":"program","lines":50,"source":"[package]\nname = \"kona-sources\"\nversion = \"0.1.2\"\ndescription = \"Data source types and utilities for the kona-node\"\n\nedition.workspace = true\nrust-version.workspace = true\nlicense.workspace = true\nhomepage.workspace = true\nauthors.workspace = true\nrepository.workspace = true\nexclude.workspace = true\n\n[lints]\nworkspace = true\n\n[dependencies]\n# Workspace\n\n# Alloy\nalloy-transport.workspace = true\nalloy-primitives.workspace = true\nalloy-rpc-client.workspace = true\nalloy-transport-http = { workspace = true, features = [\"reqwest\", \"reqwest-rustls-tls\", \"hyper\", \"hyper-tls\"] }\n\nalloy-signer.workspace = true\nalloy-signer-local.workspace = true\n\n# OP Alloy\nop-alloy-rpc-types-engine.workspace = true\n\n# Misc\ntracing.workspace = true\nthiserror.workspace = true\nderive_more.workspace = true\n\n# HTTP client and TLS for remote signer\nurl.workspace = true\nserde.workspace = true\nserde_json.workspace = true\nrustls.workspace = true\ntokio = { workspace = true, features = [\"full\"] }\nnotify.workspace = true\n\n[features]\ndefault = []\n\n[dev-dependencies]\ntokio.workspace = true\nserde_json.workspace = true","resolutions":{"9fa846564f4071bd":{"status":"unaudited","coveredLines":0,"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "446a0638a3e721bc6caef4ed633f28211b568d63f71e43aeabf7cf55732bd07c",
+  "name": "Cargo.toml",
+  "kind": "program",
+  "lines": 50,
+  "source": "[package]\nname = \"kona-sources\"\nversion = \"0.1.2\"\ndescription = \"Data source types and utilities for the kona-node\"\n\nedition.workspace = true\nrust-version.workspace = true\nlicense.workspace = true\nhomepage.workspace = true\nauthors.workspace = true\nrepository.workspace = true\nexclude.workspace = true\n\n[lints]\nworkspace = true\n\n[dependencies]\n# Workspace\n\n# Alloy\nalloy-transport.workspace = true\nalloy-primitives.workspace = true\nalloy-rpc-client.workspace = true\nalloy-transport-http = { workspace = true, features = [\"reqwest\", \"reqwest-rustls-tls\", \"hyper\", \"hyper-tls\"] }\n\nalloy-signer.workspace = true\nalloy-signer-local.workspace = true\n\n# OP Alloy\nop-alloy-rpc-types-engine.workspace = true\n\n# Misc\ntracing.workspace = true\nthiserror.workspace = true\nderive_more.workspace = true\n\n# HTTP client and TLS for remote signer\nurl.workspace = true\nserde.workspace = true\nserde_json.workspace = true\nrustls.workspace = true\ntokio = { workspace = true, features = [\"full\"] }\nnotify.workspace = true\n\n[features]\ndefault = []\n\n[dev-dependencies]\ntokio.workspace = true\nserde_json.workspace = true",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

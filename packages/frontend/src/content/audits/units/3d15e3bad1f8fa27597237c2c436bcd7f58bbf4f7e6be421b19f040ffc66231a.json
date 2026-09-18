@@ -1,1 +1,15 @@
-{"schemaVersion":2,"unitHash":"3d15e3bad1f8fa27597237c2c436bcd7f58bbf4f7e6be421b19f040ffc66231a","name":"engine_test.go","kind":"program","lines":45,"source":"package node\n\nimport (\n\t\"sync\"\n\t\"testing\"\n\n\t\"github.com/ethereum-optimism/optimism/op-devstack/devtest\"\n\t\"github.com/ethereum-optimism/optimism/op-devstack/dsl\"\n\n\tsafety \"github.com/ethereum-optimism/optimism/op-service/eth/safety\"\n\tnode_utils \"github.com/ethereum-optimism/optimism/rust/kona/tests/node/utils\"\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc TestEngine(gt *testing.T) {\n\tt := devtest.ParallelT(gt)\n\n\tout := newCommonPreset(t)\n\n\t// Get the nodes from the network.\n\tnodes := out.L2CLKonaNodes()\n\n\twg := sync.WaitGroup{}\n\tfor _, node := range nodes {\n\t\twg.Add(1)\n\t\tgo func(node *dsl.L2CLNode) {\n\t\t\tdefer wg.Done()\n\n\t\t\tdone := make(chan struct{})\n\t\t\tgo func() {\n\t\t\t\tdefer close(done)\n\t\t\t\t// Wait for 40 unsafe blocks to be produced.\n\t\t\t\tnode.Advanced(safety.LocalUnsafe, 40, 100)\n\t\t\t}()\n\n\t\t\tqueueLens := node_utils.GetDevWS(t, node, \"engine_queue_size\", done)\n\t\t\tfor _, queueLen := range queueLens {\n\t\t\t\trequire.LessOrEqual(t, queueLen, uint64(1), \"engine queue length should be 1 or less\")\n\t\t\t}\n\t\t}(&node)\n\t}\n\n\twg.Wait()\n\n}","resolutions":{"9fa846564f4071bd":{"status":"unaudited","coveredLines":0,"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "3d15e3bad1f8fa27597237c2c436bcd7f58bbf4f7e6be421b19f040ffc66231a",
+  "name": "engine_test.go",
+  "kind": "program",
+  "lines": 45,
+  "source": "package node\n\nimport (\n\t\"sync\"\n\t\"testing\"\n\n\t\"github.com/ethereum-optimism/optimism/op-devstack/devtest\"\n\t\"github.com/ethereum-optimism/optimism/op-devstack/dsl\"\n\n\tsafety \"github.com/ethereum-optimism/optimism/op-service/eth/safety\"\n\tnode_utils \"github.com/ethereum-optimism/optimism/rust/kona/tests/node/utils\"\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc TestEngine(gt *testing.T) {\n\tt := devtest.ParallelT(gt)\n\n\tout := newCommonPreset(t)\n\n\t// Get the nodes from the network.\n\tnodes := out.L2CLKonaNodes()\n\n\twg := sync.WaitGroup{}\n\tfor _, node := range nodes {\n\t\twg.Add(1)\n\t\tgo func(node *dsl.L2CLNode) {\n\t\t\tdefer wg.Done()\n\n\t\t\tdone := make(chan struct{})\n\t\t\tgo func() {\n\t\t\t\tdefer close(done)\n\t\t\t\t// Wait for 40 unsafe blocks to be produced.\n\t\t\t\tnode.Advanced(safety.LocalUnsafe, 40, 100)\n\t\t\t}()\n\n\t\t\tqueueLens := node_utils.GetDevWS(t, node, \"engine_queue_size\", done)\n\t\t\tfor _, queueLen := range queueLens {\n\t\t\t\trequire.LessOrEqual(t, queueLen, uint64(1), \"engine queue length should be 1 or less\")\n\t\t\t}\n\t\t}(&node)\n\t}\n\n\twg.Wait()\n\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

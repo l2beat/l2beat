@@ -1,1 +1,258 @@
-{"schemaVersion":2,"unitHash":"04eaa73f5499b8781c705cbb9a35e2fa202b2962c471bef40ae9bfb744e1ae8b","name":"witness.rs","kind":"program","lines":171,"source":"// Copyright 2024, 2025 RISC Zero, Inc.\n//\n// Licensed under the Apache License, Version 2.0 (the \"License\");\n// you may not use this file except in compliance with the License.\n// You may obtain a copy of the License at\n//\n//     http://www.apache.org/licenses/LICENSE-2.0\n//\n// Unless required by applicable law or agreed to in writing, software\n// distributed under the License is distributed on an \"AS IS\" BASIS,\n// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n// See the License for the specific language governing permissions and\n// limitations under the License.\n\nuse crate::blobs::BlobWitnessData;\nuse crate::boot::StitchedBootInfo;\nuse crate::driver::CachedDriver;\n#[cfg(feature = \"experimental\")]\nuse crate::evm::partial::PartialExecution;\n#[cfg(feature = \"experimental\")]\nuse crate::evm::witness::PartialExecutionWitness;\nuse crate::executor::Execution;\nuse crate::oracle::vec::VecOracle;\nuse crate::oracle::WitnessOracle;\nuse crate::precondition::Precondition;\nuse crate::rkyv::primitives::{AddressDef, B256Def};\nuse alloy_primitives::{Address, B256};\nuse std::fmt::Debug;\n\n/// Represents the complete structure of a `Witness`, which is used to hold\n/// the necessary data for authenticating a rollup state transition in the FPVM.\n#[derive(Clone, Debug, Default, rkyv::Archive, rkyv::Serialize, rkyv::Deserialize)]\npub struct Witness<O: WitnessOracle> {\n    /// The witness oracle for preimage data preloaded in memory.\n    pub oracle_witness: O,\n    /// The witness oracle for preimage data streamed in on demand.\n    pub stream_witness: O,\n    /// Represents the witness data for blobs.\n    pub blobs_witness: BlobWitnessData,\n    /// Represents the address of the proof's payout recipient.\n    #[rkyv(with = AddressDef)]\n    pub payout_recipient_address: Address,\n    /// Represents a hash value used for loading precondition validation data.\n    #[rkyv(with = B256Def)]\n    pub precondition_validation_data_hash: B256,\n    /// A collection of stitched executions represented as a two-dimensional vector.\n    ///\n    /// # Structure:\n    /// - The outer `Vec` represents a collection of execution groups.\n    /// - Each inner `Vec<Execution>` contains a continuous series of `Execution` objects that\n    ///   represent individual executions within a specific stitched group.\n    ///\n    /// # Notes:\n    /// - Ensure all `Execution` objects within the groups are properly sorted.\n    pub stitched_executions: Vec<Vec<Execution>>,\n    /// Optional witness data for partial execution.\n    #[cfg(feature = \"experimental\")]\n    pub pe_witness: Option<PartialExecutionWitness>,\n    /// Pre-computed per-block chunk aggregation data.\n    #[cfg(feature = \"experimental\")]\n    pub partial_executions: Vec<Vec<PartialExecution>>,\n    /// An initial state for the derivation pipeline\n    pub derivation_cache: Option<CachedDriver>,\n    /// Whether to record a derivation trace precondition in the output journal\n    pub trace_derivation: bool,\n    /// A list of `StitchedBootInfo` instances to be stitched together from other proofs.\n    pub stitched_preconditions: Vec<Precondition>,\n    /// A list of `StitchedBootInfo` instances to be stitched together from other proofs.\n    pub stitched_boot_info: Vec<StitchedBootInfo>,\n    /// Represents the fault-proof virtual machine program image id.\n    #[rkyv(with = B256Def)]\n    pub fpvm_image_id: B256,\n}\n\nimpl Witness<VecOracle> {\n    /// Creates a deep copy of the current instance.\n    ///\n    /// This method performs a \"deep clone\" of the object by cloning all its fields,\n    /// including any nested fields that implement the `deep_clone` method.\n    /// This ensures that all references and internal data are duplicated,\n    /// rather than pointing to the same objects.\n    ///\n    /// # Returns\n    /// A new instance of the structure with all fields deeply cloned.\n    pub fn deep_clone(&self) -> Self {\n        let mut cloned_with_arc = self.clone();\n        cloned_with_arc.oracle_witness = cloned_with_arc.oracle_witness.deep_clone();\n        cloned_with_arc.stream_witness = cloned_with_arc.stream_witness.deep_clone();\n        cloned_with_arc\n    }\n}\n\n#[cfg(test)]\n#[cfg_attr(coverage_nightly, coverage(off))]\npub mod tests {\n    use super::*;\n    use crate::blobs::tests::gen_blobs;\n    use crate::boot::tests::gen_boot_infos;\n    use crate::executor::tests::gen_executions;\n    use crate::oracle::vec::tests::{exhaust_vec_oracle, prepare_vec_oracle};\n    use alloy_primitives::keccak256;\n    use std::ops::Deref;\n\n    pub fn create_test_witness() -> (Witness<VecOracle>, Vec<Vec<u8>>) {\n        let (vec_oracle, values) = prepare_vec_oracle(512, 1);\n        let blobs_witness = BlobWitnessData::from(gen_blobs(10));\n        let witness = Witness {\n            oracle_witness: vec_oracle.deep_clone(),\n            stream_witness: vec_oracle.deep_clone(),\n            blobs_witness,\n            payout_recipient_address: Address::from([0xb0; 20]),\n            precondition_validation_data_hash: keccak256(b\"precondition_validation_data_hash\"),\n            stitched_executions: vec![gen_executions(64)\n                .into_iter()\n                .map(|e| e.deref().clone())\n                .collect()],\n            derivation_cache: None,\n            trace_derivation: false,\n            stitched_preconditions: vec![\n                Precondition::default().proposal(keccak256(b\"proposal\"));\n                32\n            ],\n            stitched_boot_info: gen_boot_infos(32, 128),\n            fpvm_image_id: keccak256(b\"fpvm_image_id\"),\n            #[cfg(feature = \"experimental\")]\n            pe_witness: None,\n            #[cfg(feature = \"experimental\")]\n            partial_executions: Vec::new(),\n        };\n\n        (witness, values)\n    }\n\n    #[tokio::test]\n    pub async fn test_witness() {\n        let (witness, values) = create_test_witness();\n        // test serde\n        {\n            let recoded = rkyv::from_bytes::<Witness<VecOracle>, rkyv::rancor::Error>(\n                &rkyv::to_bytes::<rkyv::rancor::Error>(&witness).unwrap(),\n            )\n            .unwrap();\n            assert_eq!(\n                witness.oracle_witness.preimages.lock().unwrap().to_vec(),\n                recoded.oracle_witness.preimages.lock().unwrap().to_vec()\n            );\n            assert_eq!(\n                witness.stream_witness.preimages.lock().unwrap().to_vec(),\n                recoded.stream_witness.preimages.lock().unwrap().to_vec()\n            );\n            assert_eq!(witness.blobs_witness, recoded.blobs_witness);\n            assert_eq!(\n                witness.payout_recipient_address,\n                recoded.payout_recipient_address\n            );\n            assert_eq!(\n                witness.precondition_validation_data_hash,\n                recoded.precondition_validation_data_hash\n            );\n            assert_eq!(witness.stitched_boot_info, recoded.stitched_boot_info);\n            assert_eq!(witness.fpvm_image_id, recoded.fpvm_image_id);\n        }\n        // test deep clone\n        let regular_clone = witness.clone();\n        let deep_clone = witness.deep_clone();\n        let preimage_count = regular_clone.oracle_witness.preimage_count();\n        exhaust_vec_oracle(1, witness.oracle_witness, values).await;\n        assert_eq!(regular_clone.oracle_witness.preimage_count(), 0);\n        assert_eq!(deep_clone.oracle_witness.preimage_count(), preimage_count);\n    }\n}","resolutions":{"ba5b6c9584fb78fd":{"status":"differs","coveredLines":159,"match":{"origin":"own","collection":"bob","relation":{"type":"own"},"rank":0,"matchedBy":"name","auditedName":"witness.rs","similarity":0.946,"reportId":"bob/veridise-kailua-2025-10","repository":"boundless-xyz/kailua","path":"crates/kona/src/witness.rs","commit":"2414297a5f9feb98365ef6d88634bcd181a1934b","commitTimestamp":"2025-10-21T05:51:11Z","url":"https://github.com/boundless-xyz/kailua/blob/2414297a5f9feb98365ef6d88634bcd181a1934b/crates/kona/src/witness.rs","auditStatus":"audited_with_no_major_findings","reviewPhase":"initial audit","coverage":"Veridise review of the Kailua stateless Optimism client (crates/kona) on commit 2414297 of boundless-xyz/kailua, focused on the new pause/resume derivation and proof stitching. No findings located here.","majorFindings":0,"isLatestVersion":true,"laterAuditedVersionExists":false,"totalVersions":1},"diff":{"added":12,"removed":0,"ignoredAdded":2,"ignoredRemoved":0,"unchanged":159,"ignoredOnly":false,"hunks":[{"oldStart":15,"oldLines":6,"newStart":15,"newLines":10,"lines":[{"type":" ","oldLine":15,"newLine":15,"text":"use crate::blobs::BlobWitnessData;"},{"type":" ","oldLine":16,"newLine":16,"text":"use crate::boot::StitchedBootInfo;"},{"type":" ","oldLine":17,"newLine":17,"text":"use crate::driver::CachedDriver;"},{"type":"+","newLine":18,"text":"#[cfg(feature = \"experimental\")]","ignored":false},{"type":"+","newLine":19,"text":"use crate::evm::partial::PartialExecution;","ignored":false},{"type":"+","newLine":20,"text":"#[cfg(feature = \"experimental\")]","ignored":false},{"type":"+","newLine":21,"text":"use crate::evm::witness::PartialExecutionWitness;","ignored":false},{"type":" ","oldLine":18,"newLine":22,"text":"use crate::executor::Execution;"},{"type":" ","oldLine":19,"newLine":23,"text":"use crate::oracle::vec::VecOracle;"},{"type":" ","oldLine":20,"newLine":24,"text":"use crate::oracle::WitnessOracle;"}]},{"oldStart":49,"oldLines":6,"newStart":53,"newLines":12,"lines":[{"type":" ","oldLine":49,"newLine":53,"text":"    /// # Notes:"},{"type":" ","oldLine":50,"newLine":54,"text":"    /// - Ensure all `Execution` objects within the groups are properly sorted."},{"type":" ","oldLine":51,"newLine":55,"text":"    pub stitched_executions: Vec<Vec<Execution>>,"},{"type":"+","newLine":56,"text":"    /// Optional witness data for partial execution.","ignored":true},{"type":"+","newLine":57,"text":"    #[cfg(feature = \"experimental\")]","ignored":false},{"type":"+","newLine":58,"text":"    pub pe_witness: Option<PartialExecutionWitness>,","ignored":false},{"type":"+","newLine":59,"text":"    /// Pre-computed per-block chunk aggregation data.","ignored":true},{"type":"+","newLine":60,"text":"    #[cfg(feature = \"experimental\")]","ignored":false},{"type":"+","newLine":61,"text":"    pub partial_executions: Vec<Vec<PartialExecution>>,","ignored":false},{"type":" ","oldLine":52,"newLine":62,"text":"    /// An initial state for the derivation pipeline"},{"type":" ","oldLine":53,"newLine":63,"text":"    pub derivation_cache: Option<CachedDriver>,"},{"type":" ","oldLine":54,"newLine":64,"text":"    /// Whether to record a derivation trace precondition in the output journal"}]},{"oldStart":112,"oldLines":6,"newStart":122,"newLines":10,"lines":[{"type":" ","oldLine":112,"newLine":122,"text":"            ],"},{"type":" ","oldLine":113,"newLine":123,"text":"            stitched_boot_info: gen_boot_infos(32, 128),"},{"type":" ","oldLine":114,"newLine":124,"text":"            fpvm_image_id: keccak256(b\"fpvm_image_id\"),"},{"type":"+","newLine":125,"text":"            #[cfg(feature = \"experimental\")]","ignored":false},{"type":"+","newLine":126,"text":"            pe_witness: None,","ignored":false},{"type":"+","newLine":127,"text":"            #[cfg(feature = \"experimental\")]","ignored":false},{"type":"+","newLine":128,"text":"            partial_executions: Vec::new(),","ignored":false},{"type":" ","oldLine":115,"newLine":129,"text":"        };"},{"type":" ","oldLine":116,"newLine":130,"text":""},{"type":" ","oldLine":117,"newLine":131,"text":"        (witness, values)"}]}]},"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "04eaa73f5499b8781c705cbb9a35e2fa202b2962c471bef40ae9bfb744e1ae8b",
+  "name": "witness.rs",
+  "kind": "program",
+  "lines": 171,
+  "source": "// Copyright 2024, 2025 RISC Zero, Inc.\n//\n// Licensed under the Apache License, Version 2.0 (the \"License\");\n// you may not use this file except in compliance with the License.\n// You may obtain a copy of the License at\n//\n//     http://www.apache.org/licenses/LICENSE-2.0\n//\n// Unless required by applicable law or agreed to in writing, software\n// distributed under the License is distributed on an \"AS IS\" BASIS,\n// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n// See the License for the specific language governing permissions and\n// limitations under the License.\n\nuse crate::blobs::BlobWitnessData;\nuse crate::boot::StitchedBootInfo;\nuse crate::driver::CachedDriver;\n#[cfg(feature = \"experimental\")]\nuse crate::evm::partial::PartialExecution;\n#[cfg(feature = \"experimental\")]\nuse crate::evm::witness::PartialExecutionWitness;\nuse crate::executor::Execution;\nuse crate::oracle::vec::VecOracle;\nuse crate::oracle::WitnessOracle;\nuse crate::precondition::Precondition;\nuse crate::rkyv::primitives::{AddressDef, B256Def};\nuse alloy_primitives::{Address, B256};\nuse std::fmt::Debug;\n\n/// Represents the complete structure of a `Witness`, which is used to hold\n/// the necessary data for authenticating a rollup state transition in the FPVM.\n#[derive(Clone, Debug, Default, rkyv::Archive, rkyv::Serialize, rkyv::Deserialize)]\npub struct Witness<O: WitnessOracle> {\n    /// The witness oracle for preimage data preloaded in memory.\n    pub oracle_witness: O,\n    /// The witness oracle for preimage data streamed in on demand.\n    pub stream_witness: O,\n    /// Represents the witness data for blobs.\n    pub blobs_witness: BlobWitnessData,\n    /// Represents the address of the proof's payout recipient.\n    #[rkyv(with = AddressDef)]\n    pub payout_recipient_address: Address,\n    /// Represents a hash value used for loading precondition validation data.\n    #[rkyv(with = B256Def)]\n    pub precondition_validation_data_hash: B256,\n    /// A collection of stitched executions represented as a two-dimensional vector.\n    ///\n    /// # Structure:\n    /// - The outer `Vec` represents a collection of execution groups.\n    /// - Each inner `Vec<Execution>` contains a continuous series of `Execution` objects that\n    ///   represent individual executions within a specific stitched group.\n    ///\n    /// # Notes:\n    /// - Ensure all `Execution` objects within the groups are properly sorted.\n    pub stitched_executions: Vec<Vec<Execution>>,\n    /// Optional witness data for partial execution.\n    #[cfg(feature = \"experimental\")]\n    pub pe_witness: Option<PartialExecutionWitness>,\n    /// Pre-computed per-block chunk aggregation data.\n    #[cfg(feature = \"experimental\")]\n    pub partial_executions: Vec<Vec<PartialExecution>>,\n    /// An initial state for the derivation pipeline\n    pub derivation_cache: Option<CachedDriver>,\n    /// Whether to record a derivation trace precondition in the output journal\n    pub trace_derivation: bool,\n    /// A list of `StitchedBootInfo` instances to be stitched together from other proofs.\n    pub stitched_preconditions: Vec<Precondition>,\n    /// A list of `StitchedBootInfo` instances to be stitched together from other proofs.\n    pub stitched_boot_info: Vec<StitchedBootInfo>,\n    /// Represents the fault-proof virtual machine program image id.\n    #[rkyv(with = B256Def)]\n    pub fpvm_image_id: B256,\n}\n\nimpl Witness<VecOracle> {\n    /// Creates a deep copy of the current instance.\n    ///\n    /// This method performs a \"deep clone\" of the object by cloning all its fields,\n    /// including any nested fields that implement the `deep_clone` method.\n    /// This ensures that all references and internal data are duplicated,\n    /// rather than pointing to the same objects.\n    ///\n    /// # Returns\n    /// A new instance of the structure with all fields deeply cloned.\n    pub fn deep_clone(&self) -> Self {\n        let mut cloned_with_arc = self.clone();\n        cloned_with_arc.oracle_witness = cloned_with_arc.oracle_witness.deep_clone();\n        cloned_with_arc.stream_witness = cloned_with_arc.stream_witness.deep_clone();\n        cloned_with_arc\n    }\n}\n\n#[cfg(test)]\n#[cfg_attr(coverage_nightly, coverage(off))]\npub mod tests {\n    use super::*;\n    use crate::blobs::tests::gen_blobs;\n    use crate::boot::tests::gen_boot_infos;\n    use crate::executor::tests::gen_executions;\n    use crate::oracle::vec::tests::{exhaust_vec_oracle, prepare_vec_oracle};\n    use alloy_primitives::keccak256;\n    use std::ops::Deref;\n\n    pub fn create_test_witness() -> (Witness<VecOracle>, Vec<Vec<u8>>) {\n        let (vec_oracle, values) = prepare_vec_oracle(512, 1);\n        let blobs_witness = BlobWitnessData::from(gen_blobs(10));\n        let witness = Witness {\n            oracle_witness: vec_oracle.deep_clone(),\n            stream_witness: vec_oracle.deep_clone(),\n            blobs_witness,\n            payout_recipient_address: Address::from([0xb0; 20]),\n            precondition_validation_data_hash: keccak256(b\"precondition_validation_data_hash\"),\n            stitched_executions: vec![gen_executions(64)\n                .into_iter()\n                .map(|e| e.deref().clone())\n                .collect()],\n            derivation_cache: None,\n            trace_derivation: false,\n            stitched_preconditions: vec![\n                Precondition::default().proposal(keccak256(b\"proposal\"));\n                32\n            ],\n            stitched_boot_info: gen_boot_infos(32, 128),\n            fpvm_image_id: keccak256(b\"fpvm_image_id\"),\n            #[cfg(feature = \"experimental\")]\n            pe_witness: None,\n            #[cfg(feature = \"experimental\")]\n            partial_executions: Vec::new(),\n        };\n\n        (witness, values)\n    }\n\n    #[tokio::test]\n    pub async fn test_witness() {\n        let (witness, values) = create_test_witness();\n        // test serde\n        {\n            let recoded = rkyv::from_bytes::<Witness<VecOracle>, rkyv::rancor::Error>(\n                &rkyv::to_bytes::<rkyv::rancor::Error>(&witness).unwrap(),\n            )\n            .unwrap();\n            assert_eq!(\n                witness.oracle_witness.preimages.lock().unwrap().to_vec(),\n                recoded.oracle_witness.preimages.lock().unwrap().to_vec()\n            );\n            assert_eq!(\n                witness.stream_witness.preimages.lock().unwrap().to_vec(),\n                recoded.stream_witness.preimages.lock().unwrap().to_vec()\n            );\n            assert_eq!(witness.blobs_witness, recoded.blobs_witness);\n            assert_eq!(\n                witness.payout_recipient_address,\n                recoded.payout_recipient_address\n            );\n            assert_eq!(\n                witness.precondition_validation_data_hash,\n                recoded.precondition_validation_data_hash\n            );\n            assert_eq!(witness.stitched_boot_info, recoded.stitched_boot_info);\n            assert_eq!(witness.fpvm_image_id, recoded.fpvm_image_id);\n        }\n        // test deep clone\n        let regular_clone = witness.clone();\n        let deep_clone = witness.deep_clone();\n        let preimage_count = regular_clone.oracle_witness.preimage_count();\n        exhaust_vec_oracle(1, witness.oracle_witness, values).await;\n        assert_eq!(regular_clone.oracle_witness.preimage_count(), 0);\n        assert_eq!(deep_clone.oracle_witness.preimage_count(), preimage_count);\n    }\n}",
+  "resolutions": {
+    "ba5b6c9584fb78fd": {
+      "status": "differs",
+      "coveredLines": 159,
+      "match": {
+        "origin": "own",
+        "collection": "bob",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "witness.rs",
+        "similarity": 0.946,
+        "reportId": "bob/veridise-kailua-2025-10",
+        "repository": "boundless-xyz/kailua",
+        "path": "crates/kona/src/witness.rs",
+        "commit": "2414297a5f9feb98365ef6d88634bcd181a1934b",
+        "commitTimestamp": "2025-10-21T05:51:11Z",
+        "url": "https://github.com/boundless-xyz/kailua/blob/2414297a5f9feb98365ef6d88634bcd181a1934b/crates/kona/src/witness.rs",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Veridise review of the Kailua stateless Optimism client (crates/kona) on commit 2414297 of boundless-xyz/kailua, focused on the new pause/resume derivation and proof stitching. No findings located here.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 12,
+        "removed": 0,
+        "ignoredAdded": 2,
+        "ignoredRemoved": 0,
+        "unchanged": 159,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 15,
+            "oldLines": 6,
+            "newStart": 15,
+            "newLines": 10,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 15,
+                "newLine": 15,
+                "text": "use crate::blobs::BlobWitnessData;"
+              },
+              {
+                "type": " ",
+                "oldLine": 16,
+                "newLine": 16,
+                "text": "use crate::boot::StitchedBootInfo;"
+              },
+              {
+                "type": " ",
+                "oldLine": 17,
+                "newLine": 17,
+                "text": "use crate::driver::CachedDriver;"
+              },
+              {
+                "type": "+",
+                "newLine": 18,
+                "text": "#[cfg(feature = \"experimental\")]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 19,
+                "text": "use crate::evm::partial::PartialExecution;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 20,
+                "text": "#[cfg(feature = \"experimental\")]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 21,
+                "text": "use crate::evm::witness::PartialExecutionWitness;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 18,
+                "newLine": 22,
+                "text": "use crate::executor::Execution;"
+              },
+              {
+                "type": " ",
+                "oldLine": 19,
+                "newLine": 23,
+                "text": "use crate::oracle::vec::VecOracle;"
+              },
+              {
+                "type": " ",
+                "oldLine": 20,
+                "newLine": 24,
+                "text": "use crate::oracle::WitnessOracle;"
+              }
+            ]
+          },
+          {
+            "oldStart": 49,
+            "oldLines": 6,
+            "newStart": 53,
+            "newLines": 12,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 49,
+                "newLine": 53,
+                "text": "    /// # Notes:"
+              },
+              {
+                "type": " ",
+                "oldLine": 50,
+                "newLine": 54,
+                "text": "    /// - Ensure all `Execution` objects within the groups are properly sorted."
+              },
+              {
+                "type": " ",
+                "oldLine": 51,
+                "newLine": 55,
+                "text": "    pub stitched_executions: Vec<Vec<Execution>>,"
+              },
+              {
+                "type": "+",
+                "newLine": 56,
+                "text": "    /// Optional witness data for partial execution.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 57,
+                "text": "    #[cfg(feature = \"experimental\")]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 58,
+                "text": "    pub pe_witness: Option<PartialExecutionWitness>,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 59,
+                "text": "    /// Pre-computed per-block chunk aggregation data.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 60,
+                "text": "    #[cfg(feature = \"experimental\")]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 61,
+                "text": "    pub partial_executions: Vec<Vec<PartialExecution>>,",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 52,
+                "newLine": 62,
+                "text": "    /// An initial state for the derivation pipeline"
+              },
+              {
+                "type": " ",
+                "oldLine": 53,
+                "newLine": 63,
+                "text": "    pub derivation_cache: Option<CachedDriver>,"
+              },
+              {
+                "type": " ",
+                "oldLine": 54,
+                "newLine": 64,
+                "text": "    /// Whether to record a derivation trace precondition in the output journal"
+              }
+            ]
+          },
+          {
+            "oldStart": 112,
+            "oldLines": 6,
+            "newStart": 122,
+            "newLines": 10,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 112,
+                "newLine": 122,
+                "text": "            ],"
+              },
+              {
+                "type": " ",
+                "oldLine": 113,
+                "newLine": 123,
+                "text": "            stitched_boot_info: gen_boot_infos(32, 128),"
+              },
+              {
+                "type": " ",
+                "oldLine": 114,
+                "newLine": 124,
+                "text": "            fpvm_image_id: keccak256(b\"fpvm_image_id\"),"
+              },
+              {
+                "type": "+",
+                "newLine": 125,
+                "text": "            #[cfg(feature = \"experimental\")]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 126,
+                "text": "            pe_witness: None,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 127,
+                "text": "            #[cfg(feature = \"experimental\")]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 128,
+                "text": "            partial_executions: Vec::new(),",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 115,
+                "newLine": 129,
+                "text": "        };"
+              },
+              { "type": " ", "oldLine": 116, "newLine": 130, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 117,
+                "newLine": 131,
+                "text": "        (witness, values)"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

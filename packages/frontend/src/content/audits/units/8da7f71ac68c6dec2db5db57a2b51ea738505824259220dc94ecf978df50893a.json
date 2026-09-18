@@ -1,1 +1,15 @@
-{"schemaVersion":2,"unitHash":"8da7f71ac68c6dec2db5db57a2b51ea738505824259220dc94ecf978df50893a","name":"mod.rs","kind":"program","lines":16,"source":"//! Core [`RollupNode`] service, composing the available [`NodeActor`]s into various modes of\n//! operation.\n//!\n//! [`NodeActor`]: crate::NodeActor\n\nmod builder;\npub use builder::{DerivationDelegateConfig, L1ConfigBuilder, RollupNodeBuilder};\n\nmod mode;\npub use mode::{InteropMode, NodeMode};\n\nmod node;\npub use node::{L1Config, RollupNode};\n\npub(crate) mod util;\npub(crate) use util::{shutdown_signal, spawn_and_wait};","resolutions":{"9fa846564f4071bd":{"status":"unaudited","coveredLines":0,"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "8da7f71ac68c6dec2db5db57a2b51ea738505824259220dc94ecf978df50893a",
+  "name": "mod.rs",
+  "kind": "program",
+  "lines": 16,
+  "source": "//! Core [`RollupNode`] service, composing the available [`NodeActor`]s into various modes of\n//! operation.\n//!\n//! [`NodeActor`]: crate::NodeActor\n\nmod builder;\npub use builder::{DerivationDelegateConfig, L1ConfigBuilder, RollupNodeBuilder};\n\nmod mode;\npub use mode::{InteropMode, NodeMode};\n\nmod node;\npub use node::{L1Config, RollupNode};\n\npub(crate) mod util;\npub(crate) use util::{shutdown_signal, spawn_and_wait};",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

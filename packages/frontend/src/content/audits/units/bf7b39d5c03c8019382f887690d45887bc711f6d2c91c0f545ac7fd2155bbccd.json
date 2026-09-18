@@ -1,1 +1,15 @@
-{"schemaVersion":2,"unitHash":"bf7b39d5c03c8019382f887690d45887bc711f6d2c91c0f545ac7fd2155bbccd","name":"mod.rs","kind":"program","lines":29,"source":"//! Contains types related to the [`SystemConfig`].\n\nuse alloy_primitives::{B256, b256};\n\n/// `keccak256(\"ConfigUpdate(uint256,uint8,bytes)\")`\npub const CONFIG_UPDATE_TOPIC: B256 =\n    b256!(\"1d2b0bda21d56b8bd12d4f94ebacffdfb35f5e226f84b461103bb8beab6353be\");\n\n/// The initial version of the system config event log.\npub const CONFIG_UPDATE_EVENT_VERSION_0: B256 = B256::ZERO;\n\nmod config;\npub use config::SystemConfig;\n\nmod log;\npub use log::SystemConfigLog;\n\nmod update;\npub use update::SystemConfigUpdate;\n\nmod kind;\npub use kind::SystemConfigUpdateKind;\n\nmod errors;\npub use errors::{\n    BatcherUpdateError, DaFootprintGasScalarUpdateError, EIP1559UpdateError, GasConfigUpdateError,\n    GasLimitUpdateError, LogProcessingError, MinBaseFeeUpdateError, OperatorFeeUpdateError,\n    SystemConfigUpdateError, UnsafeBlockSignerUpdateError,\n};","resolutions":{"9fa846564f4071bd":{"status":"unaudited","coveredLines":0,"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "bf7b39d5c03c8019382f887690d45887bc711f6d2c91c0f545ac7fd2155bbccd",
+  "name": "mod.rs",
+  "kind": "program",
+  "lines": 29,
+  "source": "//! Contains types related to the [`SystemConfig`].\n\nuse alloy_primitives::{B256, b256};\n\n/// `keccak256(\"ConfigUpdate(uint256,uint8,bytes)\")`\npub const CONFIG_UPDATE_TOPIC: B256 =\n    b256!(\"1d2b0bda21d56b8bd12d4f94ebacffdfb35f5e226f84b461103bb8beab6353be\");\n\n/// The initial version of the system config event log.\npub const CONFIG_UPDATE_EVENT_VERSION_0: B256 = B256::ZERO;\n\nmod config;\npub use config::SystemConfig;\n\nmod log;\npub use log::SystemConfigLog;\n\nmod update;\npub use update::SystemConfigUpdate;\n\nmod kind;\npub use kind::SystemConfigUpdateKind;\n\nmod errors;\npub use errors::{\n    BatcherUpdateError, DaFootprintGasScalarUpdateError, EIP1559UpdateError, GasConfigUpdateError,\n    GasLimitUpdateError, LogProcessingError, MinBaseFeeUpdateError, OperatorFeeUpdateError,\n    SystemConfigUpdateError, UnsafeBlockSignerUpdateError,\n};",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

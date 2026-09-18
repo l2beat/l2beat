@@ -1,1 +1,15 @@
-{"schemaVersion":2,"unitHash":"103ce564f5c8e107fb3c7f8544d9ead4696853591a2971b6bf6f007df5a46305","name":"lib.rs","kind":"program","lines":12,"source":"#![doc = include_str!(\"../README.md\")]\n#![doc(\n    html_logo_url = \"https://raw.githubusercontent.com/ethereum-optimism/optimism/develop/rust/kona/assets/square.png\",\n    html_favicon_url = \"https://raw.githubusercontent.com/ethereum-optimism/optimism/develop/rust/kona/assets/favicon.ico\",\n    issue_tracker_base_url = \"https://github.com/ethereum-optimism/optimism/issues/\"\n)]\n#![cfg_attr(docsrs, feature(doc_cfg))]\n#![no_std]\n\nextern crate alloc;\n\npub mod quantity;","resolutions":{"9fa846564f4071bd":{"status":"unaudited","coveredLines":0,"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "103ce564f5c8e107fb3c7f8544d9ead4696853591a2971b6bf6f007df5a46305",
+  "name": "lib.rs",
+  "kind": "program",
+  "lines": 12,
+  "source": "#![doc = include_str!(\"../README.md\")]\n#![doc(\n    html_logo_url = \"https://raw.githubusercontent.com/ethereum-optimism/optimism/develop/rust/kona/assets/square.png\",\n    html_favicon_url = \"https://raw.githubusercontent.com/ethereum-optimism/optimism/develop/rust/kona/assets/favicon.ico\",\n    issue_tracker_base_url = \"https://github.com/ethereum-optimism/optimism/issues/\"\n)]\n#![cfg_attr(docsrs, feature(doc_cfg))]\n#![no_std]\n\nextern crate alloc;\n\npub mod quantity;",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

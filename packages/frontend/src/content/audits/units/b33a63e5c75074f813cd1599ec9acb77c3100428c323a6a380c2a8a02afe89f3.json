@@ -1,1 +1,99 @@
-{"schemaVersion":2,"unitHash":"b33a63e5c75074f813cd1599ec9acb77c3100428c323a6a380c2a8a02afe89f3","name":"tracing.rs","kind":"program","lines":58,"source":"//! This module contains a subscriber layer for `tracing-subscriber` that collects traces and their\n//! log levels.\n\nuse alloc::{format, string::String, sync::Arc, vec::Vec};\nuse spin::Mutex;\nuse tracing::{Event, Level, Subscriber};\nuse tracing_subscriber::{Layer, layer::Context};\n\n/// The storage for the collected traces.\n#[derive(Debug, Default, Clone)]\npub struct TraceStorage(pub Arc<Mutex<Vec<(Level, String)>>>);\n\nimpl TraceStorage {\n    /// Returns the items in the storage that match the specified level.\n    pub fn get_by_level(&self, level: Level) -> Vec<String> {\n        self.0\n            .lock()\n            .iter()\n            .filter(|&(l, _message)| *l == level)\n            .map(|(_l, message)| message.clone())\n            .collect()\n    }\n\n    /// Locks the storage and returns the items.\n    pub fn lock(&self) -> spin::MutexGuard<'_, Vec<(Level, String)>> {\n        self.0.lock()\n    }\n\n    /// Returns if the storage is empty.\n    pub fn is_empty(&self) -> bool {\n        self.0.lock().is_empty()\n    }\n}\n\n/// A subscriber layer that collects traces and their log levels.\n#[derive(Debug, Default)]\npub struct CollectingLayer {\n    /// The storage for the collected traces.\n    pub storage: TraceStorage,\n}\n\nimpl CollectingLayer {\n    /// Creates a new collecting layer with the specified storage.\n    pub const fn new(storage: TraceStorage) -> Self {\n        Self { storage }\n    }\n}\n\nimpl<S: Subscriber> Layer<S> for CollectingLayer {\n    fn on_event(&self, event: &Event<'_>, _ctx: Context<'_, S>) {\n        let metadata = event.metadata();\n        let level = *metadata.level();\n        let message = format!(\"{event:?}\");\n\n        let mut storage = self.storage.0.lock();\n        storage.push((level, message));\n    }\n}","resolutions":{"9fa846564f4071bd":{"status":"differs","coveredLines":56,"match":{"origin":"own","collection":"optimism","relation":{"type":"own"},"rank":0,"matchedBy":"name","auditedName":"tracing.rs","similarity":0.966,"reportId":"optimism/cantina-kona-2026-03","repository":"op-rs/kona","path":"crates/protocol/derive/src/test_utils/tracing.rs","commit":"86910c9112437bbb849eca28961f813c5450e103","commitTimestamp":"2025-12-15T17:17:05Z","url":"https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/crates/protocol/derive/src/test_utils/tracing.rs","auditStatus":"audited_with_no_major_findings","reviewPhase":"initial audit","coverage":"Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). kona-derive derivation pipeline (stages, sources, traversal, attributes). Medium findings 3.3.1 and 3.3.2 (pipeline/core.rs, stages/l1_retrieval.rs) and numerous Low/Informational findings located here; no Critical/High.","majorFindings":0,"isLatestVersion":true,"laterAuditedVersionExists":false,"totalVersions":1},"diff":{"added":2,"removed":1,"ignoredAdded":0,"ignoredRemoved":0,"unchanged":56,"ignoredOnly":false,"hunks":[{"oldStart":16,"oldLines":7,"newStart":16,"newLines":8,"lines":[{"type":" ","oldLine":16,"newLine":16,"text":"        self.0"},{"type":" ","oldLine":17,"newLine":17,"text":"            .lock()"},{"type":" ","oldLine":18,"newLine":18,"text":"            .iter()"},{"type":"-","oldLine":19,"text":"            .filter_map(|(l, message)| if *l == level { Some(message.clone()) } else { None })","ignored":false},{"type":"+","newLine":19,"text":"            .filter(|&(l, _message)| *l == level)","ignored":false},{"type":"+","newLine":20,"text":"            .map(|(_l, message)| message.clone())","ignored":false},{"type":" ","oldLine":20,"newLine":21,"text":"            .collect()"},{"type":" ","oldLine":21,"newLine":22,"text":"    }"},{"type":" ","oldLine":22,"newLine":23,"text":""}]}]},"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "b33a63e5c75074f813cd1599ec9acb77c3100428c323a6a380c2a8a02afe89f3",
+  "name": "tracing.rs",
+  "kind": "program",
+  "lines": 58,
+  "source": "//! This module contains a subscriber layer for `tracing-subscriber` that collects traces and their\n//! log levels.\n\nuse alloc::{format, string::String, sync::Arc, vec::Vec};\nuse spin::Mutex;\nuse tracing::{Event, Level, Subscriber};\nuse tracing_subscriber::{Layer, layer::Context};\n\n/// The storage for the collected traces.\n#[derive(Debug, Default, Clone)]\npub struct TraceStorage(pub Arc<Mutex<Vec<(Level, String)>>>);\n\nimpl TraceStorage {\n    /// Returns the items in the storage that match the specified level.\n    pub fn get_by_level(&self, level: Level) -> Vec<String> {\n        self.0\n            .lock()\n            .iter()\n            .filter(|&(l, _message)| *l == level)\n            .map(|(_l, message)| message.clone())\n            .collect()\n    }\n\n    /// Locks the storage and returns the items.\n    pub fn lock(&self) -> spin::MutexGuard<'_, Vec<(Level, String)>> {\n        self.0.lock()\n    }\n\n    /// Returns if the storage is empty.\n    pub fn is_empty(&self) -> bool {\n        self.0.lock().is_empty()\n    }\n}\n\n/// A subscriber layer that collects traces and their log levels.\n#[derive(Debug, Default)]\npub struct CollectingLayer {\n    /// The storage for the collected traces.\n    pub storage: TraceStorage,\n}\n\nimpl CollectingLayer {\n    /// Creates a new collecting layer with the specified storage.\n    pub const fn new(storage: TraceStorage) -> Self {\n        Self { storage }\n    }\n}\n\nimpl<S: Subscriber> Layer<S> for CollectingLayer {\n    fn on_event(&self, event: &Event<'_>, _ctx: Context<'_, S>) {\n        let metadata = event.metadata();\n        let level = *metadata.level();\n        let message = format!(\"{event:?}\");\n\n        let mut storage = self.storage.0.lock();\n        storage.push((level, message));\n    }\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "differs",
+      "coveredLines": 56,
+      "match": {
+        "origin": "own",
+        "collection": "optimism",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "tracing.rs",
+        "similarity": 0.966,
+        "reportId": "optimism/cantina-kona-2026-03",
+        "repository": "op-rs/kona",
+        "path": "crates/protocol/derive/src/test_utils/tracing.rs",
+        "commit": "86910c9112437bbb849eca28961f813c5450e103",
+        "commitTimestamp": "2025-12-15T17:17:05Z",
+        "url": "https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/crates/protocol/derive/src/test_utils/tracing.rs",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). kona-derive derivation pipeline (stages, sources, traversal, attributes). Medium findings 3.3.1 and 3.3.2 (pipeline/core.rs, stages/l1_retrieval.rs) and numerous Low/Informational findings located here; no Critical/High.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 2,
+        "removed": 1,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 56,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 16,
+            "oldLines": 7,
+            "newStart": 16,
+            "newLines": 8,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 16,
+                "newLine": 16,
+                "text": "        self.0"
+              },
+              {
+                "type": " ",
+                "oldLine": 17,
+                "newLine": 17,
+                "text": "            .lock()"
+              },
+              {
+                "type": " ",
+                "oldLine": 18,
+                "newLine": 18,
+                "text": "            .iter()"
+              },
+              {
+                "type": "-",
+                "oldLine": 19,
+                "text": "            .filter_map(|(l, message)| if *l == level { Some(message.clone()) } else { None })",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 19,
+                "text": "            .filter(|&(l, _message)| *l == level)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 20,
+                "text": "            .map(|(_l, message)| message.clone())",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 20,
+                "newLine": 21,
+                "text": "            .collect()"
+              },
+              { "type": " ", "oldLine": 21, "newLine": 22, "text": "    }" },
+              { "type": " ", "oldLine": 22, "newLine": 23, "text": "" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

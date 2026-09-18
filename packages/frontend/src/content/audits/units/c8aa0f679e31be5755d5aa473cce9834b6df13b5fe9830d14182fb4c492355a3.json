@@ -1,1 +1,15 @@
-{"schemaVersion":2,"unitHash":"c8aa0f679e31be5755d5aa473cce9834b6df13b5fe9830d14182fb4c492355a3","name":"traits.rs","kind":"program","lines":18,"source":"//! The trait abstraction for a Hardfork.\n\nuse alloy_primitives::Bytes;\n\n/// The trait abstraction for a Hardfork.\npub trait Hardfork {\n    /// Returns the hardfork upgrade transactions as [`Bytes`].\n    fn txs(&self) -> impl Iterator<Item = Bytes> + '_;\n\n    /// Returns the additional gas required by upgrade transactions.\n    ///\n    /// Starting with Karst, upgrade transactions carry their own gas budget that is\n    /// added to the block gas limit at the fork activation block. Pre-Karst forks\n    /// return 0 (upgrade txs ran within the system tx gas allowance).\n    fn upgrade_gas(&self) -> u64 {\n        0\n    }\n}","resolutions":{"9fa846564f4071bd":{"status":"unaudited","coveredLines":0,"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "c8aa0f679e31be5755d5aa473cce9834b6df13b5fe9830d14182fb4c492355a3",
+  "name": "traits.rs",
+  "kind": "program",
+  "lines": 18,
+  "source": "//! The trait abstraction for a Hardfork.\n\nuse alloy_primitives::Bytes;\n\n/// The trait abstraction for a Hardfork.\npub trait Hardfork {\n    /// Returns the hardfork upgrade transactions as [`Bytes`].\n    fn txs(&self) -> impl Iterator<Item = Bytes> + '_;\n\n    /// Returns the additional gas required by upgrade transactions.\n    ///\n    /// Starting with Karst, upgrade transactions carry their own gas budget that is\n    /// added to the block gas limit at the fork activation block. Pre-Karst forks\n    /// return 0 (upgrade txs ran within the system tx gas allowance).\n    fn upgrade_gas(&self) -> u64 {\n        0\n    }\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

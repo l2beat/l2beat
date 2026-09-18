@@ -1,1 +1,15 @@
-{"schemaVersion":2,"unitHash":"c8c8af97a14a4bf92c01fe05468e8d089ec169b70b253aa641a617aa83d566da","name":".gitignore","kind":"program","lines":3,"source":"datadirs/\njwttoken/\nop-rs-box1.env","resolutions":{"9fa846564f4071bd":{"status":"unaudited","coveredLines":0,"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "c8c8af97a14a4bf92c01fe05468e8d089ec169b70b253aa641a617aa83d566da",
+  "name": ".gitignore",
+  "kind": "program",
+  "lines": 3,
+  "source": "datadirs/\njwttoken/\nop-rs-box1.env",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

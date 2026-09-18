@@ -1,1 +1,37 @@
-{"schemaVersion":2,"unitHash":"8279d97962919d2e3cca044ce42f01df110ed891a192d819faa3e208f9d049b8","name":"errors.rs","kind":"program","lines":28,"source":"//! Contains driver-related error types.\n\nuse kona_derive::PipelineErrorKind;\nuse kona_protocol::FromBlockError;\nuse thiserror::Error;\n\n/// A [`Result`] type for the [`DriverError`].\npub type DriverResult<T, E> = Result<T, DriverError<E>>;\n\n/// Driver error.\n#[derive(Error, Debug)]\npub enum DriverError<E>\nwhere\n    E: core::error::Error,\n{\n    /// Pipeline error.\n    #[error(\"Pipeline error: {0}\")]\n    Pipeline(#[from] PipelineErrorKind),\n    /// An error returned by the executor.\n    #[error(\"Executor error: {0}\")]\n    Executor(E),\n    /// An error returned by the conversion from a block to an [`kona_protocol::L2BlockInfo`].\n    #[error(\"From block error: {0}\")]\n    FromBlock(#[from] FromBlockError),\n    /// Error decoding or encoding RLP.\n    #[error(\"RLP error: {0}\")]\n    Rlp(alloy_rlp::Error),\n}","resolutions":{"9fa846564f4071bd":{"status":"identical","coveredLines":28,"match":{"origin":"own","collection":"optimism","relation":{"type":"own"},"rank":0,"matchedBy":"identity","auditedName":"errors.rs","similarity":1,"reportId":"optimism/cantina-kona-2026-03","repository":"op-rs/kona","path":"crates/proof/driver/src/errors.rs","commit":"86910c9112437bbb849eca28961f813c5450e103","commitTimestamp":"2025-12-15T17:17:05Z","url":"https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/crates/proof/driver/src/errors.rs","auditStatus":"audited_with_no_major_findings","reviewPhase":"initial audit","coverage":"Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). Proof driver, cursor and pipeline; Low findings 3.4.10, 3.4.11, 3.4.19 and Informational 3.5.10 located here.","majorFindings":0,"isLatestVersion":true,"laterAuditedVersionExists":false,"totalVersions":1},"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "8279d97962919d2e3cca044ce42f01df110ed891a192d819faa3e208f9d049b8",
+  "name": "errors.rs",
+  "kind": "program",
+  "lines": 28,
+  "source": "//! Contains driver-related error types.\n\nuse kona_derive::PipelineErrorKind;\nuse kona_protocol::FromBlockError;\nuse thiserror::Error;\n\n/// A [`Result`] type for the [`DriverError`].\npub type DriverResult<T, E> = Result<T, DriverError<E>>;\n\n/// Driver error.\n#[derive(Error, Debug)]\npub enum DriverError<E>\nwhere\n    E: core::error::Error,\n{\n    /// Pipeline error.\n    #[error(\"Pipeline error: {0}\")]\n    Pipeline(#[from] PipelineErrorKind),\n    /// An error returned by the executor.\n    #[error(\"Executor error: {0}\")]\n    Executor(E),\n    /// An error returned by the conversion from a block to an [`kona_protocol::L2BlockInfo`].\n    #[error(\"From block error: {0}\")]\n    FromBlock(#[from] FromBlockError),\n    /// Error decoding or encoding RLP.\n    #[error(\"RLP error: {0}\")]\n    Rlp(alloy_rlp::Error),\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "identical",
+      "coveredLines": 28,
+      "match": {
+        "origin": "own",
+        "collection": "optimism",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "errors.rs",
+        "similarity": 1,
+        "reportId": "optimism/cantina-kona-2026-03",
+        "repository": "op-rs/kona",
+        "path": "crates/proof/driver/src/errors.rs",
+        "commit": "86910c9112437bbb849eca28961f813c5450e103",
+        "commitTimestamp": "2025-12-15T17:17:05Z",
+        "url": "https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/crates/proof/driver/src/errors.rs",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). Proof driver, cursor and pipeline; Low findings 3.4.10, 3.4.11, 3.4.19 and Informational 3.5.10 located here.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "warnings": []
+    }
+  }
+}

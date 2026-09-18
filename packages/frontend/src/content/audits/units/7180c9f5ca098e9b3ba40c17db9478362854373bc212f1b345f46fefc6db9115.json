@@ -1,1 +1,15 @@
-{"schemaVersion":2,"unitHash":"7180c9f5ca098e9b3ba40c17db9478362854373bc212f1b345f46fefc6db9115","name":"backtrace.rs","kind":"program","lines":10,"source":"//! Helper to set the backtrace env var.\n\n/// Sets the `RUST_BACKTRACE` environment variable to 1 if it is not already set.\npub fn enable() {\n    // Enable backtraces unless a RUST_BACKTRACE value has already been explicitly provided.\n    if std::env::var_os(\"RUST_BACKTRACE\").is_none() {\n        // We accept the risk that another process may set RUST_BACKTRACE at the same time.\n        unsafe { std::env::set_var(\"RUST_BACKTRACE\", \"1\") };\n    }\n}","resolutions":{"9fa846564f4071bd":{"status":"unaudited","coveredLines":0,"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "7180c9f5ca098e9b3ba40c17db9478362854373bc212f1b345f46fefc6db9115",
+  "name": "backtrace.rs",
+  "kind": "program",
+  "lines": 10,
+  "source": "//! Helper to set the backtrace env var.\n\n/// Sets the `RUST_BACKTRACE` environment variable to 1 if it is not already set.\npub fn enable() {\n    // Enable backtraces unless a RUST_BACKTRACE value has already been explicitly provided.\n    if std::env::var_os(\"RUST_BACKTRACE\").is_none() {\n        // We accept the risk that another process may set RUST_BACKTRACE at the same time.\n        unsafe { std::env::set_var(\"RUST_BACKTRACE\", \"1\") };\n    }\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

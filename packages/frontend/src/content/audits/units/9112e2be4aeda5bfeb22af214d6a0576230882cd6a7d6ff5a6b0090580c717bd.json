@@ -1,1 +1,86 @@
-{"schemaVersion":2,"unitHash":"9112e2be4aeda5bfeb22af214d6a0576230882cd6a7d6ff5a6b0090580c717bd","name":"errors.rs","kind":"program","lines":11,"source":"//! Errors for the `kona-std-fpvm` crate.\n\nuse thiserror::Error;\n\n/// An error that can occur when reading from or writing to a file descriptor.\n#[derive(Error, Debug, PartialEq, Eq)]\n#[error(\"IO error (errno: {_0})\")]\npub struct IOError(pub i32);\n\n/// A [Result] type for the [`IOError`].\npub type IOResult<T> = Result<T, IOError>;","resolutions":{"9fa846564f4071bd":{"status":"identical","coveredLines":11,"match":{"origin":"own","collection":"optimism","relation":{"type":"own"},"rank":0,"matchedBy":"identity","auditedName":"errors.rs","similarity":1,"reportId":"optimism/cantina-kona-2026-03","repository":"op-rs/kona","path":"crates/proof/std-fpvm/src/errors.rs","commit":"86910c9112437bbb849eca28961f813c5450e103","commitTimestamp":"2025-12-15T17:17:05Z","url":"https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/crates/proof/std-fpvm/src/errors.rs","auditStatus":"audited_with_no_major_findings","reviewPhase":"initial audit","coverage":"Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). FPVM std I/O and syscall layer (mips64, riscv64); Informational finding 3.5.6 (channel.rs) located here.","majorFindings":0,"isLatestVersion":true,"laterAuditedVersionExists":false,"totalVersions":1},"diff":{"added":0,"removed":0,"ignoredAdded":1,"ignoredRemoved":1,"unchanged":11,"ignoredOnly":true,"hunks":[{"oldStart":7,"oldLines":5,"newStart":7,"newLines":5,"lines":[{"type":" ","oldLine":7,"newLine":7,"text":"#[error(\"IO error (errno: {_0})\")]"},{"type":" ","oldLine":8,"newLine":8,"text":"pub struct IOError(pub i32);"},{"type":" ","oldLine":9,"newLine":9,"text":""},{"type":"-","oldLine":10,"text":"/// A [Result] type for the [IOError].","ignored":true},{"type":"+","newLine":10,"text":"/// A [Result] type for the [`IOError`].","ignored":true},{"type":" ","oldLine":11,"newLine":11,"text":"pub type IOResult<T> = Result<T, IOError>;"}]}]},"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "9112e2be4aeda5bfeb22af214d6a0576230882cd6a7d6ff5a6b0090580c717bd",
+  "name": "errors.rs",
+  "kind": "program",
+  "lines": 11,
+  "source": "//! Errors for the `kona-std-fpvm` crate.\n\nuse thiserror::Error;\n\n/// An error that can occur when reading from or writing to a file descriptor.\n#[derive(Error, Debug, PartialEq, Eq)]\n#[error(\"IO error (errno: {_0})\")]\npub struct IOError(pub i32);\n\n/// A [Result] type for the [`IOError`].\npub type IOResult<T> = Result<T, IOError>;",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "identical",
+      "coveredLines": 11,
+      "match": {
+        "origin": "own",
+        "collection": "optimism",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "errors.rs",
+        "similarity": 1,
+        "reportId": "optimism/cantina-kona-2026-03",
+        "repository": "op-rs/kona",
+        "path": "crates/proof/std-fpvm/src/errors.rs",
+        "commit": "86910c9112437bbb849eca28961f813c5450e103",
+        "commitTimestamp": "2025-12-15T17:17:05Z",
+        "url": "https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/crates/proof/std-fpvm/src/errors.rs",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). FPVM std I/O and syscall layer (mips64, riscv64); Informational finding 3.5.6 (channel.rs) located here.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 1,
+        "ignoredRemoved": 1,
+        "unchanged": 11,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 7,
+            "oldLines": 5,
+            "newStart": 7,
+            "newLines": 5,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 7,
+                "newLine": 7,
+                "text": "#[error(\"IO error (errno: {_0})\")]"
+              },
+              {
+                "type": " ",
+                "oldLine": 8,
+                "newLine": 8,
+                "text": "pub struct IOError(pub i32);"
+              },
+              { "type": " ", "oldLine": 9, "newLine": 9, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 10,
+                "text": "/// A [Result] type for the [IOError].",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 10,
+                "text": "/// A [Result] type for the [`IOError`].",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 11,
+                "newLine": 11,
+                "text": "pub type IOResult<T> = Result<T, IOError>;"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

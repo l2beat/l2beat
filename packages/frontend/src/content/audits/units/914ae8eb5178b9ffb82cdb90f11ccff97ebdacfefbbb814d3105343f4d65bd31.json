@@ -1,1 +1,1135 @@
-{"schemaVersion":2,"unitHash":"914ae8eb5178b9ffb82cdb90f11ccff97ebdacfefbbb814d3105343f4d65bd31","name":"channel_assembler.rs","kind":"program","lines":411,"source":"//! This module contains the [`ChannelAssembler`] stage.\n\nuse super::{ChannelReaderProvider, NextFrameProvider};\nuse crate::{\n    errors::PipelineError,\n    traits::{OriginAdvancer, OriginProvider, Stage},\n    types::PipelineResult,\n};\nuse alloc::{boxed::Box, sync::Arc};\nuse alloy_eips::BlockNumHash;\nuse alloy_primitives::{Bytes, hex};\nuse async_trait::async_trait;\nuse core::fmt::Debug;\nuse kona_genesis::{\n    MAX_RLP_BYTES_PER_CHANNEL_BEDROCK, MAX_RLP_BYTES_PER_CHANNEL_FJORD, RollupConfig, SystemConfig,\n};\nuse kona_protocol::{BlockInfo, OrderedChannel};\n\n/// The [`ChannelAssembler`] stage is responsible for assembling the [`Frame`]s from the\n/// [`FrameQueue`] stage into a raw compressed [`OrderedChannel`].\n///\n/// [`Frame`]: kona_protocol::Frame\n/// [`FrameQueue`]: crate::stages::FrameQueue\n#[derive(Debug)]\npub struct ChannelAssembler<P>\nwhere\n    P: NextFrameProvider + OriginAdvancer + OriginProvider + Stage + Debug,\n{\n    /// The rollup configuration.\n    pub cfg: Arc<RollupConfig>,\n    /// The previous stage of the derivation pipeline.\n    pub prev: P,\n    /// The current [`OrderedChannel`] being assembled.\n    pub channel: Option<OrderedChannel>,\n}\n\nimpl<P> ChannelAssembler<P>\nwhere\n    P: NextFrameProvider + OriginAdvancer + OriginProvider + Stage + Debug,\n{\n    /// Creates a new [`ChannelAssembler`] stage with the given configuration and previous stage.\n    pub const fn new(cfg: Arc<RollupConfig>, prev: P) -> Self {\n        Self { cfg, prev, channel: None }\n    }\n\n    /// Returns whether or not the channel currently being assembled has timed out.\n    pub fn is_timed_out(&self) -> PipelineResult<bool> {\n        let origin = self.origin().ok_or(PipelineError::MissingOrigin.crit())?;\n        let is_timed_out = self.channel.as_ref().is_some_and(|c| {\n            c.open_block_number() + self.cfg.channel_timeout(origin.timestamp) < origin.number\n        });\n\n        Ok(is_timed_out)\n    }\n}\n\n#[async_trait]\nimpl<P> ChannelReaderProvider for ChannelAssembler<P>\nwhere\n    P: NextFrameProvider + OriginAdvancer + OriginProvider + Stage + Send + Debug,\n{\n    async fn next_data(&mut self) -> PipelineResult<Option<Bytes>> {\n        let origin = self.origin().ok_or(PipelineError::MissingOrigin.crit())?;\n\n        // Time out the channel if it has timed out.\n        if let Some(channel) = self.channel.as_ref() &&\n            self.is_timed_out()?\n        {\n            let channel_id = hex::encode(channel.id());\n            let open_block = channel.open_block_number();\n            warn!(\n                target: \"channel_assembler\",\n                \"Channel (ID: {}) timed out at L1 origin #{}, open block #{}. Discarding channel.\",\n                channel_id,\n                origin.number,\n                open_block\n            );\n            self.channel = None;\n        }\n\n        // Grab the next frame from the previous stage.\n        let next_frame = self.prev.next_frame().await?;\n\n        // Start a new channel if the frame number is 0.\n        if next_frame.number == 0 {\n            info!(\n                target: \"channel_assembler\",\n                \"Starting new channel (ID: {}) at L1 origin #{}\",\n                hex::encode(next_frame.id),\n                origin.number\n            );\n            self.channel = Some(OrderedChannel::new(next_frame.id, origin));\n        }\n\n        let _count = if self.channel.is_some() { 1 } else { 0 };\n        kona_macros::set!(gauge, crate::metrics::Metrics::PIPELINE_CHANNEL_BUFFER, _count);\n\n        if let Some(channel) = self.channel.as_mut() {\n            // Track the number of blocks until the channel times out.\n            let timeout = channel.open_block_number() + self.cfg.channel_timeout(origin.timestamp);\n            let _margin = timeout.saturating_sub(origin.number) as f64;\n            kona_macros::set!(gauge, crate::metrics::Metrics::PIPELINE_CHANNEL_TIMEOUT, _margin);\n\n            // Add the frame to the channel. If this fails, return NotEnoughData and discard the\n            // frame.\n            debug!(\n                target: \"channel_assembler\",\n                \"Adding frame #{} to channel (ID: {}) at L1 origin #{}\",\n                next_frame.number,\n                hex::encode(channel.id()),\n                origin.number\n            );\n            if channel.add_frame(next_frame, origin).is_err() {\n                error!(\n                    target: \"channel_assembler\",\n                    \"Failed to add frame to channel (ID: {}) at L1 origin #{}\",\n                    hex::encode(channel.id()),\n                    origin.number\n                );\n                return Err(PipelineError::NotEnoughData.temp());\n            }\n\n            let _size = channel.size() as f64;\n            kona_macros::set!(gauge, crate::metrics::Metrics::PIPELINE_CHANNEL_MEM, _size);\n\n            let max_rlp_bytes_per_channel = if self.cfg.is_fjord_active(origin.timestamp) {\n                MAX_RLP_BYTES_PER_CHANNEL_FJORD\n            } else {\n                MAX_RLP_BYTES_PER_CHANNEL_BEDROCK\n            };\n            kona_macros::set!(\n                gauge,\n                crate::metrics::Metrics::PIPELINE_MAX_RLP_BYTES,\n                max_rlp_bytes_per_channel as f64\n            );\n            if channel.size() > max_rlp_bytes_per_channel as usize {\n                warn!(\n                    target: \"channel_assembler\",\n                    \"Compressed channel size exceeded max RLP bytes per channel, dropping channel (ID: {}) with {} bytes\",\n                    hex::encode(channel.id()),\n                    channel.size()\n                );\n                self.channel = None;\n                return Err(PipelineError::NotEnoughData.temp());\n            }\n\n            // If the channel is ready, forward the channel to the next stage.\n            if channel.is_ready() {\n                let channel_bytes =\n                    channel.data().map_err(|_| PipelineError::ChannelNotFound.crit())?;\n\n                info!(\n                    target: \"channel_assembler\",\n                    \"Channel (ID: {}) ready for decompression.\",\n                    hex::encode(channel.id()),\n                );\n\n                // Reset the channel and return the compressed bytes.\n                self.channel = None;\n                return Ok(Some(channel_bytes));\n            }\n        }\n\n        kona_macros::set!(gauge, crate::metrics::Metrics::PIPELINE_CHANNEL_MEM, 0);\n\n        Err(PipelineError::NotEnoughData.temp())\n    }\n}\n\n#[async_trait]\nimpl<P> OriginAdvancer for ChannelAssembler<P>\nwhere\n    P: NextFrameProvider + OriginAdvancer + OriginProvider + Stage + Send + Debug,\n{\n    async fn advance_origin(&mut self) -> PipelineResult<()> {\n        self.prev.advance_origin().await\n    }\n}\n\nimpl<P> OriginProvider for ChannelAssembler<P>\nwhere\n    P: NextFrameProvider + OriginAdvancer + OriginProvider + Stage + Debug,\n{\n    fn origin(&self) -> Option<BlockInfo> {\n        self.prev.origin()\n    }\n}\n\n#[async_trait]\nimpl<P> Stage for ChannelAssembler<P>\nwhere\n    P: NextFrameProvider + OriginAdvancer + OriginProvider + Stage + Send + Debug,\n{\n    async fn reset(\n        &mut self,\n        l1_origin: BlockNumHash,\n        system_config: SystemConfig,\n    ) -> PipelineResult<()> {\n        self.prev.reset(l1_origin, system_config).await?;\n        self.channel = None;\n        Ok(())\n    }\n\n    async fn activate(&mut self) -> PipelineResult<()> {\n        self.prev.activate().await?;\n        self.channel = None;\n        Ok(())\n    }\n\n    async fn flush_channel(&mut self) -> PipelineResult<()> {\n        self.prev.flush_channel().await?;\n        self.channel = None;\n        Ok(())\n    }\n\n    async fn provide_block(&mut self, block: BlockInfo) -> PipelineResult<()> {\n        self.prev.provide_block(block).await\n    }\n}\n\n#[cfg(test)]\nmod test {\n    use super::ChannelAssembler;\n    use crate::{\n        ChannelReaderProvider, PipelineError,\n        test_utils::{CollectingLayer, TestNextFrameProvider, TraceStorage},\n    };\n    use alloc::{sync::Arc, vec};\n    use kona_genesis::{\n        HardForkConfig, MAX_RLP_BYTES_PER_CHANNEL_BEDROCK, MAX_RLP_BYTES_PER_CHANNEL_FJORD,\n        RollupConfig,\n    };\n    use kona_protocol::BlockInfo;\n    use tracing::Level;\n    use tracing_subscriber::layer::SubscriberExt;\n\n    #[tokio::test]\n    async fn test_assembler_channel_timeout() {\n        let trace_store: TraceStorage = Default::default();\n        let layer = CollectingLayer::new(trace_store.clone());\n        let subscriber = tracing_subscriber::Registry::default().with(layer);\n        let _guard = tracing::subscriber::set_default(subscriber);\n\n        let frames = [\n            crate::frame!(0xFF, 0, vec![0xDD; 50], false),\n            crate::frame!(0xFF, 1, vec![0xDD; 50], true),\n        ];\n        let mock = TestNextFrameProvider::new(frames.into_iter().rev().map(Ok).collect());\n        let cfg = Arc::new(RollupConfig::default());\n        let mut assembler = ChannelAssembler::new(cfg, mock);\n\n        // Set the origin to default block info @ block # 0.\n        assembler.prev.block_info = Some(BlockInfo::default());\n\n        // Read in the first frame. Since the frame isn't the last, the assembler\n        // should return None.\n        assert!(assembler.channel.is_none());\n        assert_eq!(assembler.next_data().await.unwrap_err(), PipelineError::NotEnoughData.temp());\n        assert!(assembler.channel.is_some());\n\n        // Push the origin forward past channel timeout.\n        assembler.prev.block_info =\n            Some(BlockInfo { number: assembler.cfg.channel_timeout(0) + 1, ..Default::default() });\n\n        // Assert that the assembler has timed out the channel.\n        assert!(assembler.is_timed_out().unwrap());\n        assert_eq!(assembler.next_data().await.unwrap_err(), PipelineError::NotEnoughData.temp());\n        assert!(assembler.channel.is_none());\n\n        // Assert that the info log was emitted.\n        let info_logs = trace_store.get_by_level(Level::INFO);\n        assert_eq!(info_logs.len(), 1);\n        let info_str = \"Starting new channel\";\n        assert!(info_logs[0].contains(info_str));\n\n        // Assert that the warning log was emitted.\n        let warning_logs = trace_store.get_by_level(Level::WARN);\n        assert_eq!(warning_logs.len(), 1);\n        let warn_str = \"timed out at L1 origin\";\n        assert!(warning_logs[0].contains(warn_str));\n    }\n\n    #[tokio::test]\n    async fn test_assembler_non_starting_frame() {\n        let frames = [\n            crate::frame!(0xFF, 0, vec![0xDD; 50], false),\n            crate::frame!(0xFF, 1, vec![0xDD; 50], true),\n        ];\n        let mock = TestNextFrameProvider::new(frames.into_iter().map(Ok).collect());\n        let cfg = Arc::new(RollupConfig::default());\n        let mut assembler = ChannelAssembler::new(cfg, mock);\n\n        // Send in the second frame first. This should result in no channel being created,\n        // and the frame being discarded.\n        assert!(assembler.channel.is_none());\n        assert_eq!(assembler.next_data().await.unwrap_err(), PipelineError::NotEnoughData.temp());\n        assert!(assembler.channel.is_none());\n    }\n\n    #[tokio::test]\n    async fn test_assembler_already_built() {\n        let trace_store: TraceStorage = Default::default();\n        let layer = CollectingLayer::new(trace_store.clone());\n        let subscriber = tracing_subscriber::Registry::default().with(layer);\n        let _guard = tracing::subscriber::set_default(subscriber);\n\n        let frames = [\n            crate::frame!(0xFF, 0, vec![0xDD; 50], false),\n            crate::frame!(0xFF, 1, vec![0xDD; 50], true),\n        ];\n        let mock = TestNextFrameProvider::new(frames.clone().into_iter().rev().map(Ok).collect());\n        let cfg = Arc::new(RollupConfig::default());\n        let mut assembler = ChannelAssembler::new(cfg, mock);\n\n        // Send in the first frame. This should result in a channel being created.\n        assert!(assembler.channel.is_none());\n        assert_eq!(assembler.next_data().await.unwrap_err(), PipelineError::NotEnoughData.temp());\n        assert!(assembler.channel.is_some());\n\n        // Send in a malformed second frame. This should result in an error in `add_frame`.\n        assembler.prev.data.push(Ok(frames[1].clone()).map(|mut f| {\n            f.id = Default::default();\n            f\n        }));\n        assert_eq!(assembler.next_data().await.unwrap_err(), PipelineError::NotEnoughData.temp());\n        assert!(assembler.channel.is_some());\n\n        // Send in the second frame again. This should return the channel bytes.\n        assert!(assembler.next_data().await.unwrap().is_some());\n        assert!(assembler.channel.is_none());\n\n        // Assert that the error log was emitted.\n        let error_logs = trace_store.get_by_level(Level::ERROR);\n        assert_eq!(error_logs.len(), 1);\n        let error_str = \"Failed to add frame to channel\";\n        assert!(error_logs[0].contains(error_str));\n    }\n\n    #[tokio::test]\n    async fn test_assembler_size_limit_exceeded_bedrock() {\n        let trace_store: TraceStorage = Default::default();\n        let layer = CollectingLayer::new(trace_store.clone());\n        let subscriber = tracing_subscriber::Registry::default().with(layer);\n        let _guard = tracing::subscriber::set_default(subscriber);\n\n        let mut frames = [\n            crate::frame!(0xFF, 0, vec![0xDD; 50], false),\n            crate::frame!(0xFF, 1, vec![0xDD; 50], true),\n        ];\n        frames[1].data = vec![0; MAX_RLP_BYTES_PER_CHANNEL_BEDROCK as usize];\n        let mock = TestNextFrameProvider::new(frames.into_iter().rev().map(Ok).collect());\n        let cfg = Arc::new(RollupConfig::default());\n\n        let mut assembler = ChannelAssembler::new(cfg, mock);\n\n        // Send in the first frame. This should result in a channel being created.\n        assert!(assembler.channel.is_none());\n        assert_eq!(assembler.next_data().await.unwrap_err(), PipelineError::NotEnoughData.temp());\n        assert!(assembler.channel.is_some());\n\n        // Send in the second frame. This should result in the channel being dropped due to the size\n        // limit being reached.\n        assert_eq!(assembler.next_data().await.unwrap_err(), PipelineError::NotEnoughData.temp());\n        assert!(assembler.channel.is_none());\n\n        let trace_store_lock = trace_store.lock();\n        assert_eq!(trace_store_lock.iter().filter(|(l, _)| matches!(l, &Level::WARN)).count(), 1);\n\n        let (_, message) =\n            trace_store_lock.iter().find(|(l, _)| matches!(l, &Level::WARN)).unwrap();\n        assert!(message.contains(\"Compressed channel size exceeded max RLP bytes per channel\"));\n    }\n\n    #[tokio::test]\n    async fn test_assembler_size_limit_exceeded_fjord() {\n        let trace_store: TraceStorage = Default::default();\n        let layer = CollectingLayer::new(trace_store.clone());\n        let subscriber = tracing_subscriber::Registry::default().with(layer);\n        let _guard = tracing::subscriber::set_default(subscriber);\n\n        let mut frames = [\n            crate::frame!(0xFF, 0, vec![0xDD; 50], false),\n            crate::frame!(0xFF, 1, vec![0xDD; 50], true),\n        ];\n        frames[1].data = vec![0; MAX_RLP_BYTES_PER_CHANNEL_FJORD as usize];\n        let mock = TestNextFrameProvider::new(frames.into_iter().rev().map(Ok).collect());\n        let cfg = Arc::new(RollupConfig {\n            hardforks: HardForkConfig { fjord_time: Some(0), ..Default::default() },\n            ..Default::default()\n        });\n\n        let mut assembler = ChannelAssembler::new(cfg, mock);\n\n        // Send in the first frame. This should result in a channel being created.\n        assert!(assembler.channel.is_none());\n        assert_eq!(assembler.next_data().await.unwrap_err(), PipelineError::NotEnoughData.temp());\n        assert!(assembler.channel.is_some());\n\n        // Send in the second frame. This should result in the channel being dropped due to the size\n        // limit being reached.\n        assert_eq!(assembler.next_data().await.unwrap_err(), PipelineError::NotEnoughData.temp());\n        assert!(assembler.channel.is_none());\n\n        let trace_store_lock = trace_store.lock();\n        assert_eq!(trace_store_lock.iter().filter(|(l, _)| matches!(l, &Level::WARN)).count(), 1);\n\n        let (_, message) =\n            trace_store_lock.iter().find(|(l, _)| matches!(l, &Level::WARN)).unwrap();\n        assert!(message.contains(\"Compressed channel size exceeded max RLP bytes per channel\"));\n    }\n}","resolutions":{"9fa846564f4071bd":{"status":"differs","coveredLines":362,"match":{"origin":"own","collection":"optimism","relation":{"type":"own"},"rank":0,"matchedBy":"name","auditedName":"channel_assembler.rs","similarity":0.867,"reportId":"optimism/cantina-kona-2026-03","repository":"op-rs/kona","path":"crates/protocol/derive/src/stages/channel/channel_assembler.rs","commit":"86910c9112437bbb849eca28961f813c5450e103","commitTimestamp":"2025-12-15T17:17:05Z","url":"https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/crates/protocol/derive/src/stages/channel/channel_assembler.rs","auditStatus":"audited_with_no_major_findings","reviewPhase":"initial audit","coverage":"Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). kona-derive derivation pipeline (stages, sources, traversal, attributes). Medium findings 3.3.1 and 3.3.2 (pipeline/core.rs, stages/l1_retrieval.rs) and numerous Low/Informational findings located here; no Critical/High.","majorFindings":0,"isLatestVersion":true,"laterAuditedVersionExists":false,"totalVersions":1},"diff":{"added":49,"removed":33,"ignoredAdded":13,"ignoredRemoved":11,"unchanged":362,"ignoredOnly":false,"hunks":[{"oldStart":1,"oldLines":42,"newStart":1,"newLines":42,"lines":[{"type":"-","oldLine":1,"text":"//! This module contains the [ChannelAssembler] stage.","ignored":true},{"type":"+","newLine":1,"text":"//! This module contains the [`ChannelAssembler`] stage.","ignored":true},{"type":" ","oldLine":2,"newLine":2,"text":""},{"type":" ","oldLine":3,"newLine":3,"text":"use super::{ChannelReaderProvider, NextFrameProvider};"},{"type":" ","oldLine":4,"newLine":4,"text":"use crate::{"},{"type":" ","oldLine":5,"newLine":5,"text":"    errors::PipelineError,"},{"type":"-","oldLine":6,"text":"    traits::{OriginAdvancer, OriginProvider, SignalReceiver},","ignored":false},{"type":"-","oldLine":7,"text":"    types::{PipelineResult, Signal},","ignored":false},{"type":"+","newLine":6,"text":"    traits::{OriginAdvancer, OriginProvider, Stage},","ignored":false},{"type":"+","newLine":7,"text":"    types::PipelineResult,","ignored":false},{"type":" ","oldLine":8,"newLine":8,"text":"};"},{"type":" ","oldLine":9,"newLine":9,"text":"use alloc::{boxed::Box, sync::Arc};"},{"type":"+","newLine":10,"text":"use alloy_eips::BlockNumHash;","ignored":false},{"type":" ","oldLine":10,"newLine":11,"text":"use alloy_primitives::{Bytes, hex};"},{"type":" ","oldLine":11,"newLine":12,"text":"use async_trait::async_trait;"},{"type":" ","oldLine":12,"newLine":13,"text":"use core::fmt::Debug;"},{"type":" ","oldLine":13,"newLine":14,"text":"use kona_genesis::{"},{"type":"-","oldLine":14,"text":"    MAX_RLP_BYTES_PER_CHANNEL_BEDROCK, MAX_RLP_BYTES_PER_CHANNEL_FJORD, RollupConfig,","ignored":false},{"type":"+","newLine":15,"text":"    MAX_RLP_BYTES_PER_CHANNEL_BEDROCK, MAX_RLP_BYTES_PER_CHANNEL_FJORD, RollupConfig, SystemConfig,","ignored":false},{"type":" ","oldLine":15,"newLine":16,"text":"};"},{"type":"-","oldLine":16,"text":"use kona_protocol::{BlockInfo, Channel};","ignored":false},{"type":"+","newLine":17,"text":"use kona_protocol::{BlockInfo, OrderedChannel};","ignored":false},{"type":" ","oldLine":17,"newLine":18,"text":""},{"type":" ","oldLine":18,"newLine":19,"text":"/// The [`ChannelAssembler`] stage is responsible for assembling the [`Frame`]s from the"},{"type":"-","oldLine":19,"text":"/// [`FrameQueue`] stage into a raw compressed [`Channel`].","ignored":true},{"type":"+","newLine":20,"text":"/// [`FrameQueue`] stage into a raw compressed [`OrderedChannel`].","ignored":true},{"type":" ","oldLine":20,"newLine":21,"text":"///"},{"type":" ","oldLine":21,"newLine":22,"text":"/// [`Frame`]: kona_protocol::Frame"},{"type":" ","oldLine":22,"newLine":23,"text":"/// [`FrameQueue`]: crate::stages::FrameQueue"},{"type":"-","oldLine":23,"text":"/// [`Channel`]: kona_protocol::Channel","ignored":true},{"type":" ","oldLine":24,"newLine":24,"text":"#[derive(Debug)]"},{"type":" ","oldLine":25,"newLine":25,"text":"pub struct ChannelAssembler<P>"},{"type":" ","oldLine":26,"newLine":26,"text":"where"},{"type":"-","oldLine":27,"text":"    P: NextFrameProvider + OriginAdvancer + OriginProvider + SignalReceiver + Debug,","ignored":false},{"type":"+","newLine":27,"text":"    P: NextFrameProvider + OriginAdvancer + OriginProvider + Stage + Debug,","ignored":false},{"type":" ","oldLine":28,"newLine":28,"text":"{"},{"type":" ","oldLine":29,"newLine":29,"text":"    /// The rollup configuration."},{"type":" ","oldLine":30,"newLine":30,"text":"    pub cfg: Arc<RollupConfig>,"},{"type":" ","oldLine":31,"newLine":31,"text":"    /// The previous stage of the derivation pipeline."},{"type":" ","oldLine":32,"newLine":32,"text":"    pub prev: P,"},{"type":"-","oldLine":33,"text":"    /// The current [`Channel`] being assembled.","ignored":true},{"type":"-","oldLine":34,"text":"    pub channel: Option<Channel>,","ignored":false},{"type":"+","newLine":33,"text":"    /// The current [`OrderedChannel`] being assembled.","ignored":true},{"type":"+","newLine":34,"text":"    pub channel: Option<OrderedChannel>,","ignored":false},{"type":" ","oldLine":35,"newLine":35,"text":"}"},{"type":" ","oldLine":36,"newLine":36,"text":""},{"type":" ","oldLine":37,"newLine":37,"text":"impl<P> ChannelAssembler<P>"},{"type":" ","oldLine":38,"newLine":38,"text":"where"},{"type":"-","oldLine":39,"text":"    P: NextFrameProvider + OriginAdvancer + OriginProvider + SignalReceiver + Debug,","ignored":false},{"type":"+","newLine":39,"text":"    P: NextFrameProvider + OriginAdvancer + OriginProvider + Stage + Debug,","ignored":false},{"type":" ","oldLine":40,"newLine":40,"text":"{"},{"type":" ","oldLine":41,"newLine":41,"text":"    /// Creates a new [`ChannelAssembler`] stage with the given configuration and previous stage."},{"type":" ","oldLine":42,"newLine":42,"text":"    pub const fn new(cfg: Arc<RollupConfig>, prev: P) -> Self {"}]},{"oldStart":46,"oldLines":13,"newStart":46,"newLines":9,"lines":[{"type":" ","oldLine":46,"newLine":46,"text":"    /// Returns whether or not the channel currently being assembled has timed out."},{"type":" ","oldLine":47,"newLine":47,"text":"    pub fn is_timed_out(&self) -> PipelineResult<bool> {"},{"type":" ","oldLine":48,"newLine":48,"text":"        let origin = self.origin().ok_or(PipelineError::MissingOrigin.crit())?;"},{"type":"-","oldLine":49,"text":"        let is_timed_out = self","ignored":false},{"type":"-","oldLine":50,"text":"            .channel","ignored":false},{"type":"-","oldLine":51,"text":"            .as_ref()","ignored":false},{"type":"-","oldLine":52,"text":"            .map(|c| {","ignored":false},{"type":"-","oldLine":53,"text":"                c.open_block_number() + self.cfg.channel_timeout(origin.timestamp) < origin.number","ignored":true},{"type":"-","oldLine":54,"text":"            })","ignored":false},{"type":"-","oldLine":55,"text":"            .unwrap_or_default();","ignored":false},{"type":"+","newLine":49,"text":"        let is_timed_out = self.channel.as_ref().is_some_and(|c| {","ignored":false},{"type":"+","newLine":50,"text":"            c.open_block_number() + self.cfg.channel_timeout(origin.timestamp) < origin.number","ignored":true},{"type":"+","newLine":51,"text":"        });","ignored":false},{"type":" ","oldLine":56,"newLine":52,"text":""},{"type":" ","oldLine":57,"newLine":53,"text":"        Ok(is_timed_out)"},{"type":" ","oldLine":58,"newLine":54,"text":"    }"}]},{"oldStart":61,"oldLines":23,"newStart":57,"newLines":25,"lines":[{"type":" ","oldLine":61,"newLine":57,"text":"#[async_trait]"},{"type":" ","oldLine":62,"newLine":58,"text":"impl<P> ChannelReaderProvider for ChannelAssembler<P>"},{"type":" ","oldLine":63,"newLine":59,"text":"where"},{"type":"-","oldLine":64,"text":"    P: NextFrameProvider + OriginAdvancer + OriginProvider + SignalReceiver + Send + Debug,","ignored":false},{"type":"+","newLine":60,"text":"    P: NextFrameProvider + OriginAdvancer + OriginProvider + Stage + Send + Debug,","ignored":false},{"type":" ","oldLine":65,"newLine":61,"text":"{"},{"type":" ","oldLine":66,"newLine":62,"text":"    async fn next_data(&mut self) -> PipelineResult<Option<Bytes>> {"},{"type":" ","oldLine":67,"newLine":63,"text":"        let origin = self.origin().ok_or(PipelineError::MissingOrigin.crit())?;"},{"type":" ","oldLine":68,"newLine":64,"text":""},{"type":" ","oldLine":69,"newLine":65,"text":"        // Time out the channel if it has timed out."},{"type":"-","oldLine":70,"text":"        if let Some(channel) = self.channel.as_ref() {","ignored":false},{"type":"-","oldLine":71,"text":"            if self.is_timed_out()? {","ignored":false},{"type":"-","oldLine":72,"text":"                warn!(","ignored":true},{"type":"-","oldLine":73,"text":"                    target: \"channel_assembler\",","ignored":true},{"type":"-","oldLine":74,"text":"                    \"Channel (ID: {}) timed out at L1 origin #{}, open block #{}. Discarding channel.\",","ignored":true},{"type":"-","oldLine":75,"text":"                    hex::encode(channel.id()),","ignored":false},{"type":"-","oldLine":76,"text":"                    origin.number,","ignored":true},{"type":"-","oldLine":77,"text":"                    channel.open_block_number()","ignored":false},{"type":"-","oldLine":78,"text":"                );","ignored":true},{"type":"-","oldLine":79,"text":"                self.channel = None;","ignored":true},{"type":"-","oldLine":80,"text":"            }","ignored":false},{"type":"+","newLine":66,"text":"        if let Some(channel) = self.channel.as_ref() &&","ignored":false},{"type":"+","newLine":67,"text":"            self.is_timed_out()?","ignored":false},{"type":"+","newLine":68,"text":"        {","ignored":false},{"type":"+","newLine":69,"text":"            let channel_id = hex::encode(channel.id());","ignored":false},{"type":"+","newLine":70,"text":"            let open_block = channel.open_block_number();","ignored":false},{"type":"+","newLine":71,"text":"            warn!(","ignored":true},{"type":"+","newLine":72,"text":"                target: \"channel_assembler\",","ignored":true},{"type":"+","newLine":73,"text":"                \"Channel (ID: {}) timed out at L1 origin #{}, open block #{}. Discarding channel.\",","ignored":true},{"type":"+","newLine":74,"text":"                channel_id,","ignored":false},{"type":"+","newLine":75,"text":"                origin.number,","ignored":true},{"type":"+","newLine":76,"text":"                open_block","ignored":false},{"type":"+","newLine":77,"text":"            );","ignored":true},{"type":"+","newLine":78,"text":"            self.channel = None;","ignored":true},{"type":" ","oldLine":81,"newLine":79,"text":"        }"},{"type":" ","oldLine":82,"newLine":80,"text":""},{"type":" ","oldLine":83,"newLine":81,"text":"        // Grab the next frame from the previous stage."}]},{"oldStart":91,"oldLines":17,"newStart":89,"newLines":17,"lines":[{"type":" ","oldLine":91,"newLine":89,"text":"                hex::encode(next_frame.id),"},{"type":" ","oldLine":92,"newLine":90,"text":"                origin.number"},{"type":" ","oldLine":93,"newLine":91,"text":"            );"},{"type":"-","oldLine":94,"text":"            self.channel = Some(Channel::new(next_frame.id, origin));","ignored":false},{"type":"+","newLine":92,"text":"            self.channel = Some(OrderedChannel::new(next_frame.id, origin));","ignored":false},{"type":" ","oldLine":95,"newLine":93,"text":"        }"},{"type":" ","oldLine":96,"newLine":94,"text":""},{"type":"-","oldLine":97,"text":"        let count = if self.channel.is_some() { 1 } else { 0 };","ignored":false},{"type":"-","oldLine":98,"text":"        kona_macros::set!(gauge, crate::metrics::Metrics::PIPELINE_CHANNEL_BUFFER, count);","ignored":false},{"type":"+","newLine":95,"text":"        let _count = if self.channel.is_some() { 1 } else { 0 };","ignored":false},{"type":"+","newLine":96,"text":"        kona_macros::set!(gauge, crate::metrics::Metrics::PIPELINE_CHANNEL_BUFFER, _count);","ignored":false},{"type":" ","oldLine":99,"newLine":97,"text":""},{"type":" ","oldLine":100,"newLine":98,"text":"        if let Some(channel) = self.channel.as_mut() {"},{"type":" ","oldLine":101,"newLine":99,"text":"            // Track the number of blocks until the channel times out."},{"type":" ","oldLine":102,"newLine":100,"text":"            let timeout = channel.open_block_number() + self.cfg.channel_timeout(origin.timestamp);"},{"type":"-","oldLine":103,"text":"            let margin = timeout.saturating_sub(origin.number) as f64;","ignored":false},{"type":"-","oldLine":104,"text":"            kona_macros::set!(gauge, crate::metrics::Metrics::PIPELINE_CHANNEL_TIMEOUT, margin);","ignored":false},{"type":"+","newLine":101,"text":"            let _margin = timeout.saturating_sub(origin.number) as f64;","ignored":false},{"type":"+","newLine":102,"text":"            kona_macros::set!(gauge, crate::metrics::Metrics::PIPELINE_CHANNEL_TIMEOUT, _margin);","ignored":false},{"type":" ","oldLine":105,"newLine":103,"text":""},{"type":" ","oldLine":106,"newLine":104,"text":"            // Add the frame to the channel. If this fails, return NotEnoughData and discard the"},{"type":" ","oldLine":107,"newLine":105,"text":"            // frame."}]},{"oldStart":122,"oldLines":8,"newStart":120,"newLines":8,"lines":[{"type":" ","oldLine":122,"newLine":120,"text":"                return Err(PipelineError::NotEnoughData.temp());"},{"type":" ","oldLine":123,"newLine":121,"text":"            }"},{"type":" ","oldLine":124,"newLine":122,"text":""},{"type":"-","oldLine":125,"text":"            let size = channel.size() as f64;","ignored":false},{"type":"-","oldLine":126,"text":"            kona_macros::set!(gauge, crate::metrics::Metrics::PIPELINE_CHANNEL_MEM, size);","ignored":false},{"type":"+","newLine":123,"text":"            let _size = channel.size() as f64;","ignored":false},{"type":"+","newLine":124,"text":"            kona_macros::set!(gauge, crate::metrics::Metrics::PIPELINE_CHANNEL_MEM, _size);","ignored":false},{"type":" ","oldLine":127,"newLine":125,"text":""},{"type":" ","oldLine":128,"newLine":126,"text":"            let max_rlp_bytes_per_channel = if self.cfg.is_fjord_active(origin.timestamp) {"},{"type":" ","oldLine":129,"newLine":127,"text":"                MAX_RLP_BYTES_PER_CHANNEL_FJORD"}]},{"oldStart":149,"oldLines":7,"newStart":147,"newLines":7,"lines":[{"type":" ","oldLine":149,"newLine":147,"text":"            // If the channel is ready, forward the channel to the next stage."},{"type":" ","oldLine":150,"newLine":148,"text":"            if channel.is_ready() {"},{"type":" ","oldLine":151,"newLine":149,"text":"                let channel_bytes ="},{"type":"-","oldLine":152,"text":"                    channel.frame_data().ok_or(PipelineError::ChannelNotFound.crit())?;","ignored":false},{"type":"+","newLine":150,"text":"                    channel.data().map_err(|_| PipelineError::ChannelNotFound.crit())?;","ignored":false},{"type":" ","oldLine":153,"newLine":151,"text":""},{"type":" ","oldLine":154,"newLine":152,"text":"                info!("},{"type":" ","oldLine":155,"newLine":153,"text":"                    target: \"channel_assembler\","}]},{"oldStart":172,"oldLines":7,"newStart":170,"newLines":7,"lines":[{"type":" ","oldLine":172,"newLine":170,"text":"#[async_trait]"},{"type":" ","oldLine":173,"newLine":171,"text":"impl<P> OriginAdvancer for ChannelAssembler<P>"},{"type":" ","oldLine":174,"newLine":172,"text":"where"},{"type":"-","oldLine":175,"text":"    P: NextFrameProvider + OriginAdvancer + OriginProvider + SignalReceiver + Send + Debug,","ignored":false},{"type":"+","newLine":173,"text":"    P: NextFrameProvider + OriginAdvancer + OriginProvider + Stage + Send + Debug,","ignored":false},{"type":" ","oldLine":176,"newLine":174,"text":"{"},{"type":" ","oldLine":177,"newLine":175,"text":"    async fn advance_origin(&mut self) -> PipelineResult<()> {"},{"type":" ","oldLine":178,"newLine":176,"text":"        self.prev.advance_origin().await"}]},{"oldStart":181,"oldLines":7,"newStart":179,"newLines":7,"lines":[{"type":" ","oldLine":181,"newLine":179,"text":""},{"type":" ","oldLine":182,"newLine":180,"text":"impl<P> OriginProvider for ChannelAssembler<P>"},{"type":" ","oldLine":183,"newLine":181,"text":"where"},{"type":"-","oldLine":184,"text":"    P: NextFrameProvider + OriginAdvancer + OriginProvider + SignalReceiver + Debug,","ignored":false},{"type":"+","newLine":182,"text":"    P: NextFrameProvider + OriginAdvancer + OriginProvider + Stage + Debug,","ignored":false},{"type":" ","oldLine":185,"newLine":183,"text":"{"},{"type":" ","oldLine":186,"newLine":184,"text":"    fn origin(&self) -> Option<BlockInfo> {"},{"type":" ","oldLine":187,"newLine":185,"text":"        self.prev.origin()"}]},{"oldStart":189,"oldLines":15,"newStart":187,"newLines":35,"lines":[{"type":" ","oldLine":189,"newLine":187,"text":"}"},{"type":" ","oldLine":190,"newLine":188,"text":""},{"type":" ","oldLine":191,"newLine":189,"text":"#[async_trait]"},{"type":"-","oldLine":192,"text":"impl<P> SignalReceiver for ChannelAssembler<P>","ignored":false},{"type":"+","newLine":190,"text":"impl<P> Stage for ChannelAssembler<P>","ignored":false},{"type":" ","oldLine":193,"newLine":191,"text":"where"},{"type":"-","oldLine":194,"text":"    P: NextFrameProvider + OriginAdvancer + OriginProvider + SignalReceiver + Send + Debug,","ignored":false},{"type":"+","newLine":192,"text":"    P: NextFrameProvider + OriginAdvancer + OriginProvider + Stage + Send + Debug,","ignored":false},{"type":" ","oldLine":195,"newLine":193,"text":"{"},{"type":"-","oldLine":196,"text":"    async fn signal(&mut self, signal: Signal) -> PipelineResult<()> {","ignored":false},{"type":"-","oldLine":197,"text":"        self.prev.signal(signal).await?;","ignored":false},{"type":"+","newLine":194,"text":"    async fn reset(","ignored":false},{"type":"+","newLine":195,"text":"        &mut self,","ignored":false},{"type":"+","newLine":196,"text":"        l1_origin: BlockNumHash,","ignored":false},{"type":"+","newLine":197,"text":"        system_config: SystemConfig,","ignored":false},{"type":"+","newLine":198,"text":"    ) -> PipelineResult<()> {","ignored":false},{"type":"+","newLine":199,"text":"        self.prev.reset(l1_origin, system_config).await?;","ignored":false},{"type":" ","oldLine":198,"newLine":200,"text":"        self.channel = None;"},{"type":" ","oldLine":199,"newLine":201,"text":"        Ok(())"},{"type":" ","oldLine":200,"newLine":202,"text":"    }"},{"type":"+","newLine":203,"text":"","ignored":true},{"type":"+","newLine":204,"text":"    async fn activate(&mut self) -> PipelineResult<()> {","ignored":false},{"type":"+","newLine":205,"text":"        self.prev.activate().await?;","ignored":false},{"type":"+","newLine":206,"text":"        self.channel = None;","ignored":false},{"type":"+","newLine":207,"text":"        Ok(())","ignored":false},{"type":"+","newLine":208,"text":"    }","ignored":false},{"type":"+","newLine":209,"text":"","ignored":true},{"type":"+","newLine":210,"text":"    async fn flush_channel(&mut self) -> PipelineResult<()> {","ignored":false},{"type":"+","newLine":211,"text":"        self.prev.flush_channel().await?;","ignored":false},{"type":"+","newLine":212,"text":"        self.channel = None;","ignored":false},{"type":"+","newLine":213,"text":"        Ok(())","ignored":false},{"type":"+","newLine":214,"text":"    }","ignored":false},{"type":"+","newLine":215,"text":"","ignored":true},{"type":"+","newLine":216,"text":"    async fn provide_block(&mut self, block: BlockInfo) -> PipelineResult<()> {","ignored":false},{"type":"+","newLine":217,"text":"        self.prev.provide_block(block).await","ignored":false},{"type":"+","newLine":218,"text":"    }","ignored":false},{"type":" ","oldLine":201,"newLine":219,"text":"}"},{"type":" ","oldLine":202,"newLine":220,"text":""},{"type":" ","oldLine":203,"newLine":221,"text":"#[cfg(test)]"}]}]},"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "914ae8eb5178b9ffb82cdb90f11ccff97ebdacfefbbb814d3105343f4d65bd31",
+  "name": "channel_assembler.rs",
+  "kind": "program",
+  "lines": 411,
+  "source": "//! This module contains the [`ChannelAssembler`] stage.\n\nuse super::{ChannelReaderProvider, NextFrameProvider};\nuse crate::{\n    errors::PipelineError,\n    traits::{OriginAdvancer, OriginProvider, Stage},\n    types::PipelineResult,\n};\nuse alloc::{boxed::Box, sync::Arc};\nuse alloy_eips::BlockNumHash;\nuse alloy_primitives::{Bytes, hex};\nuse async_trait::async_trait;\nuse core::fmt::Debug;\nuse kona_genesis::{\n    MAX_RLP_BYTES_PER_CHANNEL_BEDROCK, MAX_RLP_BYTES_PER_CHANNEL_FJORD, RollupConfig, SystemConfig,\n};\nuse kona_protocol::{BlockInfo, OrderedChannel};\n\n/// The [`ChannelAssembler`] stage is responsible for assembling the [`Frame`]s from the\n/// [`FrameQueue`] stage into a raw compressed [`OrderedChannel`].\n///\n/// [`Frame`]: kona_protocol::Frame\n/// [`FrameQueue`]: crate::stages::FrameQueue\n#[derive(Debug)]\npub struct ChannelAssembler<P>\nwhere\n    P: NextFrameProvider + OriginAdvancer + OriginProvider + Stage + Debug,\n{\n    /// The rollup configuration.\n    pub cfg: Arc<RollupConfig>,\n    /// The previous stage of the derivation pipeline.\n    pub prev: P,\n    /// The current [`OrderedChannel`] being assembled.\n    pub channel: Option<OrderedChannel>,\n}\n\nimpl<P> ChannelAssembler<P>\nwhere\n    P: NextFrameProvider + OriginAdvancer + OriginProvider + Stage + Debug,\n{\n    /// Creates a new [`ChannelAssembler`] stage with the given configuration and previous stage.\n    pub const fn new(cfg: Arc<RollupConfig>, prev: P) -> Self {\n        Self { cfg, prev, channel: None }\n    }\n\n    /// Returns whether or not the channel currently being assembled has timed out.\n    pub fn is_timed_out(&self) -> PipelineResult<bool> {\n        let origin = self.origin().ok_or(PipelineError::MissingOrigin.crit())?;\n        let is_timed_out = self.channel.as_ref().is_some_and(|c| {\n            c.open_block_number() + self.cfg.channel_timeout(origin.timestamp) < origin.number\n        });\n\n        Ok(is_timed_out)\n    }\n}\n\n#[async_trait]\nimpl<P> ChannelReaderProvider for ChannelAssembler<P>\nwhere\n    P: NextFrameProvider + OriginAdvancer + OriginProvider + Stage + Send + Debug,\n{\n    async fn next_data(&mut self) -> PipelineResult<Option<Bytes>> {\n        let origin = self.origin().ok_or(PipelineError::MissingOrigin.crit())?;\n\n        // Time out the channel if it has timed out.\n        if let Some(channel) = self.channel.as_ref() &&\n            self.is_timed_out()?\n        {\n            let channel_id = hex::encode(channel.id());\n            let open_block = channel.open_block_number();\n            warn!(\n                target: \"channel_assembler\",\n                \"Channel (ID: {}) timed out at L1 origin #{}, open block #{}. Discarding channel.\",\n                channel_id,\n                origin.number,\n                open_block\n            );\n            self.channel = None;\n        }\n\n        // Grab the next frame from the previous stage.\n        let next_frame = self.prev.next_frame().await?;\n\n        // Start a new channel if the frame number is 0.\n        if next_frame.number == 0 {\n            info!(\n                target: \"channel_assembler\",\n                \"Starting new channel (ID: {}) at L1 origin #{}\",\n                hex::encode(next_frame.id),\n                origin.number\n            );\n            self.channel = Some(OrderedChannel::new(next_frame.id, origin));\n        }\n\n        let _count = if self.channel.is_some() { 1 } else { 0 };\n        kona_macros::set!(gauge, crate::metrics::Metrics::PIPELINE_CHANNEL_BUFFER, _count);\n\n        if let Some(channel) = self.channel.as_mut() {\n            // Track the number of blocks until the channel times out.\n            let timeout = channel.open_block_number() + self.cfg.channel_timeout(origin.timestamp);\n            let _margin = timeout.saturating_sub(origin.number) as f64;\n            kona_macros::set!(gauge, crate::metrics::Metrics::PIPELINE_CHANNEL_TIMEOUT, _margin);\n\n            // Add the frame to the channel. If this fails, return NotEnoughData and discard the\n            // frame.\n            debug!(\n                target: \"channel_assembler\",\n                \"Adding frame #{} to channel (ID: {}) at L1 origin #{}\",\n                next_frame.number,\n                hex::encode(channel.id()),\n                origin.number\n            );\n            if channel.add_frame(next_frame, origin).is_err() {\n                error!(\n                    target: \"channel_assembler\",\n                    \"Failed to add frame to channel (ID: {}) at L1 origin #{}\",\n                    hex::encode(channel.id()),\n                    origin.number\n                );\n                return Err(PipelineError::NotEnoughData.temp());\n            }\n\n            let _size = channel.size() as f64;\n            kona_macros::set!(gauge, crate::metrics::Metrics::PIPELINE_CHANNEL_MEM, _size);\n\n            let max_rlp_bytes_per_channel = if self.cfg.is_fjord_active(origin.timestamp) {\n                MAX_RLP_BYTES_PER_CHANNEL_FJORD\n            } else {\n                MAX_RLP_BYTES_PER_CHANNEL_BEDROCK\n            };\n            kona_macros::set!(\n                gauge,\n                crate::metrics::Metrics::PIPELINE_MAX_RLP_BYTES,\n                max_rlp_bytes_per_channel as f64\n            );\n            if channel.size() > max_rlp_bytes_per_channel as usize {\n                warn!(\n                    target: \"channel_assembler\",\n                    \"Compressed channel size exceeded max RLP bytes per channel, dropping channel (ID: {}) with {} bytes\",\n                    hex::encode(channel.id()),\n                    channel.size()\n                );\n                self.channel = None;\n                return Err(PipelineError::NotEnoughData.temp());\n            }\n\n            // If the channel is ready, forward the channel to the next stage.\n            if channel.is_ready() {\n                let channel_bytes =\n                    channel.data().map_err(|_| PipelineError::ChannelNotFound.crit())?;\n\n                info!(\n                    target: \"channel_assembler\",\n                    \"Channel (ID: {}) ready for decompression.\",\n                    hex::encode(channel.id()),\n                );\n\n                // Reset the channel and return the compressed bytes.\n                self.channel = None;\n                return Ok(Some(channel_bytes));\n            }\n        }\n\n        kona_macros::set!(gauge, crate::metrics::Metrics::PIPELINE_CHANNEL_MEM, 0);\n\n        Err(PipelineError::NotEnoughData.temp())\n    }\n}\n\n#[async_trait]\nimpl<P> OriginAdvancer for ChannelAssembler<P>\nwhere\n    P: NextFrameProvider + OriginAdvancer + OriginProvider + Stage + Send + Debug,\n{\n    async fn advance_origin(&mut self) -> PipelineResult<()> {\n        self.prev.advance_origin().await\n    }\n}\n\nimpl<P> OriginProvider for ChannelAssembler<P>\nwhere\n    P: NextFrameProvider + OriginAdvancer + OriginProvider + Stage + Debug,\n{\n    fn origin(&self) -> Option<BlockInfo> {\n        self.prev.origin()\n    }\n}\n\n#[async_trait]\nimpl<P> Stage for ChannelAssembler<P>\nwhere\n    P: NextFrameProvider + OriginAdvancer + OriginProvider + Stage + Send + Debug,\n{\n    async fn reset(\n        &mut self,\n        l1_origin: BlockNumHash,\n        system_config: SystemConfig,\n    ) -> PipelineResult<()> {\n        self.prev.reset(l1_origin, system_config).await?;\n        self.channel = None;\n        Ok(())\n    }\n\n    async fn activate(&mut self) -> PipelineResult<()> {\n        self.prev.activate().await?;\n        self.channel = None;\n        Ok(())\n    }\n\n    async fn flush_channel(&mut self) -> PipelineResult<()> {\n        self.prev.flush_channel().await?;\n        self.channel = None;\n        Ok(())\n    }\n\n    async fn provide_block(&mut self, block: BlockInfo) -> PipelineResult<()> {\n        self.prev.provide_block(block).await\n    }\n}\n\n#[cfg(test)]\nmod test {\n    use super::ChannelAssembler;\n    use crate::{\n        ChannelReaderProvider, PipelineError,\n        test_utils::{CollectingLayer, TestNextFrameProvider, TraceStorage},\n    };\n    use alloc::{sync::Arc, vec};\n    use kona_genesis::{\n        HardForkConfig, MAX_RLP_BYTES_PER_CHANNEL_BEDROCK, MAX_RLP_BYTES_PER_CHANNEL_FJORD,\n        RollupConfig,\n    };\n    use kona_protocol::BlockInfo;\n    use tracing::Level;\n    use tracing_subscriber::layer::SubscriberExt;\n\n    #[tokio::test]\n    async fn test_assembler_channel_timeout() {\n        let trace_store: TraceStorage = Default::default();\n        let layer = CollectingLayer::new(trace_store.clone());\n        let subscriber = tracing_subscriber::Registry::default().with(layer);\n        let _guard = tracing::subscriber::set_default(subscriber);\n\n        let frames = [\n            crate::frame!(0xFF, 0, vec![0xDD; 50], false),\n            crate::frame!(0xFF, 1, vec![0xDD; 50], true),\n        ];\n        let mock = TestNextFrameProvider::new(frames.into_iter().rev().map(Ok).collect());\n        let cfg = Arc::new(RollupConfig::default());\n        let mut assembler = ChannelAssembler::new(cfg, mock);\n\n        // Set the origin to default block info @ block # 0.\n        assembler.prev.block_info = Some(BlockInfo::default());\n\n        // Read in the first frame. Since the frame isn't the last, the assembler\n        // should return None.\n        assert!(assembler.channel.is_none());\n        assert_eq!(assembler.next_data().await.unwrap_err(), PipelineError::NotEnoughData.temp());\n        assert!(assembler.channel.is_some());\n\n        // Push the origin forward past channel timeout.\n        assembler.prev.block_info =\n            Some(BlockInfo { number: assembler.cfg.channel_timeout(0) + 1, ..Default::default() });\n\n        // Assert that the assembler has timed out the channel.\n        assert!(assembler.is_timed_out().unwrap());\n        assert_eq!(assembler.next_data().await.unwrap_err(), PipelineError::NotEnoughData.temp());\n        assert!(assembler.channel.is_none());\n\n        // Assert that the info log was emitted.\n        let info_logs = trace_store.get_by_level(Level::INFO);\n        assert_eq!(info_logs.len(), 1);\n        let info_str = \"Starting new channel\";\n        assert!(info_logs[0].contains(info_str));\n\n        // Assert that the warning log was emitted.\n        let warning_logs = trace_store.get_by_level(Level::WARN);\n        assert_eq!(warning_logs.len(), 1);\n        let warn_str = \"timed out at L1 origin\";\n        assert!(warning_logs[0].contains(warn_str));\n    }\n\n    #[tokio::test]\n    async fn test_assembler_non_starting_frame() {\n        let frames = [\n            crate::frame!(0xFF, 0, vec![0xDD; 50], false),\n            crate::frame!(0xFF, 1, vec![0xDD; 50], true),\n        ];\n        let mock = TestNextFrameProvider::new(frames.into_iter().map(Ok).collect());\n        let cfg = Arc::new(RollupConfig::default());\n        let mut assembler = ChannelAssembler::new(cfg, mock);\n\n        // Send in the second frame first. This should result in no channel being created,\n        // and the frame being discarded.\n        assert!(assembler.channel.is_none());\n        assert_eq!(assembler.next_data().await.unwrap_err(), PipelineError::NotEnoughData.temp());\n        assert!(assembler.channel.is_none());\n    }\n\n    #[tokio::test]\n    async fn test_assembler_already_built() {\n        let trace_store: TraceStorage = Default::default();\n        let layer = CollectingLayer::new(trace_store.clone());\n        let subscriber = tracing_subscriber::Registry::default().with(layer);\n        let _guard = tracing::subscriber::set_default(subscriber);\n\n        let frames = [\n            crate::frame!(0xFF, 0, vec![0xDD; 50], false),\n            crate::frame!(0xFF, 1, vec![0xDD; 50], true),\n        ];\n        let mock = TestNextFrameProvider::new(frames.clone().into_iter().rev().map(Ok).collect());\n        let cfg = Arc::new(RollupConfig::default());\n        let mut assembler = ChannelAssembler::new(cfg, mock);\n\n        // Send in the first frame. This should result in a channel being created.\n        assert!(assembler.channel.is_none());\n        assert_eq!(assembler.next_data().await.unwrap_err(), PipelineError::NotEnoughData.temp());\n        assert!(assembler.channel.is_some());\n\n        // Send in a malformed second frame. This should result in an error in `add_frame`.\n        assembler.prev.data.push(Ok(frames[1].clone()).map(|mut f| {\n            f.id = Default::default();\n            f\n        }));\n        assert_eq!(assembler.next_data().await.unwrap_err(), PipelineError::NotEnoughData.temp());\n        assert!(assembler.channel.is_some());\n\n        // Send in the second frame again. This should return the channel bytes.\n        assert!(assembler.next_data().await.unwrap().is_some());\n        assert!(assembler.channel.is_none());\n\n        // Assert that the error log was emitted.\n        let error_logs = trace_store.get_by_level(Level::ERROR);\n        assert_eq!(error_logs.len(), 1);\n        let error_str = \"Failed to add frame to channel\";\n        assert!(error_logs[0].contains(error_str));\n    }\n\n    #[tokio::test]\n    async fn test_assembler_size_limit_exceeded_bedrock() {\n        let trace_store: TraceStorage = Default::default();\n        let layer = CollectingLayer::new(trace_store.clone());\n        let subscriber = tracing_subscriber::Registry::default().with(layer);\n        let _guard = tracing::subscriber::set_default(subscriber);\n\n        let mut frames = [\n            crate::frame!(0xFF, 0, vec![0xDD; 50], false),\n            crate::frame!(0xFF, 1, vec![0xDD; 50], true),\n        ];\n        frames[1].data = vec![0; MAX_RLP_BYTES_PER_CHANNEL_BEDROCK as usize];\n        let mock = TestNextFrameProvider::new(frames.into_iter().rev().map(Ok).collect());\n        let cfg = Arc::new(RollupConfig::default());\n\n        let mut assembler = ChannelAssembler::new(cfg, mock);\n\n        // Send in the first frame. This should result in a channel being created.\n        assert!(assembler.channel.is_none());\n        assert_eq!(assembler.next_data().await.unwrap_err(), PipelineError::NotEnoughData.temp());\n        assert!(assembler.channel.is_some());\n\n        // Send in the second frame. This should result in the channel being dropped due to the size\n        // limit being reached.\n        assert_eq!(assembler.next_data().await.unwrap_err(), PipelineError::NotEnoughData.temp());\n        assert!(assembler.channel.is_none());\n\n        let trace_store_lock = trace_store.lock();\n        assert_eq!(trace_store_lock.iter().filter(|(l, _)| matches!(l, &Level::WARN)).count(), 1);\n\n        let (_, message) =\n            trace_store_lock.iter().find(|(l, _)| matches!(l, &Level::WARN)).unwrap();\n        assert!(message.contains(\"Compressed channel size exceeded max RLP bytes per channel\"));\n    }\n\n    #[tokio::test]\n    async fn test_assembler_size_limit_exceeded_fjord() {\n        let trace_store: TraceStorage = Default::default();\n        let layer = CollectingLayer::new(trace_store.clone());\n        let subscriber = tracing_subscriber::Registry::default().with(layer);\n        let _guard = tracing::subscriber::set_default(subscriber);\n\n        let mut frames = [\n            crate::frame!(0xFF, 0, vec![0xDD; 50], false),\n            crate::frame!(0xFF, 1, vec![0xDD; 50], true),\n        ];\n        frames[1].data = vec![0; MAX_RLP_BYTES_PER_CHANNEL_FJORD as usize];\n        let mock = TestNextFrameProvider::new(frames.into_iter().rev().map(Ok).collect());\n        let cfg = Arc::new(RollupConfig {\n            hardforks: HardForkConfig { fjord_time: Some(0), ..Default::default() },\n            ..Default::default()\n        });\n\n        let mut assembler = ChannelAssembler::new(cfg, mock);\n\n        // Send in the first frame. This should result in a channel being created.\n        assert!(assembler.channel.is_none());\n        assert_eq!(assembler.next_data().await.unwrap_err(), PipelineError::NotEnoughData.temp());\n        assert!(assembler.channel.is_some());\n\n        // Send in the second frame. This should result in the channel being dropped due to the size\n        // limit being reached.\n        assert_eq!(assembler.next_data().await.unwrap_err(), PipelineError::NotEnoughData.temp());\n        assert!(assembler.channel.is_none());\n\n        let trace_store_lock = trace_store.lock();\n        assert_eq!(trace_store_lock.iter().filter(|(l, _)| matches!(l, &Level::WARN)).count(), 1);\n\n        let (_, message) =\n            trace_store_lock.iter().find(|(l, _)| matches!(l, &Level::WARN)).unwrap();\n        assert!(message.contains(\"Compressed channel size exceeded max RLP bytes per channel\"));\n    }\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "differs",
+      "coveredLines": 362,
+      "match": {
+        "origin": "own",
+        "collection": "optimism",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "channel_assembler.rs",
+        "similarity": 0.867,
+        "reportId": "optimism/cantina-kona-2026-03",
+        "repository": "op-rs/kona",
+        "path": "crates/protocol/derive/src/stages/channel/channel_assembler.rs",
+        "commit": "86910c9112437bbb849eca28961f813c5450e103",
+        "commitTimestamp": "2025-12-15T17:17:05Z",
+        "url": "https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/crates/protocol/derive/src/stages/channel/channel_assembler.rs",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). kona-derive derivation pipeline (stages, sources, traversal, attributes). Medium findings 3.3.1 and 3.3.2 (pipeline/core.rs, stages/l1_retrieval.rs) and numerous Low/Informational findings located here; no Critical/High.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 49,
+        "removed": 33,
+        "ignoredAdded": 13,
+        "ignoredRemoved": 11,
+        "unchanged": 362,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 42,
+            "newStart": 1,
+            "newLines": 42,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "//! This module contains the [ChannelAssembler] stage.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "//! This module contains the [`ChannelAssembler`] stage.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 2, "newLine": 2, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "use super::{ChannelReaderProvider, NextFrameProvider};"
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "use crate::{"
+              },
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 5,
+                "text": "    errors::PipelineError,"
+              },
+              {
+                "type": "-",
+                "oldLine": 6,
+                "text": "    traits::{OriginAdvancer, OriginProvider, SignalReceiver},",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 7,
+                "text": "    types::{PipelineResult, Signal},",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 6,
+                "text": "    traits::{OriginAdvancer, OriginProvider, Stage},",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 7,
+                "text": "    types::PipelineResult,",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 8, "newLine": 8, "text": "};" },
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 9,
+                "text": "use alloc::{boxed::Box, sync::Arc};"
+              },
+              {
+                "type": "+",
+                "newLine": 10,
+                "text": "use alloy_eips::BlockNumHash;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 10,
+                "newLine": 11,
+                "text": "use alloy_primitives::{Bytes, hex};"
+              },
+              {
+                "type": " ",
+                "oldLine": 11,
+                "newLine": 12,
+                "text": "use async_trait::async_trait;"
+              },
+              {
+                "type": " ",
+                "oldLine": 12,
+                "newLine": 13,
+                "text": "use core::fmt::Debug;"
+              },
+              {
+                "type": " ",
+                "oldLine": 13,
+                "newLine": 14,
+                "text": "use kona_genesis::{"
+              },
+              {
+                "type": "-",
+                "oldLine": 14,
+                "text": "    MAX_RLP_BYTES_PER_CHANNEL_BEDROCK, MAX_RLP_BYTES_PER_CHANNEL_FJORD, RollupConfig,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 15,
+                "text": "    MAX_RLP_BYTES_PER_CHANNEL_BEDROCK, MAX_RLP_BYTES_PER_CHANNEL_FJORD, RollupConfig, SystemConfig,",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 15, "newLine": 16, "text": "};" },
+              {
+                "type": "-",
+                "oldLine": 16,
+                "text": "use kona_protocol::{BlockInfo, Channel};",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 17,
+                "text": "use kona_protocol::{BlockInfo, OrderedChannel};",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 17, "newLine": 18, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 18,
+                "newLine": 19,
+                "text": "/// The [`ChannelAssembler`] stage is responsible for assembling the [`Frame`]s from the"
+              },
+              {
+                "type": "-",
+                "oldLine": 19,
+                "text": "/// [`FrameQueue`] stage into a raw compressed [`Channel`].",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 20,
+                "text": "/// [`FrameQueue`] stage into a raw compressed [`OrderedChannel`].",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 20, "newLine": 21, "text": "///" },
+              {
+                "type": " ",
+                "oldLine": 21,
+                "newLine": 22,
+                "text": "/// [`Frame`]: kona_protocol::Frame"
+              },
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 23,
+                "text": "/// [`FrameQueue`]: crate::stages::FrameQueue"
+              },
+              {
+                "type": "-",
+                "oldLine": 23,
+                "text": "/// [`Channel`]: kona_protocol::Channel",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 24,
+                "text": "#[derive(Debug)]"
+              },
+              {
+                "type": " ",
+                "oldLine": 25,
+                "newLine": 25,
+                "text": "pub struct ChannelAssembler<P>"
+              },
+              { "type": " ", "oldLine": 26, "newLine": 26, "text": "where" },
+              {
+                "type": "-",
+                "oldLine": 27,
+                "text": "    P: NextFrameProvider + OriginAdvancer + OriginProvider + SignalReceiver + Debug,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 27,
+                "text": "    P: NextFrameProvider + OriginAdvancer + OriginProvider + Stage + Debug,",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 28, "newLine": 28, "text": "{" },
+              {
+                "type": " ",
+                "oldLine": 29,
+                "newLine": 29,
+                "text": "    /// The rollup configuration."
+              },
+              {
+                "type": " ",
+                "oldLine": 30,
+                "newLine": 30,
+                "text": "    pub cfg: Arc<RollupConfig>,"
+              },
+              {
+                "type": " ",
+                "oldLine": 31,
+                "newLine": 31,
+                "text": "    /// The previous stage of the derivation pipeline."
+              },
+              {
+                "type": " ",
+                "oldLine": 32,
+                "newLine": 32,
+                "text": "    pub prev: P,"
+              },
+              {
+                "type": "-",
+                "oldLine": 33,
+                "text": "    /// The current [`Channel`] being assembled.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 34,
+                "text": "    pub channel: Option<Channel>,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 33,
+                "text": "    /// The current [`OrderedChannel`] being assembled.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 34,
+                "text": "    pub channel: Option<OrderedChannel>,",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 35, "newLine": 35, "text": "}" },
+              { "type": " ", "oldLine": 36, "newLine": 36, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 37,
+                "newLine": 37,
+                "text": "impl<P> ChannelAssembler<P>"
+              },
+              { "type": " ", "oldLine": 38, "newLine": 38, "text": "where" },
+              {
+                "type": "-",
+                "oldLine": 39,
+                "text": "    P: NextFrameProvider + OriginAdvancer + OriginProvider + SignalReceiver + Debug,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 39,
+                "text": "    P: NextFrameProvider + OriginAdvancer + OriginProvider + Stage + Debug,",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 40, "newLine": 40, "text": "{" },
+              {
+                "type": " ",
+                "oldLine": 41,
+                "newLine": 41,
+                "text": "    /// Creates a new [`ChannelAssembler`] stage with the given configuration and previous stage."
+              },
+              {
+                "type": " ",
+                "oldLine": 42,
+                "newLine": 42,
+                "text": "    pub const fn new(cfg: Arc<RollupConfig>, prev: P) -> Self {"
+              }
+            ]
+          },
+          {
+            "oldStart": 46,
+            "oldLines": 13,
+            "newStart": 46,
+            "newLines": 9,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 46,
+                "newLine": 46,
+                "text": "    /// Returns whether or not the channel currently being assembled has timed out."
+              },
+              {
+                "type": " ",
+                "oldLine": 47,
+                "newLine": 47,
+                "text": "    pub fn is_timed_out(&self) -> PipelineResult<bool> {"
+              },
+              {
+                "type": " ",
+                "oldLine": 48,
+                "newLine": 48,
+                "text": "        let origin = self.origin().ok_or(PipelineError::MissingOrigin.crit())?;"
+              },
+              {
+                "type": "-",
+                "oldLine": 49,
+                "text": "        let is_timed_out = self",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 50,
+                "text": "            .channel",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 51,
+                "text": "            .as_ref()",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 52,
+                "text": "            .map(|c| {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 53,
+                "text": "                c.open_block_number() + self.cfg.channel_timeout(origin.timestamp) < origin.number",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 54,
+                "text": "            })",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 55,
+                "text": "            .unwrap_or_default();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 49,
+                "text": "        let is_timed_out = self.channel.as_ref().is_some_and(|c| {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 50,
+                "text": "            c.open_block_number() + self.cfg.channel_timeout(origin.timestamp) < origin.number",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 51,
+                "text": "        });",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 56, "newLine": 52, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 57,
+                "newLine": 53,
+                "text": "        Ok(is_timed_out)"
+              },
+              { "type": " ", "oldLine": 58, "newLine": 54, "text": "    }" }
+            ]
+          },
+          {
+            "oldStart": 61,
+            "oldLines": 23,
+            "newStart": 57,
+            "newLines": 25,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 61,
+                "newLine": 57,
+                "text": "#[async_trait]"
+              },
+              {
+                "type": " ",
+                "oldLine": 62,
+                "newLine": 58,
+                "text": "impl<P> ChannelReaderProvider for ChannelAssembler<P>"
+              },
+              { "type": " ", "oldLine": 63, "newLine": 59, "text": "where" },
+              {
+                "type": "-",
+                "oldLine": 64,
+                "text": "    P: NextFrameProvider + OriginAdvancer + OriginProvider + SignalReceiver + Send + Debug,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 60,
+                "text": "    P: NextFrameProvider + OriginAdvancer + OriginProvider + Stage + Send + Debug,",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 65, "newLine": 61, "text": "{" },
+              {
+                "type": " ",
+                "oldLine": 66,
+                "newLine": 62,
+                "text": "    async fn next_data(&mut self) -> PipelineResult<Option<Bytes>> {"
+              },
+              {
+                "type": " ",
+                "oldLine": 67,
+                "newLine": 63,
+                "text": "        let origin = self.origin().ok_or(PipelineError::MissingOrigin.crit())?;"
+              },
+              { "type": " ", "oldLine": 68, "newLine": 64, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 69,
+                "newLine": 65,
+                "text": "        // Time out the channel if it has timed out."
+              },
+              {
+                "type": "-",
+                "oldLine": 70,
+                "text": "        if let Some(channel) = self.channel.as_ref() {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 71,
+                "text": "            if self.is_timed_out()? {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 72,
+                "text": "                warn!(",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 73,
+                "text": "                    target: \"channel_assembler\",",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 74,
+                "text": "                    \"Channel (ID: {}) timed out at L1 origin #{}, open block #{}. Discarding channel.\",",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 75,
+                "text": "                    hex::encode(channel.id()),",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 76,
+                "text": "                    origin.number,",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 77,
+                "text": "                    channel.open_block_number()",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 78,
+                "text": "                );",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 79,
+                "text": "                self.channel = None;",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 80,
+                "text": "            }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 66,
+                "text": "        if let Some(channel) = self.channel.as_ref() &&",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 67,
+                "text": "            self.is_timed_out()?",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 68,
+                "text": "        {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 69,
+                "text": "            let channel_id = hex::encode(channel.id());",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 70,
+                "text": "            let open_block = channel.open_block_number();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 71,
+                "text": "            warn!(",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 72,
+                "text": "                target: \"channel_assembler\",",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 73,
+                "text": "                \"Channel (ID: {}) timed out at L1 origin #{}, open block #{}. Discarding channel.\",",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 74,
+                "text": "                channel_id,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 75,
+                "text": "                origin.number,",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 76,
+                "text": "                open_block",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 77,
+                "text": "            );",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 78,
+                "text": "            self.channel = None;",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 81,
+                "newLine": 79,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 82, "newLine": 80, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 83,
+                "newLine": 81,
+                "text": "        // Grab the next frame from the previous stage."
+              }
+            ]
+          },
+          {
+            "oldStart": 91,
+            "oldLines": 17,
+            "newStart": 89,
+            "newLines": 17,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 91,
+                "newLine": 89,
+                "text": "                hex::encode(next_frame.id),"
+              },
+              {
+                "type": " ",
+                "oldLine": 92,
+                "newLine": 90,
+                "text": "                origin.number"
+              },
+              {
+                "type": " ",
+                "oldLine": 93,
+                "newLine": 91,
+                "text": "            );"
+              },
+              {
+                "type": "-",
+                "oldLine": 94,
+                "text": "            self.channel = Some(Channel::new(next_frame.id, origin));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 92,
+                "text": "            self.channel = Some(OrderedChannel::new(next_frame.id, origin));",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 95,
+                "newLine": 93,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 96, "newLine": 94, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 97,
+                "text": "        let count = if self.channel.is_some() { 1 } else { 0 };",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 98,
+                "text": "        kona_macros::set!(gauge, crate::metrics::Metrics::PIPELINE_CHANNEL_BUFFER, count);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 95,
+                "text": "        let _count = if self.channel.is_some() { 1 } else { 0 };",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 96,
+                "text": "        kona_macros::set!(gauge, crate::metrics::Metrics::PIPELINE_CHANNEL_BUFFER, _count);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 99, "newLine": 97, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 100,
+                "newLine": 98,
+                "text": "        if let Some(channel) = self.channel.as_mut() {"
+              },
+              {
+                "type": " ",
+                "oldLine": 101,
+                "newLine": 99,
+                "text": "            // Track the number of blocks until the channel times out."
+              },
+              {
+                "type": " ",
+                "oldLine": 102,
+                "newLine": 100,
+                "text": "            let timeout = channel.open_block_number() + self.cfg.channel_timeout(origin.timestamp);"
+              },
+              {
+                "type": "-",
+                "oldLine": 103,
+                "text": "            let margin = timeout.saturating_sub(origin.number) as f64;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 104,
+                "text": "            kona_macros::set!(gauge, crate::metrics::Metrics::PIPELINE_CHANNEL_TIMEOUT, margin);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 101,
+                "text": "            let _margin = timeout.saturating_sub(origin.number) as f64;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 102,
+                "text": "            kona_macros::set!(gauge, crate::metrics::Metrics::PIPELINE_CHANNEL_TIMEOUT, _margin);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 105, "newLine": 103, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 106,
+                "newLine": 104,
+                "text": "            // Add the frame to the channel. If this fails, return NotEnoughData and discard the"
+              },
+              {
+                "type": " ",
+                "oldLine": 107,
+                "newLine": 105,
+                "text": "            // frame."
+              }
+            ]
+          },
+          {
+            "oldStart": 122,
+            "oldLines": 8,
+            "newStart": 120,
+            "newLines": 8,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 122,
+                "newLine": 120,
+                "text": "                return Err(PipelineError::NotEnoughData.temp());"
+              },
+              {
+                "type": " ",
+                "oldLine": 123,
+                "newLine": 121,
+                "text": "            }"
+              },
+              { "type": " ", "oldLine": 124, "newLine": 122, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 125,
+                "text": "            let size = channel.size() as f64;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 126,
+                "text": "            kona_macros::set!(gauge, crate::metrics::Metrics::PIPELINE_CHANNEL_MEM, size);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 123,
+                "text": "            let _size = channel.size() as f64;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 124,
+                "text": "            kona_macros::set!(gauge, crate::metrics::Metrics::PIPELINE_CHANNEL_MEM, _size);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 127, "newLine": 125, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 128,
+                "newLine": 126,
+                "text": "            let max_rlp_bytes_per_channel = if self.cfg.is_fjord_active(origin.timestamp) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 129,
+                "newLine": 127,
+                "text": "                MAX_RLP_BYTES_PER_CHANNEL_FJORD"
+              }
+            ]
+          },
+          {
+            "oldStart": 149,
+            "oldLines": 7,
+            "newStart": 147,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 149,
+                "newLine": 147,
+                "text": "            // If the channel is ready, forward the channel to the next stage."
+              },
+              {
+                "type": " ",
+                "oldLine": 150,
+                "newLine": 148,
+                "text": "            if channel.is_ready() {"
+              },
+              {
+                "type": " ",
+                "oldLine": 151,
+                "newLine": 149,
+                "text": "                let channel_bytes ="
+              },
+              {
+                "type": "-",
+                "oldLine": 152,
+                "text": "                    channel.frame_data().ok_or(PipelineError::ChannelNotFound.crit())?;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 150,
+                "text": "                    channel.data().map_err(|_| PipelineError::ChannelNotFound.crit())?;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 153, "newLine": 151, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 154,
+                "newLine": 152,
+                "text": "                info!("
+              },
+              {
+                "type": " ",
+                "oldLine": 155,
+                "newLine": 153,
+                "text": "                    target: \"channel_assembler\","
+              }
+            ]
+          },
+          {
+            "oldStart": 172,
+            "oldLines": 7,
+            "newStart": 170,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 172,
+                "newLine": 170,
+                "text": "#[async_trait]"
+              },
+              {
+                "type": " ",
+                "oldLine": 173,
+                "newLine": 171,
+                "text": "impl<P> OriginAdvancer for ChannelAssembler<P>"
+              },
+              { "type": " ", "oldLine": 174, "newLine": 172, "text": "where" },
+              {
+                "type": "-",
+                "oldLine": 175,
+                "text": "    P: NextFrameProvider + OriginAdvancer + OriginProvider + SignalReceiver + Send + Debug,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 173,
+                "text": "    P: NextFrameProvider + OriginAdvancer + OriginProvider + Stage + Send + Debug,",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 176, "newLine": 174, "text": "{" },
+              {
+                "type": " ",
+                "oldLine": 177,
+                "newLine": 175,
+                "text": "    async fn advance_origin(&mut self) -> PipelineResult<()> {"
+              },
+              {
+                "type": " ",
+                "oldLine": 178,
+                "newLine": 176,
+                "text": "        self.prev.advance_origin().await"
+              }
+            ]
+          },
+          {
+            "oldStart": 181,
+            "oldLines": 7,
+            "newStart": 179,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 181, "newLine": 179, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 182,
+                "newLine": 180,
+                "text": "impl<P> OriginProvider for ChannelAssembler<P>"
+              },
+              { "type": " ", "oldLine": 183, "newLine": 181, "text": "where" },
+              {
+                "type": "-",
+                "oldLine": 184,
+                "text": "    P: NextFrameProvider + OriginAdvancer + OriginProvider + SignalReceiver + Debug,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 182,
+                "text": "    P: NextFrameProvider + OriginAdvancer + OriginProvider + Stage + Debug,",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 185, "newLine": 183, "text": "{" },
+              {
+                "type": " ",
+                "oldLine": 186,
+                "newLine": 184,
+                "text": "    fn origin(&self) -> Option<BlockInfo> {"
+              },
+              {
+                "type": " ",
+                "oldLine": 187,
+                "newLine": 185,
+                "text": "        self.prev.origin()"
+              }
+            ]
+          },
+          {
+            "oldStart": 189,
+            "oldLines": 15,
+            "newStart": 187,
+            "newLines": 35,
+            "lines": [
+              { "type": " ", "oldLine": 189, "newLine": 187, "text": "}" },
+              { "type": " ", "oldLine": 190, "newLine": 188, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 191,
+                "newLine": 189,
+                "text": "#[async_trait]"
+              },
+              {
+                "type": "-",
+                "oldLine": 192,
+                "text": "impl<P> SignalReceiver for ChannelAssembler<P>",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 190,
+                "text": "impl<P> Stage for ChannelAssembler<P>",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 193, "newLine": 191, "text": "where" },
+              {
+                "type": "-",
+                "oldLine": 194,
+                "text": "    P: NextFrameProvider + OriginAdvancer + OriginProvider + SignalReceiver + Send + Debug,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 192,
+                "text": "    P: NextFrameProvider + OriginAdvancer + OriginProvider + Stage + Send + Debug,",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 195, "newLine": 193, "text": "{" },
+              {
+                "type": "-",
+                "oldLine": 196,
+                "text": "    async fn signal(&mut self, signal: Signal) -> PipelineResult<()> {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 197,
+                "text": "        self.prev.signal(signal).await?;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 194,
+                "text": "    async fn reset(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 195,
+                "text": "        &mut self,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 196,
+                "text": "        l1_origin: BlockNumHash,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 197,
+                "text": "        system_config: SystemConfig,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 198,
+                "text": "    ) -> PipelineResult<()> {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 199,
+                "text": "        self.prev.reset(l1_origin, system_config).await?;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 198,
+                "newLine": 200,
+                "text": "        self.channel = None;"
+              },
+              {
+                "type": " ",
+                "oldLine": 199,
+                "newLine": 201,
+                "text": "        Ok(())"
+              },
+              { "type": " ", "oldLine": 200, "newLine": 202, "text": "    }" },
+              { "type": "+", "newLine": 203, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 204,
+                "text": "    async fn activate(&mut self) -> PipelineResult<()> {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 205,
+                "text": "        self.prev.activate().await?;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 206,
+                "text": "        self.channel = None;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 207,
+                "text": "        Ok(())",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 208,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 209, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 210,
+                "text": "    async fn flush_channel(&mut self) -> PipelineResult<()> {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 211,
+                "text": "        self.prev.flush_channel().await?;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 212,
+                "text": "        self.channel = None;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 213,
+                "text": "        Ok(())",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 214,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 215, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 216,
+                "text": "    async fn provide_block(&mut self, block: BlockInfo) -> PipelineResult<()> {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 217,
+                "text": "        self.prev.provide_block(block).await",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 218,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 201, "newLine": 219, "text": "}" },
+              { "type": " ", "oldLine": 202, "newLine": 220, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 203,
+                "newLine": 221,
+                "text": "#[cfg(test)]"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

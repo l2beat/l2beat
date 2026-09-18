@@ -1,1 +1,15 @@
-{"schemaVersion":2,"unitHash":"7b1af85205777f45dab479eecb40d9eabf781581cda3becc1fd2b767dd19d0a7","name":"error.rs","kind":"program","lines":15,"source":"//! Contains the error type for the network driver builder.\n\nuse kona_disc::Discv5BuilderError;\nuse kona_gossip::GossipDriverBuilderError;\n\n/// An error from the [`crate::NetworkBuilder`].\n#[derive(Debug, Clone, PartialEq, Eq, thiserror::Error)]\npub enum NetworkBuilderError {\n    /// An error from building the gossip driver.\n    #[error(transparent)]\n    GossipDriverBuilder(#[from] GossipDriverBuilderError),\n    /// An error from building the discv5 driver.\n    #[error(transparent)]\n    DiscoveryDriverBuilder(#[from] Discv5BuilderError),\n}","resolutions":{"9fa846564f4071bd":{"status":"unaudited","coveredLines":0,"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "7b1af85205777f45dab479eecb40d9eabf781581cda3becc1fd2b767dd19d0a7",
+  "name": "error.rs",
+  "kind": "program",
+  "lines": 15,
+  "source": "//! Contains the error type for the network driver builder.\n\nuse kona_disc::Discv5BuilderError;\nuse kona_gossip::GossipDriverBuilderError;\n\n/// An error from the [`crate::NetworkBuilder`].\n#[derive(Debug, Clone, PartialEq, Eq, thiserror::Error)]\npub enum NetworkBuilderError {\n    /// An error from building the gossip driver.\n    #[error(transparent)]\n    GossipDriverBuilder(#[from] GossipDriverBuilderError),\n    /// An error from building the discv5 driver.\n    #[error(transparent)]\n    DiscoveryDriverBuilder(#[from] Discv5BuilderError),\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

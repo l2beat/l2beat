@@ -1,1 +1,15 @@
-{"schemaVersion":2,"unitHash":"16e874923ec51a80e1328dfdfc980a70cde02b6a37bcb1690b7ffb20d9591a59","name":"prometheus.yml","kind":"program","lines":8,"source":"apiVersion: 1\n\ndatasources:\n  - name: Prometheus\n    type: prometheus\n    access: proxy\n    url: $PROMETHEUS_URL\n    editable: true","resolutions":{"9fa846564f4071bd":{"status":"unaudited","coveredLines":0,"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "16e874923ec51a80e1328dfdfc980a70cde02b6a37bcb1690b7ffb20d9591a59",
+  "name": "prometheus.yml",
+  "kind": "program",
+  "lines": 8,
+  "source": "apiVersion: 1\n\ndatasources:\n  - name: Prometheus\n    type: prometheus\n    access: proxy\n    url: $PROMETHEUS_URL\n    editable: true",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

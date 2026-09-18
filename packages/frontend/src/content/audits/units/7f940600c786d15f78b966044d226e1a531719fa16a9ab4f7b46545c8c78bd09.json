@@ -1,1 +1,37 @@
-{"schemaVersion":2,"unitHash":"7f940600c786d15f78b966044d226e1a531719fa16a9ab4f7b46545c8c78bd09","name":"CHANGELOG.md","kind":"program","lines":20,"source":"# Changelog\n\nAll notable changes to this project will be documented in this file.\n\nThe format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),\nand this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).\n\n## [Unreleased]\n\n## [0.1.2](https://github.com/op-rs/kona/compare/kona-std-fpvm-proc-v0.1.1...kona-std-fpvm-proc-v0.1.2) - 2025-01-07\n\n### Fixed\n\n- op-rs rename (#883)\n\n## [0.1.1](https://github.com/op-rs/kona/compare/kona-std-fpvm-proc-v0.1.0...kona-std-fpvm-proc-v0.1.1) - 2024-12-03\n\n### Other\n\n- update Cargo.toml dependencies","resolutions":{"9fa846564f4071bd":{"status":"identical","coveredLines":20,"match":{"origin":"own","collection":"optimism","relation":{"type":"own"},"rank":0,"matchedBy":"identity","auditedName":"CHANGELOG.md","similarity":1,"reportId":"optimism/cantina-kona-2026-03","repository":"op-rs/kona","path":"crates/proof/std-fpvm-proc/CHANGELOG.md","commit":"86910c9112437bbb849eca28961f813c5450e103","commitTimestamp":"2025-12-15T17:17:05Z","url":"https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/crates/proof/std-fpvm-proc/CHANGELOG.md","auditStatus":"audited_with_no_major_findings","reviewPhase":"initial audit","coverage":"Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). Procedural macro crate for the FPVM entrypoint; no findings located here.","majorFindings":0,"isLatestVersion":true,"laterAuditedVersionExists":false,"totalVersions":1},"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "7f940600c786d15f78b966044d226e1a531719fa16a9ab4f7b46545c8c78bd09",
+  "name": "CHANGELOG.md",
+  "kind": "program",
+  "lines": 20,
+  "source": "# Changelog\n\nAll notable changes to this project will be documented in this file.\n\nThe format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),\nand this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).\n\n## [Unreleased]\n\n## [0.1.2](https://github.com/op-rs/kona/compare/kona-std-fpvm-proc-v0.1.1...kona-std-fpvm-proc-v0.1.2) - 2025-01-07\n\n### Fixed\n\n- op-rs rename (#883)\n\n## [0.1.1](https://github.com/op-rs/kona/compare/kona-std-fpvm-proc-v0.1.0...kona-std-fpvm-proc-v0.1.1) - 2024-12-03\n\n### Other\n\n- update Cargo.toml dependencies",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "identical",
+      "coveredLines": 20,
+      "match": {
+        "origin": "own",
+        "collection": "optimism",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "CHANGELOG.md",
+        "similarity": 1,
+        "reportId": "optimism/cantina-kona-2026-03",
+        "repository": "op-rs/kona",
+        "path": "crates/proof/std-fpvm-proc/CHANGELOG.md",
+        "commit": "86910c9112437bbb849eca28961f813c5450e103",
+        "commitTimestamp": "2025-12-15T17:17:05Z",
+        "url": "https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/crates/proof/std-fpvm-proc/CHANGELOG.md",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). Procedural macro crate for the FPVM entrypoint; no findings located here.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "warnings": []
+    }
+  }
+}

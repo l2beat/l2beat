@@ -1,1 +1,15 @@
-{"schemaVersion":2,"unitHash":"2b9f6b8997a284ec587af3ee896aaf036bcc63a04db35b25988c0fc9c869f029","name":"Cargo.toml","kind":"program","lines":44,"source":"[package]\nname = \"kona-cli\"\nversion = \"0.3.2\"\ndescription = \"Shared CLI utilities for Kona crates\"\nedition.workspace = true\nlicense.workspace = true\nauthors.workspace = true\nrepository.workspace = true\nhomepage.workspace = true\n\n[lints]\nworkspace = true\n\n[dependencies]\n# Workspace\nkona-genesis.workspace = true\nkona-registry.workspace = true\n\n# Alloy\nalloy-chains.workspace = true\n\n# General\ntracing.workspace = true\nserde = { workspace = true, features = [\"derive\"]}\nclap = { workspace = true, features = [\"derive\", \"env\"] }\ntracing-subscriber = { workspace = true, features = [\"fmt\", \"env-filter\", \"json\", \"tracing-log\", \"ansi\"] }\ntracing-appender.workspace = true\nmetrics-exporter-prometheus = { workspace = true, features = [\"http-listener\"] }\nmetrics-process.workspace = true\nthiserror.workspace = true\n\n# `secrets` feature\nlibp2p = { workspace = true, features = [\"secp256k1\"], optional = true }\nalloy-primitives.workspace = true\n\n[dev-dependencies]\nrstest.workspace = true\n\n[target.'cfg(unix)'.dependencies]\nlibc.workspace = true\n\n[features]\ndefault = []\nsecrets = [ \"dep:libp2p\" ]","resolutions":{"9fa846564f4071bd":{"status":"unaudited","coveredLines":0,"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "2b9f6b8997a284ec587af3ee896aaf036bcc63a04db35b25988c0fc9c869f029",
+  "name": "Cargo.toml",
+  "kind": "program",
+  "lines": 44,
+  "source": "[package]\nname = \"kona-cli\"\nversion = \"0.3.2\"\ndescription = \"Shared CLI utilities for Kona crates\"\nedition.workspace = true\nlicense.workspace = true\nauthors.workspace = true\nrepository.workspace = true\nhomepage.workspace = true\n\n[lints]\nworkspace = true\n\n[dependencies]\n# Workspace\nkona-genesis.workspace = true\nkona-registry.workspace = true\n\n# Alloy\nalloy-chains.workspace = true\n\n# General\ntracing.workspace = true\nserde = { workspace = true, features = [\"derive\"]}\nclap = { workspace = true, features = [\"derive\", \"env\"] }\ntracing-subscriber = { workspace = true, features = [\"fmt\", \"env-filter\", \"json\", \"tracing-log\", \"ansi\"] }\ntracing-appender.workspace = true\nmetrics-exporter-prometheus = { workspace = true, features = [\"http-listener\"] }\nmetrics-process.workspace = true\nthiserror.workspace = true\n\n# `secrets` feature\nlibp2p = { workspace = true, features = [\"secp256k1\"], optional = true }\nalloy-primitives.workspace = true\n\n[dev-dependencies]\nrstest.workspace = true\n\n[target.'cfg(unix)'.dependencies]\nlibc.workspace = true\n\n[features]\ndefault = []\nsecrets = [ \"dep:libp2p\" ]",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

@@ -1,1 +1,105 @@
-{"schemaVersion":2,"unitHash":"58d50e7224d647d0bc53338d01afc44e7c5763ad1ae2ae2dd0fc5528623dab5b","name":"README.md","kind":"program","lines":13,"source":"# `kona-mpt`\n\nA recursive, in-memory implementation of Ethereum's hexary Merkle Patricia Trie (MPT), supporting:\n- Retrieval\n- Insertion\n- Deletion\n- Root Computation\n    - Trie Node RLP Encoding\n\nThis implementation is intended to serve as a backend for a stateless executor of Ethereum blocks, like\nthe one in the [`kona-executor`](../executor) crate. Starting with a trie root, the `TrieNode` can be\nunravelled to access, insert, or delete values. These operations are all backed by the `TrieProvider`,\nwhich enables fetching the preimages of hashed trie nodes.","resolutions":{"9fa846564f4071bd":{"status":"differs","coveredLines":13,"match":{"origin":"own","collection":"optimism","relation":{"type":"own"},"rank":0,"matchedBy":"name","auditedName":"README.md","similarity":0.846,"reportId":"optimism/cantina-kona-2026-03","repository":"op-rs/kona","path":"crates/proof/mpt/README.md","commit":"86910c9112437bbb849eca28961f813c5450e103","commitTimestamp":"2025-12-15T17:17:05Z","url":"https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/crates/proof/mpt/README.md","auditStatus":"audited_with_no_major_findings","reviewPhase":"initial audit","coverage":"Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). Merkle Patricia trie crate; Informational finding 3.5.2 (node.rs) located here.","majorFindings":0,"isLatestVersion":true,"laterAuditedVersionExists":false,"totalVersions":1},"diff":{"added":0,"removed":4,"ignoredAdded":0,"ignoredRemoved":1,"unchanged":13,"ignoredOnly":false,"hunks":[{"oldStart":1,"oldLines":10,"newStart":1,"newLines":5,"lines":[{"type":" ","oldLine":1,"newLine":1,"text":"# `kona-mpt`"},{"type":" ","oldLine":2,"newLine":2,"text":""},{"type":"-","oldLine":3,"text":"<a href=\"https://github.com/op-rs/kona/actions/workflows/rust_ci.yaml\"><img src=\"https://github.com/op-rs/kona/actions/workflows/rust_ci.yaml/badge.svg?label=ci\" alt=\"CI\"></a>","ignored":false},{"type":"-","oldLine":4,"text":"<a href=\"https://crates.io/crates/kona-mpt\"><img src=\"https://img.shields.io/crates/v/kona-mpt.svg?label=kona-mpt&labelColor=2a2f35\" alt=\"Kona MPT\"></a>","ignored":false},{"type":"-","oldLine":5,"text":"<a href=\"https://github.com/op-rs/kona/blob/main/LICENSE.md\"><img src=\"https://img.shields.io/badge/License-MIT-d1d1f6.svg?label=license&labelColor=2a2f35\" alt=\"License\"></a>","ignored":false},{"type":"-","oldLine":6,"text":"<a href=\"https://img.shields.io/codecov/c/github/op-rs/kona\"><img src=\"https://img.shields.io/codecov/c/github/op-rs/kona\" alt=\"Codecov\"></a>","ignored":false},{"type":"-","oldLine":7,"text":"","ignored":true},{"type":" ","oldLine":8,"newLine":3,"text":"A recursive, in-memory implementation of Ethereum's hexary Merkle Patricia Trie (MPT), supporting:"},{"type":" ","oldLine":9,"newLine":4,"text":"- Retrieval"},{"type":" ","oldLine":10,"newLine":5,"text":"- Insertion"}]}]},"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "58d50e7224d647d0bc53338d01afc44e7c5763ad1ae2ae2dd0fc5528623dab5b",
+  "name": "README.md",
+  "kind": "program",
+  "lines": 13,
+  "source": "# `kona-mpt`\n\nA recursive, in-memory implementation of Ethereum's hexary Merkle Patricia Trie (MPT), supporting:\n- Retrieval\n- Insertion\n- Deletion\n- Root Computation\n    - Trie Node RLP Encoding\n\nThis implementation is intended to serve as a backend for a stateless executor of Ethereum blocks, like\nthe one in the [`kona-executor`](../executor) crate. Starting with a trie root, the `TrieNode` can be\nunravelled to access, insert, or delete values. These operations are all backed by the `TrieProvider`,\nwhich enables fetching the preimages of hashed trie nodes.",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "differs",
+      "coveredLines": 13,
+      "match": {
+        "origin": "own",
+        "collection": "optimism",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "README.md",
+        "similarity": 0.846,
+        "reportId": "optimism/cantina-kona-2026-03",
+        "repository": "op-rs/kona",
+        "path": "crates/proof/mpt/README.md",
+        "commit": "86910c9112437bbb849eca28961f813c5450e103",
+        "commitTimestamp": "2025-12-15T17:17:05Z",
+        "url": "https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/crates/proof/mpt/README.md",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). Merkle Patricia trie crate; Informational finding 3.5.2 (node.rs) located here.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 0,
+        "removed": 4,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 1,
+        "unchanged": 13,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 10,
+            "newStart": 1,
+            "newLines": 5,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "# `kona-mpt`"
+              },
+              { "type": " ", "oldLine": 2, "newLine": 2, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 3,
+                "text": "<a href=\"https://github.com/op-rs/kona/actions/workflows/rust_ci.yaml\"><img src=\"https://github.com/op-rs/kona/actions/workflows/rust_ci.yaml/badge.svg?label=ci\" alt=\"CI\"></a>",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 4,
+                "text": "<a href=\"https://crates.io/crates/kona-mpt\"><img src=\"https://img.shields.io/crates/v/kona-mpt.svg?label=kona-mpt&labelColor=2a2f35\" alt=\"Kona MPT\"></a>",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 5,
+                "text": "<a href=\"https://github.com/op-rs/kona/blob/main/LICENSE.md\"><img src=\"https://img.shields.io/badge/License-MIT-d1d1f6.svg?label=license&labelColor=2a2f35\" alt=\"License\"></a>",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 6,
+                "text": "<a href=\"https://img.shields.io/codecov/c/github/op-rs/kona\"><img src=\"https://img.shields.io/codecov/c/github/op-rs/kona\" alt=\"Codecov\"></a>",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 7, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 8,
+                "newLine": 3,
+                "text": "A recursive, in-memory implementation of Ethereum's hexary Merkle Patricia Trie (MPT), supporting:"
+              },
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 4,
+                "text": "- Retrieval"
+              },
+              {
+                "type": " ",
+                "oldLine": 10,
+                "newLine": 5,
+                "text": "- Insertion"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

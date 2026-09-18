@@ -1,10 +1,13 @@
 import {
+  AUDIT_STATUS_META,
+  AUDIT_STATUS_ORDER,
+} from '~/components/audits/auditStatus'
+import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
 import { cn } from '~/utils/cn'
-import { AUDIT_STATUS_META, AUDIT_STATUS_ORDER } from './auditStatus'
 
 export function AuditStatusLegend({ className }: { className?: string }) {
   return (

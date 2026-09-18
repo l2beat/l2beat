@@ -1,1 +1,546 @@
-{"schemaVersion":2,"unitHash":"6ca3167fba3d595178b6654184d785d61b8ffd9d22a22a093d3ed75163a96346","name":"bls12_g1_add.rs","kind":"program","lines":128,"source":"//! Contains the accelerated precompile for the BLS12-381 curve G1 Point Addition.\n//!\n//! BLS12-381 is introduced in [EIP-2537](https://eips.ethereum.org/EIPS/eip-2537).\n//!\n//! For constants and logic, see the [revm implementation].\n//!\n//! [revm implementation]: https://github.com/bluealloy/revm/blob/main/crates/precompile/src/bls12_381/g1_add.rs\n\nuse crate::fpvm_evm::precompiles::utils::precompile_run;\nuse alloc::string::ToString;\nuse kona_preimage::{HintWriterClient, PreimageOracleClient};\nuse revm::precompile::{\n    EthPrecompileOutput, EthPrecompileResult, PrecompileHalt, bls12_381,\n    bls12_381_const::{G1_ADD_BASE_GAS_FEE, G1_ADD_INPUT_LENGTH},\n};\n\n/// Performs an FPVM-accelerated BLS12-381 G1 addition check.\n///\n/// Notice, there is no input size limit for this precompile.\n/// See: <https://specs.optimism.io/protocol/isthmus/exec-engine.html#evm-changes>\npub(crate) fn fpvm_bls12_g1_add<H, O>(\n    input: &[u8],\n    gas_limit: u64,\n    hint_writer: &H,\n    oracle_reader: &O,\n) -> EthPrecompileResult\nwhere\n    H: HintWriterClient + Send + Sync,\n    O: PreimageOracleClient + Send + Sync,\n{\n    /// Oracle/L1 staticcall gas required by [EIP-7904](https://eips.ethereum.org/EIPS/eip-7904).\n    const G1_ADD_ORACLE_GAS: u64 = 643;\n\n    if G1_ADD_BASE_GAS_FEE > gas_limit {\n        return Err(PrecompileHalt::OutOfGas);\n    }\n\n    let input_len = input.len();\n    if input_len != G1_ADD_INPUT_LENGTH {\n        return Err(PrecompileHalt::Other(\n            alloc::format!(\n                \"G1 addition input length should be {G1_ADD_INPUT_LENGTH} bytes, was {input_len}\"\n            )\n            .into(),\n        ));\n    }\n\n    let precompile = bls12_381::g1_add::PRECOMPILE;\n\n    let result_data = kona_proof::block_on(precompile_run! {\n        hint_writer,\n        oracle_reader,\n        &[precompile.address().as_slice(), &G1_ADD_ORACLE_GAS.to_be_bytes(), input]\n    })\n    .map_err(|e| PrecompileHalt::Other(e.to_string().into()))?;\n\n    Ok(EthPrecompileOutput::new(G1_ADD_BASE_GAS_FEE, result_data.into()))\n}\n\n#[cfg(test)]\nmod test {\n    use super::*;\n    use crate::fpvm_evm::precompiles::test_utils::{\n        execute_native_precompile, test_accelerated_precompile,\n        test_accelerated_precompile_capture_hint,\n    };\n\n    #[tokio::test(flavor = \"multi_thread\")]\n    async fn test_accelerated_bls12_381_g1_add() {\n        test_accelerated_precompile(|hint_writer, oracle_reader| {\n            // G1.INF + G1.INF = G1.INF\n            let input = [0u8; G1_ADD_INPUT_LENGTH];\n            let accelerated_result =\n                fpvm_bls12_g1_add(&input, u64::MAX, hint_writer, oracle_reader).unwrap();\n            let native_result = execute_native_precompile(\n                *bls12_381::g1_add::PRECOMPILE.address(),\n                input,\n                u64::MAX,\n            )\n            .unwrap();\n\n            assert_eq!(accelerated_result.bytes, native_result.bytes);\n            assert_eq!(accelerated_result.gas_used, native_result.gas_used);\n        })\n        .await;\n    }\n\n    #[tokio::test(flavor = \"multi_thread\")]\n    async fn test_accelerated_bls12_381_g1_add_bad_input_len() {\n        test_accelerated_precompile(|hint_writer, oracle_reader| {\n            let accelerated_result =\n                fpvm_bls12_g1_add(&[], u64::MAX, hint_writer, oracle_reader).unwrap_err();\n            assert!(matches!(accelerated_result, PrecompileHalt::Other(_)));\n        })\n        .await;\n    }\n\n    #[tokio::test(flavor = \"multi_thread\")]\n    async fn test_accelerated_bls12_381_g1_add_bad_gas_limit() {\n        test_accelerated_precompile(|hint_writer, oracle_reader| {\n            let accelerated_result =\n                fpvm_bls12_g1_add(&[], 0, hint_writer, oracle_reader).unwrap_err();\n            assert!(matches!(accelerated_result, PrecompileHalt::OutOfGas));\n        })\n        .await;\n    }\n\n    #[tokio::test(flavor = \"multi_thread\")]\n    async fn test_accelerated_bls12_381_g1_add_oracle_gas_carries_l1_cost() {\n        let recorded_gas_used: std::sync::Arc<std::sync::Mutex<Option<u64>>> =\n            std::sync::Arc::new(std::sync::Mutex::new(None));\n        let recorded_gas_used_in = recorded_gas_used.clone();\n\n        let captured =\n            test_accelerated_precompile_capture_hint(move |hint_writer, oracle_reader| {\n                let input = [0u8; G1_ADD_INPUT_LENGTH];\n                let result =\n                    fpvm_bls12_g1_add(&input, u64::MAX, hint_writer, oracle_reader).unwrap();\n                *recorded_gas_used_in.lock().unwrap() = Some(result.gas_used);\n            })\n            .await;\n\n        // Oracle hint must carry the current L1 G1Add cost (EIP-7904: 643).\n        assert_eq!(captured.oracle_gas(), 643);\n        // L2 charge must remain unchanged (G1_ADD_BASE_GAS_FEE = 375).\n        assert_eq!(recorded_gas_used.lock().unwrap().unwrap(), G1_ADD_BASE_GAS_FEE);\n    }\n}","resolutions":{"9fa846564f4071bd":{"status":"differs","coveredLines":101,"match":{"origin":"own","collection":"optimism","relation":{"type":"own"},"rank":0,"matchedBy":"name","auditedName":"bls12_g1_add.rs","similarity":0.798,"reportId":"optimism/cantina-kona-2026-03","repository":"op-rs/kona","path":"bin/client/src/fpvm_evm/precompiles/bls12_g1_add.rs","commit":"86910c9112437bbb849eca28961f813c5450e103","commitTimestamp":"2025-12-15T17:17:05Z","url":"https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/bin/client/src/fpvm_evm/precompiles/bls12_g1_add.rs","auditStatus":"audited_with_no_major_findings","reviewPhase":"initial audit","coverage":"Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). FPVM EVM factory and accelerated precompiles; finding 3.4.32 (Low) located in precompiles/provider.rs.","majorFindings":0,"isLatestVersion":true,"laterAuditedVersionExists":false,"totalVersions":1},"diff":{"added":27,"removed":9,"ignoredAdded":7,"ignoredRemoved":0,"unchanged":101,"ignoredOnly":false,"hunks":[{"oldStart":10,"oldLines":7,"newStart":10,"newLines":7,"lines":[{"type":" ","oldLine":10,"newLine":10,"text":"use alloc::string::ToString;"},{"type":" ","oldLine":11,"newLine":11,"text":"use kona_preimage::{HintWriterClient, PreimageOracleClient};"},{"type":" ","oldLine":12,"newLine":12,"text":"use revm::precompile::{"},{"type":"-","oldLine":13,"text":"    PrecompileError, PrecompileOutput, PrecompileResult, bls12_381,","ignored":false},{"type":"+","newLine":13,"text":"    EthPrecompileOutput, EthPrecompileResult, PrecompileHalt, bls12_381,","ignored":false},{"type":" ","oldLine":14,"newLine":14,"text":"    bls12_381_const::{G1_ADD_BASE_GAS_FEE, G1_ADD_INPUT_LENGTH},"},{"type":" ","oldLine":15,"newLine":15,"text":"};"},{"type":" ","oldLine":16,"newLine":16,"text":""}]},{"oldStart":23,"oldLines":18,"newStart":23,"newLines":21,"lines":[{"type":" ","oldLine":23,"newLine":23,"text":"    gas_limit: u64,"},{"type":" ","oldLine":24,"newLine":24,"text":"    hint_writer: &H,"},{"type":" ","oldLine":25,"newLine":25,"text":"    oracle_reader: &O,"},{"type":"-","oldLine":26,"text":") -> PrecompileResult","ignored":false},{"type":"+","newLine":26,"text":") -> EthPrecompileResult","ignored":false},{"type":" ","oldLine":27,"newLine":27,"text":"where"},{"type":" ","oldLine":28,"newLine":28,"text":"    H: HintWriterClient + Send + Sync,"},{"type":" ","oldLine":29,"newLine":29,"text":"    O: PreimageOracleClient + Send + Sync,"},{"type":" ","oldLine":30,"newLine":30,"text":"{"},{"type":"+","newLine":31,"text":"    /// Oracle/L1 staticcall gas required by [EIP-7904](https://eips.ethereum.org/EIPS/eip-7904).","ignored":true},{"type":"+","newLine":32,"text":"    const G1_ADD_ORACLE_GAS: u64 = 643;","ignored":false},{"type":"+","newLine":33,"text":"","ignored":true},{"type":" ","oldLine":31,"newLine":34,"text":"    if G1_ADD_BASE_GAS_FEE > gas_limit {"},{"type":"-","oldLine":32,"text":"        return Err(PrecompileError::OutOfGas);","ignored":false},{"type":"+","newLine":35,"text":"        return Err(PrecompileHalt::OutOfGas);","ignored":false},{"type":" ","oldLine":33,"newLine":36,"text":"    }"},{"type":" ","oldLine":34,"newLine":37,"text":""},{"type":" ","oldLine":35,"newLine":38,"text":"    let input_len = input.len();"},{"type":" ","oldLine":36,"newLine":39,"text":"    if input_len != G1_ADD_INPUT_LENGTH {"},{"type":"-","oldLine":37,"text":"        return Err(PrecompileError::Other(","ignored":false},{"type":"+","newLine":40,"text":"        return Err(PrecompileHalt::Other(","ignored":false},{"type":" ","oldLine":38,"newLine":41,"text":"            alloc::format!("},{"type":" ","oldLine":39,"newLine":42,"text":"                \"G1 addition input length should be {G1_ADD_INPUT_LENGTH} bytes, was {input_len}\""},{"type":" ","oldLine":40,"newLine":43,"text":"            )"}]},{"oldStart":47,"oldLines":11,"newStart":50,"newLines":11,"lines":[{"type":" ","oldLine":47,"newLine":50,"text":"    let result_data = kona_proof::block_on(precompile_run! {"},{"type":" ","oldLine":48,"newLine":51,"text":"        hint_writer,"},{"type":" ","oldLine":49,"newLine":52,"text":"        oracle_reader,"},{"type":"-","oldLine":50,"text":"        &[precompile.address().as_slice(), &G1_ADD_BASE_GAS_FEE.to_be_bytes(), input]","ignored":false},{"type":"+","newLine":53,"text":"        &[precompile.address().as_slice(), &G1_ADD_ORACLE_GAS.to_be_bytes(), input]","ignored":false},{"type":" ","oldLine":51,"newLine":54,"text":"    })"},{"type":"-","oldLine":52,"text":"    .map_err(|e| PrecompileError::Other(e.to_string().into()))?;","ignored":false},{"type":"+","newLine":55,"text":"    .map_err(|e| PrecompileHalt::Other(e.to_string().into()))?;","ignored":false},{"type":" ","oldLine":53,"newLine":56,"text":""},{"type":"-","oldLine":54,"text":"    Ok(PrecompileOutput::new(G1_ADD_BASE_GAS_FEE, result_data.into()))","ignored":false},{"type":"+","newLine":57,"text":"    Ok(EthPrecompileOutput::new(G1_ADD_BASE_GAS_FEE, result_data.into()))","ignored":false},{"type":" ","oldLine":55,"newLine":58,"text":"}"},{"type":" ","oldLine":56,"newLine":59,"text":""},{"type":" ","oldLine":57,"newLine":60,"text":"#[cfg(test)]"}]},{"oldStart":59,"oldLines":6,"newStart":62,"newLines":7,"lines":[{"type":" ","oldLine":59,"newLine":62,"text":"    use super::*;"},{"type":" ","oldLine":60,"newLine":63,"text":"    use crate::fpvm_evm::precompiles::test_utils::{"},{"type":" ","oldLine":61,"newLine":64,"text":"        execute_native_precompile, test_accelerated_precompile,"},{"type":"+","newLine":65,"text":"        test_accelerated_precompile_capture_hint,","ignored":false},{"type":" ","oldLine":62,"newLine":66,"text":"    };"},{"type":" ","oldLine":63,"newLine":67,"text":""},{"type":" ","oldLine":64,"newLine":68,"text":"    #[tokio::test(flavor = \"multi_thread\")]"}]},{"oldStart":86,"oldLines":7,"newStart":90,"newLines":7,"lines":[{"type":" ","oldLine":86,"newLine":90,"text":"        test_accelerated_precompile(|hint_writer, oracle_reader| {"},{"type":" ","oldLine":87,"newLine":91,"text":"            let accelerated_result ="},{"type":" ","oldLine":88,"newLine":92,"text":"                fpvm_bls12_g1_add(&[], u64::MAX, hint_writer, oracle_reader).unwrap_err();"},{"type":"-","oldLine":89,"text":"            assert!(matches!(accelerated_result, PrecompileError::Other(_)));","ignored":false},{"type":"+","newLine":93,"text":"            assert!(matches!(accelerated_result, PrecompileHalt::Other(_)));","ignored":false},{"type":" ","oldLine":90,"newLine":94,"text":"        })"},{"type":" ","oldLine":91,"newLine":95,"text":"        .await;"},{"type":" ","oldLine":92,"newLine":96,"text":"    }"}]},{"oldStart":96,"oldLines":8,"newStart":100,"newLines":29,"lines":[{"type":" ","oldLine":96,"newLine":100,"text":"        test_accelerated_precompile(|hint_writer, oracle_reader| {"},{"type":" ","oldLine":97,"newLine":101,"text":"            let accelerated_result ="},{"type":" ","oldLine":98,"newLine":102,"text":"                fpvm_bls12_g1_add(&[], 0, hint_writer, oracle_reader).unwrap_err();"},{"type":"-","oldLine":99,"text":"            assert!(matches!(accelerated_result, PrecompileError::OutOfGas));","ignored":false},{"type":"+","newLine":103,"text":"            assert!(matches!(accelerated_result, PrecompileHalt::OutOfGas));","ignored":false},{"type":" ","oldLine":100,"newLine":104,"text":"        })"},{"type":" ","oldLine":101,"newLine":105,"text":"        .await;"},{"type":" ","oldLine":102,"newLine":106,"text":"    }"},{"type":"+","newLine":107,"text":"","ignored":true},{"type":"+","newLine":108,"text":"    #[tokio::test(flavor = \"multi_thread\")]","ignored":false},{"type":"+","newLine":109,"text":"    async fn test_accelerated_bls12_381_g1_add_oracle_gas_carries_l1_cost() {","ignored":false},{"type":"+","newLine":110,"text":"        let recorded_gas_used: std::sync::Arc<std::sync::Mutex<Option<u64>>> =","ignored":false},{"type":"+","newLine":111,"text":"            std::sync::Arc::new(std::sync::Mutex::new(None));","ignored":false},{"type":"+","newLine":112,"text":"        let recorded_gas_used_in = recorded_gas_used.clone();","ignored":false},{"type":"+","newLine":113,"text":"","ignored":true},{"type":"+","newLine":114,"text":"        let captured =","ignored":false},{"type":"+","newLine":115,"text":"            test_accelerated_precompile_capture_hint(move |hint_writer, oracle_reader| {","ignored":false},{"type":"+","newLine":116,"text":"                let input = [0u8; G1_ADD_INPUT_LENGTH];","ignored":false},{"type":"+","newLine":117,"text":"                let result =","ignored":false},{"type":"+","newLine":118,"text":"                    fpvm_bls12_g1_add(&input, u64::MAX, hint_writer, oracle_reader).unwrap();","ignored":false},{"type":"+","newLine":119,"text":"                *recorded_gas_used_in.lock().unwrap() = Some(result.gas_used);","ignored":false},{"type":"+","newLine":120,"text":"            })","ignored":false},{"type":"+","newLine":121,"text":"            .await;","ignored":false},{"type":"+","newLine":122,"text":"","ignored":true},{"type":"+","newLine":123,"text":"        // Oracle hint must carry the current L1 G1Add cost (EIP-7904: 643).","ignored":true},{"type":"+","newLine":124,"text":"        assert_eq!(captured.oracle_gas(), 643);","ignored":false},{"type":"+","newLine":125,"text":"        // L2 charge must remain unchanged (G1_ADD_BASE_GAS_FEE = 375).","ignored":true},{"type":"+","newLine":126,"text":"        assert_eq!(recorded_gas_used.lock().unwrap().unwrap(), G1_ADD_BASE_GAS_FEE);","ignored":false},{"type":"+","newLine":127,"text":"    }","ignored":false},{"type":" ","oldLine":103,"newLine":128,"text":"}"}]}]},"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "6ca3167fba3d595178b6654184d785d61b8ffd9d22a22a093d3ed75163a96346",
+  "name": "bls12_g1_add.rs",
+  "kind": "program",
+  "lines": 128,
+  "source": "//! Contains the accelerated precompile for the BLS12-381 curve G1 Point Addition.\n//!\n//! BLS12-381 is introduced in [EIP-2537](https://eips.ethereum.org/EIPS/eip-2537).\n//!\n//! For constants and logic, see the [revm implementation].\n//!\n//! [revm implementation]: https://github.com/bluealloy/revm/blob/main/crates/precompile/src/bls12_381/g1_add.rs\n\nuse crate::fpvm_evm::precompiles::utils::precompile_run;\nuse alloc::string::ToString;\nuse kona_preimage::{HintWriterClient, PreimageOracleClient};\nuse revm::precompile::{\n    EthPrecompileOutput, EthPrecompileResult, PrecompileHalt, bls12_381,\n    bls12_381_const::{G1_ADD_BASE_GAS_FEE, G1_ADD_INPUT_LENGTH},\n};\n\n/// Performs an FPVM-accelerated BLS12-381 G1 addition check.\n///\n/// Notice, there is no input size limit for this precompile.\n/// See: <https://specs.optimism.io/protocol/isthmus/exec-engine.html#evm-changes>\npub(crate) fn fpvm_bls12_g1_add<H, O>(\n    input: &[u8],\n    gas_limit: u64,\n    hint_writer: &H,\n    oracle_reader: &O,\n) -> EthPrecompileResult\nwhere\n    H: HintWriterClient + Send + Sync,\n    O: PreimageOracleClient + Send + Sync,\n{\n    /// Oracle/L1 staticcall gas required by [EIP-7904](https://eips.ethereum.org/EIPS/eip-7904).\n    const G1_ADD_ORACLE_GAS: u64 = 643;\n\n    if G1_ADD_BASE_GAS_FEE > gas_limit {\n        return Err(PrecompileHalt::OutOfGas);\n    }\n\n    let input_len = input.len();\n    if input_len != G1_ADD_INPUT_LENGTH {\n        return Err(PrecompileHalt::Other(\n            alloc::format!(\n                \"G1 addition input length should be {G1_ADD_INPUT_LENGTH} bytes, was {input_len}\"\n            )\n            .into(),\n        ));\n    }\n\n    let precompile = bls12_381::g1_add::PRECOMPILE;\n\n    let result_data = kona_proof::block_on(precompile_run! {\n        hint_writer,\n        oracle_reader,\n        &[precompile.address().as_slice(), &G1_ADD_ORACLE_GAS.to_be_bytes(), input]\n    })\n    .map_err(|e| PrecompileHalt::Other(e.to_string().into()))?;\n\n    Ok(EthPrecompileOutput::new(G1_ADD_BASE_GAS_FEE, result_data.into()))\n}\n\n#[cfg(test)]\nmod test {\n    use super::*;\n    use crate::fpvm_evm::precompiles::test_utils::{\n        execute_native_precompile, test_accelerated_precompile,\n        test_accelerated_precompile_capture_hint,\n    };\n\n    #[tokio::test(flavor = \"multi_thread\")]\n    async fn test_accelerated_bls12_381_g1_add() {\n        test_accelerated_precompile(|hint_writer, oracle_reader| {\n            // G1.INF + G1.INF = G1.INF\n            let input = [0u8; G1_ADD_INPUT_LENGTH];\n            let accelerated_result =\n                fpvm_bls12_g1_add(&input, u64::MAX, hint_writer, oracle_reader).unwrap();\n            let native_result = execute_native_precompile(\n                *bls12_381::g1_add::PRECOMPILE.address(),\n                input,\n                u64::MAX,\n            )\n            .unwrap();\n\n            assert_eq!(accelerated_result.bytes, native_result.bytes);\n            assert_eq!(accelerated_result.gas_used, native_result.gas_used);\n        })\n        .await;\n    }\n\n    #[tokio::test(flavor = \"multi_thread\")]\n    async fn test_accelerated_bls12_381_g1_add_bad_input_len() {\n        test_accelerated_precompile(|hint_writer, oracle_reader| {\n            let accelerated_result =\n                fpvm_bls12_g1_add(&[], u64::MAX, hint_writer, oracle_reader).unwrap_err();\n            assert!(matches!(accelerated_result, PrecompileHalt::Other(_)));\n        })\n        .await;\n    }\n\n    #[tokio::test(flavor = \"multi_thread\")]\n    async fn test_accelerated_bls12_381_g1_add_bad_gas_limit() {\n        test_accelerated_precompile(|hint_writer, oracle_reader| {\n            let accelerated_result =\n                fpvm_bls12_g1_add(&[], 0, hint_writer, oracle_reader).unwrap_err();\n            assert!(matches!(accelerated_result, PrecompileHalt::OutOfGas));\n        })\n        .await;\n    }\n\n    #[tokio::test(flavor = \"multi_thread\")]\n    async fn test_accelerated_bls12_381_g1_add_oracle_gas_carries_l1_cost() {\n        let recorded_gas_used: std::sync::Arc<std::sync::Mutex<Option<u64>>> =\n            std::sync::Arc::new(std::sync::Mutex::new(None));\n        let recorded_gas_used_in = recorded_gas_used.clone();\n\n        let captured =\n            test_accelerated_precompile_capture_hint(move |hint_writer, oracle_reader| {\n                let input = [0u8; G1_ADD_INPUT_LENGTH];\n                let result =\n                    fpvm_bls12_g1_add(&input, u64::MAX, hint_writer, oracle_reader).unwrap();\n                *recorded_gas_used_in.lock().unwrap() = Some(result.gas_used);\n            })\n            .await;\n\n        // Oracle hint must carry the current L1 G1Add cost (EIP-7904: 643).\n        assert_eq!(captured.oracle_gas(), 643);\n        // L2 charge must remain unchanged (G1_ADD_BASE_GAS_FEE = 375).\n        assert_eq!(recorded_gas_used.lock().unwrap().unwrap(), G1_ADD_BASE_GAS_FEE);\n    }\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "differs",
+      "coveredLines": 101,
+      "match": {
+        "origin": "own",
+        "collection": "optimism",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "bls12_g1_add.rs",
+        "similarity": 0.798,
+        "reportId": "optimism/cantina-kona-2026-03",
+        "repository": "op-rs/kona",
+        "path": "bin/client/src/fpvm_evm/precompiles/bls12_g1_add.rs",
+        "commit": "86910c9112437bbb849eca28961f813c5450e103",
+        "commitTimestamp": "2025-12-15T17:17:05Z",
+        "url": "https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/bin/client/src/fpvm_evm/precompiles/bls12_g1_add.rs",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). FPVM EVM factory and accelerated precompiles; finding 3.4.32 (Low) located in precompiles/provider.rs.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 27,
+        "removed": 9,
+        "ignoredAdded": 7,
+        "ignoredRemoved": 0,
+        "unchanged": 101,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 10,
+            "oldLines": 7,
+            "newStart": 10,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 10,
+                "newLine": 10,
+                "text": "use alloc::string::ToString;"
+              },
+              {
+                "type": " ",
+                "oldLine": 11,
+                "newLine": 11,
+                "text": "use kona_preimage::{HintWriterClient, PreimageOracleClient};"
+              },
+              {
+                "type": " ",
+                "oldLine": 12,
+                "newLine": 12,
+                "text": "use revm::precompile::{"
+              },
+              {
+                "type": "-",
+                "oldLine": 13,
+                "text": "    PrecompileError, PrecompileOutput, PrecompileResult, bls12_381,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 13,
+                "text": "    EthPrecompileOutput, EthPrecompileResult, PrecompileHalt, bls12_381,",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 14,
+                "newLine": 14,
+                "text": "    bls12_381_const::{G1_ADD_BASE_GAS_FEE, G1_ADD_INPUT_LENGTH},"
+              },
+              { "type": " ", "oldLine": 15, "newLine": 15, "text": "};" },
+              { "type": " ", "oldLine": 16, "newLine": 16, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 23,
+            "oldLines": 18,
+            "newStart": 23,
+            "newLines": 21,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 23,
+                "newLine": 23,
+                "text": "    gas_limit: u64,"
+              },
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 24,
+                "text": "    hint_writer: &H,"
+              },
+              {
+                "type": " ",
+                "oldLine": 25,
+                "newLine": 25,
+                "text": "    oracle_reader: &O,"
+              },
+              {
+                "type": "-",
+                "oldLine": 26,
+                "text": ") -> PrecompileResult",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 26,
+                "text": ") -> EthPrecompileResult",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 27, "newLine": 27, "text": "where" },
+              {
+                "type": " ",
+                "oldLine": 28,
+                "newLine": 28,
+                "text": "    H: HintWriterClient + Send + Sync,"
+              },
+              {
+                "type": " ",
+                "oldLine": 29,
+                "newLine": 29,
+                "text": "    O: PreimageOracleClient + Send + Sync,"
+              },
+              { "type": " ", "oldLine": 30, "newLine": 30, "text": "{" },
+              {
+                "type": "+",
+                "newLine": 31,
+                "text": "    /// Oracle/L1 staticcall gas required by [EIP-7904](https://eips.ethereum.org/EIPS/eip-7904).",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 32,
+                "text": "    const G1_ADD_ORACLE_GAS: u64 = 643;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 33, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 31,
+                "newLine": 34,
+                "text": "    if G1_ADD_BASE_GAS_FEE > gas_limit {"
+              },
+              {
+                "type": "-",
+                "oldLine": 32,
+                "text": "        return Err(PrecompileError::OutOfGas);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 35,
+                "text": "        return Err(PrecompileHalt::OutOfGas);",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 33, "newLine": 36, "text": "    }" },
+              { "type": " ", "oldLine": 34, "newLine": 37, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 35,
+                "newLine": 38,
+                "text": "    let input_len = input.len();"
+              },
+              {
+                "type": " ",
+                "oldLine": 36,
+                "newLine": 39,
+                "text": "    if input_len != G1_ADD_INPUT_LENGTH {"
+              },
+              {
+                "type": "-",
+                "oldLine": 37,
+                "text": "        return Err(PrecompileError::Other(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 40,
+                "text": "        return Err(PrecompileHalt::Other(",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 38,
+                "newLine": 41,
+                "text": "            alloc::format!("
+              },
+              {
+                "type": " ",
+                "oldLine": 39,
+                "newLine": 42,
+                "text": "                \"G1 addition input length should be {G1_ADD_INPUT_LENGTH} bytes, was {input_len}\""
+              },
+              {
+                "type": " ",
+                "oldLine": 40,
+                "newLine": 43,
+                "text": "            )"
+              }
+            ]
+          },
+          {
+            "oldStart": 47,
+            "oldLines": 11,
+            "newStart": 50,
+            "newLines": 11,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 47,
+                "newLine": 50,
+                "text": "    let result_data = kona_proof::block_on(precompile_run! {"
+              },
+              {
+                "type": " ",
+                "oldLine": 48,
+                "newLine": 51,
+                "text": "        hint_writer,"
+              },
+              {
+                "type": " ",
+                "oldLine": 49,
+                "newLine": 52,
+                "text": "        oracle_reader,"
+              },
+              {
+                "type": "-",
+                "oldLine": 50,
+                "text": "        &[precompile.address().as_slice(), &G1_ADD_BASE_GAS_FEE.to_be_bytes(), input]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 53,
+                "text": "        &[precompile.address().as_slice(), &G1_ADD_ORACLE_GAS.to_be_bytes(), input]",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 51, "newLine": 54, "text": "    })" },
+              {
+                "type": "-",
+                "oldLine": 52,
+                "text": "    .map_err(|e| PrecompileError::Other(e.to_string().into()))?;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 55,
+                "text": "    .map_err(|e| PrecompileHalt::Other(e.to_string().into()))?;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 53, "newLine": 56, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 54,
+                "text": "    Ok(PrecompileOutput::new(G1_ADD_BASE_GAS_FEE, result_data.into()))",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 57,
+                "text": "    Ok(EthPrecompileOutput::new(G1_ADD_BASE_GAS_FEE, result_data.into()))",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 55, "newLine": 58, "text": "}" },
+              { "type": " ", "oldLine": 56, "newLine": 59, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 57,
+                "newLine": 60,
+                "text": "#[cfg(test)]"
+              }
+            ]
+          },
+          {
+            "oldStart": 59,
+            "oldLines": 6,
+            "newStart": 62,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 59,
+                "newLine": 62,
+                "text": "    use super::*;"
+              },
+              {
+                "type": " ",
+                "oldLine": 60,
+                "newLine": 63,
+                "text": "    use crate::fpvm_evm::precompiles::test_utils::{"
+              },
+              {
+                "type": " ",
+                "oldLine": 61,
+                "newLine": 64,
+                "text": "        execute_native_precompile, test_accelerated_precompile,"
+              },
+              {
+                "type": "+",
+                "newLine": 65,
+                "text": "        test_accelerated_precompile_capture_hint,",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 62, "newLine": 66, "text": "    };" },
+              { "type": " ", "oldLine": 63, "newLine": 67, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 64,
+                "newLine": 68,
+                "text": "    #[tokio::test(flavor = \"multi_thread\")]"
+              }
+            ]
+          },
+          {
+            "oldStart": 86,
+            "oldLines": 7,
+            "newStart": 90,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 86,
+                "newLine": 90,
+                "text": "        test_accelerated_precompile(|hint_writer, oracle_reader| {"
+              },
+              {
+                "type": " ",
+                "oldLine": 87,
+                "newLine": 91,
+                "text": "            let accelerated_result ="
+              },
+              {
+                "type": " ",
+                "oldLine": 88,
+                "newLine": 92,
+                "text": "                fpvm_bls12_g1_add(&[], u64::MAX, hint_writer, oracle_reader).unwrap_err();"
+              },
+              {
+                "type": "-",
+                "oldLine": 89,
+                "text": "            assert!(matches!(accelerated_result, PrecompileError::Other(_)));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 93,
+                "text": "            assert!(matches!(accelerated_result, PrecompileHalt::Other(_)));",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 90,
+                "newLine": 94,
+                "text": "        })"
+              },
+              {
+                "type": " ",
+                "oldLine": 91,
+                "newLine": 95,
+                "text": "        .await;"
+              },
+              { "type": " ", "oldLine": 92, "newLine": 96, "text": "    }" }
+            ]
+          },
+          {
+            "oldStart": 96,
+            "oldLines": 8,
+            "newStart": 100,
+            "newLines": 29,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 96,
+                "newLine": 100,
+                "text": "        test_accelerated_precompile(|hint_writer, oracle_reader| {"
+              },
+              {
+                "type": " ",
+                "oldLine": 97,
+                "newLine": 101,
+                "text": "            let accelerated_result ="
+              },
+              {
+                "type": " ",
+                "oldLine": 98,
+                "newLine": 102,
+                "text": "                fpvm_bls12_g1_add(&[], 0, hint_writer, oracle_reader).unwrap_err();"
+              },
+              {
+                "type": "-",
+                "oldLine": 99,
+                "text": "            assert!(matches!(accelerated_result, PrecompileError::OutOfGas));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 103,
+                "text": "            assert!(matches!(accelerated_result, PrecompileHalt::OutOfGas));",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 100,
+                "newLine": 104,
+                "text": "        })"
+              },
+              {
+                "type": " ",
+                "oldLine": 101,
+                "newLine": 105,
+                "text": "        .await;"
+              },
+              { "type": " ", "oldLine": 102, "newLine": 106, "text": "    }" },
+              { "type": "+", "newLine": 107, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 108,
+                "text": "    #[tokio::test(flavor = \"multi_thread\")]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 109,
+                "text": "    async fn test_accelerated_bls12_381_g1_add_oracle_gas_carries_l1_cost() {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 110,
+                "text": "        let recorded_gas_used: std::sync::Arc<std::sync::Mutex<Option<u64>>> =",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 111,
+                "text": "            std::sync::Arc::new(std::sync::Mutex::new(None));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 112,
+                "text": "        let recorded_gas_used_in = recorded_gas_used.clone();",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 113, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 114,
+                "text": "        let captured =",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 115,
+                "text": "            test_accelerated_precompile_capture_hint(move |hint_writer, oracle_reader| {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 116,
+                "text": "                let input = [0u8; G1_ADD_INPUT_LENGTH];",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 117,
+                "text": "                let result =",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 118,
+                "text": "                    fpvm_bls12_g1_add(&input, u64::MAX, hint_writer, oracle_reader).unwrap();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 119,
+                "text": "                *recorded_gas_used_in.lock().unwrap() = Some(result.gas_used);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 120,
+                "text": "            })",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 121,
+                "text": "            .await;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 122, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 123,
+                "text": "        // Oracle hint must carry the current L1 G1Add cost (EIP-7904: 643).",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 124,
+                "text": "        assert_eq!(captured.oracle_gas(), 643);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 125,
+                "text": "        // L2 charge must remain unchanged (G1_ADD_BASE_GAS_FEE = 375).",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 126,
+                "text": "        assert_eq!(recorded_gas_used.lock().unwrap().unwrap(), G1_ADD_BASE_GAS_FEE);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 127,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 103, "newLine": 128, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

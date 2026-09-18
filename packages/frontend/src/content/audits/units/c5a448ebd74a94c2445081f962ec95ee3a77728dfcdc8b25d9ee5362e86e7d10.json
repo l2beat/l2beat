@@ -1,1 +1,15 @@
-{"schemaVersion":2,"unitHash":"c5a448ebd74a94c2445081f962ec95ee3a77728dfcdc8b25d9ee5362e86e7d10","name":"output.rs","kind":"program","lines":38,"source":"//! Output Types\n\nuse alloy_primitives::B256;\nuse kona_protocol::{L2BlockInfo, OutputRoot, SyncStatus};\n\n/// An [output response][or] for Optimism Rollup.\n///\n/// [or]: https://github.com/ethereum-optimism/optimism/blob/f20b92d3eb379355c876502c4f28e72a91ab902f/op-service/eth/output.go#L10-L17\n#[derive(Clone, Debug, PartialEq, Eq, serde::Serialize, serde::Deserialize)]\n#[serde(rename_all = \"camelCase\")]\npub struct OutputResponse {\n    /// The output version.\n    pub version: B256,\n    /// The output root hash.\n    pub output_root: B256,\n    /// A reference to the L2 block.\n    pub block_ref: L2BlockInfo,\n    /// The withdrawal storage root.\n    pub withdrawal_storage_root: B256,\n    /// The state root.\n    pub state_root: B256,\n    /// The status of the node sync.\n    pub sync_status: SyncStatus,\n}\n\nimpl OutputResponse {\n    /// Builds an [`OutputResponse`] from its parts.\n    pub fn from_v0(v0: OutputRoot, sync_status: SyncStatus, block_ref: L2BlockInfo) -> Self {\n        Self {\n            version: v0.version(),\n            output_root: v0.hash(),\n            block_ref,\n            withdrawal_storage_root: v0.bridge_storage_root,\n            state_root: v0.state_root,\n            sync_status,\n        }\n    }\n}","resolutions":{"9fa846564f4071bd":{"status":"unaudited","coveredLines":0,"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "c5a448ebd74a94c2445081f962ec95ee3a77728dfcdc8b25d9ee5362e86e7d10",
+  "name": "output.rs",
+  "kind": "program",
+  "lines": 38,
+  "source": "//! Output Types\n\nuse alloy_primitives::B256;\nuse kona_protocol::{L2BlockInfo, OutputRoot, SyncStatus};\n\n/// An [output response][or] for Optimism Rollup.\n///\n/// [or]: https://github.com/ethereum-optimism/optimism/blob/f20b92d3eb379355c876502c4f28e72a91ab902f/op-service/eth/output.go#L10-L17\n#[derive(Clone, Debug, PartialEq, Eq, serde::Serialize, serde::Deserialize)]\n#[serde(rename_all = \"camelCase\")]\npub struct OutputResponse {\n    /// The output version.\n    pub version: B256,\n    /// The output root hash.\n    pub output_root: B256,\n    /// A reference to the L2 block.\n    pub block_ref: L2BlockInfo,\n    /// The withdrawal storage root.\n    pub withdrawal_storage_root: B256,\n    /// The state root.\n    pub state_root: B256,\n    /// The status of the node sync.\n    pub sync_status: SyncStatus,\n}\n\nimpl OutputResponse {\n    /// Builds an [`OutputResponse`] from its parts.\n    pub fn from_v0(v0: OutputRoot, sync_status: SyncStatus, block_ref: L2BlockInfo) -> Self {\n        Self {\n            version: v0.version(),\n            output_root: v0.hash(),\n            block_ref,\n            withdrawal_storage_root: v0.bridge_storage_root,\n            state_root: v0.state_root,\n            sync_status,\n        }\n    }\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

@@ -1,1 +1,15 @@
-{"schemaVersion":2,"unitHash":"a75816c8872c3d9599873b1ce2ee5cf69f718bf4140fca902aeff28831e062b3","name":"helpers_test.go","kind":"program","lines":28,"source":"package node\n\nimport (\n\t\"flag\"\n\n\t\"github.com/ethereum-optimism/optimism/op-devstack/devtest\"\n\tnode_utils \"github.com/ethereum-optimism/optimism/rust/kona/tests/node/utils\"\n)\n\nvar (\n\tnum_threads           = flag.Int(\"num-threads\", 10, \"number of threads to use for the test\")\n\tpercentageNewAccounts = flag.Int(\"percentage-new-accounts\", 20, \"percentage of new accounts to produce transactions for\")\n\tfundAmount            = flag.Int(\"fund-amount\", 10, \"eth amount to fund each new account with\")\n\tinitNumAccounts       = flag.Int(\"init-num-accounts\", 10, \"initial number of accounts to fund\")\n)\n\nfunc newLongRunningPreset(t devtest.T) *node_utils.MixedOpKonaPreset {\n\treturn node_utils.NewMixedOpKonaForConfig(t, node_utils.L2NodeConfig{\n\t\tOpSequencerNodesWithGeth:   0,\n\t\tOpSequencerNodesWithReth:   0,\n\t\tKonaSequencerNodesWithGeth: 1,\n\t\tKonaSequencerNodesWithReth: 0,\n\t\tOpNodesWithGeth:            1,\n\t\tOpNodesWithReth:            1,\n\t\tKonaNodesWithGeth:          1,\n\t\tKonaNodesWithReth:          1,\n\t})\n}","resolutions":{"9fa846564f4071bd":{"status":"unaudited","coveredLines":0,"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "a75816c8872c3d9599873b1ce2ee5cf69f718bf4140fca902aeff28831e062b3",
+  "name": "helpers_test.go",
+  "kind": "program",
+  "lines": 28,
+  "source": "package node\n\nimport (\n\t\"flag\"\n\n\t\"github.com/ethereum-optimism/optimism/op-devstack/devtest\"\n\tnode_utils \"github.com/ethereum-optimism/optimism/rust/kona/tests/node/utils\"\n)\n\nvar (\n\tnum_threads           = flag.Int(\"num-threads\", 10, \"number of threads to use for the test\")\n\tpercentageNewAccounts = flag.Int(\"percentage-new-accounts\", 20, \"percentage of new accounts to produce transactions for\")\n\tfundAmount            = flag.Int(\"fund-amount\", 10, \"eth amount to fund each new account with\")\n\tinitNumAccounts       = flag.Int(\"init-num-accounts\", 10, \"initial number of accounts to fund\")\n)\n\nfunc newLongRunningPreset(t devtest.T) *node_utils.MixedOpKonaPreset {\n\treturn node_utils.NewMixedOpKonaForConfig(t, node_utils.L2NodeConfig{\n\t\tOpSequencerNodesWithGeth:   0,\n\t\tOpSequencerNodesWithReth:   0,\n\t\tKonaSequencerNodesWithGeth: 1,\n\t\tKonaSequencerNodesWithReth: 0,\n\t\tOpNodesWithGeth:            1,\n\t\tOpNodesWithReth:            1,\n\t\tKonaNodesWithGeth:          1,\n\t\tKonaNodesWithReth:          1,\n\t})\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

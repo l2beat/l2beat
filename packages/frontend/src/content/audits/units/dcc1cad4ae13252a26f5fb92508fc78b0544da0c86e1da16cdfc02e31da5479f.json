@@ -1,1 +1,1343 @@
-{"schemaVersion":2,"unitHash":"dcc1cad4ae13252a26f5fb92508fc78b0544da0c86e1da16cdfc02e31da5479f","name":"core.rs","kind":"program","lines":368,"source":"//! Stateless OP Stack L2 block builder implementation.\n//!\n//! The [`StatelessL2Builder`] provides a complete block building and execution engine\n//! for OP Stack L2 chains that operates in a stateless manner, pulling required state\n//! data from a [`TrieDB`] during execution rather than maintaining full state.\n\nuse crate::{ExecutorError, ExecutorResult, TrieDB, TrieDBError, TrieDBProvider};\nuse alloc::{string::ToString, vec::Vec};\nuse alloy_consensus::{Header, Sealed, crypto::RecoveryError};\nuse alloy_eips::Encodable2718;\nuse alloy_evm::{\n    EvmFactory, FromRecoveredTx, FromTxWithEncoded, RecoveredTx,\n    block::{BlockExecutionResult, BlockExecutor, BlockExecutorFactory},\n};\nuse alloy_op_evm::{\n    OpBlockExecutionCtx, OpBlockExecutorFactory, PostExecMode,\n    block::{OpTxEnv, receipt_builder::OpReceiptBuilder},\n};\nuse core::fmt::Debug;\nuse kona_genesis::RollupConfig;\nuse kona_mpt::TrieHinter;\nuse op_alloy_consensus::{OpTxEnvelope, parse_post_exec_payload_from_transactions};\nuse op_alloy_rpc_types_engine::OpPayloadAttributes;\nuse op_revm::OpSpecId;\nuse revm::{\n    context::BlockEnv,\n    database::{State, states::bundle_state::BundleRetention},\n};\n\n/// Stateless OP Stack L2 block builder that derives state from trie proofs during execution.\n///\n/// The [`StatelessL2Builder`] is a specialized block execution engine designed for fault proof\n/// systems and stateless verification. Instead of maintaining full L2 state, it dynamically\n/// retrieves required state data from a [`TrieDB`] backed by Merkle proofs and witnesses.\n///\n/// # Architecture\n///\n/// The builder operates in a stateless manner by:\n/// 1. **Trie Database**: Uses [`TrieDB`] to access state via Merkle proofs\n/// 2. **EVM Factory**: Creates execution environments with proof-backed state\n/// 3. **Block Executor**: Executes transactions using witness-provided state\n/// 4. **Receipt Generation**: Produces execution receipts and state commitments\n///\n/// # Stateless Execution Model\n///\n/// Traditional execution engines maintain full state databases, but the stateless model:\n/// - Receives state witnesses containing only required data\n/// - Verifies state access against Merkle proofs\n/// - Executes transactions without persistent state storage\n/// - Produces verifiable execution results and state commitments\n///\n/// # Use Cases\n///\n/// ## Fault Proof Systems\n/// - Enables dispute resolution without full state replication\n/// - Provides verifiable execution results for challenge games\n/// - Supports optimistic rollup fraud proof generation\n///\n/// ## Stateless Verification\n/// - Allows third parties to verify L2 blocks without full state\n/// - Enables light clients to validate L2 execution\n/// - Supports decentralized verification networks\n///\n/// # Performance Characteristics\n///\n/// - **Memory**: Lower memory usage than stateful execution (no full state)\n/// - **I/O**: Higher I/O for proof verification and witness access\n/// - **CPU**: Additional overhead for cryptographic proof verification\n/// - **Determinism**: Guaranteed deterministic execution results\n///\n/// # Type Parameters\n///\n/// * `P` - Trie database provider implementing [`TrieDBProvider`]\n/// * `H` - Trie hinter implementing [`TrieHinter`] for state access optimization\n/// * `Evm` - EVM factory implementing [`EvmFactory`] for execution environment creation\n/// * `R` - Receipt builder implementing [`OpReceiptBuilder`]. OP Stack callers pass\n///   `OpAlloyReceiptBuilder`; chains that produce non-`OpReceiptEnvelope` receipts (e.g. Celo's\n///   CIP-64 receipt) plug in their own builder.\n#[derive(Debug)]\npub struct StatelessL2Builder<'a, P, H, Evm, R>\nwhere\n    P: TrieDBProvider,\n    H: TrieHinter,\n    Evm: EvmFactory,\n{\n    /// The rollup configuration containing chain parameters and activation heights.\n    ///\n    /// Provides access to network-specific parameters including gas limits,\n    /// hard fork activation heights, and system addresses needed for proper\n    /// L2 block execution and validation.\n    pub(crate) config: &'a RollupConfig,\n    /// The trie database providing stateless access to L2 state via Merkle proofs.\n    ///\n    /// The [`TrieDB`] serves as the primary interface for state access during\n    /// execution, resolving account and storage queries using witness data\n    /// and cryptographic proofs rather than a traditional state database.\n    pub(crate) trie_db: TrieDB<P, H>,\n    /// The block executor factory for creating OP Stack execution environments.\n    ///\n    /// This factory creates specialized OP Stack execution environments that\n    /// understand OP-specific transaction types, system calls, and state\n    /// management required for proper L2 block execution.\n    pub(crate) factory: OpBlockExecutorFactory<R, RollupConfig, Evm>,\n    /// Test-only override for SDM activation while the fork is not yet scheduled.\n    #[cfg(any(test, feature = \"test-utils\"))]\n    pub(crate) sdm_active_override: Option<bool>,\n}\n\nimpl<'a, P, H, Evm, R> StatelessL2Builder<'a, P, H, Evm, R>\nwhere\n    P: TrieDBProvider + Debug,\n    H: TrieHinter + Debug,\n    Evm: EvmFactory<Spec = OpSpecId, BlockEnv = BlockEnv> + 'static,\n    <Evm as EvmFactory>::Tx:\n        FromTxWithEncoded<OpTxEnvelope> + FromRecoveredTx<OpTxEnvelope> + OpTxEnv,\n    R: OpReceiptBuilder<Transaction = OpTxEnvelope> + 'static,\n    R::Receipt: Encodable2718,\n    OpBlockExecutorFactory<R, RollupConfig, Evm>: for<'b> BlockExecutorFactory<\n            EvmFactory = Evm,\n            ExecutionCtx<'b> = OpBlockExecutionCtx,\n            Transaction = OpTxEnvelope,\n            Receipt = R::Receipt,\n        >,\n{\n    /// Creates a new stateless L2 block builder instance.\n    ///\n    /// Initializes the builder with the necessary components for stateless block execution\n    /// including the trie database, execution factory, and rollup configuration.\n    ///\n    /// # Arguments\n    /// * `config` - Rollup configuration with chain parameters and activation heights\n    /// * `evm_factory` - EVM factory for creating execution environments\n    /// * `receipt_builder` - Receipt builder selecting the receipt envelope shape\n    /// * `provider` - Trie database provider for state access\n    /// * `hinter` - Trie hinter for optimizing state access patterns\n    /// * `parent_header` - Sealed header of the parent block to build upon\n    ///\n    /// # Returns\n    /// A new [`StatelessL2Builder`] ready for block building operations\n    ///\n    /// # Usage\n    /// ```rust,ignore\n    /// let builder = StatelessL2Builder::new(\n    ///     &rollup_config,\n    ///     evm_factory,\n    ///     receipt_builder,\n    ///     trie_provider,\n    ///     trie_hinter,\n    ///     parent_header,\n    /// );\n    /// ```\n    pub fn new(\n        config: &'a RollupConfig,\n        evm_factory: Evm,\n        receipt_builder: R,\n        provider: P,\n        hinter: H,\n        parent_header: Sealed<Header>,\n    ) -> Self {\n        let trie_db = TrieDB::new(parent_header, provider, hinter);\n        let factory = OpBlockExecutorFactory::new(receipt_builder, config.clone(), evm_factory);\n        Self {\n            config,\n            trie_db,\n            factory,\n            #[cfg(any(test, feature = \"test-utils\"))]\n            sdm_active_override: None,\n        }\n    }\n\n    /// Overrides SDM activation for tests and fixture tooling.\n    #[cfg(any(test, feature = \"test-utils\"))]\n    pub const fn set_sdm_active_override(&mut self, sdm_active_override: Option<bool>) {\n        self.sdm_active_override = sdm_active_override;\n    }\n\n    /// Returns whether SDM is active at the given timestamp.\n    fn is_sdm_active(&self, timestamp: u64) -> bool {\n        #[cfg(any(test, feature = \"test-utils\"))]\n        if let Some(active) = self.sdm_active_override {\n            return active;\n        }\n\n        self.config.is_sdm_active(timestamp)\n    }\n\n    /// Builds and executes a new L2 block using the provided payload attributes.\n    ///\n    /// This method performs the complete block building and execution process in a stateless\n    /// manner, dynamically retrieving required state data via the trie database and producing\n    /// a fully executed block with receipts and state commitments.\n    ///\n    /// # Arguments\n    /// * `attrs` - Payload attributes containing transactions and block metadata\n    ///\n    /// # Returns\n    /// * `Ok(BlockBuildingOutcome)` - Successfully built and executed block with receipts\n    /// * `Err(ExecutorError)` - Block building or execution failure\n    ///\n    /// # Errors\n    /// This method can fail due to various conditions:\n    ///\n    /// ## Input Validation Errors\n    /// - [`ExecutorError::MissingGasLimit`]: Gas limit not provided in attributes\n    /// - [`ExecutorError::MissingTransactions`]: Transaction list not provided\n    /// - [`ExecutorError::MissingEIP1559Params`]: Required fee parameters missing (post-Holocene)\n    /// - [`ExecutorError::MissingParentBeaconBlockRoot`]: Beacon root missing (post-Dencun)\n    ///\n    /// ## Execution Errors\n    /// - [`ExecutorError::BlockGasLimitExceeded`]: Cumulative gas exceeds block limit\n    /// - [`ExecutorError::UnsupportedTransactionType`]: Unknown transaction type encountered\n    /// - [`ExecutorError::ExecutionError`]: EVM-level execution failures\n    ///\n    /// ## State Access Errors\n    /// - [`ExecutorError::TrieDBError`]: State tree access or proof verification failures\n    /// - Missing account data in witness\n    /// - Invalid Merkle proofs\n    ///\n    /// ## Data Integrity Errors\n    /// - [`ExecutorError::Recovery`]: Transaction signature recovery failures\n    /// - [`ExecutorError::RLPError`]: Data encoding/decoding errors\n    ///\n    /// # Block Building Process\n    ///\n    /// The block building process follows these steps:\n    ///\n    /// 1. **Environment Setup**: Configure EVM environment with proper gas settings\n    /// 2. **Witness Hinting**: Send payload witness hints to optimize state access\n    /// 3. **Transaction Execution**: Execute each transaction in order with state updates\n    /// 4. **Receipt Generation**: Generate execution receipts for all transactions\n    /// 5. **State Commitment**: Compute final state roots and output commitments\n    /// 6. **Block Assembly**: Assemble complete block with header and execution results\n    ///\n    /// # Stateless Execution Details\n    ///\n    /// Unlike traditional execution engines, this builder:\n    /// - Resolves state access via Merkle proofs instead of database lookups\n    /// - Validates all state access against cryptographic witnesses\n    /// - Produces deterministic results independent of execution environment\n    /// - Enables verification without full state replication\n    ///\n    /// # Performance Considerations\n    ///\n    /// - State access latency depends on proof verification overhead\n    /// - Memory usage scales with witness size rather than full state\n    /// - CPU overhead from cryptographic proof verification\n    /// - I/O patterns optimized through trie hinter guidance\n    pub fn build_block(\n        &mut self,\n        attrs: OpPayloadAttributes,\n    ) -> ExecutorResult<BlockBuildingOutcome<R::Receipt>> {\n        // Step 1. Set up the execution environment.\n        let (base_fee_params, min_base_fee) = Self::active_base_fee_params(\n            self.config,\n            self.trie_db.parent_block_header(),\n            attrs.payload_attributes.timestamp,\n        )?;\n        let evm_env = self.evm_env(\n            self.config.spec_id(attrs.payload_attributes.timestamp),\n            self.trie_db.parent_block_header(),\n            &attrs,\n            &base_fee_params,\n            min_base_fee,\n        )?;\n        let block_env = evm_env.block_env().clone();\n        let parent_hash = self.trie_db.parent_block_header().seal();\n\n        // Attempt to send a payload witness hint to the host. This hint instructs the host to\n        // populate its preimage store with the preimages required to statelessly execute\n        // this payload. This feature is experimental, so if the hint fails, we continue\n        // without it and fall back on on-demand preimage fetching for execution.\n        self.trie_db\n            .hinter\n            .hint_execution_witness(parent_hash, &attrs)\n            .map_err(|e| TrieDBError::Provider(e.to_string()))?;\n\n        info!(\n            target: \"block_builder\",\n            block_number = %block_env.number,\n            block_timestamp = %block_env.timestamp,\n            block_gas_limit = block_env.gas_limit,\n            transactions = attrs.transactions.as_ref().map_or(0, |txs| txs.len()),\n            \"Beginning block building.\"\n        );\n\n        // Compute SDM activation before borrowing `self.trie_db` mutably below.\n        let sdm_active = self.is_sdm_active(block_env.timestamp.saturating_to());\n\n        // Step 2. Create the executor, using the trie database.\n        let mut state =\n            State::builder().with_database(&mut self.trie_db).with_bundle_update().build();\n        let evm = self.factory.evm_factory().create_evm(&mut state, evm_env);\n        // Step 3. Decode and validate the block transactions within the payload attributes.\n        let transactions = attrs\n            .recovered_transactions_with_encoded()\n            .collect::<Result<Vec<_>, RecoveryError>>()\n            .map_err(ExecutorError::Recovery)?;\n        let post_exec_mode = parse_post_exec_payload_from_transactions(\n            transactions.iter().map(RecoveredTx::tx),\n            block_env.number.saturating_to(),\n            sdm_active,\n        )\n        .map_err(|err| ExecutorError::InvalidPostExecPayload(err.into_string()))?\n        .map(|parsed| PostExecMode::Verify(parsed.payload))\n        .unwrap_or_default();\n\n        let ctx = OpBlockExecutionCtx {\n            parent_hash,\n            parent_beacon_block_root: attrs.payload_attributes.parent_beacon_block_root,\n            // This field is unused for individual block building jobs.\n            extra_data: Default::default(),\n            post_exec_mode,\n        };\n        let executor = self.factory.create_executor(evm, ctx);\n\n        let ex_result = executor.execute_block(transactions.iter())?;\n\n        info!(\n            target: \"block_builder\",\n            gas_used = ex_result.gas_used,\n            gas_limit = block_env.gas_limit,\n            \"Finished block building. Beginning sealing job.\"\n        );\n\n        // Step 4. Merge state transitions and seal the block.\n        state.merge_transitions(BundleRetention::Reverts);\n        let bundle = state.take_bundle();\n        let header = self.seal_block(&attrs, parent_hash, &block_env, &ex_result, bundle)?;\n\n        info!(\n            target: \"block_builder\",\n            number = header.number,\n            hash = ?header.seal(),\n            state_root = ?header.state_root,\n            transactions_root = ?header.transactions_root,\n            receipts_root = ?header.receipts_root,\n            \"Sealed new block\",\n        );\n\n        // Update the parent block hash in the state database, preparing for the next block.\n        self.trie_db.set_parent_block_header(header.clone());\n        Ok((header, ex_result).into())\n    }\n}\n\n/// The outcome of a block building operation, returning the sealed block [`Header`] and the\n/// [`BlockExecutionResult`].\n///\n/// Generic over the receipt envelope so non-OP receipt shapes (e.g. CIP-64) can be carried out of\n/// the builder.\n#[derive(Debug, Clone)]\npub struct BlockBuildingOutcome<Receipt> {\n    /// The block header.\n    pub header: Sealed<Header>,\n    /// The block execution result.\n    pub execution_result: BlockExecutionResult<Receipt>,\n}\n\nimpl<Receipt> From<(Sealed<Header>, BlockExecutionResult<Receipt>)>\n    for BlockBuildingOutcome<Receipt>\n{\n    fn from((header, execution_result): (Sealed<Header>, BlockExecutionResult<Receipt>)) -> Self {\n        Self { header, execution_result }\n    }\n}\n\n#[cfg(test)]\nmod tests;","resolutions":{"9fa846564f4071bd":{"status":"differs","coveredLines":303,"match":{"origin":"own","collection":"optimism","relation":{"type":"own"},"rank":0,"matchedBy":"name","auditedName":"core.rs","similarity":0.517,"reportId":"optimism/cantina-kona-2026-03","repository":"op-rs/kona","path":"crates/proof/executor/src/builder/core.rs","commit":"86910c9112437bbb849eca28961f813c5450e103","commitTimestamp":"2025-12-15T17:17:05Z","url":"https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/crates/proof/executor/src/builder/core.rs","auditStatus":"audited_with_no_major_findings","reviewPhase":"initial audit","coverage":"Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). kona-executor block builder; Low finding 3.4.2 (util.rs) and Informational 3.5.18 (builder/core.rs) located here.","majorFindings":0,"isLatestVersion":true,"laterAuditedVersionExists":false,"totalVersions":1},"diff":{"added":65,"removed":39,"ignoredAdded":17,"ignoredRemoved":8,"unchanged":303,"ignoredOnly":false,"hunks":[{"oldStart":1,"oldLines":24,"newStart":1,"newLines":25,"lines":[{"type":" ","oldLine":1,"newLine":1,"text":"//! Stateless OP Stack L2 block builder implementation."},{"type":" ","oldLine":2,"newLine":2,"text":"//!"},{"type":"-","oldLine":3,"text":"//! The [StatelessL2Builder] provides a complete block building and execution engine","ignored":true},{"type":"+","newLine":3,"text":"//! The [`StatelessL2Builder`] provides a complete block building and execution engine","ignored":true},{"type":" ","oldLine":4,"newLine":4,"text":"//! for OP Stack L2 chains that operates in a stateless manner, pulling required state"},{"type":"-","oldLine":5,"text":"//! data from a [TrieDB] during execution rather than maintaining full state.","ignored":true},{"type":"+","newLine":5,"text":"//! data from a [`TrieDB`] during execution rather than maintaining full state.","ignored":true},{"type":" ","oldLine":6,"newLine":6,"text":""},{"type":" ","oldLine":7,"newLine":7,"text":"use crate::{ExecutorError, ExecutorResult, TrieDB, TrieDBError, TrieDBProvider};"},{"type":" ","oldLine":8,"newLine":8,"text":"use alloc::{string::ToString, vec::Vec};"},{"type":" ","oldLine":9,"newLine":9,"text":"use alloy_consensus::{Header, Sealed, crypto::RecoveryError};"},{"type":"+","newLine":10,"text":"use alloy_eips::Encodable2718;","ignored":false},{"type":" ","oldLine":10,"newLine":11,"text":"use alloy_evm::{"},{"type":"-","oldLine":11,"text":"    EvmFactory, FromRecoveredTx, FromTxWithEncoded,","ignored":false},{"type":"+","newLine":12,"text":"    EvmFactory, FromRecoveredTx, FromTxWithEncoded, RecoveredTx,","ignored":false},{"type":" ","oldLine":12,"newLine":13,"text":"    block::{BlockExecutionResult, BlockExecutor, BlockExecutorFactory},"},{"type":" ","oldLine":13,"newLine":14,"text":"};"},{"type":" ","oldLine":14,"newLine":15,"text":"use alloy_op_evm::{"},{"type":"-","oldLine":15,"text":"    OpBlockExecutionCtx, OpBlockExecutorFactory,","ignored":false},{"type":"-","oldLine":16,"text":"    block::{OpAlloyReceiptBuilder, OpTxEnv},","ignored":false},{"type":"+","newLine":16,"text":"    OpBlockExecutionCtx, OpBlockExecutorFactory, PostExecMode,","ignored":false},{"type":"+","newLine":17,"text":"    block::{OpTxEnv, receipt_builder::OpReceiptBuilder},","ignored":false},{"type":" ","oldLine":17,"newLine":18,"text":"};"},{"type":" ","oldLine":18,"newLine":19,"text":"use core::fmt::Debug;"},{"type":" ","oldLine":19,"newLine":20,"text":"use kona_genesis::RollupConfig;"},{"type":" ","oldLine":20,"newLine":21,"text":"use kona_mpt::TrieHinter;"},{"type":"-","oldLine":21,"text":"use op_alloy_consensus::{OpReceiptEnvelope, OpTxEnvelope};","ignored":false},{"type":"+","newLine":22,"text":"use op_alloy_consensus::{OpTxEnvelope, parse_post_exec_payload_from_transactions};","ignored":false},{"type":" ","oldLine":22,"newLine":23,"text":"use op_alloy_rpc_types_engine::OpPayloadAttributes;"},{"type":" ","oldLine":23,"newLine":24,"text":"use op_revm::OpSpecId;"},{"type":" ","oldLine":24,"newLine":25,"text":"use revm::{"}]},{"oldStart":72,"oldLines":8,"newStart":73,"newLines":11,"lines":[{"type":" ","oldLine":72,"newLine":73,"text":"/// * `P` - Trie database provider implementing [`TrieDBProvider`]"},{"type":" ","oldLine":73,"newLine":74,"text":"/// * `H` - Trie hinter implementing [`TrieHinter`] for state access optimization"},{"type":" ","oldLine":74,"newLine":75,"text":"/// * `Evm` - EVM factory implementing [`EvmFactory`] for execution environment creation"},{"type":"+","newLine":76,"text":"/// * `R` - Receipt builder implementing [`OpReceiptBuilder`]. OP Stack callers pass","ignored":true},{"type":"+","newLine":77,"text":"///   `OpAlloyReceiptBuilder`; chains that produce non-`OpReceiptEnvelope` receipts (e.g. Celo's","ignored":true},{"type":"+","newLine":78,"text":"///   CIP-64 receipt) plug in their own builder.","ignored":true},{"type":" ","oldLine":75,"newLine":79,"text":"#[derive(Debug)]"},{"type":"-","oldLine":76,"text":"pub struct StatelessL2Builder<'a, P, H, Evm>","ignored":false},{"type":"+","newLine":80,"text":"pub struct StatelessL2Builder<'a, P, H, Evm, R>","ignored":false},{"type":" ","oldLine":77,"newLine":81,"text":"where"},{"type":" ","oldLine":78,"newLine":82,"text":"    P: TrieDBProvider,"},{"type":" ","oldLine":79,"newLine":83,"text":"    H: TrieHinter,"}]},{"oldStart":96,"oldLines":16,"newStart":100,"newLines":27,"lines":[{"type":" ","oldLine":96,"newLine":100,"text":"    /// This factory creates specialized OP Stack execution environments that"},{"type":" ","oldLine":97,"newLine":101,"text":"    /// understand OP-specific transaction types, system calls, and state"},{"type":" ","oldLine":98,"newLine":102,"text":"    /// management required for proper L2 block execution."},{"type":"-","oldLine":99,"text":"    pub(crate) factory: OpBlockExecutorFactory<OpAlloyReceiptBuilder, RollupConfig, Evm>,","ignored":false},{"type":"+","newLine":103,"text":"    pub(crate) factory: OpBlockExecutorFactory<R, RollupConfig, Evm>,","ignored":false},{"type":"+","newLine":104,"text":"    /// Test-only override for SDM activation while the fork is not yet scheduled.","ignored":true},{"type":"+","newLine":105,"text":"    #[cfg(any(test, feature = \"test-utils\"))]","ignored":false},{"type":"+","newLine":106,"text":"    pub(crate) sdm_active_override: Option<bool>,","ignored":false},{"type":" ","oldLine":100,"newLine":107,"text":"}"},{"type":" ","oldLine":101,"newLine":108,"text":""},{"type":"-","oldLine":102,"text":"impl<'a, P, H, Evm> StatelessL2Builder<'a, P, H, Evm>","ignored":false},{"type":"+","newLine":109,"text":"impl<'a, P, H, Evm, R> StatelessL2Builder<'a, P, H, Evm, R>","ignored":false},{"type":" ","oldLine":103,"newLine":110,"text":"where"},{"type":" ","oldLine":104,"newLine":111,"text":"    P: TrieDBProvider + Debug,"},{"type":" ","oldLine":105,"newLine":112,"text":"    H: TrieHinter + Debug,"},{"type":" ","oldLine":106,"newLine":113,"text":"    Evm: EvmFactory<Spec = OpSpecId, BlockEnv = BlockEnv> + 'static,"},{"type":" ","oldLine":107,"newLine":114,"text":"    <Evm as EvmFactory>::Tx:"},{"type":" ","oldLine":108,"newLine":115,"text":"        FromTxWithEncoded<OpTxEnvelope> + FromRecoveredTx<OpTxEnvelope> + OpTxEnv,"},{"type":"+","newLine":116,"text":"    R: OpReceiptBuilder<Transaction = OpTxEnvelope> + 'static,","ignored":false},{"type":"+","newLine":117,"text":"    R::Receipt: Encodable2718,","ignored":false},{"type":"+","newLine":118,"text":"    OpBlockExecutorFactory<R, RollupConfig, Evm>: for<'b> BlockExecutorFactory<","ignored":false},{"type":"+","newLine":119,"text":"            EvmFactory = Evm,","ignored":false},{"type":"+","newLine":120,"text":"            ExecutionCtx<'b> = OpBlockExecutionCtx,","ignored":false},{"type":"+","newLine":121,"text":"            Transaction = OpTxEnvelope,","ignored":false},{"type":"+","newLine":122,"text":"            Receipt = R::Receipt,","ignored":false},{"type":"+","newLine":123,"text":"        >,","ignored":false},{"type":" ","oldLine":109,"newLine":124,"text":"{"},{"type":" ","oldLine":110,"newLine":125,"text":"    /// Creates a new stateless L2 block builder instance."},{"type":" ","oldLine":111,"newLine":126,"text":"    ///"}]},{"oldStart":115,"oldLines":6,"newStart":130,"newLines":7,"lines":[{"type":" ","oldLine":115,"newLine":130,"text":"    /// # Arguments"},{"type":" ","oldLine":116,"newLine":131,"text":"    /// * `config` - Rollup configuration with chain parameters and activation heights"},{"type":" ","oldLine":117,"newLine":132,"text":"    /// * `evm_factory` - EVM factory for creating execution environments"},{"type":"+","newLine":133,"text":"    /// * `receipt_builder` - Receipt builder selecting the receipt envelope shape","ignored":true},{"type":" ","oldLine":118,"newLine":134,"text":"    /// * `provider` - Trie database provider for state access"},{"type":" ","oldLine":119,"newLine":135,"text":"    /// * `hinter` - Trie hinter for optimizing state access patterns"},{"type":" ","oldLine":120,"newLine":136,"text":"    /// * `parent_header` - Sealed header of the parent block to build upon"}]},{"oldStart":127,"oldLines":6,"newStart":143,"newLines":7,"lines":[{"type":" ","oldLine":127,"newLine":143,"text":"    /// let builder = StatelessL2Builder::new("},{"type":" ","oldLine":128,"newLine":144,"text":"    ///     &rollup_config,"},{"type":" ","oldLine":129,"newLine":145,"text":"    ///     evm_factory,"},{"type":"+","newLine":146,"text":"    ///     receipt_builder,","ignored":true},{"type":" ","oldLine":130,"newLine":147,"text":"    ///     trie_provider,"},{"type":" ","oldLine":131,"newLine":148,"text":"    ///     trie_hinter,"},{"type":" ","oldLine":132,"newLine":149,"text":"    ///     parent_header,"}]},{"oldStart":135,"oldLines":19,"newStart":152,"newLines":38,"lines":[{"type":" ","oldLine":135,"newLine":152,"text":"    pub fn new("},{"type":" ","oldLine":136,"newLine":153,"text":"        config: &'a RollupConfig,"},{"type":" ","oldLine":137,"newLine":154,"text":"        evm_factory: Evm,"},{"type":"+","newLine":155,"text":"        receipt_builder: R,","ignored":false},{"type":" ","oldLine":138,"newLine":156,"text":"        provider: P,"},{"type":" ","oldLine":139,"newLine":157,"text":"        hinter: H,"},{"type":" ","oldLine":140,"newLine":158,"text":"        parent_header: Sealed<Header>,"},{"type":" ","oldLine":141,"newLine":159,"text":"    ) -> Self {"},{"type":" ","oldLine":142,"newLine":160,"text":"        let trie_db = TrieDB::new(parent_header, provider, hinter);"},{"type":"-","oldLine":143,"text":"        let factory = OpBlockExecutorFactory::new(","ignored":false},{"type":"-","oldLine":144,"text":"            OpAlloyReceiptBuilder::default(),","ignored":false},{"type":"-","oldLine":145,"text":"            config.clone(),","ignored":false},{"type":"-","oldLine":146,"text":"            evm_factory,","ignored":false},{"type":"-","oldLine":147,"text":"        );","ignored":false},{"type":"-","oldLine":148,"text":"        Self { config, trie_db, factory }","ignored":false},{"type":"+","newLine":161,"text":"        let factory = OpBlockExecutorFactory::new(receipt_builder, config.clone(), evm_factory);","ignored":false},{"type":"+","newLine":162,"text":"        Self {","ignored":false},{"type":"+","newLine":163,"text":"            config,","ignored":false},{"type":"+","newLine":164,"text":"            trie_db,","ignored":false},{"type":"+","newLine":165,"text":"            factory,","ignored":false},{"type":"+","newLine":166,"text":"            #[cfg(any(test, feature = \"test-utils\"))]","ignored":false},{"type":"+","newLine":167,"text":"            sdm_active_override: None,","ignored":false},{"type":"+","newLine":168,"text":"        }","ignored":false},{"type":" ","oldLine":149,"newLine":169,"text":"    }"},{"type":" ","oldLine":150,"newLine":170,"text":""},{"type":"+","newLine":171,"text":"    /// Overrides SDM activation for tests and fixture tooling.","ignored":false},{"type":"+","newLine":172,"text":"    #[cfg(any(test, feature = \"test-utils\"))]","ignored":false},{"type":"+","newLine":173,"text":"    pub const fn set_sdm_active_override(&mut self, sdm_active_override: Option<bool>) {","ignored":false},{"type":"+","newLine":174,"text":"        self.sdm_active_override = sdm_active_override;","ignored":false},{"type":"+","newLine":175,"text":"    }","ignored":false},{"type":"+","newLine":176,"text":"","ignored":true},{"type":"+","newLine":177,"text":"    /// Returns whether SDM is active at the given timestamp.","ignored":false},{"type":"+","newLine":178,"text":"    fn is_sdm_active(&self, timestamp: u64) -> bool {","ignored":false},{"type":"+","newLine":179,"text":"        #[cfg(any(test, feature = \"test-utils\"))]","ignored":false},{"type":"+","newLine":180,"text":"        if let Some(active) = self.sdm_active_override {","ignored":false},{"type":"+","newLine":181,"text":"            return active;","ignored":false},{"type":"+","newLine":182,"text":"        }","ignored":false},{"type":"+","newLine":183,"text":"","ignored":true},{"type":"+","newLine":184,"text":"        self.config.is_sdm_active(timestamp)","ignored":false},{"type":"+","newLine":185,"text":"    }","ignored":false},{"type":"+","newLine":186,"text":"","ignored":true},{"type":" ","oldLine":151,"newLine":187,"text":"    /// Builds and executes a new L2 block using the provided payload attributes."},{"type":" ","oldLine":152,"newLine":188,"text":"    ///"},{"type":" ","oldLine":153,"newLine":189,"text":"    /// This method performs the complete block building and execution process in a stateless"}]},{"oldStart":212,"oldLines":7,"newStart":248,"newLines":7,"lines":[{"type":" ","oldLine":212,"newLine":248,"text":"    pub fn build_block("},{"type":" ","oldLine":213,"newLine":249,"text":"        &mut self,"},{"type":" ","oldLine":214,"newLine":250,"text":"        attrs: OpPayloadAttributes,"},{"type":"-","oldLine":215,"text":"    ) -> ExecutorResult<BlockBuildingOutcome> {","ignored":false},{"type":"+","newLine":251,"text":"    ) -> ExecutorResult<BlockBuildingOutcome<R::Receipt>> {","ignored":false},{"type":" ","oldLine":216,"newLine":252,"text":"        // Step 1. Set up the execution environment."},{"type":" ","oldLine":217,"newLine":253,"text":"        let (base_fee_params, min_base_fee) = Self::active_base_fee_params("},{"type":" ","oldLine":218,"newLine":254,"text":"            self.config,"}]},{"oldStart":247,"oldLines":26,"newStart":283,"newLines":36,"lines":[{"type":" ","oldLine":247,"newLine":283,"text":"            \"Beginning block building.\""},{"type":" ","oldLine":248,"newLine":284,"text":"        );"},{"type":" ","oldLine":249,"newLine":285,"text":""},{"type":"+","newLine":286,"text":"        // Compute SDM activation before borrowing `self.trie_db` mutably below.","ignored":false},{"type":"+","newLine":287,"text":"        let sdm_active = self.is_sdm_active(block_env.timestamp.saturating_to());","ignored":false},{"type":"+","newLine":288,"text":"","ignored":true},{"type":" ","oldLine":250,"newLine":289,"text":"        // Step 2. Create the executor, using the trie database."},{"type":"-","oldLine":251,"text":"        let mut state = State::builder()","ignored":false},{"type":"-","oldLine":252,"text":"            .with_database(&mut self.trie_db)","ignored":false},{"type":"-","oldLine":253,"text":"            .with_bundle_update()","ignored":false},{"type":"-","oldLine":254,"text":"            .without_state_clear()","ignored":false},{"type":"-","oldLine":255,"text":"            .build();","ignored":false},{"type":"+","newLine":290,"text":"        let mut state =","ignored":false},{"type":"+","newLine":291,"text":"            State::builder().with_database(&mut self.trie_db).with_bundle_update().build();","ignored":false},{"type":" ","oldLine":256,"newLine":292,"text":"        let evm = self.factory.evm_factory().create_evm(&mut state, evm_env);"},{"type":"+","newLine":293,"text":"        // Step 3. Decode and validate the block transactions within the payload attributes.","ignored":false},{"type":"+","newLine":294,"text":"        let transactions = attrs","ignored":true},{"type":"+","newLine":295,"text":"            .recovered_transactions_with_encoded()","ignored":true},{"type":"+","newLine":296,"text":"            .collect::<Result<Vec<_>, RecoveryError>>()","ignored":true},{"type":"+","newLine":297,"text":"            .map_err(ExecutorError::Recovery)?;","ignored":true},{"type":"+","newLine":298,"text":"        let post_exec_mode = parse_post_exec_payload_from_transactions(","ignored":false},{"type":"+","newLine":299,"text":"            transactions.iter().map(RecoveredTx::tx),","ignored":false},{"type":"+","newLine":300,"text":"            block_env.number.saturating_to(),","ignored":false},{"type":"+","newLine":301,"text":"            sdm_active,","ignored":false},{"type":"+","newLine":302,"text":"        )","ignored":false},{"type":"+","newLine":303,"text":"        .map_err(|err| ExecutorError::InvalidPostExecPayload(err.into_string()))?","ignored":false},{"type":"+","newLine":304,"text":"        .map(|parsed| PostExecMode::Verify(parsed.payload))","ignored":false},{"type":"+","newLine":305,"text":"        .unwrap_or_default();","ignored":false},{"type":"+","newLine":306,"text":"","ignored":true},{"type":" ","oldLine":257,"newLine":307,"text":"        let ctx = OpBlockExecutionCtx {"},{"type":" ","oldLine":258,"newLine":308,"text":"            parent_hash,"},{"type":" ","oldLine":259,"newLine":309,"text":"            parent_beacon_block_root: attrs.payload_attributes.parent_beacon_block_root,"},{"type":" ","oldLine":260,"newLine":310,"text":"            // This field is unused for individual block building jobs."},{"type":" ","oldLine":261,"newLine":311,"text":"            extra_data: Default::default(),"},{"type":"+","newLine":312,"text":"            post_exec_mode,","ignored":false},{"type":" ","oldLine":262,"newLine":313,"text":"        };"},{"type":" ","oldLine":263,"newLine":314,"text":"        let executor = self.factory.create_executor(evm, ctx);"},{"type":" ","oldLine":264,"newLine":315,"text":""},{"type":"-","oldLine":265,"text":"        // Step 3. Execute the block containing the transactions within the payload attributes.","ignored":true},{"type":"-","oldLine":266,"text":"        let transactions = attrs","ignored":true},{"type":"-","oldLine":267,"text":"            .recovered_transactions_with_encoded()","ignored":true},{"type":"-","oldLine":268,"text":"            .collect::<Result<Vec<_>, RecoveryError>>()","ignored":true},{"type":"-","oldLine":269,"text":"            .map_err(ExecutorError::Recovery)?;","ignored":true},{"type":" ","oldLine":270,"newLine":316,"text":"        let ex_result = executor.execute_block(transactions.iter())?;"},{"type":" ","oldLine":271,"newLine":317,"text":""},{"type":" ","oldLine":272,"newLine":318,"text":"        info!("}]},{"oldStart":299,"oldLines":35,"newStart":345,"newLines":24,"lines":[{"type":" ","oldLine":299,"newLine":345,"text":""},{"type":" ","oldLine":300,"newLine":346,"text":"/// The outcome of a block building operation, returning the sealed block [`Header`] and the"},{"type":" ","oldLine":301,"newLine":347,"text":"/// [`BlockExecutionResult`]."},{"type":"+","newLine":348,"text":"///","ignored":false},{"type":"+","newLine":349,"text":"/// Generic over the receipt envelope so non-OP receipt shapes (e.g. CIP-64) can be carried out of","ignored":false},{"type":"+","newLine":350,"text":"/// the builder.","ignored":false},{"type":" ","oldLine":302,"newLine":351,"text":"#[derive(Debug, Clone)]"},{"type":"-","oldLine":303,"text":"pub struct BlockBuildingOutcome {","ignored":false},{"type":"+","newLine":352,"text":"pub struct BlockBuildingOutcome<Receipt> {","ignored":false},{"type":" ","oldLine":304,"newLine":353,"text":"    /// The block header."},{"type":" ","oldLine":305,"newLine":354,"text":"    pub header: Sealed<Header>,"},{"type":" ","oldLine":306,"newLine":355,"text":"    /// The block execution result."},{"type":"-","oldLine":307,"text":"    pub execution_result: BlockExecutionResult<OpReceiptEnvelope>,","ignored":false},{"type":"+","newLine":356,"text":"    pub execution_result: BlockExecutionResult<Receipt>,","ignored":false},{"type":" ","oldLine":308,"newLine":357,"text":"}"},{"type":" ","oldLine":309,"newLine":358,"text":""},{"type":"-","oldLine":310,"text":"impl From<(Sealed<Header>, BlockExecutionResult<OpReceiptEnvelope>)> for BlockBuildingOutcome {","ignored":false},{"type":"-","oldLine":311,"text":"    fn from(","ignored":false},{"type":"-","oldLine":312,"text":"        (header, execution_result): (Sealed<Header>, BlockExecutionResult<OpReceiptEnvelope>),","ignored":false},{"type":"-","oldLine":313,"text":"    ) -> Self {","ignored":false},{"type":"+","newLine":359,"text":"impl<Receipt> From<(Sealed<Header>, BlockExecutionResult<Receipt>)>","ignored":false},{"type":"+","newLine":360,"text":"    for BlockBuildingOutcome<Receipt>","ignored":false},{"type":"+","newLine":361,"text":"{","ignored":false},{"type":"+","newLine":362,"text":"    fn from((header, execution_result): (Sealed<Header>, BlockExecutionResult<Receipt>)) -> Self {","ignored":false},{"type":" ","oldLine":314,"newLine":363,"text":"        Self { header, execution_result }"},{"type":" ","oldLine":315,"newLine":364,"text":"    }"},{"type":" ","oldLine":316,"newLine":365,"text":"}"},{"type":" ","oldLine":317,"newLine":366,"text":""},{"type":" ","oldLine":318,"newLine":367,"text":"#[cfg(test)]"},{"type":"-","oldLine":319,"text":"mod test {","ignored":false},{"type":"-","oldLine":320,"text":"    use crate::test_utils::run_test_fixture;","ignored":false},{"type":"-","oldLine":321,"text":"    use rstest::rstest;","ignored":false},{"type":"-","oldLine":322,"text":"    use std::path::PathBuf;","ignored":false},{"type":"-","oldLine":323,"text":"","ignored":true},{"type":"-","oldLine":324,"text":"    #[rstest]","ignored":false},{"type":"-","oldLine":325,"text":"    #[tokio::test]","ignored":false},{"type":"-","oldLine":326,"text":"    async fn test_statelessly_execute_block(","ignored":false},{"type":"-","oldLine":327,"text":"        #[base_dir = \"./testdata\"]","ignored":false},{"type":"-","oldLine":328,"text":"        #[files(\"*.tar.gz\")]","ignored":false},{"type":"-","oldLine":329,"text":"        path: PathBuf,","ignored":false},{"type":"-","oldLine":330,"text":"    ) {","ignored":false},{"type":"-","oldLine":331,"text":"        run_test_fixture(path).await;","ignored":false},{"type":"-","oldLine":332,"text":"    }","ignored":false},{"type":"-","oldLine":333,"text":"}","ignored":false},{"type":"+","newLine":368,"text":"mod tests;","ignored":false}]}]},"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "dcc1cad4ae13252a26f5fb92508fc78b0544da0c86e1da16cdfc02e31da5479f",
+  "name": "core.rs",
+  "kind": "program",
+  "lines": 368,
+  "source": "//! Stateless OP Stack L2 block builder implementation.\n//!\n//! The [`StatelessL2Builder`] provides a complete block building and execution engine\n//! for OP Stack L2 chains that operates in a stateless manner, pulling required state\n//! data from a [`TrieDB`] during execution rather than maintaining full state.\n\nuse crate::{ExecutorError, ExecutorResult, TrieDB, TrieDBError, TrieDBProvider};\nuse alloc::{string::ToString, vec::Vec};\nuse alloy_consensus::{Header, Sealed, crypto::RecoveryError};\nuse alloy_eips::Encodable2718;\nuse alloy_evm::{\n    EvmFactory, FromRecoveredTx, FromTxWithEncoded, RecoveredTx,\n    block::{BlockExecutionResult, BlockExecutor, BlockExecutorFactory},\n};\nuse alloy_op_evm::{\n    OpBlockExecutionCtx, OpBlockExecutorFactory, PostExecMode,\n    block::{OpTxEnv, receipt_builder::OpReceiptBuilder},\n};\nuse core::fmt::Debug;\nuse kona_genesis::RollupConfig;\nuse kona_mpt::TrieHinter;\nuse op_alloy_consensus::{OpTxEnvelope, parse_post_exec_payload_from_transactions};\nuse op_alloy_rpc_types_engine::OpPayloadAttributes;\nuse op_revm::OpSpecId;\nuse revm::{\n    context::BlockEnv,\n    database::{State, states::bundle_state::BundleRetention},\n};\n\n/// Stateless OP Stack L2 block builder that derives state from trie proofs during execution.\n///\n/// The [`StatelessL2Builder`] is a specialized block execution engine designed for fault proof\n/// systems and stateless verification. Instead of maintaining full L2 state, it dynamically\n/// retrieves required state data from a [`TrieDB`] backed by Merkle proofs and witnesses.\n///\n/// # Architecture\n///\n/// The builder operates in a stateless manner by:\n/// 1. **Trie Database**: Uses [`TrieDB`] to access state via Merkle proofs\n/// 2. **EVM Factory**: Creates execution environments with proof-backed state\n/// 3. **Block Executor**: Executes transactions using witness-provided state\n/// 4. **Receipt Generation**: Produces execution receipts and state commitments\n///\n/// # Stateless Execution Model\n///\n/// Traditional execution engines maintain full state databases, but the stateless model:\n/// - Receives state witnesses containing only required data\n/// - Verifies state access against Merkle proofs\n/// - Executes transactions without persistent state storage\n/// - Produces verifiable execution results and state commitments\n///\n/// # Use Cases\n///\n/// ## Fault Proof Systems\n/// - Enables dispute resolution without full state replication\n/// - Provides verifiable execution results for challenge games\n/// - Supports optimistic rollup fraud proof generation\n///\n/// ## Stateless Verification\n/// - Allows third parties to verify L2 blocks without full state\n/// - Enables light clients to validate L2 execution\n/// - Supports decentralized verification networks\n///\n/// # Performance Characteristics\n///\n/// - **Memory**: Lower memory usage than stateful execution (no full state)\n/// - **I/O**: Higher I/O for proof verification and witness access\n/// - **CPU**: Additional overhead for cryptographic proof verification\n/// - **Determinism**: Guaranteed deterministic execution results\n///\n/// # Type Parameters\n///\n/// * `P` - Trie database provider implementing [`TrieDBProvider`]\n/// * `H` - Trie hinter implementing [`TrieHinter`] for state access optimization\n/// * `Evm` - EVM factory implementing [`EvmFactory`] for execution environment creation\n/// * `R` - Receipt builder implementing [`OpReceiptBuilder`]. OP Stack callers pass\n///   `OpAlloyReceiptBuilder`; chains that produce non-`OpReceiptEnvelope` receipts (e.g. Celo's\n///   CIP-64 receipt) plug in their own builder.\n#[derive(Debug)]\npub struct StatelessL2Builder<'a, P, H, Evm, R>\nwhere\n    P: TrieDBProvider,\n    H: TrieHinter,\n    Evm: EvmFactory,\n{\n    /// The rollup configuration containing chain parameters and activation heights.\n    ///\n    /// Provides access to network-specific parameters including gas limits,\n    /// hard fork activation heights, and system addresses needed for proper\n    /// L2 block execution and validation.\n    pub(crate) config: &'a RollupConfig,\n    /// The trie database providing stateless access to L2 state via Merkle proofs.\n    ///\n    /// The [`TrieDB`] serves as the primary interface for state access during\n    /// execution, resolving account and storage queries using witness data\n    /// and cryptographic proofs rather than a traditional state database.\n    pub(crate) trie_db: TrieDB<P, H>,\n    /// The block executor factory for creating OP Stack execution environments.\n    ///\n    /// This factory creates specialized OP Stack execution environments that\n    /// understand OP-specific transaction types, system calls, and state\n    /// management required for proper L2 block execution.\n    pub(crate) factory: OpBlockExecutorFactory<R, RollupConfig, Evm>,\n    /// Test-only override for SDM activation while the fork is not yet scheduled.\n    #[cfg(any(test, feature = \"test-utils\"))]\n    pub(crate) sdm_active_override: Option<bool>,\n}\n\nimpl<'a, P, H, Evm, R> StatelessL2Builder<'a, P, H, Evm, R>\nwhere\n    P: TrieDBProvider + Debug,\n    H: TrieHinter + Debug,\n    Evm: EvmFactory<Spec = OpSpecId, BlockEnv = BlockEnv> + 'static,\n    <Evm as EvmFactory>::Tx:\n        FromTxWithEncoded<OpTxEnvelope> + FromRecoveredTx<OpTxEnvelope> + OpTxEnv,\n    R: OpReceiptBuilder<Transaction = OpTxEnvelope> + 'static,\n    R::Receipt: Encodable2718,\n    OpBlockExecutorFactory<R, RollupConfig, Evm>: for<'b> BlockExecutorFactory<\n            EvmFactory = Evm,\n            ExecutionCtx<'b> = OpBlockExecutionCtx,\n            Transaction = OpTxEnvelope,\n            Receipt = R::Receipt,\n        >,\n{\n    /// Creates a new stateless L2 block builder instance.\n    ///\n    /// Initializes the builder with the necessary components for stateless block execution\n    /// including the trie database, execution factory, and rollup configuration.\n    ///\n    /// # Arguments\n    /// * `config` - Rollup configuration with chain parameters and activation heights\n    /// * `evm_factory` - EVM factory for creating execution environments\n    /// * `receipt_builder` - Receipt builder selecting the receipt envelope shape\n    /// * `provider` - Trie database provider for state access\n    /// * `hinter` - Trie hinter for optimizing state access patterns\n    /// * `parent_header` - Sealed header of the parent block to build upon\n    ///\n    /// # Returns\n    /// A new [`StatelessL2Builder`] ready for block building operations\n    ///\n    /// # Usage\n    /// ```rust,ignore\n    /// let builder = StatelessL2Builder::new(\n    ///     &rollup_config,\n    ///     evm_factory,\n    ///     receipt_builder,\n    ///     trie_provider,\n    ///     trie_hinter,\n    ///     parent_header,\n    /// );\n    /// ```\n    pub fn new(\n        config: &'a RollupConfig,\n        evm_factory: Evm,\n        receipt_builder: R,\n        provider: P,\n        hinter: H,\n        parent_header: Sealed<Header>,\n    ) -> Self {\n        let trie_db = TrieDB::new(parent_header, provider, hinter);\n        let factory = OpBlockExecutorFactory::new(receipt_builder, config.clone(), evm_factory);\n        Self {\n            config,\n            trie_db,\n            factory,\n            #[cfg(any(test, feature = \"test-utils\"))]\n            sdm_active_override: None,\n        }\n    }\n\n    /// Overrides SDM activation for tests and fixture tooling.\n    #[cfg(any(test, feature = \"test-utils\"))]\n    pub const fn set_sdm_active_override(&mut self, sdm_active_override: Option<bool>) {\n        self.sdm_active_override = sdm_active_override;\n    }\n\n    /// Returns whether SDM is active at the given timestamp.\n    fn is_sdm_active(&self, timestamp: u64) -> bool {\n        #[cfg(any(test, feature = \"test-utils\"))]\n        if let Some(active) = self.sdm_active_override {\n            return active;\n        }\n\n        self.config.is_sdm_active(timestamp)\n    }\n\n    /// Builds and executes a new L2 block using the provided payload attributes.\n    ///\n    /// This method performs the complete block building and execution process in a stateless\n    /// manner, dynamically retrieving required state data via the trie database and producing\n    /// a fully executed block with receipts and state commitments.\n    ///\n    /// # Arguments\n    /// * `attrs` - Payload attributes containing transactions and block metadata\n    ///\n    /// # Returns\n    /// * `Ok(BlockBuildingOutcome)` - Successfully built and executed block with receipts\n    /// * `Err(ExecutorError)` - Block building or execution failure\n    ///\n    /// # Errors\n    /// This method can fail due to various conditions:\n    ///\n    /// ## Input Validation Errors\n    /// - [`ExecutorError::MissingGasLimit`]: Gas limit not provided in attributes\n    /// - [`ExecutorError::MissingTransactions`]: Transaction list not provided\n    /// - [`ExecutorError::MissingEIP1559Params`]: Required fee parameters missing (post-Holocene)\n    /// - [`ExecutorError::MissingParentBeaconBlockRoot`]: Beacon root missing (post-Dencun)\n    ///\n    /// ## Execution Errors\n    /// - [`ExecutorError::BlockGasLimitExceeded`]: Cumulative gas exceeds block limit\n    /// - [`ExecutorError::UnsupportedTransactionType`]: Unknown transaction type encountered\n    /// - [`ExecutorError::ExecutionError`]: EVM-level execution failures\n    ///\n    /// ## State Access Errors\n    /// - [`ExecutorError::TrieDBError`]: State tree access or proof verification failures\n    /// - Missing account data in witness\n    /// - Invalid Merkle proofs\n    ///\n    /// ## Data Integrity Errors\n    /// - [`ExecutorError::Recovery`]: Transaction signature recovery failures\n    /// - [`ExecutorError::RLPError`]: Data encoding/decoding errors\n    ///\n    /// # Block Building Process\n    ///\n    /// The block building process follows these steps:\n    ///\n    /// 1. **Environment Setup**: Configure EVM environment with proper gas settings\n    /// 2. **Witness Hinting**: Send payload witness hints to optimize state access\n    /// 3. **Transaction Execution**: Execute each transaction in order with state updates\n    /// 4. **Receipt Generation**: Generate execution receipts for all transactions\n    /// 5. **State Commitment**: Compute final state roots and output commitments\n    /// 6. **Block Assembly**: Assemble complete block with header and execution results\n    ///\n    /// # Stateless Execution Details\n    ///\n    /// Unlike traditional execution engines, this builder:\n    /// - Resolves state access via Merkle proofs instead of database lookups\n    /// - Validates all state access against cryptographic witnesses\n    /// - Produces deterministic results independent of execution environment\n    /// - Enables verification without full state replication\n    ///\n    /// # Performance Considerations\n    ///\n    /// - State access latency depends on proof verification overhead\n    /// - Memory usage scales with witness size rather than full state\n    /// - CPU overhead from cryptographic proof verification\n    /// - I/O patterns optimized through trie hinter guidance\n    pub fn build_block(\n        &mut self,\n        attrs: OpPayloadAttributes,\n    ) -> ExecutorResult<BlockBuildingOutcome<R::Receipt>> {\n        // Step 1. Set up the execution environment.\n        let (base_fee_params, min_base_fee) = Self::active_base_fee_params(\n            self.config,\n            self.trie_db.parent_block_header(),\n            attrs.payload_attributes.timestamp,\n        )?;\n        let evm_env = self.evm_env(\n            self.config.spec_id(attrs.payload_attributes.timestamp),\n            self.trie_db.parent_block_header(),\n            &attrs,\n            &base_fee_params,\n            min_base_fee,\n        )?;\n        let block_env = evm_env.block_env().clone();\n        let parent_hash = self.trie_db.parent_block_header().seal();\n\n        // Attempt to send a payload witness hint to the host. This hint instructs the host to\n        // populate its preimage store with the preimages required to statelessly execute\n        // this payload. This feature is experimental, so if the hint fails, we continue\n        // without it and fall back on on-demand preimage fetching for execution.\n        self.trie_db\n            .hinter\n            .hint_execution_witness(parent_hash, &attrs)\n            .map_err(|e| TrieDBError::Provider(e.to_string()))?;\n\n        info!(\n            target: \"block_builder\",\n            block_number = %block_env.number,\n            block_timestamp = %block_env.timestamp,\n            block_gas_limit = block_env.gas_limit,\n            transactions = attrs.transactions.as_ref().map_or(0, |txs| txs.len()),\n            \"Beginning block building.\"\n        );\n\n        // Compute SDM activation before borrowing `self.trie_db` mutably below.\n        let sdm_active = self.is_sdm_active(block_env.timestamp.saturating_to());\n\n        // Step 2. Create the executor, using the trie database.\n        let mut state =\n            State::builder().with_database(&mut self.trie_db).with_bundle_update().build();\n        let evm = self.factory.evm_factory().create_evm(&mut state, evm_env);\n        // Step 3. Decode and validate the block transactions within the payload attributes.\n        let transactions = attrs\n            .recovered_transactions_with_encoded()\n            .collect::<Result<Vec<_>, RecoveryError>>()\n            .map_err(ExecutorError::Recovery)?;\n        let post_exec_mode = parse_post_exec_payload_from_transactions(\n            transactions.iter().map(RecoveredTx::tx),\n            block_env.number.saturating_to(),\n            sdm_active,\n        )\n        .map_err(|err| ExecutorError::InvalidPostExecPayload(err.into_string()))?\n        .map(|parsed| PostExecMode::Verify(parsed.payload))\n        .unwrap_or_default();\n\n        let ctx = OpBlockExecutionCtx {\n            parent_hash,\n            parent_beacon_block_root: attrs.payload_attributes.parent_beacon_block_root,\n            // This field is unused for individual block building jobs.\n            extra_data: Default::default(),\n            post_exec_mode,\n        };\n        let executor = self.factory.create_executor(evm, ctx);\n\n        let ex_result = executor.execute_block(transactions.iter())?;\n\n        info!(\n            target: \"block_builder\",\n            gas_used = ex_result.gas_used,\n            gas_limit = block_env.gas_limit,\n            \"Finished block building. Beginning sealing job.\"\n        );\n\n        // Step 4. Merge state transitions and seal the block.\n        state.merge_transitions(BundleRetention::Reverts);\n        let bundle = state.take_bundle();\n        let header = self.seal_block(&attrs, parent_hash, &block_env, &ex_result, bundle)?;\n\n        info!(\n            target: \"block_builder\",\n            number = header.number,\n            hash = ?header.seal(),\n            state_root = ?header.state_root,\n            transactions_root = ?header.transactions_root,\n            receipts_root = ?header.receipts_root,\n            \"Sealed new block\",\n        );\n\n        // Update the parent block hash in the state database, preparing for the next block.\n        self.trie_db.set_parent_block_header(header.clone());\n        Ok((header, ex_result).into())\n    }\n}\n\n/// The outcome of a block building operation, returning the sealed block [`Header`] and the\n/// [`BlockExecutionResult`].\n///\n/// Generic over the receipt envelope so non-OP receipt shapes (e.g. CIP-64) can be carried out of\n/// the builder.\n#[derive(Debug, Clone)]\npub struct BlockBuildingOutcome<Receipt> {\n    /// The block header.\n    pub header: Sealed<Header>,\n    /// The block execution result.\n    pub execution_result: BlockExecutionResult<Receipt>,\n}\n\nimpl<Receipt> From<(Sealed<Header>, BlockExecutionResult<Receipt>)>\n    for BlockBuildingOutcome<Receipt>\n{\n    fn from((header, execution_result): (Sealed<Header>, BlockExecutionResult<Receipt>)) -> Self {\n        Self { header, execution_result }\n    }\n}\n\n#[cfg(test)]\nmod tests;",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "differs",
+      "coveredLines": 303,
+      "match": {
+        "origin": "own",
+        "collection": "optimism",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "core.rs",
+        "similarity": 0.517,
+        "reportId": "optimism/cantina-kona-2026-03",
+        "repository": "op-rs/kona",
+        "path": "crates/proof/executor/src/builder/core.rs",
+        "commit": "86910c9112437bbb849eca28961f813c5450e103",
+        "commitTimestamp": "2025-12-15T17:17:05Z",
+        "url": "https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/crates/proof/executor/src/builder/core.rs",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). kona-executor block builder; Low finding 3.4.2 (util.rs) and Informational 3.5.18 (builder/core.rs) located here.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 65,
+        "removed": 39,
+        "ignoredAdded": 17,
+        "ignoredRemoved": 8,
+        "unchanged": 303,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 24,
+            "newStart": 1,
+            "newLines": 25,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "//! Stateless OP Stack L2 block builder implementation."
+              },
+              { "type": " ", "oldLine": 2, "newLine": 2, "text": "//!" },
+              {
+                "type": "-",
+                "oldLine": 3,
+                "text": "//! The [StatelessL2Builder] provides a complete block building and execution engine",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "//! The [`StatelessL2Builder`] provides a complete block building and execution engine",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "//! for OP Stack L2 chains that operates in a stateless manner, pulling required state"
+              },
+              {
+                "type": "-",
+                "oldLine": 5,
+                "text": "//! data from a [TrieDB] during execution rather than maintaining full state.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 5,
+                "text": "//! data from a [`TrieDB`] during execution rather than maintaining full state.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 6, "newLine": 6, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 7,
+                "newLine": 7,
+                "text": "use crate::{ExecutorError, ExecutorResult, TrieDB, TrieDBError, TrieDBProvider};"
+              },
+              {
+                "type": " ",
+                "oldLine": 8,
+                "newLine": 8,
+                "text": "use alloc::{string::ToString, vec::Vec};"
+              },
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 9,
+                "text": "use alloy_consensus::{Header, Sealed, crypto::RecoveryError};"
+              },
+              {
+                "type": "+",
+                "newLine": 10,
+                "text": "use alloy_eips::Encodable2718;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 10,
+                "newLine": 11,
+                "text": "use alloy_evm::{"
+              },
+              {
+                "type": "-",
+                "oldLine": 11,
+                "text": "    EvmFactory, FromRecoveredTx, FromTxWithEncoded,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 12,
+                "text": "    EvmFactory, FromRecoveredTx, FromTxWithEncoded, RecoveredTx,",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 12,
+                "newLine": 13,
+                "text": "    block::{BlockExecutionResult, BlockExecutor, BlockExecutorFactory},"
+              },
+              { "type": " ", "oldLine": 13, "newLine": 14, "text": "};" },
+              {
+                "type": " ",
+                "oldLine": 14,
+                "newLine": 15,
+                "text": "use alloy_op_evm::{"
+              },
+              {
+                "type": "-",
+                "oldLine": 15,
+                "text": "    OpBlockExecutionCtx, OpBlockExecutorFactory,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 16,
+                "text": "    block::{OpAlloyReceiptBuilder, OpTxEnv},",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 16,
+                "text": "    OpBlockExecutionCtx, OpBlockExecutorFactory, PostExecMode,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 17,
+                "text": "    block::{OpTxEnv, receipt_builder::OpReceiptBuilder},",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 17, "newLine": 18, "text": "};" },
+              {
+                "type": " ",
+                "oldLine": 18,
+                "newLine": 19,
+                "text": "use core::fmt::Debug;"
+              },
+              {
+                "type": " ",
+                "oldLine": 19,
+                "newLine": 20,
+                "text": "use kona_genesis::RollupConfig;"
+              },
+              {
+                "type": " ",
+                "oldLine": 20,
+                "newLine": 21,
+                "text": "use kona_mpt::TrieHinter;"
+              },
+              {
+                "type": "-",
+                "oldLine": 21,
+                "text": "use op_alloy_consensus::{OpReceiptEnvelope, OpTxEnvelope};",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 22,
+                "text": "use op_alloy_consensus::{OpTxEnvelope, parse_post_exec_payload_from_transactions};",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 23,
+                "text": "use op_alloy_rpc_types_engine::OpPayloadAttributes;"
+              },
+              {
+                "type": " ",
+                "oldLine": 23,
+                "newLine": 24,
+                "text": "use op_revm::OpSpecId;"
+              },
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 25,
+                "text": "use revm::{"
+              }
+            ]
+          },
+          {
+            "oldStart": 72,
+            "oldLines": 8,
+            "newStart": 73,
+            "newLines": 11,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 72,
+                "newLine": 73,
+                "text": "/// * `P` - Trie database provider implementing [`TrieDBProvider`]"
+              },
+              {
+                "type": " ",
+                "oldLine": 73,
+                "newLine": 74,
+                "text": "/// * `H` - Trie hinter implementing [`TrieHinter`] for state access optimization"
+              },
+              {
+                "type": " ",
+                "oldLine": 74,
+                "newLine": 75,
+                "text": "/// * `Evm` - EVM factory implementing [`EvmFactory`] for execution environment creation"
+              },
+              {
+                "type": "+",
+                "newLine": 76,
+                "text": "/// * `R` - Receipt builder implementing [`OpReceiptBuilder`]. OP Stack callers pass",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 77,
+                "text": "///   `OpAlloyReceiptBuilder`; chains that produce non-`OpReceiptEnvelope` receipts (e.g. Celo's",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 78,
+                "text": "///   CIP-64 receipt) plug in their own builder.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 75,
+                "newLine": 79,
+                "text": "#[derive(Debug)]"
+              },
+              {
+                "type": "-",
+                "oldLine": 76,
+                "text": "pub struct StatelessL2Builder<'a, P, H, Evm>",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 80,
+                "text": "pub struct StatelessL2Builder<'a, P, H, Evm, R>",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 77, "newLine": 81, "text": "where" },
+              {
+                "type": " ",
+                "oldLine": 78,
+                "newLine": 82,
+                "text": "    P: TrieDBProvider,"
+              },
+              {
+                "type": " ",
+                "oldLine": 79,
+                "newLine": 83,
+                "text": "    H: TrieHinter,"
+              }
+            ]
+          },
+          {
+            "oldStart": 96,
+            "oldLines": 16,
+            "newStart": 100,
+            "newLines": 27,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 96,
+                "newLine": 100,
+                "text": "    /// This factory creates specialized OP Stack execution environments that"
+              },
+              {
+                "type": " ",
+                "oldLine": 97,
+                "newLine": 101,
+                "text": "    /// understand OP-specific transaction types, system calls, and state"
+              },
+              {
+                "type": " ",
+                "oldLine": 98,
+                "newLine": 102,
+                "text": "    /// management required for proper L2 block execution."
+              },
+              {
+                "type": "-",
+                "oldLine": 99,
+                "text": "    pub(crate) factory: OpBlockExecutorFactory<OpAlloyReceiptBuilder, RollupConfig, Evm>,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 103,
+                "text": "    pub(crate) factory: OpBlockExecutorFactory<R, RollupConfig, Evm>,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 104,
+                "text": "    /// Test-only override for SDM activation while the fork is not yet scheduled.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 105,
+                "text": "    #[cfg(any(test, feature = \"test-utils\"))]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 106,
+                "text": "    pub(crate) sdm_active_override: Option<bool>,",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 100, "newLine": 107, "text": "}" },
+              { "type": " ", "oldLine": 101, "newLine": 108, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 102,
+                "text": "impl<'a, P, H, Evm> StatelessL2Builder<'a, P, H, Evm>",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 109,
+                "text": "impl<'a, P, H, Evm, R> StatelessL2Builder<'a, P, H, Evm, R>",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 103, "newLine": 110, "text": "where" },
+              {
+                "type": " ",
+                "oldLine": 104,
+                "newLine": 111,
+                "text": "    P: TrieDBProvider + Debug,"
+              },
+              {
+                "type": " ",
+                "oldLine": 105,
+                "newLine": 112,
+                "text": "    H: TrieHinter + Debug,"
+              },
+              {
+                "type": " ",
+                "oldLine": 106,
+                "newLine": 113,
+                "text": "    Evm: EvmFactory<Spec = OpSpecId, BlockEnv = BlockEnv> + 'static,"
+              },
+              {
+                "type": " ",
+                "oldLine": 107,
+                "newLine": 114,
+                "text": "    <Evm as EvmFactory>::Tx:"
+              },
+              {
+                "type": " ",
+                "oldLine": 108,
+                "newLine": 115,
+                "text": "        FromTxWithEncoded<OpTxEnvelope> + FromRecoveredTx<OpTxEnvelope> + OpTxEnv,"
+              },
+              {
+                "type": "+",
+                "newLine": 116,
+                "text": "    R: OpReceiptBuilder<Transaction = OpTxEnvelope> + 'static,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 117,
+                "text": "    R::Receipt: Encodable2718,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 118,
+                "text": "    OpBlockExecutorFactory<R, RollupConfig, Evm>: for<'b> BlockExecutorFactory<",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 119,
+                "text": "            EvmFactory = Evm,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 120,
+                "text": "            ExecutionCtx<'b> = OpBlockExecutionCtx,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 121,
+                "text": "            Transaction = OpTxEnvelope,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 122,
+                "text": "            Receipt = R::Receipt,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 123,
+                "text": "        >,",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 109, "newLine": 124, "text": "{" },
+              {
+                "type": " ",
+                "oldLine": 110,
+                "newLine": 125,
+                "text": "    /// Creates a new stateless L2 block builder instance."
+              },
+              { "type": " ", "oldLine": 111, "newLine": 126, "text": "    ///" }
+            ]
+          },
+          {
+            "oldStart": 115,
+            "oldLines": 6,
+            "newStart": 130,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 115,
+                "newLine": 130,
+                "text": "    /// # Arguments"
+              },
+              {
+                "type": " ",
+                "oldLine": 116,
+                "newLine": 131,
+                "text": "    /// * `config` - Rollup configuration with chain parameters and activation heights"
+              },
+              {
+                "type": " ",
+                "oldLine": 117,
+                "newLine": 132,
+                "text": "    /// * `evm_factory` - EVM factory for creating execution environments"
+              },
+              {
+                "type": "+",
+                "newLine": 133,
+                "text": "    /// * `receipt_builder` - Receipt builder selecting the receipt envelope shape",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 118,
+                "newLine": 134,
+                "text": "    /// * `provider` - Trie database provider for state access"
+              },
+              {
+                "type": " ",
+                "oldLine": 119,
+                "newLine": 135,
+                "text": "    /// * `hinter` - Trie hinter for optimizing state access patterns"
+              },
+              {
+                "type": " ",
+                "oldLine": 120,
+                "newLine": 136,
+                "text": "    /// * `parent_header` - Sealed header of the parent block to build upon"
+              }
+            ]
+          },
+          {
+            "oldStart": 127,
+            "oldLines": 6,
+            "newStart": 143,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 127,
+                "newLine": 143,
+                "text": "    /// let builder = StatelessL2Builder::new("
+              },
+              {
+                "type": " ",
+                "oldLine": 128,
+                "newLine": 144,
+                "text": "    ///     &rollup_config,"
+              },
+              {
+                "type": " ",
+                "oldLine": 129,
+                "newLine": 145,
+                "text": "    ///     evm_factory,"
+              },
+              {
+                "type": "+",
+                "newLine": 146,
+                "text": "    ///     receipt_builder,",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 130,
+                "newLine": 147,
+                "text": "    ///     trie_provider,"
+              },
+              {
+                "type": " ",
+                "oldLine": 131,
+                "newLine": 148,
+                "text": "    ///     trie_hinter,"
+              },
+              {
+                "type": " ",
+                "oldLine": 132,
+                "newLine": 149,
+                "text": "    ///     parent_header,"
+              }
+            ]
+          },
+          {
+            "oldStart": 135,
+            "oldLines": 19,
+            "newStart": 152,
+            "newLines": 38,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 135,
+                "newLine": 152,
+                "text": "    pub fn new("
+              },
+              {
+                "type": " ",
+                "oldLine": 136,
+                "newLine": 153,
+                "text": "        config: &'a RollupConfig,"
+              },
+              {
+                "type": " ",
+                "oldLine": 137,
+                "newLine": 154,
+                "text": "        evm_factory: Evm,"
+              },
+              {
+                "type": "+",
+                "newLine": 155,
+                "text": "        receipt_builder: R,",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 138,
+                "newLine": 156,
+                "text": "        provider: P,"
+              },
+              {
+                "type": " ",
+                "oldLine": 139,
+                "newLine": 157,
+                "text": "        hinter: H,"
+              },
+              {
+                "type": " ",
+                "oldLine": 140,
+                "newLine": 158,
+                "text": "        parent_header: Sealed<Header>,"
+              },
+              {
+                "type": " ",
+                "oldLine": 141,
+                "newLine": 159,
+                "text": "    ) -> Self {"
+              },
+              {
+                "type": " ",
+                "oldLine": 142,
+                "newLine": 160,
+                "text": "        let trie_db = TrieDB::new(parent_header, provider, hinter);"
+              },
+              {
+                "type": "-",
+                "oldLine": 143,
+                "text": "        let factory = OpBlockExecutorFactory::new(",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 144,
+                "text": "            OpAlloyReceiptBuilder::default(),",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 145,
+                "text": "            config.clone(),",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 146,
+                "text": "            evm_factory,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 147,
+                "text": "        );",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 148,
+                "text": "        Self { config, trie_db, factory }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 161,
+                "text": "        let factory = OpBlockExecutorFactory::new(receipt_builder, config.clone(), evm_factory);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 162,
+                "text": "        Self {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 163,
+                "text": "            config,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 164,
+                "text": "            trie_db,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 165,
+                "text": "            factory,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 166,
+                "text": "            #[cfg(any(test, feature = \"test-utils\"))]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 167,
+                "text": "            sdm_active_override: None,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 168,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 149, "newLine": 169, "text": "    }" },
+              { "type": " ", "oldLine": 150, "newLine": 170, "text": "" },
+              {
+                "type": "+",
+                "newLine": 171,
+                "text": "    /// Overrides SDM activation for tests and fixture tooling.",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 172,
+                "text": "    #[cfg(any(test, feature = \"test-utils\"))]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 173,
+                "text": "    pub const fn set_sdm_active_override(&mut self, sdm_active_override: Option<bool>) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 174,
+                "text": "        self.sdm_active_override = sdm_active_override;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 175,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 176, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 177,
+                "text": "    /// Returns whether SDM is active at the given timestamp.",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 178,
+                "text": "    fn is_sdm_active(&self, timestamp: u64) -> bool {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 179,
+                "text": "        #[cfg(any(test, feature = \"test-utils\"))]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 180,
+                "text": "        if let Some(active) = self.sdm_active_override {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 181,
+                "text": "            return active;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 182,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 183, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 184,
+                "text": "        self.config.is_sdm_active(timestamp)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 185,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 186, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 151,
+                "newLine": 187,
+                "text": "    /// Builds and executes a new L2 block using the provided payload attributes."
+              },
+              {
+                "type": " ",
+                "oldLine": 152,
+                "newLine": 188,
+                "text": "    ///"
+              },
+              {
+                "type": " ",
+                "oldLine": 153,
+                "newLine": 189,
+                "text": "    /// This method performs the complete block building and execution process in a stateless"
+              }
+            ]
+          },
+          {
+            "oldStart": 212,
+            "oldLines": 7,
+            "newStart": 248,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 212,
+                "newLine": 248,
+                "text": "    pub fn build_block("
+              },
+              {
+                "type": " ",
+                "oldLine": 213,
+                "newLine": 249,
+                "text": "        &mut self,"
+              },
+              {
+                "type": " ",
+                "oldLine": 214,
+                "newLine": 250,
+                "text": "        attrs: OpPayloadAttributes,"
+              },
+              {
+                "type": "-",
+                "oldLine": 215,
+                "text": "    ) -> ExecutorResult<BlockBuildingOutcome> {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 251,
+                "text": "    ) -> ExecutorResult<BlockBuildingOutcome<R::Receipt>> {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 216,
+                "newLine": 252,
+                "text": "        // Step 1. Set up the execution environment."
+              },
+              {
+                "type": " ",
+                "oldLine": 217,
+                "newLine": 253,
+                "text": "        let (base_fee_params, min_base_fee) = Self::active_base_fee_params("
+              },
+              {
+                "type": " ",
+                "oldLine": 218,
+                "newLine": 254,
+                "text": "            self.config,"
+              }
+            ]
+          },
+          {
+            "oldStart": 247,
+            "oldLines": 26,
+            "newStart": 283,
+            "newLines": 36,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 247,
+                "newLine": 283,
+                "text": "            \"Beginning block building.\""
+              },
+              {
+                "type": " ",
+                "oldLine": 248,
+                "newLine": 284,
+                "text": "        );"
+              },
+              { "type": " ", "oldLine": 249, "newLine": 285, "text": "" },
+              {
+                "type": "+",
+                "newLine": 286,
+                "text": "        // Compute SDM activation before borrowing `self.trie_db` mutably below.",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 287,
+                "text": "        let sdm_active = self.is_sdm_active(block_env.timestamp.saturating_to());",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 288, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 250,
+                "newLine": 289,
+                "text": "        // Step 2. Create the executor, using the trie database."
+              },
+              {
+                "type": "-",
+                "oldLine": 251,
+                "text": "        let mut state = State::builder()",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 252,
+                "text": "            .with_database(&mut self.trie_db)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 253,
+                "text": "            .with_bundle_update()",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 254,
+                "text": "            .without_state_clear()",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 255,
+                "text": "            .build();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 290,
+                "text": "        let mut state =",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 291,
+                "text": "            State::builder().with_database(&mut self.trie_db).with_bundle_update().build();",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 256,
+                "newLine": 292,
+                "text": "        let evm = self.factory.evm_factory().create_evm(&mut state, evm_env);"
+              },
+              {
+                "type": "+",
+                "newLine": 293,
+                "text": "        // Step 3. Decode and validate the block transactions within the payload attributes.",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 294,
+                "text": "        let transactions = attrs",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 295,
+                "text": "            .recovered_transactions_with_encoded()",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 296,
+                "text": "            .collect::<Result<Vec<_>, RecoveryError>>()",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 297,
+                "text": "            .map_err(ExecutorError::Recovery)?;",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 298,
+                "text": "        let post_exec_mode = parse_post_exec_payload_from_transactions(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 299,
+                "text": "            transactions.iter().map(RecoveredTx::tx),",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 300,
+                "text": "            block_env.number.saturating_to(),",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 301,
+                "text": "            sdm_active,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 302,
+                "text": "        )",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 303,
+                "text": "        .map_err(|err| ExecutorError::InvalidPostExecPayload(err.into_string()))?",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 304,
+                "text": "        .map(|parsed| PostExecMode::Verify(parsed.payload))",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 305,
+                "text": "        .unwrap_or_default();",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 306, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 257,
+                "newLine": 307,
+                "text": "        let ctx = OpBlockExecutionCtx {"
+              },
+              {
+                "type": " ",
+                "oldLine": 258,
+                "newLine": 308,
+                "text": "            parent_hash,"
+              },
+              {
+                "type": " ",
+                "oldLine": 259,
+                "newLine": 309,
+                "text": "            parent_beacon_block_root: attrs.payload_attributes.parent_beacon_block_root,"
+              },
+              {
+                "type": " ",
+                "oldLine": 260,
+                "newLine": 310,
+                "text": "            // This field is unused for individual block building jobs."
+              },
+              {
+                "type": " ",
+                "oldLine": 261,
+                "newLine": 311,
+                "text": "            extra_data: Default::default(),"
+              },
+              {
+                "type": "+",
+                "newLine": 312,
+                "text": "            post_exec_mode,",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 262,
+                "newLine": 313,
+                "text": "        };"
+              },
+              {
+                "type": " ",
+                "oldLine": 263,
+                "newLine": 314,
+                "text": "        let executor = self.factory.create_executor(evm, ctx);"
+              },
+              { "type": " ", "oldLine": 264, "newLine": 315, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 265,
+                "text": "        // Step 3. Execute the block containing the transactions within the payload attributes.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 266,
+                "text": "        let transactions = attrs",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 267,
+                "text": "            .recovered_transactions_with_encoded()",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 268,
+                "text": "            .collect::<Result<Vec<_>, RecoveryError>>()",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 269,
+                "text": "            .map_err(ExecutorError::Recovery)?;",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 270,
+                "newLine": 316,
+                "text": "        let ex_result = executor.execute_block(transactions.iter())?;"
+              },
+              { "type": " ", "oldLine": 271, "newLine": 317, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 272,
+                "newLine": 318,
+                "text": "        info!("
+              }
+            ]
+          },
+          {
+            "oldStart": 299,
+            "oldLines": 35,
+            "newStart": 345,
+            "newLines": 24,
+            "lines": [
+              { "type": " ", "oldLine": 299, "newLine": 345, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 300,
+                "newLine": 346,
+                "text": "/// The outcome of a block building operation, returning the sealed block [`Header`] and the"
+              },
+              {
+                "type": " ",
+                "oldLine": 301,
+                "newLine": 347,
+                "text": "/// [`BlockExecutionResult`]."
+              },
+              { "type": "+", "newLine": 348, "text": "///", "ignored": false },
+              {
+                "type": "+",
+                "newLine": 349,
+                "text": "/// Generic over the receipt envelope so non-OP receipt shapes (e.g. CIP-64) can be carried out of",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 350,
+                "text": "/// the builder.",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 302,
+                "newLine": 351,
+                "text": "#[derive(Debug, Clone)]"
+              },
+              {
+                "type": "-",
+                "oldLine": 303,
+                "text": "pub struct BlockBuildingOutcome {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 352,
+                "text": "pub struct BlockBuildingOutcome<Receipt> {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 304,
+                "newLine": 353,
+                "text": "    /// The block header."
+              },
+              {
+                "type": " ",
+                "oldLine": 305,
+                "newLine": 354,
+                "text": "    pub header: Sealed<Header>,"
+              },
+              {
+                "type": " ",
+                "oldLine": 306,
+                "newLine": 355,
+                "text": "    /// The block execution result."
+              },
+              {
+                "type": "-",
+                "oldLine": 307,
+                "text": "    pub execution_result: BlockExecutionResult<OpReceiptEnvelope>,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 356,
+                "text": "    pub execution_result: BlockExecutionResult<Receipt>,",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 308, "newLine": 357, "text": "}" },
+              { "type": " ", "oldLine": 309, "newLine": 358, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 310,
+                "text": "impl From<(Sealed<Header>, BlockExecutionResult<OpReceiptEnvelope>)> for BlockBuildingOutcome {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 311,
+                "text": "    fn from(",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 312,
+                "text": "        (header, execution_result): (Sealed<Header>, BlockExecutionResult<OpReceiptEnvelope>),",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 313,
+                "text": "    ) -> Self {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 359,
+                "text": "impl<Receipt> From<(Sealed<Header>, BlockExecutionResult<Receipt>)>",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 360,
+                "text": "    for BlockBuildingOutcome<Receipt>",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 361, "text": "{", "ignored": false },
+              {
+                "type": "+",
+                "newLine": 362,
+                "text": "    fn from((header, execution_result): (Sealed<Header>, BlockExecutionResult<Receipt>)) -> Self {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 314,
+                "newLine": 363,
+                "text": "        Self { header, execution_result }"
+              },
+              { "type": " ", "oldLine": 315, "newLine": 364, "text": "    }" },
+              { "type": " ", "oldLine": 316, "newLine": 365, "text": "}" },
+              { "type": " ", "oldLine": 317, "newLine": 366, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 318,
+                "newLine": 367,
+                "text": "#[cfg(test)]"
+              },
+              {
+                "type": "-",
+                "oldLine": 319,
+                "text": "mod test {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 320,
+                "text": "    use crate::test_utils::run_test_fixture;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 321,
+                "text": "    use rstest::rstest;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 322,
+                "text": "    use std::path::PathBuf;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 323, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 324,
+                "text": "    #[rstest]",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 325,
+                "text": "    #[tokio::test]",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 326,
+                "text": "    async fn test_statelessly_execute_block(",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 327,
+                "text": "        #[base_dir = \"./testdata\"]",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 328,
+                "text": "        #[files(\"*.tar.gz\")]",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 329,
+                "text": "        path: PathBuf,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 330,
+                "text": "    ) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 331,
+                "text": "        run_test_fixture(path).await;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 332,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 333, "text": "}", "ignored": false },
+              {
+                "type": "+",
+                "newLine": 368,
+                "text": "mod tests;",
+                "ignored": false
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

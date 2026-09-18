@@ -1,1 +1,117 @@
-{"schemaVersion":2,"unitHash":"50ede47969472442350ee52c400760b66c3720c18d634cf0fb7295336389ceb6","name":"Cargo.toml","kind":"program","lines":27,"source":"[package]\nname = \"kona-std-fpvm-proc\"\ndescription = \"Proc macro entry point for `kona-std-fpvm` targeted programs.\"\nversion = \"0.2.0\"\nedition.workspace = true\nauthors.workspace = true\nlicense.workspace = true\nrepository.workspace = true\nhomepage.workspace = true\n\n[lib]\nproc-macro = true\n\n[dependencies]\n# General\ncfg-if.workspace = true\n\n# Workspace\nkona-std-fpvm.workspace = true\n\n# Proc Macros\nquote.workspace = true\nproc-macro2.workspace = true\nsyn = { workspace = true, features = [\"full\"] }\n\n[package.metadata.cargo-udeps.ignore]\nnormal = [\"kona-std-fpvm\"]","resolutions":{"9fa846564f4071bd":{"status":"differs","coveredLines":24,"match":{"origin":"own","collection":"optimism","relation":{"type":"own"},"rank":0,"matchedBy":"name","auditedName":"Cargo.toml","similarity":0.864,"reportId":"optimism/cantina-kona-2026-03","repository":"op-rs/kona","path":"crates/proof/std-fpvm-proc/Cargo.toml","commit":"86910c9112437bbb849eca28961f813c5450e103","commitTimestamp":"2025-12-15T17:17:05Z","url":"https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/crates/proof/std-fpvm-proc/Cargo.toml","auditStatus":"audited_with_no_major_findings","reviewPhase":"initial audit","coverage":"Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). Procedural macro crate for the FPVM entrypoint; no findings located here.","majorFindings":0,"isLatestVersion":true,"laterAuditedVersionExists":false,"totalVersions":1},"diff":{"added":3,"removed":3,"ignoredAdded":0,"ignoredRemoved":0,"unchanged":24,"ignoredOnly":false,"hunks":[{"oldStart":19,"oldLines":9,"newStart":19,"newLines":9,"lines":[{"type":" ","oldLine":19,"newLine":19,"text":"kona-std-fpvm.workspace = true"},{"type":" ","oldLine":20,"newLine":20,"text":""},{"type":" ","oldLine":21,"newLine":21,"text":"# Proc Macros"},{"type":"-","oldLine":22,"text":"quote = \"1.0\"","ignored":false},{"type":"-","oldLine":23,"text":"proc-macro2 = \"1.0\"","ignored":false},{"type":"-","oldLine":24,"text":"syn = { version = \"2.0\", features = [\"full\"] }","ignored":false},{"type":"+","newLine":22,"text":"quote.workspace = true","ignored":false},{"type":"+","newLine":23,"text":"proc-macro2.workspace = true","ignored":false},{"type":"+","newLine":24,"text":"syn = { workspace = true, features = [\"full\"] }","ignored":false},{"type":" ","oldLine":25,"newLine":25,"text":""},{"type":" ","oldLine":26,"newLine":26,"text":"[package.metadata.cargo-udeps.ignore]"},{"type":" ","oldLine":27,"newLine":27,"text":"normal = [\"kona-std-fpvm\"]"}]}]},"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "50ede47969472442350ee52c400760b66c3720c18d634cf0fb7295336389ceb6",
+  "name": "Cargo.toml",
+  "kind": "program",
+  "lines": 27,
+  "source": "[package]\nname = \"kona-std-fpvm-proc\"\ndescription = \"Proc macro entry point for `kona-std-fpvm` targeted programs.\"\nversion = \"0.2.0\"\nedition.workspace = true\nauthors.workspace = true\nlicense.workspace = true\nrepository.workspace = true\nhomepage.workspace = true\n\n[lib]\nproc-macro = true\n\n[dependencies]\n# General\ncfg-if.workspace = true\n\n# Workspace\nkona-std-fpvm.workspace = true\n\n# Proc Macros\nquote.workspace = true\nproc-macro2.workspace = true\nsyn = { workspace = true, features = [\"full\"] }\n\n[package.metadata.cargo-udeps.ignore]\nnormal = [\"kona-std-fpvm\"]",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "differs",
+      "coveredLines": 24,
+      "match": {
+        "origin": "own",
+        "collection": "optimism",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "Cargo.toml",
+        "similarity": 0.864,
+        "reportId": "optimism/cantina-kona-2026-03",
+        "repository": "op-rs/kona",
+        "path": "crates/proof/std-fpvm-proc/Cargo.toml",
+        "commit": "86910c9112437bbb849eca28961f813c5450e103",
+        "commitTimestamp": "2025-12-15T17:17:05Z",
+        "url": "https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/crates/proof/std-fpvm-proc/Cargo.toml",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). Procedural macro crate for the FPVM entrypoint; no findings located here.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 3,
+        "removed": 3,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 24,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 19,
+            "oldLines": 9,
+            "newStart": 19,
+            "newLines": 9,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 19,
+                "newLine": 19,
+                "text": "kona-std-fpvm.workspace = true"
+              },
+              { "type": " ", "oldLine": 20, "newLine": 20, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 21,
+                "newLine": 21,
+                "text": "# Proc Macros"
+              },
+              {
+                "type": "-",
+                "oldLine": 22,
+                "text": "quote = \"1.0\"",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 23,
+                "text": "proc-macro2 = \"1.0\"",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 24,
+                "text": "syn = { version = \"2.0\", features = [\"full\"] }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 22,
+                "text": "quote.workspace = true",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 23,
+                "text": "proc-macro2.workspace = true",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 24,
+                "text": "syn = { workspace = true, features = [\"full\"] }",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 25, "newLine": 25, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 26,
+                "newLine": 26,
+                "text": "[package.metadata.cargo-udeps.ignore]"
+              },
+              {
+                "type": " ",
+                "oldLine": 27,
+                "newLine": 27,
+                "text": "normal = [\"kona-std-fpvm\"]"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

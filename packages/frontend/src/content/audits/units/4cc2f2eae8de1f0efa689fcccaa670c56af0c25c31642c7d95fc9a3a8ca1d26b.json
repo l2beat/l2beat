@@ -1,1 +1,37 @@
-{"schemaVersion":2,"unitHash":"4cc2f2eae8de1f0efa689fcccaa670c56af0c25c31642c7d95fc9a3a8ca1d26b","name":"reset.rs","kind":"program","lines":16,"source":"//! Traits for resetting stages.\n\nuse alloc::boxed::Box;\nuse async_trait::async_trait;\nuse kona_genesis::SystemConfig;\nuse kona_protocol::BlockInfo;\n\n/// Provides the [`BlockInfo`] and [`SystemConfig`] for the stack to reset the stages.\n#[async_trait]\npub trait ResetProvider {\n    /// Returns the current [`BlockInfo`] for the pipeline to reset.\n    async fn block_info(&self) -> BlockInfo;\n\n    /// Returns the current [`SystemConfig`] for the pipeline to reset.\n    async fn system_config(&self) -> SystemConfig;\n}","resolutions":{"9fa846564f4071bd":{"status":"identical","coveredLines":16,"match":{"origin":"own","collection":"optimism","relation":{"type":"own"},"rank":0,"matchedBy":"identity","auditedName":"reset.rs","similarity":1,"reportId":"optimism/cantina-kona-2026-03","repository":"op-rs/kona","path":"crates/protocol/derive/src/traits/reset.rs","commit":"86910c9112437bbb849eca28961f813c5450e103","commitTimestamp":"2025-12-15T17:17:05Z","url":"https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/crates/protocol/derive/src/traits/reset.rs","auditStatus":"audited_with_no_major_findings","reviewPhase":"initial audit","coverage":"Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). kona-derive derivation pipeline (stages, sources, traversal, attributes). Medium findings 3.3.1 and 3.3.2 (pipeline/core.rs, stages/l1_retrieval.rs) and numerous Low/Informational findings located here; no Critical/High.","majorFindings":0,"isLatestVersion":true,"laterAuditedVersionExists":false,"totalVersions":1},"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "4cc2f2eae8de1f0efa689fcccaa670c56af0c25c31642c7d95fc9a3a8ca1d26b",
+  "name": "reset.rs",
+  "kind": "program",
+  "lines": 16,
+  "source": "//! Traits for resetting stages.\n\nuse alloc::boxed::Box;\nuse async_trait::async_trait;\nuse kona_genesis::SystemConfig;\nuse kona_protocol::BlockInfo;\n\n/// Provides the [`BlockInfo`] and [`SystemConfig`] for the stack to reset the stages.\n#[async_trait]\npub trait ResetProvider {\n    /// Returns the current [`BlockInfo`] for the pipeline to reset.\n    async fn block_info(&self) -> BlockInfo;\n\n    /// Returns the current [`SystemConfig`] for the pipeline to reset.\n    async fn system_config(&self) -> SystemConfig;\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "identical",
+      "coveredLines": 16,
+      "match": {
+        "origin": "own",
+        "collection": "optimism",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "reset.rs",
+        "similarity": 1,
+        "reportId": "optimism/cantina-kona-2026-03",
+        "repository": "op-rs/kona",
+        "path": "crates/protocol/derive/src/traits/reset.rs",
+        "commit": "86910c9112437bbb849eca28961f813c5450e103",
+        "commitTimestamp": "2025-12-15T17:17:05Z",
+        "url": "https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/crates/protocol/derive/src/traits/reset.rs",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). kona-derive derivation pipeline (stages, sources, traversal, attributes). Medium findings 3.3.1 and 3.3.2 (pipeline/core.rs, stages/l1_retrieval.rs) and numerous Low/Informational findings located here; no Critical/High.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "warnings": []
+    }
+  }
+}

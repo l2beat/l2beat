@@ -1,1 +1,15 @@
-{"schemaVersion":2,"unitHash":"ef6d0fe020942ed4c2acc0b9e5490fa001140264cdd1e84067225e057c251166","name":"seed.rs","kind":"program","lines":35,"source":"use std::sync::atomic::{AtomicU64, Ordering};\n\nuse rand::SeedableRng;\n\npub(crate) static SEED_GENERATOR_BUILDER: SeedGeneratorBuilder = SeedGeneratorBuilder::new();\n\npub(crate) struct SeedGeneratorBuilder(AtomicU64);\n\nimpl SeedGeneratorBuilder {\n    pub(crate) const fn new() -> Self {\n        Self(AtomicU64::new(0))\n    }\n\n    fn next(&self) -> u64 {\n        self.0.fetch_add(1, Ordering::SeqCst)\n    }\n\n    pub(crate) fn next_generator(&self) -> SeedGenerator {\n        SeedGenerator(rand::rngs::StdRng::seed_from_u64(self.next()))\n    }\n}\n\npub(crate) struct SeedGenerator(pub(super) rand::rngs::StdRng);\n\nimpl SeedGenerator {\n    pub(crate) const fn as_rng(&mut self) -> &mut rand::rngs::StdRng {\n        &mut self.0\n    }\n\n    pub(crate) fn random_bytes(&mut self, len: usize) -> Vec<u8> {\n        let mut data = vec![0; len];\n        rand::Rng::fill(self.as_rng(), &mut data[..]);\n        data\n    }\n}","resolutions":{"9fa846564f4071bd":{"status":"unaudited","coveredLines":0,"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "ef6d0fe020942ed4c2acc0b9e5490fa001140264cdd1e84067225e057c251166",
+  "name": "seed.rs",
+  "kind": "program",
+  "lines": 35,
+  "source": "use std::sync::atomic::{AtomicU64, Ordering};\n\nuse rand::SeedableRng;\n\npub(crate) static SEED_GENERATOR_BUILDER: SeedGeneratorBuilder = SeedGeneratorBuilder::new();\n\npub(crate) struct SeedGeneratorBuilder(AtomicU64);\n\nimpl SeedGeneratorBuilder {\n    pub(crate) const fn new() -> Self {\n        Self(AtomicU64::new(0))\n    }\n\n    fn next(&self) -> u64 {\n        self.0.fetch_add(1, Ordering::SeqCst)\n    }\n\n    pub(crate) fn next_generator(&self) -> SeedGenerator {\n        SeedGenerator(rand::rngs::StdRng::seed_from_u64(self.next()))\n    }\n}\n\npub(crate) struct SeedGenerator(pub(super) rand::rngs::StdRng);\n\nimpl SeedGenerator {\n    pub(crate) const fn as_rng(&mut self) -> &mut rand::rngs::StdRng {\n        &mut self.0\n    }\n\n    pub(crate) fn random_bytes(&mut self, len: usize) -> Vec<u8> {\n        let mut data = vec![0; len];\n        rand::Rng::fill(self.as_rng(), &mut data[..]);\n        data\n    }\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

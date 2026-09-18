@@ -1,1 +1,157 @@
-{"schemaVersion":2,"unitHash":"8b8fd9a2bf753325b7344a0df3112bb009e9ebe28a2921086d6725b7eea465e9","name":"trie_node.rs","kind":"program","lines":157,"source":"#![allow(missing_docs)]\n//! Contains benchmarks for the [`TrieNode`].\n\nuse alloy_trie::Nibbles;\nuse criterion::{Criterion, criterion_group, criterion_main};\nuse kona_mpt::{NoopTrieHinter, NoopTrieProvider, TrieNode};\nuse rand::{Rng, SeedableRng, rngs::StdRng, seq::IteratorRandom};\n\nfn trie(c: &mut Criterion) {\n    let mut g = c.benchmark_group(\"execution\");\n    g.sample_size(10);\n\n    // Use pseudo-randomness for reproducibility\n    let mut rng = StdRng::seed_from_u64(42);\n\n    g.bench_function(\"Insertion - 4096 nodes\", |b| {\n        let keys = (0..2usize.pow(12))\n            .map(|_| Nibbles::unpack(rng.random::<[u8; 32]>()))\n            .collect::<Vec<_>>();\n\n        b.iter(|| {\n            let mut trie = TrieNode::Empty;\n            for key in &keys {\n                trie.insert(key, key.to_vec().into(), &NoopTrieProvider).unwrap();\n            }\n        });\n    });\n\n    g.bench_function(\"Insertion - 65,536 nodes\", |b| {\n        let keys = (0..2usize.pow(16))\n            .map(|_| Nibbles::unpack(rng.random::<[u8; 32]>()))\n            .collect::<Vec<_>>();\n\n        b.iter(|| {\n            let mut trie = TrieNode::Empty;\n            for key in &keys {\n                trie.insert(key, key.to_vec().into(), &NoopTrieProvider).unwrap();\n            }\n        });\n    });\n\n    g.bench_function(\"Delete 16 nodes - 4096 nodes\", |b| {\n        let keys = (0..2usize.pow(12))\n            .map(|_| Nibbles::unpack(rng.random::<[u8; 32]>()))\n            .collect::<Vec<_>>();\n        let mut trie = TrieNode::Empty;\n\n        let rng = &mut rand::rng();\n        let keys_to_delete = keys.clone().into_iter().choose_multiple(rng, 16);\n\n        for key in &keys {\n            trie.insert(key, key.to_vec().into(), &NoopTrieProvider).unwrap();\n        }\n\n        b.iter(|| {\n            let trie = &mut trie.clone();\n            for key in &keys_to_delete {\n                trie.delete(key, &NoopTrieProvider, &NoopTrieHinter).unwrap();\n            }\n        });\n    });\n\n    g.bench_function(\"Delete 16 nodes - 65,536 nodes\", |b| {\n        let keys = (0..2usize.pow(16))\n            .map(|_| Nibbles::unpack(rng.random::<[u8; 32]>()))\n            .collect::<Vec<_>>();\n        let mut trie = TrieNode::Empty;\n        for key in &keys {\n            trie.insert(key, key.to_vec().into(), &NoopTrieProvider).unwrap();\n        }\n\n        let rng = &mut rand::rng();\n        let keys_to_delete = keys.into_iter().choose_multiple(rng, 16);\n\n        b.iter(|| {\n            let trie = &mut trie.clone();\n            for key in &keys_to_delete {\n                trie.delete(key, &NoopTrieProvider, &NoopTrieHinter).unwrap();\n            }\n        });\n    });\n\n    g.bench_function(\"Open 1024 nodes - 4096 nodes\", |b| {\n        let keys = (0..2usize.pow(12))\n            .map(|_| Nibbles::unpack(rng.random::<[u8; 32]>()))\n            .collect::<Vec<_>>();\n        let mut trie = TrieNode::Empty;\n        for key in &keys {\n            trie.insert(key, key.to_vec().into(), &NoopTrieProvider).unwrap();\n        }\n\n        let rng = &mut rand::rng();\n        let keys_to_retrieve = keys.into_iter().choose_multiple(rng, 1024);\n\n        b.iter(|| {\n            for key in &keys_to_retrieve {\n                trie.open(key, &NoopTrieProvider).unwrap();\n            }\n        });\n    });\n\n    g.bench_function(\"Open 1024 nodes - 65,536 nodes\", |b| {\n        let keys = (0..2usize.pow(16))\n            .map(|_| Nibbles::unpack(rng.random::<[u8; 32]>()))\n            .collect::<Vec<_>>();\n        let mut trie = TrieNode::Empty;\n        for key in &keys {\n            trie.insert(key, key.to_vec().into(), &NoopTrieProvider).unwrap();\n        }\n\n        let rng = &mut rand::rng();\n        let keys_to_retrieve = keys.into_iter().choose_multiple(rng, 1024);\n\n        b.iter(|| {\n            for key in &keys_to_retrieve {\n                trie.open(key, &NoopTrieProvider).unwrap();\n            }\n        });\n    });\n\n    g.bench_function(\"Compute root, fully open trie - 4096 nodes\", |b| {\n        let keys = (0..2usize.pow(12))\n            .map(|_| Nibbles::unpack(rng.random::<[u8; 32]>()))\n            .collect::<Vec<_>>();\n        let mut trie = TrieNode::Empty;\n        for key in &keys {\n            trie.insert(key, key.to_vec().into(), &NoopTrieProvider).unwrap();\n        }\n\n        b.iter(|| {\n            let trie = &mut trie.clone();\n            trie.blind();\n        });\n    });\n\n    g.bench_function(\"Compute root, fully open trie - 65,536 nodes\", |b| {\n        let keys = (0..2usize.pow(16))\n            .map(|_| Nibbles::unpack(rng.random::<[u8; 32]>()))\n            .collect::<Vec<_>>();\n        let mut trie = TrieNode::Empty;\n        for key in &keys {\n            trie.insert(key, key.to_vec().into(), &NoopTrieProvider).unwrap();\n        }\n\n        b.iter(|| {\n            let trie = &mut trie.clone();\n            trie.blind();\n        });\n    });\n}\n\ncriterion_group! {\n    name = trie_benches;\n    config = Criterion::default();\n    targets = trie\n}\ncriterion_main!(trie_benches);","resolutions":{"9fa846564f4071bd":{"status":"differs","coveredLines":156,"match":{"origin":"own","collection":"optimism","relation":{"type":"own"},"rank":0,"matchedBy":"name","auditedName":"trie_node.rs","similarity":0.989,"reportId":"optimism/cantina-kona-2026-03","repository":"op-rs/kona","path":"crates/proof/mpt/benches/trie_node.rs","commit":"86910c9112437bbb849eca28961f813c5450e103","commitTimestamp":"2025-12-15T17:17:05Z","url":"https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/crates/proof/mpt/benches/trie_node.rs","auditStatus":"audited_with_no_major_findings","reviewPhase":"initial audit","coverage":"Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). Merkle Patricia trie crate; Informational finding 3.5.2 (node.rs) located here.","majorFindings":0,"isLatestVersion":true,"laterAuditedVersionExists":false,"totalVersions":1},"diff":{"added":1,"removed":2,"ignoredAdded":1,"ignoredRemoved":1,"unchanged":156,"ignoredOnly":false,"hunks":[{"oldStart":1,"oldLines":10,"newStart":1,"newLines":9,"lines":[{"type":" ","oldLine":1,"newLine":1,"text":"#![allow(missing_docs)]"},{"type":"-","oldLine":2,"text":"//! Contains benchmarks for the [TrieNode].","ignored":true},{"type":"+","newLine":2,"text":"//! Contains benchmarks for the [`TrieNode`].","ignored":true},{"type":" ","oldLine":3,"newLine":3,"text":""},{"type":" ","oldLine":4,"newLine":4,"text":"use alloy_trie::Nibbles;"},{"type":" ","oldLine":5,"newLine":5,"text":"use criterion::{Criterion, criterion_group, criterion_main};"},{"type":" ","oldLine":6,"newLine":6,"text":"use kona_mpt::{NoopTrieHinter, NoopTrieProvider, TrieNode};"},{"type":"-","oldLine":7,"text":"use pprof::criterion::{Output, PProfProfiler};","ignored":false},{"type":" ","oldLine":8,"newLine":7,"text":"use rand::{Rng, SeedableRng, rngs::StdRng, seq::IteratorRandom};"},{"type":" ","oldLine":9,"newLine":8,"text":""},{"type":" ","oldLine":10,"newLine":9,"text":"fn trie(c: &mut Criterion) {"}]},{"oldStart":152,"oldLines":7,"newStart":151,"newLines":7,"lines":[{"type":" ","oldLine":152,"newLine":151,"text":""},{"type":" ","oldLine":153,"newLine":152,"text":"criterion_group! {"},{"type":" ","oldLine":154,"newLine":153,"text":"    name = trie_benches;"},{"type":"-","oldLine":155,"text":"    config = Criterion::default().with_profiler(PProfProfiler::new(100, Output::Flamegraph(None)));","ignored":false},{"type":"+","newLine":154,"text":"    config = Criterion::default();","ignored":false},{"type":" ","oldLine":156,"newLine":155,"text":"    targets = trie"},{"type":" ","oldLine":157,"newLine":156,"text":"}"},{"type":" ","oldLine":158,"newLine":157,"text":"criterion_main!(trie_benches);"}]}]},"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "8b8fd9a2bf753325b7344a0df3112bb009e9ebe28a2921086d6725b7eea465e9",
+  "name": "trie_node.rs",
+  "kind": "program",
+  "lines": 157,
+  "source": "#![allow(missing_docs)]\n//! Contains benchmarks for the [`TrieNode`].\n\nuse alloy_trie::Nibbles;\nuse criterion::{Criterion, criterion_group, criterion_main};\nuse kona_mpt::{NoopTrieHinter, NoopTrieProvider, TrieNode};\nuse rand::{Rng, SeedableRng, rngs::StdRng, seq::IteratorRandom};\n\nfn trie(c: &mut Criterion) {\n    let mut g = c.benchmark_group(\"execution\");\n    g.sample_size(10);\n\n    // Use pseudo-randomness for reproducibility\n    let mut rng = StdRng::seed_from_u64(42);\n\n    g.bench_function(\"Insertion - 4096 nodes\", |b| {\n        let keys = (0..2usize.pow(12))\n            .map(|_| Nibbles::unpack(rng.random::<[u8; 32]>()))\n            .collect::<Vec<_>>();\n\n        b.iter(|| {\n            let mut trie = TrieNode::Empty;\n            for key in &keys {\n                trie.insert(key, key.to_vec().into(), &NoopTrieProvider).unwrap();\n            }\n        });\n    });\n\n    g.bench_function(\"Insertion - 65,536 nodes\", |b| {\n        let keys = (0..2usize.pow(16))\n            .map(|_| Nibbles::unpack(rng.random::<[u8; 32]>()))\n            .collect::<Vec<_>>();\n\n        b.iter(|| {\n            let mut trie = TrieNode::Empty;\n            for key in &keys {\n                trie.insert(key, key.to_vec().into(), &NoopTrieProvider).unwrap();\n            }\n        });\n    });\n\n    g.bench_function(\"Delete 16 nodes - 4096 nodes\", |b| {\n        let keys = (0..2usize.pow(12))\n            .map(|_| Nibbles::unpack(rng.random::<[u8; 32]>()))\n            .collect::<Vec<_>>();\n        let mut trie = TrieNode::Empty;\n\n        let rng = &mut rand::rng();\n        let keys_to_delete = keys.clone().into_iter().choose_multiple(rng, 16);\n\n        for key in &keys {\n            trie.insert(key, key.to_vec().into(), &NoopTrieProvider).unwrap();\n        }\n\n        b.iter(|| {\n            let trie = &mut trie.clone();\n            for key in &keys_to_delete {\n                trie.delete(key, &NoopTrieProvider, &NoopTrieHinter).unwrap();\n            }\n        });\n    });\n\n    g.bench_function(\"Delete 16 nodes - 65,536 nodes\", |b| {\n        let keys = (0..2usize.pow(16))\n            .map(|_| Nibbles::unpack(rng.random::<[u8; 32]>()))\n            .collect::<Vec<_>>();\n        let mut trie = TrieNode::Empty;\n        for key in &keys {\n            trie.insert(key, key.to_vec().into(), &NoopTrieProvider).unwrap();\n        }\n\n        let rng = &mut rand::rng();\n        let keys_to_delete = keys.into_iter().choose_multiple(rng, 16);\n\n        b.iter(|| {\n            let trie = &mut trie.clone();\n            for key in &keys_to_delete {\n                trie.delete(key, &NoopTrieProvider, &NoopTrieHinter).unwrap();\n            }\n        });\n    });\n\n    g.bench_function(\"Open 1024 nodes - 4096 nodes\", |b| {\n        let keys = (0..2usize.pow(12))\n            .map(|_| Nibbles::unpack(rng.random::<[u8; 32]>()))\n            .collect::<Vec<_>>();\n        let mut trie = TrieNode::Empty;\n        for key in &keys {\n            trie.insert(key, key.to_vec().into(), &NoopTrieProvider).unwrap();\n        }\n\n        let rng = &mut rand::rng();\n        let keys_to_retrieve = keys.into_iter().choose_multiple(rng, 1024);\n\n        b.iter(|| {\n            for key in &keys_to_retrieve {\n                trie.open(key, &NoopTrieProvider).unwrap();\n            }\n        });\n    });\n\n    g.bench_function(\"Open 1024 nodes - 65,536 nodes\", |b| {\n        let keys = (0..2usize.pow(16))\n            .map(|_| Nibbles::unpack(rng.random::<[u8; 32]>()))\n            .collect::<Vec<_>>();\n        let mut trie = TrieNode::Empty;\n        for key in &keys {\n            trie.insert(key, key.to_vec().into(), &NoopTrieProvider).unwrap();\n        }\n\n        let rng = &mut rand::rng();\n        let keys_to_retrieve = keys.into_iter().choose_multiple(rng, 1024);\n\n        b.iter(|| {\n            for key in &keys_to_retrieve {\n                trie.open(key, &NoopTrieProvider).unwrap();\n            }\n        });\n    });\n\n    g.bench_function(\"Compute root, fully open trie - 4096 nodes\", |b| {\n        let keys = (0..2usize.pow(12))\n            .map(|_| Nibbles::unpack(rng.random::<[u8; 32]>()))\n            .collect::<Vec<_>>();\n        let mut trie = TrieNode::Empty;\n        for key in &keys {\n            trie.insert(key, key.to_vec().into(), &NoopTrieProvider).unwrap();\n        }\n\n        b.iter(|| {\n            let trie = &mut trie.clone();\n            trie.blind();\n        });\n    });\n\n    g.bench_function(\"Compute root, fully open trie - 65,536 nodes\", |b| {\n        let keys = (0..2usize.pow(16))\n            .map(|_| Nibbles::unpack(rng.random::<[u8; 32]>()))\n            .collect::<Vec<_>>();\n        let mut trie = TrieNode::Empty;\n        for key in &keys {\n            trie.insert(key, key.to_vec().into(), &NoopTrieProvider).unwrap();\n        }\n\n        b.iter(|| {\n            let trie = &mut trie.clone();\n            trie.blind();\n        });\n    });\n}\n\ncriterion_group! {\n    name = trie_benches;\n    config = Criterion::default();\n    targets = trie\n}\ncriterion_main!(trie_benches);",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "differs",
+      "coveredLines": 156,
+      "match": {
+        "origin": "own",
+        "collection": "optimism",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "trie_node.rs",
+        "similarity": 0.989,
+        "reportId": "optimism/cantina-kona-2026-03",
+        "repository": "op-rs/kona",
+        "path": "crates/proof/mpt/benches/trie_node.rs",
+        "commit": "86910c9112437bbb849eca28961f813c5450e103",
+        "commitTimestamp": "2025-12-15T17:17:05Z",
+        "url": "https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/crates/proof/mpt/benches/trie_node.rs",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). Merkle Patricia trie crate; Informational finding 3.5.2 (node.rs) located here.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 1,
+        "removed": 2,
+        "ignoredAdded": 1,
+        "ignoredRemoved": 1,
+        "unchanged": 156,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 10,
+            "newStart": 1,
+            "newLines": 9,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "#![allow(missing_docs)]"
+              },
+              {
+                "type": "-",
+                "oldLine": 2,
+                "text": "//! Contains benchmarks for the [TrieNode].",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 2,
+                "text": "//! Contains benchmarks for the [`TrieNode`].",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 3, "newLine": 3, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "use alloy_trie::Nibbles;"
+              },
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 5,
+                "text": "use criterion::{Criterion, criterion_group, criterion_main};"
+              },
+              {
+                "type": " ",
+                "oldLine": 6,
+                "newLine": 6,
+                "text": "use kona_mpt::{NoopTrieHinter, NoopTrieProvider, TrieNode};"
+              },
+              {
+                "type": "-",
+                "oldLine": 7,
+                "text": "use pprof::criterion::{Output, PProfProfiler};",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 8,
+                "newLine": 7,
+                "text": "use rand::{Rng, SeedableRng, rngs::StdRng, seq::IteratorRandom};"
+              },
+              { "type": " ", "oldLine": 9, "newLine": 8, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 10,
+                "newLine": 9,
+                "text": "fn trie(c: &mut Criterion) {"
+              }
+            ]
+          },
+          {
+            "oldStart": 152,
+            "oldLines": 7,
+            "newStart": 151,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 152, "newLine": 151, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 153,
+                "newLine": 152,
+                "text": "criterion_group! {"
+              },
+              {
+                "type": " ",
+                "oldLine": 154,
+                "newLine": 153,
+                "text": "    name = trie_benches;"
+              },
+              {
+                "type": "-",
+                "oldLine": 155,
+                "text": "    config = Criterion::default().with_profiler(PProfProfiler::new(100, Output::Flamegraph(None)));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 154,
+                "text": "    config = Criterion::default();",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 156,
+                "newLine": 155,
+                "text": "    targets = trie"
+              },
+              { "type": " ", "oldLine": 157, "newLine": 156, "text": "}" },
+              {
+                "type": " ",
+                "oldLine": 158,
+                "newLine": 157,
+                "text": "criterion_main!(trie_benches);"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

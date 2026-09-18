@@ -1,1 +1,171 @@
-{"schemaVersion":2,"unitHash":"8574644779729e1c98fe23cfc9f50e2c121d471956783c2844f3367562fbcf99","name":"lib.rs","kind":"program","lines":48,"source":"// Copyright 2024, 2025 RISC Zero, Inc.\n//\n// Licensed under the Apache License, Version 2.0 (the \"License\");\n// you may not use this file except in compliance with the License.\n// You may obtain a copy of the License at\n//\n//     http://www.apache.org/licenses/LICENSE-2.0\n//\n// Unless required by applicable law or agreed to in writing, software\n// distributed under the License is distributed on an \"AS IS\" BASIS,\n// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n// See the License for the specific language governing permissions and\n// limitations under the License.\n#![cfg_attr(coverage_nightly, feature(coverage_attribute))]\n\n//! This crate contains the cryptographic primitives and procedures for securely generating\n//! Kona block derivation and execution traces usable in the Kailua hybrid dispute engine.\n\n/// Enables the provision of authenticated KZG Blob to the proving pipeline.\npub mod blobs;\n/// Structures for representing divided proving workloads.\npub mod boot;\n/// Procedures for securely generating and combining stateless Kona client execution traces.\npub mod client;\n/// Procedures for generating secure cryptographic commitments to rollup configuration settings.\npub mod config;\n/// Implementation for caching support in derivation.\npub mod driver;\n/// EVM wrappers for chunk aggregation (guest-side chunk result injection).\n#[cfg(feature = \"experimental\")]\npub mod evm;\n/// Implementation for an execution engine with caching support.\npub mod executor;\n/// A tightly packed representation for extended execution trace results.\npub mod journal;\n/// A modified `kona_proof::l1::chain_provider` with caching support.\npub mod kona;\n/// Definitions and implementations of secure stateless oracles for hash preimages.\npub mod oracle;\n/// Structures and logic for defining preconditions for Kailua proofs.\npub mod precondition;\n/// R0VM-accelerated revm `Crypto` provider for EVM precompiles.\n#[cfg(all(feature = \"experimental\", target_os = \"zkvm\", target_vendor = \"risc0\"))]\npub mod r0vm_crypto;\n/// Utility methods for zero-copy (de)serialization using the `rkyv` crate.\npub mod rkyv;\n/// A module for representing oracle-backed stateless client witness data.\npub mod witness;","resolutions":{"ba5b6c9584fb78fd":{"status":"differs","coveredLines":44,"match":{"origin":"own","collection":"bob","relation":{"type":"own"},"rank":0,"matchedBy":"name","auditedName":"lib.rs","similarity":0.867,"reportId":"bob/veridise-kailua-2025-10","repository":"boundless-xyz/kailua","path":"crates/kona/src/lib.rs","commit":"2414297a5f9feb98365ef6d88634bcd181a1934b","commitTimestamp":"2025-10-21T05:51:11Z","url":"https://github.com/boundless-xyz/kailua/blob/2414297a5f9feb98365ef6d88634bcd181a1934b/crates/kona/src/lib.rs","auditStatus":"audited_with_no_major_findings","reviewPhase":"initial audit","coverage":"Veridise review of the Kailua stateless Optimism client (crates/kona) on commit 2414297 of boundless-xyz/kailua, focused on the new pause/resume derivation and proof stitching. No findings located here.","majorFindings":0,"isLatestVersion":true,"laterAuditedVersionExists":false,"totalVersions":1},"diff":{"added":4,"removed":0,"ignoredAdded":2,"ignoredRemoved":0,"unchanged":44,"ignoredOnly":false,"hunks":[{"oldStart":26,"oldLines":6,"newStart":26,"newLines":9,"lines":[{"type":" ","oldLine":26,"newLine":26,"text":"pub mod config;"},{"type":" ","oldLine":27,"newLine":27,"text":"/// Implementation for caching support in derivation."},{"type":" ","oldLine":28,"newLine":28,"text":"pub mod driver;"},{"type":"+","newLine":29,"text":"/// EVM wrappers for chunk aggregation (guest-side chunk result injection).","ignored":true},{"type":"+","newLine":30,"text":"#[cfg(feature = \"experimental\")]","ignored":false},{"type":"+","newLine":31,"text":"pub mod evm;","ignored":false},{"type":" ","oldLine":29,"newLine":32,"text":"/// Implementation for an execution engine with caching support."},{"type":" ","oldLine":30,"newLine":33,"text":"pub mod executor;"},{"type":" ","oldLine":31,"newLine":34,"text":"/// A tightly packed representation for extended execution trace results."}]},{"oldStart":36,"oldLines":6,"newStart":39,"newLines":9,"lines":[{"type":" ","oldLine":36,"newLine":39,"text":"pub mod oracle;"},{"type":" ","oldLine":37,"newLine":40,"text":"/// Structures and logic for defining preconditions for Kailua proofs."},{"type":" ","oldLine":38,"newLine":41,"text":"pub mod precondition;"},{"type":"+","newLine":42,"text":"/// R0VM-accelerated revm `Crypto` provider for EVM precompiles.","ignored":true},{"type":"+","newLine":43,"text":"#[cfg(all(feature = \"experimental\", target_os = \"zkvm\", target_vendor = \"risc0\"))]","ignored":false},{"type":"+","newLine":44,"text":"pub mod r0vm_crypto;","ignored":false},{"type":" ","oldLine":39,"newLine":45,"text":"/// Utility methods for zero-copy (de)serialization using the `rkyv` crate."},{"type":" ","oldLine":40,"newLine":46,"text":"pub mod rkyv;"},{"type":" ","oldLine":41,"newLine":47,"text":"/// A module for representing oracle-backed stateless client witness data."}]}]},"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "8574644779729e1c98fe23cfc9f50e2c121d471956783c2844f3367562fbcf99",
+  "name": "lib.rs",
+  "kind": "program",
+  "lines": 48,
+  "source": "// Copyright 2024, 2025 RISC Zero, Inc.\n//\n// Licensed under the Apache License, Version 2.0 (the \"License\");\n// you may not use this file except in compliance with the License.\n// You may obtain a copy of the License at\n//\n//     http://www.apache.org/licenses/LICENSE-2.0\n//\n// Unless required by applicable law or agreed to in writing, software\n// distributed under the License is distributed on an \"AS IS\" BASIS,\n// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n// See the License for the specific language governing permissions and\n// limitations under the License.\n#![cfg_attr(coverage_nightly, feature(coverage_attribute))]\n\n//! This crate contains the cryptographic primitives and procedures for securely generating\n//! Kona block derivation and execution traces usable in the Kailua hybrid dispute engine.\n\n/// Enables the provision of authenticated KZG Blob to the proving pipeline.\npub mod blobs;\n/// Structures for representing divided proving workloads.\npub mod boot;\n/// Procedures for securely generating and combining stateless Kona client execution traces.\npub mod client;\n/// Procedures for generating secure cryptographic commitments to rollup configuration settings.\npub mod config;\n/// Implementation for caching support in derivation.\npub mod driver;\n/// EVM wrappers for chunk aggregation (guest-side chunk result injection).\n#[cfg(feature = \"experimental\")]\npub mod evm;\n/// Implementation for an execution engine with caching support.\npub mod executor;\n/// A tightly packed representation for extended execution trace results.\npub mod journal;\n/// A modified `kona_proof::l1::chain_provider` with caching support.\npub mod kona;\n/// Definitions and implementations of secure stateless oracles for hash preimages.\npub mod oracle;\n/// Structures and logic for defining preconditions for Kailua proofs.\npub mod precondition;\n/// R0VM-accelerated revm `Crypto` provider for EVM precompiles.\n#[cfg(all(feature = \"experimental\", target_os = \"zkvm\", target_vendor = \"risc0\"))]\npub mod r0vm_crypto;\n/// Utility methods for zero-copy (de)serialization using the `rkyv` crate.\npub mod rkyv;\n/// A module for representing oracle-backed stateless client witness data.\npub mod witness;",
+  "resolutions": {
+    "ba5b6c9584fb78fd": {
+      "status": "differs",
+      "coveredLines": 44,
+      "match": {
+        "origin": "own",
+        "collection": "bob",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "lib.rs",
+        "similarity": 0.867,
+        "reportId": "bob/veridise-kailua-2025-10",
+        "repository": "boundless-xyz/kailua",
+        "path": "crates/kona/src/lib.rs",
+        "commit": "2414297a5f9feb98365ef6d88634bcd181a1934b",
+        "commitTimestamp": "2025-10-21T05:51:11Z",
+        "url": "https://github.com/boundless-xyz/kailua/blob/2414297a5f9feb98365ef6d88634bcd181a1934b/crates/kona/src/lib.rs",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Veridise review of the Kailua stateless Optimism client (crates/kona) on commit 2414297 of boundless-xyz/kailua, focused on the new pause/resume derivation and proof stitching. No findings located here.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 4,
+        "removed": 0,
+        "ignoredAdded": 2,
+        "ignoredRemoved": 0,
+        "unchanged": 44,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 26,
+            "oldLines": 6,
+            "newStart": 26,
+            "newLines": 9,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 26,
+                "newLine": 26,
+                "text": "pub mod config;"
+              },
+              {
+                "type": " ",
+                "oldLine": 27,
+                "newLine": 27,
+                "text": "/// Implementation for caching support in derivation."
+              },
+              {
+                "type": " ",
+                "oldLine": 28,
+                "newLine": 28,
+                "text": "pub mod driver;"
+              },
+              {
+                "type": "+",
+                "newLine": 29,
+                "text": "/// EVM wrappers for chunk aggregation (guest-side chunk result injection).",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 30,
+                "text": "#[cfg(feature = \"experimental\")]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 31,
+                "text": "pub mod evm;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 29,
+                "newLine": 32,
+                "text": "/// Implementation for an execution engine with caching support."
+              },
+              {
+                "type": " ",
+                "oldLine": 30,
+                "newLine": 33,
+                "text": "pub mod executor;"
+              },
+              {
+                "type": " ",
+                "oldLine": 31,
+                "newLine": 34,
+                "text": "/// A tightly packed representation for extended execution trace results."
+              }
+            ]
+          },
+          {
+            "oldStart": 36,
+            "oldLines": 6,
+            "newStart": 39,
+            "newLines": 9,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 36,
+                "newLine": 39,
+                "text": "pub mod oracle;"
+              },
+              {
+                "type": " ",
+                "oldLine": 37,
+                "newLine": 40,
+                "text": "/// Structures and logic for defining preconditions for Kailua proofs."
+              },
+              {
+                "type": " ",
+                "oldLine": 38,
+                "newLine": 41,
+                "text": "pub mod precondition;"
+              },
+              {
+                "type": "+",
+                "newLine": 42,
+                "text": "/// R0VM-accelerated revm `Crypto` provider for EVM precompiles.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 43,
+                "text": "#[cfg(all(feature = \"experimental\", target_os = \"zkvm\", target_vendor = \"risc0\"))]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 44,
+                "text": "pub mod r0vm_crypto;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 39,
+                "newLine": 45,
+                "text": "/// Utility methods for zero-copy (de)serialization using the `rkyv` crate."
+              },
+              {
+                "type": " ",
+                "oldLine": 40,
+                "newLine": 46,
+                "text": "pub mod rkyv;"
+              },
+              {
+                "type": " ",
+                "oldLine": 41,
+                "newLine": 47,
+                "text": "/// A module for representing oracle-backed stateless client witness data."
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

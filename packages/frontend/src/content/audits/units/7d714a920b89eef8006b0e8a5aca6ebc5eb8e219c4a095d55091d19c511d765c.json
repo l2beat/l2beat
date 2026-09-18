@@ -1,1 +1,15 @@
-{"schemaVersion":2,"unitHash":"7d714a920b89eef8006b0e8a5aca6ebc5eb8e219c4a095d55091d19c511d765c","name":"mod.rs","kind":"program","lines":7,"source":"//! Task to insert an unsafe payload into the execution engine.\n\nmod task;\npub use task::InsertTask;\n\nmod error;\npub use error::InsertTaskError;","resolutions":{"9fa846564f4071bd":{"status":"unaudited","coveredLines":0,"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "7d714a920b89eef8006b0e8a5aca6ebc5eb8e219c4a095d55091d19c511d765c",
+  "name": "mod.rs",
+  "kind": "program",
+  "lines": 7,
+  "source": "//! Task to insert an unsafe payload into the execution engine.\n\nmod task;\npub use task::InsertTask;\n\nmod error;\npub use error::InsertTaskError;",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

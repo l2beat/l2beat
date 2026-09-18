@@ -1,1 +1,15 @@
-{"schemaVersion":2,"unitHash":"631f21adba8c43effbcec64ba323b2091b22e0c624662df928186a320ba42a5b","name":"generate-jwt.sh","kind":"program","lines":12,"source":"#!/bin/bash\n# Borrowed from EthStaker's prepare for the merge guide\n# See https://github.com/eth-educators/ethstaker-guides/blob/main/docs/prepare-for-the-merge.md#configuring-a-jwt-token-file\n\nSCRIPT_DIR=$( cd -- \"$( dirname -- \"${BASH_SOURCE[0]}\" )\" &> /dev/null && pwd )\nmkdir -p \"${SCRIPT_DIR}/jwttoken\"\nif [[ ! -f \"${SCRIPT_DIR}/jwttoken/jwt.hex\" ]]\nthen\n  openssl rand -hex 32 | tr -d \"\\n\" | tee > \"${SCRIPT_DIR}/jwttoken/jwt.hex\"\nelse\n  echo \"${SCRIPT_DIR}/jwttoken/jwt.hex already exists!\"\nfi","resolutions":{"9fa846564f4071bd":{"status":"unaudited","coveredLines":0,"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "631f21adba8c43effbcec64ba323b2091b22e0c624662df928186a320ba42a5b",
+  "name": "generate-jwt.sh",
+  "kind": "program",
+  "lines": 12,
+  "source": "#!/bin/bash\n# Borrowed from EthStaker's prepare for the merge guide\n# See https://github.com/eth-educators/ethstaker-guides/blob/main/docs/prepare-for-the-merge.md#configuring-a-jwt-token-file\n\nSCRIPT_DIR=$( cd -- \"$( dirname -- \"${BASH_SOURCE[0]}\" )\" &> /dev/null && pwd )\nmkdir -p \"${SCRIPT_DIR}/jwttoken\"\nif [[ ! -f \"${SCRIPT_DIR}/jwttoken/jwt.hex\" ]]\nthen\n  openssl rand -hex 32 | tr -d \"\\n\" | tee > \"${SCRIPT_DIR}/jwttoken/jwt.hex\"\nelse\n  echo \"${SCRIPT_DIR}/jwttoken/jwt.hex already exists!\"\nfi",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

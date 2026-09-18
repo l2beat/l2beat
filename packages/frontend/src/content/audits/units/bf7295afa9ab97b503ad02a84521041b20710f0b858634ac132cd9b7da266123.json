@@ -1,1 +1,158 @@
-{"schemaVersion":2,"unitHash":"bf7295afa9ab97b503ad02a84521041b20710f0b858634ac132cd9b7da266123","name":"executor.rs","kind":"program","lines":111,"source":"//! An abstraction for the driver's block executor.\n//!\n//! This module provides the [`Executor`] trait which abstracts block execution for the driver.\n//! The executor is responsible for building and executing blocks from payload attributes,\n//! maintaining safe head state, and computing output roots for the execution results.\n\nuse alloc::boxed::Box;\nuse alloy_consensus::{Header, Sealed};\nuse alloy_primitives::B256;\nuse async_trait::async_trait;\nuse core::error::Error;\nuse kona_executor::BlockBuildingOutcome;\nuse op_alloy_rpc_types_engine::OpPayloadAttributes;\n\n/// Executor trait for block execution in the driver pipeline.\n///\n/// This trait abstracts the block execution functionality needed by the driver.\n/// Implementations are responsible for:\n/// - Building blocks from payload attributes\n/// - Maintaining execution state and safe head tracking\n/// - Computing output roots after block execution\n/// - Handling execution errors and recovery scenarios\n///\n/// The executor operates in a sequential manner where blocks must be executed\n/// in order to maintain proper state transitions.\n#[async_trait]\npub trait Executor {\n    /// The error type for the Executor.\n    ///\n    /// Should implement [`Error`] and provide detailed information about\n    /// execution failures, including transaction-level errors and state issues.\n    type Error: Error;\n\n    /// The receipt type produced by this executor.\n    ///\n    /// Threaded through to [`BlockBuildingOutcome`] so non-OP chains that produce different\n    /// receipt envelopes (e.g. Celo's CIP-64 receipt) can carry their type out of the driver.\n    type Receipt;\n\n    /// Waits for the executor to be ready for block execution.\n    ///\n    /// This method blocks until the executor has completed any necessary\n    /// initialization or synchronization required before it can begin\n    /// processing blocks.\n    ///\n    /// # Usage\n    /// This should be called before attempting to execute any payloads\n    /// to ensure the executor is in a valid state.\n    async fn wait_until_ready(&mut self);\n\n    /// Updates the safe head to the specified header.\n    ///\n    /// Sets the executor's internal safe head state to the provided sealed header.\n    /// This is used to establish the starting point for subsequent block execution.\n    ///\n    /// # Arguments\n    /// * `header` - The sealed header to set as the new safe head\n    ///\n    /// # Usage\n    /// This must be called before executing a payload to ensure the executor\n    /// builds on the correct parent block.\n    fn update_safe_head(&mut self, header: Sealed<Header>);\n\n    /// Execute the given payload attributes to build and execute a block.\n    ///\n    /// Takes the provided payload attributes and builds a complete block,\n    /// executing all transactions and computing the resulting state changes.\n    ///\n    /// # Arguments\n    /// * `attributes` - The payload attributes containing transactions and metadata\n    ///\n    /// # Returns\n    /// * `Ok(BlockBuildingOutcome)` - Successful execution result with the built block\n    /// * `Err(Self::Error)` - Execution failure with detailed error information\n    ///\n    /// # Errors\n    /// This method can fail due to:\n    /// - Invalid transactions in the payload\n    /// - Execution errors (e.g., out of gas, revert)\n    /// - State inconsistencies\n    /// - Block validation failures\n    ///\n    /// # Usage\n    /// Must be called after setting the safe head with [`Self::update_safe_head`].\n    /// The execution builds on the current safe head state.\n    async fn execute_payload(\n        &mut self,\n        attributes: OpPayloadAttributes,\n    ) -> Result<BlockBuildingOutcome<Self::Receipt>, Self::Error>;\n\n    /// Computes the output root for the most recently executed block.\n    ///\n    /// Calculates the Merkle root of the execution outputs which is used\n    /// for verification and state commitment purposes.\n    ///\n    /// # Returns\n    /// * `Ok(B256)` - The computed output root hash\n    /// * `Err(Self::Error)` - Computation failure\n    ///\n    /// # Errors\n    /// This method can fail if:\n    /// - No block has been executed yet\n    /// - State is inconsistent or corrupted\n    /// - Output computation encounters an internal error\n    ///\n    /// # Usage\n    /// Expected to be called immediately after successful payload execution\n    /// via [`Self::execute_payload`]. The computed root corresponds to the state\n    /// after the most recent block execution.\n    fn compute_output_root(&mut self) -> Result<B256, Self::Error>;\n}","resolutions":{"9fa846564f4071bd":{"status":"differs","coveredLines":109,"match":{"origin":"own","collection":"optimism","relation":{"type":"own"},"rank":0,"matchedBy":"name","auditedName":"executor.rs","similarity":0.919,"reportId":"optimism/cantina-kona-2026-03","repository":"op-rs/kona","path":"crates/proof/driver/src/executor.rs","commit":"86910c9112437bbb849eca28961f813c5450e103","commitTimestamp":"2025-12-15T17:17:05Z","url":"https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/crates/proof/driver/src/executor.rs","auditStatus":"audited_with_no_major_findings","reviewPhase":"initial audit","coverage":"Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). Proof driver, cursor and pipeline; Low findings 3.4.10, 3.4.11, 3.4.19 and Informational 3.5.10 located here.","majorFindings":0,"isLatestVersion":true,"laterAuditedVersionExists":false,"totalVersions":1},"diff":{"added":2,"removed":1,"ignoredAdded":5,"ignoredRemoved":0,"unchanged":109,"ignoredOnly":false,"hunks":[{"oldStart":31,"oldLines":6,"newStart":31,"newLines":12,"lines":[{"type":" ","oldLine":31,"newLine":31,"text":"    /// execution failures, including transaction-level errors and state issues."},{"type":" ","oldLine":32,"newLine":32,"text":"    type Error: Error;"},{"type":" ","oldLine":33,"newLine":33,"text":""},{"type":"+","newLine":34,"text":"    /// The receipt type produced by this executor.","ignored":true},{"type":"+","newLine":35,"text":"    ///","ignored":true},{"type":"+","newLine":36,"text":"    /// Threaded through to [`BlockBuildingOutcome`] so non-OP chains that produce different","ignored":true},{"type":"+","newLine":37,"text":"    /// receipt envelopes (e.g. Celo's CIP-64 receipt) can carry their type out of the driver.","ignored":true},{"type":"+","newLine":38,"text":"    type Receipt;","ignored":false},{"type":"+","newLine":39,"text":"","ignored":true},{"type":" ","oldLine":34,"newLine":40,"text":"    /// Waits for the executor to be ready for block execution."},{"type":" ","oldLine":35,"newLine":41,"text":"    ///"},{"type":" ","oldLine":36,"newLine":42,"text":"    /// This method blocks until the executor has completed any necessary"}]},{"oldStart":80,"oldLines":7,"newStart":86,"newLines":7,"lines":[{"type":" ","oldLine":80,"newLine":86,"text":"    async fn execute_payload("},{"type":" ","oldLine":81,"newLine":87,"text":"        &mut self,"},{"type":" ","oldLine":82,"newLine":88,"text":"        attributes: OpPayloadAttributes,"},{"type":"-","oldLine":83,"text":"    ) -> Result<BlockBuildingOutcome, Self::Error>;","ignored":false},{"type":"+","newLine":89,"text":"    ) -> Result<BlockBuildingOutcome<Self::Receipt>, Self::Error>;","ignored":false},{"type":" ","oldLine":84,"newLine":90,"text":""},{"type":" ","oldLine":85,"newLine":91,"text":"    /// Computes the output root for the most recently executed block."},{"type":" ","oldLine":86,"newLine":92,"text":"    ///"}]}]},"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "bf7295afa9ab97b503ad02a84521041b20710f0b858634ac132cd9b7da266123",
+  "name": "executor.rs",
+  "kind": "program",
+  "lines": 111,
+  "source": "//! An abstraction for the driver's block executor.\n//!\n//! This module provides the [`Executor`] trait which abstracts block execution for the driver.\n//! The executor is responsible for building and executing blocks from payload attributes,\n//! maintaining safe head state, and computing output roots for the execution results.\n\nuse alloc::boxed::Box;\nuse alloy_consensus::{Header, Sealed};\nuse alloy_primitives::B256;\nuse async_trait::async_trait;\nuse core::error::Error;\nuse kona_executor::BlockBuildingOutcome;\nuse op_alloy_rpc_types_engine::OpPayloadAttributes;\n\n/// Executor trait for block execution in the driver pipeline.\n///\n/// This trait abstracts the block execution functionality needed by the driver.\n/// Implementations are responsible for:\n/// - Building blocks from payload attributes\n/// - Maintaining execution state and safe head tracking\n/// - Computing output roots after block execution\n/// - Handling execution errors and recovery scenarios\n///\n/// The executor operates in a sequential manner where blocks must be executed\n/// in order to maintain proper state transitions.\n#[async_trait]\npub trait Executor {\n    /// The error type for the Executor.\n    ///\n    /// Should implement [`Error`] and provide detailed information about\n    /// execution failures, including transaction-level errors and state issues.\n    type Error: Error;\n\n    /// The receipt type produced by this executor.\n    ///\n    /// Threaded through to [`BlockBuildingOutcome`] so non-OP chains that produce different\n    /// receipt envelopes (e.g. Celo's CIP-64 receipt) can carry their type out of the driver.\n    type Receipt;\n\n    /// Waits for the executor to be ready for block execution.\n    ///\n    /// This method blocks until the executor has completed any necessary\n    /// initialization or synchronization required before it can begin\n    /// processing blocks.\n    ///\n    /// # Usage\n    /// This should be called before attempting to execute any payloads\n    /// to ensure the executor is in a valid state.\n    async fn wait_until_ready(&mut self);\n\n    /// Updates the safe head to the specified header.\n    ///\n    /// Sets the executor's internal safe head state to the provided sealed header.\n    /// This is used to establish the starting point for subsequent block execution.\n    ///\n    /// # Arguments\n    /// * `header` - The sealed header to set as the new safe head\n    ///\n    /// # Usage\n    /// This must be called before executing a payload to ensure the executor\n    /// builds on the correct parent block.\n    fn update_safe_head(&mut self, header: Sealed<Header>);\n\n    /// Execute the given payload attributes to build and execute a block.\n    ///\n    /// Takes the provided payload attributes and builds a complete block,\n    /// executing all transactions and computing the resulting state changes.\n    ///\n    /// # Arguments\n    /// * `attributes` - The payload attributes containing transactions and metadata\n    ///\n    /// # Returns\n    /// * `Ok(BlockBuildingOutcome)` - Successful execution result with the built block\n    /// * `Err(Self::Error)` - Execution failure with detailed error information\n    ///\n    /// # Errors\n    /// This method can fail due to:\n    /// - Invalid transactions in the payload\n    /// - Execution errors (e.g., out of gas, revert)\n    /// - State inconsistencies\n    /// - Block validation failures\n    ///\n    /// # Usage\n    /// Must be called after setting the safe head with [`Self::update_safe_head`].\n    /// The execution builds on the current safe head state.\n    async fn execute_payload(\n        &mut self,\n        attributes: OpPayloadAttributes,\n    ) -> Result<BlockBuildingOutcome<Self::Receipt>, Self::Error>;\n\n    /// Computes the output root for the most recently executed block.\n    ///\n    /// Calculates the Merkle root of the execution outputs which is used\n    /// for verification and state commitment purposes.\n    ///\n    /// # Returns\n    /// * `Ok(B256)` - The computed output root hash\n    /// * `Err(Self::Error)` - Computation failure\n    ///\n    /// # Errors\n    /// This method can fail if:\n    /// - No block has been executed yet\n    /// - State is inconsistent or corrupted\n    /// - Output computation encounters an internal error\n    ///\n    /// # Usage\n    /// Expected to be called immediately after successful payload execution\n    /// via [`Self::execute_payload`]. The computed root corresponds to the state\n    /// after the most recent block execution.\n    fn compute_output_root(&mut self) -> Result<B256, Self::Error>;\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "differs",
+      "coveredLines": 109,
+      "match": {
+        "origin": "own",
+        "collection": "optimism",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "executor.rs",
+        "similarity": 0.919,
+        "reportId": "optimism/cantina-kona-2026-03",
+        "repository": "op-rs/kona",
+        "path": "crates/proof/driver/src/executor.rs",
+        "commit": "86910c9112437bbb849eca28961f813c5450e103",
+        "commitTimestamp": "2025-12-15T17:17:05Z",
+        "url": "https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/crates/proof/driver/src/executor.rs",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). Proof driver, cursor and pipeline; Low findings 3.4.10, 3.4.11, 3.4.19 and Informational 3.5.10 located here.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 2,
+        "removed": 1,
+        "ignoredAdded": 5,
+        "ignoredRemoved": 0,
+        "unchanged": 109,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 31,
+            "oldLines": 6,
+            "newStart": 31,
+            "newLines": 12,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 31,
+                "newLine": 31,
+                "text": "    /// execution failures, including transaction-level errors and state issues."
+              },
+              {
+                "type": " ",
+                "oldLine": 32,
+                "newLine": 32,
+                "text": "    type Error: Error;"
+              },
+              { "type": " ", "oldLine": 33, "newLine": 33, "text": "" },
+              {
+                "type": "+",
+                "newLine": 34,
+                "text": "    /// The receipt type produced by this executor.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 35,
+                "text": "    ///",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 36,
+                "text": "    /// Threaded through to [`BlockBuildingOutcome`] so non-OP chains that produce different",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 37,
+                "text": "    /// receipt envelopes (e.g. Celo's CIP-64 receipt) can carry their type out of the driver.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 38,
+                "text": "    type Receipt;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 39, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 34,
+                "newLine": 40,
+                "text": "    /// Waits for the executor to be ready for block execution."
+              },
+              { "type": " ", "oldLine": 35, "newLine": 41, "text": "    ///" },
+              {
+                "type": " ",
+                "oldLine": 36,
+                "newLine": 42,
+                "text": "    /// This method blocks until the executor has completed any necessary"
+              }
+            ]
+          },
+          {
+            "oldStart": 80,
+            "oldLines": 7,
+            "newStart": 86,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 80,
+                "newLine": 86,
+                "text": "    async fn execute_payload("
+              },
+              {
+                "type": " ",
+                "oldLine": 81,
+                "newLine": 87,
+                "text": "        &mut self,"
+              },
+              {
+                "type": " ",
+                "oldLine": 82,
+                "newLine": 88,
+                "text": "        attributes: OpPayloadAttributes,"
+              },
+              {
+                "type": "-",
+                "oldLine": 83,
+                "text": "    ) -> Result<BlockBuildingOutcome, Self::Error>;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 89,
+                "text": "    ) -> Result<BlockBuildingOutcome<Self::Receipt>, Self::Error>;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 84, "newLine": 90, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 85,
+                "newLine": 91,
+                "text": "    /// Computes the output root for the most recently executed block."
+              },
+              { "type": " ", "oldLine": 86, "newLine": 92, "text": "    ///" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

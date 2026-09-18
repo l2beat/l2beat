@@ -1,1 +1,93 @@
-{"schemaVersion":2,"unitHash":"409896bd09f6a182ad531019ece6e05726c2e08e48e830b639be65071bfc3326","name":"linux.rs","kind":"program","lines":32,"source":"//! Linux utilities\n\nuse crate::errors::{IOError, IOResult};\n\n/// Converts a return value from a syscall into a [`IOResult`] type.\n#[inline(always)]\n#[allow(unused)]\npub(crate) const fn from_ret(value: usize) -> IOResult<usize> {\n    if value > -4096isize as usize {\n        // Truncation of the error value is guaranteed to never occur due to\n        // the above check. This is the same check that musl uses:\n        // https://git.musl-libc.org/cgit/musl/tree/src/internal/syscall_ret.c?h=v1.1.15\n        Err(IOError(-(value as i32)))\n    } else {\n        Ok(value)\n    }\n}\n\n#[cfg(test)]\nmod tests {\n    use super::*;\n\n    #[test]\n    fn test_from_ret_io_error() {\n        assert_eq!(from_ret(-4095isize as usize), Err(IOError(4095)));\n    }\n\n    #[test]\n    fn test_from_ret_ok() {\n        assert_eq!(from_ret(1), Ok(1));\n    }\n}","resolutions":{"9fa846564f4071bd":{"status":"identical","coveredLines":32,"match":{"origin":"own","collection":"optimism","relation":{"type":"own"},"rank":0,"matchedBy":"identity","auditedName":"linux.rs","similarity":1,"reportId":"optimism/cantina-kona-2026-03","repository":"op-rs/kona","path":"crates/proof/std-fpvm/src/linux.rs","commit":"86910c9112437bbb849eca28961f813c5450e103","commitTimestamp":"2025-12-15T17:17:05Z","url":"https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/crates/proof/std-fpvm/src/linux.rs","auditStatus":"audited_with_no_major_findings","reviewPhase":"initial audit","coverage":"Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). FPVM std I/O and syscall layer (mips64, riscv64); Informational finding 3.5.6 (channel.rs) located here.","majorFindings":0,"isLatestVersion":true,"laterAuditedVersionExists":false,"totalVersions":1},"diff":{"added":0,"removed":0,"ignoredAdded":1,"ignoredRemoved":1,"unchanged":32,"ignoredOnly":true,"hunks":[{"oldStart":2,"oldLines":7,"newStart":2,"newLines":7,"lines":[{"type":" ","oldLine":2,"newLine":2,"text":""},{"type":" ","oldLine":3,"newLine":3,"text":"use crate::errors::{IOError, IOResult};"},{"type":" ","oldLine":4,"newLine":4,"text":""},{"type":"-","oldLine":5,"text":"/// Converts a return value from a syscall into a [IOResult] type.","ignored":true},{"type":"+","newLine":5,"text":"/// Converts a return value from a syscall into a [`IOResult`] type.","ignored":true},{"type":" ","oldLine":6,"newLine":6,"text":"#[inline(always)]"},{"type":" ","oldLine":7,"newLine":7,"text":"#[allow(unused)]"},{"type":" ","oldLine":8,"newLine":8,"text":"pub(crate) const fn from_ret(value: usize) -> IOResult<usize> {"}]}]},"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "409896bd09f6a182ad531019ece6e05726c2e08e48e830b639be65071bfc3326",
+  "name": "linux.rs",
+  "kind": "program",
+  "lines": 32,
+  "source": "//! Linux utilities\n\nuse crate::errors::{IOError, IOResult};\n\n/// Converts a return value from a syscall into a [`IOResult`] type.\n#[inline(always)]\n#[allow(unused)]\npub(crate) const fn from_ret(value: usize) -> IOResult<usize> {\n    if value > -4096isize as usize {\n        // Truncation of the error value is guaranteed to never occur due to\n        // the above check. This is the same check that musl uses:\n        // https://git.musl-libc.org/cgit/musl/tree/src/internal/syscall_ret.c?h=v1.1.15\n        Err(IOError(-(value as i32)))\n    } else {\n        Ok(value)\n    }\n}\n\n#[cfg(test)]\nmod tests {\n    use super::*;\n\n    #[test]\n    fn test_from_ret_io_error() {\n        assert_eq!(from_ret(-4095isize as usize), Err(IOError(4095)));\n    }\n\n    #[test]\n    fn test_from_ret_ok() {\n        assert_eq!(from_ret(1), Ok(1));\n    }\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "identical",
+      "coveredLines": 32,
+      "match": {
+        "origin": "own",
+        "collection": "optimism",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "linux.rs",
+        "similarity": 1,
+        "reportId": "optimism/cantina-kona-2026-03",
+        "repository": "op-rs/kona",
+        "path": "crates/proof/std-fpvm/src/linux.rs",
+        "commit": "86910c9112437bbb849eca28961f813c5450e103",
+        "commitTimestamp": "2025-12-15T17:17:05Z",
+        "url": "https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/crates/proof/std-fpvm/src/linux.rs",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). FPVM std I/O and syscall layer (mips64, riscv64); Informational finding 3.5.6 (channel.rs) located here.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 1,
+        "ignoredRemoved": 1,
+        "unchanged": 32,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 2,
+            "oldLines": 7,
+            "newStart": 2,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 2, "newLine": 2, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "use crate::errors::{IOError, IOResult};"
+              },
+              { "type": " ", "oldLine": 4, "newLine": 4, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 5,
+                "text": "/// Converts a return value from a syscall into a [IOResult] type.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 5,
+                "text": "/// Converts a return value from a syscall into a [`IOResult`] type.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 6,
+                "newLine": 6,
+                "text": "#[inline(always)]"
+              },
+              {
+                "type": " ",
+                "oldLine": 7,
+                "newLine": 7,
+                "text": "#[allow(unused)]"
+              },
+              {
+                "type": " ",
+                "oldLine": 8,
+                "newLine": 8,
+                "text": "pub(crate) const fn from_ret(value: usize) -> IOResult<usize> {"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

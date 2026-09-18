@@ -1,1 +1,1919 @@
-{"schemaVersion":2,"unitHash":"0c29e1681027f76e5a82bb737f85c4241badaca2aea9f5b94954bb09c64aad4c","name":"executor.rs","kind":"program","lines":735,"source":"// Copyright 2025 RISC Zero, Inc.\n//\n// Licensed under the Apache License, Version 2.0 (the \"License\");\n// you may not use this file except in compliance with the License.\n// You may obtain a copy of the License at\n//\n//     http://www.apache.org/licenses/LICENSE-2.0\n//\n// Unless required by applicable law or agreed to in writing, software\n// distributed under the License is distributed on an \"AS IS\" BASIS,\n// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n// See the License for the specific language governing permissions and\n// limitations under the License.\n\nuse crate::client::log;\nuse crate::rkyv::execution::BlockBuildingOutcomeRkyv;\nuse crate::rkyv::optimism::OpPayloadAttributesRkyv;\nuse crate::rkyv::primitives::B256Def;\nuse alloy_consensus::Header;\nuse alloy_evm::EvmFactory;\nuse alloy_op_evm::block::OpAlloyReceiptBuilder;\nuse alloy_primitives::{Sealed, B256};\nuse async_trait::async_trait;\nuse kona_driver::{Executor, PipelineCursor, TipCursor};\nuse kona_executor::{BlockBuildingOutcome, TrieDBProvider};\nuse kona_genesis::RollupConfig;\nuse kona_mpt::TrieHinter;\nuse kona_preimage::CommsClient;\nuse kona_proof::errors::OracleProviderError;\nuse kona_proof::executor::KonaExecutor;\nuse kona_proof::l2::OracleL2ChainProvider;\nuse kona_proof::FlushableCache;\nuse kona_protocol::{BatchValidationProvider, BlockInfo};\nuse op_alloy_consensus::OpReceiptEnvelope;\nuse op_alloy_rpc_types_engine::OpPayloadAttributes;\nuse spin::RwLock;\nuse std::fmt::Debug;\nuse std::sync::{Arc, Mutex};\n#[cfg(feature = \"experimental\")]\nuse {\n    crate::evm::partial::{PartialExecution, PartialExecutionTrace},\n    alloy_consensus::BlockHeader,\n    alloy_eips::eip7840::BlobParams,\n    alloy_evm::revm::context::BlockEnv,\n    alloy_evm::revm::context_interface::block::BlobExcessGasAndPrice,\n    alloy_evm::revm::primitives::eip4844::{\n        BLOB_BASE_FEE_UPDATE_FRACTION_CANCUN, BLOB_BASE_FEE_UPDATE_FRACTION_PRAGUE,\n    },\n    alloy_op_evm::{OpBlockExecutionCtx, PostExecMode},\n    alloy_primitives::{Bytes, U256},\n    op_revm::OpSpecId,\n    risc0_zkvm::sha::{Impl as SHA2, Sha256},\n};\n\n/// Represents a block execution process and its results.\n///\n/// This struct is designed to hold essential information about the execution,\n/// including its initial state, the attributes associated with the execution,\n/// the resulting artifacts, and the final state after execution.\n#[derive(Clone, Debug, rkyv::Archive, rkyv::Serialize, rkyv::Deserialize)]\npub struct Execution {\n    /// Output root prior to execution\n    #[rkyv(with = B256Def)]\n    pub agreed_output: B256,\n    /// Derived attributes to be executed\n    #[rkyv(with = OpPayloadAttributesRkyv)]\n    pub attributes: OpPayloadAttributes,\n    /// Output block from execution\n    #[rkyv(with = BlockBuildingOutcomeRkyv)]\n    pub artifacts: BlockBuildingOutcome<OpReceiptEnvelope>,\n    /// Output root after execution\n    #[rkyv(with = B256Def)]\n    pub claimed_output: B256,\n}\n\n#[cfg(feature = \"experimental\")]\nimpl Execution {\n    pub fn get_transactions(&self, tx_hashes: &[B256]) -> Vec<Bytes> {\n        let transactions = self.attributes.transactions.as_deref().unwrap_or(&[]);\n        let by_hash: std::collections::HashMap<B256, Bytes> = transactions\n            .iter()\n            .map(|tx| {\n                (\n                    B256::from_slice(SHA2::hash_bytes(tx.as_ref()).as_bytes()),\n                    tx.clone(),\n                )\n            })\n            .collect();\n        tx_hashes\n            .iter()\n            .filter_map(|h| by_hash.get(h).cloned())\n            .collect()\n    }\n}\n\n/// A structure that provides a caching layer for an `Executor` implementation.\n///\n/// The `CachedExecutor` is a generic struct that allows the caching of executed tasks\n/// and their results. It is designed to work with executors that implement the `Executor`\n/// trait and are thread-safe (`Send` and `Sync`).\n#[derive(Debug)]\npub struct CachedExecutor<E: Executor + Send + Sync + Debug> {\n    /// A vector of cached execution results.\n    pub cache: Vec<Arc<Execution>>,\n    /// The underlying block executor used when a task is not found in the cache.\n    pub executor: E,\n    /// An optional shared target for collecting executed tasks.\n    pub collection_target: Option<Arc<Mutex<Vec<Execution>>>>,\n}\n\nimpl<'a, P, H, Evm> CachedExecutor<KonaExecutor<'a, P, H, Evm, OpAlloyReceiptBuilder>>\nwhere\n    P: TrieDBProvider + Send + Sync + Clone + Debug,\n    H: TrieHinter + Send + Sync + Clone + Debug,\n    Evm: EvmFactory<Spec = op_revm::OpSpecId, BlockEnv = alloy_evm::revm::context::BlockEnv>\n        + Send\n        + Sync\n        + Clone\n        + Debug\n        + 'static,\n    Evm::Tx: alloy_evm::FromTxWithEncoded<op_alloy_consensus::OpTxEnvelope>\n        + alloy_evm::FromRecoveredTx<op_alloy_consensus::OpTxEnvelope>\n        + alloy_op_evm::block::OpTxEnv,\n    alloy_op_evm::OpBlockExecutorFactory<\n        alloy_op_evm::block::OpAlloyReceiptBuilder,\n        RollupConfig,\n        Evm,\n    >: for<'b> alloy_evm::block::BlockExecutorFactory<\n        EvmFactory = Evm,\n        ExecutionCtx<'b> = alloy_op_evm::OpBlockExecutionCtx,\n        Transaction = op_alloy_consensus::OpTxEnvelope,\n        Receipt = op_alloy_consensus::OpReceiptEnvelope,\n    >,\n{\n    pub fn new(\n        execution_cache: Vec<Arc<Execution>>,\n        rollup_config: &'a RollupConfig,\n        trie_provider: P,\n        trie_hinter: H,\n        evm_factory: Evm,\n        collection_target: Option<Arc<Mutex<Vec<Execution>>>>,\n    ) -> CachedExecutor<KonaExecutor<'a, P, H, Evm, OpAlloyReceiptBuilder>> {\n        CachedExecutor {\n            cache: {\n                // The cache elements will be popped from first to last\n                let mut cache = execution_cache;\n                cache.reverse();\n                cache\n            },\n            executor: KonaExecutor::new(\n                rollup_config,\n                trie_provider,\n                trie_hinter,\n                evm_factory,\n                OpAlloyReceiptBuilder::default(),\n                None,\n            ),\n            collection_target,\n        }\n    }\n}\n\nimpl<E: Executor + Send + Sync + Debug> Drop for CachedExecutor<E> {\n    fn drop(&mut self) {\n        if !self.cache.is_empty() {\n            #[cfg(target_os = \"zkvm\")]\n            log(&format!(\"EXEC CACHE UNUSED: {}\", self.cache.len()));\n            #[cfg(not(target_os = \"zkvm\"))]\n            tracing::error!(\"EXEC CACHE UNUSED: {}\", self.cache.len());\n        }\n    }\n}\n\n#[async_trait]\nimpl<E: Executor<Receipt = OpReceiptEnvelope> + Send + Sync + Debug> Executor\n    for CachedExecutor<E>\n{\n    type Error = <E as Executor>::Error;\n    type Receipt = OpReceiptEnvelope;\n\n    /// An asynchronous function that waits until the executor is ready.\n    ///\n    /// This function calls the `wait_until_ready` method on the internal `executor`\n    /// and awaits its completion. It ensures that the required state or prerequisites\n    /// are ready before proceeding.\n    ///\n    /// This can be used in scenarios where subsequent operations depend on the\n    /// readiness of the executor.\n    async fn wait_until_ready(&mut self) {\n        self.executor.wait_until_ready().await;\n    }\n\n    /// Updates the \"safe head\" of the blockchain to the specified sealed header.\n    ///\n    /// The \"safe head\" refers to the point in the blockchain that is considered\n    /// finalized or safe for operations and is used as a reference for further\n    /// progression or validation within the node.\n    ///\n    /// # Parameters\n    /// - `header`: A `Sealed<Header>` representing the new \"safe head\" of the blockchain.\n    ///   It is a sealed header, meaning it has gone through necessary validation and is immutable.\n    ///\n    /// # Behavior\n    /// Delegates the update operation to the `executor` component that handles\n    /// the internal logic for updating the safe head within the system.\n    fn update_safe_head(&mut self, header: Sealed<Header>) {\n        self.executor.update_safe_head(header);\n    }\n\n    /// Executes a given payload based on the specified `OpPayloadAttributes` and manages its outcomes.\n    ///\n    /// # Parameters\n    /// - `attributes`: An instance of [`OpPayloadAttributes`] containing the attributes used to build or execute the payload.\n    ///\n    /// # Returns\n    /// - `Result<BlockBuildingOutcome, Self::Error>`: On success, returns the resulting [`BlockBuildingOutcome`].\n    ///   If an error occurs during the execution process or cache lookup, returns `Self::Error`.\n    ///\n    /// # Functionality\n    /// 1. Calculates an agreed output root by invoking `compute_output_root`, which must succeed.\n    /// 2. Checks if the execution can be optimized by matching the given attributes and the agreed output\n    ///    with the last cached entry:\n    ///    - If a match is found:\n    ///      - Uses the cached artifacts and logs the cache hit details.\n    ///      - Updates the safe head with the cached header.\n    ///      - Returns the cached artifacts.\n    /// 3. If no cache optimization is possible but a `collection_target` exists:\n    ///    - Executes the payload with the given attributes using the executor.\n    ///    - Updates the `collection_target` with the resulting artifacts and metadata.\n    ///    - Returns the resulting artifacts.\n    /// 4. If no additional conditions are met, directly delegates the execution of the payload to the executor and awaits its result.\n    ///\n    /// # Edge Cases\n    /// - If no cached result is found (`self.cache.last()` fails or returns `None`):\n    ///   - Verification of cache attributes defaults to `false`.\n    /// - Handles locking and modification of the shared `collection_target` state safely.\n    ///\n    /// # Notes\n    /// - If an entry exists in the cache, it is popped after a cache hit is confirmed.\n    /// - The function assumes `self.executor.execute_payload` is an asynchronous operation meaning any errors or delays\n    ///   during this invocation may affect execution flow.\n    /// - Logging details about cache hits include the header number of the cached artifacts.\n    ///\n    /// # Errors\n    /// - Returns an appropriate error (`Self::Error`) if:\n    ///   - `compute_output_root` fails to calculate the agreed output root.\n    ///   - Matching cached attributes comparison (or unwrap) fails.\n    ///   - Payload execution via `self.executor` encounters an issue.\n    async fn execute_payload(\n        &mut self,\n        attributes: OpPayloadAttributes,\n    ) -> Result<BlockBuildingOutcome<OpReceiptEnvelope>, Self::Error> {\n        let agreed_output = self.compute_output_root()?;\n        if self\n            .cache\n            .last()\n            .map(|e| Ok(agreed_output == e.agreed_output && attributes == e.attributes))\n            .unwrap_or(Ok(false))?\n        {\n            let artifacts = self.cache.pop().unwrap().artifacts.clone();\n            log(&format!(\"CACHE {}\", artifacts.header.number));\n            self.update_safe_head(artifacts.header.clone());\n            return Ok(artifacts);\n        }\n        if let Some(collection_target) = &self.collection_target {\n            let artifacts = self.executor.execute_payload(attributes.clone()).await?;\n            let mut collection_target = collection_target.lock().unwrap();\n            collection_target.push(Execution {\n                agreed_output,\n                attributes,\n                artifacts: artifacts.clone(),\n                claimed_output: Default::default(),\n            });\n            return Ok(artifacts);\n        }\n        self.executor.execute_payload(attributes).await\n    }\n\n    /// Computes the output root based on the current state of the executor.\n    ///\n    /// This method invokes the `compute_output_root` function on the executor associated\n    /// with this instance. The output root is a cryptographic hash (of type `B256`) that\n    /// represents the resulting state or output from the operations performed by the executor.\n    ///\n    /// This operation could potentially result in an error, in which case the error type\n    /// associated with this instance (`Self::Error`) will be returned.\n    ///\n    /// # Returns\n    /// - `Ok(B256)`: The computed output root if the operation succeeds.\n    /// - `Err(Self::Error)`: If an error occurs during the computation.\n    ///\n    /// # Errors\n    /// This method will return an error if the executor fails to compute the output root.\n    fn compute_output_root(&mut self) -> Result<B256, Self::Error> {\n        self.executor.compute_output_root()\n    }\n}\n\n/// Initializes and constructs a new `PipelineCursor` for a given L2 chain.\npub async fn new_execution_cursor<O>(\n    rollup_config: &RollupConfig,\n    safe_header: Sealed<Header>,\n    l2_chain_provider: &mut OracleL2ChainProvider<O>,\n) -> Result<Arc<RwLock<PipelineCursor>>, OracleProviderError>\nwhere\n    O: CommsClient + FlushableCache + FlushableCache + Send + Sync + Debug,\n{\n    let safe_head_info = l2_chain_provider\n        .l2_block_info_by_number(safe_header.number)\n        .await?;\n\n    // Walk back the starting L1 block by `channel_timeout` to ensure that the full channel is\n    // captured.\n    let channel_timeout = rollup_config.channel_timeout(safe_head_info.block_info.timestamp);\n\n    // Construct the cursor.\n    let mut cursor = PipelineCursor::new(channel_timeout, BlockInfo::default());\n    // `l2_safe_head_output_root` can be zero because it is not used. The executor is always\n    // instructed to recompute the output root.\n    let tip = TipCursor::new(safe_head_info, safe_header, B256::ZERO);\n    cursor.advance(BlockInfo::default(), tip);\n\n    // Wrap the cursor in a shared read-write lock\n    Ok(Arc::new(RwLock::new(cursor)))\n}\n\n#[cfg(feature = \"experimental\")]\nfn expected_blob_excess_gas_and_price(\n    parent_header: &Header,\n    spec_id: OpSpecId,\n) -> Option<BlobExcessGasAndPrice> {\n    let (params, fraction) = if spec_id.is_enabled_in(OpSpecId::ISTHMUS) {\n        (\n            Some(BlobParams::prague()),\n            BLOB_BASE_FEE_UPDATE_FRACTION_PRAGUE,\n        )\n    } else if spec_id.is_enabled_in(OpSpecId::ECOTONE) {\n        (\n            Some(BlobParams::cancun()),\n            BLOB_BASE_FEE_UPDATE_FRACTION_CANCUN,\n        )\n    } else {\n        (None, 0)\n    };\n\n    parent_header\n        .maybe_next_block_excess_blob_gas(params)\n        .or_else(|| spec_id.is_enabled_in(OpSpecId::ECOTONE).then_some(0))\n        .map(|excess| BlobExcessGasAndPrice::new(excess, fraction))\n}\n\n#[cfg(feature = \"experimental\")]\npub fn build_single_partial_for_block(\n    execution: &Execution,\n    traces: Vec<PartialExecutionTrace>,\n    parent_header: &Header,\n    spec_id: OpSpecId,\n) -> PartialExecution {\n    let header = execution.artifacts.header.inner();\n    let expected_state = traces\n        .first()\n        .map(|trace| trace.expected_state.clone())\n        .unwrap_or_default();\n    let (tx_hashes, results): (Vec<B256>, Vec<_>) = traces\n        .into_iter()\n        .map(|trace| (trace.tx_hash, trace.result))\n        .unzip();\n    PartialExecution {\n        tx_hashes,\n        results,\n        expected_state,\n        block_env: BlockEnv {\n            number: U256::from(header.number),\n            beneficiary: header.beneficiary,\n            timestamp: U256::from(header.timestamp),\n            gas_limit: header.gas_limit,\n            basefee: header.base_fee_per_gas.unwrap_or(0),\n            difficulty: header.difficulty,\n            prevrandao: Some(header.mix_hash),\n            blob_excess_gas_and_price: expected_blob_excess_gas_and_price(parent_header, spec_id),\n            slot_num: 0,\n        },\n        op_block_ctx: OpBlockExecutionCtx {\n            parent_hash: header.parent_hash,\n            parent_beacon_block_root: header.parent_beacon_block_root,\n            extra_data: header.extra_data.clone(),\n            // Valid while kona hardcodes `RollupConfig::is_sdm_active` to\n            // `false` (v1.5.2). SDM future work: derive the true mode the way\n            // kona's stateless builder does (`Verify` when SDM is active and\n            // the block's transactions embed a post-exec payload), or the\n            // partial re-execution diverges from canonical gas accounting.\n            // See the SDM canonical note in `evm/cached.rs`.\n            post_exec_mode: PostExecMode::Disabled,\n        },\n    }\n}\n\n#[cfg(test)]\n#[cfg_attr(coverage_nightly, coverage(off))]\npub mod tests {\n    use super::*;\n    use crate::oracle::vec::tests::prepare_vec_oracle;\n    use crate::oracle::WitnessOracle;\n    use crate::precondition::execution::{attributes_hash, exec_precondition_hash};\n    use crate::rkyv::execution::tests::gen_execution_outcomes;\n    use alloy_eips::eip4895::Withdrawal;\n    use alloy_primitives::{keccak256, Address, Sealable, B64};\n    use alloy_rpc_types_engine::PayloadAttributes;\n    use kona_mpt::TrieNode;\n    use kona_preimage::PreimageKey;\n    use rayon::prelude::{IntoParallelIterator, ParallelIterator};\n    use rkyv::rancor::Error;\n    use std::collections::HashSet;\n\n    fn test_safe_default_err(value: &OpPayloadAttributes, modifier: fn(&mut OpPayloadAttributes)) {\n        let mut value = value.clone();\n        modifier(&mut value);\n        assert!(attributes_hash(&value).is_err());\n    }\n\n    #[test]\n    fn test_attributes_hash_safe_defaults() {\n        let attributes = OpPayloadAttributes {\n            payload_attributes: PayloadAttributes {\n                timestamp: 0,\n                prev_randao: Default::default(),\n                suggested_fee_recipient: Default::default(),\n                withdrawals: None,\n                parent_beacon_block_root: None,\n                slot_number: None,\n            },\n            transactions: None,\n            no_tx_pool: None,\n            gas_limit: None,\n            eip_1559_params: None,\n            min_base_fee: None,\n        };\n\n        test_safe_default_err(&attributes, |a| {\n            a.payload_attributes.parent_beacon_block_root = Some(B256::ZERO);\n        });\n\n        test_safe_default_err(&attributes, |a| {\n            a.gas_limit = Some(u64::MAX);\n        });\n\n        test_safe_default_err(&attributes, |a| {\n            a.eip_1559_params = Some(B64::new([0xff; 8]));\n        });\n    }\n\n    pub fn gen_executions(count: usize) -> Vec<Arc<Execution>> {\n        gen_execution_outcomes(count)\n            .into_iter()\n            .enumerate()\n            .map(|(i, artifacts)| {\n                Arc::new(Execution {\n                    agreed_output: keccak256(format!(\"output {i}\")),\n                    attributes: OpPayloadAttributes {\n                        payload_attributes: PayloadAttributes {\n                            timestamp: i as u64 * 1024,\n                            prev_randao: keccak256(format!(\"prev_randao {i}\")),\n                            suggested_fee_recipient: Address::from_slice(&[0xf1; 20]),\n                            withdrawals: Some(vec![Withdrawal {\n                                index: 0,\n                                validator_index: 0,\n                                address: Address::from_slice(&[0xf2; 20]),\n                                amount: i as u64 * 1024,\n                            }]),\n                            parent_beacon_block_root: Some(keccak256(format!(\n                                \"parent_beacon_block_root {i}\"\n                            ))),\n                            slot_number: Some(i as u64),\n                        },\n                        transactions: Some(vec![format!(\"transactions {i}\")\n                            .as_bytes()\n                            .to_vec()\n                            .into()]),\n                        no_tx_pool: Some(true),\n                        gas_limit: Some(u64::MAX / 2),\n                        eip_1559_params: Some(B64::new([0xb0; 8])),\n                        min_base_fee: Some(u64::MAX - 1),\n                    },\n                    artifacts,\n                    claimed_output: keccak256(format!(\"output {}\", i + 1)),\n                })\n            })\n            .collect()\n    }\n\n    #[derive(Clone, Debug)]\n    pub struct TestExecutor {\n        pub outcomes: Vec<BlockBuildingOutcome<OpReceiptEnvelope>>,\n        pub output_roots: Vec<B256>,\n    }\n\n    #[async_trait]\n    impl Executor for TestExecutor {\n        type Error = kona_executor::ExecutorError;\n        type Receipt = OpReceiptEnvelope;\n\n        async fn wait_until_ready(&mut self) {}\n\n        fn update_safe_head(&mut self, _header: Sealed<Header>) {}\n\n        async fn execute_payload(\n            &mut self,\n            _attributes: OpPayloadAttributes,\n        ) -> Result<BlockBuildingOutcome<OpReceiptEnvelope>, Self::Error> {\n            self.outcomes\n                .pop()\n                .ok_or(kona_executor::ExecutorError::MissingExecutor)\n        }\n\n        fn compute_output_root(&mut self) -> Result<B256, Self::Error> {\n            self.output_roots\n                .pop()\n                .ok_or(kona_executor::ExecutorError::MissingExecutor)\n        }\n    }\n\n    #[test]\n    fn test_exec_precondition_hash() {\n        let executions = gen_executions(16);\n        // check hash uniqueness over all subsequences\n        let hashes = Arc::new(Mutex::new(HashSet::new()));\n        rayon::scope(|_| {\n            (0..executions.len()).into_par_iter().for_each(|i| {\n                ((i + 1)..executions.len()).into_par_iter().for_each(|j| {\n                    // test hashing uniqueness\n                    let hash = exec_precondition_hash(&executions[i..j]);\n                    {\n                        assert!(hashes.lock().unwrap().insert(hash));\n                    }\n                    // test serde\n                    let trace = executions[i..j].to_vec();\n                    let recoded = rkyv::from_bytes::<Vec<Arc<Execution>>, Error>(\n                        rkyv::to_bytes::<Error>(&trace).unwrap().as_ref(),\n                    )\n                    .unwrap();\n                    assert_eq!(hash, exec_precondition_hash(&recoded));\n                });\n            });\n        });\n    }\n\n    #[tokio::test]\n    async fn test_cached_executor() {\n        let executions = gen_executions(128);\n        let (outcomes, mut output_roots): (Vec<_>, Vec<_>) = executions\n            .iter()\n            .rev()\n            .map(|e| (e.artifacts.clone(), e.claimed_output))\n            .unzip();\n        output_roots.push(keccak256(String::from(\"output 0\")));\n        let test_executor = TestExecutor {\n            outcomes,\n            output_roots,\n        };\n\n        // test without cache or collection target\n        let mut cached_executor = CachedExecutor {\n            cache: vec![],\n            executor: test_executor.clone(),\n            collection_target: None,\n        };\n        for execution in &executions {\n            assert_eq!(\n                cached_executor\n                    .execute_payload(execution.attributes.clone())\n                    .await\n                    .unwrap()\n                    .header,\n                execution.artifacts.header.clone()\n            );\n            cached_executor.wait_until_ready().await;\n            cached_executor.update_safe_head(execution.artifacts.header.clone());\n        }\n\n        // test with collection target\n        let collection_target = Arc::new(Mutex::new(vec![]));\n        let mut cached_executor = CachedExecutor {\n            cache: vec![],\n            executor: test_executor.clone(),\n            collection_target: Some(collection_target.clone()),\n        };\n        for execution in &executions {\n            assert_eq!(\n                cached_executor\n                    .execute_payload(execution.attributes.clone())\n                    .await\n                    .unwrap()\n                    .header,\n                execution.artifacts.header.clone()\n            );\n            {\n                let collected = collection_target.lock().unwrap();\n                assert_eq!(\n                    collected.last().unwrap().artifacts.header,\n                    execution.artifacts.header.clone()\n                );\n            }\n            cached_executor.wait_until_ready().await;\n            cached_executor.update_safe_head(execution.artifacts.header.clone());\n        }\n\n        // test with caching\n        let collection_target = Arc::new(Mutex::new(vec![]));\n        let cache = {\n            let mut cache = executions.clone();\n            cache.reverse();\n            cache\n        };\n        let mut cached_executor = CachedExecutor {\n            cache,\n            executor: test_executor.clone(),\n            collection_target: Some(collection_target.clone()),\n        };\n        for execution in &executions {\n            assert_eq!(\n                cached_executor\n                    .execute_payload(execution.attributes.clone())\n                    .await\n                    .unwrap()\n                    .header,\n                execution.artifacts.header.clone()\n            );\n            {\n                let collected = collection_target.lock().unwrap();\n                assert!(collected.is_empty());\n            }\n            cached_executor.wait_until_ready().await;\n            cached_executor.update_safe_head(execution.artifacts.header.clone());\n        }\n\n        // test with faulty caching\n        let collection_target = Arc::new(Mutex::new(vec![]));\n        let cache = executions.clone();\n        let mut cached_executor = CachedExecutor {\n            cache,\n            executor: test_executor.clone(),\n            collection_target: Some(collection_target.clone()),\n        };\n        for execution in &executions {\n            assert_eq!(\n                cached_executor\n                    .execute_payload(execution.attributes.clone())\n                    .await\n                    .unwrap()\n                    .header,\n                execution.artifacts.header.clone()\n            );\n            cached_executor.wait_until_ready().await;\n            cached_executor.update_safe_head(execution.artifacts.header.clone());\n        }\n        // only the last execution was a cache hit\n        assert_eq!(\n            collection_target.lock().unwrap().len(),\n            executions.len() - 1\n        );\n    }\n\n    #[cfg(feature = \"experimental\")]\n    #[test]\n    fn build_single_partial_for_block_blob_param_branches() {\n        let execution = gen_executions(1)\n            .pop()\n            .expect(\"gen_executions(1) yields one\");\n        let parent_header = Header::default();\n\n        // Pre-ECOTONE: `expected_blob_excess_gas_and_price` selects `(None, 0)`\n        // and `maybe_next_block_excess_blob_gas(None)` short-circuits to None,\n        // and the `or_else` closure also returns None (ECOTONE not enabled).\n        let bedrock = build_single_partial_for_block(\n            execution.as_ref(),\n            Vec::new(),\n            &parent_header,\n            OpSpecId::BEDROCK,\n        );\n        assert!(\n            bedrock.block_env.blob_excess_gas_and_price.is_none(),\n            \"BEDROCK must yield None blob_excess_gas_and_price\",\n        );\n\n        // ISTHMUS: selects `(Some(prague), PRAGUE_FRAC)`. Default header has no\n        // `excess_blob_gas`, so `maybe_next_block_excess_blob_gas` returns None,\n        // the `or_else` fallback supplies Some(0), and `BlobExcessGasAndPrice::new`\n        // is constructed with the prague fraction.\n        let isthmus = build_single_partial_for_block(\n            execution.as_ref(),\n            Vec::new(),\n            &parent_header,\n            OpSpecId::ISTHMUS,\n        );\n        let blob = isthmus\n            .block_env\n            .blob_excess_gas_and_price\n            .expect(\"ISTHMUS must yield Some blob_excess_gas_and_price\");\n        assert_eq!(blob.excess_blob_gas, 0);\n    }\n\n    #[tokio::test(flavor = \"multi_thread\")]\n    pub async fn test_execution_cursor() {\n        // prepare oracle data\n        let mut vec_oracle = prepare_vec_oracle(0, 0).0;\n        let safe_head = Header {\n            number: 0,\n            ..Default::default()\n        };\n        let safe_head_hash = safe_head.hash_slow();\n        vec_oracle.insert_preimage(\n            PreimageKey::new_keccak256(safe_head_hash.0),\n            alloy_rlp::encode(&safe_head),\n        );\n        vec_oracle.insert_preimage(\n            PreimageKey::new_keccak256(TrieNode::Empty.blind().0),\n            alloy_rlp::encode(&TrieNode::Empty),\n        );\n        vec_oracle.insert_preimage(\n            PreimageKey::new_keccak256(safe_head_hash.0),\n            alloy_rlp::encode(&safe_head),\n        );\n        // create cursor\n        let rollup_config = Arc::new({\n            let mut config = RollupConfig::default();\n            config.genesis.l2.hash = safe_head_hash;\n            config\n        });\n        let mut provider =\n            OracleL2ChainProvider::new(safe_head_hash, rollup_config.clone(), Arc::new(vec_oracle));\n        new_execution_cursor(rollup_config.as_ref(), safe_head.seal_slow(), &mut provider)\n            .await\n            .unwrap();\n    }\n}","resolutions":{"ba5b6c9584fb78fd":{"status":"differs","coveredLines":569,"match":{"origin":"own","collection":"bob","relation":{"type":"own"},"rank":0,"matchedBy":"name","auditedName":"executor.rs","similarity":0.754,"reportId":"bob/veridise-kailua-2025-10","repository":"boundless-xyz/kailua","path":"crates/kona/src/executor.rs","commit":"2414297a5f9feb98365ef6d88634bcd181a1934b","commitTimestamp":"2025-10-21T05:51:11Z","url":"https://github.com/boundless-xyz/kailua/blob/2414297a5f9feb98365ef6d88634bcd181a1934b/crates/kona/src/executor.rs","auditStatus":"audited_with_no_major_findings","reviewPhase":"initial audit","coverage":"Veridise review of the Kailua stateless Optimism client (crates/kona) on commit 2414297 of boundless-xyz/kailua, focused on the new pause/resume derivation and proof stitching. No findings located here.","majorFindings":0,"isLatestVersion":true,"laterAuditedVersionExists":false,"totalVersions":1},"diff":{"added":166,"removed":9,"ignoredAdded":17,"ignoredRemoved":28,"unchanged":569,"ignoredOnly":false,"hunks":[{"oldStart":17,"oldLines":7,"newStart":17,"newLines":8,"lines":[{"type":" ","oldLine":17,"newLine":17,"text":"use crate::rkyv::optimism::OpPayloadAttributesRkyv;"},{"type":" ","oldLine":18,"newLine":18,"text":"use crate::rkyv::primitives::B256Def;"},{"type":" ","oldLine":19,"newLine":19,"text":"use alloy_consensus::Header;"},{"type":"-","oldLine":20,"text":"use alloy_op_evm::OpEvmFactory;","ignored":false},{"type":"+","newLine":20,"text":"use alloy_evm::EvmFactory;","ignored":false},{"type":"+","newLine":21,"text":"use alloy_op_evm::block::OpAlloyReceiptBuilder;","ignored":false},{"type":" ","oldLine":21,"newLine":22,"text":"use alloy_primitives::{Sealed, B256};"},{"type":" ","oldLine":22,"newLine":23,"text":"use async_trait::async_trait;"},{"type":" ","oldLine":23,"newLine":24,"text":"use kona_driver::{Executor, PipelineCursor, TipCursor};"}]},{"oldStart":30,"oldLines":10,"newStart":31,"newLines":26,"lines":[{"type":" ","oldLine":30,"newLine":31,"text":"use kona_proof::l2::OracleL2ChainProvider;"},{"type":" ","oldLine":31,"newLine":32,"text":"use kona_proof::FlushableCache;"},{"type":" ","oldLine":32,"newLine":33,"text":"use kona_protocol::{BatchValidationProvider, BlockInfo};"},{"type":"+","newLine":34,"text":"use op_alloy_consensus::OpReceiptEnvelope;","ignored":false},{"type":" ","oldLine":33,"newLine":35,"text":"use op_alloy_rpc_types_engine::OpPayloadAttributes;"},{"type":" ","oldLine":34,"newLine":36,"text":"use spin::RwLock;"},{"type":" ","oldLine":35,"newLine":37,"text":"use std::fmt::Debug;"},{"type":" ","oldLine":36,"newLine":38,"text":"use std::sync::{Arc, Mutex};"},{"type":"+","newLine":39,"text":"#[cfg(feature = \"experimental\")]","ignored":false},{"type":"+","newLine":40,"text":"use {","ignored":false},{"type":"+","newLine":41,"text":"    crate::evm::partial::{PartialExecution, PartialExecutionTrace},","ignored":false},{"type":"+","newLine":42,"text":"    alloy_consensus::BlockHeader,","ignored":false},{"type":"+","newLine":43,"text":"    alloy_eips::eip7840::BlobParams,","ignored":false},{"type":"+","newLine":44,"text":"    alloy_evm::revm::context::BlockEnv,","ignored":false},{"type":"+","newLine":45,"text":"    alloy_evm::revm::context_interface::block::BlobExcessGasAndPrice,","ignored":false},{"type":"+","newLine":46,"text":"    alloy_evm::revm::primitives::eip4844::{","ignored":false},{"type":"+","newLine":47,"text":"        BLOB_BASE_FEE_UPDATE_FRACTION_CANCUN, BLOB_BASE_FEE_UPDATE_FRACTION_PRAGUE,","ignored":false},{"type":"+","newLine":48,"text":"    },","ignored":false},{"type":"+","newLine":49,"text":"    alloy_op_evm::{OpBlockExecutionCtx, PostExecMode},","ignored":false},{"type":"+","newLine":50,"text":"    alloy_primitives::{Bytes, U256},","ignored":false},{"type":"+","newLine":51,"text":"    op_revm::OpSpecId,","ignored":false},{"type":"+","newLine":52,"text":"    risc0_zkvm::sha::{Impl as SHA2, Sha256},","ignored":false},{"type":"+","newLine":53,"text":"};","ignored":false},{"type":" ","oldLine":37,"newLine":54,"text":""},{"type":" ","oldLine":38,"newLine":55,"text":"/// Represents a block execution process and its results."},{"type":" ","oldLine":39,"newLine":56,"text":"///"}]},{"oldStart":50,"oldLines":12,"newStart":67,"newLines":32,"lines":[{"type":" ","oldLine":50,"newLine":67,"text":"    pub attributes: OpPayloadAttributes,"},{"type":" ","oldLine":51,"newLine":68,"text":"    /// Output block from execution"},{"type":" ","oldLine":52,"newLine":69,"text":"    #[rkyv(with = BlockBuildingOutcomeRkyv)]"},{"type":"-","oldLine":53,"text":"    pub artifacts: BlockBuildingOutcome,","ignored":false},{"type":"+","newLine":70,"text":"    pub artifacts: BlockBuildingOutcome<OpReceiptEnvelope>,","ignored":false},{"type":" ","oldLine":54,"newLine":71,"text":"    /// Output root after execution"},{"type":" ","oldLine":55,"newLine":72,"text":"    #[rkyv(with = B256Def)]"},{"type":" ","oldLine":56,"newLine":73,"text":"    pub claimed_output: B256,"},{"type":" ","oldLine":57,"newLine":74,"text":"}"},{"type":" ","oldLine":58,"newLine":75,"text":""},{"type":"+","newLine":76,"text":"#[cfg(feature = \"experimental\")]","ignored":false},{"type":"+","newLine":77,"text":"impl Execution {","ignored":false},{"type":"+","newLine":78,"text":"    pub fn get_transactions(&self, tx_hashes: &[B256]) -> Vec<Bytes> {","ignored":false},{"type":"+","newLine":79,"text":"        let transactions = self.attributes.transactions.as_deref().unwrap_or(&[]);","ignored":false},{"type":"+","newLine":80,"text":"        let by_hash: std::collections::HashMap<B256, Bytes> = transactions","ignored":false},{"type":"+","newLine":81,"text":"            .iter()","ignored":false},{"type":"+","newLine":82,"text":"            .map(|tx| {","ignored":false},{"type":"+","newLine":83,"text":"                (","ignored":false},{"type":"+","newLine":84,"text":"                    B256::from_slice(SHA2::hash_bytes(tx.as_ref()).as_bytes()),","ignored":false},{"type":"+","newLine":85,"text":"                    tx.clone(),","ignored":false},{"type":"+","newLine":86,"text":"                )","ignored":false},{"type":"+","newLine":87,"text":"            })","ignored":false},{"type":"+","newLine":88,"text":"            .collect();","ignored":false},{"type":"+","newLine":89,"text":"        tx_hashes","ignored":false},{"type":"+","newLine":90,"text":"            .iter()","ignored":false},{"type":"+","newLine":91,"text":"            .filter_map(|h| by_hash.get(h).cloned())","ignored":false},{"type":"+","newLine":92,"text":"            .collect()","ignored":false},{"type":"+","newLine":93,"text":"    }","ignored":false},{"type":"+","newLine":94,"text":"}","ignored":false},{"type":"+","newLine":95,"text":"","ignored":true},{"type":" ","oldLine":59,"newLine":96,"text":"/// A structure that provides a caching layer for an `Executor` implementation."},{"type":" ","oldLine":60,"newLine":97,"text":"///"},{"type":" ","oldLine":61,"newLine":98,"text":"/// The `CachedExecutor` is a generic struct that allows the caching of executed tasks"}]},{"oldStart":71,"oldLines":18,"newStart":108,"newLines":38,"lines":[{"type":" ","oldLine":71,"newLine":108,"text":"    pub collection_target: Option<Arc<Mutex<Vec<Execution>>>>,"},{"type":" ","oldLine":72,"newLine":109,"text":"}"},{"type":" ","oldLine":73,"newLine":110,"text":""},{"type":"-","oldLine":74,"text":"impl<'a, P, H> CachedExecutor<KonaExecutor<'a, P, H, OpEvmFactory>>","ignored":false},{"type":"+","newLine":111,"text":"impl<'a, P, H, Evm> CachedExecutor<KonaExecutor<'a, P, H, Evm, OpAlloyReceiptBuilder>>","ignored":false},{"type":" ","oldLine":75,"newLine":112,"text":"where"},{"type":" ","oldLine":76,"newLine":113,"text":"    P: TrieDBProvider + Send + Sync + Clone + Debug,"},{"type":" ","oldLine":77,"newLine":114,"text":"    H: TrieHinter + Send + Sync + Clone + Debug,"},{"type":"+","newLine":115,"text":"    Evm: EvmFactory<Spec = op_revm::OpSpecId, BlockEnv = alloy_evm::revm::context::BlockEnv>","ignored":false},{"type":"+","newLine":116,"text":"        + Send","ignored":false},{"type":"+","newLine":117,"text":"        + Sync","ignored":false},{"type":"+","newLine":118,"text":"        + Clone","ignored":false},{"type":"+","newLine":119,"text":"        + Debug","ignored":false},{"type":"+","newLine":120,"text":"        + 'static,","ignored":false},{"type":"+","newLine":121,"text":"    Evm::Tx: alloy_evm::FromTxWithEncoded<op_alloy_consensus::OpTxEnvelope>","ignored":false},{"type":"+","newLine":122,"text":"        + alloy_evm::FromRecoveredTx<op_alloy_consensus::OpTxEnvelope>","ignored":false},{"type":"+","newLine":123,"text":"        + alloy_op_evm::block::OpTxEnv,","ignored":false},{"type":"+","newLine":124,"text":"    alloy_op_evm::OpBlockExecutorFactory<","ignored":false},{"type":"+","newLine":125,"text":"        alloy_op_evm::block::OpAlloyReceiptBuilder,","ignored":false},{"type":"+","newLine":126,"text":"        RollupConfig,","ignored":false},{"type":"+","newLine":127,"text":"        Evm,","ignored":false},{"type":"+","newLine":128,"text":"    >: for<'b> alloy_evm::block::BlockExecutorFactory<","ignored":false},{"type":"+","newLine":129,"text":"        EvmFactory = Evm,","ignored":false},{"type":"+","newLine":130,"text":"        ExecutionCtx<'b> = alloy_op_evm::OpBlockExecutionCtx,","ignored":false},{"type":"+","newLine":131,"text":"        Transaction = op_alloy_consensus::OpTxEnvelope,","ignored":false},{"type":"+","newLine":132,"text":"        Receipt = op_alloy_consensus::OpReceiptEnvelope,","ignored":false},{"type":"+","newLine":133,"text":"    >,","ignored":false},{"type":" ","oldLine":78,"newLine":134,"text":"{"},{"type":" ","oldLine":79,"newLine":135,"text":"    pub fn new("},{"type":" ","oldLine":80,"newLine":136,"text":"        execution_cache: Vec<Arc<Execution>>,"},{"type":" ","oldLine":81,"newLine":137,"text":"        rollup_config: &'a RollupConfig,"},{"type":" ","oldLine":82,"newLine":138,"text":"        trie_provider: P,"},{"type":" ","oldLine":83,"newLine":139,"text":"        trie_hinter: H,"},{"type":"+","newLine":140,"text":"        evm_factory: Evm,","ignored":false},{"type":" ","oldLine":84,"newLine":141,"text":"        collection_target: Option<Arc<Mutex<Vec<Execution>>>>,"},{"type":"-","oldLine":85,"text":"    ) -> CachedExecutor<KonaExecutor<'a, P, H, OpEvmFactory>> {","ignored":false},{"type":"+","newLine":142,"text":"    ) -> CachedExecutor<KonaExecutor<'a, P, H, Evm, OpAlloyReceiptBuilder>> {","ignored":false},{"type":" ","oldLine":86,"newLine":143,"text":"        CachedExecutor {"},{"type":" ","oldLine":87,"newLine":144,"text":"            cache: {"},{"type":" ","oldLine":88,"newLine":145,"text":"                // The cache elements will be popped from first to last"}]},{"oldStart":94,"oldLines":7,"newStart":151,"newLines":8,"lines":[{"type":" ","oldLine":94,"newLine":151,"text":"                rollup_config,"},{"type":" ","oldLine":95,"newLine":152,"text":"                trie_provider,"},{"type":" ","oldLine":96,"newLine":153,"text":"                trie_hinter,"},{"type":"-","oldLine":97,"text":"                OpEvmFactory::default(),","ignored":false},{"type":"+","newLine":154,"text":"                evm_factory,","ignored":false},{"type":"+","newLine":155,"text":"                OpAlloyReceiptBuilder::default(),","ignored":false},{"type":" ","oldLine":98,"newLine":156,"text":"                None,"},{"type":" ","oldLine":99,"newLine":157,"text":"            ),"},{"type":" ","oldLine":100,"newLine":158,"text":"            collection_target,"}]},{"oldStart":114,"oldLines":8,"newStart":172,"newLines":11,"lines":[{"type":" ","oldLine":114,"newLine":172,"text":"}"},{"type":" ","oldLine":115,"newLine":173,"text":""},{"type":" ","oldLine":116,"newLine":174,"text":"#[async_trait]"},{"type":"-","oldLine":117,"text":"impl<E: Executor + Send + Sync + Debug> Executor for CachedExecutor<E> {","ignored":false},{"type":"+","newLine":175,"text":"impl<E: Executor<Receipt = OpReceiptEnvelope> + Send + Sync + Debug> Executor","ignored":false},{"type":"+","newLine":176,"text":"    for CachedExecutor<E>","ignored":false},{"type":"+","newLine":177,"text":"{","ignored":false},{"type":" ","oldLine":118,"newLine":178,"text":"    type Error = <E as Executor>::Error;"},{"type":"+","newLine":179,"text":"    type Receipt = OpReceiptEnvelope;","ignored":false},{"type":" ","oldLine":119,"newLine":180,"text":""},{"type":" ","oldLine":120,"newLine":181,"text":"    /// An asynchronous function that waits until the executor is ready."},{"type":" ","oldLine":121,"newLine":182,"text":"    ///"}]},{"oldStart":188,"oldLines":7,"newStart":249,"newLines":7,"lines":[{"type":" ","oldLine":188,"newLine":249,"text":"    async fn execute_payload("},{"type":" ","oldLine":189,"newLine":250,"text":"        &mut self,"},{"type":" ","oldLine":190,"newLine":251,"text":"        attributes: OpPayloadAttributes,"},{"type":"-","oldLine":191,"text":"    ) -> Result<BlockBuildingOutcome, Self::Error> {","ignored":false},{"type":"+","newLine":252,"text":"    ) -> Result<BlockBuildingOutcome<OpReceiptEnvelope>, Self::Error> {","ignored":false},{"type":" ","oldLine":192,"newLine":253,"text":"        let agreed_output = self.compute_output_root()?;"},{"type":" ","oldLine":193,"newLine":254,"text":"        if self"},{"type":" ","oldLine":194,"newLine":255,"text":"            .cache"}]},{"oldStart":236,"oldLines":34,"newStart":297,"newLines":6,"lines":[{"type":" ","oldLine":236,"newLine":297,"text":"}"},{"type":" ","oldLine":237,"newLine":298,"text":""},{"type":" ","oldLine":238,"newLine":299,"text":"/// Initializes and constructs a new `PipelineCursor` for a given L2 chain."},{"type":"-","oldLine":239,"text":"///","ignored":true},{"type":"-","oldLine":240,"text":"/// This function sets up the execution cursor required for processing rollup blocks. It","ignored":true},{"type":"-","oldLine":241,"text":"/// adjusts the starting L1 block position based on the `channel_timeout` to ensure","ignored":true},{"type":"-","oldLine":242,"text":"/// that the entire channel data is included for processing.","ignored":true},{"type":"-","oldLine":243,"text":"///","ignored":true},{"type":"-","oldLine":244,"text":"/// # Arguments","ignored":true},{"type":"-","oldLine":245,"text":"/// * `rollup_config` - A reference to the rollup configuration containing chain-specific settings.","ignored":true},{"type":"-","oldLine":246,"text":"/// * `safe_header` - A sealed header representing the latest safe L2 block.","ignored":true},{"type":"-","oldLine":247,"text":"/// * `l2_chain_provider` - A mutable reference to an L2 chain provider for fetching L2 block data.","ignored":true},{"type":"-","oldLine":248,"text":"///","ignored":true},{"type":"-","oldLine":249,"text":"/// # Type Parameters","ignored":true},{"type":"-","oldLine":250,"text":"/// * `O` - A generic parameter representing the Oracle client implementation.","ignored":true},{"type":"-","oldLine":251,"text":"///   It must implement the traits `CommsClient`, `FlushableCache`, `Send`, `Sync`, and `Debug`.","ignored":true},{"type":"-","oldLine":252,"text":"///","ignored":true},{"type":"-","oldLine":253,"text":"/// # Returns","ignored":true},{"type":"-","oldLine":254,"text":"/// A shared reference to a thread-safe `PipelineCursor` wrapped in an `Arc` and `RwLock`,","ignored":true},{"type":"-","oldLine":255,"text":"/// or an error of type `OracleProviderError` if the cursor initialization fails.","ignored":true},{"type":"-","oldLine":256,"text":"///","ignored":true},{"type":"-","oldLine":257,"text":"/// # Errors","ignored":true},{"type":"-","oldLine":258,"text":"/// This function will return an error if:","ignored":true},{"type":"-","oldLine":259,"text":"/// - The L2 chain provider fails to fetch the block information for the given `safe_header`.","ignored":true},{"type":"-","oldLine":260,"text":"///","ignored":true},{"type":"-","oldLine":261,"text":"/// # Details","ignored":true},{"type":"-","oldLine":262,"text":"/// - Retrieves the L2 block information associated with the provided `safe_header`.","ignored":true},{"type":"-","oldLine":263,"text":"/// - Computes the `channel_timeout` based on the rollup configuration and L2 block timestamp.","ignored":true},{"type":"-","oldLine":264,"text":"/// - Creates a new `PipelineCursor` using the computed `channel_timeout`.","ignored":true},{"type":"-","oldLine":265,"text":"/// - Advances the cursor to the proper state based on default `BlockInfo` and the L2 tip.","ignored":true},{"type":"-","oldLine":266,"text":"/// - Returns the cursor wrapped in an `Arc<RwLock<PipelineCursor>>` for safe concurrent access.","ignored":true},{"type":" ","oldLine":267,"newLine":300,"text":"pub async fn new_execution_cursor<O>("},{"type":" ","oldLine":268,"newLine":301,"text":"    rollup_config: &RollupConfig,"},{"type":" ","oldLine":269,"newLine":302,"text":"    safe_header: Sealed<Header>,"}]},{"oldStart":291,"oldLines":6,"newStart":324,"newLines":77,"lines":[{"type":" ","oldLine":291,"newLine":324,"text":"    Ok(Arc::new(RwLock::new(cursor)))"},{"type":" ","oldLine":292,"newLine":325,"text":"}"},{"type":" ","oldLine":293,"newLine":326,"text":""},{"type":"+","newLine":327,"text":"#[cfg(feature = \"experimental\")]","ignored":false},{"type":"+","newLine":328,"text":"fn expected_blob_excess_gas_and_price(","ignored":false},{"type":"+","newLine":329,"text":"    parent_header: &Header,","ignored":false},{"type":"+","newLine":330,"text":"    spec_id: OpSpecId,","ignored":false},{"type":"+","newLine":331,"text":") -> Option<BlobExcessGasAndPrice> {","ignored":false},{"type":"+","newLine":332,"text":"    let (params, fraction) = if spec_id.is_enabled_in(OpSpecId::ISTHMUS) {","ignored":false},{"type":"+","newLine":333,"text":"        (","ignored":false},{"type":"+","newLine":334,"text":"            Some(BlobParams::prague()),","ignored":false},{"type":"+","newLine":335,"text":"            BLOB_BASE_FEE_UPDATE_FRACTION_PRAGUE,","ignored":false},{"type":"+","newLine":336,"text":"        )","ignored":false},{"type":"+","newLine":337,"text":"    } else if spec_id.is_enabled_in(OpSpecId::ECOTONE) {","ignored":false},{"type":"+","newLine":338,"text":"        (","ignored":false},{"type":"+","newLine":339,"text":"            Some(BlobParams::cancun()),","ignored":false},{"type":"+","newLine":340,"text":"            BLOB_BASE_FEE_UPDATE_FRACTION_CANCUN,","ignored":false},{"type":"+","newLine":341,"text":"        )","ignored":false},{"type":"+","newLine":342,"text":"    } else {","ignored":false},{"type":"+","newLine":343,"text":"        (None, 0)","ignored":false},{"type":"+","newLine":344,"text":"    };","ignored":false},{"type":"+","newLine":345,"text":"","ignored":true},{"type":"+","newLine":346,"text":"    parent_header","ignored":false},{"type":"+","newLine":347,"text":"        .maybe_next_block_excess_blob_gas(params)","ignored":false},{"type":"+","newLine":348,"text":"        .or_else(|| spec_id.is_enabled_in(OpSpecId::ECOTONE).then_some(0))","ignored":false},{"type":"+","newLine":349,"text":"        .map(|excess| BlobExcessGasAndPrice::new(excess, fraction))","ignored":false},{"type":"+","newLine":350,"text":"}","ignored":false},{"type":"+","newLine":351,"text":"","ignored":true},{"type":"+","newLine":352,"text":"#[cfg(feature = \"experimental\")]","ignored":false},{"type":"+","newLine":353,"text":"pub fn build_single_partial_for_block(","ignored":false},{"type":"+","newLine":354,"text":"    execution: &Execution,","ignored":false},{"type":"+","newLine":355,"text":"    traces: Vec<PartialExecutionTrace>,","ignored":false},{"type":"+","newLine":356,"text":"    parent_header: &Header,","ignored":false},{"type":"+","newLine":357,"text":"    spec_id: OpSpecId,","ignored":false},{"type":"+","newLine":358,"text":") -> PartialExecution {","ignored":false},{"type":"+","newLine":359,"text":"    let header = execution.artifacts.header.inner();","ignored":false},{"type":"+","newLine":360,"text":"    let expected_state = traces","ignored":false},{"type":"+","newLine":361,"text":"        .first()","ignored":false},{"type":"+","newLine":362,"text":"        .map(|trace| trace.expected_state.clone())","ignored":false},{"type":"+","newLine":363,"text":"        .unwrap_or_default();","ignored":false},{"type":"+","newLine":364,"text":"    let (tx_hashes, results): (Vec<B256>, Vec<_>) = traces","ignored":false},{"type":"+","newLine":365,"text":"        .into_iter()","ignored":false},{"type":"+","newLine":366,"text":"        .map(|trace| (trace.tx_hash, trace.result))","ignored":false},{"type":"+","newLine":367,"text":"        .unzip();","ignored":false},{"type":"+","newLine":368,"text":"    PartialExecution {","ignored":false},{"type":"+","newLine":369,"text":"        tx_hashes,","ignored":false},{"type":"+","newLine":370,"text":"        results,","ignored":false},{"type":"+","newLine":371,"text":"        expected_state,","ignored":false},{"type":"+","newLine":372,"text":"        block_env: BlockEnv {","ignored":false},{"type":"+","newLine":373,"text":"            number: U256::from(header.number),","ignored":false},{"type":"+","newLine":374,"text":"            beneficiary: header.beneficiary,","ignored":false},{"type":"+","newLine":375,"text":"            timestamp: U256::from(header.timestamp),","ignored":false},{"type":"+","newLine":376,"text":"            gas_limit: header.gas_limit,","ignored":false},{"type":"+","newLine":377,"text":"            basefee: header.base_fee_per_gas.unwrap_or(0),","ignored":false},{"type":"+","newLine":378,"text":"            difficulty: header.difficulty,","ignored":false},{"type":"+","newLine":379,"text":"            prevrandao: Some(header.mix_hash),","ignored":false},{"type":"+","newLine":380,"text":"            blob_excess_gas_and_price: expected_blob_excess_gas_and_price(parent_header, spec_id),","ignored":false},{"type":"+","newLine":381,"text":"            slot_num: 0,","ignored":false},{"type":"+","newLine":382,"text":"        },","ignored":false},{"type":"+","newLine":383,"text":"        op_block_ctx: OpBlockExecutionCtx {","ignored":false},{"type":"+","newLine":384,"text":"            parent_hash: header.parent_hash,","ignored":false},{"type":"+","newLine":385,"text":"            parent_beacon_block_root: header.parent_beacon_block_root,","ignored":false},{"type":"+","newLine":386,"text":"            extra_data: header.extra_data.clone(),","ignored":false},{"type":"+","newLine":387,"text":"            // Valid while kona hardcodes `RollupConfig::is_sdm_active` to","ignored":false},{"type":"+","newLine":388,"text":"            // `false` (v1.5.2). SDM future work: derive the true mode the way","ignored":false},{"type":"+","newLine":389,"text":"            // kona's stateless builder does (`Verify` when SDM is active and","ignored":false},{"type":"+","newLine":390,"text":"            // the block's transactions embed a post-exec payload), or the","ignored":true},{"type":"+","newLine":391,"text":"            // partial re-execution diverges from canonical gas accounting.","ignored":true},{"type":"+","newLine":392,"text":"            // See the SDM canonical note in `evm/cached.rs`.","ignored":true},{"type":"+","newLine":393,"text":"            post_exec_mode: PostExecMode::Disabled,","ignored":false},{"type":"+","newLine":394,"text":"        },","ignored":false},{"type":"+","newLine":395,"text":"    }","ignored":false},{"type":"+","newLine":396,"text":"}","ignored":false},{"type":"+","newLine":397,"text":"","ignored":true},{"type":" ","oldLine":294,"newLine":398,"text":"#[cfg(test)]"},{"type":" ","oldLine":295,"newLine":399,"text":"#[cfg_attr(coverage_nightly, coverage(off))]"},{"type":" ","oldLine":296,"newLine":400,"text":"pub mod tests {"}]},{"oldStart":323,"oldLines":6,"newStart":427,"newLines":7,"lines":[{"type":" ","oldLine":323,"newLine":427,"text":"                suggested_fee_recipient: Default::default(),"},{"type":" ","oldLine":324,"newLine":428,"text":"                withdrawals: None,"},{"type":" ","oldLine":325,"newLine":429,"text":"                parent_beacon_block_root: None,"},{"type":"+","newLine":430,"text":"                slot_number: None,","ignored":false},{"type":" ","oldLine":326,"newLine":431,"text":"            },"},{"type":" ","oldLine":327,"newLine":432,"text":"            transactions: None,"},{"type":" ","oldLine":328,"newLine":433,"text":"            no_tx_pool: None,"}]},{"oldStart":365,"oldLines":6,"newStart":470,"newLines":7,"lines":[{"type":" ","oldLine":365,"newLine":470,"text":"                            parent_beacon_block_root: Some(keccak256(format!("},{"type":" ","oldLine":366,"newLine":471,"text":"                                \"parent_beacon_block_root {i}\""},{"type":" ","oldLine":367,"newLine":472,"text":"                            ))),"},{"type":"+","newLine":473,"text":"                            slot_number: Some(i as u64),","ignored":false},{"type":" ","oldLine":368,"newLine":474,"text":"                        },"},{"type":" ","oldLine":369,"newLine":475,"text":"                        transactions: Some(vec![format!(\"transactions {i}\")"},{"type":" ","oldLine":370,"newLine":476,"text":"                            .as_bytes()"}]},{"oldStart":384,"oldLines":13,"newStart":490,"newLines":14,"lines":[{"type":" ","oldLine":384,"newLine":490,"text":""},{"type":" ","oldLine":385,"newLine":491,"text":"    #[derive(Clone, Debug)]"},{"type":" ","oldLine":386,"newLine":492,"text":"    pub struct TestExecutor {"},{"type":"-","oldLine":387,"text":"        pub outcomes: Vec<BlockBuildingOutcome>,","ignored":false},{"type":"+","newLine":493,"text":"        pub outcomes: Vec<BlockBuildingOutcome<OpReceiptEnvelope>>,","ignored":false},{"type":" ","oldLine":388,"newLine":494,"text":"        pub output_roots: Vec<B256>,"},{"type":" ","oldLine":389,"newLine":495,"text":"    }"},{"type":" ","oldLine":390,"newLine":496,"text":""},{"type":" ","oldLine":391,"newLine":497,"text":"    #[async_trait]"},{"type":" ","oldLine":392,"newLine":498,"text":"    impl Executor for TestExecutor {"},{"type":" ","oldLine":393,"newLine":499,"text":"        type Error = kona_executor::ExecutorError;"},{"type":"+","newLine":500,"text":"        type Receipt = OpReceiptEnvelope;","ignored":false},{"type":" ","oldLine":394,"newLine":501,"text":""},{"type":" ","oldLine":395,"newLine":502,"text":"        async fn wait_until_ready(&mut self) {}"},{"type":" ","oldLine":396,"newLine":503,"text":""}]},{"oldStart":399,"oldLines":7,"newStart":506,"newLines":7,"lines":[{"type":" ","oldLine":399,"newLine":506,"text":"        async fn execute_payload("},{"type":" ","oldLine":400,"newLine":507,"text":"            &mut self,"},{"type":" ","oldLine":401,"newLine":508,"text":"            _attributes: OpPayloadAttributes,"},{"type":"-","oldLine":402,"text":"        ) -> Result<BlockBuildingOutcome, Self::Error> {","ignored":false},{"type":"+","newLine":509,"text":"        ) -> Result<BlockBuildingOutcome<OpReceiptEnvelope>, Self::Error> {","ignored":false},{"type":" ","oldLine":403,"newLine":510,"text":"            self.outcomes"},{"type":" ","oldLine":404,"newLine":511,"text":"                .pop()"},{"type":" ","oldLine":405,"newLine":512,"text":"                .ok_or(kona_executor::ExecutorError::MissingExecutor)"}]},{"oldStart":553,"oldLines":6,"newStart":660,"newLines":45,"lines":[{"type":" ","oldLine":553,"newLine":660,"text":"        );"},{"type":" ","oldLine":554,"newLine":661,"text":"    }"},{"type":" ","oldLine":555,"newLine":662,"text":""},{"type":"+","newLine":663,"text":"    #[cfg(feature = \"experimental\")]","ignored":false},{"type":"+","newLine":664,"text":"    #[test]","ignored":false},{"type":"+","newLine":665,"text":"    fn build_single_partial_for_block_blob_param_branches() {","ignored":false},{"type":"+","newLine":666,"text":"        let execution = gen_executions(1)","ignored":false},{"type":"+","newLine":667,"text":"            .pop()","ignored":false},{"type":"+","newLine":668,"text":"            .expect(\"gen_executions(1) yields one\");","ignored":false},{"type":"+","newLine":669,"text":"        let parent_header = Header::default();","ignored":false},{"type":"+","newLine":670,"text":"","ignored":true},{"type":"+","newLine":671,"text":"        // Pre-ECOTONE: `expected_blob_excess_gas_and_price` selects `(None, 0)`","ignored":true},{"type":"+","newLine":672,"text":"        // and `maybe_next_block_excess_blob_gas(None)` short-circuits to None,","ignored":true},{"type":"+","newLine":673,"text":"        // and the `or_else` closure also returns None (ECOTONE not enabled).","ignored":true},{"type":"+","newLine":674,"text":"        let bedrock = build_single_partial_for_block(","ignored":false},{"type":"+","newLine":675,"text":"            execution.as_ref(),","ignored":false},{"type":"+","newLine":676,"text":"            Vec::new(),","ignored":false},{"type":"+","newLine":677,"text":"            &parent_header,","ignored":false},{"type":"+","newLine":678,"text":"            OpSpecId::BEDROCK,","ignored":false},{"type":"+","newLine":679,"text":"        );","ignored":false},{"type":"+","newLine":680,"text":"        assert!(","ignored":false},{"type":"+","newLine":681,"text":"            bedrock.block_env.blob_excess_gas_and_price.is_none(),","ignored":false},{"type":"+","newLine":682,"text":"            \"BEDROCK must yield None blob_excess_gas_and_price\",","ignored":false},{"type":"+","newLine":683,"text":"        );","ignored":false},{"type":"+","newLine":684,"text":"","ignored":true},{"type":"+","newLine":685,"text":"        // ISTHMUS: selects `(Some(prague), PRAGUE_FRAC)`. Default header has no","ignored":true},{"type":"+","newLine":686,"text":"        // `excess_blob_gas`, so `maybe_next_block_excess_blob_gas` returns None,","ignored":true},{"type":"+","newLine":687,"text":"        // the `or_else` fallback supplies Some(0), and `BlobExcessGasAndPrice::new`","ignored":true},{"type":"+","newLine":688,"text":"        // is constructed with the prague fraction.","ignored":true},{"type":"+","newLine":689,"text":"        let isthmus = build_single_partial_for_block(","ignored":false},{"type":"+","newLine":690,"text":"            execution.as_ref(),","ignored":false},{"type":"+","newLine":691,"text":"            Vec::new(),","ignored":false},{"type":"+","newLine":692,"text":"            &parent_header,","ignored":false},{"type":"+","newLine":693,"text":"            OpSpecId::ISTHMUS,","ignored":false},{"type":"+","newLine":694,"text":"        );","ignored":false},{"type":"+","newLine":695,"text":"        let blob = isthmus","ignored":false},{"type":"+","newLine":696,"text":"            .block_env","ignored":false},{"type":"+","newLine":697,"text":"            .blob_excess_gas_and_price","ignored":false},{"type":"+","newLine":698,"text":"            .expect(\"ISTHMUS must yield Some blob_excess_gas_and_price\");","ignored":false},{"type":"+","newLine":699,"text":"        assert_eq!(blob.excess_blob_gas, 0);","ignored":false},{"type":"+","newLine":700,"text":"    }","ignored":false},{"type":"+","newLine":701,"text":"","ignored":true},{"type":" ","oldLine":556,"newLine":702,"text":"    #[tokio::test(flavor = \"multi_thread\")]"},{"type":" ","oldLine":557,"newLine":703,"text":"    pub async fn test_execution_cursor() {"},{"type":" ","oldLine":558,"newLine":704,"text":"        // prepare oracle data"}]}]},"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "0c29e1681027f76e5a82bb737f85c4241badaca2aea9f5b94954bb09c64aad4c",
+  "name": "executor.rs",
+  "kind": "program",
+  "lines": 735,
+  "source": "// Copyright 2025 RISC Zero, Inc.\n//\n// Licensed under the Apache License, Version 2.0 (the \"License\");\n// you may not use this file except in compliance with the License.\n// You may obtain a copy of the License at\n//\n//     http://www.apache.org/licenses/LICENSE-2.0\n//\n// Unless required by applicable law or agreed to in writing, software\n// distributed under the License is distributed on an \"AS IS\" BASIS,\n// WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.\n// See the License for the specific language governing permissions and\n// limitations under the License.\n\nuse crate::client::log;\nuse crate::rkyv::execution::BlockBuildingOutcomeRkyv;\nuse crate::rkyv::optimism::OpPayloadAttributesRkyv;\nuse crate::rkyv::primitives::B256Def;\nuse alloy_consensus::Header;\nuse alloy_evm::EvmFactory;\nuse alloy_op_evm::block::OpAlloyReceiptBuilder;\nuse alloy_primitives::{Sealed, B256};\nuse async_trait::async_trait;\nuse kona_driver::{Executor, PipelineCursor, TipCursor};\nuse kona_executor::{BlockBuildingOutcome, TrieDBProvider};\nuse kona_genesis::RollupConfig;\nuse kona_mpt::TrieHinter;\nuse kona_preimage::CommsClient;\nuse kona_proof::errors::OracleProviderError;\nuse kona_proof::executor::KonaExecutor;\nuse kona_proof::l2::OracleL2ChainProvider;\nuse kona_proof::FlushableCache;\nuse kona_protocol::{BatchValidationProvider, BlockInfo};\nuse op_alloy_consensus::OpReceiptEnvelope;\nuse op_alloy_rpc_types_engine::OpPayloadAttributes;\nuse spin::RwLock;\nuse std::fmt::Debug;\nuse std::sync::{Arc, Mutex};\n#[cfg(feature = \"experimental\")]\nuse {\n    crate::evm::partial::{PartialExecution, PartialExecutionTrace},\n    alloy_consensus::BlockHeader,\n    alloy_eips::eip7840::BlobParams,\n    alloy_evm::revm::context::BlockEnv,\n    alloy_evm::revm::context_interface::block::BlobExcessGasAndPrice,\n    alloy_evm::revm::primitives::eip4844::{\n        BLOB_BASE_FEE_UPDATE_FRACTION_CANCUN, BLOB_BASE_FEE_UPDATE_FRACTION_PRAGUE,\n    },\n    alloy_op_evm::{OpBlockExecutionCtx, PostExecMode},\n    alloy_primitives::{Bytes, U256},\n    op_revm::OpSpecId,\n    risc0_zkvm::sha::{Impl as SHA2, Sha256},\n};\n\n/// Represents a block execution process and its results.\n///\n/// This struct is designed to hold essential information about the execution,\n/// including its initial state, the attributes associated with the execution,\n/// the resulting artifacts, and the final state after execution.\n#[derive(Clone, Debug, rkyv::Archive, rkyv::Serialize, rkyv::Deserialize)]\npub struct Execution {\n    /// Output root prior to execution\n    #[rkyv(with = B256Def)]\n    pub agreed_output: B256,\n    /// Derived attributes to be executed\n    #[rkyv(with = OpPayloadAttributesRkyv)]\n    pub attributes: OpPayloadAttributes,\n    /// Output block from execution\n    #[rkyv(with = BlockBuildingOutcomeRkyv)]\n    pub artifacts: BlockBuildingOutcome<OpReceiptEnvelope>,\n    /// Output root after execution\n    #[rkyv(with = B256Def)]\n    pub claimed_output: B256,\n}\n\n#[cfg(feature = \"experimental\")]\nimpl Execution {\n    pub fn get_transactions(&self, tx_hashes: &[B256]) -> Vec<Bytes> {\n        let transactions = self.attributes.transactions.as_deref().unwrap_or(&[]);\n        let by_hash: std::collections::HashMap<B256, Bytes> = transactions\n            .iter()\n            .map(|tx| {\n                (\n                    B256::from_slice(SHA2::hash_bytes(tx.as_ref()).as_bytes()),\n                    tx.clone(),\n                )\n            })\n            .collect();\n        tx_hashes\n            .iter()\n            .filter_map(|h| by_hash.get(h).cloned())\n            .collect()\n    }\n}\n\n/// A structure that provides a caching layer for an `Executor` implementation.\n///\n/// The `CachedExecutor` is a generic struct that allows the caching of executed tasks\n/// and their results. It is designed to work with executors that implement the `Executor`\n/// trait and are thread-safe (`Send` and `Sync`).\n#[derive(Debug)]\npub struct CachedExecutor<E: Executor + Send + Sync + Debug> {\n    /// A vector of cached execution results.\n    pub cache: Vec<Arc<Execution>>,\n    /// The underlying block executor used when a task is not found in the cache.\n    pub executor: E,\n    /// An optional shared target for collecting executed tasks.\n    pub collection_target: Option<Arc<Mutex<Vec<Execution>>>>,\n}\n\nimpl<'a, P, H, Evm> CachedExecutor<KonaExecutor<'a, P, H, Evm, OpAlloyReceiptBuilder>>\nwhere\n    P: TrieDBProvider + Send + Sync + Clone + Debug,\n    H: TrieHinter + Send + Sync + Clone + Debug,\n    Evm: EvmFactory<Spec = op_revm::OpSpecId, BlockEnv = alloy_evm::revm::context::BlockEnv>\n        + Send\n        + Sync\n        + Clone\n        + Debug\n        + 'static,\n    Evm::Tx: alloy_evm::FromTxWithEncoded<op_alloy_consensus::OpTxEnvelope>\n        + alloy_evm::FromRecoveredTx<op_alloy_consensus::OpTxEnvelope>\n        + alloy_op_evm::block::OpTxEnv,\n    alloy_op_evm::OpBlockExecutorFactory<\n        alloy_op_evm::block::OpAlloyReceiptBuilder,\n        RollupConfig,\n        Evm,\n    >: for<'b> alloy_evm::block::BlockExecutorFactory<\n        EvmFactory = Evm,\n        ExecutionCtx<'b> = alloy_op_evm::OpBlockExecutionCtx,\n        Transaction = op_alloy_consensus::OpTxEnvelope,\n        Receipt = op_alloy_consensus::OpReceiptEnvelope,\n    >,\n{\n    pub fn new(\n        execution_cache: Vec<Arc<Execution>>,\n        rollup_config: &'a RollupConfig,\n        trie_provider: P,\n        trie_hinter: H,\n        evm_factory: Evm,\n        collection_target: Option<Arc<Mutex<Vec<Execution>>>>,\n    ) -> CachedExecutor<KonaExecutor<'a, P, H, Evm, OpAlloyReceiptBuilder>> {\n        CachedExecutor {\n            cache: {\n                // The cache elements will be popped from first to last\n                let mut cache = execution_cache;\n                cache.reverse();\n                cache\n            },\n            executor: KonaExecutor::new(\n                rollup_config,\n                trie_provider,\n                trie_hinter,\n                evm_factory,\n                OpAlloyReceiptBuilder::default(),\n                None,\n            ),\n            collection_target,\n        }\n    }\n}\n\nimpl<E: Executor + Send + Sync + Debug> Drop for CachedExecutor<E> {\n    fn drop(&mut self) {\n        if !self.cache.is_empty() {\n            #[cfg(target_os = \"zkvm\")]\n            log(&format!(\"EXEC CACHE UNUSED: {}\", self.cache.len()));\n            #[cfg(not(target_os = \"zkvm\"))]\n            tracing::error!(\"EXEC CACHE UNUSED: {}\", self.cache.len());\n        }\n    }\n}\n\n#[async_trait]\nimpl<E: Executor<Receipt = OpReceiptEnvelope> + Send + Sync + Debug> Executor\n    for CachedExecutor<E>\n{\n    type Error = <E as Executor>::Error;\n    type Receipt = OpReceiptEnvelope;\n\n    /// An asynchronous function that waits until the executor is ready.\n    ///\n    /// This function calls the `wait_until_ready` method on the internal `executor`\n    /// and awaits its completion. It ensures that the required state or prerequisites\n    /// are ready before proceeding.\n    ///\n    /// This can be used in scenarios where subsequent operations depend on the\n    /// readiness of the executor.\n    async fn wait_until_ready(&mut self) {\n        self.executor.wait_until_ready().await;\n    }\n\n    /// Updates the \"safe head\" of the blockchain to the specified sealed header.\n    ///\n    /// The \"safe head\" refers to the point in the blockchain that is considered\n    /// finalized or safe for operations and is used as a reference for further\n    /// progression or validation within the node.\n    ///\n    /// # Parameters\n    /// - `header`: A `Sealed<Header>` representing the new \"safe head\" of the blockchain.\n    ///   It is a sealed header, meaning it has gone through necessary validation and is immutable.\n    ///\n    /// # Behavior\n    /// Delegates the update operation to the `executor` component that handles\n    /// the internal logic for updating the safe head within the system.\n    fn update_safe_head(&mut self, header: Sealed<Header>) {\n        self.executor.update_safe_head(header);\n    }\n\n    /// Executes a given payload based on the specified `OpPayloadAttributes` and manages its outcomes.\n    ///\n    /// # Parameters\n    /// - `attributes`: An instance of [`OpPayloadAttributes`] containing the attributes used to build or execute the payload.\n    ///\n    /// # Returns\n    /// - `Result<BlockBuildingOutcome, Self::Error>`: On success, returns the resulting [`BlockBuildingOutcome`].\n    ///   If an error occurs during the execution process or cache lookup, returns `Self::Error`.\n    ///\n    /// # Functionality\n    /// 1. Calculates an agreed output root by invoking `compute_output_root`, which must succeed.\n    /// 2. Checks if the execution can be optimized by matching the given attributes and the agreed output\n    ///    with the last cached entry:\n    ///    - If a match is found:\n    ///      - Uses the cached artifacts and logs the cache hit details.\n    ///      - Updates the safe head with the cached header.\n    ///      - Returns the cached artifacts.\n    /// 3. If no cache optimization is possible but a `collection_target` exists:\n    ///    - Executes the payload with the given attributes using the executor.\n    ///    - Updates the `collection_target` with the resulting artifacts and metadata.\n    ///    - Returns the resulting artifacts.\n    /// 4. If no additional conditions are met, directly delegates the execution of the payload to the executor and awaits its result.\n    ///\n    /// # Edge Cases\n    /// - If no cached result is found (`self.cache.last()` fails or returns `None`):\n    ///   - Verification of cache attributes defaults to `false`.\n    /// - Handles locking and modification of the shared `collection_target` state safely.\n    ///\n    /// # Notes\n    /// - If an entry exists in the cache, it is popped after a cache hit is confirmed.\n    /// - The function assumes `self.executor.execute_payload` is an asynchronous operation meaning any errors or delays\n    ///   during this invocation may affect execution flow.\n    /// - Logging details about cache hits include the header number of the cached artifacts.\n    ///\n    /// # Errors\n    /// - Returns an appropriate error (`Self::Error`) if:\n    ///   - `compute_output_root` fails to calculate the agreed output root.\n    ///   - Matching cached attributes comparison (or unwrap) fails.\n    ///   - Payload execution via `self.executor` encounters an issue.\n    async fn execute_payload(\n        &mut self,\n        attributes: OpPayloadAttributes,\n    ) -> Result<BlockBuildingOutcome<OpReceiptEnvelope>, Self::Error> {\n        let agreed_output = self.compute_output_root()?;\n        if self\n            .cache\n            .last()\n            .map(|e| Ok(agreed_output == e.agreed_output && attributes == e.attributes))\n            .unwrap_or(Ok(false))?\n        {\n            let artifacts = self.cache.pop().unwrap().artifacts.clone();\n            log(&format!(\"CACHE {}\", artifacts.header.number));\n            self.update_safe_head(artifacts.header.clone());\n            return Ok(artifacts);\n        }\n        if let Some(collection_target) = &self.collection_target {\n            let artifacts = self.executor.execute_payload(attributes.clone()).await?;\n            let mut collection_target = collection_target.lock().unwrap();\n            collection_target.push(Execution {\n                agreed_output,\n                attributes,\n                artifacts: artifacts.clone(),\n                claimed_output: Default::default(),\n            });\n            return Ok(artifacts);\n        }\n        self.executor.execute_payload(attributes).await\n    }\n\n    /// Computes the output root based on the current state of the executor.\n    ///\n    /// This method invokes the `compute_output_root` function on the executor associated\n    /// with this instance. The output root is a cryptographic hash (of type `B256`) that\n    /// represents the resulting state or output from the operations performed by the executor.\n    ///\n    /// This operation could potentially result in an error, in which case the error type\n    /// associated with this instance (`Self::Error`) will be returned.\n    ///\n    /// # Returns\n    /// - `Ok(B256)`: The computed output root if the operation succeeds.\n    /// - `Err(Self::Error)`: If an error occurs during the computation.\n    ///\n    /// # Errors\n    /// This method will return an error if the executor fails to compute the output root.\n    fn compute_output_root(&mut self) -> Result<B256, Self::Error> {\n        self.executor.compute_output_root()\n    }\n}\n\n/// Initializes and constructs a new `PipelineCursor` for a given L2 chain.\npub async fn new_execution_cursor<O>(\n    rollup_config: &RollupConfig,\n    safe_header: Sealed<Header>,\n    l2_chain_provider: &mut OracleL2ChainProvider<O>,\n) -> Result<Arc<RwLock<PipelineCursor>>, OracleProviderError>\nwhere\n    O: CommsClient + FlushableCache + FlushableCache + Send + Sync + Debug,\n{\n    let safe_head_info = l2_chain_provider\n        .l2_block_info_by_number(safe_header.number)\n        .await?;\n\n    // Walk back the starting L1 block by `channel_timeout` to ensure that the full channel is\n    // captured.\n    let channel_timeout = rollup_config.channel_timeout(safe_head_info.block_info.timestamp);\n\n    // Construct the cursor.\n    let mut cursor = PipelineCursor::new(channel_timeout, BlockInfo::default());\n    // `l2_safe_head_output_root` can be zero because it is not used. The executor is always\n    // instructed to recompute the output root.\n    let tip = TipCursor::new(safe_head_info, safe_header, B256::ZERO);\n    cursor.advance(BlockInfo::default(), tip);\n\n    // Wrap the cursor in a shared read-write lock\n    Ok(Arc::new(RwLock::new(cursor)))\n}\n\n#[cfg(feature = \"experimental\")]\nfn expected_blob_excess_gas_and_price(\n    parent_header: &Header,\n    spec_id: OpSpecId,\n) -> Option<BlobExcessGasAndPrice> {\n    let (params, fraction) = if spec_id.is_enabled_in(OpSpecId::ISTHMUS) {\n        (\n            Some(BlobParams::prague()),\n            BLOB_BASE_FEE_UPDATE_FRACTION_PRAGUE,\n        )\n    } else if spec_id.is_enabled_in(OpSpecId::ECOTONE) {\n        (\n            Some(BlobParams::cancun()),\n            BLOB_BASE_FEE_UPDATE_FRACTION_CANCUN,\n        )\n    } else {\n        (None, 0)\n    };\n\n    parent_header\n        .maybe_next_block_excess_blob_gas(params)\n        .or_else(|| spec_id.is_enabled_in(OpSpecId::ECOTONE).then_some(0))\n        .map(|excess| BlobExcessGasAndPrice::new(excess, fraction))\n}\n\n#[cfg(feature = \"experimental\")]\npub fn build_single_partial_for_block(\n    execution: &Execution,\n    traces: Vec<PartialExecutionTrace>,\n    parent_header: &Header,\n    spec_id: OpSpecId,\n) -> PartialExecution {\n    let header = execution.artifacts.header.inner();\n    let expected_state = traces\n        .first()\n        .map(|trace| trace.expected_state.clone())\n        .unwrap_or_default();\n    let (tx_hashes, results): (Vec<B256>, Vec<_>) = traces\n        .into_iter()\n        .map(|trace| (trace.tx_hash, trace.result))\n        .unzip();\n    PartialExecution {\n        tx_hashes,\n        results,\n        expected_state,\n        block_env: BlockEnv {\n            number: U256::from(header.number),\n            beneficiary: header.beneficiary,\n            timestamp: U256::from(header.timestamp),\n            gas_limit: header.gas_limit,\n            basefee: header.base_fee_per_gas.unwrap_or(0),\n            difficulty: header.difficulty,\n            prevrandao: Some(header.mix_hash),\n            blob_excess_gas_and_price: expected_blob_excess_gas_and_price(parent_header, spec_id),\n            slot_num: 0,\n        },\n        op_block_ctx: OpBlockExecutionCtx {\n            parent_hash: header.parent_hash,\n            parent_beacon_block_root: header.parent_beacon_block_root,\n            extra_data: header.extra_data.clone(),\n            // Valid while kona hardcodes `RollupConfig::is_sdm_active` to\n            // `false` (v1.5.2). SDM future work: derive the true mode the way\n            // kona's stateless builder does (`Verify` when SDM is active and\n            // the block's transactions embed a post-exec payload), or the\n            // partial re-execution diverges from canonical gas accounting.\n            // See the SDM canonical note in `evm/cached.rs`.\n            post_exec_mode: PostExecMode::Disabled,\n        },\n    }\n}\n\n#[cfg(test)]\n#[cfg_attr(coverage_nightly, coverage(off))]\npub mod tests {\n    use super::*;\n    use crate::oracle::vec::tests::prepare_vec_oracle;\n    use crate::oracle::WitnessOracle;\n    use crate::precondition::execution::{attributes_hash, exec_precondition_hash};\n    use crate::rkyv::execution::tests::gen_execution_outcomes;\n    use alloy_eips::eip4895::Withdrawal;\n    use alloy_primitives::{keccak256, Address, Sealable, B64};\n    use alloy_rpc_types_engine::PayloadAttributes;\n    use kona_mpt::TrieNode;\n    use kona_preimage::PreimageKey;\n    use rayon::prelude::{IntoParallelIterator, ParallelIterator};\n    use rkyv::rancor::Error;\n    use std::collections::HashSet;\n\n    fn test_safe_default_err(value: &OpPayloadAttributes, modifier: fn(&mut OpPayloadAttributes)) {\n        let mut value = value.clone();\n        modifier(&mut value);\n        assert!(attributes_hash(&value).is_err());\n    }\n\n    #[test]\n    fn test_attributes_hash_safe_defaults() {\n        let attributes = OpPayloadAttributes {\n            payload_attributes: PayloadAttributes {\n                timestamp: 0,\n                prev_randao: Default::default(),\n                suggested_fee_recipient: Default::default(),\n                withdrawals: None,\n                parent_beacon_block_root: None,\n                slot_number: None,\n            },\n            transactions: None,\n            no_tx_pool: None,\n            gas_limit: None,\n            eip_1559_params: None,\n            min_base_fee: None,\n        };\n\n        test_safe_default_err(&attributes, |a| {\n            a.payload_attributes.parent_beacon_block_root = Some(B256::ZERO);\n        });\n\n        test_safe_default_err(&attributes, |a| {\n            a.gas_limit = Some(u64::MAX);\n        });\n\n        test_safe_default_err(&attributes, |a| {\n            a.eip_1559_params = Some(B64::new([0xff; 8]));\n        });\n    }\n\n    pub fn gen_executions(count: usize) -> Vec<Arc<Execution>> {\n        gen_execution_outcomes(count)\n            .into_iter()\n            .enumerate()\n            .map(|(i, artifacts)| {\n                Arc::new(Execution {\n                    agreed_output: keccak256(format!(\"output {i}\")),\n                    attributes: OpPayloadAttributes {\n                        payload_attributes: PayloadAttributes {\n                            timestamp: i as u64 * 1024,\n                            prev_randao: keccak256(format!(\"prev_randao {i}\")),\n                            suggested_fee_recipient: Address::from_slice(&[0xf1; 20]),\n                            withdrawals: Some(vec![Withdrawal {\n                                index: 0,\n                                validator_index: 0,\n                                address: Address::from_slice(&[0xf2; 20]),\n                                amount: i as u64 * 1024,\n                            }]),\n                            parent_beacon_block_root: Some(keccak256(format!(\n                                \"parent_beacon_block_root {i}\"\n                            ))),\n                            slot_number: Some(i as u64),\n                        },\n                        transactions: Some(vec![format!(\"transactions {i}\")\n                            .as_bytes()\n                            .to_vec()\n                            .into()]),\n                        no_tx_pool: Some(true),\n                        gas_limit: Some(u64::MAX / 2),\n                        eip_1559_params: Some(B64::new([0xb0; 8])),\n                        min_base_fee: Some(u64::MAX - 1),\n                    },\n                    artifacts,\n                    claimed_output: keccak256(format!(\"output {}\", i + 1)),\n                })\n            })\n            .collect()\n    }\n\n    #[derive(Clone, Debug)]\n    pub struct TestExecutor {\n        pub outcomes: Vec<BlockBuildingOutcome<OpReceiptEnvelope>>,\n        pub output_roots: Vec<B256>,\n    }\n\n    #[async_trait]\n    impl Executor for TestExecutor {\n        type Error = kona_executor::ExecutorError;\n        type Receipt = OpReceiptEnvelope;\n\n        async fn wait_until_ready(&mut self) {}\n\n        fn update_safe_head(&mut self, _header: Sealed<Header>) {}\n\n        async fn execute_payload(\n            &mut self,\n            _attributes: OpPayloadAttributes,\n        ) -> Result<BlockBuildingOutcome<OpReceiptEnvelope>, Self::Error> {\n            self.outcomes\n                .pop()\n                .ok_or(kona_executor::ExecutorError::MissingExecutor)\n        }\n\n        fn compute_output_root(&mut self) -> Result<B256, Self::Error> {\n            self.output_roots\n                .pop()\n                .ok_or(kona_executor::ExecutorError::MissingExecutor)\n        }\n    }\n\n    #[test]\n    fn test_exec_precondition_hash() {\n        let executions = gen_executions(16);\n        // check hash uniqueness over all subsequences\n        let hashes = Arc::new(Mutex::new(HashSet::new()));\n        rayon::scope(|_| {\n            (0..executions.len()).into_par_iter().for_each(|i| {\n                ((i + 1)..executions.len()).into_par_iter().for_each(|j| {\n                    // test hashing uniqueness\n                    let hash = exec_precondition_hash(&executions[i..j]);\n                    {\n                        assert!(hashes.lock().unwrap().insert(hash));\n                    }\n                    // test serde\n                    let trace = executions[i..j].to_vec();\n                    let recoded = rkyv::from_bytes::<Vec<Arc<Execution>>, Error>(\n                        rkyv::to_bytes::<Error>(&trace).unwrap().as_ref(),\n                    )\n                    .unwrap();\n                    assert_eq!(hash, exec_precondition_hash(&recoded));\n                });\n            });\n        });\n    }\n\n    #[tokio::test]\n    async fn test_cached_executor() {\n        let executions = gen_executions(128);\n        let (outcomes, mut output_roots): (Vec<_>, Vec<_>) = executions\n            .iter()\n            .rev()\n            .map(|e| (e.artifacts.clone(), e.claimed_output))\n            .unzip();\n        output_roots.push(keccak256(String::from(\"output 0\")));\n        let test_executor = TestExecutor {\n            outcomes,\n            output_roots,\n        };\n\n        // test without cache or collection target\n        let mut cached_executor = CachedExecutor {\n            cache: vec![],\n            executor: test_executor.clone(),\n            collection_target: None,\n        };\n        for execution in &executions {\n            assert_eq!(\n                cached_executor\n                    .execute_payload(execution.attributes.clone())\n                    .await\n                    .unwrap()\n                    .header,\n                execution.artifacts.header.clone()\n            );\n            cached_executor.wait_until_ready().await;\n            cached_executor.update_safe_head(execution.artifacts.header.clone());\n        }\n\n        // test with collection target\n        let collection_target = Arc::new(Mutex::new(vec![]));\n        let mut cached_executor = CachedExecutor {\n            cache: vec![],\n            executor: test_executor.clone(),\n            collection_target: Some(collection_target.clone()),\n        };\n        for execution in &executions {\n            assert_eq!(\n                cached_executor\n                    .execute_payload(execution.attributes.clone())\n                    .await\n                    .unwrap()\n                    .header,\n                execution.artifacts.header.clone()\n            );\n            {\n                let collected = collection_target.lock().unwrap();\n                assert_eq!(\n                    collected.last().unwrap().artifacts.header,\n                    execution.artifacts.header.clone()\n                );\n            }\n            cached_executor.wait_until_ready().await;\n            cached_executor.update_safe_head(execution.artifacts.header.clone());\n        }\n\n        // test with caching\n        let collection_target = Arc::new(Mutex::new(vec![]));\n        let cache = {\n            let mut cache = executions.clone();\n            cache.reverse();\n            cache\n        };\n        let mut cached_executor = CachedExecutor {\n            cache,\n            executor: test_executor.clone(),\n            collection_target: Some(collection_target.clone()),\n        };\n        for execution in &executions {\n            assert_eq!(\n                cached_executor\n                    .execute_payload(execution.attributes.clone())\n                    .await\n                    .unwrap()\n                    .header,\n                execution.artifacts.header.clone()\n            );\n            {\n                let collected = collection_target.lock().unwrap();\n                assert!(collected.is_empty());\n            }\n            cached_executor.wait_until_ready().await;\n            cached_executor.update_safe_head(execution.artifacts.header.clone());\n        }\n\n        // test with faulty caching\n        let collection_target = Arc::new(Mutex::new(vec![]));\n        let cache = executions.clone();\n        let mut cached_executor = CachedExecutor {\n            cache,\n            executor: test_executor.clone(),\n            collection_target: Some(collection_target.clone()),\n        };\n        for execution in &executions {\n            assert_eq!(\n                cached_executor\n                    .execute_payload(execution.attributes.clone())\n                    .await\n                    .unwrap()\n                    .header,\n                execution.artifacts.header.clone()\n            );\n            cached_executor.wait_until_ready().await;\n            cached_executor.update_safe_head(execution.artifacts.header.clone());\n        }\n        // only the last execution was a cache hit\n        assert_eq!(\n            collection_target.lock().unwrap().len(),\n            executions.len() - 1\n        );\n    }\n\n    #[cfg(feature = \"experimental\")]\n    #[test]\n    fn build_single_partial_for_block_blob_param_branches() {\n        let execution = gen_executions(1)\n            .pop()\n            .expect(\"gen_executions(1) yields one\");\n        let parent_header = Header::default();\n\n        // Pre-ECOTONE: `expected_blob_excess_gas_and_price` selects `(None, 0)`\n        // and `maybe_next_block_excess_blob_gas(None)` short-circuits to None,\n        // and the `or_else` closure also returns None (ECOTONE not enabled).\n        let bedrock = build_single_partial_for_block(\n            execution.as_ref(),\n            Vec::new(),\n            &parent_header,\n            OpSpecId::BEDROCK,\n        );\n        assert!(\n            bedrock.block_env.blob_excess_gas_and_price.is_none(),\n            \"BEDROCK must yield None blob_excess_gas_and_price\",\n        );\n\n        // ISTHMUS: selects `(Some(prague), PRAGUE_FRAC)`. Default header has no\n        // `excess_blob_gas`, so `maybe_next_block_excess_blob_gas` returns None,\n        // the `or_else` fallback supplies Some(0), and `BlobExcessGasAndPrice::new`\n        // is constructed with the prague fraction.\n        let isthmus = build_single_partial_for_block(\n            execution.as_ref(),\n            Vec::new(),\n            &parent_header,\n            OpSpecId::ISTHMUS,\n        );\n        let blob = isthmus\n            .block_env\n            .blob_excess_gas_and_price\n            .expect(\"ISTHMUS must yield Some blob_excess_gas_and_price\");\n        assert_eq!(blob.excess_blob_gas, 0);\n    }\n\n    #[tokio::test(flavor = \"multi_thread\")]\n    pub async fn test_execution_cursor() {\n        // prepare oracle data\n        let mut vec_oracle = prepare_vec_oracle(0, 0).0;\n        let safe_head = Header {\n            number: 0,\n            ..Default::default()\n        };\n        let safe_head_hash = safe_head.hash_slow();\n        vec_oracle.insert_preimage(\n            PreimageKey::new_keccak256(safe_head_hash.0),\n            alloy_rlp::encode(&safe_head),\n        );\n        vec_oracle.insert_preimage(\n            PreimageKey::new_keccak256(TrieNode::Empty.blind().0),\n            alloy_rlp::encode(&TrieNode::Empty),\n        );\n        vec_oracle.insert_preimage(\n            PreimageKey::new_keccak256(safe_head_hash.0),\n            alloy_rlp::encode(&safe_head),\n        );\n        // create cursor\n        let rollup_config = Arc::new({\n            let mut config = RollupConfig::default();\n            config.genesis.l2.hash = safe_head_hash;\n            config\n        });\n        let mut provider =\n            OracleL2ChainProvider::new(safe_head_hash, rollup_config.clone(), Arc::new(vec_oracle));\n        new_execution_cursor(rollup_config.as_ref(), safe_head.seal_slow(), &mut provider)\n            .await\n            .unwrap();\n    }\n}",
+  "resolutions": {
+    "ba5b6c9584fb78fd": {
+      "status": "differs",
+      "coveredLines": 569,
+      "match": {
+        "origin": "own",
+        "collection": "bob",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "executor.rs",
+        "similarity": 0.754,
+        "reportId": "bob/veridise-kailua-2025-10",
+        "repository": "boundless-xyz/kailua",
+        "path": "crates/kona/src/executor.rs",
+        "commit": "2414297a5f9feb98365ef6d88634bcd181a1934b",
+        "commitTimestamp": "2025-10-21T05:51:11Z",
+        "url": "https://github.com/boundless-xyz/kailua/blob/2414297a5f9feb98365ef6d88634bcd181a1934b/crates/kona/src/executor.rs",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Veridise review of the Kailua stateless Optimism client (crates/kona) on commit 2414297 of boundless-xyz/kailua, focused on the new pause/resume derivation and proof stitching. No findings located here.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 166,
+        "removed": 9,
+        "ignoredAdded": 17,
+        "ignoredRemoved": 28,
+        "unchanged": 569,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 17,
+            "oldLines": 7,
+            "newStart": 17,
+            "newLines": 8,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 17,
+                "newLine": 17,
+                "text": "use crate::rkyv::optimism::OpPayloadAttributesRkyv;"
+              },
+              {
+                "type": " ",
+                "oldLine": 18,
+                "newLine": 18,
+                "text": "use crate::rkyv::primitives::B256Def;"
+              },
+              {
+                "type": " ",
+                "oldLine": 19,
+                "newLine": 19,
+                "text": "use alloy_consensus::Header;"
+              },
+              {
+                "type": "-",
+                "oldLine": 20,
+                "text": "use alloy_op_evm::OpEvmFactory;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 20,
+                "text": "use alloy_evm::EvmFactory;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 21,
+                "text": "use alloy_op_evm::block::OpAlloyReceiptBuilder;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 21,
+                "newLine": 22,
+                "text": "use alloy_primitives::{Sealed, B256};"
+              },
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 23,
+                "text": "use async_trait::async_trait;"
+              },
+              {
+                "type": " ",
+                "oldLine": 23,
+                "newLine": 24,
+                "text": "use kona_driver::{Executor, PipelineCursor, TipCursor};"
+              }
+            ]
+          },
+          {
+            "oldStart": 30,
+            "oldLines": 10,
+            "newStart": 31,
+            "newLines": 26,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 30,
+                "newLine": 31,
+                "text": "use kona_proof::l2::OracleL2ChainProvider;"
+              },
+              {
+                "type": " ",
+                "oldLine": 31,
+                "newLine": 32,
+                "text": "use kona_proof::FlushableCache;"
+              },
+              {
+                "type": " ",
+                "oldLine": 32,
+                "newLine": 33,
+                "text": "use kona_protocol::{BatchValidationProvider, BlockInfo};"
+              },
+              {
+                "type": "+",
+                "newLine": 34,
+                "text": "use op_alloy_consensus::OpReceiptEnvelope;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 33,
+                "newLine": 35,
+                "text": "use op_alloy_rpc_types_engine::OpPayloadAttributes;"
+              },
+              {
+                "type": " ",
+                "oldLine": 34,
+                "newLine": 36,
+                "text": "use spin::RwLock;"
+              },
+              {
+                "type": " ",
+                "oldLine": 35,
+                "newLine": 37,
+                "text": "use std::fmt::Debug;"
+              },
+              {
+                "type": " ",
+                "oldLine": 36,
+                "newLine": 38,
+                "text": "use std::sync::{Arc, Mutex};"
+              },
+              {
+                "type": "+",
+                "newLine": 39,
+                "text": "#[cfg(feature = \"experimental\")]",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 40, "text": "use {", "ignored": false },
+              {
+                "type": "+",
+                "newLine": 41,
+                "text": "    crate::evm::partial::{PartialExecution, PartialExecutionTrace},",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 42,
+                "text": "    alloy_consensus::BlockHeader,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 43,
+                "text": "    alloy_eips::eip7840::BlobParams,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 44,
+                "text": "    alloy_evm::revm::context::BlockEnv,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 45,
+                "text": "    alloy_evm::revm::context_interface::block::BlobExcessGasAndPrice,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 46,
+                "text": "    alloy_evm::revm::primitives::eip4844::{",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 47,
+                "text": "        BLOB_BASE_FEE_UPDATE_FRACTION_CANCUN, BLOB_BASE_FEE_UPDATE_FRACTION_PRAGUE,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 48,
+                "text": "    },",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 49,
+                "text": "    alloy_op_evm::{OpBlockExecutionCtx, PostExecMode},",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 50,
+                "text": "    alloy_primitives::{Bytes, U256},",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 51,
+                "text": "    op_revm::OpSpecId,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 52,
+                "text": "    risc0_zkvm::sha::{Impl as SHA2, Sha256},",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 53, "text": "};", "ignored": false },
+              { "type": " ", "oldLine": 37, "newLine": 54, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 38,
+                "newLine": 55,
+                "text": "/// Represents a block execution process and its results."
+              },
+              { "type": " ", "oldLine": 39, "newLine": 56, "text": "///" }
+            ]
+          },
+          {
+            "oldStart": 50,
+            "oldLines": 12,
+            "newStart": 67,
+            "newLines": 32,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 50,
+                "newLine": 67,
+                "text": "    pub attributes: OpPayloadAttributes,"
+              },
+              {
+                "type": " ",
+                "oldLine": 51,
+                "newLine": 68,
+                "text": "    /// Output block from execution"
+              },
+              {
+                "type": " ",
+                "oldLine": 52,
+                "newLine": 69,
+                "text": "    #[rkyv(with = BlockBuildingOutcomeRkyv)]"
+              },
+              {
+                "type": "-",
+                "oldLine": 53,
+                "text": "    pub artifacts: BlockBuildingOutcome,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 70,
+                "text": "    pub artifacts: BlockBuildingOutcome<OpReceiptEnvelope>,",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 54,
+                "newLine": 71,
+                "text": "    /// Output root after execution"
+              },
+              {
+                "type": " ",
+                "oldLine": 55,
+                "newLine": 72,
+                "text": "    #[rkyv(with = B256Def)]"
+              },
+              {
+                "type": " ",
+                "oldLine": 56,
+                "newLine": 73,
+                "text": "    pub claimed_output: B256,"
+              },
+              { "type": " ", "oldLine": 57, "newLine": 74, "text": "}" },
+              { "type": " ", "oldLine": 58, "newLine": 75, "text": "" },
+              {
+                "type": "+",
+                "newLine": 76,
+                "text": "#[cfg(feature = \"experimental\")]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 77,
+                "text": "impl Execution {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 78,
+                "text": "    pub fn get_transactions(&self, tx_hashes: &[B256]) -> Vec<Bytes> {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 79,
+                "text": "        let transactions = self.attributes.transactions.as_deref().unwrap_or(&[]);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 80,
+                "text": "        let by_hash: std::collections::HashMap<B256, Bytes> = transactions",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 81,
+                "text": "            .iter()",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 82,
+                "text": "            .map(|tx| {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 83,
+                "text": "                (",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 84,
+                "text": "                    B256::from_slice(SHA2::hash_bytes(tx.as_ref()).as_bytes()),",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 85,
+                "text": "                    tx.clone(),",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 86,
+                "text": "                )",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 87,
+                "text": "            })",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 88,
+                "text": "            .collect();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 89,
+                "text": "        tx_hashes",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 90,
+                "text": "            .iter()",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 91,
+                "text": "            .filter_map(|h| by_hash.get(h).cloned())",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 92,
+                "text": "            .collect()",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 93, "text": "    }", "ignored": false },
+              { "type": "+", "newLine": 94, "text": "}", "ignored": false },
+              { "type": "+", "newLine": 95, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 59,
+                "newLine": 96,
+                "text": "/// A structure that provides a caching layer for an `Executor` implementation."
+              },
+              { "type": " ", "oldLine": 60, "newLine": 97, "text": "///" },
+              {
+                "type": " ",
+                "oldLine": 61,
+                "newLine": 98,
+                "text": "/// The `CachedExecutor` is a generic struct that allows the caching of executed tasks"
+              }
+            ]
+          },
+          {
+            "oldStart": 71,
+            "oldLines": 18,
+            "newStart": 108,
+            "newLines": 38,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 71,
+                "newLine": 108,
+                "text": "    pub collection_target: Option<Arc<Mutex<Vec<Execution>>>>,"
+              },
+              { "type": " ", "oldLine": 72, "newLine": 109, "text": "}" },
+              { "type": " ", "oldLine": 73, "newLine": 110, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 74,
+                "text": "impl<'a, P, H> CachedExecutor<KonaExecutor<'a, P, H, OpEvmFactory>>",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 111,
+                "text": "impl<'a, P, H, Evm> CachedExecutor<KonaExecutor<'a, P, H, Evm, OpAlloyReceiptBuilder>>",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 75, "newLine": 112, "text": "where" },
+              {
+                "type": " ",
+                "oldLine": 76,
+                "newLine": 113,
+                "text": "    P: TrieDBProvider + Send + Sync + Clone + Debug,"
+              },
+              {
+                "type": " ",
+                "oldLine": 77,
+                "newLine": 114,
+                "text": "    H: TrieHinter + Send + Sync + Clone + Debug,"
+              },
+              {
+                "type": "+",
+                "newLine": 115,
+                "text": "    Evm: EvmFactory<Spec = op_revm::OpSpecId, BlockEnv = alloy_evm::revm::context::BlockEnv>",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 116,
+                "text": "        + Send",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 117,
+                "text": "        + Sync",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 118,
+                "text": "        + Clone",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 119,
+                "text": "        + Debug",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 120,
+                "text": "        + 'static,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 121,
+                "text": "    Evm::Tx: alloy_evm::FromTxWithEncoded<op_alloy_consensus::OpTxEnvelope>",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 122,
+                "text": "        + alloy_evm::FromRecoveredTx<op_alloy_consensus::OpTxEnvelope>",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 123,
+                "text": "        + alloy_op_evm::block::OpTxEnv,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 124,
+                "text": "    alloy_op_evm::OpBlockExecutorFactory<",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 125,
+                "text": "        alloy_op_evm::block::OpAlloyReceiptBuilder,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 126,
+                "text": "        RollupConfig,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 127,
+                "text": "        Evm,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 128,
+                "text": "    >: for<'b> alloy_evm::block::BlockExecutorFactory<",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 129,
+                "text": "        EvmFactory = Evm,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 130,
+                "text": "        ExecutionCtx<'b> = alloy_op_evm::OpBlockExecutionCtx,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 131,
+                "text": "        Transaction = op_alloy_consensus::OpTxEnvelope,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 132,
+                "text": "        Receipt = op_alloy_consensus::OpReceiptEnvelope,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 133,
+                "text": "    >,",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 78, "newLine": 134, "text": "{" },
+              {
+                "type": " ",
+                "oldLine": 79,
+                "newLine": 135,
+                "text": "    pub fn new("
+              },
+              {
+                "type": " ",
+                "oldLine": 80,
+                "newLine": 136,
+                "text": "        execution_cache: Vec<Arc<Execution>>,"
+              },
+              {
+                "type": " ",
+                "oldLine": 81,
+                "newLine": 137,
+                "text": "        rollup_config: &'a RollupConfig,"
+              },
+              {
+                "type": " ",
+                "oldLine": 82,
+                "newLine": 138,
+                "text": "        trie_provider: P,"
+              },
+              {
+                "type": " ",
+                "oldLine": 83,
+                "newLine": 139,
+                "text": "        trie_hinter: H,"
+              },
+              {
+                "type": "+",
+                "newLine": 140,
+                "text": "        evm_factory: Evm,",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 84,
+                "newLine": 141,
+                "text": "        collection_target: Option<Arc<Mutex<Vec<Execution>>>>,"
+              },
+              {
+                "type": "-",
+                "oldLine": 85,
+                "text": "    ) -> CachedExecutor<KonaExecutor<'a, P, H, OpEvmFactory>> {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 142,
+                "text": "    ) -> CachedExecutor<KonaExecutor<'a, P, H, Evm, OpAlloyReceiptBuilder>> {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 86,
+                "newLine": 143,
+                "text": "        CachedExecutor {"
+              },
+              {
+                "type": " ",
+                "oldLine": 87,
+                "newLine": 144,
+                "text": "            cache: {"
+              },
+              {
+                "type": " ",
+                "oldLine": 88,
+                "newLine": 145,
+                "text": "                // The cache elements will be popped from first to last"
+              }
+            ]
+          },
+          {
+            "oldStart": 94,
+            "oldLines": 7,
+            "newStart": 151,
+            "newLines": 8,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 94,
+                "newLine": 151,
+                "text": "                rollup_config,"
+              },
+              {
+                "type": " ",
+                "oldLine": 95,
+                "newLine": 152,
+                "text": "                trie_provider,"
+              },
+              {
+                "type": " ",
+                "oldLine": 96,
+                "newLine": 153,
+                "text": "                trie_hinter,"
+              },
+              {
+                "type": "-",
+                "oldLine": 97,
+                "text": "                OpEvmFactory::default(),",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 154,
+                "text": "                evm_factory,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 155,
+                "text": "                OpAlloyReceiptBuilder::default(),",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 98,
+                "newLine": 156,
+                "text": "                None,"
+              },
+              {
+                "type": " ",
+                "oldLine": 99,
+                "newLine": 157,
+                "text": "            ),"
+              },
+              {
+                "type": " ",
+                "oldLine": 100,
+                "newLine": 158,
+                "text": "            collection_target,"
+              }
+            ]
+          },
+          {
+            "oldStart": 114,
+            "oldLines": 8,
+            "newStart": 172,
+            "newLines": 11,
+            "lines": [
+              { "type": " ", "oldLine": 114, "newLine": 172, "text": "}" },
+              { "type": " ", "oldLine": 115, "newLine": 173, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 116,
+                "newLine": 174,
+                "text": "#[async_trait]"
+              },
+              {
+                "type": "-",
+                "oldLine": 117,
+                "text": "impl<E: Executor + Send + Sync + Debug> Executor for CachedExecutor<E> {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 175,
+                "text": "impl<E: Executor<Receipt = OpReceiptEnvelope> + Send + Sync + Debug> Executor",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 176,
+                "text": "    for CachedExecutor<E>",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 177, "text": "{", "ignored": false },
+              {
+                "type": " ",
+                "oldLine": 118,
+                "newLine": 178,
+                "text": "    type Error = <E as Executor>::Error;"
+              },
+              {
+                "type": "+",
+                "newLine": 179,
+                "text": "    type Receipt = OpReceiptEnvelope;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 119, "newLine": 180, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 120,
+                "newLine": 181,
+                "text": "    /// An asynchronous function that waits until the executor is ready."
+              },
+              { "type": " ", "oldLine": 121, "newLine": 182, "text": "    ///" }
+            ]
+          },
+          {
+            "oldStart": 188,
+            "oldLines": 7,
+            "newStart": 249,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 188,
+                "newLine": 249,
+                "text": "    async fn execute_payload("
+              },
+              {
+                "type": " ",
+                "oldLine": 189,
+                "newLine": 250,
+                "text": "        &mut self,"
+              },
+              {
+                "type": " ",
+                "oldLine": 190,
+                "newLine": 251,
+                "text": "        attributes: OpPayloadAttributes,"
+              },
+              {
+                "type": "-",
+                "oldLine": 191,
+                "text": "    ) -> Result<BlockBuildingOutcome, Self::Error> {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 252,
+                "text": "    ) -> Result<BlockBuildingOutcome<OpReceiptEnvelope>, Self::Error> {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 192,
+                "newLine": 253,
+                "text": "        let agreed_output = self.compute_output_root()?;"
+              },
+              {
+                "type": " ",
+                "oldLine": 193,
+                "newLine": 254,
+                "text": "        if self"
+              },
+              {
+                "type": " ",
+                "oldLine": 194,
+                "newLine": 255,
+                "text": "            .cache"
+              }
+            ]
+          },
+          {
+            "oldStart": 236,
+            "oldLines": 34,
+            "newStart": 297,
+            "newLines": 6,
+            "lines": [
+              { "type": " ", "oldLine": 236, "newLine": 297, "text": "}" },
+              { "type": " ", "oldLine": 237, "newLine": 298, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 238,
+                "newLine": 299,
+                "text": "/// Initializes and constructs a new `PipelineCursor` for a given L2 chain."
+              },
+              { "type": "-", "oldLine": 239, "text": "///", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 240,
+                "text": "/// This function sets up the execution cursor required for processing rollup blocks. It",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 241,
+                "text": "/// adjusts the starting L1 block position based on the `channel_timeout` to ensure",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 242,
+                "text": "/// that the entire channel data is included for processing.",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 243, "text": "///", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 244,
+                "text": "/// # Arguments",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 245,
+                "text": "/// * `rollup_config` - A reference to the rollup configuration containing chain-specific settings.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 246,
+                "text": "/// * `safe_header` - A sealed header representing the latest safe L2 block.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 247,
+                "text": "/// * `l2_chain_provider` - A mutable reference to an L2 chain provider for fetching L2 block data.",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 248, "text": "///", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 249,
+                "text": "/// # Type Parameters",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 250,
+                "text": "/// * `O` - A generic parameter representing the Oracle client implementation.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 251,
+                "text": "///   It must implement the traits `CommsClient`, `FlushableCache`, `Send`, `Sync`, and `Debug`.",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 252, "text": "///", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 253,
+                "text": "/// # Returns",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 254,
+                "text": "/// A shared reference to a thread-safe `PipelineCursor` wrapped in an `Arc` and `RwLock`,",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 255,
+                "text": "/// or an error of type `OracleProviderError` if the cursor initialization fails.",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 256, "text": "///", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 257,
+                "text": "/// # Errors",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 258,
+                "text": "/// This function will return an error if:",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 259,
+                "text": "/// - The L2 chain provider fails to fetch the block information for the given `safe_header`.",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 260, "text": "///", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 261,
+                "text": "/// # Details",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 262,
+                "text": "/// - Retrieves the L2 block information associated with the provided `safe_header`.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 263,
+                "text": "/// - Computes the `channel_timeout` based on the rollup configuration and L2 block timestamp.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 264,
+                "text": "/// - Creates a new `PipelineCursor` using the computed `channel_timeout`.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 265,
+                "text": "/// - Advances the cursor to the proper state based on default `BlockInfo` and the L2 tip.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 266,
+                "text": "/// - Returns the cursor wrapped in an `Arc<RwLock<PipelineCursor>>` for safe concurrent access.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 267,
+                "newLine": 300,
+                "text": "pub async fn new_execution_cursor<O>("
+              },
+              {
+                "type": " ",
+                "oldLine": 268,
+                "newLine": 301,
+                "text": "    rollup_config: &RollupConfig,"
+              },
+              {
+                "type": " ",
+                "oldLine": 269,
+                "newLine": 302,
+                "text": "    safe_header: Sealed<Header>,"
+              }
+            ]
+          },
+          {
+            "oldStart": 291,
+            "oldLines": 6,
+            "newStart": 324,
+            "newLines": 77,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 291,
+                "newLine": 324,
+                "text": "    Ok(Arc::new(RwLock::new(cursor)))"
+              },
+              { "type": " ", "oldLine": 292, "newLine": 325, "text": "}" },
+              { "type": " ", "oldLine": 293, "newLine": 326, "text": "" },
+              {
+                "type": "+",
+                "newLine": 327,
+                "text": "#[cfg(feature = \"experimental\")]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 328,
+                "text": "fn expected_blob_excess_gas_and_price(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 329,
+                "text": "    parent_header: &Header,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 330,
+                "text": "    spec_id: OpSpecId,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 331,
+                "text": ") -> Option<BlobExcessGasAndPrice> {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 332,
+                "text": "    let (params, fraction) = if spec_id.is_enabled_in(OpSpecId::ISTHMUS) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 333,
+                "text": "        (",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 334,
+                "text": "            Some(BlobParams::prague()),",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 335,
+                "text": "            BLOB_BASE_FEE_UPDATE_FRACTION_PRAGUE,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 336,
+                "text": "        )",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 337,
+                "text": "    } else if spec_id.is_enabled_in(OpSpecId::ECOTONE) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 338,
+                "text": "        (",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 339,
+                "text": "            Some(BlobParams::cancun()),",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 340,
+                "text": "            BLOB_BASE_FEE_UPDATE_FRACTION_CANCUN,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 341,
+                "text": "        )",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 342,
+                "text": "    } else {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 343,
+                "text": "        (None, 0)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 344,
+                "text": "    };",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 345, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 346,
+                "text": "    parent_header",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 347,
+                "text": "        .maybe_next_block_excess_blob_gas(params)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 348,
+                "text": "        .or_else(|| spec_id.is_enabled_in(OpSpecId::ECOTONE).then_some(0))",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 349,
+                "text": "        .map(|excess| BlobExcessGasAndPrice::new(excess, fraction))",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 350, "text": "}", "ignored": false },
+              { "type": "+", "newLine": 351, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 352,
+                "text": "#[cfg(feature = \"experimental\")]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 353,
+                "text": "pub fn build_single_partial_for_block(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 354,
+                "text": "    execution: &Execution,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 355,
+                "text": "    traces: Vec<PartialExecutionTrace>,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 356,
+                "text": "    parent_header: &Header,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 357,
+                "text": "    spec_id: OpSpecId,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 358,
+                "text": ") -> PartialExecution {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 359,
+                "text": "    let header = execution.artifacts.header.inner();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 360,
+                "text": "    let expected_state = traces",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 361,
+                "text": "        .first()",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 362,
+                "text": "        .map(|trace| trace.expected_state.clone())",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 363,
+                "text": "        .unwrap_or_default();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 364,
+                "text": "    let (tx_hashes, results): (Vec<B256>, Vec<_>) = traces",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 365,
+                "text": "        .into_iter()",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 366,
+                "text": "        .map(|trace| (trace.tx_hash, trace.result))",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 367,
+                "text": "        .unzip();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 368,
+                "text": "    PartialExecution {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 369,
+                "text": "        tx_hashes,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 370,
+                "text": "        results,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 371,
+                "text": "        expected_state,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 372,
+                "text": "        block_env: BlockEnv {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 373,
+                "text": "            number: U256::from(header.number),",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 374,
+                "text": "            beneficiary: header.beneficiary,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 375,
+                "text": "            timestamp: U256::from(header.timestamp),",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 376,
+                "text": "            gas_limit: header.gas_limit,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 377,
+                "text": "            basefee: header.base_fee_per_gas.unwrap_or(0),",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 378,
+                "text": "            difficulty: header.difficulty,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 379,
+                "text": "            prevrandao: Some(header.mix_hash),",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 380,
+                "text": "            blob_excess_gas_and_price: expected_blob_excess_gas_and_price(parent_header, spec_id),",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 381,
+                "text": "            slot_num: 0,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 382,
+                "text": "        },",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 383,
+                "text": "        op_block_ctx: OpBlockExecutionCtx {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 384,
+                "text": "            parent_hash: header.parent_hash,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 385,
+                "text": "            parent_beacon_block_root: header.parent_beacon_block_root,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 386,
+                "text": "            extra_data: header.extra_data.clone(),",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 387,
+                "text": "            // Valid while kona hardcodes `RollupConfig::is_sdm_active` to",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 388,
+                "text": "            // `false` (v1.5.2). SDM future work: derive the true mode the way",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 389,
+                "text": "            // kona's stateless builder does (`Verify` when SDM is active and",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 390,
+                "text": "            // the block's transactions embed a post-exec payload), or the",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 391,
+                "text": "            // partial re-execution diverges from canonical gas accounting.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 392,
+                "text": "            // See the SDM canonical note in `evm/cached.rs`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 393,
+                "text": "            post_exec_mode: PostExecMode::Disabled,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 394,
+                "text": "        },",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 395,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 396, "text": "}", "ignored": false },
+              { "type": "+", "newLine": 397, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 294,
+                "newLine": 398,
+                "text": "#[cfg(test)]"
+              },
+              {
+                "type": " ",
+                "oldLine": 295,
+                "newLine": 399,
+                "text": "#[cfg_attr(coverage_nightly, coverage(off))]"
+              },
+              {
+                "type": " ",
+                "oldLine": 296,
+                "newLine": 400,
+                "text": "pub mod tests {"
+              }
+            ]
+          },
+          {
+            "oldStart": 323,
+            "oldLines": 6,
+            "newStart": 427,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 323,
+                "newLine": 427,
+                "text": "                suggested_fee_recipient: Default::default(),"
+              },
+              {
+                "type": " ",
+                "oldLine": 324,
+                "newLine": 428,
+                "text": "                withdrawals: None,"
+              },
+              {
+                "type": " ",
+                "oldLine": 325,
+                "newLine": 429,
+                "text": "                parent_beacon_block_root: None,"
+              },
+              {
+                "type": "+",
+                "newLine": 430,
+                "text": "                slot_number: None,",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 326,
+                "newLine": 431,
+                "text": "            },"
+              },
+              {
+                "type": " ",
+                "oldLine": 327,
+                "newLine": 432,
+                "text": "            transactions: None,"
+              },
+              {
+                "type": " ",
+                "oldLine": 328,
+                "newLine": 433,
+                "text": "            no_tx_pool: None,"
+              }
+            ]
+          },
+          {
+            "oldStart": 365,
+            "oldLines": 6,
+            "newStart": 470,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 365,
+                "newLine": 470,
+                "text": "                            parent_beacon_block_root: Some(keccak256(format!("
+              },
+              {
+                "type": " ",
+                "oldLine": 366,
+                "newLine": 471,
+                "text": "                                \"parent_beacon_block_root {i}\""
+              },
+              {
+                "type": " ",
+                "oldLine": 367,
+                "newLine": 472,
+                "text": "                            ))),"
+              },
+              {
+                "type": "+",
+                "newLine": 473,
+                "text": "                            slot_number: Some(i as u64),",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 368,
+                "newLine": 474,
+                "text": "                        },"
+              },
+              {
+                "type": " ",
+                "oldLine": 369,
+                "newLine": 475,
+                "text": "                        transactions: Some(vec![format!(\"transactions {i}\")"
+              },
+              {
+                "type": " ",
+                "oldLine": 370,
+                "newLine": 476,
+                "text": "                            .as_bytes()"
+              }
+            ]
+          },
+          {
+            "oldStart": 384,
+            "oldLines": 13,
+            "newStart": 490,
+            "newLines": 14,
+            "lines": [
+              { "type": " ", "oldLine": 384, "newLine": 490, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 385,
+                "newLine": 491,
+                "text": "    #[derive(Clone, Debug)]"
+              },
+              {
+                "type": " ",
+                "oldLine": 386,
+                "newLine": 492,
+                "text": "    pub struct TestExecutor {"
+              },
+              {
+                "type": "-",
+                "oldLine": 387,
+                "text": "        pub outcomes: Vec<BlockBuildingOutcome>,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 493,
+                "text": "        pub outcomes: Vec<BlockBuildingOutcome<OpReceiptEnvelope>>,",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 388,
+                "newLine": 494,
+                "text": "        pub output_roots: Vec<B256>,"
+              },
+              { "type": " ", "oldLine": 389, "newLine": 495, "text": "    }" },
+              { "type": " ", "oldLine": 390, "newLine": 496, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 391,
+                "newLine": 497,
+                "text": "    #[async_trait]"
+              },
+              {
+                "type": " ",
+                "oldLine": 392,
+                "newLine": 498,
+                "text": "    impl Executor for TestExecutor {"
+              },
+              {
+                "type": " ",
+                "oldLine": 393,
+                "newLine": 499,
+                "text": "        type Error = kona_executor::ExecutorError;"
+              },
+              {
+                "type": "+",
+                "newLine": 500,
+                "text": "        type Receipt = OpReceiptEnvelope;",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 394, "newLine": 501, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 395,
+                "newLine": 502,
+                "text": "        async fn wait_until_ready(&mut self) {}"
+              },
+              { "type": " ", "oldLine": 396, "newLine": 503, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 399,
+            "oldLines": 7,
+            "newStart": 506,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 399,
+                "newLine": 506,
+                "text": "        async fn execute_payload("
+              },
+              {
+                "type": " ",
+                "oldLine": 400,
+                "newLine": 507,
+                "text": "            &mut self,"
+              },
+              {
+                "type": " ",
+                "oldLine": 401,
+                "newLine": 508,
+                "text": "            _attributes: OpPayloadAttributes,"
+              },
+              {
+                "type": "-",
+                "oldLine": 402,
+                "text": "        ) -> Result<BlockBuildingOutcome, Self::Error> {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 509,
+                "text": "        ) -> Result<BlockBuildingOutcome<OpReceiptEnvelope>, Self::Error> {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 403,
+                "newLine": 510,
+                "text": "            self.outcomes"
+              },
+              {
+                "type": " ",
+                "oldLine": 404,
+                "newLine": 511,
+                "text": "                .pop()"
+              },
+              {
+                "type": " ",
+                "oldLine": 405,
+                "newLine": 512,
+                "text": "                .ok_or(kona_executor::ExecutorError::MissingExecutor)"
+              }
+            ]
+          },
+          {
+            "oldStart": 553,
+            "oldLines": 6,
+            "newStart": 660,
+            "newLines": 45,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 553,
+                "newLine": 660,
+                "text": "        );"
+              },
+              { "type": " ", "oldLine": 554, "newLine": 661, "text": "    }" },
+              { "type": " ", "oldLine": 555, "newLine": 662, "text": "" },
+              {
+                "type": "+",
+                "newLine": 663,
+                "text": "    #[cfg(feature = \"experimental\")]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 664,
+                "text": "    #[test]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 665,
+                "text": "    fn build_single_partial_for_block_blob_param_branches() {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 666,
+                "text": "        let execution = gen_executions(1)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 667,
+                "text": "            .pop()",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 668,
+                "text": "            .expect(\"gen_executions(1) yields one\");",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 669,
+                "text": "        let parent_header = Header::default();",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 670, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 671,
+                "text": "        // Pre-ECOTONE: `expected_blob_excess_gas_and_price` selects `(None, 0)`",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 672,
+                "text": "        // and `maybe_next_block_excess_blob_gas(None)` short-circuits to None,",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 673,
+                "text": "        // and the `or_else` closure also returns None (ECOTONE not enabled).",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 674,
+                "text": "        let bedrock = build_single_partial_for_block(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 675,
+                "text": "            execution.as_ref(),",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 676,
+                "text": "            Vec::new(),",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 677,
+                "text": "            &parent_header,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 678,
+                "text": "            OpSpecId::BEDROCK,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 679,
+                "text": "        );",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 680,
+                "text": "        assert!(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 681,
+                "text": "            bedrock.block_env.blob_excess_gas_and_price.is_none(),",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 682,
+                "text": "            \"BEDROCK must yield None blob_excess_gas_and_price\",",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 683,
+                "text": "        );",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 684, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 685,
+                "text": "        // ISTHMUS: selects `(Some(prague), PRAGUE_FRAC)`. Default header has no",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 686,
+                "text": "        // `excess_blob_gas`, so `maybe_next_block_excess_blob_gas` returns None,",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 687,
+                "text": "        // the `or_else` fallback supplies Some(0), and `BlobExcessGasAndPrice::new`",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 688,
+                "text": "        // is constructed with the prague fraction.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 689,
+                "text": "        let isthmus = build_single_partial_for_block(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 690,
+                "text": "            execution.as_ref(),",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 691,
+                "text": "            Vec::new(),",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 692,
+                "text": "            &parent_header,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 693,
+                "text": "            OpSpecId::ISTHMUS,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 694,
+                "text": "        );",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 695,
+                "text": "        let blob = isthmus",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 696,
+                "text": "            .block_env",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 697,
+                "text": "            .blob_excess_gas_and_price",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 698,
+                "text": "            .expect(\"ISTHMUS must yield Some blob_excess_gas_and_price\");",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 699,
+                "text": "        assert_eq!(blob.excess_blob_gas, 0);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 700,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 701, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 556,
+                "newLine": 702,
+                "text": "    #[tokio::test(flavor = \"multi_thread\")]"
+              },
+              {
+                "type": " ",
+                "oldLine": 557,
+                "newLine": 703,
+                "text": "    pub async fn test_execution_cursor() {"
+              },
+              {
+                "type": " ",
+                "oldLine": 558,
+                "newLine": 704,
+                "text": "        // prepare oracle data"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

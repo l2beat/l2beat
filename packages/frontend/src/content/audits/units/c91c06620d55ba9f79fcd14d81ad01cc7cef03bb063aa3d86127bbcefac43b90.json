@@ -1,1 +1,15 @@
-{"schemaVersion":2,"unitHash":"c91c06620d55ba9f79fcd14d81ad01cc7cef03bb063aa3d86127bbcefac43b90","name":"interop-deposits-dump.rs","kind":"program","lines":28,"source":"//! Prints Interop activation deposits and upgrade gas; paired with the Go `interop-deposits-dump`\n//! command for cross-language diffing.\n\nuse alloy_primitives::{TxKind, hex};\nuse kona_hardforks::{Hardforks, Lagoon};\n\nfn main() {\n    for activate in [false, true] {\n        let gas = Hardforks::LAGOON.upgrade_gas_for_activation(activate);\n        println!(\"activate={}\", activate);\n        println!(\"gas=0x{:016x}\", gas);\n        for (i, tx) in Lagoon::deposits(activate).iter().enumerate() {\n            let to = match tx.to {\n                TxKind::Call(addr) => format!(\"0x{}\", hex::encode(addr.as_slice())),\n                TxKind::Create => \"create\".to_string(),\n            };\n            println!(\"--- tx {} ---\", i);\n            println!(\"source_hash=0x{}\", hex::encode(tx.source_hash.as_slice()));\n            println!(\"from=0x{}\", hex::encode(tx.from.as_slice()));\n            println!(\"to={}\", to);\n            println!(\"mint=0x{:032x}\", tx.mint);\n            println!(\"value=0x{:064x}\", tx.value);\n            println!(\"gas_limit=0x{:016x}\", tx.gas_limit);\n            println!(\"is_system_tx={}\", tx.is_system_transaction);\n            println!(\"data=0x{}\", hex::encode(&tx.input));\n        }\n    }\n}","resolutions":{"9fa846564f4071bd":{"status":"unaudited","coveredLines":0,"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "c91c06620d55ba9f79fcd14d81ad01cc7cef03bb063aa3d86127bbcefac43b90",
+  "name": "interop-deposits-dump.rs",
+  "kind": "program",
+  "lines": 28,
+  "source": "//! Prints Interop activation deposits and upgrade gas; paired with the Go `interop-deposits-dump`\n//! command for cross-language diffing.\n\nuse alloy_primitives::{TxKind, hex};\nuse kona_hardforks::{Hardforks, Lagoon};\n\nfn main() {\n    for activate in [false, true] {\n        let gas = Hardforks::LAGOON.upgrade_gas_for_activation(activate);\n        println!(\"activate={}\", activate);\n        println!(\"gas=0x{:016x}\", gas);\n        for (i, tx) in Lagoon::deposits(activate).iter().enumerate() {\n            let to = match tx.to {\n                TxKind::Call(addr) => format!(\"0x{}\", hex::encode(addr.as_slice())),\n                TxKind::Create => \"create\".to_string(),\n            };\n            println!(\"--- tx {} ---\", i);\n            println!(\"source_hash=0x{}\", hex::encode(tx.source_hash.as_slice()));\n            println!(\"from=0x{}\", hex::encode(tx.from.as_slice()));\n            println!(\"to={}\", to);\n            println!(\"mint=0x{:032x}\", tx.mint);\n            println!(\"value=0x{:064x}\", tx.value);\n            println!(\"gas_limit=0x{:016x}\", tx.gas_limit);\n            println!(\"is_system_tx={}\", tx.is_system_transaction);\n            println!(\"data=0x{}\", hex::encode(&tx.input));\n        }\n    }\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

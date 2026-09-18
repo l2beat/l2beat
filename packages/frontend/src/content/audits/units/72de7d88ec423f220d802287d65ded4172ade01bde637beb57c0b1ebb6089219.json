@@ -1,1 +1,316 @@
-{"schemaVersion":2,"unitHash":"72de7d88ec423f220d802287d65ded4172ade01bde637beb57c0b1ebb6089219","name":"single.rs","kind":"program","lines":217,"source":"//! Single-chain fault proof program entrypoint.\n\nuse crate::fpvm_evm::FpvmOpEvmFactory;\nuse alloc::sync::Arc;\nuse alloy_consensus::Sealed;\nuse alloy_op_evm::post_exec::PostExecEvmFactoryAdapter;\nuse alloy_primitives::B256;\nuse core::fmt::Debug;\nuse kona_derive::{EthereumDataSource, PipelineErrorKind};\nuse kona_driver::{Driver, DriverError};\nuse kona_executor::{ExecutorError, TrieDBProvider};\nuse kona_preimage::{CommsClient, HintWriterClient, PreimageKey, PreimageOracleClient};\nuse kona_proof::{\n    BootInfo, CachingOracle, HintType,\n    errors::OracleProviderError,\n    executor::KonaExecutor,\n    l1::{OracleBlobProvider, OracleL1ChainProvider, OraclePipeline},\n    l2::OracleL2ChainProvider,\n    sync::new_oracle_pipeline_cursor,\n};\nuse thiserror::Error;\nuse tracing::{error, info};\n\n/// An error that can occur when running the fault proof program.\n#[derive(Error, Debug)]\npub enum FaultProofProgramError {\n    /// The claim is invalid.\n    #[error(\"Invalid claim. Expected {0}, actual {1}\")]\n    InvalidClaim(B256, B256),\n    /// An error occurred in the Oracle provider.\n    #[error(transparent)]\n    OracleProviderError(#[from] OracleProviderError),\n    /// An error occurred in the derivation pipeline.\n    #[error(transparent)]\n    PipelineError(#[from] PipelineErrorKind),\n    /// An error occurred in the driver.\n    #[error(transparent)]\n    Driver(#[from] DriverError<ExecutorError>),\n}\n\n/// Executes the fault proof program with the given [PreimageOracleClient] and [HintWriterClient].\n#[inline]\npub async fn run<P, H>(oracle_client: P, hint_client: H) -> Result<(), FaultProofProgramError>\nwhere\n    P: PreimageOracleClient + Send + Sync + Debug + Clone + 'static,\n    H: HintWriterClient + Send + Sync + Debug + Clone + 'static,\n{\n    const ORACLE_LRU_SIZE: usize = 1024;\n\n    ////////////////////////////////////////////////////////////////\n    //                          PROLOGUE                          //\n    ////////////////////////////////////////////////////////////////\n\n    let oracle =\n        Arc::new(CachingOracle::new(ORACLE_LRU_SIZE, oracle_client.clone(), hint_client.clone()));\n    let boot = BootInfo::load(oracle.as_ref()).await?;\n    let l1_config = boot.l1_config;\n    let rollup_config = Arc::new(boot.rollup_config);\n    let safe_head_hash = fetch_safe_head_hash(oracle.as_ref(), boot.agreed_l2_output_root).await?;\n\n    let mut l1_provider = OracleL1ChainProvider::new(boot.l1_head, oracle.clone());\n    let mut l2_provider =\n        OracleL2ChainProvider::new(safe_head_hash, rollup_config.clone(), oracle.clone());\n    let beacon = OracleBlobProvider::new(oracle.clone());\n\n    // Fetch the safe head's block header.\n    let safe_head = l2_provider\n        .header_by_hash(safe_head_hash)\n        .map(|header| Sealed::new_unchecked(header, safe_head_hash))?;\n\n    // If the claimed L2 block number is less than the safe head of the L2 chain, the claim is\n    // invalid.\n    if boot.claimed_l2_block_number < safe_head.number {\n        error!(\n            target: \"client\",\n            claimed = boot.claimed_l2_block_number,\n            safe = safe_head.number,\n            \"Claimed L2 block number is less than the safe head\",\n        );\n        return Err(FaultProofProgramError::InvalidClaim(\n            boot.agreed_l2_output_root,\n            boot.claimed_l2_output_root,\n        ));\n    }\n\n    // If the claim targets the safe head block itself, then no derivation is required. This can\n    // happen at trace-extension leaves where the trace is capped at the root-claim block number.\n    //\n    // In this case, the only valid output root is the agreed output root (a zero-step transition).\n    if boot.claimed_l2_block_number == safe_head.number {\n        if boot.claimed_l2_output_root != boot.agreed_l2_output_root {\n            error!(\n                target: \"client\",\n                claimed = boot.claimed_l2_block_number,\n                safe = safe_head.number,\n                expected_output_root = ?boot.agreed_l2_output_root,\n                claimed_output_root = ?boot.claimed_l2_output_root,\n                \"Claimed output root does not match agreed output root at safe head\",\n            );\n            return Err(FaultProofProgramError::InvalidClaim(\n                boot.agreed_l2_output_root,\n                boot.claimed_l2_output_root,\n            ));\n        }\n\n        info!(\n            target: \"client\",\n            \"Trace extension detected. State transition is already agreed upon.\",\n        );\n        return Ok(());\n    }\n\n    ////////////////////////////////////////////////////////////////\n    //                   DERIVATION & EXECUTION                   //\n    ////////////////////////////////////////////////////////////////\n\n    // Create a new derivation driver with the given boot information and oracle.\n    let cursor = new_oracle_pipeline_cursor(\n        rollup_config.as_ref(),\n        safe_head,\n        boot.agreed_l2_output_root,\n        &mut l1_provider,\n        &mut l2_provider,\n    )\n    .await\n    .map_err(|e| {\n        error!(target: \"client\", \"Failed to create pipeline cursor: {:?}\", e);\n        e\n    })?;\n    l2_provider.set_cursor(cursor.clone());\n\n    let evm_factory =\n        PostExecEvmFactoryAdapter::new(FpvmOpEvmFactory::new(hint_client, oracle_client));\n    let da_provider =\n        EthereumDataSource::new_from_parts(l1_provider.clone(), beacon, &rollup_config);\n    let pipeline = OraclePipeline::new(\n        rollup_config.clone(),\n        l1_config.into(),\n        cursor.clone(),\n        oracle.clone(),\n        da_provider,\n        l1_provider.clone(),\n        l2_provider.clone(),\n        // Single-chain fault proof: no interop dependency set. If this chain\n        // ever schedules interop, the StatefulAttributesBuilder constructor\n        // will panic.\n        None,\n    )\n    .await?;\n\n    let executor = KonaExecutor::new(\n        rollup_config.as_ref(),\n        l2_provider.clone(),\n        l2_provider,\n        evm_factory,\n        alloy_op_evm::block::OpAlloyReceiptBuilder::default(),\n        None,\n    );\n    let mut driver = Driver::new(cursor, executor, pipeline);\n\n    // Run the derivation pipeline until we are able to produce the output root of the claimed\n    // L2 block.\n    let (safe_head, output_root) = driver\n        .advance_to_target(rollup_config.as_ref(), Some(boot.claimed_l2_block_number))\n        .await?;\n\n    ////////////////////////////////////////////////////////////////\n    //                          EPILOGUE                          //\n    ////////////////////////////////////////////////////////////////\n\n    if output_root != boot.claimed_l2_output_root {\n        error!(\n            target: \"client\",\n            number = safe_head.block_info.number,\n            output_root = ?output_root,\n            claimed_output_root = ?boot.claimed_l2_output_root,\n            \"Failed to validate L2 block\",\n        );\n        return Err(FaultProofProgramError::InvalidClaim(output_root, boot.claimed_l2_output_root));\n    }\n\n    info!(\n        target: \"client\",\n        number = safe_head.block_info.number,\n        output_root = ?output_root,\n        \"Successfully validated L2 block\",\n    );\n\n    Ok(())\n}\n\n/// Fetches the safe head hash of the L2 chain based on the agreed upon L2 output root in the\n/// [BootInfo].\npub async fn fetch_safe_head_hash<O>(\n    caching_oracle: &O,\n    agreed_l2_output_root: B256,\n) -> Result<B256, OracleProviderError>\nwhere\n    O: CommsClient,\n{\n    let mut output_preimage = [0u8; 128];\n    HintType::StartingL2Output\n        .with_data(&[agreed_l2_output_root.as_ref()])\n        .send(caching_oracle)\n        .await?;\n    caching_oracle\n        .get_exact(PreimageKey::new_keccak256(*agreed_l2_output_root), output_preimage.as_mut())\n        .await?;\n\n    if output_preimage[..32] != [0u8; 32] {\n        return Err(OracleProviderError::UnknownOutputVersion(B256::from_slice(\n            &output_preimage[..32],\n        )));\n    }\n\n    output_preimage[96..128].try_into().map_err(OracleProviderError::SliceConversion)\n}","resolutions":{"9fa846564f4071bd":{"status":"differs","coveredLines":207,"match":{"origin":"own","collection":"optimism","relation":{"type":"own"},"rank":0,"matchedBy":"name","auditedName":"single.rs","similarity":0.966,"reportId":"optimism/cantina-kona-2026-03","repository":"ethereum-optimism/optimism","path":"rust/kona/bin/client/src/single.rs","commit":"c390d771c65d783503f82fb76fb0b1d8628c605b","commitTimestamp":"2026-03-26T17:10:19Z","url":"https://github.com/ethereum-optimism/optimism/blob/c390d771c65d783503f82fb76fb0b1d8628c605b/rust/kona/bin/client/src/single.rs","auditStatus":"partially_audited_without_major_findings","reviewPhase":"fix review","coverage":"Fix review only: head commit of PR 19775 'fix(kona/proof): several fixes to kona-proof.' (merged 2026-03-26) in the optimism monorepo, where kona now lives under rust/kona. Cantina verified the fix for Critical 3.1.1. Same file as op-rs/kona bin/client/src/single.rs at 86910c91; different repository so no follows link.","majorFindings":0,"isLatestVersion":true,"laterAuditedVersionExists":false,"totalVersions":1},"diff":{"added":10,"removed":1,"ignoredAdded":4,"ignoredRemoved":0,"unchanged":207,"ignoredOnly":false,"hunks":[{"oldStart":3,"oldLines":6,"newStart":3,"newLines":7,"lines":[{"type":" ","oldLine":3,"newLine":3,"text":"use crate::fpvm_evm::FpvmOpEvmFactory;"},{"type":" ","oldLine":4,"newLine":4,"text":"use alloc::sync::Arc;"},{"type":" ","oldLine":5,"newLine":5,"text":"use alloy_consensus::Sealed;"},{"type":"+","newLine":6,"text":"use alloy_op_evm::post_exec::PostExecEvmFactoryAdapter;","ignored":false},{"type":" ","oldLine":6,"newLine":7,"text":"use alloy_primitives::B256;"},{"type":" ","oldLine":7,"newLine":8,"text":"use core::fmt::Debug;"},{"type":" ","oldLine":8,"newLine":9,"text":"use kona_derive::{EthereumDataSource, PipelineErrorKind};"}]},{"oldStart":128,"oldLines":7,"newStart":129,"newLines":8,"lines":[{"type":" ","oldLine":128,"newLine":129,"text":"    })?;"},{"type":" ","oldLine":129,"newLine":130,"text":"    l2_provider.set_cursor(cursor.clone());"},{"type":" ","oldLine":130,"newLine":131,"text":""},{"type":"-","oldLine":131,"text":"    let evm_factory = FpvmOpEvmFactory::new(hint_client, oracle_client);","ignored":false},{"type":"+","newLine":132,"text":"    let evm_factory =","ignored":false},{"type":"+","newLine":133,"text":"        PostExecEvmFactoryAdapter::new(FpvmOpEvmFactory::new(hint_client, oracle_client));","ignored":false},{"type":" ","oldLine":132,"newLine":134,"text":"    let da_provider ="},{"type":" ","oldLine":133,"newLine":135,"text":"        EthereumDataSource::new_from_parts(l1_provider.clone(), beacon, &rollup_config);"},{"type":" ","oldLine":134,"newLine":136,"text":"    let pipeline = OraclePipeline::new("}]},{"oldStart":139,"oldLines":6,"newStart":141,"newLines":10,"lines":[{"type":" ","oldLine":139,"newLine":141,"text":"        da_provider,"},{"type":" ","oldLine":140,"newLine":142,"text":"        l1_provider.clone(),"},{"type":" ","oldLine":141,"newLine":143,"text":"        l2_provider.clone(),"},{"type":"+","newLine":144,"text":"        // Single-chain fault proof: no interop dependency set. If this chain","ignored":true},{"type":"+","newLine":145,"text":"        // ever schedules interop, the StatefulAttributesBuilder constructor","ignored":true},{"type":"+","newLine":146,"text":"        // will panic.","ignored":true},{"type":"+","newLine":147,"text":"        None,","ignored":false},{"type":" ","oldLine":142,"newLine":148,"text":"    )"},{"type":" ","oldLine":143,"newLine":149,"text":"    .await?;"},{"type":" ","oldLine":144,"newLine":150,"text":""}]},{"oldStart":147,"oldLines":6,"newStart":153,"newLines":7,"lines":[{"type":" ","oldLine":147,"newLine":153,"text":"        l2_provider.clone(),"},{"type":" ","oldLine":148,"newLine":154,"text":"        l2_provider,"},{"type":" ","oldLine":149,"newLine":155,"text":"        evm_factory,"},{"type":"+","newLine":156,"text":"        alloy_op_evm::block::OpAlloyReceiptBuilder::default(),","ignored":false},{"type":" ","oldLine":150,"newLine":157,"text":"        None,"},{"type":" ","oldLine":151,"newLine":158,"text":"    );"},{"type":" ","oldLine":152,"newLine":159,"text":"    let mut driver = Driver::new(cursor, executor, pipeline);"}]},{"oldStart":200,"oldLines":5,"newStart":207,"newLines":11,"lines":[{"type":" ","oldLine":200,"newLine":207,"text":"        .get_exact(PreimageKey::new_keccak256(*agreed_l2_output_root), output_preimage.as_mut())"},{"type":" ","oldLine":201,"newLine":208,"text":"        .await?;"},{"type":" ","oldLine":202,"newLine":209,"text":""},{"type":"+","newLine":210,"text":"    if output_preimage[..32] != [0u8; 32] {","ignored":false},{"type":"+","newLine":211,"text":"        return Err(OracleProviderError::UnknownOutputVersion(B256::from_slice(","ignored":false},{"type":"+","newLine":212,"text":"            &output_preimage[..32],","ignored":false},{"type":"+","newLine":213,"text":"        )));","ignored":false},{"type":"+","newLine":214,"text":"    }","ignored":false},{"type":"+","newLine":215,"text":"","ignored":true},{"type":" ","oldLine":203,"newLine":216,"text":"    output_preimage[96..128].try_into().map_err(OracleProviderError::SliceConversion)"},{"type":" ","oldLine":204,"newLine":217,"text":"}"}]}]},"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "72de7d88ec423f220d802287d65ded4172ade01bde637beb57c0b1ebb6089219",
+  "name": "single.rs",
+  "kind": "program",
+  "lines": 217,
+  "source": "//! Single-chain fault proof program entrypoint.\n\nuse crate::fpvm_evm::FpvmOpEvmFactory;\nuse alloc::sync::Arc;\nuse alloy_consensus::Sealed;\nuse alloy_op_evm::post_exec::PostExecEvmFactoryAdapter;\nuse alloy_primitives::B256;\nuse core::fmt::Debug;\nuse kona_derive::{EthereumDataSource, PipelineErrorKind};\nuse kona_driver::{Driver, DriverError};\nuse kona_executor::{ExecutorError, TrieDBProvider};\nuse kona_preimage::{CommsClient, HintWriterClient, PreimageKey, PreimageOracleClient};\nuse kona_proof::{\n    BootInfo, CachingOracle, HintType,\n    errors::OracleProviderError,\n    executor::KonaExecutor,\n    l1::{OracleBlobProvider, OracleL1ChainProvider, OraclePipeline},\n    l2::OracleL2ChainProvider,\n    sync::new_oracle_pipeline_cursor,\n};\nuse thiserror::Error;\nuse tracing::{error, info};\n\n/// An error that can occur when running the fault proof program.\n#[derive(Error, Debug)]\npub enum FaultProofProgramError {\n    /// The claim is invalid.\n    #[error(\"Invalid claim. Expected {0}, actual {1}\")]\n    InvalidClaim(B256, B256),\n    /// An error occurred in the Oracle provider.\n    #[error(transparent)]\n    OracleProviderError(#[from] OracleProviderError),\n    /// An error occurred in the derivation pipeline.\n    #[error(transparent)]\n    PipelineError(#[from] PipelineErrorKind),\n    /// An error occurred in the driver.\n    #[error(transparent)]\n    Driver(#[from] DriverError<ExecutorError>),\n}\n\n/// Executes the fault proof program with the given [PreimageOracleClient] and [HintWriterClient].\n#[inline]\npub async fn run<P, H>(oracle_client: P, hint_client: H) -> Result<(), FaultProofProgramError>\nwhere\n    P: PreimageOracleClient + Send + Sync + Debug + Clone + 'static,\n    H: HintWriterClient + Send + Sync + Debug + Clone + 'static,\n{\n    const ORACLE_LRU_SIZE: usize = 1024;\n\n    ////////////////////////////////////////////////////////////////\n    //                          PROLOGUE                          //\n    ////////////////////////////////////////////////////////////////\n\n    let oracle =\n        Arc::new(CachingOracle::new(ORACLE_LRU_SIZE, oracle_client.clone(), hint_client.clone()));\n    let boot = BootInfo::load(oracle.as_ref()).await?;\n    let l1_config = boot.l1_config;\n    let rollup_config = Arc::new(boot.rollup_config);\n    let safe_head_hash = fetch_safe_head_hash(oracle.as_ref(), boot.agreed_l2_output_root).await?;\n\n    let mut l1_provider = OracleL1ChainProvider::new(boot.l1_head, oracle.clone());\n    let mut l2_provider =\n        OracleL2ChainProvider::new(safe_head_hash, rollup_config.clone(), oracle.clone());\n    let beacon = OracleBlobProvider::new(oracle.clone());\n\n    // Fetch the safe head's block header.\n    let safe_head = l2_provider\n        .header_by_hash(safe_head_hash)\n        .map(|header| Sealed::new_unchecked(header, safe_head_hash))?;\n\n    // If the claimed L2 block number is less than the safe head of the L2 chain, the claim is\n    // invalid.\n    if boot.claimed_l2_block_number < safe_head.number {\n        error!(\n            target: \"client\",\n            claimed = boot.claimed_l2_block_number,\n            safe = safe_head.number,\n            \"Claimed L2 block number is less than the safe head\",\n        );\n        return Err(FaultProofProgramError::InvalidClaim(\n            boot.agreed_l2_output_root,\n            boot.claimed_l2_output_root,\n        ));\n    }\n\n    // If the claim targets the safe head block itself, then no derivation is required. This can\n    // happen at trace-extension leaves where the trace is capped at the root-claim block number.\n    //\n    // In this case, the only valid output root is the agreed output root (a zero-step transition).\n    if boot.claimed_l2_block_number == safe_head.number {\n        if boot.claimed_l2_output_root != boot.agreed_l2_output_root {\n            error!(\n                target: \"client\",\n                claimed = boot.claimed_l2_block_number,\n                safe = safe_head.number,\n                expected_output_root = ?boot.agreed_l2_output_root,\n                claimed_output_root = ?boot.claimed_l2_output_root,\n                \"Claimed output root does not match agreed output root at safe head\",\n            );\n            return Err(FaultProofProgramError::InvalidClaim(\n                boot.agreed_l2_output_root,\n                boot.claimed_l2_output_root,\n            ));\n        }\n\n        info!(\n            target: \"client\",\n            \"Trace extension detected. State transition is already agreed upon.\",\n        );\n        return Ok(());\n    }\n\n    ////////////////////////////////////////////////////////////////\n    //                   DERIVATION & EXECUTION                   //\n    ////////////////////////////////////////////////////////////////\n\n    // Create a new derivation driver with the given boot information and oracle.\n    let cursor = new_oracle_pipeline_cursor(\n        rollup_config.as_ref(),\n        safe_head,\n        boot.agreed_l2_output_root,\n        &mut l1_provider,\n        &mut l2_provider,\n    )\n    .await\n    .map_err(|e| {\n        error!(target: \"client\", \"Failed to create pipeline cursor: {:?}\", e);\n        e\n    })?;\n    l2_provider.set_cursor(cursor.clone());\n\n    let evm_factory =\n        PostExecEvmFactoryAdapter::new(FpvmOpEvmFactory::new(hint_client, oracle_client));\n    let da_provider =\n        EthereumDataSource::new_from_parts(l1_provider.clone(), beacon, &rollup_config);\n    let pipeline = OraclePipeline::new(\n        rollup_config.clone(),\n        l1_config.into(),\n        cursor.clone(),\n        oracle.clone(),\n        da_provider,\n        l1_provider.clone(),\n        l2_provider.clone(),\n        // Single-chain fault proof: no interop dependency set. If this chain\n        // ever schedules interop, the StatefulAttributesBuilder constructor\n        // will panic.\n        None,\n    )\n    .await?;\n\n    let executor = KonaExecutor::new(\n        rollup_config.as_ref(),\n        l2_provider.clone(),\n        l2_provider,\n        evm_factory,\n        alloy_op_evm::block::OpAlloyReceiptBuilder::default(),\n        None,\n    );\n    let mut driver = Driver::new(cursor, executor, pipeline);\n\n    // Run the derivation pipeline until we are able to produce the output root of the claimed\n    // L2 block.\n    let (safe_head, output_root) = driver\n        .advance_to_target(rollup_config.as_ref(), Some(boot.claimed_l2_block_number))\n        .await?;\n\n    ////////////////////////////////////////////////////////////////\n    //                          EPILOGUE                          //\n    ////////////////////////////////////////////////////////////////\n\n    if output_root != boot.claimed_l2_output_root {\n        error!(\n            target: \"client\",\n            number = safe_head.block_info.number,\n            output_root = ?output_root,\n            claimed_output_root = ?boot.claimed_l2_output_root,\n            \"Failed to validate L2 block\",\n        );\n        return Err(FaultProofProgramError::InvalidClaim(output_root, boot.claimed_l2_output_root));\n    }\n\n    info!(\n        target: \"client\",\n        number = safe_head.block_info.number,\n        output_root = ?output_root,\n        \"Successfully validated L2 block\",\n    );\n\n    Ok(())\n}\n\n/// Fetches the safe head hash of the L2 chain based on the agreed upon L2 output root in the\n/// [BootInfo].\npub async fn fetch_safe_head_hash<O>(\n    caching_oracle: &O,\n    agreed_l2_output_root: B256,\n) -> Result<B256, OracleProviderError>\nwhere\n    O: CommsClient,\n{\n    let mut output_preimage = [0u8; 128];\n    HintType::StartingL2Output\n        .with_data(&[agreed_l2_output_root.as_ref()])\n        .send(caching_oracle)\n        .await?;\n    caching_oracle\n        .get_exact(PreimageKey::new_keccak256(*agreed_l2_output_root), output_preimage.as_mut())\n        .await?;\n\n    if output_preimage[..32] != [0u8; 32] {\n        return Err(OracleProviderError::UnknownOutputVersion(B256::from_slice(\n            &output_preimage[..32],\n        )));\n    }\n\n    output_preimage[96..128].try_into().map_err(OracleProviderError::SliceConversion)\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "differs",
+      "coveredLines": 207,
+      "match": {
+        "origin": "own",
+        "collection": "optimism",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "single.rs",
+        "similarity": 0.966,
+        "reportId": "optimism/cantina-kona-2026-03",
+        "repository": "ethereum-optimism/optimism",
+        "path": "rust/kona/bin/client/src/single.rs",
+        "commit": "c390d771c65d783503f82fb76fb0b1d8628c605b",
+        "commitTimestamp": "2026-03-26T17:10:19Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/c390d771c65d783503f82fb76fb0b1d8628c605b/rust/kona/bin/client/src/single.rs",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Fix review only: head commit of PR 19775 'fix(kona/proof): several fixes to kona-proof.' (merged 2026-03-26) in the optimism monorepo, where kona now lives under rust/kona. Cantina verified the fix for Critical 3.1.1. Same file as op-rs/kona bin/client/src/single.rs at 86910c91; different repository so no follows link.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 10,
+        "removed": 1,
+        "ignoredAdded": 4,
+        "ignoredRemoved": 0,
+        "unchanged": 207,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 3,
+            "oldLines": 6,
+            "newStart": 3,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "use crate::fpvm_evm::FpvmOpEvmFactory;"
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "use alloc::sync::Arc;"
+              },
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 5,
+                "text": "use alloy_consensus::Sealed;"
+              },
+              {
+                "type": "+",
+                "newLine": 6,
+                "text": "use alloy_op_evm::post_exec::PostExecEvmFactoryAdapter;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 6,
+                "newLine": 7,
+                "text": "use alloy_primitives::B256;"
+              },
+              {
+                "type": " ",
+                "oldLine": 7,
+                "newLine": 8,
+                "text": "use core::fmt::Debug;"
+              },
+              {
+                "type": " ",
+                "oldLine": 8,
+                "newLine": 9,
+                "text": "use kona_derive::{EthereumDataSource, PipelineErrorKind};"
+              }
+            ]
+          },
+          {
+            "oldStart": 128,
+            "oldLines": 7,
+            "newStart": 129,
+            "newLines": 8,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 128,
+                "newLine": 129,
+                "text": "    })?;"
+              },
+              {
+                "type": " ",
+                "oldLine": 129,
+                "newLine": 130,
+                "text": "    l2_provider.set_cursor(cursor.clone());"
+              },
+              { "type": " ", "oldLine": 130, "newLine": 131, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 131,
+                "text": "    let evm_factory = FpvmOpEvmFactory::new(hint_client, oracle_client);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 132,
+                "text": "    let evm_factory =",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 133,
+                "text": "        PostExecEvmFactoryAdapter::new(FpvmOpEvmFactory::new(hint_client, oracle_client));",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 132,
+                "newLine": 134,
+                "text": "    let da_provider ="
+              },
+              {
+                "type": " ",
+                "oldLine": 133,
+                "newLine": 135,
+                "text": "        EthereumDataSource::new_from_parts(l1_provider.clone(), beacon, &rollup_config);"
+              },
+              {
+                "type": " ",
+                "oldLine": 134,
+                "newLine": 136,
+                "text": "    let pipeline = OraclePipeline::new("
+              }
+            ]
+          },
+          {
+            "oldStart": 139,
+            "oldLines": 6,
+            "newStart": 141,
+            "newLines": 10,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 139,
+                "newLine": 141,
+                "text": "        da_provider,"
+              },
+              {
+                "type": " ",
+                "oldLine": 140,
+                "newLine": 142,
+                "text": "        l1_provider.clone(),"
+              },
+              {
+                "type": " ",
+                "oldLine": 141,
+                "newLine": 143,
+                "text": "        l2_provider.clone(),"
+              },
+              {
+                "type": "+",
+                "newLine": 144,
+                "text": "        // Single-chain fault proof: no interop dependency set. If this chain",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 145,
+                "text": "        // ever schedules interop, the StatefulAttributesBuilder constructor",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 146,
+                "text": "        // will panic.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 147,
+                "text": "        None,",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 142, "newLine": 148, "text": "    )" },
+              {
+                "type": " ",
+                "oldLine": 143,
+                "newLine": 149,
+                "text": "    .await?;"
+              },
+              { "type": " ", "oldLine": 144, "newLine": 150, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 147,
+            "oldLines": 6,
+            "newStart": 153,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 147,
+                "newLine": 153,
+                "text": "        l2_provider.clone(),"
+              },
+              {
+                "type": " ",
+                "oldLine": 148,
+                "newLine": 154,
+                "text": "        l2_provider,"
+              },
+              {
+                "type": " ",
+                "oldLine": 149,
+                "newLine": 155,
+                "text": "        evm_factory,"
+              },
+              {
+                "type": "+",
+                "newLine": 156,
+                "text": "        alloy_op_evm::block::OpAlloyReceiptBuilder::default(),",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 150,
+                "newLine": 157,
+                "text": "        None,"
+              },
+              { "type": " ", "oldLine": 151, "newLine": 158, "text": "    );" },
+              {
+                "type": " ",
+                "oldLine": 152,
+                "newLine": 159,
+                "text": "    let mut driver = Driver::new(cursor, executor, pipeline);"
+              }
+            ]
+          },
+          {
+            "oldStart": 200,
+            "oldLines": 5,
+            "newStart": 207,
+            "newLines": 11,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 200,
+                "newLine": 207,
+                "text": "        .get_exact(PreimageKey::new_keccak256(*agreed_l2_output_root), output_preimage.as_mut())"
+              },
+              {
+                "type": " ",
+                "oldLine": 201,
+                "newLine": 208,
+                "text": "        .await?;"
+              },
+              { "type": " ", "oldLine": 202, "newLine": 209, "text": "" },
+              {
+                "type": "+",
+                "newLine": 210,
+                "text": "    if output_preimage[..32] != [0u8; 32] {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 211,
+                "text": "        return Err(OracleProviderError::UnknownOutputVersion(B256::from_slice(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 212,
+                "text": "            &output_preimage[..32],",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 213,
+                "text": "        )));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 214,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 215, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 203,
+                "newLine": 216,
+                "text": "    output_preimage[96..128].try_into().map_err(OracleProviderError::SliceConversion)"
+              },
+              { "type": " ", "oldLine": 204, "newLine": 217, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

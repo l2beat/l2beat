@@ -1,1 +1,15 @@
-{"schemaVersion":2,"unitHash":"57c9ee5010b32557616585bf824e953c89e2d52da84b23f11db386981e23e3f2","name":"Cargo.toml","kind":"program","lines":21,"source":"[package]\nname = \"example-gossip\"\nversion = \"0.0.0\"\npublish = false\nedition.workspace = true\nlicense.workspace = true\n\n[dependencies]\nanyhow.workspace = true\ntracing.workspace = true\nkona-cli.workspace = true\nkona-disc.workspace = true\nkona-node-service.workspace = true\nkona-registry.workspace = true\nlibp2p.workspace = true\nclap = { workspace = true, features = [\"derive\", \"env\"] }\ntokio = { workspace = true, features = [\"rt-multi-thread\", \"macros\"] }\ntracing-subscriber = { workspace = true, features = [\"fmt\", \"env-filter\"] }\ndiscv5.workspace = true\nop-alloy-rpc-types-engine = { workspace = true, features = [\"std\"] }\nasync-trait.workspace = true","resolutions":{"9fa846564f4071bd":{"status":"unaudited","coveredLines":0,"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "57c9ee5010b32557616585bf824e953c89e2d52da84b23f11db386981e23e3f2",
+  "name": "Cargo.toml",
+  "kind": "program",
+  "lines": 21,
+  "source": "[package]\nname = \"example-gossip\"\nversion = \"0.0.0\"\npublish = false\nedition.workspace = true\nlicense.workspace = true\n\n[dependencies]\nanyhow.workspace = true\ntracing.workspace = true\nkona-cli.workspace = true\nkona-disc.workspace = true\nkona-node-service.workspace = true\nkona-registry.workspace = true\nlibp2p.workspace = true\nclap = { workspace = true, features = [\"derive\", \"env\"] }\ntokio = { workspace = true, features = [\"rt-multi-thread\", \"macros\"] }\ntracing-subscriber = { workspace = true, features = [\"fmt\", \"env-filter\"] }\ndiscv5.workspace = true\nop-alloy-rpc-types-engine = { workspace = true, features = [\"std\"] }\nasync-trait.workspace = true",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

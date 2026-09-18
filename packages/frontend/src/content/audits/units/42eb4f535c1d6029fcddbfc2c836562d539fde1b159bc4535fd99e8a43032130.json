@@ -1,1 +1,98 @@
-{"schemaVersion":2,"unitHash":"42eb4f535c1d6029fcddbfc2c836562d539fde1b159bc4535fd99e8a43032130","name":"Cargo.toml","kind":"program","lines":35,"source":"[package]\nname = \"kona-driver\"\ndescription = \"A no_std derivation pipeline driver\"\nversion = \"0.4.0\"\nedition.workspace = true\nauthors.workspace = true\nlicense.workspace = true\nrepository.workspace = true\nhomepage.workspace = true\n\n[lints]\nworkspace = true\n\n[dependencies]\n# Workspace\nkona-derive.workspace = true\nkona-executor.workspace = true\nkona-genesis.workspace = true\nkona-protocol.workspace = true\n\n# Alloy\nalloy-rlp.workspace = true\nalloy-consensus.workspace = true\nalloy-primitives.workspace = true\nalloy-evm = { workspace = true }\n\n# OP Alloy\nop-alloy-consensus.workspace = true\nop-alloy-rpc-types-engine.workspace = true\n\n# Misc\nasync-trait.workspace = true\nspin.workspace = true\nthiserror .workspace = true\ntracing.workspace = true","resolutions":{"9fa846564f4071bd":{"status":"differs","coveredLines":34,"match":{"origin":"own","collection":"optimism","relation":{"type":"own"},"rank":0,"matchedBy":"name","auditedName":"Cargo.toml","similarity":0.967,"reportId":"optimism/cantina-kona-2026-03","repository":"op-rs/kona","path":"crates/proof/driver/Cargo.toml","commit":"86910c9112437bbb849eca28961f813c5450e103","commitTimestamp":"2025-12-15T17:17:05Z","url":"https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/crates/proof/driver/Cargo.toml","auditStatus":"audited_with_no_major_findings","reviewPhase":"initial audit","coverage":"Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). Proof driver, cursor and pipeline; Low findings 3.4.10, 3.4.11, 3.4.19 and Informational 3.5.10 located here.","majorFindings":0,"isLatestVersion":true,"laterAuditedVersionExists":false,"totalVersions":1},"diff":{"added":1,"removed":1,"ignoredAdded":0,"ignoredRemoved":0,"unchanged":34,"ignoredOnly":false,"hunks":[{"oldStart":22,"oldLines":7,"newStart":22,"newLines":7,"lines":[{"type":" ","oldLine":22,"newLine":22,"text":"alloy-rlp.workspace = true"},{"type":" ","oldLine":23,"newLine":23,"text":"alloy-consensus.workspace = true"},{"type":" ","oldLine":24,"newLine":24,"text":"alloy-primitives.workspace = true"},{"type":"-","oldLine":25,"text":"alloy-evm = { workspace = true, features = [\"op\"] }","ignored":false},{"type":"+","newLine":25,"text":"alloy-evm = { workspace = true }","ignored":false},{"type":" ","oldLine":26,"newLine":26,"text":""},{"type":" ","oldLine":27,"newLine":27,"text":"# OP Alloy"},{"type":" ","oldLine":28,"newLine":28,"text":"op-alloy-consensus.workspace = true"}]}]},"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "42eb4f535c1d6029fcddbfc2c836562d539fde1b159bc4535fd99e8a43032130",
+  "name": "Cargo.toml",
+  "kind": "program",
+  "lines": 35,
+  "source": "[package]\nname = \"kona-driver\"\ndescription = \"A no_std derivation pipeline driver\"\nversion = \"0.4.0\"\nedition.workspace = true\nauthors.workspace = true\nlicense.workspace = true\nrepository.workspace = true\nhomepage.workspace = true\n\n[lints]\nworkspace = true\n\n[dependencies]\n# Workspace\nkona-derive.workspace = true\nkona-executor.workspace = true\nkona-genesis.workspace = true\nkona-protocol.workspace = true\n\n# Alloy\nalloy-rlp.workspace = true\nalloy-consensus.workspace = true\nalloy-primitives.workspace = true\nalloy-evm = { workspace = true }\n\n# OP Alloy\nop-alloy-consensus.workspace = true\nop-alloy-rpc-types-engine.workspace = true\n\n# Misc\nasync-trait.workspace = true\nspin.workspace = true\nthiserror .workspace = true\ntracing.workspace = true",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "differs",
+      "coveredLines": 34,
+      "match": {
+        "origin": "own",
+        "collection": "optimism",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "Cargo.toml",
+        "similarity": 0.967,
+        "reportId": "optimism/cantina-kona-2026-03",
+        "repository": "op-rs/kona",
+        "path": "crates/proof/driver/Cargo.toml",
+        "commit": "86910c9112437bbb849eca28961f813c5450e103",
+        "commitTimestamp": "2025-12-15T17:17:05Z",
+        "url": "https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/crates/proof/driver/Cargo.toml",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). Proof driver, cursor and pipeline; Low findings 3.4.10, 3.4.11, 3.4.19 and Informational 3.5.10 located here.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 1,
+        "removed": 1,
+        "ignoredAdded": 0,
+        "ignoredRemoved": 0,
+        "unchanged": 34,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 22,
+            "oldLines": 7,
+            "newStart": 22,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 22,
+                "text": "alloy-rlp.workspace = true"
+              },
+              {
+                "type": " ",
+                "oldLine": 23,
+                "newLine": 23,
+                "text": "alloy-consensus.workspace = true"
+              },
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 24,
+                "text": "alloy-primitives.workspace = true"
+              },
+              {
+                "type": "-",
+                "oldLine": 25,
+                "text": "alloy-evm = { workspace = true, features = [\"op\"] }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 25,
+                "text": "alloy-evm = { workspace = true }",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 26, "newLine": 26, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 27,
+                "newLine": 27,
+                "text": "# OP Alloy"
+              },
+              {
+                "type": " ",
+                "oldLine": 28,
+                "newLine": 28,
+                "text": "op-alloy-consensus.workspace = true"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

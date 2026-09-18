@@ -1,1 +1,216 @@
-{"schemaVersion":2,"unitHash":"3a9813890221a2f36fb2d252189cea5afd34178a9aa241a29c2f79eb9bda9576","name":"oracle.rs","kind":"program","lines":248,"source":"use crate::{\n    PreimageKey, PreimageOracleClient, PreimageOracleServer,\n    errors::{PreimageOracleError, PreimageOracleResult},\n    traits::{Channel, PreimageFetcher},\n};\nuse alloc::{boxed::Box, vec::Vec};\n\n/// An [`OracleReader`] is a high-level interface to the preimage oracle channel.\n#[derive(Debug, Clone, Copy)]\npub struct OracleReader<C> {\n    channel: C,\n}\n\nimpl<C> OracleReader<C>\nwhere\n    C: Channel,\n{\n    /// Create a new [`OracleReader`] from a [`Channel`].\n    pub const fn new(channel: C) -> Self {\n        Self { channel }\n    }\n\n    /// Set the preimage key for the global oracle reader. This will overwrite any existing key, and\n    /// block until the host has prepared the preimage and responded with the length of the\n    /// preimage.\n    async fn write_key(&self, key: PreimageKey) -> PreimageOracleResult<usize> {\n        // Write the key to the host so that it can prepare the preimage.\n        let key_bytes: [u8; 32] = key.into();\n        self.channel.write(&key_bytes).await?;\n\n        // Read the length prefix and reset the cursor.\n        let mut length_buffer = [0u8; 8];\n        self.channel.read_exact(&mut length_buffer).await?;\n        Ok(u64::from_be_bytes(length_buffer) as usize)\n    }\n}\n\n#[async_trait::async_trait]\nimpl<C> PreimageOracleClient for OracleReader<C>\nwhere\n    C: Channel + Send + Sync,\n{\n    /// Get the data corresponding to the currently set key from the host. Return the data in a new\n    /// heap allocated `Vec<u8>`\n    async fn get(&self, key: PreimageKey) -> PreimageOracleResult<Vec<u8>> {\n        trace!(target: \"oracle_client\", \"Requesting data from preimage oracle. Key {key}\");\n\n        let length = self.write_key(key).await?;\n\n        if length == 0 {\n            return Ok(Default::default());\n        }\n\n        let mut data_buffer = alloc::vec![0; length];\n\n        trace!(target: \"oracle_client\", \"Reading data from preimage oracle. Key {key}\");\n\n        // Grab a read lock on the preimage channel to read the data.\n        self.channel.read_exact(&mut data_buffer).await?;\n\n        trace!(target: \"oracle_client\", \"Successfully read data from preimage oracle. Key: {key}\");\n\n        Ok(data_buffer)\n    }\n\n    /// Get the data corresponding to the currently set key from the host. Write the data into the\n    /// provided buffer\n    async fn get_exact(&self, key: PreimageKey, buf: &mut [u8]) -> PreimageOracleResult<()> {\n        trace!(target: \"oracle_client\", \"Requesting data from preimage oracle. Key {key}\");\n\n        // Write the key to the host and read the length of the preimage.\n        let length = self.write_key(key).await?;\n\n        trace!(target: \"oracle_client\", \"Reading data from preimage oracle. Key {key}\");\n\n        // Ensure the buffer is the correct size.\n        if buf.len() != length {\n            return Err(PreimageOracleError::BufferLengthMismatch(length, buf.len()));\n        }\n\n        if length == 0 {\n            return Ok(());\n        }\n\n        self.channel.read_exact(buf).await?;\n\n        trace!(target: \"oracle_client\", \"Successfully read data from preimage oracle. Key: {key}\");\n\n        Ok(())\n    }\n}\n\n/// An [`OracleServer`] is a router for the host to serve data back to the client [`OracleReader`].\n#[derive(Debug, Clone, Copy)]\npub struct OracleServer<C> {\n    channel: C,\n}\n\nimpl<C> OracleServer<C>\nwhere\n    C: Channel,\n{\n    /// Create a new [`OracleServer`] from a [`Channel`].\n    pub const fn new(channel: C) -> Self {\n        Self { channel }\n    }\n}\n\n#[async_trait::async_trait]\nimpl<C> PreimageOracleServer for OracleServer<C>\nwhere\n    C: Channel + Send + Sync,\n{\n    async fn next_preimage_request<F>(&self, fetcher: &F) -> Result<(), PreimageOracleError>\n    where\n        F: PreimageFetcher + Send + Sync,\n    {\n        // Read the preimage request from the client, and throw early if there isn't any.\n        let mut buf = [0u8; 32];\n        self.channel.read_exact(&mut buf).await?;\n        let preimage_key = PreimageKey::try_from(buf)?;\n\n        trace!(target: \"oracle_server\", \"Fetching preimage for key {preimage_key}\");\n\n        // Fetch the preimage value from the preimage getter.\n        let value = fetcher.get_preimage(preimage_key).await?;\n\n        // Write the length as a big-endian u64 followed by the data.\n        self.channel.write(value.len().to_be_bytes().as_ref()).await?;\n        self.channel.write(value.as_ref()).await?;\n\n        trace!(target: \"oracle_server\", \"Successfully wrote preimage data for key {preimage_key}\");\n\n        Ok(())\n    }\n}\n\n#[cfg(test)]\nmod test {\n    use super::*;\n    use crate::{PreimageKeyType, native_channel::BidirectionalChannel};\n    use alloc::sync::Arc;\n    use alloy_primitives::keccak256;\n    use std::collections::HashMap;\n    use tokio::sync::Mutex;\n\n    struct TestFetcher {\n        preimages: Arc<Mutex<HashMap<PreimageKey, Vec<u8>>>>,\n    }\n\n    #[async_trait::async_trait]\n    impl PreimageFetcher for TestFetcher {\n        async fn get_preimage(&self, key: PreimageKey) -> PreimageOracleResult<Vec<u8>> {\n            let read_lock = self.preimages.lock().await;\n            read_lock.get(&key).cloned().ok_or(PreimageOracleError::KeyNotFound)\n        }\n    }\n\n    #[tokio::test(flavor = \"multi_thread\", worker_threads = 2)]\n    async fn test_oracle_reader_get_exact() {\n        const MOCK_DATA_A: &[u8] = b\"1234567890\";\n        const MOCK_DATA_B: &[u8] = b\"FACADE\";\n        let key_a: PreimageKey =\n            PreimageKey::new(*keccak256(MOCK_DATA_A), PreimageKeyType::Keccak256);\n        let key_b: PreimageKey =\n            PreimageKey::new(*keccak256(MOCK_DATA_B), PreimageKeyType::Keccak256);\n\n        let preimages = {\n            let mut preimages = HashMap::default();\n            preimages.insert(key_a, MOCK_DATA_A.to_vec());\n            preimages.insert(key_b, MOCK_DATA_B.to_vec());\n            Arc::new(Mutex::new(preimages))\n        };\n\n        let preimage_channel = BidirectionalChannel::new().unwrap();\n\n        let client = tokio::task::spawn(async move {\n            let oracle_reader = OracleReader::new(preimage_channel.client);\n            let mut contents_a = [0u8; 10];\n            let mut contents_b = [0u8; 6];\n            oracle_reader.get_exact(key_a, &mut contents_a).await.unwrap();\n            oracle_reader.get_exact(key_b, &mut contents_b).await.unwrap();\n\n            (contents_a, contents_b)\n        });\n        tokio::task::spawn(async move {\n            let oracle_server = OracleServer::new(preimage_channel.host);\n            let test_fetcher = TestFetcher { preimages: Arc::clone(&preimages) };\n\n            loop {\n                match oracle_server.next_preimage_request(&test_fetcher).await {\n                    Err(PreimageOracleError::IOError(_)) => break,\n                    Err(e) => panic!(\"Unexpected error: {e:?}\"),\n                    Ok(_) => {}\n                }\n            }\n        });\n\n        let (c,) = tokio::join!(client);\n        let (contents_a, contents_b) = c.unwrap();\n        assert_eq!(contents_a, MOCK_DATA_A);\n        assert_eq!(contents_b, MOCK_DATA_B);\n    }\n\n    #[tokio::test(flavor = \"multi_thread\", worker_threads = 2)]\n    async fn test_oracle_client_and_host() {\n        const MOCK_DATA_A: &[u8] = b\"1234567890\";\n        const MOCK_DATA_B: &[u8] = b\"FACADE\";\n        let key_a: PreimageKey =\n            PreimageKey::new(*keccak256(MOCK_DATA_A), PreimageKeyType::Keccak256);\n        let key_b: PreimageKey =\n            PreimageKey::new(*keccak256(MOCK_DATA_B), PreimageKeyType::Keccak256);\n\n        let preimages = {\n            let mut preimages = HashMap::default();\n            preimages.insert(key_a, MOCK_DATA_A.to_vec());\n            preimages.insert(key_b, MOCK_DATA_B.to_vec());\n            Arc::new(Mutex::new(preimages))\n        };\n\n        let preimage_channel = BidirectionalChannel::new().unwrap();\n\n        let client = tokio::task::spawn(async move {\n            let oracle_reader = OracleReader::new(preimage_channel.client);\n            let contents_a = oracle_reader.get(key_a).await.unwrap();\n            let contents_b = oracle_reader.get(key_b).await.unwrap();\n\n            (contents_a, contents_b)\n        });\n        tokio::task::spawn(async move {\n            let oracle_server = OracleServer::new(preimage_channel.host);\n            let test_fetcher = TestFetcher { preimages: Arc::clone(&preimages) };\n\n            loop {\n                match oracle_server.next_preimage_request(&test_fetcher).await {\n                    Err(PreimageOracleError::IOError(_)) => break,\n                    Err(e) => panic!(\"Unexpected error: {e:?}\"),\n                    Ok(_) => {}\n                }\n            }\n        });\n\n        let (c,) = tokio::join!(client);\n        let (contents_a, contents_b) = c.unwrap();\n        assert_eq!(contents_a, MOCK_DATA_A);\n        assert_eq!(contents_b, MOCK_DATA_B);\n    }\n}","resolutions":{"9fa846564f4071bd":{"status":"identical","coveredLines":248,"match":{"origin":"own","collection":"optimism","relation":{"type":"own"},"rank":0,"matchedBy":"identity","auditedName":"oracle.rs","similarity":1,"reportId":"optimism/cantina-kona-2026-03","repository":"op-rs/kona","path":"crates/proof/preimage/src/oracle.rs","commit":"86910c9112437bbb849eca28961f813c5450e103","commitTimestamp":"2025-12-15T17:17:05Z","url":"https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/crates/proof/preimage/src/oracle.rs","auditStatus":"audited_with_no_major_findings","reviewPhase":"initial audit","coverage":"Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). Preimage oracle key/hint types; Informational finding 3.5.12 (key.rs) located here.","majorFindings":0,"isLatestVersion":true,"laterAuditedVersionExists":false,"totalVersions":1},"diff":{"added":0,"removed":0,"ignoredAdded":4,"ignoredRemoved":4,"unchanged":248,"ignoredOnly":true,"hunks":[{"oldStart":5,"oldLines":7,"newStart":5,"newLines":7,"lines":[{"type":" ","oldLine":5,"newLine":5,"text":"};"},{"type":" ","oldLine":6,"newLine":6,"text":"use alloc::{boxed::Box, vec::Vec};"},{"type":" ","oldLine":7,"newLine":7,"text":""},{"type":"-","oldLine":8,"text":"/// An [OracleReader] is a high-level interface to the preimage oracle channel.","ignored":true},{"type":"+","newLine":8,"text":"/// An [`OracleReader`] is a high-level interface to the preimage oracle channel.","ignored":true},{"type":" ","oldLine":9,"newLine":9,"text":"#[derive(Debug, Clone, Copy)]"},{"type":" ","oldLine":10,"newLine":10,"text":"pub struct OracleReader<C> {"},{"type":" ","oldLine":11,"newLine":11,"text":"    channel: C,"}]},{"oldStart":15,"oldLines":7,"newStart":15,"newLines":7,"lines":[{"type":" ","oldLine":15,"newLine":15,"text":"where"},{"type":" ","oldLine":16,"newLine":16,"text":"    C: Channel,"},{"type":" ","oldLine":17,"newLine":17,"text":"{"},{"type":"-","oldLine":18,"text":"    /// Create a new [OracleReader] from a [Channel].","ignored":true},{"type":"+","newLine":18,"text":"    /// Create a new [`OracleReader`] from a [`Channel`].","ignored":true},{"type":" ","oldLine":19,"newLine":19,"text":"    pub const fn new(channel: C) -> Self {"},{"type":" ","oldLine":20,"newLine":20,"text":"        Self { channel }"},{"type":" ","oldLine":21,"newLine":21,"text":"    }"}]},{"oldStart":90,"oldLines":7,"newStart":90,"newLines":7,"lines":[{"type":" ","oldLine":90,"newLine":90,"text":"    }"},{"type":" ","oldLine":91,"newLine":91,"text":"}"},{"type":" ","oldLine":92,"newLine":92,"text":""},{"type":"-","oldLine":93,"text":"/// An [OracleServer] is a router for the host to serve data back to the client [OracleReader].","ignored":true},{"type":"+","newLine":93,"text":"/// An [`OracleServer`] is a router for the host to serve data back to the client [`OracleReader`].","ignored":true},{"type":" ","oldLine":94,"newLine":94,"text":"#[derive(Debug, Clone, Copy)]"},{"type":" ","oldLine":95,"newLine":95,"text":"pub struct OracleServer<C> {"},{"type":" ","oldLine":96,"newLine":96,"text":"    channel: C,"}]},{"oldStart":100,"oldLines":7,"newStart":100,"newLines":7,"lines":[{"type":" ","oldLine":100,"newLine":100,"text":"where"},{"type":" ","oldLine":101,"newLine":101,"text":"    C: Channel,"},{"type":" ","oldLine":102,"newLine":102,"text":"{"},{"type":"-","oldLine":103,"text":"    /// Create a new [OracleServer] from a [Channel].","ignored":true},{"type":"+","newLine":103,"text":"    /// Create a new [`OracleServer`] from a [`Channel`].","ignored":true},{"type":" ","oldLine":104,"newLine":104,"text":"    pub const fn new(channel: C) -> Self {"},{"type":" ","oldLine":105,"newLine":105,"text":"        Self { channel }"},{"type":" ","oldLine":106,"newLine":106,"text":"    }"}]}]},"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "3a9813890221a2f36fb2d252189cea5afd34178a9aa241a29c2f79eb9bda9576",
+  "name": "oracle.rs",
+  "kind": "program",
+  "lines": 248,
+  "source": "use crate::{\n    PreimageKey, PreimageOracleClient, PreimageOracleServer,\n    errors::{PreimageOracleError, PreimageOracleResult},\n    traits::{Channel, PreimageFetcher},\n};\nuse alloc::{boxed::Box, vec::Vec};\n\n/// An [`OracleReader`] is a high-level interface to the preimage oracle channel.\n#[derive(Debug, Clone, Copy)]\npub struct OracleReader<C> {\n    channel: C,\n}\n\nimpl<C> OracleReader<C>\nwhere\n    C: Channel,\n{\n    /// Create a new [`OracleReader`] from a [`Channel`].\n    pub const fn new(channel: C) -> Self {\n        Self { channel }\n    }\n\n    /// Set the preimage key for the global oracle reader. This will overwrite any existing key, and\n    /// block until the host has prepared the preimage and responded with the length of the\n    /// preimage.\n    async fn write_key(&self, key: PreimageKey) -> PreimageOracleResult<usize> {\n        // Write the key to the host so that it can prepare the preimage.\n        let key_bytes: [u8; 32] = key.into();\n        self.channel.write(&key_bytes).await?;\n\n        // Read the length prefix and reset the cursor.\n        let mut length_buffer = [0u8; 8];\n        self.channel.read_exact(&mut length_buffer).await?;\n        Ok(u64::from_be_bytes(length_buffer) as usize)\n    }\n}\n\n#[async_trait::async_trait]\nimpl<C> PreimageOracleClient for OracleReader<C>\nwhere\n    C: Channel + Send + Sync,\n{\n    /// Get the data corresponding to the currently set key from the host. Return the data in a new\n    /// heap allocated `Vec<u8>`\n    async fn get(&self, key: PreimageKey) -> PreimageOracleResult<Vec<u8>> {\n        trace!(target: \"oracle_client\", \"Requesting data from preimage oracle. Key {key}\");\n\n        let length = self.write_key(key).await?;\n\n        if length == 0 {\n            return Ok(Default::default());\n        }\n\n        let mut data_buffer = alloc::vec![0; length];\n\n        trace!(target: \"oracle_client\", \"Reading data from preimage oracle. Key {key}\");\n\n        // Grab a read lock on the preimage channel to read the data.\n        self.channel.read_exact(&mut data_buffer).await?;\n\n        trace!(target: \"oracle_client\", \"Successfully read data from preimage oracle. Key: {key}\");\n\n        Ok(data_buffer)\n    }\n\n    /// Get the data corresponding to the currently set key from the host. Write the data into the\n    /// provided buffer\n    async fn get_exact(&self, key: PreimageKey, buf: &mut [u8]) -> PreimageOracleResult<()> {\n        trace!(target: \"oracle_client\", \"Requesting data from preimage oracle. Key {key}\");\n\n        // Write the key to the host and read the length of the preimage.\n        let length = self.write_key(key).await?;\n\n        trace!(target: \"oracle_client\", \"Reading data from preimage oracle. Key {key}\");\n\n        // Ensure the buffer is the correct size.\n        if buf.len() != length {\n            return Err(PreimageOracleError::BufferLengthMismatch(length, buf.len()));\n        }\n\n        if length == 0 {\n            return Ok(());\n        }\n\n        self.channel.read_exact(buf).await?;\n\n        trace!(target: \"oracle_client\", \"Successfully read data from preimage oracle. Key: {key}\");\n\n        Ok(())\n    }\n}\n\n/// An [`OracleServer`] is a router for the host to serve data back to the client [`OracleReader`].\n#[derive(Debug, Clone, Copy)]\npub struct OracleServer<C> {\n    channel: C,\n}\n\nimpl<C> OracleServer<C>\nwhere\n    C: Channel,\n{\n    /// Create a new [`OracleServer`] from a [`Channel`].\n    pub const fn new(channel: C) -> Self {\n        Self { channel }\n    }\n}\n\n#[async_trait::async_trait]\nimpl<C> PreimageOracleServer for OracleServer<C>\nwhere\n    C: Channel + Send + Sync,\n{\n    async fn next_preimage_request<F>(&self, fetcher: &F) -> Result<(), PreimageOracleError>\n    where\n        F: PreimageFetcher + Send + Sync,\n    {\n        // Read the preimage request from the client, and throw early if there isn't any.\n        let mut buf = [0u8; 32];\n        self.channel.read_exact(&mut buf).await?;\n        let preimage_key = PreimageKey::try_from(buf)?;\n\n        trace!(target: \"oracle_server\", \"Fetching preimage for key {preimage_key}\");\n\n        // Fetch the preimage value from the preimage getter.\n        let value = fetcher.get_preimage(preimage_key).await?;\n\n        // Write the length as a big-endian u64 followed by the data.\n        self.channel.write(value.len().to_be_bytes().as_ref()).await?;\n        self.channel.write(value.as_ref()).await?;\n\n        trace!(target: \"oracle_server\", \"Successfully wrote preimage data for key {preimage_key}\");\n\n        Ok(())\n    }\n}\n\n#[cfg(test)]\nmod test {\n    use super::*;\n    use crate::{PreimageKeyType, native_channel::BidirectionalChannel};\n    use alloc::sync::Arc;\n    use alloy_primitives::keccak256;\n    use std::collections::HashMap;\n    use tokio::sync::Mutex;\n\n    struct TestFetcher {\n        preimages: Arc<Mutex<HashMap<PreimageKey, Vec<u8>>>>,\n    }\n\n    #[async_trait::async_trait]\n    impl PreimageFetcher for TestFetcher {\n        async fn get_preimage(&self, key: PreimageKey) -> PreimageOracleResult<Vec<u8>> {\n            let read_lock = self.preimages.lock().await;\n            read_lock.get(&key).cloned().ok_or(PreimageOracleError::KeyNotFound)\n        }\n    }\n\n    #[tokio::test(flavor = \"multi_thread\", worker_threads = 2)]\n    async fn test_oracle_reader_get_exact() {\n        const MOCK_DATA_A: &[u8] = b\"1234567890\";\n        const MOCK_DATA_B: &[u8] = b\"FACADE\";\n        let key_a: PreimageKey =\n            PreimageKey::new(*keccak256(MOCK_DATA_A), PreimageKeyType::Keccak256);\n        let key_b: PreimageKey =\n            PreimageKey::new(*keccak256(MOCK_DATA_B), PreimageKeyType::Keccak256);\n\n        let preimages = {\n            let mut preimages = HashMap::default();\n            preimages.insert(key_a, MOCK_DATA_A.to_vec());\n            preimages.insert(key_b, MOCK_DATA_B.to_vec());\n            Arc::new(Mutex::new(preimages))\n        };\n\n        let preimage_channel = BidirectionalChannel::new().unwrap();\n\n        let client = tokio::task::spawn(async move {\n            let oracle_reader = OracleReader::new(preimage_channel.client);\n            let mut contents_a = [0u8; 10];\n            let mut contents_b = [0u8; 6];\n            oracle_reader.get_exact(key_a, &mut contents_a).await.unwrap();\n            oracle_reader.get_exact(key_b, &mut contents_b).await.unwrap();\n\n            (contents_a, contents_b)\n        });\n        tokio::task::spawn(async move {\n            let oracle_server = OracleServer::new(preimage_channel.host);\n            let test_fetcher = TestFetcher { preimages: Arc::clone(&preimages) };\n\n            loop {\n                match oracle_server.next_preimage_request(&test_fetcher).await {\n                    Err(PreimageOracleError::IOError(_)) => break,\n                    Err(e) => panic!(\"Unexpected error: {e:?}\"),\n                    Ok(_) => {}\n                }\n            }\n        });\n\n        let (c,) = tokio::join!(client);\n        let (contents_a, contents_b) = c.unwrap();\n        assert_eq!(contents_a, MOCK_DATA_A);\n        assert_eq!(contents_b, MOCK_DATA_B);\n    }\n\n    #[tokio::test(flavor = \"multi_thread\", worker_threads = 2)]\n    async fn test_oracle_client_and_host() {\n        const MOCK_DATA_A: &[u8] = b\"1234567890\";\n        const MOCK_DATA_B: &[u8] = b\"FACADE\";\n        let key_a: PreimageKey =\n            PreimageKey::new(*keccak256(MOCK_DATA_A), PreimageKeyType::Keccak256);\n        let key_b: PreimageKey =\n            PreimageKey::new(*keccak256(MOCK_DATA_B), PreimageKeyType::Keccak256);\n\n        let preimages = {\n            let mut preimages = HashMap::default();\n            preimages.insert(key_a, MOCK_DATA_A.to_vec());\n            preimages.insert(key_b, MOCK_DATA_B.to_vec());\n            Arc::new(Mutex::new(preimages))\n        };\n\n        let preimage_channel = BidirectionalChannel::new().unwrap();\n\n        let client = tokio::task::spawn(async move {\n            let oracle_reader = OracleReader::new(preimage_channel.client);\n            let contents_a = oracle_reader.get(key_a).await.unwrap();\n            let contents_b = oracle_reader.get(key_b).await.unwrap();\n\n            (contents_a, contents_b)\n        });\n        tokio::task::spawn(async move {\n            let oracle_server = OracleServer::new(preimage_channel.host);\n            let test_fetcher = TestFetcher { preimages: Arc::clone(&preimages) };\n\n            loop {\n                match oracle_server.next_preimage_request(&test_fetcher).await {\n                    Err(PreimageOracleError::IOError(_)) => break,\n                    Err(e) => panic!(\"Unexpected error: {e:?}\"),\n                    Ok(_) => {}\n                }\n            }\n        });\n\n        let (c,) = tokio::join!(client);\n        let (contents_a, contents_b) = c.unwrap();\n        assert_eq!(contents_a, MOCK_DATA_A);\n        assert_eq!(contents_b, MOCK_DATA_B);\n    }\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "identical",
+      "coveredLines": 248,
+      "match": {
+        "origin": "own",
+        "collection": "optimism",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "oracle.rs",
+        "similarity": 1,
+        "reportId": "optimism/cantina-kona-2026-03",
+        "repository": "op-rs/kona",
+        "path": "crates/proof/preimage/src/oracle.rs",
+        "commit": "86910c9112437bbb849eca28961f813c5450e103",
+        "commitTimestamp": "2025-12-15T17:17:05Z",
+        "url": "https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/crates/proof/preimage/src/oracle.rs",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). Preimage oracle key/hint types; Informational finding 3.5.12 (key.rs) located here.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 4,
+        "ignoredRemoved": 4,
+        "unchanged": 248,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 5,
+            "oldLines": 7,
+            "newStart": 5,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 5, "newLine": 5, "text": "};" },
+              {
+                "type": " ",
+                "oldLine": 6,
+                "newLine": 6,
+                "text": "use alloc::{boxed::Box, vec::Vec};"
+              },
+              { "type": " ", "oldLine": 7, "newLine": 7, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 8,
+                "text": "/// An [OracleReader] is a high-level interface to the preimage oracle channel.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 8,
+                "text": "/// An [`OracleReader`] is a high-level interface to the preimage oracle channel.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 9,
+                "text": "#[derive(Debug, Clone, Copy)]"
+              },
+              {
+                "type": " ",
+                "oldLine": 10,
+                "newLine": 10,
+                "text": "pub struct OracleReader<C> {"
+              },
+              {
+                "type": " ",
+                "oldLine": 11,
+                "newLine": 11,
+                "text": "    channel: C,"
+              }
+            ]
+          },
+          {
+            "oldStart": 15,
+            "oldLines": 7,
+            "newStart": 15,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 15, "newLine": 15, "text": "where" },
+              {
+                "type": " ",
+                "oldLine": 16,
+                "newLine": 16,
+                "text": "    C: Channel,"
+              },
+              { "type": " ", "oldLine": 17, "newLine": 17, "text": "{" },
+              {
+                "type": "-",
+                "oldLine": 18,
+                "text": "    /// Create a new [OracleReader] from a [Channel].",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 18,
+                "text": "    /// Create a new [`OracleReader`] from a [`Channel`].",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 19,
+                "newLine": 19,
+                "text": "    pub const fn new(channel: C) -> Self {"
+              },
+              {
+                "type": " ",
+                "oldLine": 20,
+                "newLine": 20,
+                "text": "        Self { channel }"
+              },
+              { "type": " ", "oldLine": 21, "newLine": 21, "text": "    }" }
+            ]
+          },
+          {
+            "oldStart": 90,
+            "oldLines": 7,
+            "newStart": 90,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 90, "newLine": 90, "text": "    }" },
+              { "type": " ", "oldLine": 91, "newLine": 91, "text": "}" },
+              { "type": " ", "oldLine": 92, "newLine": 92, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 93,
+                "text": "/// An [OracleServer] is a router for the host to serve data back to the client [OracleReader].",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 93,
+                "text": "/// An [`OracleServer`] is a router for the host to serve data back to the client [`OracleReader`].",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 94,
+                "newLine": 94,
+                "text": "#[derive(Debug, Clone, Copy)]"
+              },
+              {
+                "type": " ",
+                "oldLine": 95,
+                "newLine": 95,
+                "text": "pub struct OracleServer<C> {"
+              },
+              {
+                "type": " ",
+                "oldLine": 96,
+                "newLine": 96,
+                "text": "    channel: C,"
+              }
+            ]
+          },
+          {
+            "oldStart": 100,
+            "oldLines": 7,
+            "newStart": 100,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 100, "newLine": 100, "text": "where" },
+              {
+                "type": " ",
+                "oldLine": 101,
+                "newLine": 101,
+                "text": "    C: Channel,"
+              },
+              { "type": " ", "oldLine": 102, "newLine": 102, "text": "{" },
+              {
+                "type": "-",
+                "oldLine": 103,
+                "text": "    /// Create a new [OracleServer] from a [Channel].",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 103,
+                "text": "    /// Create a new [`OracleServer`] from a [`Channel`].",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 104,
+                "newLine": 104,
+                "text": "    pub const fn new(channel: C) -> Self {"
+              },
+              {
+                "type": " ",
+                "oldLine": 105,
+                "newLine": 105,
+                "text": "        Self { channel }"
+              },
+              { "type": " ", "oldLine": 106, "newLine": 106, "text": "    }" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

@@ -1,1 +1,126 @@
-{"schemaVersion":2,"unitHash":"3d62cc288047dfe96fd5fa3e3d2d26a5b9f63e12162ab89a6a60f7292bd58e75","name":"native_channel.rs","kind":"program","lines":62,"source":"//! Native implementation of the [Channel] trait, backed by [`async_channel`]'s unbounded\n//! channel primitives.\n\nuse crate::{\n    Channel,\n    errors::{ChannelError, ChannelResult},\n};\nuse async_channel::{Receiver, Sender, unbounded};\nuse async_trait::async_trait;\nuse std::io::Result;\n\n/// A bidirectional channel, allowing for synchronized communication between two parties.\n#[derive(Debug, Clone)]\npub struct BidirectionalChannel {\n    /// The client handle of the channel.\n    pub client: NativeChannel,\n    /// The host handle of the channel.\n    pub host: NativeChannel,\n}\n\nimpl BidirectionalChannel {\n    /// Creates a [`BidirectionalChannel`] instance.\n    pub fn new() -> Result<Self> {\n        let (bw, ar) = unbounded();\n        let (aw, br) = unbounded();\n\n        Ok(Self {\n            client: NativeChannel { read: ar, write: aw },\n            host: NativeChannel { read: br, write: bw },\n        })\n    }\n}\n\n/// A channel with a receiver and sender.\n#[derive(Debug, Clone)]\npub struct NativeChannel {\n    /// The receiver of the channel.\n    pub(crate) read: Receiver<Vec<u8>>,\n    /// The sender of the channel.\n    pub(crate) write: Sender<Vec<u8>>,\n}\n\n#[async_trait]\nimpl Channel for NativeChannel {\n    async fn read(&self, buf: &mut [u8]) -> ChannelResult<usize> {\n        let data = self.read.recv().await.map_err(|_| ChannelError::Closed)?;\n        let len = data.len().min(buf.len());\n        buf[..len].copy_from_slice(&data[..len]);\n        Ok(len)\n    }\n\n    async fn read_exact(&self, buf: &mut [u8]) -> ChannelResult<usize> {\n        let data = self.read.recv().await.map_err(|_| ChannelError::Closed)?;\n        buf[..].copy_from_slice(&data[..]);\n        Ok(buf.len())\n    }\n\n    async fn write(&self, buf: &[u8]) -> ChannelResult<usize> {\n        self.write.send(buf.to_vec()).await.map_err(|_| ChannelError::Closed)?;\n        Ok(buf.len())\n    }\n}","resolutions":{"9fa846564f4071bd":{"status":"identical","coveredLines":62,"match":{"origin":"own","collection":"optimism","relation":{"type":"own"},"rank":0,"matchedBy":"identity","auditedName":"native_channel.rs","similarity":1,"reportId":"optimism/cantina-kona-2026-03","repository":"op-rs/kona","path":"crates/proof/preimage/src/native_channel.rs","commit":"86910c9112437bbb849eca28961f813c5450e103","commitTimestamp":"2025-12-15T17:17:05Z","url":"https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/crates/proof/preimage/src/native_channel.rs","auditStatus":"audited_with_no_major_findings","reviewPhase":"initial audit","coverage":"Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). Preimage oracle key/hint types; Informational finding 3.5.12 (key.rs) located here.","majorFindings":0,"isLatestVersion":true,"laterAuditedVersionExists":false,"totalVersions":1},"diff":{"added":0,"removed":0,"ignoredAdded":2,"ignoredRemoved":2,"unchanged":62,"ignoredOnly":true,"hunks":[{"oldStart":1,"oldLines":4,"newStart":1,"newLines":4,"lines":[{"type":"-","oldLine":1,"text":"//! Native implementation of the [Channel] trait, backed by [async_channel]'s unbounded","ignored":true},{"type":"+","newLine":1,"text":"//! Native implementation of the [Channel] trait, backed by [`async_channel`]'s unbounded","ignored":true},{"type":" ","oldLine":2,"newLine":2,"text":"//! channel primitives."},{"type":" ","oldLine":3,"newLine":3,"text":""},{"type":" ","oldLine":4,"newLine":4,"text":"use crate::{"}]},{"oldStart":19,"oldLines":7,"newStart":19,"newLines":7,"lines":[{"type":" ","oldLine":19,"newLine":19,"text":"}"},{"type":" ","oldLine":20,"newLine":20,"text":""},{"type":" ","oldLine":21,"newLine":21,"text":"impl BidirectionalChannel {"},{"type":"-","oldLine":22,"text":"    /// Creates a [BidirectionalChannel] instance.","ignored":true},{"type":"+","newLine":22,"text":"    /// Creates a [`BidirectionalChannel`] instance.","ignored":true},{"type":" ","oldLine":23,"newLine":23,"text":"    pub fn new() -> Result<Self> {"},{"type":" ","oldLine":24,"newLine":24,"text":"        let (bw, ar) = unbounded();"},{"type":" ","oldLine":25,"newLine":25,"text":"        let (aw, br) = unbounded();"}]}]},"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "3d62cc288047dfe96fd5fa3e3d2d26a5b9f63e12162ab89a6a60f7292bd58e75",
+  "name": "native_channel.rs",
+  "kind": "program",
+  "lines": 62,
+  "source": "//! Native implementation of the [Channel] trait, backed by [`async_channel`]'s unbounded\n//! channel primitives.\n\nuse crate::{\n    Channel,\n    errors::{ChannelError, ChannelResult},\n};\nuse async_channel::{Receiver, Sender, unbounded};\nuse async_trait::async_trait;\nuse std::io::Result;\n\n/// A bidirectional channel, allowing for synchronized communication between two parties.\n#[derive(Debug, Clone)]\npub struct BidirectionalChannel {\n    /// The client handle of the channel.\n    pub client: NativeChannel,\n    /// The host handle of the channel.\n    pub host: NativeChannel,\n}\n\nimpl BidirectionalChannel {\n    /// Creates a [`BidirectionalChannel`] instance.\n    pub fn new() -> Result<Self> {\n        let (bw, ar) = unbounded();\n        let (aw, br) = unbounded();\n\n        Ok(Self {\n            client: NativeChannel { read: ar, write: aw },\n            host: NativeChannel { read: br, write: bw },\n        })\n    }\n}\n\n/// A channel with a receiver and sender.\n#[derive(Debug, Clone)]\npub struct NativeChannel {\n    /// The receiver of the channel.\n    pub(crate) read: Receiver<Vec<u8>>,\n    /// The sender of the channel.\n    pub(crate) write: Sender<Vec<u8>>,\n}\n\n#[async_trait]\nimpl Channel for NativeChannel {\n    async fn read(&self, buf: &mut [u8]) -> ChannelResult<usize> {\n        let data = self.read.recv().await.map_err(|_| ChannelError::Closed)?;\n        let len = data.len().min(buf.len());\n        buf[..len].copy_from_slice(&data[..len]);\n        Ok(len)\n    }\n\n    async fn read_exact(&self, buf: &mut [u8]) -> ChannelResult<usize> {\n        let data = self.read.recv().await.map_err(|_| ChannelError::Closed)?;\n        buf[..].copy_from_slice(&data[..]);\n        Ok(buf.len())\n    }\n\n    async fn write(&self, buf: &[u8]) -> ChannelResult<usize> {\n        self.write.send(buf.to_vec()).await.map_err(|_| ChannelError::Closed)?;\n        Ok(buf.len())\n    }\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "identical",
+      "coveredLines": 62,
+      "match": {
+        "origin": "own",
+        "collection": "optimism",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "native_channel.rs",
+        "similarity": 1,
+        "reportId": "optimism/cantina-kona-2026-03",
+        "repository": "op-rs/kona",
+        "path": "crates/proof/preimage/src/native_channel.rs",
+        "commit": "86910c9112437bbb849eca28961f813c5450e103",
+        "commitTimestamp": "2025-12-15T17:17:05Z",
+        "url": "https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/crates/proof/preimage/src/native_channel.rs",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). Preimage oracle key/hint types; Informational finding 3.5.12 (key.rs) located here.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 2,
+        "ignoredRemoved": 2,
+        "unchanged": 62,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 4,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "//! Native implementation of the [Channel] trait, backed by [async_channel]'s unbounded",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "//! Native implementation of the [Channel] trait, backed by [`async_channel`]'s unbounded",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "//! channel primitives."
+              },
+              { "type": " ", "oldLine": 3, "newLine": 3, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "use crate::{"
+              }
+            ]
+          },
+          {
+            "oldStart": 19,
+            "oldLines": 7,
+            "newStart": 19,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 19, "newLine": 19, "text": "}" },
+              { "type": " ", "oldLine": 20, "newLine": 20, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 21,
+                "newLine": 21,
+                "text": "impl BidirectionalChannel {"
+              },
+              {
+                "type": "-",
+                "oldLine": 22,
+                "text": "    /// Creates a [BidirectionalChannel] instance.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 22,
+                "text": "    /// Creates a [`BidirectionalChannel`] instance.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 23,
+                "newLine": 23,
+                "text": "    pub fn new() -> Result<Self> {"
+              },
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 24,
+                "text": "        let (bw, ar) = unbounded();"
+              },
+              {
+                "type": " ",
+                "oldLine": 25,
+                "newLine": 25,
+                "text": "        let (aw, br) = unbounded();"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

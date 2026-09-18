@@ -1,1 +1,15 @@
-{"schemaVersion":2,"unitHash":"5220f177b101859342652bcb5c330d46ec2449416e2615e73386d0136ecf2beb","name":"mem.rs","kind":"program","lines":32,"source":"//! Contains a concrete implementation of the [`KeyValueStore`] trait that stores data in memory.\n\nuse super::KeyValueStore;\nuse crate::Result;\nuse alloy_primitives::B256;\nuse std::collections::HashMap;\n\n/// A simple, synchronous key-value store that stores data in memory. This is useful for testing and\n/// development purposes.\n#[derive(Default, Clone, Debug, Eq, PartialEq)]\npub struct MemoryKeyValueStore {\n    /// The underlying store.\n    pub store: HashMap<B256, Vec<u8>>,\n}\n\nimpl MemoryKeyValueStore {\n    /// Create a new [`MemoryKeyValueStore`] with an empty store.\n    pub fn new() -> Self {\n        Self { store: HashMap::default() }\n    }\n}\n\nimpl KeyValueStore for MemoryKeyValueStore {\n    fn get(&self, key: B256) -> Option<Vec<u8>> {\n        self.store.get(&key).cloned()\n    }\n\n    fn set(&mut self, key: B256, value: Vec<u8>) -> Result<()> {\n        self.store.insert(key, value);\n        Ok(())\n    }\n}","resolutions":{"9fa846564f4071bd":{"status":"unaudited","coveredLines":0,"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "5220f177b101859342652bcb5c330d46ec2449416e2615e73386d0136ecf2beb",
+  "name": "mem.rs",
+  "kind": "program",
+  "lines": 32,
+  "source": "//! Contains a concrete implementation of the [`KeyValueStore`] trait that stores data in memory.\n\nuse super::KeyValueStore;\nuse crate::Result;\nuse alloy_primitives::B256;\nuse std::collections::HashMap;\n\n/// A simple, synchronous key-value store that stores data in memory. This is useful for testing and\n/// development purposes.\n#[derive(Default, Clone, Debug, Eq, PartialEq)]\npub struct MemoryKeyValueStore {\n    /// The underlying store.\n    pub store: HashMap<B256, Vec<u8>>,\n}\n\nimpl MemoryKeyValueStore {\n    /// Create a new [`MemoryKeyValueStore`] with an empty store.\n    pub fn new() -> Self {\n        Self { store: HashMap::default() }\n    }\n}\n\nimpl KeyValueStore for MemoryKeyValueStore {\n    fn get(&self, key: B256) -> Option<Vec<u8>> {\n        self.store.get(&key).cloned()\n    }\n\n    fn set(&mut self, key: B256, value: Vec<u8>) -> Result<()> {\n        self.store.insert(key, value);\n        Ok(())\n    }\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

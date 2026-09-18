@@ -1,1 +1,216 @@
-{"schemaVersion":2,"unitHash":"460bd5393cd10ba14e291d3304f4fc1127982146b0e5056d4cf870fa8b6e29d6","name":"noop.rs","kind":"program","lines":52,"source":"//! Trait implementations for `kona-mpt` traits that are effectively a no-op.\n//! Provides trait implementations for downstream users who do not require hinting.\n\nuse crate::{TrieHinter, TrieNode, TrieProvider};\nuse alloc::string::String;\nuse alloy_primitives::{Address, B256, U256};\nuse core::fmt::Debug;\n\n/// The default, no-op implementation of the [`TrieProvider`] trait, used for testing.\n#[derive(Debug, Clone, Copy)]\npub struct NoopTrieProvider;\n\nimpl TrieProvider for NoopTrieProvider {\n    type Error = String;\n\n    fn trie_node_by_hash(&self, _key: B256) -> Result<TrieNode, Self::Error> {\n        Ok(TrieNode::Empty)\n    }\n}\n\n/// The default, no-op implementation of the [`TrieHinter`] trait, used for testing.\n#[derive(Debug, Clone, Copy)]\npub struct NoopTrieHinter;\n\nimpl TrieHinter for NoopTrieHinter {\n    type Error = String;\n\n    fn hint_trie_node(&self, _hash: B256) -> Result<(), Self::Error> {\n        Ok(())\n    }\n\n    fn hint_account_proof(&self, _address: Address, _block_hash: B256) -> Result<(), Self::Error> {\n        Ok(())\n    }\n\n    fn hint_storage_proof(\n        &self,\n        _address: Address,\n        _slot: U256,\n        _block_hash: B256,\n    ) -> Result<(), Self::Error> {\n        Ok(())\n    }\n\n    fn hint_execution_witness(\n        &self,\n        _parent_hash: B256,\n        _op_payload_attributes: &op_alloy_rpc_types_engine::OpPayloadAttributes,\n    ) -> Result<(), Self::Error> {\n        Ok(())\n    }\n}","resolutions":{"9fa846564f4071bd":{"status":"differs","coveredLines":50,"match":{"origin":"own","collection":"optimism","relation":{"type":"own"},"rank":0,"matchedBy":"name","auditedName":"noop.rs","similarity":0.947,"reportId":"optimism/cantina-kona-2026-03","repository":"op-rs/kona","path":"crates/proof/mpt/src/noop.rs","commit":"86910c9112437bbb849eca28961f813c5450e103","commitTimestamp":"2025-12-15T17:17:05Z","url":"https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/crates/proof/mpt/src/noop.rs","auditStatus":"audited_with_no_major_findings","reviewPhase":"initial audit","coverage":"Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). Merkle Patricia trie crate; Informational finding 3.5.2 (node.rs) located here.","majorFindings":0,"isLatestVersion":true,"laterAuditedVersionExists":false,"totalVersions":1},"diff":{"added":2,"removed":2,"ignoredAdded":2,"ignoredRemoved":2,"unchanged":50,"ignoredOnly":false,"hunks":[{"oldStart":6,"oldLines":7,"newStart":6,"newLines":7,"lines":[{"type":" ","oldLine":6,"newLine":6,"text":"use alloy_primitives::{Address, B256, U256};"},{"type":" ","oldLine":7,"newLine":7,"text":"use core::fmt::Debug;"},{"type":" ","oldLine":8,"newLine":8,"text":""},{"type":"-","oldLine":9,"text":"/// The default, no-op implementation of the [TrieProvider] trait, used for testing.","ignored":true},{"type":"+","newLine":9,"text":"/// The default, no-op implementation of the [`TrieProvider`] trait, used for testing.","ignored":true},{"type":" ","oldLine":10,"newLine":10,"text":"#[derive(Debug, Clone, Copy)]"},{"type":" ","oldLine":11,"newLine":11,"text":"pub struct NoopTrieProvider;"},{"type":" ","oldLine":12,"newLine":12,"text":""}]},{"oldStart":18,"oldLines":7,"newStart":18,"newLines":7,"lines":[{"type":" ","oldLine":18,"newLine":18,"text":"    }"},{"type":" ","oldLine":19,"newLine":19,"text":"}"},{"type":" ","oldLine":20,"newLine":20,"text":""},{"type":"-","oldLine":21,"text":"/// The default, no-op implementation of the [TrieHinter] trait, used for testing.","ignored":true},{"type":"+","newLine":21,"text":"/// The default, no-op implementation of the [`TrieHinter`] trait, used for testing.","ignored":true},{"type":" ","oldLine":22,"newLine":22,"text":"#[derive(Debug, Clone, Copy)]"},{"type":" ","oldLine":23,"newLine":23,"text":"pub struct NoopTrieHinter;"},{"type":" ","oldLine":24,"newLine":24,"text":""}]},{"oldStart":29,"oldLines":7,"newStart":29,"newLines":7,"lines":[{"type":" ","oldLine":29,"newLine":29,"text":"        Ok(())"},{"type":" ","oldLine":30,"newLine":30,"text":"    }"},{"type":" ","oldLine":31,"newLine":31,"text":""},{"type":"-","oldLine":32,"text":"    fn hint_account_proof(&self, _address: Address, _block_number: u64) -> Result<(), Self::Error> {","ignored":false},{"type":"+","newLine":32,"text":"    fn hint_account_proof(&self, _address: Address, _block_hash: B256) -> Result<(), Self::Error> {","ignored":false},{"type":" ","oldLine":33,"newLine":33,"text":"        Ok(())"},{"type":" ","oldLine":34,"newLine":34,"text":"    }"},{"type":" ","oldLine":35,"newLine":35,"text":""}]},{"oldStart":37,"oldLines":7,"newStart":37,"newLines":7,"lines":[{"type":" ","oldLine":37,"newLine":37,"text":"        &self,"},{"type":" ","oldLine":38,"newLine":38,"text":"        _address: Address,"},{"type":" ","oldLine":39,"newLine":39,"text":"        _slot: U256,"},{"type":"-","oldLine":40,"text":"        _block_number: u64,","ignored":false},{"type":"+","newLine":40,"text":"        _block_hash: B256,","ignored":false},{"type":" ","oldLine":41,"newLine":41,"text":"    ) -> Result<(), Self::Error> {"},{"type":" ","oldLine":42,"newLine":42,"text":"        Ok(())"},{"type":" ","oldLine":43,"newLine":43,"text":"    }"}]}]},"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "460bd5393cd10ba14e291d3304f4fc1127982146b0e5056d4cf870fa8b6e29d6",
+  "name": "noop.rs",
+  "kind": "program",
+  "lines": 52,
+  "source": "//! Trait implementations for `kona-mpt` traits that are effectively a no-op.\n//! Provides trait implementations for downstream users who do not require hinting.\n\nuse crate::{TrieHinter, TrieNode, TrieProvider};\nuse alloc::string::String;\nuse alloy_primitives::{Address, B256, U256};\nuse core::fmt::Debug;\n\n/// The default, no-op implementation of the [`TrieProvider`] trait, used for testing.\n#[derive(Debug, Clone, Copy)]\npub struct NoopTrieProvider;\n\nimpl TrieProvider for NoopTrieProvider {\n    type Error = String;\n\n    fn trie_node_by_hash(&self, _key: B256) -> Result<TrieNode, Self::Error> {\n        Ok(TrieNode::Empty)\n    }\n}\n\n/// The default, no-op implementation of the [`TrieHinter`] trait, used for testing.\n#[derive(Debug, Clone, Copy)]\npub struct NoopTrieHinter;\n\nimpl TrieHinter for NoopTrieHinter {\n    type Error = String;\n\n    fn hint_trie_node(&self, _hash: B256) -> Result<(), Self::Error> {\n        Ok(())\n    }\n\n    fn hint_account_proof(&self, _address: Address, _block_hash: B256) -> Result<(), Self::Error> {\n        Ok(())\n    }\n\n    fn hint_storage_proof(\n        &self,\n        _address: Address,\n        _slot: U256,\n        _block_hash: B256,\n    ) -> Result<(), Self::Error> {\n        Ok(())\n    }\n\n    fn hint_execution_witness(\n        &self,\n        _parent_hash: B256,\n        _op_payload_attributes: &op_alloy_rpc_types_engine::OpPayloadAttributes,\n    ) -> Result<(), Self::Error> {\n        Ok(())\n    }\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "differs",
+      "coveredLines": 50,
+      "match": {
+        "origin": "own",
+        "collection": "optimism",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "noop.rs",
+        "similarity": 0.947,
+        "reportId": "optimism/cantina-kona-2026-03",
+        "repository": "op-rs/kona",
+        "path": "crates/proof/mpt/src/noop.rs",
+        "commit": "86910c9112437bbb849eca28961f813c5450e103",
+        "commitTimestamp": "2025-12-15T17:17:05Z",
+        "url": "https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/crates/proof/mpt/src/noop.rs",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). Merkle Patricia trie crate; Informational finding 3.5.2 (node.rs) located here.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 2,
+        "removed": 2,
+        "ignoredAdded": 2,
+        "ignoredRemoved": 2,
+        "unchanged": 50,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 6,
+            "oldLines": 7,
+            "newStart": 6,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 6,
+                "newLine": 6,
+                "text": "use alloy_primitives::{Address, B256, U256};"
+              },
+              {
+                "type": " ",
+                "oldLine": 7,
+                "newLine": 7,
+                "text": "use core::fmt::Debug;"
+              },
+              { "type": " ", "oldLine": 8, "newLine": 8, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 9,
+                "text": "/// The default, no-op implementation of the [TrieProvider] trait, used for testing.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 9,
+                "text": "/// The default, no-op implementation of the [`TrieProvider`] trait, used for testing.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 10,
+                "newLine": 10,
+                "text": "#[derive(Debug, Clone, Copy)]"
+              },
+              {
+                "type": " ",
+                "oldLine": 11,
+                "newLine": 11,
+                "text": "pub struct NoopTrieProvider;"
+              },
+              { "type": " ", "oldLine": 12, "newLine": 12, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 18,
+            "oldLines": 7,
+            "newStart": 18,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 18, "newLine": 18, "text": "    }" },
+              { "type": " ", "oldLine": 19, "newLine": 19, "text": "}" },
+              { "type": " ", "oldLine": 20, "newLine": 20, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 21,
+                "text": "/// The default, no-op implementation of the [TrieHinter] trait, used for testing.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 21,
+                "text": "/// The default, no-op implementation of the [`TrieHinter`] trait, used for testing.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 22,
+                "text": "#[derive(Debug, Clone, Copy)]"
+              },
+              {
+                "type": " ",
+                "oldLine": 23,
+                "newLine": 23,
+                "text": "pub struct NoopTrieHinter;"
+              },
+              { "type": " ", "oldLine": 24, "newLine": 24, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 29,
+            "oldLines": 7,
+            "newStart": 29,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 29,
+                "newLine": 29,
+                "text": "        Ok(())"
+              },
+              { "type": " ", "oldLine": 30, "newLine": 30, "text": "    }" },
+              { "type": " ", "oldLine": 31, "newLine": 31, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 32,
+                "text": "    fn hint_account_proof(&self, _address: Address, _block_number: u64) -> Result<(), Self::Error> {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 32,
+                "text": "    fn hint_account_proof(&self, _address: Address, _block_hash: B256) -> Result<(), Self::Error> {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 33,
+                "newLine": 33,
+                "text": "        Ok(())"
+              },
+              { "type": " ", "oldLine": 34, "newLine": 34, "text": "    }" },
+              { "type": " ", "oldLine": 35, "newLine": 35, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 37,
+            "oldLines": 7,
+            "newStart": 37,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 37,
+                "newLine": 37,
+                "text": "        &self,"
+              },
+              {
+                "type": " ",
+                "oldLine": 38,
+                "newLine": 38,
+                "text": "        _address: Address,"
+              },
+              {
+                "type": " ",
+                "oldLine": 39,
+                "newLine": 39,
+                "text": "        _slot: U256,"
+              },
+              {
+                "type": "-",
+                "oldLine": 40,
+                "text": "        _block_number: u64,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 40,
+                "text": "        _block_hash: B256,",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 41,
+                "newLine": 41,
+                "text": "    ) -> Result<(), Self::Error> {"
+              },
+              {
+                "type": " ",
+                "oldLine": 42,
+                "newLine": 42,
+                "text": "        Ok(())"
+              },
+              { "type": " ", "oldLine": 43, "newLine": 43, "text": "    }" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

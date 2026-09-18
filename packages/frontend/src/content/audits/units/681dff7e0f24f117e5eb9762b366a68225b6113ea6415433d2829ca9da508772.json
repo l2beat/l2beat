@@ -1,1 +1,15 @@
-{"schemaVersion":2,"unitHash":"681dff7e0f24f117e5eb9762b366a68225b6113ea6415433d2829ca9da508772","name":"traits.rs","kind":"program","lines":20,"source":"//! [`NodeActor`] trait.\n\nuse async_trait::async_trait;\n\n/// The [`NodeActor`] is an actor-like service for the node.\n///\n/// Callers may call [`Self::step`] to execute a single inbound request,\n/// event, or tick.\n#[async_trait]\npub trait NodeActor: Send + 'static {\n    /// The error type for the actor.\n    type Error: std::fmt::Debug;\n\n    /// Handle the next inbound request, event, or scheduled tick.\n    ///\n    /// Returning `Ok(())` indicates the actor is ready to be stepped again.\n    /// Returning `Err(_)` indicates the actor has encountered a fatal\n    /// condition and should not be stepped further.\n    async fn step(&mut self) -> Result<(), Self::Error>;\n}","resolutions":{"9fa846564f4071bd":{"status":"unaudited","coveredLines":0,"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "681dff7e0f24f117e5eb9762b366a68225b6113ea6415433d2829ca9da508772",
+  "name": "traits.rs",
+  "kind": "program",
+  "lines": 20,
+  "source": "//! [`NodeActor`] trait.\n\nuse async_trait::async_trait;\n\n/// The [`NodeActor`] is an actor-like service for the node.\n///\n/// Callers may call [`Self::step`] to execute a single inbound request,\n/// event, or tick.\n#[async_trait]\npub trait NodeActor: Send + 'static {\n    /// The error type for the actor.\n    type Error: std::fmt::Debug;\n\n    /// Handle the next inbound request, event, or scheduled tick.\n    ///\n    /// Returning `Ok(())` indicates the actor is ready to be stepped again.\n    /// Returning `Err(_)` indicates the actor has encountered a fatal\n    /// condition and should not be stepped further.\n    async fn step(&mut self) -> Result<(), Self::Error>;\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

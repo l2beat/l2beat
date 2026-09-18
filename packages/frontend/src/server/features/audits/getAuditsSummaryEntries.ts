@@ -1,14 +1,22 @@
 import type { ProjectAuditCoverage } from '@l2beat/audit-diff'
+import { ProjectId } from '@l2beat/shared-pure'
 import { ps } from '~/server/projects'
 import { manifest } from '~/utils/Manifest'
+import { get7dTvsBreakdown } from '../layer2s/tvs/get7dTvsBreakdown'
 import { auditCoverageSource } from './AuditCoverageSource'
 import type { AuditsSummaryEntry } from './types'
 
 export async function getAuditsSummaryEntries(): Promise<AuditsSummaryEntry[]> {
   const reports = auditCoverageSource.listProjects()
-  const projects = await ps.getProjects({
-    slugs: reports.map((r) => r.slug),
-  })
+  const [projects, tvs] = await Promise.all([
+    ps.getProjects({
+      slugs: reports.map((r) => r.slug),
+    }),
+    get7dTvsBreakdown({
+      type: 'projects',
+      projectIds: reports.map((r) => ProjectId(r.projectId)),
+    }),
+  ])
 
   return reports.map((report) => {
     const project = projects.find((p) => p.slug === report.slug)
@@ -20,6 +28,7 @@ export async function getAuditsSummaryEntries(): Promise<AuditsSummaryEntry[]> {
     const ownReportsCount = report.reportIds.filter((id) =>
       own.has(collectionOf(id)),
     ).length
+    const projectTvs = tvs.projects[report.projectId]
     return {
       id: report.projectId,
       slug: report.slug,
@@ -34,6 +43,11 @@ export async function getAuditsSummaryEntries(): Promise<AuditsSummaryEntry[]> {
       ownReportsCount,
       sharedReportsCount: report.reportIds.length - ownReportsCount,
       discoveryTimestamp: report.discoveryTimestamp,
+      tvs: projectTvs && {
+        latest: projectTvs.breakdown.total,
+        change: projectTvs.change.total,
+        changePeriod: projectTvs.changePeriod,
+      },
     }
   })
 }

@@ -1,1 +1,15 @@
-{"schemaVersion":2,"unitHash":"80033f4ff3007b104f1f86933a2c7d48833c28a3af49c7c14ec4f294ecf7483c","name":"mod.rs","kind":"program","lines":10,"source":"//! This module contains the single-chain mode for the host.\n\nmod cfg;\npub use cfg::{SingleChainHost, SingleChainHostError, SingleChainProviders};\n\nmod local_kv;\npub use local_kv::SingleChainLocalInputs;\n\nmod handler;\npub use handler::{SingleChainHintHandler, parse_blob_hint};","resolutions":{"9fa846564f4071bd":{"status":"unaudited","coveredLines":0,"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "80033f4ff3007b104f1f86933a2c7d48833c28a3af49c7c14ec4f294ecf7483c",
+  "name": "mod.rs",
+  "kind": "program",
+  "lines": 10,
+  "source": "//! This module contains the single-chain mode for the host.\n\nmod cfg;\npub use cfg::{SingleChainHost, SingleChainHostError, SingleChainProviders};\n\nmod local_kv;\npub use local_kv::SingleChainLocalInputs;\n\nmod handler;\npub use handler::{SingleChainHintHandler, parse_blob_hint};",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

@@ -1,1 +1,15 @@
-{"schemaVersion":2,"unitHash":"919c55540696d8ff9d609d48ae766ec927f227b5dd8c5f88767e1c386aa6515d","name":"kind.rs","kind":"program","lines":24,"source":"//! Contains the kind of system config update.\n\n/// Represents type of update to the system config.\n#[derive(Debug, Clone, Copy, Hash, PartialEq, Eq, derive_more::Display, derive_more::TryFrom)]\n#[try_from(repr)]\n#[repr(u64)]\npub enum SystemConfigUpdateKind {\n    /// Batcher update type\n    Batcher = 0,\n    /// Gas config update type\n    GasConfig = 1,\n    /// Gas limit update type\n    GasLimit = 2,\n    /// Unsafe block signer update type\n    UnsafeBlockSigner = 3,\n    /// EIP-1559 parameters update type\n    Eip1559 = 4,\n    /// Operator fee parameter update\n    OperatorFee = 5,\n    /// Min base fee parameter update\n    MinBaseFee = 6,\n    /// DA footprint gas scalar update type\n    DaFootprintGasScalar = 7,\n}","resolutions":{"9fa846564f4071bd":{"status":"unaudited","coveredLines":0,"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "919c55540696d8ff9d609d48ae766ec927f227b5dd8c5f88767e1c386aa6515d",
+  "name": "kind.rs",
+  "kind": "program",
+  "lines": 24,
+  "source": "//! Contains the kind of system config update.\n\n/// Represents type of update to the system config.\n#[derive(Debug, Clone, Copy, Hash, PartialEq, Eq, derive_more::Display, derive_more::TryFrom)]\n#[try_from(repr)]\n#[repr(u64)]\npub enum SystemConfigUpdateKind {\n    /// Batcher update type\n    Batcher = 0,\n    /// Gas config update type\n    GasConfig = 1,\n    /// Gas limit update type\n    GasLimit = 2,\n    /// Unsafe block signer update type\n    UnsafeBlockSigner = 3,\n    /// EIP-1559 parameters update type\n    Eip1559 = 4,\n    /// Operator fee parameter update\n    OperatorFee = 5,\n    /// Min base fee parameter update\n    MinBaseFee = 6,\n    /// DA footprint gas scalar update type\n    DaFootprintGasScalar = 7,\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

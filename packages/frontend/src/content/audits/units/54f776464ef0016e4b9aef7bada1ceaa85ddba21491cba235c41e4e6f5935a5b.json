@@ -1,1 +1,15 @@
-{"schemaVersion":2,"unitHash":"54f776464ef0016e4b9aef7bada1ceaa85ddba21491cba235c41e4e6f5935a5b","name":".gitignore","kind":"program","lines":2,"source":"# JWT secret\njwttoken","resolutions":{"9fa846564f4071bd":{"status":"unaudited","coveredLines":0,"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "54f776464ef0016e4b9aef7bada1ceaa85ddba21491cba235c41e4e6f5935a5b",
+  "name": ".gitignore",
+  "kind": "program",
+  "lines": 2,
+  "source": "# JWT secret\njwttoken",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

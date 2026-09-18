@@ -1,1 +1,203 @@
-{"schemaVersion":2,"unitHash":"ed35b459c354e8b73544e5748fbea265633c1d7e0ce13e6654d9be7eaa111399","name":"Cargo.toml","kind":"program","lines":49,"source":"[package]\nname = \"kona-preimage\"\ndescription = \"Bindings and types for interacting with the PreimageOracle ABI\"\nversion = \"0.3.0\"\nedition.workspace = true\nauthors.workspace = true\nlicense.workspace = true\nrepository.workspace = true\nhomepage.workspace = true\n\n[lints]\nworkspace = true\n\n[dependencies]\n# General\ntracing.workspace = true\nthiserror.workspace = true\nasync-trait.workspace = true\nalloy-primitives.workspace = true\n\n# `std` feature dependencies\nasync-channel = { workspace = true, optional = true }\n\n# `verify` feature dependencies\nsha2 = { workspace = true, optional = true }\n\n# `rkyv` feature dependencies\nrkyv = { workspace = true, optional = true }\n\n# `serde` feature dependencies\nserde = { workspace = true, optional = true, features = [\"derive\"] }\n\n[dev-dependencies]\ntokio = { workspace = true, features = [\"full\"] }\nsha2.workspace = true\n\n[features]\ndefault = []\nstd = [\n\t\"alloy-primitives/std\",\n\t\"dep:async-channel\",\n\t\"serde?/std\",\n\t\"sha2?/std\",\n\t\"thiserror/std\",\n\t\"tracing/std\",\n]\nrkyv = [ \"dep:rkyv\" ]\nserde = [ \"alloy-primitives/serde\", \"dep:serde\" ]\nverify = [ \"dep:sha2\" ]","resolutions":{"9fa846564f4071bd":{"status":"differs","coveredLines":44,"match":{"origin":"own","collection":"optimism","relation":{"type":"own"},"rank":0,"matchedBy":"name","auditedName":"Cargo.toml","similarity":0.935,"reportId":"optimism/cantina-kona-2026-03","repository":"op-rs/kona","path":"crates/proof/preimage/Cargo.toml","commit":"86910c9112437bbb849eca28961f813c5450e103","commitTimestamp":"2025-12-15T17:17:05Z","url":"https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/crates/proof/preimage/Cargo.toml","auditStatus":"audited_with_no_major_findings","reviewPhase":"initial audit","coverage":"Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). Preimage oracle key/hint types; Informational finding 3.5.12 (key.rs) located here.","majorFindings":0,"isLatestVersion":true,"laterAuditedVersionExists":false,"totalVersions":1},"diff":{"added":5,"removed":0,"ignoredAdded":2,"ignoredRemoved":1,"unchanged":44,"ignoredOnly":false,"hunks":[{"oldStart":21,"oldLines":6,"newStart":21,"newLines":9,"lines":[{"type":" ","oldLine":21,"newLine":21,"text":"# `std` feature dependencies"},{"type":" ","oldLine":22,"newLine":22,"text":"async-channel = { workspace = true, optional = true }"},{"type":" ","oldLine":23,"newLine":23,"text":""},{"type":"+","newLine":24,"text":"# `verify` feature dependencies","ignored":false},{"type":"+","newLine":25,"text":"sha2 = { workspace = true, optional = true }","ignored":false},{"type":"+","newLine":26,"text":"","ignored":true},{"type":" ","oldLine":24,"newLine":27,"text":"# `rkyv` feature dependencies"},{"type":" ","oldLine":25,"newLine":28,"text":"rkyv = { workspace = true, optional = true }"},{"type":" ","oldLine":26,"newLine":29,"text":""}]},{"oldStart":29,"oldLines":6,"newStart":32,"newLines":7,"lines":[{"type":" ","oldLine":29,"newLine":32,"text":""},{"type":" ","oldLine":30,"newLine":33,"text":"[dev-dependencies]"},{"type":" ","oldLine":31,"newLine":34,"text":"tokio = { workspace = true, features = [\"full\"] }"},{"type":"+","newLine":35,"text":"sha2.workspace = true","ignored":false},{"type":" ","oldLine":32,"newLine":36,"text":""},{"type":" ","oldLine":33,"newLine":37,"text":"[features]"},{"type":" ","oldLine":34,"newLine":38,"text":"default = []"}]},{"oldStart":36,"oldLines":8,"newStart":40,"newLines":10,"lines":[{"type":" ","oldLine":36,"newLine":40,"text":"\t\"alloy-primitives/std\","},{"type":" ","oldLine":37,"newLine":41,"text":"\t\"dep:async-channel\","},{"type":" ","oldLine":38,"newLine":42,"text":"\t\"serde?/std\","},{"type":"+","newLine":43,"text":"\t\"sha2?/std\",","ignored":false},{"type":" ","oldLine":39,"newLine":44,"text":"\t\"thiserror/std\","},{"type":" ","oldLine":40,"newLine":45,"text":"\t\"tracing/std\","},{"type":" ","oldLine":41,"newLine":46,"text":"]"},{"type":" ","oldLine":42,"newLine":47,"text":"rkyv = [ \"dep:rkyv\" ]"},{"type":"-","oldLine":43,"text":"serde = [ \"alloy-primitives/serde\", \"dep:serde\" ]","ignored":true},{"type":"+","newLine":48,"text":"serde = [ \"alloy-primitives/serde\", \"dep:serde\" ]","ignored":true},{"type":"+","newLine":49,"text":"verify = [ \"dep:sha2\" ]","ignored":false}]}]},"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "ed35b459c354e8b73544e5748fbea265633c1d7e0ce13e6654d9be7eaa111399",
+  "name": "Cargo.toml",
+  "kind": "program",
+  "lines": 49,
+  "source": "[package]\nname = \"kona-preimage\"\ndescription = \"Bindings and types for interacting with the PreimageOracle ABI\"\nversion = \"0.3.0\"\nedition.workspace = true\nauthors.workspace = true\nlicense.workspace = true\nrepository.workspace = true\nhomepage.workspace = true\n\n[lints]\nworkspace = true\n\n[dependencies]\n# General\ntracing.workspace = true\nthiserror.workspace = true\nasync-trait.workspace = true\nalloy-primitives.workspace = true\n\n# `std` feature dependencies\nasync-channel = { workspace = true, optional = true }\n\n# `verify` feature dependencies\nsha2 = { workspace = true, optional = true }\n\n# `rkyv` feature dependencies\nrkyv = { workspace = true, optional = true }\n\n# `serde` feature dependencies\nserde = { workspace = true, optional = true, features = [\"derive\"] }\n\n[dev-dependencies]\ntokio = { workspace = true, features = [\"full\"] }\nsha2.workspace = true\n\n[features]\ndefault = []\nstd = [\n\t\"alloy-primitives/std\",\n\t\"dep:async-channel\",\n\t\"serde?/std\",\n\t\"sha2?/std\",\n\t\"thiserror/std\",\n\t\"tracing/std\",\n]\nrkyv = [ \"dep:rkyv\" ]\nserde = [ \"alloy-primitives/serde\", \"dep:serde\" ]\nverify = [ \"dep:sha2\" ]",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "differs",
+      "coveredLines": 44,
+      "match": {
+        "origin": "own",
+        "collection": "optimism",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "Cargo.toml",
+        "similarity": 0.935,
+        "reportId": "optimism/cantina-kona-2026-03",
+        "repository": "op-rs/kona",
+        "path": "crates/proof/preimage/Cargo.toml",
+        "commit": "86910c9112437bbb849eca28961f813c5450e103",
+        "commitTimestamp": "2025-12-15T17:17:05Z",
+        "url": "https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/crates/proof/preimage/Cargo.toml",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). Preimage oracle key/hint types; Informational finding 3.5.12 (key.rs) located here.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 5,
+        "removed": 0,
+        "ignoredAdded": 2,
+        "ignoredRemoved": 1,
+        "unchanged": 44,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 21,
+            "oldLines": 6,
+            "newStart": 21,
+            "newLines": 9,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 21,
+                "newLine": 21,
+                "text": "# `std` feature dependencies"
+              },
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 22,
+                "text": "async-channel = { workspace = true, optional = true }"
+              },
+              { "type": " ", "oldLine": 23, "newLine": 23, "text": "" },
+              {
+                "type": "+",
+                "newLine": 24,
+                "text": "# `verify` feature dependencies",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 25,
+                "text": "sha2 = { workspace = true, optional = true }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 26, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 27,
+                "text": "# `rkyv` feature dependencies"
+              },
+              {
+                "type": " ",
+                "oldLine": 25,
+                "newLine": 28,
+                "text": "rkyv = { workspace = true, optional = true }"
+              },
+              { "type": " ", "oldLine": 26, "newLine": 29, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 29,
+            "oldLines": 6,
+            "newStart": 32,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 29, "newLine": 32, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 30,
+                "newLine": 33,
+                "text": "[dev-dependencies]"
+              },
+              {
+                "type": " ",
+                "oldLine": 31,
+                "newLine": 34,
+                "text": "tokio = { workspace = true, features = [\"full\"] }"
+              },
+              {
+                "type": "+",
+                "newLine": 35,
+                "text": "sha2.workspace = true",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 32, "newLine": 36, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 33,
+                "newLine": 37,
+                "text": "[features]"
+              },
+              {
+                "type": " ",
+                "oldLine": 34,
+                "newLine": 38,
+                "text": "default = []"
+              }
+            ]
+          },
+          {
+            "oldStart": 36,
+            "oldLines": 8,
+            "newStart": 40,
+            "newLines": 10,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 36,
+                "newLine": 40,
+                "text": "\t\"alloy-primitives/std\","
+              },
+              {
+                "type": " ",
+                "oldLine": 37,
+                "newLine": 41,
+                "text": "\t\"dep:async-channel\","
+              },
+              {
+                "type": " ",
+                "oldLine": 38,
+                "newLine": 42,
+                "text": "\t\"serde?/std\","
+              },
+              {
+                "type": "+",
+                "newLine": 43,
+                "text": "\t\"sha2?/std\",",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 39,
+                "newLine": 44,
+                "text": "\t\"thiserror/std\","
+              },
+              {
+                "type": " ",
+                "oldLine": 40,
+                "newLine": 45,
+                "text": "\t\"tracing/std\","
+              },
+              { "type": " ", "oldLine": 41, "newLine": 46, "text": "]" },
+              {
+                "type": " ",
+                "oldLine": 42,
+                "newLine": 47,
+                "text": "rkyv = [ \"dep:rkyv\" ]"
+              },
+              {
+                "type": "-",
+                "oldLine": 43,
+                "text": "serde = [ \"alloy-primitives/serde\", \"dep:serde\" ]",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 48,
+                "text": "serde = [ \"alloy-primitives/serde\", \"dep:serde\" ]",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 49,
+                "text": "verify = [ \"dep:sha2\" ]",
+                "ignored": false
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

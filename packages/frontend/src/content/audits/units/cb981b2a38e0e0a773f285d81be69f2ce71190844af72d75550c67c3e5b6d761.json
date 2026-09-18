@@ -1,1 +1,273 @@
-{"schemaVersion":2,"unitHash":"cb981b2a38e0e0a773f285d81be69f2ce71190844af72d75550c67c3e5b6d761","name":"batch_provider.rs","kind":"program","lines":87,"source":"//! A mock implementation of the [`NextBatchProvider`] stage for testing.\n\nuse crate::{\n    errors::PipelineError,\n    stages::NextBatchProvider,\n    traits::{OriginAdvancer, OriginProvider, Stage},\n    types::PipelineResult,\n};\nuse alloc::{boxed::Box, vec::Vec};\nuse alloy_eips::BlockNumHash;\nuse async_trait::async_trait;\nuse kona_genesis::SystemConfig;\nuse kona_protocol::{Batch, BlockInfo, L2BlockInfo};\n\n/// A mock provider for the [`NextBatchProvider`] stage.\n#[derive(Debug, Default)]\npub struct TestNextBatchProvider {\n    /// The origin of the L1 block.\n    pub origin: Option<BlockInfo>,\n    /// A list of batches to return.\n    pub batches: Vec<PipelineResult<Batch>>,\n    /// Tracks if the provider has been flushed.\n    pub flushed: bool,\n    /// Tracks if the reset method was called.\n    pub reset: bool,\n}\n\nimpl TestNextBatchProvider {\n    /// Creates a new [`TestNextBatchProvider`] with the given origin and batches.\n    pub fn new(batches: Vec<PipelineResult<Batch>>) -> Self {\n        Self { origin: Some(BlockInfo::default()), batches, flushed: false, reset: false }\n    }\n}\n\nimpl OriginProvider for TestNextBatchProvider {\n    fn origin(&self) -> Option<BlockInfo> {\n        self.origin\n    }\n}\n\n#[async_trait]\nimpl NextBatchProvider for TestNextBatchProvider {\n    fn flush(&mut self) {\n        self.flushed = true;\n    }\n\n    fn span_buffer_size(&self) -> usize {\n        self.batches.len()\n    }\n\n    async fn next_batch(&mut self, _: L2BlockInfo, _: &[BlockInfo]) -> PipelineResult<Batch> {\n        self.batches.pop().ok_or(PipelineError::Eof.temp())?\n    }\n}\n\n#[async_trait]\nimpl OriginAdvancer for TestNextBatchProvider {\n    async fn advance_origin(&mut self) -> PipelineResult<()> {\n        self.origin = self.origin.map(|mut origin| {\n            origin.number += 1;\n            origin\n        });\n        Ok(())\n    }\n}\n\n#[async_trait]\nimpl Stage for TestNextBatchProvider {\n    async fn reset(&mut self, _: BlockNumHash, _: SystemConfig) -> PipelineResult<()> {\n        self.reset = true;\n        Ok(())\n    }\n\n    async fn activate(&mut self) -> PipelineResult<()> {\n        self.reset = true;\n        Ok(())\n    }\n\n    async fn flush_channel(&mut self) -> PipelineResult<()> {\n        self.flushed = true;\n        Ok(())\n    }\n\n    async fn provide_block(&mut self, _: BlockInfo) -> PipelineResult<()> {\n        Ok(())\n    }\n}","resolutions":{"9fa846564f4071bd":{"status":"differs","coveredLines":72,"match":{"origin":"own","collection":"optimism","relation":{"type":"own"},"rank":0,"matchedBy":"name","auditedName":"batch_provider.rs","similarity":0.803,"reportId":"optimism/cantina-kona-2026-03","repository":"op-rs/kona","path":"crates/protocol/derive/src/test_utils/batch_provider.rs","commit":"86910c9112437bbb849eca28961f813c5450e103","commitTimestamp":"2025-12-15T17:17:05Z","url":"https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/crates/protocol/derive/src/test_utils/batch_provider.rs","auditStatus":"audited_with_no_major_findings","reviewPhase":"initial audit","coverage":"Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). kona-derive derivation pipeline (stages, sources, traversal, attributes). Medium findings 3.3.1 and 3.3.2 (pipeline/core.rs, stages/l1_retrieval.rs) and numerous Low/Informational findings located here; no Critical/High.","majorFindings":0,"isLatestVersion":true,"laterAuditedVersionExists":false,"totalVersions":1},"diff":{"added":15,"removed":8,"ignoredAdded":6,"ignoredRemoved":1,"unchanged":72,"ignoredOnly":false,"hunks":[{"oldStart":3,"oldLines":11,"newStart":3,"newLines":13,"lines":[{"type":" ","oldLine":3,"newLine":3,"text":"use crate::{"},{"type":" ","oldLine":4,"newLine":4,"text":"    errors::PipelineError,"},{"type":" ","oldLine":5,"newLine":5,"text":"    stages::NextBatchProvider,"},{"type":"-","oldLine":6,"text":"    traits::{OriginAdvancer, OriginProvider, SignalReceiver},","ignored":false},{"type":"-","oldLine":7,"text":"    types::{PipelineResult, Signal},","ignored":false},{"type":"+","newLine":6,"text":"    traits::{OriginAdvancer, OriginProvider, Stage},","ignored":false},{"type":"+","newLine":7,"text":"    types::PipelineResult,","ignored":false},{"type":" ","oldLine":8,"newLine":8,"text":"};"},{"type":" ","oldLine":9,"newLine":9,"text":"use alloc::{boxed::Box, vec::Vec};"},{"type":"+","newLine":10,"text":"use alloy_eips::BlockNumHash;","ignored":false},{"type":" ","oldLine":10,"newLine":11,"text":"use async_trait::async_trait;"},{"type":"+","newLine":12,"text":"use kona_genesis::SystemConfig;","ignored":false},{"type":" ","oldLine":11,"newLine":13,"text":"use kona_protocol::{Batch, BlockInfo, L2BlockInfo};"},{"type":" ","oldLine":12,"newLine":14,"text":""},{"type":" ","oldLine":13,"newLine":15,"text":"/// A mock provider for the [`NextBatchProvider`] stage."}]},{"oldStart":63,"oldLines":13,"newStart":65,"newLines":23,"lines":[{"type":" ","oldLine":63,"newLine":65,"text":"}"},{"type":" ","oldLine":64,"newLine":66,"text":""},{"type":" ","oldLine":65,"newLine":67,"text":"#[async_trait]"},{"type":"-","oldLine":66,"text":"impl SignalReceiver for TestNextBatchProvider {","ignored":false},{"type":"-","oldLine":67,"text":"    async fn signal(&mut self, signal: Signal) -> PipelineResult<()> {","ignored":false},{"type":"-","oldLine":68,"text":"        match signal {","ignored":false},{"type":"-","oldLine":69,"text":"            Signal::Reset { .. } => self.reset = true,","ignored":false},{"type":"-","oldLine":70,"text":"            Signal::FlushChannel => self.flushed = true,","ignored":false},{"type":"-","oldLine":71,"text":"            _ => {}","ignored":false},{"type":"-","oldLine":72,"text":"        }","ignored":true},{"type":"+","newLine":68,"text":"impl Stage for TestNextBatchProvider {","ignored":false},{"type":"+","newLine":69,"text":"    async fn reset(&mut self, _: BlockNumHash, _: SystemConfig) -> PipelineResult<()> {","ignored":false},{"type":"+","newLine":70,"text":"        self.reset = true;","ignored":false},{"type":" ","oldLine":73,"newLine":71,"text":"        Ok(())"},{"type":" ","oldLine":74,"newLine":72,"text":"    }"},{"type":"+","newLine":73,"text":"","ignored":true},{"type":"+","newLine":74,"text":"    async fn activate(&mut self) -> PipelineResult<()> {","ignored":false},{"type":"+","newLine":75,"text":"        self.reset = true;","ignored":false},{"type":"+","newLine":76,"text":"        Ok(())","ignored":false},{"type":"+","newLine":77,"text":"    }","ignored":true},{"type":"+","newLine":78,"text":"","ignored":true},{"type":"+","newLine":79,"text":"    async fn flush_channel(&mut self) -> PipelineResult<()> {","ignored":false},{"type":"+","newLine":80,"text":"        self.flushed = true;","ignored":false},{"type":"+","newLine":81,"text":"        Ok(())","ignored":false},{"type":"+","newLine":82,"text":"    }","ignored":true},{"type":"+","newLine":83,"text":"","ignored":true},{"type":"+","newLine":84,"text":"    async fn provide_block(&mut self, _: BlockInfo) -> PipelineResult<()> {","ignored":false},{"type":"+","newLine":85,"text":"        Ok(())","ignored":false},{"type":"+","newLine":86,"text":"    }","ignored":true},{"type":" ","oldLine":75,"newLine":87,"text":"}"}]}]},"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "cb981b2a38e0e0a773f285d81be69f2ce71190844af72d75550c67c3e5b6d761",
+  "name": "batch_provider.rs",
+  "kind": "program",
+  "lines": 87,
+  "source": "//! A mock implementation of the [`NextBatchProvider`] stage for testing.\n\nuse crate::{\n    errors::PipelineError,\n    stages::NextBatchProvider,\n    traits::{OriginAdvancer, OriginProvider, Stage},\n    types::PipelineResult,\n};\nuse alloc::{boxed::Box, vec::Vec};\nuse alloy_eips::BlockNumHash;\nuse async_trait::async_trait;\nuse kona_genesis::SystemConfig;\nuse kona_protocol::{Batch, BlockInfo, L2BlockInfo};\n\n/// A mock provider for the [`NextBatchProvider`] stage.\n#[derive(Debug, Default)]\npub struct TestNextBatchProvider {\n    /// The origin of the L1 block.\n    pub origin: Option<BlockInfo>,\n    /// A list of batches to return.\n    pub batches: Vec<PipelineResult<Batch>>,\n    /// Tracks if the provider has been flushed.\n    pub flushed: bool,\n    /// Tracks if the reset method was called.\n    pub reset: bool,\n}\n\nimpl TestNextBatchProvider {\n    /// Creates a new [`TestNextBatchProvider`] with the given origin and batches.\n    pub fn new(batches: Vec<PipelineResult<Batch>>) -> Self {\n        Self { origin: Some(BlockInfo::default()), batches, flushed: false, reset: false }\n    }\n}\n\nimpl OriginProvider for TestNextBatchProvider {\n    fn origin(&self) -> Option<BlockInfo> {\n        self.origin\n    }\n}\n\n#[async_trait]\nimpl NextBatchProvider for TestNextBatchProvider {\n    fn flush(&mut self) {\n        self.flushed = true;\n    }\n\n    fn span_buffer_size(&self) -> usize {\n        self.batches.len()\n    }\n\n    async fn next_batch(&mut self, _: L2BlockInfo, _: &[BlockInfo]) -> PipelineResult<Batch> {\n        self.batches.pop().ok_or(PipelineError::Eof.temp())?\n    }\n}\n\n#[async_trait]\nimpl OriginAdvancer for TestNextBatchProvider {\n    async fn advance_origin(&mut self) -> PipelineResult<()> {\n        self.origin = self.origin.map(|mut origin| {\n            origin.number += 1;\n            origin\n        });\n        Ok(())\n    }\n}\n\n#[async_trait]\nimpl Stage for TestNextBatchProvider {\n    async fn reset(&mut self, _: BlockNumHash, _: SystemConfig) -> PipelineResult<()> {\n        self.reset = true;\n        Ok(())\n    }\n\n    async fn activate(&mut self) -> PipelineResult<()> {\n        self.reset = true;\n        Ok(())\n    }\n\n    async fn flush_channel(&mut self) -> PipelineResult<()> {\n        self.flushed = true;\n        Ok(())\n    }\n\n    async fn provide_block(&mut self, _: BlockInfo) -> PipelineResult<()> {\n        Ok(())\n    }\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "differs",
+      "coveredLines": 72,
+      "match": {
+        "origin": "own",
+        "collection": "optimism",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "batch_provider.rs",
+        "similarity": 0.803,
+        "reportId": "optimism/cantina-kona-2026-03",
+        "repository": "op-rs/kona",
+        "path": "crates/protocol/derive/src/test_utils/batch_provider.rs",
+        "commit": "86910c9112437bbb849eca28961f813c5450e103",
+        "commitTimestamp": "2025-12-15T17:17:05Z",
+        "url": "https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/crates/protocol/derive/src/test_utils/batch_provider.rs",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). kona-derive derivation pipeline (stages, sources, traversal, attributes). Medium findings 3.3.1 and 3.3.2 (pipeline/core.rs, stages/l1_retrieval.rs) and numerous Low/Informational findings located here; no Critical/High.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 15,
+        "removed": 8,
+        "ignoredAdded": 6,
+        "ignoredRemoved": 1,
+        "unchanged": 72,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 3,
+            "oldLines": 11,
+            "newStart": 3,
+            "newLines": 13,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "use crate::{"
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "    errors::PipelineError,"
+              },
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 5,
+                "text": "    stages::NextBatchProvider,"
+              },
+              {
+                "type": "-",
+                "oldLine": 6,
+                "text": "    traits::{OriginAdvancer, OriginProvider, SignalReceiver},",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 7,
+                "text": "    types::{PipelineResult, Signal},",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 6,
+                "text": "    traits::{OriginAdvancer, OriginProvider, Stage},",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 7,
+                "text": "    types::PipelineResult,",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 8, "newLine": 8, "text": "};" },
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 9,
+                "text": "use alloc::{boxed::Box, vec::Vec};"
+              },
+              {
+                "type": "+",
+                "newLine": 10,
+                "text": "use alloy_eips::BlockNumHash;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 10,
+                "newLine": 11,
+                "text": "use async_trait::async_trait;"
+              },
+              {
+                "type": "+",
+                "newLine": 12,
+                "text": "use kona_genesis::SystemConfig;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 11,
+                "newLine": 13,
+                "text": "use kona_protocol::{Batch, BlockInfo, L2BlockInfo};"
+              },
+              { "type": " ", "oldLine": 12, "newLine": 14, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 13,
+                "newLine": 15,
+                "text": "/// A mock provider for the [`NextBatchProvider`] stage."
+              }
+            ]
+          },
+          {
+            "oldStart": 63,
+            "oldLines": 13,
+            "newStart": 65,
+            "newLines": 23,
+            "lines": [
+              { "type": " ", "oldLine": 63, "newLine": 65, "text": "}" },
+              { "type": " ", "oldLine": 64, "newLine": 66, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 65,
+                "newLine": 67,
+                "text": "#[async_trait]"
+              },
+              {
+                "type": "-",
+                "oldLine": 66,
+                "text": "impl SignalReceiver for TestNextBatchProvider {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 67,
+                "text": "    async fn signal(&mut self, signal: Signal) -> PipelineResult<()> {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 68,
+                "text": "        match signal {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 69,
+                "text": "            Signal::Reset { .. } => self.reset = true,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 70,
+                "text": "            Signal::FlushChannel => self.flushed = true,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 71,
+                "text": "            _ => {}",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 72,
+                "text": "        }",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 68,
+                "text": "impl Stage for TestNextBatchProvider {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 69,
+                "text": "    async fn reset(&mut self, _: BlockNumHash, _: SystemConfig) -> PipelineResult<()> {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 70,
+                "text": "        self.reset = true;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 73,
+                "newLine": 71,
+                "text": "        Ok(())"
+              },
+              { "type": " ", "oldLine": 74, "newLine": 72, "text": "    }" },
+              { "type": "+", "newLine": 73, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 74,
+                "text": "    async fn activate(&mut self) -> PipelineResult<()> {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 75,
+                "text": "        self.reset = true;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 76,
+                "text": "        Ok(())",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 77, "text": "    }", "ignored": true },
+              { "type": "+", "newLine": 78, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 79,
+                "text": "    async fn flush_channel(&mut self) -> PipelineResult<()> {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 80,
+                "text": "        self.flushed = true;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 81,
+                "text": "        Ok(())",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 82, "text": "    }", "ignored": true },
+              { "type": "+", "newLine": 83, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 84,
+                "text": "    async fn provide_block(&mut self, _: BlockInfo) -> PipelineResult<()> {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 85,
+                "text": "        Ok(())",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 86, "text": "    }", "ignored": true },
+              { "type": " ", "oldLine": 75, "newLine": 87, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

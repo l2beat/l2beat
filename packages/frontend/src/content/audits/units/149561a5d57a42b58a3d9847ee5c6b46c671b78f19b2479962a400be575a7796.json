@@ -1,1 +1,38 @@
-{"schemaVersion":2,"unitHash":"149561a5d57a42b58a3d9847ee5c6b46c671b78f19b2479962a400be575a7796","name":"blocking_runtime.rs","kind":"program","lines":64,"source":"//! This module contains a blocking runtime for futures, allowing for synchronous execution of async\n//! code in an embedded environment.\n\nuse core::future::Future;\n\n/// This function blocks on a future in place until it is ready.\n#[cfg(feature = \"std\")]\npub fn block_on<T>(f: impl Future<Output = T>) -> T {\n    // When running with Tokio, use the appropriate blocking mechanism\n    if let Ok(runtime) = tokio::runtime::Handle::try_current() {\n        tokio::task::block_in_place(|| runtime.block_on(f))\n    } else {\n        // Fallback to tokio's block_on if we're not in a runtime\n        tokio::runtime::Runtime::new().unwrap().block_on(f)\n    }\n}\n\n/// This function busy waits on a future until it is ready. It uses a no-op waker to poll the future\n/// in a thread-blocking loop.\n#[cfg(not(feature = \"std\"))]\npub fn block_on<T>(f: impl Future<Output = T>) -> T {\n    use alloc::boxed::Box;\n    use core::task::{Context, Poll, RawWaker, RawWakerVTable, Waker};\n\n    let mut f = Box::pin(f);\n\n    // Construct a no-op waker.\n    fn noop_clone(_: *const ()) -> RawWaker {\n        noop_raw_waker()\n    }\n    const fn noop(_: *const ()) {}\n    fn noop_raw_waker() -> RawWaker {\n        let vtable = &RawWakerVTable::new(noop_clone, noop, noop, noop);\n        RawWaker::new(core::ptr::null(), vtable)\n    }\n    let waker = unsafe { Waker::from_raw(noop_raw_waker()) };\n    let mut context = Context::from_waker(&waker);\n\n    loop {\n        // Safety: This is safe because we only poll the future once per loop iteration,\n        // and we do not move the future after pinning it.\n        if let Poll::Ready(v) = f.as_mut().poll(&mut context) {\n            return v;\n        }\n    }\n}\n\n#[cfg(test)]\nmod tests {\n    use super::*;\n    use core::future::ready;\n\n    #[test]\n    fn test_block_on() {\n        let f = async { 42 };\n        assert_eq!(block_on(f), 42);\n    }\n\n    #[test]\n    fn test_block_on_ready() {\n        let f = ready(42);\n        assert_eq!(block_on(f), 42);\n    }\n}","resolutions":{"9fa846564f4071bd":{"status":"identical","coveredLines":64,"match":{"origin":"own","collection":"optimism","relation":{"type":"own"},"rank":0,"matchedBy":"identity","auditedName":"blocking_runtime.rs","similarity":1,"reportId":"optimism/cantina-kona-2026-03","repository":"op-rs/kona","path":"crates/proof/proof/src/blocking_runtime.rs","commit":"86910c9112437bbb849eca28961f813c5450e103","commitTimestamp":"2025-12-15T17:17:05Z","url":"https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/crates/proof/proof/src/blocking_runtime.rs","auditStatus":"audited_with_major_findings","reviewPhase":"initial audit","coverage":"Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). kona-proof crate (boot info, sync start, caching oracle, L1/L2 providers, pipeline). Critical finding 3.1.2 is located in src/sync.rs (TipCursor initialized with zero output root); Medium 3.3.2 (l1/pipeline.rs), Low 3.4.17, 3.4.21 and Informational 3.5.9 also located here. 3.1.2 fixed in ethereum-optimism/optimism PR 19775 (see that repository's scope).","majorFindings":1,"findingIds":["3.1.2"],"isLatestVersion":true,"laterAuditedVersionExists":false,"totalVersions":1},"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "149561a5d57a42b58a3d9847ee5c6b46c671b78f19b2479962a400be575a7796",
+  "name": "blocking_runtime.rs",
+  "kind": "program",
+  "lines": 64,
+  "source": "//! This module contains a blocking runtime for futures, allowing for synchronous execution of async\n//! code in an embedded environment.\n\nuse core::future::Future;\n\n/// This function blocks on a future in place until it is ready.\n#[cfg(feature = \"std\")]\npub fn block_on<T>(f: impl Future<Output = T>) -> T {\n    // When running with Tokio, use the appropriate blocking mechanism\n    if let Ok(runtime) = tokio::runtime::Handle::try_current() {\n        tokio::task::block_in_place(|| runtime.block_on(f))\n    } else {\n        // Fallback to tokio's block_on if we're not in a runtime\n        tokio::runtime::Runtime::new().unwrap().block_on(f)\n    }\n}\n\n/// This function busy waits on a future until it is ready. It uses a no-op waker to poll the future\n/// in a thread-blocking loop.\n#[cfg(not(feature = \"std\"))]\npub fn block_on<T>(f: impl Future<Output = T>) -> T {\n    use alloc::boxed::Box;\n    use core::task::{Context, Poll, RawWaker, RawWakerVTable, Waker};\n\n    let mut f = Box::pin(f);\n\n    // Construct a no-op waker.\n    fn noop_clone(_: *const ()) -> RawWaker {\n        noop_raw_waker()\n    }\n    const fn noop(_: *const ()) {}\n    fn noop_raw_waker() -> RawWaker {\n        let vtable = &RawWakerVTable::new(noop_clone, noop, noop, noop);\n        RawWaker::new(core::ptr::null(), vtable)\n    }\n    let waker = unsafe { Waker::from_raw(noop_raw_waker()) };\n    let mut context = Context::from_waker(&waker);\n\n    loop {\n        // Safety: This is safe because we only poll the future once per loop iteration,\n        // and we do not move the future after pinning it.\n        if let Poll::Ready(v) = f.as_mut().poll(&mut context) {\n            return v;\n        }\n    }\n}\n\n#[cfg(test)]\nmod tests {\n    use super::*;\n    use core::future::ready;\n\n    #[test]\n    fn test_block_on() {\n        let f = async { 42 };\n        assert_eq!(block_on(f), 42);\n    }\n\n    #[test]\n    fn test_block_on_ready() {\n        let f = ready(42);\n        assert_eq!(block_on(f), 42);\n    }\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "identical",
+      "coveredLines": 64,
+      "match": {
+        "origin": "own",
+        "collection": "optimism",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "blocking_runtime.rs",
+        "similarity": 1,
+        "reportId": "optimism/cantina-kona-2026-03",
+        "repository": "op-rs/kona",
+        "path": "crates/proof/proof/src/blocking_runtime.rs",
+        "commit": "86910c9112437bbb849eca28961f813c5450e103",
+        "commitTimestamp": "2025-12-15T17:17:05Z",
+        "url": "https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/crates/proof/proof/src/blocking_runtime.rs",
+        "auditStatus": "audited_with_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). kona-proof crate (boot info, sync start, caching oracle, L1/L2 providers, pipeline). Critical finding 3.1.2 is located in src/sync.rs (TipCursor initialized with zero output root); Medium 3.3.2 (l1/pipeline.rs), Low 3.4.17, 3.4.21 and Informational 3.5.9 also located here. 3.1.2 fixed in ethereum-optimism/optimism PR 19775 (see that repository's scope).",
+        "majorFindings": 1,
+        "findingIds": ["3.1.2"],
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "warnings": []
+    }
+  }
+}

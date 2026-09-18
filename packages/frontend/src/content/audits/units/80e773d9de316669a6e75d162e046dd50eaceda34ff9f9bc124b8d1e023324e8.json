@@ -1,1 +1,38 @@
-{"schemaVersion":2,"unitHash":"80e773d9de316669a6e75d162e046dd50eaceda34ff9f9bc124b8d1e023324e8","name":"mod.rs","kind":"program","lines":10,"source":"//! Contains the L1 constructs of the proof, backed by the preimage oracle ABI as a data source.\n\nmod pipeline;\npub use pipeline::{OraclePipeline, ProviderAttributesBuilder, ProviderDerivationPipeline};\n\nmod blob_provider;\npub use blob_provider::{OracleBlobProvider, ROOTS_OF_UNITY};\n\nmod chain_provider;\npub use chain_provider::OracleL1ChainProvider;","resolutions":{"9fa846564f4071bd":{"status":"identical","coveredLines":10,"match":{"origin":"own","collection":"optimism","relation":{"type":"own"},"rank":0,"matchedBy":"identity","auditedName":"mod.rs","similarity":1,"reportId":"optimism/cantina-kona-2026-03","repository":"op-rs/kona","path":"crates/proof/proof/src/l1/mod.rs","commit":"86910c9112437bbb849eca28961f813c5450e103","commitTimestamp":"2025-12-15T17:17:05Z","url":"https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/crates/proof/proof/src/l1/mod.rs","auditStatus":"audited_with_major_findings","reviewPhase":"initial audit","coverage":"Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). kona-proof crate (boot info, sync start, caching oracle, L1/L2 providers, pipeline). Critical finding 3.1.2 is located in src/sync.rs (TipCursor initialized with zero output root); Medium 3.3.2 (l1/pipeline.rs), Low 3.4.17, 3.4.21 and Informational 3.5.9 also located here. 3.1.2 fixed in ethereum-optimism/optimism PR 19775 (see that repository's scope).","majorFindings":1,"findingIds":["3.1.2"],"isLatestVersion":true,"laterAuditedVersionExists":false,"totalVersions":1},"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "80e773d9de316669a6e75d162e046dd50eaceda34ff9f9bc124b8d1e023324e8",
+  "name": "mod.rs",
+  "kind": "program",
+  "lines": 10,
+  "source": "//! Contains the L1 constructs of the proof, backed by the preimage oracle ABI as a data source.\n\nmod pipeline;\npub use pipeline::{OraclePipeline, ProviderAttributesBuilder, ProviderDerivationPipeline};\n\nmod blob_provider;\npub use blob_provider::{OracleBlobProvider, ROOTS_OF_UNITY};\n\nmod chain_provider;\npub use chain_provider::OracleL1ChainProvider;",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "identical",
+      "coveredLines": 10,
+      "match": {
+        "origin": "own",
+        "collection": "optimism",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "mod.rs",
+        "similarity": 1,
+        "reportId": "optimism/cantina-kona-2026-03",
+        "repository": "op-rs/kona",
+        "path": "crates/proof/proof/src/l1/mod.rs",
+        "commit": "86910c9112437bbb849eca28961f813c5450e103",
+        "commitTimestamp": "2025-12-15T17:17:05Z",
+        "url": "https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/crates/proof/proof/src/l1/mod.rs",
+        "auditStatus": "audited_with_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). kona-proof crate (boot info, sync start, caching oracle, L1/L2 providers, pipeline). Critical finding 3.1.2 is located in src/sync.rs (TipCursor initialized with zero output root); Medium 3.3.2 (l1/pipeline.rs), Low 3.4.17, 3.4.21 and Informational 3.5.9 also located here. 3.1.2 fixed in ethereum-optimism/optimism PR 19775 (see that repository's scope).",
+        "majorFindings": 1,
+        "findingIds": ["3.1.2"],
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "warnings": []
+    }
+  }
+}

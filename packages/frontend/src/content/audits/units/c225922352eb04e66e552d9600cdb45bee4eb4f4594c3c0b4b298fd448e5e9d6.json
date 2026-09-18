@@ -1,1 +1,15 @@
-{"schemaVersion":2,"unitHash":"c225922352eb04e66e552d9600cdb45bee4eb4f4594c3c0b4b298fd448e5e9d6","name":"mod.rs","kind":"program","lines":7,"source":"//! Task and its associated types for importing a block that has been started.\n\nmod task;\npub use task::SealTask;\n\nmod error;\npub use error::SealTaskError;","resolutions":{"9fa846564f4071bd":{"status":"unaudited","coveredLines":0,"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "c225922352eb04e66e552d9600cdb45bee4eb4f4594c3c0b4b298fd448e5e9d6",
+  "name": "mod.rs",
+  "kind": "program",
+  "lines": 7,
+  "source": "//! Task and its associated types for importing a block that has been started.\n\nmod task;\npub use task::SealTask;\n\nmod error;\npub use error::SealTaskError;",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

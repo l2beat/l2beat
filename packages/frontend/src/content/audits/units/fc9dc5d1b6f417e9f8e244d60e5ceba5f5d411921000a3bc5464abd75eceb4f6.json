@@ -1,1 +1,15 @@
-{"schemaVersion":2,"unitHash":"fc9dc5d1b6f417e9f8e244d60e5ceba5f5d411921000a3bc5464abd75eceb4f6","name":"lib.rs","kind":"program","lines":18,"source":"#![doc = include_str!(\"../README.md\")]\n#![doc(\n    html_logo_url = \"https://raw.githubusercontent.com/ethereum-optimism/optimism/develop/rust/kona/assets/square.png\",\n    html_favicon_url = \"https://raw.githubusercontent.com/ethereum-optimism/optimism/develop/rust/kona/assets/favicon.ico\",\n    issue_tracker_base_url = \"https://github.com/ethereum-optimism/optimism/issues/\"\n)]\n#![cfg_attr(docsrs, feature(doc_cfg))]\n\nmod buffer;\npub use buffer::{CacheStats, CachedBlock, ChainBufferError, ChainStateBuffer, ChainStateEvent};\n\nmod buffered;\npub use buffered::{BufferedL2Provider, BufferedProviderError};\n\n#[cfg(feature = \"metrics\")]\nmod metrics;\n#[cfg(feature = \"metrics\")]\npub use metrics::Metrics;","resolutions":{"9fa846564f4071bd":{"status":"unaudited","coveredLines":0,"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "fc9dc5d1b6f417e9f8e244d60e5ceba5f5d411921000a3bc5464abd75eceb4f6",
+  "name": "lib.rs",
+  "kind": "program",
+  "lines": 18,
+  "source": "#![doc = include_str!(\"../README.md\")]\n#![doc(\n    html_logo_url = \"https://raw.githubusercontent.com/ethereum-optimism/optimism/develop/rust/kona/assets/square.png\",\n    html_favicon_url = \"https://raw.githubusercontent.com/ethereum-optimism/optimism/develop/rust/kona/assets/favicon.ico\",\n    issue_tracker_base_url = \"https://github.com/ethereum-optimism/optimism/issues/\"\n)]\n#![cfg_attr(docsrs, feature(doc_cfg))]\n\nmod buffer;\npub use buffer::{CacheStats, CachedBlock, ChainBufferError, ChainStateBuffer, ChainStateEvent};\n\nmod buffered;\npub use buffered::{BufferedL2Provider, BufferedProviderError};\n\n#[cfg(feature = \"metrics\")]\nmod metrics;\n#[cfg(feature = \"metrics\")]\npub use metrics::Metrics;",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

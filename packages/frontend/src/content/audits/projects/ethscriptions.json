@@ -812,10 +812,7 @@
                 "reviewPhase": "initial audit",
                 "coverage": "Second audited commit (last 3 weeks). Same directory scope and exclusions as the first commit; C01 and H01 fixes from the archived repository are contained in this commit, L02/L04/N01 are fixed here per the report.",
                 "majorFindings": 2,
-                "findingIds": [
-                  "C02",
-                  "C04"
-                ],
+                "findingIds": ["C02", "C04"],
                 "isLatestVersion": true,
                 "laterAuditedVersionExists": false,
                 "totalVersions": 2
@@ -1106,9 +1103,7 @@
                 "unchanged": 5,
                 "ignoredOnly": false
               },
-              "warnings": [
-                "kind-mismatch"
-              ]
+              "warnings": ["kind-mismatch"]
             },
             {
               "unitHash": "54e1232f487718883a0eb40f8d9e1b619c6c9a08035ebaeaa86a84d9119ad397",

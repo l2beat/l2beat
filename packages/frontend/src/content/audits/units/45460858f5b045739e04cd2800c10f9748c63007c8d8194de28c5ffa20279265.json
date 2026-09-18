@@ -1,1 +1,594 @@
-{"schemaVersion":2,"unitHash":"45460858f5b045739e04cd2800c10f9748c63007c8d8194de28c5ffa20279265","name":"signals.rs","kind":"program","lines":66,"source":"//! Signal types for the `kona-derive` pipeline.\n//!\n//! Signals are the primary method of communication between the pipeline driver\n//! and the [`DerivationPipeline`]. The pipeline receives [`Signal`]s and\n//! dispatches to stages via [`Stage`] methods.\n//!\n//! [`DerivationPipeline`]: crate::DerivationPipeline\n//! [`Stage`]: crate::Stage\n\nuse kona_protocol::{BlockInfo, L2BlockInfo};\n\n/// A signal to send to the pipeline.\n#[derive(Debug, Clone, Copy, PartialEq, Eq)]\n#[allow(clippy::large_enum_variant)]\npub enum Signal {\n    /// Reset the pipeline.\n    Reset(ResetSignal),\n    /// Hardfork Activation.\n    Activation(ActivationSignal),\n    /// Flush the currently active channel.\n    FlushChannel,\n    /// Provide a new L1 block to the L1 traversal stage.\n    ProvideBlock(BlockInfo),\n}\n\nimpl core::fmt::Display for Signal {\n    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {\n        match self {\n            Self::Reset(_) => write!(f, \"reset\"),\n            Self::Activation(_) => write!(f, \"activation\"),\n            Self::FlushChannel => write!(f, \"flush_channel\"),\n            Self::ProvideBlock(_) => write!(f, \"provide_block\"),\n        }\n    }\n}\n\n/// A pipeline reset signal.\n#[derive(Debug, Default, Clone, Copy, PartialEq, Eq)]\npub struct ResetSignal {\n    /// The L2 safe head to reset to.\n    pub l2_safe_head: L2BlockInfo,\n}\n\n/// A pipeline hardfork activation signal.\n#[derive(Debug, Default, Clone, Copy, PartialEq, Eq)]\npub struct ActivationSignal {\n    /// The L2 safe head to reset to.\n    pub l2_safe_head: L2BlockInfo,\n}\n\n#[cfg(test)]\nmod tests {\n    use super::*;\n\n    #[test]\n    fn test_reset_signal() {\n        let signal = ResetSignal::default();\n        assert_eq!(Signal::Reset(signal), Signal::Reset(signal));\n    }\n\n    #[test]\n    fn test_activation_signal() {\n        let signal = ActivationSignal::default();\n        assert_eq!(Signal::Activation(signal), Signal::Activation(signal));\n    }\n}","resolutions":{"9fa846564f4071bd":{"status":"differs","coveredLines":64,"match":{"origin":"own","collection":"optimism","relation":{"type":"own"},"rank":0,"matchedBy":"name","auditedName":"signals.rs","similarity":0.589,"reportId":"optimism/cantina-kona-2026-03","repository":"op-rs/kona","path":"crates/protocol/derive/src/types/signals.rs","commit":"86910c9112437bbb849eca28961f813c5450e103","commitTimestamp":"2025-12-15T17:17:05Z","url":"https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/crates/protocol/derive/src/types/signals.rs","auditStatus":"audited_with_no_major_findings","reviewPhase":"initial audit","coverage":"Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). kona-derive derivation pipeline (stages, sources, traversal, attributes). Medium findings 3.3.1 and 3.3.2 (pipeline/core.rs, stages/l1_retrieval.rs) and numerous Low/Informational findings located here; no Critical/High.","majorFindings":0,"isLatestVersion":true,"laterAuditedVersionExists":false,"totalVersions":1},"diff":{"added":2,"removed":58,"ignoredAdded":6,"ignoredRemoved":11,"unchanged":64,"ignoredOnly":false,"hunks":[{"oldStart":1,"oldLines":10,"newStart":1,"newLines":12,"lines":[{"type":" ","oldLine":1,"newLine":1,"text":"//! Signal types for the `kona-derive` pipeline."},{"type":" ","oldLine":2,"newLine":2,"text":"//!"},{"type":"-","oldLine":3,"text":"//! Signals are the primary method of communication in the downwards direction","ignored":true},{"type":"-","oldLine":4,"text":"//! of the pipeline. They allow the pipeline driver to perform actions such as","ignored":true},{"type":"-","oldLine":5,"text":"//! resetting all stages in the pipeline through message passing.","ignored":true},{"type":"+","newLine":3,"text":"//! Signals are the primary method of communication between the pipeline driver","ignored":true},{"type":"+","newLine":4,"text":"//! and the [`DerivationPipeline`]. The pipeline receives [`Signal`]s and","ignored":true},{"type":"+","newLine":5,"text":"//! dispatches to stages via [`Stage`] methods.","ignored":true},{"type":"+","newLine":6,"text":"//!","ignored":true},{"type":"+","newLine":7,"text":"//! [`DerivationPipeline`]: crate::DerivationPipeline","ignored":true},{"type":"+","newLine":8,"text":"//! [`Stage`]: crate::Stage","ignored":true},{"type":" ","oldLine":6,"newLine":9,"text":""},{"type":"-","oldLine":7,"text":"use kona_genesis::SystemConfig;","ignored":false},{"type":" ","oldLine":8,"newLine":10,"text":"use kona_protocol::{BlockInfo, L2BlockInfo};"},{"type":" ","oldLine":9,"newLine":11,"text":""},{"type":" ","oldLine":10,"newLine":12,"text":"/// A signal to send to the pipeline."}]},{"oldStart":32,"oldLines":64,"newStart":34,"newLines":20,"lines":[{"type":" ","oldLine":32,"newLine":34,"text":"    }"},{"type":" ","oldLine":33,"newLine":35,"text":"}"},{"type":" ","oldLine":34,"newLine":36,"text":""},{"type":"-","oldLine":35,"text":"impl Signal {","ignored":false},{"type":"-","oldLine":36,"text":"    /// Sets the [`SystemConfig`] for the signal.","ignored":false},{"type":"-","oldLine":37,"text":"    pub const fn with_system_config(self, system_config: SystemConfig) -> Self {","ignored":false},{"type":"-","oldLine":38,"text":"        match self {","ignored":false},{"type":"-","oldLine":39,"text":"            Self::Reset(reset) => reset.with_system_config(system_config).signal(),","ignored":false},{"type":"-","oldLine":40,"text":"            Self::Activation(activation) => activation.with_system_config(system_config).signal(),","ignored":false},{"type":"-","oldLine":41,"text":"            Self::FlushChannel => Self::FlushChannel,","ignored":false},{"type":"-","oldLine":42,"text":"            Self::ProvideBlock(block) => Self::ProvideBlock(block),","ignored":false},{"type":"-","oldLine":43,"text":"        }","ignored":false},{"type":"-","oldLine":44,"text":"    }","ignored":false},{"type":"-","oldLine":45,"text":"}","ignored":false},{"type":"-","oldLine":46,"text":"","ignored":true},{"type":" ","oldLine":47,"newLine":37,"text":"/// A pipeline reset signal."},{"type":" ","oldLine":48,"newLine":38,"text":"#[derive(Debug, Default, Clone, Copy, PartialEq, Eq)]"},{"type":" ","oldLine":49,"newLine":39,"text":"pub struct ResetSignal {"},{"type":" ","oldLine":50,"newLine":40,"text":"    /// The L2 safe head to reset to."},{"type":" ","oldLine":51,"newLine":41,"text":"    pub l2_safe_head: L2BlockInfo,"},{"type":"-","oldLine":52,"text":"    /// The L1 origin to reset to.","ignored":false},{"type":"-","oldLine":53,"text":"    pub l1_origin: BlockInfo,","ignored":false},{"type":"-","oldLine":54,"text":"    /// The optional [`SystemConfig`] to reset with.","ignored":false},{"type":"-","oldLine":55,"text":"    pub system_config: Option<SystemConfig>,","ignored":false},{"type":" ","oldLine":56,"newLine":42,"text":"}"},{"type":" ","oldLine":57,"newLine":43,"text":""},{"type":"-","oldLine":58,"text":"impl ResetSignal {","ignored":false},{"type":"-","oldLine":59,"text":"    /// Creates a new [Signal::Reset] from the [`ResetSignal`].","ignored":false},{"type":"-","oldLine":60,"text":"    pub const fn signal(self) -> Signal {","ignored":false},{"type":"-","oldLine":61,"text":"        Signal::Reset(self)","ignored":false},{"type":"-","oldLine":62,"text":"    }","ignored":false},{"type":"-","oldLine":63,"text":"","ignored":true},{"type":"-","oldLine":64,"text":"    /// Sets the [`SystemConfig`] for the signal.","ignored":false},{"type":"-","oldLine":65,"text":"    pub const fn with_system_config(self, system_config: SystemConfig) -> Self {","ignored":false},{"type":"-","oldLine":66,"text":"        Self { system_config: Some(system_config), ..self }","ignored":false},{"type":"-","oldLine":67,"text":"    }","ignored":false},{"type":"-","oldLine":68,"text":"}","ignored":false},{"type":"-","oldLine":69,"text":"","ignored":true},{"type":" ","oldLine":70,"newLine":44,"text":"/// A pipeline hardfork activation signal."},{"type":" ","oldLine":71,"newLine":45,"text":"#[derive(Debug, Default, Clone, Copy, PartialEq, Eq)]"},{"type":" ","oldLine":72,"newLine":46,"text":"pub struct ActivationSignal {"},{"type":" ","oldLine":73,"newLine":47,"text":"    /// The L2 safe head to reset to."},{"type":" ","oldLine":74,"newLine":48,"text":"    pub l2_safe_head: L2BlockInfo,"},{"type":"-","oldLine":75,"text":"    /// The L1 origin to reset to.","ignored":false},{"type":"-","oldLine":76,"text":"    pub l1_origin: BlockInfo,","ignored":false},{"type":"-","oldLine":77,"text":"    /// The optional [`SystemConfig`] to reset with.","ignored":false},{"type":"-","oldLine":78,"text":"    pub system_config: Option<SystemConfig>,","ignored":false},{"type":" ","oldLine":79,"newLine":49,"text":"}"},{"type":" ","oldLine":80,"newLine":50,"text":""},{"type":"-","oldLine":81,"text":"impl ActivationSignal {","ignored":false},{"type":"-","oldLine":82,"text":"    /// Creates a new [Signal::Activation] from the [`ActivationSignal`].","ignored":false},{"type":"-","oldLine":83,"text":"    pub const fn signal(self) -> Signal {","ignored":false},{"type":"-","oldLine":84,"text":"        Signal::Activation(self)","ignored":false},{"type":"-","oldLine":85,"text":"    }","ignored":false},{"type":"-","oldLine":86,"text":"","ignored":true},{"type":"-","oldLine":87,"text":"    /// Sets the [`SystemConfig`] for the signal.","ignored":false},{"type":"-","oldLine":88,"text":"    pub const fn with_system_config(self, system_config: SystemConfig) -> Self {","ignored":false},{"type":"-","oldLine":89,"text":"        Self { system_config: Some(system_config), ..self }","ignored":false},{"type":"-","oldLine":90,"text":"    }","ignored":false},{"type":"-","oldLine":91,"text":"}","ignored":false},{"type":"-","oldLine":92,"text":"","ignored":true},{"type":" ","oldLine":93,"newLine":51,"text":"#[cfg(test)]"},{"type":" ","oldLine":94,"newLine":52,"text":"mod tests {"},{"type":" ","oldLine":95,"newLine":53,"text":"    use super::*;"}]},{"oldStart":97,"oldLines":31,"newStart":55,"newLines":12,"lines":[{"type":" ","oldLine":97,"newLine":55,"text":"    #[test]"},{"type":" ","oldLine":98,"newLine":56,"text":"    fn test_reset_signal() {"},{"type":" ","oldLine":99,"newLine":57,"text":"        let signal = ResetSignal::default();"},{"type":"-","oldLine":100,"text":"        assert_eq!(signal.signal(), Signal::Reset(signal));","ignored":false},{"type":"+","newLine":58,"text":"        assert_eq!(Signal::Reset(signal), Signal::Reset(signal));","ignored":false},{"type":" ","oldLine":101,"newLine":59,"text":"    }"},{"type":" ","oldLine":102,"newLine":60,"text":""},{"type":" ","oldLine":103,"newLine":61,"text":"    #[test]"},{"type":" ","oldLine":104,"newLine":62,"text":"    fn test_activation_signal() {"},{"type":" ","oldLine":105,"newLine":63,"text":"        let signal = ActivationSignal::default();"},{"type":"-","oldLine":106,"text":"        assert_eq!(signal.signal(), Signal::Activation(signal));","ignored":false},{"type":"+","newLine":64,"text":"        assert_eq!(Signal::Activation(signal), Signal::Activation(signal));","ignored":false},{"type":" ","oldLine":107,"newLine":65,"text":"    }"},{"type":"-","oldLine":108,"text":"","ignored":true},{"type":"-","oldLine":109,"text":"    #[test]","ignored":false},{"type":"-","oldLine":110,"text":"    fn test_signal_with_system_config() {","ignored":false},{"type":"-","oldLine":111,"text":"        let signal = ResetSignal::default();","ignored":false},{"type":"-","oldLine":112,"text":"        let system_config = SystemConfig::default();","ignored":false},{"type":"-","oldLine":113,"text":"        assert_eq!(","ignored":false},{"type":"-","oldLine":114,"text":"            signal.with_system_config(system_config).signal(),","ignored":false},{"type":"-","oldLine":115,"text":"            Signal::Reset(ResetSignal { system_config: Some(system_config), ..signal })","ignored":false},{"type":"-","oldLine":116,"text":"        );","ignored":false},{"type":"-","oldLine":117,"text":"","ignored":true},{"type":"-","oldLine":118,"text":"        let signal = ActivationSignal::default();","ignored":false},{"type":"-","oldLine":119,"text":"        let system_config = SystemConfig::default();","ignored":false},{"type":"-","oldLine":120,"text":"        assert_eq!(","ignored":false},{"type":"-","oldLine":121,"text":"            signal.with_system_config(system_config).signal(),","ignored":false},{"type":"-","oldLine":122,"text":"            Signal::Activation(ActivationSignal { system_config: Some(system_config), ..signal })","ignored":false},{"type":"-","oldLine":123,"text":"        );","ignored":false},{"type":"-","oldLine":124,"text":"","ignored":true},{"type":"-","oldLine":125,"text":"        assert_eq!(Signal::FlushChannel.with_system_config(system_config), Signal::FlushChannel);","ignored":false},{"type":"-","oldLine":126,"text":"    }","ignored":false},{"type":" ","oldLine":127,"newLine":66,"text":"}"}]}]},"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "45460858f5b045739e04cd2800c10f9748c63007c8d8194de28c5ffa20279265",
+  "name": "signals.rs",
+  "kind": "program",
+  "lines": 66,
+  "source": "//! Signal types for the `kona-derive` pipeline.\n//!\n//! Signals are the primary method of communication between the pipeline driver\n//! and the [`DerivationPipeline`]. The pipeline receives [`Signal`]s and\n//! dispatches to stages via [`Stage`] methods.\n//!\n//! [`DerivationPipeline`]: crate::DerivationPipeline\n//! [`Stage`]: crate::Stage\n\nuse kona_protocol::{BlockInfo, L2BlockInfo};\n\n/// A signal to send to the pipeline.\n#[derive(Debug, Clone, Copy, PartialEq, Eq)]\n#[allow(clippy::large_enum_variant)]\npub enum Signal {\n    /// Reset the pipeline.\n    Reset(ResetSignal),\n    /// Hardfork Activation.\n    Activation(ActivationSignal),\n    /// Flush the currently active channel.\n    FlushChannel,\n    /// Provide a new L1 block to the L1 traversal stage.\n    ProvideBlock(BlockInfo),\n}\n\nimpl core::fmt::Display for Signal {\n    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {\n        match self {\n            Self::Reset(_) => write!(f, \"reset\"),\n            Self::Activation(_) => write!(f, \"activation\"),\n            Self::FlushChannel => write!(f, \"flush_channel\"),\n            Self::ProvideBlock(_) => write!(f, \"provide_block\"),\n        }\n    }\n}\n\n/// A pipeline reset signal.\n#[derive(Debug, Default, Clone, Copy, PartialEq, Eq)]\npub struct ResetSignal {\n    /// The L2 safe head to reset to.\n    pub l2_safe_head: L2BlockInfo,\n}\n\n/// A pipeline hardfork activation signal.\n#[derive(Debug, Default, Clone, Copy, PartialEq, Eq)]\npub struct ActivationSignal {\n    /// The L2 safe head to reset to.\n    pub l2_safe_head: L2BlockInfo,\n}\n\n#[cfg(test)]\nmod tests {\n    use super::*;\n\n    #[test]\n    fn test_reset_signal() {\n        let signal = ResetSignal::default();\n        assert_eq!(Signal::Reset(signal), Signal::Reset(signal));\n    }\n\n    #[test]\n    fn test_activation_signal() {\n        let signal = ActivationSignal::default();\n        assert_eq!(Signal::Activation(signal), Signal::Activation(signal));\n    }\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "differs",
+      "coveredLines": 64,
+      "match": {
+        "origin": "own",
+        "collection": "optimism",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "signals.rs",
+        "similarity": 0.589,
+        "reportId": "optimism/cantina-kona-2026-03",
+        "repository": "op-rs/kona",
+        "path": "crates/protocol/derive/src/types/signals.rs",
+        "commit": "86910c9112437bbb849eca28961f813c5450e103",
+        "commitTimestamp": "2025-12-15T17:17:05Z",
+        "url": "https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/crates/protocol/derive/src/types/signals.rs",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). kona-derive derivation pipeline (stages, sources, traversal, attributes). Medium findings 3.3.1 and 3.3.2 (pipeline/core.rs, stages/l1_retrieval.rs) and numerous Low/Informational findings located here; no Critical/High.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 2,
+        "removed": 58,
+        "ignoredAdded": 6,
+        "ignoredRemoved": 11,
+        "unchanged": 64,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 10,
+            "newStart": 1,
+            "newLines": 12,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "//! Signal types for the `kona-derive` pipeline."
+              },
+              { "type": " ", "oldLine": 2, "newLine": 2, "text": "//!" },
+              {
+                "type": "-",
+                "oldLine": 3,
+                "text": "//! Signals are the primary method of communication in the downwards direction",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 4,
+                "text": "//! of the pipeline. They allow the pipeline driver to perform actions such as",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 5,
+                "text": "//! resetting all stages in the pipeline through message passing.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "//! Signals are the primary method of communication between the pipeline driver",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 4,
+                "text": "//! and the [`DerivationPipeline`]. The pipeline receives [`Signal`]s and",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 5,
+                "text": "//! dispatches to stages via [`Stage`] methods.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 6, "text": "//!", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 7,
+                "text": "//! [`DerivationPipeline`]: crate::DerivationPipeline",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 8,
+                "text": "//! [`Stage`]: crate::Stage",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 6, "newLine": 9, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 7,
+                "text": "use kona_genesis::SystemConfig;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 8,
+                "newLine": 10,
+                "text": "use kona_protocol::{BlockInfo, L2BlockInfo};"
+              },
+              { "type": " ", "oldLine": 9, "newLine": 11, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 10,
+                "newLine": 12,
+                "text": "/// A signal to send to the pipeline."
+              }
+            ]
+          },
+          {
+            "oldStart": 32,
+            "oldLines": 64,
+            "newStart": 34,
+            "newLines": 20,
+            "lines": [
+              { "type": " ", "oldLine": 32, "newLine": 34, "text": "    }" },
+              { "type": " ", "oldLine": 33, "newLine": 35, "text": "}" },
+              { "type": " ", "oldLine": 34, "newLine": 36, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 35,
+                "text": "impl Signal {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 36,
+                "text": "    /// Sets the [`SystemConfig`] for the signal.",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 37,
+                "text": "    pub const fn with_system_config(self, system_config: SystemConfig) -> Self {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 38,
+                "text": "        match self {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 39,
+                "text": "            Self::Reset(reset) => reset.with_system_config(system_config).signal(),",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 40,
+                "text": "            Self::Activation(activation) => activation.with_system_config(system_config).signal(),",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 41,
+                "text": "            Self::FlushChannel => Self::FlushChannel,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 42,
+                "text": "            Self::ProvideBlock(block) => Self::ProvideBlock(block),",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 43,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 44, "text": "    }", "ignored": false },
+              { "type": "-", "oldLine": 45, "text": "}", "ignored": false },
+              { "type": "-", "oldLine": 46, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 47,
+                "newLine": 37,
+                "text": "/// A pipeline reset signal."
+              },
+              {
+                "type": " ",
+                "oldLine": 48,
+                "newLine": 38,
+                "text": "#[derive(Debug, Default, Clone, Copy, PartialEq, Eq)]"
+              },
+              {
+                "type": " ",
+                "oldLine": 49,
+                "newLine": 39,
+                "text": "pub struct ResetSignal {"
+              },
+              {
+                "type": " ",
+                "oldLine": 50,
+                "newLine": 40,
+                "text": "    /// The L2 safe head to reset to."
+              },
+              {
+                "type": " ",
+                "oldLine": 51,
+                "newLine": 41,
+                "text": "    pub l2_safe_head: L2BlockInfo,"
+              },
+              {
+                "type": "-",
+                "oldLine": 52,
+                "text": "    /// The L1 origin to reset to.",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 53,
+                "text": "    pub l1_origin: BlockInfo,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 54,
+                "text": "    /// The optional [`SystemConfig`] to reset with.",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 55,
+                "text": "    pub system_config: Option<SystemConfig>,",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 56, "newLine": 42, "text": "}" },
+              { "type": " ", "oldLine": 57, "newLine": 43, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 58,
+                "text": "impl ResetSignal {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 59,
+                "text": "    /// Creates a new [Signal::Reset] from the [`ResetSignal`].",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 60,
+                "text": "    pub const fn signal(self) -> Signal {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 61,
+                "text": "        Signal::Reset(self)",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 62, "text": "    }", "ignored": false },
+              { "type": "-", "oldLine": 63, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 64,
+                "text": "    /// Sets the [`SystemConfig`] for the signal.",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 65,
+                "text": "    pub const fn with_system_config(self, system_config: SystemConfig) -> Self {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 66,
+                "text": "        Self { system_config: Some(system_config), ..self }",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 67, "text": "    }", "ignored": false },
+              { "type": "-", "oldLine": 68, "text": "}", "ignored": false },
+              { "type": "-", "oldLine": 69, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 70,
+                "newLine": 44,
+                "text": "/// A pipeline hardfork activation signal."
+              },
+              {
+                "type": " ",
+                "oldLine": 71,
+                "newLine": 45,
+                "text": "#[derive(Debug, Default, Clone, Copy, PartialEq, Eq)]"
+              },
+              {
+                "type": " ",
+                "oldLine": 72,
+                "newLine": 46,
+                "text": "pub struct ActivationSignal {"
+              },
+              {
+                "type": " ",
+                "oldLine": 73,
+                "newLine": 47,
+                "text": "    /// The L2 safe head to reset to."
+              },
+              {
+                "type": " ",
+                "oldLine": 74,
+                "newLine": 48,
+                "text": "    pub l2_safe_head: L2BlockInfo,"
+              },
+              {
+                "type": "-",
+                "oldLine": 75,
+                "text": "    /// The L1 origin to reset to.",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 76,
+                "text": "    pub l1_origin: BlockInfo,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 77,
+                "text": "    /// The optional [`SystemConfig`] to reset with.",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 78,
+                "text": "    pub system_config: Option<SystemConfig>,",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 79, "newLine": 49, "text": "}" },
+              { "type": " ", "oldLine": 80, "newLine": 50, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 81,
+                "text": "impl ActivationSignal {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 82,
+                "text": "    /// Creates a new [Signal::Activation] from the [`ActivationSignal`].",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 83,
+                "text": "    pub const fn signal(self) -> Signal {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 84,
+                "text": "        Signal::Activation(self)",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 85, "text": "    }", "ignored": false },
+              { "type": "-", "oldLine": 86, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 87,
+                "text": "    /// Sets the [`SystemConfig`] for the signal.",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 88,
+                "text": "    pub const fn with_system_config(self, system_config: SystemConfig) -> Self {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 89,
+                "text": "        Self { system_config: Some(system_config), ..self }",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 90, "text": "    }", "ignored": false },
+              { "type": "-", "oldLine": 91, "text": "}", "ignored": false },
+              { "type": "-", "oldLine": 92, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 93,
+                "newLine": 51,
+                "text": "#[cfg(test)]"
+              },
+              {
+                "type": " ",
+                "oldLine": 94,
+                "newLine": 52,
+                "text": "mod tests {"
+              },
+              {
+                "type": " ",
+                "oldLine": 95,
+                "newLine": 53,
+                "text": "    use super::*;"
+              }
+            ]
+          },
+          {
+            "oldStart": 97,
+            "oldLines": 31,
+            "newStart": 55,
+            "newLines": 12,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 97,
+                "newLine": 55,
+                "text": "    #[test]"
+              },
+              {
+                "type": " ",
+                "oldLine": 98,
+                "newLine": 56,
+                "text": "    fn test_reset_signal() {"
+              },
+              {
+                "type": " ",
+                "oldLine": 99,
+                "newLine": 57,
+                "text": "        let signal = ResetSignal::default();"
+              },
+              {
+                "type": "-",
+                "oldLine": 100,
+                "text": "        assert_eq!(signal.signal(), Signal::Reset(signal));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 58,
+                "text": "        assert_eq!(Signal::Reset(signal), Signal::Reset(signal));",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 101, "newLine": 59, "text": "    }" },
+              { "type": " ", "oldLine": 102, "newLine": 60, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 103,
+                "newLine": 61,
+                "text": "    #[test]"
+              },
+              {
+                "type": " ",
+                "oldLine": 104,
+                "newLine": 62,
+                "text": "    fn test_activation_signal() {"
+              },
+              {
+                "type": " ",
+                "oldLine": 105,
+                "newLine": 63,
+                "text": "        let signal = ActivationSignal::default();"
+              },
+              {
+                "type": "-",
+                "oldLine": 106,
+                "text": "        assert_eq!(signal.signal(), Signal::Activation(signal));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 64,
+                "text": "        assert_eq!(Signal::Activation(signal), Signal::Activation(signal));",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 107, "newLine": 65, "text": "    }" },
+              { "type": "-", "oldLine": 108, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 109,
+                "text": "    #[test]",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 110,
+                "text": "    fn test_signal_with_system_config() {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 111,
+                "text": "        let signal = ResetSignal::default();",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 112,
+                "text": "        let system_config = SystemConfig::default();",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 113,
+                "text": "        assert_eq!(",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 114,
+                "text": "            signal.with_system_config(system_config).signal(),",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 115,
+                "text": "            Signal::Reset(ResetSignal { system_config: Some(system_config), ..signal })",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 116,
+                "text": "        );",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 117, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 118,
+                "text": "        let signal = ActivationSignal::default();",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 119,
+                "text": "        let system_config = SystemConfig::default();",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 120,
+                "text": "        assert_eq!(",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 121,
+                "text": "            signal.with_system_config(system_config).signal(),",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 122,
+                "text": "            Signal::Activation(ActivationSignal { system_config: Some(system_config), ..signal })",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 123,
+                "text": "        );",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 124, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 125,
+                "text": "        assert_eq!(Signal::FlushChannel.with_system_config(system_config), Signal::FlushChannel);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 126,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 127, "newLine": 66, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

@@ -1,1 +1,15 @@
-{"schemaVersion":2,"unitHash":"1e06c4e70d087db7dffd02060f48defa15515ad5eb20f6c5b8f06433bc6cbd2a","name":"error.rs","kind":"program","lines":26,"source":"use std::sync::mpsc::SendError;\n\nuse crate::DerivationClientError;\nuse alloy_eips::BlockId;\nuse alloy_transport::TransportError;\nuse thiserror::Error;\n\n/// The error type for the `L1WatcherActor`.\n#[derive(Error, Debug)]\npub enum L1WatcherActorError<T> {\n    /// Error sending the head update event.\n    #[error(\"Error sending the head update event: {0}\")]\n    SendError(#[from] SendError<T>),\n    /// Error in the transport layer.\n    #[error(\"Transport error: {0}\")]\n    Transport(#[from] TransportError),\n    /// The L1 block was not found.\n    #[error(\"L1 block not found: {0}\")]\n    L1BlockNotFound(BlockId),\n    /// Stream ended unexpectedly.\n    #[error(\"Stream ended unexpectedly\")]\n    StreamEnded,\n    /// Derivation client error.\n    #[error(\"derivation client error: {0}\")]\n    DerivationClientError(#[from] DerivationClientError),\n}","resolutions":{"9fa846564f4071bd":{"status":"unaudited","coveredLines":0,"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "1e06c4e70d087db7dffd02060f48defa15515ad5eb20f6c5b8f06433bc6cbd2a",
+  "name": "error.rs",
+  "kind": "program",
+  "lines": 26,
+  "source": "use std::sync::mpsc::SendError;\n\nuse crate::DerivationClientError;\nuse alloy_eips::BlockId;\nuse alloy_transport::TransportError;\nuse thiserror::Error;\n\n/// The error type for the `L1WatcherActor`.\n#[derive(Error, Debug)]\npub enum L1WatcherActorError<T> {\n    /// Error sending the head update event.\n    #[error(\"Error sending the head update event: {0}\")]\n    SendError(#[from] SendError<T>),\n    /// Error in the transport layer.\n    #[error(\"Transport error: {0}\")]\n    Transport(#[from] TransportError),\n    /// The L1 block was not found.\n    #[error(\"L1 block not found: {0}\")]\n    L1BlockNotFound(BlockId),\n    /// Stream ended unexpectedly.\n    #[error(\"Stream ended unexpectedly\")]\n    StreamEnded,\n    /// Derivation client error.\n    #[error(\"derivation client error: {0}\")]\n    DerivationClientError(#[from] DerivationClientError),\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

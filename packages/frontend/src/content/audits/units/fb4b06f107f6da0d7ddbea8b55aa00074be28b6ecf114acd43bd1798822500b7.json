@@ -1,1 +1,222 @@
-{"schemaVersion":2,"unitHash":"fb4b06f107f6da0d7ddbea8b55aa00074be28b6ecf114acd43bd1798822500b7","name":"calldata.rs","kind":"program","lines":280,"source":"//! `CallData` Source\n\nuse crate::{ChainProvider, DataAvailabilityProvider, PipelineError, PipelineResult};\nuse alloc::{boxed::Box, collections::VecDeque};\nuse alloy_consensus::{Transaction, TxEnvelope, transaction::SignerRecoverable};\nuse alloy_primitives::{Address, Bytes};\nuse async_trait::async_trait;\nuse kona_protocol::BlockInfo;\n\n/// A data iterator that reads from calldata.\n#[derive(Debug, Clone)]\npub struct CalldataSource<CP>\nwhere\n    CP: ChainProvider + Send,\n{\n    /// The chain provider to use for the calldata source.\n    pub chain_provider: CP,\n    /// The batch inbox address.\n    pub batch_inbox_address: Address,\n    /// Current calldata.\n    pub calldata: VecDeque<Bytes>,\n    /// Whether the calldata source is open.\n    pub open: bool,\n}\n\nimpl<CP: ChainProvider + Send> CalldataSource<CP> {\n    /// Creates a new calldata source.\n    pub const fn new(chain_provider: CP, batch_inbox_address: Address) -> Self {\n        Self { chain_provider, batch_inbox_address, calldata: VecDeque::new(), open: false }\n    }\n\n    /// Loads the calldata into the source if it is not open.\n    async fn load_calldata(\n        &mut self,\n        block_ref: &BlockInfo,\n        batcher_address: Address,\n    ) -> Result<(), CP::Error> {\n        if self.open {\n            return Ok(());\n        }\n\n        let (_, txs) =\n            self.chain_provider.block_info_and_transactions_by_hash(block_ref.hash).await?;\n\n        self.calldata = txs\n            .iter()\n            .filter_map(|tx| {\n                let (tx_kind, data) = match tx {\n                    TxEnvelope::Legacy(tx) => (tx.tx().to(), tx.tx().input()),\n                    TxEnvelope::Eip2930(tx) => (tx.tx().to(), tx.tx().input()),\n                    TxEnvelope::Eip1559(tx) => (tx.tx().to(), tx.tx().input()),\n                    TxEnvelope::Eip4844(tx) => (tx.tx().to(), tx.tx().input()),\n                    _ => return None,\n                };\n                let to = tx_kind?;\n\n                if to != self.batch_inbox_address {\n                    return None;\n                }\n                if tx.recover_signer().ok()? != batcher_address {\n                    return None;\n                }\n                Some(data.to_vec().into())\n            })\n            .collect::<VecDeque<_>>();\n\n        #[cfg(feature = \"metrics\")]\n        metrics::gauge!(\n            crate::metrics::Metrics::PIPELINE_DATA_AVAILABILITY_PROVIDER,\n            \"source\" => \"calldata\",\n        )\n        .increment(self.calldata.len() as f64);\n\n        self.open = true;\n\n        Ok(())\n    }\n}\n\n#[async_trait]\nimpl<CP: ChainProvider + Send> DataAvailabilityProvider for CalldataSource<CP> {\n    type Item = Bytes;\n\n    async fn next(\n        &mut self,\n        block_ref: &BlockInfo,\n        batcher_address: Address,\n    ) -> PipelineResult<Self::Item> {\n        self.load_calldata(block_ref, batcher_address).await.map_err(Into::into)?;\n        self.calldata.pop_front().ok_or(PipelineError::Eof.temp())\n    }\n\n    fn clear(&mut self) {\n        self.calldata.clear();\n        self.open = false;\n    }\n}\n\n#[cfg(test)]\nmod tests {\n    use super::*;\n    use crate::{errors::PipelineErrorKind, test_utils::TestChainProvider};\n    use alloc::{vec, vec::Vec};\n    use alloy_consensus::{Signed, TxEip2930, TxEip4844, TxEip4844Variant, TxEip7702, TxLegacy};\n    use alloy_primitives::{Address, Signature, TxKind, address};\n\n    pub(crate) fn test_legacy_tx(to: Address) -> TxEnvelope {\n        let sig = Signature::test_signature();\n        TxEnvelope::Legacy(Signed::new_unchecked(\n            TxLegacy { to: TxKind::Call(to), ..Default::default() },\n            sig,\n            Default::default(),\n        ))\n    }\n\n    pub(crate) fn test_eip2930_tx(to: Address) -> TxEnvelope {\n        let sig = Signature::test_signature();\n        TxEnvelope::Eip2930(Signed::new_unchecked(\n            TxEip2930 { to: TxKind::Call(to), ..Default::default() },\n            sig,\n            Default::default(),\n        ))\n    }\n\n    pub(crate) fn test_eip7702_tx(to: Address) -> TxEnvelope {\n        let sig = Signature::test_signature();\n        TxEnvelope::Eip7702(Signed::new_unchecked(\n            TxEip7702 { to, ..Default::default() },\n            sig,\n            Default::default(),\n        ))\n    }\n\n    pub(crate) fn test_blob_tx(to: Address) -> TxEnvelope {\n        let sig = Signature::test_signature();\n        TxEnvelope::Eip4844(Signed::new_unchecked(\n            TxEip4844Variant::TxEip4844(TxEip4844 { to, ..Default::default() }),\n            sig,\n            Default::default(),\n        ))\n    }\n\n    pub(crate) fn default_test_calldata_source() -> CalldataSource<TestChainProvider> {\n        CalldataSource::new(TestChainProvider::default(), Default::default())\n    }\n\n    #[tokio::test]\n    async fn test_clear_calldata() {\n        let mut source = default_test_calldata_source();\n        source.open = true;\n        source.calldata.push_back(Bytes::default());\n        source.clear();\n        assert!(source.calldata.is_empty());\n        assert!(!source.open);\n    }\n\n    #[tokio::test]\n    async fn test_load_calldata_open() {\n        let mut source = default_test_calldata_source();\n        source.open = true;\n        assert!(source.load_calldata(&BlockInfo::default(), Address::ZERO).await.is_ok());\n    }\n\n    #[tokio::test]\n    async fn test_load_calldata_provider_err() {\n        let mut source = default_test_calldata_source();\n        assert!(source.load_calldata(&BlockInfo::default(), Address::ZERO).await.is_err());\n    }\n\n    #[tokio::test]\n    async fn test_load_calldata_chain_provider_empty_txs() {\n        let mut source = default_test_calldata_source();\n        let block_info = BlockInfo::default();\n        source.chain_provider.insert_block_with_transactions(0, block_info, Vec::new());\n        assert!(!source.open); // Source is not open by default.\n        assert!(source.load_calldata(&BlockInfo::default(), Address::ZERO).await.is_ok());\n        assert!(source.calldata.is_empty());\n        assert!(source.open);\n    }\n\n    #[tokio::test]\n    async fn test_load_calldata_wrong_batch_inbox_address() {\n        let batch_inbox_address = address!(\"0123456789012345678901234567890123456789\");\n        let mut source = default_test_calldata_source();\n        let block_info = BlockInfo::default();\n        let tx = test_legacy_tx(batch_inbox_address);\n        source.chain_provider.insert_block_with_transactions(0, block_info, vec![tx]);\n        assert!(!source.open); // Source is not open by default.\n        assert!(source.load_calldata(&BlockInfo::default(), Address::ZERO).await.is_ok());\n        assert!(source.calldata.is_empty());\n        assert!(source.open);\n    }\n\n    #[tokio::test]\n    async fn test_load_calldata_wrong_signer() {\n        let batch_inbox_address = address!(\"0123456789012345678901234567890123456789\");\n        let mut source = default_test_calldata_source();\n        source.batch_inbox_address = batch_inbox_address;\n        let block_info = BlockInfo::default();\n        let tx = test_legacy_tx(batch_inbox_address);\n        source.chain_provider.insert_block_with_transactions(0, block_info, vec![tx]);\n        assert!(!source.open); // Source is not open by default.\n        assert!(source.load_calldata(&BlockInfo::default(), Address::ZERO).await.is_ok());\n        assert!(source.calldata.is_empty());\n        assert!(source.open);\n    }\n\n    #[tokio::test]\n    async fn test_load_calldata_valid_legacy_tx() {\n        let batch_inbox_address = address!(\"0123456789012345678901234567890123456789\");\n        let mut source = default_test_calldata_source();\n        source.batch_inbox_address = batch_inbox_address;\n        let tx = test_legacy_tx(batch_inbox_address);\n        let block_info = BlockInfo::default();\n        source.chain_provider.insert_block_with_transactions(0, block_info, vec![tx.clone()]);\n        assert!(!source.open); // Source is not open by default.\n        assert!(\n            source.load_calldata(&BlockInfo::default(), tx.recover_signer().unwrap()).await.is_ok()\n        );\n        assert!(!source.calldata.is_empty()); // Calldata is NOT empty.\n        assert!(source.open);\n    }\n\n    #[tokio::test]\n    async fn test_load_calldata_valid_eip2930_tx() {\n        let batch_inbox_address = address!(\"0123456789012345678901234567890123456789\");\n        let mut source = default_test_calldata_source();\n        source.batch_inbox_address = batch_inbox_address;\n        let tx = test_eip2930_tx(batch_inbox_address);\n        let block_info = BlockInfo::default();\n        source.chain_provider.insert_block_with_transactions(0, block_info, vec![tx.clone()]);\n        assert!(!source.open); // Source is not open by default.\n        assert!(\n            source.load_calldata(&BlockInfo::default(), tx.recover_signer().unwrap()).await.is_ok()\n        );\n        assert!(!source.calldata.is_empty()); // Calldata is NOT empty.\n        assert!(source.open);\n    }\n\n    #[tokio::test]\n    async fn test_load_calldata_valid_blob_tx() {\n        let batch_inbox_address = address!(\"0123456789012345678901234567890123456789\");\n        let mut source = default_test_calldata_source();\n        source.batch_inbox_address = batch_inbox_address;\n        let tx = test_blob_tx(batch_inbox_address);\n        let block_info = BlockInfo::default();\n        source.chain_provider.insert_block_with_transactions(0, block_info, vec![tx.clone()]);\n        assert!(!source.open); // Source is not open by default.\n        assert!(\n            source.load_calldata(&BlockInfo::default(), tx.recover_signer().unwrap()).await.is_ok()\n        );\n        assert!(!source.calldata.is_empty()); // Calldata is NOT empty.\n        assert!(source.open);\n    }\n\n    #[tokio::test]\n    async fn test_load_calldata_eip7702_tx_ignored() {\n        let batch_inbox_address = address!(\"0123456789012345678901234567890123456789\");\n        let mut source = default_test_calldata_source();\n        source.batch_inbox_address = batch_inbox_address;\n        let tx = test_eip7702_tx(batch_inbox_address);\n        let block_info = BlockInfo::default();\n        source.chain_provider.insert_block_with_transactions(0, block_info, vec![tx.clone()]);\n        assert!(!source.open); // Source is not open by default.\n        assert!(\n            source.load_calldata(&BlockInfo::default(), tx.recover_signer().unwrap()).await.is_ok()\n        );\n        assert!(source.calldata.is_empty());\n        assert!(source.open);\n    }\n\n    #[tokio::test]\n    async fn test_next_err_loading_calldata() {\n        let mut source = default_test_calldata_source();\n        assert!(matches!(\n            source.next(&BlockInfo::default(), Address::ZERO).await,\n            Err(PipelineErrorKind::Temporary(_))\n        ));\n    }\n}","resolutions":{"9fa846564f4071bd":{"status":"differs","coveredLines":277,"match":{"origin":"own","collection":"optimism","relation":{"type":"own"},"rank":0,"matchedBy":"name","auditedName":"calldata.rs","similarity":0.99,"reportId":"optimism/cantina-kona-2026-03","repository":"op-rs/kona","path":"crates/protocol/derive/src/sources/calldata.rs","commit":"86910c9112437bbb849eca28961f813c5450e103","commitTimestamp":"2025-12-15T17:17:05Z","url":"https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/crates/protocol/derive/src/sources/calldata.rs","auditStatus":"audited_with_no_major_findings","reviewPhase":"initial audit","coverage":"Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). kona-derive derivation pipeline (stages, sources, traversal, attributes). Medium findings 3.3.1 and 3.3.2 (pipeline/core.rs, stages/l1_retrieval.rs) and numerous Low/Informational findings located here; no Critical/High.","majorFindings":0,"isLatestVersion":true,"laterAuditedVersionExists":false,"totalVersions":1},"diff":{"added":3,"removed":2,"ignoredAdded":1,"ignoredRemoved":1,"unchanged":277,"ignoredOnly":false,"hunks":[{"oldStart":1,"oldLines":4,"newStart":1,"newLines":4,"lines":[{"type":"-","oldLine":1,"text":"//! CallData Source","ignored":true},{"type":"+","newLine":1,"text":"//! `CallData` Source","ignored":true},{"type":" ","oldLine":2,"newLine":2,"text":""},{"type":" ","oldLine":3,"newLine":3,"text":"use crate::{ChainProvider, DataAvailabilityProvider, PipelineError, PipelineResult};"},{"type":" ","oldLine":4,"newLine":4,"text":"use alloc::{boxed::Box, collections::VecDeque};"}]},{"oldStart":49,"oldLines":6,"newStart":49,"newLines":7,"lines":[{"type":" ","oldLine":49,"newLine":49,"text":"                    TxEnvelope::Legacy(tx) => (tx.tx().to(), tx.tx().input()),"},{"type":" ","oldLine":50,"newLine":50,"text":"                    TxEnvelope::Eip2930(tx) => (tx.tx().to(), tx.tx().input()),"},{"type":" ","oldLine":51,"newLine":51,"text":"                    TxEnvelope::Eip1559(tx) => (tx.tx().to(), tx.tx().input()),"},{"type":"+","newLine":52,"text":"                    TxEnvelope::Eip4844(tx) => (tx.tx().to(), tx.tx().input()),","ignored":false},{"type":" ","oldLine":52,"newLine":53,"text":"                    _ => return None,"},{"type":" ","oldLine":53,"newLine":54,"text":"                };"},{"type":" ","oldLine":54,"newLine":55,"text":"                let to = tx_kind?;"}]},{"oldStart":237,"oldLines":7,"newStart":238,"newLines":7,"lines":[{"type":" ","oldLine":237,"newLine":238,"text":"    }"},{"type":" ","oldLine":238,"newLine":239,"text":""},{"type":" ","oldLine":239,"newLine":240,"text":"    #[tokio::test]"},{"type":"-","oldLine":240,"text":"    async fn test_load_calldata_blob_tx_ignored() {","ignored":false},{"type":"+","newLine":241,"text":"    async fn test_load_calldata_valid_blob_tx() {","ignored":false},{"type":" ","oldLine":241,"newLine":242,"text":"        let batch_inbox_address = address!(\"0123456789012345678901234567890123456789\");"},{"type":" ","oldLine":242,"newLine":243,"text":"        let mut source = default_test_calldata_source();"},{"type":" ","oldLine":243,"newLine":244,"text":"        source.batch_inbox_address = batch_inbox_address;"}]},{"oldStart":248,"oldLines":7,"newStart":249,"newLines":7,"lines":[{"type":" ","oldLine":248,"newLine":249,"text":"        assert!("},{"type":" ","oldLine":249,"newLine":250,"text":"            source.load_calldata(&BlockInfo::default(), tx.recover_signer().unwrap()).await.is_ok()"},{"type":" ","oldLine":250,"newLine":251,"text":"        );"},{"type":"-","oldLine":251,"text":"        assert!(source.calldata.is_empty());","ignored":false},{"type":"+","newLine":252,"text":"        assert!(!source.calldata.is_empty()); // Calldata is NOT empty.","ignored":false},{"type":" ","oldLine":252,"newLine":253,"text":"        assert!(source.open);"},{"type":" ","oldLine":253,"newLine":254,"text":"    }"},{"type":" ","oldLine":254,"newLine":255,"text":""}]}]},"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "fb4b06f107f6da0d7ddbea8b55aa00074be28b6ecf114acd43bd1798822500b7",
+  "name": "calldata.rs",
+  "kind": "program",
+  "lines": 280,
+  "source": "//! `CallData` Source\n\nuse crate::{ChainProvider, DataAvailabilityProvider, PipelineError, PipelineResult};\nuse alloc::{boxed::Box, collections::VecDeque};\nuse alloy_consensus::{Transaction, TxEnvelope, transaction::SignerRecoverable};\nuse alloy_primitives::{Address, Bytes};\nuse async_trait::async_trait;\nuse kona_protocol::BlockInfo;\n\n/// A data iterator that reads from calldata.\n#[derive(Debug, Clone)]\npub struct CalldataSource<CP>\nwhere\n    CP: ChainProvider + Send,\n{\n    /// The chain provider to use for the calldata source.\n    pub chain_provider: CP,\n    /// The batch inbox address.\n    pub batch_inbox_address: Address,\n    /// Current calldata.\n    pub calldata: VecDeque<Bytes>,\n    /// Whether the calldata source is open.\n    pub open: bool,\n}\n\nimpl<CP: ChainProvider + Send> CalldataSource<CP> {\n    /// Creates a new calldata source.\n    pub const fn new(chain_provider: CP, batch_inbox_address: Address) -> Self {\n        Self { chain_provider, batch_inbox_address, calldata: VecDeque::new(), open: false }\n    }\n\n    /// Loads the calldata into the source if it is not open.\n    async fn load_calldata(\n        &mut self,\n        block_ref: &BlockInfo,\n        batcher_address: Address,\n    ) -> Result<(), CP::Error> {\n        if self.open {\n            return Ok(());\n        }\n\n        let (_, txs) =\n            self.chain_provider.block_info_and_transactions_by_hash(block_ref.hash).await?;\n\n        self.calldata = txs\n            .iter()\n            .filter_map(|tx| {\n                let (tx_kind, data) = match tx {\n                    TxEnvelope::Legacy(tx) => (tx.tx().to(), tx.tx().input()),\n                    TxEnvelope::Eip2930(tx) => (tx.tx().to(), tx.tx().input()),\n                    TxEnvelope::Eip1559(tx) => (tx.tx().to(), tx.tx().input()),\n                    TxEnvelope::Eip4844(tx) => (tx.tx().to(), tx.tx().input()),\n                    _ => return None,\n                };\n                let to = tx_kind?;\n\n                if to != self.batch_inbox_address {\n                    return None;\n                }\n                if tx.recover_signer().ok()? != batcher_address {\n                    return None;\n                }\n                Some(data.to_vec().into())\n            })\n            .collect::<VecDeque<_>>();\n\n        #[cfg(feature = \"metrics\")]\n        metrics::gauge!(\n            crate::metrics::Metrics::PIPELINE_DATA_AVAILABILITY_PROVIDER,\n            \"source\" => \"calldata\",\n        )\n        .increment(self.calldata.len() as f64);\n\n        self.open = true;\n\n        Ok(())\n    }\n}\n\n#[async_trait]\nimpl<CP: ChainProvider + Send> DataAvailabilityProvider for CalldataSource<CP> {\n    type Item = Bytes;\n\n    async fn next(\n        &mut self,\n        block_ref: &BlockInfo,\n        batcher_address: Address,\n    ) -> PipelineResult<Self::Item> {\n        self.load_calldata(block_ref, batcher_address).await.map_err(Into::into)?;\n        self.calldata.pop_front().ok_or(PipelineError::Eof.temp())\n    }\n\n    fn clear(&mut self) {\n        self.calldata.clear();\n        self.open = false;\n    }\n}\n\n#[cfg(test)]\nmod tests {\n    use super::*;\n    use crate::{errors::PipelineErrorKind, test_utils::TestChainProvider};\n    use alloc::{vec, vec::Vec};\n    use alloy_consensus::{Signed, TxEip2930, TxEip4844, TxEip4844Variant, TxEip7702, TxLegacy};\n    use alloy_primitives::{Address, Signature, TxKind, address};\n\n    pub(crate) fn test_legacy_tx(to: Address) -> TxEnvelope {\n        let sig = Signature::test_signature();\n        TxEnvelope::Legacy(Signed::new_unchecked(\n            TxLegacy { to: TxKind::Call(to), ..Default::default() },\n            sig,\n            Default::default(),\n        ))\n    }\n\n    pub(crate) fn test_eip2930_tx(to: Address) -> TxEnvelope {\n        let sig = Signature::test_signature();\n        TxEnvelope::Eip2930(Signed::new_unchecked(\n            TxEip2930 { to: TxKind::Call(to), ..Default::default() },\n            sig,\n            Default::default(),\n        ))\n    }\n\n    pub(crate) fn test_eip7702_tx(to: Address) -> TxEnvelope {\n        let sig = Signature::test_signature();\n        TxEnvelope::Eip7702(Signed::new_unchecked(\n            TxEip7702 { to, ..Default::default() },\n            sig,\n            Default::default(),\n        ))\n    }\n\n    pub(crate) fn test_blob_tx(to: Address) -> TxEnvelope {\n        let sig = Signature::test_signature();\n        TxEnvelope::Eip4844(Signed::new_unchecked(\n            TxEip4844Variant::TxEip4844(TxEip4844 { to, ..Default::default() }),\n            sig,\n            Default::default(),\n        ))\n    }\n\n    pub(crate) fn default_test_calldata_source() -> CalldataSource<TestChainProvider> {\n        CalldataSource::new(TestChainProvider::default(), Default::default())\n    }\n\n    #[tokio::test]\n    async fn test_clear_calldata() {\n        let mut source = default_test_calldata_source();\n        source.open = true;\n        source.calldata.push_back(Bytes::default());\n        source.clear();\n        assert!(source.calldata.is_empty());\n        assert!(!source.open);\n    }\n\n    #[tokio::test]\n    async fn test_load_calldata_open() {\n        let mut source = default_test_calldata_source();\n        source.open = true;\n        assert!(source.load_calldata(&BlockInfo::default(), Address::ZERO).await.is_ok());\n    }\n\n    #[tokio::test]\n    async fn test_load_calldata_provider_err() {\n        let mut source = default_test_calldata_source();\n        assert!(source.load_calldata(&BlockInfo::default(), Address::ZERO).await.is_err());\n    }\n\n    #[tokio::test]\n    async fn test_load_calldata_chain_provider_empty_txs() {\n        let mut source = default_test_calldata_source();\n        let block_info = BlockInfo::default();\n        source.chain_provider.insert_block_with_transactions(0, block_info, Vec::new());\n        assert!(!source.open); // Source is not open by default.\n        assert!(source.load_calldata(&BlockInfo::default(), Address::ZERO).await.is_ok());\n        assert!(source.calldata.is_empty());\n        assert!(source.open);\n    }\n\n    #[tokio::test]\n    async fn test_load_calldata_wrong_batch_inbox_address() {\n        let batch_inbox_address = address!(\"0123456789012345678901234567890123456789\");\n        let mut source = default_test_calldata_source();\n        let block_info = BlockInfo::default();\n        let tx = test_legacy_tx(batch_inbox_address);\n        source.chain_provider.insert_block_with_transactions(0, block_info, vec![tx]);\n        assert!(!source.open); // Source is not open by default.\n        assert!(source.load_calldata(&BlockInfo::default(), Address::ZERO).await.is_ok());\n        assert!(source.calldata.is_empty());\n        assert!(source.open);\n    }\n\n    #[tokio::test]\n    async fn test_load_calldata_wrong_signer() {\n        let batch_inbox_address = address!(\"0123456789012345678901234567890123456789\");\n        let mut source = default_test_calldata_source();\n        source.batch_inbox_address = batch_inbox_address;\n        let block_info = BlockInfo::default();\n        let tx = test_legacy_tx(batch_inbox_address);\n        source.chain_provider.insert_block_with_transactions(0, block_info, vec![tx]);\n        assert!(!source.open); // Source is not open by default.\n        assert!(source.load_calldata(&BlockInfo::default(), Address::ZERO).await.is_ok());\n        assert!(source.calldata.is_empty());\n        assert!(source.open);\n    }\n\n    #[tokio::test]\n    async fn test_load_calldata_valid_legacy_tx() {\n        let batch_inbox_address = address!(\"0123456789012345678901234567890123456789\");\n        let mut source = default_test_calldata_source();\n        source.batch_inbox_address = batch_inbox_address;\n        let tx = test_legacy_tx(batch_inbox_address);\n        let block_info = BlockInfo::default();\n        source.chain_provider.insert_block_with_transactions(0, block_info, vec![tx.clone()]);\n        assert!(!source.open); // Source is not open by default.\n        assert!(\n            source.load_calldata(&BlockInfo::default(), tx.recover_signer().unwrap()).await.is_ok()\n        );\n        assert!(!source.calldata.is_empty()); // Calldata is NOT empty.\n        assert!(source.open);\n    }\n\n    #[tokio::test]\n    async fn test_load_calldata_valid_eip2930_tx() {\n        let batch_inbox_address = address!(\"0123456789012345678901234567890123456789\");\n        let mut source = default_test_calldata_source();\n        source.batch_inbox_address = batch_inbox_address;\n        let tx = test_eip2930_tx(batch_inbox_address);\n        let block_info = BlockInfo::default();\n        source.chain_provider.insert_block_with_transactions(0, block_info, vec![tx.clone()]);\n        assert!(!source.open); // Source is not open by default.\n        assert!(\n            source.load_calldata(&BlockInfo::default(), tx.recover_signer().unwrap()).await.is_ok()\n        );\n        assert!(!source.calldata.is_empty()); // Calldata is NOT empty.\n        assert!(source.open);\n    }\n\n    #[tokio::test]\n    async fn test_load_calldata_valid_blob_tx() {\n        let batch_inbox_address = address!(\"0123456789012345678901234567890123456789\");\n        let mut source = default_test_calldata_source();\n        source.batch_inbox_address = batch_inbox_address;\n        let tx = test_blob_tx(batch_inbox_address);\n        let block_info = BlockInfo::default();\n        source.chain_provider.insert_block_with_transactions(0, block_info, vec![tx.clone()]);\n        assert!(!source.open); // Source is not open by default.\n        assert!(\n            source.load_calldata(&BlockInfo::default(), tx.recover_signer().unwrap()).await.is_ok()\n        );\n        assert!(!source.calldata.is_empty()); // Calldata is NOT empty.\n        assert!(source.open);\n    }\n\n    #[tokio::test]\n    async fn test_load_calldata_eip7702_tx_ignored() {\n        let batch_inbox_address = address!(\"0123456789012345678901234567890123456789\");\n        let mut source = default_test_calldata_source();\n        source.batch_inbox_address = batch_inbox_address;\n        let tx = test_eip7702_tx(batch_inbox_address);\n        let block_info = BlockInfo::default();\n        source.chain_provider.insert_block_with_transactions(0, block_info, vec![tx.clone()]);\n        assert!(!source.open); // Source is not open by default.\n        assert!(\n            source.load_calldata(&BlockInfo::default(), tx.recover_signer().unwrap()).await.is_ok()\n        );\n        assert!(source.calldata.is_empty());\n        assert!(source.open);\n    }\n\n    #[tokio::test]\n    async fn test_next_err_loading_calldata() {\n        let mut source = default_test_calldata_source();\n        assert!(matches!(\n            source.next(&BlockInfo::default(), Address::ZERO).await,\n            Err(PipelineErrorKind::Temporary(_))\n        ));\n    }\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "differs",
+      "coveredLines": 277,
+      "match": {
+        "origin": "own",
+        "collection": "optimism",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "calldata.rs",
+        "similarity": 0.99,
+        "reportId": "optimism/cantina-kona-2026-03",
+        "repository": "op-rs/kona",
+        "path": "crates/protocol/derive/src/sources/calldata.rs",
+        "commit": "86910c9112437bbb849eca28961f813c5450e103",
+        "commitTimestamp": "2025-12-15T17:17:05Z",
+        "url": "https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/crates/protocol/derive/src/sources/calldata.rs",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). kona-derive derivation pipeline (stages, sources, traversal, attributes). Medium findings 3.3.1 and 3.3.2 (pipeline/core.rs, stages/l1_retrieval.rs) and numerous Low/Informational findings located here; no Critical/High.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 3,
+        "removed": 2,
+        "ignoredAdded": 1,
+        "ignoredRemoved": 1,
+        "unchanged": 277,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 4,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "//! CallData Source",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "//! `CallData` Source",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 2, "newLine": 2, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "use crate::{ChainProvider, DataAvailabilityProvider, PipelineError, PipelineResult};"
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "use alloc::{boxed::Box, collections::VecDeque};"
+              }
+            ]
+          },
+          {
+            "oldStart": 49,
+            "oldLines": 6,
+            "newStart": 49,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 49,
+                "newLine": 49,
+                "text": "                    TxEnvelope::Legacy(tx) => (tx.tx().to(), tx.tx().input()),"
+              },
+              {
+                "type": " ",
+                "oldLine": 50,
+                "newLine": 50,
+                "text": "                    TxEnvelope::Eip2930(tx) => (tx.tx().to(), tx.tx().input()),"
+              },
+              {
+                "type": " ",
+                "oldLine": 51,
+                "newLine": 51,
+                "text": "                    TxEnvelope::Eip1559(tx) => (tx.tx().to(), tx.tx().input()),"
+              },
+              {
+                "type": "+",
+                "newLine": 52,
+                "text": "                    TxEnvelope::Eip4844(tx) => (tx.tx().to(), tx.tx().input()),",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 52,
+                "newLine": 53,
+                "text": "                    _ => return None,"
+              },
+              {
+                "type": " ",
+                "oldLine": 53,
+                "newLine": 54,
+                "text": "                };"
+              },
+              {
+                "type": " ",
+                "oldLine": 54,
+                "newLine": 55,
+                "text": "                let to = tx_kind?;"
+              }
+            ]
+          },
+          {
+            "oldStart": 237,
+            "oldLines": 7,
+            "newStart": 238,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 237, "newLine": 238, "text": "    }" },
+              { "type": " ", "oldLine": 238, "newLine": 239, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 239,
+                "newLine": 240,
+                "text": "    #[tokio::test]"
+              },
+              {
+                "type": "-",
+                "oldLine": 240,
+                "text": "    async fn test_load_calldata_blob_tx_ignored() {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 241,
+                "text": "    async fn test_load_calldata_valid_blob_tx() {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 241,
+                "newLine": 242,
+                "text": "        let batch_inbox_address = address!(\"0123456789012345678901234567890123456789\");"
+              },
+              {
+                "type": " ",
+                "oldLine": 242,
+                "newLine": 243,
+                "text": "        let mut source = default_test_calldata_source();"
+              },
+              {
+                "type": " ",
+                "oldLine": 243,
+                "newLine": 244,
+                "text": "        source.batch_inbox_address = batch_inbox_address;"
+              }
+            ]
+          },
+          {
+            "oldStart": 248,
+            "oldLines": 7,
+            "newStart": 249,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 248,
+                "newLine": 249,
+                "text": "        assert!("
+              },
+              {
+                "type": " ",
+                "oldLine": 249,
+                "newLine": 250,
+                "text": "            source.load_calldata(&BlockInfo::default(), tx.recover_signer().unwrap()).await.is_ok()"
+              },
+              {
+                "type": " ",
+                "oldLine": 250,
+                "newLine": 251,
+                "text": "        );"
+              },
+              {
+                "type": "-",
+                "oldLine": 251,
+                "text": "        assert!(source.calldata.is_empty());",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 252,
+                "text": "        assert!(!source.calldata.is_empty()); // Calldata is NOT empty.",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 252,
+                "newLine": 253,
+                "text": "        assert!(source.open);"
+              },
+              { "type": " ", "oldLine": 253, "newLine": 254, "text": "    }" },
+              { "type": " ", "oldLine": 254, "newLine": 255, "text": "" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

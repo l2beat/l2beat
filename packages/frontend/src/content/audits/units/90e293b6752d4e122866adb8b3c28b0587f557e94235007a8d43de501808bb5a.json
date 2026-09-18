@@ -1,1 +1,225 @@
-{"schemaVersion":2,"unitHash":"90e293b6752d4e122866adb8b3c28b0587f557e94235007a8d43de501808bb5a","name":"frames.rs","kind":"program","lines":132,"source":"//! Frames\n\nuse crate::{\n    FrameQueue, NextFrameProvider, OriginProvider, PipelineError, PipelineErrorKind,\n    test_utils::TestFrameQueueProvider,\n};\nuse alloc::{sync::Arc, vec, vec::Vec};\nuse alloy_primitives::Bytes;\nuse kona_genesis::RollupConfig;\nuse kona_protocol::{BlockInfo, DERIVATION_VERSION_0, Frame};\n\n/// A [`FrameQueue`] builder.\n#[derive(Debug, Default)]\npub struct FrameQueueBuilder {\n    origin: Option<BlockInfo>,\n    config: Option<RollupConfig>,\n    mock: Option<TestFrameQueueProvider>,\n    expected_frames: Vec<Frame>,\n    expected_err: Option<PipelineErrorKind>,\n}\n\nfn encode_frames(frames: &[Frame]) -> Bytes {\n    let mut bytes = Vec::new();\n    bytes.extend_from_slice(&[DERIVATION_VERSION_0]);\n    for frame in frames {\n        bytes.extend_from_slice(&frame.encode());\n    }\n    Bytes::from(bytes)\n}\n\nimpl FrameQueueBuilder {\n    /// Create a new [`FrameQueueBuilder`] instance.\n    pub const fn new() -> Self {\n        Self { origin: None, config: None, mock: None, expected_frames: vec![], expected_err: None }\n    }\n\n    /// Sets the rollup config.\n    pub fn with_rollup_config(mut self, config: &RollupConfig) -> Self {\n        self.config = Some(config.clone());\n        self\n    }\n\n    /// Set the origin block.\n    pub const fn with_origin(mut self, origin: BlockInfo) -> Self {\n        self.origin = Some(origin);\n        self\n    }\n\n    /// With expected frames.\n    pub fn with_expected_frames(mut self, frames: &[Frame]) -> Self {\n        self.expected_frames = frames.to_vec();\n        self\n    }\n\n    /// Sets the expected error type.\n    pub fn with_expected_err(mut self, err: PipelineErrorKind) -> Self {\n        self.expected_err = Some(err);\n        self\n    }\n\n    /// With raw frames.\n    pub fn with_raw_frames(mut self, raw: Bytes) -> Self {\n        let mock = self.mock.unwrap_or_else(|| TestFrameQueueProvider::new(vec![Ok(raw)]));\n        self.mock = Some(mock);\n        self\n    }\n\n    /// Adds frames to the mock provider.\n    pub fn with_frames(mut self, frames: &[Frame]) -> Self {\n        let encoded = encode_frames(frames);\n        let mock = self.mock.unwrap_or_else(|| TestFrameQueueProvider::new(vec![Ok(encoded)]));\n        self.mock = Some(mock);\n        self\n    }\n\n    /// Build the [`FrameQueue`].\n    pub fn build(self) -> FrameQueueAsserter {\n        let mut mock = self.mock.unwrap_or_else(|| TestFrameQueueProvider::new(vec![]));\n        if let Some(origin) = self.origin {\n            mock.set_origin(origin);\n        }\n        let config = self.config.unwrap_or_default();\n        let config = Arc::new(config);\n        let err = self.expected_err.unwrap_or_else(|| PipelineError::Eof.temp());\n        FrameQueueAsserter::new(FrameQueue::new(mock, config), self.expected_frames, err)\n    }\n}\n\n/// The [`FrameQueueAsserter`] validates frame queue outputs.\n#[derive(Debug)]\npub struct FrameQueueAsserter {\n    inner: FrameQueue<TestFrameQueueProvider>,\n    expected_frames: Vec<Frame>,\n    expected_err: PipelineErrorKind,\n}\n\nimpl FrameQueueAsserter {\n    /// Create a new [`FrameQueueAsserter`] instance.\n    pub const fn new(\n        inner: FrameQueue<TestFrameQueueProvider>,\n        expected_frames: Vec<Frame>,\n        expected_err: PipelineErrorKind,\n    ) -> Self {\n        Self { inner, expected_frames, expected_err }\n    }\n\n    /// Asserts that holocene is active.\n    pub fn holocene_active(&self, active: bool) {\n        let holocene = self.inner.is_holocene_active(self.inner.origin().unwrap_or_default());\n        if active {\n            assert!(holocene);\n        } else {\n            assert!(!holocene);\n        }\n    }\n\n    /// Asserts that the frame queue returns with a missing origin error.\n    pub async fn missing_origin(mut self) {\n        let err = self.inner.next_frame().await.unwrap_err();\n        assert_eq!(err, PipelineError::MissingOrigin.crit());\n    }\n\n    /// Asserts that the frame queue produces the expected frames.\n    pub async fn next_frames(mut self) {\n        for eframe in self.expected_frames {\n            let frame = self.inner.next_frame().await.expect(\"unexpected frame\");\n            assert_eq!(frame, eframe);\n        }\n        let err = self.inner.next_frame().await.unwrap_err();\n        assert_eq!(err, self.expected_err);\n    }\n}","resolutions":{"9fa846564f4071bd":{"status":"differs","coveredLines":129,"match":{"origin":"own","collection":"optimism","relation":{"type":"own"},"rank":0,"matchedBy":"name","auditedName":"frames.rs","similarity":0.95,"reportId":"optimism/cantina-kona-2026-03","repository":"op-rs/kona","path":"crates/protocol/derive/src/test_utils/frames.rs","commit":"86910c9112437bbb849eca28961f813c5450e103","commitTimestamp":"2025-12-15T17:17:05Z","url":"https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/crates/protocol/derive/src/test_utils/frames.rs","auditStatus":"audited_with_no_major_findings","reviewPhase":"initial audit","coverage":"Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). kona-derive derivation pipeline (stages, sources, traversal, attributes). Medium findings 3.3.1 and 3.3.2 (pipeline/core.rs, stages/l1_retrieval.rs) and numerous Low/Informational findings located here; no Critical/High.","majorFindings":0,"isLatestVersion":true,"laterAuditedVersionExists":false,"totalVersions":1},"diff":{"added":3,"removed":3,"ignoredAdded":2,"ignoredRemoved":2,"unchanged":129,"ignoredOnly":false,"hunks":[{"oldStart":22,"oldLines":7,"newStart":22,"newLines":7,"lines":[{"type":" ","oldLine":22,"newLine":22,"text":"fn encode_frames(frames: &[Frame]) -> Bytes {"},{"type":" ","oldLine":23,"newLine":23,"text":"    let mut bytes = Vec::new();"},{"type":" ","oldLine":24,"newLine":24,"text":"    bytes.extend_from_slice(&[DERIVATION_VERSION_0]);"},{"type":"-","oldLine":25,"text":"    for frame in frames.iter() {","ignored":false},{"type":"+","newLine":25,"text":"    for frame in frames {","ignored":false},{"type":" ","oldLine":26,"newLine":26,"text":"        bytes.extend_from_slice(&frame.encode());"},{"type":" ","oldLine":27,"newLine":27,"text":"    }"},{"type":" ","oldLine":28,"newLine":28,"text":"    Bytes::from(bytes)"}]},{"oldStart":107,"oldLines":10,"newStart":107,"newLines":10,"lines":[{"type":" ","oldLine":107,"newLine":107,"text":"    /// Asserts that holocene is active."},{"type":" ","oldLine":108,"newLine":108,"text":"    pub fn holocene_active(&self, active: bool) {"},{"type":" ","oldLine":109,"newLine":109,"text":"        let holocene = self.inner.is_holocene_active(self.inner.origin().unwrap_or_default());"},{"type":"-","oldLine":110,"text":"        if !active {","ignored":false},{"type":"-","oldLine":111,"text":"            assert!(!holocene);","ignored":true},{"type":"-","oldLine":112,"text":"        } else {","ignored":true},{"type":"+","newLine":110,"text":"        if active {","ignored":false},{"type":" ","oldLine":113,"newLine":111,"text":"            assert!(holocene);"},{"type":"+","newLine":112,"text":"        } else {","ignored":true},{"type":"+","newLine":113,"text":"            assert!(!holocene);","ignored":true},{"type":" ","oldLine":114,"newLine":114,"text":"        }"},{"type":" ","oldLine":115,"newLine":115,"text":"    }"},{"type":" ","oldLine":116,"newLine":116,"text":""}]},{"oldStart":122,"oldLines":7,"newStart":122,"newLines":7,"lines":[{"type":" ","oldLine":122,"newLine":122,"text":""},{"type":" ","oldLine":123,"newLine":123,"text":"    /// Asserts that the frame queue produces the expected frames."},{"type":" ","oldLine":124,"newLine":124,"text":"    pub async fn next_frames(mut self) {"},{"type":"-","oldLine":125,"text":"        for eframe in self.expected_frames.into_iter() {","ignored":false},{"type":"+","newLine":125,"text":"        for eframe in self.expected_frames {","ignored":false},{"type":" ","oldLine":126,"newLine":126,"text":"            let frame = self.inner.next_frame().await.expect(\"unexpected frame\");"},{"type":" ","oldLine":127,"newLine":127,"text":"            assert_eq!(frame, eframe);"},{"type":" ","oldLine":128,"newLine":128,"text":"        }"}]}]},"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "90e293b6752d4e122866adb8b3c28b0587f557e94235007a8d43de501808bb5a",
+  "name": "frames.rs",
+  "kind": "program",
+  "lines": 132,
+  "source": "//! Frames\n\nuse crate::{\n    FrameQueue, NextFrameProvider, OriginProvider, PipelineError, PipelineErrorKind,\n    test_utils::TestFrameQueueProvider,\n};\nuse alloc::{sync::Arc, vec, vec::Vec};\nuse alloy_primitives::Bytes;\nuse kona_genesis::RollupConfig;\nuse kona_protocol::{BlockInfo, DERIVATION_VERSION_0, Frame};\n\n/// A [`FrameQueue`] builder.\n#[derive(Debug, Default)]\npub struct FrameQueueBuilder {\n    origin: Option<BlockInfo>,\n    config: Option<RollupConfig>,\n    mock: Option<TestFrameQueueProvider>,\n    expected_frames: Vec<Frame>,\n    expected_err: Option<PipelineErrorKind>,\n}\n\nfn encode_frames(frames: &[Frame]) -> Bytes {\n    let mut bytes = Vec::new();\n    bytes.extend_from_slice(&[DERIVATION_VERSION_0]);\n    for frame in frames {\n        bytes.extend_from_slice(&frame.encode());\n    }\n    Bytes::from(bytes)\n}\n\nimpl FrameQueueBuilder {\n    /// Create a new [`FrameQueueBuilder`] instance.\n    pub const fn new() -> Self {\n        Self { origin: None, config: None, mock: None, expected_frames: vec![], expected_err: None }\n    }\n\n    /// Sets the rollup config.\n    pub fn with_rollup_config(mut self, config: &RollupConfig) -> Self {\n        self.config = Some(config.clone());\n        self\n    }\n\n    /// Set the origin block.\n    pub const fn with_origin(mut self, origin: BlockInfo) -> Self {\n        self.origin = Some(origin);\n        self\n    }\n\n    /// With expected frames.\n    pub fn with_expected_frames(mut self, frames: &[Frame]) -> Self {\n        self.expected_frames = frames.to_vec();\n        self\n    }\n\n    /// Sets the expected error type.\n    pub fn with_expected_err(mut self, err: PipelineErrorKind) -> Self {\n        self.expected_err = Some(err);\n        self\n    }\n\n    /// With raw frames.\n    pub fn with_raw_frames(mut self, raw: Bytes) -> Self {\n        let mock = self.mock.unwrap_or_else(|| TestFrameQueueProvider::new(vec![Ok(raw)]));\n        self.mock = Some(mock);\n        self\n    }\n\n    /// Adds frames to the mock provider.\n    pub fn with_frames(mut self, frames: &[Frame]) -> Self {\n        let encoded = encode_frames(frames);\n        let mock = self.mock.unwrap_or_else(|| TestFrameQueueProvider::new(vec![Ok(encoded)]));\n        self.mock = Some(mock);\n        self\n    }\n\n    /// Build the [`FrameQueue`].\n    pub fn build(self) -> FrameQueueAsserter {\n        let mut mock = self.mock.unwrap_or_else(|| TestFrameQueueProvider::new(vec![]));\n        if let Some(origin) = self.origin {\n            mock.set_origin(origin);\n        }\n        let config = self.config.unwrap_or_default();\n        let config = Arc::new(config);\n        let err = self.expected_err.unwrap_or_else(|| PipelineError::Eof.temp());\n        FrameQueueAsserter::new(FrameQueue::new(mock, config), self.expected_frames, err)\n    }\n}\n\n/// The [`FrameQueueAsserter`] validates frame queue outputs.\n#[derive(Debug)]\npub struct FrameQueueAsserter {\n    inner: FrameQueue<TestFrameQueueProvider>,\n    expected_frames: Vec<Frame>,\n    expected_err: PipelineErrorKind,\n}\n\nimpl FrameQueueAsserter {\n    /// Create a new [`FrameQueueAsserter`] instance.\n    pub const fn new(\n        inner: FrameQueue<TestFrameQueueProvider>,\n        expected_frames: Vec<Frame>,\n        expected_err: PipelineErrorKind,\n    ) -> Self {\n        Self { inner, expected_frames, expected_err }\n    }\n\n    /// Asserts that holocene is active.\n    pub fn holocene_active(&self, active: bool) {\n        let holocene = self.inner.is_holocene_active(self.inner.origin().unwrap_or_default());\n        if active {\n            assert!(holocene);\n        } else {\n            assert!(!holocene);\n        }\n    }\n\n    /// Asserts that the frame queue returns with a missing origin error.\n    pub async fn missing_origin(mut self) {\n        let err = self.inner.next_frame().await.unwrap_err();\n        assert_eq!(err, PipelineError::MissingOrigin.crit());\n    }\n\n    /// Asserts that the frame queue produces the expected frames.\n    pub async fn next_frames(mut self) {\n        for eframe in self.expected_frames {\n            let frame = self.inner.next_frame().await.expect(\"unexpected frame\");\n            assert_eq!(frame, eframe);\n        }\n        let err = self.inner.next_frame().await.unwrap_err();\n        assert_eq!(err, self.expected_err);\n    }\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "differs",
+      "coveredLines": 129,
+      "match": {
+        "origin": "own",
+        "collection": "optimism",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "frames.rs",
+        "similarity": 0.95,
+        "reportId": "optimism/cantina-kona-2026-03",
+        "repository": "op-rs/kona",
+        "path": "crates/protocol/derive/src/test_utils/frames.rs",
+        "commit": "86910c9112437bbb849eca28961f813c5450e103",
+        "commitTimestamp": "2025-12-15T17:17:05Z",
+        "url": "https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/crates/protocol/derive/src/test_utils/frames.rs",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). kona-derive derivation pipeline (stages, sources, traversal, attributes). Medium findings 3.3.1 and 3.3.2 (pipeline/core.rs, stages/l1_retrieval.rs) and numerous Low/Informational findings located here; no Critical/High.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 3,
+        "removed": 3,
+        "ignoredAdded": 2,
+        "ignoredRemoved": 2,
+        "unchanged": 129,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 22,
+            "oldLines": 7,
+            "newStart": 22,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 22,
+                "text": "fn encode_frames(frames: &[Frame]) -> Bytes {"
+              },
+              {
+                "type": " ",
+                "oldLine": 23,
+                "newLine": 23,
+                "text": "    let mut bytes = Vec::new();"
+              },
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 24,
+                "text": "    bytes.extend_from_slice(&[DERIVATION_VERSION_0]);"
+              },
+              {
+                "type": "-",
+                "oldLine": 25,
+                "text": "    for frame in frames.iter() {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 25,
+                "text": "    for frame in frames {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 26,
+                "newLine": 26,
+                "text": "        bytes.extend_from_slice(&frame.encode());"
+              },
+              { "type": " ", "oldLine": 27, "newLine": 27, "text": "    }" },
+              {
+                "type": " ",
+                "oldLine": 28,
+                "newLine": 28,
+                "text": "    Bytes::from(bytes)"
+              }
+            ]
+          },
+          {
+            "oldStart": 107,
+            "oldLines": 10,
+            "newStart": 107,
+            "newLines": 10,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 107,
+                "newLine": 107,
+                "text": "    /// Asserts that holocene is active."
+              },
+              {
+                "type": " ",
+                "oldLine": 108,
+                "newLine": 108,
+                "text": "    pub fn holocene_active(&self, active: bool) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 109,
+                "newLine": 109,
+                "text": "        let holocene = self.inner.is_holocene_active(self.inner.origin().unwrap_or_default());"
+              },
+              {
+                "type": "-",
+                "oldLine": 110,
+                "text": "        if !active {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 111,
+                "text": "            assert!(!holocene);",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 112,
+                "text": "        } else {",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 110,
+                "text": "        if active {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 113,
+                "newLine": 111,
+                "text": "            assert!(holocene);"
+              },
+              {
+                "type": "+",
+                "newLine": 112,
+                "text": "        } else {",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 113,
+                "text": "            assert!(!holocene);",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 114,
+                "newLine": 114,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 115, "newLine": 115, "text": "    }" },
+              { "type": " ", "oldLine": 116, "newLine": 116, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 122,
+            "oldLines": 7,
+            "newStart": 122,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 122, "newLine": 122, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 123,
+                "newLine": 123,
+                "text": "    /// Asserts that the frame queue produces the expected frames."
+              },
+              {
+                "type": " ",
+                "oldLine": 124,
+                "newLine": 124,
+                "text": "    pub async fn next_frames(mut self) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 125,
+                "text": "        for eframe in self.expected_frames.into_iter() {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 125,
+                "text": "        for eframe in self.expected_frames {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 126,
+                "newLine": 126,
+                "text": "            let frame = self.inner.next_frame().await.expect(\"unexpected frame\");"
+              },
+              {
+                "type": " ",
+                "oldLine": 127,
+                "newLine": 127,
+                "text": "            assert_eq!(frame, eframe);"
+              },
+              {
+                "type": " ",
+                "oldLine": 128,
+                "newLine": 128,
+                "text": "        }"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

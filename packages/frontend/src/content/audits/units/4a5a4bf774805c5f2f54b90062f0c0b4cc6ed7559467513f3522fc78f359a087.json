@@ -1,1 +1,400 @@
-{"schemaVersion":2,"unitHash":"4a5a4bf774805c5f2f54b90062f0c0b4cc6ed7559467513f3522fc78f359a087","name":"key.rs","kind":"program","lines":233,"source":"//! Contains the [`PreimageKey`] type, which is used to identify preimages that may be fetched from\n//! the preimage oracle.\n\nuse alloy_primitives::{B256, Keccak256, U256};\n#[cfg(feature = \"rkyv\")]\nuse rkyv::{Archive, Deserialize as RkyvDeserialize, Serialize as RkyvSerialize};\n#[cfg(feature = \"serde\")]\nuse serde::{Deserialize as SerdeDeserialize, Serialize as SerdeSerialize};\n\nuse crate::errors::PreimageOracleError;\n\n/// <https://specs.optimism.io/experimental/fault-proof/index.html#pre-image-key-types>\n#[derive(Debug, Default, Clone, Copy, Eq, PartialEq, Ord, PartialOrd, Hash)]\n#[repr(u8)]\n#[cfg_attr(\n    feature = \"rkyv\",\n    derive(Archive, RkyvSerialize, RkyvDeserialize),\n    rkyv(derive(Eq, PartialEq, Ord, PartialOrd, Hash))\n)]\n#[cfg_attr(feature = \"serde\", derive(SerdeSerialize, SerdeDeserialize))]\npub enum PreimageKeyType {\n    /// Local key types are local to a given instance of a fault-proof and context dependent.\n    /// Commonly these local keys are mapped to bootstrap data for the fault proof program.\n    Local = 1,\n    /// Keccak256 key types are global and context independent. Preimages are mapped from the\n    /// low-order 31 bytes of the preimage's `keccak256` digest to the preimage itself.\n    #[default]\n    Keccak256 = 2,\n    /// `GlobalGeneric` key types are reserved for future use.\n    GlobalGeneric = 3,\n    /// Sha256 key types are global and context independent. Preimages are mapped from the\n    /// low-order 31 bytes of the preimage's `sha256` digest to the preimage itself.\n    Sha256 = 4,\n    /// Blob key types are global and context independent. Blob keys are constructed as\n    /// `keccak256(commitment ++ z)`, and then the high-order byte of the digest is set to the\n    /// type byte.\n    Blob = 5,\n    /// Precompile key types are global and context independent. Precompile keys are constructed as\n    /// `keccak256(precompile_addr ++ input)`, and then the high-order byte of the digest is set to\n    /// the type byte.\n    Precompile = 6,\n}\n\nimpl TryFrom<u8> for PreimageKeyType {\n    type Error = PreimageOracleError;\n\n    fn try_from(value: u8) -> Result<Self, Self::Error> {\n        let key_type = match value {\n            1 => Self::Local,\n            2 => Self::Keccak256,\n            3 => Self::GlobalGeneric,\n            4 => Self::Sha256,\n            5 => Self::Blob,\n            6 => Self::Precompile,\n            _ => return Err(PreimageOracleError::InvalidPreimageKey),\n        };\n        Ok(key_type)\n    }\n}\n\n/// A preimage key is a 32-byte value that identifies a preimage that may be fetched from the\n/// oracle.\n///\n/// **Layout**:\n/// |  Bits   | Description |\n/// |---------|-------------|\n/// | [0, 1)  | Type byte   |\n/// | [1, 32) | Data        |\n#[derive(Debug, Default, Clone, Copy, Eq, PartialEq, Ord, PartialOrd, Hash)]\n#[cfg_attr(\n    feature = \"rkyv\",\n    derive(Archive, RkyvSerialize, RkyvDeserialize),\n    rkyv(derive(Eq, PartialEq, Ord, PartialOrd, Hash))\n)]\n#[cfg_attr(feature = \"serde\", derive(SerdeSerialize, SerdeDeserialize))]\npub struct PreimageKey {\n    data: [u8; 31],\n    key_type: PreimageKeyType,\n}\n\nimpl PreimageKey {\n    /// Creates a new [`PreimageKey`] from a 32-byte value and a [`PreimageKeyType`]. The 32-byte\n    /// value will be truncated to 31 bytes by taking the low-order 31 bytes.\n    pub fn new(key: [u8; 32], key_type: PreimageKeyType) -> Self {\n        let mut data = [0u8; 31];\n        data.copy_from_slice(&key[1..]);\n        Self { data, key_type }\n    }\n\n    /// Creates a new local [`PreimageKey`] from a 64-bit local identifier. The local identifier\n    /// will be written into the low-order 8 bytes of the big-endian 31-byte data field.\n    pub fn new_local(local_ident: u64) -> Self {\n        let mut data = [0u8; 31];\n        data[23..].copy_from_slice(&local_ident.to_be_bytes());\n        Self { data, key_type: PreimageKeyType::Local }\n    }\n\n    /// Creates a new keccak256 [`PreimageKey`] from a 32-byte keccak256 digest. The digest will be\n    /// truncated to 31 bytes by taking the low-order 31 bytes.\n    pub fn new_keccak256(digest: [u8; 32]) -> Self {\n        Self::new(digest, PreimageKeyType::Keccak256)\n    }\n\n    /// Creates a new precompile [`PreimageKey`] from a precompile address and input. The key will\n    /// be constructed as `keccak256(precompile_addr ++ input)`, and then the high-order byte of\n    /// the digest will be set to the type byte.\n    pub fn new_precompile(precompile_addr: [u8; 20], input: &[u8]) -> Self {\n        let mut data = [0u8; 31];\n\n        let mut hasher = Keccak256::new();\n        hasher.update(precompile_addr);\n        hasher.update(input);\n\n        data.copy_from_slice(&hasher.finalize()[1..]);\n        Self { data, key_type: PreimageKeyType::Precompile }\n    }\n\n    /// Returns the [`PreimageKeyType`] for the [`PreimageKey`].\n    pub const fn key_type(&self) -> PreimageKeyType {\n        self.key_type\n    }\n\n    /// Returns the value of the [`PreimageKey`] as a [`U256`].\n    pub const fn key_value(&self) -> U256 {\n        U256::from_be_slice(self.data.as_slice())\n    }\n}\n\nimpl From<PreimageKey> for [u8; 32] {\n    fn from(key: PreimageKey) -> Self {\n        let mut rendered_key = [0u8; 32];\n        rendered_key[0] = key.key_type as u8;\n        rendered_key[1..].copy_from_slice(&key.data);\n        rendered_key\n    }\n}\n\nimpl From<PreimageKey> for B256 {\n    fn from(value: PreimageKey) -> Self {\n        let raw: [u8; 32] = value.into();\n        Self::from(raw)\n    }\n}\n\nimpl TryFrom<[u8; 32]> for PreimageKey {\n    type Error = PreimageOracleError;\n\n    fn try_from(value: [u8; 32]) -> Result<Self, Self::Error> {\n        let key_type = PreimageKeyType::try_from(value[0])?;\n        Ok(Self::new(value, key_type))\n    }\n}\n\nimpl core::fmt::Display for PreimageKey {\n    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {\n        let raw: [u8; 32] = (*self).into();\n        write!(f, \"{}\", B256::from(raw))\n    }\n}\n\n#[cfg(test)]\nmod test {\n    use super::*;\n\n    #[test]\n    fn test_preimage_key_from_u8() {\n        assert_eq!(PreimageKeyType::try_from(1).unwrap(), PreimageKeyType::Local);\n        assert_eq!(PreimageKeyType::try_from(2).unwrap(), PreimageKeyType::Keccak256);\n        assert_eq!(PreimageKeyType::try_from(3).unwrap(), PreimageKeyType::GlobalGeneric);\n        assert_eq!(PreimageKeyType::try_from(4).unwrap(), PreimageKeyType::Sha256);\n        assert_eq!(PreimageKeyType::try_from(5).unwrap(), PreimageKeyType::Blob);\n        assert_eq!(PreimageKeyType::try_from(6).unwrap(), PreimageKeyType::Precompile);\n        assert!(PreimageKeyType::try_from(0).is_err());\n        assert!(PreimageKeyType::try_from(7).is_err());\n    }\n\n    #[test]\n    fn test_preimage_key_new_local() {\n        let key = PreimageKey::new_local(0xFFu64);\n        assert_eq!(key.key_type(), PreimageKeyType::Local);\n        assert_eq!(key.key_value(), U256::from(0xFFu64));\n    }\n\n    #[test]\n    fn test_preimage_key_value() {\n        let key = PreimageKey::new([0xFFu8; 32], PreimageKeyType::Local);\n        assert_eq!(\n            key.key_value(),\n            alloy_primitives::uint!(\n                452312848583266388373324160190187140051835877600158453279131187530910662655_U256\n            )\n        );\n    }\n\n    #[test]\n    fn test_preimage_key_roundtrip_b256() {\n        let key = PreimageKey::new([0xFFu8; 32], PreimageKeyType::Local);\n        let b256: B256 = key.into();\n        let key2 = PreimageKey::try_from(<[u8; 32]>::from(b256)).unwrap();\n        assert_eq!(key, key2);\n    }\n\n    #[test]\n    fn test_preimage_key_display() {\n        let key = PreimageKey::new([0xFFu8; 32], PreimageKeyType::Local);\n        assert_eq!(\n            key.to_string(),\n            \"0x01ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff\"\n        );\n    }\n\n    #[test]\n    fn test_preimage_keys() {\n        let types = [\n            PreimageKeyType::Local,\n            PreimageKeyType::Keccak256,\n            PreimageKeyType::GlobalGeneric,\n            PreimageKeyType::Sha256,\n            PreimageKeyType::Blob,\n            PreimageKeyType::Precompile,\n        ];\n\n        for key_type in types {\n            let key = PreimageKey::new([0xFFu8; 32], key_type);\n            assert_eq!(key.key_type(), key_type);\n\n            let mut rendered_key = [0xFFu8; 32];\n            rendered_key[0] = key_type as u8;\n            let actual: [u8; 32] = key.into();\n            assert_eq!(actual, rendered_key);\n        }\n    }\n}","resolutions":{"9fa846564f4071bd":{"status":"identical","coveredLines":233,"match":{"origin":"own","collection":"optimism","relation":{"type":"own"},"rank":0,"matchedBy":"identity","auditedName":"key.rs","similarity":1,"reportId":"optimism/cantina-kona-2026-03","repository":"op-rs/kona","path":"crates/proof/preimage/src/key.rs","commit":"86910c9112437bbb849eca28961f813c5450e103","commitTimestamp":"2025-12-15T17:17:05Z","url":"https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/crates/proof/preimage/src/key.rs","auditStatus":"audited_with_no_major_findings","reviewPhase":"initial audit","coverage":"Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). Preimage oracle key/hint types; Informational finding 3.5.12 (key.rs) located here.","majorFindings":0,"isLatestVersion":true,"laterAuditedVersionExists":false,"totalVersions":1},"diff":{"added":0,"removed":0,"ignoredAdded":12,"ignoredRemoved":12,"unchanged":233,"ignoredOnly":true,"hunks":[{"oldStart":1,"oldLines":4,"newStart":1,"newLines":4,"lines":[{"type":"-","oldLine":1,"text":"//! Contains the [PreimageKey] type, which is used to identify preimages that may be fetched from","ignored":true},{"type":"+","newLine":1,"text":"//! Contains the [`PreimageKey`] type, which is used to identify preimages that may be fetched from","ignored":true},{"type":" ","oldLine":2,"newLine":2,"text":"//! the preimage oracle."},{"type":" ","oldLine":3,"newLine":3,"text":""},{"type":" ","oldLine":4,"newLine":4,"text":"use alloy_primitives::{B256, Keccak256, U256};"}]},{"oldStart":26,"oldLines":7,"newStart":26,"newLines":7,"lines":[{"type":" ","oldLine":26,"newLine":26,"text":"    /// low-order 31 bytes of the preimage's `keccak256` digest to the preimage itself."},{"type":" ","oldLine":27,"newLine":27,"text":"    #[default]"},{"type":" ","oldLine":28,"newLine":28,"text":"    Keccak256 = 2,"},{"type":"-","oldLine":29,"text":"    /// GlobalGeneric key types are reserved for future use.","ignored":true},{"type":"+","newLine":29,"text":"    /// `GlobalGeneric` key types are reserved for future use.","ignored":true},{"type":" ","oldLine":30,"newLine":30,"text":"    GlobalGeneric = 3,"},{"type":" ","oldLine":31,"newLine":31,"text":"    /// Sha256 key types are global and context independent. Preimages are mapped from the"},{"type":" ","oldLine":32,"newLine":32,"text":"    /// low-order 31 bytes of the preimage's `sha256` digest to the preimage itself."}]},{"oldStart":79,"oldLines":31,"newStart":79,"newLines":31,"lines":[{"type":" ","oldLine":79,"newLine":79,"text":"}"},{"type":" ","oldLine":80,"newLine":80,"text":""},{"type":" ","oldLine":81,"newLine":81,"text":"impl PreimageKey {"},{"type":"-","oldLine":82,"text":"    /// Creates a new [PreimageKey] from a 32-byte value and a [PreimageKeyType]. The 32-byte value","ignored":true},{"type":"-","oldLine":83,"text":"    /// will be truncated to 31 bytes by taking the low-order 31 bytes.","ignored":true},{"type":"+","newLine":82,"text":"    /// Creates a new [`PreimageKey`] from a 32-byte value and a [`PreimageKeyType`]. The 32-byte","ignored":true},{"type":"+","newLine":83,"text":"    /// value will be truncated to 31 bytes by taking the low-order 31 bytes.","ignored":true},{"type":" ","oldLine":84,"newLine":84,"text":"    pub fn new(key: [u8; 32], key_type: PreimageKeyType) -> Self {"},{"type":" ","oldLine":85,"newLine":85,"text":"        let mut data = [0u8; 31];"},{"type":" ","oldLine":86,"newLine":86,"text":"        data.copy_from_slice(&key[1..]);"},{"type":" ","oldLine":87,"newLine":87,"text":"        Self { data, key_type }"},{"type":" ","oldLine":88,"newLine":88,"text":"    }"},{"type":" ","oldLine":89,"newLine":89,"text":""},{"type":"-","oldLine":90,"text":"    /// Creates a new local [PreimageKey] from a 64-bit local identifier. The local identifier will","ignored":true},{"type":"-","oldLine":91,"text":"    /// be written into the low-order 8 bytes of the big-endian 31-byte data field.","ignored":true},{"type":"+","newLine":90,"text":"    /// Creates a new local [`PreimageKey`] from a 64-bit local identifier. The local identifier","ignored":true},{"type":"+","newLine":91,"text":"    /// will be written into the low-order 8 bytes of the big-endian 31-byte data field.","ignored":true},{"type":" ","oldLine":92,"newLine":92,"text":"    pub fn new_local(local_ident: u64) -> Self {"},{"type":" ","oldLine":93,"newLine":93,"text":"        let mut data = [0u8; 31];"},{"type":" ","oldLine":94,"newLine":94,"text":"        data[23..].copy_from_slice(&local_ident.to_be_bytes());"},{"type":" ","oldLine":95,"newLine":95,"text":"        Self { data, key_type: PreimageKeyType::Local }"},{"type":" ","oldLine":96,"newLine":96,"text":"    }"},{"type":" ","oldLine":97,"newLine":97,"text":""},{"type":"-","oldLine":98,"text":"    /// Creates a new keccak256 [PreimageKey] from a 32-byte keccak256 digest. The digest will be","ignored":true},{"type":"+","newLine":98,"text":"    /// Creates a new keccak256 [`PreimageKey`] from a 32-byte keccak256 digest. The digest will be","ignored":true},{"type":" ","oldLine":99,"newLine":99,"text":"    /// truncated to 31 bytes by taking the low-order 31 bytes."},{"type":" ","oldLine":100,"newLine":100,"text":"    pub fn new_keccak256(digest: [u8; 32]) -> Self {"},{"type":" ","oldLine":101,"newLine":101,"text":"        Self::new(digest, PreimageKeyType::Keccak256)"},{"type":" ","oldLine":102,"newLine":102,"text":"    }"},{"type":" ","oldLine":103,"newLine":103,"text":""},{"type":"-","oldLine":104,"text":"    /// Creates a new precompile [PreimageKey] from a precompile address and input. The key will be","ignored":true},{"type":"-","oldLine":105,"text":"    /// constructed as `keccak256(precompile_addr ++ input)`, and then the high-order byte of the","ignored":true},{"type":"-","oldLine":106,"text":"    /// digest will be set to the type byte.","ignored":true},{"type":"+","newLine":104,"text":"    /// Creates a new precompile [`PreimageKey`] from a precompile address and input. The key will","ignored":true},{"type":"+","newLine":105,"text":"    /// be constructed as `keccak256(precompile_addr ++ input)`, and then the high-order byte of","ignored":true},{"type":"+","newLine":106,"text":"    /// the digest will be set to the type byte.","ignored":true},{"type":" ","oldLine":107,"newLine":107,"text":"    pub fn new_precompile(precompile_addr: [u8; 20], input: &[u8]) -> Self {"},{"type":" ","oldLine":108,"newLine":108,"text":"        let mut data = [0u8; 31];"},{"type":" ","oldLine":109,"newLine":109,"text":""}]},{"oldStart":115,"oldLines":12,"newStart":115,"newLines":12,"lines":[{"type":" ","oldLine":115,"newLine":115,"text":"        Self { data, key_type: PreimageKeyType::Precompile }"},{"type":" ","oldLine":116,"newLine":116,"text":"    }"},{"type":" ","oldLine":117,"newLine":117,"text":""},{"type":"-","oldLine":118,"text":"    /// Returns the [PreimageKeyType] for the [PreimageKey].","ignored":true},{"type":"+","newLine":118,"text":"    /// Returns the [`PreimageKeyType`] for the [`PreimageKey`].","ignored":true},{"type":" ","oldLine":119,"newLine":119,"text":"    pub const fn key_type(&self) -> PreimageKeyType {"},{"type":" ","oldLine":120,"newLine":120,"text":"        self.key_type"},{"type":" ","oldLine":121,"newLine":121,"text":"    }"},{"type":" ","oldLine":122,"newLine":122,"text":""},{"type":"-","oldLine":123,"text":"    /// Returns the value of the [PreimageKey] as a [U256].","ignored":true},{"type":"+","newLine":123,"text":"    /// Returns the value of the [`PreimageKey`] as a [`U256`].","ignored":true},{"type":" ","oldLine":124,"newLine":124,"text":"    pub const fn key_value(&self) -> U256 {"},{"type":" ","oldLine":125,"newLine":125,"text":"        U256::from_be_slice(self.data.as_slice())"},{"type":" ","oldLine":126,"newLine":126,"text":"    }"}]}]},"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "4a5a4bf774805c5f2f54b90062f0c0b4cc6ed7559467513f3522fc78f359a087",
+  "name": "key.rs",
+  "kind": "program",
+  "lines": 233,
+  "source": "//! Contains the [`PreimageKey`] type, which is used to identify preimages that may be fetched from\n//! the preimage oracle.\n\nuse alloy_primitives::{B256, Keccak256, U256};\n#[cfg(feature = \"rkyv\")]\nuse rkyv::{Archive, Deserialize as RkyvDeserialize, Serialize as RkyvSerialize};\n#[cfg(feature = \"serde\")]\nuse serde::{Deserialize as SerdeDeserialize, Serialize as SerdeSerialize};\n\nuse crate::errors::PreimageOracleError;\n\n/// <https://specs.optimism.io/experimental/fault-proof/index.html#pre-image-key-types>\n#[derive(Debug, Default, Clone, Copy, Eq, PartialEq, Ord, PartialOrd, Hash)]\n#[repr(u8)]\n#[cfg_attr(\n    feature = \"rkyv\",\n    derive(Archive, RkyvSerialize, RkyvDeserialize),\n    rkyv(derive(Eq, PartialEq, Ord, PartialOrd, Hash))\n)]\n#[cfg_attr(feature = \"serde\", derive(SerdeSerialize, SerdeDeserialize))]\npub enum PreimageKeyType {\n    /// Local key types are local to a given instance of a fault-proof and context dependent.\n    /// Commonly these local keys are mapped to bootstrap data for the fault proof program.\n    Local = 1,\n    /// Keccak256 key types are global and context independent. Preimages are mapped from the\n    /// low-order 31 bytes of the preimage's `keccak256` digest to the preimage itself.\n    #[default]\n    Keccak256 = 2,\n    /// `GlobalGeneric` key types are reserved for future use.\n    GlobalGeneric = 3,\n    /// Sha256 key types are global and context independent. Preimages are mapped from the\n    /// low-order 31 bytes of the preimage's `sha256` digest to the preimage itself.\n    Sha256 = 4,\n    /// Blob key types are global and context independent. Blob keys are constructed as\n    /// `keccak256(commitment ++ z)`, and then the high-order byte of the digest is set to the\n    /// type byte.\n    Blob = 5,\n    /// Precompile key types are global and context independent. Precompile keys are constructed as\n    /// `keccak256(precompile_addr ++ input)`, and then the high-order byte of the digest is set to\n    /// the type byte.\n    Precompile = 6,\n}\n\nimpl TryFrom<u8> for PreimageKeyType {\n    type Error = PreimageOracleError;\n\n    fn try_from(value: u8) -> Result<Self, Self::Error> {\n        let key_type = match value {\n            1 => Self::Local,\n            2 => Self::Keccak256,\n            3 => Self::GlobalGeneric,\n            4 => Self::Sha256,\n            5 => Self::Blob,\n            6 => Self::Precompile,\n            _ => return Err(PreimageOracleError::InvalidPreimageKey),\n        };\n        Ok(key_type)\n    }\n}\n\n/// A preimage key is a 32-byte value that identifies a preimage that may be fetched from the\n/// oracle.\n///\n/// **Layout**:\n/// |  Bits   | Description |\n/// |---------|-------------|\n/// | [0, 1)  | Type byte   |\n/// | [1, 32) | Data        |\n#[derive(Debug, Default, Clone, Copy, Eq, PartialEq, Ord, PartialOrd, Hash)]\n#[cfg_attr(\n    feature = \"rkyv\",\n    derive(Archive, RkyvSerialize, RkyvDeserialize),\n    rkyv(derive(Eq, PartialEq, Ord, PartialOrd, Hash))\n)]\n#[cfg_attr(feature = \"serde\", derive(SerdeSerialize, SerdeDeserialize))]\npub struct PreimageKey {\n    data: [u8; 31],\n    key_type: PreimageKeyType,\n}\n\nimpl PreimageKey {\n    /// Creates a new [`PreimageKey`] from a 32-byte value and a [`PreimageKeyType`]. The 32-byte\n    /// value will be truncated to 31 bytes by taking the low-order 31 bytes.\n    pub fn new(key: [u8; 32], key_type: PreimageKeyType) -> Self {\n        let mut data = [0u8; 31];\n        data.copy_from_slice(&key[1..]);\n        Self { data, key_type }\n    }\n\n    /// Creates a new local [`PreimageKey`] from a 64-bit local identifier. The local identifier\n    /// will be written into the low-order 8 bytes of the big-endian 31-byte data field.\n    pub fn new_local(local_ident: u64) -> Self {\n        let mut data = [0u8; 31];\n        data[23..].copy_from_slice(&local_ident.to_be_bytes());\n        Self { data, key_type: PreimageKeyType::Local }\n    }\n\n    /// Creates a new keccak256 [`PreimageKey`] from a 32-byte keccak256 digest. The digest will be\n    /// truncated to 31 bytes by taking the low-order 31 bytes.\n    pub fn new_keccak256(digest: [u8; 32]) -> Self {\n        Self::new(digest, PreimageKeyType::Keccak256)\n    }\n\n    /// Creates a new precompile [`PreimageKey`] from a precompile address and input. The key will\n    /// be constructed as `keccak256(precompile_addr ++ input)`, and then the high-order byte of\n    /// the digest will be set to the type byte.\n    pub fn new_precompile(precompile_addr: [u8; 20], input: &[u8]) -> Self {\n        let mut data = [0u8; 31];\n\n        let mut hasher = Keccak256::new();\n        hasher.update(precompile_addr);\n        hasher.update(input);\n\n        data.copy_from_slice(&hasher.finalize()[1..]);\n        Self { data, key_type: PreimageKeyType::Precompile }\n    }\n\n    /// Returns the [`PreimageKeyType`] for the [`PreimageKey`].\n    pub const fn key_type(&self) -> PreimageKeyType {\n        self.key_type\n    }\n\n    /// Returns the value of the [`PreimageKey`] as a [`U256`].\n    pub const fn key_value(&self) -> U256 {\n        U256::from_be_slice(self.data.as_slice())\n    }\n}\n\nimpl From<PreimageKey> for [u8; 32] {\n    fn from(key: PreimageKey) -> Self {\n        let mut rendered_key = [0u8; 32];\n        rendered_key[0] = key.key_type as u8;\n        rendered_key[1..].copy_from_slice(&key.data);\n        rendered_key\n    }\n}\n\nimpl From<PreimageKey> for B256 {\n    fn from(value: PreimageKey) -> Self {\n        let raw: [u8; 32] = value.into();\n        Self::from(raw)\n    }\n}\n\nimpl TryFrom<[u8; 32]> for PreimageKey {\n    type Error = PreimageOracleError;\n\n    fn try_from(value: [u8; 32]) -> Result<Self, Self::Error> {\n        let key_type = PreimageKeyType::try_from(value[0])?;\n        Ok(Self::new(value, key_type))\n    }\n}\n\nimpl core::fmt::Display for PreimageKey {\n    fn fmt(&self, f: &mut core::fmt::Formatter<'_>) -> core::fmt::Result {\n        let raw: [u8; 32] = (*self).into();\n        write!(f, \"{}\", B256::from(raw))\n    }\n}\n\n#[cfg(test)]\nmod test {\n    use super::*;\n\n    #[test]\n    fn test_preimage_key_from_u8() {\n        assert_eq!(PreimageKeyType::try_from(1).unwrap(), PreimageKeyType::Local);\n        assert_eq!(PreimageKeyType::try_from(2).unwrap(), PreimageKeyType::Keccak256);\n        assert_eq!(PreimageKeyType::try_from(3).unwrap(), PreimageKeyType::GlobalGeneric);\n        assert_eq!(PreimageKeyType::try_from(4).unwrap(), PreimageKeyType::Sha256);\n        assert_eq!(PreimageKeyType::try_from(5).unwrap(), PreimageKeyType::Blob);\n        assert_eq!(PreimageKeyType::try_from(6).unwrap(), PreimageKeyType::Precompile);\n        assert!(PreimageKeyType::try_from(0).is_err());\n        assert!(PreimageKeyType::try_from(7).is_err());\n    }\n\n    #[test]\n    fn test_preimage_key_new_local() {\n        let key = PreimageKey::new_local(0xFFu64);\n        assert_eq!(key.key_type(), PreimageKeyType::Local);\n        assert_eq!(key.key_value(), U256::from(0xFFu64));\n    }\n\n    #[test]\n    fn test_preimage_key_value() {\n        let key = PreimageKey::new([0xFFu8; 32], PreimageKeyType::Local);\n        assert_eq!(\n            key.key_value(),\n            alloy_primitives::uint!(\n                452312848583266388373324160190187140051835877600158453279131187530910662655_U256\n            )\n        );\n    }\n\n    #[test]\n    fn test_preimage_key_roundtrip_b256() {\n        let key = PreimageKey::new([0xFFu8; 32], PreimageKeyType::Local);\n        let b256: B256 = key.into();\n        let key2 = PreimageKey::try_from(<[u8; 32]>::from(b256)).unwrap();\n        assert_eq!(key, key2);\n    }\n\n    #[test]\n    fn test_preimage_key_display() {\n        let key = PreimageKey::new([0xFFu8; 32], PreimageKeyType::Local);\n        assert_eq!(\n            key.to_string(),\n            \"0x01ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff\"\n        );\n    }\n\n    #[test]\n    fn test_preimage_keys() {\n        let types = [\n            PreimageKeyType::Local,\n            PreimageKeyType::Keccak256,\n            PreimageKeyType::GlobalGeneric,\n            PreimageKeyType::Sha256,\n            PreimageKeyType::Blob,\n            PreimageKeyType::Precompile,\n        ];\n\n        for key_type in types {\n            let key = PreimageKey::new([0xFFu8; 32], key_type);\n            assert_eq!(key.key_type(), key_type);\n\n            let mut rendered_key = [0xFFu8; 32];\n            rendered_key[0] = key_type as u8;\n            let actual: [u8; 32] = key.into();\n            assert_eq!(actual, rendered_key);\n        }\n    }\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "identical",
+      "coveredLines": 233,
+      "match": {
+        "origin": "own",
+        "collection": "optimism",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "key.rs",
+        "similarity": 1,
+        "reportId": "optimism/cantina-kona-2026-03",
+        "repository": "op-rs/kona",
+        "path": "crates/proof/preimage/src/key.rs",
+        "commit": "86910c9112437bbb849eca28961f813c5450e103",
+        "commitTimestamp": "2025-12-15T17:17:05Z",
+        "url": "https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/crates/proof/preimage/src/key.rs",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). Preimage oracle key/hint types; Informational finding 3.5.12 (key.rs) located here.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 12,
+        "ignoredRemoved": 12,
+        "unchanged": 233,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 4,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "//! Contains the [PreimageKey] type, which is used to identify preimages that may be fetched from",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "//! Contains the [`PreimageKey`] type, which is used to identify preimages that may be fetched from",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 2,
+                "newLine": 2,
+                "text": "//! the preimage oracle."
+              },
+              { "type": " ", "oldLine": 3, "newLine": 3, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "use alloy_primitives::{B256, Keccak256, U256};"
+              }
+            ]
+          },
+          {
+            "oldStart": 26,
+            "oldLines": 7,
+            "newStart": 26,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 26,
+                "newLine": 26,
+                "text": "    /// low-order 31 bytes of the preimage's `keccak256` digest to the preimage itself."
+              },
+              {
+                "type": " ",
+                "oldLine": 27,
+                "newLine": 27,
+                "text": "    #[default]"
+              },
+              {
+                "type": " ",
+                "oldLine": 28,
+                "newLine": 28,
+                "text": "    Keccak256 = 2,"
+              },
+              {
+                "type": "-",
+                "oldLine": 29,
+                "text": "    /// GlobalGeneric key types are reserved for future use.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 29,
+                "text": "    /// `GlobalGeneric` key types are reserved for future use.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 30,
+                "newLine": 30,
+                "text": "    GlobalGeneric = 3,"
+              },
+              {
+                "type": " ",
+                "oldLine": 31,
+                "newLine": 31,
+                "text": "    /// Sha256 key types are global and context independent. Preimages are mapped from the"
+              },
+              {
+                "type": " ",
+                "oldLine": 32,
+                "newLine": 32,
+                "text": "    /// low-order 31 bytes of the preimage's `sha256` digest to the preimage itself."
+              }
+            ]
+          },
+          {
+            "oldStart": 79,
+            "oldLines": 31,
+            "newStart": 79,
+            "newLines": 31,
+            "lines": [
+              { "type": " ", "oldLine": 79, "newLine": 79, "text": "}" },
+              { "type": " ", "oldLine": 80, "newLine": 80, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 81,
+                "newLine": 81,
+                "text": "impl PreimageKey {"
+              },
+              {
+                "type": "-",
+                "oldLine": 82,
+                "text": "    /// Creates a new [PreimageKey] from a 32-byte value and a [PreimageKeyType]. The 32-byte value",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 83,
+                "text": "    /// will be truncated to 31 bytes by taking the low-order 31 bytes.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 82,
+                "text": "    /// Creates a new [`PreimageKey`] from a 32-byte value and a [`PreimageKeyType`]. The 32-byte",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 83,
+                "text": "    /// value will be truncated to 31 bytes by taking the low-order 31 bytes.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 84,
+                "newLine": 84,
+                "text": "    pub fn new(key: [u8; 32], key_type: PreimageKeyType) -> Self {"
+              },
+              {
+                "type": " ",
+                "oldLine": 85,
+                "newLine": 85,
+                "text": "        let mut data = [0u8; 31];"
+              },
+              {
+                "type": " ",
+                "oldLine": 86,
+                "newLine": 86,
+                "text": "        data.copy_from_slice(&key[1..]);"
+              },
+              {
+                "type": " ",
+                "oldLine": 87,
+                "newLine": 87,
+                "text": "        Self { data, key_type }"
+              },
+              { "type": " ", "oldLine": 88, "newLine": 88, "text": "    }" },
+              { "type": " ", "oldLine": 89, "newLine": 89, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 90,
+                "text": "    /// Creates a new local [PreimageKey] from a 64-bit local identifier. The local identifier will",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 91,
+                "text": "    /// be written into the low-order 8 bytes of the big-endian 31-byte data field.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 90,
+                "text": "    /// Creates a new local [`PreimageKey`] from a 64-bit local identifier. The local identifier",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 91,
+                "text": "    /// will be written into the low-order 8 bytes of the big-endian 31-byte data field.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 92,
+                "newLine": 92,
+                "text": "    pub fn new_local(local_ident: u64) -> Self {"
+              },
+              {
+                "type": " ",
+                "oldLine": 93,
+                "newLine": 93,
+                "text": "        let mut data = [0u8; 31];"
+              },
+              {
+                "type": " ",
+                "oldLine": 94,
+                "newLine": 94,
+                "text": "        data[23..].copy_from_slice(&local_ident.to_be_bytes());"
+              },
+              {
+                "type": " ",
+                "oldLine": 95,
+                "newLine": 95,
+                "text": "        Self { data, key_type: PreimageKeyType::Local }"
+              },
+              { "type": " ", "oldLine": 96, "newLine": 96, "text": "    }" },
+              { "type": " ", "oldLine": 97, "newLine": 97, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 98,
+                "text": "    /// Creates a new keccak256 [PreimageKey] from a 32-byte keccak256 digest. The digest will be",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 98,
+                "text": "    /// Creates a new keccak256 [`PreimageKey`] from a 32-byte keccak256 digest. The digest will be",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 99,
+                "newLine": 99,
+                "text": "    /// truncated to 31 bytes by taking the low-order 31 bytes."
+              },
+              {
+                "type": " ",
+                "oldLine": 100,
+                "newLine": 100,
+                "text": "    pub fn new_keccak256(digest: [u8; 32]) -> Self {"
+              },
+              {
+                "type": " ",
+                "oldLine": 101,
+                "newLine": 101,
+                "text": "        Self::new(digest, PreimageKeyType::Keccak256)"
+              },
+              { "type": " ", "oldLine": 102, "newLine": 102, "text": "    }" },
+              { "type": " ", "oldLine": 103, "newLine": 103, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 104,
+                "text": "    /// Creates a new precompile [PreimageKey] from a precompile address and input. The key will be",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 105,
+                "text": "    /// constructed as `keccak256(precompile_addr ++ input)`, and then the high-order byte of the",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 106,
+                "text": "    /// digest will be set to the type byte.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 104,
+                "text": "    /// Creates a new precompile [`PreimageKey`] from a precompile address and input. The key will",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 105,
+                "text": "    /// be constructed as `keccak256(precompile_addr ++ input)`, and then the high-order byte of",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 106,
+                "text": "    /// the digest will be set to the type byte.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 107,
+                "newLine": 107,
+                "text": "    pub fn new_precompile(precompile_addr: [u8; 20], input: &[u8]) -> Self {"
+              },
+              {
+                "type": " ",
+                "oldLine": 108,
+                "newLine": 108,
+                "text": "        let mut data = [0u8; 31];"
+              },
+              { "type": " ", "oldLine": 109, "newLine": 109, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 115,
+            "oldLines": 12,
+            "newStart": 115,
+            "newLines": 12,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 115,
+                "newLine": 115,
+                "text": "        Self { data, key_type: PreimageKeyType::Precompile }"
+              },
+              { "type": " ", "oldLine": 116, "newLine": 116, "text": "    }" },
+              { "type": " ", "oldLine": 117, "newLine": 117, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 118,
+                "text": "    /// Returns the [PreimageKeyType] for the [PreimageKey].",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 118,
+                "text": "    /// Returns the [`PreimageKeyType`] for the [`PreimageKey`].",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 119,
+                "newLine": 119,
+                "text": "    pub const fn key_type(&self) -> PreimageKeyType {"
+              },
+              {
+                "type": " ",
+                "oldLine": 120,
+                "newLine": 120,
+                "text": "        self.key_type"
+              },
+              { "type": " ", "oldLine": 121, "newLine": 121, "text": "    }" },
+              { "type": " ", "oldLine": 122, "newLine": 122, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 123,
+                "text": "    /// Returns the value of the [PreimageKey] as a [U256].",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 123,
+                "text": "    /// Returns the value of the [`PreimageKey`] as a [`U256`].",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 124,
+                "newLine": 124,
+                "text": "    pub const fn key_value(&self) -> U256 {"
+              },
+              {
+                "type": " ",
+                "oldLine": 125,
+                "newLine": 125,
+                "text": "        U256::from_be_slice(self.data.as_slice())"
+              },
+              { "type": " ", "oldLine": 126, "newLine": 126, "text": "    }" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

@@ -1770,9 +1770,7 @@
                 "reviewPhase": "initial audit",
                 "coverage": "full file",
                 "majorFindings": 1,
-                "findingIds": [
-                  "TOB-UNI-009"
-                ],
+                "findingIds": ["TOB-UNI-009"],
                 "isLatestVersion": true,
                 "laterAuditedVersionExists": false,
                 "totalVersions": 2
@@ -1925,9 +1923,7 @@
                 "reviewPhase": "initial audit",
                 "coverage": "full file (manual review, unit tests, Echidna end-to-end properties)",
                 "majorFindings": 1,
-                "findingIds": [
-                  "TOB-UNI-005"
-                ],
+                "findingIds": ["TOB-UNI-005"],
                 "isLatestVersion": true,
                 "laterAuditedVersionExists": false,
                 "totalVersions": 2
@@ -6495,9 +6491,7 @@
                 "reviewPhase": "initial audit",
                 "coverage": "full file",
                 "majorFindings": 1,
-                "findingIds": [
-                  "TOB-UNI-009"
-                ],
+                "findingIds": ["TOB-UNI-009"],
                 "isLatestVersion": true,
                 "laterAuditedVersionExists": false,
                 "totalVersions": 2
@@ -6650,9 +6644,7 @@
                 "reviewPhase": "initial audit",
                 "coverage": "full file (manual review, unit tests, Echidna end-to-end properties)",
                 "majorFindings": 1,
-                "findingIds": [
-                  "TOB-UNI-005"
-                ],
+                "findingIds": ["TOB-UNI-005"],
                 "isLatestVersion": true,
                 "laterAuditedVersionExists": false,
                 "totalVersions": 2
@@ -8190,9 +8182,7 @@
                 "reviewPhase": "fix review",
                 "coverage": "verification of the fix for the Critical decreaseLiquidity finding; the Major missing-token-existence-check finding remains open",
                 "majorFindings": 1,
-                "findingIds": [
-                  "CVF-24"
-                ],
+                "findingIds": ["CVF-24"],
                 "isLatestVersion": true,
                 "laterAuditedVersionExists": false,
                 "totalVersions": 2
@@ -9282,9 +9272,7 @@
                 "reviewPhase": "initial audit",
                 "coverage": "full file",
                 "majorFindings": 1,
-                "findingIds": [
-                  "TOB-UNI-009"
-                ],
+                "findingIds": ["TOB-UNI-009"],
                 "isLatestVersion": true,
                 "laterAuditedVersionExists": false,
                 "totalVersions": 2
@@ -9437,9 +9425,7 @@
                 "reviewPhase": "initial audit",
                 "coverage": "full file (manual review, unit tests, Echidna end-to-end properties)",
                 "majorFindings": 1,
-                "findingIds": [
-                  "TOB-UNI-005"
-                ],
+                "findingIds": ["TOB-UNI-005"],
                 "isLatestVersion": true,
                 "laterAuditedVersionExists": false,
                 "totalVersions": 2

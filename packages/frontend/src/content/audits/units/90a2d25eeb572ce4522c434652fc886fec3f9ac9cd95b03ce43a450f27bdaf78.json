@@ -1,1 +1,322 @@
-{"schemaVersion":2,"unitHash":"90a2d25eeb572ce4522c434652fc886fec3f9ac9cd95b03ce43a450f27bdaf78","name":"errors.rs","kind":"program","lines":59,"source":"//! Errors for the `kona-preimage` crate.\n\nuse crate::{PreimageKey, PreimageKeyType};\nuse alloc::string::String;\nuse thiserror::Error;\n\n/// A [`PreimageOracleError`] is an enum that differentiates pipe-related errors from other errors\n/// in the [`PreimageOracleServer`](crate::PreimageOracleServer) and\n/// [`HintReaderServer`](crate::HintReaderServer) implementations.\n#[derive(Error, Debug)]\npub enum PreimageOracleError {\n    /// The pipe has been broken.\n    #[error(transparent)]\n    IOError(#[from] ChannelError),\n    /// The preimage key is invalid.\n    #[error(\"Invalid preimage key.\")]\n    InvalidPreimageKey,\n    /// Key not found.\n    #[error(\"Key not found.\")]\n    KeyNotFound,\n    /// The preimage returned by the fetcher does not hash to the requested key.\n    #[error(\"Incorrect preimage data: hash does not match requested key {0}.\")]\n    IncorrectData(PreimageKey),\n    /// The verifier was asked to verify a key type it does not support.\n    #[error(\"Unsupported preimage key type: {0:?}.\")]\n    UnsupportedKeyType(PreimageKeyType),\n    /// Timeout while waiting for preimage.\n    #[error(\"Timeout while waiting for preimage.\")]\n    Timeout,\n    /// Buffer length mismatch.\n    #[error(\"Buffer length mismatch. Expected {0}, got {1}.\")]\n    BufferLengthMismatch(usize, usize),\n    /// Failed to parse hint.\n    #[error(\"Failed to parse hint: {0}\")]\n    HintParseFailed(String),\n    /// Other errors.\n    #[error(\"Error in preimage server: {0}\")]\n    Other(String),\n}\n\n/// A [Result] type for the [`PreimageOracleError`] enum.\npub type PreimageOracleResult<T> = Result<T, PreimageOracleError>;\n\n/// A [`ChannelError`] is an enum that describes the error cases of a [Channel] trait\n/// implementation.\n///\n/// [Channel]: crate::Channel\n#[derive(Error, Debug)]\npub enum ChannelError {\n    /// The channel is closed.\n    #[error(\"Channel is closed.\")]\n    Closed,\n    /// Unexpected EOF.\n    #[error(\"Unexpected EOF in channel read operation.\")]\n    UnexpectedEOF,\n}\n\n/// A [Result] type for the [`ChannelError`] enum.\npub type ChannelResult<T> = Result<T, ChannelError>;","resolutions":{"9fa846564f4071bd":{"status":"differs","coveredLines":54,"match":{"origin":"own","collection":"optimism","relation":{"type":"own"},"rank":0,"matchedBy":"name","auditedName":"errors.rs","similarity":0.918,"reportId":"optimism/cantina-kona-2026-03","repository":"op-rs/kona","path":"crates/proof/preimage/src/errors.rs","commit":"86910c9112437bbb849eca28961f813c5450e103","commitTimestamp":"2025-12-15T17:17:05Z","url":"https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/crates/proof/preimage/src/errors.rs","auditStatus":"audited_with_no_major_findings","reviewPhase":"initial audit","coverage":"Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). Preimage oracle key/hint types; Informational finding 3.5.12 (key.rs) located here.","majorFindings":0,"isLatestVersion":true,"laterAuditedVersionExists":false,"totalVersions":1},"diff":{"added":5,"removed":0,"ignoredAdded":9,"ignoredRemoved":8,"unchanged":54,"ignoredOnly":false,"hunks":[{"oldStart":1,"oldLines":13,"newStart":1,"newLines":12,"lines":[{"type":" ","oldLine":1,"newLine":1,"text":"//! Errors for the `kona-preimage` crate."},{"type":" ","oldLine":2,"newLine":2,"text":""},{"type":"+","newLine":3,"text":"use crate::{PreimageKey, PreimageKeyType};","ignored":false},{"type":" ","oldLine":3,"newLine":4,"text":"use alloc::string::String;"},{"type":" ","oldLine":4,"newLine":5,"text":"use thiserror::Error;"},{"type":" ","oldLine":5,"newLine":6,"text":""},{"type":"-","oldLine":6,"text":"/// A [PreimageOracleError] is an enum that differentiates pipe-related errors from other errors","ignored":true},{"type":"-","oldLine":7,"text":"/// in the [PreimageOracleServer] and [HintReaderServer] implementations.","ignored":true},{"type":"-","oldLine":8,"text":"///","ignored":true},{"type":"-","oldLine":9,"text":"/// [PreimageOracleServer]: crate::PreimageOracleServer","ignored":true},{"type":"-","oldLine":10,"text":"/// [HintReaderServer]: crate::HintReaderServer","ignored":true},{"type":"+","newLine":7,"text":"/// A [`PreimageOracleError`] is an enum that differentiates pipe-related errors from other errors","ignored":true},{"type":"+","newLine":8,"text":"/// in the [`PreimageOracleServer`](crate::PreimageOracleServer) and","ignored":true},{"type":"+","newLine":9,"text":"/// [`HintReaderServer`](crate::HintReaderServer) implementations.","ignored":true},{"type":" ","oldLine":11,"newLine":10,"text":"#[derive(Error, Debug)]"},{"type":" ","oldLine":12,"newLine":11,"text":"pub enum PreimageOracleError {"},{"type":" ","oldLine":13,"newLine":12,"text":"    /// The pipe has been broken."}]},{"oldStart":19,"oldLines":6,"newStart":18,"newLines":12,"lines":[{"type":" ","oldLine":19,"newLine":18,"text":"    /// Key not found."},{"type":" ","oldLine":20,"newLine":19,"text":"    #[error(\"Key not found.\")]"},{"type":" ","oldLine":21,"newLine":20,"text":"    KeyNotFound,"},{"type":"+","newLine":21,"text":"    /// The preimage returned by the fetcher does not hash to the requested key.","ignored":true},{"type":"+","newLine":22,"text":"    #[error(\"Incorrect preimage data: hash does not match requested key {0}.\")]","ignored":false},{"type":"+","newLine":23,"text":"    IncorrectData(PreimageKey),","ignored":false},{"type":"+","newLine":24,"text":"    /// The verifier was asked to verify a key type it does not support.","ignored":true},{"type":"+","newLine":25,"text":"    #[error(\"Unsupported preimage key type: {0:?}.\")]","ignored":false},{"type":"+","newLine":26,"text":"    UnsupportedKeyType(PreimageKeyType),","ignored":false},{"type":" ","oldLine":22,"newLine":27,"text":"    /// Timeout while waiting for preimage."},{"type":" ","oldLine":23,"newLine":28,"text":"    #[error(\"Timeout while waiting for preimage.\")]"},{"type":" ","oldLine":24,"newLine":29,"text":"    Timeout,"}]},{"oldStart":33,"oldLines":10,"newStart":38,"newLines":11,"lines":[{"type":" ","oldLine":33,"newLine":38,"text":"    Other(String),"},{"type":" ","oldLine":34,"newLine":39,"text":"}"},{"type":" ","oldLine":35,"newLine":40,"text":""},{"type":"-","oldLine":36,"text":"/// A [Result] type for the [PreimageOracleError] enum.","ignored":true},{"type":"+","newLine":41,"text":"/// A [Result] type for the [`PreimageOracleError`] enum.","ignored":true},{"type":" ","oldLine":37,"newLine":42,"text":"pub type PreimageOracleResult<T> = Result<T, PreimageOracleError>;"},{"type":" ","oldLine":38,"newLine":43,"text":""},{"type":"-","oldLine":39,"text":"/// A [ChannelError] is an enum that describes the error cases of a [Channel] trait implementation.","ignored":true},{"type":"+","newLine":44,"text":"/// A [`ChannelError`] is an enum that describes the error cases of a [Channel] trait","ignored":true},{"type":"+","newLine":45,"text":"/// implementation.","ignored":true},{"type":" ","oldLine":40,"newLine":46,"text":"///"},{"type":" ","oldLine":41,"newLine":47,"text":"/// [Channel]: crate::Channel"},{"type":" ","oldLine":42,"newLine":48,"text":"#[derive(Error, Debug)]"}]},{"oldStart":49,"oldLines":5,"newStart":55,"newLines":5,"lines":[{"type":" ","oldLine":49,"newLine":55,"text":"    UnexpectedEOF,"},{"type":" ","oldLine":50,"newLine":56,"text":"}"},{"type":" ","oldLine":51,"newLine":57,"text":""},{"type":"-","oldLine":52,"text":"/// A [Result] type for the [ChannelError] enum.","ignored":true},{"type":"+","newLine":58,"text":"/// A [Result] type for the [`ChannelError`] enum.","ignored":true},{"type":" ","oldLine":53,"newLine":59,"text":"pub type ChannelResult<T> = Result<T, ChannelError>;"}]}]},"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "90a2d25eeb572ce4522c434652fc886fec3f9ac9cd95b03ce43a450f27bdaf78",
+  "name": "errors.rs",
+  "kind": "program",
+  "lines": 59,
+  "source": "//! Errors for the `kona-preimage` crate.\n\nuse crate::{PreimageKey, PreimageKeyType};\nuse alloc::string::String;\nuse thiserror::Error;\n\n/// A [`PreimageOracleError`] is an enum that differentiates pipe-related errors from other errors\n/// in the [`PreimageOracleServer`](crate::PreimageOracleServer) and\n/// [`HintReaderServer`](crate::HintReaderServer) implementations.\n#[derive(Error, Debug)]\npub enum PreimageOracleError {\n    /// The pipe has been broken.\n    #[error(transparent)]\n    IOError(#[from] ChannelError),\n    /// The preimage key is invalid.\n    #[error(\"Invalid preimage key.\")]\n    InvalidPreimageKey,\n    /// Key not found.\n    #[error(\"Key not found.\")]\n    KeyNotFound,\n    /// The preimage returned by the fetcher does not hash to the requested key.\n    #[error(\"Incorrect preimage data: hash does not match requested key {0}.\")]\n    IncorrectData(PreimageKey),\n    /// The verifier was asked to verify a key type it does not support.\n    #[error(\"Unsupported preimage key type: {0:?}.\")]\n    UnsupportedKeyType(PreimageKeyType),\n    /// Timeout while waiting for preimage.\n    #[error(\"Timeout while waiting for preimage.\")]\n    Timeout,\n    /// Buffer length mismatch.\n    #[error(\"Buffer length mismatch. Expected {0}, got {1}.\")]\n    BufferLengthMismatch(usize, usize),\n    /// Failed to parse hint.\n    #[error(\"Failed to parse hint: {0}\")]\n    HintParseFailed(String),\n    /// Other errors.\n    #[error(\"Error in preimage server: {0}\")]\n    Other(String),\n}\n\n/// A [Result] type for the [`PreimageOracleError`] enum.\npub type PreimageOracleResult<T> = Result<T, PreimageOracleError>;\n\n/// A [`ChannelError`] is an enum that describes the error cases of a [Channel] trait\n/// implementation.\n///\n/// [Channel]: crate::Channel\n#[derive(Error, Debug)]\npub enum ChannelError {\n    /// The channel is closed.\n    #[error(\"Channel is closed.\")]\n    Closed,\n    /// Unexpected EOF.\n    #[error(\"Unexpected EOF in channel read operation.\")]\n    UnexpectedEOF,\n}\n\n/// A [Result] type for the [`ChannelError`] enum.\npub type ChannelResult<T> = Result<T, ChannelError>;",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "differs",
+      "coveredLines": 54,
+      "match": {
+        "origin": "own",
+        "collection": "optimism",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "errors.rs",
+        "similarity": 0.918,
+        "reportId": "optimism/cantina-kona-2026-03",
+        "repository": "op-rs/kona",
+        "path": "crates/proof/preimage/src/errors.rs",
+        "commit": "86910c9112437bbb849eca28961f813c5450e103",
+        "commitTimestamp": "2025-12-15T17:17:05Z",
+        "url": "https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/crates/proof/preimage/src/errors.rs",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). Preimage oracle key/hint types; Informational finding 3.5.12 (key.rs) located here.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 5,
+        "removed": 0,
+        "ignoredAdded": 9,
+        "ignoredRemoved": 8,
+        "unchanged": 54,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 13,
+            "newStart": 1,
+            "newLines": 12,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "//! Errors for the `kona-preimage` crate."
+              },
+              { "type": " ", "oldLine": 2, "newLine": 2, "text": "" },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "use crate::{PreimageKey, PreimageKeyType};",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 4,
+                "text": "use alloc::string::String;"
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 5,
+                "text": "use thiserror::Error;"
+              },
+              { "type": " ", "oldLine": 5, "newLine": 6, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 6,
+                "text": "/// A [PreimageOracleError] is an enum that differentiates pipe-related errors from other errors",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 7,
+                "text": "/// in the [PreimageOracleServer] and [HintReaderServer] implementations.",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 8, "text": "///", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 9,
+                "text": "/// [PreimageOracleServer]: crate::PreimageOracleServer",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 10,
+                "text": "/// [HintReaderServer]: crate::HintReaderServer",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 7,
+                "text": "/// A [`PreimageOracleError`] is an enum that differentiates pipe-related errors from other errors",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 8,
+                "text": "/// in the [`PreimageOracleServer`](crate::PreimageOracleServer) and",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 9,
+                "text": "/// [`HintReaderServer`](crate::HintReaderServer) implementations.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 11,
+                "newLine": 10,
+                "text": "#[derive(Error, Debug)]"
+              },
+              {
+                "type": " ",
+                "oldLine": 12,
+                "newLine": 11,
+                "text": "pub enum PreimageOracleError {"
+              },
+              {
+                "type": " ",
+                "oldLine": 13,
+                "newLine": 12,
+                "text": "    /// The pipe has been broken."
+              }
+            ]
+          },
+          {
+            "oldStart": 19,
+            "oldLines": 6,
+            "newStart": 18,
+            "newLines": 12,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 19,
+                "newLine": 18,
+                "text": "    /// Key not found."
+              },
+              {
+                "type": " ",
+                "oldLine": 20,
+                "newLine": 19,
+                "text": "    #[error(\"Key not found.\")]"
+              },
+              {
+                "type": " ",
+                "oldLine": 21,
+                "newLine": 20,
+                "text": "    KeyNotFound,"
+              },
+              {
+                "type": "+",
+                "newLine": 21,
+                "text": "    /// The preimage returned by the fetcher does not hash to the requested key.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 22,
+                "text": "    #[error(\"Incorrect preimage data: hash does not match requested key {0}.\")]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 23,
+                "text": "    IncorrectData(PreimageKey),",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 24,
+                "text": "    /// The verifier was asked to verify a key type it does not support.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 25,
+                "text": "    #[error(\"Unsupported preimage key type: {0:?}.\")]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 26,
+                "text": "    UnsupportedKeyType(PreimageKeyType),",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 27,
+                "text": "    /// Timeout while waiting for preimage."
+              },
+              {
+                "type": " ",
+                "oldLine": 23,
+                "newLine": 28,
+                "text": "    #[error(\"Timeout while waiting for preimage.\")]"
+              },
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 29,
+                "text": "    Timeout,"
+              }
+            ]
+          },
+          {
+            "oldStart": 33,
+            "oldLines": 10,
+            "newStart": 38,
+            "newLines": 11,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 33,
+                "newLine": 38,
+                "text": "    Other(String),"
+              },
+              { "type": " ", "oldLine": 34, "newLine": 39, "text": "}" },
+              { "type": " ", "oldLine": 35, "newLine": 40, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 36,
+                "text": "/// A [Result] type for the [PreimageOracleError] enum.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 41,
+                "text": "/// A [Result] type for the [`PreimageOracleError`] enum.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 37,
+                "newLine": 42,
+                "text": "pub type PreimageOracleResult<T> = Result<T, PreimageOracleError>;"
+              },
+              { "type": " ", "oldLine": 38, "newLine": 43, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 39,
+                "text": "/// A [ChannelError] is an enum that describes the error cases of a [Channel] trait implementation.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 44,
+                "text": "/// A [`ChannelError`] is an enum that describes the error cases of a [Channel] trait",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 45,
+                "text": "/// implementation.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 40, "newLine": 46, "text": "///" },
+              {
+                "type": " ",
+                "oldLine": 41,
+                "newLine": 47,
+                "text": "/// [Channel]: crate::Channel"
+              },
+              {
+                "type": " ",
+                "oldLine": 42,
+                "newLine": 48,
+                "text": "#[derive(Error, Debug)]"
+              }
+            ]
+          },
+          {
+            "oldStart": 49,
+            "oldLines": 5,
+            "newStart": 55,
+            "newLines": 5,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 49,
+                "newLine": 55,
+                "text": "    UnexpectedEOF,"
+              },
+              { "type": " ", "oldLine": 50, "newLine": 56, "text": "}" },
+              { "type": " ", "oldLine": 51, "newLine": 57, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 52,
+                "text": "/// A [Result] type for the [ChannelError] enum.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 58,
+                "text": "/// A [Result] type for the [`ChannelError`] enum.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 53,
+                "newLine": 59,
+                "text": "pub type ChannelResult<T> = Result<T, ChannelError>;"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

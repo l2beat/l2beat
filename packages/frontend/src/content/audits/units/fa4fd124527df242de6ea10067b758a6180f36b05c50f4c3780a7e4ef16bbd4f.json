@@ -1,1 +1,15 @@
-{"schemaVersion":2,"unitHash":"fa4fd124527df242de6ea10067b758a6180f36b05c50f4c3780a7e4ef16bbd4f","name":"replacement.rs","kind":"program","lines":24,"source":"//! Contains the block replacement type.Add commentMore actions\n\nuse alloy_primitives::B256;\nuse derive_more::Display;\nuse kona_protocol::BlockInfo;\n\n/// Represents a [`BlockReplacement`] event where one block replaces another.\n#[derive(Debug, Clone, Copy, Display, PartialEq, Eq)]\n#[cfg_attr(feature = \"serde\", derive(serde::Serialize, serde::Deserialize))]\n#[cfg_attr(feature = \"serde\", serde(rename_all = \"camelCase\"))]\n#[display(\"replacement: {replacement}, invalidated: {invalidated}\")]\npub struct BlockReplacement<T = BlockInfo> {\n    /// The block that replaces the invalidated block\n    pub replacement: T,\n    /// Hash of the block being invalidated and replaced\n    pub invalidated: B256,\n}\n\nimpl<T> BlockReplacement<T> {\n    /// Creates a new [`BlockReplacement`].\n    pub const fn new(replacement: T, invalidated: B256) -> Self {\n        Self { replacement, invalidated }\n    }\n}","resolutions":{"9fa846564f4071bd":{"status":"unaudited","coveredLines":0,"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "fa4fd124527df242de6ea10067b758a6180f36b05c50f4c3780a7e4ef16bbd4f",
+  "name": "replacement.rs",
+  "kind": "program",
+  "lines": 24,
+  "source": "//! Contains the block replacement type.Add commentMore actions\n\nuse alloy_primitives::B256;\nuse derive_more::Display;\nuse kona_protocol::BlockInfo;\n\n/// Represents a [`BlockReplacement`] event where one block replaces another.\n#[derive(Debug, Clone, Copy, Display, PartialEq, Eq)]\n#[cfg_attr(feature = \"serde\", derive(serde::Serialize, serde::Deserialize))]\n#[cfg_attr(feature = \"serde\", serde(rename_all = \"camelCase\"))]\n#[display(\"replacement: {replacement}, invalidated: {invalidated}\")]\npub struct BlockReplacement<T = BlockInfo> {\n    /// The block that replaces the invalidated block\n    pub replacement: T,\n    /// Hash of the block being invalidated and replaced\n    pub invalidated: B256,\n}\n\nimpl<T> BlockReplacement<T> {\n    /// Creates a new [`BlockReplacement`].\n    pub const fn new(replacement: T, invalidated: B256) -> Self {\n        Self { replacement, invalidated }\n    }\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

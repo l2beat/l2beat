@@ -1,1 +1,15 @@
-{"schemaVersion":2,"unitHash":"832b8d2cefeb139634a96ebbce534764e8e355c0f61094f0eb546ad8872e5b01","name":"lib.rs","kind":"program","lines":12,"source":"#![doc = include_str!(\"../README.md\")]\n#![warn(missing_debug_implementations, missing_docs, unreachable_pub, rustdoc::all)]\n#![deny(unused_must_use, rust_2018_idioms)]\n#![cfg_attr(docsrs, feature(doc_cfg))]\n#![allow(clippy::type_complexity)]\n#![cfg_attr(not(test), no_std)]\n\nextern crate alloc;\n\npub mod fpvm_evm;\npub mod interop;\npub mod single;","resolutions":{"9fa846564f4071bd":{"status":"unaudited","coveredLines":0,"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "832b8d2cefeb139634a96ebbce534764e8e355c0f61094f0eb546ad8872e5b01",
+  "name": "lib.rs",
+  "kind": "program",
+  "lines": 12,
+  "source": "#![doc = include_str!(\"../README.md\")]\n#![warn(missing_debug_implementations, missing_docs, unreachable_pub, rustdoc::all)]\n#![deny(unused_must_use, rust_2018_idioms)]\n#![cfg_attr(docsrs, feature(doc_cfg))]\n#![allow(clippy::type_complexity)]\n#![cfg_attr(not(test), no_std)]\n\nextern crate alloc;\n\npub mod fpvm_evm;\npub mod interop;\npub mod single;",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

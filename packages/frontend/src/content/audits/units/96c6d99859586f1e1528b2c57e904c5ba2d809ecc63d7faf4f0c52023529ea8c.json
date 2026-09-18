@@ -1,1 +1,37 @@
-{"schemaVersion":2,"unitHash":"96c6d99859586f1e1528b2c57e904c5ba2d809ecc63d7faf4f0c52023529ea8c","name":"types.rs","kind":"program","lines":35,"source":"//! Type aliases for the stages in the derivation pipeline.\n\nuse crate::{\n    AttributesQueue, BatchProvider, BatchStream, ChannelProvider, ChannelReader, FrameQueue,\n    IndexedTraversal, L1Retrieval, PollingTraversal,\n};\n\n/// Type alias for the [`L1Retrieval`] stage.\npub type L1RetrievalStage<DAP, T> = L1Retrieval<DAP, T>;\n\n/// Type alias for the [`FrameQueue`] stage.\npub type FrameQueueStage<DAP, T> = FrameQueue<L1RetrievalStage<DAP, T>>;\n\n/// Type alias for the [`ChannelProvider`] stage.\npub type ChannelProviderStage<DAP, T> = ChannelProvider<FrameQueueStage<DAP, T>>;\n\n/// Type alias for the [`ChannelReader`] stage.\npub type ChannelReaderStage<DAP, T> = ChannelReader<ChannelProviderStage<DAP, T>>;\n\n/// Type alias for the [`BatchStream`] stage.\npub type BatchStreamStage<DAP, T, F> = BatchStream<ChannelReaderStage<DAP, T>, F>;\n\n/// Type alias for the [`BatchProvider`] stage.\npub type BatchProviderStage<DAP, T, F> = BatchProvider<BatchStreamStage<DAP, T, F>, F>;\n\n/// Type alias for the [`AttributesQueue`] stage.\npub type AttributesQueueStage<DAP, T, F, B> = AttributesQueue<BatchProviderStage<DAP, T, F>, B>;\n\n/// Type alias for the [`AttributesQueue`] stage that uses a [`PollingTraversal`] stage.\npub type PolledAttributesQueueStage<DAP, P, F, B> =\n    AttributesQueueStage<DAP, PollingTraversal<P>, F, B>;\n\n/// Type alias for the [`AttributesQueue`] stage that uses a [`IndexedTraversal`] stage.\npub type IndexedAttributesQueueStage<DAP, P, F, B> =\n    AttributesQueueStage<DAP, IndexedTraversal<P>, F, B>;","resolutions":{"9fa846564f4071bd":{"status":"identical","coveredLines":35,"match":{"origin":"own","collection":"optimism","relation":{"type":"own"},"rank":0,"matchedBy":"identity","auditedName":"types.rs","similarity":1,"reportId":"optimism/cantina-kona-2026-03","repository":"op-rs/kona","path":"crates/protocol/derive/src/pipeline/types.rs","commit":"86910c9112437bbb849eca28961f813c5450e103","commitTimestamp":"2025-12-15T17:17:05Z","url":"https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/crates/protocol/derive/src/pipeline/types.rs","auditStatus":"audited_with_no_major_findings","reviewPhase":"initial audit","coverage":"Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). kona-derive derivation pipeline (stages, sources, traversal, attributes). Medium findings 3.3.1 and 3.3.2 (pipeline/core.rs, stages/l1_retrieval.rs) and numerous Low/Informational findings located here; no Critical/High.","majorFindings":0,"isLatestVersion":true,"laterAuditedVersionExists":false,"totalVersions":1},"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "96c6d99859586f1e1528b2c57e904c5ba2d809ecc63d7faf4f0c52023529ea8c",
+  "name": "types.rs",
+  "kind": "program",
+  "lines": 35,
+  "source": "//! Type aliases for the stages in the derivation pipeline.\n\nuse crate::{\n    AttributesQueue, BatchProvider, BatchStream, ChannelProvider, ChannelReader, FrameQueue,\n    IndexedTraversal, L1Retrieval, PollingTraversal,\n};\n\n/// Type alias for the [`L1Retrieval`] stage.\npub type L1RetrievalStage<DAP, T> = L1Retrieval<DAP, T>;\n\n/// Type alias for the [`FrameQueue`] stage.\npub type FrameQueueStage<DAP, T> = FrameQueue<L1RetrievalStage<DAP, T>>;\n\n/// Type alias for the [`ChannelProvider`] stage.\npub type ChannelProviderStage<DAP, T> = ChannelProvider<FrameQueueStage<DAP, T>>;\n\n/// Type alias for the [`ChannelReader`] stage.\npub type ChannelReaderStage<DAP, T> = ChannelReader<ChannelProviderStage<DAP, T>>;\n\n/// Type alias for the [`BatchStream`] stage.\npub type BatchStreamStage<DAP, T, F> = BatchStream<ChannelReaderStage<DAP, T>, F>;\n\n/// Type alias for the [`BatchProvider`] stage.\npub type BatchProviderStage<DAP, T, F> = BatchProvider<BatchStreamStage<DAP, T, F>, F>;\n\n/// Type alias for the [`AttributesQueue`] stage.\npub type AttributesQueueStage<DAP, T, F, B> = AttributesQueue<BatchProviderStage<DAP, T, F>, B>;\n\n/// Type alias for the [`AttributesQueue`] stage that uses a [`PollingTraversal`] stage.\npub type PolledAttributesQueueStage<DAP, P, F, B> =\n    AttributesQueueStage<DAP, PollingTraversal<P>, F, B>;\n\n/// Type alias for the [`AttributesQueue`] stage that uses a [`IndexedTraversal`] stage.\npub type IndexedAttributesQueueStage<DAP, P, F, B> =\n    AttributesQueueStage<DAP, IndexedTraversal<P>, F, B>;",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "identical",
+      "coveredLines": 35,
+      "match": {
+        "origin": "own",
+        "collection": "optimism",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "types.rs",
+        "similarity": 1,
+        "reportId": "optimism/cantina-kona-2026-03",
+        "repository": "op-rs/kona",
+        "path": "crates/protocol/derive/src/pipeline/types.rs",
+        "commit": "86910c9112437bbb849eca28961f813c5450e103",
+        "commitTimestamp": "2025-12-15T17:17:05Z",
+        "url": "https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/crates/protocol/derive/src/pipeline/types.rs",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). kona-derive derivation pipeline (stages, sources, traversal, attributes). Medium findings 3.3.1 and 3.3.2 (pipeline/core.rs, stages/l1_retrieval.rs) and numerous Low/Informational findings located here; no Critical/High.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "warnings": []
+    }
+  }
+}

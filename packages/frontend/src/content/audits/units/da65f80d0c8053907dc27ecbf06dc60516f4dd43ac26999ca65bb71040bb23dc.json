@@ -1,1 +1,37 @@
-{"schemaVersion":2,"unitHash":"da65f80d0c8053907dc27ecbf06dc60516f4dd43ac26999ca65bb71040bb23dc","name":"sync.rs","kind":"program","lines":47,"source":"//! Sync Start\n\nuse crate::errors::OracleProviderError;\nuse alloc::sync::Arc;\nuse alloy_consensus::{Header, Sealed};\nuse alloy_primitives::B256;\nuse core::fmt::Debug;\nuse kona_derive::ChainProvider;\nuse kona_driver::{PipelineCursor, TipCursor};\nuse kona_protocol::BatchValidationProvider;\nuse kona_registry::RollupConfig;\nuse spin::RwLock;\n\n/// Constructs a [`PipelineCursor`] from the caching oracle, boot info, and providers.\npub async fn new_oracle_pipeline_cursor<L1, L2>(\n    rollup_config: &RollupConfig,\n    safe_header: Sealed<Header>,\n    agreed_l2_output_root: B256,\n    chain_provider: &mut L1,\n    l2_chain_provider: &mut L2,\n) -> Result<Arc<RwLock<PipelineCursor>>, OracleProviderError>\nwhere\n    L1: ChainProvider + Send + Sync + Debug + Clone,\n    L2: BatchValidationProvider + Send + Sync + Debug + Clone,\n    OracleProviderError:\n        From<<L1 as ChainProvider>::Error> + From<<L2 as BatchValidationProvider>::Error>,\n{\n    let safe_head_info = l2_chain_provider.l2_block_info_by_number(safe_header.number).await?;\n    let l1_origin = chain_provider.block_info_by_number(safe_head_info.l1_origin.number).await?;\n\n    // Walk back the starting L1 block by `channel_timeout` to ensure that the full channel is\n    // captured.\n    let channel_timeout = rollup_config.channel_timeout(safe_head_info.block_info.timestamp);\n    let mut l1_origin_number = l1_origin.number.saturating_sub(channel_timeout);\n    if l1_origin_number < rollup_config.genesis.l1.number {\n        l1_origin_number = rollup_config.genesis.l1.number;\n    }\n    let origin = chain_provider.block_info_by_number(l1_origin_number).await?;\n\n    // Construct the cursor.\n    let mut cursor = PipelineCursor::new(channel_timeout, origin);\n    let tip = TipCursor::new(safe_head_info, safe_header, agreed_l2_output_root);\n    cursor.advance(origin, tip);\n\n    // Wrap the cursor in a shared read-write lock\n    Ok(Arc::new(RwLock::new(cursor)))\n}","resolutions":{"9fa846564f4071bd":{"status":"identical","coveredLines":47,"match":{"origin":"own","collection":"optimism","relation":{"type":"own"},"rank":0,"matchedBy":"identity","auditedName":"sync.rs","similarity":1,"reportId":"optimism/cantina-kona-2026-03","repository":"ethereum-optimism/optimism","path":"rust/kona/crates/proof/proof/src/sync.rs","commit":"c390d771c65d783503f82fb76fb0b1d8628c605b","commitTimestamp":"2026-03-26T17:10:19Z","url":"https://github.com/ethereum-optimism/optimism/blob/c390d771c65d783503f82fb76fb0b1d8628c605b/rust/kona/crates/proof/proof/src/sync.rs","auditStatus":"partially_audited_without_major_findings","reviewPhase":"fix review","coverage":"Fix review only: head commit of PR 19775 'fix(kona/proof): several fixes to kona-proof.' (merged 2026-03-26) in the optimism monorepo, where kona now lives under rust/kona. Cantina verified the fix for Critical 3.1.2. Same file as op-rs/kona crates/proof/proof/src/sync.rs at 86910c91; different repository so no follows link.","majorFindings":0,"isLatestVersion":true,"laterAuditedVersionExists":false,"totalVersions":1},"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "da65f80d0c8053907dc27ecbf06dc60516f4dd43ac26999ca65bb71040bb23dc",
+  "name": "sync.rs",
+  "kind": "program",
+  "lines": 47,
+  "source": "//! Sync Start\n\nuse crate::errors::OracleProviderError;\nuse alloc::sync::Arc;\nuse alloy_consensus::{Header, Sealed};\nuse alloy_primitives::B256;\nuse core::fmt::Debug;\nuse kona_derive::ChainProvider;\nuse kona_driver::{PipelineCursor, TipCursor};\nuse kona_protocol::BatchValidationProvider;\nuse kona_registry::RollupConfig;\nuse spin::RwLock;\n\n/// Constructs a [`PipelineCursor`] from the caching oracle, boot info, and providers.\npub async fn new_oracle_pipeline_cursor<L1, L2>(\n    rollup_config: &RollupConfig,\n    safe_header: Sealed<Header>,\n    agreed_l2_output_root: B256,\n    chain_provider: &mut L1,\n    l2_chain_provider: &mut L2,\n) -> Result<Arc<RwLock<PipelineCursor>>, OracleProviderError>\nwhere\n    L1: ChainProvider + Send + Sync + Debug + Clone,\n    L2: BatchValidationProvider + Send + Sync + Debug + Clone,\n    OracleProviderError:\n        From<<L1 as ChainProvider>::Error> + From<<L2 as BatchValidationProvider>::Error>,\n{\n    let safe_head_info = l2_chain_provider.l2_block_info_by_number(safe_header.number).await?;\n    let l1_origin = chain_provider.block_info_by_number(safe_head_info.l1_origin.number).await?;\n\n    // Walk back the starting L1 block by `channel_timeout` to ensure that the full channel is\n    // captured.\n    let channel_timeout = rollup_config.channel_timeout(safe_head_info.block_info.timestamp);\n    let mut l1_origin_number = l1_origin.number.saturating_sub(channel_timeout);\n    if l1_origin_number < rollup_config.genesis.l1.number {\n        l1_origin_number = rollup_config.genesis.l1.number;\n    }\n    let origin = chain_provider.block_info_by_number(l1_origin_number).await?;\n\n    // Construct the cursor.\n    let mut cursor = PipelineCursor::new(channel_timeout, origin);\n    let tip = TipCursor::new(safe_head_info, safe_header, agreed_l2_output_root);\n    cursor.advance(origin, tip);\n\n    // Wrap the cursor in a shared read-write lock\n    Ok(Arc::new(RwLock::new(cursor)))\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "identical",
+      "coveredLines": 47,
+      "match": {
+        "origin": "own",
+        "collection": "optimism",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "sync.rs",
+        "similarity": 1,
+        "reportId": "optimism/cantina-kona-2026-03",
+        "repository": "ethereum-optimism/optimism",
+        "path": "rust/kona/crates/proof/proof/src/sync.rs",
+        "commit": "c390d771c65d783503f82fb76fb0b1d8628c605b",
+        "commitTimestamp": "2026-03-26T17:10:19Z",
+        "url": "https://github.com/ethereum-optimism/optimism/blob/c390d771c65d783503f82fb76fb0b1d8628c605b/rust/kona/crates/proof/proof/src/sync.rs",
+        "auditStatus": "partially_audited_without_major_findings",
+        "reviewPhase": "fix review",
+        "coverage": "Fix review only: head commit of PR 19775 'fix(kona/proof): several fixes to kona-proof.' (merged 2026-03-26) in the optimism monorepo, where kona now lives under rust/kona. Cantina verified the fix for Critical 3.1.2. Same file as op-rs/kona crates/proof/proof/src/sync.rs at 86910c91; different repository so no follows link.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "warnings": []
+    }
+  }
+}

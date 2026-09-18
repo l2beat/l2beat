@@ -1,1 +1,80 @@
-{"schemaVersion":2,"unitHash":"9ae638a1915c5a214352a4dd480e0426fee5fbf2a3557cb150fcb0a32a49d4d9","name":"data_availability_provider.rs","kind":"program","lines":28,"source":"//! An implementation of the [`DataAvailabilityProvider`] trait for tests.\n\nuse crate::{errors::PipelineError, traits::DataAvailabilityProvider, types::PipelineResult};\nuse alloc::{boxed::Box, vec::Vec};\nuse alloy_primitives::{Address, Bytes};\nuse async_trait::async_trait;\nuse core::fmt::Debug;\nuse kona_protocol::BlockInfo;\n\n/// Mock data availability provider\n#[derive(Debug, Default)]\npub struct TestDAP {\n    /// Specifies the stage results.\n    pub results: Vec<PipelineResult<Bytes>>,\n}\n\n#[async_trait]\nimpl DataAvailabilityProvider for TestDAP {\n    type Item = Bytes;\n\n    async fn next(&mut self, _: &BlockInfo, _: Address) -> PipelineResult<Self::Item> {\n        self.results.pop().unwrap_or(Err(PipelineError::Eof.temp()))\n    }\n\n    fn clear(&mut self) {\n        self.results.clear();\n    }\n}","resolutions":{"9fa846564f4071bd":{"status":"identical","coveredLines":28,"match":{"origin":"own","collection":"optimism","relation":{"type":"own"},"rank":0,"matchedBy":"identity","auditedName":"data_availability_provider.rs","similarity":1,"reportId":"optimism/cantina-kona-2026-03","repository":"op-rs/kona","path":"crates/protocol/derive/src/test_utils/data_availability_provider.rs","commit":"86910c9112437bbb849eca28961f813c5450e103","commitTimestamp":"2025-12-15T17:17:05Z","url":"https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/crates/protocol/derive/src/test_utils/data_availability_provider.rs","auditStatus":"audited_with_no_major_findings","reviewPhase":"initial audit","coverage":"Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). kona-derive derivation pipeline (stages, sources, traversal, attributes). Medium findings 3.3.1 and 3.3.2 (pipeline/core.rs, stages/l1_retrieval.rs) and numerous Low/Informational findings located here; no Critical/High.","majorFindings":0,"isLatestVersion":true,"laterAuditedVersionExists":false,"totalVersions":1},"diff":{"added":0,"removed":0,"ignoredAdded":1,"ignoredRemoved":1,"unchanged":28,"ignoredOnly":true,"hunks":[{"oldStart":1,"oldLines":4,"newStart":1,"newLines":4,"lines":[{"type":"-","oldLine":1,"text":"//! An implementation of the [DataAvailabilityProvider] trait for tests.","ignored":true},{"type":"+","newLine":1,"text":"//! An implementation of the [`DataAvailabilityProvider`] trait for tests.","ignored":true},{"type":" ","oldLine":2,"newLine":2,"text":""},{"type":" ","oldLine":3,"newLine":3,"text":"use crate::{errors::PipelineError, traits::DataAvailabilityProvider, types::PipelineResult};"},{"type":" ","oldLine":4,"newLine":4,"text":"use alloc::{boxed::Box, vec::Vec};"}]}]},"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "9ae638a1915c5a214352a4dd480e0426fee5fbf2a3557cb150fcb0a32a49d4d9",
+  "name": "data_availability_provider.rs",
+  "kind": "program",
+  "lines": 28,
+  "source": "//! An implementation of the [`DataAvailabilityProvider`] trait for tests.\n\nuse crate::{errors::PipelineError, traits::DataAvailabilityProvider, types::PipelineResult};\nuse alloc::{boxed::Box, vec::Vec};\nuse alloy_primitives::{Address, Bytes};\nuse async_trait::async_trait;\nuse core::fmt::Debug;\nuse kona_protocol::BlockInfo;\n\n/// Mock data availability provider\n#[derive(Debug, Default)]\npub struct TestDAP {\n    /// Specifies the stage results.\n    pub results: Vec<PipelineResult<Bytes>>,\n}\n\n#[async_trait]\nimpl DataAvailabilityProvider for TestDAP {\n    type Item = Bytes;\n\n    async fn next(&mut self, _: &BlockInfo, _: Address) -> PipelineResult<Self::Item> {\n        self.results.pop().unwrap_or(Err(PipelineError::Eof.temp()))\n    }\n\n    fn clear(&mut self) {\n        self.results.clear();\n    }\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "identical",
+      "coveredLines": 28,
+      "match": {
+        "origin": "own",
+        "collection": "optimism",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "data_availability_provider.rs",
+        "similarity": 1,
+        "reportId": "optimism/cantina-kona-2026-03",
+        "repository": "op-rs/kona",
+        "path": "crates/protocol/derive/src/test_utils/data_availability_provider.rs",
+        "commit": "86910c9112437bbb849eca28961f813c5450e103",
+        "commitTimestamp": "2025-12-15T17:17:05Z",
+        "url": "https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/crates/protocol/derive/src/test_utils/data_availability_provider.rs",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). kona-derive derivation pipeline (stages, sources, traversal, attributes). Medium findings 3.3.1 and 3.3.2 (pipeline/core.rs, stages/l1_retrieval.rs) and numerous Low/Informational findings located here; no Critical/High.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 1,
+        "ignoredRemoved": 1,
+        "unchanged": 28,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 4,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "//! An implementation of the [DataAvailabilityProvider] trait for tests.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "//! An implementation of the [`DataAvailabilityProvider`] trait for tests.",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 2, "newLine": 2, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "use crate::{errors::PipelineError, traits::DataAvailabilityProvider, types::PipelineResult};"
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "use alloc::{boxed::Box, vec::Vec};"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

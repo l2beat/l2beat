@@ -1,1 +1,15 @@
-{"schemaVersion":2,"unitHash":"2e806d98c24ccdaa438f8875a6fc1ead89d0c00e64fb9047392396acccadcbd1","name":"config.rs","kind":"program","lines":22,"source":"//! Per-chain interop configuration parsed from the chain TOML's `[interop]` block.\n\nuse crate::ChainDependency;\nuse alloc::collections::BTreeMap;\nuse alloy_primitives::ChainId;\n\n/// Per-chain interop configuration.\n///\n/// Chain TOMLs in `superchain-registry` may declare an `[interop]` section listing the\n/// chain ids that participate in the same interop cluster. Every member of a cluster is\n/// expected to declare a matching set; the registry build script validates this and\n/// builds one [`crate::DependencySet`] per cluster from the union of equal entries.\n#[derive(Debug, Clone, Default, PartialEq, Eq)]\n#[cfg_attr(feature = \"arbitrary\", derive(arbitrary::Arbitrary))]\n#[cfg_attr(feature = \"serde\", derive(serde::Serialize, serde::Deserialize))]\n#[allow(clippy::zero_sized_map_values)]\npub struct InteropConfig {\n    /// Chain ids this chain depends on (interop cluster membership).\n    /// Keys are L2 chain ids; values are reserved per-dependency config (currently empty).\n    #[cfg_attr(feature = \"serde\", serde(default))]\n    pub dependencies: BTreeMap<ChainId, ChainDependency>,\n}","resolutions":{"9fa846564f4071bd":{"status":"unaudited","coveredLines":0,"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "2e806d98c24ccdaa438f8875a6fc1ead89d0c00e64fb9047392396acccadcbd1",
+  "name": "config.rs",
+  "kind": "program",
+  "lines": 22,
+  "source": "//! Per-chain interop configuration parsed from the chain TOML's `[interop]` block.\n\nuse crate::ChainDependency;\nuse alloc::collections::BTreeMap;\nuse alloy_primitives::ChainId;\n\n/// Per-chain interop configuration.\n///\n/// Chain TOMLs in `superchain-registry` may declare an `[interop]` section listing the\n/// chain ids that participate in the same interop cluster. Every member of a cluster is\n/// expected to declare a matching set; the registry build script validates this and\n/// builds one [`crate::DependencySet`] per cluster from the union of equal entries.\n#[derive(Debug, Clone, Default, PartialEq, Eq)]\n#[cfg_attr(feature = \"arbitrary\", derive(arbitrary::Arbitrary))]\n#[cfg_attr(feature = \"serde\", derive(serde::Serialize, serde::Deserialize))]\n#[allow(clippy::zero_sized_map_values)]\npub struct InteropConfig {\n    /// Chain ids this chain depends on (interop cluster membership).\n    /// Keys are L2 chain ids; values are reserved per-dependency config (currently empty).\n    #[cfg_attr(feature = \"serde\", serde(default))]\n    pub dependencies: BTreeMap<ChainId, ChainDependency>,\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

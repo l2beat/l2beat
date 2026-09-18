@@ -1,1 +1,840 @@
-{"schemaVersion":2,"unitHash":"6e4ed086f3501d949394c0b48766c47db5022e2f1886a72feb5d214e7200a0cc","name":"env.rs","kind":"program","lines":224,"source":"//! Environment utility functions for [`StatelessL2Builder`].\n\nuse super::StatelessL2Builder;\nuse crate::{\n    ExecutorError, ExecutorResult, TrieDBProvider,\n    util::{\n        decode_holocene_eip_1559_params_block_header, decode_jovian_eip_1559_params_block_header,\n    },\n};\nuse alloy_consensus::{BlockHeader, Header};\nuse alloy_eips::{calc_next_block_base_fee, eip1559::BaseFeeParams};\nuse alloy_evm::{EvmEnv, EvmFactory};\nuse alloy_primitives::U256;\nuse kona_genesis::RollupConfig;\nuse kona_mpt::TrieHinter;\nuse op_alloy_rpc_types_engine::OpPayloadAttributes;\nuse op_revm::OpSpecId;\nuse revm::{\n    context::{BlockEnv, CfgEnv},\n    context_interface::block::BlobExcessGasAndPrice,\n};\n\nimpl<P, H, Evm, R> StatelessL2Builder<'_, P, H, Evm, R>\nwhere\n    P: TrieDBProvider,\n    H: TrieHinter,\n    Evm: EvmFactory,\n{\n    /// Returns the active [`EvmEnv`] for the executor.\n    pub(crate) fn evm_env(\n        &self,\n        spec_id: OpSpecId,\n        parent_header: &Header,\n        payload_attrs: &OpPayloadAttributes,\n        base_fee_params: &BaseFeeParams,\n        min_base_fee: u64,\n    ) -> ExecutorResult<EvmEnv<OpSpecId>> {\n        let block_env = self.prepare_block_env(\n            spec_id,\n            parent_header,\n            payload_attrs,\n            base_fee_params,\n            min_base_fee,\n        )?;\n        let cfg_env = self.evm_cfg_env(payload_attrs.payload_attributes.timestamp);\n        Ok(EvmEnv::new(cfg_env, block_env))\n    }\n\n    /// Returns the active [`CfgEnv`] for the executor.\n    pub(crate) fn evm_cfg_env(&self, timestamp: u64) -> CfgEnv<OpSpecId> {\n        CfgEnv::new()\n            .with_chain_id(self.config.l2_chain_id.id())\n            .with_spec_and_mainnet_gas_params(self.config.spec_id(timestamp))\n    }\n\n    fn next_block_base_fee(\n        &self,\n        params: BaseFeeParams,\n        parent: &Header,\n        min_base_fee: u64,\n    ) -> Option<u64> {\n        if !self.config.is_jovian_active(parent.timestamp()) {\n            return parent.next_block_base_fee(params);\n        }\n\n        // Starting from Jovian, we use the maximum of the gas used and the blob gas used to\n        // calculate the next base fee.\n        let gas_used = if parent.blob_gas_used().unwrap_or_default() > parent.gas_used() {\n            parent.blob_gas_used().unwrap_or_default()\n        } else {\n            parent.gas_used()\n        };\n\n        let mut next_block_base_fee = calc_next_block_base_fee(\n            gas_used,\n            parent.gas_limit(),\n            parent.base_fee_per_gas().unwrap_or_default(),\n            params,\n        );\n\n        // If the next block base fee is less than the min base fee, set it to the min base fee.\n        // # Note\n        // Before Jovian activation, the min-base-fee is 0 so this is a no-op.\n        if next_block_base_fee < min_base_fee {\n            next_block_base_fee = min_base_fee;\n        }\n\n        Some(next_block_base_fee)\n    }\n\n    /// Prepares a [`BlockEnv`] with the given [`OpPayloadAttributes`].\n    pub(crate) fn prepare_block_env(\n        &self,\n        spec_id: OpSpecId,\n        parent_header: &Header,\n        payload_attrs: &OpPayloadAttributes,\n        base_fee_params: &BaseFeeParams,\n        min_base_fee: u64,\n    ) -> ExecutorResult<BlockEnv> {\n        // On the OP Stack the BLOBBASEFEE opcode is always 1 from Ecotone onward. Post-Jovian the\n        // header's `blobGasUsed` field carries the block's DA footprint, so it must not feed the\n        // EIP-4844 excess-blob-gas rule; pin the blob env instead.\n        let blob_excess_gas_and_price = spec_id\n            .is_enabled_in(OpSpecId::ECOTONE)\n            .then_some(BlobExcessGasAndPrice { excess_blob_gas: 0, blob_gasprice: 1 });\n\n        let next_block_base_fee = self\n            .next_block_base_fee(*base_fee_params, parent_header, min_base_fee)\n            .unwrap_or_default();\n\n        Ok(BlockEnv {\n            number: U256::from(parent_header.number + 1),\n            beneficiary: payload_attrs.payload_attributes.suggested_fee_recipient,\n            timestamp: U256::from(payload_attrs.payload_attributes.timestamp),\n            gas_limit: payload_attrs.gas_limit.ok_or(ExecutorError::MissingGasLimit)?,\n            basefee: next_block_base_fee,\n            prevrandao: Some(payload_attrs.payload_attributes.prev_randao),\n            blob_excess_gas_and_price,\n            ..Default::default()\n        })\n    }\n\n    /// Returns the active base fee parameters for the parent header.\n    /// Returns the min-base-fee as the second element of the tuple.\n    ///\n    /// ## Note\n    /// Before Jovian activation, the min-base-fee is 0.\n    pub(crate) fn active_base_fee_params(\n        config: &RollupConfig,\n        parent_header: &Header,\n        payload_timestamp: u64,\n    ) -> ExecutorResult<(BaseFeeParams, u64)> {\n        match config {\n            // After Holocene activation, the base fee parameters are stored in the\n            // `extraData` field of the parent header. If Holocene wasn't active in the\n            // parent block, the default base fee parameters are used.\n            _ if config.is_jovian_active(parent_header.timestamp) => {\n                decode_jovian_eip_1559_params_block_header(parent_header)\n            }\n            _ if config.is_holocene_active(parent_header.timestamp) => {\n                decode_holocene_eip_1559_params_block_header(parent_header)\n                    .map(|base_fee_params| (base_fee_params, 0))\n            }\n            // If the next payload attribute timestamp is past canyon activation,\n            // use the canyon base fee params from the rollup config.\n            _ if config.is_canyon_active(payload_timestamp) => {\n                // If the payload attribute timestamp is past canyon activation,\n                // use the canyon base fee params from the rollup config.\n                Ok((config.chain_op_config.post_canyon_params(), 0))\n            }\n            _ => {\n                // If the next payload attribute timestamp is prior to canyon activation,\n                // use the default base fee params from the rollup config.\n                Ok((config.chain_op_config.pre_canyon_params(), 0))\n            }\n        }\n    }\n}\n\n#[cfg(test)]\nmod tests {\n    use super::*;\n    use crate::NoopTrieDBProvider;\n    use alloy_consensus::{Header, Sealable};\n    use alloy_op_evm::OpEvmFactory;\n    use alloy_rpc_types_engine::PayloadAttributes;\n    use kona_mpt::NoopTrieHinter;\n\n    /// The `BLOBBASEFEE` opcode must always be 1 on the OP Stack. Post-Jovian the header's\n    /// `blobGasUsed` carries the block's DA footprint, which must not influence the blob env. The\n    /// footprint here is from op-mainnet block 152635937.\n    #[test]\n    fn prepare_block_env_pins_blob_gasprice_to_one() {\n        let config = RollupConfig::default();\n        let parent_header = Header {\n            number: 100,\n            timestamp: 1_000_000,\n            gas_limit: 60_000_000,\n            base_fee_per_gas: Some(1_000_000_000),\n            blob_gas_used: Some(30_406_400),\n            excess_blob_gas: Some(0),\n            ..Default::default()\n        };\n\n        let builder = StatelessL2Builder::new(\n            &config,\n            OpEvmFactory::<alloy_op_evm::OpTx>::default(),\n            alloy_op_evm::block::OpAlloyReceiptBuilder::default(),\n            NoopTrieDBProvider,\n            NoopTrieHinter,\n            parent_header.clone().seal_slow(),\n        );\n\n        let payload_attrs = OpPayloadAttributes {\n            payload_attributes: PayloadAttributes {\n                timestamp: parent_header.timestamp + 2,\n                ..Default::default()\n            },\n            gas_limit: Some(parent_header.gas_limit),\n            ..Default::default()\n        };\n\n        let block_env = builder\n            .prepare_block_env(\n                OpSpecId::ISTHMUS,\n                &parent_header,\n                &payload_attrs,\n                &BaseFeeParams::new(250, 6),\n                0,\n            )\n            .expect(\"prepare_block_env should succeed\");\n\n        let blob =\n            block_env.blob_excess_gas_and_price.expect(\"blob env should be present for Isthmus\");\n        assert_eq!(\n            blob.blob_gasprice, 1,\n            \"BLOBBASEFEE must be pinned to 1 on the OP Stack regardless of the parent DA footprint\"\n        );\n        assert_eq!(\n            blob.excess_blob_gas, 0,\n            \"excess blob gas must be pinned to 0 regardless of the parent DA footprint\"\n        );\n    }\n}","resolutions":{"9fa846564f4071bd":{"status":"differs","coveredLines":156,"match":{"origin":"own","collection":"optimism","relation":{"type":"own"},"rank":0,"matchedBy":"name","auditedName":"env.rs","similarity":0.745,"reportId":"optimism/cantina-kona-2026-03","repository":"op-rs/kona","path":"crates/proof/executor/src/builder/env.rs","commit":"86910c9112437bbb849eca28961f813c5450e103","commitTimestamp":"2025-12-15T17:17:05Z","url":"https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/crates/proof/executor/src/builder/env.rs","auditStatus":"audited_with_no_major_findings","reviewPhase":"initial audit","coverage":"Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). kona-executor block builder; Low finding 3.4.2 (util.rs) and Informational 3.5.18 (builder/core.rs) located here.","majorFindings":0,"isLatestVersion":true,"laterAuditedVersionExists":false,"totalVersions":1},"diff":{"added":68,"removed":19,"ignoredAdded":10,"ignoredRemoved":2,"unchanged":156,"ignoredOnly":false,"hunks":[{"oldStart":1,"oldLines":4,"newStart":1,"newLines":4,"lines":[{"type":"-","oldLine":1,"text":"//! Environment utility functions for [StatelessL2Builder].","ignored":true},{"type":"+","newLine":1,"text":"//! Environment utility functions for [`StatelessL2Builder`].","ignored":true},{"type":" ","oldLine":2,"newLine":2,"text":""},{"type":" ","oldLine":3,"newLine":3,"text":"use super::StatelessL2Builder;"},{"type":" ","oldLine":4,"newLine":4,"text":"use crate::{"}]},{"oldStart":8,"oldLines":7,"newStart":8,"newLines":7,"lines":[{"type":" ","oldLine":8,"newLine":8,"text":"    },"},{"type":" ","oldLine":9,"newLine":9,"text":"};"},{"type":" ","oldLine":10,"newLine":10,"text":"use alloy_consensus::{BlockHeader, Header};"},{"type":"-","oldLine":11,"text":"use alloy_eips::{calc_next_block_base_fee, eip1559::BaseFeeParams, eip7840::BlobParams};","ignored":false},{"type":"+","newLine":11,"text":"use alloy_eips::{calc_next_block_base_fee, eip1559::BaseFeeParams};","ignored":false},{"type":" ","oldLine":12,"newLine":12,"text":"use alloy_evm::{EvmEnv, EvmFactory};"},{"type":" ","oldLine":13,"newLine":13,"text":"use alloy_primitives::U256;"},{"type":" ","oldLine":14,"newLine":14,"text":"use kona_genesis::RollupConfig;"}]},{"oldStart":18,"oldLines":12,"newStart":18,"newLines":9,"lines":[{"type":" ","oldLine":18,"newLine":18,"text":"use revm::{"},{"type":" ","oldLine":19,"newLine":19,"text":"    context::{BlockEnv, CfgEnv},"},{"type":" ","oldLine":20,"newLine":20,"text":"    context_interface::block::BlobExcessGasAndPrice,"},{"type":"-","oldLine":21,"text":"    primitives::eip4844::{","ignored":false},{"type":"-","oldLine":22,"text":"        BLOB_BASE_FEE_UPDATE_FRACTION_CANCUN, BLOB_BASE_FEE_UPDATE_FRACTION_PRAGUE,","ignored":false},{"type":"-","oldLine":23,"text":"    },","ignored":false},{"type":" ","oldLine":24,"newLine":21,"text":"};"},{"type":" ","oldLine":25,"newLine":22,"text":""},{"type":"-","oldLine":26,"text":"impl<P, H, Evm> StatelessL2Builder<'_, P, H, Evm>","ignored":false},{"type":"+","newLine":23,"text":"impl<P, H, Evm, R> StatelessL2Builder<'_, P, H, Evm, R>","ignored":false},{"type":" ","oldLine":27,"newLine":24,"text":"where"},{"type":" ","oldLine":28,"newLine":25,"text":"    P: TrieDBProvider,"},{"type":" ","oldLine":29,"newLine":26,"text":"    H: TrieHinter,"}]},{"oldStart":49,"oldLines":11,"newStart":46,"newLines":11,"lines":[{"type":" ","oldLine":49,"newLine":46,"text":"        Ok(EvmEnv::new(cfg_env, block_env))"},{"type":" ","oldLine":50,"newLine":47,"text":"    }"},{"type":" ","oldLine":51,"newLine":48,"text":""},{"type":"-","oldLine":52,"text":"    /// Returns the active [CfgEnv] for the executor.","ignored":false},{"type":"+","newLine":49,"text":"    /// Returns the active [`CfgEnv`] for the executor.","ignored":false},{"type":" ","oldLine":53,"newLine":50,"text":"    pub(crate) fn evm_cfg_env(&self, timestamp: u64) -> CfgEnv<OpSpecId> {"},{"type":" ","oldLine":54,"newLine":51,"text":"        CfgEnv::new()"},{"type":" ","oldLine":55,"newLine":52,"text":"            .with_chain_id(self.config.l2_chain_id.id())"},{"type":"-","oldLine":56,"text":"            .with_spec(self.config.spec_id(timestamp))","ignored":false},{"type":"+","newLine":53,"text":"            .with_spec_and_mainnet_gas_params(self.config.spec_id(timestamp))","ignored":false},{"type":" ","oldLine":57,"newLine":54,"text":"    }"},{"type":" ","oldLine":58,"newLine":55,"text":""},{"type":" ","oldLine":59,"newLine":56,"text":"    fn next_block_base_fee("}]},{"oldStart":91,"oldLines":7,"newStart":88,"newLines":7,"lines":[{"type":" ","oldLine":91,"newLine":88,"text":"        Some(next_block_base_fee)"},{"type":" ","oldLine":92,"newLine":89,"text":"    }"},{"type":" ","oldLine":93,"newLine":90,"text":""},{"type":"-","oldLine":94,"text":"    /// Prepares a [BlockEnv] with the given [OpPayloadAttributes].","ignored":false},{"type":"+","newLine":91,"text":"    /// Prepares a [`BlockEnv`] with the given [`OpPayloadAttributes`].","ignored":false},{"type":" ","oldLine":95,"newLine":92,"text":"    pub(crate) fn prepare_block_env("},{"type":" ","oldLine":96,"newLine":93,"text":"        &self,"},{"type":" ","oldLine":97,"newLine":94,"text":"        spec_id: OpSpecId,"}]},{"oldStart":100,"oldLines":19,"newStart":97,"newLines":13,"lines":[{"type":" ","oldLine":100,"newLine":97,"text":"        base_fee_params: &BaseFeeParams,"},{"type":" ","oldLine":101,"newLine":98,"text":"        min_base_fee: u64,"},{"type":" ","oldLine":102,"newLine":99,"text":"    ) -> ExecutorResult<BlockEnv> {"},{"type":"-","oldLine":103,"text":"        let (params, fraction) = if spec_id.is_enabled_in(OpSpecId::ISTHMUS) {","ignored":false},{"type":"-","oldLine":104,"text":"            (Some(BlobParams::prague()), BLOB_BASE_FEE_UPDATE_FRACTION_PRAGUE)","ignored":false},{"type":"-","oldLine":105,"text":"        } else if spec_id.is_enabled_in(OpSpecId::ECOTONE) {","ignored":false},{"type":"-","oldLine":106,"text":"            (Some(BlobParams::cancun()), BLOB_BASE_FEE_UPDATE_FRACTION_CANCUN)","ignored":false},{"type":"-","oldLine":107,"text":"        } else {","ignored":false},{"type":"-","oldLine":108,"text":"            (None, 0)","ignored":false},{"type":"-","oldLine":109,"text":"        };","ignored":false},{"type":"+","newLine":100,"text":"        // On the OP Stack the BLOBBASEFEE opcode is always 1 from Ecotone onward. Post-Jovian the","ignored":false},{"type":"+","newLine":101,"text":"        // header's `blobGasUsed` field carries the block's DA footprint, so it must not feed the","ignored":false},{"type":"+","newLine":102,"text":"        // EIP-4844 excess-blob-gas rule; pin the blob env instead.","ignored":false},{"type":"+","newLine":103,"text":"        let blob_excess_gas_and_price = spec_id","ignored":false},{"type":"+","newLine":104,"text":"            .is_enabled_in(OpSpecId::ECOTONE)","ignored":false},{"type":"+","newLine":105,"text":"            .then_some(BlobExcessGasAndPrice { excess_blob_gas: 0, blob_gasprice: 1 });","ignored":false},{"type":" ","oldLine":110,"newLine":106,"text":""},{"type":"-","oldLine":111,"text":"        let blob_excess_gas_and_price = parent_header","ignored":false},{"type":"-","oldLine":112,"text":"            .maybe_next_block_excess_blob_gas(params)","ignored":false},{"type":"-","oldLine":113,"text":"            .or_else(|| spec_id.is_enabled_in(OpSpecId::ECOTONE).then_some(0))","ignored":false},{"type":"-","oldLine":114,"text":"            .map(|excess| BlobExcessGasAndPrice::new(excess, fraction));","ignored":false},{"type":"-","oldLine":115,"text":"","ignored":true},{"type":" ","oldLine":116,"newLine":107,"text":"        let next_block_base_fee = self"},{"type":" ","oldLine":117,"newLine":108,"text":"            .next_block_base_fee(*base_fee_params, parent_header, min_base_fee)"},{"type":" ","oldLine":118,"newLine":109,"text":"            .unwrap_or_default();"}]},{"oldStart":164,"oldLines":4,"newStart":155,"newLines":70,"lines":[{"type":" ","oldLine":164,"newLine":155,"text":"            }"},{"type":" ","oldLine":165,"newLine":156,"text":"        }"},{"type":" ","oldLine":166,"newLine":157,"text":"    }"},{"type":"+","newLine":158,"text":"}","ignored":false},{"type":"+","newLine":159,"text":"","ignored":true},{"type":"+","newLine":160,"text":"#[cfg(test)]","ignored":false},{"type":"+","newLine":161,"text":"mod tests {","ignored":false},{"type":"+","newLine":162,"text":"    use super::*;","ignored":false},{"type":"+","newLine":163,"text":"    use crate::NoopTrieDBProvider;","ignored":false},{"type":"+","newLine":164,"text":"    use alloy_consensus::{Header, Sealable};","ignored":false},{"type":"+","newLine":165,"text":"    use alloy_op_evm::OpEvmFactory;","ignored":false},{"type":"+","newLine":166,"text":"    use alloy_rpc_types_engine::PayloadAttributes;","ignored":false},{"type":"+","newLine":167,"text":"    use kona_mpt::NoopTrieHinter;","ignored":false},{"type":"+","newLine":168,"text":"","ignored":true},{"type":"+","newLine":169,"text":"    /// The `BLOBBASEFEE` opcode must always be 1 on the OP Stack. Post-Jovian the header's","ignored":true},{"type":"+","newLine":170,"text":"    /// `blobGasUsed` carries the block's DA footprint, which must not influence the blob env. The","ignored":true},{"type":"+","newLine":171,"text":"    /// footprint here is from op-mainnet block 152635937.","ignored":true},{"type":"+","newLine":172,"text":"    #[test]","ignored":false},{"type":"+","newLine":173,"text":"    fn prepare_block_env_pins_blob_gasprice_to_one() {","ignored":false},{"type":"+","newLine":174,"text":"        let config = RollupConfig::default();","ignored":false},{"type":"+","newLine":175,"text":"        let parent_header = Header {","ignored":false},{"type":"+","newLine":176,"text":"            number: 100,","ignored":false},{"type":"+","newLine":177,"text":"            timestamp: 1_000_000,","ignored":false},{"type":"+","newLine":178,"text":"            gas_limit: 60_000_000,","ignored":false},{"type":"+","newLine":179,"text":"            base_fee_per_gas: Some(1_000_000_000),","ignored":false},{"type":"+","newLine":180,"text":"            blob_gas_used: Some(30_406_400),","ignored":false},{"type":"+","newLine":181,"text":"            excess_blob_gas: Some(0),","ignored":false},{"type":"+","newLine":182,"text":"            ..Default::default()","ignored":false},{"type":"+","newLine":183,"text":"        };","ignored":false},{"type":"+","newLine":184,"text":"","ignored":true},{"type":"+","newLine":185,"text":"        let builder = StatelessL2Builder::new(","ignored":false},{"type":"+","newLine":186,"text":"            &config,","ignored":false},{"type":"+","newLine":187,"text":"            OpEvmFactory::<alloy_op_evm::OpTx>::default(),","ignored":false},{"type":"+","newLine":188,"text":"            alloy_op_evm::block::OpAlloyReceiptBuilder::default(),","ignored":false},{"type":"+","newLine":189,"text":"            NoopTrieDBProvider,","ignored":false},{"type":"+","newLine":190,"text":"            NoopTrieHinter,","ignored":false},{"type":"+","newLine":191,"text":"            parent_header.clone().seal_slow(),","ignored":false},{"type":"+","newLine":192,"text":"        );","ignored":false},{"type":"+","newLine":193,"text":"","ignored":true},{"type":"+","newLine":194,"text":"        let payload_attrs = OpPayloadAttributes {","ignored":false},{"type":"+","newLine":195,"text":"            payload_attributes: PayloadAttributes {","ignored":false},{"type":"+","newLine":196,"text":"                timestamp: parent_header.timestamp + 2,","ignored":false},{"type":"+","newLine":197,"text":"                ..Default::default()","ignored":false},{"type":"+","newLine":198,"text":"            },","ignored":false},{"type":"+","newLine":199,"text":"            gas_limit: Some(parent_header.gas_limit),","ignored":false},{"type":"+","newLine":200,"text":"            ..Default::default()","ignored":false},{"type":"+","newLine":201,"text":"        };","ignored":false},{"type":"+","newLine":202,"text":"","ignored":true},{"type":"+","newLine":203,"text":"        let block_env = builder","ignored":false},{"type":"+","newLine":204,"text":"            .prepare_block_env(","ignored":false},{"type":"+","newLine":205,"text":"                OpSpecId::ISTHMUS,","ignored":false},{"type":"+","newLine":206,"text":"                &parent_header,","ignored":false},{"type":"+","newLine":207,"text":"                &payload_attrs,","ignored":false},{"type":"+","newLine":208,"text":"                &BaseFeeParams::new(250, 6),","ignored":false},{"type":"+","newLine":209,"text":"                0,","ignored":false},{"type":"+","newLine":210,"text":"            )","ignored":false},{"type":"+","newLine":211,"text":"            .expect(\"prepare_block_env should succeed\");","ignored":false},{"type":"+","newLine":212,"text":"","ignored":true},{"type":"+","newLine":213,"text":"        let blob =","ignored":false},{"type":"+","newLine":214,"text":"            block_env.blob_excess_gas_and_price.expect(\"blob env should be present for Isthmus\");","ignored":false},{"type":"+","newLine":215,"text":"        assert_eq!(","ignored":false},{"type":"+","newLine":216,"text":"            blob.blob_gasprice, 1,","ignored":false},{"type":"+","newLine":217,"text":"            \"BLOBBASEFEE must be pinned to 1 on the OP Stack regardless of the parent DA footprint\"","ignored":false},{"type":"+","newLine":218,"text":"        );","ignored":false},{"type":"+","newLine":219,"text":"        assert_eq!(","ignored":false},{"type":"+","newLine":220,"text":"            blob.excess_blob_gas, 0,","ignored":false},{"type":"+","newLine":221,"text":"            \"excess blob gas must be pinned to 0 regardless of the parent DA footprint\"","ignored":false},{"type":"+","newLine":222,"text":"        );","ignored":false},{"type":"+","newLine":223,"text":"    }","ignored":false},{"type":" ","oldLine":167,"newLine":224,"text":"}"}]}]},"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "6e4ed086f3501d949394c0b48766c47db5022e2f1886a72feb5d214e7200a0cc",
+  "name": "env.rs",
+  "kind": "program",
+  "lines": 224,
+  "source": "//! Environment utility functions for [`StatelessL2Builder`].\n\nuse super::StatelessL2Builder;\nuse crate::{\n    ExecutorError, ExecutorResult, TrieDBProvider,\n    util::{\n        decode_holocene_eip_1559_params_block_header, decode_jovian_eip_1559_params_block_header,\n    },\n};\nuse alloy_consensus::{BlockHeader, Header};\nuse alloy_eips::{calc_next_block_base_fee, eip1559::BaseFeeParams};\nuse alloy_evm::{EvmEnv, EvmFactory};\nuse alloy_primitives::U256;\nuse kona_genesis::RollupConfig;\nuse kona_mpt::TrieHinter;\nuse op_alloy_rpc_types_engine::OpPayloadAttributes;\nuse op_revm::OpSpecId;\nuse revm::{\n    context::{BlockEnv, CfgEnv},\n    context_interface::block::BlobExcessGasAndPrice,\n};\n\nimpl<P, H, Evm, R> StatelessL2Builder<'_, P, H, Evm, R>\nwhere\n    P: TrieDBProvider,\n    H: TrieHinter,\n    Evm: EvmFactory,\n{\n    /// Returns the active [`EvmEnv`] for the executor.\n    pub(crate) fn evm_env(\n        &self,\n        spec_id: OpSpecId,\n        parent_header: &Header,\n        payload_attrs: &OpPayloadAttributes,\n        base_fee_params: &BaseFeeParams,\n        min_base_fee: u64,\n    ) -> ExecutorResult<EvmEnv<OpSpecId>> {\n        let block_env = self.prepare_block_env(\n            spec_id,\n            parent_header,\n            payload_attrs,\n            base_fee_params,\n            min_base_fee,\n        )?;\n        let cfg_env = self.evm_cfg_env(payload_attrs.payload_attributes.timestamp);\n        Ok(EvmEnv::new(cfg_env, block_env))\n    }\n\n    /// Returns the active [`CfgEnv`] for the executor.\n    pub(crate) fn evm_cfg_env(&self, timestamp: u64) -> CfgEnv<OpSpecId> {\n        CfgEnv::new()\n            .with_chain_id(self.config.l2_chain_id.id())\n            .with_spec_and_mainnet_gas_params(self.config.spec_id(timestamp))\n    }\n\n    fn next_block_base_fee(\n        &self,\n        params: BaseFeeParams,\n        parent: &Header,\n        min_base_fee: u64,\n    ) -> Option<u64> {\n        if !self.config.is_jovian_active(parent.timestamp()) {\n            return parent.next_block_base_fee(params);\n        }\n\n        // Starting from Jovian, we use the maximum of the gas used and the blob gas used to\n        // calculate the next base fee.\n        let gas_used = if parent.blob_gas_used().unwrap_or_default() > parent.gas_used() {\n            parent.blob_gas_used().unwrap_or_default()\n        } else {\n            parent.gas_used()\n        };\n\n        let mut next_block_base_fee = calc_next_block_base_fee(\n            gas_used,\n            parent.gas_limit(),\n            parent.base_fee_per_gas().unwrap_or_default(),\n            params,\n        );\n\n        // If the next block base fee is less than the min base fee, set it to the min base fee.\n        // # Note\n        // Before Jovian activation, the min-base-fee is 0 so this is a no-op.\n        if next_block_base_fee < min_base_fee {\n            next_block_base_fee = min_base_fee;\n        }\n\n        Some(next_block_base_fee)\n    }\n\n    /// Prepares a [`BlockEnv`] with the given [`OpPayloadAttributes`].\n    pub(crate) fn prepare_block_env(\n        &self,\n        spec_id: OpSpecId,\n        parent_header: &Header,\n        payload_attrs: &OpPayloadAttributes,\n        base_fee_params: &BaseFeeParams,\n        min_base_fee: u64,\n    ) -> ExecutorResult<BlockEnv> {\n        // On the OP Stack the BLOBBASEFEE opcode is always 1 from Ecotone onward. Post-Jovian the\n        // header's `blobGasUsed` field carries the block's DA footprint, so it must not feed the\n        // EIP-4844 excess-blob-gas rule; pin the blob env instead.\n        let blob_excess_gas_and_price = spec_id\n            .is_enabled_in(OpSpecId::ECOTONE)\n            .then_some(BlobExcessGasAndPrice { excess_blob_gas: 0, blob_gasprice: 1 });\n\n        let next_block_base_fee = self\n            .next_block_base_fee(*base_fee_params, parent_header, min_base_fee)\n            .unwrap_or_default();\n\n        Ok(BlockEnv {\n            number: U256::from(parent_header.number + 1),\n            beneficiary: payload_attrs.payload_attributes.suggested_fee_recipient,\n            timestamp: U256::from(payload_attrs.payload_attributes.timestamp),\n            gas_limit: payload_attrs.gas_limit.ok_or(ExecutorError::MissingGasLimit)?,\n            basefee: next_block_base_fee,\n            prevrandao: Some(payload_attrs.payload_attributes.prev_randao),\n            blob_excess_gas_and_price,\n            ..Default::default()\n        })\n    }\n\n    /// Returns the active base fee parameters for the parent header.\n    /// Returns the min-base-fee as the second element of the tuple.\n    ///\n    /// ## Note\n    /// Before Jovian activation, the min-base-fee is 0.\n    pub(crate) fn active_base_fee_params(\n        config: &RollupConfig,\n        parent_header: &Header,\n        payload_timestamp: u64,\n    ) -> ExecutorResult<(BaseFeeParams, u64)> {\n        match config {\n            // After Holocene activation, the base fee parameters are stored in the\n            // `extraData` field of the parent header. If Holocene wasn't active in the\n            // parent block, the default base fee parameters are used.\n            _ if config.is_jovian_active(parent_header.timestamp) => {\n                decode_jovian_eip_1559_params_block_header(parent_header)\n            }\n            _ if config.is_holocene_active(parent_header.timestamp) => {\n                decode_holocene_eip_1559_params_block_header(parent_header)\n                    .map(|base_fee_params| (base_fee_params, 0))\n            }\n            // If the next payload attribute timestamp is past canyon activation,\n            // use the canyon base fee params from the rollup config.\n            _ if config.is_canyon_active(payload_timestamp) => {\n                // If the payload attribute timestamp is past canyon activation,\n                // use the canyon base fee params from the rollup config.\n                Ok((config.chain_op_config.post_canyon_params(), 0))\n            }\n            _ => {\n                // If the next payload attribute timestamp is prior to canyon activation,\n                // use the default base fee params from the rollup config.\n                Ok((config.chain_op_config.pre_canyon_params(), 0))\n            }\n        }\n    }\n}\n\n#[cfg(test)]\nmod tests {\n    use super::*;\n    use crate::NoopTrieDBProvider;\n    use alloy_consensus::{Header, Sealable};\n    use alloy_op_evm::OpEvmFactory;\n    use alloy_rpc_types_engine::PayloadAttributes;\n    use kona_mpt::NoopTrieHinter;\n\n    /// The `BLOBBASEFEE` opcode must always be 1 on the OP Stack. Post-Jovian the header's\n    /// `blobGasUsed` carries the block's DA footprint, which must not influence the blob env. The\n    /// footprint here is from op-mainnet block 152635937.\n    #[test]\n    fn prepare_block_env_pins_blob_gasprice_to_one() {\n        let config = RollupConfig::default();\n        let parent_header = Header {\n            number: 100,\n            timestamp: 1_000_000,\n            gas_limit: 60_000_000,\n            base_fee_per_gas: Some(1_000_000_000),\n            blob_gas_used: Some(30_406_400),\n            excess_blob_gas: Some(0),\n            ..Default::default()\n        };\n\n        let builder = StatelessL2Builder::new(\n            &config,\n            OpEvmFactory::<alloy_op_evm::OpTx>::default(),\n            alloy_op_evm::block::OpAlloyReceiptBuilder::default(),\n            NoopTrieDBProvider,\n            NoopTrieHinter,\n            parent_header.clone().seal_slow(),\n        );\n\n        let payload_attrs = OpPayloadAttributes {\n            payload_attributes: PayloadAttributes {\n                timestamp: parent_header.timestamp + 2,\n                ..Default::default()\n            },\n            gas_limit: Some(parent_header.gas_limit),\n            ..Default::default()\n        };\n\n        let block_env = builder\n            .prepare_block_env(\n                OpSpecId::ISTHMUS,\n                &parent_header,\n                &payload_attrs,\n                &BaseFeeParams::new(250, 6),\n                0,\n            )\n            .expect(\"prepare_block_env should succeed\");\n\n        let blob =\n            block_env.blob_excess_gas_and_price.expect(\"blob env should be present for Isthmus\");\n        assert_eq!(\n            blob.blob_gasprice, 1,\n            \"BLOBBASEFEE must be pinned to 1 on the OP Stack regardless of the parent DA footprint\"\n        );\n        assert_eq!(\n            blob.excess_blob_gas, 0,\n            \"excess blob gas must be pinned to 0 regardless of the parent DA footprint\"\n        );\n    }\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "differs",
+      "coveredLines": 156,
+      "match": {
+        "origin": "own",
+        "collection": "optimism",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "env.rs",
+        "similarity": 0.745,
+        "reportId": "optimism/cantina-kona-2026-03",
+        "repository": "op-rs/kona",
+        "path": "crates/proof/executor/src/builder/env.rs",
+        "commit": "86910c9112437bbb849eca28961f813c5450e103",
+        "commitTimestamp": "2025-12-15T17:17:05Z",
+        "url": "https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/crates/proof/executor/src/builder/env.rs",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). kona-executor block builder; Low finding 3.4.2 (util.rs) and Informational 3.5.18 (builder/core.rs) located here.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 68,
+        "removed": 19,
+        "ignoredAdded": 10,
+        "ignoredRemoved": 2,
+        "unchanged": 156,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 4,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "//! Environment utility functions for [StatelessL2Builder].",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "//! Environment utility functions for [`StatelessL2Builder`].",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 2, "newLine": 2, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "use super::StatelessL2Builder;"
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "use crate::{"
+              }
+            ]
+          },
+          {
+            "oldStart": 8,
+            "oldLines": 7,
+            "newStart": 8,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 8, "newLine": 8, "text": "    }," },
+              { "type": " ", "oldLine": 9, "newLine": 9, "text": "};" },
+              {
+                "type": " ",
+                "oldLine": 10,
+                "newLine": 10,
+                "text": "use alloy_consensus::{BlockHeader, Header};"
+              },
+              {
+                "type": "-",
+                "oldLine": 11,
+                "text": "use alloy_eips::{calc_next_block_base_fee, eip1559::BaseFeeParams, eip7840::BlobParams};",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 11,
+                "text": "use alloy_eips::{calc_next_block_base_fee, eip1559::BaseFeeParams};",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 12,
+                "newLine": 12,
+                "text": "use alloy_evm::{EvmEnv, EvmFactory};"
+              },
+              {
+                "type": " ",
+                "oldLine": 13,
+                "newLine": 13,
+                "text": "use alloy_primitives::U256;"
+              },
+              {
+                "type": " ",
+                "oldLine": 14,
+                "newLine": 14,
+                "text": "use kona_genesis::RollupConfig;"
+              }
+            ]
+          },
+          {
+            "oldStart": 18,
+            "oldLines": 12,
+            "newStart": 18,
+            "newLines": 9,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 18,
+                "newLine": 18,
+                "text": "use revm::{"
+              },
+              {
+                "type": " ",
+                "oldLine": 19,
+                "newLine": 19,
+                "text": "    context::{BlockEnv, CfgEnv},"
+              },
+              {
+                "type": " ",
+                "oldLine": 20,
+                "newLine": 20,
+                "text": "    context_interface::block::BlobExcessGasAndPrice,"
+              },
+              {
+                "type": "-",
+                "oldLine": 21,
+                "text": "    primitives::eip4844::{",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 22,
+                "text": "        BLOB_BASE_FEE_UPDATE_FRACTION_CANCUN, BLOB_BASE_FEE_UPDATE_FRACTION_PRAGUE,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 23,
+                "text": "    },",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 24, "newLine": 21, "text": "};" },
+              { "type": " ", "oldLine": 25, "newLine": 22, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 26,
+                "text": "impl<P, H, Evm> StatelessL2Builder<'_, P, H, Evm>",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 23,
+                "text": "impl<P, H, Evm, R> StatelessL2Builder<'_, P, H, Evm, R>",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 27, "newLine": 24, "text": "where" },
+              {
+                "type": " ",
+                "oldLine": 28,
+                "newLine": 25,
+                "text": "    P: TrieDBProvider,"
+              },
+              {
+                "type": " ",
+                "oldLine": 29,
+                "newLine": 26,
+                "text": "    H: TrieHinter,"
+              }
+            ]
+          },
+          {
+            "oldStart": 49,
+            "oldLines": 11,
+            "newStart": 46,
+            "newLines": 11,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 49,
+                "newLine": 46,
+                "text": "        Ok(EvmEnv::new(cfg_env, block_env))"
+              },
+              { "type": " ", "oldLine": 50, "newLine": 47, "text": "    }" },
+              { "type": " ", "oldLine": 51, "newLine": 48, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 52,
+                "text": "    /// Returns the active [CfgEnv] for the executor.",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 49,
+                "text": "    /// Returns the active [`CfgEnv`] for the executor.",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 53,
+                "newLine": 50,
+                "text": "    pub(crate) fn evm_cfg_env(&self, timestamp: u64) -> CfgEnv<OpSpecId> {"
+              },
+              {
+                "type": " ",
+                "oldLine": 54,
+                "newLine": 51,
+                "text": "        CfgEnv::new()"
+              },
+              {
+                "type": " ",
+                "oldLine": 55,
+                "newLine": 52,
+                "text": "            .with_chain_id(self.config.l2_chain_id.id())"
+              },
+              {
+                "type": "-",
+                "oldLine": 56,
+                "text": "            .with_spec(self.config.spec_id(timestamp))",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 53,
+                "text": "            .with_spec_and_mainnet_gas_params(self.config.spec_id(timestamp))",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 57, "newLine": 54, "text": "    }" },
+              { "type": " ", "oldLine": 58, "newLine": 55, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 59,
+                "newLine": 56,
+                "text": "    fn next_block_base_fee("
+              }
+            ]
+          },
+          {
+            "oldStart": 91,
+            "oldLines": 7,
+            "newStart": 88,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 91,
+                "newLine": 88,
+                "text": "        Some(next_block_base_fee)"
+              },
+              { "type": " ", "oldLine": 92, "newLine": 89, "text": "    }" },
+              { "type": " ", "oldLine": 93, "newLine": 90, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 94,
+                "text": "    /// Prepares a [BlockEnv] with the given [OpPayloadAttributes].",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 91,
+                "text": "    /// Prepares a [`BlockEnv`] with the given [`OpPayloadAttributes`].",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 95,
+                "newLine": 92,
+                "text": "    pub(crate) fn prepare_block_env("
+              },
+              {
+                "type": " ",
+                "oldLine": 96,
+                "newLine": 93,
+                "text": "        &self,"
+              },
+              {
+                "type": " ",
+                "oldLine": 97,
+                "newLine": 94,
+                "text": "        spec_id: OpSpecId,"
+              }
+            ]
+          },
+          {
+            "oldStart": 100,
+            "oldLines": 19,
+            "newStart": 97,
+            "newLines": 13,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 100,
+                "newLine": 97,
+                "text": "        base_fee_params: &BaseFeeParams,"
+              },
+              {
+                "type": " ",
+                "oldLine": 101,
+                "newLine": 98,
+                "text": "        min_base_fee: u64,"
+              },
+              {
+                "type": " ",
+                "oldLine": 102,
+                "newLine": 99,
+                "text": "    ) -> ExecutorResult<BlockEnv> {"
+              },
+              {
+                "type": "-",
+                "oldLine": 103,
+                "text": "        let (params, fraction) = if spec_id.is_enabled_in(OpSpecId::ISTHMUS) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 104,
+                "text": "            (Some(BlobParams::prague()), BLOB_BASE_FEE_UPDATE_FRACTION_PRAGUE)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 105,
+                "text": "        } else if spec_id.is_enabled_in(OpSpecId::ECOTONE) {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 106,
+                "text": "            (Some(BlobParams::cancun()), BLOB_BASE_FEE_UPDATE_FRACTION_CANCUN)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 107,
+                "text": "        } else {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 108,
+                "text": "            (None, 0)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 109,
+                "text": "        };",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 100,
+                "text": "        // On the OP Stack the BLOBBASEFEE opcode is always 1 from Ecotone onward. Post-Jovian the",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 101,
+                "text": "        // header's `blobGasUsed` field carries the block's DA footprint, so it must not feed the",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 102,
+                "text": "        // EIP-4844 excess-blob-gas rule; pin the blob env instead.",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 103,
+                "text": "        let blob_excess_gas_and_price = spec_id",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 104,
+                "text": "            .is_enabled_in(OpSpecId::ECOTONE)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 105,
+                "text": "            .then_some(BlobExcessGasAndPrice { excess_blob_gas: 0, blob_gasprice: 1 });",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 110, "newLine": 106, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 111,
+                "text": "        let blob_excess_gas_and_price = parent_header",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 112,
+                "text": "            .maybe_next_block_excess_blob_gas(params)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 113,
+                "text": "            .or_else(|| spec_id.is_enabled_in(OpSpecId::ECOTONE).then_some(0))",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 114,
+                "text": "            .map(|excess| BlobExcessGasAndPrice::new(excess, fraction));",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 115, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 116,
+                "newLine": 107,
+                "text": "        let next_block_base_fee = self"
+              },
+              {
+                "type": " ",
+                "oldLine": 117,
+                "newLine": 108,
+                "text": "            .next_block_base_fee(*base_fee_params, parent_header, min_base_fee)"
+              },
+              {
+                "type": " ",
+                "oldLine": 118,
+                "newLine": 109,
+                "text": "            .unwrap_or_default();"
+              }
+            ]
+          },
+          {
+            "oldStart": 164,
+            "oldLines": 4,
+            "newStart": 155,
+            "newLines": 70,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 164,
+                "newLine": 155,
+                "text": "            }"
+              },
+              {
+                "type": " ",
+                "oldLine": 165,
+                "newLine": 156,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 166, "newLine": 157, "text": "    }" },
+              { "type": "+", "newLine": 158, "text": "}", "ignored": false },
+              { "type": "+", "newLine": 159, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 160,
+                "text": "#[cfg(test)]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 161,
+                "text": "mod tests {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 162,
+                "text": "    use super::*;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 163,
+                "text": "    use crate::NoopTrieDBProvider;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 164,
+                "text": "    use alloy_consensus::{Header, Sealable};",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 165,
+                "text": "    use alloy_op_evm::OpEvmFactory;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 166,
+                "text": "    use alloy_rpc_types_engine::PayloadAttributes;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 167,
+                "text": "    use kona_mpt::NoopTrieHinter;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 168, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 169,
+                "text": "    /// The `BLOBBASEFEE` opcode must always be 1 on the OP Stack. Post-Jovian the header's",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 170,
+                "text": "    /// `blobGasUsed` carries the block's DA footprint, which must not influence the blob env. The",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 171,
+                "text": "    /// footprint here is from op-mainnet block 152635937.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 172,
+                "text": "    #[test]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 173,
+                "text": "    fn prepare_block_env_pins_blob_gasprice_to_one() {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 174,
+                "text": "        let config = RollupConfig::default();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 175,
+                "text": "        let parent_header = Header {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 176,
+                "text": "            number: 100,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 177,
+                "text": "            timestamp: 1_000_000,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 178,
+                "text": "            gas_limit: 60_000_000,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 179,
+                "text": "            base_fee_per_gas: Some(1_000_000_000),",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 180,
+                "text": "            blob_gas_used: Some(30_406_400),",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 181,
+                "text": "            excess_blob_gas: Some(0),",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 182,
+                "text": "            ..Default::default()",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 183,
+                "text": "        };",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 184, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 185,
+                "text": "        let builder = StatelessL2Builder::new(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 186,
+                "text": "            &config,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 187,
+                "text": "            OpEvmFactory::<alloy_op_evm::OpTx>::default(),",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 188,
+                "text": "            alloy_op_evm::block::OpAlloyReceiptBuilder::default(),",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 189,
+                "text": "            NoopTrieDBProvider,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 190,
+                "text": "            NoopTrieHinter,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 191,
+                "text": "            parent_header.clone().seal_slow(),",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 192,
+                "text": "        );",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 193, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 194,
+                "text": "        let payload_attrs = OpPayloadAttributes {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 195,
+                "text": "            payload_attributes: PayloadAttributes {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 196,
+                "text": "                timestamp: parent_header.timestamp + 2,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 197,
+                "text": "                ..Default::default()",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 198,
+                "text": "            },",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 199,
+                "text": "            gas_limit: Some(parent_header.gas_limit),",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 200,
+                "text": "            ..Default::default()",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 201,
+                "text": "        };",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 202, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 203,
+                "text": "        let block_env = builder",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 204,
+                "text": "            .prepare_block_env(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 205,
+                "text": "                OpSpecId::ISTHMUS,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 206,
+                "text": "                &parent_header,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 207,
+                "text": "                &payload_attrs,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 208,
+                "text": "                &BaseFeeParams::new(250, 6),",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 209,
+                "text": "                0,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 210,
+                "text": "            )",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 211,
+                "text": "            .expect(\"prepare_block_env should succeed\");",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 212, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 213,
+                "text": "        let blob =",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 214,
+                "text": "            block_env.blob_excess_gas_and_price.expect(\"blob env should be present for Isthmus\");",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 215,
+                "text": "        assert_eq!(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 216,
+                "text": "            blob.blob_gasprice, 1,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 217,
+                "text": "            \"BLOBBASEFEE must be pinned to 1 on the OP Stack regardless of the parent DA footprint\"",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 218,
+                "text": "        );",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 219,
+                "text": "        assert_eq!(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 220,
+                "text": "            blob.excess_blob_gas, 0,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 221,
+                "text": "            \"excess blob gas must be pinned to 0 regardless of the parent DA footprint\"",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 222,
+                "text": "        );",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 223,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 167, "newLine": 224, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

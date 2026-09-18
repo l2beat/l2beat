@@ -1,1 +1,1647 @@
-{"schemaVersion":2,"unitHash":"acb47f9a9bf9d0796f445d2611e11e8be2a6ffed16d613232c89d364a1f601ea","name":"consolidation.rs","kind":"program","lines":308,"source":"//! Interop dependency resolution and consolidation logic.\n\nuse crate::{BootInfo, OptimisticBlock, OracleInteropProvider, PreState};\nuse alloc::{collections::BTreeSet, vec::Vec};\nuse alloy_consensus::{Header, Sealed};\nuse alloy_evm::{EvmFactory, FromRecoveredTx, FromTxWithEncoded, block::BlockExecutorFactory};\nuse alloy_op_evm::{\n    OpBlockExecutionCtx, OpBlockExecutorFactory,\n    block::{OpAlloyReceiptBuilder, OpTxEnv},\n};\nuse alloy_primitives::Sealable;\nuse alloy_rpc_types_engine::PayloadAttributes;\nuse core::fmt::Debug;\nuse kona_executor::{Eip1559ValidationError, ExecutorError, StatelessL2Builder};\nuse kona_genesis::RollupConfig;\nuse kona_interop::{MessageGraph, MessageGraphError};\nuse kona_mpt::OrderedListWalker;\nuse kona_preimage::CommsClient;\nuse kona_proof::{errors::OracleProviderError, l2::OracleL2ChainProvider};\nuse kona_registry::{HashMap, ROLLUP_CONFIGS};\nuse op_alloy_consensus::{OpReceiptEnvelope, OpTxEnvelope, OpTxType};\nuse op_alloy_rpc_types_engine::OpPayloadAttributes;\nuse op_revm::OpSpecId;\nuse revm::context::BlockEnv;\nuse thiserror::Error;\nuse tracing::{error, info};\n\n/// The [`SuperchainConsolidator`] holds a [`MessageGraph`] and is responsible for recursively\n/// consolidating the blocks within the graph, per [message validity rules].\n///\n/// [message validity rules]: https://specs.optimism.io/interop/messaging.html#invalid-messages\n#[derive(Debug)]\npub struct SuperchainConsolidator<'a, C, Evm>\nwhere\n    C: CommsClient,\n{\n    /// The [`BootInfo`] of the program.\n    boot_info: &'a mut BootInfo,\n    /// The [`OracleInteropProvider`] used for the message graph.\n    interop_provider: OracleInteropProvider<C>,\n    /// The [`OracleL2ChainProvider`]s used for re-execution of invalid blocks, keyed by chain ID.\n    l2_providers: HashMap<u64, OracleL2ChainProvider<C>>,\n    /// The inner [`EvmFactory`] to create EVM instances for re-execution of bad blocks.\n    evm_factory: Evm,\n    /// Chain IDs that have already been replaced with deposit-only blocks. These are skipped\n    /// during validation since deposit-only blocks cannot contain executing messages.\n    replaced_chains: BTreeSet<u64>,\n}\n\nimpl<'a, C, Evm> SuperchainConsolidator<'a, C, Evm>\nwhere\n    C: CommsClient + Debug + Send + Sync,\n    Evm: EvmFactory<Spec = OpSpecId, BlockEnv = BlockEnv> + Send + Sync + Debug + Clone + 'static,\n    <Evm as EvmFactory>::Tx:\n        FromTxWithEncoded<OpTxEnvelope> + FromRecoveredTx<OpTxEnvelope> + OpTxEnv,\n    OpBlockExecutorFactory<OpAlloyReceiptBuilder, RollupConfig, Evm>: for<'b> BlockExecutorFactory<\n            EvmFactory = Evm,\n            ExecutionCtx<'b> = OpBlockExecutionCtx,\n            Transaction = OpTxEnvelope,\n            Receipt = OpReceiptEnvelope,\n        >,\n{\n    /// Creates a new [`SuperchainConsolidator`] with the given providers and [Header]s.\n    ///\n    /// [Header]: alloy_consensus::Header\n    pub const fn new(\n        boot_info: &'a mut BootInfo,\n        interop_provider: OracleInteropProvider<C>,\n        l2_providers: HashMap<u64, OracleL2ChainProvider<C>>,\n        evm_factory: Evm,\n    ) -> Self {\n        Self {\n            boot_info,\n            interop_provider,\n            l2_providers,\n            evm_factory,\n            replaced_chains: BTreeSet::new(),\n        }\n    }\n\n    /// Recursively consolidates the dependencies of the blocks within the [`MessageGraph`].\n    ///\n    /// This method will recurse until all invalid cross-chain dependencies have been resolved,\n    /// re-executing deposit-only blocks for chains with invalid dependencies as needed.\n    pub async fn consolidate(&mut self) -> Result<(), ConsolidationError> {\n        info!(target: \"superchain_consolidator\", \"Consolidating superchain\");\n\n        loop {\n            match self.consolidate_once().await {\n                Ok(()) => {\n                    info!(target: \"superchain_consolidator\", \"Superchain consolidation complete\");\n                    return Ok(());\n                }\n                Err(ConsolidationError::MessageGraph(\n                    MessageGraphError::InvalidMessages(_) |\n                    MessageGraphError::CyclicDependency { .. },\n                )) => {\n                    // If invalid messages or cyclic dependencies are found, continue the loop.\n                    // The affected chains have been replaced with deposit-only blocks by\n                    // consolidate_once, so the next iteration will exclude them.\n                }\n                Err(e) => {\n                    error!(target: \"superchain_consolidator\", \"Error consolidating superchain: {:?}\", e);\n                    return Err(e);\n                }\n            }\n        }\n    }\n\n    /// Performs a single iteration of the consolidation process.\n    ///\n    /// Step-wise:\n    /// 1. Derive a new [`MessageGraph`] from the current set of local safe [Header]s.\n    /// 2. Resolve the [`MessageGraph`].\n    /// 3. If any invalid messages are found, re-execute the bad block(s) only deposit transactions,\n    ///    and bubble up the error.\n    ///\n    /// [Header]: alloy_consensus::Header\n    async fn consolidate_once(&mut self) -> Result<(), ConsolidationError> {\n        // Filter out chains that have already been replaced with deposit-only blocks.\n        // Deposit-only blocks cannot contain executing messages, so they are already\n        // cross-safe and do not need to be re-validated.\n        let heads_to_check: HashMap<u64, Sealed<Header>> = self\n            .interop_provider\n            .local_safe_heads()\n            .iter()\n            .filter(|(chain_id, _)| !self.replaced_chains.contains(chain_id))\n            .map(|(k, v)| (*k, v.clone()))\n            .collect();\n\n        // Derive the message graph from the non-replaced block headers.\n        let graph = MessageGraph::derive(\n            &heads_to_check,\n            &self.interop_provider,\n            &self.boot_info.rollup_configs,\n            &self.boot_info.dependency_set,\n            self.boot_info.dependency_set.get_message_expiry_window(),\n        )\n        .await?;\n\n        // Attempt to resolve the message graph. If there were any invalid messages or cyclic\n        // dependencies found, re-execute the affected chains with deposit-only transactions.\n        match graph.resolve().await {\n            Err(MessageGraphError::InvalidMessages(invalid_chains)) => {\n                self.re_execute_deposit_only(&invalid_chains.keys().copied().collect::<Vec<_>>())\n                    .await?;\n                return Err(MessageGraphError::InvalidMessages(invalid_chains).into());\n            }\n            Err(MessageGraphError::CyclicDependency { chain_ids }) => {\n                self.re_execute_deposit_only(&chain_ids).await?;\n                return Err(MessageGraphError::CyclicDependency { chain_ids }.into());\n            }\n            Err(e) => return Err(e.into()),\n            Ok(()) => {}\n        }\n\n        Ok(())\n    }\n\n    /// Re-executes the original blocks, keyed by their chain IDs, with only their deposit\n    /// transactions.\n    async fn re_execute_deposit_only(\n        &mut self,\n        chain_ids: &[u64],\n    ) -> Result<(), ConsolidationError> {\n        for chain_id in chain_ids {\n            // Find the optimistic block header for the chain ID.\n            let header = self\n                .interop_provider\n                .local_safe_heads()\n                .get(chain_id)\n                .ok_or(MessageGraphError::EmptyDependencySet)?\n                .clone();\n\n            // Look up the parent header for the block.\n            let parent_header =\n                self.interop_provider.header_by_hash(*chain_id, header.parent_hash).await?;\n\n            // Send a hint for the block's transactions so the host pre-fetches the trie nodes.\n            self.interop_provider.hint_transactions(*chain_id, header.hash()).await?;\n\n            // Traverse the transactions trie of the block to re-execute.\n            let trie_walker = OrderedListWalker::try_new_hydrated(\n                header.transactions_root,\n                &self.interop_provider,\n            )\n            .map_err(OracleProviderError::TrieWalker)?;\n            let transactions = trie_walker.into_iter().map(|(_, rlp)| rlp).collect::<Vec<_>>();\n\n            // Fetch the rollup config + provider for the current chain ID.\n            let rollup_config = ROLLUP_CONFIGS\n                .get(chain_id)\n                .or_else(|| self.boot_info.rollup_configs.get(chain_id))\n                .ok_or(ConsolidationError::MissingRollupConfig(*chain_id))?;\n            let l2_provider = self\n                .l2_providers\n                .get(chain_id)\n                .ok_or(ConsolidationError::MissingLocalProvider(*chain_id))?;\n\n            let PreState::TransitionState(ref mut transition_state) =\n                self.boot_info.agreed_pre_state\n            else {\n                return Err(ConsolidationError::InvalidPreStateVariant);\n            };\n            let original_optimistic_block = transition_state\n                .pending_progress\n                .iter_mut()\n                .find(|block| block.block_hash == header.hash())\n                .ok_or(MessageGraphError::EmptyDependencySet)?;\n\n            // Filter out all transactions that are not deposits.\n            let transactions = transactions\n                .into_iter()\n                .filter(|t| !t.is_empty() && t[0] == OpTxType::Deposit)\n                .collect::<Vec<_>>();\n\n            // Re-craft the execution payload, trimming off all non-deposit transactions.\n            let deposit_only_payload = OpPayloadAttributes {\n                payload_attributes: PayloadAttributes {\n                    timestamp: header.timestamp,\n                    prev_randao: header.mix_hash,\n                    suggested_fee_recipient: header.beneficiary,\n                    withdrawals: Default::default(),\n                    parent_beacon_block_root: header.parent_beacon_block_root,\n                    slot_number: Default::default(),\n                },\n                transactions: Some(transactions),\n                no_tx_pool: Some(true),\n                gas_limit: Some(header.gas_limit),\n                eip_1559_params: rollup_config\n                    .is_holocene_active(header.timestamp)\n                    .then(|| {\n                        // SAFETY: After the Holocene hardfork, blocks must have the EIP-1559\n                        // parameters of the chain placed within the\n                        // header's `extra_data` field. This slice index +\n                        // conversion cannot fail unless the protocol rules\n                        // have been violated.\n                        header.extra_data.get(1..9).and_then(|s| s.try_into().ok()).ok_or(\n                            ExecutorError::InvalidExtraData(Eip1559ValidationError::Decode(\n                                op_alloy_consensus::EIP1559ParamError::NoEIP1559Params,\n                            )),\n                        )\n                    })\n                    .transpose()?,\n                min_base_fee: rollup_config\n                    .is_jovian_active(header.timestamp)\n                    .then(|| {\n                        header\n                            .extra_data\n                            .get(9..17)\n                            .and_then(|s| <[u8; 8]>::try_from(s).ok())\n                            .map(u64::from_be_bytes)\n                            .ok_or(ExecutorError::InvalidExtraData(Eip1559ValidationError::Decode(\n                                op_alloy_consensus::EIP1559ParamError::MinBaseFeeNotSet,\n                            )))\n                    })\n                    .transpose()?,\n            };\n\n            // Create a new stateless L2 block executor for the current chain.\n            let mut executor = StatelessL2Builder::new(\n                rollup_config,\n                self.evm_factory.clone(),\n                OpAlloyReceiptBuilder::default(),\n                l2_provider.clone(),\n                l2_provider.clone(),\n                parent_header.seal_slow(),\n            );\n\n            // Execute the block and take the new header. At this point, the block is guaranteed to\n            // be canonical.\n            let new_header = executor.build_block(deposit_only_payload)?.header;\n            let new_output_root = executor.compute_output_root()?;\n\n            // Replace the original optimistic block with the deposit only block.\n            *original_optimistic_block = OptimisticBlock::new(new_header.hash(), new_output_root);\n\n            // Replace the original header with the new header and mark the chain as replaced.\n            self.interop_provider.replace_local_safe_head(*chain_id, new_header);\n            self.replaced_chains.insert(*chain_id);\n        }\n\n        Ok(())\n    }\n}\n\n/// An error type for the [`SuperchainConsolidator`] struct.\n#[derive(Debug, Error)]\npub enum ConsolidationError {\n    /// An invalid pre-state variant was passed to the consolidator.\n    #[error(\"Invalid PreState variant\")]\n    InvalidPreStateVariant,\n    /// Missing a rollup configuration.\n    #[error(\"Missing rollup configuration for chain ID {0}\")]\n    MissingRollupConfig(u64),\n    /// Missing a local L2 chain provider.\n    #[error(\"Missing local L2 chain provider for chain ID {0}\")]\n    MissingLocalProvider(u64),\n    /// An error occurred during consolidation.\n    #[error(transparent)]\n    MessageGraph(#[from] MessageGraphError<OracleProviderError>),\n    /// An error occurred during execution.\n    #[error(transparent)]\n    Executor(#[from] ExecutorError),\n    /// An error occurred during RLP decoding.\n    #[error(transparent)]\n    OracleProvider(#[from] OracleProviderError),\n}","resolutions":{"9fa846564f4071bd":{"status":"differs","coveredLines":253,"match":{"origin":"own","collection":"optimism","relation":{"type":"own"},"rank":0,"matchedBy":"name","auditedName":"consolidation.rs","similarity":0.77,"reportId":"optimism/cantina-kona-2026-03","repository":"op-rs/kona","path":"crates/proof/proof-interop/src/consolidation.rs","commit":"86910c9112437bbb849eca28961f813c5450e103","commitTimestamp":"2025-12-15T17:17:05Z","url":"https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/crates/proof/proof-interop/src/consolidation.rs","auditStatus":"audited_with_no_major_findings","reviewPhase":"initial audit","coverage":"Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). Interop proof crate (pre-state, consolidation, boot); Low findings 3.4.3, 3.4.4, 3.4.5, 3.4.7 and Informational 3.5.3, 3.5.4, 3.5.5 located here, all acknowledged as interop is not planned to be supported.","majorFindings":0,"isLatestVersion":true,"laterAuditedVersionExists":false,"totalVersions":1},"diff":{"added":55,"removed":48,"ignoredAdded":26,"ignoredRemoved":28,"unchanged":253,"ignoredOnly":false,"hunks":[{"oldStart":1,"oldLines":29,"newStart":1,"newLines":31,"lines":[{"type":" ","oldLine":1,"newLine":1,"text":"//! Interop dependency resolution and consolidation logic."},{"type":" ","oldLine":2,"newLine":2,"text":""},{"type":" ","oldLine":3,"newLine":3,"text":"use crate::{BootInfo, OptimisticBlock, OracleInteropProvider, PreState};"},{"type":"-","oldLine":4,"text":"use alloc::vec::Vec;","ignored":false},{"type":"+","newLine":4,"text":"use alloc::{collections::BTreeSet, vec::Vec};","ignored":false},{"type":" ","oldLine":5,"newLine":5,"text":"use alloy_consensus::{Header, Sealed};"},{"type":"-","oldLine":6,"text":"use alloy_eips::Encodable2718;","ignored":false},{"type":"-","oldLine":7,"text":"use alloy_evm::{EvmFactory, FromRecoveredTx, FromTxWithEncoded};","ignored":false},{"type":"-","oldLine":8,"text":"use alloy_op_evm::block::OpTxEnv;","ignored":false},{"type":"-","oldLine":9,"text":"use alloy_primitives::{Address, B256, Bytes, Sealable, TxKind, U256, address};","ignored":false},{"type":"+","newLine":6,"text":"use alloy_evm::{EvmFactory, FromRecoveredTx, FromTxWithEncoded, block::BlockExecutorFactory};","ignored":false},{"type":"+","newLine":7,"text":"use alloy_op_evm::{","ignored":false},{"type":"+","newLine":8,"text":"    OpBlockExecutionCtx, OpBlockExecutorFactory,","ignored":false},{"type":"+","newLine":9,"text":"    block::{OpAlloyReceiptBuilder, OpTxEnv},","ignored":false},{"type":"+","newLine":10,"text":"};","ignored":false},{"type":"+","newLine":11,"text":"use alloy_primitives::Sealable;","ignored":false},{"type":" ","oldLine":10,"newLine":12,"text":"use alloy_rpc_types_engine::PayloadAttributes;"},{"type":" ","oldLine":11,"newLine":13,"text":"use core::fmt::Debug;"},{"type":" ","oldLine":12,"newLine":14,"text":"use kona_executor::{Eip1559ValidationError, ExecutorError, StatelessL2Builder};"},{"type":"+","newLine":15,"text":"use kona_genesis::RollupConfig;","ignored":false},{"type":" ","oldLine":13,"newLine":16,"text":"use kona_interop::{MessageGraph, MessageGraphError};"},{"type":" ","oldLine":14,"newLine":17,"text":"use kona_mpt::OrderedListWalker;"},{"type":" ","oldLine":15,"newLine":18,"text":"use kona_preimage::CommsClient;"},{"type":" ","oldLine":16,"newLine":19,"text":"use kona_proof::{errors::OracleProviderError, l2::OracleL2ChainProvider};"},{"type":"-","oldLine":17,"text":"use kona_protocol::OutputRoot;","ignored":false},{"type":" ","oldLine":18,"newLine":20,"text":"use kona_registry::{HashMap, ROLLUP_CONFIGS};"},{"type":"-","oldLine":19,"text":"use op_alloy_consensus::{InteropBlockReplacementDepositSource, OpTxEnvelope, OpTxType, TxDeposit};","ignored":false},{"type":"+","newLine":21,"text":"use op_alloy_consensus::{OpReceiptEnvelope, OpTxEnvelope, OpTxType};","ignored":false},{"type":" ","oldLine":20,"newLine":22,"text":"use op_alloy_rpc_types_engine::OpPayloadAttributes;"},{"type":" ","oldLine":21,"newLine":23,"text":"use op_revm::OpSpecId;"},{"type":" ","oldLine":22,"newLine":24,"text":"use revm::context::BlockEnv;"},{"type":" ","oldLine":23,"newLine":25,"text":"use thiserror::Error;"},{"type":" ","oldLine":24,"newLine":26,"text":"use tracing::{error, info};"},{"type":" ","oldLine":25,"newLine":27,"text":""},{"type":"-","oldLine":26,"text":"/// The [SuperchainConsolidator] holds a [MessageGraph] and is responsible for recursively","ignored":true},{"type":"+","newLine":28,"text":"/// The [`SuperchainConsolidator`] holds a [`MessageGraph`] and is responsible for recursively","ignored":true},{"type":" ","oldLine":27,"newLine":29,"text":"/// consolidating the blocks within the graph, per [message validity rules]."},{"type":" ","oldLine":28,"newLine":30,"text":"///"},{"type":" ","oldLine":29,"newLine":31,"text":"/// [message validity rules]: https://specs.optimism.io/interop/messaging.html#invalid-messages"}]},{"oldStart":32,"oldLines":14,"newStart":34,"newLines":17,"lines":[{"type":" ","oldLine":32,"newLine":34,"text":"where"},{"type":" ","oldLine":33,"newLine":35,"text":"    C: CommsClient,"},{"type":" ","oldLine":34,"newLine":36,"text":"{"},{"type":"-","oldLine":35,"text":"    /// The [BootInfo] of the program.","ignored":false},{"type":"+","newLine":37,"text":"    /// The [`BootInfo`] of the program.","ignored":false},{"type":" ","oldLine":36,"newLine":38,"text":"    boot_info: &'a mut BootInfo,"},{"type":"-","oldLine":37,"text":"    /// The [OracleInteropProvider] used for the message graph.","ignored":true},{"type":"+","newLine":39,"text":"    /// The [`OracleInteropProvider`] used for the message graph.","ignored":true},{"type":" ","oldLine":38,"newLine":40,"text":"    interop_provider: OracleInteropProvider<C>,"},{"type":"-","oldLine":39,"text":"    /// The [OracleL2ChainProvider]s used for re-execution of invalid blocks, keyed by chain ID.","ignored":true},{"type":"+","newLine":41,"text":"    /// The [`OracleL2ChainProvider`]s used for re-execution of invalid blocks, keyed by chain ID.","ignored":true},{"type":" ","oldLine":40,"newLine":42,"text":"    l2_providers: HashMap<u64, OracleL2ChainProvider<C>>,"},{"type":" ","oldLine":41,"newLine":43,"text":"    /// The inner [`EvmFactory`] to create EVM instances for re-execution of bad blocks."},{"type":" ","oldLine":42,"newLine":44,"text":"    evm_factory: Evm,"},{"type":"+","newLine":45,"text":"    /// Chain IDs that have already been replaced with deposit-only blocks. These are skipped","ignored":true},{"type":"+","newLine":46,"text":"    /// during validation since deposit-only blocks cannot contain executing messages.","ignored":true},{"type":"+","newLine":47,"text":"    replaced_chains: BTreeSet<u64>,","ignored":false},{"type":" ","oldLine":43,"newLine":48,"text":"}"},{"type":" ","oldLine":44,"newLine":49,"text":""},{"type":" ","oldLine":45,"newLine":50,"text":"impl<'a, C, Evm> SuperchainConsolidator<'a, C, Evm>"}]},{"oldStart":48,"oldLines":8,"newStart":53,"newLines":14,"lines":[{"type":" ","oldLine":48,"newLine":53,"text":"    Evm: EvmFactory<Spec = OpSpecId, BlockEnv = BlockEnv> + Send + Sync + Debug + Clone + 'static,"},{"type":" ","oldLine":49,"newLine":54,"text":"    <Evm as EvmFactory>::Tx:"},{"type":" ","oldLine":50,"newLine":55,"text":"        FromTxWithEncoded<OpTxEnvelope> + FromRecoveredTx<OpTxEnvelope> + OpTxEnv,"},{"type":"+","newLine":56,"text":"    OpBlockExecutorFactory<OpAlloyReceiptBuilder, RollupConfig, Evm>: for<'b> BlockExecutorFactory<","ignored":false},{"type":"+","newLine":57,"text":"            EvmFactory = Evm,","ignored":false},{"type":"+","newLine":58,"text":"            ExecutionCtx<'b> = OpBlockExecutionCtx,","ignored":false},{"type":"+","newLine":59,"text":"            Transaction = OpTxEnvelope,","ignored":false},{"type":"+","newLine":60,"text":"            Receipt = OpReceiptEnvelope,","ignored":false},{"type":"+","newLine":61,"text":"        >,","ignored":false},{"type":" ","oldLine":51,"newLine":62,"text":"{"},{"type":"-","oldLine":52,"text":"    /// Creates a new [SuperchainConsolidator] with the given providers and [Header]s.","ignored":false},{"type":"+","newLine":63,"text":"    /// Creates a new [`SuperchainConsolidator`] with the given providers and [Header]s.","ignored":false},{"type":" ","oldLine":53,"newLine":64,"text":"    ///"},{"type":" ","oldLine":54,"newLine":65,"text":"    /// [Header]: alloy_consensus::Header"},{"type":" ","oldLine":55,"newLine":66,"text":"    pub const fn new("}]},{"oldStart":58,"oldLines":10,"newStart":69,"newLines":16,"lines":[{"type":" ","oldLine":58,"newLine":69,"text":"        l2_providers: HashMap<u64, OracleL2ChainProvider<C>>,"},{"type":" ","oldLine":59,"newLine":70,"text":"        evm_factory: Evm,"},{"type":" ","oldLine":60,"newLine":71,"text":"    ) -> Self {"},{"type":"-","oldLine":61,"text":"        Self { boot_info, interop_provider, l2_providers, evm_factory }","ignored":false},{"type":"+","newLine":72,"text":"        Self {","ignored":false},{"type":"+","newLine":73,"text":"            boot_info,","ignored":false},{"type":"+","newLine":74,"text":"            interop_provider,","ignored":false},{"type":"+","newLine":75,"text":"            l2_providers,","ignored":false},{"type":"+","newLine":76,"text":"            evm_factory,","ignored":false},{"type":"+","newLine":77,"text":"            replaced_chains: BTreeSet::new(),","ignored":false},{"type":"+","newLine":78,"text":"        }","ignored":false},{"type":" ","oldLine":62,"newLine":79,"text":"    }"},{"type":" ","oldLine":63,"newLine":80,"text":""},{"type":"-","oldLine":64,"text":"    /// Recursively consolidates the dependencies of the blocks within the [MessageGraph].","ignored":true},{"type":"+","newLine":81,"text":"    /// Recursively consolidates the dependencies of the blocks within the [`MessageGraph`].","ignored":true},{"type":" ","oldLine":65,"newLine":82,"text":"    ///"},{"type":" ","oldLine":66,"newLine":83,"text":"    /// This method will recurse until all invalid cross-chain dependencies have been resolved,"},{"type":" ","oldLine":67,"newLine":84,"text":"    /// re-executing deposit-only blocks for chains with invalid dependencies as needed."}]},{"oldStart":74,"oldLines":9,"newStart":91,"newLines":13,"lines":[{"type":" ","oldLine":74,"newLine":91,"text":"                    info!(target: \"superchain_consolidator\", \"Superchain consolidation complete\");"},{"type":" ","oldLine":75,"newLine":92,"text":"                    return Ok(());"},{"type":" ","oldLine":76,"newLine":93,"text":"                }"},{"type":"-","oldLine":77,"text":"                Err(ConsolidationError::MessageGraph(MessageGraphError::InvalidMessages(_))) => {","ignored":false},{"type":"-","oldLine":78,"text":"                    // If invalid messages are still present in the graph, continue the loop.","ignored":true},{"type":"-","oldLine":79,"text":"                    continue;","ignored":false},{"type":"+","newLine":94,"text":"                Err(ConsolidationError::MessageGraph(","ignored":false},{"type":"+","newLine":95,"text":"                    MessageGraphError::InvalidMessages(_) |","ignored":false},{"type":"+","newLine":96,"text":"                    MessageGraphError::CyclicDependency { .. },","ignored":false},{"type":"+","newLine":97,"text":"                )) => {","ignored":false},{"type":"+","newLine":98,"text":"                    // If invalid messages or cyclic dependencies are found, continue the loop.","ignored":true},{"type":"+","newLine":99,"text":"                    // The affected chains have been replaced with deposit-only blocks by","ignored":true},{"type":"+","newLine":100,"text":"                    // consolidate_once, so the next iteration will exclude them.","ignored":true},{"type":" ","oldLine":80,"newLine":101,"text":"                }"},{"type":" ","oldLine":81,"newLine":102,"text":"                Err(e) => {"},{"type":" ","oldLine":82,"newLine":103,"text":"                    error!(target: \"superchain_consolidator\", \"Error consolidating superchain: {:?}\", e);"}]},{"oldStart":89,"oldLines":27,"newStart":110,"newLines":48,"lines":[{"type":" ","oldLine":89,"newLine":110,"text":"    /// Performs a single iteration of the consolidation process."},{"type":" ","oldLine":90,"newLine":111,"text":"    ///"},{"type":" ","oldLine":91,"newLine":112,"text":"    /// Step-wise:"},{"type":"-","oldLine":92,"text":"    /// 1. Derive a new [MessageGraph] from the current set of local safe [Header]s.","ignored":true},{"type":"-","oldLine":93,"text":"    /// 2. Resolve the [MessageGraph].","ignored":true},{"type":"+","newLine":113,"text":"    /// 1. Derive a new [`MessageGraph`] from the current set of local safe [Header]s.","ignored":true},{"type":"+","newLine":114,"text":"    /// 2. Resolve the [`MessageGraph`].","ignored":true},{"type":" ","oldLine":94,"newLine":115,"text":"    /// 3. If any invalid messages are found, re-execute the bad block(s) only deposit transactions,"},{"type":" ","oldLine":95,"newLine":116,"text":"    ///    and bubble up the error."},{"type":" ","oldLine":96,"newLine":117,"text":"    ///"},{"type":" ","oldLine":97,"newLine":118,"text":"    /// [Header]: alloy_consensus::Header"},{"type":" ","oldLine":98,"newLine":119,"text":"    async fn consolidate_once(&mut self) -> Result<(), ConsolidationError> {"},{"type":"-","oldLine":99,"text":"        // Derive the message graph from the current set of block headers.","ignored":true},{"type":"+","newLine":120,"text":"        // Filter out chains that have already been replaced with deposit-only blocks.","ignored":true},{"type":"+","newLine":121,"text":"        // Deposit-only blocks cannot contain executing messages, so they are already","ignored":true},{"type":"+","newLine":122,"text":"        // cross-safe and do not need to be re-validated.","ignored":true},{"type":"+","newLine":123,"text":"        let heads_to_check: HashMap<u64, Sealed<Header>> = self","ignored":false},{"type":"+","newLine":124,"text":"            .interop_provider","ignored":false},{"type":"+","newLine":125,"text":"            .local_safe_heads()","ignored":false},{"type":"+","newLine":126,"text":"            .iter()","ignored":false},{"type":"+","newLine":127,"text":"            .filter(|(chain_id, _)| !self.replaced_chains.contains(chain_id))","ignored":false},{"type":"+","newLine":128,"text":"            .map(|(k, v)| (*k, v.clone()))","ignored":false},{"type":"+","newLine":129,"text":"            .collect();","ignored":false},{"type":"+","newLine":130,"text":"","ignored":true},{"type":"+","newLine":131,"text":"        // Derive the message graph from the non-replaced block headers.","ignored":true},{"type":" ","oldLine":100,"newLine":132,"text":"        let graph = MessageGraph::derive("},{"type":"-","oldLine":101,"text":"            self.interop_provider.local_safe_heads(),","ignored":false},{"type":"+","newLine":133,"text":"            &heads_to_check,","ignored":false},{"type":" ","oldLine":102,"newLine":134,"text":"            &self.interop_provider,"},{"type":" ","oldLine":103,"newLine":135,"text":"            &self.boot_info.rollup_configs,"},{"type":"+","newLine":136,"text":"            &self.boot_info.dependency_set,","ignored":false},{"type":"+","newLine":137,"text":"            self.boot_info.dependency_set.get_message_expiry_window(),","ignored":false},{"type":" ","oldLine":104,"newLine":138,"text":"        )"},{"type":" ","oldLine":105,"newLine":139,"text":"        .await?;"},{"type":" ","oldLine":106,"newLine":140,"text":""},{"type":"-","oldLine":107,"text":"        // Attempt to resolve the message graph. If there were any invalid messages found, we must","ignored":true},{"type":"-","oldLine":108,"text":"        // initiate a re-execution of the original block, with only deposit transactions.","ignored":true},{"type":"-","oldLine":109,"text":"        if let Err(MessageGraphError::InvalidMessages(invalid_chains)) = graph.resolve().await {","ignored":false},{"type":"-","oldLine":110,"text":"            self.re_execute_deposit_only(&invalid_chains.keys().copied().collect::<Vec<_>>())","ignored":true},{"type":"-","oldLine":111,"text":"                .await?;","ignored":true},{"type":"-","oldLine":112,"text":"            return Err(MessageGraphError::InvalidMessages(invalid_chains).into());","ignored":true},{"type":"+","newLine":141,"text":"        // Attempt to resolve the message graph. If there were any invalid messages or cyclic","ignored":true},{"type":"+","newLine":142,"text":"        // dependencies found, re-execute the affected chains with deposit-only transactions.","ignored":true},{"type":"+","newLine":143,"text":"        match graph.resolve().await {","ignored":false},{"type":"+","newLine":144,"text":"            Err(MessageGraphError::InvalidMessages(invalid_chains)) => {","ignored":false},{"type":"+","newLine":145,"text":"                self.re_execute_deposit_only(&invalid_chains.keys().copied().collect::<Vec<_>>())","ignored":true},{"type":"+","newLine":146,"text":"                    .await?;","ignored":true},{"type":"+","newLine":147,"text":"                return Err(MessageGraphError::InvalidMessages(invalid_chains).into());","ignored":true},{"type":"+","newLine":148,"text":"            }","ignored":false},{"type":"+","newLine":149,"text":"            Err(MessageGraphError::CyclicDependency { chain_ids }) => {","ignored":false},{"type":"+","newLine":150,"text":"                self.re_execute_deposit_only(&chain_ids).await?;","ignored":false},{"type":"+","newLine":151,"text":"                return Err(MessageGraphError::CyclicDependency { chain_ids }.into());","ignored":false},{"type":"+","newLine":152,"text":"            }","ignored":false},{"type":"+","newLine":153,"text":"            Err(e) => return Err(e.into()),","ignored":false},{"type":"+","newLine":154,"text":"            Ok(()) => {}","ignored":false},{"type":" ","oldLine":113,"newLine":155,"text":"        }"},{"type":" ","oldLine":114,"newLine":156,"text":""},{"type":" ","oldLine":115,"newLine":157,"text":"        Ok(())"}]},{"oldStart":127,"oldLines":12,"newStart":169,"newLines":16,"lines":[{"type":" ","oldLine":127,"newLine":169,"text":"                .interop_provider"},{"type":" ","oldLine":128,"newLine":170,"text":"                .local_safe_heads()"},{"type":" ","oldLine":129,"newLine":171,"text":"                .get(chain_id)"},{"type":"-","oldLine":130,"text":"                .ok_or(MessageGraphError::EmptyDependencySet)?;","ignored":false},{"type":"+","newLine":172,"text":"                .ok_or(MessageGraphError::EmptyDependencySet)?","ignored":false},{"type":"+","newLine":173,"text":"                .clone();","ignored":false},{"type":" ","oldLine":131,"newLine":174,"text":""},{"type":" ","oldLine":132,"newLine":175,"text":"            // Look up the parent header for the block."},{"type":" ","oldLine":133,"newLine":176,"text":"            let parent_header ="},{"type":" ","oldLine":134,"newLine":177,"text":"                self.interop_provider.header_by_hash(*chain_id, header.parent_hash).await?;"},{"type":" ","oldLine":135,"newLine":178,"text":""},{"type":"+","newLine":179,"text":"            // Send a hint for the block's transactions so the host pre-fetches the trie nodes.","ignored":true},{"type":"+","newLine":180,"text":"            self.interop_provider.hint_transactions(*chain_id, header.hash()).await?;","ignored":false},{"type":"+","newLine":181,"text":"","ignored":true},{"type":" ","oldLine":136,"newLine":182,"text":"            // Traverse the transactions trie of the block to re-execute."},{"type":" ","oldLine":137,"newLine":183,"text":"            let trie_walker = OrderedListWalker::try_new_hydrated("},{"type":" ","oldLine":138,"newLine":184,"text":"                header.transactions_root,"}]},{"oldStart":141,"oldLines":13,"newStart":187,"newLines":6,"lines":[{"type":" ","oldLine":141,"newLine":187,"text":"            .map_err(OracleProviderError::TrieWalker)?;"},{"type":" ","oldLine":142,"newLine":188,"text":"            let transactions = trie_walker.into_iter().map(|(_, rlp)| rlp).collect::<Vec<_>>();"},{"type":" ","oldLine":143,"newLine":189,"text":""},{"type":"-","oldLine":144,"text":"            // Explicitly panic if a block sent off for re-execution already contains nothing but","ignored":true},{"type":"-","oldLine":145,"text":"            // deposits.","ignored":true},{"type":"-","oldLine":146,"text":"            assert!(","ignored":false},{"type":"-","oldLine":147,"text":"                !transactions.iter().all(|f| !f.is_empty() && f[0] == OpTxType::Deposit),","ignored":false},{"type":"-","oldLine":148,"text":"                \"Impossible case; Block with only deposits found to be invalid. Something has gone horribly wrong!\"","ignored":false},{"type":"-","oldLine":149,"text":"            );","ignored":false},{"type":"-","oldLine":150,"text":"","ignored":true},{"type":" ","oldLine":151,"newLine":190,"text":"            // Fetch the rollup config + provider for the current chain ID."},{"type":" ","oldLine":152,"newLine":191,"text":"            let rollup_config = ROLLUP_CONFIGS"},{"type":" ","oldLine":153,"newLine":192,"text":"                .get(chain_id)"}]},{"oldStart":169,"oldLines":18,"newStart":208,"newLines":12,"lines":[{"type":" ","oldLine":169,"newLine":208,"text":"                .find(|block| block.block_hash == header.hash())"},{"type":" ","oldLine":170,"newLine":209,"text":"                .ok_or(MessageGraphError::EmptyDependencySet)?;"},{"type":" ","oldLine":171,"newLine":210,"text":""},{"type":"-","oldLine":172,"text":"            // Filter out all transactions that are not deposits to start.","ignored":true},{"type":"-","oldLine":173,"text":"            let mut transactions = transactions","ignored":false},{"type":"+","newLine":211,"text":"            // Filter out all transactions that are not deposits.","ignored":true},{"type":"+","newLine":212,"text":"            let transactions = transactions","ignored":false},{"type":" ","oldLine":174,"newLine":213,"text":"                .into_iter()"},{"type":" ","oldLine":175,"newLine":214,"text":"                .filter(|t| !t.is_empty() && t[0] == OpTxType::Deposit)"},{"type":" ","oldLine":176,"newLine":215,"text":"                .collect::<Vec<_>>();"},{"type":" ","oldLine":177,"newLine":216,"text":""},{"type":"-","oldLine":178,"text":"            // Add the deposit replacement system transaction at the end of the list.","ignored":true},{"type":"-","oldLine":179,"text":"            transactions.push(Self::craft_replacement_transaction(","ignored":false},{"type":"-","oldLine":180,"text":"                header,","ignored":false},{"type":"-","oldLine":181,"text":"                original_optimistic_block.output_root,","ignored":false},{"type":"-","oldLine":182,"text":"            ));","ignored":false},{"type":"-","oldLine":183,"text":"","ignored":true},{"type":" ","oldLine":184,"newLine":217,"text":"            // Re-craft the execution payload, trimming off all non-deposit transactions."},{"type":" ","oldLine":185,"newLine":218,"text":"            let deposit_only_payload = OpPayloadAttributes {"},{"type":" ","oldLine":186,"newLine":219,"text":"                payload_attributes: PayloadAttributes {"}]},{"oldStart":189,"oldLines":6,"newStart":222,"newLines":7,"lines":[{"type":" ","oldLine":189,"newLine":222,"text":"                    suggested_fee_recipient: header.beneficiary,"},{"type":" ","oldLine":190,"newLine":223,"text":"                    withdrawals: Default::default(),"},{"type":" ","oldLine":191,"newLine":224,"text":"                    parent_beacon_block_root: header.parent_beacon_block_root,"},{"type":"+","newLine":225,"text":"                    slot_number: Default::default(),","ignored":false},{"type":" ","oldLine":192,"newLine":226,"text":"                },"},{"type":" ","oldLine":193,"newLine":227,"text":"                transactions: Some(transactions),"},{"type":" ","oldLine":194,"newLine":228,"text":"                no_tx_pool: Some(true),"}]},{"oldStart":227,"oldLines":6,"newStart":261,"newLines":7,"lines":[{"type":" ","oldLine":227,"newLine":261,"text":"            let mut executor = StatelessL2Builder::new("},{"type":" ","oldLine":228,"newLine":262,"text":"                rollup_config,"},{"type":" ","oldLine":229,"newLine":263,"text":"                self.evm_factory.clone(),"},{"type":"+","newLine":264,"text":"                OpAlloyReceiptBuilder::default(),","ignored":false},{"type":" ","oldLine":230,"newLine":265,"text":"                l2_provider.clone(),"},{"type":" ","oldLine":231,"newLine":266,"text":"                l2_provider.clone(),"},{"type":" ","oldLine":232,"newLine":267,"text":"                parent_header.seal_slow(),"}]},{"oldStart":240,"oldLines":46,"newStart":275,"newLines":16,"lines":[{"type":" ","oldLine":240,"newLine":275,"text":"            // Replace the original optimistic block with the deposit only block."},{"type":" ","oldLine":241,"newLine":276,"text":"            *original_optimistic_block = OptimisticBlock::new(new_header.hash(), new_output_root);"},{"type":" ","oldLine":242,"newLine":277,"text":""},{"type":"-","oldLine":243,"text":"            // Replace the original header with the new header.","ignored":true},{"type":"+","newLine":278,"text":"            // Replace the original header with the new header and mark the chain as replaced.","ignored":true},{"type":" ","oldLine":244,"newLine":279,"text":"            self.interop_provider.replace_local_safe_head(*chain_id, new_header);"},{"type":"+","newLine":280,"text":"            self.replaced_chains.insert(*chain_id);","ignored":false},{"type":" ","oldLine":245,"newLine":281,"text":"        }"},{"type":" ","oldLine":246,"newLine":282,"text":""},{"type":" ","oldLine":247,"newLine":283,"text":"        Ok(())"},{"type":" ","oldLine":248,"newLine":284,"text":"    }"},{"type":"-","oldLine":249,"text":"","ignored":true},{"type":"-","oldLine":250,"text":"    /// Forms the replacement transaction inserted into a deposit-only block in the event that a","ignored":true},{"type":"-","oldLine":251,"text":"    /// block is reduced due to invalid messages.","ignored":true},{"type":"-","oldLine":252,"text":"    ///","ignored":true},{"type":"-","oldLine":253,"text":"    /// <https://specs.optimism.io/interop/derivation.html#optimistic-block-deposited-transaction>","ignored":true},{"type":"-","oldLine":254,"text":"    fn craft_replacement_transaction(old_header: &Sealed<Header>, old_output_root: B256) -> Bytes {","ignored":false},{"type":"-","oldLine":255,"text":"        const REPLACEMENT_SENDER: Address = address!(\"deaddeaddeaddeaddeaddeaddeaddeaddead0002\");","ignored":false},{"type":"-","oldLine":256,"text":"        const REPLACEMENT_GAS: u64 = 36000;","ignored":false},{"type":"-","oldLine":257,"text":"","ignored":true},{"type":"-","oldLine":258,"text":"        let source = InteropBlockReplacementDepositSource::new(old_output_root);","ignored":false},{"type":"-","oldLine":259,"text":"        let output_root = OutputRoot::from_parts(","ignored":false},{"type":"-","oldLine":260,"text":"            old_header.state_root,","ignored":false},{"type":"-","oldLine":261,"text":"            old_header.withdrawals_root.unwrap_or_default(),","ignored":false},{"type":"-","oldLine":262,"text":"            old_header.hash(),","ignored":false},{"type":"-","oldLine":263,"text":"        );","ignored":false},{"type":"-","oldLine":264,"text":"        let replacement_tx = OpTxEnvelope::Deposit(","ignored":false},{"type":"-","oldLine":265,"text":"            TxDeposit {","ignored":false},{"type":"-","oldLine":266,"text":"                source_hash: source.source_hash(),","ignored":false},{"type":"-","oldLine":267,"text":"                from: REPLACEMENT_SENDER,","ignored":false},{"type":"-","oldLine":268,"text":"                to: TxKind::Call(Address::ZERO),","ignored":false},{"type":"-","oldLine":269,"text":"                mint: 0,","ignored":false},{"type":"-","oldLine":270,"text":"                value: U256::ZERO,","ignored":false},{"type":"-","oldLine":271,"text":"                gas_limit: REPLACEMENT_GAS,","ignored":false},{"type":"-","oldLine":272,"text":"                is_system_transaction: false,","ignored":false},{"type":"-","oldLine":273,"text":"                input: output_root.encode().into(),","ignored":false},{"type":"-","oldLine":274,"text":"            }","ignored":false},{"type":"-","oldLine":275,"text":"            .seal(),","ignored":false},{"type":"-","oldLine":276,"text":"        );","ignored":false},{"type":"-","oldLine":277,"text":"","ignored":true},{"type":"-","oldLine":278,"text":"        replacement_tx.encoded_2718().into()","ignored":false},{"type":"-","oldLine":279,"text":"    }","ignored":false},{"type":" ","oldLine":280,"newLine":285,"text":"}"},{"type":" ","oldLine":281,"newLine":286,"text":""},{"type":"-","oldLine":282,"text":"/// An error type for the [SuperchainConsolidator] struct.","ignored":true},{"type":"+","newLine":287,"text":"/// An error type for the [`SuperchainConsolidator`] struct.","ignored":true},{"type":" ","oldLine":283,"newLine":288,"text":"#[derive(Debug, Error)]"},{"type":" ","oldLine":284,"newLine":289,"text":"pub enum ConsolidationError {"},{"type":" ","oldLine":285,"newLine":290,"text":"    /// An invalid pre-state variant was passed to the consolidator."}]}]},"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "acb47f9a9bf9d0796f445d2611e11e8be2a6ffed16d613232c89d364a1f601ea",
+  "name": "consolidation.rs",
+  "kind": "program",
+  "lines": 308,
+  "source": "//! Interop dependency resolution and consolidation logic.\n\nuse crate::{BootInfo, OptimisticBlock, OracleInteropProvider, PreState};\nuse alloc::{collections::BTreeSet, vec::Vec};\nuse alloy_consensus::{Header, Sealed};\nuse alloy_evm::{EvmFactory, FromRecoveredTx, FromTxWithEncoded, block::BlockExecutorFactory};\nuse alloy_op_evm::{\n    OpBlockExecutionCtx, OpBlockExecutorFactory,\n    block::{OpAlloyReceiptBuilder, OpTxEnv},\n};\nuse alloy_primitives::Sealable;\nuse alloy_rpc_types_engine::PayloadAttributes;\nuse core::fmt::Debug;\nuse kona_executor::{Eip1559ValidationError, ExecutorError, StatelessL2Builder};\nuse kona_genesis::RollupConfig;\nuse kona_interop::{MessageGraph, MessageGraphError};\nuse kona_mpt::OrderedListWalker;\nuse kona_preimage::CommsClient;\nuse kona_proof::{errors::OracleProviderError, l2::OracleL2ChainProvider};\nuse kona_registry::{HashMap, ROLLUP_CONFIGS};\nuse op_alloy_consensus::{OpReceiptEnvelope, OpTxEnvelope, OpTxType};\nuse op_alloy_rpc_types_engine::OpPayloadAttributes;\nuse op_revm::OpSpecId;\nuse revm::context::BlockEnv;\nuse thiserror::Error;\nuse tracing::{error, info};\n\n/// The [`SuperchainConsolidator`] holds a [`MessageGraph`] and is responsible for recursively\n/// consolidating the blocks within the graph, per [message validity rules].\n///\n/// [message validity rules]: https://specs.optimism.io/interop/messaging.html#invalid-messages\n#[derive(Debug)]\npub struct SuperchainConsolidator<'a, C, Evm>\nwhere\n    C: CommsClient,\n{\n    /// The [`BootInfo`] of the program.\n    boot_info: &'a mut BootInfo,\n    /// The [`OracleInteropProvider`] used for the message graph.\n    interop_provider: OracleInteropProvider<C>,\n    /// The [`OracleL2ChainProvider`]s used for re-execution of invalid blocks, keyed by chain ID.\n    l2_providers: HashMap<u64, OracleL2ChainProvider<C>>,\n    /// The inner [`EvmFactory`] to create EVM instances for re-execution of bad blocks.\n    evm_factory: Evm,\n    /// Chain IDs that have already been replaced with deposit-only blocks. These are skipped\n    /// during validation since deposit-only blocks cannot contain executing messages.\n    replaced_chains: BTreeSet<u64>,\n}\n\nimpl<'a, C, Evm> SuperchainConsolidator<'a, C, Evm>\nwhere\n    C: CommsClient + Debug + Send + Sync,\n    Evm: EvmFactory<Spec = OpSpecId, BlockEnv = BlockEnv> + Send + Sync + Debug + Clone + 'static,\n    <Evm as EvmFactory>::Tx:\n        FromTxWithEncoded<OpTxEnvelope> + FromRecoveredTx<OpTxEnvelope> + OpTxEnv,\n    OpBlockExecutorFactory<OpAlloyReceiptBuilder, RollupConfig, Evm>: for<'b> BlockExecutorFactory<\n            EvmFactory = Evm,\n            ExecutionCtx<'b> = OpBlockExecutionCtx,\n            Transaction = OpTxEnvelope,\n            Receipt = OpReceiptEnvelope,\n        >,\n{\n    /// Creates a new [`SuperchainConsolidator`] with the given providers and [Header]s.\n    ///\n    /// [Header]: alloy_consensus::Header\n    pub const fn new(\n        boot_info: &'a mut BootInfo,\n        interop_provider: OracleInteropProvider<C>,\n        l2_providers: HashMap<u64, OracleL2ChainProvider<C>>,\n        evm_factory: Evm,\n    ) -> Self {\n        Self {\n            boot_info,\n            interop_provider,\n            l2_providers,\n            evm_factory,\n            replaced_chains: BTreeSet::new(),\n        }\n    }\n\n    /// Recursively consolidates the dependencies of the blocks within the [`MessageGraph`].\n    ///\n    /// This method will recurse until all invalid cross-chain dependencies have been resolved,\n    /// re-executing deposit-only blocks for chains with invalid dependencies as needed.\n    pub async fn consolidate(&mut self) -> Result<(), ConsolidationError> {\n        info!(target: \"superchain_consolidator\", \"Consolidating superchain\");\n\n        loop {\n            match self.consolidate_once().await {\n                Ok(()) => {\n                    info!(target: \"superchain_consolidator\", \"Superchain consolidation complete\");\n                    return Ok(());\n                }\n                Err(ConsolidationError::MessageGraph(\n                    MessageGraphError::InvalidMessages(_) |\n                    MessageGraphError::CyclicDependency { .. },\n                )) => {\n                    // If invalid messages or cyclic dependencies are found, continue the loop.\n                    // The affected chains have been replaced with deposit-only blocks by\n                    // consolidate_once, so the next iteration will exclude them.\n                }\n                Err(e) => {\n                    error!(target: \"superchain_consolidator\", \"Error consolidating superchain: {:?}\", e);\n                    return Err(e);\n                }\n            }\n        }\n    }\n\n    /// Performs a single iteration of the consolidation process.\n    ///\n    /// Step-wise:\n    /// 1. Derive a new [`MessageGraph`] from the current set of local safe [Header]s.\n    /// 2. Resolve the [`MessageGraph`].\n    /// 3. If any invalid messages are found, re-execute the bad block(s) only deposit transactions,\n    ///    and bubble up the error.\n    ///\n    /// [Header]: alloy_consensus::Header\n    async fn consolidate_once(&mut self) -> Result<(), ConsolidationError> {\n        // Filter out chains that have already been replaced with deposit-only blocks.\n        // Deposit-only blocks cannot contain executing messages, so they are already\n        // cross-safe and do not need to be re-validated.\n        let heads_to_check: HashMap<u64, Sealed<Header>> = self\n            .interop_provider\n            .local_safe_heads()\n            .iter()\n            .filter(|(chain_id, _)| !self.replaced_chains.contains(chain_id))\n            .map(|(k, v)| (*k, v.clone()))\n            .collect();\n\n        // Derive the message graph from the non-replaced block headers.\n        let graph = MessageGraph::derive(\n            &heads_to_check,\n            &self.interop_provider,\n            &self.boot_info.rollup_configs,\n            &self.boot_info.dependency_set,\n            self.boot_info.dependency_set.get_message_expiry_window(),\n        )\n        .await?;\n\n        // Attempt to resolve the message graph. If there were any invalid messages or cyclic\n        // dependencies found, re-execute the affected chains with deposit-only transactions.\n        match graph.resolve().await {\n            Err(MessageGraphError::InvalidMessages(invalid_chains)) => {\n                self.re_execute_deposit_only(&invalid_chains.keys().copied().collect::<Vec<_>>())\n                    .await?;\n                return Err(MessageGraphError::InvalidMessages(invalid_chains).into());\n            }\n            Err(MessageGraphError::CyclicDependency { chain_ids }) => {\n                self.re_execute_deposit_only(&chain_ids).await?;\n                return Err(MessageGraphError::CyclicDependency { chain_ids }.into());\n            }\n            Err(e) => return Err(e.into()),\n            Ok(()) => {}\n        }\n\n        Ok(())\n    }\n\n    /// Re-executes the original blocks, keyed by their chain IDs, with only their deposit\n    /// transactions.\n    async fn re_execute_deposit_only(\n        &mut self,\n        chain_ids: &[u64],\n    ) -> Result<(), ConsolidationError> {\n        for chain_id in chain_ids {\n            // Find the optimistic block header for the chain ID.\n            let header = self\n                .interop_provider\n                .local_safe_heads()\n                .get(chain_id)\n                .ok_or(MessageGraphError::EmptyDependencySet)?\n                .clone();\n\n            // Look up the parent header for the block.\n            let parent_header =\n                self.interop_provider.header_by_hash(*chain_id, header.parent_hash).await?;\n\n            // Send a hint for the block's transactions so the host pre-fetches the trie nodes.\n            self.interop_provider.hint_transactions(*chain_id, header.hash()).await?;\n\n            // Traverse the transactions trie of the block to re-execute.\n            let trie_walker = OrderedListWalker::try_new_hydrated(\n                header.transactions_root,\n                &self.interop_provider,\n            )\n            .map_err(OracleProviderError::TrieWalker)?;\n            let transactions = trie_walker.into_iter().map(|(_, rlp)| rlp).collect::<Vec<_>>();\n\n            // Fetch the rollup config + provider for the current chain ID.\n            let rollup_config = ROLLUP_CONFIGS\n                .get(chain_id)\n                .or_else(|| self.boot_info.rollup_configs.get(chain_id))\n                .ok_or(ConsolidationError::MissingRollupConfig(*chain_id))?;\n            let l2_provider = self\n                .l2_providers\n                .get(chain_id)\n                .ok_or(ConsolidationError::MissingLocalProvider(*chain_id))?;\n\n            let PreState::TransitionState(ref mut transition_state) =\n                self.boot_info.agreed_pre_state\n            else {\n                return Err(ConsolidationError::InvalidPreStateVariant);\n            };\n            let original_optimistic_block = transition_state\n                .pending_progress\n                .iter_mut()\n                .find(|block| block.block_hash == header.hash())\n                .ok_or(MessageGraphError::EmptyDependencySet)?;\n\n            // Filter out all transactions that are not deposits.\n            let transactions = transactions\n                .into_iter()\n                .filter(|t| !t.is_empty() && t[0] == OpTxType::Deposit)\n                .collect::<Vec<_>>();\n\n            // Re-craft the execution payload, trimming off all non-deposit transactions.\n            let deposit_only_payload = OpPayloadAttributes {\n                payload_attributes: PayloadAttributes {\n                    timestamp: header.timestamp,\n                    prev_randao: header.mix_hash,\n                    suggested_fee_recipient: header.beneficiary,\n                    withdrawals: Default::default(),\n                    parent_beacon_block_root: header.parent_beacon_block_root,\n                    slot_number: Default::default(),\n                },\n                transactions: Some(transactions),\n                no_tx_pool: Some(true),\n                gas_limit: Some(header.gas_limit),\n                eip_1559_params: rollup_config\n                    .is_holocene_active(header.timestamp)\n                    .then(|| {\n                        // SAFETY: After the Holocene hardfork, blocks must have the EIP-1559\n                        // parameters of the chain placed within the\n                        // header's `extra_data` field. This slice index +\n                        // conversion cannot fail unless the protocol rules\n                        // have been violated.\n                        header.extra_data.get(1..9).and_then(|s| s.try_into().ok()).ok_or(\n                            ExecutorError::InvalidExtraData(Eip1559ValidationError::Decode(\n                                op_alloy_consensus::EIP1559ParamError::NoEIP1559Params,\n                            )),\n                        )\n                    })\n                    .transpose()?,\n                min_base_fee: rollup_config\n                    .is_jovian_active(header.timestamp)\n                    .then(|| {\n                        header\n                            .extra_data\n                            .get(9..17)\n                            .and_then(|s| <[u8; 8]>::try_from(s).ok())\n                            .map(u64::from_be_bytes)\n                            .ok_or(ExecutorError::InvalidExtraData(Eip1559ValidationError::Decode(\n                                op_alloy_consensus::EIP1559ParamError::MinBaseFeeNotSet,\n                            )))\n                    })\n                    .transpose()?,\n            };\n\n            // Create a new stateless L2 block executor for the current chain.\n            let mut executor = StatelessL2Builder::new(\n                rollup_config,\n                self.evm_factory.clone(),\n                OpAlloyReceiptBuilder::default(),\n                l2_provider.clone(),\n                l2_provider.clone(),\n                parent_header.seal_slow(),\n            );\n\n            // Execute the block and take the new header. At this point, the block is guaranteed to\n            // be canonical.\n            let new_header = executor.build_block(deposit_only_payload)?.header;\n            let new_output_root = executor.compute_output_root()?;\n\n            // Replace the original optimistic block with the deposit only block.\n            *original_optimistic_block = OptimisticBlock::new(new_header.hash(), new_output_root);\n\n            // Replace the original header with the new header and mark the chain as replaced.\n            self.interop_provider.replace_local_safe_head(*chain_id, new_header);\n            self.replaced_chains.insert(*chain_id);\n        }\n\n        Ok(())\n    }\n}\n\n/// An error type for the [`SuperchainConsolidator`] struct.\n#[derive(Debug, Error)]\npub enum ConsolidationError {\n    /// An invalid pre-state variant was passed to the consolidator.\n    #[error(\"Invalid PreState variant\")]\n    InvalidPreStateVariant,\n    /// Missing a rollup configuration.\n    #[error(\"Missing rollup configuration for chain ID {0}\")]\n    MissingRollupConfig(u64),\n    /// Missing a local L2 chain provider.\n    #[error(\"Missing local L2 chain provider for chain ID {0}\")]\n    MissingLocalProvider(u64),\n    /// An error occurred during consolidation.\n    #[error(transparent)]\n    MessageGraph(#[from] MessageGraphError<OracleProviderError>),\n    /// An error occurred during execution.\n    #[error(transparent)]\n    Executor(#[from] ExecutorError),\n    /// An error occurred during RLP decoding.\n    #[error(transparent)]\n    OracleProvider(#[from] OracleProviderError),\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "differs",
+      "coveredLines": 253,
+      "match": {
+        "origin": "own",
+        "collection": "optimism",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "consolidation.rs",
+        "similarity": 0.77,
+        "reportId": "optimism/cantina-kona-2026-03",
+        "repository": "op-rs/kona",
+        "path": "crates/proof/proof-interop/src/consolidation.rs",
+        "commit": "86910c9112437bbb849eca28961f813c5450e103",
+        "commitTimestamp": "2025-12-15T17:17:05Z",
+        "url": "https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/crates/proof/proof-interop/src/consolidation.rs",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). Interop proof crate (pre-state, consolidation, boot); Low findings 3.4.3, 3.4.4, 3.4.5, 3.4.7 and Informational 3.5.3, 3.5.4, 3.5.5 located here, all acknowledged as interop is not planned to be supported.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 55,
+        "removed": 48,
+        "ignoredAdded": 26,
+        "ignoredRemoved": 28,
+        "unchanged": 253,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 29,
+            "newStart": 1,
+            "newLines": 31,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "//! Interop dependency resolution and consolidation logic."
+              },
+              { "type": " ", "oldLine": 2, "newLine": 2, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "use crate::{BootInfo, OptimisticBlock, OracleInteropProvider, PreState};"
+              },
+              {
+                "type": "-",
+                "oldLine": 4,
+                "text": "use alloc::vec::Vec;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 4,
+                "text": "use alloc::{collections::BTreeSet, vec::Vec};",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 5,
+                "newLine": 5,
+                "text": "use alloy_consensus::{Header, Sealed};"
+              },
+              {
+                "type": "-",
+                "oldLine": 6,
+                "text": "use alloy_eips::Encodable2718;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 7,
+                "text": "use alloy_evm::{EvmFactory, FromRecoveredTx, FromTxWithEncoded};",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 8,
+                "text": "use alloy_op_evm::block::OpTxEnv;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 9,
+                "text": "use alloy_primitives::{Address, B256, Bytes, Sealable, TxKind, U256, address};",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 6,
+                "text": "use alloy_evm::{EvmFactory, FromRecoveredTx, FromTxWithEncoded, block::BlockExecutorFactory};",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 7,
+                "text": "use alloy_op_evm::{",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 8,
+                "text": "    OpBlockExecutionCtx, OpBlockExecutorFactory,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 9,
+                "text": "    block::{OpAlloyReceiptBuilder, OpTxEnv},",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 10, "text": "};", "ignored": false },
+              {
+                "type": "+",
+                "newLine": 11,
+                "text": "use alloy_primitives::Sealable;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 10,
+                "newLine": 12,
+                "text": "use alloy_rpc_types_engine::PayloadAttributes;"
+              },
+              {
+                "type": " ",
+                "oldLine": 11,
+                "newLine": 13,
+                "text": "use core::fmt::Debug;"
+              },
+              {
+                "type": " ",
+                "oldLine": 12,
+                "newLine": 14,
+                "text": "use kona_executor::{Eip1559ValidationError, ExecutorError, StatelessL2Builder};"
+              },
+              {
+                "type": "+",
+                "newLine": 15,
+                "text": "use kona_genesis::RollupConfig;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 13,
+                "newLine": 16,
+                "text": "use kona_interop::{MessageGraph, MessageGraphError};"
+              },
+              {
+                "type": " ",
+                "oldLine": 14,
+                "newLine": 17,
+                "text": "use kona_mpt::OrderedListWalker;"
+              },
+              {
+                "type": " ",
+                "oldLine": 15,
+                "newLine": 18,
+                "text": "use kona_preimage::CommsClient;"
+              },
+              {
+                "type": " ",
+                "oldLine": 16,
+                "newLine": 19,
+                "text": "use kona_proof::{errors::OracleProviderError, l2::OracleL2ChainProvider};"
+              },
+              {
+                "type": "-",
+                "oldLine": 17,
+                "text": "use kona_protocol::OutputRoot;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 18,
+                "newLine": 20,
+                "text": "use kona_registry::{HashMap, ROLLUP_CONFIGS};"
+              },
+              {
+                "type": "-",
+                "oldLine": 19,
+                "text": "use op_alloy_consensus::{InteropBlockReplacementDepositSource, OpTxEnvelope, OpTxType, TxDeposit};",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 21,
+                "text": "use op_alloy_consensus::{OpReceiptEnvelope, OpTxEnvelope, OpTxType};",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 20,
+                "newLine": 22,
+                "text": "use op_alloy_rpc_types_engine::OpPayloadAttributes;"
+              },
+              {
+                "type": " ",
+                "oldLine": 21,
+                "newLine": 23,
+                "text": "use op_revm::OpSpecId;"
+              },
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 24,
+                "text": "use revm::context::BlockEnv;"
+              },
+              {
+                "type": " ",
+                "oldLine": 23,
+                "newLine": 25,
+                "text": "use thiserror::Error;"
+              },
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 26,
+                "text": "use tracing::{error, info};"
+              },
+              { "type": " ", "oldLine": 25, "newLine": 27, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 26,
+                "text": "/// The [SuperchainConsolidator] holds a [MessageGraph] and is responsible for recursively",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 28,
+                "text": "/// The [`SuperchainConsolidator`] holds a [`MessageGraph`] and is responsible for recursively",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 27,
+                "newLine": 29,
+                "text": "/// consolidating the blocks within the graph, per [message validity rules]."
+              },
+              { "type": " ", "oldLine": 28, "newLine": 30, "text": "///" },
+              {
+                "type": " ",
+                "oldLine": 29,
+                "newLine": 31,
+                "text": "/// [message validity rules]: https://specs.optimism.io/interop/messaging.html#invalid-messages"
+              }
+            ]
+          },
+          {
+            "oldStart": 32,
+            "oldLines": 14,
+            "newStart": 34,
+            "newLines": 17,
+            "lines": [
+              { "type": " ", "oldLine": 32, "newLine": 34, "text": "where" },
+              {
+                "type": " ",
+                "oldLine": 33,
+                "newLine": 35,
+                "text": "    C: CommsClient,"
+              },
+              { "type": " ", "oldLine": 34, "newLine": 36, "text": "{" },
+              {
+                "type": "-",
+                "oldLine": 35,
+                "text": "    /// The [BootInfo] of the program.",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 37,
+                "text": "    /// The [`BootInfo`] of the program.",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 36,
+                "newLine": 38,
+                "text": "    boot_info: &'a mut BootInfo,"
+              },
+              {
+                "type": "-",
+                "oldLine": 37,
+                "text": "    /// The [OracleInteropProvider] used for the message graph.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 39,
+                "text": "    /// The [`OracleInteropProvider`] used for the message graph.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 38,
+                "newLine": 40,
+                "text": "    interop_provider: OracleInteropProvider<C>,"
+              },
+              {
+                "type": "-",
+                "oldLine": 39,
+                "text": "    /// The [OracleL2ChainProvider]s used for re-execution of invalid blocks, keyed by chain ID.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 41,
+                "text": "    /// The [`OracleL2ChainProvider`]s used for re-execution of invalid blocks, keyed by chain ID.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 40,
+                "newLine": 42,
+                "text": "    l2_providers: HashMap<u64, OracleL2ChainProvider<C>>,"
+              },
+              {
+                "type": " ",
+                "oldLine": 41,
+                "newLine": 43,
+                "text": "    /// The inner [`EvmFactory`] to create EVM instances for re-execution of bad blocks."
+              },
+              {
+                "type": " ",
+                "oldLine": 42,
+                "newLine": 44,
+                "text": "    evm_factory: Evm,"
+              },
+              {
+                "type": "+",
+                "newLine": 45,
+                "text": "    /// Chain IDs that have already been replaced with deposit-only blocks. These are skipped",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 46,
+                "text": "    /// during validation since deposit-only blocks cannot contain executing messages.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 47,
+                "text": "    replaced_chains: BTreeSet<u64>,",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 43, "newLine": 48, "text": "}" },
+              { "type": " ", "oldLine": 44, "newLine": 49, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 45,
+                "newLine": 50,
+                "text": "impl<'a, C, Evm> SuperchainConsolidator<'a, C, Evm>"
+              }
+            ]
+          },
+          {
+            "oldStart": 48,
+            "oldLines": 8,
+            "newStart": 53,
+            "newLines": 14,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 48,
+                "newLine": 53,
+                "text": "    Evm: EvmFactory<Spec = OpSpecId, BlockEnv = BlockEnv> + Send + Sync + Debug + Clone + 'static,"
+              },
+              {
+                "type": " ",
+                "oldLine": 49,
+                "newLine": 54,
+                "text": "    <Evm as EvmFactory>::Tx:"
+              },
+              {
+                "type": " ",
+                "oldLine": 50,
+                "newLine": 55,
+                "text": "        FromTxWithEncoded<OpTxEnvelope> + FromRecoveredTx<OpTxEnvelope> + OpTxEnv,"
+              },
+              {
+                "type": "+",
+                "newLine": 56,
+                "text": "    OpBlockExecutorFactory<OpAlloyReceiptBuilder, RollupConfig, Evm>: for<'b> BlockExecutorFactory<",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 57,
+                "text": "            EvmFactory = Evm,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 58,
+                "text": "            ExecutionCtx<'b> = OpBlockExecutionCtx,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 59,
+                "text": "            Transaction = OpTxEnvelope,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 60,
+                "text": "            Receipt = OpReceiptEnvelope,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 61,
+                "text": "        >,",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 51, "newLine": 62, "text": "{" },
+              {
+                "type": "-",
+                "oldLine": 52,
+                "text": "    /// Creates a new [SuperchainConsolidator] with the given providers and [Header]s.",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 63,
+                "text": "    /// Creates a new [`SuperchainConsolidator`] with the given providers and [Header]s.",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 53, "newLine": 64, "text": "    ///" },
+              {
+                "type": " ",
+                "oldLine": 54,
+                "newLine": 65,
+                "text": "    /// [Header]: alloy_consensus::Header"
+              },
+              {
+                "type": " ",
+                "oldLine": 55,
+                "newLine": 66,
+                "text": "    pub const fn new("
+              }
+            ]
+          },
+          {
+            "oldStart": 58,
+            "oldLines": 10,
+            "newStart": 69,
+            "newLines": 16,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 58,
+                "newLine": 69,
+                "text": "        l2_providers: HashMap<u64, OracleL2ChainProvider<C>>,"
+              },
+              {
+                "type": " ",
+                "oldLine": 59,
+                "newLine": 70,
+                "text": "        evm_factory: Evm,"
+              },
+              {
+                "type": " ",
+                "oldLine": 60,
+                "newLine": 71,
+                "text": "    ) -> Self {"
+              },
+              {
+                "type": "-",
+                "oldLine": 61,
+                "text": "        Self { boot_info, interop_provider, l2_providers, evm_factory }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 72,
+                "text": "        Self {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 73,
+                "text": "            boot_info,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 74,
+                "text": "            interop_provider,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 75,
+                "text": "            l2_providers,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 76,
+                "text": "            evm_factory,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 77,
+                "text": "            replaced_chains: BTreeSet::new(),",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 78,
+                "text": "        }",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 62, "newLine": 79, "text": "    }" },
+              { "type": " ", "oldLine": 63, "newLine": 80, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 64,
+                "text": "    /// Recursively consolidates the dependencies of the blocks within the [MessageGraph].",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 81,
+                "text": "    /// Recursively consolidates the dependencies of the blocks within the [`MessageGraph`].",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 65, "newLine": 82, "text": "    ///" },
+              {
+                "type": " ",
+                "oldLine": 66,
+                "newLine": 83,
+                "text": "    /// This method will recurse until all invalid cross-chain dependencies have been resolved,"
+              },
+              {
+                "type": " ",
+                "oldLine": 67,
+                "newLine": 84,
+                "text": "    /// re-executing deposit-only blocks for chains with invalid dependencies as needed."
+              }
+            ]
+          },
+          {
+            "oldStart": 74,
+            "oldLines": 9,
+            "newStart": 91,
+            "newLines": 13,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 74,
+                "newLine": 91,
+                "text": "                    info!(target: \"superchain_consolidator\", \"Superchain consolidation complete\");"
+              },
+              {
+                "type": " ",
+                "oldLine": 75,
+                "newLine": 92,
+                "text": "                    return Ok(());"
+              },
+              {
+                "type": " ",
+                "oldLine": 76,
+                "newLine": 93,
+                "text": "                }"
+              },
+              {
+                "type": "-",
+                "oldLine": 77,
+                "text": "                Err(ConsolidationError::MessageGraph(MessageGraphError::InvalidMessages(_))) => {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 78,
+                "text": "                    // If invalid messages are still present in the graph, continue the loop.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 79,
+                "text": "                    continue;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 94,
+                "text": "                Err(ConsolidationError::MessageGraph(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 95,
+                "text": "                    MessageGraphError::InvalidMessages(_) |",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 96,
+                "text": "                    MessageGraphError::CyclicDependency { .. },",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 97,
+                "text": "                )) => {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 98,
+                "text": "                    // If invalid messages or cyclic dependencies are found, continue the loop.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 99,
+                "text": "                    // The affected chains have been replaced with deposit-only blocks by",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 100,
+                "text": "                    // consolidate_once, so the next iteration will exclude them.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 80,
+                "newLine": 101,
+                "text": "                }"
+              },
+              {
+                "type": " ",
+                "oldLine": 81,
+                "newLine": 102,
+                "text": "                Err(e) => {"
+              },
+              {
+                "type": " ",
+                "oldLine": 82,
+                "newLine": 103,
+                "text": "                    error!(target: \"superchain_consolidator\", \"Error consolidating superchain: {:?}\", e);"
+              }
+            ]
+          },
+          {
+            "oldStart": 89,
+            "oldLines": 27,
+            "newStart": 110,
+            "newLines": 48,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 89,
+                "newLine": 110,
+                "text": "    /// Performs a single iteration of the consolidation process."
+              },
+              { "type": " ", "oldLine": 90, "newLine": 111, "text": "    ///" },
+              {
+                "type": " ",
+                "oldLine": 91,
+                "newLine": 112,
+                "text": "    /// Step-wise:"
+              },
+              {
+                "type": "-",
+                "oldLine": 92,
+                "text": "    /// 1. Derive a new [MessageGraph] from the current set of local safe [Header]s.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 93,
+                "text": "    /// 2. Resolve the [MessageGraph].",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 113,
+                "text": "    /// 1. Derive a new [`MessageGraph`] from the current set of local safe [Header]s.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 114,
+                "text": "    /// 2. Resolve the [`MessageGraph`].",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 94,
+                "newLine": 115,
+                "text": "    /// 3. If any invalid messages are found, re-execute the bad block(s) only deposit transactions,"
+              },
+              {
+                "type": " ",
+                "oldLine": 95,
+                "newLine": 116,
+                "text": "    ///    and bubble up the error."
+              },
+              { "type": " ", "oldLine": 96, "newLine": 117, "text": "    ///" },
+              {
+                "type": " ",
+                "oldLine": 97,
+                "newLine": 118,
+                "text": "    /// [Header]: alloy_consensus::Header"
+              },
+              {
+                "type": " ",
+                "oldLine": 98,
+                "newLine": 119,
+                "text": "    async fn consolidate_once(&mut self) -> Result<(), ConsolidationError> {"
+              },
+              {
+                "type": "-",
+                "oldLine": 99,
+                "text": "        // Derive the message graph from the current set of block headers.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 120,
+                "text": "        // Filter out chains that have already been replaced with deposit-only blocks.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 121,
+                "text": "        // Deposit-only blocks cannot contain executing messages, so they are already",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 122,
+                "text": "        // cross-safe and do not need to be re-validated.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 123,
+                "text": "        let heads_to_check: HashMap<u64, Sealed<Header>> = self",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 124,
+                "text": "            .interop_provider",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 125,
+                "text": "            .local_safe_heads()",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 126,
+                "text": "            .iter()",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 127,
+                "text": "            .filter(|(chain_id, _)| !self.replaced_chains.contains(chain_id))",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 128,
+                "text": "            .map(|(k, v)| (*k, v.clone()))",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 129,
+                "text": "            .collect();",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 130, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 131,
+                "text": "        // Derive the message graph from the non-replaced block headers.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 100,
+                "newLine": 132,
+                "text": "        let graph = MessageGraph::derive("
+              },
+              {
+                "type": "-",
+                "oldLine": 101,
+                "text": "            self.interop_provider.local_safe_heads(),",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 133,
+                "text": "            &heads_to_check,",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 102,
+                "newLine": 134,
+                "text": "            &self.interop_provider,"
+              },
+              {
+                "type": " ",
+                "oldLine": 103,
+                "newLine": 135,
+                "text": "            &self.boot_info.rollup_configs,"
+              },
+              {
+                "type": "+",
+                "newLine": 136,
+                "text": "            &self.boot_info.dependency_set,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 137,
+                "text": "            self.boot_info.dependency_set.get_message_expiry_window(),",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 104,
+                "newLine": 138,
+                "text": "        )"
+              },
+              {
+                "type": " ",
+                "oldLine": 105,
+                "newLine": 139,
+                "text": "        .await?;"
+              },
+              { "type": " ", "oldLine": 106, "newLine": 140, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 107,
+                "text": "        // Attempt to resolve the message graph. If there were any invalid messages found, we must",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 108,
+                "text": "        // initiate a re-execution of the original block, with only deposit transactions.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 109,
+                "text": "        if let Err(MessageGraphError::InvalidMessages(invalid_chains)) = graph.resolve().await {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 110,
+                "text": "            self.re_execute_deposit_only(&invalid_chains.keys().copied().collect::<Vec<_>>())",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 111,
+                "text": "                .await?;",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 112,
+                "text": "            return Err(MessageGraphError::InvalidMessages(invalid_chains).into());",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 141,
+                "text": "        // Attempt to resolve the message graph. If there were any invalid messages or cyclic",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 142,
+                "text": "        // dependencies found, re-execute the affected chains with deposit-only transactions.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 143,
+                "text": "        match graph.resolve().await {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 144,
+                "text": "            Err(MessageGraphError::InvalidMessages(invalid_chains)) => {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 145,
+                "text": "                self.re_execute_deposit_only(&invalid_chains.keys().copied().collect::<Vec<_>>())",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 146,
+                "text": "                    .await?;",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 147,
+                "text": "                return Err(MessageGraphError::InvalidMessages(invalid_chains).into());",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 148,
+                "text": "            }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 149,
+                "text": "            Err(MessageGraphError::CyclicDependency { chain_ids }) => {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 150,
+                "text": "                self.re_execute_deposit_only(&chain_ids).await?;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 151,
+                "text": "                return Err(MessageGraphError::CyclicDependency { chain_ids }.into());",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 152,
+                "text": "            }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 153,
+                "text": "            Err(e) => return Err(e.into()),",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 154,
+                "text": "            Ok(()) => {}",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 113,
+                "newLine": 155,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 114, "newLine": 156, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 115,
+                "newLine": 157,
+                "text": "        Ok(())"
+              }
+            ]
+          },
+          {
+            "oldStart": 127,
+            "oldLines": 12,
+            "newStart": 169,
+            "newLines": 16,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 127,
+                "newLine": 169,
+                "text": "                .interop_provider"
+              },
+              {
+                "type": " ",
+                "oldLine": 128,
+                "newLine": 170,
+                "text": "                .local_safe_heads()"
+              },
+              {
+                "type": " ",
+                "oldLine": 129,
+                "newLine": 171,
+                "text": "                .get(chain_id)"
+              },
+              {
+                "type": "-",
+                "oldLine": 130,
+                "text": "                .ok_or(MessageGraphError::EmptyDependencySet)?;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 172,
+                "text": "                .ok_or(MessageGraphError::EmptyDependencySet)?",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 173,
+                "text": "                .clone();",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 131, "newLine": 174, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 132,
+                "newLine": 175,
+                "text": "            // Look up the parent header for the block."
+              },
+              {
+                "type": " ",
+                "oldLine": 133,
+                "newLine": 176,
+                "text": "            let parent_header ="
+              },
+              {
+                "type": " ",
+                "oldLine": 134,
+                "newLine": 177,
+                "text": "                self.interop_provider.header_by_hash(*chain_id, header.parent_hash).await?;"
+              },
+              { "type": " ", "oldLine": 135, "newLine": 178, "text": "" },
+              {
+                "type": "+",
+                "newLine": 179,
+                "text": "            // Send a hint for the block's transactions so the host pre-fetches the trie nodes.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 180,
+                "text": "            self.interop_provider.hint_transactions(*chain_id, header.hash()).await?;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 181, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 136,
+                "newLine": 182,
+                "text": "            // Traverse the transactions trie of the block to re-execute."
+              },
+              {
+                "type": " ",
+                "oldLine": 137,
+                "newLine": 183,
+                "text": "            let trie_walker = OrderedListWalker::try_new_hydrated("
+              },
+              {
+                "type": " ",
+                "oldLine": 138,
+                "newLine": 184,
+                "text": "                header.transactions_root,"
+              }
+            ]
+          },
+          {
+            "oldStart": 141,
+            "oldLines": 13,
+            "newStart": 187,
+            "newLines": 6,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 141,
+                "newLine": 187,
+                "text": "            .map_err(OracleProviderError::TrieWalker)?;"
+              },
+              {
+                "type": " ",
+                "oldLine": 142,
+                "newLine": 188,
+                "text": "            let transactions = trie_walker.into_iter().map(|(_, rlp)| rlp).collect::<Vec<_>>();"
+              },
+              { "type": " ", "oldLine": 143, "newLine": 189, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 144,
+                "text": "            // Explicitly panic if a block sent off for re-execution already contains nothing but",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 145,
+                "text": "            // deposits.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 146,
+                "text": "            assert!(",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 147,
+                "text": "                !transactions.iter().all(|f| !f.is_empty() && f[0] == OpTxType::Deposit),",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 148,
+                "text": "                \"Impossible case; Block with only deposits found to be invalid. Something has gone horribly wrong!\"",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 149,
+                "text": "            );",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 150, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 151,
+                "newLine": 190,
+                "text": "            // Fetch the rollup config + provider for the current chain ID."
+              },
+              {
+                "type": " ",
+                "oldLine": 152,
+                "newLine": 191,
+                "text": "            let rollup_config = ROLLUP_CONFIGS"
+              },
+              {
+                "type": " ",
+                "oldLine": 153,
+                "newLine": 192,
+                "text": "                .get(chain_id)"
+              }
+            ]
+          },
+          {
+            "oldStart": 169,
+            "oldLines": 18,
+            "newStart": 208,
+            "newLines": 12,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 169,
+                "newLine": 208,
+                "text": "                .find(|block| block.block_hash == header.hash())"
+              },
+              {
+                "type": " ",
+                "oldLine": 170,
+                "newLine": 209,
+                "text": "                .ok_or(MessageGraphError::EmptyDependencySet)?;"
+              },
+              { "type": " ", "oldLine": 171, "newLine": 210, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 172,
+                "text": "            // Filter out all transactions that are not deposits to start.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 173,
+                "text": "            let mut transactions = transactions",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 211,
+                "text": "            // Filter out all transactions that are not deposits.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 212,
+                "text": "            let transactions = transactions",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 174,
+                "newLine": 213,
+                "text": "                .into_iter()"
+              },
+              {
+                "type": " ",
+                "oldLine": 175,
+                "newLine": 214,
+                "text": "                .filter(|t| !t.is_empty() && t[0] == OpTxType::Deposit)"
+              },
+              {
+                "type": " ",
+                "oldLine": 176,
+                "newLine": 215,
+                "text": "                .collect::<Vec<_>>();"
+              },
+              { "type": " ", "oldLine": 177, "newLine": 216, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 178,
+                "text": "            // Add the deposit replacement system transaction at the end of the list.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 179,
+                "text": "            transactions.push(Self::craft_replacement_transaction(",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 180,
+                "text": "                header,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 181,
+                "text": "                original_optimistic_block.output_root,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 182,
+                "text": "            ));",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 183, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 184,
+                "newLine": 217,
+                "text": "            // Re-craft the execution payload, trimming off all non-deposit transactions."
+              },
+              {
+                "type": " ",
+                "oldLine": 185,
+                "newLine": 218,
+                "text": "            let deposit_only_payload = OpPayloadAttributes {"
+              },
+              {
+                "type": " ",
+                "oldLine": 186,
+                "newLine": 219,
+                "text": "                payload_attributes: PayloadAttributes {"
+              }
+            ]
+          },
+          {
+            "oldStart": 189,
+            "oldLines": 6,
+            "newStart": 222,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 189,
+                "newLine": 222,
+                "text": "                    suggested_fee_recipient: header.beneficiary,"
+              },
+              {
+                "type": " ",
+                "oldLine": 190,
+                "newLine": 223,
+                "text": "                    withdrawals: Default::default(),"
+              },
+              {
+                "type": " ",
+                "oldLine": 191,
+                "newLine": 224,
+                "text": "                    parent_beacon_block_root: header.parent_beacon_block_root,"
+              },
+              {
+                "type": "+",
+                "newLine": 225,
+                "text": "                    slot_number: Default::default(),",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 192,
+                "newLine": 226,
+                "text": "                },"
+              },
+              {
+                "type": " ",
+                "oldLine": 193,
+                "newLine": 227,
+                "text": "                transactions: Some(transactions),"
+              },
+              {
+                "type": " ",
+                "oldLine": 194,
+                "newLine": 228,
+                "text": "                no_tx_pool: Some(true),"
+              }
+            ]
+          },
+          {
+            "oldStart": 227,
+            "oldLines": 6,
+            "newStart": 261,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 227,
+                "newLine": 261,
+                "text": "            let mut executor = StatelessL2Builder::new("
+              },
+              {
+                "type": " ",
+                "oldLine": 228,
+                "newLine": 262,
+                "text": "                rollup_config,"
+              },
+              {
+                "type": " ",
+                "oldLine": 229,
+                "newLine": 263,
+                "text": "                self.evm_factory.clone(),"
+              },
+              {
+                "type": "+",
+                "newLine": 264,
+                "text": "                OpAlloyReceiptBuilder::default(),",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 230,
+                "newLine": 265,
+                "text": "                l2_provider.clone(),"
+              },
+              {
+                "type": " ",
+                "oldLine": 231,
+                "newLine": 266,
+                "text": "                l2_provider.clone(),"
+              },
+              {
+                "type": " ",
+                "oldLine": 232,
+                "newLine": 267,
+                "text": "                parent_header.seal_slow(),"
+              }
+            ]
+          },
+          {
+            "oldStart": 240,
+            "oldLines": 46,
+            "newStart": 275,
+            "newLines": 16,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 240,
+                "newLine": 275,
+                "text": "            // Replace the original optimistic block with the deposit only block."
+              },
+              {
+                "type": " ",
+                "oldLine": 241,
+                "newLine": 276,
+                "text": "            *original_optimistic_block = OptimisticBlock::new(new_header.hash(), new_output_root);"
+              },
+              { "type": " ", "oldLine": 242, "newLine": 277, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 243,
+                "text": "            // Replace the original header with the new header.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 278,
+                "text": "            // Replace the original header with the new header and mark the chain as replaced.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 244,
+                "newLine": 279,
+                "text": "            self.interop_provider.replace_local_safe_head(*chain_id, new_header);"
+              },
+              {
+                "type": "+",
+                "newLine": 280,
+                "text": "            self.replaced_chains.insert(*chain_id);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 245,
+                "newLine": 281,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 246, "newLine": 282, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 247,
+                "newLine": 283,
+                "text": "        Ok(())"
+              },
+              { "type": " ", "oldLine": 248, "newLine": 284, "text": "    }" },
+              { "type": "-", "oldLine": 249, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 250,
+                "text": "    /// Forms the replacement transaction inserted into a deposit-only block in the event that a",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 251,
+                "text": "    /// block is reduced due to invalid messages.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 252,
+                "text": "    ///",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 253,
+                "text": "    /// <https://specs.optimism.io/interop/derivation.html#optimistic-block-deposited-transaction>",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 254,
+                "text": "    fn craft_replacement_transaction(old_header: &Sealed<Header>, old_output_root: B256) -> Bytes {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 255,
+                "text": "        const REPLACEMENT_SENDER: Address = address!(\"deaddeaddeaddeaddeaddeaddeaddeaddead0002\");",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 256,
+                "text": "        const REPLACEMENT_GAS: u64 = 36000;",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 257, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 258,
+                "text": "        let source = InteropBlockReplacementDepositSource::new(old_output_root);",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 259,
+                "text": "        let output_root = OutputRoot::from_parts(",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 260,
+                "text": "            old_header.state_root,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 261,
+                "text": "            old_header.withdrawals_root.unwrap_or_default(),",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 262,
+                "text": "            old_header.hash(),",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 263,
+                "text": "        );",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 264,
+                "text": "        let replacement_tx = OpTxEnvelope::Deposit(",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 265,
+                "text": "            TxDeposit {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 266,
+                "text": "                source_hash: source.source_hash(),",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 267,
+                "text": "                from: REPLACEMENT_SENDER,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 268,
+                "text": "                to: TxKind::Call(Address::ZERO),",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 269,
+                "text": "                mint: 0,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 270,
+                "text": "                value: U256::ZERO,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 271,
+                "text": "                gas_limit: REPLACEMENT_GAS,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 272,
+                "text": "                is_system_transaction: false,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 273,
+                "text": "                input: output_root.encode().into(),",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 274,
+                "text": "            }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 275,
+                "text": "            .seal(),",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 276,
+                "text": "        );",
+                "ignored": false
+              },
+              { "type": "-", "oldLine": 277, "text": "", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 278,
+                "text": "        replacement_tx.encoded_2718().into()",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 279,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 280, "newLine": 285, "text": "}" },
+              { "type": " ", "oldLine": 281, "newLine": 286, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 282,
+                "text": "/// An error type for the [SuperchainConsolidator] struct.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 287,
+                "text": "/// An error type for the [`SuperchainConsolidator`] struct.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 283,
+                "newLine": 288,
+                "text": "#[derive(Debug, Error)]"
+              },
+              {
+                "type": " ",
+                "oldLine": 284,
+                "newLine": 289,
+                "text": "pub enum ConsolidationError {"
+              },
+              {
+                "type": " ",
+                "oldLine": 285,
+                "newLine": 290,
+                "text": "    /// An invalid pre-state variant was passed to the consolidator."
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

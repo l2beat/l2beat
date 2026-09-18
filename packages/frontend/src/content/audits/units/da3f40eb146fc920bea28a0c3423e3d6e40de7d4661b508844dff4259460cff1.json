@@ -1,1 +1,413 @@
-{"schemaVersion":2,"unitHash":"da3f40eb146fc920bea28a0c3423e3d6e40de7d4661b508844dff4259460cff1","name":"pipeline.rs","kind":"program","lines":143,"source":"//! Abstracts the derivation pipeline from the driver.\n//!\n//! This module provides the [`DriverPipeline`] trait which serves as a high-level\n//! abstraction for the driver's derivation pipeline. The pipeline is responsible\n//! for deriving L2 blocks from L1 data and producing payload attributes for execution.\n\nuse alloc::boxed::Box;\nuse async_trait::async_trait;\nuse kona_protocol::{L2BlockInfo, OpAttributesWithParent};\n\nuse kona_derive::{\n    ActivationSignal, Pipeline, PipelineError, PipelineErrorKind, ResetError, ResetSignal, Signal,\n    SignalReceiver, StepResult,\n};\n\n/// High-level abstraction for the driver's derivation pipeline.\n///\n/// The [`DriverPipeline`] trait extends the base [`Pipeline`] functionality with\n/// driver-specific operations needed for block production. It handles the complex\n/// logic of stepping through derivation stages, managing resets and reorgs, and\n/// producing payload attributes for block building.\n///\n/// ## Key Responsibilities\n/// - Stepping through derivation pipeline stages\n/// - Handling L1 origin advancement\n/// - Managing pipeline resets due to reorgs or activation signals\n/// - Producing payload attributes for disputed blocks\n/// - Caching and cache invalidation\n///\n/// ## Error Handling\n/// The pipeline can encounter several types of errors:\n/// - **Temporary**: Retryable errors (e.g., missing data)\n/// - **Reset**: Errors requiring pipeline reset (e.g., reorgs, activations)\n/// - **Critical**: Fatal errors that stop derivation\n#[async_trait]\npub trait DriverPipeline<P>: Pipeline + SignalReceiver\nwhere\n    P: Pipeline + SignalReceiver,\n{\n    /// Flushes any cached data due to a reorganization.\n    ///\n    /// This method clears internal caches that may contain stale data\n    /// when a reorganization is detected on the L1 chain. It ensures\n    /// that subsequent derivation operations work with fresh data.\n    ///\n    /// # Usage\n    /// Called automatically when a reorg is detected during pipeline\n    /// stepping, but can also be called manually if needed.\n    fn flush(&mut self);\n\n    /// Produces payload attributes for the next block after the given L2 safe head.\n    ///\n    /// This method advances the derivation pipeline to produce the next set of\n    /// [`OpAttributesWithParent`] that can be used for block building. It handles\n    /// the complex stepping logic including error recovery, resets, and reorgs.\n    ///\n    /// # Arguments\n    /// * `l2_safe_head` - The current L2 safe head block info to build upon\n    ///\n    /// # Returns\n    /// * `Ok(OpAttributesWithParent)` - Successfully produced payload attributes\n    /// * `Err(PipelineErrorKind)` - Pipeline error preventing payload production\n    ///\n    /// # Errors\n    /// This method can fail with various error types:\n    /// - **Temporary errors**: Insufficient data, retries automatically\n    /// - **Reset errors**: Reorg detected or activation needed, triggers pipeline reset\n    /// - **Critical errors**: Fatal issues that require external intervention\n    ///\n    /// # Behavior\n    /// The method operates in a loop, continuously stepping the pipeline until:\n    /// 1. Payload attributes are successfully produced\n    /// 2. A critical error occurs\n    /// 3. The pipeline signals completion\n    ///\n    /// ## Reset Handling\n    /// When reset errors occur:\n    /// - **Reorg detected**: Flushes cache and resets to safe head\n    /// - **Holocene activation**: Sends activation signal\n    /// - **Other resets**: Standard reset to safe head with system config\n    ///\n    /// ## Step Results\n    /// The pipeline can return different step results:\n    /// - **`PreparedAttributes`**: Attributes ready for the next block\n    /// - **`AdvancedOrigin`**: L1 origin moved forward\n    /// - **OriginAdvanceErr/StepFailed**: Various error conditions\n    async fn produce_payload(\n        &mut self,\n        l2_safe_head: L2BlockInfo,\n    ) -> Result<OpAttributesWithParent, PipelineErrorKind> {\n        // As we start the safe head at the disputed block's parent, we step the pipeline until the\n        // first attributes are produced. All batches at and before the safe head will be\n        // dropped, so the first payload will always be the disputed one.\n        loop {\n            match self.step(l2_safe_head).await {\n                StepResult::PreparedAttributes => {\n                    info!(target: \"client_derivation_driver\", \"Stepped derivation pipeline\")\n                }\n                StepResult::AdvancedOrigin => {\n                    info!(\n                        target: \"client_derivation_driver\",\n                        l1_block_number = self.origin().map(|o| o.number).ok_or(PipelineError::MissingOrigin.crit())?,\n                        \"Advanced origin\"\n                    )\n                }\n                StepResult::OriginAdvanceErr(e) | StepResult::StepFailed(e) => {\n                    // Break the loop unless the error signifies that there is not enough data to\n                    // complete the current step. In this case, we retry the step to see if other\n                    // stages can make progress.\n                    match e {\n                        PipelineErrorKind::Temporary(_) => {\n                            trace!(target: \"client_derivation_driver\", \"Failed to step derivation pipeline temporarily: {:?}\", e);\n                            continue;\n                        }\n                        PipelineErrorKind::Reset(e) => {\n                            warn!(target: \"client_derivation_driver\", \"Failed to step derivation pipeline due to reset: {:?}\", e);\n\n                            if matches!(e, ResetError::HoloceneActivation) {\n                                self.signal(Signal::Activation(ActivationSignal { l2_safe_head }))\n                                    .await?;\n                            } else {\n                                // Flushes cache if a reorg is detected.\n                                if matches!(e, ResetError::ReorgDetected(_, _)) {\n                                    self.flush();\n                                }\n\n                                self.signal(Signal::Reset(ResetSignal { l2_safe_head })).await?;\n                            }\n                        }\n                        PipelineErrorKind::Critical(_) => {\n                            warn!(target: \"client_derivation_driver\", \"Failed to step derivation pipeline: {:?}\", e);\n                            return Err(e);\n                        }\n                    }\n                }\n            }\n\n            if let Some(attrs) = self.next() {\n                return Ok(attrs);\n            }\n        }\n    }\n}","resolutions":{"9fa846564f4071bd":{"status":"differs","coveredLines":140,"match":{"origin":"own","collection":"optimism","relation":{"type":"own"},"rank":0,"matchedBy":"name","auditedName":"pipeline.rs","similarity":0.803,"reportId":"optimism/cantina-kona-2026-03","repository":"op-rs/kona","path":"crates/proof/driver/src/pipeline.rs","commit":"86910c9112437bbb849eca28961f813c5450e103","commitTimestamp":"2025-12-15T17:17:05Z","url":"https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/crates/proof/driver/src/pipeline.rs","auditStatus":"audited_with_no_major_findings","reviewPhase":"initial audit","coverage":"Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). Proof driver, cursor and pipeline; Low findings 3.4.10, 3.4.11, 3.4.19 and Informational 3.5.10 located here.","majorFindings":0,"isLatestVersion":true,"laterAuditedVersionExists":false,"totalVersions":1},"diff":{"added":3,"removed":23,"ignoredAdded":3,"ignoredRemoved":7,"unchanged":140,"ignoredOnly":false,"hunks":[{"oldStart":9,"oldLines":7,"newStart":9,"newLines":7,"lines":[{"type":" ","oldLine":9,"newLine":9,"text":"use kona_protocol::{L2BlockInfo, OpAttributesWithParent};"},{"type":" ","oldLine":10,"newLine":10,"text":""},{"type":" ","oldLine":11,"newLine":11,"text":"use kona_derive::{"},{"type":"-","oldLine":12,"text":"    ActivationSignal, Pipeline, PipelineError, PipelineErrorKind, ResetError, ResetSignal,","ignored":false},{"type":"+","newLine":12,"text":"    ActivationSignal, Pipeline, PipelineError, PipelineErrorKind, ResetError, ResetSignal, Signal,","ignored":false},{"type":" ","oldLine":13,"newLine":13,"text":"    SignalReceiver, StepResult,"},{"type":" ","oldLine":14,"newLine":14,"text":"};"},{"type":" ","oldLine":15,"newLine":15,"text":""}]},{"oldStart":81,"oldLines":8,"newStart":81,"newLines":8,"lines":[{"type":" ","oldLine":81,"newLine":81,"text":"    ///"},{"type":" ","oldLine":82,"newLine":82,"text":"    /// ## Step Results"},{"type":" ","oldLine":83,"newLine":83,"text":"    /// The pipeline can return different step results:"},{"type":"-","oldLine":84,"text":"    /// - **PreparedAttributes**: Attributes ready for the next block","ignored":true},{"type":"-","oldLine":85,"text":"    /// - **AdvancedOrigin**: L1 origin moved forward","ignored":true},{"type":"+","newLine":84,"text":"    /// - **`PreparedAttributes`**: Attributes ready for the next block","ignored":true},{"type":"+","newLine":85,"text":"    /// - **`AdvancedOrigin`**: L1 origin moved forward","ignored":true},{"type":" ","oldLine":86,"newLine":86,"text":"    /// - **OriginAdvanceErr/StepFailed**: Various error conditions"},{"type":" ","oldLine":87,"newLine":87,"text":"    async fn produce_payload("},{"type":" ","oldLine":88,"newLine":88,"text":"        &mut self,"}]},{"oldStart":114,"oldLines":41,"newStart":114,"newLines":17,"lines":[{"type":" ","oldLine":114,"newLine":114,"text":"                        }"},{"type":" ","oldLine":115,"newLine":115,"text":"                        PipelineErrorKind::Reset(e) => {"},{"type":" ","oldLine":116,"newLine":116,"text":"                            warn!(target: \"client_derivation_driver\", \"Failed to step derivation pipeline due to reset: {:?}\", e);"},{"type":"-","oldLine":117,"text":"                            let system_config = self","ignored":false},{"type":"-","oldLine":118,"text":"                                .system_config_by_number(l2_safe_head.block_info.number)","ignored":false},{"type":"-","oldLine":119,"text":"                                .await?;","ignored":true},{"type":" ","oldLine":120,"newLine":117,"text":""},{"type":" ","oldLine":121,"newLine":118,"text":"                            if matches!(e, ResetError::HoloceneActivation) {"},{"type":"-","oldLine":122,"text":"                                let l1_origin =","ignored":false},{"type":"-","oldLine":123,"text":"                                    self.origin().ok_or(PipelineError::MissingOrigin.crit())?;","ignored":false},{"type":"-","oldLine":124,"text":"                                self.signal(","ignored":false},{"type":"-","oldLine":125,"text":"                                    ActivationSignal {","ignored":false},{"type":"-","oldLine":126,"text":"                                        l2_safe_head,","ignored":false},{"type":"-","oldLine":127,"text":"                                        l1_origin,","ignored":false},{"type":"-","oldLine":128,"text":"                                        system_config: Some(system_config),","ignored":false},{"type":"-","oldLine":129,"text":"                                    }","ignored":false},{"type":"-","oldLine":130,"text":"                                    .signal(),","ignored":false},{"type":"-","oldLine":131,"text":"                                )","ignored":false},{"type":"-","oldLine":132,"text":"                                .await?;","ignored":true},{"type":"+","newLine":119,"text":"                                self.signal(Signal::Activation(ActivationSignal { l2_safe_head }))","ignored":false},{"type":"+","newLine":120,"text":"                                    .await?;","ignored":true},{"type":" ","oldLine":133,"newLine":121,"text":"                            } else {"},{"type":" ","oldLine":134,"newLine":122,"text":"                                // Flushes cache if a reorg is detected."},{"type":" ","oldLine":135,"newLine":123,"text":"                                if matches!(e, ResetError::ReorgDetected(_, _)) {"},{"type":" ","oldLine":136,"newLine":124,"text":"                                    self.flush();"},{"type":" ","oldLine":137,"newLine":125,"text":"                                }"},{"type":" ","oldLine":138,"newLine":126,"text":""},{"type":"-","oldLine":139,"text":"                                // Reset the pipeline to the initial L2 safe head and L1 origin,","ignored":true},{"type":"-","oldLine":140,"text":"                                // and try again.","ignored":true},{"type":"-","oldLine":141,"text":"                                let l1_origin =","ignored":false},{"type":"-","oldLine":142,"text":"                                    self.origin().ok_or(PipelineError::MissingOrigin.crit())?;","ignored":false},{"type":"-","oldLine":143,"text":"                                self.signal(","ignored":false},{"type":"-","oldLine":144,"text":"                                    ResetSignal {","ignored":false},{"type":"-","oldLine":145,"text":"                                        l2_safe_head,","ignored":false},{"type":"-","oldLine":146,"text":"                                        l1_origin,","ignored":false},{"type":"-","oldLine":147,"text":"                                        system_config: Some(system_config),","ignored":false},{"type":"-","oldLine":148,"text":"                                    }","ignored":false},{"type":"-","oldLine":149,"text":"                                    .signal(),","ignored":false},{"type":"-","oldLine":150,"text":"                                )","ignored":false},{"type":"-","oldLine":151,"text":"                                .await?;","ignored":true},{"type":"+","newLine":127,"text":"                                self.signal(Signal::Reset(ResetSignal { l2_safe_head })).await?;","ignored":false},{"type":" ","oldLine":152,"newLine":128,"text":"                            }"},{"type":" ","oldLine":153,"newLine":129,"text":"                        }"},{"type":" ","oldLine":154,"newLine":130,"text":"                        PipelineErrorKind::Critical(_) => {"}]}]},"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "da3f40eb146fc920bea28a0c3423e3d6e40de7d4661b508844dff4259460cff1",
+  "name": "pipeline.rs",
+  "kind": "program",
+  "lines": 143,
+  "source": "//! Abstracts the derivation pipeline from the driver.\n//!\n//! This module provides the [`DriverPipeline`] trait which serves as a high-level\n//! abstraction for the driver's derivation pipeline. The pipeline is responsible\n//! for deriving L2 blocks from L1 data and producing payload attributes for execution.\n\nuse alloc::boxed::Box;\nuse async_trait::async_trait;\nuse kona_protocol::{L2BlockInfo, OpAttributesWithParent};\n\nuse kona_derive::{\n    ActivationSignal, Pipeline, PipelineError, PipelineErrorKind, ResetError, ResetSignal, Signal,\n    SignalReceiver, StepResult,\n};\n\n/// High-level abstraction for the driver's derivation pipeline.\n///\n/// The [`DriverPipeline`] trait extends the base [`Pipeline`] functionality with\n/// driver-specific operations needed for block production. It handles the complex\n/// logic of stepping through derivation stages, managing resets and reorgs, and\n/// producing payload attributes for block building.\n///\n/// ## Key Responsibilities\n/// - Stepping through derivation pipeline stages\n/// - Handling L1 origin advancement\n/// - Managing pipeline resets due to reorgs or activation signals\n/// - Producing payload attributes for disputed blocks\n/// - Caching and cache invalidation\n///\n/// ## Error Handling\n/// The pipeline can encounter several types of errors:\n/// - **Temporary**: Retryable errors (e.g., missing data)\n/// - **Reset**: Errors requiring pipeline reset (e.g., reorgs, activations)\n/// - **Critical**: Fatal errors that stop derivation\n#[async_trait]\npub trait DriverPipeline<P>: Pipeline + SignalReceiver\nwhere\n    P: Pipeline + SignalReceiver,\n{\n    /// Flushes any cached data due to a reorganization.\n    ///\n    /// This method clears internal caches that may contain stale data\n    /// when a reorganization is detected on the L1 chain. It ensures\n    /// that subsequent derivation operations work with fresh data.\n    ///\n    /// # Usage\n    /// Called automatically when a reorg is detected during pipeline\n    /// stepping, but can also be called manually if needed.\n    fn flush(&mut self);\n\n    /// Produces payload attributes for the next block after the given L2 safe head.\n    ///\n    /// This method advances the derivation pipeline to produce the next set of\n    /// [`OpAttributesWithParent`] that can be used for block building. It handles\n    /// the complex stepping logic including error recovery, resets, and reorgs.\n    ///\n    /// # Arguments\n    /// * `l2_safe_head` - The current L2 safe head block info to build upon\n    ///\n    /// # Returns\n    /// * `Ok(OpAttributesWithParent)` - Successfully produced payload attributes\n    /// * `Err(PipelineErrorKind)` - Pipeline error preventing payload production\n    ///\n    /// # Errors\n    /// This method can fail with various error types:\n    /// - **Temporary errors**: Insufficient data, retries automatically\n    /// - **Reset errors**: Reorg detected or activation needed, triggers pipeline reset\n    /// - **Critical errors**: Fatal issues that require external intervention\n    ///\n    /// # Behavior\n    /// The method operates in a loop, continuously stepping the pipeline until:\n    /// 1. Payload attributes are successfully produced\n    /// 2. A critical error occurs\n    /// 3. The pipeline signals completion\n    ///\n    /// ## Reset Handling\n    /// When reset errors occur:\n    /// - **Reorg detected**: Flushes cache and resets to safe head\n    /// - **Holocene activation**: Sends activation signal\n    /// - **Other resets**: Standard reset to safe head with system config\n    ///\n    /// ## Step Results\n    /// The pipeline can return different step results:\n    /// - **`PreparedAttributes`**: Attributes ready for the next block\n    /// - **`AdvancedOrigin`**: L1 origin moved forward\n    /// - **OriginAdvanceErr/StepFailed**: Various error conditions\n    async fn produce_payload(\n        &mut self,\n        l2_safe_head: L2BlockInfo,\n    ) -> Result<OpAttributesWithParent, PipelineErrorKind> {\n        // As we start the safe head at the disputed block's parent, we step the pipeline until the\n        // first attributes are produced. All batches at and before the safe head will be\n        // dropped, so the first payload will always be the disputed one.\n        loop {\n            match self.step(l2_safe_head).await {\n                StepResult::PreparedAttributes => {\n                    info!(target: \"client_derivation_driver\", \"Stepped derivation pipeline\")\n                }\n                StepResult::AdvancedOrigin => {\n                    info!(\n                        target: \"client_derivation_driver\",\n                        l1_block_number = self.origin().map(|o| o.number).ok_or(PipelineError::MissingOrigin.crit())?,\n                        \"Advanced origin\"\n                    )\n                }\n                StepResult::OriginAdvanceErr(e) | StepResult::StepFailed(e) => {\n                    // Break the loop unless the error signifies that there is not enough data to\n                    // complete the current step. In this case, we retry the step to see if other\n                    // stages can make progress.\n                    match e {\n                        PipelineErrorKind::Temporary(_) => {\n                            trace!(target: \"client_derivation_driver\", \"Failed to step derivation pipeline temporarily: {:?}\", e);\n                            continue;\n                        }\n                        PipelineErrorKind::Reset(e) => {\n                            warn!(target: \"client_derivation_driver\", \"Failed to step derivation pipeline due to reset: {:?}\", e);\n\n                            if matches!(e, ResetError::HoloceneActivation) {\n                                self.signal(Signal::Activation(ActivationSignal { l2_safe_head }))\n                                    .await?;\n                            } else {\n                                // Flushes cache if a reorg is detected.\n                                if matches!(e, ResetError::ReorgDetected(_, _)) {\n                                    self.flush();\n                                }\n\n                                self.signal(Signal::Reset(ResetSignal { l2_safe_head })).await?;\n                            }\n                        }\n                        PipelineErrorKind::Critical(_) => {\n                            warn!(target: \"client_derivation_driver\", \"Failed to step derivation pipeline: {:?}\", e);\n                            return Err(e);\n                        }\n                    }\n                }\n            }\n\n            if let Some(attrs) = self.next() {\n                return Ok(attrs);\n            }\n        }\n    }\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "differs",
+      "coveredLines": 140,
+      "match": {
+        "origin": "own",
+        "collection": "optimism",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "pipeline.rs",
+        "similarity": 0.803,
+        "reportId": "optimism/cantina-kona-2026-03",
+        "repository": "op-rs/kona",
+        "path": "crates/proof/driver/src/pipeline.rs",
+        "commit": "86910c9112437bbb849eca28961f813c5450e103",
+        "commitTimestamp": "2025-12-15T17:17:05Z",
+        "url": "https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/crates/proof/driver/src/pipeline.rs",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). Proof driver, cursor and pipeline; Low findings 3.4.10, 3.4.11, 3.4.19 and Informational 3.5.10 located here.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 3,
+        "removed": 23,
+        "ignoredAdded": 3,
+        "ignoredRemoved": 7,
+        "unchanged": 140,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 9,
+            "oldLines": 7,
+            "newStart": 9,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 9,
+                "text": "use kona_protocol::{L2BlockInfo, OpAttributesWithParent};"
+              },
+              { "type": " ", "oldLine": 10, "newLine": 10, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 11,
+                "newLine": 11,
+                "text": "use kona_derive::{"
+              },
+              {
+                "type": "-",
+                "oldLine": 12,
+                "text": "    ActivationSignal, Pipeline, PipelineError, PipelineErrorKind, ResetError, ResetSignal,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 12,
+                "text": "    ActivationSignal, Pipeline, PipelineError, PipelineErrorKind, ResetError, ResetSignal, Signal,",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 13,
+                "newLine": 13,
+                "text": "    SignalReceiver, StepResult,"
+              },
+              { "type": " ", "oldLine": 14, "newLine": 14, "text": "};" },
+              { "type": " ", "oldLine": 15, "newLine": 15, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 81,
+            "oldLines": 8,
+            "newStart": 81,
+            "newLines": 8,
+            "lines": [
+              { "type": " ", "oldLine": 81, "newLine": 81, "text": "    ///" },
+              {
+                "type": " ",
+                "oldLine": 82,
+                "newLine": 82,
+                "text": "    /// ## Step Results"
+              },
+              {
+                "type": " ",
+                "oldLine": 83,
+                "newLine": 83,
+                "text": "    /// The pipeline can return different step results:"
+              },
+              {
+                "type": "-",
+                "oldLine": 84,
+                "text": "    /// - **PreparedAttributes**: Attributes ready for the next block",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 85,
+                "text": "    /// - **AdvancedOrigin**: L1 origin moved forward",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 84,
+                "text": "    /// - **`PreparedAttributes`**: Attributes ready for the next block",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 85,
+                "text": "    /// - **`AdvancedOrigin`**: L1 origin moved forward",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 86,
+                "newLine": 86,
+                "text": "    /// - **OriginAdvanceErr/StepFailed**: Various error conditions"
+              },
+              {
+                "type": " ",
+                "oldLine": 87,
+                "newLine": 87,
+                "text": "    async fn produce_payload("
+              },
+              {
+                "type": " ",
+                "oldLine": 88,
+                "newLine": 88,
+                "text": "        &mut self,"
+              }
+            ]
+          },
+          {
+            "oldStart": 114,
+            "oldLines": 41,
+            "newStart": 114,
+            "newLines": 17,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 114,
+                "newLine": 114,
+                "text": "                        }"
+              },
+              {
+                "type": " ",
+                "oldLine": 115,
+                "newLine": 115,
+                "text": "                        PipelineErrorKind::Reset(e) => {"
+              },
+              {
+                "type": " ",
+                "oldLine": 116,
+                "newLine": 116,
+                "text": "                            warn!(target: \"client_derivation_driver\", \"Failed to step derivation pipeline due to reset: {:?}\", e);"
+              },
+              {
+                "type": "-",
+                "oldLine": 117,
+                "text": "                            let system_config = self",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 118,
+                "text": "                                .system_config_by_number(l2_safe_head.block_info.number)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 119,
+                "text": "                                .await?;",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 120, "newLine": 117, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 121,
+                "newLine": 118,
+                "text": "                            if matches!(e, ResetError::HoloceneActivation) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 122,
+                "text": "                                let l1_origin =",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 123,
+                "text": "                                    self.origin().ok_or(PipelineError::MissingOrigin.crit())?;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 124,
+                "text": "                                self.signal(",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 125,
+                "text": "                                    ActivationSignal {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 126,
+                "text": "                                        l2_safe_head,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 127,
+                "text": "                                        l1_origin,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 128,
+                "text": "                                        system_config: Some(system_config),",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 129,
+                "text": "                                    }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 130,
+                "text": "                                    .signal(),",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 131,
+                "text": "                                )",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 132,
+                "text": "                                .await?;",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 119,
+                "text": "                                self.signal(Signal::Activation(ActivationSignal { l2_safe_head }))",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 120,
+                "text": "                                    .await?;",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 133,
+                "newLine": 121,
+                "text": "                            } else {"
+              },
+              {
+                "type": " ",
+                "oldLine": 134,
+                "newLine": 122,
+                "text": "                                // Flushes cache if a reorg is detected."
+              },
+              {
+                "type": " ",
+                "oldLine": 135,
+                "newLine": 123,
+                "text": "                                if matches!(e, ResetError::ReorgDetected(_, _)) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 136,
+                "newLine": 124,
+                "text": "                                    self.flush();"
+              },
+              {
+                "type": " ",
+                "oldLine": 137,
+                "newLine": 125,
+                "text": "                                }"
+              },
+              { "type": " ", "oldLine": 138, "newLine": 126, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 139,
+                "text": "                                // Reset the pipeline to the initial L2 safe head and L1 origin,",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 140,
+                "text": "                                // and try again.",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 141,
+                "text": "                                let l1_origin =",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 142,
+                "text": "                                    self.origin().ok_or(PipelineError::MissingOrigin.crit())?;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 143,
+                "text": "                                self.signal(",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 144,
+                "text": "                                    ResetSignal {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 145,
+                "text": "                                        l2_safe_head,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 146,
+                "text": "                                        l1_origin,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 147,
+                "text": "                                        system_config: Some(system_config),",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 148,
+                "text": "                                    }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 149,
+                "text": "                                    .signal(),",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 150,
+                "text": "                                )",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 151,
+                "text": "                                .await?;",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 127,
+                "text": "                                self.signal(Signal::Reset(ResetSignal { l2_safe_head })).await?;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 152,
+                "newLine": 128,
+                "text": "                            }"
+              },
+              {
+                "type": " ",
+                "oldLine": 153,
+                "newLine": 129,
+                "text": "                        }"
+              },
+              {
+                "type": " ",
+                "oldLine": 154,
+                "newLine": 130,
+                "text": "                        PipelineErrorKind::Critical(_) => {"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

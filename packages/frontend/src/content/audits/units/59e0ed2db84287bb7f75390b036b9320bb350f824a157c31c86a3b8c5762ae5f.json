@@ -1,1 +1,561 @@
-{"schemaVersion":2,"unitHash":"59e0ed2db84287bb7f75390b036b9320bb350f824a157c31c86a3b8c5762ae5f","name":"test_utils.rs","kind":"program","lines":190,"source":"//! Test utilities for accelerated precompiles.\n\nuse alloy_primitives::{Address, Bytes, keccak256};\nuse async_trait::async_trait;\nuse kona_preimage::{\n    BidirectionalChannel, HintReader, HintReaderServer, HintRouter, HintWriter, NativeChannel,\n    OracleReader, OracleServer, PreimageFetcher, PreimageKey, PreimageKeyType,\n    PreimageOracleServer,\n    errors::{PreimageOracleError, PreimageOracleResult},\n};\nuse kona_proof::{Hint, HintType};\nuse revm::precompile::PrecompileResult;\nuse std::{collections::HashMap, sync::Arc};\nuse tokio::sync::{Mutex, RwLock};\n\n/// Runs a test with a mock host that serves [`HintType::L1Precompile`] hints and preimages. The\n/// closure accepts the client's [`HintWriter`] and [`OracleReader`] as arguments.\npub(crate) async fn test_accelerated_precompile(\n    f: impl Fn(&HintWriter<NativeChannel>, &OracleReader<NativeChannel>) + Send + Sync + 'static,\n) {\n    test_accelerated_precompile_inner(Arc::new(RwLock::new(None)), f).await;\n}\n\n/// The most recent `L1Precompile` hint payload captured by the mock host.\n#[derive(Debug, Clone)]\npub(crate) struct CapturedHint {\n    /// Raw hint payload: `address[20] || gas[8] || input[..]`.\n    pub(crate) data: Vec<u8>,\n}\n\nimpl CapturedHint {\n    /// The 8-byte oracle-gas value the client embedded in the hint.\n    pub(crate) fn oracle_gas(&self) -> u64 {\n        u64::from_be_bytes(self.data[20..28].try_into().unwrap())\n    }\n}\n\n/// Variant of [`test_accelerated_precompile`] that returns the most recent `L1Precompile` hint\n/// payload after the closure completes. Tests use this to assert oracle-gas bytes at offset\n/// 20..28 without reading the lock from inside the (sync) closure.\npub(crate) async fn test_accelerated_precompile_capture_hint(\n    f: impl Fn(&HintWriter<NativeChannel>, &OracleReader<NativeChannel>) + Send + Sync + 'static,\n) -> CapturedHint {\n    let last_hint = Arc::new(RwLock::new(None));\n    test_accelerated_precompile_inner(last_hint.clone(), f).await;\n\n    let guard = last_hint.read().await;\n    let raw = guard.as_ref().expect(\"client did not emit an L1Precompile hint\");\n    let parsed: Hint<HintType> = raw.parse().expect(\"failed to parse captured hint\");\n    CapturedHint { data: parsed.data.as_ref().to_vec() }\n}\n\nasync fn test_accelerated_precompile_inner(\n    last_hint: Arc<RwLock<Option<String>>>,\n    f: impl Fn(&HintWriter<NativeChannel>, &OracleReader<NativeChannel>) + Send + Sync + 'static,\n) {\n    let (hint_chan, preimage_chan) =\n        (BidirectionalChannel::new().unwrap(), BidirectionalChannel::new().unwrap());\n\n    let host = tokio::task::spawn(precompile_host(\n        OracleServer::new(preimage_chan.host),\n        HintReader::new(hint_chan.host),\n        last_hint,\n    ));\n    let client = tokio::task::spawn(async move {\n        let oracle_reader = OracleReader::new(preimage_chan.client);\n        let hint_writer = HintWriter::new(hint_chan.client);\n\n        (f)(&hint_writer, &oracle_reader)\n    });\n\n    tokio::try_join!(host, client).unwrap_or_else(|e| {\n        panic!(\"Failed to join client/host: {e:?}\");\n    });\n}\n\n/// Executes a precompile on [`revm`].\npub(crate) fn execute_native_precompile<T: Into<Bytes>>(\n    address: Address,\n    input: T,\n    gas: u64,\n) -> PrecompileResult {\n    let precompiles =\n        revm::handler::EthPrecompiles::new(revm::primitives::hardfork::SpecId::PRAGUE);\n    let Some(precompile) = precompiles.precompiles.get(&address) else {\n        panic!(\"Precompile not found\");\n    };\n    precompile.execute(&input.into(), gas, 0)\n}\n\n/// Starts a mock host thread that serves [`HintType::L1Precompile`] hints and preimages.\n///\n/// `last_hint` is shared with the caller so tests using\n/// [`test_accelerated_precompile_capture_hint`] can read the most recently routed hint\n/// after the client closure completes.\nasync fn precompile_host(\n    oracle_server: OracleServer<NativeChannel>,\n    hint_reader: HintReader<NativeChannel>,\n    last_hint: Arc<RwLock<Option<String>>>,\n) {\n    let preimage_fetcher =\n        PrecompilePreimageFetcher { map: Default::default(), last_hint: last_hint.clone() };\n    let hint_router = PrecompileHintRouter { last_hint };\n\n    let server = tokio::task::spawn(async move {\n        loop {\n            match oracle_server.next_preimage_request(&preimage_fetcher).await {\n                Ok(_) => continue,\n                Err(PreimageOracleError::IOError(_)) => return,\n                Err(e) => {\n                    panic!(\"Critical: Failed to serve preimage: {e:?}\");\n                }\n            }\n        }\n    });\n    let hint_reader = tokio::task::spawn(async move {\n        loop {\n            match hint_reader.next_hint(&hint_router).await {\n                Ok(_) => continue,\n                Err(PreimageOracleError::IOError(_)) => return,\n                Err(e) => {\n                    panic!(\"Critical: Failed to serve hint: {e:?}\");\n                }\n            }\n        }\n    });\n\n    tokio::try_join!(server, hint_reader).unwrap_or_else(|e| {\n        panic!(\"Failed to join server/hint reader: {e:?}\");\n    });\n}\n\n#[derive(Default, Debug, Clone)]\nstruct PrecompilePreimageFetcher {\n    /// Inner map of preimages.\n    map: Arc<Mutex<HashMap<PreimageKey, Vec<u8>>>>,\n    /// The previous hint received.\n    last_hint: Arc<RwLock<Option<String>>>,\n}\n\n#[async_trait]\nimpl PreimageFetcher for PrecompilePreimageFetcher {\n    async fn get_preimage(&self, key: PreimageKey) -> PreimageOracleResult<Vec<u8>> {\n        let mut map_lock = self.map.lock().await;\n        if let Some(preimage) = map_lock.get(&key) {\n            return Ok(preimage.clone());\n        }\n\n        let last_hint = self.last_hint.read().await;\n        let Some(last_hint) = last_hint.as_ref() else { unreachable!(\"Hint not queued\") };\n\n        let parsed_hint = last_hint.parse::<Hint<HintType>>().unwrap();\n        if matches!(parsed_hint.ty, HintType::L1Precompile) {\n            let address = Address::from_slice(&parsed_hint.data.as_ref()[..20]);\n            let gas = u64::from_be_bytes(parsed_hint.data.as_ref()[20..28].try_into().unwrap());\n            let input = parsed_hint.data[28..].to_vec();\n            let input_hash = keccak256(parsed_hint.data.as_ref());\n\n            let result = match execute_native_precompile(address, input, gas) {\n                Ok(raw_res) if raw_res.is_success() => {\n                    let mut res = Vec::with_capacity(1 + raw_res.bytes.len());\n                    res.push(0x01);\n                    res.extend_from_slice(&raw_res.bytes);\n                    res\n                }\n                _ => vec![0u8; 1],\n            };\n\n            map_lock\n                .insert(PreimageKey::new(*input_hash, PreimageKeyType::Precompile), result.clone());\n            return Ok(result);\n        } else {\n            panic!(\"Unexpected hint type: {:?}\", parsed_hint.ty);\n        }\n    }\n}\n\n#[derive(Default, Debug, Clone)]\nstruct PrecompileHintRouter {\n    /// The latest hint received.\n    last_hint: Arc<RwLock<Option<String>>>,\n}\n\n#[async_trait]\nimpl HintRouter for PrecompileHintRouter {\n    async fn route_hint(&self, hint: String) -> PreimageOracleResult<()> {\n        self.last_hint.write().await.replace(hint);\n        Ok(())\n    }\n}","resolutions":{"9fa846564f4071bd":{"status":"differs","coveredLines":144,"match":{"origin":"own","collection":"optimism","relation":{"type":"own"},"rank":0,"matchedBy":"name","auditedName":"test_utils.rs","similarity":0.812,"reportId":"optimism/cantina-kona-2026-03","repository":"op-rs/kona","path":"bin/client/src/fpvm_evm/precompiles/test_utils.rs","commit":"86910c9112437bbb849eca28961f813c5450e103","commitTimestamp":"2025-12-15T17:17:05Z","url":"https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/bin/client/src/fpvm_evm/precompiles/test_utils.rs","auditStatus":"audited_with_no_major_findings","reviewPhase":"initial audit","coverage":"Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). FPVM EVM factory and accelerated precompiles; finding 3.4.32 (Low) located in precompiles/provider.rs.","majorFindings":0,"isLatestVersion":true,"laterAuditedVersionExists":false,"totalVersions":1},"diff":{"added":46,"removed":9,"ignoredAdded":5,"ignoredRemoved":0,"unchanged":144,"ignoredOnly":false,"hunks":[{"oldStart":18,"oldLines":12,"newStart":18,"newLines":49,"lines":[{"type":" ","oldLine":18,"newLine":18,"text":"pub(crate) async fn test_accelerated_precompile("},{"type":" ","oldLine":19,"newLine":19,"text":"    f: impl Fn(&HintWriter<NativeChannel>, &OracleReader<NativeChannel>) + Send + Sync + 'static,"},{"type":" ","oldLine":20,"newLine":20,"text":") {"},{"type":"+","newLine":21,"text":"    test_accelerated_precompile_inner(Arc::new(RwLock::new(None)), f).await;","ignored":false},{"type":"+","newLine":22,"text":"}","ignored":false},{"type":"+","newLine":23,"text":"","ignored":true},{"type":"+","newLine":24,"text":"/// The most recent `L1Precompile` hint payload captured by the mock host.","ignored":false},{"type":"+","newLine":25,"text":"#[derive(Debug, Clone)]","ignored":false},{"type":"+","newLine":26,"text":"pub(crate) struct CapturedHint {","ignored":false},{"type":"+","newLine":27,"text":"    /// Raw hint payload: `address[20] || gas[8] || input[..]`.","ignored":false},{"type":"+","newLine":28,"text":"    pub(crate) data: Vec<u8>,","ignored":false},{"type":"+","newLine":29,"text":"}","ignored":false},{"type":"+","newLine":30,"text":"","ignored":true},{"type":"+","newLine":31,"text":"impl CapturedHint {","ignored":false},{"type":"+","newLine":32,"text":"    /// The 8-byte oracle-gas value the client embedded in the hint.","ignored":false},{"type":"+","newLine":33,"text":"    pub(crate) fn oracle_gas(&self) -> u64 {","ignored":false},{"type":"+","newLine":34,"text":"        u64::from_be_bytes(self.data[20..28].try_into().unwrap())","ignored":false},{"type":"+","newLine":35,"text":"    }","ignored":false},{"type":"+","newLine":36,"text":"}","ignored":false},{"type":"+","newLine":37,"text":"","ignored":true},{"type":"+","newLine":38,"text":"/// Variant of [`test_accelerated_precompile`] that returns the most recent `L1Precompile` hint","ignored":false},{"type":"+","newLine":39,"text":"/// payload after the closure completes. Tests use this to assert oracle-gas bytes at offset","ignored":false},{"type":"+","newLine":40,"text":"/// 20..28 without reading the lock from inside the (sync) closure.","ignored":false},{"type":"+","newLine":41,"text":"pub(crate) async fn test_accelerated_precompile_capture_hint(","ignored":false},{"type":"+","newLine":42,"text":"    f: impl Fn(&HintWriter<NativeChannel>, &OracleReader<NativeChannel>) + Send + Sync + 'static,","ignored":false},{"type":"+","newLine":43,"text":") -> CapturedHint {","ignored":false},{"type":"+","newLine":44,"text":"    let last_hint = Arc::new(RwLock::new(None));","ignored":false},{"type":"+","newLine":45,"text":"    test_accelerated_precompile_inner(last_hint.clone(), f).await;","ignored":false},{"type":"+","newLine":46,"text":"","ignored":true},{"type":"+","newLine":47,"text":"    let guard = last_hint.read().await;","ignored":false},{"type":"+","newLine":48,"text":"    let raw = guard.as_ref().expect(\"client did not emit an L1Precompile hint\");","ignored":false},{"type":"+","newLine":49,"text":"    let parsed: Hint<HintType> = raw.parse().expect(\"failed to parse captured hint\");","ignored":false},{"type":"+","newLine":50,"text":"    CapturedHint { data: parsed.data.as_ref().to_vec() }","ignored":false},{"type":"+","newLine":51,"text":"}","ignored":false},{"type":"+","newLine":52,"text":"","ignored":true},{"type":"+","newLine":53,"text":"async fn test_accelerated_precompile_inner(","ignored":false},{"type":"+","newLine":54,"text":"    last_hint: Arc<RwLock<Option<String>>>,","ignored":false},{"type":"+","newLine":55,"text":"    f: impl Fn(&HintWriter<NativeChannel>, &OracleReader<NativeChannel>) + Send + Sync + 'static,","ignored":false},{"type":"+","newLine":56,"text":") {","ignored":false},{"type":" ","oldLine":21,"newLine":57,"text":"    let (hint_chan, preimage_chan) ="},{"type":" ","oldLine":22,"newLine":58,"text":"        (BidirectionalChannel::new().unwrap(), BidirectionalChannel::new().unwrap());"},{"type":" ","oldLine":23,"newLine":59,"text":""},{"type":" ","oldLine":24,"newLine":60,"text":"    let host = tokio::task::spawn(precompile_host("},{"type":" ","oldLine":25,"newLine":61,"text":"        OracleServer::new(preimage_chan.host),"},{"type":" ","oldLine":26,"newLine":62,"text":"        HintReader::new(hint_chan.host),"},{"type":"+","newLine":63,"text":"        last_hint,","ignored":false},{"type":" ","oldLine":27,"newLine":64,"text":"    ));"},{"type":" ","oldLine":28,"newLine":65,"text":"    let client = tokio::task::spawn(async move {"},{"type":" ","oldLine":29,"newLine":66,"text":"        let oracle_reader = OracleReader::new(preimage_chan.client);"}]},{"oldStart":43,"oldLines":22,"newStart":80,"newLines":27,"lines":[{"type":" ","oldLine":43,"newLine":80,"text":"    input: T,"},{"type":" ","oldLine":44,"newLine":81,"text":"    gas: u64,"},{"type":" ","oldLine":45,"newLine":82,"text":") -> PrecompileResult {"},{"type":"-","oldLine":46,"text":"    let precompiles = revm::handler::EthPrecompiles::default();","ignored":false},{"type":"+","newLine":83,"text":"    let precompiles =","ignored":false},{"type":"+","newLine":84,"text":"        revm::handler::EthPrecompiles::new(revm::primitives::hardfork::SpecId::PRAGUE);","ignored":false},{"type":" ","oldLine":47,"newLine":85,"text":"    let Some(precompile) = precompiles.precompiles.get(&address) else {"},{"type":" ","oldLine":48,"newLine":86,"text":"        panic!(\"Precompile not found\");"},{"type":" ","oldLine":49,"newLine":87,"text":"    };"},{"type":"-","oldLine":50,"text":"    precompile.execute(&input.into(), gas)","ignored":false},{"type":"+","newLine":88,"text":"    precompile.execute(&input.into(), gas, 0)","ignored":false},{"type":" ","oldLine":51,"newLine":89,"text":"}"},{"type":" ","oldLine":52,"newLine":90,"text":""},{"type":" ","oldLine":53,"newLine":91,"text":"/// Starts a mock host thread that serves [`HintType::L1Precompile`] hints and preimages."},{"type":"+","newLine":92,"text":"///","ignored":false},{"type":"+","newLine":93,"text":"/// `last_hint` is shared with the caller so tests using","ignored":false},{"type":"+","newLine":94,"text":"/// [`test_accelerated_precompile_capture_hint`] can read the most recently routed hint","ignored":false},{"type":"+","newLine":95,"text":"/// after the client closure completes.","ignored":false},{"type":" ","oldLine":54,"newLine":96,"text":"async fn precompile_host("},{"type":" ","oldLine":55,"newLine":97,"text":"    oracle_server: OracleServer<NativeChannel>,"},{"type":" ","oldLine":56,"newLine":98,"text":"    hint_reader: HintReader<NativeChannel>,"},{"type":"+","newLine":99,"text":"    last_hint: Arc<RwLock<Option<String>>>,","ignored":false},{"type":" ","oldLine":57,"newLine":100,"text":") {"},{"type":"-","oldLine":58,"text":"    let last_hint = Arc::new(RwLock::new(None));","ignored":false},{"type":" ","oldLine":59,"newLine":101,"text":"    let preimage_fetcher ="},{"type":" ","oldLine":60,"newLine":102,"text":"        PrecompilePreimageFetcher { map: Default::default(), last_hint: last_hint.clone() };"},{"type":"-","oldLine":61,"text":"    let hint_router = PrecompileHintRouter { last_hint: last_hint.clone() };","ignored":false},{"type":"+","newLine":103,"text":"    let hint_router = PrecompileHintRouter { last_hint };","ignored":false},{"type":" ","oldLine":62,"newLine":104,"text":""},{"type":" ","oldLine":63,"newLine":105,"text":"    let server = tokio::task::spawn(async move {"},{"type":" ","oldLine":64,"newLine":106,"text":"        loop {"}]},{"oldStart":114,"oldLines":15,"newStart":156,"newLines":15,"lines":[{"type":" ","oldLine":114,"newLine":156,"text":"            let input = parsed_hint.data[28..].to_vec();"},{"type":" ","oldLine":115,"newLine":157,"text":"            let input_hash = keccak256(parsed_hint.data.as_ref());"},{"type":" ","oldLine":116,"newLine":158,"text":""},{"type":"-","oldLine":117,"text":"            let result = execute_native_precompile(address, input, gas).map_or_else(","ignored":false},{"type":"-","oldLine":118,"text":"                |_| vec![0u8; 1],","ignored":false},{"type":"-","oldLine":119,"text":"                |raw_res| {","ignored":false},{"type":"+","newLine":159,"text":"            let result = match execute_native_precompile(address, input, gas) {","ignored":false},{"type":"+","newLine":160,"text":"                Ok(raw_res) if raw_res.is_success() => {","ignored":false},{"type":" ","oldLine":120,"newLine":161,"text":"                    let mut res = Vec::with_capacity(1 + raw_res.bytes.len());"},{"type":" ","oldLine":121,"newLine":162,"text":"                    res.push(0x01);"},{"type":" ","oldLine":122,"newLine":163,"text":"                    res.extend_from_slice(&raw_res.bytes);"},{"type":" ","oldLine":123,"newLine":164,"text":"                    res"},{"type":"-","oldLine":124,"text":"                },","ignored":false},{"type":"-","oldLine":125,"text":"            );","ignored":false},{"type":"+","newLine":165,"text":"                }","ignored":false},{"type":"+","newLine":166,"text":"                _ => vec![0u8; 1],","ignored":false},{"type":"+","newLine":167,"text":"            };","ignored":false},{"type":" ","oldLine":126,"newLine":168,"text":""},{"type":" ","oldLine":127,"newLine":169,"text":"            map_lock"},{"type":" ","oldLine":128,"newLine":170,"text":"                .insert(PreimageKey::new(*input_hash, PreimageKeyType::Precompile), result.clone());"}]}]},"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "59e0ed2db84287bb7f75390b036b9320bb350f824a157c31c86a3b8c5762ae5f",
+  "name": "test_utils.rs",
+  "kind": "program",
+  "lines": 190,
+  "source": "//! Test utilities for accelerated precompiles.\n\nuse alloy_primitives::{Address, Bytes, keccak256};\nuse async_trait::async_trait;\nuse kona_preimage::{\n    BidirectionalChannel, HintReader, HintReaderServer, HintRouter, HintWriter, NativeChannel,\n    OracleReader, OracleServer, PreimageFetcher, PreimageKey, PreimageKeyType,\n    PreimageOracleServer,\n    errors::{PreimageOracleError, PreimageOracleResult},\n};\nuse kona_proof::{Hint, HintType};\nuse revm::precompile::PrecompileResult;\nuse std::{collections::HashMap, sync::Arc};\nuse tokio::sync::{Mutex, RwLock};\n\n/// Runs a test with a mock host that serves [`HintType::L1Precompile`] hints and preimages. The\n/// closure accepts the client's [`HintWriter`] and [`OracleReader`] as arguments.\npub(crate) async fn test_accelerated_precompile(\n    f: impl Fn(&HintWriter<NativeChannel>, &OracleReader<NativeChannel>) + Send + Sync + 'static,\n) {\n    test_accelerated_precompile_inner(Arc::new(RwLock::new(None)), f).await;\n}\n\n/// The most recent `L1Precompile` hint payload captured by the mock host.\n#[derive(Debug, Clone)]\npub(crate) struct CapturedHint {\n    /// Raw hint payload: `address[20] || gas[8] || input[..]`.\n    pub(crate) data: Vec<u8>,\n}\n\nimpl CapturedHint {\n    /// The 8-byte oracle-gas value the client embedded in the hint.\n    pub(crate) fn oracle_gas(&self) -> u64 {\n        u64::from_be_bytes(self.data[20..28].try_into().unwrap())\n    }\n}\n\n/// Variant of [`test_accelerated_precompile`] that returns the most recent `L1Precompile` hint\n/// payload after the closure completes. Tests use this to assert oracle-gas bytes at offset\n/// 20..28 without reading the lock from inside the (sync) closure.\npub(crate) async fn test_accelerated_precompile_capture_hint(\n    f: impl Fn(&HintWriter<NativeChannel>, &OracleReader<NativeChannel>) + Send + Sync + 'static,\n) -> CapturedHint {\n    let last_hint = Arc::new(RwLock::new(None));\n    test_accelerated_precompile_inner(last_hint.clone(), f).await;\n\n    let guard = last_hint.read().await;\n    let raw = guard.as_ref().expect(\"client did not emit an L1Precompile hint\");\n    let parsed: Hint<HintType> = raw.parse().expect(\"failed to parse captured hint\");\n    CapturedHint { data: parsed.data.as_ref().to_vec() }\n}\n\nasync fn test_accelerated_precompile_inner(\n    last_hint: Arc<RwLock<Option<String>>>,\n    f: impl Fn(&HintWriter<NativeChannel>, &OracleReader<NativeChannel>) + Send + Sync + 'static,\n) {\n    let (hint_chan, preimage_chan) =\n        (BidirectionalChannel::new().unwrap(), BidirectionalChannel::new().unwrap());\n\n    let host = tokio::task::spawn(precompile_host(\n        OracleServer::new(preimage_chan.host),\n        HintReader::new(hint_chan.host),\n        last_hint,\n    ));\n    let client = tokio::task::spawn(async move {\n        let oracle_reader = OracleReader::new(preimage_chan.client);\n        let hint_writer = HintWriter::new(hint_chan.client);\n\n        (f)(&hint_writer, &oracle_reader)\n    });\n\n    tokio::try_join!(host, client).unwrap_or_else(|e| {\n        panic!(\"Failed to join client/host: {e:?}\");\n    });\n}\n\n/// Executes a precompile on [`revm`].\npub(crate) fn execute_native_precompile<T: Into<Bytes>>(\n    address: Address,\n    input: T,\n    gas: u64,\n) -> PrecompileResult {\n    let precompiles =\n        revm::handler::EthPrecompiles::new(revm::primitives::hardfork::SpecId::PRAGUE);\n    let Some(precompile) = precompiles.precompiles.get(&address) else {\n        panic!(\"Precompile not found\");\n    };\n    precompile.execute(&input.into(), gas, 0)\n}\n\n/// Starts a mock host thread that serves [`HintType::L1Precompile`] hints and preimages.\n///\n/// `last_hint` is shared with the caller so tests using\n/// [`test_accelerated_precompile_capture_hint`] can read the most recently routed hint\n/// after the client closure completes.\nasync fn precompile_host(\n    oracle_server: OracleServer<NativeChannel>,\n    hint_reader: HintReader<NativeChannel>,\n    last_hint: Arc<RwLock<Option<String>>>,\n) {\n    let preimage_fetcher =\n        PrecompilePreimageFetcher { map: Default::default(), last_hint: last_hint.clone() };\n    let hint_router = PrecompileHintRouter { last_hint };\n\n    let server = tokio::task::spawn(async move {\n        loop {\n            match oracle_server.next_preimage_request(&preimage_fetcher).await {\n                Ok(_) => continue,\n                Err(PreimageOracleError::IOError(_)) => return,\n                Err(e) => {\n                    panic!(\"Critical: Failed to serve preimage: {e:?}\");\n                }\n            }\n        }\n    });\n    let hint_reader = tokio::task::spawn(async move {\n        loop {\n            match hint_reader.next_hint(&hint_router).await {\n                Ok(_) => continue,\n                Err(PreimageOracleError::IOError(_)) => return,\n                Err(e) => {\n                    panic!(\"Critical: Failed to serve hint: {e:?}\");\n                }\n            }\n        }\n    });\n\n    tokio::try_join!(server, hint_reader).unwrap_or_else(|e| {\n        panic!(\"Failed to join server/hint reader: {e:?}\");\n    });\n}\n\n#[derive(Default, Debug, Clone)]\nstruct PrecompilePreimageFetcher {\n    /// Inner map of preimages.\n    map: Arc<Mutex<HashMap<PreimageKey, Vec<u8>>>>,\n    /// The previous hint received.\n    last_hint: Arc<RwLock<Option<String>>>,\n}\n\n#[async_trait]\nimpl PreimageFetcher for PrecompilePreimageFetcher {\n    async fn get_preimage(&self, key: PreimageKey) -> PreimageOracleResult<Vec<u8>> {\n        let mut map_lock = self.map.lock().await;\n        if let Some(preimage) = map_lock.get(&key) {\n            return Ok(preimage.clone());\n        }\n\n        let last_hint = self.last_hint.read().await;\n        let Some(last_hint) = last_hint.as_ref() else { unreachable!(\"Hint not queued\") };\n\n        let parsed_hint = last_hint.parse::<Hint<HintType>>().unwrap();\n        if matches!(parsed_hint.ty, HintType::L1Precompile) {\n            let address = Address::from_slice(&parsed_hint.data.as_ref()[..20]);\n            let gas = u64::from_be_bytes(parsed_hint.data.as_ref()[20..28].try_into().unwrap());\n            let input = parsed_hint.data[28..].to_vec();\n            let input_hash = keccak256(parsed_hint.data.as_ref());\n\n            let result = match execute_native_precompile(address, input, gas) {\n                Ok(raw_res) if raw_res.is_success() => {\n                    let mut res = Vec::with_capacity(1 + raw_res.bytes.len());\n                    res.push(0x01);\n                    res.extend_from_slice(&raw_res.bytes);\n                    res\n                }\n                _ => vec![0u8; 1],\n            };\n\n            map_lock\n                .insert(PreimageKey::new(*input_hash, PreimageKeyType::Precompile), result.clone());\n            return Ok(result);\n        } else {\n            panic!(\"Unexpected hint type: {:?}\", parsed_hint.ty);\n        }\n    }\n}\n\n#[derive(Default, Debug, Clone)]\nstruct PrecompileHintRouter {\n    /// The latest hint received.\n    last_hint: Arc<RwLock<Option<String>>>,\n}\n\n#[async_trait]\nimpl HintRouter for PrecompileHintRouter {\n    async fn route_hint(&self, hint: String) -> PreimageOracleResult<()> {\n        self.last_hint.write().await.replace(hint);\n        Ok(())\n    }\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "differs",
+      "coveredLines": 144,
+      "match": {
+        "origin": "own",
+        "collection": "optimism",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "test_utils.rs",
+        "similarity": 0.812,
+        "reportId": "optimism/cantina-kona-2026-03",
+        "repository": "op-rs/kona",
+        "path": "bin/client/src/fpvm_evm/precompiles/test_utils.rs",
+        "commit": "86910c9112437bbb849eca28961f813c5450e103",
+        "commitTimestamp": "2025-12-15T17:17:05Z",
+        "url": "https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/bin/client/src/fpvm_evm/precompiles/test_utils.rs",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). FPVM EVM factory and accelerated precompiles; finding 3.4.32 (Low) located in precompiles/provider.rs.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 46,
+        "removed": 9,
+        "ignoredAdded": 5,
+        "ignoredRemoved": 0,
+        "unchanged": 144,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 18,
+            "oldLines": 12,
+            "newStart": 18,
+            "newLines": 49,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 18,
+                "newLine": 18,
+                "text": "pub(crate) async fn test_accelerated_precompile("
+              },
+              {
+                "type": " ",
+                "oldLine": 19,
+                "newLine": 19,
+                "text": "    f: impl Fn(&HintWriter<NativeChannel>, &OracleReader<NativeChannel>) + Send + Sync + 'static,"
+              },
+              { "type": " ", "oldLine": 20, "newLine": 20, "text": ") {" },
+              {
+                "type": "+",
+                "newLine": 21,
+                "text": "    test_accelerated_precompile_inner(Arc::new(RwLock::new(None)), f).await;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 22, "text": "}", "ignored": false },
+              { "type": "+", "newLine": 23, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 24,
+                "text": "/// The most recent `L1Precompile` hint payload captured by the mock host.",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 25,
+                "text": "#[derive(Debug, Clone)]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 26,
+                "text": "pub(crate) struct CapturedHint {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 27,
+                "text": "    /// Raw hint payload: `address[20] || gas[8] || input[..]`.",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 28,
+                "text": "    pub(crate) data: Vec<u8>,",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 29, "text": "}", "ignored": false },
+              { "type": "+", "newLine": 30, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 31,
+                "text": "impl CapturedHint {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 32,
+                "text": "    /// The 8-byte oracle-gas value the client embedded in the hint.",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 33,
+                "text": "    pub(crate) fn oracle_gas(&self) -> u64 {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 34,
+                "text": "        u64::from_be_bytes(self.data[20..28].try_into().unwrap())",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 35, "text": "    }", "ignored": false },
+              { "type": "+", "newLine": 36, "text": "}", "ignored": false },
+              { "type": "+", "newLine": 37, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 38,
+                "text": "/// Variant of [`test_accelerated_precompile`] that returns the most recent `L1Precompile` hint",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 39,
+                "text": "/// payload after the closure completes. Tests use this to assert oracle-gas bytes at offset",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 40,
+                "text": "/// 20..28 without reading the lock from inside the (sync) closure.",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 41,
+                "text": "pub(crate) async fn test_accelerated_precompile_capture_hint(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 42,
+                "text": "    f: impl Fn(&HintWriter<NativeChannel>, &OracleReader<NativeChannel>) + Send + Sync + 'static,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 43,
+                "text": ") -> CapturedHint {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 44,
+                "text": "    let last_hint = Arc::new(RwLock::new(None));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 45,
+                "text": "    test_accelerated_precompile_inner(last_hint.clone(), f).await;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 46, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 47,
+                "text": "    let guard = last_hint.read().await;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 48,
+                "text": "    let raw = guard.as_ref().expect(\"client did not emit an L1Precompile hint\");",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 49,
+                "text": "    let parsed: Hint<HintType> = raw.parse().expect(\"failed to parse captured hint\");",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 50,
+                "text": "    CapturedHint { data: parsed.data.as_ref().to_vec() }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 51, "text": "}", "ignored": false },
+              { "type": "+", "newLine": 52, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 53,
+                "text": "async fn test_accelerated_precompile_inner(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 54,
+                "text": "    last_hint: Arc<RwLock<Option<String>>>,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 55,
+                "text": "    f: impl Fn(&HintWriter<NativeChannel>, &OracleReader<NativeChannel>) + Send + Sync + 'static,",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 56, "text": ") {", "ignored": false },
+              {
+                "type": " ",
+                "oldLine": 21,
+                "newLine": 57,
+                "text": "    let (hint_chan, preimage_chan) ="
+              },
+              {
+                "type": " ",
+                "oldLine": 22,
+                "newLine": 58,
+                "text": "        (BidirectionalChannel::new().unwrap(), BidirectionalChannel::new().unwrap());"
+              },
+              { "type": " ", "oldLine": 23, "newLine": 59, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 60,
+                "text": "    let host = tokio::task::spawn(precompile_host("
+              },
+              {
+                "type": " ",
+                "oldLine": 25,
+                "newLine": 61,
+                "text": "        OracleServer::new(preimage_chan.host),"
+              },
+              {
+                "type": " ",
+                "oldLine": 26,
+                "newLine": 62,
+                "text": "        HintReader::new(hint_chan.host),"
+              },
+              {
+                "type": "+",
+                "newLine": 63,
+                "text": "        last_hint,",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 27, "newLine": 64, "text": "    ));" },
+              {
+                "type": " ",
+                "oldLine": 28,
+                "newLine": 65,
+                "text": "    let client = tokio::task::spawn(async move {"
+              },
+              {
+                "type": " ",
+                "oldLine": 29,
+                "newLine": 66,
+                "text": "        let oracle_reader = OracleReader::new(preimage_chan.client);"
+              }
+            ]
+          },
+          {
+            "oldStart": 43,
+            "oldLines": 22,
+            "newStart": 80,
+            "newLines": 27,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 43,
+                "newLine": 80,
+                "text": "    input: T,"
+              },
+              {
+                "type": " ",
+                "oldLine": 44,
+                "newLine": 81,
+                "text": "    gas: u64,"
+              },
+              {
+                "type": " ",
+                "oldLine": 45,
+                "newLine": 82,
+                "text": ") -> PrecompileResult {"
+              },
+              {
+                "type": "-",
+                "oldLine": 46,
+                "text": "    let precompiles = revm::handler::EthPrecompiles::default();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 83,
+                "text": "    let precompiles =",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 84,
+                "text": "        revm::handler::EthPrecompiles::new(revm::primitives::hardfork::SpecId::PRAGUE);",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 47,
+                "newLine": 85,
+                "text": "    let Some(precompile) = precompiles.precompiles.get(&address) else {"
+              },
+              {
+                "type": " ",
+                "oldLine": 48,
+                "newLine": 86,
+                "text": "        panic!(\"Precompile not found\");"
+              },
+              { "type": " ", "oldLine": 49, "newLine": 87, "text": "    };" },
+              {
+                "type": "-",
+                "oldLine": 50,
+                "text": "    precompile.execute(&input.into(), gas)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 88,
+                "text": "    precompile.execute(&input.into(), gas, 0)",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 51, "newLine": 89, "text": "}" },
+              { "type": " ", "oldLine": 52, "newLine": 90, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 53,
+                "newLine": 91,
+                "text": "/// Starts a mock host thread that serves [`HintType::L1Precompile`] hints and preimages."
+              },
+              { "type": "+", "newLine": 92, "text": "///", "ignored": false },
+              {
+                "type": "+",
+                "newLine": 93,
+                "text": "/// `last_hint` is shared with the caller so tests using",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 94,
+                "text": "/// [`test_accelerated_precompile_capture_hint`] can read the most recently routed hint",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 95,
+                "text": "/// after the client closure completes.",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 54,
+                "newLine": 96,
+                "text": "async fn precompile_host("
+              },
+              {
+                "type": " ",
+                "oldLine": 55,
+                "newLine": 97,
+                "text": "    oracle_server: OracleServer<NativeChannel>,"
+              },
+              {
+                "type": " ",
+                "oldLine": 56,
+                "newLine": 98,
+                "text": "    hint_reader: HintReader<NativeChannel>,"
+              },
+              {
+                "type": "+",
+                "newLine": 99,
+                "text": "    last_hint: Arc<RwLock<Option<String>>>,",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 57, "newLine": 100, "text": ") {" },
+              {
+                "type": "-",
+                "oldLine": 58,
+                "text": "    let last_hint = Arc::new(RwLock::new(None));",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 59,
+                "newLine": 101,
+                "text": "    let preimage_fetcher ="
+              },
+              {
+                "type": " ",
+                "oldLine": 60,
+                "newLine": 102,
+                "text": "        PrecompilePreimageFetcher { map: Default::default(), last_hint: last_hint.clone() };"
+              },
+              {
+                "type": "-",
+                "oldLine": 61,
+                "text": "    let hint_router = PrecompileHintRouter { last_hint: last_hint.clone() };",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 103,
+                "text": "    let hint_router = PrecompileHintRouter { last_hint };",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 62, "newLine": 104, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 63,
+                "newLine": 105,
+                "text": "    let server = tokio::task::spawn(async move {"
+              },
+              {
+                "type": " ",
+                "oldLine": 64,
+                "newLine": 106,
+                "text": "        loop {"
+              }
+            ]
+          },
+          {
+            "oldStart": 114,
+            "oldLines": 15,
+            "newStart": 156,
+            "newLines": 15,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 114,
+                "newLine": 156,
+                "text": "            let input = parsed_hint.data[28..].to_vec();"
+              },
+              {
+                "type": " ",
+                "oldLine": 115,
+                "newLine": 157,
+                "text": "            let input_hash = keccak256(parsed_hint.data.as_ref());"
+              },
+              { "type": " ", "oldLine": 116, "newLine": 158, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 117,
+                "text": "            let result = execute_native_precompile(address, input, gas).map_or_else(",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 118,
+                "text": "                |_| vec![0u8; 1],",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 119,
+                "text": "                |raw_res| {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 159,
+                "text": "            let result = match execute_native_precompile(address, input, gas) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 160,
+                "text": "                Ok(raw_res) if raw_res.is_success() => {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 120,
+                "newLine": 161,
+                "text": "                    let mut res = Vec::with_capacity(1 + raw_res.bytes.len());"
+              },
+              {
+                "type": " ",
+                "oldLine": 121,
+                "newLine": 162,
+                "text": "                    res.push(0x01);"
+              },
+              {
+                "type": " ",
+                "oldLine": 122,
+                "newLine": 163,
+                "text": "                    res.extend_from_slice(&raw_res.bytes);"
+              },
+              {
+                "type": " ",
+                "oldLine": 123,
+                "newLine": 164,
+                "text": "                    res"
+              },
+              {
+                "type": "-",
+                "oldLine": 124,
+                "text": "                },",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 125,
+                "text": "            );",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 165,
+                "text": "                }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 166,
+                "text": "                _ => vec![0u8; 1],",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 167,
+                "text": "            };",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 126, "newLine": 168, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 127,
+                "newLine": 169,
+                "text": "            map_lock"
+              },
+              {
+                "type": " ",
+                "oldLine": 128,
+                "newLine": 170,
+                "text": "                .insert(PreimageKey::new(*input_hash, PreimageKeyType::Precompile), result.clone());"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

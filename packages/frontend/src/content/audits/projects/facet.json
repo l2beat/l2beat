@@ -331,9 +331,7 @@
                 "reviewPhase": "Initial audit",
                 "coverage": "File referenced by the report's findings; the report states a review of the Solady repository at this commit without a file-level scope list, so full-file coverage is not established.",
                 "majorFindings": 1,
-                "findingIds": [
-                  "5.2.3"
-                ],
+                "findingIds": ["5.2.3"],
                 "isLatestVersion": false,
                 "laterAuditedVersionExists": true,
                 "totalVersions": 3
@@ -573,9 +571,7 @@
                 "reviewPhase": "Initial audit",
                 "coverage": "File referenced by the report's findings; the report states a review of the Solady repository at this commit without a file-level scope list, so full-file coverage is not established.",
                 "majorFindings": 1,
-                "findingIds": [
-                  "5.2.3"
-                ],
+                "findingIds": ["5.2.3"],
                 "isLatestVersion": false,
                 "laterAuditedVersionExists": true,
                 "totalVersions": 3
@@ -710,10 +706,7 @@
                 "reviewPhase": "initial audit",
                 "coverage": "Second audited commit (last 3 weeks). Same directory scope and exclusions as the first commit; C01 and H01 fixes from the archived repository are contained in this commit, L02/L04/N01 are fixed here per the report.",
                 "majorFindings": 2,
-                "findingIds": [
-                  "C02",
-                  "C04"
-                ],
+                "findingIds": ["C02", "C04"],
                 "isLatestVersion": true,
                 "laterAuditedVersionExists": false,
                 "totalVersions": 2
@@ -1633,10 +1626,7 @@
                 "reviewPhase": "initial audit",
                 "coverage": "Second audited commit (last 3 weeks). Same directory scope and exclusions as the first commit; C01 and H01 fixes from the archived repository are contained in this commit, L02/L04/N01 are fixed here per the report.",
                 "majorFindings": 2,
-                "findingIds": [
-                  "C02",
-                  "C04"
-                ],
+                "findingIds": ["C02", "C04"],
                 "isLatestVersion": true,
                 "laterAuditedVersionExists": false,
                 "totalVersions": 2

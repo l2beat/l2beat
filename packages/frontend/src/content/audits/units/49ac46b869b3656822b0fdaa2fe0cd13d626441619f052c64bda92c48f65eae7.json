@@ -1,1 +1,15 @@
-{"schemaVersion":2,"unitHash":"49ac46b869b3656822b0fdaa2fe0cd13d626441619f052c64bda92c48f65eae7","name":"test_sequencer_preset_test.go","kind":"program","lines":38,"source":"package node_utils\n\nimport (\n\t\"testing\"\n\n\t\"github.com/ethereum-optimism/optimism/op-devstack/sysgo\"\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc TestWithRequiredOpSequencerForTestSequencerAddsDefaultOpGethSequencer(t *testing.T) {\n\tcfg := withRequiredOpSequencerForTestSequencer(L2NodeConfig{\n\t\tKonaSequencerNodesWithReth: 1,\n\t})\n\n\trequire.Equal(t, 1, cfg.OpSequencerNodesWithGeth)\n\trequire.Equal(t, 1, cfg.KonaSequencerNodesWithReth)\n\n\tspecs := mixedOpKonaNodeSpecs(cfg)\n\trequire.True(t, hasNodeSpec(specs, sysgo.MixedL2ELOpGeth, sysgo.MixedL2CLOpNode, true))\n}\n\nfunc TestWithRequiredOpSequencerForTestSequencerPreservesExistingOpSequencer(t *testing.T) {\n\tcfg := withRequiredOpSequencerForTestSequencer(L2NodeConfig{\n\t\tOpSequencerNodesWithReth: 2,\n\t})\n\n\trequire.Equal(t, 0, cfg.OpSequencerNodesWithGeth)\n\trequire.Equal(t, 2, cfg.OpSequencerNodesWithReth)\n}\n\nfunc hasNodeSpec(specs []sysgo.MixedSingleChainNodeSpec, elKind sysgo.MixedL2ELKind, clKind sysgo.MixedL2CLKind, isSequencer bool) bool {\n\tfor _, spec := range specs {\n\t\tif spec.ELKind == elKind && spec.CLKind == clKind && spec.IsSequencer == isSequencer {\n\t\t\treturn true\n\t\t}\n\t}\n\treturn false\n}","resolutions":{"9fa846564f4071bd":{"status":"unaudited","coveredLines":0,"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "49ac46b869b3656822b0fdaa2fe0cd13d626441619f052c64bda92c48f65eae7",
+  "name": "test_sequencer_preset_test.go",
+  "kind": "program",
+  "lines": 38,
+  "source": "package node_utils\n\nimport (\n\t\"testing\"\n\n\t\"github.com/ethereum-optimism/optimism/op-devstack/sysgo\"\n\t\"github.com/stretchr/testify/require\"\n)\n\nfunc TestWithRequiredOpSequencerForTestSequencerAddsDefaultOpGethSequencer(t *testing.T) {\n\tcfg := withRequiredOpSequencerForTestSequencer(L2NodeConfig{\n\t\tKonaSequencerNodesWithReth: 1,\n\t})\n\n\trequire.Equal(t, 1, cfg.OpSequencerNodesWithGeth)\n\trequire.Equal(t, 1, cfg.KonaSequencerNodesWithReth)\n\n\tspecs := mixedOpKonaNodeSpecs(cfg)\n\trequire.True(t, hasNodeSpec(specs, sysgo.MixedL2ELOpGeth, sysgo.MixedL2CLOpNode, true))\n}\n\nfunc TestWithRequiredOpSequencerForTestSequencerPreservesExistingOpSequencer(t *testing.T) {\n\tcfg := withRequiredOpSequencerForTestSequencer(L2NodeConfig{\n\t\tOpSequencerNodesWithReth: 2,\n\t})\n\n\trequire.Equal(t, 0, cfg.OpSequencerNodesWithGeth)\n\trequire.Equal(t, 2, cfg.OpSequencerNodesWithReth)\n}\n\nfunc hasNodeSpec(specs []sysgo.MixedSingleChainNodeSpec, elKind sysgo.MixedL2ELKind, clKind sysgo.MixedL2CLKind, isSequencer bool) bool {\n\tfor _, spec := range specs {\n\t\tif spec.ELKind == elKind && spec.CLKind == clKind && spec.IsSequencer == isSequencer {\n\t\t\treturn true\n\t\t}\n\t}\n\treturn false\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

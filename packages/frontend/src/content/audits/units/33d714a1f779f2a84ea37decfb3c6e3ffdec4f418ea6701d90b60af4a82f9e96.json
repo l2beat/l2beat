@@ -1,1 +1,37 @@
-{"schemaVersion":2,"unitHash":"33d714a1f779f2a84ea37decfb3c6e3ffdec4f418ea6701d90b60af4a82f9e96","name":"utils.rs","kind":"program","lines":51,"source":"//! Utility functions for precompiles\n\n/// A macro that generates an async block that sends a hint to the host, constructs a key hash\n/// from the hint data, fetches the result of the precompile run from the host, and returns the\n/// result data.\n///\n/// The macro takes the following arguments:\n/// - `hint_data`: The hint data to send to the host.\n#[macro_export]\nmacro_rules! precompile_run {\n    ($hint_writer:expr, $oracle_reader:expr, $hint_data:expr) => {\n        async move {\n            use alloc::{string::ToString, vec::Vec};\n            use kona_preimage::{PreimageKey, PreimageKeyType, errors::PreimageOracleError};\n            use kona_proof::{HintType, errors::OracleProviderError};\n\n            // Write the hint for the precompile run.\n            let hint_data = $hint_data;\n            HintType::L1Precompile.with_data(hint_data).send($hint_writer).await?;\n\n            // Construct the key hash for the precompile run.\n            let raw_key_data = hint_data.iter().copied().flatten().copied().collect::<Vec<u8>>();\n            let key_hash = alloy_primitives::keccak256(&raw_key_data);\n\n            // Fetch the result of the precompile run from the host.\n            let result_data = $oracle_reader\n                .get(PreimageKey::new(*key_hash, PreimageKeyType::Precompile))\n                .await\n                .map_err(OracleProviderError::Preimage)?;\n\n            // Ensure we've received valid result data.\n            if result_data.is_empty() {\n                return Err(OracleProviderError::Preimage(PreimageOracleError::Other(\n                    \"Invalid result data\".to_string(),\n                )));\n            }\n\n            // Ensure we've not received an error from the host.\n            if result_data[0] == 0 {\n                return Err(OracleProviderError::Preimage(PreimageOracleError::Other(\n                    \"Error executing precompile in host\".to_string(),\n                )));\n            }\n\n            // Return the result data.\n            Ok(result_data[1..].to_vec())\n        }\n    };\n}\n\npub(crate) use precompile_run;","resolutions":{"9fa846564f4071bd":{"status":"identical","coveredLines":51,"match":{"origin":"own","collection":"optimism","relation":{"type":"own"},"rank":0,"matchedBy":"identity","auditedName":"utils.rs","similarity":1,"reportId":"optimism/cantina-kona-2026-03","repository":"op-rs/kona","path":"bin/client/src/fpvm_evm/precompiles/utils.rs","commit":"86910c9112437bbb849eca28961f813c5450e103","commitTimestamp":"2025-12-15T17:17:05Z","url":"https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/bin/client/src/fpvm_evm/precompiles/utils.rs","auditStatus":"audited_with_no_major_findings","reviewPhase":"initial audit","coverage":"Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). FPVM EVM factory and accelerated precompiles; finding 3.4.32 (Low) located in precompiles/provider.rs.","majorFindings":0,"isLatestVersion":true,"laterAuditedVersionExists":false,"totalVersions":1},"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "33d714a1f779f2a84ea37decfb3c6e3ffdec4f418ea6701d90b60af4a82f9e96",
+  "name": "utils.rs",
+  "kind": "program",
+  "lines": 51,
+  "source": "//! Utility functions for precompiles\n\n/// A macro that generates an async block that sends a hint to the host, constructs a key hash\n/// from the hint data, fetches the result of the precompile run from the host, and returns the\n/// result data.\n///\n/// The macro takes the following arguments:\n/// - `hint_data`: The hint data to send to the host.\n#[macro_export]\nmacro_rules! precompile_run {\n    ($hint_writer:expr, $oracle_reader:expr, $hint_data:expr) => {\n        async move {\n            use alloc::{string::ToString, vec::Vec};\n            use kona_preimage::{PreimageKey, PreimageKeyType, errors::PreimageOracleError};\n            use kona_proof::{HintType, errors::OracleProviderError};\n\n            // Write the hint for the precompile run.\n            let hint_data = $hint_data;\n            HintType::L1Precompile.with_data(hint_data).send($hint_writer).await?;\n\n            // Construct the key hash for the precompile run.\n            let raw_key_data = hint_data.iter().copied().flatten().copied().collect::<Vec<u8>>();\n            let key_hash = alloy_primitives::keccak256(&raw_key_data);\n\n            // Fetch the result of the precompile run from the host.\n            let result_data = $oracle_reader\n                .get(PreimageKey::new(*key_hash, PreimageKeyType::Precompile))\n                .await\n                .map_err(OracleProviderError::Preimage)?;\n\n            // Ensure we've received valid result data.\n            if result_data.is_empty() {\n                return Err(OracleProviderError::Preimage(PreimageOracleError::Other(\n                    \"Invalid result data\".to_string(),\n                )));\n            }\n\n            // Ensure we've not received an error from the host.\n            if result_data[0] == 0 {\n                return Err(OracleProviderError::Preimage(PreimageOracleError::Other(\n                    \"Error executing precompile in host\".to_string(),\n                )));\n            }\n\n            // Return the result data.\n            Ok(result_data[1..].to_vec())\n        }\n    };\n}\n\npub(crate) use precompile_run;",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "identical",
+      "coveredLines": 51,
+      "match": {
+        "origin": "own",
+        "collection": "optimism",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "utils.rs",
+        "similarity": 1,
+        "reportId": "optimism/cantina-kona-2026-03",
+        "repository": "op-rs/kona",
+        "path": "bin/client/src/fpvm_evm/precompiles/utils.rs",
+        "commit": "86910c9112437bbb849eca28961f813c5450e103",
+        "commitTimestamp": "2025-12-15T17:17:05Z",
+        "url": "https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/bin/client/src/fpvm_evm/precompiles/utils.rs",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). FPVM EVM factory and accelerated precompiles; finding 3.4.32 (Low) located in precompiles/provider.rs.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "warnings": []
+    }
+  }
+}

@@ -1,4 +1,4 @@
-import { formatInteger } from '@l2beat/shared-pure'
+import { formatDollarValueNumber, formatInteger } from '@l2beat/shared-pure'
 import {
   createColumnHelper,
   getCoreRowModel,
@@ -7,23 +7,24 @@ import {
 } from '@tanstack/react-table'
 import { useState } from 'react'
 import {
+  LineCoverageBar,
+  LineCoverageTooltipContent,
+  UnitStatusBar,
+  UnitStatusBarTooltipContent,
+} from '~/components/audits/AuditCoverageBar'
+import { formatShare, totalUnits } from '~/components/audits/auditStatus'
+import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
 } from '~/components/core/tooltip/Tooltip'
 import { PrimaryCard } from '~/components/primary-card/PrimaryCard'
 import { BasicTable } from '~/components/table/BasicTable'
+import { ValueWithPercentageChange } from '~/components/table/cells/ValueWithPercentageChange'
 import { getCommonProjectColumns } from '~/components/table/common-project-columns/CommonProjectColumns'
 import { TableLink } from '~/components/table/TableLink'
 import { useTable } from '~/hooks/useTable'
 import type { AuditsSummaryEntry } from '~/server/features/audits/types'
-import {
-  LineCoverageBar,
-  LineCoverageTooltipContent,
-  UnitStatusBar,
-  UnitStatusBarTooltipContent,
-} from '../../components/AuditCoverageBar'
-import { formatShare, totalUnits } from '../../components/auditStatus'
 
 const columnHelper = createColumnHelper<AuditsSummaryEntry>()
 
@@ -42,23 +43,41 @@ const columns = [
     enableSorting: false,
     meta: { cellClassName: 'pl-4', headClassName: 'pl-4' },
   }),
+  columnHelper.accessor((e) => e.tvs?.latest, {
+    id: 'tvs',
+    header: 'TVS',
+    cell: (ctx) => {
+      const tvs = ctx.row.original.tvs
+      if (!tvs) return <span className="text-secondary text-sm">-</span>
+      return (
+        <ValueWithPercentageChange
+          change={tvs.change}
+          changePeriod={tvs.changePeriod}
+          containerClassName="justify-end"
+        >
+          {formatDollarValueNumber(tvs.latest)}
+        </ValueWithPercentageChange>
+      )
+    },
+    sortUndefined: 'last',
+    sortDescFirst: true,
+    meta: {
+      align: 'right',
+      tooltip:
+        'Total value secured by the project, as shown on its L2BEAT page.',
+    },
+  }),
   columnHelper.accessor('contracts', {
     header: 'Contracts',
     cell: (ctx) => (
       <span className="font-medium text-sm">
         {formatInteger(ctx.getValue())}
-        {ctx.row.original.contractsWithoutSource > 0 && (
-          <span className="text-secondary">
-            {' '}
-            ({ctx.row.original.contractsWithoutSource} w/o source)
-          </span>
-        )}
       </span>
     ),
     meta: {
-      align: 'right',
+      align: 'center',
       tooltip:
-        'Deployed contracts in the dataset (critical contracts from discovery). Contracts without verified source have no units.',
+        'Deployed contracts in the dataset (critical contracts from discovery). Contracts without verified source are counted but have no units.',
     },
   }),
   columnHelper.accessor((e) => totalUnits(e.coverage.units), {
@@ -143,7 +162,7 @@ const columns = [
   }),
 ]
 
-const initialSorting: SortingState = [{ id: 'linesCovered', desc: true }]
+const initialSorting: SortingState = [{ id: 'tvs', desc: true }]
 
 export function AuditsSummaryTable({
   entries,

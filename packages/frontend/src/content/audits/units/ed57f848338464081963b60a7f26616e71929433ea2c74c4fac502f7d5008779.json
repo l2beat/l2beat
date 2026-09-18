@@ -1,1 +1,15 @@
-{"schemaVersion":2,"unitHash":"ed57f848338464081963b60a7f26616e71929433ea2c74c4fac502f7d5008779","name":"mod.rs","kind":"program","lines":13,"source":"//! Task and its associated types for finalizing an L2 block.\n\nmod task;\npub use task::FinalizeTask;\n\nmod error;\npub use error::FinalizeTaskError;\n\nmod id;\npub use id::FinalizeBlockId;\n\n#[cfg(test)]\nmod task_test;","resolutions":{"9fa846564f4071bd":{"status":"unaudited","coveredLines":0,"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "ed57f848338464081963b60a7f26616e71929433ea2c74c4fac502f7d5008779",
+  "name": "mod.rs",
+  "kind": "program",
+  "lines": 13,
+  "source": "//! Task and its associated types for finalizing an L2 block.\n\nmod task;\npub use task::FinalizeTask;\n\nmod error;\npub use error::FinalizeTaskError;\n\nmod id;\npub use id::FinalizeBlockId;\n\n#[cfg(test)]\nmod task_test;",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

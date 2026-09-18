@@ -1,1 +1,832 @@
-{"schemaVersion":2,"unitHash":"93b676db3d2ed092afe43511a140fb11240fe44d184c969fdc07cde6ea7d5d17","name":"assemble.rs","kind":"program","lines":212,"source":"//! [Header] assembly logic for the [`StatelessL2Builder`].\n\nuse super::StatelessL2Builder;\nuse crate::{\n    ExecutorError, ExecutorResult, TrieDBError, TrieDBProvider,\n    util::{encode_holocene_eip_1559_params, encode_jovian_eip_1559_params},\n};\nuse alloc::vec::Vec;\nuse alloy_consensus::{EMPTY_OMMER_ROOT_HASH, Header, Sealed, TxReceipt};\nuse alloy_eips::{Encodable2718, eip7685::EMPTY_REQUESTS_HASH};\nuse alloy_evm::{EvmFactory, block::BlockExecutionResult};\nuse alloy_op_evm::block::receipt_builder::OpReceiptBuilder;\nuse alloy_primitives::{B256, Sealable, U256, logs_bloom};\nuse alloy_trie::EMPTY_ROOT_HASH;\nuse kona_genesis::RollupConfig;\nuse kona_mpt::{TrieHinter, ordered_trie_with_encoder};\nuse kona_protocol::{OutputRoot, Predeploys};\nuse op_alloy_rpc_types_engine::OpPayloadAttributes;\nuse revm::{context::BlockEnv, database::BundleState};\n\nimpl<P, H, Evm, R> StatelessL2Builder<'_, P, H, Evm, R>\nwhere\n    P: TrieDBProvider,\n    H: TrieHinter,\n    Evm: EvmFactory,\n    R: OpReceiptBuilder,\n    R::Receipt: Encodable2718,\n{\n    /// Seals the block executed from the given [`OpPayloadAttributes`] and [`BlockEnv`], returning\n    /// the computed [Header].\n    pub(crate) fn seal_block(\n        &mut self,\n        attrs: &OpPayloadAttributes,\n        parent_hash: B256,\n        block_env: &BlockEnv,\n        ex_result: &BlockExecutionResult<R::Receipt>,\n        bundle: BundleState,\n    ) -> ExecutorResult<Sealed<Header>> {\n        let timestamp = block_env.timestamp.saturating_to::<u64>();\n\n        // Compute the roots for the block header.\n        let state_root = self.trie_db.state_root(&bundle)?;\n        let transactions_root = ordered_trie_with_encoder(\n            // SAFETY: The OP Stack protocol will never generate a payload attributes with an empty\n            // transactions field. Panicking here is the desired behavior, as it indicates a severe\n            // protocol violation.\n            attrs.transactions.as_ref().expect(\"Transactions must be non-empty\"),\n            |tx, buf| buf.put_slice(tx.as_ref()),\n        )\n        .root();\n        let receipts_root = compute_receipts_root(\n            self.factory.receipt_builder(),\n            &ex_result.receipts,\n            self.config,\n            timestamp,\n        );\n        let withdrawals_root = if self.config.is_isthmus_active(timestamp) {\n            Some(self.message_passer_account()?)\n        } else if self.config.is_canyon_active(timestamp) {\n            Some(EMPTY_ROOT_HASH)\n        } else {\n            None\n        };\n\n        // Compute the logs bloom from the receipts generated during block execution.\n        let logs_bloom = logs_bloom(ex_result.receipts.iter().flat_map(|r| r.logs()));\n\n        // Compute Cancun fields, if active.\n        let (blob_gas_used, excess_blob_gas) = if self.config.is_jovian_active(timestamp) {\n            (Some(ex_result.blob_gas_used), Some(0))\n        } else if self.config.is_ecotone_active(timestamp) {\n            (Some(0), Some(0))\n        } else {\n            Default::default()\n        };\n\n        // At holocene activation, the base fee parameters from the payload are placed\n        // into the Header's `extra_data` field.\n        //\n        // If the payload's `eip_1559_params` are equal to `0`, then the header's `extraData`\n        // field is set to the encoded canyon base fee parameters.\n        let encoded_base_fee_params = match self.config {\n            config if config.is_jovian_active(timestamp) => {\n                let extra_data = encode_jovian_eip_1559_params(self.config, attrs)?;\n                Ok(extra_data)\n            }\n            config if config.is_holocene_active(timestamp) => {\n                encode_holocene_eip_1559_params(self.config, attrs)\n            }\n            _ => Ok(Default::default()),\n        }?;\n\n        // The requests hash on the OP Stack, if Isthmus is active, is always the empty SHA256 hash.\n        let requests_hash = self.config.is_isthmus_active(timestamp).then_some(EMPTY_REQUESTS_HASH);\n\n        // Construct the new header.\n        let header = Header {\n            parent_hash,\n            ommers_hash: EMPTY_OMMER_ROOT_HASH,\n            beneficiary: attrs.payload_attributes.suggested_fee_recipient,\n            state_root,\n            transactions_root,\n            receipts_root,\n            withdrawals_root,\n            requests_hash,\n            logs_bloom,\n            difficulty: U256::ZERO,\n            number: block_env.number.saturating_to::<u64>(),\n            gas_limit: attrs.gas_limit.ok_or(ExecutorError::MissingGasLimit)?,\n            gas_used: ex_result.gas_used,\n            timestamp,\n            mix_hash: attrs.payload_attributes.prev_randao,\n            nonce: Default::default(),\n            base_fee_per_gas: Some(block_env.basefee),\n            blob_gas_used,\n            excess_blob_gas: excess_blob_gas.and_then(|x| x.try_into().ok()),\n            parent_beacon_block_root: attrs.payload_attributes.parent_beacon_block_root,\n            extra_data: encoded_base_fee_params,\n            block_access_list_hash: Default::default(),\n            slot_number: Default::default(),\n        }\n        .seal_slow();\n\n        Ok(header)\n    }\n\n    /// Computes the current output root of the latest executed block, based on the parent header\n    /// and the underlying state trie.\n    ///\n    /// **CONSTRUCTION:**\n    /// ```text\n    /// output_root = keccak256(version_byte .. payload)\n    /// payload = state_root .. withdrawal_storage_root .. latest_block_hash\n    /// ```\n    pub fn compute_output_root(&mut self) -> ExecutorResult<B256> {\n        let parent_number = self.trie_db.parent_block_header().number;\n\n        info!(\n            target: \"block_builder\",\n            parent_state_root = ?self.trie_db.parent_block_header().state_root,\n            parent_block_number = parent_number,\n            \"Computing output root\",\n        );\n\n        let storage_root = self.message_passer_account()?;\n        let parent_header = self.trie_db.parent_block_header();\n\n        // Construct the raw output and hash it.\n        let output_root_hash =\n            OutputRoot::from_parts(parent_header.state_root, storage_root, parent_header.seal())\n                .hash();\n\n        info!(\n            target: \"block_builder\",\n            parent_block_number = parent_number,\n            output_root = ?output_root_hash,\n            \"Computed output root\",\n        );\n\n        // Hash the output and return\n        Ok(output_root_hash)\n    }\n\n    /// Fetches the L2 to L1 message passer account from the cache or underlying trie.\n    fn message_passer_account(&mut self) -> Result<B256, TrieDBError> {\n        match self.trie_db.storage_roots().get(&Predeploys::L2_TO_L1_MESSAGE_PASSER) {\n            Some(storage_root) => Ok(storage_root.blind()),\n            None => Ok(self\n                .trie_db\n                .get_trie_account(&Predeploys::L2_TO_L1_MESSAGE_PASSER)?\n                .ok_or(TrieDBError::MissingAccountInfo)?\n                .storage_root),\n        }\n    }\n}\n\n/// Computes the receipts root from the given set of receipts.\n///\n/// Generic over the receipt builder so non-OP receipt shapes (e.g. Celo's CIP-64 receipt) can\n/// plug in their own [`OpReceiptBuilder`]. From Regolith activation up to (but not including)\n/// Canyon activation, op-geth/op-erigon compute the receipts-trie root from a deposit-receipt\n/// encoding that omits the deposit nonce; this function reproduces that encoding by delegating\n/// nonce-stripping to [`OpReceiptBuilder::strip_deposit_nonce`], which OP Stack implementations\n/// override and other chains inherit as a no-op.\npub fn compute_receipts_root<R>(\n    receipt_builder: &R,\n    receipts: &[R::Receipt],\n    config: &RollupConfig,\n    timestamp: u64,\n) -> B256\nwhere\n    R: OpReceiptBuilder,\n    R::Receipt: Encodable2718,\n{\n    if config.is_regolith_active(timestamp) && !config.is_canyon_active(timestamp) {\n        let receipts = receipts\n            .iter()\n            .cloned()\n            .map(|mut receipt| {\n                receipt_builder.strip_deposit_nonce(&mut receipt);\n                receipt\n            })\n            .collect::<Vec<_>>();\n\n        ordered_trie_with_encoder(receipts.as_ref(), |receipt, mut buf| {\n            receipt.encode_2718(&mut buf)\n        })\n        .root()\n    } else {\n        ordered_trie_with_encoder(receipts, |receipt, mut buf| receipt.encode_2718(&mut buf)).root()\n    }\n}","resolutions":{"9fa846564f4071bd":{"status":"differs","coveredLines":181,"match":{"origin":"own","collection":"optimism","relation":{"type":"own"},"rank":0,"matchedBy":"name","auditedName":"assemble.rs","similarity":0.844,"reportId":"optimism/cantina-kona-2026-03","repository":"op-rs/kona","path":"crates/proof/executor/src/builder/assemble.rs","commit":"86910c9112437bbb849eca28961f813c5450e103","commitTimestamp":"2025-12-15T17:17:05Z","url":"https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/crates/proof/executor/src/builder/assemble.rs","auditStatus":"audited_with_no_major_findings","reviewPhase":"initial audit","coverage":"Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). kona-executor block builder; Low finding 3.4.2 (util.rs) and Informational 3.5.18 (builder/core.rs) located here.","majorFindings":0,"isLatestVersion":true,"laterAuditedVersionExists":false,"totalVersions":1},"diff":{"added":31,"removed":20,"ignoredAdded":8,"ignoredRemoved":5,"unchanged":181,"ignoredOnly":false,"hunks":[{"oldStart":1,"oldLines":4,"newStart":1,"newLines":4,"lines":[{"type":"-","oldLine":1,"text":"//! [Header] assembly logic for the [StatelessL2Builder].","ignored":true},{"type":"+","newLine":1,"text":"//! [Header] assembly logic for the [`StatelessL2Builder`].","ignored":true},{"type":" ","oldLine":2,"newLine":2,"text":""},{"type":" ","oldLine":3,"newLine":3,"text":"use super::StatelessL2Builder;"},{"type":" ","oldLine":4,"newLine":4,"text":"use crate::{"}]},{"oldStart":6,"oldLines":32,"newStart":6,"newLines":34,"lines":[{"type":" ","oldLine":6,"newLine":6,"text":"    util::{encode_holocene_eip_1559_params, encode_jovian_eip_1559_params},"},{"type":" ","oldLine":7,"newLine":7,"text":"};"},{"type":" ","oldLine":8,"newLine":8,"text":"use alloc::vec::Vec;"},{"type":"-","oldLine":9,"text":"use alloy_consensus::{EMPTY_OMMER_ROOT_HASH, Header, Sealed};","ignored":false},{"type":"+","newLine":9,"text":"use alloy_consensus::{EMPTY_OMMER_ROOT_HASH, Header, Sealed, TxReceipt};","ignored":false},{"type":" ","oldLine":10,"newLine":10,"text":"use alloy_eips::{Encodable2718, eip7685::EMPTY_REQUESTS_HASH};"},{"type":" ","oldLine":11,"newLine":11,"text":"use alloy_evm::{EvmFactory, block::BlockExecutionResult};"},{"type":"+","newLine":12,"text":"use alloy_op_evm::block::receipt_builder::OpReceiptBuilder;","ignored":false},{"type":" ","oldLine":12,"newLine":13,"text":"use alloy_primitives::{B256, Sealable, U256, logs_bloom};"},{"type":" ","oldLine":13,"newLine":14,"text":"use alloy_trie::EMPTY_ROOT_HASH;"},{"type":" ","oldLine":14,"newLine":15,"text":"use kona_genesis::RollupConfig;"},{"type":" ","oldLine":15,"newLine":16,"text":"use kona_mpt::{TrieHinter, ordered_trie_with_encoder};"},{"type":" ","oldLine":16,"newLine":17,"text":"use kona_protocol::{OutputRoot, Predeploys};"},{"type":"-","oldLine":17,"text":"use op_alloy_consensus::OpReceiptEnvelope;","ignored":false},{"type":" ","oldLine":18,"newLine":18,"text":"use op_alloy_rpc_types_engine::OpPayloadAttributes;"},{"type":" ","oldLine":19,"newLine":19,"text":"use revm::{context::BlockEnv, database::BundleState};"},{"type":" ","oldLine":20,"newLine":20,"text":""},{"type":"-","oldLine":21,"text":"impl<P, H, Evm> StatelessL2Builder<'_, P, H, Evm>","ignored":false},{"type":"+","newLine":21,"text":"impl<P, H, Evm, R> StatelessL2Builder<'_, P, H, Evm, R>","ignored":false},{"type":" ","oldLine":22,"newLine":22,"text":"where"},{"type":" ","oldLine":23,"newLine":23,"text":"    P: TrieDBProvider,"},{"type":" ","oldLine":24,"newLine":24,"text":"    H: TrieHinter,"},{"type":" ","oldLine":25,"newLine":25,"text":"    Evm: EvmFactory,"},{"type":"+","newLine":26,"text":"    R: OpReceiptBuilder,","ignored":false},{"type":"+","newLine":27,"text":"    R::Receipt: Encodable2718,","ignored":false},{"type":" ","oldLine":26,"newLine":28,"text":"{"},{"type":"-","oldLine":27,"text":"    /// Seals the block executed from the given [OpPayloadAttributes] and [BlockEnv], returning the","ignored":false},{"type":"-","oldLine":28,"text":"    /// computed [Header].","ignored":false},{"type":"+","newLine":29,"text":"    /// Seals the block executed from the given [`OpPayloadAttributes`] and [`BlockEnv`], returning","ignored":false},{"type":"+","newLine":30,"text":"    /// the computed [Header].","ignored":false},{"type":" ","oldLine":29,"newLine":31,"text":"    pub(crate) fn seal_block("},{"type":" ","oldLine":30,"newLine":32,"text":"        &mut self,"},{"type":" ","oldLine":31,"newLine":33,"text":"        attrs: &OpPayloadAttributes,"},{"type":" ","oldLine":32,"newLine":34,"text":"        parent_hash: B256,"},{"type":" ","oldLine":33,"newLine":35,"text":"        block_env: &BlockEnv,"},{"type":"-","oldLine":34,"text":"        ex_result: &BlockExecutionResult<OpReceiptEnvelope>,","ignored":false},{"type":"+","newLine":36,"text":"        ex_result: &BlockExecutionResult<R::Receipt>,","ignored":false},{"type":" ","oldLine":35,"newLine":37,"text":"        bundle: BundleState,"},{"type":" ","oldLine":36,"newLine":38,"text":"    ) -> ExecutorResult<Sealed<Header>> {"},{"type":" ","oldLine":37,"newLine":39,"text":"        let timestamp = block_env.timestamp.saturating_to::<u64>();"}]},{"oldStart":46,"oldLines":9,"newStart":48,"newLines":14,"lines":[{"type":" ","oldLine":46,"newLine":48,"text":"            |tx, buf| buf.put_slice(tx.as_ref()),"},{"type":" ","oldLine":47,"newLine":49,"text":"        )"},{"type":" ","oldLine":48,"newLine":50,"text":"        .root();"},{"type":"-","oldLine":49,"text":"        let receipts_root = compute_receipts_root(&ex_result.receipts, self.config, timestamp);","ignored":false},{"type":"+","newLine":51,"text":"        let receipts_root = compute_receipts_root(","ignored":false},{"type":"+","newLine":52,"text":"            self.factory.receipt_builder(),","ignored":false},{"type":"+","newLine":53,"text":"            &ex_result.receipts,","ignored":false},{"type":"+","newLine":54,"text":"            self.config,","ignored":false},{"type":"+","newLine":55,"text":"            timestamp,","ignored":false},{"type":"+","newLine":56,"text":"        );","ignored":false},{"type":" ","oldLine":50,"newLine":57,"text":"        let withdrawals_root = if self.config.is_isthmus_active(timestamp) {"},{"type":"-","oldLine":51,"text":"            Some(self.message_passer_account(block_env.number.saturating_to::<u64>())?)","ignored":false},{"type":"+","newLine":58,"text":"            Some(self.message_passer_account()?)","ignored":false},{"type":" ","oldLine":52,"newLine":59,"text":"        } else if self.config.is_canyon_active(timestamp) {"},{"type":" ","oldLine":53,"newLine":60,"text":"            Some(EMPTY_ROOT_HASH)"},{"type":" ","oldLine":54,"newLine":61,"text":"        } else {"}]},{"oldStart":109,"oldLines":6,"newStart":116,"newLines":8,"lines":[{"type":" ","oldLine":109,"newLine":116,"text":"            excess_blob_gas: excess_blob_gas.and_then(|x| x.try_into().ok()),"},{"type":" ","oldLine":110,"newLine":117,"text":"            parent_beacon_block_root: attrs.payload_attributes.parent_beacon_block_root,"},{"type":" ","oldLine":111,"newLine":118,"text":"            extra_data: encoded_base_fee_params,"},{"type":"+","newLine":119,"text":"            block_access_list_hash: Default::default(),","ignored":false},{"type":"+","newLine":120,"text":"            slot_number: Default::default(),","ignored":false},{"type":" ","oldLine":112,"newLine":121,"text":"        }"},{"type":" ","oldLine":113,"newLine":122,"text":"        .seal_slow();"},{"type":" ","oldLine":114,"newLine":123,"text":""}]},{"oldStart":133,"oldLines":7,"newStart":142,"newLines":7,"lines":[{"type":" ","oldLine":133,"newLine":142,"text":"            \"Computing output root\","},{"type":" ","oldLine":134,"newLine":143,"text":"        );"},{"type":" ","oldLine":135,"newLine":144,"text":""},{"type":"-","oldLine":136,"text":"        let storage_root = self.message_passer_account(parent_number)?;","ignored":false},{"type":"+","newLine":145,"text":"        let storage_root = self.message_passer_account()?;","ignored":false},{"type":" ","oldLine":137,"newLine":146,"text":"        let parent_header = self.trie_db.parent_block_header();"},{"type":" ","oldLine":138,"newLine":147,"text":""},{"type":" ","oldLine":139,"newLine":148,"text":"        // Construct the raw output and hash it."}]},{"oldStart":153,"oldLines":12,"newStart":162,"newLines":12,"lines":[{"type":" ","oldLine":153,"newLine":162,"text":"    }"},{"type":" ","oldLine":154,"newLine":163,"text":""},{"type":" ","oldLine":155,"newLine":164,"text":"    /// Fetches the L2 to L1 message passer account from the cache or underlying trie."},{"type":"-","oldLine":156,"text":"    fn message_passer_account(&mut self, block_number: u64) -> Result<B256, TrieDBError> {","ignored":false},{"type":"+","newLine":165,"text":"    fn message_passer_account(&mut self) -> Result<B256, TrieDBError> {","ignored":false},{"type":" ","oldLine":157,"newLine":166,"text":"        match self.trie_db.storage_roots().get(&Predeploys::L2_TO_L1_MESSAGE_PASSER) {"},{"type":" ","oldLine":158,"newLine":167,"text":"            Some(storage_root) => Ok(storage_root.blind()),"},{"type":" ","oldLine":159,"newLine":168,"text":"            None => Ok(self"},{"type":" ","oldLine":160,"newLine":169,"text":"                .trie_db"},{"type":"-","oldLine":161,"text":"                .get_trie_account(&Predeploys::L2_TO_L1_MESSAGE_PASSER, block_number)?","ignored":false},{"type":"+","newLine":170,"text":"                .get_trie_account(&Predeploys::L2_TO_L1_MESSAGE_PASSER)?","ignored":false},{"type":" ","oldLine":162,"newLine":171,"text":"                .ok_or(TrieDBError::MissingAccountInfo)?"},{"type":" ","oldLine":163,"newLine":172,"text":"                .storage_root),"},{"type":" ","oldLine":164,"newLine":173,"text":"        }"}]},{"oldStart":166,"oldLines":25,"newStart":175,"newLines":30,"lines":[{"type":" ","oldLine":166,"newLine":175,"text":"}"},{"type":" ","oldLine":167,"newLine":176,"text":""},{"type":" ","oldLine":168,"newLine":177,"text":"/// Computes the receipts root from the given set of receipts."},{"type":"-","oldLine":169,"text":"pub fn compute_receipts_root(","ignored":false},{"type":"-","oldLine":170,"text":"    receipts: &[OpReceiptEnvelope],","ignored":false},{"type":"+","newLine":178,"text":"///","ignored":true},{"type":"+","newLine":179,"text":"/// Generic over the receipt builder so non-OP receipt shapes (e.g. Celo's CIP-64 receipt) can","ignored":true},{"type":"+","newLine":180,"text":"/// plug in their own [`OpReceiptBuilder`]. From Regolith activation up to (but not including)","ignored":true},{"type":"+","newLine":181,"text":"/// Canyon activation, op-geth/op-erigon compute the receipts-trie root from a deposit-receipt","ignored":true},{"type":"+","newLine":182,"text":"/// encoding that omits the deposit nonce; this function reproduces that encoding by delegating","ignored":true},{"type":"+","newLine":183,"text":"/// nonce-stripping to [`OpReceiptBuilder::strip_deposit_nonce`], which OP Stack implementations","ignored":true},{"type":"+","newLine":184,"text":"/// override and other chains inherit as a no-op.","ignored":true},{"type":"+","newLine":185,"text":"pub fn compute_receipts_root<R>(","ignored":false},{"type":"+","newLine":186,"text":"    receipt_builder: &R,","ignored":false},{"type":"+","newLine":187,"text":"    receipts: &[R::Receipt],","ignored":false},{"type":" ","oldLine":171,"newLine":188,"text":"    config: &RollupConfig,"},{"type":" ","oldLine":172,"newLine":189,"text":"    timestamp: u64,"},{"type":"-","oldLine":173,"text":") -> B256 {","ignored":false},{"type":"-","oldLine":174,"text":"    // There is a minor bug in op-geth and op-erigon where in the Regolith hardfork,","ignored":true},{"type":"-","oldLine":175,"text":"    // the receipt root calculation does not include the deposit nonce in the","ignored":true},{"type":"-","oldLine":176,"text":"    // receipt encoding. In the Regolith hardfork, we must strip the deposit nonce","ignored":true},{"type":"-","oldLine":177,"text":"    // from the receipt encoding to match the receipt root calculation.","ignored":true},{"type":"+","newLine":190,"text":") -> B256","ignored":false},{"type":"+","newLine":191,"text":"where","ignored":false},{"type":"+","newLine":192,"text":"    R: OpReceiptBuilder,","ignored":false},{"type":"+","newLine":193,"text":"    R::Receipt: Encodable2718,","ignored":false},{"type":"+","newLine":194,"text":"{","ignored":false},{"type":" ","oldLine":178,"newLine":195,"text":"    if config.is_regolith_active(timestamp) && !config.is_canyon_active(timestamp) {"},{"type":" ","oldLine":179,"newLine":196,"text":"        let receipts = receipts"},{"type":" ","oldLine":180,"newLine":197,"text":"            .iter()"},{"type":" ","oldLine":181,"newLine":198,"text":"            .cloned()"},{"type":"-","oldLine":182,"text":"            .map(|receipt| match receipt {","ignored":false},{"type":"-","oldLine":183,"text":"                OpReceiptEnvelope::Deposit(mut deposit_receipt) => {","ignored":false},{"type":"-","oldLine":184,"text":"                    deposit_receipt.receipt.deposit_nonce = None;","ignored":false},{"type":"-","oldLine":185,"text":"                    OpReceiptEnvelope::Deposit(deposit_receipt)","ignored":false},{"type":"-","oldLine":186,"text":"                }","ignored":false},{"type":"-","oldLine":187,"text":"                _ => receipt,","ignored":false},{"type":"+","newLine":199,"text":"            .map(|mut receipt| {","ignored":false},{"type":"+","newLine":200,"text":"                receipt_builder.strip_deposit_nonce(&mut receipt);","ignored":false},{"type":"+","newLine":201,"text":"                receipt","ignored":false},{"type":" ","oldLine":188,"newLine":202,"text":"            })"},{"type":" ","oldLine":189,"newLine":203,"text":"            .collect::<Vec<_>>();"},{"type":" ","oldLine":190,"newLine":204,"text":""}]}]},"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "93b676db3d2ed092afe43511a140fb11240fe44d184c969fdc07cde6ea7d5d17",
+  "name": "assemble.rs",
+  "kind": "program",
+  "lines": 212,
+  "source": "//! [Header] assembly logic for the [`StatelessL2Builder`].\n\nuse super::StatelessL2Builder;\nuse crate::{\n    ExecutorError, ExecutorResult, TrieDBError, TrieDBProvider,\n    util::{encode_holocene_eip_1559_params, encode_jovian_eip_1559_params},\n};\nuse alloc::vec::Vec;\nuse alloy_consensus::{EMPTY_OMMER_ROOT_HASH, Header, Sealed, TxReceipt};\nuse alloy_eips::{Encodable2718, eip7685::EMPTY_REQUESTS_HASH};\nuse alloy_evm::{EvmFactory, block::BlockExecutionResult};\nuse alloy_op_evm::block::receipt_builder::OpReceiptBuilder;\nuse alloy_primitives::{B256, Sealable, U256, logs_bloom};\nuse alloy_trie::EMPTY_ROOT_HASH;\nuse kona_genesis::RollupConfig;\nuse kona_mpt::{TrieHinter, ordered_trie_with_encoder};\nuse kona_protocol::{OutputRoot, Predeploys};\nuse op_alloy_rpc_types_engine::OpPayloadAttributes;\nuse revm::{context::BlockEnv, database::BundleState};\n\nimpl<P, H, Evm, R> StatelessL2Builder<'_, P, H, Evm, R>\nwhere\n    P: TrieDBProvider,\n    H: TrieHinter,\n    Evm: EvmFactory,\n    R: OpReceiptBuilder,\n    R::Receipt: Encodable2718,\n{\n    /// Seals the block executed from the given [`OpPayloadAttributes`] and [`BlockEnv`], returning\n    /// the computed [Header].\n    pub(crate) fn seal_block(\n        &mut self,\n        attrs: &OpPayloadAttributes,\n        parent_hash: B256,\n        block_env: &BlockEnv,\n        ex_result: &BlockExecutionResult<R::Receipt>,\n        bundle: BundleState,\n    ) -> ExecutorResult<Sealed<Header>> {\n        let timestamp = block_env.timestamp.saturating_to::<u64>();\n\n        // Compute the roots for the block header.\n        let state_root = self.trie_db.state_root(&bundle)?;\n        let transactions_root = ordered_trie_with_encoder(\n            // SAFETY: The OP Stack protocol will never generate a payload attributes with an empty\n            // transactions field. Panicking here is the desired behavior, as it indicates a severe\n            // protocol violation.\n            attrs.transactions.as_ref().expect(\"Transactions must be non-empty\"),\n            |tx, buf| buf.put_slice(tx.as_ref()),\n        )\n        .root();\n        let receipts_root = compute_receipts_root(\n            self.factory.receipt_builder(),\n            &ex_result.receipts,\n            self.config,\n            timestamp,\n        );\n        let withdrawals_root = if self.config.is_isthmus_active(timestamp) {\n            Some(self.message_passer_account()?)\n        } else if self.config.is_canyon_active(timestamp) {\n            Some(EMPTY_ROOT_HASH)\n        } else {\n            None\n        };\n\n        // Compute the logs bloom from the receipts generated during block execution.\n        let logs_bloom = logs_bloom(ex_result.receipts.iter().flat_map(|r| r.logs()));\n\n        // Compute Cancun fields, if active.\n        let (blob_gas_used, excess_blob_gas) = if self.config.is_jovian_active(timestamp) {\n            (Some(ex_result.blob_gas_used), Some(0))\n        } else if self.config.is_ecotone_active(timestamp) {\n            (Some(0), Some(0))\n        } else {\n            Default::default()\n        };\n\n        // At holocene activation, the base fee parameters from the payload are placed\n        // into the Header's `extra_data` field.\n        //\n        // If the payload's `eip_1559_params` are equal to `0`, then the header's `extraData`\n        // field is set to the encoded canyon base fee parameters.\n        let encoded_base_fee_params = match self.config {\n            config if config.is_jovian_active(timestamp) => {\n                let extra_data = encode_jovian_eip_1559_params(self.config, attrs)?;\n                Ok(extra_data)\n            }\n            config if config.is_holocene_active(timestamp) => {\n                encode_holocene_eip_1559_params(self.config, attrs)\n            }\n            _ => Ok(Default::default()),\n        }?;\n\n        // The requests hash on the OP Stack, if Isthmus is active, is always the empty SHA256 hash.\n        let requests_hash = self.config.is_isthmus_active(timestamp).then_some(EMPTY_REQUESTS_HASH);\n\n        // Construct the new header.\n        let header = Header {\n            parent_hash,\n            ommers_hash: EMPTY_OMMER_ROOT_HASH,\n            beneficiary: attrs.payload_attributes.suggested_fee_recipient,\n            state_root,\n            transactions_root,\n            receipts_root,\n            withdrawals_root,\n            requests_hash,\n            logs_bloom,\n            difficulty: U256::ZERO,\n            number: block_env.number.saturating_to::<u64>(),\n            gas_limit: attrs.gas_limit.ok_or(ExecutorError::MissingGasLimit)?,\n            gas_used: ex_result.gas_used,\n            timestamp,\n            mix_hash: attrs.payload_attributes.prev_randao,\n            nonce: Default::default(),\n            base_fee_per_gas: Some(block_env.basefee),\n            blob_gas_used,\n            excess_blob_gas: excess_blob_gas.and_then(|x| x.try_into().ok()),\n            parent_beacon_block_root: attrs.payload_attributes.parent_beacon_block_root,\n            extra_data: encoded_base_fee_params,\n            block_access_list_hash: Default::default(),\n            slot_number: Default::default(),\n        }\n        .seal_slow();\n\n        Ok(header)\n    }\n\n    /// Computes the current output root of the latest executed block, based on the parent header\n    /// and the underlying state trie.\n    ///\n    /// **CONSTRUCTION:**\n    /// ```text\n    /// output_root = keccak256(version_byte .. payload)\n    /// payload = state_root .. withdrawal_storage_root .. latest_block_hash\n    /// ```\n    pub fn compute_output_root(&mut self) -> ExecutorResult<B256> {\n        let parent_number = self.trie_db.parent_block_header().number;\n\n        info!(\n            target: \"block_builder\",\n            parent_state_root = ?self.trie_db.parent_block_header().state_root,\n            parent_block_number = parent_number,\n            \"Computing output root\",\n        );\n\n        let storage_root = self.message_passer_account()?;\n        let parent_header = self.trie_db.parent_block_header();\n\n        // Construct the raw output and hash it.\n        let output_root_hash =\n            OutputRoot::from_parts(parent_header.state_root, storage_root, parent_header.seal())\n                .hash();\n\n        info!(\n            target: \"block_builder\",\n            parent_block_number = parent_number,\n            output_root = ?output_root_hash,\n            \"Computed output root\",\n        );\n\n        // Hash the output and return\n        Ok(output_root_hash)\n    }\n\n    /// Fetches the L2 to L1 message passer account from the cache or underlying trie.\n    fn message_passer_account(&mut self) -> Result<B256, TrieDBError> {\n        match self.trie_db.storage_roots().get(&Predeploys::L2_TO_L1_MESSAGE_PASSER) {\n            Some(storage_root) => Ok(storage_root.blind()),\n            None => Ok(self\n                .trie_db\n                .get_trie_account(&Predeploys::L2_TO_L1_MESSAGE_PASSER)?\n                .ok_or(TrieDBError::MissingAccountInfo)?\n                .storage_root),\n        }\n    }\n}\n\n/// Computes the receipts root from the given set of receipts.\n///\n/// Generic over the receipt builder so non-OP receipt shapes (e.g. Celo's CIP-64 receipt) can\n/// plug in their own [`OpReceiptBuilder`]. From Regolith activation up to (but not including)\n/// Canyon activation, op-geth/op-erigon compute the receipts-trie root from a deposit-receipt\n/// encoding that omits the deposit nonce; this function reproduces that encoding by delegating\n/// nonce-stripping to [`OpReceiptBuilder::strip_deposit_nonce`], which OP Stack implementations\n/// override and other chains inherit as a no-op.\npub fn compute_receipts_root<R>(\n    receipt_builder: &R,\n    receipts: &[R::Receipt],\n    config: &RollupConfig,\n    timestamp: u64,\n) -> B256\nwhere\n    R: OpReceiptBuilder,\n    R::Receipt: Encodable2718,\n{\n    if config.is_regolith_active(timestamp) && !config.is_canyon_active(timestamp) {\n        let receipts = receipts\n            .iter()\n            .cloned()\n            .map(|mut receipt| {\n                receipt_builder.strip_deposit_nonce(&mut receipt);\n                receipt\n            })\n            .collect::<Vec<_>>();\n\n        ordered_trie_with_encoder(receipts.as_ref(), |receipt, mut buf| {\n            receipt.encode_2718(&mut buf)\n        })\n        .root()\n    } else {\n        ordered_trie_with_encoder(receipts, |receipt, mut buf| receipt.encode_2718(&mut buf)).root()\n    }\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "differs",
+      "coveredLines": 181,
+      "match": {
+        "origin": "own",
+        "collection": "optimism",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "assemble.rs",
+        "similarity": 0.844,
+        "reportId": "optimism/cantina-kona-2026-03",
+        "repository": "op-rs/kona",
+        "path": "crates/proof/executor/src/builder/assemble.rs",
+        "commit": "86910c9112437bbb849eca28961f813c5450e103",
+        "commitTimestamp": "2025-12-15T17:17:05Z",
+        "url": "https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/crates/proof/executor/src/builder/assemble.rs",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). kona-executor block builder; Low finding 3.4.2 (util.rs) and Informational 3.5.18 (builder/core.rs) located here.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 31,
+        "removed": 20,
+        "ignoredAdded": 8,
+        "ignoredRemoved": 5,
+        "unchanged": 181,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 4,
+            "newStart": 1,
+            "newLines": 4,
+            "lines": [
+              {
+                "type": "-",
+                "oldLine": 1,
+                "text": "//! [Header] assembly logic for the [StatelessL2Builder].",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 1,
+                "text": "//! [Header] assembly logic for the [`StatelessL2Builder`].",
+                "ignored": true
+              },
+              { "type": " ", "oldLine": 2, "newLine": 2, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "use super::StatelessL2Builder;"
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "use crate::{"
+              }
+            ]
+          },
+          {
+            "oldStart": 6,
+            "oldLines": 32,
+            "newStart": 6,
+            "newLines": 34,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 6,
+                "newLine": 6,
+                "text": "    util::{encode_holocene_eip_1559_params, encode_jovian_eip_1559_params},"
+              },
+              { "type": " ", "oldLine": 7, "newLine": 7, "text": "};" },
+              {
+                "type": " ",
+                "oldLine": 8,
+                "newLine": 8,
+                "text": "use alloc::vec::Vec;"
+              },
+              {
+                "type": "-",
+                "oldLine": 9,
+                "text": "use alloy_consensus::{EMPTY_OMMER_ROOT_HASH, Header, Sealed};",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 9,
+                "text": "use alloy_consensus::{EMPTY_OMMER_ROOT_HASH, Header, Sealed, TxReceipt};",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 10,
+                "newLine": 10,
+                "text": "use alloy_eips::{Encodable2718, eip7685::EMPTY_REQUESTS_HASH};"
+              },
+              {
+                "type": " ",
+                "oldLine": 11,
+                "newLine": 11,
+                "text": "use alloy_evm::{EvmFactory, block::BlockExecutionResult};"
+              },
+              {
+                "type": "+",
+                "newLine": 12,
+                "text": "use alloy_op_evm::block::receipt_builder::OpReceiptBuilder;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 12,
+                "newLine": 13,
+                "text": "use alloy_primitives::{B256, Sealable, U256, logs_bloom};"
+              },
+              {
+                "type": " ",
+                "oldLine": 13,
+                "newLine": 14,
+                "text": "use alloy_trie::EMPTY_ROOT_HASH;"
+              },
+              {
+                "type": " ",
+                "oldLine": 14,
+                "newLine": 15,
+                "text": "use kona_genesis::RollupConfig;"
+              },
+              {
+                "type": " ",
+                "oldLine": 15,
+                "newLine": 16,
+                "text": "use kona_mpt::{TrieHinter, ordered_trie_with_encoder};"
+              },
+              {
+                "type": " ",
+                "oldLine": 16,
+                "newLine": 17,
+                "text": "use kona_protocol::{OutputRoot, Predeploys};"
+              },
+              {
+                "type": "-",
+                "oldLine": 17,
+                "text": "use op_alloy_consensus::OpReceiptEnvelope;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 18,
+                "newLine": 18,
+                "text": "use op_alloy_rpc_types_engine::OpPayloadAttributes;"
+              },
+              {
+                "type": " ",
+                "oldLine": 19,
+                "newLine": 19,
+                "text": "use revm::{context::BlockEnv, database::BundleState};"
+              },
+              { "type": " ", "oldLine": 20, "newLine": 20, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 21,
+                "text": "impl<P, H, Evm> StatelessL2Builder<'_, P, H, Evm>",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 21,
+                "text": "impl<P, H, Evm, R> StatelessL2Builder<'_, P, H, Evm, R>",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 22, "newLine": 22, "text": "where" },
+              {
+                "type": " ",
+                "oldLine": 23,
+                "newLine": 23,
+                "text": "    P: TrieDBProvider,"
+              },
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 24,
+                "text": "    H: TrieHinter,"
+              },
+              {
+                "type": " ",
+                "oldLine": 25,
+                "newLine": 25,
+                "text": "    Evm: EvmFactory,"
+              },
+              {
+                "type": "+",
+                "newLine": 26,
+                "text": "    R: OpReceiptBuilder,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 27,
+                "text": "    R::Receipt: Encodable2718,",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 26, "newLine": 28, "text": "{" },
+              {
+                "type": "-",
+                "oldLine": 27,
+                "text": "    /// Seals the block executed from the given [OpPayloadAttributes] and [BlockEnv], returning the",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 28,
+                "text": "    /// computed [Header].",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 29,
+                "text": "    /// Seals the block executed from the given [`OpPayloadAttributes`] and [`BlockEnv`], returning",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 30,
+                "text": "    /// the computed [Header].",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 29,
+                "newLine": 31,
+                "text": "    pub(crate) fn seal_block("
+              },
+              {
+                "type": " ",
+                "oldLine": 30,
+                "newLine": 32,
+                "text": "        &mut self,"
+              },
+              {
+                "type": " ",
+                "oldLine": 31,
+                "newLine": 33,
+                "text": "        attrs: &OpPayloadAttributes,"
+              },
+              {
+                "type": " ",
+                "oldLine": 32,
+                "newLine": 34,
+                "text": "        parent_hash: B256,"
+              },
+              {
+                "type": " ",
+                "oldLine": 33,
+                "newLine": 35,
+                "text": "        block_env: &BlockEnv,"
+              },
+              {
+                "type": "-",
+                "oldLine": 34,
+                "text": "        ex_result: &BlockExecutionResult<OpReceiptEnvelope>,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 36,
+                "text": "        ex_result: &BlockExecutionResult<R::Receipt>,",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 35,
+                "newLine": 37,
+                "text": "        bundle: BundleState,"
+              },
+              {
+                "type": " ",
+                "oldLine": 36,
+                "newLine": 38,
+                "text": "    ) -> ExecutorResult<Sealed<Header>> {"
+              },
+              {
+                "type": " ",
+                "oldLine": 37,
+                "newLine": 39,
+                "text": "        let timestamp = block_env.timestamp.saturating_to::<u64>();"
+              }
+            ]
+          },
+          {
+            "oldStart": 46,
+            "oldLines": 9,
+            "newStart": 48,
+            "newLines": 14,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 46,
+                "newLine": 48,
+                "text": "            |tx, buf| buf.put_slice(tx.as_ref()),"
+              },
+              {
+                "type": " ",
+                "oldLine": 47,
+                "newLine": 49,
+                "text": "        )"
+              },
+              {
+                "type": " ",
+                "oldLine": 48,
+                "newLine": 50,
+                "text": "        .root();"
+              },
+              {
+                "type": "-",
+                "oldLine": 49,
+                "text": "        let receipts_root = compute_receipts_root(&ex_result.receipts, self.config, timestamp);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 51,
+                "text": "        let receipts_root = compute_receipts_root(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 52,
+                "text": "            self.factory.receipt_builder(),",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 53,
+                "text": "            &ex_result.receipts,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 54,
+                "text": "            self.config,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 55,
+                "text": "            timestamp,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 56,
+                "text": "        );",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 50,
+                "newLine": 57,
+                "text": "        let withdrawals_root = if self.config.is_isthmus_active(timestamp) {"
+              },
+              {
+                "type": "-",
+                "oldLine": 51,
+                "text": "            Some(self.message_passer_account(block_env.number.saturating_to::<u64>())?)",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 58,
+                "text": "            Some(self.message_passer_account()?)",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 52,
+                "newLine": 59,
+                "text": "        } else if self.config.is_canyon_active(timestamp) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 53,
+                "newLine": 60,
+                "text": "            Some(EMPTY_ROOT_HASH)"
+              },
+              {
+                "type": " ",
+                "oldLine": 54,
+                "newLine": 61,
+                "text": "        } else {"
+              }
+            ]
+          },
+          {
+            "oldStart": 109,
+            "oldLines": 6,
+            "newStart": 116,
+            "newLines": 8,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 109,
+                "newLine": 116,
+                "text": "            excess_blob_gas: excess_blob_gas.and_then(|x| x.try_into().ok()),"
+              },
+              {
+                "type": " ",
+                "oldLine": 110,
+                "newLine": 117,
+                "text": "            parent_beacon_block_root: attrs.payload_attributes.parent_beacon_block_root,"
+              },
+              {
+                "type": " ",
+                "oldLine": 111,
+                "newLine": 118,
+                "text": "            extra_data: encoded_base_fee_params,"
+              },
+              {
+                "type": "+",
+                "newLine": 119,
+                "text": "            block_access_list_hash: Default::default(),",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 120,
+                "text": "            slot_number: Default::default(),",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 112,
+                "newLine": 121,
+                "text": "        }"
+              },
+              {
+                "type": " ",
+                "oldLine": 113,
+                "newLine": 122,
+                "text": "        .seal_slow();"
+              },
+              { "type": " ", "oldLine": 114, "newLine": 123, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 133,
+            "oldLines": 7,
+            "newStart": 142,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 133,
+                "newLine": 142,
+                "text": "            \"Computing output root\","
+              },
+              {
+                "type": " ",
+                "oldLine": 134,
+                "newLine": 143,
+                "text": "        );"
+              },
+              { "type": " ", "oldLine": 135, "newLine": 144, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 136,
+                "text": "        let storage_root = self.message_passer_account(parent_number)?;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 145,
+                "text": "        let storage_root = self.message_passer_account()?;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 137,
+                "newLine": 146,
+                "text": "        let parent_header = self.trie_db.parent_block_header();"
+              },
+              { "type": " ", "oldLine": 138, "newLine": 147, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 139,
+                "newLine": 148,
+                "text": "        // Construct the raw output and hash it."
+              }
+            ]
+          },
+          {
+            "oldStart": 153,
+            "oldLines": 12,
+            "newStart": 162,
+            "newLines": 12,
+            "lines": [
+              { "type": " ", "oldLine": 153, "newLine": 162, "text": "    }" },
+              { "type": " ", "oldLine": 154, "newLine": 163, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 155,
+                "newLine": 164,
+                "text": "    /// Fetches the L2 to L1 message passer account from the cache or underlying trie."
+              },
+              {
+                "type": "-",
+                "oldLine": 156,
+                "text": "    fn message_passer_account(&mut self, block_number: u64) -> Result<B256, TrieDBError> {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 165,
+                "text": "    fn message_passer_account(&mut self) -> Result<B256, TrieDBError> {",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 157,
+                "newLine": 166,
+                "text": "        match self.trie_db.storage_roots().get(&Predeploys::L2_TO_L1_MESSAGE_PASSER) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 158,
+                "newLine": 167,
+                "text": "            Some(storage_root) => Ok(storage_root.blind()),"
+              },
+              {
+                "type": " ",
+                "oldLine": 159,
+                "newLine": 168,
+                "text": "            None => Ok(self"
+              },
+              {
+                "type": " ",
+                "oldLine": 160,
+                "newLine": 169,
+                "text": "                .trie_db"
+              },
+              {
+                "type": "-",
+                "oldLine": 161,
+                "text": "                .get_trie_account(&Predeploys::L2_TO_L1_MESSAGE_PASSER, block_number)?",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 170,
+                "text": "                .get_trie_account(&Predeploys::L2_TO_L1_MESSAGE_PASSER)?",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 162,
+                "newLine": 171,
+                "text": "                .ok_or(TrieDBError::MissingAccountInfo)?"
+              },
+              {
+                "type": " ",
+                "oldLine": 163,
+                "newLine": 172,
+                "text": "                .storage_root),"
+              },
+              {
+                "type": " ",
+                "oldLine": 164,
+                "newLine": 173,
+                "text": "        }"
+              }
+            ]
+          },
+          {
+            "oldStart": 166,
+            "oldLines": 25,
+            "newStart": 175,
+            "newLines": 30,
+            "lines": [
+              { "type": " ", "oldLine": 166, "newLine": 175, "text": "}" },
+              { "type": " ", "oldLine": 167, "newLine": 176, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 168,
+                "newLine": 177,
+                "text": "/// Computes the receipts root from the given set of receipts."
+              },
+              {
+                "type": "-",
+                "oldLine": 169,
+                "text": "pub fn compute_receipts_root(",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 170,
+                "text": "    receipts: &[OpReceiptEnvelope],",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 178, "text": "///", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 179,
+                "text": "/// Generic over the receipt builder so non-OP receipt shapes (e.g. Celo's CIP-64 receipt) can",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 180,
+                "text": "/// plug in their own [`OpReceiptBuilder`]. From Regolith activation up to (but not including)",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 181,
+                "text": "/// Canyon activation, op-geth/op-erigon compute the receipts-trie root from a deposit-receipt",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 182,
+                "text": "/// encoding that omits the deposit nonce; this function reproduces that encoding by delegating",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 183,
+                "text": "/// nonce-stripping to [`OpReceiptBuilder::strip_deposit_nonce`], which OP Stack implementations",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 184,
+                "text": "/// override and other chains inherit as a no-op.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 185,
+                "text": "pub fn compute_receipts_root<R>(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 186,
+                "text": "    receipt_builder: &R,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 187,
+                "text": "    receipts: &[R::Receipt],",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 171,
+                "newLine": 188,
+                "text": "    config: &RollupConfig,"
+              },
+              {
+                "type": " ",
+                "oldLine": 172,
+                "newLine": 189,
+                "text": "    timestamp: u64,"
+              },
+              {
+                "type": "-",
+                "oldLine": 173,
+                "text": ") -> B256 {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 174,
+                "text": "    // There is a minor bug in op-geth and op-erigon where in the Regolith hardfork,",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 175,
+                "text": "    // the receipt root calculation does not include the deposit nonce in the",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 176,
+                "text": "    // receipt encoding. In the Regolith hardfork, we must strip the deposit nonce",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 177,
+                "text": "    // from the receipt encoding to match the receipt root calculation.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 190,
+                "text": ") -> B256",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 191,
+                "text": "where",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 192,
+                "text": "    R: OpReceiptBuilder,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 193,
+                "text": "    R::Receipt: Encodable2718,",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 194, "text": "{", "ignored": false },
+              {
+                "type": " ",
+                "oldLine": 178,
+                "newLine": 195,
+                "text": "    if config.is_regolith_active(timestamp) && !config.is_canyon_active(timestamp) {"
+              },
+              {
+                "type": " ",
+                "oldLine": 179,
+                "newLine": 196,
+                "text": "        let receipts = receipts"
+              },
+              {
+                "type": " ",
+                "oldLine": 180,
+                "newLine": 197,
+                "text": "            .iter()"
+              },
+              {
+                "type": " ",
+                "oldLine": 181,
+                "newLine": 198,
+                "text": "            .cloned()"
+              },
+              {
+                "type": "-",
+                "oldLine": 182,
+                "text": "            .map(|receipt| match receipt {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 183,
+                "text": "                OpReceiptEnvelope::Deposit(mut deposit_receipt) => {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 184,
+                "text": "                    deposit_receipt.receipt.deposit_nonce = None;",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 185,
+                "text": "                    OpReceiptEnvelope::Deposit(deposit_receipt)",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 186,
+                "text": "                }",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 187,
+                "text": "                _ => receipt,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 199,
+                "text": "            .map(|mut receipt| {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 200,
+                "text": "                receipt_builder.strip_deposit_nonce(&mut receipt);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 201,
+                "text": "                receipt",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 188,
+                "newLine": 202,
+                "text": "            })"
+              },
+              {
+                "type": " ",
+                "oldLine": 189,
+                "newLine": 203,
+                "text": "            .collect::<Vec<_>>();"
+              },
+              { "type": " ", "oldLine": 190, "newLine": 204, "text": "" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

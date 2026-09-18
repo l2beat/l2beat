@@ -1,1 +1,183 @@
-{"schemaVersion":2,"unitHash":"75972eef6bc1bf1e75e785dec6cc7bf5a70debe6681c79a8991b8b5be835b8b4","name":"lib.rs","kind":"program","lines":40,"source":"#![doc = include_str!(\"../README.md\")]\n#![doc(\n    html_logo_url = \"https://raw.githubusercontent.com/ethereum-optimism/optimism/develop/rust/kona/assets/square.png\",\n    html_favicon_url = \"https://raw.githubusercontent.com/ethereum-optimism/optimism/develop/rust/kona/assets/favicon.ico\",\n    issue_tracker_base_url = \"https://github.com/ethereum-optimism/optimism/issues/\"\n)]\n#![cfg_attr(docsrs, feature(doc_cfg))]\n#![cfg_attr(not(feature = \"std\"), no_std)]\n\nextern crate alloc;\n\n#[macro_use]\nextern crate tracing;\n\npub mod errors;\n\nmod key;\npub use key::{PreimageKey, PreimageKeyType};\n\nmod oracle;\npub use oracle::{OracleReader, OracleServer};\n\n#[cfg(feature = \"verify\")]\nmod verifier;\n#[cfg(feature = \"verify\")]\npub use verifier::{VerifyingPreimageFetcher, verify_preimage};\n\nmod hint;\npub use hint::{HintReader, HintWriter};\n\nmod traits;\npub use traits::{\n    Channel, CommsClient, HintReaderServer, HintRouter, HintWriterClient, PreimageFetcher,\n    PreimageOracleClient, PreimageOracleServer, PreimageServerBackend,\n};\n\n#[cfg(feature = \"std\")]\nmod native_channel;\n#[cfg(feature = \"std\")]\npub use native_channel::{BidirectionalChannel, NativeChannel};","resolutions":{"9fa846564f4071bd":{"status":"differs","coveredLines":32,"match":{"origin":"own","collection":"optimism","relation":{"type":"own"},"rank":0,"matchedBy":"name","auditedName":"lib.rs","similarity":0.793,"reportId":"optimism/cantina-kona-2026-03","repository":"op-rs/kona","path":"crates/proof/preimage/src/lib.rs","commit":"86910c9112437bbb849eca28961f813c5450e103","commitTimestamp":"2025-12-15T17:17:05Z","url":"https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/crates/proof/preimage/src/lib.rs","auditStatus":"audited_with_no_major_findings","reviewPhase":"initial audit","coverage":"Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). Preimage oracle key/hint types; Informational finding 3.5.12 (key.rs) located here.","majorFindings":0,"isLatestVersion":true,"laterAuditedVersionExists":false,"totalVersions":1},"diff":{"added":8,"removed":4,"ignoredAdded":1,"ignoredRemoved":0,"unchanged":32,"ignoredOnly":false,"hunks":[{"oldStart":1,"oldLines":10,"newStart":1,"newLines":10,"lines":[{"type":" ","oldLine":1,"newLine":1,"text":"#![doc = include_str!(\"../README.md\")]"},{"type":" ","oldLine":2,"newLine":2,"text":"#![doc("},{"type":"-","oldLine":3,"text":"    html_logo_url = \"https://raw.githubusercontent.com/op-rs/kona/main/assets/square.png\",","ignored":false},{"type":"-","oldLine":4,"text":"    html_favicon_url = \"https://raw.githubusercontent.com/op-rs/kona/main/assets/favicon.ico\",","ignored":false},{"type":"-","oldLine":5,"text":"    issue_tracker_base_url = \"https://github.com/op-rs/kona/issues/\"","ignored":false},{"type":"+","newLine":3,"text":"    html_logo_url = \"https://raw.githubusercontent.com/ethereum-optimism/optimism/develop/rust/kona/assets/square.png\",","ignored":false},{"type":"+","newLine":4,"text":"    html_favicon_url = \"https://raw.githubusercontent.com/ethereum-optimism/optimism/develop/rust/kona/assets/favicon.ico\",","ignored":false},{"type":"+","newLine":5,"text":"    issue_tracker_base_url = \"https://github.com/ethereum-optimism/optimism/issues/\"","ignored":false},{"type":" ","oldLine":6,"newLine":6,"text":")]"},{"type":"-","oldLine":7,"text":"#![cfg_attr(docsrs, feature(doc_cfg, doc_auto_cfg))]","ignored":false},{"type":"+","newLine":7,"text":"#![cfg_attr(docsrs, feature(doc_cfg))]","ignored":false},{"type":" ","oldLine":8,"newLine":8,"text":"#![cfg_attr(not(feature = \"std\"), no_std)]"},{"type":" ","oldLine":9,"newLine":9,"text":""},{"type":" ","oldLine":10,"newLine":10,"text":"extern crate alloc;"}]},{"oldStart":20,"oldLines":6,"newStart":20,"newLines":11,"lines":[{"type":" ","oldLine":20,"newLine":20,"text":"mod oracle;"},{"type":" ","oldLine":21,"newLine":21,"text":"pub use oracle::{OracleReader, OracleServer};"},{"type":" ","oldLine":22,"newLine":22,"text":""},{"type":"+","newLine":23,"text":"#[cfg(feature = \"verify\")]","ignored":false},{"type":"+","newLine":24,"text":"mod verifier;","ignored":false},{"type":"+","newLine":25,"text":"#[cfg(feature = \"verify\")]","ignored":false},{"type":"+","newLine":26,"text":"pub use verifier::{VerifyingPreimageFetcher, verify_preimage};","ignored":false},{"type":"+","newLine":27,"text":"","ignored":true},{"type":" ","oldLine":23,"newLine":28,"text":"mod hint;"},{"type":" ","oldLine":24,"newLine":29,"text":"pub use hint::{HintReader, HintWriter};"},{"type":" ","oldLine":25,"newLine":30,"text":""}]}]},"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "75972eef6bc1bf1e75e785dec6cc7bf5a70debe6681c79a8991b8b5be835b8b4",
+  "name": "lib.rs",
+  "kind": "program",
+  "lines": 40,
+  "source": "#![doc = include_str!(\"../README.md\")]\n#![doc(\n    html_logo_url = \"https://raw.githubusercontent.com/ethereum-optimism/optimism/develop/rust/kona/assets/square.png\",\n    html_favicon_url = \"https://raw.githubusercontent.com/ethereum-optimism/optimism/develop/rust/kona/assets/favicon.ico\",\n    issue_tracker_base_url = \"https://github.com/ethereum-optimism/optimism/issues/\"\n)]\n#![cfg_attr(docsrs, feature(doc_cfg))]\n#![cfg_attr(not(feature = \"std\"), no_std)]\n\nextern crate alloc;\n\n#[macro_use]\nextern crate tracing;\n\npub mod errors;\n\nmod key;\npub use key::{PreimageKey, PreimageKeyType};\n\nmod oracle;\npub use oracle::{OracleReader, OracleServer};\n\n#[cfg(feature = \"verify\")]\nmod verifier;\n#[cfg(feature = \"verify\")]\npub use verifier::{VerifyingPreimageFetcher, verify_preimage};\n\nmod hint;\npub use hint::{HintReader, HintWriter};\n\nmod traits;\npub use traits::{\n    Channel, CommsClient, HintReaderServer, HintRouter, HintWriterClient, PreimageFetcher,\n    PreimageOracleClient, PreimageOracleServer, PreimageServerBackend,\n};\n\n#[cfg(feature = \"std\")]\nmod native_channel;\n#[cfg(feature = \"std\")]\npub use native_channel::{BidirectionalChannel, NativeChannel};",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "differs",
+      "coveredLines": 32,
+      "match": {
+        "origin": "own",
+        "collection": "optimism",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "lib.rs",
+        "similarity": 0.793,
+        "reportId": "optimism/cantina-kona-2026-03",
+        "repository": "op-rs/kona",
+        "path": "crates/proof/preimage/src/lib.rs",
+        "commit": "86910c9112437bbb849eca28961f813c5450e103",
+        "commitTimestamp": "2025-12-15T17:17:05Z",
+        "url": "https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/crates/proof/preimage/src/lib.rs",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). Preimage oracle key/hint types; Informational finding 3.5.12 (key.rs) located here.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 8,
+        "removed": 4,
+        "ignoredAdded": 1,
+        "ignoredRemoved": 0,
+        "unchanged": 32,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 1,
+            "oldLines": 10,
+            "newStart": 1,
+            "newLines": 10,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 1,
+                "newLine": 1,
+                "text": "#![doc = include_str!(\"../README.md\")]"
+              },
+              { "type": " ", "oldLine": 2, "newLine": 2, "text": "#![doc(" },
+              {
+                "type": "-",
+                "oldLine": 3,
+                "text": "    html_logo_url = \"https://raw.githubusercontent.com/op-rs/kona/main/assets/square.png\",",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 4,
+                "text": "    html_favicon_url = \"https://raw.githubusercontent.com/op-rs/kona/main/assets/favicon.ico\",",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 5,
+                "text": "    issue_tracker_base_url = \"https://github.com/op-rs/kona/issues/\"",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 3,
+                "text": "    html_logo_url = \"https://raw.githubusercontent.com/ethereum-optimism/optimism/develop/rust/kona/assets/square.png\",",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 4,
+                "text": "    html_favicon_url = \"https://raw.githubusercontent.com/ethereum-optimism/optimism/develop/rust/kona/assets/favicon.ico\",",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 5,
+                "text": "    issue_tracker_base_url = \"https://github.com/ethereum-optimism/optimism/issues/\"",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 6, "newLine": 6, "text": ")]" },
+              {
+                "type": "-",
+                "oldLine": 7,
+                "text": "#![cfg_attr(docsrs, feature(doc_cfg, doc_auto_cfg))]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 7,
+                "text": "#![cfg_attr(docsrs, feature(doc_cfg))]",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 8,
+                "newLine": 8,
+                "text": "#![cfg_attr(not(feature = \"std\"), no_std)]"
+              },
+              { "type": " ", "oldLine": 9, "newLine": 9, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 10,
+                "newLine": 10,
+                "text": "extern crate alloc;"
+              }
+            ]
+          },
+          {
+            "oldStart": 20,
+            "oldLines": 6,
+            "newStart": 20,
+            "newLines": 11,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 20,
+                "newLine": 20,
+                "text": "mod oracle;"
+              },
+              {
+                "type": " ",
+                "oldLine": 21,
+                "newLine": 21,
+                "text": "pub use oracle::{OracleReader, OracleServer};"
+              },
+              { "type": " ", "oldLine": 22, "newLine": 22, "text": "" },
+              {
+                "type": "+",
+                "newLine": 23,
+                "text": "#[cfg(feature = \"verify\")]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 24,
+                "text": "mod verifier;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 25,
+                "text": "#[cfg(feature = \"verify\")]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 26,
+                "text": "pub use verifier::{VerifyingPreimageFetcher, verify_preimage};",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 27, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 23,
+                "newLine": 28,
+                "text": "mod hint;"
+              },
+              {
+                "type": " ",
+                "oldLine": 24,
+                "newLine": 29,
+                "text": "pub use hint::{HintReader, HintWriter};"
+              },
+              { "type": " ", "oldLine": 25, "newLine": 30, "text": "" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

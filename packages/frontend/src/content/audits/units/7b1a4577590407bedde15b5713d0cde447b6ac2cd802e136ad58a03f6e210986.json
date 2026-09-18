@@ -1,1 +1,15 @@
-{"schemaVersion":2,"unitHash":"7b1a4577590407bedde15b5713d0cde447b6ac2cd802e136ad58a03f6e210986","name":"mod.rs","kind":"program","lines":10,"source":"//! This module contains the super-chain (interop) mode for the host.\n\nmod cfg;\npub use cfg::{InteropHost, InteropHostError, InteropProviders};\n\nmod local_kv;\npub use local_kv::InteropLocalInputs;\n\nmod handler;\npub use handler::InteropHintHandler;","resolutions":{"9fa846564f4071bd":{"status":"unaudited","coveredLines":0,"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "7b1a4577590407bedde15b5713d0cde447b6ac2cd802e136ad58a03f6e210986",
+  "name": "mod.rs",
+  "kind": "program",
+  "lines": 10,
+  "source": "//! This module contains the super-chain (interop) mode for the host.\n\nmod cfg;\npub use cfg::{InteropHost, InteropHostError, InteropProviders};\n\nmod local_kv;\npub use local_kv::InteropLocalInputs;\n\nmod handler;\npub use handler::InteropHintHandler;",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

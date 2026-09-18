@@ -1,1 +1,37 @@
-{"schemaVersion":2,"unitHash":"cc6b1c630677d0d39ead842d341e2240c3eefd72e88a2170d4cb84cf7a8eef2c","name":"attributes.rs","kind":"program","lines":35,"source":"//! Error types for kona's attributes builder.\n\nuse alloc::string::String;\nuse alloy_eips::BlockNumHash;\nuse alloy_primitives::B256;\nuse thiserror::Error;\n\n/// An [`AttributesBuilder`] Error.\n///\n/// [`AttributesBuilder`]: crate::traits::AttributesBuilder\n#[derive(Error, Clone, Debug, PartialEq, Eq)]\npub enum BuilderError {\n    /// Mismatched blocks.\n    #[error(\"Block mismatch. Expected {0:?}, got {1:?}\")]\n    BlockMismatch(BlockNumHash, BlockNumHash),\n    /// Mismatched blocks for the start of an Epoch.\n    #[error(\"Block mismatch on epoch reset. Expected {0:?}, got {1:?}\")]\n    BlockMismatchEpochReset(BlockNumHash, BlockNumHash, B256),\n    /// [`SystemConfig`] update failed.\n    ///\n    /// [`SystemConfig`]: kona_genesis::SystemConfig\n    #[error(\"System config update failed\")]\n    SystemConfigUpdate,\n    /// Broken time invariant between L2 and L1.\n    #[error(\n        \"Time invariant broken. L1 origin: {0:?} | Next L2 time: {1} | L1 block: {2:?} | L1 timestamp {3:?}\"\n    )]\n    BrokenTimeInvariant(BlockNumHash, u64, BlockNumHash, u64),\n    /// Attributes unavailable.\n    #[error(\"Attributes unavailable\")]\n    AttributesUnavailable,\n    /// A custom error.\n    #[error(\"Error in attributes builder: {0}\")]\n    Custom(String),\n}","resolutions":{"9fa846564f4071bd":{"status":"identical","coveredLines":35,"match":{"origin":"own","collection":"optimism","relation":{"type":"own"},"rank":0,"matchedBy":"identity","auditedName":"attributes.rs","similarity":1,"reportId":"optimism/cantina-kona-2026-03","repository":"op-rs/kona","path":"crates/protocol/derive/src/errors/attributes.rs","commit":"86910c9112437bbb849eca28961f813c5450e103","commitTimestamp":"2025-12-15T17:17:05Z","url":"https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/crates/protocol/derive/src/errors/attributes.rs","auditStatus":"audited_with_no_major_findings","reviewPhase":"initial audit","coverage":"Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). kona-derive derivation pipeline (stages, sources, traversal, attributes). Medium findings 3.3.1 and 3.3.2 (pipeline/core.rs, stages/l1_retrieval.rs) and numerous Low/Informational findings located here; no Critical/High.","majorFindings":0,"isLatestVersion":true,"laterAuditedVersionExists":false,"totalVersions":1},"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "cc6b1c630677d0d39ead842d341e2240c3eefd72e88a2170d4cb84cf7a8eef2c",
+  "name": "attributes.rs",
+  "kind": "program",
+  "lines": 35,
+  "source": "//! Error types for kona's attributes builder.\n\nuse alloc::string::String;\nuse alloy_eips::BlockNumHash;\nuse alloy_primitives::B256;\nuse thiserror::Error;\n\n/// An [`AttributesBuilder`] Error.\n///\n/// [`AttributesBuilder`]: crate::traits::AttributesBuilder\n#[derive(Error, Clone, Debug, PartialEq, Eq)]\npub enum BuilderError {\n    /// Mismatched blocks.\n    #[error(\"Block mismatch. Expected {0:?}, got {1:?}\")]\n    BlockMismatch(BlockNumHash, BlockNumHash),\n    /// Mismatched blocks for the start of an Epoch.\n    #[error(\"Block mismatch on epoch reset. Expected {0:?}, got {1:?}\")]\n    BlockMismatchEpochReset(BlockNumHash, BlockNumHash, B256),\n    /// [`SystemConfig`] update failed.\n    ///\n    /// [`SystemConfig`]: kona_genesis::SystemConfig\n    #[error(\"System config update failed\")]\n    SystemConfigUpdate,\n    /// Broken time invariant between L2 and L1.\n    #[error(\n        \"Time invariant broken. L1 origin: {0:?} | Next L2 time: {1} | L1 block: {2:?} | L1 timestamp {3:?}\"\n    )]\n    BrokenTimeInvariant(BlockNumHash, u64, BlockNumHash, u64),\n    /// Attributes unavailable.\n    #[error(\"Attributes unavailable\")]\n    AttributesUnavailable,\n    /// A custom error.\n    #[error(\"Error in attributes builder: {0}\")]\n    Custom(String),\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "identical",
+      "coveredLines": 35,
+      "match": {
+        "origin": "own",
+        "collection": "optimism",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "attributes.rs",
+        "similarity": 1,
+        "reportId": "optimism/cantina-kona-2026-03",
+        "repository": "op-rs/kona",
+        "path": "crates/protocol/derive/src/errors/attributes.rs",
+        "commit": "86910c9112437bbb849eca28961f813c5450e103",
+        "commitTimestamp": "2025-12-15T17:17:05Z",
+        "url": "https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/crates/protocol/derive/src/errors/attributes.rs",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). kona-derive derivation pipeline (stages, sources, traversal, attributes). Medium findings 3.3.1 and 3.3.2 (pipeline/core.rs, stages/l1_retrieval.rs) and numerous Low/Informational findings located here; no Critical/High.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "warnings": []
+    }
+  }
+}

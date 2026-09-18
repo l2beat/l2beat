@@ -1,1 +1,15 @@
-{"schemaVersion":2,"unitHash":"2f90932a2254fa0c60fed89b86ce75ca8d87d40eb97fed6386a05021a84c423e","name":"mod.rs","kind":"program","lines":11,"source":"//! Ethereum utilities for the host binary.\n\nuse alloy_provider::{Network, RootProvider};\n\nmod precompiles;\npub(crate) use precompiles::execute;\n\n/// Returns an HTTP provider for the given URL.\npub async fn rpc_provider<N: Network>(url: &str) -> RootProvider<N> {\n    RootProvider::connect(url).await.unwrap()\n}","resolutions":{"9fa846564f4071bd":{"status":"unaudited","coveredLines":0,"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "2f90932a2254fa0c60fed89b86ce75ca8d87d40eb97fed6386a05021a84c423e",
+  "name": "mod.rs",
+  "kind": "program",
+  "lines": 11,
+  "source": "//! Ethereum utilities for the host binary.\n\nuse alloy_provider::{Network, RootProvider};\n\nmod precompiles;\npub(crate) use precompiles::execute;\n\n/// Returns an HTTP provider for the given URL.\npub async fn rpc_provider<N: Network>(url: &str) -> RootProvider<N> {\n    RootProvider::connect(url).await.unwrap()\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

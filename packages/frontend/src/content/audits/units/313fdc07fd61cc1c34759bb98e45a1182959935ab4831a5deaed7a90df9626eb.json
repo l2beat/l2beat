@@ -1,1 +1,15 @@
-{"schemaVersion":2,"unitHash":"313fdc07fd61cc1c34759bb98e45a1182959935ab4831a5deaed7a90df9626eb","name":"provider.rs","kind":"program","lines":34,"source":"use alloy_network::Ethereum;\nuse alloy_provider::Provider;\nuse async_trait::async_trait;\nuse op_alloy_network::Optimism;\n\n/// Mock L1 Provider that implements the Provider trait for testing.\n///\n/// This is a minimal no-op provider that satisfies the trait bounds required\n/// by [`MockEngineClient`](super::MockEngineClient). All provider methods return empty/default\n/// values.\n#[derive(Debug, Clone)]\npub struct MockL1Provider;\n\n#[async_trait]\nimpl Provider<Ethereum> for MockL1Provider {\n    fn root(&self) -> &alloy_provider::RootProvider<Ethereum> {\n        unimplemented!(\"MockL1Provider does not support root()\")\n    }\n}\n\n/// Mock L2 Provider that implements the Provider trait for Optimism network.\n///\n/// This is a minimal no-op provider that satisfies the trait bounds required\n/// by [`MockEngineClient`](super::MockEngineClient). All provider methods return empty/default\n/// values.\n#[derive(Debug, Clone)]\npub struct MockL2Provider;\n\n#[async_trait]\nimpl Provider<Optimism> for MockL2Provider {\n    fn root(&self) -> &alloy_provider::RootProvider<Optimism> {\n        unimplemented!(\"MockL2Provider does not support root()\")\n    }\n}","resolutions":{"9fa846564f4071bd":{"status":"unaudited","coveredLines":0,"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "313fdc07fd61cc1c34759bb98e45a1182959935ab4831a5deaed7a90df9626eb",
+  "name": "provider.rs",
+  "kind": "program",
+  "lines": 34,
+  "source": "use alloy_network::Ethereum;\nuse alloy_provider::Provider;\nuse async_trait::async_trait;\nuse op_alloy_network::Optimism;\n\n/// Mock L1 Provider that implements the Provider trait for testing.\n///\n/// This is a minimal no-op provider that satisfies the trait bounds required\n/// by [`MockEngineClient`](super::MockEngineClient). All provider methods return empty/default\n/// values.\n#[derive(Debug, Clone)]\npub struct MockL1Provider;\n\n#[async_trait]\nimpl Provider<Ethereum> for MockL1Provider {\n    fn root(&self) -> &alloy_provider::RootProvider<Ethereum> {\n        unimplemented!(\"MockL1Provider does not support root()\")\n    }\n}\n\n/// Mock L2 Provider that implements the Provider trait for Optimism network.\n///\n/// This is a minimal no-op provider that satisfies the trait bounds required\n/// by [`MockEngineClient`](super::MockEngineClient). All provider methods return empty/default\n/// values.\n#[derive(Debug, Clone)]\npub struct MockL2Provider;\n\n#[async_trait]\nimpl Provider<Optimism> for MockL2Provider {\n    fn root(&self) -> &alloy_provider::RootProvider<Optimism> {\n        unimplemented!(\"MockL2Provider does not support root()\")\n    }\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

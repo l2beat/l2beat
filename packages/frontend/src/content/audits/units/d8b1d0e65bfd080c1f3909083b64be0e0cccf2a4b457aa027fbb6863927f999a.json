@@ -1,1 +1,15 @@
-{"schemaVersion":2,"unitHash":"d8b1d0e65bfd080c1f3909083b64be0e0cccf2a4b457aa027fbb6863927f999a","name":"fetch-witness-tar.sh","kind":"program","lines":26,"source":"#!/usr/bin/env bash\n# Download a preimage witness tar from chain-test-data releases with etag caching.\n# Mirrors op-program/scripts/run-compat.sh — skips redownload when the release asset\n# is unchanged so local re-runs are fast.\n#\n# Usage: fetch-witness-tar.sh <tar_name> <base_url>\n#\n# Invoked via the `prepare-witness-data` just recipe, which supplies the\n# canonical tar name and release URL. The tar is written to\n# rust/kona/bin/client/testdata/<tar_name>, alongside an etag sidecar that\n# enables conditional GETs on subsequent invocations.\nset -o errexit -o nounset -o pipefail\n\nSCRIPTS_DIR=$(cd \"$(dirname \"${BASH_SOURCE[0]}\")\" && pwd)\nTESTDATA_DIR=\"${SCRIPTS_DIR}/../testdata\"\n\nTAR_NAME=\"${1?Must specify tar name (e.g. op-sepolia-42427365-witness.tar.zst)}\"\nBASE_URL=\"${2?Must specify chain-test-data release base URL (e.g. https://github.com/ethereum-optimism/chain-test-data/releases/download/kona-YYYY-MM-DD)}\"\n\nURL=\"${BASE_URL}/${TAR_NAME}\"\nTAR_PATH=\"${TESTDATA_DIR}/${TAR_NAME}\"\nETAG_PATH=\"${TESTDATA_DIR}/${TAR_NAME}.etag\"\n\nmkdir -p \"${TESTDATA_DIR}\"\ncurl --etag-save \"${ETAG_PATH}\" --etag-compare \"${ETAG_PATH}\" \\\n  -L --fail -o \"${TAR_PATH}\" \"${URL}\"","resolutions":{"9fa846564f4071bd":{"status":"unaudited","coveredLines":0,"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "d8b1d0e65bfd080c1f3909083b64be0e0cccf2a4b457aa027fbb6863927f999a",
+  "name": "fetch-witness-tar.sh",
+  "kind": "program",
+  "lines": 26,
+  "source": "#!/usr/bin/env bash\n# Download a preimage witness tar from chain-test-data releases with etag caching.\n# Mirrors op-program/scripts/run-compat.sh — skips redownload when the release asset\n# is unchanged so local re-runs are fast.\n#\n# Usage: fetch-witness-tar.sh <tar_name> <base_url>\n#\n# Invoked via the `prepare-witness-data` just recipe, which supplies the\n# canonical tar name and release URL. The tar is written to\n# rust/kona/bin/client/testdata/<tar_name>, alongside an etag sidecar that\n# enables conditional GETs on subsequent invocations.\nset -o errexit -o nounset -o pipefail\n\nSCRIPTS_DIR=$(cd \"$(dirname \"${BASH_SOURCE[0]}\")\" && pwd)\nTESTDATA_DIR=\"${SCRIPTS_DIR}/../testdata\"\n\nTAR_NAME=\"${1?Must specify tar name (e.g. op-sepolia-42427365-witness.tar.zst)}\"\nBASE_URL=\"${2?Must specify chain-test-data release base URL (e.g. https://github.com/ethereum-optimism/chain-test-data/releases/download/kona-YYYY-MM-DD)}\"\n\nURL=\"${BASE_URL}/${TAR_NAME}\"\nTAR_PATH=\"${TESTDATA_DIR}/${TAR_NAME}\"\nETAG_PATH=\"${TESTDATA_DIR}/${TAR_NAME}.etag\"\n\nmkdir -p \"${TESTDATA_DIR}\"\ncurl --etag-save \"${ETAG_PATH}\" --etag-compare \"${ETAG_PATH}\" \\\n  -L --fail -o \"${TAR_PATH}\" \"${URL}\"",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

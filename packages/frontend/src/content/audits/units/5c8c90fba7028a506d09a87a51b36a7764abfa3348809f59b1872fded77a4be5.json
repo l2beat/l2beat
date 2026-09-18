@@ -1,1 +1,728 @@
-{"schemaVersion":2,"unitHash":"5c8c90fba7028a506d09a87a51b36a7764abfa3348809f59b1872fded77a4be5","name":"channel_bank.rs","kind":"program","lines":577,"source":"//! This module contains the `ChannelBank` struct.\n\nuse crate::{\n    ChannelReaderProvider, NextFrameProvider, OriginAdvancer, OriginProvider, PipelineError,\n    PipelineErrorKind, PipelineResult, Stage,\n};\nuse alloc::{boxed::Box, collections::VecDeque, sync::Arc};\nuse alloy_eips::BlockNumHash;\nuse alloy_primitives::{Bytes, hex, map::HashMap};\nuse async_trait::async_trait;\nuse core::fmt::Debug;\nuse kona_genesis::{RollupConfig, SystemConfig};\nuse kona_protocol::{BlockInfo, Channel, ChannelId, Frame};\n\n/// The maximum size of a channel bank.\npub(crate) const MAX_CHANNEL_BANK_SIZE: usize = 100_000_000;\n\n/// The maximum size of a channel bank after the Fjord Hardfork.\npub(crate) const FJORD_MAX_CHANNEL_BANK_SIZE: usize = 1_000_000_000;\n\n/// [`ChannelBank`] is a stateful stage that does the following:\n/// 1. Unmarshalls frames from L1 transaction data\n/// 2. Applies those frames to a channel\n/// 3. Attempts to read from the channel when it is ready\n/// 4. Prunes channels (not frames) when the channel bank is too large.\n///\n/// Note: we prune before we ingest data.\n/// As we switch between ingesting data & reading, the prune step occurs at an odd point\n/// Specifically, the channel bank is not allowed to become too large between successive calls\n/// to `IngestData`. This means that we can do an ingest and then do a read while becoming too\n/// large. [`ChannelBank`] buffers channel frames, and emits full channel data\n#[derive(Debug)]\npub struct ChannelBank<P>\nwhere\n    P: NextFrameProvider + OriginAdvancer + OriginProvider + Stage + Debug,\n{\n    /// The rollup configuration.\n    pub cfg: Arc<RollupConfig>,\n    /// Map of channels by ID.\n    pub channels: HashMap<ChannelId, Channel>,\n    /// Channels in FIFO order.\n    pub channel_queue: VecDeque<ChannelId>,\n    /// The previous stage of the derivation pipeline.\n    pub prev: P,\n}\n\nimpl<P> ChannelBank<P>\nwhere\n    P: NextFrameProvider + OriginAdvancer + OriginProvider + Stage + Debug,\n{\n    /// Create a new [`ChannelBank`] stage.\n    pub fn new(cfg: Arc<RollupConfig>, prev: P) -> Self {\n        Self { cfg, channels: HashMap::default(), channel_queue: VecDeque::new(), prev }\n    }\n\n    /// Returns the size of the channel bank by accumulating over all channels.\n    pub fn size(&self) -> usize {\n        self.channels.iter().fold(0, |acc, (_, c)| acc + c.size())\n    }\n\n    /// Prunes the Channel bank, until it is below the max channel bank size.\n    /// Prunes from the high-priority channel since it failed to be read.\n    pub fn prune(&mut self) -> PipelineResult<()> {\n        let mut total_size = self.size();\n        let origin = self.origin().ok_or(PipelineError::MissingOrigin.crit())?;\n        let max_channel_bank_size = if self.cfg.is_fjord_active(origin.timestamp) {\n            FJORD_MAX_CHANNEL_BANK_SIZE\n        } else {\n            MAX_CHANNEL_BANK_SIZE\n        };\n        while total_size > max_channel_bank_size {\n            let id =\n                self.channel_queue.pop_front().ok_or(PipelineError::ChannelProviderEmpty.crit())?;\n            let channel = self.channels.remove(&id).ok_or(PipelineError::ChannelNotFound.crit())?;\n            total_size -= channel.size();\n        }\n        Ok(())\n    }\n\n    /// Adds new L1 data to the channel bank. Should only be called after all data has been read.\n    pub fn ingest_frame(&mut self, frame: Frame) -> PipelineResult<()> {\n        let origin = self.origin().ok_or(PipelineError::MissingOrigin.crit())?;\n\n        // Get the channel for the frame, or create a new one if it doesn't exist.\n        let current_channel = match self.channels.get_mut(&frame.id) {\n            Some(c) => c,\n            None => {\n                let channel = Channel::new(frame.id, origin);\n                self.channel_queue.push_back(frame.id);\n                self.channels.insert(frame.id, channel);\n                self.channels.get_mut(&frame.id).expect(\"Channel must be in queue\")\n            }\n        };\n\n        // Check if the channel is not timed out. If it has, ignore the frame.\n        if current_channel.open_block_number() + self.cfg.channel_timeout(origin.timestamp) <\n            origin.number\n        {\n            warn!(\n                target: \"channel_bank\",\n                \"Channel (ID: {}) timed out\", hex::encode(frame.id)\n            );\n            return Ok(());\n        }\n\n        // Ingest the frame. If it fails, ignore the frame.\n        let frame_id = frame.id;\n        if current_channel.add_frame(frame, origin).is_err() {\n            warn!(target: \"channel_bank\", \"Failed to add frame to channel: {:?}\", frame_id);\n            return Ok(());\n        }\n\n        self.prune()\n    }\n\n    /// Read the raw data of the first channel, if it's timed-out or closed.\n    ///\n    /// Returns an error if there is nothing new to read.\n    pub fn read(&mut self) -> PipelineResult<Option<Bytes>> {\n        // Bail if there are no channels to read from.\n        if self.channel_queue.is_empty() {\n            trace!(target: \"channel_bank\", \"No channels to read from\");\n            return Err(PipelineError::Eof.temp());\n        }\n\n        // Return an `Ok(None)` if the first channel is timed out. There may be more timed\n        // out channels at the head of the queue and we want to remove them all.\n        let first = self.channel_queue[0];\n        let channel =\n            self.channels.get(&first).ok_or(PipelineError::ChannelProviderEmpty.crit())?;\n        let origin = self.origin().ok_or(PipelineError::ChannelProviderEmpty.crit())?;\n        if channel.open_block_number() + self.cfg.channel_timeout(origin.timestamp) < origin.number\n        {\n            warn!(\n                target: \"channel_bank\",\n                \"Channel (ID: {}) timed out\", hex::encode(first)\n            );\n            self.channels.remove(&first);\n            self.channel_queue.pop_front();\n            return Ok(None);\n        }\n\n        // At this point we have removed all timed out channels from the front of the\n        // `channel_queue`. Pre-Canyon we simply check the first index.\n        // Post-Canyon we read the entire channelQueue for the first ready channel.\n        // If no channel is available, we return `PipelineError::Eof`.\n        // Canyon is activated when the first L1 block whose time >= CanyonTime, not on the L2\n        // timestamp.\n        if !self.cfg.is_canyon_active(origin.timestamp) {\n            return self.try_read_channel_at_index(0).map(Some);\n        }\n\n        let channel_data =\n            (0..self.channel_queue.len()).find_map(|i| self.try_read_channel_at_index(i).ok());\n        channel_data.map_or_else(|| Err(PipelineError::Eof.temp()), |data| Ok(Some(data)))\n    }\n\n    /// Attempts to read the channel at the specified index. If the channel is not ready or timed\n    /// out, it will return an error.\n    /// If the channel read was successful, it will remove the channel from the channel queue.\n    fn try_read_channel_at_index(&mut self, index: usize) -> PipelineResult<Bytes> {\n        let channel_id = self.channel_queue[index];\n        let channel =\n            self.channels.get(&channel_id).ok_or(PipelineError::ChannelProviderEmpty.crit())?;\n        let origin = self.origin().ok_or(PipelineError::MissingOrigin.crit())?;\n\n        let timed_out = channel.open_block_number() + self.cfg.channel_timeout(origin.timestamp) <\n            origin.number;\n        if timed_out || !channel.is_ready() {\n            return Err(PipelineError::Eof.temp());\n        }\n\n        let frame_data = channel.frame_data();\n        self.channels.remove(&channel_id);\n        self.channel_queue.remove(index);\n\n        frame_data.ok_or(PipelineError::ChannelProviderEmpty.crit())\n    }\n}\n\n#[async_trait]\nimpl<P> OriginAdvancer for ChannelBank<P>\nwhere\n    P: NextFrameProvider + OriginAdvancer + OriginProvider + Stage + Send + Debug,\n{\n    async fn advance_origin(&mut self) -> PipelineResult<()> {\n        self.prev.advance_origin().await\n    }\n}\n\n#[async_trait]\nimpl<P> ChannelReaderProvider for ChannelBank<P>\nwhere\n    P: NextFrameProvider + OriginAdvancer + OriginProvider + Stage + Send + Debug,\n{\n    async fn next_data(&mut self) -> PipelineResult<Option<Bytes>> {\n        match self.read() {\n            Err(e) => {\n                if !matches!(e, PipelineErrorKind::Temporary(PipelineError::Eof)) {\n                    return Err(PipelineError::ChannelProviderEmpty.crit());\n                }\n            }\n            data => return data,\n        };\n\n        // Load the data into the channel bank\n        let frame = match self.prev.next_frame().await {\n            Ok(f) => f,\n            Err(e) => {\n                return Err(e);\n            }\n        };\n        let res = self.ingest_frame(frame);\n        res?;\n        Err(PipelineError::NotEnoughData.temp())\n    }\n}\n\nimpl<P> OriginProvider for ChannelBank<P>\nwhere\n    P: NextFrameProvider + OriginAdvancer + OriginProvider + Stage + Debug,\n{\n    fn origin(&self) -> Option<BlockInfo> {\n        self.prev.origin()\n    }\n}\n\n#[async_trait]\nimpl<P> Stage for ChannelBank<P>\nwhere\n    P: NextFrameProvider + OriginAdvancer + OriginProvider + Stage + Send + Debug,\n{\n    async fn reset(\n        &mut self,\n        l1_origin: BlockNumHash,\n        system_config: SystemConfig,\n    ) -> PipelineResult<()> {\n        self.prev.reset(l1_origin, system_config).await?;\n        self.channels.clear();\n        self.channel_queue = VecDeque::with_capacity(10);\n        Ok(())\n    }\n\n    async fn activate(&mut self) -> PipelineResult<()> {\n        self.prev.activate().await?;\n        self.channels.clear();\n        self.channel_queue = VecDeque::with_capacity(10);\n        Ok(())\n    }\n\n    async fn flush_channel(&mut self) -> PipelineResult<()> {\n        self.prev.flush_channel().await?;\n        self.channels.clear();\n        self.channel_queue = VecDeque::with_capacity(10);\n        Ok(())\n    }\n\n    async fn provide_block(&mut self, block: BlockInfo) -> PipelineResult<()> {\n        self.prev.provide_block(block).await\n    }\n}\n\n#[cfg(test)]\nmod tests {\n    use super::*;\n    use crate::test_utils::{CollectingLayer, TestNextFrameProvider, TraceStorage};\n    use alloc::{vec, vec::Vec};\n    use kona_genesis::HardForkConfig;\n    use tracing::Level;\n    use tracing_subscriber::layer::SubscriberExt;\n\n    #[test]\n    fn test_try_read_channel_at_index_missing_channel() {\n        let mock = TestNextFrameProvider::new(vec![]);\n        let cfg = Arc::new(RollupConfig::default());\n        let mut channel_bank = ChannelBank::new(cfg, mock);\n        channel_bank.channel_queue.push_back([0xFF; 16]);\n        let err = channel_bank.try_read_channel_at_index(0).unwrap_err();\n        assert_eq!(err, PipelineError::ChannelProviderEmpty.crit());\n    }\n\n    #[test]\n    fn test_try_read_channel_at_index_missing_origin() {\n        let mut mock = TestNextFrameProvider::new(vec![]);\n        mock.block_info = None;\n        let cfg = Arc::new(RollupConfig::default());\n        let mut channel_bank = ChannelBank::new(cfg, mock);\n        channel_bank.channel_queue.push_back([0xFF; 16]);\n        channel_bank.channels.insert([0xFF; 16], Channel::new([0xFF; 16], BlockInfo::default()));\n        let err = channel_bank.try_read_channel_at_index(0).unwrap_err();\n        assert_eq!(err, PipelineError::MissingOrigin.crit());\n    }\n\n    #[test]\n    fn test_try_read_channel_at_index_timed_out() {\n        let mut mock = TestNextFrameProvider::new(vec![]);\n        mock.block_info = Some(BlockInfo { number: 10, ..Default::default() });\n        let cfg = Arc::new(RollupConfig::default());\n        let mut channel_bank = ChannelBank::new(cfg, mock);\n        channel_bank.channel_queue.push_back([0xFF; 16]);\n        channel_bank.channels.insert([0xFF; 16], Channel::new([0xFF; 16], BlockInfo::default()));\n        let err = channel_bank.try_read_channel_at_index(0).unwrap_err();\n        assert_eq!(err, PipelineError::Eof.temp());\n    }\n\n    #[test]\n    fn test_try_read_channel_at_index() {\n        let mock = TestNextFrameProvider::new(vec![]);\n        let cfg = Arc::new(RollupConfig::default());\n        let mut channel_bank = ChannelBank::new(cfg, mock);\n        let id: ChannelId = [0xFF; 16];\n        channel_bank.channel_queue.push_back(id);\n        let mut channel = Channel::new(id, BlockInfo::default());\n        channel\n            .add_frame(\n                Frame { id, number: 0, data: b\"seven__\".to_vec(), is_last: false },\n                BlockInfo::default(),\n            )\n            .unwrap();\n        channel\n            .add_frame(\n                Frame { id, number: 1, data: b\"seven__\".to_vec(), is_last: false },\n                BlockInfo::default(),\n            )\n            .unwrap();\n        channel\n            .add_frame(\n                Frame { id, number: 2, data: b\"seven__\".to_vec(), is_last: true },\n                BlockInfo::default(),\n            )\n            .unwrap();\n        assert!(channel.is_ready());\n        channel_bank.channels.insert([0xFF; 16], channel);\n        let frame_data = channel_bank.try_read_channel_at_index(0).unwrap();\n        assert_eq!(\n            frame_data,\n            alloy_primitives::bytes!(\"736576656e5f5f736576656e5f5f736576656e5f5f\")\n        );\n    }\n\n    #[test]\n    fn test_read_channel_canyon_not_active() {\n        let mock = TestNextFrameProvider::new(vec![]);\n        let cfg = Arc::new(RollupConfig::default());\n        let mut channel_bank = ChannelBank::new(cfg, mock);\n        let id: ChannelId = [0xFF; 16];\n        channel_bank.channel_queue.push_back(id);\n        let mut channel = Channel::new(id, BlockInfo::default());\n        channel\n            .add_frame(\n                Frame { id, number: 0, data: b\"seven__\".to_vec(), is_last: false },\n                BlockInfo::default(),\n            )\n            .unwrap();\n        channel\n            .add_frame(\n                Frame { id, number: 1, data: b\"seven__\".to_vec(), is_last: false },\n                BlockInfo::default(),\n            )\n            .unwrap();\n        channel\n            .add_frame(\n                Frame { id, number: 2, data: b\"seven__\".to_vec(), is_last: true },\n                BlockInfo::default(),\n            )\n            .unwrap();\n        assert!(channel.is_ready());\n        channel_bank.channels.insert([0xFF; 16], channel);\n        let frame_data = channel_bank.read().unwrap();\n        assert_eq!(\n            frame_data,\n            Some(alloy_primitives::bytes!(\"736576656e5f5f736576656e5f5f736576656e5f5f\"))\n        );\n    }\n\n    #[test]\n    fn test_read_channel_active() {\n        let mock = TestNextFrameProvider::new(vec![]);\n        let cfg = Arc::new(RollupConfig {\n            hardforks: HardForkConfig { canyon_time: Some(0), ..Default::default() },\n            ..Default::default()\n        });\n        let mut channel_bank = ChannelBank::new(cfg, mock);\n        let id: ChannelId = [0xFF; 16];\n        channel_bank.channel_queue.push_back(id);\n        let mut channel = Channel::new(id, BlockInfo::default());\n        channel\n            .add_frame(\n                Frame { id, number: 0, data: b\"seven__\".to_vec(), is_last: false },\n                BlockInfo::default(),\n            )\n            .unwrap();\n        channel\n            .add_frame(\n                Frame { id, number: 1, data: b\"seven__\".to_vec(), is_last: false },\n                BlockInfo::default(),\n            )\n            .unwrap();\n        channel\n            .add_frame(\n                Frame { id, number: 2, data: b\"seven__\".to_vec(), is_last: true },\n                BlockInfo::default(),\n            )\n            .unwrap();\n        assert!(channel.is_ready());\n        channel_bank.channels.insert([0xFF; 16], channel);\n        let frame_data = channel_bank.read().unwrap();\n        assert_eq!(\n            frame_data,\n            Some(alloy_primitives::bytes!(\"736576656e5f5f736576656e5f5f736576656e5f5f\"))\n        );\n    }\n\n    #[test]\n    fn test_ingest_empty_origin() {\n        let mut mock = TestNextFrameProvider::new(vec![]);\n        mock.block_info = None;\n        let cfg = Arc::new(RollupConfig::default());\n        let mut channel_bank = ChannelBank::new(cfg, mock);\n        let frame = Frame::default();\n        let err = channel_bank.ingest_frame(frame).unwrap_err();\n        assert_eq!(err, PipelineError::MissingOrigin.crit());\n    }\n\n    #[tokio::test]\n    async fn test_reset() {\n        let mock = TestNextFrameProvider::new(vec![]);\n        let cfg = Arc::new(RollupConfig::default());\n        let mut channel_bank = ChannelBank::new(cfg, mock);\n        channel_bank.channels.insert([0xFF; 16], Channel::default());\n        channel_bank.channel_queue.push_back([0xFF; 16]);\n        assert!(!channel_bank.prev.reset);\n        channel_bank.reset(BlockNumHash::default(), SystemConfig::default()).await.unwrap();\n        assert_eq!(channel_bank.channels.len(), 0);\n        assert_eq!(channel_bank.channel_queue.len(), 0);\n        assert!(channel_bank.prev.reset);\n    }\n\n    #[test]\n    fn test_ingest_invalid_frame() {\n        let trace_store: TraceStorage = Default::default();\n        let layer = CollectingLayer::new(trace_store.clone());\n        let subscriber = tracing_subscriber::Registry::default().with(layer);\n        let _guard = tracing::subscriber::set_default(subscriber);\n\n        let mock = TestNextFrameProvider::new(vec![]);\n        let mut channel_bank = ChannelBank::new(Arc::new(RollupConfig::default()), mock);\n        let frame = Frame { id: [0xFF; 16], ..Default::default() };\n        assert_eq!(channel_bank.size(), 0);\n        assert!(channel_bank.channels.is_empty());\n        assert_eq!(trace_store.lock().iter().filter(|(l, _)| matches!(l, &Level::WARN)).count(), 0);\n        assert_eq!(channel_bank.ingest_frame(frame.clone()), Ok(()));\n        assert_eq!(channel_bank.size(), kona_protocol::FRAME_OVERHEAD);\n        assert_eq!(channel_bank.channels.len(), 1);\n        // This should fail since the frame is already ingested.\n        assert_eq!(channel_bank.ingest_frame(frame), Ok(()));\n        assert_eq!(channel_bank.size(), kona_protocol::FRAME_OVERHEAD);\n        assert_eq!(channel_bank.channels.len(), 1);\n        assert_eq!(trace_store.lock().iter().filter(|(l, _)| matches!(l, &Level::WARN)).count(), 1);\n    }\n\n    #[test]\n    fn test_ingest_and_prune_channel_bank() {\n        let mut frames = crate::frames!(0xFF, 0, vec![0xDD; 50], 100000);\n        let mock = TestNextFrameProvider::new(vec![]);\n        let cfg = Arc::new(RollupConfig::default());\n        let mut channel_bank = ChannelBank::new(cfg, mock);\n        // Ingest frames until the channel bank is full and it stops increasing in size\n        let mut current_size = 0;\n        let next_frame = frames.pop().unwrap();\n        channel_bank.ingest_frame(next_frame).unwrap();\n        while channel_bank.size() > current_size {\n            current_size = channel_bank.size();\n            let next_frame = frames.pop().unwrap();\n            channel_bank.ingest_frame(next_frame).unwrap();\n            assert!(channel_bank.size() <= MAX_CHANNEL_BANK_SIZE);\n        }\n        // There should be a bunch of frames leftover\n        assert!(!frames.is_empty());\n        // If we ingest one more frame, the channel bank should prune\n        // and the size should be the same\n        let next_frame = frames.pop().unwrap();\n        channel_bank.ingest_frame(next_frame).unwrap();\n        assert_eq!(channel_bank.size(), current_size);\n    }\n\n    #[test]\n    fn test_ingest_and_prune_channel_bank_fjord() {\n        let mut frames = crate::frames!(0xFF, 0, vec![0xDD; 50], 100000);\n        let mock = TestNextFrameProvider::new(vec![]);\n        let cfg = Arc::new(RollupConfig {\n            hardforks: HardForkConfig { fjord_time: Some(0), ..Default::default() },\n            ..Default::default()\n        });\n        let mut channel_bank = ChannelBank::new(cfg, mock);\n        // Ingest frames until the channel bank is full and it stops increasing in size\n        let mut current_size = 0;\n        let next_frame = frames.pop().unwrap();\n        channel_bank.ingest_frame(next_frame).unwrap();\n        while channel_bank.size() > current_size {\n            current_size = channel_bank.size();\n            let next_frame = frames.pop().unwrap();\n            channel_bank.ingest_frame(next_frame).unwrap();\n            assert!(channel_bank.size() <= FJORD_MAX_CHANNEL_BANK_SIZE);\n        }\n        // There should be a bunch of frames leftover\n        assert!(!frames.is_empty());\n        // If we ingest one more frame, the channel bank should prune\n        // and the size should be the same\n        let next_frame = frames.pop().unwrap();\n        channel_bank.ingest_frame(next_frame).unwrap();\n        assert_eq!(channel_bank.size(), current_size);\n    }\n\n    #[tokio::test]\n    async fn test_read_empty_channel_bank() {\n        let frames = [crate::frame!(0xFF, 0, vec![0xDD; 50], true)];\n        let mock = TestNextFrameProvider::new(vec![Ok(frames[0].clone())]);\n        let cfg = Arc::new(RollupConfig::default());\n        let mut channel_bank = ChannelBank::new(cfg, mock);\n        let err = channel_bank.read().unwrap_err();\n        assert_eq!(err, PipelineError::Eof.temp());\n        let err = channel_bank.next_data().await.unwrap_err();\n        assert_eq!(err, PipelineError::NotEnoughData.temp());\n    }\n\n    #[tokio::test]\n    async fn test_channel_timeout() {\n        let trace_store: TraceStorage = Default::default();\n        let layer = CollectingLayer::new(trace_store.clone());\n        let subscriber = tracing_subscriber::Registry::default().with(layer);\n        let _guard = tracing::subscriber::set_default(subscriber);\n\n        let configs: [RollupConfig; 2] = [\n            kona_registry::ROLLUP_CONFIGS.get(&10).cloned().unwrap(),\n            kona_registry::ROLLUP_CONFIGS.get(&11155420).cloned().unwrap(),\n        ];\n\n        for cfg in configs {\n            let frames = [\n                crate::frame!(0xFF, 0, vec![0xDD; 50], false),\n                crate::frame!(0xFF, 1, vec![0xDD; 50], true),\n            ];\n            let mock = TestNextFrameProvider::new(frames.into_iter().map(Ok).collect::<Vec<_>>());\n            let cfg = Arc::new(cfg);\n            let mut channel_bank = ChannelBank::new(cfg.clone(), mock);\n\n            // Ingest first frame\n            let err = channel_bank.next_data().await.unwrap_err();\n            assert_eq!(err, PipelineError::NotEnoughData.temp());\n\n            for _ in 0..cfg.channel_timeout + 1 {\n                channel_bank.advance_origin().await.unwrap();\n            }\n\n            // There should be an in-progress channel.\n            assert_eq!(channel_bank.channels.len(), 1);\n            assert_eq!(channel_bank.channel_queue.len(), 1);\n\n            // Should be `Ok(())`, channel timed out.\n            channel_bank.next_data().await.unwrap();\n\n            // The channel should have been pruned.\n            assert_eq!(channel_bank.channels.len(), 0);\n            assert_eq!(channel_bank.channel_queue.len(), 0);\n\n            // Ensure the channel was successfully timed out.\n            let (_, warning_trace) = trace_store\n                .lock()\n                .iter()\n                .find(|(l, _)| matches!(l, &Level::WARN))\n                .cloned()\n                .unwrap();\n            assert!(warning_trace.contains(\"timed out\"));\n        }\n    }\n}","resolutions":{"9fa846564f4071bd":{"status":"differs","coveredLines":543,"match":{"origin":"own","collection":"optimism","relation":{"type":"own"},"rank":0,"matchedBy":"name","auditedName":"channel_bank.rs","similarity":0.945,"reportId":"optimism/cantina-kona-2026-03","repository":"op-rs/kona","path":"crates/protocol/derive/src/stages/channel/channel_bank.rs","commit":"86910c9112437bbb849eca28961f813c5450e103","commitTimestamp":"2025-12-15T17:17:05Z","url":"https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/crates/protocol/derive/src/stages/channel/channel_bank.rs","auditStatus":"audited_with_no_major_findings","reviewPhase":"initial audit","coverage":"Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). kona-derive derivation pipeline (stages, sources, traversal, attributes). Medium findings 3.3.1 and 3.3.2 (pipeline/core.rs, stages/l1_retrieval.rs) and numerous Low/Informational findings located here; no Critical/High.","majorFindings":0,"isLatestVersion":true,"laterAuditedVersionExists":false,"totalVersions":1},"diff":{"added":34,"removed":17,"ignoredAdded":3,"ignoredRemoved":0,"unchanged":543,"ignoredOnly":false,"hunks":[{"oldStart":2,"oldLines":13,"newStart":2,"newLines":14,"lines":[{"type":" ","oldLine":2,"newLine":2,"text":""},{"type":" ","oldLine":3,"newLine":3,"text":"use crate::{"},{"type":" ","oldLine":4,"newLine":4,"text":"    ChannelReaderProvider, NextFrameProvider, OriginAdvancer, OriginProvider, PipelineError,"},{"type":"-","oldLine":5,"text":"    PipelineErrorKind, PipelineResult, Signal, SignalReceiver,","ignored":false},{"type":"+","newLine":5,"text":"    PipelineErrorKind, PipelineResult, Stage,","ignored":false},{"type":" ","oldLine":6,"newLine":6,"text":"};"},{"type":" ","oldLine":7,"newLine":7,"text":"use alloc::{boxed::Box, collections::VecDeque, sync::Arc};"},{"type":"+","newLine":8,"text":"use alloy_eips::BlockNumHash;","ignored":false},{"type":" ","oldLine":8,"newLine":9,"text":"use alloy_primitives::{Bytes, hex, map::HashMap};"},{"type":" ","oldLine":9,"newLine":10,"text":"use async_trait::async_trait;"},{"type":" ","oldLine":10,"newLine":11,"text":"use core::fmt::Debug;"},{"type":"-","oldLine":11,"text":"use kona_genesis::RollupConfig;","ignored":false},{"type":"+","newLine":12,"text":"use kona_genesis::{RollupConfig, SystemConfig};","ignored":false},{"type":" ","oldLine":12,"newLine":13,"text":"use kona_protocol::{BlockInfo, Channel, ChannelId, Frame};"},{"type":" ","oldLine":13,"newLine":14,"text":""},{"type":" ","oldLine":14,"newLine":15,"text":"/// The maximum size of a channel bank."}]},{"oldStart":31,"oldLines":7,"newStart":32,"newLines":7,"lines":[{"type":" ","oldLine":31,"newLine":32,"text":"#[derive(Debug)]"},{"type":" ","oldLine":32,"newLine":33,"text":"pub struct ChannelBank<P>"},{"type":" ","oldLine":33,"newLine":34,"text":"where"},{"type":"-","oldLine":34,"text":"    P: NextFrameProvider + OriginAdvancer + OriginProvider + SignalReceiver + Debug,","ignored":false},{"type":"+","newLine":35,"text":"    P: NextFrameProvider + OriginAdvancer + OriginProvider + Stage + Debug,","ignored":false},{"type":" ","oldLine":35,"newLine":36,"text":"{"},{"type":" ","oldLine":36,"newLine":37,"text":"    /// The rollup configuration."},{"type":" ","oldLine":37,"newLine":38,"text":"    pub cfg: Arc<RollupConfig>,"}]},{"oldStart":45,"oldLines":7,"newStart":46,"newLines":7,"lines":[{"type":" ","oldLine":45,"newLine":46,"text":""},{"type":" ","oldLine":46,"newLine":47,"text":"impl<P> ChannelBank<P>"},{"type":" ","oldLine":47,"newLine":48,"text":"where"},{"type":"-","oldLine":48,"text":"    P: NextFrameProvider + OriginAdvancer + OriginProvider + SignalReceiver + Debug,","ignored":false},{"type":"+","newLine":49,"text":"    P: NextFrameProvider + OriginAdvancer + OriginProvider + Stage + Debug,","ignored":false},{"type":" ","oldLine":49,"newLine":50,"text":"{"},{"type":" ","oldLine":50,"newLine":51,"text":"    /// Create a new [`ChannelBank`] stage."},{"type":" ","oldLine":51,"newLine":52,"text":"    pub fn new(cfg: Arc<RollupConfig>, prev: P) -> Self {"}]},{"oldStart":180,"oldLines":7,"newStart":181,"newLines":7,"lines":[{"type":" ","oldLine":180,"newLine":181,"text":"#[async_trait]"},{"type":" ","oldLine":181,"newLine":182,"text":"impl<P> OriginAdvancer for ChannelBank<P>"},{"type":" ","oldLine":182,"newLine":183,"text":"where"},{"type":"-","oldLine":183,"text":"    P: NextFrameProvider + OriginAdvancer + OriginProvider + SignalReceiver + Send + Debug,","ignored":false},{"type":"+","newLine":184,"text":"    P: NextFrameProvider + OriginAdvancer + OriginProvider + Stage + Send + Debug,","ignored":false},{"type":" ","oldLine":184,"newLine":185,"text":"{"},{"type":" ","oldLine":185,"newLine":186,"text":"    async fn advance_origin(&mut self) -> PipelineResult<()> {"},{"type":" ","oldLine":186,"newLine":187,"text":"        self.prev.advance_origin().await"}]},{"oldStart":190,"oldLines":7,"newStart":191,"newLines":7,"lines":[{"type":" ","oldLine":190,"newLine":191,"text":"#[async_trait]"},{"type":" ","oldLine":191,"newLine":192,"text":"impl<P> ChannelReaderProvider for ChannelBank<P>"},{"type":" ","oldLine":192,"newLine":193,"text":"where"},{"type":"-","oldLine":193,"text":"    P: NextFrameProvider + OriginAdvancer + OriginProvider + SignalReceiver + Send + Debug,","ignored":false},{"type":"+","newLine":194,"text":"    P: NextFrameProvider + OriginAdvancer + OriginProvider + Stage + Send + Debug,","ignored":false},{"type":" ","oldLine":194,"newLine":195,"text":"{"},{"type":" ","oldLine":195,"newLine":196,"text":"    async fn next_data(&mut self) -> PipelineResult<Option<Bytes>> {"},{"type":" ","oldLine":196,"newLine":197,"text":"        match self.read() {"}]},{"oldStart":217,"oldLines":7,"newStart":218,"newLines":7,"lines":[{"type":" ","oldLine":217,"newLine":218,"text":""},{"type":" ","oldLine":218,"newLine":219,"text":"impl<P> OriginProvider for ChannelBank<P>"},{"type":" ","oldLine":219,"newLine":220,"text":"where"},{"type":"-","oldLine":220,"text":"    P: NextFrameProvider + OriginAdvancer + OriginProvider + SignalReceiver + Debug,","ignored":false},{"type":"+","newLine":221,"text":"    P: NextFrameProvider + OriginAdvancer + OriginProvider + Stage + Debug,","ignored":false},{"type":" ","oldLine":221,"newLine":222,"text":"{"},{"type":" ","oldLine":222,"newLine":223,"text":"    fn origin(&self) -> Option<BlockInfo> {"},{"type":" ","oldLine":223,"newLine":224,"text":"        self.prev.origin()"}]},{"oldStart":225,"oldLines":25,"newStart":226,"newLines":44,"lines":[{"type":" ","oldLine":225,"newLine":226,"text":"}"},{"type":" ","oldLine":226,"newLine":227,"text":""},{"type":" ","oldLine":227,"newLine":228,"text":"#[async_trait]"},{"type":"-","oldLine":228,"text":"impl<P> SignalReceiver for ChannelBank<P>","ignored":false},{"type":"+","newLine":229,"text":"impl<P> Stage for ChannelBank<P>","ignored":false},{"type":" ","oldLine":229,"newLine":230,"text":"where"},{"type":"-","oldLine":230,"text":"    P: NextFrameProvider + OriginAdvancer + OriginProvider + SignalReceiver + Send + Debug,","ignored":false},{"type":"+","newLine":231,"text":"    P: NextFrameProvider + OriginAdvancer + OriginProvider + Stage + Send + Debug,","ignored":false},{"type":" ","oldLine":231,"newLine":232,"text":"{"},{"type":"-","oldLine":232,"text":"    async fn signal(&mut self, signal: Signal) -> PipelineResult<()> {","ignored":false},{"type":"-","oldLine":233,"text":"        self.prev.signal(signal).await?;","ignored":false},{"type":"+","newLine":233,"text":"    async fn reset(","ignored":false},{"type":"+","newLine":234,"text":"        &mut self,","ignored":false},{"type":"+","newLine":235,"text":"        l1_origin: BlockNumHash,","ignored":false},{"type":"+","newLine":236,"text":"        system_config: SystemConfig,","ignored":false},{"type":"+","newLine":237,"text":"    ) -> PipelineResult<()> {","ignored":false},{"type":"+","newLine":238,"text":"        self.prev.reset(l1_origin, system_config).await?;","ignored":false},{"type":" ","oldLine":234,"newLine":239,"text":"        self.channels.clear();"},{"type":" ","oldLine":235,"newLine":240,"text":"        self.channel_queue = VecDeque::with_capacity(10);"},{"type":" ","oldLine":236,"newLine":241,"text":"        Ok(())"},{"type":" ","oldLine":237,"newLine":242,"text":"    }"},{"type":"+","newLine":243,"text":"","ignored":true},{"type":"+","newLine":244,"text":"    async fn activate(&mut self) -> PipelineResult<()> {","ignored":false},{"type":"+","newLine":245,"text":"        self.prev.activate().await?;","ignored":false},{"type":"+","newLine":246,"text":"        self.channels.clear();","ignored":false},{"type":"+","newLine":247,"text":"        self.channel_queue = VecDeque::with_capacity(10);","ignored":false},{"type":"+","newLine":248,"text":"        Ok(())","ignored":false},{"type":"+","newLine":249,"text":"    }","ignored":false},{"type":"+","newLine":250,"text":"","ignored":true},{"type":"+","newLine":251,"text":"    async fn flush_channel(&mut self) -> PipelineResult<()> {","ignored":false},{"type":"+","newLine":252,"text":"        self.prev.flush_channel().await?;","ignored":false},{"type":"+","newLine":253,"text":"        self.channels.clear();","ignored":false},{"type":"+","newLine":254,"text":"        self.channel_queue = VecDeque::with_capacity(10);","ignored":false},{"type":"+","newLine":255,"text":"        Ok(())","ignored":false},{"type":"+","newLine":256,"text":"    }","ignored":false},{"type":"+","newLine":257,"text":"","ignored":true},{"type":"+","newLine":258,"text":"    async fn provide_block(&mut self, block: BlockInfo) -> PipelineResult<()> {","ignored":false},{"type":"+","newLine":259,"text":"        self.prev.provide_block(block).await","ignored":false},{"type":"+","newLine":260,"text":"    }","ignored":false},{"type":" ","oldLine":238,"newLine":261,"text":"}"},{"type":" ","oldLine":239,"newLine":262,"text":""},{"type":" ","oldLine":240,"newLine":263,"text":"#[cfg(test)]"},{"type":" ","oldLine":241,"newLine":264,"text":"mod tests {"},{"type":" ","oldLine":242,"newLine":265,"text":"    use super::*;"},{"type":"-","oldLine":243,"text":"    use crate::{","ignored":false},{"type":"-","oldLine":244,"text":"        test_utils::{CollectingLayer, TestNextFrameProvider, TraceStorage},","ignored":false},{"type":"-","oldLine":245,"text":"        types::ResetSignal,","ignored":false},{"type":"-","oldLine":246,"text":"    };","ignored":false},{"type":"+","newLine":266,"text":"    use crate::test_utils::{CollectingLayer, TestNextFrameProvider, TraceStorage};","ignored":false},{"type":" ","oldLine":247,"newLine":267,"text":"    use alloc::{vec, vec::Vec};"},{"type":" ","oldLine":248,"newLine":268,"text":"    use kona_genesis::HardForkConfig;"},{"type":" ","oldLine":249,"newLine":269,"text":"    use tracing::Level;"}]},{"oldStart":410,"oldLines":7,"newStart":430,"newLines":7,"lines":[{"type":" ","oldLine":410,"newLine":430,"text":"        channel_bank.channels.insert([0xFF; 16], Channel::default());"},{"type":" ","oldLine":411,"newLine":431,"text":"        channel_bank.channel_queue.push_back([0xFF; 16]);"},{"type":" ","oldLine":412,"newLine":432,"text":"        assert!(!channel_bank.prev.reset);"},{"type":"-","oldLine":413,"text":"        channel_bank.signal(ResetSignal::default().signal()).await.unwrap();","ignored":false},{"type":"+","newLine":433,"text":"        channel_bank.reset(BlockNumHash::default(), SystemConfig::default()).await.unwrap();","ignored":false},{"type":" ","oldLine":414,"newLine":434,"text":"        assert_eq!(channel_bank.channels.len(), 0);"},{"type":" ","oldLine":415,"newLine":435,"text":"        assert_eq!(channel_bank.channel_queue.len(), 0);"},{"type":" ","oldLine":416,"newLine":436,"text":"        assert!(channel_bank.prev.reset);"}]},{"oldStart":513,"oldLines":7,"newStart":533,"newLines":7,"lines":[{"type":" ","oldLine":513,"newLine":533,"text":""},{"type":" ","oldLine":514,"newLine":534,"text":"        let configs: [RollupConfig; 2] = ["},{"type":" ","oldLine":515,"newLine":535,"text":"            kona_registry::ROLLUP_CONFIGS.get(&10).cloned().unwrap(),"},{"type":"-","oldLine":516,"text":"            kona_registry::ROLLUP_CONFIGS.get(&8453).cloned().unwrap(),","ignored":false},{"type":"+","newLine":536,"text":"            kona_registry::ROLLUP_CONFIGS.get(&11155420).cloned().unwrap(),","ignored":false},{"type":" ","oldLine":517,"newLine":537,"text":"        ];"},{"type":" ","oldLine":518,"newLine":538,"text":""},{"type":" ","oldLine":519,"newLine":539,"text":"        for cfg in configs {"}]}]},"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "5c8c90fba7028a506d09a87a51b36a7764abfa3348809f59b1872fded77a4be5",
+  "name": "channel_bank.rs",
+  "kind": "program",
+  "lines": 577,
+  "source": "//! This module contains the `ChannelBank` struct.\n\nuse crate::{\n    ChannelReaderProvider, NextFrameProvider, OriginAdvancer, OriginProvider, PipelineError,\n    PipelineErrorKind, PipelineResult, Stage,\n};\nuse alloc::{boxed::Box, collections::VecDeque, sync::Arc};\nuse alloy_eips::BlockNumHash;\nuse alloy_primitives::{Bytes, hex, map::HashMap};\nuse async_trait::async_trait;\nuse core::fmt::Debug;\nuse kona_genesis::{RollupConfig, SystemConfig};\nuse kona_protocol::{BlockInfo, Channel, ChannelId, Frame};\n\n/// The maximum size of a channel bank.\npub(crate) const MAX_CHANNEL_BANK_SIZE: usize = 100_000_000;\n\n/// The maximum size of a channel bank after the Fjord Hardfork.\npub(crate) const FJORD_MAX_CHANNEL_BANK_SIZE: usize = 1_000_000_000;\n\n/// [`ChannelBank`] is a stateful stage that does the following:\n/// 1. Unmarshalls frames from L1 transaction data\n/// 2. Applies those frames to a channel\n/// 3. Attempts to read from the channel when it is ready\n/// 4. Prunes channels (not frames) when the channel bank is too large.\n///\n/// Note: we prune before we ingest data.\n/// As we switch between ingesting data & reading, the prune step occurs at an odd point\n/// Specifically, the channel bank is not allowed to become too large between successive calls\n/// to `IngestData`. This means that we can do an ingest and then do a read while becoming too\n/// large. [`ChannelBank`] buffers channel frames, and emits full channel data\n#[derive(Debug)]\npub struct ChannelBank<P>\nwhere\n    P: NextFrameProvider + OriginAdvancer + OriginProvider + Stage + Debug,\n{\n    /// The rollup configuration.\n    pub cfg: Arc<RollupConfig>,\n    /// Map of channels by ID.\n    pub channels: HashMap<ChannelId, Channel>,\n    /// Channels in FIFO order.\n    pub channel_queue: VecDeque<ChannelId>,\n    /// The previous stage of the derivation pipeline.\n    pub prev: P,\n}\n\nimpl<P> ChannelBank<P>\nwhere\n    P: NextFrameProvider + OriginAdvancer + OriginProvider + Stage + Debug,\n{\n    /// Create a new [`ChannelBank`] stage.\n    pub fn new(cfg: Arc<RollupConfig>, prev: P) -> Self {\n        Self { cfg, channels: HashMap::default(), channel_queue: VecDeque::new(), prev }\n    }\n\n    /// Returns the size of the channel bank by accumulating over all channels.\n    pub fn size(&self) -> usize {\n        self.channels.iter().fold(0, |acc, (_, c)| acc + c.size())\n    }\n\n    /// Prunes the Channel bank, until it is below the max channel bank size.\n    /// Prunes from the high-priority channel since it failed to be read.\n    pub fn prune(&mut self) -> PipelineResult<()> {\n        let mut total_size = self.size();\n        let origin = self.origin().ok_or(PipelineError::MissingOrigin.crit())?;\n        let max_channel_bank_size = if self.cfg.is_fjord_active(origin.timestamp) {\n            FJORD_MAX_CHANNEL_BANK_SIZE\n        } else {\n            MAX_CHANNEL_BANK_SIZE\n        };\n        while total_size > max_channel_bank_size {\n            let id =\n                self.channel_queue.pop_front().ok_or(PipelineError::ChannelProviderEmpty.crit())?;\n            let channel = self.channels.remove(&id).ok_or(PipelineError::ChannelNotFound.crit())?;\n            total_size -= channel.size();\n        }\n        Ok(())\n    }\n\n    /// Adds new L1 data to the channel bank. Should only be called after all data has been read.\n    pub fn ingest_frame(&mut self, frame: Frame) -> PipelineResult<()> {\n        let origin = self.origin().ok_or(PipelineError::MissingOrigin.crit())?;\n\n        // Get the channel for the frame, or create a new one if it doesn't exist.\n        let current_channel = match self.channels.get_mut(&frame.id) {\n            Some(c) => c,\n            None => {\n                let channel = Channel::new(frame.id, origin);\n                self.channel_queue.push_back(frame.id);\n                self.channels.insert(frame.id, channel);\n                self.channels.get_mut(&frame.id).expect(\"Channel must be in queue\")\n            }\n        };\n\n        // Check if the channel is not timed out. If it has, ignore the frame.\n        if current_channel.open_block_number() + self.cfg.channel_timeout(origin.timestamp) <\n            origin.number\n        {\n            warn!(\n                target: \"channel_bank\",\n                \"Channel (ID: {}) timed out\", hex::encode(frame.id)\n            );\n            return Ok(());\n        }\n\n        // Ingest the frame. If it fails, ignore the frame.\n        let frame_id = frame.id;\n        if current_channel.add_frame(frame, origin).is_err() {\n            warn!(target: \"channel_bank\", \"Failed to add frame to channel: {:?}\", frame_id);\n            return Ok(());\n        }\n\n        self.prune()\n    }\n\n    /// Read the raw data of the first channel, if it's timed-out or closed.\n    ///\n    /// Returns an error if there is nothing new to read.\n    pub fn read(&mut self) -> PipelineResult<Option<Bytes>> {\n        // Bail if there are no channels to read from.\n        if self.channel_queue.is_empty() {\n            trace!(target: \"channel_bank\", \"No channels to read from\");\n            return Err(PipelineError::Eof.temp());\n        }\n\n        // Return an `Ok(None)` if the first channel is timed out. There may be more timed\n        // out channels at the head of the queue and we want to remove them all.\n        let first = self.channel_queue[0];\n        let channel =\n            self.channels.get(&first).ok_or(PipelineError::ChannelProviderEmpty.crit())?;\n        let origin = self.origin().ok_or(PipelineError::ChannelProviderEmpty.crit())?;\n        if channel.open_block_number() + self.cfg.channel_timeout(origin.timestamp) < origin.number\n        {\n            warn!(\n                target: \"channel_bank\",\n                \"Channel (ID: {}) timed out\", hex::encode(first)\n            );\n            self.channels.remove(&first);\n            self.channel_queue.pop_front();\n            return Ok(None);\n        }\n\n        // At this point we have removed all timed out channels from the front of the\n        // `channel_queue`. Pre-Canyon we simply check the first index.\n        // Post-Canyon we read the entire channelQueue for the first ready channel.\n        // If no channel is available, we return `PipelineError::Eof`.\n        // Canyon is activated when the first L1 block whose time >= CanyonTime, not on the L2\n        // timestamp.\n        if !self.cfg.is_canyon_active(origin.timestamp) {\n            return self.try_read_channel_at_index(0).map(Some);\n        }\n\n        let channel_data =\n            (0..self.channel_queue.len()).find_map(|i| self.try_read_channel_at_index(i).ok());\n        channel_data.map_or_else(|| Err(PipelineError::Eof.temp()), |data| Ok(Some(data)))\n    }\n\n    /// Attempts to read the channel at the specified index. If the channel is not ready or timed\n    /// out, it will return an error.\n    /// If the channel read was successful, it will remove the channel from the channel queue.\n    fn try_read_channel_at_index(&mut self, index: usize) -> PipelineResult<Bytes> {\n        let channel_id = self.channel_queue[index];\n        let channel =\n            self.channels.get(&channel_id).ok_or(PipelineError::ChannelProviderEmpty.crit())?;\n        let origin = self.origin().ok_or(PipelineError::MissingOrigin.crit())?;\n\n        let timed_out = channel.open_block_number() + self.cfg.channel_timeout(origin.timestamp) <\n            origin.number;\n        if timed_out || !channel.is_ready() {\n            return Err(PipelineError::Eof.temp());\n        }\n\n        let frame_data = channel.frame_data();\n        self.channels.remove(&channel_id);\n        self.channel_queue.remove(index);\n\n        frame_data.ok_or(PipelineError::ChannelProviderEmpty.crit())\n    }\n}\n\n#[async_trait]\nimpl<P> OriginAdvancer for ChannelBank<P>\nwhere\n    P: NextFrameProvider + OriginAdvancer + OriginProvider + Stage + Send + Debug,\n{\n    async fn advance_origin(&mut self) -> PipelineResult<()> {\n        self.prev.advance_origin().await\n    }\n}\n\n#[async_trait]\nimpl<P> ChannelReaderProvider for ChannelBank<P>\nwhere\n    P: NextFrameProvider + OriginAdvancer + OriginProvider + Stage + Send + Debug,\n{\n    async fn next_data(&mut self) -> PipelineResult<Option<Bytes>> {\n        match self.read() {\n            Err(e) => {\n                if !matches!(e, PipelineErrorKind::Temporary(PipelineError::Eof)) {\n                    return Err(PipelineError::ChannelProviderEmpty.crit());\n                }\n            }\n            data => return data,\n        };\n\n        // Load the data into the channel bank\n        let frame = match self.prev.next_frame().await {\n            Ok(f) => f,\n            Err(e) => {\n                return Err(e);\n            }\n        };\n        let res = self.ingest_frame(frame);\n        res?;\n        Err(PipelineError::NotEnoughData.temp())\n    }\n}\n\nimpl<P> OriginProvider for ChannelBank<P>\nwhere\n    P: NextFrameProvider + OriginAdvancer + OriginProvider + Stage + Debug,\n{\n    fn origin(&self) -> Option<BlockInfo> {\n        self.prev.origin()\n    }\n}\n\n#[async_trait]\nimpl<P> Stage for ChannelBank<P>\nwhere\n    P: NextFrameProvider + OriginAdvancer + OriginProvider + Stage + Send + Debug,\n{\n    async fn reset(\n        &mut self,\n        l1_origin: BlockNumHash,\n        system_config: SystemConfig,\n    ) -> PipelineResult<()> {\n        self.prev.reset(l1_origin, system_config).await?;\n        self.channels.clear();\n        self.channel_queue = VecDeque::with_capacity(10);\n        Ok(())\n    }\n\n    async fn activate(&mut self) -> PipelineResult<()> {\n        self.prev.activate().await?;\n        self.channels.clear();\n        self.channel_queue = VecDeque::with_capacity(10);\n        Ok(())\n    }\n\n    async fn flush_channel(&mut self) -> PipelineResult<()> {\n        self.prev.flush_channel().await?;\n        self.channels.clear();\n        self.channel_queue = VecDeque::with_capacity(10);\n        Ok(())\n    }\n\n    async fn provide_block(&mut self, block: BlockInfo) -> PipelineResult<()> {\n        self.prev.provide_block(block).await\n    }\n}\n\n#[cfg(test)]\nmod tests {\n    use super::*;\n    use crate::test_utils::{CollectingLayer, TestNextFrameProvider, TraceStorage};\n    use alloc::{vec, vec::Vec};\n    use kona_genesis::HardForkConfig;\n    use tracing::Level;\n    use tracing_subscriber::layer::SubscriberExt;\n\n    #[test]\n    fn test_try_read_channel_at_index_missing_channel() {\n        let mock = TestNextFrameProvider::new(vec![]);\n        let cfg = Arc::new(RollupConfig::default());\n        let mut channel_bank = ChannelBank::new(cfg, mock);\n        channel_bank.channel_queue.push_back([0xFF; 16]);\n        let err = channel_bank.try_read_channel_at_index(0).unwrap_err();\n        assert_eq!(err, PipelineError::ChannelProviderEmpty.crit());\n    }\n\n    #[test]\n    fn test_try_read_channel_at_index_missing_origin() {\n        let mut mock = TestNextFrameProvider::new(vec![]);\n        mock.block_info = None;\n        let cfg = Arc::new(RollupConfig::default());\n        let mut channel_bank = ChannelBank::new(cfg, mock);\n        channel_bank.channel_queue.push_back([0xFF; 16]);\n        channel_bank.channels.insert([0xFF; 16], Channel::new([0xFF; 16], BlockInfo::default()));\n        let err = channel_bank.try_read_channel_at_index(0).unwrap_err();\n        assert_eq!(err, PipelineError::MissingOrigin.crit());\n    }\n\n    #[test]\n    fn test_try_read_channel_at_index_timed_out() {\n        let mut mock = TestNextFrameProvider::new(vec![]);\n        mock.block_info = Some(BlockInfo { number: 10, ..Default::default() });\n        let cfg = Arc::new(RollupConfig::default());\n        let mut channel_bank = ChannelBank::new(cfg, mock);\n        channel_bank.channel_queue.push_back([0xFF; 16]);\n        channel_bank.channels.insert([0xFF; 16], Channel::new([0xFF; 16], BlockInfo::default()));\n        let err = channel_bank.try_read_channel_at_index(0).unwrap_err();\n        assert_eq!(err, PipelineError::Eof.temp());\n    }\n\n    #[test]\n    fn test_try_read_channel_at_index() {\n        let mock = TestNextFrameProvider::new(vec![]);\n        let cfg = Arc::new(RollupConfig::default());\n        let mut channel_bank = ChannelBank::new(cfg, mock);\n        let id: ChannelId = [0xFF; 16];\n        channel_bank.channel_queue.push_back(id);\n        let mut channel = Channel::new(id, BlockInfo::default());\n        channel\n            .add_frame(\n                Frame { id, number: 0, data: b\"seven__\".to_vec(), is_last: false },\n                BlockInfo::default(),\n            )\n            .unwrap();\n        channel\n            .add_frame(\n                Frame { id, number: 1, data: b\"seven__\".to_vec(), is_last: false },\n                BlockInfo::default(),\n            )\n            .unwrap();\n        channel\n            .add_frame(\n                Frame { id, number: 2, data: b\"seven__\".to_vec(), is_last: true },\n                BlockInfo::default(),\n            )\n            .unwrap();\n        assert!(channel.is_ready());\n        channel_bank.channels.insert([0xFF; 16], channel);\n        let frame_data = channel_bank.try_read_channel_at_index(0).unwrap();\n        assert_eq!(\n            frame_data,\n            alloy_primitives::bytes!(\"736576656e5f5f736576656e5f5f736576656e5f5f\")\n        );\n    }\n\n    #[test]\n    fn test_read_channel_canyon_not_active() {\n        let mock = TestNextFrameProvider::new(vec![]);\n        let cfg = Arc::new(RollupConfig::default());\n        let mut channel_bank = ChannelBank::new(cfg, mock);\n        let id: ChannelId = [0xFF; 16];\n        channel_bank.channel_queue.push_back(id);\n        let mut channel = Channel::new(id, BlockInfo::default());\n        channel\n            .add_frame(\n                Frame { id, number: 0, data: b\"seven__\".to_vec(), is_last: false },\n                BlockInfo::default(),\n            )\n            .unwrap();\n        channel\n            .add_frame(\n                Frame { id, number: 1, data: b\"seven__\".to_vec(), is_last: false },\n                BlockInfo::default(),\n            )\n            .unwrap();\n        channel\n            .add_frame(\n                Frame { id, number: 2, data: b\"seven__\".to_vec(), is_last: true },\n                BlockInfo::default(),\n            )\n            .unwrap();\n        assert!(channel.is_ready());\n        channel_bank.channels.insert([0xFF; 16], channel);\n        let frame_data = channel_bank.read().unwrap();\n        assert_eq!(\n            frame_data,\n            Some(alloy_primitives::bytes!(\"736576656e5f5f736576656e5f5f736576656e5f5f\"))\n        );\n    }\n\n    #[test]\n    fn test_read_channel_active() {\n        let mock = TestNextFrameProvider::new(vec![]);\n        let cfg = Arc::new(RollupConfig {\n            hardforks: HardForkConfig { canyon_time: Some(0), ..Default::default() },\n            ..Default::default()\n        });\n        let mut channel_bank = ChannelBank::new(cfg, mock);\n        let id: ChannelId = [0xFF; 16];\n        channel_bank.channel_queue.push_back(id);\n        let mut channel = Channel::new(id, BlockInfo::default());\n        channel\n            .add_frame(\n                Frame { id, number: 0, data: b\"seven__\".to_vec(), is_last: false },\n                BlockInfo::default(),\n            )\n            .unwrap();\n        channel\n            .add_frame(\n                Frame { id, number: 1, data: b\"seven__\".to_vec(), is_last: false },\n                BlockInfo::default(),\n            )\n            .unwrap();\n        channel\n            .add_frame(\n                Frame { id, number: 2, data: b\"seven__\".to_vec(), is_last: true },\n                BlockInfo::default(),\n            )\n            .unwrap();\n        assert!(channel.is_ready());\n        channel_bank.channels.insert([0xFF; 16], channel);\n        let frame_data = channel_bank.read().unwrap();\n        assert_eq!(\n            frame_data,\n            Some(alloy_primitives::bytes!(\"736576656e5f5f736576656e5f5f736576656e5f5f\"))\n        );\n    }\n\n    #[test]\n    fn test_ingest_empty_origin() {\n        let mut mock = TestNextFrameProvider::new(vec![]);\n        mock.block_info = None;\n        let cfg = Arc::new(RollupConfig::default());\n        let mut channel_bank = ChannelBank::new(cfg, mock);\n        let frame = Frame::default();\n        let err = channel_bank.ingest_frame(frame).unwrap_err();\n        assert_eq!(err, PipelineError::MissingOrigin.crit());\n    }\n\n    #[tokio::test]\n    async fn test_reset() {\n        let mock = TestNextFrameProvider::new(vec![]);\n        let cfg = Arc::new(RollupConfig::default());\n        let mut channel_bank = ChannelBank::new(cfg, mock);\n        channel_bank.channels.insert([0xFF; 16], Channel::default());\n        channel_bank.channel_queue.push_back([0xFF; 16]);\n        assert!(!channel_bank.prev.reset);\n        channel_bank.reset(BlockNumHash::default(), SystemConfig::default()).await.unwrap();\n        assert_eq!(channel_bank.channels.len(), 0);\n        assert_eq!(channel_bank.channel_queue.len(), 0);\n        assert!(channel_bank.prev.reset);\n    }\n\n    #[test]\n    fn test_ingest_invalid_frame() {\n        let trace_store: TraceStorage = Default::default();\n        let layer = CollectingLayer::new(trace_store.clone());\n        let subscriber = tracing_subscriber::Registry::default().with(layer);\n        let _guard = tracing::subscriber::set_default(subscriber);\n\n        let mock = TestNextFrameProvider::new(vec![]);\n        let mut channel_bank = ChannelBank::new(Arc::new(RollupConfig::default()), mock);\n        let frame = Frame { id: [0xFF; 16], ..Default::default() };\n        assert_eq!(channel_bank.size(), 0);\n        assert!(channel_bank.channels.is_empty());\n        assert_eq!(trace_store.lock().iter().filter(|(l, _)| matches!(l, &Level::WARN)).count(), 0);\n        assert_eq!(channel_bank.ingest_frame(frame.clone()), Ok(()));\n        assert_eq!(channel_bank.size(), kona_protocol::FRAME_OVERHEAD);\n        assert_eq!(channel_bank.channels.len(), 1);\n        // This should fail since the frame is already ingested.\n        assert_eq!(channel_bank.ingest_frame(frame), Ok(()));\n        assert_eq!(channel_bank.size(), kona_protocol::FRAME_OVERHEAD);\n        assert_eq!(channel_bank.channels.len(), 1);\n        assert_eq!(trace_store.lock().iter().filter(|(l, _)| matches!(l, &Level::WARN)).count(), 1);\n    }\n\n    #[test]\n    fn test_ingest_and_prune_channel_bank() {\n        let mut frames = crate::frames!(0xFF, 0, vec![0xDD; 50], 100000);\n        let mock = TestNextFrameProvider::new(vec![]);\n        let cfg = Arc::new(RollupConfig::default());\n        let mut channel_bank = ChannelBank::new(cfg, mock);\n        // Ingest frames until the channel bank is full and it stops increasing in size\n        let mut current_size = 0;\n        let next_frame = frames.pop().unwrap();\n        channel_bank.ingest_frame(next_frame).unwrap();\n        while channel_bank.size() > current_size {\n            current_size = channel_bank.size();\n            let next_frame = frames.pop().unwrap();\n            channel_bank.ingest_frame(next_frame).unwrap();\n            assert!(channel_bank.size() <= MAX_CHANNEL_BANK_SIZE);\n        }\n        // There should be a bunch of frames leftover\n        assert!(!frames.is_empty());\n        // If we ingest one more frame, the channel bank should prune\n        // and the size should be the same\n        let next_frame = frames.pop().unwrap();\n        channel_bank.ingest_frame(next_frame).unwrap();\n        assert_eq!(channel_bank.size(), current_size);\n    }\n\n    #[test]\n    fn test_ingest_and_prune_channel_bank_fjord() {\n        let mut frames = crate::frames!(0xFF, 0, vec![0xDD; 50], 100000);\n        let mock = TestNextFrameProvider::new(vec![]);\n        let cfg = Arc::new(RollupConfig {\n            hardforks: HardForkConfig { fjord_time: Some(0), ..Default::default() },\n            ..Default::default()\n        });\n        let mut channel_bank = ChannelBank::new(cfg, mock);\n        // Ingest frames until the channel bank is full and it stops increasing in size\n        let mut current_size = 0;\n        let next_frame = frames.pop().unwrap();\n        channel_bank.ingest_frame(next_frame).unwrap();\n        while channel_bank.size() > current_size {\n            current_size = channel_bank.size();\n            let next_frame = frames.pop().unwrap();\n            channel_bank.ingest_frame(next_frame).unwrap();\n            assert!(channel_bank.size() <= FJORD_MAX_CHANNEL_BANK_SIZE);\n        }\n        // There should be a bunch of frames leftover\n        assert!(!frames.is_empty());\n        // If we ingest one more frame, the channel bank should prune\n        // and the size should be the same\n        let next_frame = frames.pop().unwrap();\n        channel_bank.ingest_frame(next_frame).unwrap();\n        assert_eq!(channel_bank.size(), current_size);\n    }\n\n    #[tokio::test]\n    async fn test_read_empty_channel_bank() {\n        let frames = [crate::frame!(0xFF, 0, vec![0xDD; 50], true)];\n        let mock = TestNextFrameProvider::new(vec![Ok(frames[0].clone())]);\n        let cfg = Arc::new(RollupConfig::default());\n        let mut channel_bank = ChannelBank::new(cfg, mock);\n        let err = channel_bank.read().unwrap_err();\n        assert_eq!(err, PipelineError::Eof.temp());\n        let err = channel_bank.next_data().await.unwrap_err();\n        assert_eq!(err, PipelineError::NotEnoughData.temp());\n    }\n\n    #[tokio::test]\n    async fn test_channel_timeout() {\n        let trace_store: TraceStorage = Default::default();\n        let layer = CollectingLayer::new(trace_store.clone());\n        let subscriber = tracing_subscriber::Registry::default().with(layer);\n        let _guard = tracing::subscriber::set_default(subscriber);\n\n        let configs: [RollupConfig; 2] = [\n            kona_registry::ROLLUP_CONFIGS.get(&10).cloned().unwrap(),\n            kona_registry::ROLLUP_CONFIGS.get(&11155420).cloned().unwrap(),\n        ];\n\n        for cfg in configs {\n            let frames = [\n                crate::frame!(0xFF, 0, vec![0xDD; 50], false),\n                crate::frame!(0xFF, 1, vec![0xDD; 50], true),\n            ];\n            let mock = TestNextFrameProvider::new(frames.into_iter().map(Ok).collect::<Vec<_>>());\n            let cfg = Arc::new(cfg);\n            let mut channel_bank = ChannelBank::new(cfg.clone(), mock);\n\n            // Ingest first frame\n            let err = channel_bank.next_data().await.unwrap_err();\n            assert_eq!(err, PipelineError::NotEnoughData.temp());\n\n            for _ in 0..cfg.channel_timeout + 1 {\n                channel_bank.advance_origin().await.unwrap();\n            }\n\n            // There should be an in-progress channel.\n            assert_eq!(channel_bank.channels.len(), 1);\n            assert_eq!(channel_bank.channel_queue.len(), 1);\n\n            // Should be `Ok(())`, channel timed out.\n            channel_bank.next_data().await.unwrap();\n\n            // The channel should have been pruned.\n            assert_eq!(channel_bank.channels.len(), 0);\n            assert_eq!(channel_bank.channel_queue.len(), 0);\n\n            // Ensure the channel was successfully timed out.\n            let (_, warning_trace) = trace_store\n                .lock()\n                .iter()\n                .find(|(l, _)| matches!(l, &Level::WARN))\n                .cloned()\n                .unwrap();\n            assert!(warning_trace.contains(\"timed out\"));\n        }\n    }\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "differs",
+      "coveredLines": 543,
+      "match": {
+        "origin": "own",
+        "collection": "optimism",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "channel_bank.rs",
+        "similarity": 0.945,
+        "reportId": "optimism/cantina-kona-2026-03",
+        "repository": "op-rs/kona",
+        "path": "crates/protocol/derive/src/stages/channel/channel_bank.rs",
+        "commit": "86910c9112437bbb849eca28961f813c5450e103",
+        "commitTimestamp": "2025-12-15T17:17:05Z",
+        "url": "https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/crates/protocol/derive/src/stages/channel/channel_bank.rs",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). kona-derive derivation pipeline (stages, sources, traversal, attributes). Medium findings 3.3.1 and 3.3.2 (pipeline/core.rs, stages/l1_retrieval.rs) and numerous Low/Informational findings located here; no Critical/High.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 34,
+        "removed": 17,
+        "ignoredAdded": 3,
+        "ignoredRemoved": 0,
+        "unchanged": 543,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 2,
+            "oldLines": 13,
+            "newStart": 2,
+            "newLines": 14,
+            "lines": [
+              { "type": " ", "oldLine": 2, "newLine": 2, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "use crate::{"
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "    ChannelReaderProvider, NextFrameProvider, OriginAdvancer, OriginProvider, PipelineError,"
+              },
+              {
+                "type": "-",
+                "oldLine": 5,
+                "text": "    PipelineErrorKind, PipelineResult, Signal, SignalReceiver,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 5,
+                "text": "    PipelineErrorKind, PipelineResult, Stage,",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 6, "newLine": 6, "text": "};" },
+              {
+                "type": " ",
+                "oldLine": 7,
+                "newLine": 7,
+                "text": "use alloc::{boxed::Box, collections::VecDeque, sync::Arc};"
+              },
+              {
+                "type": "+",
+                "newLine": 8,
+                "text": "use alloy_eips::BlockNumHash;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 8,
+                "newLine": 9,
+                "text": "use alloy_primitives::{Bytes, hex, map::HashMap};"
+              },
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 10,
+                "text": "use async_trait::async_trait;"
+              },
+              {
+                "type": " ",
+                "oldLine": 10,
+                "newLine": 11,
+                "text": "use core::fmt::Debug;"
+              },
+              {
+                "type": "-",
+                "oldLine": 11,
+                "text": "use kona_genesis::RollupConfig;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 12,
+                "text": "use kona_genesis::{RollupConfig, SystemConfig};",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 12,
+                "newLine": 13,
+                "text": "use kona_protocol::{BlockInfo, Channel, ChannelId, Frame};"
+              },
+              { "type": " ", "oldLine": 13, "newLine": 14, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 14,
+                "newLine": 15,
+                "text": "/// The maximum size of a channel bank."
+              }
+            ]
+          },
+          {
+            "oldStart": 31,
+            "oldLines": 7,
+            "newStart": 32,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 31,
+                "newLine": 32,
+                "text": "#[derive(Debug)]"
+              },
+              {
+                "type": " ",
+                "oldLine": 32,
+                "newLine": 33,
+                "text": "pub struct ChannelBank<P>"
+              },
+              { "type": " ", "oldLine": 33, "newLine": 34, "text": "where" },
+              {
+                "type": "-",
+                "oldLine": 34,
+                "text": "    P: NextFrameProvider + OriginAdvancer + OriginProvider + SignalReceiver + Debug,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 35,
+                "text": "    P: NextFrameProvider + OriginAdvancer + OriginProvider + Stage + Debug,",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 35, "newLine": 36, "text": "{" },
+              {
+                "type": " ",
+                "oldLine": 36,
+                "newLine": 37,
+                "text": "    /// The rollup configuration."
+              },
+              {
+                "type": " ",
+                "oldLine": 37,
+                "newLine": 38,
+                "text": "    pub cfg: Arc<RollupConfig>,"
+              }
+            ]
+          },
+          {
+            "oldStart": 45,
+            "oldLines": 7,
+            "newStart": 46,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 45, "newLine": 46, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 46,
+                "newLine": 47,
+                "text": "impl<P> ChannelBank<P>"
+              },
+              { "type": " ", "oldLine": 47, "newLine": 48, "text": "where" },
+              {
+                "type": "-",
+                "oldLine": 48,
+                "text": "    P: NextFrameProvider + OriginAdvancer + OriginProvider + SignalReceiver + Debug,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 49,
+                "text": "    P: NextFrameProvider + OriginAdvancer + OriginProvider + Stage + Debug,",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 49, "newLine": 50, "text": "{" },
+              {
+                "type": " ",
+                "oldLine": 50,
+                "newLine": 51,
+                "text": "    /// Create a new [`ChannelBank`] stage."
+              },
+              {
+                "type": " ",
+                "oldLine": 51,
+                "newLine": 52,
+                "text": "    pub fn new(cfg: Arc<RollupConfig>, prev: P) -> Self {"
+              }
+            ]
+          },
+          {
+            "oldStart": 180,
+            "oldLines": 7,
+            "newStart": 181,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 180,
+                "newLine": 181,
+                "text": "#[async_trait]"
+              },
+              {
+                "type": " ",
+                "oldLine": 181,
+                "newLine": 182,
+                "text": "impl<P> OriginAdvancer for ChannelBank<P>"
+              },
+              { "type": " ", "oldLine": 182, "newLine": 183, "text": "where" },
+              {
+                "type": "-",
+                "oldLine": 183,
+                "text": "    P: NextFrameProvider + OriginAdvancer + OriginProvider + SignalReceiver + Send + Debug,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 184,
+                "text": "    P: NextFrameProvider + OriginAdvancer + OriginProvider + Stage + Send + Debug,",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 184, "newLine": 185, "text": "{" },
+              {
+                "type": " ",
+                "oldLine": 185,
+                "newLine": 186,
+                "text": "    async fn advance_origin(&mut self) -> PipelineResult<()> {"
+              },
+              {
+                "type": " ",
+                "oldLine": 186,
+                "newLine": 187,
+                "text": "        self.prev.advance_origin().await"
+              }
+            ]
+          },
+          {
+            "oldStart": 190,
+            "oldLines": 7,
+            "newStart": 191,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 190,
+                "newLine": 191,
+                "text": "#[async_trait]"
+              },
+              {
+                "type": " ",
+                "oldLine": 191,
+                "newLine": 192,
+                "text": "impl<P> ChannelReaderProvider for ChannelBank<P>"
+              },
+              { "type": " ", "oldLine": 192, "newLine": 193, "text": "where" },
+              {
+                "type": "-",
+                "oldLine": 193,
+                "text": "    P: NextFrameProvider + OriginAdvancer + OriginProvider + SignalReceiver + Send + Debug,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 194,
+                "text": "    P: NextFrameProvider + OriginAdvancer + OriginProvider + Stage + Send + Debug,",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 194, "newLine": 195, "text": "{" },
+              {
+                "type": " ",
+                "oldLine": 195,
+                "newLine": 196,
+                "text": "    async fn next_data(&mut self) -> PipelineResult<Option<Bytes>> {"
+              },
+              {
+                "type": " ",
+                "oldLine": 196,
+                "newLine": 197,
+                "text": "        match self.read() {"
+              }
+            ]
+          },
+          {
+            "oldStart": 217,
+            "oldLines": 7,
+            "newStart": 218,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 217, "newLine": 218, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 218,
+                "newLine": 219,
+                "text": "impl<P> OriginProvider for ChannelBank<P>"
+              },
+              { "type": " ", "oldLine": 219, "newLine": 220, "text": "where" },
+              {
+                "type": "-",
+                "oldLine": 220,
+                "text": "    P: NextFrameProvider + OriginAdvancer + OriginProvider + SignalReceiver + Debug,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 221,
+                "text": "    P: NextFrameProvider + OriginAdvancer + OriginProvider + Stage + Debug,",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 221, "newLine": 222, "text": "{" },
+              {
+                "type": " ",
+                "oldLine": 222,
+                "newLine": 223,
+                "text": "    fn origin(&self) -> Option<BlockInfo> {"
+              },
+              {
+                "type": " ",
+                "oldLine": 223,
+                "newLine": 224,
+                "text": "        self.prev.origin()"
+              }
+            ]
+          },
+          {
+            "oldStart": 225,
+            "oldLines": 25,
+            "newStart": 226,
+            "newLines": 44,
+            "lines": [
+              { "type": " ", "oldLine": 225, "newLine": 226, "text": "}" },
+              { "type": " ", "oldLine": 226, "newLine": 227, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 227,
+                "newLine": 228,
+                "text": "#[async_trait]"
+              },
+              {
+                "type": "-",
+                "oldLine": 228,
+                "text": "impl<P> SignalReceiver for ChannelBank<P>",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 229,
+                "text": "impl<P> Stage for ChannelBank<P>",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 229, "newLine": 230, "text": "where" },
+              {
+                "type": "-",
+                "oldLine": 230,
+                "text": "    P: NextFrameProvider + OriginAdvancer + OriginProvider + SignalReceiver + Send + Debug,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 231,
+                "text": "    P: NextFrameProvider + OriginAdvancer + OriginProvider + Stage + Send + Debug,",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 231, "newLine": 232, "text": "{" },
+              {
+                "type": "-",
+                "oldLine": 232,
+                "text": "    async fn signal(&mut self, signal: Signal) -> PipelineResult<()> {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 233,
+                "text": "        self.prev.signal(signal).await?;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 233,
+                "text": "    async fn reset(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 234,
+                "text": "        &mut self,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 235,
+                "text": "        l1_origin: BlockNumHash,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 236,
+                "text": "        system_config: SystemConfig,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 237,
+                "text": "    ) -> PipelineResult<()> {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 238,
+                "text": "        self.prev.reset(l1_origin, system_config).await?;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 234,
+                "newLine": 239,
+                "text": "        self.channels.clear();"
+              },
+              {
+                "type": " ",
+                "oldLine": 235,
+                "newLine": 240,
+                "text": "        self.channel_queue = VecDeque::with_capacity(10);"
+              },
+              {
+                "type": " ",
+                "oldLine": 236,
+                "newLine": 241,
+                "text": "        Ok(())"
+              },
+              { "type": " ", "oldLine": 237, "newLine": 242, "text": "    }" },
+              { "type": "+", "newLine": 243, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 244,
+                "text": "    async fn activate(&mut self) -> PipelineResult<()> {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 245,
+                "text": "        self.prev.activate().await?;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 246,
+                "text": "        self.channels.clear();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 247,
+                "text": "        self.channel_queue = VecDeque::with_capacity(10);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 248,
+                "text": "        Ok(())",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 249,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 250, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 251,
+                "text": "    async fn flush_channel(&mut self) -> PipelineResult<()> {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 252,
+                "text": "        self.prev.flush_channel().await?;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 253,
+                "text": "        self.channels.clear();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 254,
+                "text": "        self.channel_queue = VecDeque::with_capacity(10);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 255,
+                "text": "        Ok(())",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 256,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 257, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 258,
+                "text": "    async fn provide_block(&mut self, block: BlockInfo) -> PipelineResult<()> {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 259,
+                "text": "        self.prev.provide_block(block).await",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 260,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 238, "newLine": 261, "text": "}" },
+              { "type": " ", "oldLine": 239, "newLine": 262, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 240,
+                "newLine": 263,
+                "text": "#[cfg(test)]"
+              },
+              {
+                "type": " ",
+                "oldLine": 241,
+                "newLine": 264,
+                "text": "mod tests {"
+              },
+              {
+                "type": " ",
+                "oldLine": 242,
+                "newLine": 265,
+                "text": "    use super::*;"
+              },
+              {
+                "type": "-",
+                "oldLine": 243,
+                "text": "    use crate::{",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 244,
+                "text": "        test_utils::{CollectingLayer, TestNextFrameProvider, TraceStorage},",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 245,
+                "text": "        types::ResetSignal,",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 246,
+                "text": "    };",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 266,
+                "text": "    use crate::test_utils::{CollectingLayer, TestNextFrameProvider, TraceStorage};",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 247,
+                "newLine": 267,
+                "text": "    use alloc::{vec, vec::Vec};"
+              },
+              {
+                "type": " ",
+                "oldLine": 248,
+                "newLine": 268,
+                "text": "    use kona_genesis::HardForkConfig;"
+              },
+              {
+                "type": " ",
+                "oldLine": 249,
+                "newLine": 269,
+                "text": "    use tracing::Level;"
+              }
+            ]
+          },
+          {
+            "oldStart": 410,
+            "oldLines": 7,
+            "newStart": 430,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 410,
+                "newLine": 430,
+                "text": "        channel_bank.channels.insert([0xFF; 16], Channel::default());"
+              },
+              {
+                "type": " ",
+                "oldLine": 411,
+                "newLine": 431,
+                "text": "        channel_bank.channel_queue.push_back([0xFF; 16]);"
+              },
+              {
+                "type": " ",
+                "oldLine": 412,
+                "newLine": 432,
+                "text": "        assert!(!channel_bank.prev.reset);"
+              },
+              {
+                "type": "-",
+                "oldLine": 413,
+                "text": "        channel_bank.signal(ResetSignal::default().signal()).await.unwrap();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 433,
+                "text": "        channel_bank.reset(BlockNumHash::default(), SystemConfig::default()).await.unwrap();",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 414,
+                "newLine": 434,
+                "text": "        assert_eq!(channel_bank.channels.len(), 0);"
+              },
+              {
+                "type": " ",
+                "oldLine": 415,
+                "newLine": 435,
+                "text": "        assert_eq!(channel_bank.channel_queue.len(), 0);"
+              },
+              {
+                "type": " ",
+                "oldLine": 416,
+                "newLine": 436,
+                "text": "        assert!(channel_bank.prev.reset);"
+              }
+            ]
+          },
+          {
+            "oldStart": 513,
+            "oldLines": 7,
+            "newStart": 533,
+            "newLines": 7,
+            "lines": [
+              { "type": " ", "oldLine": 513, "newLine": 533, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 514,
+                "newLine": 534,
+                "text": "        let configs: [RollupConfig; 2] = ["
+              },
+              {
+                "type": " ",
+                "oldLine": 515,
+                "newLine": 535,
+                "text": "            kona_registry::ROLLUP_CONFIGS.get(&10).cloned().unwrap(),"
+              },
+              {
+                "type": "-",
+                "oldLine": 516,
+                "text": "            kona_registry::ROLLUP_CONFIGS.get(&8453).cloned().unwrap(),",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 536,
+                "text": "            kona_registry::ROLLUP_CONFIGS.get(&11155420).cloned().unwrap(),",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 517,
+                "newLine": 537,
+                "text": "        ];"
+              },
+              { "type": " ", "oldLine": 518, "newLine": 538, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 519,
+                "newLine": 539,
+                "text": "        for cfg in configs {"
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

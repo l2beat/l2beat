@@ -1,1 +1,15 @@
-{"schemaVersion":2,"unitHash":"a131ab9fba2a3bdf094bebd5d6a535cf79bdf4f47b63de9eb520f710e90d65c5","name":"net.rs","kind":"program","lines":22,"source":"//! Network types\n\nuse kona_gossip::P2pRpcRequest;\n\n/// A type alias for the sender of a [`P2pRpcRequest`].\ntype P2pReqSender = tokio::sync::mpsc::Sender<P2pRpcRequest>;\n\n/// `P2pRpc`\n///\n/// This is a server implementation of [`crate::OpP2PApiServer`].\n#[derive(Debug)]\npub struct P2pRpc {\n    /// The channel to send [`P2pRpcRequest`]s.\n    pub sender: P2pReqSender,\n}\n\nimpl P2pRpc {\n    /// Constructs a new [`P2pRpc`] given a sender channel.\n    pub const fn new(sender: P2pReqSender) -> Self {\n        Self { sender }\n    }\n}","resolutions":{"9fa846564f4071bd":{"status":"unaudited","coveredLines":0,"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "a131ab9fba2a3bdf094bebd5d6a535cf79bdf4f47b63de9eb520f710e90d65c5",
+  "name": "net.rs",
+  "kind": "program",
+  "lines": 22,
+  "source": "//! Network types\n\nuse kona_gossip::P2pRpcRequest;\n\n/// A type alias for the sender of a [`P2pRpcRequest`].\ntype P2pReqSender = tokio::sync::mpsc::Sender<P2pRpcRequest>;\n\n/// `P2pRpc`\n///\n/// This is a server implementation of [`crate::OpP2PApiServer`].\n#[derive(Debug)]\npub struct P2pRpc {\n    /// The channel to send [`P2pRpcRequest`]s.\n    pub sender: P2pReqSender,\n}\n\nimpl P2pRpc {\n    /// Constructs a new [`P2pRpc`] given a sender channel.\n    pub const fn new(sender: P2pReqSender) -> Self {\n        Self { sender }\n    }\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

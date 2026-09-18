@@ -1,1 +1,1312 @@
-{"schemaVersion":2,"unitHash":"d4984737aaedfeec2ae2d23c08a3c315b906436a8d95449a1e4729a5188a1adc","name":"boot.rs","kind":"program","lines":377,"source":"//! This module contains the prologue phase of the client program, pulling in the boot information\n//! through the `PreimageOracle` ABI as local keys.\n\nuse crate::{HintType, INVALID_TRANSITION, INVALID_TRANSITION_HASH, PreState};\nuse alloc::{string::ToString, vec::Vec};\nuse alloy_primitives::{B256, Bytes, U256};\nuse alloy_rlp::Decodable;\nuse kona_genesis::{L1ChainConfig, RollupConfig};\nuse kona_interop::DependencySet;\nuse kona_preimage::{\n    CommsClient, HintWriterClient, PreimageKey, PreimageKeyType, PreimageOracleClient,\n    errors::PreimageOracleError,\n};\nuse kona_proof::errors::OracleProviderError;\nuse kona_registry::{DEPENDENCY_SETS, HashMap, L1_CONFIGS, ROLLUP_CONFIGS};\nuse serde::{Deserialize, Serialize};\nuse thiserror::Error;\nuse tracing::warn;\n\n/// The local key ident for the L1 head hash.\npub const L1_HEAD_KEY: U256 = U256::from_be_slice(&[1]);\n\n/// The local key ident for the agreed upon L2 pre-state claim.\npub const L2_AGREED_PRE_STATE_KEY: U256 = U256::from_be_slice(&[2]);\n\n/// The local key ident for the L2 post-state claim.\npub const L2_CLAIMED_POST_STATE_KEY: U256 = U256::from_be_slice(&[3]);\n\n/// The local key ident for the L2 claim timestamp.\npub const L2_CLAIMED_TIMESTAMP_KEY: U256 = U256::from_be_slice(&[4]);\n\n/// The local key ident for the L2 rollup config.\npub const L2_ROLLUP_CONFIG_KEY: U256 = U256::from_be_slice(&[6]);\n\n/// The local key ident for the l1 config.\npub const L1_CONFIG_KEY: U256 = U256::from_be_slice(&[7]);\n\n/// The local key ident for the dependency set.\npub const DEPENDENCY_SET_KEY: U256 = U256::from_be_slice(&[8]);\n\n/// The boot information for the interop client program.\n#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]\npub struct BootInfo {\n    /// The L1 head hash containing the safe L2 chain data that may reproduce the post-state claim.\n    pub l1_head: B256,\n    /// The agreed upon superchain pre-state commitment.\n    pub agreed_pre_state_commitment: B256,\n    /// The agreed upon superchain pre-state.\n    pub agreed_pre_state: PreState,\n    /// The claimed (disputed) superchain post-state commitment.\n    pub claimed_post_state: B256,\n    /// The L2 claim timestamp.\n    pub claimed_l2_timestamp: u64,\n    /// The rollup config for the L2 chain.\n    pub rollup_configs: HashMap<u64, RollupConfig>,\n    /// The dependency set configuration for the interop cluster.\n    pub dependency_set: DependencySet,\n    /// The L1 config for the L2 chain.\n    pub l1_config: L1ChainConfig,\n}\n\nimpl BootInfo {\n    /// Load the boot information from the preimage oracle.\n    ///\n    /// ## Takes\n    /// - `oracle`: The preimage oracle reader.\n    ///\n    /// ## Returns\n    /// - `Ok(BootInfo)`: The boot information.\n    /// - `Err(_)`: Failed to load the boot information.\n    pub async fn load<O>(oracle: &O) -> Result<Self, BootstrapError>\n    where\n        O: PreimageOracleClient + HintWriterClient + Clone + Send,\n    {\n        let mut l1_head: B256 = B256::ZERO;\n        oracle\n            .get_exact(PreimageKey::new_local(L1_HEAD_KEY.to()), l1_head.as_mut())\n            .await\n            .map_err(OracleProviderError::Preimage)?;\n\n        let mut l2_pre: B256 = B256::ZERO;\n        oracle\n            .get_exact(PreimageKey::new_local(L2_AGREED_PRE_STATE_KEY.to()), l2_pre.as_mut())\n            .await\n            .map_err(OracleProviderError::Preimage)?;\n\n        let mut l2_post: B256 = B256::ZERO;\n        oracle\n            .get_exact(PreimageKey::new_local(L2_CLAIMED_POST_STATE_KEY.to()), l2_post.as_mut())\n            .await\n            .map_err(OracleProviderError::Preimage)?;\n\n        let l2_claim_block = u64::from_be_bytes(\n            oracle\n                .get(PreimageKey::new_local(L2_CLAIMED_TIMESTAMP_KEY.to()))\n                .await\n                .map_err(OracleProviderError::Preimage)?\n                .as_slice()\n                .try_into()\n                .map_err(OracleProviderError::SliceConversion)?,\n        );\n\n        let raw_pre_state = read_raw_pre_state(oracle, l2_pre).await?;\n        if raw_pre_state == INVALID_TRANSITION {\n            warn!(\n                target: \"boot_loader\",\n                \"Invalid pre-state, short-circuiting to check post-state claim.\"\n            );\n\n            if l2_post == INVALID_TRANSITION_HASH {\n                return Err(BootstrapError::InvalidToInvalid);\n            }\n            return Err(BootstrapError::InvalidPostState(l2_post));\n        }\n\n        let agreed_pre_state =\n            PreState::decode(&mut raw_pre_state.as_ref()).map_err(OracleProviderError::Rlp)?;\n\n        // INVARIANT: the honest actor never agrees to a prestate whose timestamp exceeds\n        // the dispute-game-pinned `claimed_l2_timestamp`. The oracle only verifies\n        // `key == keccak256(preimage)`, not the timestamp inside; without this guard a\n        // malicious proposer could register a future-timestamped prestate and use it as\n        // both starting and disputed claim at trace-extended bisection positions, where\n        // `claim == prestate ⇒ Ok(())` would resolve as `vmStatus = VALID`. Op-program\n        // panics on this condition (see `op-program/client/interop/interop.go:87-97`).\n        assert!(\n            agreed_pre_state.timestamp() <= l2_claim_block,\n            \"agreed prestate timestamp {} is after the game timestamp {}\",\n            agreed_pre_state.timestamp(),\n            l2_claim_block\n        );\n\n        let chain_ids: Vec<_> = match agreed_pre_state {\n            PreState::SuperRoot(ref super_root) => {\n                super_root.output_roots.iter().map(|r| r.chain_id).collect()\n            }\n            PreState::TransitionState(ref transition_state) => {\n                transition_state.pre_state.output_roots.iter().map(|r| r.chain_id).collect()\n            }\n        };\n\n        // Attempt to load the rollup config from the chain ID. If there is no config for the chain,\n        // fall back to loading the config from the preimage oracle.\n        let rollup_configs: HashMap<u64, RollupConfig> = if chain_ids\n            .iter()\n            .all(|id| ROLLUP_CONFIGS.contains_key(id))\n        {\n            chain_ids.iter().map(|id| (*id, ROLLUP_CONFIGS[id].clone())).collect()\n        } else {\n            let missing_ids: Vec<u64> =\n                chain_ids.iter().copied().filter(|id| !ROLLUP_CONFIGS.contains_key(id)).collect();\n            warn!(\n                target: \"boot_loader\",\n                \"No rollup config found for chain IDs {:?}, falling back to preimage oracle. This is insecure in production without additional validation!\",\n                missing_ids\n            );\n            let ser_cfg = oracle\n                .get(PreimageKey::new_local(L2_ROLLUP_CONFIG_KEY.to()))\n                .await\n                .map_err(OracleProviderError::Preimage)?;\n            serde_json::from_slice(&ser_cfg).map_err(OracleProviderError::Serde)?\n        };\n\n        let dependency_set = load_dependency_set(oracle, &chain_ids, &DEPENDENCY_SETS).await?;\n\n        // Attempt to load the l1 config from the chain ID. If there is no config for the chain,\n        // fall back to loading the config from the preimage oracle.\n\n        // Note that there should be only one l1 config per interop cluster. Let's ensure that all\n        // the chain ids are the same.\n        let l1_chain_ids = rollup_configs.values().map(|cfg| cfg.l1_chain_id).collect::<Vec<_>>();\n        if l1_chain_ids.iter().any(|id| *id != l1_chain_ids[0]) {\n            return Err(BootstrapError::InvalidL1Config);\n        }\n\n        let l1_chain_id = l1_chain_ids[0];\n\n        let l1_config = if let Some(config) = L1_CONFIGS.get(&l1_chain_id) {\n            config.clone()\n        } else {\n            warn!(\n                target: \"boot_loader\",\n                \"No l1 config found for chain ID {}, falling back to preimage oracle. This is insecure in production without additional validation!\",\n                l1_chain_id\n            );\n            let ser_cfg = oracle\n                .get(PreimageKey::new_local(L1_CONFIG_KEY.to()))\n                .await\n                .map_err(OracleProviderError::Preimage)?;\n            serde_json::from_slice(&ser_cfg).map_err(OracleProviderError::Serde)?\n        };\n\n        Ok(Self {\n            l1_head,\n            l1_config,\n            rollup_configs,\n            dependency_set,\n            agreed_pre_state_commitment: l2_pre,\n            agreed_pre_state,\n            claimed_post_state: l2_post,\n            claimed_l2_timestamp: l2_claim_block,\n        })\n    }\n\n    /// Returns the [`RollupConfig`] corresponding to the [`PreState::active_l2_chain_id`].\n    pub fn active_rollup_config(&self) -> Option<RollupConfig> {\n        let active_l2_chain_id = self.agreed_pre_state.active_l2_chain_id()?;\n        self.rollup_configs.get(&active_l2_chain_id).cloned()\n    }\n\n    /// Returns the [`L1ChainConfig`] corresponding to the [`PreState::active_l2_chain_id`] through\n    /// the l2 [`RollupConfig`].\n    pub fn active_l1_config(&self) -> L1ChainConfig {\n        self.l1_config.clone()\n    }\n\n    /// Returns the [`RollupConfig`] corresponding to the given `chain_id`.\n    pub fn rollup_config(&self, chain_id: u64) -> Option<RollupConfig> {\n        self.rollup_configs.get(&chain_id).cloned()\n    }\n}\n\n/// An error that occurred during the bootstrapping phase.\n#[derive(Debug, Error)]\npub enum BootstrapError {\n    /// An error occurred while reading from the preimage oracle.\n    #[error(transparent)]\n    Oracle(#[from] OracleProviderError),\n    /// The pre-state is invalid and the post-state claim is not invalid.\n    #[error(\"`INVALID` pre-state claim; Post-state {0} unexpected.\")]\n    InvalidPostState(B256),\n    /// The pre-state is invalid and the post-state claim is also invalid.\n    #[error(\"No-op state transition detected; both pre and post states are `INVALID`.\")]\n    InvalidToInvalid,\n    /// The l1 config is invalid because the chain ids are not the same.\n    #[error(\"The l1 config is invalid because the chain ids are not the same.\")]\n    InvalidL1Config,\n}\n\n/// Reads the raw pre-state from the preimage oracle.\npub(crate) async fn read_raw_pre_state<O>(\n    caching_oracle: &O,\n    agreed_pre_state_commitment: B256,\n) -> Result<Bytes, OracleProviderError>\nwhere\n    O: CommsClient,\n{\n    HintType::AgreedPreState\n        .with_data(&[agreed_pre_state_commitment.as_ref()])\n        .send(caching_oracle)\n        .await?;\n    let pre = caching_oracle\n        .get(PreimageKey::new(*agreed_pre_state_commitment, PreimageKeyType::Keccak256))\n        .await\n        .map_err(OracleProviderError::Preimage)?;\n\n    if pre.is_empty() {\n        return Err(OracleProviderError::Preimage(PreimageOracleError::Other(\n            \"Invalid pre-state preimage\".to_string(),\n        )));\n    }\n\n    Ok(Bytes::from(pre))\n}\n\n/// Loads the dependency set for the proof.\n///\n/// Looks up the first chain id from the proof's `agreed_pre_state` in the\n/// registry-embedded `DEPENDENCY_SETS` map. The build pipeline guarantees that every\n/// chain id in any embedded cluster is keyed under that cluster's [`DependencySet`], so\n/// a single lookup suffices — if the first chain id is in any embedded cluster, this\n/// returns it. If no embedded entry exists, falls back to the preimage oracle, which\n/// keeps host-synthesized depsets working for dev/test flows.\n///\n/// Cross-cluster and partial-coverage proofs (chain ids spanning multiple embedded\n/// clusters or mixing embedded/non-embedded chains) are not detected here. They fail\n/// downstream during interop message validation when a message's source chain isn't in\n/// the chosen depset's `dependencies`.\nasync fn load_dependency_set<O>(\n    oracle: &O,\n    chain_ids: &[u64],\n    embedded: &HashMap<u64, DependencySet>,\n) -> Result<DependencySet, BootstrapError>\nwhere\n    O: PreimageOracleClient + Send,\n{\n    if let Some(ds) = chain_ids.first().and_then(|id| embedded.get(id)) {\n        return Ok(ds.clone());\n    }\n    warn!(\n        target: \"boot_loader\",\n        \"No embedded dependency set found for proof chain ids {:?}, falling back to preimage oracle. This is insecure in production without additional validation!\",\n        chain_ids\n    );\n    let ser_cfg = oracle\n        .get(PreimageKey::new_local(DEPENDENCY_SET_KEY.to()))\n        .await\n        .map_err(OracleProviderError::Preimage)?;\n    let ds: DependencySet = serde_json::from_slice(&ser_cfg).map_err(OracleProviderError::Serde)?;\n    Ok(ds)\n}\n\n#[cfg(test)]\n#[allow(clippy::zero_sized_map_values)]\nmod tests {\n    use super::*;\n    use alloc::{boxed::Box, vec, vec::Vec};\n    use kona_genesis::{ChainDependency, DependencySet};\n    use kona_preimage::{HintWriterClient, errors::PreimageOracleError};\n    use kona_registry::HashMap;\n\n    #[derive(Default)]\n    struct MockOracle {\n        fetched: spin::Mutex<Vec<PreimageKey>>,\n        depset_payload: Vec<u8>,\n    }\n\n    #[async_trait::async_trait]\n    impl PreimageOracleClient for MockOracle {\n        async fn get(&self, key: PreimageKey) -> Result<Vec<u8>, PreimageOracleError> {\n            self.fetched.lock().push(key);\n            Ok(self.depset_payload.clone())\n        }\n        async fn get_exact(\n            &self,\n            _key: PreimageKey,\n            _buf: &mut [u8],\n        ) -> Result<(), PreimageOracleError> {\n            unimplemented!(\"not exercised by load_dependency_set tests\")\n        }\n    }\n\n    #[async_trait::async_trait]\n    impl HintWriterClient for MockOracle {\n        async fn write(&self, _hint: &str) -> Result<(), PreimageOracleError> {\n            unimplemented!(\"not exercised by load_dependency_set tests\")\n        }\n    }\n\n    fn make_depset(chain_ids: &[u64]) -> DependencySet {\n        let dependencies = chain_ids.iter().map(|id| (*id, ChainDependency {})).collect();\n        DependencySet { dependencies, override_message_expiry_window: None }\n    }\n\n    fn embed(depsets: Vec<DependencySet>) -> HashMap<u64, DependencySet> {\n        let mut by_chain = HashMap::default();\n        for ds in depsets {\n            for id in ds.dependencies.keys() {\n                by_chain.insert(*id, ds.clone());\n            }\n        }\n        by_chain\n    }\n\n    #[tokio::test]\n    async fn embedded_depset_covers_all_chains_does_not_call_oracle() {\n        let oracle = MockOracle::default();\n        let depset = make_depset(&[1u64, 2u64]);\n        let embedded = embed(vec![depset.clone()]);\n        let out = load_dependency_set(&oracle, &[1, 2], &embedded).await.unwrap();\n        assert_eq!(out, depset);\n        assert!(oracle.fetched.lock().is_empty());\n    }\n\n    #[tokio::test]\n    async fn no_embedded_depsets_falls_back_to_oracle() {\n        let oracle = MockOracle {\n            depset_payload: serde_json::to_vec(&make_depset(&[1u64])).unwrap(),\n            ..Default::default()\n        };\n        let out = load_dependency_set(&oracle, &[1], &HashMap::default()).await.unwrap();\n        assert_eq!(out.dependencies.len(), 1);\n        let fetched = oracle.fetched.lock().clone();\n        assert_eq!(fetched.len(), 1);\n        assert_eq!(fetched[0], PreimageKey::new_local(DEPENDENCY_SET_KEY.to()));\n    }\n}","resolutions":{"9fa846564f4071bd":{"status":"differs","coveredLines":271,"match":{"origin":"own","collection":"optimism","relation":{"type":"own"},"rank":0,"matchedBy":"name","auditedName":"boot.rs","similarity":0.751,"reportId":"optimism/cantina-kona-2026-03","repository":"op-rs/kona","path":"crates/proof/proof-interop/src/boot.rs","commit":"86910c9112437bbb849eca28961f813c5450e103","commitTimestamp":"2025-12-15T17:17:05Z","url":"https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/crates/proof/proof-interop/src/boot.rs","auditStatus":"audited_with_no_major_findings","reviewPhase":"initial audit","coverage":"Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). Interop proof crate (pre-state, consolidation, boot); Low findings 3.4.3, 3.4.4, 3.4.5, 3.4.7 and Informational 3.5.3, 3.5.4, 3.5.5 located here, all acknowledged as interop is not planned to be supported.","majorFindings":0,"isLatestVersion":true,"laterAuditedVersionExists":false,"totalVersions":1},"diff":{"added":106,"removed":3,"ignoredAdded":39,"ignoredRemoved":5,"unchanged":271,"ignoredOnly":false,"hunks":[{"oldStart":6,"oldLines":12,"newStart":6,"newLines":13,"lines":[{"type":" ","oldLine":6,"newLine":6,"text":"use alloy_primitives::{B256, Bytes, U256};"},{"type":" ","oldLine":7,"newLine":7,"text":"use alloy_rlp::Decodable;"},{"type":" ","oldLine":8,"newLine":8,"text":"use kona_genesis::{L1ChainConfig, RollupConfig};"},{"type":"+","newLine":9,"text":"use kona_interop::DependencySet;","ignored":false},{"type":" ","oldLine":9,"newLine":10,"text":"use kona_preimage::{"},{"type":" ","oldLine":10,"newLine":11,"text":"    CommsClient, HintWriterClient, PreimageKey, PreimageKeyType, PreimageOracleClient,"},{"type":" ","oldLine":11,"newLine":12,"text":"    errors::PreimageOracleError,"},{"type":" ","oldLine":12,"newLine":13,"text":"};"},{"type":" ","oldLine":13,"newLine":14,"text":"use kona_proof::errors::OracleProviderError;"},{"type":"-","oldLine":14,"text":"use kona_registry::{HashMap, L1_CONFIGS, ROLLUP_CONFIGS};","ignored":false},{"type":"+","newLine":15,"text":"use kona_registry::{DEPENDENCY_SETS, HashMap, L1_CONFIGS, ROLLUP_CONFIGS};","ignored":false},{"type":" ","oldLine":15,"newLine":16,"text":"use serde::{Deserialize, Serialize};"},{"type":" ","oldLine":16,"newLine":17,"text":"use thiserror::Error;"},{"type":" ","oldLine":17,"newLine":18,"text":"use tracing::warn;"}]},{"oldStart":34,"oldLines":6,"newStart":35,"newLines":9,"lines":[{"type":" ","oldLine":34,"newLine":35,"text":"/// The local key ident for the l1 config."},{"type":" ","oldLine":35,"newLine":36,"text":"pub const L1_CONFIG_KEY: U256 = U256::from_be_slice(&[7]);"},{"type":" ","oldLine":36,"newLine":37,"text":""},{"type":"+","newLine":38,"text":"/// The local key ident for the dependency set.","ignored":true},{"type":"+","newLine":39,"text":"pub const DEPENDENCY_SET_KEY: U256 = U256::from_be_slice(&[8]);","ignored":false},{"type":"+","newLine":40,"text":"","ignored":true},{"type":" ","oldLine":37,"newLine":41,"text":"/// The boot information for the interop client program."},{"type":" ","oldLine":38,"newLine":42,"text":"#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]"},{"type":" ","oldLine":39,"newLine":43,"text":"pub struct BootInfo {"}]},{"oldStart":49,"oldLines":6,"newStart":53,"newLines":8,"lines":[{"type":" ","oldLine":49,"newLine":53,"text":"    pub claimed_l2_timestamp: u64,"},{"type":" ","oldLine":50,"newLine":54,"text":"    /// The rollup config for the L2 chain."},{"type":" ","oldLine":51,"newLine":55,"text":"    pub rollup_configs: HashMap<u64, RollupConfig>,"},{"type":"+","newLine":56,"text":"    /// The dependency set configuration for the interop cluster.","ignored":true},{"type":"+","newLine":57,"text":"    pub dependency_set: DependencySet,","ignored":false},{"type":" ","oldLine":52,"newLine":58,"text":"    /// The L1 config for the L2 chain."},{"type":" ","oldLine":53,"newLine":59,"text":"    pub l1_config: L1ChainConfig,"},{"type":" ","oldLine":54,"newLine":60,"text":"}"}]},{"oldStart":103,"oldLines":14,"newStart":109,"newLines":27,"lines":[{"type":" ","oldLine":103,"newLine":109,"text":""},{"type":" ","oldLine":104,"newLine":110,"text":"            if l2_post == INVALID_TRANSITION_HASH {"},{"type":" ","oldLine":105,"newLine":111,"text":"                return Err(BootstrapError::InvalidToInvalid);"},{"type":"-","oldLine":106,"text":"            } else {","ignored":false},{"type":"-","oldLine":107,"text":"                return Err(BootstrapError::InvalidPostState(l2_post));","ignored":true},{"type":" ","oldLine":108,"newLine":112,"text":"            }"},{"type":"+","newLine":113,"text":"            return Err(BootstrapError::InvalidPostState(l2_post));","ignored":true},{"type":" ","oldLine":109,"newLine":114,"text":"        }"},{"type":" ","oldLine":110,"newLine":115,"text":""},{"type":" ","oldLine":111,"newLine":116,"text":"        let agreed_pre_state ="},{"type":" ","oldLine":112,"newLine":117,"text":"            PreState::decode(&mut raw_pre_state.as_ref()).map_err(OracleProviderError::Rlp)?;"},{"type":" ","oldLine":113,"newLine":118,"text":""},{"type":"+","newLine":119,"text":"        // INVARIANT: the honest actor never agrees to a prestate whose timestamp exceeds","ignored":true},{"type":"+","newLine":120,"text":"        // the dispute-game-pinned `claimed_l2_timestamp`. The oracle only verifies","ignored":true},{"type":"+","newLine":121,"text":"        // `key == keccak256(preimage)`, not the timestamp inside; without this guard a","ignored":true},{"type":"+","newLine":122,"text":"        // malicious proposer could register a future-timestamped prestate and use it as","ignored":true},{"type":"+","newLine":123,"text":"        // both starting and disputed claim at trace-extended bisection positions, where","ignored":true},{"type":"+","newLine":124,"text":"        // `claim == prestate ⇒ Ok(())` would resolve as `vmStatus = VALID`. Op-program","ignored":true},{"type":"+","newLine":125,"text":"        // panics on this condition (see `op-program/client/interop/interop.go:87-97`).","ignored":true},{"type":"+","newLine":126,"text":"        assert!(","ignored":false},{"type":"+","newLine":127,"text":"            agreed_pre_state.timestamp() <= l2_claim_block,","ignored":false},{"type":"+","newLine":128,"text":"            \"agreed prestate timestamp {} is after the game timestamp {}\",","ignored":false},{"type":"+","newLine":129,"text":"            agreed_pre_state.timestamp(),","ignored":false},{"type":"+","newLine":130,"text":"            l2_claim_block","ignored":false},{"type":"+","newLine":131,"text":"        );","ignored":false},{"type":"+","newLine":132,"text":"","ignored":true},{"type":" ","oldLine":114,"newLine":133,"text":"        let chain_ids: Vec<_> = match agreed_pre_state {"},{"type":" ","oldLine":115,"newLine":134,"text":"            PreState::SuperRoot(ref super_root) => {"},{"type":" ","oldLine":116,"newLine":135,"text":"                super_root.output_roots.iter().map(|r| r.chain_id).collect()"}]},{"oldStart":128,"oldLines":10,"newStart":147,"newLines":12,"lines":[{"type":" ","oldLine":128,"newLine":147,"text":"        {"},{"type":" ","oldLine":129,"newLine":148,"text":"            chain_ids.iter().map(|id| (*id, ROLLUP_CONFIGS[id].clone())).collect()"},{"type":" ","oldLine":130,"newLine":149,"text":"        } else {"},{"type":"+","newLine":150,"text":"            let missing_ids: Vec<u64> =","ignored":false},{"type":"+","newLine":151,"text":"                chain_ids.iter().copied().filter(|id| !ROLLUP_CONFIGS.contains_key(id)).collect();","ignored":false},{"type":" ","oldLine":131,"newLine":152,"text":"            warn!("},{"type":" ","oldLine":132,"newLine":153,"text":"                target: \"boot_loader\","},{"type":" ","oldLine":133,"newLine":154,"text":"                \"No rollup config found for chain IDs {:?}, falling back to preimage oracle. This is insecure in production without additional validation!\","},{"type":"-","oldLine":134,"text":"                chain_ids","ignored":false},{"type":"+","newLine":155,"text":"                missing_ids","ignored":false},{"type":" ","oldLine":135,"newLine":156,"text":"            );"},{"type":" ","oldLine":136,"newLine":157,"text":"            let ser_cfg = oracle"},{"type":" ","oldLine":137,"newLine":158,"text":"                .get(PreimageKey::new_local(L2_ROLLUP_CONFIG_KEY.to()))"}]},{"oldStart":140,"oldLines":6,"newStart":161,"newLines":8,"lines":[{"type":" ","oldLine":140,"newLine":161,"text":"            serde_json::from_slice(&ser_cfg).map_err(OracleProviderError::Serde)?"},{"type":" ","oldLine":141,"newLine":162,"text":"        };"},{"type":" ","oldLine":142,"newLine":163,"text":""},{"type":"+","newLine":164,"text":"        let dependency_set = load_dependency_set(oracle, &chain_ids, &DEPENDENCY_SETS).await?;","ignored":false},{"type":"+","newLine":165,"text":"","ignored":true},{"type":" ","oldLine":143,"newLine":166,"text":"        // Attempt to load the l1 config from the chain ID. If there is no config for the chain,"},{"type":" ","oldLine":144,"newLine":167,"text":"        // fall back to loading the config from the preimage oracle."},{"type":" ","oldLine":145,"newLine":168,"text":""}]},{"oldStart":171,"oldLines":6,"newStart":194,"newLines":7,"lines":[{"type":" ","oldLine":171,"newLine":194,"text":"            l1_head,"},{"type":" ","oldLine":172,"newLine":195,"text":"            l1_config,"},{"type":" ","oldLine":173,"newLine":196,"text":"            rollup_configs,"},{"type":"+","newLine":197,"text":"            dependency_set,","ignored":false},{"type":" ","oldLine":174,"newLine":198,"text":"            agreed_pre_state_commitment: l2_pre,"},{"type":" ","oldLine":175,"newLine":199,"text":"            agreed_pre_state,"},{"type":" ","oldLine":176,"newLine":200,"text":"            claimed_post_state: l2_post,"}]},{"oldStart":178,"oldLines":19,"newStart":202,"newLines":19,"lines":[{"type":" ","oldLine":178,"newLine":202,"text":"        })"},{"type":" ","oldLine":179,"newLine":203,"text":"    }"},{"type":" ","oldLine":180,"newLine":204,"text":""},{"type":"-","oldLine":181,"text":"    /// Returns the [RollupConfig] corresponding to the [PreState::active_l2_chain_id].","ignored":true},{"type":"+","newLine":205,"text":"    /// Returns the [`RollupConfig`] corresponding to the [`PreState::active_l2_chain_id`].","ignored":true},{"type":" ","oldLine":182,"newLine":206,"text":"    pub fn active_rollup_config(&self) -> Option<RollupConfig> {"},{"type":" ","oldLine":183,"newLine":207,"text":"        let active_l2_chain_id = self.agreed_pre_state.active_l2_chain_id()?;"},{"type":" ","oldLine":184,"newLine":208,"text":"        self.rollup_configs.get(&active_l2_chain_id).cloned()"},{"type":" ","oldLine":185,"newLine":209,"text":"    }"},{"type":" ","oldLine":186,"newLine":210,"text":""},{"type":"-","oldLine":187,"text":"    /// Returns the [L1ChainConfig] corresponding to the [PreState::active_l2_chain_id] through the","ignored":true},{"type":"-","oldLine":188,"text":"    /// l2 [RollupConfig].","ignored":true},{"type":"+","newLine":211,"text":"    /// Returns the [`L1ChainConfig`] corresponding to the [`PreState::active_l2_chain_id`] through","ignored":true},{"type":"+","newLine":212,"text":"    /// the l2 [`RollupConfig`].","ignored":true},{"type":" ","oldLine":189,"newLine":213,"text":"    pub fn active_l1_config(&self) -> L1ChainConfig {"},{"type":" ","oldLine":190,"newLine":214,"text":"        self.l1_config.clone()"},{"type":" ","oldLine":191,"newLine":215,"text":"    }"},{"type":" ","oldLine":192,"newLine":216,"text":""},{"type":"-","oldLine":193,"text":"    /// Returns the [RollupConfig] corresponding to the given `chain_id`.","ignored":true},{"type":"+","newLine":217,"text":"    /// Returns the [`RollupConfig`] corresponding to the given `chain_id`.","ignored":true},{"type":" ","oldLine":194,"newLine":218,"text":"    pub fn rollup_config(&self, chain_id: u64) -> Option<RollupConfig> {"},{"type":" ","oldLine":195,"newLine":219,"text":"        self.rollup_configs.get(&chain_id).cloned()"},{"type":" ","oldLine":196,"newLine":220,"text":"    }"}]},{"oldStart":237,"oldLines":4,"newStart":261,"newLines":117,"lines":[{"type":" ","oldLine":237,"newLine":261,"text":"    }"},{"type":" ","oldLine":238,"newLine":262,"text":""},{"type":" ","oldLine":239,"newLine":263,"text":"    Ok(Bytes::from(pre))"},{"type":"+","newLine":264,"text":"}","ignored":false},{"type":"+","newLine":265,"text":"","ignored":true},{"type":"+","newLine":266,"text":"/// Loads the dependency set for the proof.","ignored":true},{"type":"+","newLine":267,"text":"///","ignored":true},{"type":"+","newLine":268,"text":"/// Looks up the first chain id from the proof's `agreed_pre_state` in the","ignored":true},{"type":"+","newLine":269,"text":"/// registry-embedded `DEPENDENCY_SETS` map. The build pipeline guarantees that every","ignored":true},{"type":"+","newLine":270,"text":"/// chain id in any embedded cluster is keyed under that cluster's [`DependencySet`], so","ignored":true},{"type":"+","newLine":271,"text":"/// a single lookup suffices — if the first chain id is in any embedded cluster, this","ignored":true},{"type":"+","newLine":272,"text":"/// returns it. If no embedded entry exists, falls back to the preimage oracle, which","ignored":true},{"type":"+","newLine":273,"text":"/// keeps host-synthesized depsets working for dev/test flows.","ignored":true},{"type":"+","newLine":274,"text":"///","ignored":true},{"type":"+","newLine":275,"text":"/// Cross-cluster and partial-coverage proofs (chain ids spanning multiple embedded","ignored":true},{"type":"+","newLine":276,"text":"/// clusters or mixing embedded/non-embedded chains) are not detected here. They fail","ignored":true},{"type":"+","newLine":277,"text":"/// downstream during interop message validation when a message's source chain isn't in","ignored":true},{"type":"+","newLine":278,"text":"/// the chosen depset's `dependencies`.","ignored":true},{"type":"+","newLine":279,"text":"async fn load_dependency_set<O>(","ignored":false},{"type":"+","newLine":280,"text":"    oracle: &O,","ignored":false},{"type":"+","newLine":281,"text":"    chain_ids: &[u64],","ignored":false},{"type":"+","newLine":282,"text":"    embedded: &HashMap<u64, DependencySet>,","ignored":false},{"type":"+","newLine":283,"text":") -> Result<DependencySet, BootstrapError>","ignored":false},{"type":"+","newLine":284,"text":"where","ignored":false},{"type":"+","newLine":285,"text":"    O: PreimageOracleClient + Send,","ignored":false},{"type":"+","newLine":286,"text":"{","ignored":false},{"type":"+","newLine":287,"text":"    if let Some(ds) = chain_ids.first().and_then(|id| embedded.get(id)) {","ignored":false},{"type":"+","newLine":288,"text":"        return Ok(ds.clone());","ignored":false},{"type":"+","newLine":289,"text":"    }","ignored":false},{"type":"+","newLine":290,"text":"    warn!(","ignored":false},{"type":"+","newLine":291,"text":"        target: \"boot_loader\",","ignored":false},{"type":"+","newLine":292,"text":"        \"No embedded dependency set found for proof chain ids {:?}, falling back to preimage oracle. This is insecure in production without additional validation!\",","ignored":false},{"type":"+","newLine":293,"text":"        chain_ids","ignored":false},{"type":"+","newLine":294,"text":"    );","ignored":false},{"type":"+","newLine":295,"text":"    let ser_cfg = oracle","ignored":false},{"type":"+","newLine":296,"text":"        .get(PreimageKey::new_local(DEPENDENCY_SET_KEY.to()))","ignored":false},{"type":"+","newLine":297,"text":"        .await","ignored":false},{"type":"+","newLine":298,"text":"        .map_err(OracleProviderError::Preimage)?;","ignored":false},{"type":"+","newLine":299,"text":"    let ds: DependencySet = serde_json::from_slice(&ser_cfg).map_err(OracleProviderError::Serde)?;","ignored":false},{"type":"+","newLine":300,"text":"    Ok(ds)","ignored":false},{"type":"+","newLine":301,"text":"}","ignored":false},{"type":"+","newLine":302,"text":"","ignored":true},{"type":"+","newLine":303,"text":"#[cfg(test)]","ignored":false},{"type":"+","newLine":304,"text":"#[allow(clippy::zero_sized_map_values)]","ignored":false},{"type":"+","newLine":305,"text":"mod tests {","ignored":false},{"type":"+","newLine":306,"text":"    use super::*;","ignored":false},{"type":"+","newLine":307,"text":"    use alloc::{boxed::Box, vec, vec::Vec};","ignored":false},{"type":"+","newLine":308,"text":"    use kona_genesis::{ChainDependency, DependencySet};","ignored":false},{"type":"+","newLine":309,"text":"    use kona_preimage::{HintWriterClient, errors::PreimageOracleError};","ignored":false},{"type":"+","newLine":310,"text":"    use kona_registry::HashMap;","ignored":false},{"type":"+","newLine":311,"text":"","ignored":true},{"type":"+","newLine":312,"text":"    #[derive(Default)]","ignored":false},{"type":"+","newLine":313,"text":"    struct MockOracle {","ignored":false},{"type":"+","newLine":314,"text":"        fetched: spin::Mutex<Vec<PreimageKey>>,","ignored":false},{"type":"+","newLine":315,"text":"        depset_payload: Vec<u8>,","ignored":false},{"type":"+","newLine":316,"text":"    }","ignored":false},{"type":"+","newLine":317,"text":"","ignored":true},{"type":"+","newLine":318,"text":"    #[async_trait::async_trait]","ignored":false},{"type":"+","newLine":319,"text":"    impl PreimageOracleClient for MockOracle {","ignored":false},{"type":"+","newLine":320,"text":"        async fn get(&self, key: PreimageKey) -> Result<Vec<u8>, PreimageOracleError> {","ignored":false},{"type":"+","newLine":321,"text":"            self.fetched.lock().push(key);","ignored":false},{"type":"+","newLine":322,"text":"            Ok(self.depset_payload.clone())","ignored":false},{"type":"+","newLine":323,"text":"        }","ignored":false},{"type":"+","newLine":324,"text":"        async fn get_exact(","ignored":false},{"type":"+","newLine":325,"text":"            &self,","ignored":false},{"type":"+","newLine":326,"text":"            _key: PreimageKey,","ignored":false},{"type":"+","newLine":327,"text":"            _buf: &mut [u8],","ignored":false},{"type":"+","newLine":328,"text":"        ) -> Result<(), PreimageOracleError> {","ignored":false},{"type":"+","newLine":329,"text":"            unimplemented!(\"not exercised by load_dependency_set tests\")","ignored":false},{"type":"+","newLine":330,"text":"        }","ignored":false},{"type":"+","newLine":331,"text":"    }","ignored":false},{"type":"+","newLine":332,"text":"","ignored":true},{"type":"+","newLine":333,"text":"    #[async_trait::async_trait]","ignored":false},{"type":"+","newLine":334,"text":"    impl HintWriterClient for MockOracle {","ignored":false},{"type":"+","newLine":335,"text":"        async fn write(&self, _hint: &str) -> Result<(), PreimageOracleError> {","ignored":false},{"type":"+","newLine":336,"text":"            unimplemented!(\"not exercised by load_dependency_set tests\")","ignored":false},{"type":"+","newLine":337,"text":"        }","ignored":false},{"type":"+","newLine":338,"text":"    }","ignored":false},{"type":"+","newLine":339,"text":"","ignored":true},{"type":"+","newLine":340,"text":"    fn make_depset(chain_ids: &[u64]) -> DependencySet {","ignored":false},{"type":"+","newLine":341,"text":"        let dependencies = chain_ids.iter().map(|id| (*id, ChainDependency {})).collect();","ignored":false},{"type":"+","newLine":342,"text":"        DependencySet { dependencies, override_message_expiry_window: None }","ignored":false},{"type":"+","newLine":343,"text":"    }","ignored":false},{"type":"+","newLine":344,"text":"","ignored":true},{"type":"+","newLine":345,"text":"    fn embed(depsets: Vec<DependencySet>) -> HashMap<u64, DependencySet> {","ignored":false},{"type":"+","newLine":346,"text":"        let mut by_chain = HashMap::default();","ignored":false},{"type":"+","newLine":347,"text":"        for ds in depsets {","ignored":false},{"type":"+","newLine":348,"text":"            for id in ds.dependencies.keys() {","ignored":false},{"type":"+","newLine":349,"text":"                by_chain.insert(*id, ds.clone());","ignored":false},{"type":"+","newLine":350,"text":"            }","ignored":false},{"type":"+","newLine":351,"text":"        }","ignored":false},{"type":"+","newLine":352,"text":"        by_chain","ignored":false},{"type":"+","newLine":353,"text":"    }","ignored":false},{"type":"+","newLine":354,"text":"","ignored":true},{"type":"+","newLine":355,"text":"    #[tokio::test]","ignored":false},{"type":"+","newLine":356,"text":"    async fn embedded_depset_covers_all_chains_does_not_call_oracle() {","ignored":false},{"type":"+","newLine":357,"text":"        let oracle = MockOracle::default();","ignored":false},{"type":"+","newLine":358,"text":"        let depset = make_depset(&[1u64, 2u64]);","ignored":false},{"type":"+","newLine":359,"text":"        let embedded = embed(vec![depset.clone()]);","ignored":false},{"type":"+","newLine":360,"text":"        let out = load_dependency_set(&oracle, &[1, 2], &embedded).await.unwrap();","ignored":false},{"type":"+","newLine":361,"text":"        assert_eq!(out, depset);","ignored":false},{"type":"+","newLine":362,"text":"        assert!(oracle.fetched.lock().is_empty());","ignored":false},{"type":"+","newLine":363,"text":"    }","ignored":false},{"type":"+","newLine":364,"text":"","ignored":true},{"type":"+","newLine":365,"text":"    #[tokio::test]","ignored":false},{"type":"+","newLine":366,"text":"    async fn no_embedded_depsets_falls_back_to_oracle() {","ignored":false},{"type":"+","newLine":367,"text":"        let oracle = MockOracle {","ignored":false},{"type":"+","newLine":368,"text":"            depset_payload: serde_json::to_vec(&make_depset(&[1u64])).unwrap(),","ignored":false},{"type":"+","newLine":369,"text":"            ..Default::default()","ignored":false},{"type":"+","newLine":370,"text":"        };","ignored":false},{"type":"+","newLine":371,"text":"        let out = load_dependency_set(&oracle, &[1], &HashMap::default()).await.unwrap();","ignored":false},{"type":"+","newLine":372,"text":"        assert_eq!(out.dependencies.len(), 1);","ignored":false},{"type":"+","newLine":373,"text":"        let fetched = oracle.fetched.lock().clone();","ignored":false},{"type":"+","newLine":374,"text":"        assert_eq!(fetched.len(), 1);","ignored":false},{"type":"+","newLine":375,"text":"        assert_eq!(fetched[0], PreimageKey::new_local(DEPENDENCY_SET_KEY.to()));","ignored":false},{"type":"+","newLine":376,"text":"    }","ignored":false},{"type":" ","oldLine":240,"newLine":377,"text":"}"}]}]},"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "d4984737aaedfeec2ae2d23c08a3c315b906436a8d95449a1e4729a5188a1adc",
+  "name": "boot.rs",
+  "kind": "program",
+  "lines": 377,
+  "source": "//! This module contains the prologue phase of the client program, pulling in the boot information\n//! through the `PreimageOracle` ABI as local keys.\n\nuse crate::{HintType, INVALID_TRANSITION, INVALID_TRANSITION_HASH, PreState};\nuse alloc::{string::ToString, vec::Vec};\nuse alloy_primitives::{B256, Bytes, U256};\nuse alloy_rlp::Decodable;\nuse kona_genesis::{L1ChainConfig, RollupConfig};\nuse kona_interop::DependencySet;\nuse kona_preimage::{\n    CommsClient, HintWriterClient, PreimageKey, PreimageKeyType, PreimageOracleClient,\n    errors::PreimageOracleError,\n};\nuse kona_proof::errors::OracleProviderError;\nuse kona_registry::{DEPENDENCY_SETS, HashMap, L1_CONFIGS, ROLLUP_CONFIGS};\nuse serde::{Deserialize, Serialize};\nuse thiserror::Error;\nuse tracing::warn;\n\n/// The local key ident for the L1 head hash.\npub const L1_HEAD_KEY: U256 = U256::from_be_slice(&[1]);\n\n/// The local key ident for the agreed upon L2 pre-state claim.\npub const L2_AGREED_PRE_STATE_KEY: U256 = U256::from_be_slice(&[2]);\n\n/// The local key ident for the L2 post-state claim.\npub const L2_CLAIMED_POST_STATE_KEY: U256 = U256::from_be_slice(&[3]);\n\n/// The local key ident for the L2 claim timestamp.\npub const L2_CLAIMED_TIMESTAMP_KEY: U256 = U256::from_be_slice(&[4]);\n\n/// The local key ident for the L2 rollup config.\npub const L2_ROLLUP_CONFIG_KEY: U256 = U256::from_be_slice(&[6]);\n\n/// The local key ident for the l1 config.\npub const L1_CONFIG_KEY: U256 = U256::from_be_slice(&[7]);\n\n/// The local key ident for the dependency set.\npub const DEPENDENCY_SET_KEY: U256 = U256::from_be_slice(&[8]);\n\n/// The boot information for the interop client program.\n#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]\npub struct BootInfo {\n    /// The L1 head hash containing the safe L2 chain data that may reproduce the post-state claim.\n    pub l1_head: B256,\n    /// The agreed upon superchain pre-state commitment.\n    pub agreed_pre_state_commitment: B256,\n    /// The agreed upon superchain pre-state.\n    pub agreed_pre_state: PreState,\n    /// The claimed (disputed) superchain post-state commitment.\n    pub claimed_post_state: B256,\n    /// The L2 claim timestamp.\n    pub claimed_l2_timestamp: u64,\n    /// The rollup config for the L2 chain.\n    pub rollup_configs: HashMap<u64, RollupConfig>,\n    /// The dependency set configuration for the interop cluster.\n    pub dependency_set: DependencySet,\n    /// The L1 config for the L2 chain.\n    pub l1_config: L1ChainConfig,\n}\n\nimpl BootInfo {\n    /// Load the boot information from the preimage oracle.\n    ///\n    /// ## Takes\n    /// - `oracle`: The preimage oracle reader.\n    ///\n    /// ## Returns\n    /// - `Ok(BootInfo)`: The boot information.\n    /// - `Err(_)`: Failed to load the boot information.\n    pub async fn load<O>(oracle: &O) -> Result<Self, BootstrapError>\n    where\n        O: PreimageOracleClient + HintWriterClient + Clone + Send,\n    {\n        let mut l1_head: B256 = B256::ZERO;\n        oracle\n            .get_exact(PreimageKey::new_local(L1_HEAD_KEY.to()), l1_head.as_mut())\n            .await\n            .map_err(OracleProviderError::Preimage)?;\n\n        let mut l2_pre: B256 = B256::ZERO;\n        oracle\n            .get_exact(PreimageKey::new_local(L2_AGREED_PRE_STATE_KEY.to()), l2_pre.as_mut())\n            .await\n            .map_err(OracleProviderError::Preimage)?;\n\n        let mut l2_post: B256 = B256::ZERO;\n        oracle\n            .get_exact(PreimageKey::new_local(L2_CLAIMED_POST_STATE_KEY.to()), l2_post.as_mut())\n            .await\n            .map_err(OracleProviderError::Preimage)?;\n\n        let l2_claim_block = u64::from_be_bytes(\n            oracle\n                .get(PreimageKey::new_local(L2_CLAIMED_TIMESTAMP_KEY.to()))\n                .await\n                .map_err(OracleProviderError::Preimage)?\n                .as_slice()\n                .try_into()\n                .map_err(OracleProviderError::SliceConversion)?,\n        );\n\n        let raw_pre_state = read_raw_pre_state(oracle, l2_pre).await?;\n        if raw_pre_state == INVALID_TRANSITION {\n            warn!(\n                target: \"boot_loader\",\n                \"Invalid pre-state, short-circuiting to check post-state claim.\"\n            );\n\n            if l2_post == INVALID_TRANSITION_HASH {\n                return Err(BootstrapError::InvalidToInvalid);\n            }\n            return Err(BootstrapError::InvalidPostState(l2_post));\n        }\n\n        let agreed_pre_state =\n            PreState::decode(&mut raw_pre_state.as_ref()).map_err(OracleProviderError::Rlp)?;\n\n        // INVARIANT: the honest actor never agrees to a prestate whose timestamp exceeds\n        // the dispute-game-pinned `claimed_l2_timestamp`. The oracle only verifies\n        // `key == keccak256(preimage)`, not the timestamp inside; without this guard a\n        // malicious proposer could register a future-timestamped prestate and use it as\n        // both starting and disputed claim at trace-extended bisection positions, where\n        // `claim == prestate ⇒ Ok(())` would resolve as `vmStatus = VALID`. Op-program\n        // panics on this condition (see `op-program/client/interop/interop.go:87-97`).\n        assert!(\n            agreed_pre_state.timestamp() <= l2_claim_block,\n            \"agreed prestate timestamp {} is after the game timestamp {}\",\n            agreed_pre_state.timestamp(),\n            l2_claim_block\n        );\n\n        let chain_ids: Vec<_> = match agreed_pre_state {\n            PreState::SuperRoot(ref super_root) => {\n                super_root.output_roots.iter().map(|r| r.chain_id).collect()\n            }\n            PreState::TransitionState(ref transition_state) => {\n                transition_state.pre_state.output_roots.iter().map(|r| r.chain_id).collect()\n            }\n        };\n\n        // Attempt to load the rollup config from the chain ID. If there is no config for the chain,\n        // fall back to loading the config from the preimage oracle.\n        let rollup_configs: HashMap<u64, RollupConfig> = if chain_ids\n            .iter()\n            .all(|id| ROLLUP_CONFIGS.contains_key(id))\n        {\n            chain_ids.iter().map(|id| (*id, ROLLUP_CONFIGS[id].clone())).collect()\n        } else {\n            let missing_ids: Vec<u64> =\n                chain_ids.iter().copied().filter(|id| !ROLLUP_CONFIGS.contains_key(id)).collect();\n            warn!(\n                target: \"boot_loader\",\n                \"No rollup config found for chain IDs {:?}, falling back to preimage oracle. This is insecure in production without additional validation!\",\n                missing_ids\n            );\n            let ser_cfg = oracle\n                .get(PreimageKey::new_local(L2_ROLLUP_CONFIG_KEY.to()))\n                .await\n                .map_err(OracleProviderError::Preimage)?;\n            serde_json::from_slice(&ser_cfg).map_err(OracleProviderError::Serde)?\n        };\n\n        let dependency_set = load_dependency_set(oracle, &chain_ids, &DEPENDENCY_SETS).await?;\n\n        // Attempt to load the l1 config from the chain ID. If there is no config for the chain,\n        // fall back to loading the config from the preimage oracle.\n\n        // Note that there should be only one l1 config per interop cluster. Let's ensure that all\n        // the chain ids are the same.\n        let l1_chain_ids = rollup_configs.values().map(|cfg| cfg.l1_chain_id).collect::<Vec<_>>();\n        if l1_chain_ids.iter().any(|id| *id != l1_chain_ids[0]) {\n            return Err(BootstrapError::InvalidL1Config);\n        }\n\n        let l1_chain_id = l1_chain_ids[0];\n\n        let l1_config = if let Some(config) = L1_CONFIGS.get(&l1_chain_id) {\n            config.clone()\n        } else {\n            warn!(\n                target: \"boot_loader\",\n                \"No l1 config found for chain ID {}, falling back to preimage oracle. This is insecure in production without additional validation!\",\n                l1_chain_id\n            );\n            let ser_cfg = oracle\n                .get(PreimageKey::new_local(L1_CONFIG_KEY.to()))\n                .await\n                .map_err(OracleProviderError::Preimage)?;\n            serde_json::from_slice(&ser_cfg).map_err(OracleProviderError::Serde)?\n        };\n\n        Ok(Self {\n            l1_head,\n            l1_config,\n            rollup_configs,\n            dependency_set,\n            agreed_pre_state_commitment: l2_pre,\n            agreed_pre_state,\n            claimed_post_state: l2_post,\n            claimed_l2_timestamp: l2_claim_block,\n        })\n    }\n\n    /// Returns the [`RollupConfig`] corresponding to the [`PreState::active_l2_chain_id`].\n    pub fn active_rollup_config(&self) -> Option<RollupConfig> {\n        let active_l2_chain_id = self.agreed_pre_state.active_l2_chain_id()?;\n        self.rollup_configs.get(&active_l2_chain_id).cloned()\n    }\n\n    /// Returns the [`L1ChainConfig`] corresponding to the [`PreState::active_l2_chain_id`] through\n    /// the l2 [`RollupConfig`].\n    pub fn active_l1_config(&self) -> L1ChainConfig {\n        self.l1_config.clone()\n    }\n\n    /// Returns the [`RollupConfig`] corresponding to the given `chain_id`.\n    pub fn rollup_config(&self, chain_id: u64) -> Option<RollupConfig> {\n        self.rollup_configs.get(&chain_id).cloned()\n    }\n}\n\n/// An error that occurred during the bootstrapping phase.\n#[derive(Debug, Error)]\npub enum BootstrapError {\n    /// An error occurred while reading from the preimage oracle.\n    #[error(transparent)]\n    Oracle(#[from] OracleProviderError),\n    /// The pre-state is invalid and the post-state claim is not invalid.\n    #[error(\"`INVALID` pre-state claim; Post-state {0} unexpected.\")]\n    InvalidPostState(B256),\n    /// The pre-state is invalid and the post-state claim is also invalid.\n    #[error(\"No-op state transition detected; both pre and post states are `INVALID`.\")]\n    InvalidToInvalid,\n    /// The l1 config is invalid because the chain ids are not the same.\n    #[error(\"The l1 config is invalid because the chain ids are not the same.\")]\n    InvalidL1Config,\n}\n\n/// Reads the raw pre-state from the preimage oracle.\npub(crate) async fn read_raw_pre_state<O>(\n    caching_oracle: &O,\n    agreed_pre_state_commitment: B256,\n) -> Result<Bytes, OracleProviderError>\nwhere\n    O: CommsClient,\n{\n    HintType::AgreedPreState\n        .with_data(&[agreed_pre_state_commitment.as_ref()])\n        .send(caching_oracle)\n        .await?;\n    let pre = caching_oracle\n        .get(PreimageKey::new(*agreed_pre_state_commitment, PreimageKeyType::Keccak256))\n        .await\n        .map_err(OracleProviderError::Preimage)?;\n\n    if pre.is_empty() {\n        return Err(OracleProviderError::Preimage(PreimageOracleError::Other(\n            \"Invalid pre-state preimage\".to_string(),\n        )));\n    }\n\n    Ok(Bytes::from(pre))\n}\n\n/// Loads the dependency set for the proof.\n///\n/// Looks up the first chain id from the proof's `agreed_pre_state` in the\n/// registry-embedded `DEPENDENCY_SETS` map. The build pipeline guarantees that every\n/// chain id in any embedded cluster is keyed under that cluster's [`DependencySet`], so\n/// a single lookup suffices — if the first chain id is in any embedded cluster, this\n/// returns it. If no embedded entry exists, falls back to the preimage oracle, which\n/// keeps host-synthesized depsets working for dev/test flows.\n///\n/// Cross-cluster and partial-coverage proofs (chain ids spanning multiple embedded\n/// clusters or mixing embedded/non-embedded chains) are not detected here. They fail\n/// downstream during interop message validation when a message's source chain isn't in\n/// the chosen depset's `dependencies`.\nasync fn load_dependency_set<O>(\n    oracle: &O,\n    chain_ids: &[u64],\n    embedded: &HashMap<u64, DependencySet>,\n) -> Result<DependencySet, BootstrapError>\nwhere\n    O: PreimageOracleClient + Send,\n{\n    if let Some(ds) = chain_ids.first().and_then(|id| embedded.get(id)) {\n        return Ok(ds.clone());\n    }\n    warn!(\n        target: \"boot_loader\",\n        \"No embedded dependency set found for proof chain ids {:?}, falling back to preimage oracle. This is insecure in production without additional validation!\",\n        chain_ids\n    );\n    let ser_cfg = oracle\n        .get(PreimageKey::new_local(DEPENDENCY_SET_KEY.to()))\n        .await\n        .map_err(OracleProviderError::Preimage)?;\n    let ds: DependencySet = serde_json::from_slice(&ser_cfg).map_err(OracleProviderError::Serde)?;\n    Ok(ds)\n}\n\n#[cfg(test)]\n#[allow(clippy::zero_sized_map_values)]\nmod tests {\n    use super::*;\n    use alloc::{boxed::Box, vec, vec::Vec};\n    use kona_genesis::{ChainDependency, DependencySet};\n    use kona_preimage::{HintWriterClient, errors::PreimageOracleError};\n    use kona_registry::HashMap;\n\n    #[derive(Default)]\n    struct MockOracle {\n        fetched: spin::Mutex<Vec<PreimageKey>>,\n        depset_payload: Vec<u8>,\n    }\n\n    #[async_trait::async_trait]\n    impl PreimageOracleClient for MockOracle {\n        async fn get(&self, key: PreimageKey) -> Result<Vec<u8>, PreimageOracleError> {\n            self.fetched.lock().push(key);\n            Ok(self.depset_payload.clone())\n        }\n        async fn get_exact(\n            &self,\n            _key: PreimageKey,\n            _buf: &mut [u8],\n        ) -> Result<(), PreimageOracleError> {\n            unimplemented!(\"not exercised by load_dependency_set tests\")\n        }\n    }\n\n    #[async_trait::async_trait]\n    impl HintWriterClient for MockOracle {\n        async fn write(&self, _hint: &str) -> Result<(), PreimageOracleError> {\n            unimplemented!(\"not exercised by load_dependency_set tests\")\n        }\n    }\n\n    fn make_depset(chain_ids: &[u64]) -> DependencySet {\n        let dependencies = chain_ids.iter().map(|id| (*id, ChainDependency {})).collect();\n        DependencySet { dependencies, override_message_expiry_window: None }\n    }\n\n    fn embed(depsets: Vec<DependencySet>) -> HashMap<u64, DependencySet> {\n        let mut by_chain = HashMap::default();\n        for ds in depsets {\n            for id in ds.dependencies.keys() {\n                by_chain.insert(*id, ds.clone());\n            }\n        }\n        by_chain\n    }\n\n    #[tokio::test]\n    async fn embedded_depset_covers_all_chains_does_not_call_oracle() {\n        let oracle = MockOracle::default();\n        let depset = make_depset(&[1u64, 2u64]);\n        let embedded = embed(vec![depset.clone()]);\n        let out = load_dependency_set(&oracle, &[1, 2], &embedded).await.unwrap();\n        assert_eq!(out, depset);\n        assert!(oracle.fetched.lock().is_empty());\n    }\n\n    #[tokio::test]\n    async fn no_embedded_depsets_falls_back_to_oracle() {\n        let oracle = MockOracle {\n            depset_payload: serde_json::to_vec(&make_depset(&[1u64])).unwrap(),\n            ..Default::default()\n        };\n        let out = load_dependency_set(&oracle, &[1], &HashMap::default()).await.unwrap();\n        assert_eq!(out.dependencies.len(), 1);\n        let fetched = oracle.fetched.lock().clone();\n        assert_eq!(fetched.len(), 1);\n        assert_eq!(fetched[0], PreimageKey::new_local(DEPENDENCY_SET_KEY.to()));\n    }\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "differs",
+      "coveredLines": 271,
+      "match": {
+        "origin": "own",
+        "collection": "optimism",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "name",
+        "auditedName": "boot.rs",
+        "similarity": 0.751,
+        "reportId": "optimism/cantina-kona-2026-03",
+        "repository": "op-rs/kona",
+        "path": "crates/proof/proof-interop/src/boot.rs",
+        "commit": "86910c9112437bbb849eca28961f813c5450e103",
+        "commitTimestamp": "2025-12-15T17:17:05Z",
+        "url": "https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/crates/proof/proof-interop/src/boot.rs",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). Interop proof crate (pre-state, consolidation, boot); Low findings 3.4.3, 3.4.4, 3.4.5, 3.4.7 and Informational 3.5.3, 3.5.4, 3.5.5 located here, all acknowledged as interop is not planned to be supported.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 106,
+        "removed": 3,
+        "ignoredAdded": 39,
+        "ignoredRemoved": 5,
+        "unchanged": 271,
+        "ignoredOnly": false,
+        "hunks": [
+          {
+            "oldStart": 6,
+            "oldLines": 12,
+            "newStart": 6,
+            "newLines": 13,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 6,
+                "newLine": 6,
+                "text": "use alloy_primitives::{B256, Bytes, U256};"
+              },
+              {
+                "type": " ",
+                "oldLine": 7,
+                "newLine": 7,
+                "text": "use alloy_rlp::Decodable;"
+              },
+              {
+                "type": " ",
+                "oldLine": 8,
+                "newLine": 8,
+                "text": "use kona_genesis::{L1ChainConfig, RollupConfig};"
+              },
+              {
+                "type": "+",
+                "newLine": 9,
+                "text": "use kona_interop::DependencySet;",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 9,
+                "newLine": 10,
+                "text": "use kona_preimage::{"
+              },
+              {
+                "type": " ",
+                "oldLine": 10,
+                "newLine": 11,
+                "text": "    CommsClient, HintWriterClient, PreimageKey, PreimageKeyType, PreimageOracleClient,"
+              },
+              {
+                "type": " ",
+                "oldLine": 11,
+                "newLine": 12,
+                "text": "    errors::PreimageOracleError,"
+              },
+              { "type": " ", "oldLine": 12, "newLine": 13, "text": "};" },
+              {
+                "type": " ",
+                "oldLine": 13,
+                "newLine": 14,
+                "text": "use kona_proof::errors::OracleProviderError;"
+              },
+              {
+                "type": "-",
+                "oldLine": 14,
+                "text": "use kona_registry::{HashMap, L1_CONFIGS, ROLLUP_CONFIGS};",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 15,
+                "text": "use kona_registry::{DEPENDENCY_SETS, HashMap, L1_CONFIGS, ROLLUP_CONFIGS};",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 15,
+                "newLine": 16,
+                "text": "use serde::{Deserialize, Serialize};"
+              },
+              {
+                "type": " ",
+                "oldLine": 16,
+                "newLine": 17,
+                "text": "use thiserror::Error;"
+              },
+              {
+                "type": " ",
+                "oldLine": 17,
+                "newLine": 18,
+                "text": "use tracing::warn;"
+              }
+            ]
+          },
+          {
+            "oldStart": 34,
+            "oldLines": 6,
+            "newStart": 35,
+            "newLines": 9,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 34,
+                "newLine": 35,
+                "text": "/// The local key ident for the l1 config."
+              },
+              {
+                "type": " ",
+                "oldLine": 35,
+                "newLine": 36,
+                "text": "pub const L1_CONFIG_KEY: U256 = U256::from_be_slice(&[7]);"
+              },
+              { "type": " ", "oldLine": 36, "newLine": 37, "text": "" },
+              {
+                "type": "+",
+                "newLine": 38,
+                "text": "/// The local key ident for the dependency set.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 39,
+                "text": "pub const DEPENDENCY_SET_KEY: U256 = U256::from_be_slice(&[8]);",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 40, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 37,
+                "newLine": 41,
+                "text": "/// The boot information for the interop client program."
+              },
+              {
+                "type": " ",
+                "oldLine": 38,
+                "newLine": 42,
+                "text": "#[derive(Debug, Clone, PartialEq, Eq, Serialize, Deserialize)]"
+              },
+              {
+                "type": " ",
+                "oldLine": 39,
+                "newLine": 43,
+                "text": "pub struct BootInfo {"
+              }
+            ]
+          },
+          {
+            "oldStart": 49,
+            "oldLines": 6,
+            "newStart": 53,
+            "newLines": 8,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 49,
+                "newLine": 53,
+                "text": "    pub claimed_l2_timestamp: u64,"
+              },
+              {
+                "type": " ",
+                "oldLine": 50,
+                "newLine": 54,
+                "text": "    /// The rollup config for the L2 chain."
+              },
+              {
+                "type": " ",
+                "oldLine": 51,
+                "newLine": 55,
+                "text": "    pub rollup_configs: HashMap<u64, RollupConfig>,"
+              },
+              {
+                "type": "+",
+                "newLine": 56,
+                "text": "    /// The dependency set configuration for the interop cluster.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 57,
+                "text": "    pub dependency_set: DependencySet,",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 52,
+                "newLine": 58,
+                "text": "    /// The L1 config for the L2 chain."
+              },
+              {
+                "type": " ",
+                "oldLine": 53,
+                "newLine": 59,
+                "text": "    pub l1_config: L1ChainConfig,"
+              },
+              { "type": " ", "oldLine": 54, "newLine": 60, "text": "}" }
+            ]
+          },
+          {
+            "oldStart": 103,
+            "oldLines": 14,
+            "newStart": 109,
+            "newLines": 27,
+            "lines": [
+              { "type": " ", "oldLine": 103, "newLine": 109, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 104,
+                "newLine": 110,
+                "text": "            if l2_post == INVALID_TRANSITION_HASH {"
+              },
+              {
+                "type": " ",
+                "oldLine": 105,
+                "newLine": 111,
+                "text": "                return Err(BootstrapError::InvalidToInvalid);"
+              },
+              {
+                "type": "-",
+                "oldLine": 106,
+                "text": "            } else {",
+                "ignored": false
+              },
+              {
+                "type": "-",
+                "oldLine": 107,
+                "text": "                return Err(BootstrapError::InvalidPostState(l2_post));",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 108,
+                "newLine": 112,
+                "text": "            }"
+              },
+              {
+                "type": "+",
+                "newLine": 113,
+                "text": "            return Err(BootstrapError::InvalidPostState(l2_post));",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 109,
+                "newLine": 114,
+                "text": "        }"
+              },
+              { "type": " ", "oldLine": 110, "newLine": 115, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 111,
+                "newLine": 116,
+                "text": "        let agreed_pre_state ="
+              },
+              {
+                "type": " ",
+                "oldLine": 112,
+                "newLine": 117,
+                "text": "            PreState::decode(&mut raw_pre_state.as_ref()).map_err(OracleProviderError::Rlp)?;"
+              },
+              { "type": " ", "oldLine": 113, "newLine": 118, "text": "" },
+              {
+                "type": "+",
+                "newLine": 119,
+                "text": "        // INVARIANT: the honest actor never agrees to a prestate whose timestamp exceeds",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 120,
+                "text": "        // the dispute-game-pinned `claimed_l2_timestamp`. The oracle only verifies",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 121,
+                "text": "        // `key == keccak256(preimage)`, not the timestamp inside; without this guard a",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 122,
+                "text": "        // malicious proposer could register a future-timestamped prestate and use it as",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 123,
+                "text": "        // both starting and disputed claim at trace-extended bisection positions, where",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 124,
+                "text": "        // `claim == prestate ⇒ Ok(())` would resolve as `vmStatus = VALID`. Op-program",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 125,
+                "text": "        // panics on this condition (see `op-program/client/interop/interop.go:87-97`).",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 126,
+                "text": "        assert!(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 127,
+                "text": "            agreed_pre_state.timestamp() <= l2_claim_block,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 128,
+                "text": "            \"agreed prestate timestamp {} is after the game timestamp {}\",",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 129,
+                "text": "            agreed_pre_state.timestamp(),",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 130,
+                "text": "            l2_claim_block",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 131,
+                "text": "        );",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 132, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 114,
+                "newLine": 133,
+                "text": "        let chain_ids: Vec<_> = match agreed_pre_state {"
+              },
+              {
+                "type": " ",
+                "oldLine": 115,
+                "newLine": 134,
+                "text": "            PreState::SuperRoot(ref super_root) => {"
+              },
+              {
+                "type": " ",
+                "oldLine": 116,
+                "newLine": 135,
+                "text": "                super_root.output_roots.iter().map(|r| r.chain_id).collect()"
+              }
+            ]
+          },
+          {
+            "oldStart": 128,
+            "oldLines": 10,
+            "newStart": 147,
+            "newLines": 12,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 128,
+                "newLine": 147,
+                "text": "        {"
+              },
+              {
+                "type": " ",
+                "oldLine": 129,
+                "newLine": 148,
+                "text": "            chain_ids.iter().map(|id| (*id, ROLLUP_CONFIGS[id].clone())).collect()"
+              },
+              {
+                "type": " ",
+                "oldLine": 130,
+                "newLine": 149,
+                "text": "        } else {"
+              },
+              {
+                "type": "+",
+                "newLine": 150,
+                "text": "            let missing_ids: Vec<u64> =",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 151,
+                "text": "                chain_ids.iter().copied().filter(|id| !ROLLUP_CONFIGS.contains_key(id)).collect();",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 131,
+                "newLine": 152,
+                "text": "            warn!("
+              },
+              {
+                "type": " ",
+                "oldLine": 132,
+                "newLine": 153,
+                "text": "                target: \"boot_loader\","
+              },
+              {
+                "type": " ",
+                "oldLine": 133,
+                "newLine": 154,
+                "text": "                \"No rollup config found for chain IDs {:?}, falling back to preimage oracle. This is insecure in production without additional validation!\","
+              },
+              {
+                "type": "-",
+                "oldLine": 134,
+                "text": "                chain_ids",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 155,
+                "text": "                missing_ids",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 135,
+                "newLine": 156,
+                "text": "            );"
+              },
+              {
+                "type": " ",
+                "oldLine": 136,
+                "newLine": 157,
+                "text": "            let ser_cfg = oracle"
+              },
+              {
+                "type": " ",
+                "oldLine": 137,
+                "newLine": 158,
+                "text": "                .get(PreimageKey::new_local(L2_ROLLUP_CONFIG_KEY.to()))"
+              }
+            ]
+          },
+          {
+            "oldStart": 140,
+            "oldLines": 6,
+            "newStart": 161,
+            "newLines": 8,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 140,
+                "newLine": 161,
+                "text": "            serde_json::from_slice(&ser_cfg).map_err(OracleProviderError::Serde)?"
+              },
+              {
+                "type": " ",
+                "oldLine": 141,
+                "newLine": 162,
+                "text": "        };"
+              },
+              { "type": " ", "oldLine": 142, "newLine": 163, "text": "" },
+              {
+                "type": "+",
+                "newLine": 164,
+                "text": "        let dependency_set = load_dependency_set(oracle, &chain_ids, &DEPENDENCY_SETS).await?;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 165, "text": "", "ignored": true },
+              {
+                "type": " ",
+                "oldLine": 143,
+                "newLine": 166,
+                "text": "        // Attempt to load the l1 config from the chain ID. If there is no config for the chain,"
+              },
+              {
+                "type": " ",
+                "oldLine": 144,
+                "newLine": 167,
+                "text": "        // fall back to loading the config from the preimage oracle."
+              },
+              { "type": " ", "oldLine": 145, "newLine": 168, "text": "" }
+            ]
+          },
+          {
+            "oldStart": 171,
+            "oldLines": 6,
+            "newStart": 194,
+            "newLines": 7,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 171,
+                "newLine": 194,
+                "text": "            l1_head,"
+              },
+              {
+                "type": " ",
+                "oldLine": 172,
+                "newLine": 195,
+                "text": "            l1_config,"
+              },
+              {
+                "type": " ",
+                "oldLine": 173,
+                "newLine": 196,
+                "text": "            rollup_configs,"
+              },
+              {
+                "type": "+",
+                "newLine": 197,
+                "text": "            dependency_set,",
+                "ignored": false
+              },
+              {
+                "type": " ",
+                "oldLine": 174,
+                "newLine": 198,
+                "text": "            agreed_pre_state_commitment: l2_pre,"
+              },
+              {
+                "type": " ",
+                "oldLine": 175,
+                "newLine": 199,
+                "text": "            agreed_pre_state,"
+              },
+              {
+                "type": " ",
+                "oldLine": 176,
+                "newLine": 200,
+                "text": "            claimed_post_state: l2_post,"
+              }
+            ]
+          },
+          {
+            "oldStart": 178,
+            "oldLines": 19,
+            "newStart": 202,
+            "newLines": 19,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 178,
+                "newLine": 202,
+                "text": "        })"
+              },
+              { "type": " ", "oldLine": 179, "newLine": 203, "text": "    }" },
+              { "type": " ", "oldLine": 180, "newLine": 204, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 181,
+                "text": "    /// Returns the [RollupConfig] corresponding to the [PreState::active_l2_chain_id].",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 205,
+                "text": "    /// Returns the [`RollupConfig`] corresponding to the [`PreState::active_l2_chain_id`].",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 182,
+                "newLine": 206,
+                "text": "    pub fn active_rollup_config(&self) -> Option<RollupConfig> {"
+              },
+              {
+                "type": " ",
+                "oldLine": 183,
+                "newLine": 207,
+                "text": "        let active_l2_chain_id = self.agreed_pre_state.active_l2_chain_id()?;"
+              },
+              {
+                "type": " ",
+                "oldLine": 184,
+                "newLine": 208,
+                "text": "        self.rollup_configs.get(&active_l2_chain_id).cloned()"
+              },
+              { "type": " ", "oldLine": 185, "newLine": 209, "text": "    }" },
+              { "type": " ", "oldLine": 186, "newLine": 210, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 187,
+                "text": "    /// Returns the [L1ChainConfig] corresponding to the [PreState::active_l2_chain_id] through the",
+                "ignored": true
+              },
+              {
+                "type": "-",
+                "oldLine": 188,
+                "text": "    /// l2 [RollupConfig].",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 211,
+                "text": "    /// Returns the [`L1ChainConfig`] corresponding to the [`PreState::active_l2_chain_id`] through",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 212,
+                "text": "    /// the l2 [`RollupConfig`].",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 189,
+                "newLine": 213,
+                "text": "    pub fn active_l1_config(&self) -> L1ChainConfig {"
+              },
+              {
+                "type": " ",
+                "oldLine": 190,
+                "newLine": 214,
+                "text": "        self.l1_config.clone()"
+              },
+              { "type": " ", "oldLine": 191, "newLine": 215, "text": "    }" },
+              { "type": " ", "oldLine": 192, "newLine": 216, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 193,
+                "text": "    /// Returns the [RollupConfig] corresponding to the given `chain_id`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 217,
+                "text": "    /// Returns the [`RollupConfig`] corresponding to the given `chain_id`.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 194,
+                "newLine": 218,
+                "text": "    pub fn rollup_config(&self, chain_id: u64) -> Option<RollupConfig> {"
+              },
+              {
+                "type": " ",
+                "oldLine": 195,
+                "newLine": 219,
+                "text": "        self.rollup_configs.get(&chain_id).cloned()"
+              },
+              { "type": " ", "oldLine": 196, "newLine": 220, "text": "    }" }
+            ]
+          },
+          {
+            "oldStart": 237,
+            "oldLines": 4,
+            "newStart": 261,
+            "newLines": 117,
+            "lines": [
+              { "type": " ", "oldLine": 237, "newLine": 261, "text": "    }" },
+              { "type": " ", "oldLine": 238, "newLine": 262, "text": "" },
+              {
+                "type": " ",
+                "oldLine": 239,
+                "newLine": 263,
+                "text": "    Ok(Bytes::from(pre))"
+              },
+              { "type": "+", "newLine": 264, "text": "}", "ignored": false },
+              { "type": "+", "newLine": 265, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 266,
+                "text": "/// Loads the dependency set for the proof.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 267, "text": "///", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 268,
+                "text": "/// Looks up the first chain id from the proof's `agreed_pre_state` in the",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 269,
+                "text": "/// registry-embedded `DEPENDENCY_SETS` map. The build pipeline guarantees that every",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 270,
+                "text": "/// chain id in any embedded cluster is keyed under that cluster's [`DependencySet`], so",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 271,
+                "text": "/// a single lookup suffices — if the first chain id is in any embedded cluster, this",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 272,
+                "text": "/// returns it. If no embedded entry exists, falls back to the preimage oracle, which",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 273,
+                "text": "/// keeps host-synthesized depsets working for dev/test flows.",
+                "ignored": true
+              },
+              { "type": "+", "newLine": 274, "text": "///", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 275,
+                "text": "/// Cross-cluster and partial-coverage proofs (chain ids spanning multiple embedded",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 276,
+                "text": "/// clusters or mixing embedded/non-embedded chains) are not detected here. They fail",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 277,
+                "text": "/// downstream during interop message validation when a message's source chain isn't in",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 278,
+                "text": "/// the chosen depset's `dependencies`.",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 279,
+                "text": "async fn load_dependency_set<O>(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 280,
+                "text": "    oracle: &O,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 281,
+                "text": "    chain_ids: &[u64],",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 282,
+                "text": "    embedded: &HashMap<u64, DependencySet>,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 283,
+                "text": ") -> Result<DependencySet, BootstrapError>",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 284,
+                "text": "where",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 285,
+                "text": "    O: PreimageOracleClient + Send,",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 286, "text": "{", "ignored": false },
+              {
+                "type": "+",
+                "newLine": 287,
+                "text": "    if let Some(ds) = chain_ids.first().and_then(|id| embedded.get(id)) {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 288,
+                "text": "        return Ok(ds.clone());",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 289,
+                "text": "    }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 290,
+                "text": "    warn!(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 291,
+                "text": "        target: \"boot_loader\",",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 292,
+                "text": "        \"No embedded dependency set found for proof chain ids {:?}, falling back to preimage oracle. This is insecure in production without additional validation!\",",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 293,
+                "text": "        chain_ids",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 294,
+                "text": "    );",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 295,
+                "text": "    let ser_cfg = oracle",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 296,
+                "text": "        .get(PreimageKey::new_local(DEPENDENCY_SET_KEY.to()))",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 297,
+                "text": "        .await",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 298,
+                "text": "        .map_err(OracleProviderError::Preimage)?;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 299,
+                "text": "    let ds: DependencySet = serde_json::from_slice(&ser_cfg).map_err(OracleProviderError::Serde)?;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 300,
+                "text": "    Ok(ds)",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 301, "text": "}", "ignored": false },
+              { "type": "+", "newLine": 302, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 303,
+                "text": "#[cfg(test)]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 304,
+                "text": "#[allow(clippy::zero_sized_map_values)]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 305,
+                "text": "mod tests {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 306,
+                "text": "    use super::*;",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 307,
+                "text": "    use alloc::{boxed::Box, vec, vec::Vec};",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 308,
+                "text": "    use kona_genesis::{ChainDependency, DependencySet};",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 309,
+                "text": "    use kona_preimage::{HintWriterClient, errors::PreimageOracleError};",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 310,
+                "text": "    use kona_registry::HashMap;",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 311, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 312,
+                "text": "    #[derive(Default)]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 313,
+                "text": "    struct MockOracle {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 314,
+                "text": "        fetched: spin::Mutex<Vec<PreimageKey>>,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 315,
+                "text": "        depset_payload: Vec<u8>,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 316,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 317, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 318,
+                "text": "    #[async_trait::async_trait]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 319,
+                "text": "    impl PreimageOracleClient for MockOracle {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 320,
+                "text": "        async fn get(&self, key: PreimageKey) -> Result<Vec<u8>, PreimageOracleError> {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 321,
+                "text": "            self.fetched.lock().push(key);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 322,
+                "text": "            Ok(self.depset_payload.clone())",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 323,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 324,
+                "text": "        async fn get_exact(",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 325,
+                "text": "            &self,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 326,
+                "text": "            _key: PreimageKey,",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 327,
+                "text": "            _buf: &mut [u8],",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 328,
+                "text": "        ) -> Result<(), PreimageOracleError> {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 329,
+                "text": "            unimplemented!(\"not exercised by load_dependency_set tests\")",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 330,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 331,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 332, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 333,
+                "text": "    #[async_trait::async_trait]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 334,
+                "text": "    impl HintWriterClient for MockOracle {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 335,
+                "text": "        async fn write(&self, _hint: &str) -> Result<(), PreimageOracleError> {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 336,
+                "text": "            unimplemented!(\"not exercised by load_dependency_set tests\")",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 337,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 338,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 339, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 340,
+                "text": "    fn make_depset(chain_ids: &[u64]) -> DependencySet {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 341,
+                "text": "        let dependencies = chain_ids.iter().map(|id| (*id, ChainDependency {})).collect();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 342,
+                "text": "        DependencySet { dependencies, override_message_expiry_window: None }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 343,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 344, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 345,
+                "text": "    fn embed(depsets: Vec<DependencySet>) -> HashMap<u64, DependencySet> {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 346,
+                "text": "        let mut by_chain = HashMap::default();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 347,
+                "text": "        for ds in depsets {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 348,
+                "text": "            for id in ds.dependencies.keys() {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 349,
+                "text": "                by_chain.insert(*id, ds.clone());",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 350,
+                "text": "            }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 351,
+                "text": "        }",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 352,
+                "text": "        by_chain",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 353,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 354, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 355,
+                "text": "    #[tokio::test]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 356,
+                "text": "    async fn embedded_depset_covers_all_chains_does_not_call_oracle() {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 357,
+                "text": "        let oracle = MockOracle::default();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 358,
+                "text": "        let depset = make_depset(&[1u64, 2u64]);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 359,
+                "text": "        let embedded = embed(vec![depset.clone()]);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 360,
+                "text": "        let out = load_dependency_set(&oracle, &[1, 2], &embedded).await.unwrap();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 361,
+                "text": "        assert_eq!(out, depset);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 362,
+                "text": "        assert!(oracle.fetched.lock().is_empty());",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 363,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": "+", "newLine": 364, "text": "", "ignored": true },
+              {
+                "type": "+",
+                "newLine": 365,
+                "text": "    #[tokio::test]",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 366,
+                "text": "    async fn no_embedded_depsets_falls_back_to_oracle() {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 367,
+                "text": "        let oracle = MockOracle {",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 368,
+                "text": "            depset_payload: serde_json::to_vec(&make_depset(&[1u64])).unwrap(),",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 369,
+                "text": "            ..Default::default()",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 370,
+                "text": "        };",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 371,
+                "text": "        let out = load_dependency_set(&oracle, &[1], &HashMap::default()).await.unwrap();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 372,
+                "text": "        assert_eq!(out.dependencies.len(), 1);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 373,
+                "text": "        let fetched = oracle.fetched.lock().clone();",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 374,
+                "text": "        assert_eq!(fetched.len(), 1);",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 375,
+                "text": "        assert_eq!(fetched[0], PreimageKey::new_local(DEPENDENCY_SET_KEY.to()));",
+                "ignored": false
+              },
+              {
+                "type": "+",
+                "newLine": 376,
+                "text": "    }",
+                "ignored": false
+              },
+              { "type": " ", "oldLine": 240, "newLine": 377, "text": "}" }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}

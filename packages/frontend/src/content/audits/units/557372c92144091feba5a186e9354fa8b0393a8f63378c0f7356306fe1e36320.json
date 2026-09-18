@@ -1,1 +1,15 @@
-{"schemaVersion":2,"unitHash":"557372c92144091feba5a186e9354fa8b0393a8f63378c0f7356306fe1e36320","name":"offline.rs","kind":"program","lines":50,"source":"//! Contains the implementations of the [`HintRouter`] and [`PreimageFetcher`] traits.\n\nuse crate::kv::KeyValueStore;\nuse async_trait::async_trait;\nuse kona_preimage::{\n    HintRouter, PreimageFetcher, PreimageKey,\n    errors::{PreimageOracleError, PreimageOracleResult},\n};\nuse std::sync::Arc;\nuse tokio::sync::RwLock;\n\n/// A [`KeyValueStore`]-backed implementation of the [`PreimageFetcher`] trait.\n#[derive(Debug)]\npub struct OfflineHostBackend<KV>\nwhere\n    KV: KeyValueStore + ?Sized,\n{\n    inner: Arc<RwLock<KV>>,\n}\n\nimpl<KV> OfflineHostBackend<KV>\nwhere\n    KV: KeyValueStore + ?Sized,\n{\n    /// Create a new [`OfflineHostBackend`] from the given [`KeyValueStore`].\n    pub const fn new(kv_store: Arc<RwLock<KV>>) -> Self {\n        Self { inner: kv_store }\n    }\n}\n\n#[async_trait]\nimpl<KV> PreimageFetcher for OfflineHostBackend<KV>\nwhere\n    KV: KeyValueStore + Send + Sync + ?Sized,\n{\n    async fn get_preimage(&self, key: PreimageKey) -> PreimageOracleResult<Vec<u8>> {\n        let kv_store = self.inner.read().await;\n        kv_store.get(key.into()).ok_or(PreimageOracleError::KeyNotFound)\n    }\n}\n\n#[async_trait]\nimpl<KV> HintRouter for OfflineHostBackend<KV>\nwhere\n    KV: KeyValueStore + Send + Sync + ?Sized,\n{\n    async fn route_hint(&self, _hint: String) -> PreimageOracleResult<()> {\n        Ok(())\n    }\n}","resolutions":{"9fa846564f4071bd":{"status":"unaudited","coveredLines":0,"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "557372c92144091feba5a186e9354fa8b0393a8f63378c0f7356306fe1e36320",
+  "name": "offline.rs",
+  "kind": "program",
+  "lines": 50,
+  "source": "//! Contains the implementations of the [`HintRouter`] and [`PreimageFetcher`] traits.\n\nuse crate::kv::KeyValueStore;\nuse async_trait::async_trait;\nuse kona_preimage::{\n    HintRouter, PreimageFetcher, PreimageKey,\n    errors::{PreimageOracleError, PreimageOracleResult},\n};\nuse std::sync::Arc;\nuse tokio::sync::RwLock;\n\n/// A [`KeyValueStore`]-backed implementation of the [`PreimageFetcher`] trait.\n#[derive(Debug)]\npub struct OfflineHostBackend<KV>\nwhere\n    KV: KeyValueStore + ?Sized,\n{\n    inner: Arc<RwLock<KV>>,\n}\n\nimpl<KV> OfflineHostBackend<KV>\nwhere\n    KV: KeyValueStore + ?Sized,\n{\n    /// Create a new [`OfflineHostBackend`] from the given [`KeyValueStore`].\n    pub const fn new(kv_store: Arc<RwLock<KV>>) -> Self {\n        Self { inner: kv_store }\n    }\n}\n\n#[async_trait]\nimpl<KV> PreimageFetcher for OfflineHostBackend<KV>\nwhere\n    KV: KeyValueStore + Send + Sync + ?Sized,\n{\n    async fn get_preimage(&self, key: PreimageKey) -> PreimageOracleResult<Vec<u8>> {\n        let kv_store = self.inner.read().await;\n        kv_store.get(key.into()).ok_or(PreimageOracleError::KeyNotFound)\n    }\n}\n\n#[async_trait]\nimpl<KV> HintRouter for OfflineHostBackend<KV>\nwhere\n    KV: KeyValueStore + Send + Sync + ?Sized,\n{\n    async fn route_hint(&self, _hint: String) -> PreimageOracleResult<()> {\n        Ok(())\n    }\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "unaudited",
+      "coveredLines": 0,
+      "warnings": []
+    }
+  }
+}

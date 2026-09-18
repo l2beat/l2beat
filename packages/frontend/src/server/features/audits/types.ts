@@ -1,3 +1,5 @@
+import type { PercentageChangePeriod } from '~/utils/calculatePercentageChange'
+
 // View models served to the audits pages. They are derived from the engine's
 // data contract (`@l2beat/audit-diff`) on the server so that page components
 // never depend on the engine directly.
@@ -43,6 +45,8 @@ export interface AuditsSummaryEntry {
   /** Reports from every other collection (upstream, stack, libraries, ...). */
   sharedReportsCount: number
   discoveryTimestamp: number
+  /** Total value secured, absent for projects without TVS tracking. */
+  tvs?: { latest: number; change: number; changePeriod: PercentageChangePeriod }
 }
 
 export interface AuditsReportEntry {

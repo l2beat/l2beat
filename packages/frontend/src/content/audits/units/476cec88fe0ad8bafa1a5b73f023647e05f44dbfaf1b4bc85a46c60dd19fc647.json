@@ -1,1 +1,196 @@
-{"schemaVersion":2,"unitHash":"476cec88fe0ad8bafa1a5b73f023647e05f44dbfaf1b4bc85a46c60dd19fc647","name":"errors.rs","kind":"program","lines":41,"source":"//! Errors for the `kona-derive` crate.\n\nuse alloc::string::String;\nuse thiserror::Error;\n\n/// A [Result] type alias where the error is [`TrieNodeError`].\npub type TrieNodeResult<T> = Result<T, TrieNodeError>;\n\n/// An error type for [`TrieNode`](crate::TrieNode) operations.\n#[derive(Error, Debug, PartialEq, Eq)]\npub enum TrieNodeError {\n    /// Invalid trie node type encountered.\n    #[error(\"Invalid trie node type encountered\")]\n    InvalidNodeType,\n    /// The path was too short to index.\n    #[error(\"Path too short\")]\n    PathTooShort,\n    /// Failed to decode trie node.\n    #[error(\"Failed to decode trie node: {0}\")]\n    RLPError(alloy_rlp::Error),\n    /// Key does not exist in trie.\n    #[error(\"Key does not exist in trie.\")]\n    KeyNotFound,\n    /// Trie node is not a leaf node.\n    #[error(\"Trie provider error: {0}\")]\n    Provider(String),\n}\n\n/// A [Result] type alias where the error is [`OrderedListWalkerError`].\npub type OrderedListWalkerResult<T> = Result<T, OrderedListWalkerError>;\n\n/// An error type for [`OrderedListWalker`](crate::OrderedListWalker) operations.\n#[derive(Error, Debug, PartialEq, Eq)]\npub enum OrderedListWalkerError {\n    /// Iterator has already been hydrated, and cannot be re-hydrated until it is exhausted.\n    #[error(\"Iterator has already been hydrated, and cannot be re-hydrated until it is exhausted\")]\n    AlreadyHydrated,\n    /// Trie node error.\n    #[error(\"{0}\")]\n    TrieNode(#[from] TrieNodeError),\n}","resolutions":{"9fa846564f4071bd":{"status":"identical","coveredLines":41,"match":{"origin":"own","collection":"optimism","relation":{"type":"own"},"rank":0,"matchedBy":"identity","auditedName":"errors.rs","similarity":1,"reportId":"optimism/cantina-kona-2026-03","repository":"op-rs/kona","path":"crates/proof/mpt/src/errors.rs","commit":"86910c9112437bbb849eca28961f813c5450e103","commitTimestamp":"2025-12-15T17:17:05Z","url":"https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/crates/proof/mpt/src/errors.rs","auditStatus":"audited_with_no_major_findings","reviewPhase":"initial audit","coverage":"Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). Merkle Patricia trie crate; Informational finding 3.5.2 (node.rs) located here.","majorFindings":0,"isLatestVersion":true,"laterAuditedVersionExists":false,"totalVersions":1},"diff":{"added":0,"removed":0,"ignoredAdded":4,"ignoredRemoved":8,"unchanged":41,"ignoredOnly":true,"hunks":[{"oldStart":3,"oldLines":12,"newStart":3,"newLines":10,"lines":[{"type":" ","oldLine":3,"newLine":3,"text":"use alloc::string::String;"},{"type":" ","oldLine":4,"newLine":4,"text":"use thiserror::Error;"},{"type":" ","oldLine":5,"newLine":5,"text":""},{"type":"-","oldLine":6,"text":"/// A [Result] type alias where the error is [TrieNodeError].","ignored":true},{"type":"+","newLine":6,"text":"/// A [Result] type alias where the error is [`TrieNodeError`].","ignored":true},{"type":" ","oldLine":7,"newLine":7,"text":"pub type TrieNodeResult<T> = Result<T, TrieNodeError>;"},{"type":" ","oldLine":8,"newLine":8,"text":""},{"type":"-","oldLine":9,"text":"/// An error type for [TrieNode] operations.","ignored":true},{"type":"-","oldLine":10,"text":"///","ignored":true},{"type":"-","oldLine":11,"text":"/// [TrieNode]: crate::TrieNode","ignored":true},{"type":"+","newLine":9,"text":"/// An error type for [`TrieNode`](crate::TrieNode) operations.","ignored":true},{"type":" ","oldLine":12,"newLine":10,"text":"#[derive(Error, Debug, PartialEq, Eq)]"},{"type":" ","oldLine":13,"newLine":11,"text":"pub enum TrieNodeError {"},{"type":" ","oldLine":14,"newLine":12,"text":"    /// Invalid trie node type encountered."}]},{"oldStart":28,"oldLines":12,"newStart":26,"newLines":10,"lines":[{"type":" ","oldLine":28,"newLine":26,"text":"    Provider(String),"},{"type":" ","oldLine":29,"newLine":27,"text":"}"},{"type":" ","oldLine":30,"newLine":28,"text":""},{"type":"-","oldLine":31,"text":"/// A [Result] type alias where the error is [OrderedListWalkerError].","ignored":true},{"type":"+","newLine":29,"text":"/// A [Result] type alias where the error is [`OrderedListWalkerError`].","ignored":true},{"type":" ","oldLine":32,"newLine":30,"text":"pub type OrderedListWalkerResult<T> = Result<T, OrderedListWalkerError>;"},{"type":" ","oldLine":33,"newLine":31,"text":""},{"type":"-","oldLine":34,"text":"/// An error type for [OrderedListWalker] operations.","ignored":true},{"type":"-","oldLine":35,"text":"///","ignored":true},{"type":"-","oldLine":36,"text":"/// [OrderedListWalker]: crate::OrderedListWalker","ignored":true},{"type":"+","newLine":32,"text":"/// An error type for [`OrderedListWalker`](crate::OrderedListWalker) operations.","ignored":true},{"type":" ","oldLine":37,"newLine":33,"text":"#[derive(Error, Debug, PartialEq, Eq)]"},{"type":" ","oldLine":38,"newLine":34,"text":"pub enum OrderedListWalkerError {"},{"type":" ","oldLine":39,"newLine":35,"text":"    /// Iterator has already been hydrated, and cannot be re-hydrated until it is exhausted."}]}]},"warnings":[]}}}
+{
+  "schemaVersion": 2,
+  "unitHash": "476cec88fe0ad8bafa1a5b73f023647e05f44dbfaf1b4bc85a46c60dd19fc647",
+  "name": "errors.rs",
+  "kind": "program",
+  "lines": 41,
+  "source": "//! Errors for the `kona-derive` crate.\n\nuse alloc::string::String;\nuse thiserror::Error;\n\n/// A [Result] type alias where the error is [`TrieNodeError`].\npub type TrieNodeResult<T> = Result<T, TrieNodeError>;\n\n/// An error type for [`TrieNode`](crate::TrieNode) operations.\n#[derive(Error, Debug, PartialEq, Eq)]\npub enum TrieNodeError {\n    /// Invalid trie node type encountered.\n    #[error(\"Invalid trie node type encountered\")]\n    InvalidNodeType,\n    /// The path was too short to index.\n    #[error(\"Path too short\")]\n    PathTooShort,\n    /// Failed to decode trie node.\n    #[error(\"Failed to decode trie node: {0}\")]\n    RLPError(alloy_rlp::Error),\n    /// Key does not exist in trie.\n    #[error(\"Key does not exist in trie.\")]\n    KeyNotFound,\n    /// Trie node is not a leaf node.\n    #[error(\"Trie provider error: {0}\")]\n    Provider(String),\n}\n\n/// A [Result] type alias where the error is [`OrderedListWalkerError`].\npub type OrderedListWalkerResult<T> = Result<T, OrderedListWalkerError>;\n\n/// An error type for [`OrderedListWalker`](crate::OrderedListWalker) operations.\n#[derive(Error, Debug, PartialEq, Eq)]\npub enum OrderedListWalkerError {\n    /// Iterator has already been hydrated, and cannot be re-hydrated until it is exhausted.\n    #[error(\"Iterator has already been hydrated, and cannot be re-hydrated until it is exhausted\")]\n    AlreadyHydrated,\n    /// Trie node error.\n    #[error(\"{0}\")]\n    TrieNode(#[from] TrieNodeError),\n}",
+  "resolutions": {
+    "9fa846564f4071bd": {
+      "status": "identical",
+      "coveredLines": 41,
+      "match": {
+        "origin": "own",
+        "collection": "optimism",
+        "relation": { "type": "own" },
+        "rank": 0,
+        "matchedBy": "identity",
+        "auditedName": "errors.rs",
+        "similarity": 1,
+        "reportId": "optimism/cantina-kona-2026-03",
+        "repository": "op-rs/kona",
+        "path": "crates/proof/mpt/src/errors.rs",
+        "commit": "86910c9112437bbb849eca28961f813c5450e103",
+        "commitTimestamp": "2025-12-15T17:17:05Z",
+        "url": "https://github.com/op-rs/kona/blob/86910c9112437bbb849eca28961f813c5450e103/crates/proof/mpt/src/errors.rs",
+        "auditStatus": "audited_with_no_major_findings",
+        "reviewPhase": "initial audit",
+        "coverage": "Directory listed in full in the report's scope tree (all files beneath it) for the Cantina review of kona at 86910c91 (Jan 19 - Feb 9, 2026). Merkle Patricia trie crate; Informational finding 3.5.2 (node.rs) located here.",
+        "majorFindings": 0,
+        "isLatestVersion": true,
+        "laterAuditedVersionExists": false,
+        "totalVersions": 1
+      },
+      "diff": {
+        "added": 0,
+        "removed": 0,
+        "ignoredAdded": 4,
+        "ignoredRemoved": 8,
+        "unchanged": 41,
+        "ignoredOnly": true,
+        "hunks": [
+          {
+            "oldStart": 3,
+            "oldLines": 12,
+            "newStart": 3,
+            "newLines": 10,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 3,
+                "newLine": 3,
+                "text": "use alloc::string::String;"
+              },
+              {
+                "type": " ",
+                "oldLine": 4,
+                "newLine": 4,
+                "text": "use thiserror::Error;"
+              },
+              { "type": " ", "oldLine": 5, "newLine": 5, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 6,
+                "text": "/// A [Result] type alias where the error is [TrieNodeError].",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 6,
+                "text": "/// A [Result] type alias where the error is [`TrieNodeError`].",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 7,
+                "newLine": 7,
+                "text": "pub type TrieNodeResult<T> = Result<T, TrieNodeError>;"
+              },
+              { "type": " ", "oldLine": 8, "newLine": 8, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 9,
+                "text": "/// An error type for [TrieNode] operations.",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 10, "text": "///", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 11,
+                "text": "/// [TrieNode]: crate::TrieNode",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 9,
+                "text": "/// An error type for [`TrieNode`](crate::TrieNode) operations.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 12,
+                "newLine": 10,
+                "text": "#[derive(Error, Debug, PartialEq, Eq)]"
+              },
+              {
+                "type": " ",
+                "oldLine": 13,
+                "newLine": 11,
+                "text": "pub enum TrieNodeError {"
+              },
+              {
+                "type": " ",
+                "oldLine": 14,
+                "newLine": 12,
+                "text": "    /// Invalid trie node type encountered."
+              }
+            ]
+          },
+          {
+            "oldStart": 28,
+            "oldLines": 12,
+            "newStart": 26,
+            "newLines": 10,
+            "lines": [
+              {
+                "type": " ",
+                "oldLine": 28,
+                "newLine": 26,
+                "text": "    Provider(String),"
+              },
+              { "type": " ", "oldLine": 29, "newLine": 27, "text": "}" },
+              { "type": " ", "oldLine": 30, "newLine": 28, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 31,
+                "text": "/// A [Result] type alias where the error is [OrderedListWalkerError].",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 29,
+                "text": "/// A [Result] type alias where the error is [`OrderedListWalkerError`].",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 32,
+                "newLine": 30,
+                "text": "pub type OrderedListWalkerResult<T> = Result<T, OrderedListWalkerError>;"
+              },
+              { "type": " ", "oldLine": 33, "newLine": 31, "text": "" },
+              {
+                "type": "-",
+                "oldLine": 34,
+                "text": "/// An error type for [OrderedListWalker] operations.",
+                "ignored": true
+              },
+              { "type": "-", "oldLine": 35, "text": "///", "ignored": true },
+              {
+                "type": "-",
+                "oldLine": 36,
+                "text": "/// [OrderedListWalker]: crate::OrderedListWalker",
+                "ignored": true
+              },
+              {
+                "type": "+",
+                "newLine": 32,
+                "text": "/// An error type for [`OrderedListWalker`](crate::OrderedListWalker) operations.",
+                "ignored": true
+              },
+              {
+                "type": " ",
+                "oldLine": 37,
+                "newLine": 33,
+                "text": "#[derive(Error, Debug, PartialEq, Eq)]"
+              },
+              {
+                "type": " ",
+                "oldLine": 38,
+                "newLine": 34,
+                "text": "pub enum OrderedListWalkerError {"
+              },
+              {
+                "type": " ",
+                "oldLine": 39,
+                "newLine": 35,
+                "text": "    /// Iterator has already been hydrated, and cannot be re-hydrated until it is exhausted."
+              }
+            ]
+          }
+        ]
+      },
+      "warnings": []
+    }
+  }
+}
