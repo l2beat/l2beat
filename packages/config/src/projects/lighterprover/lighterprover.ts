@@ -139,7 +139,7 @@ export const lighterprover: BaseProject = {
           {
             address: ChainSpecificAddress.fromLong(
               'robinhood',
-              '0x61CA82e45F5a57d00E66b522Be72D8bA41e634Aa',
+              '0xCBF92533F5816c6Ee0e4250F4E138b3f49962EF2',
             ),
           },
         ],
