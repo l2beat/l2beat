@@ -55,6 +55,7 @@ export const zcashNearIntents: BaseProject = {
       other: [
         'https://docs.near-intents.org/security-compliance/terms-of-service',
         'https://docs.near-intents.org/security-compliance/risk-and-compliance',
+        'https://mpc-operators.nearone.org/',
       ],
     },
     badges: [],
@@ -74,7 +75,7 @@ export const zcashNearIntents: BaseProject = {
       sentiment: 'bad',
       orderHint: 0,
       description:
-        'The Verifier can be upgraded at once by 4/5 NEAR Intents DAO members, the Zcash bridge by 2/5 Rainbow Bridge DAO members with no verified delay, and the Ethereum-side funds sit in an operator-controlled EOA, so there is no window to leave before a change takes effect.',
+        'The Verifier can be upgraded at once by 4/5 NEAR Intents DAO members, the Zcash bridge by 3/5 Rainbow Bridge DAO members with no verified delay, and the Ethereum-side funds sit in an operator-controlled EOA, so there is no window to leave before a change takes effect.',
       walkawayTest: {
         passed: false,
         reason:
