@@ -1,6 +1,7 @@
 import type { InMemoryCache } from '@l2beat/shared-pure'
 import { getAppLayoutProps } from '~/common/getAppLayoutProps'
 import { getDefiSummaryEntries } from '~/server/features/defi/getDefiSummaryEntries'
+import { getDefiLiquidStakingCharts } from '~/server/features/defi/liquidStakingCharts/getDefiLiquidStakingCharts'
 import { ps } from '~/server/projects'
 import { getMetadata } from '~/ssr/head/getMetadata'
 import type { RenderData } from '~/ssr/types'
@@ -11,7 +12,7 @@ export async function getDefiSummaryData(
   url: string,
   cache: InMemoryCache,
 ): Promise<RenderData> {
-  const { appLayoutProps, entries } = await cache.get(
+  const { appLayoutProps, entries, liquidStakingCharts } = await cache.get(
     {
       key: ['defi', 'summary', 'data'],
       ttl: 5 * 60,
@@ -37,6 +38,7 @@ export async function getDefiSummaryData(
       props: {
         ...appLayoutProps,
         entries,
+        liquidStakingCharts,
       },
     },
   }
@@ -54,5 +56,9 @@ async function getCachedData() {
       .then(getDefiSummaryEntries),
   ])
 
-  return { appLayoutProps, entries }
+  return {
+    appLayoutProps,
+    entries,
+    liquidStakingCharts: getDefiLiquidStakingCharts(entries),
+  }
 }
