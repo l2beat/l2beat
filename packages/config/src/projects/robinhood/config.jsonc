@@ -22,9 +22,35 @@
     "eth:0x1232813BDd40aa9d53066A880dE78a4Be70B90FD": "ProxyAdmin",
     "robinhood:0x2A153c6A1B66DBc930a8d7017230ab0253005C09": "L2UpgradeExecutor",
     "robinhood:0x0000000000000000000000000000000000000074": "ArbFilteredTransactionsManager",
-    "robinhood:0xebDc18A1F5C42fC25552eA233fAcf4054DF224b7": "TransactionFilterer"
+    "robinhood:0xebDc18A1F5C42fC25552eA233fAcf4054DF224b7": "TransactionFilterer",
+    "robinhood:0x59f83b75bD225b9c9981B04982639625c88dFb1E": "GasPricingManagerMultisig"
   },
   "overrides": {
+    "robinhood:0x5Eb36FD3A11f3A123c046E3BF84195BB4f5A2690": {
+      "description": "Second ArbOS chain owner, added on 2026-09-11. The contract is immutable and exposes two functions: setGasPricingConstraints(), callable only by MANAGER_ROLE, forwards up to 10 (gas target, adjustment window, starting backlog) constraints to ArbOwner with gas targets limited to 7M-100M gas/s, adjustment windows to 5 s-24 h and the summed starting-backlog exponent to 8, i.e. a base fee of at most ~60 gwei at the chain's 0.02 gwei floor; revoke(), callable by anyone from 2027-01-01 00:00 UTC, removes the contract from the chain owners. Removal is not automatic: until revoke() is called, or the L2UpgradeExecutor removes it via ArbOwner, it stays a chain owner. At the ArbOS level it holds full chain-owner authority; the restriction to gas-pricing constraints exists only in this contract's code. DEFAULT_ADMIN_ROLE, which assigns MANAGER_ROLE, is held by the L2UpgradeExecutor.",
+      "fields": {
+        "managers": {
+          "severity": "HIGH",
+          "type": "PERMISSION",
+          "handler": {
+            "type": "accessControl",
+            "roleNames": {
+              "0x241ecf16d79d0f8dbfb92cbc07fe17840425976cf0667f022fe9877caa831b08": "MANAGER_ROLE"
+            },
+            "pickRoleMembers": "MANAGER_ROLE"
+          },
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "set the ArbOS multi-constraint gas pricing parameters within the bounds hardcoded in the ResourceConstraintManager (gas targets 7M-100M gas/s, adjustment windows 5 s-24 h, base fee at most ~60 gwei), without delay."
+            }
+          ]
+        }
+      }
+    },
+    "robinhood:0x59f83b75bD225b9c9981B04982639625c88dFb1E": {
+      "description": "Holds MANAGER_ROLE on the ResourceConstraintManager and can set the chain's gas-pricing constraints within that contract's bounds. One signer also sits on the 7/8 and 6/8 Robinhood multisigs that control the L2UpgradeExecutor; the other signer is not seen in any other tracked contract."
+    },
     "robinhood:0x0000000000000000000000000000000000000074": {
       "description": "ArbOS 61 transaction-filtering precompile. An authorized filterer registers tx hashes here; the state transition function then forcibly fails those transactions, including force-included ones, without delay.",
       // Precompiles have no verifiable on-chain bytecode (a 0xfe stub); their
@@ -91,7 +117,7 @@
           "permissions": [
             {
               "type": "interact",
-              "description": "Can add or remove transaction filterers and change ArbOS configuration on the L2, without delay."
+              "description": "Chain-owner authority (instant for direct owners): can add or remove chain owners and transaction filterers, schedule ArbOS upgrades and change ArbOS configuration on the L2. The ResourceConstraintManager can only exercise it through its own code, which is limited to gas-pricing constraints."
             }
           ]
         }
