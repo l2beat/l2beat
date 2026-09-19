@@ -10,6 +10,7 @@ import { RedoButton } from './RedoButton'
 import { Settings } from './Settings'
 import { ShowButton } from './ShowButton'
 import { StackLayoutButton } from './StackLayoutButton'
+import { ToolControls } from './ToolControls'
 import { UndoButton } from './UndoButton'
 import { ValuesButton } from './ValuesButton'
 
@@ -18,6 +19,7 @@ export function Controls() {
     <div className="absolute inset-x-2 bottom-4 z-10 flex justify-center">
       <div className="flex max-w-full flex-wrap justify-center gap-2 pb-1">
         <AlignControls />
+        <ToolControls />
         <ControlGroup>
           <UndoButton />
           <RedoButton />
