@@ -13,13 +13,200 @@
     "zircuit:0x4200000000000000000000000000000000000015": "L1Block"
   },
   "overrides": {
+    // OPContractsManagerV2 (upgrade tooling). Ignored so discovery doesn't
+    // follow it into bare implementations.
+    "eth:0xbfb9219d933ec96Ac99C4f3D7231eFE43757811F": {
+      "ignoreDiscovery": true
+    },
+    "zircuit:0x4200000000000000000000000000000000000015": {
+      // Sourcify (the only explorer for this chain) serves a stale
+      // L2ToL1MessagePasser match for the Jovian L1Block implementation. The path
+      // below is a manual label, not an integrity check: the deployed code was
+      // checked by hand against the L1Block code hash in the Jovian spec
+      // (https://specs.optimism.io/protocol/jovian/derivation.html). It carries no
+      // ABI, so the getters are declared here. Drop once the implementation changes.
+      "preferManualSourcePaths": true,
+      "manualSourcePaths": {
+        "zircuit:0x3Ba4007f5C922FBb33C454B41ea7a1f11E83df2C": "https://github.com/ethereum-optimism/optimism/blob/773798a67678ab28c3ef7ee3405f25c04616af19/packages/contracts-bedrock/src/L2/L1Block.sol"
+      },
+      "description": "Simple contract that returns information about the latest L1 block, which is derived permissionlessly from the L1 chain.",
+      "ignoreInWatchMode": [
+        "basefee",
+        "hash",
+        "number",
+        "timestamp",
+        "sequenceNumber",
+        "blobBaseFee",
+        "operatorFeeConstant",
+        "operatorFeeScalar"
+      ],
+      "fields": {
+        "DEPOSITOR_ACCOUNT": {
+          "handler": {
+            "type": "call",
+            "method": "function DEPOSITOR_ACCOUNT() pure returns (address addr_)",
+            "args": []
+          }
+        },
+        "number": {
+          "handler": {
+            "type": "call",
+            "method": "function number() view returns (uint64)",
+            "args": []
+          }
+        },
+        "timestamp": {
+          "handler": {
+            "type": "call",
+            "method": "function timestamp() view returns (uint64)",
+            "args": []
+          }
+        },
+        "basefee": {
+          "handler": {
+            "type": "call",
+            "method": "function basefee() view returns (uint256)",
+            "args": []
+          }
+        },
+        "hash": {
+          "handler": {
+            "type": "call",
+            "method": "function hash() view returns (bytes32)",
+            "args": []
+          }
+        },
+        "sequenceNumber": {
+          "handler": {
+            "type": "call",
+            "method": "function sequenceNumber() view returns (uint64)",
+            "args": []
+          }
+        },
+        "blobBaseFeeScalar": {
+          "handler": {
+            "type": "call",
+            "method": "function blobBaseFeeScalar() view returns (uint32)",
+            "args": []
+          }
+        },
+        "baseFeeScalar": {
+          "handler": {
+            "type": "call",
+            "method": "function baseFeeScalar() view returns (uint32)",
+            "args": []
+          }
+        },
+        "batcherHash": {
+          "handler": {
+            "type": "call",
+            "method": "function batcherHash() view returns (bytes32)",
+            "args": []
+          }
+        },
+        "l1FeeOverhead": {
+          "handler": {
+            "type": "call",
+            "method": "function l1FeeOverhead() view returns (uint256)",
+            "args": []
+          }
+        },
+        "l1FeeScalar": {
+          "handler": {
+            "type": "call",
+            "method": "function l1FeeScalar() view returns (uint256)",
+            "args": []
+          }
+        },
+        "blobBaseFee": {
+          "handler": {
+            "type": "call",
+            "method": "function blobBaseFee() view returns (uint256)",
+            "args": []
+          }
+        },
+        "operatorFeeConstant": {
+          "handler": {
+            "type": "call",
+            "method": "function operatorFeeConstant() view returns (uint64)",
+            "args": []
+          }
+        },
+        "operatorFeeScalar": {
+          "handler": {
+            "type": "call",
+            "method": "function operatorFeeScalar() view returns (uint32)",
+            "args": []
+          }
+        },
+        "daFootprintGasScalar": {
+          "handler": {
+            "type": "call",
+            "method": "function daFootprintGasScalar() view returns (uint16)",
+            "args": []
+          }
+        },
+        "version": {
+          "handler": {
+            "type": "call",
+            "method": "function version() pure returns (string)",
+            "args": []
+          }
+        },
+        "gasPayingToken": {
+          "handler": {
+            "type": "call",
+            "method": "function gasPayingToken() pure returns (address addr_, uint8 decimals_)",
+            "args": []
+          }
+        },
+        "gasPayingTokenName": {
+          "handler": {
+            "type": "call",
+            "method": "function gasPayingTokenName() pure returns (string name_)",
+            "args": []
+          }
+        },
+        "gasPayingTokenSymbol": {
+          "handler": {
+            "type": "call",
+            "method": "function gasPayingTokenSymbol() pure returns (string symbol_)",
+            "args": []
+          }
+        },
+        "isCustomGasToken": {
+          "handler": {
+            "type": "call",
+            "method": "function isCustomGasToken() pure returns (bool is_)",
+            "args": []
+          }
+        }
+      }
+    },
     "eth:0x6BCe7408c0781dcE7b71494274302D4b75a1447c": {
       "category": "spam",
       "description": "This contract verifies ZK proofs (if provided). There is an intentional dummy backdoor allowing to call this contract without a proof."
     },
-    "eth:0x4F80B390aF3b49dda96134DA1ac905b05e816496": {
+    "eth:0x6b9e81504e961a9CDf81A06e916720fb4c273e90": {
+      "types": {
+        "VmFromPermissionedGameArgs": {
+          "typeCaster": "SliceAddress",
+          "arg": { "offset": 32 }
+        }
+      },
       "fields": {
-        "proposer": {
+        // The template resolves the VM of game type 8 only. This chain respects
+        // game type 1, whose args share the layout (prestate(32) | vm(20)).
+        "permissionedGameVm": {
+          "handler": {
+            "type": "call",
+            "method": "function gameArgs(uint32) view returns (bytes)",
+            "args": [1],
+            "expectRevert": true
+          },
+          "edit": ["format", "VmFromPermissionedGameArgs"]
+        },
+        "proposerFromDGF": {
           "permissions": [
             {
               "type": "interact",
@@ -27,7 +214,7 @@
             }
           ]
         },
-        "challenger": {
+        "challengerFromDGF": {
           "permissions": [
             {
               "type": "interact",

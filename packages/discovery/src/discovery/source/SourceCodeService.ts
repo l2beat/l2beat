@@ -28,12 +28,25 @@ export class SourceCodeService {
     provider: IProvider,
     addresses: ChainSpecificAddress[],
     manualSourcePath: Record<string, string>,
+    preferManualSourcePaths = false,
   ): Promise<ContractSources> {
     const metadataPerAddress = await Promise.all(
-      addresses.map(
-        async (x) =>
-          [x, await provider.getSource(x)] as [string, ContractSource],
-      ),
+      addresses.map(async (x) => {
+        const source = await provider.getSource(x)
+        // By default a manual source path is only a fallback for addresses the
+        // explorer has no source for. With preferManualSourcePaths it overrides
+        // the explorer: one that never re-checks bytecode (e.g. Sourcify) can
+        // keep serving the source of code that no longer lives at the address,
+        // so its ABI and files are dropped.
+        const isOverridden =
+          preferManualSourcePaths &&
+          source.isVerified &&
+          manualSourcePath[x.toString()] !== undefined
+        return [x, isOverridden ? unverifiedSource() : source] as [
+          string,
+          ContractSource,
+        ]
+      }),
     )
     const metadata = metadataPerAddress.map(([_, x]) => x)
 
@@ -97,5 +110,19 @@ export class SourceCodeService {
     }
 
     return hash
+  }
+}
+
+function unverifiedSource(): ContractSource {
+  return {
+    name: '',
+    rootFile: '',
+    isVerified: false,
+    abi: [],
+    solidityVersion: '',
+    constructorArguments: '',
+    files: {},
+    remappings: [],
+    libraries: {},
   }
 }

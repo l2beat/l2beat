@@ -249,4 +249,78 @@ describe(SourceCodeService.name, () => {
       ],
     })
   })
+
+  it('explorer source wins over a manual source path by default', async () => {
+    const provider = mockObject<IProvider>({
+      getSource: mockFn(),
+    })
+    provider.getSource.resolvesToOnce(BAZ_METADATA)
+
+    const service = new SourceCodeService()
+
+    const result = await service.getSources(provider, [BAZ_ADDRESS], {
+      [BAZ_ADDRESS]: 'LINK_TO_SOURCE_CODE',
+    })
+
+    expect(result.abi).toEqual(['function baz()'])
+    expect(result.sources[0]?.source).toEqual(BAZ_METADATA)
+    expect(result.sources[0]?.hash).not.toEqual(
+      '0xebfdc649af5aa73605ac6eae403d0f4d855f2674bdee881b0f5f77a49dcf843e',
+    )
+  })
+
+  it('preferManualSourcePaths overrides a source served by the explorer', async () => {
+    const provider = mockObject<IProvider>({
+      getSource: mockFn(),
+    })
+    provider.getSource.resolvesToOnce(BAR_METADATA).resolvesToOnce(BAZ_METADATA)
+
+    const service = new SourceCodeService()
+
+    const result = await service.getSources(
+      provider,
+      [BAR_ADDRESS, BAZ_ADDRESS],
+      {
+        [BAZ_ADDRESS]: 'LINK_TO_SOURCE_CODE',
+      },
+      true,
+    )
+
+    const overridden: ContractSource = {
+      abi: [],
+      name: '',
+      rootFile: '',
+      isVerified: false,
+      solidityVersion: '',
+      constructorArguments: '',
+      files: {},
+      remappings: [],
+      libraries: {},
+    }
+
+    expect(result).toEqual({
+      abi: ['function bar()'],
+      abis: {
+        [BAR_ADDRESS.toString()]: ['function bar()'],
+      },
+      isVerified: true,
+      name: '',
+      sources: [
+        {
+          hash: Hash256(
+            '0xec81a410d9701878fa4bffb9afa6a6602c33e540e61ea2442a7f72a2795c01c2',
+          ),
+          name: 'Bar',
+          address: BAR_ADDRESS,
+          source: BAR_METADATA,
+        },
+        {
+          hash: '0xebfdc649af5aa73605ac6eae403d0f4d855f2674bdee881b0f5f77a49dcf843e',
+          name: '',
+          address: BAZ_ADDRESS,
+          source: overridden,
+        },
+      ],
+    })
+  })
 })
