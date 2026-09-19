@@ -1,0 +1,125 @@
+{
+  "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  "displayName": "OracleAggregator",
+  "description": "Upgradeable resolution router that holds the resolver role on the PositionManager outcome modules. Operators register a request per event and choose its reporter modules, disputer modules, arbitrator module, optional finalizer and liveness window of at most {{ maxLivenessWindowFormatted }}. A result proposed by enough reporter modules becomes final after the liveness window unless enough disputer modules escalate it to the arbitrator. Operators and admins can change an open request's modules, arbitrator and liveness window at any time, so an operator can appoint itself arbitrator and set any result. Admins can also resolve any request directly and pause the whole oracle; operators and admins can block finalization per market. None of this is delayed.",
+  "ignoreMethods": ["proxiableUUID"],
+  "fields": {
+    "roleHolders": {
+      "handler": {
+        "type": "event",
+        "select": ["user", "roles"],
+        "add": { "event": "RolesUpdated" },
+        "dedupBy": "user"
+      },
+      "severity": "HIGH",
+      "description": "Role bitmask per address, reconstructed from role-update events. Bit 0 (1) admin, bit 1 (2) operator, bit 2 (4) rule manager."
+    },
+    "admins": {
+      "copy": "roleHolders",
+      "edit": [
+        "pipe",
+        [
+          "filter",
+          [
+            "not",
+            [
+              "and",
+              ["!=", "#roles", 1],
+              ["!=", "#roles", 3],
+              ["!=", "#roles", 5],
+              ["!=", "#roles", 7]
+            ]
+          ]
+        ],
+        ["map", "#user"]
+      ],
+      "severity": "HIGH",
+      "description": "Addresses whose role bitmask includes the admin bit.",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "resolve any request to a result of their choosing, rewrite an open request's rules, replace its reporter, disputer and arbitrator modules and liveness window, pause the whole oracle or block finalization per market, and manage all roles, with no delay."
+        }
+      ]
+    },
+    "operators": {
+      "copy": "roleHolders",
+      "edit": [
+        "pipe",
+        [
+          "filter",
+          [
+            "not",
+            [
+              "and",
+              ["!=", "#roles", 2],
+              ["!=", "#roles", 3],
+              ["!=", "#roles", 6],
+              ["!=", "#roles", 7]
+            ]
+          ]
+        ],
+        ["map", "#user"]
+      ],
+      "severity": "HIGH",
+      "description": "Addresses whose role bitmask includes the operator bit.",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "register requests, rewrite an open request's rules, and replace its reporter, disputer and arbitrator modules and liveness window, which lets them appoint themselves arbitrator and set the result, and block finalization per market, with no delay."
+        }
+      ]
+    },
+    "ruleManagers": {
+      "copy": "roleHolders",
+      "edit": [
+        "pipe",
+        [
+          "filter",
+          [
+            "not",
+            [
+              "and",
+              ["!=", "#roles", 4],
+              ["!=", "#roles", 5],
+              ["!=", "#roles", 6],
+              ["!=", "#roles", 7]
+            ]
+          ]
+        ],
+        ["map", "#user"]
+      ],
+      "description": "Addresses whose role bitmask includes the rule-manager bit.",
+      "permissions": [
+        {
+          "type": "interact",
+          "description": "set the specification URI of a product in the market data registry."
+        }
+      ]
+    },
+    "owner": {
+      "permissions": [
+        {
+          "type": "upgrade",
+          "description": "can upgrade the resolution router implementation and manage all roles."
+        }
+      ],
+      "severity": "HIGH"
+    },
+    "maxLivenessWindowFormatted": {
+      "handler": {
+        "type": "call",
+        "method": "function MAX_LIVENESS_WINDOW() view returns (uint32)",
+        "args": []
+      },
+      "edit": ["format", "FormatSeconds"]
+    },
+    "globalPaused": {
+      "description": "Whether reporting, disputing, resolving and finalizing are paused for every request.",
+      "severity": "HIGH"
+    },
+    "POSITION_MANAGER": {
+      "description": "The outcome-token ledger whose registered modules receive the final results."
+    }
+  }
+}

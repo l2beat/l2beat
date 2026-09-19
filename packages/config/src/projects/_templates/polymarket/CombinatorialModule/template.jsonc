@@ -1,7 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "CombinatorialModule",
-  "description": "Upgradeable outcome module for combinatorial positions built from legs of other modules; payouts derive from the legs' resolved payouts. Position preparation, transformation and redemption functions have no caller restriction. Bridge-role holders can mint positions without collateral backing.",
+  "description": "Upgradeable outcome module for combinatorial positions built from legs of other modules; payouts derive from the legs' resolved payouts. Position preparation, transformation and redemption functions have no caller restriction. Bridge-role holders can mint and burn positions without collateral backing, and the ids they pass are not restricted to this module.",
   "ignoreMethods": ["proxiableUUID"],
   "fields": {
     "roleHolders": {

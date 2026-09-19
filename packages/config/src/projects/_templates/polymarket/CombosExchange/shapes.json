@@ -4,5 +4,11 @@
     "address": "matic:0x7345C6842b244926125ed4054905cAc49620B5dc",
     "chain": "polygonpos",
     "blockNumber": 91023912
+  },
+  "CombosExchange_v2": {
+    "hash": "0xf1a6ae2587365e7e5c3d4c410f146685d8315f0207430ca3d00c009fc61b7525",
+    "address": "matic:0x641b40ec414a076b9e79E703Fc7BF4EBEC248Bb7",
+    "chain": "polygonpos",
+    "blockNumber": 93899421
   }
 }

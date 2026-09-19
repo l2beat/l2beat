@@ -1,7 +1,7 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "NegRiskModule",
-  "description": "Upgradeable outcome module for multi-outcome (negative-risk) markets. Split, merge, redemption and event-level conversion functions have no caller restriction. Bridge-role holders can mint positions without collateral backing, while resolver-role holders can report results directly, bypassing the oracle path; admins can pause reporting by a resolver or for a condition.",
+  "description": "Upgradeable outcome module for multi-outcome (negative-risk) markets. Split, merge, redemption and event-level conversion functions have no caller restriction. Bridge-role holders can mint positions without collateral backing, while resolver-role holders can report results directly, bypassing the oracle path, except for markets mirrored from the CTF, whose results are copied from the CTF ledger; admins can pause reporting per event.",
   "ignoreMethods": ["proxiableUUID"],
   "fields": {
     "roleHolders": {
@@ -22,6 +22,9 @@
         }
       ],
       "severity": "HIGH"
+    },
+    "RESOLUTION_CHAIN": {
+      "description": "Chain identifier embedded in this module's condition ids. Resolver-role holders can only report results for conditions carrying this identifier; 0 is Polygon."
     },
     "POSITION_MANAGER": {
       "description": "The outcome-token ledger this module mints and burns positions on."

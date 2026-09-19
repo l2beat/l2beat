@@ -4,5 +4,11 @@
     "address": "matic:0x492FEc596eC347459E1Ebe30b9245EB3B49B1BBa",
     "chain": "polygonpos",
     "blockNumber": 91023912
+  },
+  "BinaryModule_v2": {
+    "hash": "0x95797fa4c2888119bb8269b4fd03bf38e2c5d63733160cbad76322187f4487c9",
+    "address": "matic:0xf6428c0B5fa9361c0708CDdb95468cf54C56e9A2",
+    "chain": "polygonpos",
+    "blockNumber": 93899421
   }
 }
