@@ -1,3 +1,112 @@
+Generated with discovered.json: 0x6abb5359968d87e254cc8a30c17123cb30b154fc
+
+# Diff at Fri, 18 Sep 2026 07:47:30 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@15431f7683a0de5d516e42fa21c223b42652e15d block: 1782911432
+- current timestamp: 1789554702
+
+## Description
+
+New `TimelockController` (OpenZeppelin v5.7.0, 1h delay): Xlayer Multisig is proposer and canceller, anyone can execute.
+
+`DisputeGameFactory` owner changed from `OwnerContract` to the `TimelockController`, and its proxy admin moved to a new `ProxyAdmin` owned by the `TimelockController`. All other proxies stay under the old `ProxyAdmin`.
+
+## Watched changes
+
+```diff
+    contract ProxyAdmin (eth:0x313ce9Cec2070B519f13BDaFe07eabb4f215FEE6) [global/ProxyAdmin] {
+    +++ description: None
+      directlyReceivedPermissions.7:
+-        {"permission":"upgrade","from":"eth:0x9D4c8FAEadDdDeeE1Ed0c92dAbAD815c2484f675","role":"admin"}
+    }
+```
+
+```diff
+    contract DisputeGameFactory (eth:0x9D4c8FAEadDdDeeE1Ed0c92dAbAD815c2484f675) [opstack/DisputeGameFactory] {
+    +++ description: The dispute game factory allows the creation of dispute games, used to propose state roots and eventually challenge them.
+      values.$admin:
+-        "eth:0x313ce9Cec2070B519f13BDaFe07eabb4f215FEE6"
++        "eth:0xE8b516B3Bf9A6593696462953d98991202f890Ee"
+      values.owner:
+-        "eth:0xe58C365Da30c746204022e61482bBE828cAA9091"
++        "eth:0xFa3A5834D9990B94045C7b3229547FF101D552d6"
+      values.proxyAdmin:
+-        "eth:0x313ce9Cec2070B519f13BDaFe07eabb4f215FEE6"
++        "eth:0xE8b516B3Bf9A6593696462953d98991202f890Ee"
+      values.proxyAdminOwner:
+-        "eth:0xC290bE56089BCC83c6993583ce2cF51a7951D45A"
++        "eth:0xFa3A5834D9990B94045C7b3229547FF101D552d6"
+    }
+```
+
+```diff
+    contract Xlayer Multisig (eth:0xC290bE56089BCC83c6993583ce2cF51a7951D45A) [GnosisSafe] {
+    +++ description: None
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0x9D4c8FAEadDdDeeE1Ed0c92dAbAD815c2484f675","description":"set the dispute game implementation and initial bond for any game type.","role":".owner","via":[{"address":"eth:0xFa3A5834D9990B94045C7b3229547FF101D552d6","delay":3600}]}
+      receivedPermissions.2:
++        {"permission":"interact","from":"eth:0xFa3A5834D9990B94045C7b3229547FF101D552d6","description":"cancel queued transactions.","role":".Canceller"}
+      receivedPermissions.3:
++        {"permission":"interact","from":"eth:0xFa3A5834D9990B94045C7b3229547FF101D552d6","description":"manage all access control roles.","role":".defaultAdminAC","via":[{"address":"eth:0xFa3A5834D9990B94045C7b3229547FF101D552d6","delay":3600}]}
+      receivedPermissions.4:
++        {"permission":"interact","from":"eth:0xFa3A5834D9990B94045C7b3229547FF101D552d6","description":"propose transactions.","role":".Proposer"}
+      receivedPermissions.7.via.0.address:
+-        "eth:0x313ce9Cec2070B519f13BDaFe07eabb4f215FEE6"
++        "eth:0xFa3A5834D9990B94045C7b3229547FF101D552d6"
+      receivedPermissions.7.via.0.delay:
++        3600
+      receivedPermissions.7.via.0:
++        {"address":"eth:0xE8b516B3Bf9A6593696462953d98991202f890Ee"}
+      directlyReceivedPermissions.1:
++        {"permission":"act","from":"eth:0xFa3A5834D9990B94045C7b3229547FF101D552d6","delay":3600,"role":".Proposer"}
+    }
+```
+
+```diff
+    contract OwnerContract (eth:0xe58C365Da30c746204022e61482bBE828cAA9091) [N/A] {
+    +++ description: Unverified contract through which its owner can execute arbitrary calls.
+      receivedPermissions.0:
+-        {"permission":"interact","from":"eth:0x9D4c8FAEadDdDeeE1Ed0c92dAbAD815c2484f675","description":"set the dispute game implementation and initial bond for any game type.","role":".owner"}
+    }
+```
+
+```diff
++   Status: CREATED
+    contract ProxyAdmin (eth:0xE8b516B3Bf9A6593696462953d98991202f890Ee) [global/ProxyAdmin]
+    +++ description: None
+```
+
+```diff
++   Status: CREATED
+    contract TimelockController (eth:0xFa3A5834D9990B94045C7b3229547FF101D552d6) [global/TimelockController]
+    +++ description: A timelock with access control. The current minimum delay is 1h.
+```
+
+## Source code changes
+
+```diff
+...:0xE8b516B3Bf9A6593696462953d98991202f890Ee.sol |  427 +++++++
+ .../projects/xlayer/.flat/TimelockController.sol   | 1264 ++++++++++++++++++++
+ 2 files changed, 1691 insertions(+)
+```
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1782911432 (main branch discovery), not current.
+
+```diff
+    contract OwnerContract (eth:0xe58C365Da30c746204022e61482bBE828cAA9091) [N/A] {
+    +++ description: Unverified contract through which its owner can execute arbitrary calls.
+      receivedPermissions.0:
++        {"permission":"interact","from":"eth:0x9D4c8FAEadDdDeeE1Ed0c92dAbAD815c2484f675","description":"set the dispute game implementation and initial bond for any game type.","role":".owner"}
+      description:
++        "Unverified contract through which its owner can execute arbitrary calls."
+    }
+```
+
 Generated with discovered.json: 0xac53ef861ad2799306a527c382b10ff422947a62
 
 # Diff at Mon, 07 Sep 2026 08:38:04 GMT:

@@ -11,6 +11,9 @@
     "eth:0xC290bE56089BCC83c6993583ce2cF51a7951D45A": "Xlayer Multisig"
   },
   "overrides": {
+    "eth:0xe58C365Da30c746204022e61482bBE828cAA9091": {
+      "description": "Unverified contract through which its owner can execute arbitrary calls."
+    },
     "eth:0x64057ad1DdAc804d0D26A7275b193D9DACa19993": {
       "description": "Central message and gas token (dOKB) bridge of the OP stack part of this deployment. It finalizes withdrawals against the currently respected OP Succinct Lite dispute game and allows forced transactions.",
       "types": {
@@ -27,7 +30,36 @@
       }
     },
     "eth:0x9D4c8FAEadDdDeeE1Ed0c92dAbAD815c2484f675": {
-      "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"]
+      "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"],
+      "fields": {
+        "owner": {
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "set the dispute game implementation and initial bond for any game type."
+            }
+          ]
+        }
+      }
+    },
+    "eth:0xFa3A5834D9990B94045C7b3229547FF101D552d6": {
+      "fields": {
+        "Proposer": {
+          "permissions": [
+            {
+              "type": "interact",
+              "description": "propose transactions."
+            },
+            {
+              "type": "act",
+              "delay": "{{getMinDelay}}"
+            }
+          ]
+        },
+        "Executor": {
+          "description": "Executing proposals is only open to all addresses if this resolves to the 0x0 address"
+        }
+      }
     },
     "eth:0xEeDa796a23bc98726e47934ca9B54fDDa5a608e8": {
       "fields": {
