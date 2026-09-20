@@ -15,6 +15,10 @@
     "eth:0x1a76Ed328600489811F819959a74043f106CF0f9": "Cyber"
   },
   "overrides": {
+    "eth:0x19b5804B88F10262A55ac731f28A3BbC4209853a": {
+      // AddressManager of this chain: its owner can repoint the ResolvedDelegateProxy implementations
+      "critical": true
+    },
     "eth:0xaCc66304d26a01A9bd60d0584dCEdbaCeC8e10e0": {
       "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"]
     },

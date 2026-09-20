@@ -1,5 +1,8 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  // L2-side message bridge in the deposit/withdrawal validation path;
+  // compromise mints forged L2->L1 messages that release L1 escrow funds.
+  "critical": true,
   "ignoreMethods": [
     "context",
     "getMessageMinGasLimit",

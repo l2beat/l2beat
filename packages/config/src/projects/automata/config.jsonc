@@ -16,6 +16,10 @@
     "eth:0x08A650c7ADF9c79a7d4157FCb8E670D9645e3A91": "Automata"
   },
   "overrides": {
+    "eth:0xF1C911e0c1E6dd08c8a7C80c9890e2037e0504c6": {
+      // AddressManager of this chain: its owner can repoint the ResolvedDelegateProxy implementations
+      "critical": true
+    },
     "eth:0xB52337F38747D6931f2976eEa24A3f3F6B7CDEA2": {
       "ignoreDiscovery": true
     }

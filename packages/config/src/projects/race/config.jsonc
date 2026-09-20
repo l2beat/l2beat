@@ -3,5 +3,11 @@
   "archived": true,
   "name": "race",
   "import": ["../globalConfig.jsonc"],
-  "initialAddresses": ["eth:0x680969A6c58183987c8126ca4DE6b59C6540Cd2a"]
+  "initialAddresses": ["eth:0x680969A6c58183987c8126ca4DE6b59C6540Cd2a"],
+  "overrides": {
+    "eth:0x3d2BdE87466Cae97011702D2C305fd40EEBbbF0a": {
+      // AddressManager of this chain: its owner can repoint the ResolvedDelegateProxy implementations
+      "critical": true
+    }
+  }
 }

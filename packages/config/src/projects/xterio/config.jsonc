@@ -7,6 +7,12 @@
     "eth:0x2AD84AbD52050956AcC9c490D024b821A59e3FB6",
     "eth:0x16193e14197c10109F3e81b938153A04A2a00190"
   ],
+  "overrides": {
+    "eth:0xBdF852e2cc26Ea3C2dee7b493B1Fc12dA406175a": {
+      // AddressManager of this chain: its owner can repoint the ResolvedDelegateProxy implementations
+      "critical": true
+    }
+  },
   "names": {
     "eth:0xfF75Bd7672b79f2562fAf98D488bbb3Db1cD1574": "Xterio Multisig",
     "eth:0xaC79765A73eB9dcBd3c427181E6819902AE25b48": "AltLayer 1",

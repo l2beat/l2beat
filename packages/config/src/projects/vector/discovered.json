@@ -1,6 +1,6 @@
 {
   "name": "vector",
-  "timestamp": 1789656330,
+  "timestamp": 1789917678,
   "configHash": "0xbe9d01dcb88d0b8eb832345d9a645515c6ddfd453813a1dee6a603b00822fabd",
   "entries": [
     {
@@ -57,8 +57,8 @@
         "headerRangeCommitmentTreeSize": 2048,
         "headerRangeFunctionId_deprecated": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "isRelayerApproved": true,
-        "latestAuthoritySetId": 880,
-        "latestBlock": 3474048,
+        "latestAuthoritySetId": 883,
+        "latestBlock": 3486976,
         "relayers": ["eth:0x7EBe0bf025ca5993551cE6CEe3f541B24FDF7c35"],
         "rotateFunctionId_deprecated": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "TIMELOCK_ROLE": "0xf66846415d2bf9eabda9e84793ff9c0ea96d87f50fc41e66aa16469c6a442f05",
@@ -117,7 +117,7 @@
         "feePerByte": 0,
         "feeRecipient": "eth:0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666",
         "fees": 0,
-        "messageId": 1879,
+        "messageId": 1880,
         "owner": "eth:0x45828180bbE489350D621d002968A0585406d487",
         "paused": false,
         "pauserAC": ["eth:0x1a5BA9447D02Ddaf7bcB5594Fc27dE2Daf588930"],
@@ -198,6 +198,7 @@
         "owner": "eth:0x45828180bbE489350D621d002968A0585406d487",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0x36194271a00dBBBae314E83dA56d0FF75fDa367B": "ProxyAdmin"
       }
@@ -258,6 +259,10 @@
         "getMinDelayFormatted": "1d",
         "Proposer": ["eth:0x7F2f87B0Efc66Fea0b7c30C61654E53C37993666"],
         "PROPOSER_ROLE": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1"
+      },
+      "fieldMeta": {
+        "getMinDelayFormatted": { "severity": "HIGH" },
+        "accessControl": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x45828180bbE489350D621d002968A0585406d487": "TimelockController"
@@ -636,7 +641,7 @@
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "succinct/SP1Vector": "0x726d693de65ff63629181e9a27ee8342d7521ac412c6676152f27dd13bb195ad"
   },
-  "usedBlockNumbers": { "ethereum": 25997891 },
+  "usedBlockNumbers": { "ethereum": 26019588 },
   "permissionsConfigHash": "0x62792e057c9758251bfd67a8ad76330e68ad77afd2134214f1f523126dad10c6",
   "modelledAgainst": {
     "shared-sp1": "0x2e84e1ff84b5975e2af157e2590c2c72b31b7d3524b767661f01d8ae0b955540"

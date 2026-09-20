@@ -1,3 +1,37 @@
+Generated with discovered.json: 0xaf02bf3d2575f1c1313ba167a4855c2c06e1f94f
+
+# Diff at Sun, 20 Sep 2026 15:22:29 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@ad122e711014afb1a7c2455ebdcb95e39fccaa39 block: 1789656330
+- current timestamp: 1789917678
+
+## Description
+
+critical contracts and severities for the ossification perimeter (re-run after merging main)
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1789656330 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (eth:0x36194271a00dBBBae314E83dA56d0FF75fDa367B) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract TimelockController (eth:0x45828180bbE489350D621d002968A0585406d487) [global/TimelockController] {
+    +++ description: A timelock with access control. The current minimum delay is 1d.
+      fieldMeta:
++        {"getMinDelayFormatted":{"severity":"HIGH"},"accessControl":{"severity":"HIGH"}}
+    }
+```
+
 Generated with discovered.json: 0x0d4a96ae95ccf2b285fb5ed2e59f563367be1bf9
 
 # Diff at Thu, 17 Sep 2026 14:46:33 GMT:

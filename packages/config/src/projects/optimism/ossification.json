@@ -1,0 +1,189 @@
+{
+  "events": [
+    {
+      "timestamp": 1636658804,
+      "type": "state",
+      "contract": "eth:0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
+      "transaction": "0xafb7c2d5dcbe88dc33db9fb3d9e4e807dce1ff6d231889d5913cb3857804ef1d",
+      "reason": "Temporarily transferred control of the legacy address mappings away from the Operations Safe."
+    },
+    {
+      "timestamp": 1636658954,
+      "type": "state",
+      "contract": "eth:0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
+      "transaction": "0xbabb37235bd38ae5a29717590eedfd9b02f84a12b890b2126feac68f223d7448",
+      "reason": "Restored control of the legacy address mappings to the Operations Safe."
+    },
+    {
+      "timestamp": 1636675748,
+      "type": "state",
+      "contract": "eth:0x25ace71c97B33Cc4729CF772ae268934F7ab5fA1",
+      "transaction": "0xed2e696715675f37e1a5c17c6db8c67d3e41a2829bb79859afb4fdb07d29a588",
+      "reason": "Transferred control of the canonical L1 messenger to the Operations Safe."
+    },
+    {
+      "timestamp": 1665503636,
+      "type": "state",
+      "contract": "oeth:0x4200000000000000000000000000000000000042",
+      "transaction": "0x9c74926c5a7a7ccfb36b87f2f983ca754a0cb4c96fdee4b3d498d1dc5b81c45f",
+      "reason": "Transferred OP minting authority to the MintManager."
+    },
+    {
+      "timestamp": 1686067127,
+      "type": "state",
+      "contract": "eth:0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
+      "transaction": "0x76bceccd7d44656f5a129a600a6120091570b897c1d45c18cd7134cfe67c2537",
+      "reason": "Moved control of the legacy address mappings into the Bedrock deployment path."
+    },
+    {
+      "timestamp": 1686075851,
+      "type": "state",
+      "contract": "eth:0xdE1FCfB0851916CA5101820A69b13a4E276bd81F",
+      "transaction": "0xe2ff41f9bdf03d5455f55539b8b9c350276a179ca7f79322e2077d7c1ffb1268",
+      "reason": "Transferred control of the legacy address mappings to the Bedrock ProxyAdmin."
+    },
+    {
+      "timestamp": 1696542003,
+      "type": "state",
+      "contract": "oeth:0x5C4e7Ba1E219E47948e6e3F55019A647bA501005",
+      "transaction": "0xa0c510a0e82cbd8612634beb71509c0423a0c91cd3f3065535631055318ec888",
+      "reason": "Changed the MintManagerOwner Safe threshold governing OP minting policy (Safe is the owner of MintManager; the Safe itself is outside the perimeter)."
+    },
+    {
+      "timestamp": 1707514547,
+      "type": "state",
+      "contract": "eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04",
+      "transaction": "0xd2a7e63eb76199234e4876c1c99dcdf73f0ed04eb8b8767e94809cc2de2629ca",
+      "updateId": "db0d2b31",
+      "reason": "Transferred the core ProxyAdmin to the new Foundation and Security Council authority path."
+    },
+    {
+      "timestamp": 1718042751,
+      "type": "state",
+      "contract": "oeth:0x4200000000000000000000000000000000000018",
+      "transaction": "0x93b7a9956faec114c3bac7fd72479ebdc23f8aace38220f8914cbf6af971bf6e",
+      "updateId": "aeff10bd",
+      "reason": "Transferred the L2 predeploy ProxyAdmin to the aliased Superchain authority path."
+    },
+    {
+      "timestamp": 1719529907,
+      "type": "state",
+      "contract": "eth:0x229047fed2591dbec1eF1118d64F7aF3dB9EB290",
+      "transaction": "0xa324ca8056ff79064771df050d70df9d44deab56290916339d94fd11ea5ee3c0",
+      "updateId": "50024322",
+      "reason": "Transferred control of SystemConfig to the Foundation Upgrade Safe."
+    },
+    {
+      "timestamp": 1720551167,
+      "type": "state",
+      "contract": "eth:0xe5965Ab5962eDc7477C8520243A95517CD252fA9",
+      "transaction": "0x7abecacd8b1a54db8f0835a5c82edfab96ff922a41d2faa914c339e3e9319b43",
+      "reason": "Replaced the FaultDisputeGame and PermissionedDisputeGame implementations (game types 0 and 1) that verify proposed state roots."
+    },
+    {
+      "timestamp": 1726016099,
+      "type": "state",
+      "contract": "eth:0xe5965Ab5962eDc7477C8520243A95517CD252fA9",
+      "transaction": "0x3bd2d811d0298313e6fb75f0e69fb54280c9b4f2e60f8f04472aaa166c285641",
+      "reason": "Replaced the FaultDisputeGame and PermissionedDisputeGame implementations (game types 0 and 1) that verify proposed state roots (Granite)."
+    },
+    {
+      "timestamp": 1726070915,
+      "type": "state",
+      "contract": "eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748",
+      "transaction": "0x592e73fdf57e7cc2c51cfaafa891fe91164d125b7943aa26a15285276de27509",
+      "reason": "Replaced the Guardian Safe module that delegated protocol pause authority (Safe is the safe of LivenessModule; the Safe itself is outside the perimeter)."
+    },
+    {
+      "timestamp": 1733920163,
+      "type": "code",
+      "contract": "eth:0x21429aF66058BC3e4aE4a8f2EC4531AaC433ecbc",
+      "transaction": "0x6b9ad25cef01bd97f1be9642d96cbf75d533129608d5a62e4ae3d69ead47d3dc",
+      "reason": "Upgraded the (since retired) DelayedWETH that held the bonds of permissioned dispute games."
+    },
+    {
+      "timestamp": 1736352527,
+      "type": "state",
+      "contract": "eth:0xe5965Ab5962eDc7477C8520243A95517CD252fA9",
+      "transaction": "0x22ab07b0bb1bc8504256835d555307ff522b78651dca33c9cd5b05591ca5b4f7",
+      "reason": "Replaced the FaultDisputeGame and PermissionedDisputeGame implementations (game types 0 and 1) that verify proposed state roots (Holocene)."
+    },
+    {
+      "timestamp": 1743612623,
+      "type": "code",
+      "contract": "eth:0x21429aF66058BC3e4aE4a8f2EC4531AaC433ecbc",
+      "transaction": "0x5f3530e593bbac37c61dc5b7755b6a40c06c20c1a3a1b13fca5b7d00cde65c29",
+      "reason": "Upgraded the (since retired) DelayedWETH that held the bonds of permissioned dispute games."
+    },
+    {
+      "timestamp": 1745511383,
+      "type": "state",
+      "contract": "eth:0xe5965Ab5962eDc7477C8520243A95517CD252fA9",
+      "transaction": "0xbe44244e352a9ffa67ad7f7133e9ed014b380e4b1bd789419e6d33aaad780d12",
+      "reason": "Replaced the FaultDisputeGame and PermissionedDisputeGame implementations (game types 0 and 1) that verify proposed state roots."
+    },
+    {
+      "timestamp": 1746628403,
+      "type": "state",
+      "contract": "eth:0xe5965Ab5962eDc7477C8520243A95517CD252fA9",
+      "transaction": "0xc4a7089a92c96b83475a7c20e40b4c888a277a90208d649c81df243ecdceb587",
+      "reason": "Replaced the FaultDisputeGame and PermissionedDisputeGame implementations (game types 0 and 1) that verify proposed state roots."
+    },
+    {
+      "timestamp": 1753378247,
+      "type": "state",
+      "contract": "eth:0x76fC2F971FB355D0453cF9F64d3F9E4f640E1754",
+      "transaction": "0x48a3f2ec90b240d052e7612f85669cd496336e113ca6e591bbc8e0b22781e565",
+      "reason": "Enabled the new DeputyPauseModule on the Guardian Safe (Safe is the guardianSafe of DeputyPauseModule; the Safe itself is outside the perimeter)."
+    },
+    {
+      "timestamp": 1753380539,
+      "type": "state",
+      "contract": "eth:0x229047fed2591dbec1eF1118d64F7aF3dB9EB290",
+      "transaction": "0x7e5703b1ab5d09aa107aa1a5fb2c7808c32023bd76048c192139bdb9b5dda092",
+      "reason": "Disabled the former deputy module on the Guardian Safe (Safe is the guardian of SystemConfig; the Safe itself is outside the perimeter)."
+    },
+    {
+      "timestamp": 1769109083,
+      "type": "state",
+      "contract": "eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748",
+      "transaction": "0x5f91ef9e90c0c7f3623cd6361b471f8d9643d67854af7c1906d23790948faf46",
+      "reason": "Enabled the SaferSafes execution module on the Upgrade Safe (Safe is the fallbackOwner of LivenessModule; the Safe itself is outside the perimeter)."
+    },
+    {
+      "timestamp": 1775575311,
+      "type": "state",
+      "contract": "oeth:0x5C4e7Ba1E219E47948e6e3F55019A647bA501005",
+      "transaction": "0xcab1687f5c496d1f2447a4dd9205cd5c9965c74444a8f9be9d5d5345ce6ed647",
+      "reason": "Replaced the direct OP minting threshold with the SafeL2 authority path (Safe is the owner of MintManager; the Safe itself is outside the perimeter)."
+    },
+    {
+      "timestamp": 1783526401,
+      "type": "code",
+      "contract": "oeth:0x4200000000000000000000000000000000000007",
+      "transaction": "0xd2e9eb2ba77098610e7dda134e70f741f7456f4ec49912d667860c40988dfd8e",
+      "reason": "First recorded upgrade of the L2CrossDomainMessenger predeploy replaced an already initialized implementation (reviewed: a real code change, not an initialization)."
+    },
+    {
+      "timestamp": 1783526401,
+      "type": "code",
+      "contract": "oeth:0x4200000000000000000000000000000000000010",
+      "transaction": "0xd2e9eb2ba77098610e7dda134e70f741f7456f4ec49912d667860c40988dfd8e",
+      "reason": "First recorded upgrade of the L2StandardBridge predeploy replaced an already initialized implementation (reviewed: a real code change, not an initialization)."
+    },
+    {
+      "timestamp": 1783526401,
+      "type": "code",
+      "contract": "oeth:0x4200000000000000000000000000000000000016",
+      "transaction": "0xd2e9eb2ba77098610e7dda134e70f741f7456f4ec49912d667860c40988dfd8e",
+      "reason": "First recorded upgrade of the L2ToL1MessagePasser predeploy replaced an already initialized implementation (reviewed: a real code change, not an initialization)."
+    },
+    {
+      "timestamp": 1783526401,
+      "type": "code",
+      "contract": "oeth:0x4200000000000000000000000000000000000018",
+      "transaction": "0x48aa8d6a9d281bf0eaa204e895acdfe0ba38640c34f6d133b2f4ecb879f5c72c",
+      "reason": "First recorded upgrade of the L2ProxyAdmin predeploy replaced an already initialized implementation (reviewed: a real code change, not an initialization)."
+    }
+  ]
+}

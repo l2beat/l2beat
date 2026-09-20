@@ -1,7 +1,7 @@
 {
   "name": "lighter-robinhood",
   "timestamp": 1789726631,
-  "configHash": "0x6b9c542dd9e592ac08872c370b9333a9484c78b5005902c5a58d0a22398d65c4",
+  "configHash": "0x7fe33980dbbd6367a2d0feaeb3ff31e2b1379012812521df943d1f179dc1e1bd",
   "entries": [
     {
       "address": "robinhood:0x07B06B78C1A1908dD8e59322Fd45F78406d2241f",
@@ -35,7 +35,8 @@
         "0x897bcb49a87330dfd6cf64b3848b2ecf503f7720b70c8c08b942741f952d681d"
       ],
       "proxyType": "immutable",
-      "description": "Governance contract functioning like an upgrade timelock for downstream contracts. The current delay is 21d and can be entirely skipped by robinhood:0x4972E0CaCb2AC45644BA054838e96fF4f6f7eFDb.",
+      "description": "Governance contract functioning like an upgrade timelock for downstream contracts. The current delay is 21d and can be entirely skipped by robinhood:0x4972E0CaCb2AC45644BA054838e96fF4f6f7eFDb. In practice every upgrade so far has been fast-tracked: the security council zeroes the notice period right before each upgrade is finished.",
+      "critical": true,
       "deployerAddress": "robinhood:0x42cDb51c23D03c69c05Fa691c3B5517Ace876213",
       "sinceTimestamp": 1782477747,
       "sinceBlock": 229410,
@@ -60,7 +61,8 @@
       "fieldMeta": {
         "getMaster": { "severity": "HIGH" },
         "approvedUpgradeNoticePeriodFmt": {
-          "description": "upgrade delay, can be skipped by the 'securityCouncil' role."
+          "description": "upgrade delay, can be skipped by the 'securityCouncil' role (and routinely is: it is zeroed shortly before each upgrade completes, then restored).",
+          "severity": "HIGH"
         }
       },
       "implementationNames": {
@@ -81,6 +83,8 @@
         "0xcedbddf6ef097d451ba200328780c0cc492b65383f8dc44e760ec70eee4f8850"
       ],
       "proxyType": "immutable",
+      "description": "Verifies the zk proofs that let users exit their funds directly on L1 while the system is in desert mode (escape hatch).",
+      "critical": true,
       "deployerAddress": "robinhood:0x42cDb51c23D03c69c05Fa691c3B5517Ace876213",
       "sinceTimestamp": 1784265403,
       "sinceBlock": 11861471,
@@ -152,6 +156,7 @@
         "0x3a35ceb50e1870902c0afbda8de806932d6a7168c2e27af00ca755fc5db60b93"
       ],
       "proxyType": "zkLighter proxy",
+      "critical": true,
       "ignoreInWatchMode": [
         "committedBatchesCount",
         "committedPriorityRequestCount",
@@ -262,6 +267,7 @@
         "0xa54f86e01624213bae74fb0e5155537807b948cb043a804c3b2acb905aa631d1"
       ],
       "proxyType": "EIP1967 proxy",
+      "critical": true,
       "deployerAddress": "robinhood:0x42cDb51c23D03c69c05Fa691c3B5517Ace876213",
       "sinceTimestamp": 1782477747,
       "sinceBlock": 229410,
@@ -289,6 +295,7 @@
       ],
       "proxyType": "EIP1967 proxy",
       "description": "Manages the list of validators and the network governor.",
+      "critical": true,
       "deployerAddress": "robinhood:0x42cDb51c23D03c69c05Fa691c3B5517Ace876213",
       "sinceTimestamp": 1782477747,
       "sinceBlock": 229410,

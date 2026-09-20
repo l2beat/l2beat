@@ -1,0 +1,12 @@
+{
+  "events": [
+    {
+      "timestamp": 1787692559,
+      "type": "state",
+      "contract": "eth:0x62C0a111929fA32ceC2F76aDba54C16aFb6E8364",
+      "transaction": "0xbf75cc41981ecb8481f3b114697310490b72f96c74fcc34e33b57433b6d9e756",
+      "updateId": "3faa3c28",
+      "reason": "SystemConfig: owner changed (owner; 0x0000000000000000000000009ba6e03d8b90de867373db8cf1a58d2f7f006b3a 0x000000000000000000000)."
+    }
+  ]
+}

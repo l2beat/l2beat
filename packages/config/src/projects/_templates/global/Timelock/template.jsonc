@@ -4,6 +4,7 @@
   "description": "A standard timelock with access control. The current minimum delay is {{minDelayFormatted}}.",
   "fields": {
     "minDelayFormatted": {
+      "severity": "HIGH",
       "handler": {
         "type": "call",
         "method": "getMinDelay",
@@ -12,6 +13,7 @@
       "edit": ["format", "FormatSeconds"]
     },
     "accessControl": {
+      "severity": "HIGH",
       "handler": {
         "type": "accessControl"
       }

@@ -1,0 +1,12 @@
+{
+  "events": [
+    {
+      "timestamp": 1766525531,
+      "type": "code",
+      "contract": "eth:0x5eaa10F99e7e6D177eF9F74E519E319aa49f191e",
+      "transaction": "0x78879348f98179e7e3387517166439e7bea2f82dcfc987cdbb636e6e3651ab5f",
+      "updateId": "50d9dbd8",
+      "reason": "Upgraded the L1StandardBridge implementation (EIP-1967 slot 0xa393\u2026c7f -> 0x4b98\u2026f8f9) via the ProxyAdmin."
+    }
+  ]
+}

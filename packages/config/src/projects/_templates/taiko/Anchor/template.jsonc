@@ -1,5 +1,8 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
+  // L2 anchor syncing L1 state roots into the L2 (withdrawal-validation
+  // input); compromise injects a fake L1 state root.
+  "critical": true,
   "description": "Stores L1 block details on L2 as a cross-layer oracle and manages EIP-1559 gas pricing for L2 operations.",
   "ignoreMethods": ["blockHashes", "proxiableUUID"],
   "category": "core",

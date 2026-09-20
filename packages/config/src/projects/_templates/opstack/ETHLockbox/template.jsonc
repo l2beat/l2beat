@@ -1,4 +1,30 @@
 {
+  "critical": true,
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
-  "description": "A simple escrow contract storing ETH for the canonical bridge."
+  "description": "A simple escrow contract storing ETH for the canonical bridge.",
+  "fields": {
+    "$admin": {
+      "severity": "HIGH"
+    },
+    "authorizedPortals": {
+      // an authorized portal can drain the lockbox via unlockETH(); adding one
+      // is a plain state change (no upgrade anywhere), so it must be HIGH.
+      "severity": "HIGH",
+      "handler": {
+        "type": "event",
+        "select": "portal",
+        "add": { "event": "PortalAuthorized" }
+      }
+    },
+    "authorizedLockboxes": {
+      // an authorized lockbox can receive the entire balance via
+      // migrateLiquidity(); adding one is a plain state change, so HIGH.
+      "severity": "HIGH",
+      "handler": {
+        "type": "event",
+        "select": "lockbox",
+        "add": { "event": "LockboxAuthorized" }
+      }
+    }
+  }
 }

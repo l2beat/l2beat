@@ -27,6 +27,8 @@
   "overrides": {
     "robinhood:0x94bAB9693Ba2f6358507eFfcbd372b0660AFfF9d": {
       "proxyType": "zkLighter proxy",
+      // untemplated (see below), so the critical flag of lighter/ZkLighterWithSpot is set here
+      "critical": true,
       // The v4 logic implementations (ZkLighter / AdditionalZkLighter) are not
       // verified on Blockscout, so the ZkLighterWithSpotQuoteAsset template
       // cannot match. Re-declare the source-independent fields the project
@@ -93,6 +95,14 @@
     },
     "robinhood:0xf6F6Bd6eEA2b9A2041328732CcAe4c5e1DD278B7": {
       "ignoreRelatives": ["quoteAsset"]
+    },
+    "robinhood:0xe1aFBE2D670eFF0e7C8A41F080792C011916ac31": {
+      // keeps the verifier in the ossification perimeter while its implementation is unverified (template match lost)
+      "critical": true
+    },
+    "robinhood:0x56aeED6920DBB9E198C2C0072147A45684A06E10": {
+      "description": "Verifies the zk proofs that let users exit their funds directly on L1 while the system is in desert mode (escape hatch).",
+      "critical": true
     }
   }
 }

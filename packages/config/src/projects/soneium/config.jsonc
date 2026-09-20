@@ -8,6 +8,10 @@
     "eth:0x2F543A7C9cc80Cc2427c892B96263098d23ee55a"
   ],
   "overrides": {
+    "eth:0xB24bFEeCE1B3b7A44559F4Cbc21BeD312b130b70": {
+      // AddressManager of this chain: its owner can repoint the ResolvedDelegateProxy implementations
+      "critical": true
+    },
     // OPContractsManagerV2 (shared Karst upgrade tooling). Ignored so discovery
     // doesn't follow it into bare implementations; authority is the SuperchainProxyAdminOwner.
     "eth:0x9Ce712Ff84E02659846dc6450BB9b7642fE8bE5D": {

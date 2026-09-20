@@ -1,3 +1,37 @@
+Generated with discovered.json: 0x5b9119cb23bf3432236e346bba4e50df60f1b838
+
+# Diff at Fri, 18 Sep 2026 10:24:58 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@e2faf827d006bceee5fb0904599ba325066c7674 block: 1786959877
+- current timestamp: 1786959877
+
+## Description
+
+critical contracts and severities for the ossification perimeter
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1786959877 (main branch discovery), not current.
+
+```diff
+    contract StealthKeyRegistry (eth:0x31fe56609C65Cd0C510E7125f051D440424D38f3) [N/A] {
+    +++ description: Public registry that maps an Ethereum address to its two secp256k1 stealth public keys: a spending key used to derive a fresh stealth address, and a viewing key used to encrypt the transfer metadata for the recipient.
+      critical:
++        true
+    }
+```
+
+```diff
+    contract Umbra (eth:0xFb2dc580Eed955B528407b4d36FfaFe3da685401) [N/A] {
+    +++ description: Main entry point of the Umbra protocol, routing all ETH and ERC-20 stealth payments. On send, it emits an Announcement event that the recipient scans to detect the payment. ETH is forwarded directly to a fresh stealth address, ERC-20s are escrowed in this smart contract.
+      critical:
++        true
+    }
+```
+
 Generated with discovered.json: 0xf77fdf569ab172a6d7c0bda1eb7d49051d03ef75
 
 # Diff at Mon, 17 Aug 2026 09:46:02 GMT:

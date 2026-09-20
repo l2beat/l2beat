@@ -1,3 +1,71 @@
+Generated with discovered.json: 0x5cf82fd1eec968f7b7a7f1e16b9a95f8f2c7c7dc
+
+# Diff at Sat, 19 Sep 2026 21:02:46 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@6eca6e945b1a287f385087f86e711c3126587332 block: 1789726631
+- current timestamp: 1789726631
+
+## Description
+
+critical contracts and severities for the ossification perimeter (reapplied after merging main)
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1789726631 (main branch discovery), not current.
+
+```diff
+    contract UpgradeGatekeeper (robinhood:0x43CfF77CD060A155dCe5deb12B93b875f69F2716) [lighter/UpgradeGatekeeper] {
+    +++ description: Governance contract functioning like an upgrade timelock for downstream contracts. The current delay is 21d and can be entirely skipped by robinhood:0x4972E0CaCb2AC45644BA054838e96fF4f6f7eFDb. In practice every upgrade so far has been fast-tracked: the security council zeroes the notice period right before each upgrade is finished.
+      description:
+-        "Governance contract functioning like an upgrade timelock for downstream contracts. The current delay is 21d and can be entirely skipped by robinhood:0x4972E0CaCb2AC45644BA054838e96fF4f6f7eFDb."
++        "Governance contract functioning like an upgrade timelock for downstream contracts. The current delay is 21d and can be entirely skipped by robinhood:0x4972E0CaCb2AC45644BA054838e96fF4f6f7eFDb. In practice every upgrade so far has been fast-tracked: the security council zeroes the notice period right before each upgrade is finished."
+      fieldMeta.approvedUpgradeNoticePeriodFmt.description:
+-        "upgrade delay, can be skipped by the 'securityCouncil' role."
++        "upgrade delay, can be skipped by the 'securityCouncil' role (and routinely is: it is zeroed shortly before each upgrade completes, then restored)."
+      fieldMeta.approvedUpgradeNoticePeriodFmt.severity:
++        "HIGH"
+      critical:
++        true
+    }
+```
+
+```diff
+    contract DesertVerifier (robinhood:0x56aeED6920DBB9E198C2C0072147A45684A06E10) [N/A] {
+    +++ description: Verifies the zk proofs that let users exit their funds directly on L1 while the system is in desert mode (escape hatch).
+      description:
++        "Verifies the zk proofs that let users exit their funds directly on L1 while the system is in desert mode (escape hatch)."
+      critical:
++        true
+    }
+```
+
+```diff
+    contract Lighter (robinhood:0x94bAB9693Ba2f6358507eFfcbd372b0660AFfF9d) [N/A] {
+    +++ description: None
+      critical:
++        true
+    }
+```
+
+```diff
+    contract ZkLighterVerifier (robinhood:0xe1aFBE2D670eFF0e7C8A41F080792C011916ac31) [N/A] {
+    +++ description: None
+      critical:
++        true
+    }
+```
+
+```diff
+    contract Governance (robinhood:0xf6F6Bd6eEA2b9A2041328732CcAe4c5e1DD278B7) [lighter/Governance] {
+    +++ description: Manages the list of validators and the network governor.
+      critical:
++        true
+    }
+```
+
 Generated with discovered.json: 0xa92a24c47f9fc448cb23677dd789d3e12d52e3e7
 
 # Diff at Fri, 18 Sep 2026 10:40:29 GMT:

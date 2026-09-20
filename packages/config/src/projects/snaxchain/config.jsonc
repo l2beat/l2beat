@@ -5,6 +5,10 @@
   "import": ["../globalConfig.jsonc"],
   "initialAddresses": ["eth:0x936D881b4760D5e9b6D55b774f65c509236b4743"],
   "overrides": {
+    "eth:0xd7BF8B8618c21F337d8eD30aC797Fa330eb94411": {
+      // AddressManager of this chain: its owner can repoint the ResolvedDelegateProxy implementations
+      "critical": true
+    },
     "eth:0x8aF5b3ED56D4a822532A07a84C499d600eCD5cf5": {
       "ignoreDiscovery": true
     },

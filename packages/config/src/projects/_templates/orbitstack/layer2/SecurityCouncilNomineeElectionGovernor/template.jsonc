@@ -1,4 +1,5 @@
 {
+  "critical": true,
   "$schema": "../../../../../../../discovery/schemas/contract.v2.schema.json",
   "category": "gov",
   "description": "Token governance contract for the Security Council nominee elections.",

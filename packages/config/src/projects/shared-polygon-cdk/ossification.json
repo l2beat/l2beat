@@ -1,0 +1,12 @@
+{
+  "events": [
+    {
+      "timestamp": 1781516999,
+      "type": "state",
+      "contract": "eth:0x046Bb8bb98Db4ceCbB2929542686B74b516274b3",
+      "transaction": "0xa164896f88299e6f17ed95dbaf48485e3d6c039c468ce7c5744dba6ad7671bcf",
+      "updateId": "8b099c72",
+      "reason": "AgglayerGateway: verifier route changed (routes; RouteAdded  0x0000000e000000000000000000000000000000000000000000000000000000000000000000000)."
+    }
+  ]
+}

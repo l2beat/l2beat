@@ -13,6 +13,10 @@
     "eth:0x1B1ecDdbd5F9601b34262Aa3Ca346209E61aA68f": "Ancient8GuardianMultisig"
   },
   "overrides": {
+    "eth:0x15A52Fed1c448028A240b603dD93f2697E12Dc82": {
+      // AddressManager of this chain: its owner can repoint the ResolvedDelegateProxy implementations
+      "critical": true
+    },
     "eth:0x3CEa4B383D855208f5d06e5b1A602E4006a1d0E1": {
       "ignoreInWatchMode": ["permissionedGamesTotal", "gameCount"]
     },

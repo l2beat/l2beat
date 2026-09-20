@@ -5,6 +5,10 @@
   "initialAddresses": ["base:0x769547a723783FCA36BAaf1ECcf9dfdbF6d09F38"],
   "names": { "base:0x184d44C2DfB6d17C60B9Ca329b7B8630aea325Ce": "B3Multisig" },
   "overrides": {
+    "base:0xd79005b0f06b2C518893d2Ba31f94429e555b6b1": {
+      // AddressManager of this chain: its owner can repoint the ResolvedDelegateProxy implementations
+      "critical": true
+    },
     "base:0xadA565Abc1Fe7358259c22dd0A7372229d943388": {
       "ignoreDiscovery": true
     }
