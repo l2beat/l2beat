@@ -50,7 +50,8 @@
       "type": "code",
       "contract": "robinhood:0xe1aFBE2D670eFF0e7C8A41F080792C011916ac31",
       "transaction": "0xdb46f86078aeede8cf03c5e226424ea8a0e9251cc5a291ad12dbbf9b13e6f793",
-      "reason": "Replaced the ZkLighterVerifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper version 6; not yet in discovery history when reviewed)."
+      "reason": "Replaced the ZkLighterVerifier implementation that decides which state-transition proofs are accepted (UpgradeGatekeeper version 6).",
+      "updateId": "64487888"
     }
   ]
 }
