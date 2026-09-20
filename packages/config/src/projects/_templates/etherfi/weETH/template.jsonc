@@ -3,5 +3,6 @@
   "displayName": "weETH",
   "category": "core",
   "description": "Non-rebasing wrapper of eETH. wrap() and unwrap() convert at the LiquidityPool rate. getRate() returns the eETH-per-weETH price.",
+  "ignoreInWatchMode": ["getRate", "totalSupply"],
   "ignoreMethods": ["getEETHByWeETH", "getWeETHByeETH", "proxiableUUID"]
 }

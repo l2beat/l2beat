@@ -1,20 +1,20 @@
-Generated with discovered.json: 0x40b015ed4bd46dfbe1fad0a2aeb4244ba6d3fe29
+Generated with discovered.json: 0x5461c19b9bc49f04d1ffeea878a035ac7a0ba734
 
-# Diff at Fri, 18 Sep 2026 10:16:13 GMT:
+# Diff at Sun, 20 Sep 2026 15:20:37 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@d903624f4bbcd7c3db85ae1858dfd3303fa28c5c block: 1789044747
-- current timestamp: 1789044747
+- comparing to: main@ad122e711014afb1a7c2455ebdcb95e39fccaa39 block: 1789656344
+- current timestamp: 1789917555
 
 ## Description
 
-critical contracts and severities for the ossification perimeter
+critical contracts and severities for the ossification perimeter (re-run after merging main)
 
 ## Config/verification related changes
 
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 1789044747 (main branch discovery), not current.
+discovery. Values are for block 1789656344 (main branch discovery), not current.
 
 ```diff
     contract MantleTokenProxyAdmin (eth:0x0cac2B1a172ac24012621101634DD5ABD6399ADd) [global/ProxyAdmin] {
@@ -142,6 +142,32 @@ discovery. Values are for block 1789044747 (main branch discovery), not current.
 +        true
       fieldMeta:
 +        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+Generated with discovered.json: 0xe41c813cce964235b451196a049f24cd5b0e9b61
+
+# Diff at Thu, 17 Sep 2026 14:47:04 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@15431f7683a0de5d516e42fa21c223b42652e15d block: 1789044747
+- current timestamp: 1789656344
+
+## Description
+
+OPSuccinctL2OutputOracle: `aggregationVkey` and `rangeVkeyCommitment` updated to the [mantle-v1.6.1](https://github.com/mantle-xyz/op-succinct/releases/tag/mantle-v1.6.1) op-succinct release keys.
+
+## Watched changes
+
+```diff
+    contract OPSuccinctL2OutputOracle (eth:0x31d543e7BE1dA6eFDc2206Ef7822879045B9f481) [succinct/OPSuccinct/OPSuccinctL2OutputOracle_mantle] {
+    +++ description: Contains a list of proposed state roots which Proposers assert to be a result of block execution. The SuccinctL2OutputOracle modifies the L2OutputOracle to support whenNotOptimistic mode, in which a validity proof can be passed as input argument to the proposeL2Output function.
+      values.aggregationVkey:
+-        "0x005ec5d81cbc4a9a70334f16cb0078d55ae20da550819bd0dc9c5ed12913b407"
++        "0x00fa36417110bce994f3054a68baef78ca51dee1a38659c70e108da7eb3d6bbf"
+      values.rangeVkeyCommitment:
+-        "0x2a928ed475bd7d8b7a54fac7666c68eb62d36fa15fafa8006b885b3237a7bd21"
++        "0x1e2b863405480e5509bcae955f9e23e1170419ba26af2f271cd0199f1e228fdb"
     }
 ```
 

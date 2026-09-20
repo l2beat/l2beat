@@ -1,6 +1,6 @@
 {
   "name": "lens",
-  "timestamp": 1786966184,
+  "timestamp": 1789917638,
   "configHash": "0xe1e40f5564d483b3b14bd89d2486cb8a62c94a83a932fd620829a5bce51bdbd9",
   "entries": [
     {
@@ -611,7 +611,7 @@
           "eth:0x8f50d93B9955B285f787043B30B5F51D09bE0120",
           "eth:0xdA6661Df15E79cFe1e679ccD138D813b955ba492"
         ],
-        "getFirstUnprocessedPriorityTx": 7132,
+        "getFirstUnprocessedPriorityTx": 7304,
         "getL2BootloaderBytecodeHash": "0x01000911c4db4fe62c98e180cfa7e9b3a22fb15f505905d4bf36192f481551e6",
         "getL2DefaultAccountBytecodeHash": "0x010005f73e7c299ed73db937843643bdc276cbc2cc8596287e1e0cf3afc60252",
         "getL2EvmEmulatorBytecodeHash": "0x01000d8bae37b82f311186426184866498b357f41d7a02ced11f3e3fbfbacd63",
@@ -620,7 +620,7 @@
         "getL2SystemContractsUpgradeTxHash": "0x0000000000000000000000000000000000000000000000000000000000000000",
         "getPendingAdmin": "eth:0x0000000000000000000000000000000000000000",
         "getPriorityQueueSize": 0,
-        "getPriorityTreeRoot": "0x776ceefbb094f88c312b89639cc892b9e50e87c6712d96b00e63d574ee438c1e",
+        "getPriorityTreeRoot": "0x534a3c263a9a17a8601eec2bf10a8cb33524504c6438a0ffe3b9b33a80f1ae79",
         "getPriorityTreeStartIndex": 25,
         "getPriorityTxMaxGasLimit": 72000000,
         "getProtocolVersion": 128849018881,
@@ -628,13 +628,13 @@
         "getRollupDAManager": "eth:0xE689e79a06D3D09f99C21E534cCF6a8b7C9b3C45",
         "getSemverProtocolVersion": [0, 30, 1],
         "getSettlementLayer": "eth:0x0000000000000000000000000000000000000000",
-        "getTotalBatchesCommitted": 9000,
-        "getTotalBatchesExecuted": 8999,
-        "getTotalBatchesVerified": 9000,
-        "getTotalBlocksCommitted": 9000,
-        "getTotalBlocksExecuted": 8999,
-        "getTotalBlocksVerified": 9000,
-        "getTotalPriorityTxs": 7132,
+        "getTotalBatchesCommitted": 9102,
+        "getTotalBatchesExecuted": 9101,
+        "getTotalBatchesVerified": 9102,
+        "getTotalBlocksCommitted": 9102,
+        "getTotalBlocksExecuted": 9101,
+        "getTotalBlocksVerified": 9102,
+        "getTotalPriorityTxs": 7304,
         "getTransactionFilterer": "eth:0x0000000000000000000000000000000000000000",
         "getVerifier": "eth:0xCeF0218c0C6dB0768e48debeE26E41B8DAdE7081",
         "getVerifierParams": {
@@ -1379,12 +1379,12 @@
     "shared-zk-stack/L1VerifierPlonk": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
     "shared-zk-stack/ValidatorTimelock_post29": "0x5418e2a478522eb998ee59e7eda86d437c94a8654ddf6b348a51ff161b61bcf6"
   },
-  "usedBlockNumbers": { "ethereum": 25774510 },
+  "usedBlockNumbers": { "ethereum": 26019585 },
   "permissionsConfigHash": "0xa7346715a24de53730021c222a527942d3a5e3bbe16810993cf5009351b50d09",
   "modelledAgainst": {
     "shared-sp1": "0x2e84e1ff84b5975e2af157e2590c2c72b31b7d3524b767661f01d8ae0b955540",
     "shared-zk-stack": "0x02fd071d931f0d2d5a8d55fc318a67086a683e198b254c37a57eb5b5bf1f28e9",
-    "vector": "0x963797723609b2818a865e9cdb694617471c1fa5eaba41826d9596fdaab4ba33"
+    "vector": "0x62792e057c9758251bfd67a8ad76330e68ad77afd2134214f1f523126dad10c6"
   },
   "permissions": {
     "eth:0x1a5BA9447D02Ddaf7bcB5594Fc27dE2Daf588930": {
@@ -1412,16 +1412,6 @@
           "permission": "upgrade",
           "from": "eth:0xfca808A744735D9919EEBe4660B8Fd897456Ce31",
           "role": "admin"
-        }
-      ]
-    },
-    "eth:0x27BF7DE579c5779DbFbB8e9d69999E4D1370787D": {
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x02993cdC11213985b9B13224f3aF289F03bf298d",
-          "description": "it is a ‘Relayer’ and can call commitHeaderRange() to commit block ranges to the Vector contract. Since adding and removing Relayers emits no events, there can be more relayers than are presented here.",
-          "role": ".relayers"
         }
       ]
     },
@@ -1583,6 +1573,16 @@
           "from": "eth:0xc29d04A93F893700015138E3E334eB828dAC3cef",
           "description": "administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role).",
           "role": ".getAdmin"
+        }
+      ]
+    },
+    "eth:0x7EBe0bf025ca5993551cE6CEe3f541B24FDF7c35": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x02993cdC11213985b9B13224f3aF289F03bf298d",
+          "description": "it is a ‘Relayer’ and can call commitHeaderRange() to commit block ranges to the Vector contract. Since adding and removing Relayers emits no events, there can be more relayers than are presented here.",
+          "role": ".relayers"
         }
       ]
     },

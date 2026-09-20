@@ -1,20 +1,20 @@
-Generated with discovered.json: 0x06cd191127224dae2cfee7e473454cdfe6517704
+Generated with discovered.json: 0x8abc9268e460cbb51fd412e92e17b1c9da61b2f8
 
-# Diff at Fri, 18 Sep 2026 10:24:51 GMT:
+# Diff at Sun, 20 Sep 2026 15:20:00 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@e2faf827d006bceee5fb0904599ba325066c7674 block: 1789044500
-- current timestamp: 1789044500
+- comparing to: main@ad122e711014afb1a7c2455ebdcb95e39fccaa39 block: 1789656039
+- current timestamp: 1789917496
 
 ## Description
 
-critical contracts and severities for the ossification perimeter
+critical contracts and severities for the ossification perimeter (re-run after merging main)
 
 ## Config/verification related changes
 
 Following changes come from updates made to the config file,
 or/and contracts becoming verified, not from differences found during
-discovery. Values are for block 1789044500 (main branch discovery), not current.
+discovery. Values are for block 1789656039 (main branch discovery), not current.
 
 ```diff
     contract LivenessModule (eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748) [gnosisSafeModules/LivenessModule] {
@@ -198,6 +198,31 @@ discovery. Values are for block 1789044500 (main branch discovery), not current.
     +++ description: None
       fieldMeta:
 +        {"owner":{"severity":"HIGH"}}
+    }
+```
+
+Generated with discovered.json: 0xbc6e41c9f754f1fda478028adf6fd42cb1019bd9
+
+# Diff at Thu, 17 Sep 2026 14:42:47 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@15431f7683a0de5d516e42fa21c223b42652e15d block: 1789044500
+- current timestamp: 1789656039
+
+## Description
+
+Gelato Multisig: member removed; threshold 3/5 → 3/4.
+
+## Watched changes
+
+```diff
+    contract Gelato Multisig (eth:0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb) [GnosisSafe] {
+    +++ description: None
+      values.$members.3:
+-        "eth:0x01a0A7BaAAca31AFB5b770FeFD69CE4917D9c32e"
+      values.multisigThreshold:
+-        "3 of 5 (60%)"
++        "3 of 4 (75%)"
     }
 ```
 
