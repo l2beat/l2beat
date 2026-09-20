@@ -52,7 +52,6 @@
       "description": "True when the LineaRollup ETH balance (the withdrawal reserve backing L2 exits) is below the effective minimum reserve. While true, no more ETH can be moved to the YieldManager or staked, and anyone can permissionlessly trigger unstaking from yield providers (with beacon chain proofs) and replenish the reserve up to the target. Refilling a deficit depends on beacon chain withdrawal latency."
     },
     "yieldProviderByIndex": { "severity": "HIGH" },
-    "yieldProviderCount": {},
     "minimumWithdrawalReserveAmount": {
       "severity": "HIGH",
       "description": "Absolute minimum ETH balance the LineaRollup must hold as withdrawal reserve. The effective minimum is the larger of this and the percentage-based minimum."

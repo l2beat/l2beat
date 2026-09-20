@@ -1,14 +1,14 @@
-Generated with discovered.json: 0x50d5e2e2aa6b022a0b96affee20ec3952418d0f4
+Generated with discovered.json: 0x2b9201e8b2bd850ae52de4abbd514d145d1a3764
 
-# Diff at Fri, 18 Sep 2026 10:24:51 GMT:
+# Diff at Sun, 20 Sep 2026 15:46:27 GMT:
 
 - author: sekuba (<29250140+sekuba@users.noreply.github.com>)
-- comparing to: main@e2faf827d006bceee5fb0904599ba325066c7674 block: 1788530615
-- current timestamp: 1788530615
+- comparing to: main@ad122e711014afb1a7c2455ebdcb95e39fccaa39 block: 1788530615
+- current timestamp: 1789919089
 
 ## Description
 
-critical contracts and severities for the ossification perimeter
+flag the forced-transaction AddressFilter critical and track its blocklist
 
 ## Config/verification related changes
 
@@ -101,6 +101,22 @@ discovery. Values are for block 1788530615 (main branch discovery), not current.
     +++ description: Yield provider adaptor, delegatecalled by the YieldManager, that deploys rollup ETH into a Lido V3 staking vault (stVault) and its beacon chain validators. Withdrawals back to the reserve are requested via EIP-7002 partial validator withdrawals, so refilling the reserve is subject to beacon chain latency; while the reserve is in deficit anyone can trigger them with a validator proof.
       critical:
 +        true
+    }
+```
+
+```diff
+    contract AddressFilter (eth:0x526AE78F0103Ae73F05449ae30eb626C1003784E) [linea/AddressFilter] {
+    +++ description: Blocklist consulted by the LineaRollup forced-transaction path: an address on this list cannot force-include transactions from L1, so the contract gates the escape hatch.
++++ description: Addresses barred from sending forced transactions from L1 through the LineaRollup.
++++ severity: HIGH
+      values.filteredAddresses:
++        ["eth:0x0000000000000000000000000000000000000001","eth:0x0000000000000000000000000000000000000002","eth:0x0000000000000000000000000000000000000003","eth:0x0000000000000000000000000000000000000004","eth:0x0000000000000000000000000000000000000005","eth:0x0000000000000000000000000000000000000006","eth:0x0000000000000000000000000000000000000007","eth:0x0000000000000000000000000000000000000008","eth:0x0000000000000000000000000000000000000009","eth:0x000000000000000000000000000000000000000A","eth:0x000000000000000000000000000000000000000b","eth:0x000000000000000000000000000000000000000C","eth:0x000000000000000000000000000000000000000d","eth:0x000000000000000000000000000000000000000E","eth:0x000000000000000000000000000000000000000F","eth:0x0000000000000000000000000000000000000010","eth:0x0000000000000000000000000000000000000011","eth:0x0000000000000000000000000000000000000100"]
+      description:
++        "Blocklist consulted by the LineaRollup forced-transaction path: an address on this list cannot force-include transactions from L1, so the contract gates the escape hatch."
+      critical:
++        true
+      fieldMeta:
++        {"filteredAddresses":{"severity":"HIGH","description":"Addresses barred from sending forced transactions from L1 through the LineaRollup."}}
     }
 ```
 
