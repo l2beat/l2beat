@@ -1,3 +1,37 @@
+Generated with discovered.json: 0x332e7a991faacb5628d8adc38cde1d7abaacb47f
+
+# Diff at Thu, 17 Sep 2026 15:00:06 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@15431f7683a0de5d516e42fa21c223b42652e15d block: 1786966184
+- current timestamp: 1786966184
+
+## Description
+
+Permissions remodelled against vector: the Vector relayer was rotated.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1786966184 (main branch discovery), not current.
+
+```diff
+    external contract (eth:0x27BF7DE579c5779DbFbB8e9d69999E4D1370787D) {
+    +++ description: None
+      receivedPermissions:
+-        [{"permission":"interact","from":"eth:0x02993cdC11213985b9B13224f3aF289F03bf298d","description":"it is a ‘Relayer’ and can call commitHeaderRange() to commit block ranges to the Vector contract. Since adding and removing Relayers emits no events, there can be more relayers than are presented here.","role":".relayers"}]
+    }
+```
+
+```diff
+    external contract (eth:0x7EBe0bf025ca5993551cE6CEe3f541B24FDF7c35) {
+    +++ description: None
+      receivedPermissions:
++        [{"permission":"interact","from":"eth:0x02993cdC11213985b9B13224f3aF289F03bf298d","description":"it is a ‘Relayer’ and can call commitHeaderRange() to commit block ranges to the Vector contract. Since adding and removing Relayers emits no events, there can be more relayers than are presented here.","role":".relayers"}]
+    }
+```
+
 Generated with discovered.json: 0xfa4399f8147f062353087d2d70e8cb75992b2fc0
 
 # Diff at Mon, 07 Sep 2026 08:37:51 GMT:

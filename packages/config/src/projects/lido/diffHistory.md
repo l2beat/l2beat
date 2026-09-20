@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xbcbbaa063d78936d5c2187f89f89f86214d35142
+
+# Diff at Thu, 17 Sep 2026 14:45:27 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@15431f7683a0de5d516e42fa21c223b42652e15d block: 1789473742
+- current timestamp: 1789656139
+
+## Description
+
+ConsolidationMigrator: 2 more source/target operator pairs allowed through EasyTrack (24 total).
+
+## Watched changes
+
+```diff
+    contract ConsolidationMigrator (eth:0x9Dc70b5A4f4F5E4AF9058C983D560564F031f1D7) [lido/ConsolidationMigrator] {
+    +++ description: Coordinates the one-time migration of eligible Curated Module v1 validators into Curated Module v2 through the delayed ConsolidationBus pipeline.
++++ description: Currently allowed source and target operator pairs and their dynamically assigned consolidation submitters.
+      values.allowedPairs.22:
++        {"sourceOperatorId":9,"targetOperatorId":3,"submitter":"eth:0x62EFDC587691319357D0518be026f940E4e2843a"}
++++ description: Currently allowed source and target operator pairs and their dynamically assigned consolidation submitters.
+      values.allowedPairs.23:
++        {"sourceOperatorId":7,"targetOperatorId":33,"submitter":"eth:0xa434489C243cb5e38Ca69809a0992B70a8930Bb6"}
+    }
+```
+
 Generated with discovered.json: 0xefc38e89d331b128b3b43a669c189000a021c2c4
 
 # Diff at Tue, 15 Sep 2026 12:10:43 GMT:

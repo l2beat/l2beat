@@ -1,3 +1,28 @@
+Generated with discovered.json: 0xbc6e41c9f754f1fda478028adf6fd42cb1019bd9
+
+# Diff at Thu, 17 Sep 2026 14:42:47 GMT:
+
+- author: vincfurc (<vincfurc@users.noreply.github.com>)
+- comparing to: main@15431f7683a0de5d516e42fa21c223b42652e15d block: 1789044500
+- current timestamp: 1789656039
+
+## Description
+
+Gelato Multisig: member removed; threshold 3/5 → 3/4.
+
+## Watched changes
+
+```diff
+    contract Gelato Multisig (eth:0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb) [GnosisSafe] {
+    +++ description: None
+      values.$members.3:
+-        "eth:0x01a0A7BaAAca31AFB5b770FeFD69CE4917D9c32e"
+      values.multisigThreshold:
+-        "3 of 5 (60%)"
++        "3 of 4 (75%)"
+    }
+```
+
 Generated with discovered.json: 0x3f30f9c5e6cb2c1534cb1d51adb60a99e672a98e
 
 # Diff at Thu, 10 Sep 2026 12:49:48 GMT:

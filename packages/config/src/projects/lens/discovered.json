@@ -1369,7 +1369,7 @@
   "modelledAgainst": {
     "shared-sp1": "0x2e84e1ff84b5975e2af157e2590c2c72b31b7d3524b767661f01d8ae0b955540",
     "shared-zk-stack": "0x02fd071d931f0d2d5a8d55fc318a67086a683e198b254c37a57eb5b5bf1f28e9",
-    "vector": "0x963797723609b2818a865e9cdb694617471c1fa5eaba41826d9596fdaab4ba33"
+    "vector": "0x62792e057c9758251bfd67a8ad76330e68ad77afd2134214f1f523126dad10c6"
   },
   "permissions": {
     "eth:0x1a5BA9447D02Ddaf7bcB5594Fc27dE2Daf588930": {
@@ -1397,16 +1397,6 @@
           "permission": "upgrade",
           "from": "eth:0xfca808A744735D9919EEBe4660B8Fd897456Ce31",
           "role": "admin"
-        }
-      ]
-    },
-    "eth:0x27BF7DE579c5779DbFbB8e9d69999E4D1370787D": {
-      "receivedPermissions": [
-        {
-          "permission": "interact",
-          "from": "eth:0x02993cdC11213985b9B13224f3aF289F03bf298d",
-          "description": "it is a ‘Relayer’ and can call commitHeaderRange() to commit block ranges to the Vector contract. Since adding and removing Relayers emits no events, there can be more relayers than are presented here.",
-          "role": ".relayers"
         }
       ]
     },
@@ -1568,6 +1558,16 @@
           "from": "eth:0xc29d04A93F893700015138E3E334eB828dAC3cef",
           "description": "administrate operator roles for this chain in the ValidatorTimelock, manage fees, apply predefined upgrades, manage censorship through a TransactionFilterer, set DA mode, migrate the chain to whitelisted settlement layers (Chain Admin role).",
           "role": ".getAdmin"
+        }
+      ]
+    },
+    "eth:0x7EBe0bf025ca5993551cE6CEe3f541B24FDF7c35": {
+      "receivedPermissions": [
+        {
+          "permission": "interact",
+          "from": "eth:0x02993cdC11213985b9B13224f3aF289F03bf298d",
+          "description": "it is a ‘Relayer’ and can call commitHeaderRange() to commit block ranges to the Vector contract. Since adding and removing Relayers emits no events, there can be more relayers than are presented here.",
+          "role": ".relayers"
         }
       ]
     },

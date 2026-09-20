@@ -3,5 +3,6 @@
   "displayName": "EtherfiL1SyncPoolETH",
   "category": "core",
   "description": "L1 side of the cross-chain deposit sync pool: mints eETH against ETH bridged from L2s via LayerZero. The endpoint is external.",
+  "ignoreInWatchMode": ["getTotalUnbackedTokens"],
   "ignoreMethods": ["proxiableUUID"]
 }
