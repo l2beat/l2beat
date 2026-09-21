@@ -66,7 +66,7 @@ export function NativeRollupsHeroIllustration({
       <text
         x="32"
         y="76"
-        className="fill-secondary"
+        className="fill-secondary dark:fill-primary"
         fontSize="11"
         fontWeight="600"
         letterSpacing="1.2"
@@ -120,7 +120,7 @@ export function NativeRollupsHeroIllustration({
         x="222"
         y="61"
         textAnchor="middle"
-        className="fill-secondary"
+        className="fill-secondary dark:fill-primary"
         fontSize="10"
         fontWeight="600"
         letterSpacing="1"
@@ -146,10 +146,20 @@ export function NativeRollupsHeroIllustration({
       >
         PROOF-CARRYING
       </text>
-      <text x="178" y="118" className="fill-secondary" fontSize="10">
+      <text
+        x="178"
+        y="118"
+        className="fill-secondary dark:fill-primary"
+        fontSize="10"
+      >
         ● BLOBS
       </text>
-      <text x="178" y="137" className="fill-secondary" fontSize="10">
+      <text
+        x="178"
+        y="137"
+        className="fill-secondary dark:fill-primary"
+        fontSize="10"
+      >
         ● PROOF SIDECAR
       </text>
 
@@ -183,7 +193,7 @@ export function NativeRollupsHeroIllustration({
         x="360"
         y="114"
         textAnchor="middle"
-        className="fill-secondary"
+        className="fill-secondary dark:fill-primary"
         fontSize="10"
         fontWeight="600"
         letterSpacing="0.8"
@@ -212,7 +222,7 @@ export function NativeRollupsHeroIllustration({
         x="210"
         y="216"
         textAnchor="middle"
-        className="fill-secondary"
+        className="fill-secondary dark:fill-primary"
         fontSize="10"
         fontWeight="600"
         letterSpacing="1"

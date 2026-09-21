@@ -65,8 +65,10 @@ export function HomeStatsStrip({
       label: 'ZK Catalog',
       metric: { count: counts.zkCatalog, unit: 'projects' },
       href: '/zk-catalog',
-      icon: <ZkCatalogIcon className="size-5 stroke-purple-500" />,
-      iconBgClassName: 'bg-purple-500/10',
+      icon: (
+        <ZkCatalogIcon className="size-5 stroke-purple-500 dark:stroke-purple-450" />
+      ),
+      iconBgClassName: 'bg-purple-500/10 dark:bg-purple-450/10',
     },
     {
       label: 'Ecosystems',
