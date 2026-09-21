@@ -4,17 +4,17 @@ import { planSchema } from './planSchema'
 
 /**
  * Checks the plan schema against the validator's schema subset and against
- * the README example, and that every object is closed. The schema is handed
- * to Codex as `--output-schema`, so a keyword the local validator does not
- * understand or an open object would let the model emit a plan the code
- * cannot read.
+ * the README example, and that every object is closed. The schema is shown
+ * to the model as the contract for its answer and is what the loop validates
+ * that answer against, so a keyword the local validator does not understand
+ * or an open object would let the model emit a plan the code cannot read.
  */
 describe('planSchema', () => {
   it('uses only keywords the milestone 1 validator understands', () => {
     expect(() => parseSchema(planSchema, 'planSchema')).not.toThrow()
   })
 
-  it('closes every object except recipe args and describes every property, as Codex structured output requires', () => {
+  it('closes every object except recipe args and describes every property, so the model is told exactly what is accepted', () => {
     const problems: string[] = []
     walk(
       planSchema as unknown as Record<string, unknown>,

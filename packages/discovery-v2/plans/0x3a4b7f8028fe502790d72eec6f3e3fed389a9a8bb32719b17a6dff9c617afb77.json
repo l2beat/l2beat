@@ -1,0 +1,36 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "L1MessageQueueV2",
+    "shapeHash": "0x3a4b7f8028fe502790d72eec6f3e3fed389a9a8bb32719b17a6dff9c617afb77",
+    "steps": [],
+    "skips": [
+      {
+        "item": "calculateIntrinsicGasFee(bytes)",
+        "reason": "computation"
+      },
+      {
+        "item": "computeTransactionHash(address,uint256,uint256,address,uint256,bytes)",
+        "reason": "computation"
+      },
+      {
+        "item": "estimateCrossDomainMessageFee(uint256)",
+        "reason": "computation"
+      },
+      {
+        "item": "getMessageEnqueueTimestamp(uint256)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "getMessageRollingHash(uint256)",
+        "reason": "user-activity"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-21T21:32:37.769Z",
+    "model": "gpt-5.6-sol",
+    "rounds": 1
+  }
+}

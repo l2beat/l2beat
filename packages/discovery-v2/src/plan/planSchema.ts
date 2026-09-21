@@ -1,12 +1,15 @@
 /**
  * JSON Schema for a plan, version 1.
  *
- * This object is handed verbatim to Codex as `--output-schema`, so it is a
- * plain JSON value and every object closes with `additionalProperties: false`
- * and lists its mandatory properties in `required`. The `description`s are
- * the model's documentation for each field. Recipe `args` stay an open
- * object because each recipe carries its own argument schema, which the
- * validator applies separately.
+ * This object is shown to the model verbatim in the authoring prompt, so it
+ * is a plain JSON value, every object closes with `additionalProperties:
+ * false` and lists its mandatory properties in `required`, and the
+ * `description`s are the model's documentation for each field. Recipe `args`
+ * stay an open object because each recipe carries its own argument schema,
+ * which the validator applies separately. That open object is also why the
+ * schema cannot be passed as Codex `--output-schema`: OpenAI's strict
+ * structured output requires every object to be closed with every property
+ * required (see `author/codex/CodexClient.ts`).
  *
  * The same object is what `validatePlan` checks a plan against, through the
  * milestone 1 `validateSchema`, so there is exactly one definition of a

@@ -1,0 +1,95 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "ScrollChain",
+    "shapeHash": "0xbae3ab76c19b4b822cc30bcc4bc5965592e0bdd388d7a86780960e54eab0c327",
+    "steps": [
+      {
+        "id": "isProver",
+        "covers": ["isProver(address)"],
+        "fetch": {
+          "kind": "logs",
+          "events": ["UpdateProver"]
+        },
+        "use": "set@1",
+        "args": {
+          "key": "account",
+          "add": [
+            {
+              "event": "UpdateProver",
+              "when": {
+                "arg": "status",
+                "equals": true
+              }
+            }
+          ],
+          "remove": [
+            {
+              "event": "UpdateProver",
+              "when": {
+                "arg": "status",
+                "equals": false
+              }
+            }
+          ]
+        },
+        "reason": "isProver is written only by addProver/removeProver (onlyOwner), which emit UpdateProver."
+      },
+      {
+        "id": "isSequencer",
+        "covers": ["isSequencer(address)"],
+        "fetch": {
+          "kind": "logs",
+          "events": ["UpdateSequencer"]
+        },
+        "use": "set@1",
+        "args": {
+          "key": "account",
+          "add": [
+            {
+              "event": "UpdateSequencer",
+              "when": {
+                "arg": "status",
+                "equals": true
+              }
+            }
+          ],
+          "remove": [
+            {
+              "event": "UpdateSequencer",
+              "when": {
+                "arg": "status",
+                "equals": false
+              }
+            }
+          ]
+        },
+        "reason": "isSequencer is written only by addSequencer/removeSequencer (onlyOwner), which emit UpdateSequencer."
+      }
+    ],
+    "skips": [
+      {
+        "item": "committedBatches(uint256)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "finalizedStateRoots(uint256)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "isBatchFinalized(uint256)",
+        "reason": "covered"
+      },
+      {
+        "item": "withdrawRoots(uint256)",
+        "reason": "user-activity"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-21T21:32:21.499Z",
+    "model": "gpt-5.6-sol",
+    "rounds": 1
+  }
+}

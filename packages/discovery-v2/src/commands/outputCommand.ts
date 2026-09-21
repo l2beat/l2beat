@@ -70,6 +70,8 @@ export function writeEntry(
     baseline: Baseline
     executed?: Executed
     plan?: Plan
+    /** The model that authored the plan, for `entry.meta.json`. */
+    model?: string
   },
   status: PlanStatus | undefined,
   outDir: string,
@@ -78,6 +80,7 @@ export function writeEntry(
   const meta: EntryMetaInput = {
     planStatus: status ?? defaultStatus(input.executed),
     planHash: input.plan === undefined ? undefined : planHash(input.plan),
+    model: input.model,
     plan: input.plan,
   }
   const output = toEntry(input.prepared, input.baseline, executed, meta)

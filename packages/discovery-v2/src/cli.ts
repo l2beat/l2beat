@@ -8,6 +8,7 @@
  */
 import {
   command,
+  flag,
   number,
   oneOf,
   option,
@@ -17,11 +18,16 @@ import {
   string,
   subcommands,
 } from 'cmd-ts'
+import { REASONING_EFFORTS } from './author/codex/CodexClient'
+import { authorCommand, summariseAuthoring } from './commands/authorCommand'
 import { baselineCommand } from './commands/baselineCommand'
 import { createContext } from './commands/context'
 import { executeCommand } from './commands/executeCommand'
 import { outputCommand } from './commands/outputCommand'
-import { pipelineCommand } from './commands/pipelineCommand'
+import {
+  type PipelineResult,
+  pipelineCommand,
+} from './commands/pipelineCommand'
 import { prepareCommand } from './commands/prepareCommand'
 import {
   countErrors,
@@ -62,6 +68,42 @@ const target = {
 
 const preparedFile = positional({ type: string, displayName: 'preparedFile' })
 const baselineFile = positional({ type: string, displayName: 'baselineFile' })
+
+const authoring = {
+  model: option({
+    type: optional(string),
+    long: 'model',
+    description: 'Codex model; default: the Codex default',
+  }),
+  reasoning: option({
+    type: optional(oneOf(REASONING_EFFORTS)),
+    long: 'reasoning',
+    description: 'model_reasoning_effort for Codex',
+  }),
+  maxRounds: option({
+    type: optional(number),
+    long: 'max-rounds',
+    description: 'repair rounds after the first turn; default 2',
+  }),
+  noStore: flag({
+    long: 'no-store',
+    description: 'do not save an accepted plan under plans/<shapeHash>.json',
+  }),
+}
+
+function authorOptions(args: {
+  model?: string
+  reasoning?: (typeof REASONING_EFFORTS)[number]
+  maxRounds?: number
+  noStore: boolean
+}) {
+  return {
+    model: args.model,
+    reasoning: args.reasoning,
+    maxRounds: args.maxRounds,
+    store: !args.noStore,
+  }
+}
 
 const prepare = command({
   name: 'prepare',
@@ -112,6 +154,30 @@ const validate = command({
   },
 })
 
+const author = command({
+  name: 'author',
+  description:
+    'ask Codex for a plan, validate, dry-run and repair it; writes plan.json and author/, exit 1 on failure',
+  args: {
+    preparedFile,
+    baselineFile,
+    worklistFile: positional({ type: string, displayName: 'worklistFile' }),
+    ...authoring,
+    out,
+    envFile,
+  },
+  handler: async (args) => {
+    const { result } = await authorCommand(createContext(args), {
+      ...args,
+      ...authorOptions(args),
+    })
+    console.log(summariseAuthoring(result))
+    if (result.status !== 'ok') {
+      process.exitCode = 1
+    }
+  },
+})
+
 const execute = command({
   name: 'execute',
   description: 'run a plan and write values.json',
@@ -155,7 +221,7 @@ const output = command({
 const pipeline = command({
   name: 'pipeline',
   description:
-    'prepare, baseline, worklist, then validate and execute a plan (--plan or the store), then output',
+    'prepare, baseline, worklist, then validate and execute a plan (--plan, the store, or --author), then output',
   args: {
     ...target,
     planFile: option({
@@ -163,17 +229,59 @@ const pipeline = command({
       long: 'plan',
       description: 'plan file; default: plans/<shapeHash>.json when present',
     }),
+    author: flag({
+      long: 'author',
+      description: 'ask Codex when no plan applies',
+    }),
+    reauthor: flag({
+      long: 'reauthor',
+      description: 'ask Codex even when a stored plan applies',
+    }),
+    ...authoring,
     out,
     envFile,
   },
   handler: async (args) => {
-    await pipelineCommand(createContext(args), args)
+    const result = await pipelineCommand(createContext(args), {
+      ...args,
+      ...authorOptions(args),
+    })
+    console.log(summarisePipeline(result))
+    if (result.planStatus === 'failed') {
+      process.exitCode = 1
+    }
   },
 })
 
+function summarisePipeline(result: PipelineResult): string {
+  const { entry, meta } = result.output
+  return [
+    `status=${result.planStatus}`,
+    `source=${result.planSource ?? 'none'}`,
+    `rounds=${result.authoring?.rounds.length ?? 0}`,
+    `steps=${meta.stepCount}`,
+    `skips=${meta.skipCount}`,
+    `fields=${Object.keys(entry.values ?? {}).length}`,
+    `errors=${Object.keys(entry.errors ?? {}).length}`,
+    ...(meta.model === undefined ? [] : [`model=${meta.model}`]),
+    ...(result.authoring?.failure === undefined
+      ? []
+      : [`failure=${JSON.stringify(result.authoring.failure)}`]),
+  ].join(' ')
+}
+
 const cli = subcommands({
   name: 'discovery-v2',
-  cmds: { prepare, baseline, worklist, validate, execute, output, pipeline },
+  cmds: {
+    prepare,
+    baseline,
+    worklist,
+    author,
+    validate,
+    execute,
+    output,
+    pipeline,
+  },
 })
 
 run(cli, process.argv.slice(2)).then(

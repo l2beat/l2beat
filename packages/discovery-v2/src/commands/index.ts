@@ -1,3 +1,12 @@
+export {
+  AUTHOR_DIR,
+  type AuthorArgs,
+  type AuthorFiles,
+  type AuthorOptions as AuthorCommandOptions,
+  authorCommand,
+  runAuthor,
+  summariseAuthoring,
+} from './authorCommand'
 export { type BaselineArgs, baselineCommand } from './baselineCommand'
 export {
   type CommandContext,
@@ -25,6 +34,7 @@ export {
 } from './outputCommand'
 export {
   type PipelineArgs,
+  type PipelinePlanSource,
   type PipelineResult,
   pipelineCommand,
 } from './pipelineCommand'

@@ -90,6 +90,36 @@ pnpm start execute  $R/prepared.json $R/baseline.json plans/manual/scroll-L1Time
 pnpm start output   $R/prepared.json $R/baseline.json $R/values.json $R/plan.json
 ```
 
+### Running author
+
+`author` is the model step. It needs a logged-in `codex` on the PATH
+(`codex login status`) and an RPC for the dry run; it prints one summary line
+and exits 1 when no acceptable plan was reached.
+
+```sh
+# Author a plan for a prepared run directory; writes $R/plan.json and $R/author/
+pnpm start author $R/prepared.json $R/baseline.json $R/worklist.json
+# status=ok rounds=1 steps=1 skips=8 model=gpt-5.6-sol tokens=29954+865 time=36s
+
+# Options: --model M, --reasoning low|medium|high, --max-rounds N (repair rounds
+# after the first turn, default 2), --no-store (keep the plan out of plans/), --out DIR
+
+# The whole pipeline, authoring only when the store has no plan for the shape
+pnpm start pipeline ethereum 0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44 --block 25789575 --author
+# status=ok source=model rounds=1 steps=1 skips=8 fields=8 errors=0 model=gpt-5.6-sol
+
+# Ask the model again even though a stored plan applies, without touching the store
+pnpm start pipeline ethereum 0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44 --block 25789575 \
+  --reauthor --no-store --out runs/ethereum/0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44-run2
+```
+
+`$R/author/` holds `round-N.prompt.md`, `round-N.response.txt`,
+`round-N.findings.json`, `round-N.dryrun.json`, `codex-events.jsonl` and
+`summary.json` (thread id, model, tokens, timing per round), so a plan can be
+reviewed together with what the model was told. `src/author/codex/
+CodexClient.smoke.test.ts` talks to the real Codex and runs only with
+`DISCOVERY_V2_CODEX_SMOKE=1`; the normal suite never spends tokens.
+
 `src/integration/scrollTimelock.test.ts` runs the pipeline above under mocha
 whenever an Ethereum RPC is configured and asserts, against the committed V1
 entry, that every plain 0-arg getter and the `accessControl` field are equal.
@@ -200,20 +230,61 @@ not hang a run.
 
 ## Authoring loop
 
-1. Build the prompt: rules (the four pinned axes), the plan JSON schema, the
-   library documentation generated from `recipe.json` files, the ABI in
-   human-readable form, baseline values with errors, the worklist, the event
-   list, the flattened source. Sources above a size cap are truncated with a
-   marker, and the plan is flagged.
-2. Run `codex exec` with `--output-schema`, read-only sandbox, shell tool
-   disabled, web search disabled, user config ignored. The prompt goes in on
-   stdin so the model never needs disk access. Capture the thread id from the
-   JSON event stream.
-3. Validate statically, then dry-run. On findings, `codex exec resume <thread>`
-   with the findings only. At most two repair rounds.
-4. Store an accepted plan under `plans/<shapeHash>.json` with provenance
-   (model, timestamps, rounds). A failed plan stays under the run directory,
-   never in the store, and the entry gets `planStatus: failed`.
+1. Build the prompt (`src/author/prompt/buildAuthoringPrompt.ts`), a pure
+   function of the prepared, baseline and worklist files plus the library, in
+   five fixed sections: the rules (the four pinned axes in imperative form,
+   the closed skip reasons, "prefer events of privileged setters", "never
+   fetch user activity"), the plan JSON schema with the ZkLink worked
+   example, the library documentation rendered from `recipe.json`, the
+   contract facts (identity, proxy values, ABI fragments, baseline values with
+   long ones elided, the worklist, the events), and the flattened sources,
+   proxy first, cut at a total character budget (default 400 000) with a
+   marker; a cut prompt is recorded as `promptTruncated`.
+2. Run `codex exec` (`src/author/codex/CodexClient.ts`) with the prompt on
+   stdin and exactly these flags on every turn, first or resumed:
+   `--skip-git-repo-check --ignore-user-config -c sandbox_mode="read-only"
+   -c features.shell_tool=false -c web_search="disabled" --json
+   --output-last-message <tmp>` (plus `--model` and
+   `-c model_reasoning_effort=…` when asked). `--ignore-user-config` is what
+   keeps the MCP servers of `~/.codex/config.toml` away from the model; the
+   stored login still works with it. The first turn is not `--ephemeral`
+   because repair rounds `codex exec resume <thread id>`, and an ephemeral
+   thread cannot be resumed. The thread id comes from the `thread.started`
+   event, usage from `turn.completed`, the final message from the
+   `--output-last-message` file (falling back to the last `agent_message`
+   item), and the model name from the thread's rollout file under
+   `~/.codex/sessions` because the JSONL stream does not carry it (observed:
+   `gpt-5.6-sol`). Isolation is verified, not assumed: a turn whose events
+   contain any item other than `agent_message`, `reasoning` or `todo_list`
+   (so `command_execution`, `mcp_tool_call`, `web_search`, `file_change`) is
+   refused. A wall-clock timeout kills the process group.
+
+   `--output-schema` is not used. The endpoint behind it is OpenAI's strict
+   structured output: it rejected `planSchema` first for `const` values
+   without a `type`, and after that was transformed because every object
+   must carry `additionalProperties: false` with every property required.
+   Recipe `args` is an open object by design (each recipe brings its own
+   argument schema, and `accessControl@1`'s `roleNames` is a map with
+   arbitrary keys), so the plan schema cannot be made strict without changing
+   the plan format. The schema travels in the prompt as text instead, the
+   model is asked for exactly one JSON object, the loop tolerates a code
+   fence, and `validateSchema` checks the result; `CodexClient` keeps an
+   `outputSchema` option for the day the schema is strict-compatible.
+3. Parse, fill `shapeHash` from `prepared.json` when the model omitted it (it
+   is a fact about the code, not a decision), `validatePlan`, and when there
+   is no error, dry-run `executePlan` on the real provider. Step errors become
+   `steps[i]` findings; a `logs` step that matched nothing becomes a warning
+   ("no logs found for events …; confirm the event names and that this
+   contract emits them"). Any error produces a repair message: the findings
+   as a numbered list, errors first, then "Return the whole corrected plan",
+   sent with `codex exec resume`. The model gets one first turn plus at most
+   `maxRepairRounds` (default 2) repairs.
+4. An accepted plan is stored under `plans/<shapeHash>.json` with provenance
+   (`source: model`, model, rounds, `createdAt`). A failed authoring leaves
+   `plan.json` (the last statically valid candidate, if any) and the round
+   trail under the run directory, never in the store, and the entry gets
+   `planStatus: failed`; `entry.meta.json` carries `model` and `planHash` on
+   success.
 
 ## Output compatibility
 
