@@ -38,6 +38,9 @@ async function main() {
     outfile: 'dist/server/index.js',
     minify: prod,
     plugins: prod ? [] : [tsxBoundaryPlugin],
+    // Lets esbuild drop development-only branches (e.g. dev pages in
+    // pageLoaders) instead of bundling code that only works under Vite.
+    define: prod ? { 'process.env.NODE_ENV': '"production"' } : {},
   }
 
   if (watch) {
