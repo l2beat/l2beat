@@ -158,8 +158,22 @@ export class RelayIndexer extends ManagedChildIndexer {
         },
       )
     }
+    const seenCursors = new Set<string>()
     while (continuation) {
+      // An API that hands back a cursor it already returned, or a cursor with
+      // nothing behind it, would otherwise keep this loop running forever.
+      if (seenCursors.has(continuation)) {
+        throw new Error(
+          `Relay API returned a repeated continuation cursor for window ${from}-${syncedTo}`,
+        )
+      }
+      seenCursors.add(continuation)
       res = await this.fetchWindow(from, syncedTo, continuation)
+      if (res.requests.length === 0 && res.continuation) {
+        throw new Error(
+          `Relay API returned a continuation cursor without requests for window ${from}-${syncedTo}`,
+        )
+      }
       await this.saveRequests(res.requests)
       continuation = res.continuation
     }
@@ -247,31 +261,45 @@ export class RelayIndexer extends ManagedChildIndexer {
       }
     }
 
+    // Ids are marked as saved only once persistence succeeded, so a failed
+    // save is retried instead of being silently skipped. The chunk-local sets
+    // still deduplicate within the chunk itself.
+    const chunkSentIds = new Set<string>()
+    const chunkReceivedIds = new Set<string>()
     const newTrackedEvents = events.filter((e) => {
       if (!this.trackedChains.includes(e.ctx.chain)) {
         return false
       }
 
       if (TokenSent.checkType(e)) {
-        if (this.sentIds.has(e.args.id)) {
+        if (this.sentIds.has(e.args.id) || chunkSentIds.has(e.args.id)) {
           return false
         }
-        this.sentIds.add(e.args.id)
+        chunkSentIds.add(e.args.id)
         return true
       }
       if (TokenReceived.checkType(e)) {
-        if (this.receivedIds.has(e.args.id)) {
+        if (
+          this.receivedIds.has(e.args.id) ||
+          chunkReceivedIds.has(e.args.id)
+        ) {
           return false
         }
-        this.receivedIds.add(e.args.id)
+        chunkReceivedIds.add(e.args.id)
         return true
       }
       return false
     })
 
     if (newTrackedEvents.length > 0) {
-      this.logger.info('Saved new events', { events: newTrackedEvents.length })
       await this.interopEventStore.saveNewEvents(newTrackedEvents)
+      this.logger.info('Saved new events', { events: newTrackedEvents.length })
+    }
+    for (const id of chunkSentIds) {
+      this.sentIds.add(id)
+    }
+    for (const id of chunkReceivedIds) {
+      this.receivedIds.add(id)
     }
   }
 
