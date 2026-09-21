@@ -1,5 +1,5 @@
 import type { Logger } from '@l2beat/backend-tools'
-import type { Database } from '@l2beat/database'
+import { type Database, INTEROP_TRANSFER_RETENTION } from '@l2beat/database'
 import { UnixTime } from '@l2beat/shared-pure'
 import { TimeLoop } from '../../../../tools/TimeLoop'
 import { type InteropPlugins, pluginsAsClusters } from '../../plugins'
@@ -27,10 +27,10 @@ export class InteropCleanerLoop extends TimeLoop {
       now - 1 * UnixTime.DAY,
     )
     const expiredTransfers = await this.db.interopTransfer.deleteBefore(
-      now - 7 * UnixTime.DAY,
+      now - INTEROP_TRANSFER_RETENTION,
     )
     const expiredPrices = await this.db.interopRecentPrices.deleteBefore(
-      now - 7 * UnixTime.DAY,
+      now - INTEROP_TRANSFER_RETENTION,
     )
     const expiredConfigs = await this.db.interopConfig.deleteAllButLatestPerKey(
       this.configHistoryKeepLatest,
