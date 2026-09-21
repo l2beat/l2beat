@@ -6,8 +6,10 @@ import {
 import { cn } from '~/utils/cn'
 import { TableTooltip } from './TableTooltip'
 import {
+  getTableBodyClassName,
   getTableElementClassName,
   getTableOuterWrapperClassName,
+  getTableRowSeparatorClassName,
   getTableScrollWrapperClassName,
 } from './utils/classNames'
 
@@ -53,7 +55,7 @@ const TableBody = ({
   className,
   ...props
 }: React.HTMLAttributes<HTMLTableSectionElement>) => (
-  <tbody className={cn('[&_tr:last-child]:border-0', className)} {...props} />
+  <tbody className={getTableBodyClassName(className)} {...props} />
 )
 TableBody.displayName = 'TableBody'
 
@@ -81,7 +83,8 @@ const TableRow = ({
   return (
     <tr
       className={cn(
-        'group/row border-b border-b-divider transition-colors',
+        'group/row transition-colors',
+        getTableRowSeparatorClassName(),
         isSelected && 'animate-row-highlight',
         className,
       )}

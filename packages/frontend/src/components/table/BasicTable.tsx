@@ -34,7 +34,6 @@ import {
   getBasicTableColumnFillerClassName,
   getBasicTableGroupedHeaderCellClassName,
   getBasicTableHeaderCellClassName,
-  getPinnedCellBackgroundClassName,
 } from './utils/classNames'
 import { getCommonPinningStyles } from './utils/commonPinningStyles'
 import { getBasicTableAdditionalRowIndex } from './utils/getBasicTableAdditionalRowIndex'
@@ -46,7 +45,11 @@ import {
   getRenderedColSpan,
   getRenderedHeaders,
 } from './utils/renderedTableColumns'
-import { getRowClassNames, type RowBackgroundColor } from './utils/rowType'
+import {
+  getRowClassNames,
+  getRowClassNamesWithoutOpacity,
+  type RowBackgroundColor,
+} from './utils/rowType'
 
 export type BasicTableRow = {
   slug?: string
@@ -305,7 +308,6 @@ export function BasicTableRow<T extends BasicTableRow>({
         highlightId={highlightId}
         className={cn(
           getRowClassNames(row.original.backgroundColor),
-          shouldRenderSubComponentRow && renderedSubComponent && 'border-none!',
           className,
         )}
       >
@@ -391,7 +393,7 @@ export function BasicTableRow<T extends BasicTableRow>({
         )
       })}
       {shouldRenderSubComponentRow && (
-        <tr className="border-divider border-b">
+        <tr>
           {/* 2nd row is a custom 1 cell row */}
           <td
             colSpan={getRenderedCells(row.getVisibleCells()).length}
@@ -472,7 +474,7 @@ function RowFiller<T, V>(props: { headers: Header<T, V>[] }) {
                 'h-4',
                 !header.isPlaceholder && 'rounded-b-lg',
                 header.column.getIsPinned() &&
-                  getPinnedCellBackgroundClassName(undefined),
+                  getRowClassNamesWithoutOpacity(null),
               )}
               style={getCommonPinningStyles(header.column)}
             />

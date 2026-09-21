@@ -21,24 +21,27 @@ export function getTableScrollWrapperClassName(tableWrapperClassName?: string) {
   )
 }
 
+/**
+ * Borders are separate, not collapsed: collapsed borders are painted by the
+ * table, and WebKit paints the opaque background of sticky (pinned) cells over
+ * them, which thins the row separators under pinned columns on iOS. With
+ * separate borders every cell paints its own separator.
+ */
 export function getTableElementClassName(className?: string) {
-  return cn('w-full border-collapse text-left', className)
+  return cn('w-full border-separate border-spacing-0 text-left', className)
 }
 
 /**
- * Pinned cells need an opaque background to hide the content scrolling under
- * them. The table is border-collapse, so half of each row separator lies inside
- * the cell's border box; WebKit paints a sticky cell's background over it and
- * the separator looks thinner on high-DPR screens. Clipping the background to
- * the padding box leaves the separator uncovered.
+ * Rows cannot have borders in the separate model, so the separator lives on the
+ * cells. It is a top border so that cells spanning several rows draw it once,
+ * above the whole entry.
  */
-export function getPinnedCellBackgroundClassName(
-  rowBackgroundColor: RowBackgroundColor,
-) {
-  return cn(
-    getRowClassNamesWithoutOpacity(rowBackgroundColor ?? null),
-    'bg-clip-padding',
-  )
+export function getTableRowSeparatorClassName() {
+  return '[&>td]:border-t [&>td]:border-t-divider'
+}
+
+export function getTableBodyClassName(className?: string) {
+  return cn('[&>tr:first-child>td]:border-t-0', className)
 }
 
 export function getBasicTableGroupedHeaderCellClassName(params: {
@@ -49,7 +52,7 @@ export function getBasicTableGroupedHeaderCellClassName(params: {
   return cn(
     'font-medium text-primary tracking-[-0.13px]',
     !params.isPlaceholder && params.hasHeader && 'rounded-t-lg px-6 pt-4',
-    params.isPinned && getPinnedCellBackgroundClassName(undefined),
+    params.isPinned && getRowClassNamesWithoutOpacity(null),
   )
 }
 
@@ -75,7 +78,7 @@ export function getBasicTableHeaderCellClassName(params: {
       !groupParams.headerTitle && groupParams.isFirstInGroup && 'rounded-tl-lg',
       !groupParams.headerTitle && groupParams.isLastInGroup && 'rounded-tr-lg',
     ],
-    isPinned && getPinnedCellBackgroundClassName(undefined),
+    isPinned && getRowClassNamesWithoutOpacity(null),
     compact && COMPACT_HEADER_CELL,
     headClassName,
   )
@@ -109,7 +112,7 @@ export function getBasicTableBodyCellClassName(params: {
         ? 'pl-10'
         : 'pl-4'
       : undefined,
-    isPinned && getPinnedCellBackgroundClassName(rowBackgroundColor),
+    isPinned && getRowClassNamesWithoutOpacity(rowBackgroundColor),
     isPinned && isHighlighted && 'animate-row-highlight-no-opacity',
     compact && COMPACT_BODY_CELL,
     cellClassName,

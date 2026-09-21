@@ -73,10 +73,7 @@ export function PrivacyAssetsBreakdownTable({
       <TableBody>
         {table.getRowModel().rows.map((row) => (
           <Fragment key={row.id}>
-            <TableRow
-              highlightId={row.original.symbol}
-              className={cn(row.getIsExpanded() && 'border-b-0')}
-            >
+            <TableRow highlightId={row.original.symbol}>
               {row.getVisibleCells().map((cell) => (
                 <TableCell
                   key={cell.id}
@@ -88,10 +85,11 @@ export function PrivacyAssetsBreakdownTable({
               ))}
             </TableRow>
             {row.getIsExpanded() &&
-              row.original.buckets.map((bucket) => (
+              row.original.buckets.map((bucket, index) => (
                 <BucketRow
                   key={`${row.id}-${bucket.id}`}
                   bucket={bucket}
+                  isAttachedToParentRow={index === 0}
                   showBucketsColumn={showBucketsColumn}
                   showTvl={showTvl}
                 />
@@ -110,15 +108,23 @@ export function PrivacyAssetsBreakdownTable({
 
 function BucketRow({
   bucket,
+  isAttachedToParentRow,
   showBucketsColumn,
   showTvl,
 }: {
   bucket: PrivacyAsset['buckets'][number]
+  isAttachedToParentRow: boolean
   showBucketsColumn: boolean
   showTvl: boolean
 }) {
   return (
-    <TableRow highlightId={undefined} className="bg-surface-secondary/30">
+    <TableRow
+      highlightId={undefined}
+      className={cn(
+        'bg-surface-secondary/30',
+        isAttachedToParentRow && '[&>td]:border-t-0',
+      )}
+    >
       <TableCell className="pl-8 font-medium text-primary md:pl-10">
         {formatBucketLabel(bucket.label)}
       </TableCell>
@@ -165,25 +171,25 @@ function TotalsRow({
 }) {
   return (
     <TableRow highlightId={undefined}>
-      <TableCell className="border-divider border-t-2 font-bold text-base">
+      <TableCell className="border-divider border-t-2! font-bold text-base">
         Total
       </TableCell>
       {showBucketsColumn && (
-        <TableCell align="right" className="border-divider border-t-2" />
+        <TableCell align="right" className="border-divider border-t-2!" />
       )}
-      <TableCell align="right" className="border-divider border-t-2">
+      <TableCell align="right" className="border-divider border-t-2!">
         <PrivacyDepositsMetric
           deposits={totals.deposits.last7d}
           depositedValueUsd={totals.depositedValueUsd.last7d}
         />
       </TableCell>
-      <TableCell align="right" className="border-divider border-t-2">
+      <TableCell align="right" className="border-divider border-t-2!">
         <PrivacyDepositsMetric
           deposits={totals.deposits.last30d}
           depositedValueUsd={totals.depositedValueUsd.last30d}
         />
       </TableCell>
-      <TableCell align="right" className="border-divider border-t-2">
+      <TableCell align="right" className="border-divider border-t-2!">
         <PrivacyDepositsMetric
           deposits={totals.deposits.total}
           depositedValueUsd={totals.depositedValueUsd.total}
@@ -192,7 +198,7 @@ function TotalsRow({
       {showTvl && (
         <TableCell
           align="right"
-          className="border-divider border-t-2 font-bold"
+          className="border-divider border-t-2! font-bold"
         >
           {totals.totalValueUsd === null
             ? '—'
