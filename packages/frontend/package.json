@@ -77,7 +77,7 @@
   },
   "devDependencies": {
     "@l2beat/typescript-config": "workspace:*",
-    "@tailwindcss/vite": "^4.1.11",
+    "@tailwindcss/vite": "^4.3.3",
     "@types/connect-timeout": "^1.9.0",
     "@types/d3-scale": "^4.0.9",
     "@types/lodash": "^4.17.4",
@@ -93,11 +93,11 @@
     "playwright": "^1.60.0",
     "postcss": "^8.4.38",
     "postcss-load-config": "^6.0.1",
-    "tailwindcss": "^4.1.11",
+    "tailwindcss": "^4.3.3",
     "tailwindcss-animate": "^1.0.7",
     "tinify": "^1.7.1",
     "tsx": "^4.9.3",
-    "vite": "^7.3.1"
+    "vite": "^8.3.0"
   },
   "overrides": {
     "react-is": "19.0.0",

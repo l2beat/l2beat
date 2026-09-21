@@ -26,11 +26,6 @@ export default defineConfig(({ command }) => {
       emptyOutDir: true,
       // Read by PagePreloads to emit modulepreload tags per page.
       manifest: true,
-      rollupOptions: {
-        output: {
-          experimentalMinChunkSize: 1024,
-        },
-      },
     },
     ssr: {
       // Externalize all dependencies (including linked workspace packages)
