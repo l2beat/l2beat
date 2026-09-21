@@ -22,6 +22,9 @@ export function getRowBackgroundColor(statuses: {
   }
 }
 
+/*
+  NOTICE: It is important that this functions return the same colors
+*/
 export function getRowClassNames(rowBackgroundColor: RowBackgroundColor) {
   switch (rowBackgroundColor) {
     case 'blue':
@@ -35,21 +38,21 @@ export function getRowClassNames(rowBackgroundColor: RowBackgroundColor) {
   }
 }
 
-/**
- * Pinned cells must hide the columns scrolling beneath them, so the row's
- * transparent tint is layered, as a flat gradient, over the opaque card colour.
- * Keep the tints in sync with getRowClassNames.
- */
+/*
+  Pinned cells must hide what scrolls beneath them, so they repeat the row tint
+  as an opaque mix over the card colour instead of a fixed hex that drifts
+  whenever the surface token changes.
+*/
 export function getRowClassNamesWithoutOpacity(
   rowBackgroundColor: RowBackgroundColor | null,
 ) {
   switch (rowBackgroundColor) {
     case 'blue':
-      return 'bg-linear-to-r bg-surface-primary from-blue-500/35 to-blue-500/35 dark:from-blue-700/25 dark:to-blue-700/25'
+      return 'bg-[color-mix(in_srgb,var(--color-blue-500)_35%,var(--surface-primary))] dark:bg-[color-mix(in_srgb,var(--color-blue-700)_25%,var(--surface-primary))]'
     case 'red':
-      return 'bg-linear-to-r bg-surface-primary from-red-100/70 to-red-100/70 dark:from-red-900/70 dark:to-red-900/70'
+      return 'bg-[color-mix(in_srgb,var(--color-red-100)_70%,var(--surface-primary))] dark:bg-[color-mix(in_srgb,var(--color-red-900)_70%,var(--surface-primary))]'
     case 'yellow':
-      return 'bg-linear-to-r bg-surface-primary from-yellow-200/10 to-yellow-200/10'
+      return 'bg-[color-mix(in_srgb,var(--color-yellow-200)_10%,var(--surface-primary))]'
     default:
       return 'bg-surface-primary'
   }
