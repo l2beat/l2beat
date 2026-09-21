@@ -6,9 +6,27 @@ import {
 import { Address32, UnixTime } from '@l2beat/shared-pure'
 import { env } from '~/env'
 import { getDb } from '~/server/database'
-import { getInteropChains } from '../utils/getInteropChains'
+import { getActiveInteropChainIds } from '../utils/getInteropChains'
 
-/** Past 24h transfer stats per deployment pair, or undefined once the raw transfers are gone. */
+export function getPairStatsParams(
+  snapshotTimestamp: UnixTime,
+  projects: Project<'interopConfig'>[],
+) {
+  const from = snapshotTimestamp - UnixTime.DAY
+  // Aggregates outlive raw transfers, so an aggregates timestamp override can
+  // point at a day the cleaner has already emptied.
+  if (from < UnixTime.now() - INTEROP_TRANSFER_RETENTION) return undefined
+  const chains = getActiveInteropChainIds()
+  return {
+    timeRange: { from, to: snapshotTimestamp },
+    selection: {
+      plugins: projects.flatMap((project) => project.interopConfig.plugins),
+      sourceChains: chains,
+      destinationChains: chains,
+    },
+  }
+}
+
 export async function getInteropTokenPairStats(
   tokenId: string,
   snapshotTimestamp: UnixTime,
@@ -17,21 +35,12 @@ export async function getInteropTokenPairStats(
   if (env.MOCK) {
     return MOCK_INTEROP_TOKEN_PAIR_STATS
   }
-  const from = snapshotTimestamp - UnixTime.DAY
-  // Aggregates outlive raw transfers, so an aggregates timestamp override can
-  // point at a day the cleaner has already emptied.
-  if (from < UnixTime.now() - INTEROP_TRANSFER_RETENTION) return undefined
-  const chains = getInteropChains()
-    .filter((chain) => !chain.isUpcoming)
-    .map((chain) => chain.id)
+  const params = getPairStatsParams(snapshotTimestamp, projects)
+  if (!params) return undefined
   return await getDb().interopTransfer.getDeployedTokenPairStats(
     tokenId,
-    { from, to: snapshotTimestamp },
-    {
-      plugins: projects.flatMap((project) => project.interopConfig.plugins),
-      sourceChains: chains,
-      destinationChains: chains,
-    },
+    params.timeRange,
+    params.selection,
   )
 }
 
