@@ -62,27 +62,6 @@
     var(--surface-primary)
   );
 
-  /* Row tints. Pinned cells must hide what scrolls beneath them, so each tint
-     has a `-no-opacity` twin: the same mix flattened onto the card colour. */
-  --row-info: color-mix(in srgb, #53a2ff 35%, transparent);
-  --row-info-no-opacity: color-mix(
-    in srgb,
-    #53a2ff 35%,
-    var(--surface-primary)
-  );
-  --row-negative: color-mix(in srgb, #fdd9d9 70%, transparent);
-  --row-negative-no-opacity: color-mix(
-    in srgb,
-    #fdd9d9 70%,
-    var(--surface-primary)
-  );
-  --row-warning: color-mix(in srgb, #ffc107 10%, transparent);
-  --row-warning-no-opacity: color-mix(
-    in srgb,
-    #ffc107 10%,
-    var(--surface-primary)
-  );
-
   /* Chart colors */
   --chart-ethereum: #2a5bd8;
   --chart-ethereum-secondary: #53a3ff;
@@ -155,19 +134,6 @@
   --row-highlight-no-opacity: color-mix(
     in srgb,
     #9521bf 40%,
-    var(--surface-primary)
-  );
-
-  --row-info: color-mix(in srgb, #005dd7 25%, transparent);
-  --row-info-no-opacity: color-mix(
-    in srgb,
-    #005dd7 25%,
-    var(--surface-primary)
-  );
-  --row-negative: color-mix(in srgb, #441111 70%, transparent);
-  --row-negative-no-opacity: color-mix(
-    in srgb,
-    #441111 70%,
     var(--surface-primary)
   );
 
@@ -500,12 +466,6 @@
   --color-divider: var(--divider);
   --color-link: var(--link);
   --color-link-stroke: var(--link-stroke);
-  --color-row-info: var(--row-info);
-  --color-row-info-no-opacity: var(--row-info-no-opacity);
-  --color-row-negative: var(--row-negative);
-  --color-row-negative-no-opacity: var(--row-negative-no-opacity);
-  --color-row-warning: var(--row-warning);
-  --color-row-warning-no-opacity: var(--row-warning-no-opacity);
   --color-chart-ethereum: var(--chart-ethereum);
   --color-chart-fuchsia: var(--chart-fuchsia);
   --color-chart-lime: var(--chart-lime);
