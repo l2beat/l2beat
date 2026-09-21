@@ -173,7 +173,7 @@ function parseFilters(filters: string): FilterState {
   let json: unknown = {}
   try {
     json = JSON.parse(filters)
-  } catch (_) {
+  } catch {
     return {}
   }
 

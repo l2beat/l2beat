@@ -93,11 +93,11 @@ function Content({
       { enabled: hasEnoughChains && hasEnoughProtocols },
     ),
   )
-  const activeIds = new Set<string>([
-    ...(data?.chainData ?? [])
+  const activeIds = new Set<string>(
+    (data?.chainData ?? [])
       .filter((chain) => chain.totalVolume > 0)
       .map((chain) => chain.chainId),
-  ])
+  )
   const [activeChains, inactiveChains] = partition(
     interopChains.filter((chain) => selectedChains.includes(chain.id)),
     (chain) => activeIds.has(chain.id),
