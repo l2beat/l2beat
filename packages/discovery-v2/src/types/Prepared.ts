@@ -58,6 +58,12 @@ export const Prepared = v.object({
   implementationNames: v.record(v.string(), v.string()).optional(),
   /** V1's template-matching hash; the key under which plans are stored. */
   shapeHash: v.string().optional(),
+  /**
+   * Non-fatal problems met while preparing, such as a source that failed to
+   * flatten. V1 logs these and moves on; here they travel with the file so a
+   * later tool, or a reviewer, can see why a flattened source is empty.
+   */
+  warnings: v.array(v.string()),
 })
 
 export type Prepared = v.infer<typeof Prepared>

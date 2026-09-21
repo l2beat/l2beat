@@ -57,6 +57,7 @@ export { UserHandlers } from './discovery/handlers/user'
 export { serializeResult as serializeConstructorArgs } from './discovery/handlers/user/ConstructorArgsHandler'
 export { bytes32ToContractValue } from './discovery/handlers/utils/bytes32ToContractValue'
 export { EXEC_REVERT_MSG } from './discovery/handlers/utils/callMethod'
+export { rewriteSolidityIdentifier } from './discovery/handlers/utils/rewriteSolidityIdentifier'
 export { toContractValue } from './discovery/handlers/utils/toContractValue'
 export {
   type ClingoFact,
@@ -85,7 +86,10 @@ export {
   discoveryDiffToMarkdown,
 } from './discovery/output/diffToMarkdown'
 export { neuterErrors } from './discovery/output/errors'
-export { flattenDiscoveredSources } from './discovery/output/flattenDiscoveredSource'
+export {
+  addSolidityVersionComment,
+  flattenDiscoveredSources,
+} from './discovery/output/flattenDiscoveredSource'
 export { remapDiscoverySourceNames } from './discovery/output/remapDiscoverySourceNames'
 export { saveDiscoveredJson } from './discovery/output/saveDiscoveryResult'
 export {

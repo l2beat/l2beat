@@ -7,6 +7,7 @@
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "scripts": {
+    "start": "tsx src/cli.ts",
     "test": "mocha",
     "clean": "rm -rf dist *.tsbuildinfo",
     "build": "tsc && node -e \"require('fs').cpSync('src/library/recipes', 'dist/library/recipes', { recursive: true })\"",
@@ -23,6 +24,7 @@
     "@l2beat/shared-pure": "workspace:*",
     "@l2beat/validate": "workspace:*",
     "cmd-ts": "^0.13.0",
+    "dotenv": "^16.4.5",
     "ethers": "^5.7.2",
     "jq-wasm": "^3.0.0-jq-1.8.2"
   },

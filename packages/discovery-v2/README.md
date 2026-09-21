@@ -47,12 +47,12 @@ subcommand, so each can be tested and benchmarked alone.
 | Tool | Input | Output | Deterministic |
 | --- | --- | --- | --- |
 | `prepare` | chain, address, block | `prepared.json`: bytecode class, proxy, deployment, sources, ABI, flattened source, shape hash | yes (reuses V1 provider, `ProxyDetector`, `SourceCodeService`, flattener) |
-| `baseline` | prepared | `baseline.json`: every 0-arg view/pure getter with a value or an error, plus proxy `$` values | yes (equals V1 system handlers minus the 5-index array probe) |
+| `baseline` | prepared | `baseline.json`: every 0-arg view/pure getter with a value or an error (proxy `$` values stay in `prepared.json` and are merged by `output`) | yes (equals V1 system handlers minus the 5-index array probe) |
 | `worklist` | prepared | `worklist.json`: every view/pure function with inputs, plus declared events, for the model to rule on | yes |
 | `author` | prepared, baseline, worklist | `plan.json` via Codex, validated, repaired, stored | no (the only model step) |
 | `execute` | prepared, plan | `values.json`: raw step results, shaped fields, errors | yes |
 | `output` | prepared, baseline, values | `entry.json` in V1 `EntryParameters` shape, plus `entry.meta.json` | yes |
-| `run` | chain, address, block | all of the above; skips `author` when a stored plan applies | |
+| `pipeline` | chain, address, block | all of the above; skips `author` when a stored plan applies | |
 | `benchmark` | V1 project name | field-by-field comparison against the committed `discovered.json` at its block | |
 
 RPC access goes through V1's `AllProviders` with the shared SQLite cache
@@ -60,6 +60,42 @@ RPC access goes through V1's `AllProviders` with the shared SQLite cache
 runs mostly replay cached responses. Environment variables are the same as V1
 (`<CHAIN>_RPC_URL`), loaded from `--env-file` or, by default, the first of
 `<repo>/.env` and `<repo>/packages/backend/.env` that exists.
+
+## Running
+
+From `packages/discovery-v2`. Every command accepts `--env-file`; the logger
+writes to stderr and JSON files are the outputs, so stdout stays quiet except
+for `validate`, which prints its findings and exits 1 on errors. Outputs go to
+`--out` or `runs/<chain>/<address>/` (gitignored); commands that take a
+`prepared.json` write next to it.
+
+```sh
+# Scroll's TimelockSCEmergency at the block of its committed discovered.json
+pnpm start prepare  ethereum 0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44 --block 25789575
+pnpm start baseline runs/ethereum/0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44/prepared.json
+pnpm start worklist runs/ethereum/0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44/prepared.json
+
+# Everything, with a hand-written plan (validate + execute + output)
+pnpm start pipeline ethereum 0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44 --block 25789575 \
+  --plan plans/manual/scroll-L1Timelock.plan.json
+
+# Without --plan, pipeline looks for plans/<shapeHash>.json and otherwise
+# writes an entry with proxy and baseline values only (planStatus: missing).
+pnpm start pipeline ethereum 0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44 --block 25789575
+
+# The stages alone, from a run directory
+R=runs/ethereum/0x0CD4c0F24a0A9f3E2Fe80ed385D8AD5a2FfECA44
+pnpm start validate $R/prepared.json $R/baseline.json $R/worklist.json plans/manual/scroll-L1Timelock.plan.json
+pnpm start execute  $R/prepared.json $R/baseline.json plans/manual/scroll-L1Timelock.plan.json
+pnpm start output   $R/prepared.json $R/baseline.json $R/values.json $R/plan.json
+```
+
+`src/integration/scrollTimelock.test.ts` runs the pipeline above under mocha
+whenever an Ethereum RPC is configured and asserts, against the committed V1
+entry, that every plain 0-arg getter and the `accessControl` field are equal.
+Stored plans live in `plans/<shapeHash>.json` as
+`{ plan, provenance: { source, createdAt, model?, rounds? } }` (`PlanStore`);
+hand-written plans live in `plans/manual/` and are passed with `--plan`.
 
 ## Plan format (version 1)
 

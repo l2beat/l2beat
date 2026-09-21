@@ -108,7 +108,7 @@ export function flattenDiscoveredSources(
   return flatSources
 }
 
-function addSolidityVersionComment(
+export function addSolidityVersionComment(
   solidityVersion: string,
   flatSource: string,
 ): string {

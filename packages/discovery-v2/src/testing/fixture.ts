@@ -121,6 +121,7 @@ export function fixturePrepared(overrides: Partial<Prepared> = {}): Prepared {
       },
     ],
     shapeHash: `0x${'22'.repeat(32)}`,
+    warnings: [],
     ...overrides,
   }
 }

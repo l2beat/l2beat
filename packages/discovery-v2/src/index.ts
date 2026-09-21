@@ -1,5 +1,49 @@
 export { AbiIndex, fullSignature, type Lookup, sighash } from './abi/AbiIndex'
 export { checkLiteral, isAddressLiteral } from './abi/literals'
+export { buildBaseline, selectGetters } from './baseline'
+export {
+  type BaselineArgs,
+  baselineCommand,
+  type CommandContext,
+  type ContextOptions,
+  countErrors,
+  createCliLogger,
+  createContext,
+  defaultRunDir,
+  type ExecuteArgs,
+  executeCommand,
+  FILE_NAMES,
+  formatFinding,
+  type OutputArgs,
+  type OutputFiles,
+  outputCommand,
+  type PipelineArgs,
+  type PipelineResult,
+  type PrepareArgs,
+  type PrepareResult,
+  packageDir,
+  parseAddress,
+  pipelineCommand,
+  prepareCommand,
+  readBaseline,
+  readExecuted,
+  readPlan,
+  readPrepared,
+  readWorklist,
+  type ValidateArgs,
+  validateCommand,
+  type WorklistArgs,
+  worklistCommand,
+  writeJson,
+} from './commands'
+export {
+  createProviders,
+  DEFAULT_ENV_FILES,
+  getProvider,
+  type LoadedEnv,
+  loadEnv,
+  type ProviderTarget,
+} from './env'
 export { type CallOutcome, callFragment } from './execute/callFragment'
 export {
   type Executed,
@@ -82,6 +126,18 @@ export {
 } from './plan/references'
 export { type ValidationContext, validatePlan } from './plan/validatePlan'
 export {
+  canonicalJson,
+  defaultPlansDir,
+  PLAN_SOURCES,
+  PlanProvenance,
+  type PlanSource,
+  PlanStore,
+  parsePlan,
+  planHash,
+  type StoredPlan,
+} from './plans'
+export { defaultPrepareDeps, type PrepareDeps, prepare } from './prepare'
+export {
   Baseline,
   BaselineField,
   buildWorklist,
@@ -89,6 +145,7 @@ export {
   type ContractValue,
   ContractValueSchema,
   EntryMeta,
+  ExecutedSchema,
   PLAN_STATUSES,
   type PlanStatus,
   Prepared,

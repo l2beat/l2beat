@@ -5,6 +5,7 @@ export {
   ContractValueSchema,
 } from './ContractValue'
 export { EntryMeta, PLAN_STATUSES, type PlanStatus } from './EntryMeta'
+export { ExecutedSchema } from './Executed'
 export {
   Prepared,
   PreparedDeployment,

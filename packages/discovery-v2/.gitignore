@@ -1,0 +1,2 @@
+# Per-run outputs of the CLI (prepared.json, baseline.json, entry.json, ...).
+runs/
