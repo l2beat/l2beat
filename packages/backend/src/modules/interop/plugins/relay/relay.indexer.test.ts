@@ -84,16 +84,129 @@ describe(RelayIndexer.name, () => {
       expect(syncedTo).toEqual(FROM + BATCH_SIZE)
     })
 
-    it('throws when the window was not fully fetched', async () => {
-      const relayApiClient = clientReturning({
-        requests: manyInSameSecond(3, '2026-08-24T14:50:59'),
-        continuation: 'cursor-1',
-      })
-      const indexer = createIndexer(relayApiClient)
-
-      await expect(indexer.update(FROM, FROM + 10_000)).toBeRejectedWith(
-        'exceeds INTEROP_RELAY_MAX_REQUESTS_PER_UPDATE=10000',
+    it('halves the window when the fetch hits the request cap', async () => {
+      const getAllRequests = mockFn<RelayApiClient['getAllRequests']>()
+        .resolvesToOnce({
+          requests: manyInSameSecond(3, '2026-08-24T14:50:59'),
+          continuation: 'cursor-1',
+        })
+        .resolvesToOnce({ requests: [] })
+      const indexer = createIndexer(
+        mockObject<RelayApiClient>({ getAllRequests }),
       )
+
+      const syncedTo = await indexer.update(FROM, FROM + 10_000)
+
+      expect(getAllRequests).toHaveBeenCalledTimes(2)
+      expect(getAllRequests).toHaveBeenNthCalledWith(1, {
+        startTimestamp: FROM,
+        endTimestamp: FROM + BATCH_SIZE + 1,
+        limit: MAX_REQUESTS_PER_UPDATE,
+      })
+      expect(getAllRequests).toHaveBeenNthCalledWith(2, {
+        startTimestamp: FROM,
+        endTimestamp: FROM + BATCH_SIZE / 2 + 1,
+        limit: MAX_REQUESTS_PER_UPDATE,
+      })
+      expect(syncedTo).toEqual(FROM + BATCH_SIZE / 2)
+    })
+
+    it('keeps halving down to a single second', async () => {
+      const getAllRequests = mockFn<
+        RelayApiClient['getAllRequests']
+      >().executes(async (options) =>
+        options?.endTimestamp === FROM + 1
+          ? { requests: [] }
+          : { requests: [], continuation: 'cursor-1' },
+      )
+      const indexer = createIndexer(
+        mockObject<RelayApiClient>({ getAllRequests }),
+      )
+
+      const syncedTo = await indexer.update(FROM, FROM + 10_000)
+
+      const windowLengths = getAllRequests.calls.map(
+        (call) => (call.args[0]?.endTimestamp ?? 0) - 1 - FROM,
+      )
+      expect(windowLengths).toEqual([60, 30, 15, 7, 3, 1, 0])
+      expect(syncedTo).toEqual(FROM)
+    })
+
+    it('follows the continuation when a single second exceeds the cap', async () => {
+      const getAllRequests = mockFn<
+        RelayApiClient['getAllRequests']
+      >().executes(async (options) => {
+        if (options?.endTimestamp !== FROM + 1) {
+          return { requests: [], continuation: 'cursor-0' }
+        }
+        switch (options.continuation) {
+          case undefined:
+            return { requests: [successRequest('a')], continuation: 'cursor-1' }
+          case 'cursor-1':
+            return { requests: [successRequest('b')], continuation: 'cursor-2' }
+          default:
+            return { requests: [successRequest('c')] }
+        }
+      })
+      const saveNewEvents =
+        mockFn<InteropEventStore['saveNewEvents']>().resolvesTo(undefined)
+      const indexer = createIndexer(
+        mockObject<RelayApiClient>({ getAllRequests }),
+        {
+          chains: [
+            { id: 1, name: 'ethereum' },
+            { id: 10, name: 'optimism' },
+          ],
+          interopEventStore: mockObject<InteropEventStore>({ saveNewEvents }),
+        },
+      )
+
+      const syncedTo = await indexer.update(FROM, FROM + 10_000)
+
+      expect(syncedTo).toEqual(FROM)
+      const continuations = getAllRequests.calls
+        .filter((call) => call.args[0]?.endTimestamp === FROM + 1)
+        .map((call) => call.args[0]?.continuation)
+      expect(continuations).toEqual([undefined, 'cursor-1', 'cursor-2'])
+      expect(getAllRequests).toHaveBeenLastCalledWith({
+        startTimestamp: FROM,
+        endTimestamp: FROM + 1,
+        limit: MAX_REQUESTS_PER_UPDATE,
+        continuation: 'cursor-2',
+      })
+      const savedIds = saveNewEvents.calls.map((call) =>
+        call.args[0].map((event) => (event.args as { id: string }).id),
+      )
+      expect(savedIds).toEqual([['a'], ['b'], ['c']])
+    })
+
+    it('does not save the same request twice across continuation chunks', async () => {
+      const getAllRequests = mockFn<
+        RelayApiClient['getAllRequests']
+      >().executes(async (options) =>
+        options?.continuation === undefined
+          ? { requests: [successRequest('a')], continuation: 'cursor-1' }
+          : { requests: [successRequest('a'), successRequest('b')] },
+      )
+      const saveNewEvents =
+        mockFn<InteropEventStore['saveNewEvents']>().resolvesTo(undefined)
+      const indexer = createIndexer(
+        mockObject<RelayApiClient>({ getAllRequests }),
+        {
+          chains: [
+            { id: 1, name: 'ethereum' },
+            { id: 10, name: 'optimism' },
+          ],
+          interopEventStore: mockObject<InteropEventStore>({ saveNewEvents }),
+        },
+      )
+
+      await indexer.update(FROM, FROM)
+
+      const savedIds = saveNewEvents.calls.map((call) =>
+        call.args[0].map((event) => (event.args as { id: string }).id),
+      )
+      expect(savedIds).toEqual([['a'], ['b']])
     })
 
     it('treats an empty continuation as a fully fetched window', async () => {
@@ -192,6 +305,21 @@ function clientReturning(response: GetRequestsResponse) {
   return mockObject<RelayApiClient>({
     getAllRequests: mockFn().resolvesTo(response),
   })
+}
+
+function successRequest(id: string) {
+  return {
+    id,
+    status: 'success',
+    sourceTx: { hash: `0x${'1'.repeat(64)}`, chainId: 1, timestamp: FROM },
+    destinationTx: {
+      hash: `0x${'2'.repeat(64)}`,
+      chainId: 10,
+      timestamp: FROM,
+    },
+    createdAt: '2026-08-24T14:50:59.000Z',
+    updatedAt: '2026-08-24T14:50:59.000Z',
+  }
 }
 
 function manyInSameSecond(count: number, second: string) {

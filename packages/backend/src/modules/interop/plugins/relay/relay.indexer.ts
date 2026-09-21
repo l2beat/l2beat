@@ -8,7 +8,7 @@ import { ManagedChildIndexer } from '../../../../tools/uif/ManagedChildIndexer'
 import type { InteropEventStore } from '../../engine/capture/InteropEventStore'
 import type { InteropConfigStore } from '../../engine/config/InteropConfigStore'
 import { createInteropEventType, findChain, type InteropEvent } from '../types'
-import type { RelayApiClient } from './RelayApiClient'
+import type { RelayApiClient, RelayRequest } from './RelayApiClient'
 import { buildRelayBootstrapChainNamesById, RelayConfig } from './relay.config'
 
 export interface RelayIndexerConfig {
@@ -123,22 +123,63 @@ export class RelayIndexer extends ManagedChildIndexer {
       return to
     }
 
-    const batchSize = this.relayConfig.batchSize
-    const syncedTo = from + batchSize < to ? from + batchSize : to
+    let syncedTo = Math.min(from + this.relayConfig.batchSize, to)
+    let res = await this.fetchWindow(from, syncedTo)
 
-    const res = await this.relayApiClient.getAllRequests({
-      startTimestamp: from,
-      endTimestamp: syncedTo + 1,
-      limit: this.relayConfig.maxRequestsPerUpdate,
-    })
-
-    if (res.continuation) {
-      throw new Error(
-        `Window ${from}-${syncedTo} exceeds INTEROP_RELAY_MAX_REQUESTS_PER_UPDATE=${this.relayConfig.maxRequestsPerUpdate}. Fetched ${res.requests.length} requests but a continuation remains`,
-      )
+    // A window holding more requests than the cap cannot be fetched in one go.
+    // Retrying it unchanged would fail forever, so halve it until it fits or
+    // until it cannot shrink any further.
+    while (res.continuation && syncedTo > from) {
+      const shrunkTo = from + Math.floor((syncedTo - from) / 2)
+      this.logger.warn('Window exceeds request cap, shrinking it', {
+        from,
+        syncedTo,
+        shrunkTo,
+        fetched: res.requests.length,
+        cap: this.relayConfig.maxRequestsPerUpdate,
+      })
+      syncedTo = shrunkTo
+      res = await this.fetchWindow(from, syncedTo)
     }
 
-    const successes = res.requests.filter((x) => x.status === 'success')
+    await this.saveRequests(res.requests)
+
+    // The narrowest window cannot be split by time, so the only way forward is
+    // to follow the continuation until it is exhausted. Requests are saved per
+    // chunk to keep memory bounded; ids already saved are skipped on retry.
+    let continuation = res.continuation
+    if (continuation) {
+      this.logger.warn(
+        'Narrowest window exceeds request cap, following continuation',
+        {
+          from,
+          fetched: res.requests.length,
+          cap: this.relayConfig.maxRequestsPerUpdate,
+        },
+      )
+    }
+    while (continuation) {
+      res = await this.fetchWindow(from, syncedTo, continuation)
+      await this.saveRequests(res.requests)
+      continuation = res.continuation
+    }
+
+    return syncedTo
+  }
+
+  private fetchWindow(from: number, syncedTo: number, continuation?: string) {
+    return this.relayApiClient.getAllRequests({
+      startTimestamp: from,
+      // Both bounds are inclusive. The extra second covers sub-second updatedAt
+      // values right at the boundary; duplicates are dropped by request id.
+      endTimestamp: syncedTo + 1,
+      limit: this.relayConfig.maxRequestsPerUpdate,
+      ...(continuation !== undefined ? { continuation } : {}),
+    })
+  }
+
+  private async saveRequests(requests: RelayRequest[]) {
+    const successes = requests.filter((x) => x.status === 'success')
 
     const events: InteropEvent[] = []
 
@@ -232,8 +273,6 @@ export class RelayIndexer extends ManagedChildIndexer {
       this.logger.info('Saved new events', { events: newTrackedEvents.length })
       await this.interopEventStore.saveNewEvents(newTrackedEvents)
     }
-
-    return syncedTo
   }
 
   override async invalidate(targetHeight: number): Promise<number> {
