@@ -20,7 +20,8 @@
     "format:fix": "biome format --write .",
     "lint:fix": "biome check --formatter-enabled=false --write .",
     "lint": "biome check --formatter-enabled=false .",
-    "test": "mocha"
+    "test": "mocha",
+    "test:e2e": "mocha --config .mocharc.e2e.json"
   },
   "dependencies": {
     "@ethereum-sourcify/bytecode-utils": "^1.5.1",

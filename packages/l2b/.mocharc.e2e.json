@@ -1,0 +1,5 @@
+{
+  "spec": "e2e/**/*.e2e.ts",
+  "node-option": ["import=tsx"],
+  "extension": "ts"
+}
