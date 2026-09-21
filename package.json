@@ -60,7 +60,7 @@
     "@l2beat/validate": "workspace:*",
     "@sinonjs/fake-timers": "^11.1.0",
     "@types/mocha": "^10.0.6",
-    "@types/node": "^20.19.0",
+    "@types/node": "^22.13.0",
     "@types/sinonjs__fake-timers": "^8.1.2",
     "cmd-ts": "^0.13.0",
     "dotenv": "^16.4.5",
