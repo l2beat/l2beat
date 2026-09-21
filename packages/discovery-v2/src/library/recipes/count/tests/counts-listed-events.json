@@ -1,0 +1,31 @@
+{
+  "description": "Counts logs of every listed event and ignores the rest, so a plan can count `BlockCommit` plus its renamed successor `BatchCommit` as one series across an upgrade.",
+  "args": { "events": ["BlockCommit", "BatchCommit"] },
+  "input": [
+    {
+      "event": "BlockCommit",
+      "blockNumber": 1,
+      "logIndex": 0,
+      "args": { "blockNumber": 1 }
+    },
+    {
+      "event": "BlockVerification",
+      "blockNumber": 2,
+      "logIndex": 0,
+      "args": { "blockNumber": 1 }
+    },
+    {
+      "event": "BlockCommit",
+      "blockNumber": 3,
+      "logIndex": 0,
+      "args": { "blockNumber": 2 }
+    },
+    {
+      "event": "BatchCommit",
+      "blockNumber": 4,
+      "logIndex": 0,
+      "args": { "batchNumber": 3 }
+    }
+  ],
+  "expected": 3
+}

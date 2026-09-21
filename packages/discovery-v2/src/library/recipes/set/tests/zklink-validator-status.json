@@ -1,0 +1,69 @@
+{
+  "description": "One event carries both add and remove through a boolean flag (ZkLink ValidatorStatusUpdate.isActive). Pins that `when` with `negate` splits a single event, that a re-added member is not duplicated, and that a removed member is gone regardless of how often it was added. Output must be sorted so two runs compare equal.",
+  "args": {
+    "key": "validatorAddress",
+    "add": [
+      {
+        "event": "ValidatorStatusUpdate",
+        "when": { "arg": "isActive", "equals": true }
+      }
+    ],
+    "remove": [
+      {
+        "event": "ValidatorStatusUpdate",
+        "when": { "arg": "isActive", "equals": true, "negate": true }
+      }
+    ]
+  },
+  "input": [
+    {
+      "event": "ValidatorStatusUpdate",
+      "blockNumber": 18000001,
+      "logIndex": 3,
+      "args": {
+        "validatorAddress": "0xcccccccccccccccccccccccccccccccccccccccc",
+        "isActive": true
+      }
+    },
+    {
+      "event": "ValidatorStatusUpdate",
+      "blockNumber": 18000001,
+      "logIndex": 4,
+      "args": {
+        "validatorAddress": "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "isActive": true
+      }
+    },
+    {
+      "event": "ValidatorStatusUpdate",
+      "blockNumber": 18000900,
+      "logIndex": 0,
+      "args": {
+        "validatorAddress": "0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+        "isActive": true
+      }
+    },
+    {
+      "event": "ValidatorStatusUpdate",
+      "blockNumber": 18000900,
+      "logIndex": 1,
+      "args": {
+        "validatorAddress": "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+        "isActive": true
+      }
+    },
+    {
+      "event": "ValidatorStatusUpdate",
+      "blockNumber": 18120000,
+      "logIndex": 7,
+      "args": {
+        "validatorAddress": "0xcccccccccccccccccccccccccccccccccccccccc",
+        "isActive": false
+      }
+    }
+  ],
+  "expected": [
+    "0xaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "0xbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb"
+  ]
+}

@@ -1,0 +1,51 @@
+{
+  "name": "list",
+  "version": 1,
+  "description": "Collects a value from every matching log in emission order, keeping duplicates. Exists for append-only state (upgrade history, batch commitments, registered hashes) where V1 used an `event` handler with `add` only and the order and repetition carry meaning. Replaces the V1 `event` handler used with `add` and no `remove`.",
+  "input": "The result of a `logs` fetch: decoded logs `[{ event, blockNumber, logIndex, args }]` in chain order.",
+  "args": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["key", "add"],
+    "properties": {
+      "key": {
+        "type": "string",
+        "description": "Name of the event argument to collect from each matching log."
+      },
+      "add": {
+        "type": "array",
+        "minItems": 1,
+        "description": "Rules selecting the logs to collect from.",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["event"],
+          "properties": {
+            "event": { "type": "string", "description": "Event name." },
+            "when": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["arg", "equals"],
+              "description": "Optional filter: only logs where `args[arg]` equals `equals` (inverted by `negate`).",
+              "properties": {
+                "arg": {
+                  "type": "string",
+                  "description": "Event argument to compare."
+                },
+                "equals": {
+                  "description": "Literal to compare against, any JSON value."
+                },
+                "negate": {
+                  "type": "boolean",
+                  "description": "Invert the comparison."
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "output": "Array of `args[key]` for every matching log, in chain order, duplicates kept.",
+  "replaces": "event (add only)"
+}

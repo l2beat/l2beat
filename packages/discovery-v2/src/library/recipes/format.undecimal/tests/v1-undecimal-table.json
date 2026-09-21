@@ -1,0 +1,26 @@
+{
+  "description": "The table from V1's Undecimal.test.ts, so grouping, fraction placement and the exactness of a 24-digit value all match BigNumber.toFormat() to the character.",
+  "cases": [
+    { "args": { "decimals": 18 }, "input": "0", "expected": "0" },
+    {
+      "args": { "decimals": 6 },
+      "input": "1233458934095843",
+      "expected": "1,233,458,934.095843"
+    },
+    {
+      "args": { "decimals": 10 },
+      "input": "1233458934095843",
+      "expected": "123,345.8934095843"
+    },
+    {
+      "args": { "decimals": 18 },
+      "input": "123345893409584392323164",
+      "expected": "123,345.893409584392323164"
+    },
+    {
+      "args": { "decimals": 18 },
+      "input": "1000000000000000000",
+      "expected": "1"
+    }
+  ]
+}

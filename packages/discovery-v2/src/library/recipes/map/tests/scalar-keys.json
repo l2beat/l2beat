@@ -1,0 +1,14 @@
+{
+  "description": "Scalar keys of different JSON types (number, string, boolean) become object keys by their text, and struct values pass through untouched, so `chainConfig(chainId)` enumerated over three chains reads as one object.",
+  "args": {},
+  "input": [
+    { "key": 1, "value": { "enabled": true, "gasLimit": 300000 } },
+    { "key": "0x0000000000000000000000000000000000000001", "value": 7 },
+    { "key": true, "value": "yes" }
+  ],
+  "expected": {
+    "1": { "enabled": true, "gasLimit": 300000 },
+    "0x0000000000000000000000000000000000000001": 7,
+    "true": "yes"
+  }
+}

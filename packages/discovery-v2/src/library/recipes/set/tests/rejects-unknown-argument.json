@@ -1,0 +1,13 @@
+{
+  "description": "A `key` that is not an argument of the matched event fails loudly instead of collecting nulls; a plan whose field is silently `[null]` would pass the dry run and mislead the benchmark.",
+  "args": { "key": "validator", "add": [{ "event": "ValidatorAdded" }] },
+  "input": [
+    {
+      "event": "ValidatorAdded",
+      "blockNumber": 1,
+      "logIndex": 0,
+      "args": { "account": "0x0000000000000000000000000000000000000001" }
+    }
+  ],
+  "expectedError": "event ValidatorAdded has no argument \"validator\""
+}

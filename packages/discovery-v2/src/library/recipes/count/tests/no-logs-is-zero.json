@@ -1,0 +1,6 @@
+{
+  "description": "No logs count as 0, not null, so a fresh deployment produces a numeric field that later runs can compare against.",
+  "args": { "events": ["Upgraded"] },
+  "input": [],
+  "expected": 0
+}

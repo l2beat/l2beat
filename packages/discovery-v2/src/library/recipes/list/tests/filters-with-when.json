@@ -1,0 +1,30 @@
+{
+  "description": "A `when` filter restricts collection to logs with a matching literal argument, here batches that were finalized (`status` 2), and an empty result is `[]` rather than null so the field type is stable.",
+  "args": {
+    "key": "batchHash",
+    "add": [
+      { "event": "BatchStatus", "when": { "arg": "status", "equals": 2 } }
+    ]
+  },
+  "input": [
+    {
+      "event": "BatchStatus",
+      "blockNumber": 1,
+      "logIndex": 0,
+      "args": { "batchHash": "0x01", "status": 1 }
+    },
+    {
+      "event": "BatchStatus",
+      "blockNumber": 2,
+      "logIndex": 0,
+      "args": { "batchHash": "0x01", "status": 2 }
+    },
+    {
+      "event": "BatchStatus",
+      "blockNumber": 3,
+      "logIndex": 0,
+      "args": { "batchHash": "0x02", "status": 1 }
+    }
+  ],
+  "expected": ["0x01"]
+}

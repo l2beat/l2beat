@@ -1,0 +1,15 @@
+{
+  "description": "A log of any other event is rejected rather than skipped: the plan's `logs` fetch should name exactly the three AccessControl events, and a stray event means the plan fetched the wrong thing.",
+  "input": [
+    {
+      "event": "OwnershipTransferred",
+      "blockNumber": 1,
+      "logIndex": 0,
+      "args": {
+        "previousOwner": "0x0000000000000000000000000000000000000000",
+        "newOwner": "0x0000000000000000000000000000000000000001"
+      }
+    }
+  ],
+  "expectedError": "expects RoleGranted, RoleRevoked or RoleAdminChanged logs, got OwnershipTransferred"
+}

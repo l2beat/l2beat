@@ -1,0 +1,5 @@
+{
+  "description": "An empty enumeration (untilRevert stopped at index 0) yields `[]`, matching V1 for an array with no elements.",
+  "input": [],
+  "expected": []
+}

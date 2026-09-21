@@ -1,0 +1,56 @@
+{
+  "description": "Separate events for add and remove, several rules per side and no `when` filter, which is the most common V1 add/remove shape. Removing a member that was never added is a no-op rather than an error, because logs can predate the block range the plan cares about.",
+  "args": {
+    "key": "operator",
+    "add": [{ "event": "OperatorAdded" }, { "event": "OperatorRestored" }],
+    "remove": [{ "event": "OperatorRemoved" }]
+  },
+  "input": [
+    {
+      "event": "OperatorRemoved",
+      "blockNumber": 100,
+      "logIndex": 0,
+      "args": { "operator": "0x0000000000000000000000000000000000000009" }
+    },
+    {
+      "event": "OperatorAdded",
+      "blockNumber": 101,
+      "logIndex": 0,
+      "args": { "operator": "0x0000000000000000000000000000000000000002" }
+    },
+    {
+      "event": "OperatorAdded",
+      "blockNumber": 102,
+      "logIndex": 0,
+      "args": { "operator": "0x0000000000000000000000000000000000000001" }
+    },
+    {
+      "event": "OperatorRemoved",
+      "blockNumber": 103,
+      "logIndex": 0,
+      "args": { "operator": "0x0000000000000000000000000000000000000002" }
+    },
+    {
+      "event": "OperatorRestored",
+      "blockNumber": 104,
+      "logIndex": 0,
+      "args": { "operator": "0x0000000000000000000000000000000000000002" }
+    },
+    {
+      "event": "OperatorAdded",
+      "blockNumber": 105,
+      "logIndex": 0,
+      "args": { "operator": "0x0000000000000000000000000000000000000003" }
+    },
+    {
+      "event": "OperatorRemoved",
+      "blockNumber": 106,
+      "logIndex": 0,
+      "args": { "operator": "0x0000000000000000000000000000000000000003" }
+    }
+  ],
+  "expected": [
+    "0x0000000000000000000000000000000000000001",
+    "0x0000000000000000000000000000000000000002"
+  ]
+}

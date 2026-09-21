@@ -1,0 +1,13 @@
+{
+  "name": "array",
+  "version": 1,
+  "description": "Turns the pairs of a `callEach` fetch into a plain array of values, for Solidity arrays read through an index getter (`owners(uint256)`, `validators(uint256)`). Exists so an indexed getter enumerated over a range renders like V1's `array` handler did. Replaces the V1 `array` handler.",
+  "input": "The result of a `callEach` fetch over indices: `[{ key, value }]` in index order, typically from `keys: { range: ... }` or `{ untilRevert: ... }`.",
+  "args": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {}
+  },
+  "output": "Array of each pair's `value`, in input order.",
+  "replaces": "array"
+}

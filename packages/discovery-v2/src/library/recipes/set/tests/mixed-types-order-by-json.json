@@ -1,0 +1,31 @@
+{
+  "description": "When members are of mixed types (a uint256 above 2^53 arrives as a decimal string next to small numbers) the set is ordered by JSON text so the result is still deterministic; jq's native ordering would depend on type ranking, which no reader expects.",
+  "args": { "key": "id", "add": [{ "event": "Registered" }] },
+  "input": [
+    {
+      "event": "Registered",
+      "blockNumber": 1,
+      "logIndex": 0,
+      "args": { "id": 2 }
+    },
+    {
+      "event": "Registered",
+      "blockNumber": 2,
+      "logIndex": 0,
+      "args": {
+        "id": "115792089237316195423570985008687907853269984665640564039457584007913129639935"
+      }
+    },
+    {
+      "event": "Registered",
+      "blockNumber": 3,
+      "logIndex": 0,
+      "args": { "id": 1 }
+    }
+  ],
+  "expected": [
+    "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+    1,
+    2
+  ]
+}

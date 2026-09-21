@@ -1,0 +1,18 @@
+{
+  "description": "A fractional number is not a scaled integer, and a JSON number above 2^53 has already lost digits, so both are rejected rather than formatted wrongly; the executor renders large values as decimal strings.",
+  "args": { "decimals": 18 },
+  "cases": [
+    {
+      "input": 1.5,
+      "expectedError": "expects an integer as a number or decimal string, got 1.5"
+    },
+    {
+      "input": 1e21,
+      "expectedError": "expects an integer as a number or decimal string"
+    },
+    {
+      "input": "1e21",
+      "expectedError": "expects an integer as a number or decimal string, got \"1e21\""
+    }
+  ]
+}

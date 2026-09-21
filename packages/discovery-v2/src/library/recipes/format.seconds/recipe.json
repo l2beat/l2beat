@@ -1,0 +1,13 @@
+{
+  "name": "format.seconds",
+  "version": 1,
+  "description": "Renders a duration in seconds as V1's short human form (`1d 1h`), so time-lock delays and challenge windows read the same as in V1 entries. Exists because V1 applies this through a Blip `format` edit that a plan cannot express. Replaces the `formatSeconds` type caster used by Blip `format`.",
+  "input": "A `call` result (or a `$step` value) holding a number of seconds: a JSON number, or a decimal string for values above 2^53.",
+  "args": {
+    "type": "object",
+    "additionalProperties": false,
+    "properties": {}
+  },
+  "output": "A string such as `1y 1mo`, `2mo 3d`, `1m 1s` or `0s`: the largest non-zero unit followed by the next unit down when it is non-zero, smaller units dropped; negative values get a leading `-`; values above 2^53 - 1 render as `more than 285616414y 8mo`, as in V1.",
+  "replaces": "format (formatSeconds)"
+}

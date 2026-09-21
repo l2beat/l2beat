@@ -1,0 +1,10 @@
+{
+  "extends": "@l2beat/typescript-config/base",
+  "compilerOptions": {
+    "outDir": "dist",
+    "rootDir": "./src",
+    "allowJs": true,
+    "checkJs": true
+  },
+  "include": ["src"]
+}

@@ -1,0 +1,15 @@
+{
+  "description": "Cases the V1 table does not cover but BigNumber handles: a JSON number input, zero decimals (grouping only), a value smaller than one unit (leading `0.`), fractions with trailing zeros trimmed, and negatives.",
+  "cases": [
+    { "args": { "decimals": 6 }, "input": 1500000, "expected": "1.5" },
+    { "args": { "decimals": 0 }, "input": 1234567, "expected": "1,234,567" },
+    { "args": { "decimals": 2 }, "input": 5, "expected": "0.05" },
+    {
+      "args": { "decimals": 18 },
+      "input": "1500000000000000000000",
+      "expected": "1,500"
+    },
+    { "args": { "decimals": 6 }, "input": "-1500000", "expected": "-1.5" },
+    { "args": { "decimals": 3 }, "input": "-1", "expected": "-0.001" }
+  ]
+}

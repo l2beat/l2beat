@@ -1,0 +1,8 @@
+{
+  "description": "Without any log the table still contains DEFAULT_ADMIN_ROLE administering itself with no members, matching V1 so an AccessControl contract that never granted a role compares equal field by field.",
+  "args": {},
+  "input": [],
+  "expected": {
+    "DEFAULT_ADMIN_ROLE": { "adminRole": "DEFAULT_ADMIN_ROLE", "members": [] }
+  }
+}

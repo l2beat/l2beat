@@ -1,0 +1,22 @@
+{
+  "description": "A log matching both an add and a remove rule is rejected, as in V1's EventHandler: the plan is ambiguous and the model must make the rules mutually exclusive rather than have the recipe pick a winner.",
+  "args": {
+    "key": "account",
+    "add": [
+      { "event": "Toggled", "when": { "arg": "enabled", "equals": true } }
+    ],
+    "remove": [{ "event": "Toggled" }]
+  },
+  "input": [
+    {
+      "event": "Toggled",
+      "blockNumber": 5,
+      "logIndex": 2,
+      "args": {
+        "account": "0x0000000000000000000000000000000000000001",
+        "enabled": true
+      }
+    }
+  ],
+  "expectedError": "log Toggled at block 5 index 2 matches both an add and a remove rule"
+}

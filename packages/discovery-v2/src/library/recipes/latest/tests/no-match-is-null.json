@@ -1,0 +1,16 @@
+{
+  "description": "With no matching log the value is null, not an error, because a contract that never emitted the event is a legitimate state (the setter was never called) and the field should read as unset.",
+  "args": { "value": "newThreshold", "set": [{ "event": "ThresholdChanged" }] },
+  "input": [
+    {
+      "event": "OwnershipTransferred",
+      "blockNumber": 1,
+      "logIndex": 0,
+      "args": {
+        "previousOwner": "0x0000000000000000000000000000000000000000",
+        "newOwner": "0x0000000000000000000000000000000000000001"
+      }
+    }
+  ],
+  "expected": null
+}

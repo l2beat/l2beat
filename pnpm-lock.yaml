@@ -560,6 +560,40 @@ importers:
         specifier: ^4.9.3
         version: 4.19.2
 
+  packages/discovery-v2:
+    dependencies:
+      '@l2beat/backend-tools':
+        specifier: workspace:*
+        version: link:../backend-tools
+      '@l2beat/discovery':
+        specifier: workspace:*
+        version: link:../discovery
+      '@l2beat/shared':
+        specifier: workspace:*
+        version: link:../shared
+      '@l2beat/shared-pure':
+        specifier: workspace:*
+        version: link:../shared-pure
+      '@l2beat/validate':
+        specifier: workspace:*
+        version: link:../validate
+      cmd-ts:
+        specifier: ^0.13.0
+        version: 0.13.0(supports-color@10.2.2)
+      ethers:
+        specifier: ^5.7.2
+        version: 5.7.2
+      jq-wasm:
+        specifier: ^3.0.0-jq-1.8.2
+        version: 3.0.0-jq-1.8.2
+    devDependencies:
+      '@l2beat/typescript-config':
+        specifier: workspace:*
+        version: link:../typescript-config
+      tsx:
+        specifier: ^4.9.3
+        version: 4.19.2
+
   packages/frontend:
     dependencies:
       '@l2beat/backend-tools':
@@ -7043,6 +7077,10 @@ packages:
 
   jose@6.1.0:
     resolution: {integrity: sha512-TTQJyoEoKcC1lscpVDCSsVgYzUDg/0Bt3WE//WiTPK6uOCQC2KZS4MpugbMWt/zyjkopgZoXhZuCi00gLudfUA==}
+
+  jq-wasm@3.0.0-jq-1.8.2:
+    resolution: {integrity: sha512-jgWSEBJSd0lYR4Q5Fw8333MxQS5jCRI+g9KwAGL7yK1spwzTJy8C5uOS08wbpKE0Gz8oQYLlRpNLE/W70Ksp2g==}
+    engines: {node: '>=20'}
 
   js-sha3@0.8.0:
     resolution: {integrity: sha512-gF1cRrHhIzNfToc802P800N8PpXS+evLLXfsVpowqmAFR9uwbi89WvXg2QspOmXL8QL86J4T1EpFu+yUkwJY3Q==}
@@ -15485,6 +15523,8 @@ snapshots:
   jose@5.10.0: {}
 
   jose@6.1.0: {}
+
+  jq-wasm@3.0.0-jq-1.8.2: {}
 
   js-sha3@0.8.0: {}
 

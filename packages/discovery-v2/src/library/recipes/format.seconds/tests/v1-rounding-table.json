@@ -1,0 +1,28 @@
+{
+  "description": "The complete table from shared-pure's formatSeconds test ('rounds up seconds to lower unit'), so any divergence from V1 in unit sizes or in dropping units below the second most significant one fails here.",
+  "cases": [
+    { "input": 1, "expected": "1s" },
+    { "input": 60, "expected": "1m" },
+    { "input": 61, "expected": "1m 1s" },
+    { "input": 3600, "expected": "1h" },
+    { "input": 3601, "expected": "1h" },
+    { "input": 3660, "expected": "1h 1m" },
+    { "input": 3661, "expected": "1h 1m" },
+    { "input": 86400, "expected": "1d" },
+    { "input": 86401, "expected": "1d" },
+    { "input": 86460, "expected": "1d" },
+    { "input": 86461, "expected": "1d" },
+    { "input": 90000, "expected": "1d 1h" },
+    { "input": 90060, "expected": "1d 1h" },
+    { "input": 90061, "expected": "1d 1h" },
+    { "input": 31536000, "expected": "1y" },
+    { "input": 63072000, "expected": "2y" },
+    { "input": 2592000, "expected": "1mo" },
+    { "input": 5184000, "expected": "2mo" },
+    { "input": 34128000, "expected": "1y 1mo" },
+    { "input": 34214400, "expected": "1y 1mo" },
+    { "input": 5270400, "expected": "2mo 1d" },
+    { "input": 5443200, "expected": "2mo 3d" },
+    { "input": 34218000, "expected": "1y 1mo" }
+  ]
+}

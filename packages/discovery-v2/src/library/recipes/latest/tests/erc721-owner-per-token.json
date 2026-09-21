@@ -1,0 +1,44 @@
+{
+  "description": "With `groupBy` the fold runs per key: ERC721 Transfer logs grouped by tokenId give the current owner of each token, with a token transferred twice showing only its latest owner. Keys are stringified because JSON object keys must be strings.",
+  "args": {
+    "value": "to",
+    "set": [{ "event": "Transfer" }],
+    "groupBy": "tokenId"
+  },
+  "input": [
+    {
+      "event": "Transfer",
+      "blockNumber": 1,
+      "logIndex": 0,
+      "args": {
+        "from": "0x0000000000000000000000000000000000000000",
+        "to": "0x000000000000000000000000000000000000aaaa",
+        "tokenId": 1
+      }
+    },
+    {
+      "event": "Transfer",
+      "blockNumber": 1,
+      "logIndex": 1,
+      "args": {
+        "from": "0x0000000000000000000000000000000000000000",
+        "to": "0x000000000000000000000000000000000000bbbb",
+        "tokenId": 2
+      }
+    },
+    {
+      "event": "Transfer",
+      "blockNumber": 7,
+      "logIndex": 0,
+      "args": {
+        "from": "0x000000000000000000000000000000000000aaaa",
+        "to": "0x000000000000000000000000000000000000cccc",
+        "tokenId": 1
+      }
+    }
+  ],
+  "expected": {
+    "1": "0x000000000000000000000000000000000000cccc",
+    "2": "0x000000000000000000000000000000000000bbbb"
+  }
+}

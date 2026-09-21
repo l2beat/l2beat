@@ -132,7 +132,7 @@ the model.
 
 ## Library
 
-`src/library/<name>/recipe.json` (name, version, argument schema, output
+`src/library/recipes/<name>/recipe.json` (name, version, argument schema, output
 description, V1 equivalent), `recipe.jq` (the implementation), and
 `tests/*.json` (input, args, expected output). Recipes receive
 `{ "input": <fetch result>, "args": <plan args> }` and must produce one JSON

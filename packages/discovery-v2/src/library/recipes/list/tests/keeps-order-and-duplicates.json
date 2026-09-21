@@ -1,0 +1,38 @@
+{
+  "description": "Collects the argument from each matching log in chain order and keeps a repeated value, because an upgrade history that rolled back to an earlier implementation must show the implementation twice. Logs of other events are ignored.",
+  "args": { "key": "implementation", "add": [{ "event": "Upgraded" }] },
+  "input": [
+    {
+      "event": "Upgraded",
+      "blockNumber": 10,
+      "logIndex": 0,
+      "args": { "implementation": "0x0000000000000000000000000000000000000001" }
+    },
+    {
+      "event": "AdminChanged",
+      "blockNumber": 11,
+      "logIndex": 0,
+      "args": {
+        "previousAdmin": "0x0000000000000000000000000000000000000009",
+        "newAdmin": "0x0000000000000000000000000000000000000008"
+      }
+    },
+    {
+      "event": "Upgraded",
+      "blockNumber": 20,
+      "logIndex": 5,
+      "args": { "implementation": "0x0000000000000000000000000000000000000002" }
+    },
+    {
+      "event": "Upgraded",
+      "blockNumber": 30,
+      "logIndex": 1,
+      "args": { "implementation": "0x0000000000000000000000000000000000000001" }
+    }
+  ],
+  "expected": [
+    "0x0000000000000000000000000000000000000001",
+    "0x0000000000000000000000000000000000000002",
+    "0x0000000000000000000000000000000000000001"
+  ]
+}

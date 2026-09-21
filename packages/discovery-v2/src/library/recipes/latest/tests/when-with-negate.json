@@ -1,0 +1,33 @@
+{
+  "description": "A `when` filter with `negate` selects the logs that do not carry a literal, here the last config change that was not a rollback; this pins that negation works in the `set` rules exactly as in set@1.",
+  "args": {
+    "value": "configHash",
+    "set": [
+      {
+        "event": "ConfigUpdated",
+        "when": { "arg": "rollback", "equals": true, "negate": true }
+      }
+    ]
+  },
+  "input": [
+    {
+      "event": "ConfigUpdated",
+      "blockNumber": 1,
+      "logIndex": 0,
+      "args": { "configHash": "0x01", "rollback": false }
+    },
+    {
+      "event": "ConfigUpdated",
+      "blockNumber": 2,
+      "logIndex": 0,
+      "args": { "configHash": "0x02", "rollback": false }
+    },
+    {
+      "event": "ConfigUpdated",
+      "blockNumber": 3,
+      "logIndex": 0,
+      "args": { "configHash": "0x01", "rollback": true }
+    }
+  ],
+  "expected": "0x02"
+}

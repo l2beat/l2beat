@@ -1,0 +1,46 @@
+{
+  "description": "Granting the same account twice lists it once (a Set in V1), revoking an account that is not a member is a no-op, and a role seen only in a revoke still appears with empty members, because V1 creates the role entry on first sight of any event.",
+  "input": [
+    {
+      "event": "RoleGranted",
+      "blockNumber": 1,
+      "logIndex": 0,
+      "args": {
+        "role": "0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6",
+        "account": "0x0000000000000000000000000000000000000001",
+        "sender": "0x00000000000000000000000000000000000000ad"
+      }
+    },
+    {
+      "event": "RoleGranted",
+      "blockNumber": 2,
+      "logIndex": 0,
+      "args": {
+        "role": "0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6",
+        "account": "0x0000000000000000000000000000000000000001",
+        "sender": "0x00000000000000000000000000000000000000ad"
+      }
+    },
+    {
+      "event": "RoleRevoked",
+      "blockNumber": 3,
+      "logIndex": 0,
+      "args": {
+        "role": "0x65d7a28e3265b37a6474929f336521b332c1681b933f6cb9f3376673440d862a",
+        "account": "0x0000000000000000000000000000000000000002",
+        "sender": "0x00000000000000000000000000000000000000ad"
+      }
+    }
+  ],
+  "expected": {
+    "DEFAULT_ADMIN_ROLE": { "adminRole": "DEFAULT_ADMIN_ROLE", "members": [] },
+    "0x9f2df0fed2c77648de5860a4cc508cd0818c85b8b8a1ab4ceeef8d981c8956a6": {
+      "adminRole": "DEFAULT_ADMIN_ROLE",
+      "members": ["0x0000000000000000000000000000000000000001"]
+    },
+    "0x65d7a28e3265b37a6474929f336521b332c1681b933f6cb9f3376673440d862a": {
+      "adminRole": "DEFAULT_ADMIN_ROLE",
+      "members": []
+    }
+  }
+}

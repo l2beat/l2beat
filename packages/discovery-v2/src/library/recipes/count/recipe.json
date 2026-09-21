@@ -1,0 +1,40 @@
+{
+  "name": "count",
+  "version": 1,
+  "description": "Counts the logs of the given events, optionally filtered by an argument literal. Exists because some state is only observable as activity (number of batches committed, number of upgrades) and V1 exposed it through `eventCount`. Replaces the V1 `eventCount` handler.",
+  "input": "The result of a `logs` fetch: decoded logs `[{ event, blockNumber, logIndex, args }]` for the events to count.",
+  "args": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["events"],
+    "properties": {
+      "events": {
+        "type": "array",
+        "minItems": 1,
+        "items": { "type": "string" },
+        "description": "Names of the events to count."
+      },
+      "when": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["arg", "equals"],
+        "description": "Optional filter applied to every counted event: only logs where `args[arg]` equals `equals` (inverted by `negate`).",
+        "properties": {
+          "arg": {
+            "type": "string",
+            "description": "Event argument to compare."
+          },
+          "equals": {
+            "description": "Literal to compare against, any JSON value."
+          },
+          "negate": {
+            "type": "boolean",
+            "description": "Invert the comparison."
+          }
+        }
+      }
+    }
+  },
+  "output": "The number of logs whose event is in `events` and, when given, satisfies `when`.",
+  "replaces": "eventCount"
+}

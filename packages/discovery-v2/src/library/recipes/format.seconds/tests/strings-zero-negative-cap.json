@@ -1,0 +1,15 @@
+{
+  "description": "Edge cases V1's FormatSeconds caster handles: numeric strings (how uint256 values above 2^53 arrive), zero, negatives with a leading minus, fractional seconds truncated, and the `more than` cap for values a double cannot hold, computed from MAX_SAFE_INTEGER exactly as V1 does.",
+  "cases": [
+    { "input": "61", "expected": "1m 1s" },
+    { "input": 0, "expected": "0s" },
+    { "input": "0", "expected": "0s" },
+    { "input": -61, "expected": "-1m 1s" },
+    { "input": 1.9, "expected": "1s" },
+    { "input": "9007199254740993", "expected": "more than 285616414y 8mo" },
+    {
+      "input": "115792089237316195423570985008687907853269984665640564039457584007913129639935",
+      "expected": "more than 285616414y 8mo"
+    }
+  ]
+}

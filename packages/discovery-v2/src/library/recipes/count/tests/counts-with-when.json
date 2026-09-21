@@ -1,0 +1,28 @@
+{
+  "description": "A `when` filter counts only logs carrying a literal, here successful executions, which V1 could not express with topics alone.",
+  "args": {
+    "events": ["Executed"],
+    "when": { "arg": "success", "equals": true }
+  },
+  "input": [
+    {
+      "event": "Executed",
+      "blockNumber": 1,
+      "logIndex": 0,
+      "args": { "id": 1, "success": true }
+    },
+    {
+      "event": "Executed",
+      "blockNumber": 2,
+      "logIndex": 0,
+      "args": { "id": 2, "success": false }
+    },
+    {
+      "event": "Executed",
+      "blockNumber": 3,
+      "logIndex": 0,
+      "args": { "id": 3, "success": true }
+    }
+  ],
+  "expected": 2
+}

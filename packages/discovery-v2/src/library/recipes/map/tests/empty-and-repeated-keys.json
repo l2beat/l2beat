@@ -1,0 +1,5 @@
+{
+  "description": "No pairs give `{}` rather than null so the field type is stable, and a repeated key keeps the last value, which is what a caller re-reading the same slot expects.",
+  "input": [{ "key": 5, "value": "first" }, { "key": 5, "value": "second" }],
+  "expected": { "5": "second" }
+}

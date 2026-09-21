@@ -1,0 +1,40 @@
+{
+  "description": "The last matching log wins: three ownership transfers yield the newest owner, and logs of other events in between are ignored. This is the plain `set` fold that most V1 single-value event handlers rely on.",
+  "args": { "value": "newOwner", "set": [{ "event": "OwnershipTransferred" }] },
+  "input": [
+    {
+      "event": "OwnershipTransferred",
+      "blockNumber": 1,
+      "logIndex": 0,
+      "args": {
+        "previousOwner": "0x0000000000000000000000000000000000000000",
+        "newOwner": "0x0000000000000000000000000000000000000001"
+      }
+    },
+    {
+      "event": "Paused",
+      "blockNumber": 2,
+      "logIndex": 0,
+      "args": { "account": "0x0000000000000000000000000000000000000001" }
+    },
+    {
+      "event": "OwnershipTransferred",
+      "blockNumber": 3,
+      "logIndex": 0,
+      "args": {
+        "previousOwner": "0x0000000000000000000000000000000000000001",
+        "newOwner": "0x0000000000000000000000000000000000000002"
+      }
+    },
+    {
+      "event": "OwnershipTransferred",
+      "blockNumber": 3,
+      "logIndex": 1,
+      "args": {
+        "previousOwner": "0x0000000000000000000000000000000000000002",
+        "newOwner": "0x0000000000000000000000000000000000000003"
+      }
+    }
+  ],
+  "expected": "0x0000000000000000000000000000000000000003"
+}

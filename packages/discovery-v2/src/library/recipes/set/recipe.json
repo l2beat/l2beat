@@ -1,0 +1,83 @@
+{
+  "name": "set",
+  "version": 1,
+  "description": "Rebuilds a membership set (a mapping to bool, an enumerable set, a whitelist) from the events that add to and remove from it. Exists because 394 V1 event handlers are one of three folds over logs and this is the add/remove one; fixing the fold in a recipe means two plans for the same contract cannot disagree on how membership is derived. Replaces the V1 `event` handler used with `add`/`remove`.",
+  "input": "The result of a `logs` fetch: decoded logs `[{ event, blockNumber, logIndex, args }]` in chain order for every event named in the rules.",
+  "args": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["key", "add"],
+    "properties": {
+      "key": {
+        "type": "string",
+        "description": "Name of the event argument whose value is the set member, e.g. `validatorAddress`. Must exist on every event named in `add` and `remove`."
+      },
+      "add": {
+        "type": "array",
+        "minItems": 1,
+        "description": "Rules whose matching logs insert `args[key]` into the set.",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["event"],
+          "properties": {
+            "event": {
+              "type": "string",
+              "description": "Event name, e.g. `ValidatorStatusUpdate`."
+            },
+            "when": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["arg", "equals"],
+              "description": "Optional filter: the rule only matches logs where `args[arg]` equals `equals` (or does not, with `negate`). Use it when one event carries both the add and the remove, e.g. an `isActive` flag.",
+              "properties": {
+                "arg": {
+                  "type": "string",
+                  "description": "Event argument to compare."
+                },
+                "equals": {
+                  "description": "Literal to compare against, any JSON value (booleans, numbers, strings, addresses)."
+                },
+                "negate": {
+                  "type": "boolean",
+                  "description": "When true the rule matches logs where the comparison is false."
+                }
+              }
+            }
+          }
+        }
+      },
+      "remove": {
+        "type": "array",
+        "description": "Rules whose matching logs delete `args[key]` from the set. Same shape as `add`. A log may not match both an add and a remove rule.",
+        "items": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["event"],
+          "properties": {
+            "event": { "type": "string", "description": "Event name." },
+            "when": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["arg", "equals"],
+              "description": "Optional filter, see `add`.",
+              "properties": {
+                "arg": {
+                  "type": "string",
+                  "description": "Event argument to compare."
+                },
+                "equals": { "description": "Literal to compare against." },
+                "negate": {
+                  "type": "boolean",
+                  "description": "Invert the comparison."
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "output": "Array of the members present after replaying every log, unique and sorted so the result is canonical: strings lexicographically, numbers numerically, a mix of types by their JSON text.",
+  "replaces": "event (add/remove)"
+}

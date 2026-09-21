@@ -1,0 +1,41 @@
+{
+  "description": "Numeric members (chain ids) sort numerically, not as text, so 9 precedes 10 and 100; a lexicographic sort would put 10 and 100 before 9 and make the field look reordered between runs.",
+  "args": {
+    "key": "chainId",
+    "add": [{ "event": "ChainEnabled" }],
+    "remove": [{ "event": "ChainDisabled" }]
+  },
+  "input": [
+    {
+      "event": "ChainEnabled",
+      "blockNumber": 1,
+      "logIndex": 0,
+      "args": { "chainId": 100 }
+    },
+    {
+      "event": "ChainEnabled",
+      "blockNumber": 2,
+      "logIndex": 0,
+      "args": { "chainId": 10 }
+    },
+    {
+      "event": "ChainEnabled",
+      "blockNumber": 3,
+      "logIndex": 0,
+      "args": { "chainId": 9 }
+    },
+    {
+      "event": "ChainEnabled",
+      "blockNumber": 4,
+      "logIndex": 0,
+      "args": { "chainId": 42 }
+    },
+    {
+      "event": "ChainDisabled",
+      "blockNumber": 5,
+      "logIndex": 0,
+      "args": { "chainId": 42 }
+    }
+  ],
+  "expected": [9, 10, 100]
+}

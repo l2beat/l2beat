@@ -1,0 +1,5 @@
+{
+  "description": "A string that is not a number is an error, not `0s`, because a plan that pointed this recipe at the wrong getter must fail the dry run.",
+  "input": "soon",
+  "expectedError": "format.seconds@1 expects a number or numeric string, got \"soon\""
+}

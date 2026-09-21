@@ -1,0 +1,147 @@
+{
+  "description": "Realistic replay (a Chainlink-style registry): four roles, DEFAULT_ADMIN_ROLE members granted first, RoleAdminChanged moving three roles under a custom admin role, one revoke and one re-grant. Pins the V1 output shape: names from `roleNames` where known and raw hashes elsewhere, adminRole rendered through the same names, DEFAULT_ADMIN_ROLE always present, members in grant order with the re-granted account at the end.",
+  "args": {
+    "roleNames": {
+      "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5": "ADMIN_ROLE",
+      "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1": "OPERATOR_ROLE",
+      "0xD8AA0F3194971A2A116679F7C2090F6939C8D4E01A2A8D7E41D55E5351469E63": "PAUSER_ROLE"
+    }
+  },
+  "input": [
+    {
+      "event": "RoleGranted",
+      "blockNumber": 21078700,
+      "logIndex": 10,
+      "args": {
+        "role": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "account": "eth:0x0a47cec6657570831ae93db36367656e5597c310",
+        "sender": "eth:0x0a47cec6657570831ae93db36367656e5597c310"
+      }
+    },
+    {
+      "event": "RoleAdminChanged",
+      "blockNumber": 21078719,
+      "logIndex": 165,
+      "args": {
+        "role": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5",
+        "previousAdminRole": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "newAdminRole": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5"
+      }
+    },
+    {
+      "event": "RoleAdminChanged",
+      "blockNumber": 21078719,
+      "logIndex": 166,
+      "args": {
+        "role": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1",
+        "previousAdminRole": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "newAdminRole": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5"
+      }
+    },
+    {
+      "event": "RoleAdminChanged",
+      "blockNumber": 21078719,
+      "logIndex": 167,
+      "args": {
+        "role": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
+        "previousAdminRole": "0x0000000000000000000000000000000000000000000000000000000000000000",
+        "newAdminRole": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5"
+      }
+    },
+    {
+      "event": "RoleGranted",
+      "blockNumber": 21078719,
+      "logIndex": 169,
+      "args": {
+        "role": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5",
+        "account": "eth:0x826714add4dda2b8750794a467c892c0cd49216b",
+        "sender": "eth:0x0a47cec6657570831ae93db36367656e5597c310"
+      }
+    },
+    {
+      "event": "RoleGranted",
+      "blockNumber": 21078719,
+      "logIndex": 170,
+      "args": {
+        "role": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5",
+        "account": "eth:0xbda143d49da40c2cda27c40edfbbe8a0d4ae0cbc",
+        "sender": "eth:0x0a47cec6657570831ae93db36367656e5597c310"
+      }
+    },
+    {
+      "event": "RoleGranted",
+      "blockNumber": 21078719,
+      "logIndex": 171,
+      "args": {
+        "role": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1",
+        "account": "eth:0xbda143d49da40c2cda27c40edfbbe8a0d4ae0cbc",
+        "sender": "eth:0x0a47cec6657570831ae93db36367656e5597c310"
+      }
+    },
+    {
+      "event": "RoleGranted",
+      "blockNumber": 21078719,
+      "logIndex": 172,
+      "args": {
+        "role": "0xfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783",
+        "account": "eth:0xbda143d49da40c2cda27c40edfbbe8a0d4ae0cbc",
+        "sender": "eth:0x0a47cec6657570831ae93db36367656e5597c310"
+      }
+    },
+    {
+      "event": "RoleGranted",
+      "blockNumber": 21078719,
+      "logIndex": 173,
+      "args": {
+        "role": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
+        "account": "eth:0x1ff1fc1bb4d1f081f6e0a7e7e3240f3ecc5b236f",
+        "sender": "eth:0x0a47cec6657570831ae93db36367656e5597c310"
+      }
+    },
+    {
+      "event": "RoleRevoked",
+      "blockNumber": 21200000,
+      "logIndex": 4,
+      "args": {
+        "role": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5",
+        "account": "eth:0x826714add4dda2b8750794a467c892c0cd49216b",
+        "sender": "eth:0xbda143d49da40c2cda27c40edfbbe8a0d4ae0cbc"
+      }
+    },
+    {
+      "event": "RoleGranted",
+      "blockNumber": 21300000,
+      "logIndex": 9,
+      "args": {
+        "role": "0x5f58e3a2316349923ce3780f8d587db2d72378aed66a8261c916544fa6846ca5",
+        "account": "eth:0x826714add4dda2b8750794a467c892c0cd49216b",
+        "sender": "eth:0xbda143d49da40c2cda27c40edfbbe8a0d4ae0cbc"
+      }
+    }
+  ],
+  "expected": {
+    "DEFAULT_ADMIN_ROLE": {
+      "adminRole": "DEFAULT_ADMIN_ROLE",
+      "members": ["eth:0x0a47cec6657570831ae93db36367656e5597c310"]
+    },
+    "ADMIN_ROLE": {
+      "adminRole": "ADMIN_ROLE",
+      "members": [
+        "eth:0xbda143d49da40c2cda27c40edfbbe8a0d4ae0cbc",
+        "eth:0x826714add4dda2b8750794a467c892c0cd49216b"
+      ]
+    },
+    "OPERATOR_ROLE": {
+      "adminRole": "ADMIN_ROLE",
+      "members": ["eth:0xbda143d49da40c2cda27c40edfbbe8a0d4ae0cbc"]
+    },
+    "PAUSER_ROLE": {
+      "adminRole": "ADMIN_ROLE",
+      "members": ["eth:0x1ff1fc1bb4d1f081f6e0a7e7e3240f3ecc5b236f"]
+    },
+    "0xfd643c72710c63c0180259aba6b2d05451e3591a24e58b62239378085726f783": {
+      "adminRole": "DEFAULT_ADMIN_ROLE",
+      "members": ["eth:0xbda143d49da40c2cda27c40edfbbe8a0d4ae0cbc"]
+    }
+  }
+}

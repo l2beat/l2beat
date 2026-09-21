@@ -1,0 +1,20 @@
+{
+  "name": "format.undecimal",
+  "version": 1,
+  "description": "Renders a fixed-point integer (a token amount, a rate scaled by 1e18) as a grouped decimal string, e.g. `1,233,458,934.095843`, exactly as V1's `Undecimal` caster does, so amounts compare equal against V1 entries. Exists because V1 applies this through a Blip `format` edit that a plan cannot express. Replaces the `Undecimal` type caster used by Blip `format`.",
+  "input": "A `call` result (or a `$step` value) holding an integer: a JSON number up to 2^53 - 1, or a decimal string for larger values (which is how the executor renders them).",
+  "args": {
+    "type": "object",
+    "additionalProperties": false,
+    "required": ["decimals"],
+    "properties": {
+      "decimals": {
+        "type": "integer",
+        "minimum": 0,
+        "description": "Number of decimal places the integer is scaled by, e.g. 18 for wei, 6 for USDC."
+      }
+    }
+  },
+  "output": "A string with the integer part grouped in thousands by `,`, a `.` and the fractional digits with trailing zeros removed (omitted entirely when zero), and a leading `-` for negatives: `1`, `123,345.893409584392323164`, `-1.5`, `0.05`.",
+  "replaces": "format (Undecimal)"
+}
