@@ -1,7 +1,7 @@
 import type { OsiLicense } from '@l2beat/config'
 import type { ReactNode } from 'react'
 import { cn } from '~/utils/cn'
-import { CROP_INK } from './cropPalette'
+import { CROP_TITLE } from './cropPalette'
 import type { ResolvedCropEvaluation } from './crops'
 import { getCropStatusText } from './crops'
 
@@ -18,7 +18,10 @@ export function CropEvaluationDetails({
   return (
     <>
       <p
-        className={cn('font-medium text-base', CROP_INK[evaluation.sentiment])}
+        className={cn(
+          'font-medium text-base',
+          CROP_TITLE[evaluation.sentiment],
+        )}
       >
         {label}: {getCropStatusText(evaluation.status, evaluation.sentiment)}
       </p>

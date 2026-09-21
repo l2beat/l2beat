@@ -19,6 +19,12 @@ export const CROP_INK: Record<CropSentiment, string> = {
   neutral: 'text-secondary',
 }
 
+/** A heading names the crop, so a neutral verdict must not mute it like body ink. */
+export const CROP_TITLE: Record<CropSentiment, string> = {
+  ...CROP_INK,
+  neutral: 'text-primary',
+}
+
 export const CROP_BORDER: Record<CropSentiment, string> = {
   good: 'border-crop-good/50',
   warning: 'border-crop-warning/50',

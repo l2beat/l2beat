@@ -56,8 +56,7 @@
   --scrollbar: #8a909d;
   --popover-shadow: 0px 4px 12px 0px rgba(0, 0, 0, 0.55);
 
-  --row-highlight: #ce66f466;
-  --row-highlight-no-opacity: #e9bff8;
+  --row-highlight: #ce66f4;
 
   /* Chart colors */
   --chart-ethereum: #2a5bd8;
@@ -105,16 +104,16 @@
 .dark {
   --primary: #fafafa;
   --primary-invert: #131215;
-  --secondary: #a3a9b9;
+  --secondary: #abb1c1;
   --positive: #12d660;
   --warning: #ffc107;
   --negative: #ff3d3d;
   --brand: #db8bf7;
   --background: #07080c;
   --surface-primary: #1b1e2a;
-  --surface-primary-hover: #252938;
-  --surface-secondary: #292d3c;
-  --surface-tertiary: #3a3f52;
+  --surface-primary-hover: #272b3a;
+  --surface-secondary: #33384b;
+  --surface-tertiary: #4a5069;
   --surface-info: #1f3457;
   --surface-warning: #ffc107;
   --surface-negative: #4a1c22;
@@ -122,16 +121,15 @@
   --header-secondary: #232634;
   --icon-secondary: #80869a;
   --overlay: #04050acc;
-  --divider: #383d4f;
+  --divider: #3d4358;
   --link-stroke: #24406b;
   --link: #66b2ff;
-  --scrollbar: #4a5066;
+  --scrollbar: #565d76;
   /* A drop shadow is invisible on dark surfaces, so floating layers get a hairline edge. */
   --popover-shadow:
     0 0 0 1px var(--divider), 0px 8px 24px 0px rgba(0, 0, 0, 0.7);
 
-  --row-highlight: #9521bf66;
-  --row-highlight-no-opacity: #4b1d5f;
+  --row-highlight: #9521bf;
 
   /* Chart colors */
   --chart-ethereum: #3387ff;
@@ -559,62 +557,43 @@
   }
 
   @keyframes row-highlight {
-    0% {
-      background-color: transparent;
-    }
-    12% {
-      background-color: var(--row-highlight);
-    }
-    32% {
-      background-color: var(--row-highlight);
-    }
-    44% {
-      background-color: transparent;
-    }
-    52% {
-      background-color: transparent;
-    }
-    64% {
-      background-color: var(--row-highlight);
-    }
-    84% {
-      background-color: var(--row-highlight);
-    }
-    96% {
-      background-color: transparent;
-    }
+    0%,
+    44%,
+    52%,
+    96%,
     100% {
       background-color: transparent;
+    }
+    12%,
+    32%,
+    64%,
+    84% {
+      background-color: color-mix(
+        in srgb,
+        var(--row-highlight) 40%,
+        transparent
+      );
     }
   }
 
+  /* For pinned cells, which must stay opaque over the columns scrolling beneath. */
   @keyframes row-highlight-no-opacity {
-    0% {
-      background-color: var(--surface-primary);
-    }
-    12% {
-      background-color: var(--row-highlight-no-opacity);
-    }
-    32% {
-      background-color: var(--row-highlight-no-opacity);
-    }
-    44% {
-      background-color: var(--surface-primary);
-    }
-    52% {
-      background-color: var(--surface-primary);
-    }
-    64% {
-      background-color: var(--row-highlight-no-opacity);
-    }
-    84% {
-      background-color: var(--row-highlight-no-opacity);
-    }
-    96% {
-      background-color: var(--surface-primary);
-    }
+    0%,
+    44%,
+    52%,
+    96%,
     100% {
       background-color: var(--surface-primary);
+    }
+    12%,
+    32%,
+    64%,
+    84% {
+      background-color: color-mix(
+        in srgb,
+        var(--row-highlight) 40%,
+        var(--surface-primary)
+      );
     }
   }
 }
@@ -867,14 +846,14 @@
   --crop-warning-ink: #ffcf3a;
   --crop-bad: #ff5d5d;
   --crop-bad-ink: #ff8080;
-  --crop-neutral: #5a5f68;
-  --crop-neutral-ink: #6b7079;
+  --crop-neutral: #7d8499;
+  --crop-neutral-ink: #939ab0;
   --garden-accent: #8fd06a;
   --garden-border: #2c3a22;
   --garden-tint: #161f0e;
-  --garden-soil: #2a251d;
-  --garden-canvas: #141b10;
-  --plot-canvas: #1e1b12;
+  --garden-soil: #4a3d2b;
+  --garden-canvas: #0a0f08;
+  --plot-canvas: #0f0d07;
   --garden-sun: #c9a437;
   --garden-sprout: #3f6b3a;
 }
