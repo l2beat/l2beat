@@ -1446,7 +1446,7 @@ importers:
         version: 3.4.14(ts-node@10.9.2(@swc/core@1.15.13)(@types/node@20.17.2)(typescript@7.0.2))
       vite:
         specifier: ^8.3.0
-        version: 8.3.0(@types/node@20.17.2)(esbuild@0.25.1)(terser@5.36.0)(tsx@4.19.2)
+        version: 8.3.0(@types/node@20.17.2)(esbuild@0.25.1)(jiti@2.7.0)(terser@5.36.0)(tsx@4.19.2)(yaml@2.6.0)
 
   packages/tools-api:
     dependencies:
@@ -1572,9 +1572,9 @@ importers:
       '@types/uuid':
         specifier: ^10.0.0
         version: 10.0.0
-      '@vitejs/plugin-react-swc':
-        specifier: ^3.7.1
-        version: 3.7.1(vite@5.4.10(@types/node@20.17.2)(lightningcss@1.30.1)(terser@5.36.0))
+      '@vitejs/plugin-react':
+        specifier: ^6.1.1
+        version: 6.1.1(vite@8.3.0(@types/node@20.17.2)(esbuild@0.25.1)(jiti@2.7.0)(terser@5.36.0)(tsx@4.19.2)(yaml@2.6.0))
       esbuild:
         specifier: ^0.25.1
         version: 0.25.1
@@ -1591,8 +1591,8 @@ importers:
         specifier: ^5
         version: 5.9.3
       vite:
-        specifier: ^5.4.10
-        version: 5.4.10(@types/node@20.17.2)(lightningcss@1.30.1)(terser@5.36.0)
+        specifier: ^8.3.0
+        version: 8.3.0(@types/node@20.17.2)(esbuild@0.25.1)(jiti@2.7.0)(terser@5.36.0)(tsx@4.19.2)(yaml@2.6.0)
 
   packages/validate: {}
 
@@ -13352,6 +13352,11 @@ snapshots:
     transitivePeerDependencies:
       - '@swc/helpers'
 
+  '@vitejs/plugin-react@6.1.1(vite@8.3.0(@types/node@20.17.2)(esbuild@0.25.1)(jiti@2.7.0)(terser@5.36.0)(tsx@4.19.2)(yaml@2.6.0))':
+    dependencies:
+      '@rolldown/pluginutils': 1.0.1
+      vite: 8.3.0(@types/node@20.17.2)(esbuild@0.25.1)(jiti@2.7.0)(terser@5.36.0)(tsx@4.19.2)(yaml@2.6.0)
+
   '@vitejs/plugin-react@6.1.1(vite@8.3.0(@types/node@20.17.2)(esbuild@0.25.1)(terser@5.36.0)(tsx@4.19.2))':
     dependencies:
       '@rolldown/pluginutils': 1.0.1
@@ -18188,6 +18193,22 @@ snapshots:
       fsevents: 2.3.3
       lightningcss: 1.30.1
       terser: 5.36.0
+
+  vite@8.3.0(@types/node@20.17.2)(esbuild@0.25.1)(jiti@2.7.0)(terser@5.36.0)(tsx@4.19.2)(yaml@2.6.0):
+    dependencies:
+      lightningcss: 1.33.0
+      picomatch: 4.0.7
+      postcss: 8.5.28
+      rolldown: 1.2.8
+      tinyglobby: 0.2.17
+    optionalDependencies:
+      '@types/node': 20.17.2
+      esbuild: 0.25.1
+      fsevents: 2.3.3
+      jiti: 2.7.0
+      terser: 5.36.0
+      tsx: 4.19.2
+      yaml: 2.6.0
 
   vite@8.3.0(@types/node@20.17.2)(esbuild@0.25.1)(terser@5.36.0)(tsx@4.19.2):
     dependencies:
