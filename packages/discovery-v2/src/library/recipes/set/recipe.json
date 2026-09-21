@@ -3,6 +3,7 @@
   "version": 1,
   "description": "Rebuilds a membership set (a mapping to bool, an enumerable set, a whitelist) from the events that add to and remove from it. Exists because 394 V1 event handlers are one of three folds over logs and this is the add/remove one; fixing the fold in a recipe means two plans for the same contract cannot disagree on how membership is derived. Replaces the V1 `event` handler used with `add`/`remove`.",
   "input": "The result of a `logs` fetch: decoded logs `[{ event, blockNumber, logIndex, args }]` in chain order for every event named in the rules.",
+  "inputKind": "logs",
   "args": {
     "type": "object",
     "additionalProperties": false,
@@ -55,7 +56,10 @@
           "additionalProperties": false,
           "required": ["event"],
           "properties": {
-            "event": { "type": "string", "description": "Event name." },
+            "event": {
+              "type": "string",
+              "description": "Event name."
+            },
             "when": {
               "type": "object",
               "additionalProperties": false,
@@ -66,7 +70,9 @@
                   "type": "string",
                   "description": "Event argument to compare."
                 },
-                "equals": { "description": "Literal to compare against." },
+                "equals": {
+                  "description": "Literal to compare against."
+                },
                 "negate": {
                   "type": "boolean",
                   "description": "Invert the comparison."

@@ -18,6 +18,20 @@ import { parseSchema, type Schema, validateSchema } from './validateSchema'
 
 export type RecipeId = `${string}@${number}`
 
+/**
+ * Which fetch kinds may feed a recipe. `logs` recipes fold decoded logs,
+ * `callEach` recipes reshape `[{ key, value }]` pairs, `scalar` recipes
+ * format one value (a `call`, `storage` or `hardcoded` result, or a prior
+ * step). The validator uses this to reject a plan that pipes, say, logs into
+ * `map@1` before anything is fetched.
+ */
+export type RecipeInputKind = 'logs' | 'callEach' | 'scalar'
+export const RECIPE_INPUT_KINDS: readonly RecipeInputKind[] = [
+  'logs',
+  'callEach',
+  'scalar',
+]
+
 export interface Recipe {
   /** `name@version`, the token a plan uses in `use`. */
   id: RecipeId
@@ -25,6 +39,7 @@ export interface Recipe {
   version: number
   description: string
   input: string
+  inputKind: RecipeInputKind
   args: Schema
   output: string
   replaces: string
@@ -55,6 +70,7 @@ const RecipeManifest = v.strictObject({
     ),
   description: v.string(),
   input: v.string(),
+  inputKind: v.enum(RECIPE_INPUT_KINDS),
   args: v.unknown(),
   output: v.string(),
   replaces: v.string(),
@@ -208,13 +224,24 @@ function renderRecipeDocs(recipe: Recipe): string {
     '',
     `Replaces V1: ${recipe.replaces}`,
     '',
-    `**Input:** ${recipe.input}`,
+    `**Input:** ${recipe.input} (fetch kind: ${describeInputKind(recipe.inputKind)})`,
     '',
     args,
     '',
     `**Output:** ${recipe.output}`,
     '',
   ].join('\n')
+}
+
+function describeInputKind(kind: RecipeInputKind): string {
+  switch (kind) {
+    case 'logs':
+      return '`logs`'
+    case 'callEach':
+      return '`callEach`'
+    case 'scalar':
+      return '`call`, `storage` or `hardcoded`'
+  }
 }
 
 function renderProperty(

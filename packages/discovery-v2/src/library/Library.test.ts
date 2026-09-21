@@ -31,6 +31,25 @@ describe(Library.name, () => {
     expect(library.list().map((r) => r.id)).toEqual(EXPECTED_RECIPES)
   })
 
+  it('declares for every recipe which fetch kind feeds it, so the validator can match recipes to fetches', () => {
+    expect(
+      Object.fromEntries(
+        library.list().map((recipe) => [recipe.id, recipe.inputKind]),
+      ),
+    ).toEqual({
+      'accessControl@1': 'logs',
+      'array@1': 'callEach',
+      'count@1': 'logs',
+      'format.seconds@1': 'scalar',
+      'format.undecimal@1': 'scalar',
+      'latest@1': 'logs',
+      'list@1': 'logs',
+      'map@1': 'callEach',
+      'set@1': 'logs',
+    })
+    expect(library.renderDocs()).toInclude('(fetch kind: `logs`)')
+  })
+
   it('rejects an unknown recipe id and lists the known ones to choose from', () => {
     expect(() => library.get('sets@1')).toThrow(
       `Unknown recipe "sets@1". Known recipes: ${EXPECTED_RECIPES.join(', ')}`,

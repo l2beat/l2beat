@@ -3,6 +3,7 @@
   "version": 1,
   "description": "Takes the most recent value of an argument from the logs that record a state change, optionally per key. Exists for state that is overwritten (current owner, current config, owner per token id) where V1 used an `event` handler with `set`, with or without `groupBy`. Replaces the V1 `event` handler used with `set`.",
   "input": "The result of a `logs` fetch: decoded logs `[{ event, blockNumber, logIndex, args }]` in chain order.",
+  "inputKind": "logs",
   "args": {
     "type": "object",
     "additionalProperties": false,
@@ -21,7 +22,10 @@
           "additionalProperties": false,
           "required": ["event"],
           "properties": {
-            "event": { "type": "string", "description": "Event name." },
+            "event": {
+              "type": "string",
+              "description": "Event name."
+            },
             "when": {
               "type": "object",
               "additionalProperties": false,

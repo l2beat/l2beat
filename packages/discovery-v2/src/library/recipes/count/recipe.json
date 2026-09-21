@@ -3,6 +3,7 @@
   "version": 1,
   "description": "Counts the logs of the given events, optionally filtered by an argument literal. Exists because some state is only observable as activity (number of batches committed, number of upgrades) and V1 exposed it through `eventCount`. Replaces the V1 `eventCount` handler.",
   "input": "The result of a `logs` fetch: decoded logs `[{ event, blockNumber, logIndex, args }]` for the events to count.",
+  "inputKind": "logs",
   "args": {
     "type": "object",
     "additionalProperties": false,
@@ -11,7 +12,9 @@
       "events": {
         "type": "array",
         "minItems": 1,
-        "items": { "type": "string" },
+        "items": {
+          "type": "string"
+        },
         "description": "Names of the events to count."
       },
       "when": {

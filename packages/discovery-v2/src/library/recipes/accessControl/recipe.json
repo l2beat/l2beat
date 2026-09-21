@@ -3,6 +3,7 @@
   "version": 1,
   "description": "Replays OpenZeppelin AccessControl events into the role table V1 writes for 328 contracts: who holds each role and which role administers it. Exists because this output shape is the single most common handler in V1 and cross-project consistency of it comes from fixed code, so the fold lives here rather than in a model-authored plan. Replaces the V1 `accessControl` handler.",
   "input": "The result of a `logs` fetch for `RoleGranted(role, account, sender)`, `RoleRevoked(role, account, sender)` and `RoleAdminChanged(role, previousAdminRole, newAdminRole)`, in chain order.",
+  "inputKind": "logs",
   "args": {
     "type": "object",
     "additionalProperties": false,
@@ -10,8 +11,12 @@
       "roleNames": {
         "type": "object",
         "description": "Optional map from a role hash (`bytes32` hex) to its name, e.g. the value of the `MINTER_ROLE()` getter to `MINTER_ROLE`. Roles without a name are keyed by their hash. The zero hash is always `DEFAULT_ADMIN_ROLE`.",
-        "propertyNames": { "pattern": "^0x[0-9a-fA-F]{64}$" },
-        "additionalProperties": { "type": "string" }
+        "propertyNames": {
+          "pattern": "^0x[0-9a-fA-F]{64}$"
+        },
+        "additionalProperties": {
+          "type": "string"
+        }
       }
     }
   },

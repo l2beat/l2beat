@@ -130,10 +130,19 @@ or a recipe's fixed name; literals type-check against the ABI. Then a dry run at
 the target block reports reverts, zero-log event sets and recipe errors back to
 the model.
 
+Three refinements the implementation adds: a step whose `at` names another
+contract may give `method` as a full fragment that is not in this ABI (the
+target's ABI is not available), and may be named after that method; a plan
+whose `shapeHash` differs from `prepared.shapeHash` is rejected, because it was
+authored for other code; and a `constructorArgs` fetch must use the id
+`constructorArgs`, which is what V1 calls the field. Each recipe declares the
+fetch kind it accepts (`logs`, `callEach` or a scalar `call`/`storage`/
+`hardcoded`), and the validator rejects a recipe fed by the wrong kind.
+
 ## Library
 
-`src/library/recipes/<name>/recipe.json` (name, version, argument schema, output
-description, V1 equivalent), `recipe.jq` (the implementation), and
+`src/library/recipes/<name>/recipe.json` (name, version, input kind, argument
+schema, output description, V1 equivalent), `recipe.jq` (the implementation), and
 `tests/*.json` (input, args, expected output). Recipes receive
 `{ "input": <fetch result>, "args": <plan args> }` and must produce one JSON
 value. Initial recipes, each replacing a V1 handler family:

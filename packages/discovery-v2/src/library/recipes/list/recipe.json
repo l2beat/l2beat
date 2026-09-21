@@ -3,6 +3,7 @@
   "version": 1,
   "description": "Collects a value from every matching log in emission order, keeping duplicates. Exists for append-only state (upgrade history, batch commitments, registered hashes) where V1 used an `event` handler with `add` only and the order and repetition carry meaning. Replaces the V1 `event` handler used with `add` and no `remove`.",
   "input": "The result of a `logs` fetch: decoded logs `[{ event, blockNumber, logIndex, args }]` in chain order.",
+  "inputKind": "logs",
   "args": {
     "type": "object",
     "additionalProperties": false,
@@ -21,7 +22,10 @@
           "additionalProperties": false,
           "required": ["event"],
           "properties": {
-            "event": { "type": "string", "description": "Event name." },
+            "event": {
+              "type": "string",
+              "description": "Event name."
+            },
             "when": {
               "type": "object",
               "additionalProperties": false,

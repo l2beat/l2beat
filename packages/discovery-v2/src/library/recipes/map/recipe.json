@@ -3,6 +3,7 @@
   "version": 1,
   "description": "Turns the key/value pairs of a `callEach` fetch into an object, so a mapping enumerated with known keys reads as `{ key: value }`. Exists because 71 V1 `call` handlers and the mapping enumerations in templates all end in this shape, and fixing it here keeps key rendering identical across plans. Replaces V1 `call` handlers with literal keys and template mapping enumerations.",
   "input": "The result of a `callEach` fetch: `[{ key, value }]` in key order, where `key` is the call argument (or the argument tuple) and `value` the decoded return value.",
+  "inputKind": "callEach",
   "args": {
     "type": "object",
     "additionalProperties": false,

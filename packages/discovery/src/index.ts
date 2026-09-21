@@ -54,6 +54,10 @@ export { DiscoveryEngine } from './discovery/engine/DiscoveryEngine'
 export { getDiscoveryEngine } from './discovery/getDiscoveryEngine'
 export { HandlerExecutor } from './discovery/handlers/HandlerExecutor'
 export { UserHandlers } from './discovery/handlers/user'
+export { serializeResult as serializeConstructorArgs } from './discovery/handlers/user/ConstructorArgsHandler'
+export { bytes32ToContractValue } from './discovery/handlers/utils/bytes32ToContractValue'
+export { EXEC_REVERT_MSG } from './discovery/handlers/utils/callMethod'
+export { toContractValue } from './discovery/handlers/utils/toContractValue'
 export {
   type ClingoFact,
   type ClingoValue,
@@ -84,7 +88,10 @@ export { neuterErrors } from './discovery/output/errors'
 export { flattenDiscoveredSources } from './discovery/output/flattenDiscoveredSource'
 export { remapDiscoverySourceNames } from './discovery/output/remapDiscoverySourceNames'
 export { saveDiscoveredJson } from './discovery/output/saveDiscoveryResult'
-export { generateStructureHash } from './discovery/output/structureOutput'
+export {
+  generateStructureHash,
+  sortByKeys,
+} from './discovery/output/structureOutput'
 export {
   combineStructureAndColor,
   toDiscoveryOutput,
@@ -98,6 +105,7 @@ export type {
   ResolvedPermissionPath,
 } from './discovery/output/types'
 export { AllProviders } from './discovery/provider/AllProviders'
+export { orderLogs } from './discovery/provider/BatchingAndCachingProvider'
 export type {
   DebugTransactionCall,
   DebugTransactionCallResponse,
@@ -122,15 +130,23 @@ export {
   generateEntrypointsCommand,
 } from './discovery/shared-modules/generateEntrypoints'
 export { deduplicateAbi } from './discovery/source/deduplicateAbi'
-export { SourceCodeService } from './discovery/source/SourceCodeService'
+export { getImplementationNames } from './discovery/source/getDerivedName'
+export {
+  type ContractSources,
+  type PerContractSource,
+  SourceCodeService,
+} from './discovery/source/SourceCodeService'
 export { asStructured } from './discovery/type-casters/asStructured'
 export {
   get$Admins,
+  get$Beacons,
   get$Implementations,
+  get$PastUpgrades,
   toAddressArray,
 } from './discovery/utils/extractors'
 export { getContractField } from './discovery/utils/metaGetters'
 export { normalizeDiffPath } from './discovery/utils/normalizeDiffPath'
+export { prefixAddresses } from './discovery/utils/prefixAddresses'
 export { getReachableEntries } from './discovery/utils/reachable'
 export { readJsonc } from './discovery/utils/readJsonc'
 export { sortBySeverity } from './discovery/utils/sortDiffs'
@@ -145,6 +161,7 @@ export {
   estimateSimilarity,
   flatteningHash,
   getHashToBeMatched,
+  recalculateSourceHashes,
 } from './flatten/utils'
 export {
   type ContractConfigSchema,

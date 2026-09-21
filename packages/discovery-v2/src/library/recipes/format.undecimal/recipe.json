@@ -3,6 +3,7 @@
   "version": 1,
   "description": "Renders a fixed-point integer (a token amount, a rate scaled by 1e18) as a grouped decimal string, e.g. `1,233,458,934.095843`, exactly as V1's `Undecimal` caster does, so amounts compare equal against V1 entries. Exists because V1 applies this through a Blip `format` edit that a plan cannot express. Replaces the `Undecimal` type caster used by Blip `format`.",
   "input": "A `call` result (or a `$step` value) holding an integer: a JSON number up to 2^53 - 1, or a decimal string for larger values (which is how the executor renders them).",
+  "inputKind": "scalar",
   "args": {
     "type": "object",
     "additionalProperties": false,
