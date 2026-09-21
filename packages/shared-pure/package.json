@@ -10,6 +10,10 @@
       "default": "./build/index.js"
     }
   },
+  "files": [
+    "build",
+    "src"
+  ],
   "scripts": {
     "build": "pnpm run clean && tsc -p tsconfig.build.json",
     "clean": "rm -rf build *.tsbuildinfo",

@@ -27,6 +27,7 @@ jobs:
       - name: Build container
         uses: docker/build-push-action@v7
         with:
+          context: .
           push: false
           file: packages/backend/Dockerfile
           build-args: |
@@ -178,8 +179,11 @@ jobs:
       - name: Build container
         uses: docker/build-push-action@v7
         with:
+          context: .
           push: false
           file: packages/token-backend/Dockerfile
+          cache-from: type=gha,scope=token-backend
+          cache-to: type=gha,scope=token-backend,mode=max
           build-args: |
             TURBO_TEAM=${{ vars.TURBO_TEAM }}
           secrets: |

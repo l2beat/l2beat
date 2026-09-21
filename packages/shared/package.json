@@ -29,6 +29,10 @@
       ]
     }
   },
+  "files": [
+    "build",
+    "src"
+  ],
   "scripts": {
     "build": "tsc -p tsconfig.build.json",
     "clean": "rm -rf build *.tsbuildinfo",

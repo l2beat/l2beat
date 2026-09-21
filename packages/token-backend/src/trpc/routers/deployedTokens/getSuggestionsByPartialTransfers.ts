@@ -6,7 +6,7 @@ import type {
   TokenDatabase,
 } from '@l2beat/database'
 import { Address32, assert } from '@l2beat/shared-pure'
-import { InteropTransferClassifier } from '../../../../../shared/build'
+import { InteropTransferClassifier } from '@l2beat/shared'
 import type { ChainRecord } from '../../../schemas/Chain'
 
 export type TransferSuggestion = {

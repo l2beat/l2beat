@@ -1,6 +1,6 @@
 import type { InteropTokenRouteRecord } from '@l2beat/database'
 import { Address32, type InteropBridgeType } from '@l2beat/shared-pure'
-import { InteropTransferClassifier } from '../../../shared/build'
+import { InteropTransferClassifier } from '@l2beat/shared'
 import type { TransferPluginEvidence } from './IngestionTrace'
 
 export interface TokenAddress {

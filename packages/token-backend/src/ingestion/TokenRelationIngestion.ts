@@ -8,7 +8,7 @@ import {
   type TokenRelationRecord,
   type TokenRelationRoute,
 } from '@l2beat/database'
-import { InteropTransferClassifier } from '../../../shared/build'
+import { InteropTransferClassifier } from '@l2beat/shared'
 import {
   commitTokenChanges,
   serializeInteropTransferRecord,

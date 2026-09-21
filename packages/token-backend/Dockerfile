@@ -29,11 +29,11 @@ RUN --mount=type=secret,id=TURBO_TOKEN,env=TURBO_TOKEN \
   --mount=type=secret,id=TURBO_API,env=TURBO_API \
   pnpm build:token-backend
 
-# Replace node_modules with production dependencies only. Switching dev -> prod
-# in place does not garbage-collect the virtual store, so purge and reinstall
-# offline from the local store (cached native builds are reused).
-RUN rm -rf node_modules packages/*/node_modules && \
-  CI=true pnpm install --prod --frozen-lockfile --offline
+# Assemble a self-contained production tree for token-backend from the local
+# store. Injected workspace packages are copied in per their package.json
+# "files", so the release stage ships only this package and its runtime deps.
+# The release-age policy was already enforced by the pnpm install above.
+RUN pnpm --filter @l2beat/token-backend --config.inject-workspace-packages=true --config.minimum-release-age=0 deploy --prod --frozen-lockfile --offline /deploy/
 
 RUN mkdir /dist/ && \
   cd /dist/ && \
@@ -52,10 +52,10 @@ RUN apt update && \
   groupadd -r appgroup && useradd -r -g appgroup -m appuser
 
 WORKDIR /app/
-COPY --from=builder --chown=appuser:appgroup /src/ .
+COPY --from=builder --chown=appuser:appgroup /deploy/ .
+COPY --from=builder --chown=appuser:appgroup /src/.discovery.json .
 COPY --from=builder --chown=appuser:appgroup /dist/difft /usr/local/bin/difft
 
-WORKDIR /app/packages/token-backend/
 USER appuser
 
 CMD ["node", "build/server.js"]
