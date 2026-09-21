@@ -23,6 +23,18 @@
     }
   },
   "fields": {
+    "pendingOwner": {
+      "severity": "MEDIUM"
+    },
+    "paused": {
+      "severity": "MEDIUM"
+    },
+    "resolver": {
+      "severity": "HIGH"
+    },
+    "$admin": {
+      "severity": "HIGH"
+    },
     "owner": {
       "severity": "HIGH",
       "permissions": [

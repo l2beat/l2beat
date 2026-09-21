@@ -7,5 +7,16 @@
     "VALIDATOR_CONTAINER_PROOF_VERIFIER",
     "VAULT_FACTORY",
     "VAULT_HUB"
-  ]
+  ],
+  "fields": {
+    "STETH": {
+      "severity": "HIGH"
+    },
+    "YIELD_MANAGER": {
+      "severity": "HIGH"
+    },
+    "L1_MESSAGE_SERVICE": {
+      "severity": "HIGH"
+    }
+  }
 }

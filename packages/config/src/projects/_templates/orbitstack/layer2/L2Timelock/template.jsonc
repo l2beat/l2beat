@@ -5,7 +5,11 @@
   "category": "gov",
   "description": "Delays constitutional AIPs from the CoreGovernor by 8d.",
   "fields": {
+    "$admin": {
+      "severity": "HIGH"
+    },
     "timelockAdminAC": {
+      "severity": "HIGH",
       "handler": {
         "type": "accessControl",
         "pickRoleMembers": "TIMELOCK_ADMIN_ROLE"
@@ -19,6 +23,7 @@
       ]
     },
     "getMinDelayFormatted": {
+      "severity": "HIGH",
       "handler": {
         "type": "call",
         "method": "getMinDelay",
@@ -27,11 +32,13 @@
       "edit": ["format", "FormatSeconds"]
     },
     "accessControl": {
+      "severity": "HIGH",
       "handler": {
         "type": "accessControl"
       }
     },
     "Proposer": {
+      "severity": "HIGH",
       "handler": {
         "type": "accessControl",
         "pickRoleMembers": "PROPOSER_ROLE"
@@ -48,6 +55,7 @@
       ]
     },
     "Canceller": {
+      "severity": "HIGH",
       "handler": {
         "type": "accessControl",
         "pickRoleMembers": "CANCELLER_ROLE"

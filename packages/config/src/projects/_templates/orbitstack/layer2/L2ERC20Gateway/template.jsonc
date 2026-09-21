@@ -5,5 +5,22 @@
   "category": "bridge-canonical",
   "description": "Counterpart to the L1ERC20Gateway. Can mint (deposit to L2) and burn (withdraw to L1) ERC20 tokens on L2.",
   "ignoreRelatives": ["counterpartGateway"],
-  "ignoreInWatchMode": ["exitNum"]
+  "ignoreInWatchMode": ["exitNum"],
+  "fields": {
+    "cloneableProxyHash": {
+      "severity": "HIGH"
+    },
+    "beaconProxyFactory": {
+      "severity": "HIGH"
+    },
+    "router": {
+      "severity": "HIGH"
+    },
+    "counterpartGateway": {
+      "severity": "HIGH"
+    },
+    "$admin": {
+      "severity": "HIGH"
+    }
+  }
 }

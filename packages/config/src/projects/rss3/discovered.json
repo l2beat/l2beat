@@ -26,7 +26,10 @@
         "isUpgrading": false,
         "owner": "eth:0x8AC80fa0993D95C9d6B8Cb494E561E6731038941"
       },
-      "fieldMeta": { "owner": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "owner": { "severity": "HIGH" },
+        "addressManager": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0x1075B29e5F7a911128C77F3989702E150C988904": "ProxyAdmin"
       }
@@ -346,7 +349,17 @@
         "superchainConfig": "eth:0x3e5FaB39eD4eFB4fc29A5201059AE819f2f0418A",
         "version": "2.1.1"
       },
-      "fieldMeta": { "$admin": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "$admin": { "severity": "HIGH" },
+        "ResolvedDelegateProxy_addressManager": { "severity": "HIGH" },
+        "superchainConfig": { "severity": "HIGH" },
+        "systemConfig": { "severity": "HIGH" },
+        "portal": { "severity": "HIGH" },
+        "PORTAL": { "severity": "HIGH" },
+        "otherMessenger": { "severity": "HIGH" },
+        "OTHER_MESSENGER": { "severity": "HIGH" },
+        "paused": { "severity": "MEDIUM" }
+      },
       "implementationNames": {
         "eth:0x892CAa506c86C5101f5eC11C6f09589c9dC8A85C": "ResolvedDelegateProxy",
         "eth:0x4795EaC1a2581F2Db6419203D063711C5a90aD50": "L1CrossDomainMessenger"

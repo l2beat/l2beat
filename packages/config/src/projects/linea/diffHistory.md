@@ -1,3 +1,285 @@
+Generated with discovered.json: 0xbffd358db33cb093809d6eb43b1849f166d1a023
+
+# Diff at Mon, 21 Sep 2026 11:24:02 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@231e4a5828ee5ff5a863f7b80215466ca39a5b1e block: 1789919089
+- current timestamp: 1789919089
+
+## Description
+
+ossification re-review: field severities
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1789919089 (main branch discovery), not current.
+
+```diff
+    contract TokenBridge (eth:0x051F1D88f0aF5763fB888eC4378b4D8B29ea3319) [linea/L1TokenBridge_v1_1] {
+    +++ description: Contract used to bridge and escrow ERC-20 tokens.
+      fieldMeta.PAUSE_DURATION:
++        {"severity":"HIGH"}
+      fieldMeta.COOLDOWN_DURATION:
++        {"severity":"HIGH"}
+      fieldMeta.tokenBeacon:
++        {"severity":"HIGH"}
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
+      fieldMeta.accessControl:
++        {"severity":"HIGH"}
+      fieldMeta.defaultAdminAC:
++        {"severity":"HIGH"}
+      fieldMeta.pauseTypeToRole:
++        {"severity":"HIGH"}
+      fieldMeta.unpauseTypeToRole:
++        {"severity":"HIGH"}
+      fieldMeta.customContractSetters:
++        {"severity":"HIGH"}
+      fieldMeta.reserveTokenSetters:
++        {"severity":"HIGH"}
+      fieldMeta.reserveTokenRemovers:
++        {"severity":"HIGH"}
+      fieldMeta.messageServiceSetters:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract PlonkVerifierFull (eth:0x09ac9f7E5Fb37e241e0B1e52aaF01eFE0a488a77) [N/A] {
+    +++ description: None
+      fieldMeta:
++        {"getChainConfiguration":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract CallForwardingProxy (eth:0x3697bD0bC6C050135b8321F989a5316eACbF367D) [linea/CallForwardingProxy] {
+    +++ description: A public proxy contract forwarding calls to a predefined target contract (eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F). Can be called by any address.
+      fieldMeta:
++        {"target":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract BridgedToken (eth:0x36f274C1C197F277EA3C57859729398FCc8a3763) [linea/BridgedToken] {
+    +++ description: Standard implementation used for assets that are native to the other layer and are bridged to this layer.
+      fieldMeta:
++        {"bridge":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x41fAD3Df1B07B647D120D055259E474fE8046eb5) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta.addressManager:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract LidoStVaultYieldProvider (eth:0x486D8cADc10489B30b64c890aEc747F1220eEEC3) [linea/LidoStakingVaultYieldProvider] {
+    +++ description: Yield provider adaptor, delegatecalled by the YieldManager, that deploys rollup ETH into a Lido V3 staking vault (stVault) and its beacon chain validators. Withdrawals back to the reserve are requested via EIP-7002 partial validator withdrawals, so refilling the reserve is subject to beacon chain latency; while the reserve is in deficit anyone can trigger them with a validator proof.
+      fieldMeta:
++        {"STETH":{"severity":"HIGH"},"YIELD_MANAGER":{"severity":"HIGH"},"L1_MESSAGE_SERVICE":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract AddressFilter (eth:0x526AE78F0103Ae73F05449ae30eb626C1003784E) [linea/AddressFilter] {
+    +++ description: Blocklist consulted by the LineaRollup forced-transaction path: an address on this list cannot force-include transactions from L1, so the contract gates the escape hatch.
+      fieldMeta.accessControl:
++        {"severity":"HIGH"}
+      fieldMeta.defaultAdminAC:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract Delay (eth:0x784CCeE002E259Fc38C4b36C2D8bd8a457e55436) [gnosisSafeModules/ZodiacDelay] {
+    +++ description: A simple Safe module for that can queue and execute transactions as eth:0xB8F5524D73f549Cf14A0587a3C7810723f9c0051 after a delay of currently 3mo, if registered as a module there.
+      fieldMeta.ZodiacModule_guard:
++        {"severity":"HIGH"}
+      fieldMeta.ZodiacModule_target:
++        {"severity":"HIGH"}
+      fieldMeta.ZodiacModule_avatar:
++        {"severity":"HIGH"}
+      fieldMeta.getGuard:
++        {"severity":"HIGH"}
+      fieldMeta.avatar:
++        {"severity":"HIGH"}
+      fieldMeta.txCooldownFmt:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract UpgradeableBeacon (eth:0x971f46a2852d11D59dbF0909e837cfd06f357DeB) [global/UpgradeableBeacon] {
+    +++ description: A beacon with an upgradeable implementation currently set as eth:0x36f274C1C197F277EA3C57859729398FCc8a3763. Beacon proxy contracts pointing to this beacon will all use its implementation.
+      fieldMeta.owner:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract PlonkVerifierFull (eth:0xAFF26999780901ee8B48f0a1271a177ff46fD53F) [N/A] {
+    +++ description: None
+      fieldMeta:
++        {"getChainConfiguration":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract LineaRollup (eth:0xd19d4B5d358258f05D7B411E21A1460D11B0876F) [linea/LineaRollup_ForcedTrx_v8_0] {
+    +++ description: The main contract of the Linea zkEVM rollup. Contains state roots, the verifier addresses and manages messages between L1 and the L2. ETH deployed to the rollup contract can be transfered to a yield protocol.
+      fieldMeta.pauseDuration_fmt.severity:
++        "HIGH"
+      fieldMeta.COOLDOWN_DURATION_fmt.severity:
++        "HIGH"
+      fieldMeta.isWithdrawLSTAllowed:
++        {"severity":"HIGH"}
+      fieldMeta.PAUSE_DURATION:
++        {"severity":"HIGH"}
+      fieldMeta.COOLDOWN_DURATION:
++        {"severity":"HIGH"}
+      fieldMeta.forcedTransactionFeeInWei:
++        {"severity":"HIGH"}
+      fieldMeta.addressFilter:
++        {"severity":"HIGH"}
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
+      fieldMeta.livenessRecoveryOperator:
++        {"severity":"HIGH"}
+      fieldMeta.accessControl:
++        {"severity":"HIGH"}
+      fieldMeta.defaultAdminAC:
++        {"severity":"HIGH"}
+      fieldMeta.ethStakerAC:
++        {"severity":"HIGH"}
+      fieldMeta.securityCouncilAC:
++        {"severity":"HIGH"}
+      fieldMeta.yieldManagerSetterAC:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract Timelock (eth:0xd6B95c960779c72B8C6752119849318E5d550574) [global/Timelock] {
+    +++ description: A standard timelock with access control. The current minimum delay is 0s.
+      fieldMeta.getMinDelay:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract YieldManager (eth:0xeb63cABDd78537b9b72A2AFB573F7caa91bd8D94) [linea/YieldManager] {
+    +++ description: Manages flows of ETH and staked ETH in and out of rollup contract reserves. Tracks the available ETH balance for L2 exits, configures target parameters for amount of staked ETH, communicates with yield provider adaptors.
+      fieldMeta.yieldStakingOperatorAC.severity:
++        "HIGH"
+      fieldMeta.yieldStakingManagerAC.severity:
++        "HIGH"
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
+      fieldMeta.accessControl:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xF5058616517C068C7b8c7EbC69FF636Ade9066d6) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta.addressManager:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract ProxyAdmin (linea:0x1E1f6F22f97b4a7522D8B62e983953639239774E) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta.addressManager:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract TokenBridge (linea:0x353012dc4a9A6cF55c941bADC267f82004A8ceB9) [linea/L1TokenBridge_v1_1] {
+    +++ description: Contract used to bridge and escrow ERC-20 tokens.
+      fieldMeta.PAUSE_DURATION:
++        {"severity":"HIGH"}
+      fieldMeta.COOLDOWN_DURATION:
++        {"severity":"HIGH"}
+      fieldMeta.tokenBeacon:
++        {"severity":"HIGH"}
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
+      fieldMeta.accessControl:
++        {"severity":"HIGH"}
+      fieldMeta.defaultAdminAC:
++        {"severity":"HIGH"}
+      fieldMeta.pauseTypeToRole:
++        {"severity":"HIGH"}
+      fieldMeta.unpauseTypeToRole:
++        {"severity":"HIGH"}
+      fieldMeta.customContractSetters:
++        {"severity":"HIGH"}
+      fieldMeta.reserveTokenSetters:
++        {"severity":"HIGH"}
+      fieldMeta.reserveTokenRemovers:
++        {"severity":"HIGH"}
+      fieldMeta.messageServiceSetters:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract L2MessageService (linea:0x508Ca82Df566dCD1B0DE8296e70a96332cD644ec) [linea/L2MessageService_v1_0] {
+    +++ description: None
+      fieldMeta.PAUSE_DURATION:
++        {"severity":"HIGH"}
+      fieldMeta.COOLDOWN_DURATION:
++        {"severity":"HIGH"}
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
+      fieldMeta.accessControl:
++        {"severity":"HIGH"}
+      fieldMeta.l1l2MessageSetter:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract L2Timelock (linea:0xc808BfCBeD34D90fa9579CAa664e67B9A03C56ca) [global/Timelock] {
+    +++ description: A standard timelock with access control. The current minimum delay is 0s.
+      fieldMeta.getMinDelay:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract ProxyAdmin (linea:0xcB04d0AD0D3ceA5aEc1B480957Ddb20CA47EA30c) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta.addressManager:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract BridgedToken (linea:0xda8AEFCf0F9B0b81915a2C124f913e58212D49dF) [linea/BridgedToken] {
+    +++ description: Standard implementation used for assets that are native to the other layer and are bridged to this layer.
+      fieldMeta:
++        {"bridge":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract UpgradeableBeacon (linea:0xE798695d2e78f7caeb5BbF3385433959324c02c0) [global/UpgradeableBeacon] {
+    +++ description: A beacon with an upgradeable implementation currently set as linea:0xda8AEFCf0F9B0b81915a2C124f913e58212D49dF. Beacon proxy contracts pointing to this beacon will all use its implementation.
+      fieldMeta.owner:
++        {"severity":"HIGH"}
+    }
+```
+
 Generated with discovered.json: 0x2b9201e8b2bd850ae52de4abbd514d145d1a3764
 
 # Diff at Sun, 20 Sep 2026 15:46:27 GMT:

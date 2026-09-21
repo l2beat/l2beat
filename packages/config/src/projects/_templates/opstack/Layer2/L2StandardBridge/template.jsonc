@@ -4,6 +4,26 @@
   "description": "The L2StandardBridge contract is the main entry point to deposit or withdraw ERC20 tokens from L2 to L1. This contract can store any token.",
   "ignoreRelatives": ["l1TokenBridge", "OTHER_BRIDGE"],
   "fields": {
+    "l1TokenBridge": {
+      // the host-chain bridge this predeploy mints against
+      "severity": "HIGH"
+    },
+    "otherBridge": {
+      "severity": "HIGH"
+    },
+    "OTHER_BRIDGE": {
+      "severity": "HIGH"
+    },
+    "messenger": {
+      "severity": "HIGH"
+    },
+    "MESSENGER": {
+      "severity": "HIGH"
+    },
+    "paused": {
+      "severity": "MEDIUM"
+    },
+
     "$admin": {
       "severity": "HIGH"
     }

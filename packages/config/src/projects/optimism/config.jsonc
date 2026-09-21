@@ -301,6 +301,15 @@
       // sole minter of OP, which is counted (natively minted) in the TVS.
       "critical": true,
       "fields": {
+        "MINT_PERIOD": {
+          "severity": "HIGH"
+        },
+        "MINT_CAP": {
+          "severity": "HIGH"
+        },
+        "governanceToken": {
+          "severity": "HIGH"
+        },
         "owner": {
           "severity": "HIGH",
           "permissions": [

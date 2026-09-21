@@ -3,6 +3,22 @@
   "displayName": "Inbox",
   "critical": true,
   "description": "Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.",
-  "fields": {},
+  "fields": {
+    "paused": {
+      "severity": "MEDIUM"
+    },
+    "allowListEnabled": {
+      "severity": "HIGH"
+    },
+    "sequencerInbox": {
+      "severity": "HIGH"
+    },
+    "bridge": {
+      "severity": "HIGH"
+    },
+    "$admin": {
+      "severity": "HIGH"
+    }
+  },
   "category": "bridge-canonical"
 }

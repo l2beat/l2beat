@@ -130,6 +130,7 @@
       },
       "fieldMeta": {
         "owner": {
+          "severity": "HIGH",
           "description": "Current operator that can stage verification keys, move the helper into WAITING, and return it to SETTING after governance has opened the COMMITTING phase.",
           "type": "PERMISSION"
         },
@@ -303,6 +304,7 @@
       },
       "fieldMeta": {
         "owner": {
+          "severity": "HIGH",
           "description": "Current operator that can stage verification keys, move the helper into WAITING, and return it to SETTING after governance has opened the COMMITTING phase.",
           "type": "PERMISSION"
         },
@@ -693,6 +695,7 @@
           "type": "PERMISSION"
         },
         "verificationKeyDelegates": {
+          "severity": "HIGH",
           "description": "Delegated callers currently allowed to update Railgun smart wallet SNARK verification keys through the Delegator.",
           "type": "PERMISSION"
         }
@@ -892,6 +895,7 @@
           "type": "PERMISSION"
         },
         "cap": {
+          "severity": "HIGH",
           "description": "Hard cap on total RAIL supply.",
           "type": "RISK_PARAMETER"
         },
@@ -1203,6 +1207,7 @@
           "type": "PERMISSION"
         },
         "treasury": {
+          "severity": "HIGH",
           "description": "Treasury contract that receives shield and unshield fees. Changing the recipient does not change the fees charged to users."
         },
         "shieldFee": {

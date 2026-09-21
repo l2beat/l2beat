@@ -5,6 +5,15 @@
   "description": "Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by {{executionDelay_fmt}}.",
   "ignoreRelatives": ["accessControl"],
   "fields": {
+    "executionDelay": {
+      "severity": "HIGH"
+    },
+    "owner": {
+      "severity": "HIGH"
+    },
+    "$admin": {
+      "severity": "HIGH"
+    },
     // the DEFAULT_ADMIN_ROLE is always the chainAdmin (defined by the bridgehub) and is not controlled by accesscontrol
     // not fetching accessControl here but in the respective projects instead
     // "accessControl": {

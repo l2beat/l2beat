@@ -22,6 +22,7 @@
     "RespectedGameString": {
       "handler": {
         "type": "call",
+        "expectRevert": true,
         "method": "respectedGameType",
         "args": []
       },

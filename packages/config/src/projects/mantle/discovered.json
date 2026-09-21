@@ -1,7 +1,7 @@
 {
   "name": "mantle",
   "timestamp": 1789917555,
-  "configHash": "0xa470c8494e171e492206b7cd8e06d123f926e3095f2e5dc33040acc90261a2cf",
+  "configHash": "0x06f40902111ca63c12022ada8e771d1d2cdd509cd18e316b5ae75e763fe772da",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -25,7 +25,10 @@
         "$immutable": true,
         "owner": "eth:0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F"
       },
-      "fieldMeta": { "owner": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "addressManager": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0x0cac2B1a172ac24012621101634DD5ABD6399ADd": "ProxyAdmin"
       }
@@ -151,6 +154,11 @@
         "version": "2.0.1"
       },
       "fieldMeta": {
+        "CHALLENGER": { "severity": "HIGH" },
+        "FINALIZATION_PERIOD_SECONDS": { "severity": "HIGH" },
+        "submissionInterval": { "severity": "HIGH" },
+        "SUBMISSION_INTERVAL": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" },
         "owner": { "severity": "HIGH" },
         "challenger": { "severity": "HIGH" },
         "aggregationVkey": {
@@ -230,6 +238,9 @@
         "totalSupply": "6219316794889999291248757829"
       },
       "fieldMeta": {
+        "MIN_MINT_INTERVAL": { "severity": "HIGH" },
+        "MINT_CAP_MAX_NUMERATOR": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" },
         "owner": { "severity": "HIGH" },
         "mintCapNumerator": {
           "severity": "HIGH",
@@ -454,8 +465,13 @@
         "PROPOSER_ROLE": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1"
       },
       "fieldMeta": {
+        "getMinDelay": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" },
         "getMinDelayFormatted": { "severity": "HIGH" },
-        "accessControl": { "severity": "HIGH" }
+        "accessControl": { "severity": "HIGH" },
+        "Proposer": { "severity": "HIGH" },
+        "Canceller": { "severity": "HIGH" },
+        "Executor": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x65331ff6F8B0fc2612F2a0deBD9d04Fce60a447F": "TimelockController"
@@ -522,7 +538,17 @@
         "ResolvedDelegateProxy_implementationName": "BVM_L1CrossDomainMessenger",
         "version": "1.5.0"
       },
-      "fieldMeta": { "$admin": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "ResolvedDelegateProxy_addressManager": { "severity": "HIGH" },
+        "superchainConfig": { "severity": "HIGH" },
+        "systemConfig": { "severity": "HIGH" },
+        "portal": { "severity": "HIGH" },
+        "PORTAL": { "severity": "HIGH" },
+        "otherMessenger": { "severity": "HIGH" },
+        "OTHER_MESSENGER": { "severity": "HIGH" },
+        "paused": { "severity": "MEDIUM" },
+        "$admin": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0x676A795fe6E43C17c668de16730c3F690FEB7120": "Lib_ResolvedDelegateProxy",
         "eth:0xb8DE82551fA4BA3bE4B3d9097763EDBeED541308": "L1CrossDomainMessenger"
@@ -585,7 +611,17 @@
         "OTHER_BRIDGE": "eth:0x4200000000000000000000000000000000000010",
         "version": "1.1.0"
       },
-      "fieldMeta": { "$admin": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "superchainConfig": { "severity": "HIGH" },
+        "systemConfig": { "severity": "HIGH" },
+        "messenger": { "severity": "HIGH" },
+        "MESSENGER": { "severity": "HIGH" },
+        "otherBridge": { "severity": "HIGH" },
+        "OTHER_BRIDGE": { "severity": "HIGH" },
+        "l2TokenBridge": { "severity": "HIGH" },
+        "paused": { "severity": "MEDIUM" },
+        "$admin": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0x95fC37A27a2f68e3A647CDc081F0A89bb47c3012": "L1ChugSplashProxy",
         "eth:0xb4133552BA49dFb60DA6eb5cA0102d0f94ce071f": "L1StandardBridge"
@@ -662,7 +698,15 @@
         "SYSTEM_CONFIG": "eth:0x427Ea0710FA5252057F0D88274f7aeb308386cAf",
         "version": "1.7.0"
       },
-      "fieldMeta": { "paused": { "severity": "MEDIUM" } },
+      "fieldMeta": {
+        "paused": { "severity": "MEDIUM" },
+        "L1_MNT_ADDRESS": { "severity": "HIGH" },
+        "SYSTEM_CONFIG": { "severity": "HIGH" },
+        "L2_ORACLE": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" },
+        "guardian": { "severity": "MEDIUM" },
+        "GUARDIAN": { "severity": "MEDIUM" }
+      },
       "implementationNames": {
         "eth:0xc54cb22944F2bE476E02dECfCD7e3E7d3e15A8Fb": "Proxy",
         "eth:0xe1399f54ba2597b4EaDA9E3450c34D393fb131A7": "OptimismPortal"
@@ -693,7 +737,10 @@
         "isUpgrading": false,
         "owner": "eth:0x4e59e778a0fb77fBb305637435C62FaeD9aED40f"
       },
-      "fieldMeta": { "owner": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "addressManager": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0xca35F8338054739D138884685e08b39EE2217794": "ProxyAdmin"
       }
@@ -1179,15 +1226,15 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
-    "global/TimelockController": "0x67edad38b59e4cfe883d5d3aea9856bddd5bbd9694ea78e137c09c8f3cd953d7",
+    "global/ProxyAdmin": "0x67403097e6696257d6279d2cfb58155d82c5ea4e778d4c626bdfccd19354f527",
+    "global/TimelockController": "0xdadafd0ba19f4517098cde4f542e2f441997df2fbff1e028dd7237714fdfb4b5",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "opstack/AddressManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
-    "opstack/L1CrossDomainMessenger": "0xea24e2bfdb6536e3712d13097b867ff34904f65030f57e349694caa653cce8fa",
-    "opstack/L1StandardBridge": "0x8cbd85e2852b26d67c72cb658b98929c845a20ccce30e84f84644c0b39e9252e",
-    "opstack/OptimismPortal": "0x754ac14860544bffa44f66442813b98ba5631abacd344f7171f2c1331a9983ed",
+    "opstack/L1CrossDomainMessenger": "0x479e8681e3398c878a3bdc1f56daf162d5fb660179c072fc7f2a7acbd3a49750",
+    "opstack/L1StandardBridge": "0xcd61740d25743cecf04c4cd894dc0b72df7e1b2938a4c5f90947be462e8f62ef",
+    "opstack/OptimismPortal": "0x57d64ca52a31a02a55a1ea25b0466ff641c462503c6705b5c8d6c071d4636a47",
     "opstack/SystemConfig_v1_4_0_mantle": "0x499f136cde0c11e214b4e9ef6ee1149701d33e15d10cb3284d703257956f96d3",
-    "succinct/OPSuccinct/OPSuccinctL2OutputOracle_mantle": "0x635ffd4ff49d5f00b52dd0feef6a3029aa6a56fcb69e2f0c9471f29101d40875"
+    "succinct/OPSuccinct/OPSuccinctL2OutputOracle_mantle": "0x8c81eaa5a4485b4fb883f2f467d34febac2cf0fe9c803f30486eb4cc15868c99"
   },
   "usedBlockNumbers": { "ethereum": 26019578 },
   "permissionsConfigHash": "0xbc9459dd60686fdcfde40be25193f3ac9ca326d66fc728a45316a8bda171e063",

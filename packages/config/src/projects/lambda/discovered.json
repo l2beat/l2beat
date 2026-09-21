@@ -63,7 +63,10 @@
         "isUpgrading": false,
         "owner": "eth:0x0b489aC3516F692159E4E5cc0C4a17B11fD6a501"
       },
-      "fieldMeta": { "owner": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "owner": { "severity": "HIGH" },
+        "addressManager": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0x04d59CB8f8b2BAcb8cE6912c284D10e263a0EB9f": "ProxyAdmin"
       }
@@ -265,6 +268,15 @@
         "systemConfig": "eth:0xae809d42f861A6381b0DFCf7216556e95362a7a8",
         "version": "2.5.0"
       },
+      "fieldMeta": {
+        "paused": { "severity": "MEDIUM" },
+        "L1_MNT_ADDRESS": { "severity": "HIGH" },
+        "SYSTEM_CONFIG": { "severity": "HIGH" },
+        "L2_ORACLE": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" },
+        "guardian": { "severity": "MEDIUM" },
+        "GUARDIAN": { "severity": "MEDIUM" }
+      },
       "implementationNames": {
         "eth:0x7288e508f56c1b4b52D2e4Fd3688a711c7cE0054": "Proxy",
         "eth:0x5865A0BCf08dd24A0691Dc746F181EDc6821bea9": "OptimismPortal"
@@ -317,7 +329,17 @@
         "superchainConfig": "eth:0x01Cf2c778E56360dCd5e1396373c0Aa6ae794E2c",
         "version": "2.3.0"
       },
-      "fieldMeta": { "$admin": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "$admin": { "severity": "HIGH" },
+        "ResolvedDelegateProxy_addressManager": { "severity": "HIGH" },
+        "superchainConfig": { "severity": "HIGH" },
+        "systemConfig": { "severity": "HIGH" },
+        "portal": { "severity": "HIGH" },
+        "PORTAL": { "severity": "HIGH" },
+        "otherMessenger": { "severity": "HIGH" },
+        "OTHER_MESSENGER": { "severity": "HIGH" },
+        "paused": { "severity": "MEDIUM" }
+      },
       "implementationNames": {
         "eth:0x78B5818884929d7A930edADD03a0fCD9Dd068EB7": "ResolvedDelegateProxy",
         "eth:0x26B5810033fd2380c87F9E22CC20101778b5F584": "L1CrossDomainMessenger"
@@ -444,7 +466,17 @@
         },
         "$admin": { "severity": "HIGH" },
         "batcherHash": { "severity": "LOW" },
-        "owner": { "severity": "HIGH" }
+        "owner": { "severity": "HIGH" },
+        "superchainConfig": { "severity": "HIGH" },
+        "disputeGameFactory": { "severity": "HIGH" },
+        "optimismPortal": { "severity": "HIGH" },
+        "l1CrossDomainMessenger": { "severity": "HIGH" },
+        "l1StandardBridge": { "severity": "HIGH" },
+        "delayedWETH": { "severity": "HIGH" },
+        "batchInbox": { "severity": "HIGH" },
+        "gasPayingToken": { "severity": "HIGH" },
+        "resourceConfig": { "severity": "HIGH" },
+        "paused": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "eth:0xae809d42f861A6381b0DFCf7216556e95362a7a8": "Proxy",
@@ -495,7 +527,17 @@
         "superchainConfig": "eth:0x01Cf2c778E56360dCd5e1396373c0Aa6ae794E2c",
         "version": "2.1.0"
       },
-      "fieldMeta": { "$admin": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "$admin": { "severity": "HIGH" },
+        "superchainConfig": { "severity": "HIGH" },
+        "systemConfig": { "severity": "HIGH" },
+        "messenger": { "severity": "HIGH" },
+        "MESSENGER": { "severity": "HIGH" },
+        "otherBridge": { "severity": "HIGH" },
+        "OTHER_BRIDGE": { "severity": "HIGH" },
+        "l2TokenBridge": { "severity": "HIGH" },
+        "paused": { "severity": "MEDIUM" }
+      },
       "implementationNames": {
         "eth:0xEEBd256da18d0BF20c3CEb785a0946D41A7F408F": "L1ChugSplashProxy",
         "eth:0x3aF70e7103d29a9466663514DE3C421769b30382": "L1StandardBridge"

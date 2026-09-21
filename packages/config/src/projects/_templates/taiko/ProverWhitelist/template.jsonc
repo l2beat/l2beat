@@ -6,7 +6,20 @@
   "ignoreMethods": ["proxiableUUID"],
   "ignoreInWatchMode": ["whitelisted"],
   "fields": {
+    "pendingOwner": {
+      "severity": "MEDIUM"
+    },
+    "paused": {
+      "severity": "MEDIUM"
+    },
+    "resolver": {
+      "severity": "HIGH"
+    },
+    "$admin": {
+      "severity": "HIGH"
+    },
     "proverManager": {
+      "severity": "HIGH",
       "handler": {
         "type": "hardcoded",
         "value": "0x9CBeE534B5D8a6280e01a14844Ee8aF350399C7F" // constructor, immutable

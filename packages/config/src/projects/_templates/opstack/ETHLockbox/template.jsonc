@@ -6,6 +6,15 @@
     "$admin": {
       "severity": "HIGH"
     },
+    "superchainConfig": {
+      "severity": "HIGH"
+    },
+    "systemConfig": {
+      "severity": "HIGH"
+    },
+    "paused": {
+      "severity": "MEDIUM"
+    },
     "authorizedPortals": {
       // an authorized portal can drain the lockbox via unlockETH(); adding one
       // is a plain state change (no upgrade anywhere), so it must be HIGH.

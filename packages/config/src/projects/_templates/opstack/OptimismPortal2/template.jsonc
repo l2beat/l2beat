@@ -21,12 +21,37 @@
     "$admin": {
       "severity": "HIGH"
     },
+    "anchorStateRegistry": {
+      // the registry this portal trusts for the anchor state withdrawals are proven against
+      "severity": "HIGH"
+    },
+    "disputeGameFactory": {
+      "severity": "HIGH"
+    },
+    "systemConfig": {
+      "severity": "HIGH"
+    },
+    "superchainConfig": {
+      // repointing this changes which contract holds the pause authority over withdrawals
+      "severity": "HIGH"
+    },
+    "ethLockbox": {
+      // holds the ETH backing withdrawals from this portal
+      "severity": "HIGH"
+    },
+    "proofMaturityDelaySeconds": {
+      "severity": "HIGH"
+    },
+    "disputeGameFinalityDelaySeconds": {
+      "severity": "HIGH"
+    },
     "respectedGameType": {
       "severity": "HIGH"
     },
     "RespectedGameString": {
       "handler": {
         "type": "call",
+        "expectRevert": true,
         "method": "respectedGameType",
         "args": []
       },

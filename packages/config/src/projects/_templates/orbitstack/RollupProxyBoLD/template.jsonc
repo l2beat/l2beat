@@ -16,6 +16,42 @@
     "stakeToken"
   ],
   "fields": {
+    "paused": {
+      "severity": "MEDIUM"
+    },
+    "rollupEventInbox": {
+      "severity": "HIGH"
+    },
+    "sequencerInbox": {
+      "severity": "HIGH"
+    },
+    "outbox": {
+      "severity": "HIGH"
+    },
+    "inbox": {
+      "severity": "HIGH"
+    },
+    "bridge": {
+      "severity": "HIGH"
+    },
+    "loserStakeEscrow": {
+      "severity": "HIGH"
+    },
+    "stakeToken": {
+      "severity": "HIGH"
+    },
+    "baseStake": {
+      "severity": "HIGH"
+    },
+    "validatorAfkBlocks": {
+      "severity": "HIGH"
+    },
+    "challengeGracePeriodBlocks": {
+      "severity": "HIGH"
+    },
+    "$admin": {
+      "severity": "HIGH"
+    },
     "getValidators": {
       "severity": "LOW",
       "permissions": [
@@ -40,6 +76,7 @@
       ]
     },
     "minimumAssertionPeriod": {
+      "severity": "HIGH",
       "description": "Minimum time delta between newly created nodes (stateUpdates). This is checked on `stakeOnNewNode()`. Format is number of ETHEREUM blocks, even for L3s. "
     },
     "confirmPeriodBlocks": {

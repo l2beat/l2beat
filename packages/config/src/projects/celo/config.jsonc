@@ -52,8 +52,11 @@
     "eth:0x25035d2233d099f0BA710ca1e5a3834842870C66": {
       "critical": true,
       "fields": {
+        "$admin": {
+          "severity": "HIGH"
+        },
         "guardian": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Address that can pause Celo withdrawals on its own, without any other party consenting."
         },
         "superchainConfig": {

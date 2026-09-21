@@ -31,6 +31,28 @@
     "unichain:0x4200000000000000000000000000000000000015": "L1Block"
   },
   "overrides": {
+    // Shared Karst upgrade tooling. Ignored so discovery does not follow it
+    // into bare implementations; the upgrade authority is the ProxyAdmin owner.
+    "eth:0x54fAbb112956Ef963e4B6c7cf15D8229ac404ad8": {
+      // OPContractsManagerContainer
+      "ignoreDiscovery": true
+    },
+    "eth:0x8D92f589E2380Fd22fc48FE155a72143910f99e4": {
+      // OPContractsManagerMigrator
+      "ignoreDiscovery": true
+    },
+    "eth:0x9873d652BdF752a6751d2e6c0ce95188da516c2e": {
+      // OPContractsManagerUtils
+      "ignoreDiscovery": true
+    },
+    "eth:0x9Ce712Ff84E02659846dc6450BB9b7642fE8bE5D": {
+      // OPContractsManagerV2
+      "ignoreDiscovery": true
+    },
+    "eth:0xB61177c2d8D929A81604650B06abFCAeCAF4FEb9": {
+      // OPContractsManagerStandardValidator
+      "ignoreDiscovery": true
+    },
     "eth:0xe89F13c5ee4033B2D3cD76C9d6958eFBfe26D3C2": {
       // bare OptimismPortal2 implementation reached as a relative since the latest upgrade; every call on it reverts
       "ignoreDiscovery": true

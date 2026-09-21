@@ -6,6 +6,20 @@
   "ignoreInWatchMode": ["messageNonce"],
   "ignoreRelatives": ["l1CrossDomainMessenger", "OTHER_MESSENGER"],
   "fields": {
+    "l1CrossDomainMessenger": {
+      // the host-chain messenger this predeploy accepts messages from
+      "severity": "HIGH"
+    },
+    "otherMessenger": {
+      "severity": "HIGH"
+    },
+    "OTHER_MESSENGER": {
+      "severity": "HIGH"
+    },
+    "paused": {
+      "severity": "MEDIUM"
+    },
+
     "$admin": {
       "severity": "HIGH"
     }

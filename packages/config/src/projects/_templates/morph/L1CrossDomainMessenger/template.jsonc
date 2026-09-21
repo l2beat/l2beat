@@ -6,6 +6,12 @@
   "ignoreMethods": ["prevReplayIndex"],
   "ignoreInWatchMode": ["messageNonce"],
   "fields": {
+    "maxReplayTimes": {
+      "severity": "HIGH"
+    },
+    "$admin": {
+      "severity": "HIGH"
+    },
     "owner": {
       "severity": "HIGH",
       "permissions": [

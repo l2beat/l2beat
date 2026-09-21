@@ -81,6 +81,11 @@
         "withdrawalLockBlocks": 3
       },
       "fieldMeta": {
+        "rewardPercentage": { "severity": "HIGH" },
+        "messenger": { "severity": "HIGH" },
+        "OTHER_STAKING": { "severity": "HIGH" },
+        "MESSENGER": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" },
         "rollupContract": { "severity": "HIGH" },
         "stakingValue": { "severity": "HIGH" },
         "challengeDeposit": { "severity": "HIGH" },
@@ -143,7 +148,13 @@
         "owner": "eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377",
         "router": "eth:0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a"
       },
-      "fieldMeta": { "owner": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "router": { "severity": "HIGH" },
+        "messenger": { "severity": "HIGH" },
+        "counterpart": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0x1C1Ffb5828c3A48B54E8910F1c75256a498aDE68": "TransparentUpgradeableProxy",
         "eth:0x63eeCb6bE6087B094c2CBAA34f2902593eAE979c": "L1ETHGateway"
@@ -201,7 +212,17 @@
         "totalBridgedUSDC": 530997863588,
         "withdrawPaused": false
       },
-      "fieldMeta": { "owner": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "withdrawPaused": { "severity": "MEDIUM" },
+        "depositPaused": { "severity": "MEDIUM" },
+        "circleCaller": { "severity": "HIGH" },
+        "l2USDC": { "severity": "HIGH" },
+        "router": { "severity": "HIGH" },
+        "messenger": { "severity": "HIGH" },
+        "counterpart": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0x2C8314f5AADa5D7a9D32eeFebFc43aCCAbe1b289": "TransparentUpgradeableProxy",
         "eth:0xB409E42e8284244F56edf9cB24b2A1f227DC3cE0": "L1USDCGateway"
@@ -224,7 +245,10 @@
         "$immutable": true,
         "owner": "eth:0x542675E90E269F20ecbb9e0095d4751ac155B530"
       },
-      "fieldMeta": { "owner": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "addressManager": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0x31110622D6CA24c9FF307d6ae1715F16E47F16A0": "ProxyAdmin"
       }
@@ -297,6 +321,10 @@
         "whitelistChecker": "eth:0xFFafDd9167777C0e5421e0B6789D6d7A5E386984"
       },
       "fieldMeta": {
+        "ENFORCED_TX_GATEWAAY": { "severity": "HIGH" },
+        "ROLLUP_CONTRACT": { "severity": "HIGH" },
+        "MESSENGER": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" },
         "owner": { "severity": "HIGH" },
         "maxGasLimit": { "severity": "HIGH" },
         "whitelistChecker": { "severity": "HIGH" },
@@ -350,7 +378,15 @@
         "owner": "eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377",
         "router": "eth:0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a"
       },
-      "fieldMeta": { "owner": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "l2TokenImplementation": { "severity": "HIGH" },
+        "l2TokenFactory": { "severity": "HIGH" },
+        "router": { "severity": "HIGH" },
+        "messenger": { "severity": "HIGH" },
+        "counterpart": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0x44c28f61A5C2Dd24Fc71D7Df8E85e18af4ab2Bd8": "TransparentUpgradeableProxy",
         "eth:0x75BC012fA81DF052baFc4EF9255Af29B6C4e5301": "L1StandardERC20Gateway"
@@ -463,8 +499,13 @@
         "PROPOSER_ROLE": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1"
       },
       "fieldMeta": {
+        "getMinDelay": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" },
         "getMinDelayFormatted": { "severity": "HIGH" },
-        "accessControl": { "severity": "HIGH" }
+        "accessControl": { "severity": "HIGH" },
+        "Proposer": { "severity": "HIGH" },
+        "Canceller": { "severity": "HIGH" },
+        "Executor": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x542675E90E269F20ecbb9e0095d4751ac155B530": "TransparentUpgradeableProxy",
@@ -512,6 +553,7 @@
         "verifierVersions": [1, 2]
       },
       "fieldMeta": {
+        "rollup": { "severity": "HIGH" },
         "latestVerifier": { "severity": "HIGH" },
         "owner": { "severity": "HIGH" }
       },
@@ -604,6 +646,7 @@
         "owner": "eth:0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887"
       },
       "fieldMeta": {
+        "$admin": { "severity": "HIGH" },
         "gateways": { "severity": "HIGH" },
         "erc20Gateways": { "severity": "HIGH" },
         "ethGateway": { "severity": "HIGH" },
@@ -756,6 +799,8 @@
         "verifier": "eth:0x5d1584c27b4aD233283c6da1ca1B825d6f220EC1"
       },
       "fieldMeta": {
+        "rollupDelayPeriod": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" },
         "verifier": { "severity": "HIGH" },
         "finalizationPeriodSeconds": { "severity": "HIGH" },
         "proofWindow": { "severity": "HIGH" },
@@ -801,7 +846,10 @@
         "owner": "eth:0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
-      "fieldMeta": { "owner": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "addressManager": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0x8654061457582c867B77A3a9f4ca714dFc84Ec17": "ProxyAdmin"
       }
@@ -902,7 +950,13 @@
         "owner": "eth:0xF101f7f59A348c1F971A2BC64fdBdA58c7bBD887",
         "router": "eth:0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a"
       },
-      "fieldMeta": { "owner": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "router": { "severity": "HIGH" },
+        "messenger": { "severity": "HIGH" },
+        "counterpart": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0xA534BAdd09b4C62B7B1C32C41dF310AA17b52ef1": "TransparentUpgradeableProxy",
         "eth:0x833cfC8cFbc77365bD184025AdFD2fe01112b0Dc": "L1CustomERC20Gateway"
@@ -1047,6 +1101,7 @@
         "paused": false
       },
       "fieldMeta": {
+        "$admin": { "severity": "HIGH" },
         "owner": { "severity": "HIGH" },
         "messageQueue": { "severity": "HIGH" },
         "paused": {
@@ -1111,7 +1166,17 @@
         "totalBridgedUSDC": 1182305879,
         "withdrawPaused": false
       },
-      "fieldMeta": { "owner": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "withdrawPaused": { "severity": "MEDIUM" },
+        "depositPaused": { "severity": "MEDIUM" },
+        "circleCaller": { "severity": "HIGH" },
+        "l2USDC": { "severity": "HIGH" },
+        "router": { "severity": "HIGH" },
+        "messenger": { "severity": "HIGH" },
+        "counterpart": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0xc9045350712A1DCC3A74Eca18Bc985424Bbe7535": "TransparentUpgradeableProxy",
         "eth:0xe11DeE885e5D38e4dc477219F50a6B1cF5DC298a": "L1USDCGateway"
@@ -1201,6 +1266,8 @@
         "xDomainMessageSender": "eth:0x000000000000000000000000000000000000dEaD"
       },
       "fieldMeta": {
+        "maxReplayTimes": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" },
         "owner": { "severity": "HIGH" },
         "rollup": { "severity": "HIGH" },
         "messageQueue": { "severity": "HIGH" },
@@ -1309,6 +1376,7 @@
         "owner": "eth:0xB822319ab7848b7cC4537c8409e50f85BFb04377",
         "whitelisted": ["eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7"]
       },
+      "fieldMeta": { "owner": { "severity": "HIGH" } },
       "implementationNames": {
         "eth:0xFFafDd9167777C0e5421e0B6789D6d7A5E386984": "Whitelist"
       }
@@ -1991,20 +2059,20 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
-    "global/TimelockController": "0x67edad38b59e4cfe883d5d3aea9856bddd5bbd9694ea78e137c09c8f3cd953d7",
+    "global/ProxyAdmin": "0x67403097e6696257d6279d2cfb58155d82c5ea4e778d4c626bdfccd19354f527",
+    "global/TimelockController": "0xdadafd0ba19f4517098cde4f542e2f441997df2fbff1e028dd7237714fdfb4b5",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
-    "morph/EnforcedTxGateway": "0x92aa7b2a8a4cc4450cf6c845dce6c7d48f288c2272149767e8410a18882dfee2",
-    "morph/L1CrossDomainMessenger": "0x32477bc6c21cc5857c793882e27036efd69fc10169bc9f62aeebd8b7375c9b50",
-    "morph/L1CustomERC20Gateway": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
-    "morph/L1ETHGateway": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
-    "morph/L1GatewayRouter": "0x031336dd53fa5ca6d56bda69789d3a5edc31428b6c350f5d2a04a85065cf0082",
-    "morph/L1MessageQueueWithGasPriceOracle": "0xf546a7b8fd8abf53f6e0e0d72d0899dca155e6a59a2316cdbcee77df84639a0c",
-    "morph/L1Staking": "0x49db1a079a26c99b3ca3fc6f125aeb1433197d91631f4f66f94467f56977cd3c",
-    "morph/L1StandardERC20Gateway": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
-    "morph/L1USDCGateway": "0x4284ddb0eb593a452660fbbe98b36d6578d94366c9c88c3a8a4341ab80883e50",
-    "morph/MultipleVersionRollupVerifier": "0x18c849e277165d1e348f720058cc03de059801204ee5e7f09bb2a9de7fac1d8c",
-    "morph/Rollup": "0x388bf096220966342b9bd5f0f838bbbc677018a71f3299c490cfde59331b4b71",
+    "morph/EnforcedTxGateway": "0x29bffb7bf656dc7937a5f5c24fa911b37416e7e1d4b8b33b42619d92c699a0eb",
+    "morph/L1CrossDomainMessenger": "0x359514bcb37c84b44e5c521d82c0aed858d92c0a1debefbf77e38bb58d08472c",
+    "morph/L1CustomERC20Gateway": "0x8f5ed0d132aeb3b289f1be7fcaa170238a8be2a0284baf6f50b99afa4d67610e",
+    "morph/L1ETHGateway": "0x8f5ed0d132aeb3b289f1be7fcaa170238a8be2a0284baf6f50b99afa4d67610e",
+    "morph/L1GatewayRouter": "0x4a088edec7387c0163da479037445494df7841c17224601deaee08a1bc2aef74",
+    "morph/L1MessageQueueWithGasPriceOracle": "0x75f98477be82584c486ec9bbf843cb1b5614caf45679053bedc77457c9161e51",
+    "morph/L1Staking": "0x249f873d18898ec0a956947154c9d1aa3ffc4d2e9af19b72b2cf91b622107a7f",
+    "morph/L1StandardERC20Gateway": "0x62ca705060ac0ee8d3c0d56d10795164b60937a8512bd4af67eb989bdbe6e278",
+    "morph/L1USDCGateway": "0x118bbebf64c3a4b1e97ce83162bc0fa36599641477cc0e4a86143f19f0f9ac1d",
+    "morph/MultipleVersionRollupVerifier": "0x2bf0ae269803c2c2b3fea785f116f6fce8320cae589c86f3e2d2422d95429c8d",
+    "morph/Rollup": "0x6d149d095d35910b1957af6073bc7ed8846afa7cf45c2aa43558bfd4f2f435f9",
     "morph/Whitelist": "0xcb13f1a8f52d11ec54253191140ce2f88f71a4b614de94df4f5a208d970b535d",
     "morph/ZkEvmVerifierV1": "0x8e1f5b8466dae2cb22b31719b8cb647638300e4327cbbfcf6cca97ef35af4213"
   },

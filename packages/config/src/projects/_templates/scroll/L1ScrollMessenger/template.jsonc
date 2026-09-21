@@ -7,7 +7,29 @@
   "ignoreMethods": ["prevReplayIndex"],
   "ignoreRelatives": ["messageQueueV1"], // deprecated
   "fields": {
+    "paused": {
+      "severity": "MEDIUM"
+    },
+    "enforcedTxGateway": {
+      "severity": "HIGH"
+    },
+    "messageQueueV2": {
+      "severity": "HIGH"
+    },
+    "messageQueueV1": {
+      "severity": "HIGH"
+    },
+    "rollup": {
+      "severity": "HIGH"
+    },
+    "owner": {
+      "severity": "HIGH"
+    },
+    "$admin": {
+      "severity": "HIGH"
+    },
     "counterpart": {
+      "severity": "HIGH",
       "edit": ["format", "ScrollAddress"]
     },
     "xDomainMessageSender": {

@@ -39,11 +39,16 @@
           "severity": "LOW",
           "description": "Fixed cToken amount accepted by this pool."
         },
-        "token": { "description": "cToken accepted by this mixer instance." },
+        "token": {
+          "severity": "HIGH",
+          "description": "cToken accepted by this mixer instance."
+        },
         "verifier": {
+          "severity": "HIGH",
           "description": "Immutable zkSNARK verifier used to authorize withdrawals from the pool."
         },
         "hasher": {
+          "severity": "HIGH",
           "description": "Merkle-tree hasher used for commitments and root updates."
         },
         "comp": {
@@ -95,12 +100,15 @@
           "description": "Fixed deposit amount accepted by this pool."
         },
         "token": {
+          "severity": "HIGH",
           "description": "ERC20 token accepted by this mixer instance."
         },
         "verifier": {
+          "severity": "HIGH",
           "description": "Immutable zkSNARK verifier used to authorize withdrawals from the pool."
         },
         "hasher": {
+          "severity": "HIGH",
           "description": "Merkle-tree hasher used for commitments and root updates."
         }
       },
@@ -152,6 +160,7 @@
           "description": "Whether verifier-upgrade authority has been permanently renounced."
         },
         "token": {
+          "severity": "HIGH",
           "description": "ERC20 token accepted by this mixer instance."
         },
         "verifier": {
@@ -282,6 +291,7 @@
           "description": "Whether verifier-upgrade authority has been permanently renounced."
         },
         "token": {
+          "severity": "HIGH",
           "description": "ERC20 token accepted by this mixer instance."
         },
         "verifier": {
@@ -329,12 +339,15 @@
           "description": "Fixed deposit amount accepted by this pool."
         },
         "token": {
+          "severity": "HIGH",
           "description": "ERC20 token accepted by this mixer instance."
         },
         "verifier": {
+          "severity": "HIGH",
           "description": "Immutable zkSNARK verifier used to authorize withdrawals from the pool."
         },
         "hasher": {
+          "severity": "HIGH",
           "description": "Merkle-tree hasher used for commitments and root updates."
         }
       },
@@ -386,6 +399,7 @@
           "description": "Whether verifier-upgrade authority has been permanently renounced."
         },
         "token": {
+          "severity": "HIGH",
           "description": "ERC20 token accepted by this mixer instance."
         },
         "verifier": {
@@ -433,12 +447,15 @@
           "description": "Fixed deposit amount accepted by this pool."
         },
         "token": {
+          "severity": "HIGH",
           "description": "ERC20 token accepted by this mixer instance."
         },
         "verifier": {
+          "severity": "HIGH",
           "description": "Immutable zkSNARK verifier used to authorize withdrawals from the pool."
         },
         "hasher": {
+          "severity": "HIGH",
           "description": "Merkle-tree hasher used for commitments and root updates."
         }
       },
@@ -483,11 +500,16 @@
           "severity": "LOW",
           "description": "Fixed cToken amount accepted by this pool."
         },
-        "token": { "description": "cToken accepted by this mixer instance." },
+        "token": {
+          "severity": "HIGH",
+          "description": "cToken accepted by this mixer instance."
+        },
         "verifier": {
+          "severity": "HIGH",
           "description": "Immutable zkSNARK verifier used to authorize withdrawals from the pool."
         },
         "hasher": {
+          "severity": "HIGH",
           "description": "Merkle-tree hasher used for commitments and root updates."
         },
         "comp": {
@@ -616,6 +638,7 @@
           "description": "Whether verifier-upgrade authority has been permanently renounced."
         },
         "token": {
+          "severity": "HIGH",
           "description": "ERC20 token accepted by this mixer instance."
         },
         "verifier": {
@@ -1584,12 +1607,15 @@
           "description": "Fixed deposit amount accepted by this pool."
         },
         "token": {
+          "severity": "HIGH",
           "description": "ERC20 token accepted by this mixer instance."
         },
         "verifier": {
+          "severity": "HIGH",
           "description": "Immutable zkSNARK verifier used to authorize withdrawals from the pool."
         },
         "hasher": {
+          "severity": "HIGH",
           "description": "Merkle-tree hasher used for commitments and root updates."
         }
       },
@@ -2278,12 +2304,15 @@
           "description": "Fixed deposit amount accepted by this pool."
         },
         "token": {
+          "severity": "HIGH",
           "description": "ERC20 token accepted by this mixer instance."
         },
         "verifier": {
+          "severity": "HIGH",
           "description": "Immutable zkSNARK verifier used to authorize withdrawals from the pool."
         },
         "hasher": {
+          "severity": "HIGH",
           "description": "Merkle-tree hasher used for commitments and root updates."
         }
       },
@@ -2362,11 +2391,16 @@
           "severity": "LOW",
           "description": "Fixed cToken amount accepted by this pool."
         },
-        "token": { "description": "cToken accepted by this mixer instance." },
+        "token": {
+          "severity": "HIGH",
+          "description": "cToken accepted by this mixer instance."
+        },
         "verifier": {
+          "severity": "HIGH",
           "description": "Immutable zkSNARK verifier used to authorize withdrawals from the pool."
         },
         "hasher": {
+          "severity": "HIGH",
           "description": "Merkle-tree hasher used for commitments and root updates."
         },
         "comp": {
@@ -2426,6 +2460,7 @@
           "description": "Whether verifier-upgrade authority has been permanently renounced."
         },
         "token": {
+          "severity": "HIGH",
           "description": "ERC20 token accepted by this mixer instance."
         },
         "verifier": {
@@ -2535,6 +2570,7 @@
           "description": "Whether verifier-upgrade authority has been permanently renounced."
         },
         "token": {
+          "severity": "HIGH",
           "description": "ERC20 token accepted by this mixer instance."
         },
         "verifier": {
@@ -2627,6 +2663,7 @@
           "description": "Whether verifier-upgrade authority has been permanently renounced."
         },
         "token": {
+          "severity": "HIGH",
           "description": "ERC20 token accepted by this mixer instance."
         },
         "verifier": {

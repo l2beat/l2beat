@@ -9,11 +9,16 @@
       "description": "Fixed deposit amount accepted by this pool.",
       "severity": "LOW"
     },
-    "token": { "description": "ERC20 token accepted by this mixer instance." },
+    "token": {
+      "severity": "HIGH",
+      "description": "ERC20 token accepted by this mixer instance."
+    },
     "verifier": {
+      "severity": "HIGH",
       "description": "Immutable zkSNARK verifier used to authorize withdrawals from the pool."
     },
     "hasher": {
+      "severity": "HIGH",
       "description": "Merkle-tree hasher used for commitments and root updates."
     }
   },

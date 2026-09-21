@@ -26,11 +26,13 @@
       }
     },
     "accessControl": {
+      "severity": "HIGH",
       "handler": {
         "type": "accessControl"
       }
     },
     "defaultAdminAC": {
+      "severity": "HIGH",
       "handler": {
         "type": "accessControl",
         "pickRoleMembers": "DEFAULT_ADMIN_ROLE"

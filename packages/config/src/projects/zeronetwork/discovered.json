@@ -89,7 +89,12 @@
           }
         }
       },
-      "fieldMeta": { "executionDelay_fmt": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "executionDelay_fmt": { "severity": "HIGH" },
+        "executionDelay": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776": "TransparentUpgradeableProxy",
         "eth:0x6086051f93412F550C0820e76f0fbE85F64C7ef8": "ValidatorTimelock"
@@ -172,8 +177,11 @@
       },
       "fieldMeta": {
         "verificationKeyHash": {
-          "description": "Verification key hash for the PLONK verifier ONLY (backwards compatibility)."
-        }
+          "description": "Verification key hash for the PLONK verifier ONLY (backwards compatibility).",
+          "severity": "HIGH"
+        },
+        "PLONK_VERIFIER": { "severity": "HIGH" },
+        "FFLONK_VERIFIER": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x47fC5273145E053A18C0BBF6d88F8d6d573C3d0e": "DualVerifier"
@@ -651,7 +659,15 @@
         "getSettlementLayer": {
           "severity": "HIGH",
           "description": "Settlement layer for this chain: the zero address while batches are committed, proven and executed on Ethereum, otherwise the Gateway diamond that settles this chain. Moving it relocates the complete proof-verification and message path of the chain."
-        }
+        },
+        "getL2EvmEmulatorBytecodeHash": { "severity": "HIGH" },
+        "getL2DefaultAccountBytecodeHash": { "severity": "HIGH" },
+        "getL2BootloaderBytecodeHash": { "severity": "HIGH" },
+        "getPriorityTxMaxGasLimit": { "severity": "HIGH" },
+        "getRollupDAManager": { "severity": "HIGH" },
+        "getChainTypeManager": { "severity": "HIGH" },
+        "getBridgehub": { "severity": "HIGH" },
+        "getVerifier": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0xdbD849acC6bA61F461CB8A41BBaeE2D673CA02d9": "DiamondProxy",

@@ -17,18 +17,42 @@
     }
   },
   "fields": {
+    "$admin": {
+      "severity": "HIGH"
+    },
+    "retirementTimestamp": {
+      "severity": "HIGH"
+    },
+    "disputeGameFactory": {
+      "severity": "HIGH"
+    },
+    "superchainConfig": {
+      "severity": "HIGH"
+    },
+    "systemConfig": {
+      "severity": "HIGH"
+    },
+    "disputeGameFinalityDelaySeconds": {
+      "severity": "HIGH"
+    },
+    "paused": {
+      "severity": "MEDIUM"
+    },
+
     "respectedGameType": {
       "severity": "HIGH"
     },
     "RespectedGameString": {
       "handler": {
         "type": "call",
+        "expectRevert": true,
         "method": "respectedGameType",
         "args": []
       },
       "edit": ["format", "DisputeGameMap"]
     },
     "disputeGameFinalityDelaySeconds_fmt": {
+      "severity": "HIGH",
       "handler": {
         "type": "call",
         "method": "disputeGameFinalityDelaySeconds",

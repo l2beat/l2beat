@@ -23,6 +23,15 @@
       "ignoreMethods": ["getPastTotalSupply"],
       "ignoreInWatchMode": ["totalSupply"],
       "fields": {
+        "MIN_MINT_INTERVAL": {
+          "severity": "HIGH"
+        },
+        "MINT_CAP_MAX_NUMERATOR": {
+          "severity": "HIGH"
+        },
+        "$admin": {
+          "severity": "HIGH"
+        },
         "owner": {
           "severity": "HIGH",
           "permissions": [

@@ -15,7 +15,7 @@
       ]
     },
     "pauser": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "permissions": [
         {
           "type": "interact",

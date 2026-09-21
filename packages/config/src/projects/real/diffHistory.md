@@ -1,3 +1,333 @@
+Generated with discovered.json: 0xcb0ce9b0a774d0930d476a4f02dde23b9df0e0ac
+
+# Diff at Mon, 21 Sep 2026 11:24:05 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@231e4a5828ee5ff5a863f7b80215466ca39a5b1e block: 1754054742
+- current timestamp: 1754054742
+
+## Description
+
+ossification re-review: field severities
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1754054742 (main branch discovery), not current.
+
+```diff
+    contract OneStepProverHostIo (eth:0x0003A96B27ce73505b43ea1b71a5aB06bec568C4) [orbitstack/OneStepProverHostIo] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sourceHashes.0:
+-        "0x2e969e0e83aea53307795f6826413e39bb416a64bc6da18f3a339ffeef444d32"
++        "0x081875b93df655e91ec23245390ad21db0990c12125dad497f1cbf118501ccc2"
+      deployerAddress:
++        "eth:0x10590a5c93E8695bDb134c22f04C4d5b50755DC4"
+    }
+```
+
+```diff
+    contract RealFastConfirmerMultisig (eth:0x118Ab5501564F1Cfa755d0b3070874a26c1C3A50) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
++        "0xf88f29d444411e68fef376c8e035ef1f39314143a7b6aff952709203095663bd"
+      deployerAddress:
++        "eth:0xB65540bBA534E88EB4a5062D0E6519C07063b259"
+    }
+```
+
+```diff
+    contract OneStepProverMemory (eth:0x1cD76B9C33b2e3b04D7B181399d492B3e49AD7fB) [orbitstack/OneStepProverMemory] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sourceHashes.0:
+-        "0x3955092d1dbd80f0910d7782a25da1e3da45533c7890928a1c6c63cbf5def5bf"
++        "0x9e22e05e7953684e6f00507684bb902908d6d4383b2e82ecdce789027bebc33a"
+      deployerAddress:
++        "eth:0x10590a5c93E8695bDb134c22f04C4d5b50755DC4"
+    }
+```
+
+```diff
+    contract ValidatorUtils (eth:0x2b0E04Dc90e3fA58165CB41E2834B44A56E766aF) [orbitstack/ValidatorUtils] {
+    +++ description: This contract implements view only utilities for validators.
+      sourceHashes.0:
+-        "0xd9b36ec321be937cc727b5bdb0afa0e1a0a28448ef1a202d4f181a01ce57bdc8"
++        "0xebcd95194086ae9c3b9095578172a3192d9d209e5b159956f1d266910d248334"
+      deployerAddress:
++        "eth:0x7A9D9dAdDd745897c06e8664E1DC2702B6E6f341"
+    }
+```
+
+```diff
+    contract OneStepProver0 (eth:0x2dCCAbE89cF76132619a9B18e9F9e48E837222b5) [orbitstack/OneStepProver0] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sourceHashes.0:
+-        "0x642d283934aef1189cf62e1bcd34a5081762b33fdd3ec8e823f304f874e48748"
++        "0x063a1b3c4451e69f827acd833c42e986c2c617bfaabb13884fb438185b192407"
+      deployerAddress:
++        "eth:0x10590a5c93E8695bDb134c22f04C4d5b50755DC4"
+    }
+```
+
+```diff
+    contract ChallengeManager (eth:0x369001149fe80892665a7b0c17fe8Db6BeFC7F5d) [orbitstack/ChallengeManager] {
+    +++ description: Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.
+      sourceHashes.1:
+-        "0x1a095768302d7d1c3d02375eaa3341833b4f1aaac707e1c608bce478c87cbf27"
++        "0x1eba00857f5477dbcd075b48ce8af9c74d5cb4f93a5e714dd27b3df498737e54"
+      deployerAddress:
++        "eth:0xbB0385FebfD25E01527617938129A34bD497331e"
+    }
+```
+
+```diff
+    contract Bridge (eth:0x39D2EEcC8B55f46aE64789E2494dE777cDDeED03) [orbitstack/Bridge] {
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      sourceHashes.1:
+-        "0x32c73666d391a33c17183e4ab20bcb0f2b925d8a99da436d2ff99c13f403e289"
++        "0x44eab8a1244ce0ae33674b88b4211d02a3f4d060cf9a7791854f3263c039813a"
+      fieldMeta.sequencerInbox:
++        {"severity":"HIGH"}
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
+      deployerAddress:
++        "eth:0xbB0385FebfD25E01527617938129A34bD497331e"
+    }
+```
+
+```diff
+    contract GatewayRouter (eth:0x490f337Ac108b2a555183f5b5fd2ee84a7F45a18) [orbitstack/GatewayRouter] {
+    +++ description: This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging.
+      sourceHashes.1:
+-        "0x33422e0ac90902db5dad442b006c9df60e262556d8ad286808d133b5429a3eb0"
++        "0xf536eecfe8b70bf9ba1ea603efcc5ee20c36b0413e4e5258494893cbde454898"
+      deployerAddress:
++        "eth:0xbB0385FebfD25E01527617938129A34bD497331e"
+      fieldMeta:
++        {"whitelist":{"severity":"HIGH"},"router":{"severity":"HIGH"},"inbox":{"severity":"HIGH"},"counterpartGateway":{"severity":"HIGH"},"$admin":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract SwapManager (eth:0x4AC36E1Fa7daBeFEc885f30B163c571080b2c335) [N/A] {
+    +++ description: Performs swaps via Curve or UniswapV3 to serve instant withdrawals from the reETH RealVault.
+      sourceHashes.0:
+-        "0x2c2f591c433021e5d54b67a3354fdc84c7f692a02fa61ec538dd633e890c4ad7"
++        "0xdb0553da5b3bff42fbf46949593391f6f76137766d39fab90133d9a4e42f74c6"
+      deployerAddress:
++        "eth:0xeB658c4Ea908aC4dAF9c309D8f883d6aD758b3A3"
+    }
+```
+
+```diff
+    contract RollupEventInbox (eth:0x503C5a576E2F72Ca9aD213D64bc775cbD81E0F2C) [orbitstack/RollupEventInbox] {
+    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
+      deployerAddress:
++        "eth:0xbB0385FebfD25E01527617938129A34bD497331e"
+      fieldMeta:
++        {"rollup":{"severity":"HIGH"},"bridge":{"severity":"HIGH"},"$admin":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract SequencerInbox (eth:0x51C4a227D59E49E26Ea07D8e4E9Af163da4c87A0) [orbitstack/SequencerInbox] {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      sourceHashes.1:
+-        "0x6bb86ac4bd0d31e049f543fcf0a8f94c952252222f115246ef9d5b8104d803cc"
++        "0x38fab1c44903c11839e1113e339b7268b07f99808721133182f57fdd891be63a"
+      fieldMeta.maxTimeVariation.severity:
++        "HIGH"
+      fieldMeta.isUsingFeeToken:
++        {"severity":"HIGH"}
+      fieldMeta.isDelayBufferable:
++        {"severity":"HIGH"}
+      fieldMeta.rollup:
++        {"severity":"HIGH"}
+      fieldMeta.bridge:
++        {"severity":"HIGH"}
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
+      fieldMeta.batchPosterManager:
++        {"severity":"HIGH"}
+      deployerAddress:
++        "eth:0xbB0385FebfD25E01527617938129A34bD497331e"
+    }
+```
+
+```diff
+    contract StrategyManager (eth:0x5Cba18d504D4158dC1A18C5Dc6BB2a30B230DdD8) [N/A] {
+    +++ description: A gateway contract that manages strategies for assets that are deposited to the AssetsVault. From a user PoV this happens when bridging to the L2.
+      sourceHashes.0:
+-        "0x6c6e93784f31191cf2b9284f57d6baac2bb7aef141c3482e250edade70dfa4be"
++        "0x0e60284eb241a2d607ed071b88433d3b04db6b0b8690c2d533d9317a2dcf8cfd"
+      deployerAddress:
++        "eth:0xeB658c4Ea908aC4dAF9c309D8f883d6aD758b3A3"
+    }
+```
+
+```diff
+    contract LidoStEthStrategy (eth:0x679D4C1cC6855C57726BEA1784F578315d6431f6) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xc18d8670e65f3ea1dc2fe9ee3114bfad504f6ee8998a9f9d6f79cc971a03814a"
++        "0x1ec8e83ed3aec7907ed3b67a2ca8d7a5ef9acd254f4cf4902566b5a9a3c5629f"
+      deployerAddress:
++        "eth:0xeB658c4Ea908aC4dAF9c309D8f883d6aD758b3A3"
+    }
+```
+
+```diff
+    contract Outbox (eth:0x8592Ca44dE1D354A20F75160F5602E5933D33761) [orbitstack/Outbox] {
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
+      deployerAddress:
++        "eth:0xbB0385FebfD25E01527617938129A34bD497331e"
+      fieldMeta:
++        {"bridge":{"severity":"HIGH"},"$admin":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract OneStepProofEntry (eth:0x8Faa21891B0b928afEbd5314D1D313f8f7B34DaC) [orbitstack/OneStepProofEntry] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sourceHashes.0:
+-        "0x96f85480073b58d0e985cd6c68956f4a52f5ed8b2ce751b18868e2e830be3678"
++        "0x294155e99018f1d390be420f29ef940f9843f3ce54ed4e515d998653e2ce4293"
+      deployerAddress:
++        "eth:0x10590a5c93E8695bDb134c22f04C4d5b50755DC4"
+      fieldMeta:
++        {"proverMem":{"severity":"HIGH"},"proverMath":{"severity":"HIGH"},"proverHostIo":{"severity":"HIGH"},"prover0":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xB032ff02cd6425e4b816137207AA8560932180f1) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta.addressManager:
++        {"severity":"HIGH"}
+      deployerAddress:
++        "eth:0xbB0385FebfD25E01527617938129A34bD497331e"
+    }
+```
+
+```diff
+    contract UnknownVault (eth:0xB24D28B8FC6881dC3d4c088eff8c88EeC65C3164) [N/A] {
+    +++ description: None
+      deployerAddress:
++        "eth:0xa1bEA57d625987430Dd0DbC8A76bB1257fdd7788"
+    }
+```
+
+```diff
+    contract Gelato Multisig (eth:0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+      deployerAddress:
++        "eth:0x28bB9385A588EF4747264D19B9A9F1603591680c"
+    }
+```
+
+```diff
+    contract Bridger (eth:0xbf2F26cadbC10C4d61ac7e424D514d79a12126f8) [N/A] {
+    +++ description: A Routing contract to the standard orbit stack bridge of the L2.
+      sourceHashes.1:
+-        "0xaeb5734c5862ad1b95a66ae767bb08920938ed5de5fd7455221098e0d37c44dd"
++        "0x8448da015a311dcc14f227a7c5b6774abda7a441a232c6d8e8e92c82e528cdc7"
+      deployerAddress:
++        "eth:0xeB658c4Ea908aC4dAF9c309D8f883d6aD758b3A3"
+    }
+```
+
+```diff
+    contract RollupProxy (eth:0xc4F7B37bE2bBbcF07373F28c61b1A259dfe49d2a) [orbitstack/RollupProxy_fastConfirm] {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      sourceHashes.0:
+-        "0xb8da0b3748daac768860783e8555198fd2d1bbdffb775b81557a7124890c7eca"
++        "0xb739f8156f36efd1dca81c7048413241da1e5bf4a5f98001523a474136b8defd"
+      sourceHashes.1:
+-        "0x86c7032e0f4b5468f1eb92c79b73ab4c7f053fc7bdfc88fdd360e2fe7baa1072"
++        "0x6639f412df425cd0592b0ca4cf5e4ad9d39436f0e7255e83726bb7ac6a9e37b4"
+      usedTypes.0.arg.0xc10cd7ec6acaf1c441a3f6bd0900ad20f15855ba775a96f1939118cbc629dc97:
++        "ArbOS v61 wasmModuleRoot"
+      usedTypes.0.arg.0xc2c02df561d4afaf9a1d6785f70098ec3874765c638e3cb6dbe8d3c83333e14c:
++        "ArbOS v51.1 wasmModuleRoot"
+      usedTypes.0.arg.0x8a7513bf7bb3e3db04b0d982d0e973bcf57bf8b88aef7c6d03dba3a81a56a499:
++        "ArbOS v51 wasmModuleRoot"
+      deployerAddress:
++        "eth:0xbB0385FebfD25E01527617938129A34bD497331e"
+    }
+```
+
+```diff
+    contract OneStepProverMath (eth:0xCf4b98cFF2976E4eb579B9498f398b5bd279A6eD) [orbitstack/OneStepProverMath] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sourceHashes.0:
+-        "0x3de1ddc210fe283d7298c5f06879df577c6a475329a206b1928c74d10db656d5"
++        "0xd38b92884347e76d4ce463bc343cbf508eefb150146ed51cb80c2aee8c565122"
+      deployerAddress:
++        "eth:0x10590a5c93E8695bDb134c22f04C4d5b50755DC4"
+    }
+```
+
+```diff
+    contract RealStrategiesMultisig (eth:0xD47E2043C1eCbeF215D89EE667D09A7aA56823d4) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+      deployerAddress:
++        "eth:0x240B5E0746eda8cBc137Fc67210532a1D2B5b82A"
+    }
+```
+
+```diff
+    contract UpgradeExecutor (eth:0xD6A4868a15d98b0BF4E9063BE707B4b89D067C3a) [orbitstack/UpgradeExecutor] {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      sourceHashes.1:
+-        "0xa7ff878cfd433a428d567d3b90fe1df400a048a1af5298f22cd4cd4fc25bdecd"
++        "0x11607080f3c3b6b77778e75183e140bfe8604333e71de324adebee0f02b9dbcc"
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
+      deployerAddress:
++        "eth:0xbB0385FebfD25E01527617938129A34bD497331e"
+    }
+```
+
+```diff
+    contract Inbox (eth:0xf538671ddd60eE54BdD6FBb0E309c491A7A2df11) [orbitstack/Inbox] {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      sourceHashes.1:
+-        "0x25984fdfffb8141859c99299fb29e7a7460732d77111e5fe23792baa99f336a3"
++        "0xb33f29d585cf178f81b64440ee9a3c598cd398ad18d2b3c6dc6c711eaf63d5e4"
+      deployerAddress:
++        "eth:0xbB0385FebfD25E01527617938129A34bD497331e"
+      fieldMeta:
++        {"paused":{"severity":"MEDIUM"},"allowListEnabled":{"severity":"HIGH"},"sequencerInbox":{"severity":"HIGH"},"bridge":{"severity":"HIGH"},"$admin":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract AssetsVault (eth:0xf985E2c73d74BefF3C8c16EFC4fa5ab4cfb62294) [N/A] {
+    +++ description: This escrow contract receives ETH that users bridge to Re.al L2. This ETH is then converted to yielding assets using the StrategyManager.
+      deployerAddress:
++        "eth:0xeB658c4Ea908aC4dAF9c309D8f883d6aD758b3A3"
+    }
+```
+
+```diff
+    contract ERC20Gateway (eth:0xfC89B875970122E24C6C5ADd4Dea139443943ea7) [orbitstack/ERC20Gateway] {
+    +++ description: Escrows deposited ERC-20 assets for the canonical Bridge. Upon depositing, a generic token representation will be minted at the destination. Withdrawals are initiated by the Outbox contract.
+      sourceHashes.1:
+-        "0x17c9d8bf5017982cb88ab1d4f22a085c097ab9c7a910fa109fe9e7204840bef8"
++        "0xe51bf51c986c2124e5af39cc6e16ee63de27ee0cfa9b73dc4b10c49a4d994d2f"
+      deployerAddress:
++        "eth:0xbB0385FebfD25E01527617938129A34bD497331e"
+    }
+```
+
 Generated with discovered.json: 0x1d3d1fb3be8dfec1b3491d8b898976f52a1cfad0
 
 # Diff at Fri, 18 Sep 2026 10:24:54 GMT:

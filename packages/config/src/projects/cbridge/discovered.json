@@ -275,7 +275,10 @@
         "$immutable": true,
         "owner": "eth:0xF380166F8490F24AF32Bf47D1aA217FBA62B6575"
       },
-      "fieldMeta": { "owner": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "addressManager": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0x8E339115b295DeD49880eA62C1F06d1dbec3496b": "ProxyAdmin"
       }
@@ -990,7 +993,7 @@
   "usedTemplates": {
     "cbridge/PeggedTokenBridge": "0x08b47d97e35ec94bae1a461f262ce3c4c61103671e9ed5ad6b8caa683860bfbd",
     "cbridge/PeggedTokenBridgeV2": "0x08b47d97e35ec94bae1a461f262ce3c4c61103671e9ed5ad6b8caa683860bfbd",
-    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d"
+    "global/ProxyAdmin": "0x67403097e6696257d6279d2cfb58155d82c5ea4e778d4c626bdfccd19354f527"
   },
   "usedBlockNumbers": { "ethereum": 25142734 },
   "permissionsConfigHash": "0xa2c1b0fad300651bdc3b23dce877d9531d3871a67d31ed9a627c7b87b5a47f3b",

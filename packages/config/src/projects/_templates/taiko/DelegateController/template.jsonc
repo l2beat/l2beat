@@ -2,10 +2,21 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "name": "TaikoDAOController",
   "description": "Middleware contract that can maintain ownership of DAO-controlled assets and contracts. It can only be invoked by the TaikoDAOController on L1 through the L2 bridge.",
+  // Holds `owner` and `$admin` over the L2 Anchor, Bridge and ERC20Vault, so it
+  // is the upgrade mechanism for three critical contracts and belongs in the
+  // perimeter alongside them.
+  "critical": true,
   "category": "gov",
   "ignoreMethods": ["proxiableUUID"],
   "fields": {
+    "owner": {
+      "severity": "HIGH"
+    },
+    "$admin": {
+      "severity": "HIGH"
+    },
     "daoController": {
+      "severity": "HIGH",
       "edit": ["format", "EthereumAddress"],
       "permissions": [{ "type": "act" }]
     }

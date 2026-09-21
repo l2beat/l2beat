@@ -4,6 +4,18 @@
   // Canonical escrow for custom-mapped bridged ERC20s (counted in TVS without additional trust assumptions).
   "critical": true,
   "fields": {
+    "router": {
+      "severity": "HIGH"
+    },
+    "messenger": {
+      "severity": "HIGH"
+    },
+    "counterpart": {
+      "severity": "HIGH"
+    },
+    "$admin": {
+      "severity": "HIGH"
+    },
     "owner": {
       // Can change L1 -> L2 token mappings, redirecting future deposits/withdrawals.
       "severity": "HIGH"

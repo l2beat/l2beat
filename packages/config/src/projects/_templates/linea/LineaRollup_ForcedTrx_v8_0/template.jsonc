@@ -24,10 +24,29 @@
     "getRequiredForcedTransactionFields"
   ],
   "fields": {
+    "isWithdrawLSTAllowed": {
+      "severity": "HIGH"
+    },
+    "PAUSE_DURATION": {
+      "severity": "HIGH"
+    },
+    "COOLDOWN_DURATION": {
+      "severity": "HIGH"
+    },
+    "forcedTransactionFeeInWei": {
+      "severity": "HIGH"
+    },
+    "addressFilter": {
+      "severity": "HIGH"
+    },
+    "$admin": {
+      "severity": "HIGH"
+    },
     "yieldManager": {
       "severity": "HIGH"
     },
     "livenessRecoveryOperator": {
+      "severity": "HIGH",
       "permissions": [
         {
           "type": "interact",
@@ -44,6 +63,7 @@
       }
     },
     "accessControl": {
+      "severity": "HIGH",
       "handler": {
         "type": "accessControl",
         "roleNames": {
@@ -52,6 +72,7 @@
       }
     },
     "defaultAdminAC": {
+      "severity": "HIGH",
       "handler": {
         "type": "accessControl",
         "pickRoleMembers": "DEFAULT_ADMIN_ROLE"
@@ -64,6 +85,7 @@
       ]
     },
     "ethStakerAC": {
+      "severity": "HIGH",
       "handler": {
         "type": "accessControl",
         "pickRoleMembers": "YIELD_PROVIDER_STAKING_ROLE"
@@ -76,6 +98,7 @@
       ]
     },
     "securityCouncilAC": {
+      "severity": "HIGH",
       "handler": {
         "type": "accessControl",
         "pickRoleMembers": "SECURITY_COUNCIL_ROLE"
@@ -100,6 +123,7 @@
       ]
     },
     "yieldManagerSetterAC": {
+      "severity": "HIGH",
       "handler": {
         "type": "accessControl",
         "pickRoleMembers": "SET_YIELD_MANAGER_ROLE"
@@ -276,6 +300,7 @@
       "severity": "HIGH"
     },
     "pauseDuration_fmt": {
+      "severity": "HIGH",
       "handler": {
         "type": "call",
         "method": "PAUSE_DURATION",
@@ -285,6 +310,7 @@
       "description": "The duration of the rate limit window over which the withdrawal amounts are accumulated."
     },
     "COOLDOWN_DURATION_fmt": {
+      "severity": "HIGH",
       "handler": {
         "type": "call",
         "method": "COOLDOWN_DURATION",

@@ -149,6 +149,7 @@
       ]
     },
     "verificationKeyDelegates": {
+      "severity": "HIGH",
       "description": "Delegated callers currently allowed to update Railgun smart wallet SNARK verification keys through the Delegator.",
       "type": "PERMISSION",
       "copy": "$delegatedPermissionsRaw",

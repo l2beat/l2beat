@@ -5,5 +5,16 @@
   "category": "bridge-canonical",
   "description": "ARB sent from L2 to L1 is escrowed in this contract and minted on L1.",
   "ignoreRelatives": ["counterpartGateway"],
-  "ignoreInWatchMode": ["exitNum"]
+  "ignoreInWatchMode": ["exitNum"],
+  "fields": {
+    "router": {
+      "severity": "HIGH"
+    },
+    "counterpartGateway": {
+      "severity": "HIGH"
+    },
+    "$admin": {
+      "severity": "HIGH"
+    }
+  }
 }

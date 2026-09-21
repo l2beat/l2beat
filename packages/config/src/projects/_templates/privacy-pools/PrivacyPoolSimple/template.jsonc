@@ -14,7 +14,11 @@
   "ignoreMethods": ["depositors", "nullifierHashes", "roots"],
   "ignoreRelatives": ["ASSET", "assetConfigFromEntrypoint"],
   "fields": {
+    "ASSET": {
+      "severity": "HIGH"
+    },
     "SCOPE": {
+      "severity": "HIGH",
       "description": "Unique scope identifier that the Entrypoint uses to map relayed withdrawals to this pool."
     },
     "WITHDRAWAL_VERIFIER": {

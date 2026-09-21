@@ -24,6 +24,12 @@
     "lastFinalizedBatchIndex"
   ],
   "fields": {
+    "rollupDelayPeriod": {
+      "severity": "HIGH"
+    },
+    "$admin": {
+      "severity": "HIGH"
+    },
     // The verifier route deciding which zk proofs are accepted in challenges.
     "verifier": {
       "severity": "HIGH"

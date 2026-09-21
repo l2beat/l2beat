@@ -1,6 +1,10 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "L2AddressManager",
+  // "Changes in this mapping effectively act as contract upgrades" - which is
+  // exactly the test for the perimeter. The L2 Bridge and ERC20Vault resolve
+  // their trusted components through it.
+  "critical": true,
   "description": "Maps contract names to contract addresses. Changes in this mapping effectively act as contract upgrades.",
   "types": {
     "Bytes32ToName": {
@@ -22,6 +26,18 @@
     }
   },
   "fields": {
+    "pendingOwner": {
+      "severity": "MEDIUM"
+    },
+    "paused": {
+      "severity": "MEDIUM"
+    },
+    "addressManager": {
+      "severity": "HIGH"
+    },
+    "$admin": {
+      "severity": "HIGH"
+    },
     "proxiableUUID": {
       "handler": {
         "type": "call",
@@ -31,6 +47,7 @@
       }
     },
     "owner": {
+      "severity": "HIGH",
       "permissions": [
         {
           "type": "interact",
@@ -39,6 +56,7 @@
       ]
     },
     "namedAddresses": {
+      "severity": "HIGH",
       "description": "Don't necessarily trust because inconsistencies have been found, e.g. signal service. Review bridging if quota-manager, or watchdog gets added here.",
       "handler": {
         "type": "event",

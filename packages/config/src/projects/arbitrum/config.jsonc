@@ -177,6 +177,17 @@
       "ignoreDiscovery": true
     },
     "eth:0x760723CD2e632826c38Fef8CD438A4CC7E7E1A40": {
+      "fields": {
+        "rollup": {
+          "severity": "HIGH"
+        },
+        "bridge": {
+          "severity": "HIGH"
+        },
+        "$admin": {
+          "severity": "HIGH"
+        }
+      },
       // legacy outbox, still registered in the Bridge's allowedOutboxList:
       // can call the Bridge to move any escrowed funds.
       "critical": true,
@@ -206,6 +217,20 @@
       "ignoreRelatives": ["ARBITRUM_STAKERS"]
     },
     "eth:0x667e23ABd27E623c11d4CC00ca3EC4d0bD63337a": {
+      "fields": {
+        "beacon": {
+          "severity": "HIGH"
+        },
+        "rollup": {
+          "severity": "HIGH"
+        },
+        "bridge": {
+          "severity": "HIGH"
+        },
+        "$admin": {
+          "severity": "HIGH"
+        }
+      },
       // legacy outbox, still registered in the Bridge's allowedOutboxList:
       // can call the Bridge to move any escrowed funds.
       "critical": true,
@@ -286,18 +311,69 @@
     // explicit roots because their cross-chain references otherwise resolve on
     // the source chain and materialize as EOAs.
     "eth:0xd92023E9d9911199a6711321D1277285e6d4e2db": {
+      "fields": {
+        "l2Weth": {
+          "severity": "HIGH"
+        },
+        "l1Weth": {
+          "severity": "HIGH"
+        },
+        "router": {
+          "severity": "HIGH"
+        },
+        "inbox": {
+          "severity": "HIGH"
+        },
+        "counterpartGateway": {
+          "severity": "HIGH"
+        },
+        "$admin": {
+          "severity": "HIGH"
+        }
+      },
       "critical": true,
       "category": "bridge-canonical",
       "description": "Canonical WETH gateway escrowing L1 WETH and releasing it for withdrawals proven through the Arbitrum bridge.",
       "ignoreRelatives": ["counterpartGateway", "l1Weth", "l2Weth"]
     },
     "eth:0xbbcE8aA77782F13D4202a230d978F361B011dB27": {
+      "fields": {
+        "whitelist": {
+          "severity": "HIGH"
+        },
+        "router": {
+          "severity": "HIGH"
+        },
+        "owner": {
+          "severity": "HIGH"
+        },
+        "inbox": {
+          "severity": "HIGH"
+        },
+        "counterpartGateway": {
+          "severity": "HIGH"
+        },
+        "$admin": {
+          "severity": "HIGH"
+        }
+      },
       "critical": true,
       "category": "bridge-canonical",
       "description": "Canonical reverse gateway for ARB transfers between Ethereum and Arbitrum One.",
       "ignoreRelatives": ["counterpartGateway"]
     },
     "arb1:0x82aF49447D8a07e3bd95BD0d56f35241523fBab1": {
+      "fields": {
+        "l1Address": {
+          "severity": "HIGH"
+        },
+        "l2Gateway": {
+          "severity": "HIGH"
+        },
+        "$admin": {
+          "severity": "HIGH"
+        }
+      },
       "critical": true,
       "category": "bridge-canonical",
       "description": "Canonical upgradeable WETH token burned by L2WethGateway when withdrawing against the L1 WETH escrow.",
@@ -307,6 +383,14 @@
     // Factory/beacon stack defining standard L2 token code redeemable against
     // the canonical L1ERC20Gateway escrow.
     "arb1:0x3fE38087A94903A9D946fa1915e1772fe611000f": {
+      "fields": {
+        "cloneableProxyHash": {
+          "severity": "HIGH"
+        },
+        "beacon": {
+          "severity": "HIGH"
+        }
+      },
       "critical": true
     },
     "arb1:0xE72ba9418b5f2Ce0A6a40501Fe77c6839Aa37333": {
@@ -319,6 +403,14 @@
       }
     },
     "arb1:0x3f770Ac673856F105b586bb393d122721265aD46": {
+      "fields": {
+        "l1Address": {
+          "severity": "HIGH"
+        },
+        "l2Gateway": {
+          "severity": "HIGH"
+        }
+      },
       "critical": true
     },
     // --- ossification severity overrides on shared orbitstack templates
@@ -340,6 +432,25 @@
     },
     "eth:0x1c479675ad559DC151F6Ec7ed3FbF8ceE79582B6": {
       "fields": {
+        "bufferConfig": {
+          // buffer() mixes the configured delay-buffer parameters with counters
+          // that move with every batch, so the whole field stays in
+          // ignoreInWatchMode and only the settable part is watched here.
+          // Kept on the project rather than the template: older Orbit
+          // SequencerInbox versions have no buffer() at all.
+          "severity": "HIGH",
+          "handler": {
+            "type": "call",
+            "method": "buffer",
+            "args": []
+          },
+          "edit": [
+            "delete",
+            "prevBlockNumber",
+            "prevSequencedBlockNumber",
+            "bufferBlocks"
+          ]
+        },
         // force-inclusion window (delayBlocks/delaySeconds): the user's
         // censorship-resistance guarantee, owner-settable. Same rationale as
         // the timelock getMinDelay override above.

@@ -5,6 +5,21 @@
   "critical": true,
   "ignoreMethods": ["getStakers", "stakerSet"],
   "fields": {
+    "rewardPercentage": {
+      "severity": "HIGH"
+    },
+    "messenger": {
+      "severity": "HIGH"
+    },
+    "OTHER_STAKING": {
+      "severity": "HIGH"
+    },
+    "MESSENGER": {
+      "severity": "HIGH"
+    },
+    "$admin": {
+      "severity": "HIGH"
+    },
     // Identity churn inside the unchanged staker role is not HIGH.
     "getActiveStakers": {
       "permissions": [

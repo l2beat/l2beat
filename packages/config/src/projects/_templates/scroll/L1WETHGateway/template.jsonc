@@ -5,10 +5,24 @@
   "category": "bridge-external",
   "ignoreMethods": ["WETH"],
   "fields": {
+    "router": {
+      "severity": "HIGH"
+    },
+    "messenger": {
+      "severity": "HIGH"
+    },
+    "owner": {
+      "severity": "HIGH"
+    },
+    "$admin": {
+      "severity": "HIGH"
+    },
     "counterpart": {
+      "severity": "HIGH",
       "edit": ["format", "ScrollAddress"]
     },
     "l2WETH": {
+      "severity": "HIGH",
       "edit": ["format", "ScrollAddress"]
     }
   }

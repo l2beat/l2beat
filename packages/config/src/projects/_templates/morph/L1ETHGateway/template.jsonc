@@ -4,6 +4,18 @@
   // Canonical deposit entrypoint for ETH (funds are escrowed in the L1CrossDomainMessenger).
   "critical": true,
   "fields": {
+    "router": {
+      "severity": "HIGH"
+    },
+    "messenger": {
+      "severity": "HIGH"
+    },
+    "counterpart": {
+      "severity": "HIGH"
+    },
+    "$admin": {
+      "severity": "HIGH"
+    },
     "owner": {
       "severity": "HIGH"
     }

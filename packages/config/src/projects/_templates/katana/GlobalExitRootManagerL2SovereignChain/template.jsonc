@@ -4,6 +4,18 @@
   "critical": true,
   "description": "Manages Layer 2 and global merkle roots (exit roots). It stores exit roots written during bridge deposits, accepts imported global exit roots from a permissioned address, and manages historical roots.",
   "fields": {
+    "pendingGlobalExitRootUpdater": {
+      "severity": "MEDIUM"
+    },
+    "pendingGlobalExitRootRemover": {
+      "severity": "MEDIUM"
+    },
+    "bridgeAddress": {
+      "severity": "HIGH"
+    },
+    "$admin": {
+      "severity": "HIGH"
+    },
     "globalExitRootRemover": {
       "severity": "HIGH",
       "permissions": [

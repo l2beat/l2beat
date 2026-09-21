@@ -4,10 +4,17 @@
   "critical": true,
   "description": "This is NOT the shared SuperchainConfig contract of the OP stack Superchain but rather a local fork. It manages pause states for each chain connected to it, as well as a global pause state for all chains. The guardian role can pause either separately, but each pause expires after {{pauseExpiryFmt}} if left untouched.",
   "fields": {
+    "$admin": {
+      "severity": "HIGH"
+    },
+    "pauseExpiry": {
+      "severity": "HIGH"
+    },
     "paused": {
       "severity": "MEDIUM"
     },
     "pauseExpiryFmt": {
+      "severity": "HIGH",
       "handler": {
         "type": "call",
         "method": "pauseExpiry",
@@ -16,6 +23,7 @@
       "edit": ["format", "FormatSeconds"]
     },
     "guardian": {
+      "severity": "MEDIUM",
       "permissions": [
         {
           "type": "interact",

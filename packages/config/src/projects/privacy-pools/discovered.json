@@ -67,7 +67,9 @@
         "WITHDRAWAL_VERIFIER": "eth:0x022891F938Ae7fDC8Ab9Ead0FBf50aBA8C897D6d"
       },
       "fieldMeta": {
+        "ASSET": { "severity": "HIGH" },
         "SCOPE": {
+          "severity": "HIGH",
           "description": "Unique scope identifier that the Entrypoint uses to map relayed withdrawals to this pool."
         },
         "WITHDRAWAL_VERIFIER": {
@@ -141,7 +143,9 @@
         "WITHDRAWAL_VERIFIER": "eth:0x022891F938Ae7fDC8Ab9Ead0FBf50aBA8C897D6d"
       },
       "fieldMeta": {
+        "ASSET": { "severity": "HIGH" },
         "SCOPE": {
+          "severity": "HIGH",
           "description": "Unique scope identifier that the Entrypoint uses to map relayed withdrawals to this pool."
         },
         "WITHDRAWAL_VERIFIER": {
@@ -215,7 +219,9 @@
         "WITHDRAWAL_VERIFIER": "eth:0x022891F938Ae7fDC8Ab9Ead0FBf50aBA8C897D6d"
       },
       "fieldMeta": {
+        "ASSET": { "severity": "HIGH" },
         "SCOPE": {
+          "severity": "HIGH",
           "description": "Unique scope identifier that the Entrypoint uses to map relayed withdrawals to this pool."
         },
         "WITHDRAWAL_VERIFIER": {
@@ -327,7 +333,9 @@
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
       "fieldMeta": {
+        "$admin": { "severity": "HIGH" },
         "accessControl": {
+          "severity": "HIGH",
           "description": "Current role membership map for the Entrypoint's owner and postman roles."
         },
         "associationSets": {
@@ -344,6 +352,7 @@
           "type": "PERMISSION"
         },
         "aspPostmen": {
+          "severity": "HIGH",
           "description": "Addresses with ASP_POSTMAN.",
           "type": "PERMISSION"
         }
@@ -398,7 +407,9 @@
         "WITHDRAWAL_VERIFIER": "eth:0x022891F938Ae7fDC8Ab9Ead0FBf50aBA8C897D6d"
       },
       "fieldMeta": {
+        "ASSET": { "severity": "HIGH" },
         "SCOPE": {
+          "severity": "HIGH",
           "description": "Unique scope identifier that the Entrypoint uses to map relayed withdrawals to this pool."
         },
         "WITHDRAWAL_VERIFIER": {
@@ -533,7 +544,9 @@
         "WITHDRAWAL_VERIFIER": "eth:0x022891F938Ae7fDC8Ab9Ead0FBf50aBA8C897D6d"
       },
       "fieldMeta": {
+        "ASSET": { "severity": "HIGH" },
         "SCOPE": {
+          "severity": "HIGH",
           "description": "Unique scope identifier that the Entrypoint uses to map relayed withdrawals to this pool."
         },
         "WITHDRAWAL_VERIFIER": {
@@ -607,7 +620,9 @@
         "WITHDRAWAL_VERIFIER": "eth:0x022891F938Ae7fDC8Ab9Ead0FBf50aBA8C897D6d"
       },
       "fieldMeta": {
+        "ASSET": { "severity": "HIGH" },
         "SCOPE": {
+          "severity": "HIGH",
           "description": "Unique scope identifier that the Entrypoint uses to map relayed withdrawals to this pool."
         },
         "WITHDRAWAL_VERIFIER": {
@@ -681,7 +696,9 @@
         "WITHDRAWAL_VERIFIER": "eth:0x022891F938Ae7fDC8Ab9Ead0FBf50aBA8C897D6d"
       },
       "fieldMeta": {
+        "ASSET": { "severity": "HIGH" },
         "SCOPE": {
+          "severity": "HIGH",
           "description": "Unique scope identifier that the Entrypoint uses to map relayed withdrawals to this pool."
         },
         "WITHDRAWAL_VERIFIER": {
@@ -755,7 +772,9 @@
         "WITHDRAWAL_VERIFIER": "eth:0x022891F938Ae7fDC8Ab9Ead0FBf50aBA8C897D6d"
       },
       "fieldMeta": {
+        "ASSET": { "severity": "HIGH" },
         "SCOPE": {
+          "severity": "HIGH",
           "description": "Unique scope identifier that the Entrypoint uses to map relayed withdrawals to this pool."
         },
         "WITHDRAWAL_VERIFIER": {
@@ -829,7 +848,9 @@
         "WITHDRAWAL_VERIFIER": "eth:0x022891F938Ae7fDC8Ab9Ead0FBf50aBA8C897D6d"
       },
       "fieldMeta": {
+        "ASSET": { "severity": "HIGH" },
         "SCOPE": {
+          "severity": "HIGH",
           "description": "Unique scope identifier that the Entrypoint uses to map relayed withdrawals to this pool."
         },
         "WITHDRAWAL_VERIFIER": {
@@ -903,7 +924,9 @@
         "WITHDRAWAL_VERIFIER": "eth:0x022891F938Ae7fDC8Ab9Ead0FBf50aBA8C897D6d"
       },
       "fieldMeta": {
+        "ASSET": { "severity": "HIGH" },
         "SCOPE": {
+          "severity": "HIGH",
           "description": "Unique scope identifier that the Entrypoint uses to map relayed withdrawals to this pool."
         },
         "WITHDRAWAL_VERIFIER": {
@@ -1006,7 +1029,9 @@
         "WITHDRAWAL_VERIFIER": "eth:0x022891F938Ae7fDC8Ab9Ead0FBf50aBA8C897D6d"
       },
       "fieldMeta": {
+        "ASSET": { "severity": "HIGH" },
         "SCOPE": {
+          "severity": "HIGH",
           "description": "Unique scope identifier that the Entrypoint uses to map relayed withdrawals to this pool."
         },
         "WITHDRAWAL_VERIFIER": {
@@ -1080,7 +1105,9 @@
         "WITHDRAWAL_VERIFIER": "eth:0x022891F938Ae7fDC8Ab9Ead0FBf50aBA8C897D6d"
       },
       "fieldMeta": {
+        "ASSET": { "severity": "HIGH" },
         "SCOPE": {
+          "severity": "HIGH",
           "description": "Unique scope identifier that the Entrypoint uses to map relayed withdrawals to this pool."
         },
         "WITHDRAWAL_VERIFIER": {
@@ -1159,7 +1186,9 @@
         "WITHDRAWAL_VERIFIER": "eth:0x022891F938Ae7fDC8Ab9Ead0FBf50aBA8C897D6d"
       },
       "fieldMeta": {
+        "ASSET": { "severity": "HIGH" },
         "SCOPE": {
+          "severity": "HIGH",
           "description": "Unique scope identifier that the Entrypoint uses to map relayed withdrawals to this pool."
         },
         "WITHDRAWAL_VERIFIER": {
@@ -1233,7 +1262,9 @@
         "WITHDRAWAL_VERIFIER": "eth:0x022891F938Ae7fDC8Ab9Ead0FBf50aBA8C897D6d"
       },
       "fieldMeta": {
+        "ASSET": { "severity": "HIGH" },
         "SCOPE": {
+          "severity": "HIGH",
           "description": "Unique scope identifier that the Entrypoint uses to map relayed withdrawals to this pool."
         },
         "WITHDRAWAL_VERIFIER": {
@@ -2159,9 +2190,9 @@
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "privacy-pools/CommitmentVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "privacy-pools/Entrypoint": "0x73ace37ad5a6f13a98c7c375f4b9c77352b90b6b85ab19f58913ee9324939a61",
-    "privacy-pools/PrivacyPoolComplex": "0xca9e6d12b1da3fb6a5974b9e8f7dbd953f42ee4eabe82264cf4427211addfc78",
-    "privacy-pools/PrivacyPoolSimple": "0xca9e6d12b1da3fb6a5974b9e8f7dbd953f42ee4eabe82264cf4427211addfc78",
+    "privacy-pools/Entrypoint": "0x8a9e902ce5ccb54e58d6ca843503088bafa2f737a78fd8d0d6c422562c1af43d",
+    "privacy-pools/PrivacyPoolComplex": "0xcd3f9dc42be14d6c67d32f826aec1291f5c1cdd3744d0de49ef213a7b8632c1a",
+    "privacy-pools/PrivacyPoolSimple": "0xcd3f9dc42be14d6c67d32f826aec1291f5c1cdd3744d0de49ef213a7b8632c1a",
     "privacy-pools/WithdrawalVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },
   "usedBlockNumbers": { "ethereum": 25193240 },

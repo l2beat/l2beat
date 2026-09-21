@@ -25,7 +25,10 @@
       "copy": "operator",
       "edit": ["=", "eth:0x0000000000000000000000000000000000000000"]
     },
-    "token": { "description": "ERC20 token accepted by this mixer instance." },
+    "token": {
+      "severity": "HIGH",
+      "description": "ERC20 token accepted by this mixer instance."
+    },
     "verifier": {
       "description": "zkSNARK verifier used to authorize withdrawals from the pool.",
       "severity": "HIGH"

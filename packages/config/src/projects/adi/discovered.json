@@ -299,6 +299,14 @@
         "validators": []
       },
       "fieldMeta": {
+        "getL2EvmEmulatorBytecodeHash": { "severity": "HIGH" },
+        "getL2DefaultAccountBytecodeHash": { "severity": "HIGH" },
+        "getL2BootloaderBytecodeHash": { "severity": "HIGH" },
+        "getPriorityTxMaxGasLimit": { "severity": "HIGH" },
+        "getRollupDAManager": { "severity": "HIGH" },
+        "getChainTypeManager": { "severity": "HIGH" },
+        "getBridgehub": { "severity": "HIGH" },
+        "getVerifier": { "severity": "HIGH" },
         "getSettlementLayer": {
           "severity": "HIGH",
           "description": "Settlement layer for this chain: the zero address while batches are committed, proven and executed on Ethereum, otherwise the Gateway diamond that settles this chain. Moving it relocates the complete proof-verification and message path of the chain."
@@ -555,7 +563,10 @@
         "$immutable": true,
         "owner": "eth:0x2d6E82F1f8fba89a67cc8d742B12633db4732Ca7"
       },
-      "fieldMeta": { "owner": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "addressManager": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0x34f56Ba641aC59E897c6179ffeCAe9769fbfC90C": "ProxyAdmin"
       }
@@ -830,7 +841,10 @@
         "$immutable": true,
         "owner": "eth:0x8253F33026c49A430963FE3991441c02175bda95"
       },
-      "fieldMeta": { "owner": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "addressManager": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0x8140aBB60c9AfB5241D90af948Cfa7644b2D3217": "ProxyAdmin"
       }
@@ -1307,7 +1321,12 @@
           }
         }
       },
-      "fieldMeta": { "executionDelay_fmt": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "executionDelay": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" },
+        "executionDelay_fmt": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0xE28cAc160C2a79dFA1fbd2169AC5fa5d061cf186": "TransparentUpgradeableProxy",
         "eth:0x6CB28384f21B18924FA312AA2E10D4E813e66263": "ValidatorTimelock"
@@ -2734,21 +2753,21 @@
     "adi/RollupDAManager": "0xf2275524272d21fe66f4b8c5eb42b74741a62235cc5e1db16e4ebaae56a9bcbb",
     "adi/ServerNotifier": "0x2d0a5ede7827c3fa5e2cb0e4568c676a952552562731371e4f9e101aebd288f2",
     "adi/ZKsyncOSDualVerifier_post_v30": "0xc77d6991c4e25294f78b0fcaba0665e29792b16cb287db3eb22449a356e35033",
-    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
+    "global/ProxyAdmin": "0x67403097e6696257d6279d2cfb58155d82c5ea4e778d4c626bdfccd19354f527",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "shared-zk-stack/BlobsL1DAValidatorZKsyncOS": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "shared-zk-stack/BridgeHub": "0x85d84032c3f2eae0ff0e6a0d3e425dd5bf1ae3a31fc2ef68fea4aa5f442edbd9",
     "shared-zk-stack/ChainAdmin": "0x8be9e939e27d818ead1d430f9f603f4143a5f3d809e6f287aa3d463e5a8f5b8b",
     "shared-zk-stack/ChainAssetHandler": "0x8014df0d446cdb3c3b832daf6f52f4993f5315bacda2db187328db9c6a777312",
     "shared-zk-stack/CTMDeploymentTracker": "0xeb9db9a349a757fe90088c401a5cf10b7da6a7dbd22abd4e0c21ad9a95292ef1",
-    "shared-zk-stack/Diamond": "0x9991c4f086f60a5f0605a052766841a0735c442ad7547cfcd2f3b347fe8a3c5d",
+    "shared-zk-stack/Diamond": "0x57a8af2e43f19d45b7496a20cca383d3aaa9f8617fbc179639ad84fd80daa9dc",
     "shared-zk-stack/L1AssetRouter": "0xb597793119e11f9fbaa496fc36287066fea595339e79f752b30faf484e03b720",
     "shared-zk-stack/L1GenesisUpgrade": "0xeb9db9a349a757fe90088c401a5cf10b7da6a7dbd22abd4e0c21ad9a95292ef1",
     "shared-zk-stack/L1NativeTokenVault": "0xdbb34d948c77bf3d53fc312d8ad484a70d5bdc083eb97978bfb1dfcba4417627",
     "shared-zk-stack/L1Nullifier": "0x614d522d7f6aed93c6d04fda3957344b9cc6c94fd8060c2c5b760b2d49e0a84a",
     "shared-zk-stack/L1VerifierFflonk": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
     "shared-zk-stack/MessageRoot": "0xbff1ea54952301b3b5c9dd16fcb265471a173687870eb62ec88bb5ad5eb68d0a",
-    "shared-zk-stack/ValidatorTimelock_post29": "0x5418e2a478522eb998ee59e7eda86d437c94a8654ddf6b348a51ff161b61bcf6"
+    "shared-zk-stack/ValidatorTimelock_post29": "0xc705047a5ab40ad374452332f3f56b976fd4ac0146b467df702b423427c8587e"
   },
   "usedBlockNumbers": { "ethereum": 25946896 },
   "permissionsConfigHash": "0xca44996659499dc49a09055d75c55311eedf6ef9b4980fad43c58ca2378e8801",

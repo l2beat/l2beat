@@ -4,5 +4,16 @@
   "critical": true,
   "category": "bridge-canonical",
   "description": "Router managing token <–> gateway mapping on L2.",
-  "ignoreRelatives": ["counterpartGateway"]
+  "ignoreRelatives": ["counterpartGateway"],
+  "fields": {
+    "router": {
+      "severity": "HIGH"
+    },
+    "counterpartGateway": {
+      "severity": "HIGH"
+    },
+    "$admin": {
+      "severity": "HIGH"
+    }
+  }
 }

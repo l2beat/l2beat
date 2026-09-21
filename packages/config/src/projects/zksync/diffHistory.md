@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xb541e5130826ea6869a8c9d75755dddfa1f66f40
+
+# Diff at Mon, 21 Sep 2026 07:14:00 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@cb454ea5283bcf30e392f86e07ac240d516636b4 block: 1784806565
+- current timestamp: 1784806565
+
+## Description
+
+ossification re-review: pause-role holders are identity, not mechanism (HIGH -> MEDIUM)
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1784806565 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (eth:0xDc7009bCAabD4069391C0aa9445D58a759fE1c7d) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta.addressManager:
++        {"severity":"HIGH"}
+    }
+```
+
 Generated with discovered.json: 0xd8b1a7f7c7e535a4fbf80f226a17bcefa1315cc0
 
 # Diff at Fri, 18 Sep 2026 09:34:57 GMT:

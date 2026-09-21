@@ -6,6 +6,30 @@
   "ignoreMethods": ["l1USDC"],
   "ignoreInWatchMode": ["totalBridgedUSDC"],
   "fields": {
+    "withdrawPaused": {
+      "severity": "MEDIUM"
+    },
+    "depositPaused": {
+      "severity": "MEDIUM"
+    },
+    "circleCaller": {
+      "severity": "HIGH"
+    },
+    "l2USDC": {
+      "severity": "HIGH"
+    },
+    "router": {
+      "severity": "HIGH"
+    },
+    "messenger": {
+      "severity": "HIGH"
+    },
+    "counterpart": {
+      "severity": "HIGH"
+    },
+    "$admin": {
+      "severity": "HIGH"
+    },
     "owner": {
       "severity": "HIGH"
     }

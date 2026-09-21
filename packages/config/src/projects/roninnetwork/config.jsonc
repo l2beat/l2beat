@@ -96,6 +96,26 @@
       "critical": true
     },
     "eth:0x6b49976a7340D0A3C00d1bEBE0E36E2367D89c7C": {
+      "fields": {
+        "PERMIT_DURATION": {
+          "severity": "HIGH"
+        },
+        "PERMIT_DELAY": {
+          "severity": "HIGH"
+        },
+        "ROLLUP_CONFIG_HASH": {
+          "severity": "HIGH"
+        },
+        "RISC_ZERO_VERIFIER": {
+          "severity": "HIGH"
+        },
+        "FPVM_IMAGE_ID": {
+          "severity": "HIGH"
+        },
+        "$admin": {
+          "severity": "HIGH"
+        }
+      },
       "description": "Proxy in front of the Kailua proof verifier; routes verification requests to the canonical RiscZeroVerifierRouter and asserts the chain-specific rollup config and FPVM image ID.",
       "critical": true
     },
@@ -170,7 +190,7 @@
     "eth:0xEE552e802A50d855bD08E93dfcc69228FC7B9E2c": {
       "fields": {
         "guardian": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Address that can pause Ronin withdrawals and blacklist dispute games."
         }
       }

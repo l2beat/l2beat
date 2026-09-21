@@ -105,7 +105,10 @@
         "owner": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
-      "fieldMeta": { "owner": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "addressManager": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0x1e4c534e7ce1FF5621Ea506D99b367D7d8EFbE3e": "ProxyAdmin"
       }
@@ -141,7 +144,10 @@
         "$immutable": true,
         "owner": "eth:0x2cf3bD6a9056b39999F3883955E183F655345063"
       },
-      "fieldMeta": { "owner": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "addressManager": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0x257FC0c3EB02F7ba8C0fd3eD57692A9c1ee6D29B": "ProxyAdmin"
       }
@@ -210,11 +216,11 @@
         ]
       },
       "fieldMeta": {
+        "owner": { "severity": "HIGH" },
+        "tokenMultiplierSetter": { "severity": "HIGH" },
         "upgradeTimestamps": {
           "description": "Timestamps for new protocol version upgrades can be registered here (NOT enforced)"
-        },
-        "owner": { "severity": "HIGH" },
-        "tokenMultiplierSetter": { "severity": "HIGH" }
+        }
       },
       "implementationNames": {
         "eth:0x2cf3bD6a9056b39999F3883955E183F655345063": "ChainAdmin"
@@ -442,13 +448,6 @@
         "sharedBridge": "eth:0x8829AD80E425C646DAB305381ff105169FeEcE56"
       },
       "fieldMeta": {
-        "chainsCreated": {
-          "description": "All new chains created go thorugh the central bridgehub and are stored here with their respective STMs."
-        },
-        "settlementLayers": {
-          "severity": "HIGH",
-          "description": "New settlement layers and their whitelist status. Chains can be migrated to whitelisted settlement layers by their chain admin."
-        },
         "admin": { "severity": "HIGH" },
         "owner": { "severity": "HIGH" },
         "paused": { "severity": "MEDIUM" },
@@ -457,7 +456,14 @@
         "sharedBridge": { "severity": "HIGH" },
         "messageRoot": { "severity": "HIGH" },
         "l1CtmDeployer": { "severity": "HIGH" },
-        "chainAssetHandler": { "severity": "HIGH" }
+        "chainAssetHandler": { "severity": "HIGH" },
+        "chainsCreated": {
+          "description": "All new chains created go thorugh the central bridgehub and are stored here with their respective STMs."
+        },
+        "settlementLayers": {
+          "severity": "HIGH",
+          "description": "New settlement layers and their whitelist status. Chains can be migrated to whitelisted settlement layers by their chain admin."
+        }
       },
       "implementationNames": {
         "eth:0x303a465B659cBB0ab36eE643eA362c509EEb5213": "TransparentUpgradeableProxy",
@@ -798,13 +804,13 @@
         "unfreezeNonce": 0
       },
       "fieldMeta": {
+        "$threshold": { "severity": "HIGH" },
         "softFreezeNonce": {
           "description": "Increments with each softFreeze (freezes ALL Hyperchains (blocks Mailbox and Executor facets) connected to the main STM for SOFT_FREEZE_PERIOD"
         },
         "hardFreezeNonce": {
           "description": "Increments with each hardFreeze (freezes ALL Hyperchains (blocks Mailbox and Executor facets) connected to the main STM for HARD_FREEZE_PERIOD"
-        },
-        "$threshold": { "severity": "HIGH" }
+        }
       },
       "implementationNames": {
         "eth:0x59195219d1176E42f8e607e9AC114926D47f9035": "SecurityCouncil"
@@ -1505,7 +1511,10 @@
         "$immutable": true,
         "owner": "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3"
       },
-      "fieldMeta": { "owner": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "addressManager": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0xC2a36181fB524a6bEfE639aFEd37A67e77d62cf1": "ProxyAdmin"
       }
@@ -1803,6 +1812,7 @@
         "pendingOwner": "eth:0x0000000000000000000000000000000000000000"
       },
       "fieldMeta": {
+        "owner": { "severity": "HIGH" },
         "migrationPaused": { "severity": "MEDIUM" },
         "paused": {
           "severity": "LOW",
@@ -1810,8 +1820,7 @@
         },
         "migrations": {
           "description": "zk chain migrations that were started. Any chain's migration appears here; Era's own settlement moves are tracked as HIGH on its Diamond (getSettlementLayer)."
-        },
-        "owner": { "severity": "HIGH" }
+        }
       },
       "implementationNames": {
         "eth:0xDd5CB8B9037357B4cD37391A073798f8aaB61076": "TransparentUpgradeableProxy",
@@ -1912,14 +1921,14 @@
         "ZKSYNC_ERA": "eth:0x32400084C286CF3E17e7B677ea9583e60a000324"
       },
       "fieldMeta": {
-        "protocolFrozenUntil": {
-          "severity": "HIGH",
-          "description": "Timestamp until which ALL Hyperchains connected to the main STM are frozen. (Mailbox and Executor facets blocked)"
-        },
         "emergencyUpgradeBoard": { "severity": "HIGH" },
         "guardians": { "severity": "HIGH" },
         "securityCouncil": { "severity": "HIGH" },
-        "L2_PROTOCOL_GOVERNOR": { "severity": "HIGH" }
+        "L2_PROTOCOL_GOVERNOR": { "severity": "HIGH" },
+        "protocolFrozenUntil": {
+          "severity": "HIGH",
+          "description": "Timestamp until which ALL Hyperchains connected to the main STM are frozen. (Mailbox and Executor facets blocked)"
+        }
       },
       "implementationNames": {
         "eth:0xE30Dca3047B37dc7d88849dE4A4Dc07937ad5Ab3": "TransparentUpgradeableProxy",
@@ -2505,7 +2514,10 @@
         "$immutable": true,
         "owner": "zksync:0xF41EcA3047B37dc7d88849de4a4dc07937Ad6bc4"
       },
-      "fieldMeta": { "owner": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "addressManager": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "zksync:0xdB1E46B448e68a5E35CB693a99D59f784aD115CC": "ProxyAdmin"
       }
@@ -4025,7 +4037,7 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
+    "global/ProxyAdmin": "0x67403097e6696257d6279d2cfb58155d82c5ea4e778d4c626bdfccd19354f527",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "shared-zk-stack/BridgeHub": "0x85d84032c3f2eae0ff0e6a0d3e425dd5bf1ae3a31fc2ef68fea4aa5f442edbd9",
     "shared-zk-stack/ChainAdmin": "0x8be9e939e27d818ead1d430f9f603f4143a5f3d809e6f287aa3d463e5a8f5b8b",
