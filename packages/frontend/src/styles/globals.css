@@ -106,17 +106,17 @@
   --primary: #fafafa;
   --primary-invert: #131215;
   --secondary: #a3a9b9;
-  --positive: #2ed67d;
-  --warning: #ffc83d;
-  --negative: #ff6166;
-  --brand: #e09bf9;
+  --positive: #12d660;
+  --warning: #ffc107;
+  --negative: #ff3d3d;
+  --brand: #db8bf7;
   --background: #07080c;
   --surface-primary: #1b1e2a;
   --surface-primary-hover: #252938;
   --surface-secondary: #292d3c;
   --surface-tertiary: #3a3f52;
   --surface-info: #1f3457;
-  --surface-warning: #ffc83d;
+  --surface-warning: #ffc107;
   --surface-negative: #4a1c22;
   --header-primary: #1b1e2a;
   --header-secondary: #232634;
@@ -124,7 +124,7 @@
   --overlay: #04050acc;
   --divider: #383d4f;
   --link-stroke: #24406b;
-  --link: #7cbaff;
+  --link: #66b2ff;
   --scrollbar: #4a5066;
   /* A drop shadow is invisible on dark surfaces, so floating layers get a hairline edge. */
   --popover-shadow:
