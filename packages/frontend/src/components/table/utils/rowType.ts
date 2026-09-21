@@ -22,37 +22,30 @@ export function getRowBackgroundColor(statuses: {
   }
 }
 
-/*
-  NOTICE: It is important that this functions return the same colors
-*/
 export function getRowClassNames(rowBackgroundColor: RowBackgroundColor) {
   switch (rowBackgroundColor) {
     case 'blue':
-      return 'bg-blue-500/35 dark:bg-blue-700/25'
+      return 'bg-row-info'
     case 'red':
-      return 'bg-red-100/70 dark:bg-red-900/70'
+      return 'bg-row-negative'
     case 'yellow':
-      return 'bg-yellow-200/10'
+      return 'bg-row-warning'
     default:
       return undefined
   }
 }
 
-/*
-  Pinned cells must hide what scrolls beneath them, so they repeat the row tint
-  as an opaque mix over the card colour instead of a fixed hex that drifts
-  whenever the surface token changes.
-*/
+/** For pinned cells, which must hide the columns scrolling beneath them. */
 export function getRowClassNamesWithoutOpacity(
   rowBackgroundColor: RowBackgroundColor | null,
 ) {
   switch (rowBackgroundColor) {
     case 'blue':
-      return 'bg-[color-mix(in_srgb,#53a2ff_35%,var(--surface-primary))] dark:bg-[color-mix(in_srgb,#005dd7_25%,var(--surface-primary))]'
+      return 'bg-row-info-no-opacity'
     case 'red':
-      return 'bg-[color-mix(in_srgb,#fdd9d9_70%,var(--surface-primary))] dark:bg-[color-mix(in_srgb,#441111_70%,var(--surface-primary))]'
+      return 'bg-row-negative-no-opacity'
     case 'yellow':
-      return 'bg-[color-mix(in_srgb,#ffc107_10%,var(--surface-primary))]'
+      return 'bg-row-warning-no-opacity'
     default:
       return 'bg-surface-primary'
   }
