@@ -71,12 +71,10 @@ export function printTemplatization(
           : [shape.address]
 
         nestedLines.push(
-          ...[
-            name,
-            `@ ${shape.blockNumber}`,
-            ...addressLines.map((address) => address.toString()),
-            `hash: ${shape.hash}`,
-          ],
+          name,
+          `@ ${shape.blockNumber}`,
+          ...addressLines.map((address) => address.toString()),
+          `hash: ${shape.hash}`,
         )
       }
 
