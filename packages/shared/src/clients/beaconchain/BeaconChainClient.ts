@@ -5,7 +5,7 @@ import { chain } from 'stream-chain'
 import { parser } from 'stream-json'
 import { pick } from 'stream-json/filters/Pick'
 import { streamValues } from 'stream-json/streamers/StreamValues'
-import type { Hex } from 'viem'
+
 import { ClientCore, type ClientCoreDependencies } from '../ClientCore'
 import {
   BeaconChainError,
@@ -50,7 +50,13 @@ export class BeaconChainClient extends ClientCore {
     stateId,
     status,
   }: {
-    stateId: 'head' | 'genesis' | 'finalized' | 'justified' | 'slot' | Hex
+    stateId:
+      | 'head'
+      | 'genesis'
+      | 'finalized'
+      | 'justified'
+      | 'slot'
+      | `0x${string}`
     status?: string[]
   }) {
     const endpoint = `eth/v1/beacon/states/${stateId}/validators?${new URLSearchParams(
