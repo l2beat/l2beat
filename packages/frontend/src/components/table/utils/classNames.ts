@@ -25,6 +25,22 @@ export function getTableElementClassName(className?: string) {
   return cn('w-full border-collapse text-left', className)
 }
 
+/**
+ * Pinned cells need an opaque background to hide the content scrolling under
+ * them. The table is border-collapse, so half of each row separator lies inside
+ * the cell's border box; WebKit paints a sticky cell's background over it and
+ * the separator looks thinner on high-DPR screens. Clipping the background to
+ * the padding box leaves the separator uncovered.
+ */
+export function getPinnedCellBackgroundClassName(
+  rowBackgroundColor: RowBackgroundColor,
+) {
+  return cn(
+    getRowClassNamesWithoutOpacity(rowBackgroundColor ?? null),
+    'bg-clip-padding',
+  )
+}
+
 export function getBasicTableGroupedHeaderCellClassName(params: {
   isPlaceholder: boolean
   hasHeader: boolean
@@ -33,7 +49,7 @@ export function getBasicTableGroupedHeaderCellClassName(params: {
   return cn(
     'font-medium text-primary tracking-[-0.13px]',
     !params.isPlaceholder && params.hasHeader && 'rounded-t-lg px-6 pt-4',
-    params.isPinned && getRowClassNamesWithoutOpacity(null),
+    params.isPinned && getPinnedCellBackgroundClassName(undefined),
   )
 }
 
@@ -59,7 +75,7 @@ export function getBasicTableHeaderCellClassName(params: {
       !groupParams.headerTitle && groupParams.isFirstInGroup && 'rounded-tl-lg',
       !groupParams.headerTitle && groupParams.isLastInGroup && 'rounded-tr-lg',
     ],
-    isPinned && getRowClassNamesWithoutOpacity(null),
+    isPinned && getPinnedCellBackgroundClassName(undefined),
     compact && COMPACT_HEADER_CELL,
     headClassName,
   )
@@ -93,7 +109,7 @@ export function getBasicTableBodyCellClassName(params: {
         ? 'pl-10'
         : 'pl-4'
       : undefined,
-    isPinned && getRowClassNamesWithoutOpacity(rowBackgroundColor),
+    isPinned && getPinnedCellBackgroundClassName(rowBackgroundColor),
     isPinned && isHighlighted && 'animate-row-highlight-no-opacity',
     compact && COMPACT_BODY_CELL,
     cellClassName,

@@ -34,6 +34,7 @@ import {
   getBasicTableColumnFillerClassName,
   getBasicTableGroupedHeaderCellClassName,
   getBasicTableHeaderCellClassName,
+  getPinnedCellBackgroundClassName,
 } from './utils/classNames'
 import { getCommonPinningStyles } from './utils/commonPinningStyles'
 import { getBasicTableAdditionalRowIndex } from './utils/getBasicTableAdditionalRowIndex'
@@ -45,11 +46,7 @@ import {
   getRenderedColSpan,
   getRenderedHeaders,
 } from './utils/renderedTableColumns'
-import {
-  getRowClassNames,
-  getRowClassNamesWithoutOpacity,
-  type RowBackgroundColor,
-} from './utils/rowType'
+import { getRowClassNames, type RowBackgroundColor } from './utils/rowType'
 
 export type BasicTableRow = {
   slug?: string
@@ -475,7 +472,7 @@ function RowFiller<T, V>(props: { headers: Header<T, V>[] }) {
                 'h-4',
                 !header.isPlaceholder && 'rounded-b-lg',
                 header.column.getIsPinned() &&
-                  getRowClassNamesWithoutOpacity(null),
+                  getPinnedCellBackgroundClassName(undefined),
               )}
               style={getCommonPinningStyles(header.column)}
             />
