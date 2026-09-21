@@ -1,12 +1,12 @@
 import tailwindcss from '@tailwindcss/vite'
-import react from '@vitejs/plugin-react-swc'
+import react from '@vitejs/plugin-react'
 import path from 'path'
 import { defineConfig } from 'vite'
 import {
   CLIENT_ASSETS_DIR,
   CLIENT_BASE_PATH,
   CLIENT_OUTPUT_DIR,
-} from './src/paths'
+} from './src/paths.mts'
 
 // biome-ignore lint/style/noDefaultExport: Vite requires default export
 export default defineConfig(({ command }) => {
@@ -17,7 +17,7 @@ export default defineConfig(({ command }) => {
     plugins: [react(), tailwindcss()],
     resolve: {
       alias: {
-        '~': path.resolve(__dirname, './src'),
+        '~': path.resolve(import.meta.dirname, './src'),
       },
     },
     build: {
