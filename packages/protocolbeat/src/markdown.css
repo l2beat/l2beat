@@ -1,5 +1,3 @@
-@reference "tailwindcss";
-
 .mdc {
   @apply bg-coffee-800 p-2 text-xs;
   /* Break long unbroken strings (addresses, hashes) instead of overflowing. */
