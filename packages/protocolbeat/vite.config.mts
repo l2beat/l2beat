@@ -10,15 +10,22 @@ export default defineConfig(({ mode }) => {
     plugins: [react(), openPanelPlugin(env.VITE_OPENPANEL_CLIENT_ID)],
     build: {
       outDir: 'build',
-      rollupOptions: {
+      rolldownOptions: {
         output: {
-          manualChunks(id) {
-            if (id.includes('node_modules/monaco-editor')) {
-              return 'monaco'
-            }
-            if (id.includes('node_modules')) {
-              return 'vendor'
-            }
+          codeSplitting: {
+            groups: [
+              {
+                name(id) {
+                  if (id.includes('node_modules/monaco-editor')) {
+                    return 'monaco'
+                  }
+                  if (id.includes('node_modules')) {
+                    return 'vendor'
+                  }
+                  return null
+                },
+              },
+            ],
           },
         },
       },
