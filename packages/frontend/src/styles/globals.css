@@ -908,61 +908,82 @@ html:has([data-backdrop="plot"]) {
   }
 }
 
+/* Bloom and pop are one segment each: the overshoot comes from the caller's
+   back-easing, because stacking an overshoot keyframe on top of one hitches. */
 @keyframes garden-bloom {
-  0% {
-    transform: scale(0);
+  from {
+    transform: scale(0.4);
     opacity: 0;
   }
-  70% {
-    transform: scale(1.2);
+  40% {
+    opacity: 1;
   }
-  100% {
+  to {
     transform: scale(1);
     opacity: 1;
   }
 }
 
 @keyframes garden-pop {
-  0% {
-    transform: scale(0.3);
+  from {
+    transform: scale(0.6);
     opacity: 0;
   }
-  70% {
-    transform: scale(1.09);
+  40% {
+    opacity: 1;
   }
-  100% {
+  to {
     transform: scale(1);
     opacity: 1;
   }
 }
 
+/* The idles start after the entrance with no backwards fill, so they must
+   leave from rest or the plant snaps sideways. The per-keyframe easings keep
+   the swing moving through upright instead of pausing there. */
 @keyframes garden-sway {
-  0%,
-  100% {
-    transform: rotate(-2.6deg);
+  0% {
+    transform: rotate(0);
+    animation-timing-function: ease-out;
   }
-  50% {
+  25% {
+    transform: rotate(-2.6deg);
+    animation-timing-function: ease-in-out;
+  }
+  75% {
     transform: rotate(2.6deg);
+    animation-timing-function: ease-in;
+  }
+  100% {
+    transform: rotate(0);
   }
 }
 
 @keyframes garden-sway-s {
-  0%,
-  100% {
-    transform: rotate(-1.5deg);
+  0% {
+    transform: rotate(0);
+    animation-timing-function: ease-out;
   }
-  50% {
+  25% {
+    transform: rotate(-1.5deg);
+    animation-timing-function: ease-in-out;
+  }
+  75% {
     transform: rotate(1.5deg);
+    animation-timing-function: ease-in;
+  }
+  100% {
+    transform: rotate(0);
   }
 }
 
 @keyframes garden-wilt {
   0%,
   100% {
-    transform: rotate(-0.5deg) translateY(0);
+    transform: rotate(0) translateY(0);
   }
   50% {
-    transform: rotate(1.6deg) translateY(0.5px);
+    transform: rotate(2.1deg) translateY(0.5px);
   }
 }
 
@@ -1006,5 +1027,55 @@ html:has([data-backdrop="plot"]) {
   100% {
     transform: translateY(-90px);
     opacity: 0;
+  }
+}
+
+/* The plants animate from inline styles, so reduced motion swaps the keyframes
+   themselves: entrances become fades and the idles hold still. */
+@media (prefers-reduced-motion: reduce) {
+  @keyframes garden-grow {
+    from {
+      opacity: 0;
+    }
+  }
+  @keyframes garden-leaf {
+    from {
+      opacity: 0;
+    }
+  }
+  @keyframes garden-bloom {
+    from {
+      opacity: 0;
+    }
+  }
+  @keyframes garden-pop {
+    from {
+      opacity: 0;
+    }
+  }
+  @keyframes garden-sway {
+    to {
+      transform: none;
+    }
+  }
+  @keyframes garden-sway-s {
+    to {
+      transform: none;
+    }
+  }
+  @keyframes garden-wilt {
+    to {
+      transform: none;
+    }
+  }
+  @keyframes garden-drift {
+    to {
+      transform: none;
+    }
+  }
+  @keyframes garden-float {
+    to {
+      transform: none;
+    }
   }
 }

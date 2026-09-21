@@ -68,6 +68,9 @@ export function CropPlant({
   )
 }
 
+/** Overshoots about 10% before settling. */
+export const EASE_OUT_BACK = 'cubic-bezier(.34,1.56,.64,1)'
+
 /** The stem grows, the leaves unfold, the bloom pops, then the plant idles. */
 function timings(delay: number) {
   const at = (origin: string, animation: string): CSSProperties => ({
@@ -84,7 +87,7 @@ function timings(delay: number) {
     leafR: at('0% 100%', `garden-leaf .5s ease-out ${delay + 0.36}s both`),
     bloom: at(
       '50% 100%',
-      `garden-bloom .55s cubic-bezier(.2,.9,.3,1.3) ${delay + 0.52}s both`,
+      `garden-bloom .55s ${EASE_OUT_BACK} ${delay + 0.52}s both`,
     ),
     idle: (name: string, duration: string) =>
       at(
