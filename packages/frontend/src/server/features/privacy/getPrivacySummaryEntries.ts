@@ -7,6 +7,7 @@ import type {
 import { UnixTime } from '@l2beat/shared-pure'
 import groupBy from 'lodash/groupBy'
 import { env } from '~/env'
+import { getPrivacyAdversariesScore } from '~/pages/privacy/adversaries/privacyAdversaryUi'
 import { getDb } from '~/server/database'
 import { manifest } from '~/utils/Manifest'
 import { get7dTvsBreakdown } from '../layer2s/tvs/get7dTvsBreakdown'
@@ -208,10 +209,22 @@ function getPoolsTracked(project: PrivacyProject): number {
   )
 }
 
+/**
+ * Privacy first: the page ranks protocols by the adversary assessment, not by
+ * how much money sits in them. Everything below is a tie-break within the
+ * same score, which is why a protocol with no TVL can still outrank one with.
+ */
 function comparePrivacySummaryEntries(
   a: PrivacySummaryEntry,
   b: PrivacySummaryEntry,
 ): number {
+  const scoreDiff =
+    getPrivacyAdversariesScore(b.adversaries) -
+    getPrivacyAdversariesScore(a.adversaries)
+  if (scoreDiff !== 0) {
+    return scoreDiff
+  }
+
   if (a.isTracked !== b.isTracked) {
     return a.isTracked ? -1 : 1
   }

@@ -26,11 +26,10 @@ import { TableLink } from '~/components/table/TableLink'
 import { useTable } from '~/hooks/useTable'
 import { ANONYMITY_SET_WINDOW_DAYS } from '~/server/features/privacy/anonymity-set/calculateAnonymitySets'
 import type { PrivacySummaryEntry } from '~/server/features/privacy/getPrivacySummaryEntries'
-import { PrivacyAdversaryDots } from '../../adversaries/PrivacyAdversaryDots'
-import { getPrivacyAdversariesTableValue } from '../../adversaries/privacyAdversaryUi'
+import { PrivacyAdversariesCell } from '../../adversaries/PrivacyAdversariesCell'
+import { getPrivacyAdversariesScore } from '../../adversaries/privacyAdversaryUi'
 import { PRIVACY_ASSESSMENT } from '../../privacyAssessment'
 import { AnonymitySetCell } from './AnonymitySetCell'
-import { DotWithLabel } from './DotWithLabel'
 import { PrivacyAssessmentCell } from './PrivacyAssessmentCell'
 import { PrivacyTrustedSetupCell } from './PrivacyTrustedSetupCell'
 
@@ -86,6 +85,27 @@ const columns = [
       headClassName: 'pl-4',
     },
   }),
+  columnHelper.accessor(
+    (entry) => getPrivacyAdversariesScore(entry.adversaries),
+    {
+      id: 'adversaries',
+      header: PRIVACY_ASSESSMENT.title,
+      cell: (ctx) => (
+        <PrivacyAdversariesCell
+          adversaries={ctx.row.original.adversaries}
+          href={ctx.row.original.href}
+        />
+      ),
+      sortDescFirst: true,
+      meta: {
+        // Wide enough for the sentence to break over two lines rather than
+        // five; the table hands leftover width to whichever column can take it.
+        cellClassName: 'py-2',
+        headClassName: 'min-w-[200px]',
+        tooltip: PRIVACY_ASSESSMENT.tooltip,
+      },
+    },
+  ),
   ...withChangeSort(
     columnHelper,
     columnHelper.accessor('totalValueLockedUsd', {
@@ -181,32 +201,6 @@ const columns = [
       },
     },
   ),
-  columnHelper.accessor(
-    (entry) => getPrivacyAdversariesTableValue(entry.adversaries),
-    {
-      id: 'adversaries',
-      header: PRIVACY_ASSESSMENT.title,
-      cell: (ctx) => {
-        const { adversaries, href } = ctx.row.original
-        return (
-          <DotWithLabel
-            dot={<PrivacyAdversaryDots adversaries={adversaries} href={href} />}
-            label={adversaries.promiseLabel}
-          />
-        )
-      },
-      sortDescFirst: true,
-      sortingFn: (a, b) =>
-        sortTableValues(
-          getPrivacyAdversariesTableValue(a.original.adversaries),
-          getPrivacyAdversariesTableValue(b.original.adversaries),
-        ),
-      meta: {
-        align: 'center',
-        tooltip: PRIVACY_ASSESSMENT.tooltip,
-      },
-    },
-  ),
   columnHelper.display({
     id: 'trustedSetup',
     header: 'Setup',
@@ -236,7 +230,7 @@ const columns = [
     meta: {
       align: 'center',
       tooltip:
-        'Time users have to withdraw before a malicious upgrade can take effect.',
+        'Time users have to withdraw before a malicious upgrade can take effect. The walkaway test says whether users can still use the protocol if every centralized participant disappears.',
     },
   }),
   columnHelper.accessor((entry) => adjustTableValue(entry.reproducibility), {

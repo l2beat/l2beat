@@ -1,5 +1,6 @@
 import type {
   PrivacyAdversaryId,
+  PrivacyAdversarySentiment,
   PrivacyExposure,
   PrivacyFieldExposure,
   TableReadyValue,
@@ -52,10 +53,48 @@ export function getPrivacyAdversaryTitle(label: string): string {
   return `Against ${label.charAt(0).toLowerCase()}${label.slice(1)}`
 }
 
+/** Points a cell contributes to the score; green is worth the most. */
+const PRIVACY_SENTIMENT_POINTS: Record<PrivacyAdversarySentiment, number> = {
+  good: 2,
+  warning: 1,
+  bad: 0,
+}
+
 /**
- * All adversaries folded into one value: the homepage dot colour and the
- * summary table sort key. The future adversary is left out: it grades a
- * potential post-quantum world, not today's protocol. Any red cell makes it
+ * Every adversary summed, two points for green and one for yellow, so a higher
+ * score is a better protocol. Orders the summary table. Unlike the folded
+ * value below it counts the future adversary too, because the count in the
+ * cell sentence covers all five and the ranking has to agree with it.
+ */
+export function getPrivacyAdversariesScore(
+  adversaries: PrivacyAdversariesSummary,
+): number {
+  return adversaries.cells.reduce(
+    (score, cell) => score + PRIVACY_SENTIMENT_POINTS[cell.sentiment],
+    0,
+  )
+}
+
+/**
+ * The summary cell headline, e.g. "Link is private against 4 of 5
+ * adversaries". Split into parts so the subject and the count can be
+ * emphasised; `held` counts only green cells, and the dots beside the
+ * sentence carry the difference between yellow and red.
+ */
+export function getPrivacyAdversariesSentence(
+  adversaries: PrivacyAdversariesSummary,
+): { subject: string; held: number; total: number } {
+  return {
+    subject: adversaries.promiseSubject,
+    held: adversaries.cells.filter((c) => c.sentiment === 'good').length,
+    total: adversaries.cells.length,
+  }
+}
+
+/**
+ * All adversaries folded into one value: the homepage dot colour. The future
+ * adversary is left out: it grades a potential post-quantum world, not
+ * today's protocol. Any red cell makes it
  * red, otherwise the majority colour wins and a tie is green. Within a colour,
  * fewer red and yellow cells sort first.
  */

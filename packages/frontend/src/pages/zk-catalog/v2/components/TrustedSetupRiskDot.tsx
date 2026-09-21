@@ -13,6 +13,8 @@ const riskDotVariants = cva('rounded-full', {
       red: 'bg-negative',
     },
     size: {
+      /** Inline with running text, as in the privacy adversary strip. */
+      xs: 'size-3',
       sm: 'size-5',
       md: 'size-6',
       lg: 'size-8',

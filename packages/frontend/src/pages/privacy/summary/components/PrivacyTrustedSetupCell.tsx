@@ -24,9 +24,12 @@ export function PrivacyTrustedSetupCell({
               className="shrink-0"
             />
           }
+          // A setup with no participants to count still needs a word under
+          // its dot: without one the two icon variants are unlabelled anywhere
+          // on the page.
           label={
             trustedSetup.participantCount === undefined
-              ? undefined
+              ? trustedSetup.name
               : `${formatInteger(trustedSetup.participantCount)} participants`
           }
         />
