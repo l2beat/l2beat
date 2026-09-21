@@ -38,16 +38,21 @@ export function getRowClassNames(rowBackgroundColor: RowBackgroundColor) {
   }
 }
 
+/*
+  Pinned cells must hide what scrolls beneath them, so they repeat the row tint
+  as an opaque mix over the card colour instead of a fixed hex that drifts
+  whenever the surface token changes.
+*/
 export function getRowClassNamesWithoutOpacity(
   rowBackgroundColor: RowBackgroundColor | null,
 ) {
   switch (rowBackgroundColor) {
     case 'blue':
-      return 'bg-blue-400 dark:bg-blue-900'
+      return 'bg-[color-mix(in_srgb,#53a2ff_35%,var(--surface-primary))] dark:bg-[color-mix(in_srgb,#005dd7_25%,var(--surface-primary))]'
     case 'red':
-      return 'bg-[#FEE4E4] dark:bg-[#371315]'
+      return 'bg-[color-mix(in_srgb,#fdd9d9_70%,var(--surface-primary))] dark:bg-[color-mix(in_srgb,#441111_70%,var(--surface-primary))]'
     case 'yellow':
-      return 'bg-[#faf5e6] dark:bg-[#2F2A1D]'
+      return 'bg-[color-mix(in_srgb,#ffc107_10%,var(--surface-primary))]'
     default:
       return 'bg-surface-primary'
   }

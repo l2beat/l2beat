@@ -56,7 +56,11 @@
   --scrollbar: #8a909d;
 
   --row-highlight: #ce66f466;
-  --row-highlight-no-opacity: #e9bff8;
+  --row-highlight-no-opacity: color-mix(
+    in srgb,
+    #ce66f4 40%,
+    var(--surface-primary)
+  );
 
   /* Chart colors */
   --chart-ethereum: #2a5bd8;
@@ -127,7 +131,11 @@
   --scrollbar: #3f444c;
 
   --row-highlight: #9521bf66;
-  --row-highlight-no-opacity: #4b1d5f;
+  --row-highlight-no-opacity: color-mix(
+    in srgb,
+    #9521bf 40%,
+    var(--surface-primary)
+  );
 
   /* Chart colors */
   --chart-ethereum: #3387ff;
