@@ -134,8 +134,8 @@ config.jsonc ──► ConfigReader ──► initialAddresses, maxAddresses, ma
    │   miss ► FactsStage (solc → inventory + facts → Soufflé → source index)       │
    │        ► Worklist: choose related items → inspect facts/source               │
    │        ► PlanAuthor ↔ retrieval tools ↔ incremental plan validation          │
-   │        ► covered / unresolved / excluded; shared plan → final validation     │
-   │        ► PlanStore.put(shapeHash, plan, meta)                                 │
+   │        ► completed groups → final validation → accepted plan store           │
+   │        ► unfinished/failed group → failed authoring; draft kept for diagnosis │
    ├───────────────────────────────────────────────────────────────────────────────┤
    │ 3 PlanExecutor                                                                │
    │   topo-sort steps │ fetch kinds over IProvider │ jq (wasm, worker, prelude,   │
@@ -176,7 +176,7 @@ facts/rules/acquisition.dl  aliases, writes through calls/params/modifiers, entr
 facts/Dossier.ts            source-index backing JSON; static observations separate from snapshot previews
 ai/Worklist.ts              inventory, related-item groups, statuses and references to shared plan steps
 ai/inspect.ts               inspect_variable, read_source, search_source, read_reference; scoped retrieval
-ai/PlanAuthor.ts            interface + CodexPlanAuthor (spawn codex exec), bounded investigation loop, recording
+ai/PlanAuthor.ts            Codex thread per group; resume with new results; completion-driven loop, recording
 ai/prompt.ts                compact briefing + active group; PLAN_FORMAT.md is a checked-in file
 ai/repair.ts                incremental validation + local repair + final whole-plan checks
 ai/isolation.ts             shell/tools disabled in Codex; harness-controlled retrieval of allowed artifacts
@@ -232,9 +232,12 @@ then `P proxyType`, `A plan <hash8> (cached|authored:attempts)`, `R relative`, `
   results). V2 is single‑pass.
 - Per-address failure policy: an exception in preparation (RPC/explorer) fails the run (as V1). Facts-stage
   failure is recorded as unavailable assistance; source/ABI authoring may continue in a visibly degraded
-  mode (§8). AI/plan failure preserves any validated, executable partial plan and its outstanding work;
-  when none exists, the entry has proxy values only and `errors['@plan'] = reason`. A failing step yields
-  `errors[field]`. BFS continues with whatever relatives exist; incomplete coverage remains explicit.
+  mode (§8). If any required investigation cannot finish or final validation fails, authoring for that
+  contract fails: save the draft and evidence in the run directory, but do not publish/reuse the draft or
+  treat its values as accepted discovery results. The entry has proxy values only, `planStatus: 'failed'`
+  and `errors['@plan'] = reason`. BFS may continue with available relatives to collect other results, but
+  the project run reports the failed contracts and exits nonzero. A replay step failure yields
+  `errors[field]` and a visibly partial execution result; it is distinct from authoring completion.
 
 ### 3.3 Address preparation (reuse)
 
@@ -260,6 +263,11 @@ summary, fragment versions, created/updated timestamps, `sourceHashes` array, so
 outcomes, assumptions and linked plan step ids; this is bookkeeping, not another executable language.
 AI transcripts are **not** committed; they go to
 `packages/config/cache/discovery-v2/ai/<runId>/<shapeHash>/group-N/attempt-N/turn-N/`.
+Record each group's Codex session id and the exact continuation inputs alongside its evidence. Failed or
+unfinished authoring leaves drafts only under this run directory. Publish to the reusable store only after
+all required groups finish and whole-plan validation passes; a failed reauthoring must not replace a
+previously accepted plan or silently report that old plan as the new result. Completed investigations with
+explicit acquisition limitations may be accepted as such; incomplete investigations may not (§3.6).
 
 Lookup by shape hash; miss → author. `--reauthor` forces re‑authoring for `--only` addresses. A source change
 produces a new hash, so the old plan is simply unused (a later cleanup command can list orphans, like
@@ -430,19 +438,33 @@ such groups or identify additional tasks, but the harness preserves each origina
 Simple getters may be investigated in batches; a complex collection gets a focused investigation. Do not
 require one fresh model session per variable.
 
-Worklist statuses are `pending`, `investigating`, `covered`, `unresolved`, and `excluded`. Each completed
-item records a reason, source references, linked acquisition step ids where applicable, and assumptions.
-`covered` means an acquisition procedure exists, not that its correctness or completeness is proved.
-Examples: `owner` covered by a getter; `_roles` covered by replay under explicit assumptions; `balances`
-readable for known keys but complete enumeration unresolved; assembly-managed storage unresolved. The
-harness rejects dangling step references and never lets finalization silently drop pending items. Budget
-exhaustion leaves a partial result and an explicit outstanding list. An empty queue means every inventoried
-item was accounted for, not that every possible acquisition method was found.
+Worklist statuses are `pending`, `investigating`, `covered`, `limited`, `excluded`, and `failed`.
+A completed item (`covered`, `limited`, or `excluded`) records a reason, inspected source references,
+linked acquisition step ids where applicable, and assumptions. `covered` means an acquisition procedure
+exists, not that its correctness or completeness is proved. `limited` means the investigation finished
+but an acquisition limitation remains explicit: for example, balances are readable for known keys but
+complete enumeration has not been established after inspecting the relevant source. `excluded` requires
+a deliberate scope/structural reason. Neither a limitation nor an AI-written reason is a proof of
+impossibility; its evidential basis and uncertainty remain visible.
+
+In contrast, "I did not finish checking the remaining writers", a context failure, a timeout, or an
+exhausted user budget is unfinished work. Such an item remains outstanding or is marked `failed`; the
+harness must not relabel it `limited`/`excluded` merely to finish the worklist. Assembly or other unsupported
+analysis is not automatically a completed limitation: investigate through source where possible, and fail
+if a required investigation cannot be completed. The harness checks recorded source references, not the
+truth of the AI's interpretation.
+
+The harness rejects dangling step references and never drops pending items at finalization. A contract's
+authoring succeeds only when all required groups have completed outcomes and final validation passes.
+Otherwise it fails, preserving drafts and the outstanding list for diagnosis or explicit continuation.
+A completed worklist prevents silently forgetting inventoried items; it does not prove the inventory or
+AI's semantic analysis exhaustive.
 
 Each investigation contributes directly to **one shared acquisition plan per contract**. Contributions use
 structured step additions/replacements (not arbitrary JSON patches or a new DSL), plus proposed worklist
 outcomes. The harness owns step ids, checks references, rejects conflicting changes and keeps earlier
-accepted steps. Shared fetches can serve several items; compatible fetches are reused without automatically
+validated draft steps. Acceptance of an individual contribution does not publish the whole plan.
+Shared fetches can serve several items; compatible fetches are reused without automatically
 merging semantically different queries. If a contribution changes a step used by another group, revalidate
 its dependents and reopen affected worklist outcomes. Coverage records are a sidecar; the executor only
 needs acquisition JSON and its pinned dependencies.
@@ -465,36 +487,65 @@ responses are bounded and paginated. The tools navigate deterministic artifacts;
 whether events suffice to reconstruct state. For `_roles`, AI starts with its writers and initialization,
 reads the functions, follows helpers/modifiers as needed, and decides which events and transformations
 belong in the acquisition plan. Source outside the initial selection always remains retrievable. In
-particular, unsupported constructs must invite further reading or an unresolved outcome, not exclusion.
+particular, unsupported constructs must invite further reading; if the required investigation cannot
+finish, authoring fails rather than excluding that code to obtain a successful result.
 
 No general SQL interface or AI-authored Datalog is required in phase 1. Add that flexibility only if real
 investigations repeatedly need relationships the small interface cannot provide. The execution engine and
 raw facts remain separate from their readable presentation.
 
-**Model loop and isolation.** `PlanAuthor` accepts an `AuthorInput` containing the overview, active group,
-shared-plan index and retrieval/validation history. A structured model turn returns one of `inspect`
-(tool + arguments), `propose` (plan contribution + worklist outcomes), or `finish_group`. The harness
-executes retrieval, validates/tries contributions and returns concrete results. `finish_group` is accepted
-only once the group's items have explicit outcomes. Tests use a `ScriptedPlanAuthor`; Codex CLI is the
-first adapter and other model adapters can implement the same protocol. This reuses the bounded request/
-response pattern in `queryable-facts/src/ask.mjs`, not a single whole-contract generation call.
+**Model loop and sessions.** Start a **fresh Codex thread for each focused investigation group**.
+The first turn receives the task/format briefing, group-specific index information and relevant current
+shared-plan state. A structured model turn returns `inspect` (tool + arguments), `propose` (plan
+contribution + worklist outcomes), `finish_group`, or `fail_group` (reason + outstanding items). The
+harness executes retrieval, validates/tries contributions and returns results. `finish_group` is accepted only once the group's items have completed
+outcomes. If the model reports it cannot finish, the harness records failure rather than forcing a
+successful final proposal. Tests use a `ScriptedPlanAuthor`; other adapters can implement the same protocol.
 
-Artifacts per authoring run: prepared `sources/<Name>.sol` (one per code address), `abi.json`,
-`dossier.json`, `PLAN_FORMAT.md`, prelude/fragments/examples, the shared candidate `plan.json`, and
-`coverage.json`. Initial briefings and each tool request/response, proposal, validation result and group
-outcome are saved. Each group works with its relevant evidence and the current shared plan; do not append
-all earlier groups' source snippets to every prompt. Exact evidence stays retrievable from artifacts.
+Within a group, retrieval and repair use **the same thread**, sending only the new tool result, validation
+feedback and relevant shared-plan changes. Do not rebuild or append the full briefing/history on every
+turn. Capture `thread_id` from the initial `--json` event stream and resume that explicit id; never use
+`--last` because investigations can run concurrently. The teaching prototype supplies the structured
+retrieval pattern, while the spike's `exec resume` usage supplies the continuation mechanism. Do not copy
+the prototype's fresh `--ephemeral` invocation and growing history dump for every retrieval.
 
-Codex runs in an empty temporary workspace outside the repository, using the teaching prototype's
-no-shell setup: `codex exec --ignore-user-config --ephemeral --skip-git-repo-check --sandbox read-only
---color never --model M -c model_reasoning_effort=E -c project_doc_max_bytes=0
--c web_search="disabled" -c features.multi_agent=false -c features.shell_tool=false
---output-schema schema.json --output-last-message response.json -`. The output schema describes the
-structured turn protocol above; the separate plan schema validates contributions. No other model-side
-filesystem/network tools or connectors are enabled. The model asks for retrieval in its structured
-response; only the host resolves the request against allowed artifacts, so disabling shell does **not**
-mean inlining source or removing navigation. Each CLI response, log and validation result is recorded.
-The host retains its normal ability to invoke the model and execute the acquisition plan.
+Unrelated groups have separate sessions and histories. The next group receives relevant shared artifacts,
+not the preceding group's transcript or source snippets. If a dependency emerges between groups, retrieve
+the relevant validated draft steps/evidence or deliberately regroup the task; do not inherit an unrelated
+conversation wholesale. A new group must not be started by resuming or forking the previous group's
+thread. Investigation grouping and context policy are identical in both facts-on/off comparison arms.
+
+**Artifacts and isolation.** Prepared artifacts include `sources/<Name>.sol` (one per code address),
+`abi.json`, `dossier.json`, `PLAN_FORMAT.md`, prelude/fragments/examples, candidate `plan.json` and
+`coverage.json`. Save initial briefings, session ids, each incremental request/response, proposal,
+validation result and group outcome. The application-owned plan, worklist and original evidence are the
+source of truth; model session files are a continuation mechanism, not the only record. Session loss or
+compaction must not erase pending tasks or turn model notes into trusted evidence.
+
+The first invocation runs in an empty temporary workspace outside the repository:
+`codex exec --ignore-user-config --skip-git-repo-check --sandbox read-only --json --color never --model M
+-c model_reasoning_effort=E -c project_doc_max_bytes=0 -c web_search="disabled"
+-c features.multi_agent=false -c features.shell_tool=false
+--output-schema schema.json --output-last-message response.json -`.
+Subsequent turns use `codex exec resume <SESSION_ID> ... -` with only the new result/feedback on stdin.
+Omit `--ephemeral`: CLI invocations must persist session state for later resumption. Reapply the model,
+structured-output schema and supported isolation settings on continuation; verify with the pinned CLI
+that read-only policy, disabled tools/connectors and instruction isolation remain effective after resume.
+Checked against Codex 0.155 on this machine: `exec resume` accepts `--model`, `--output-schema`, `--json`,
+`--output-last-message`, `--skip-git-repo-check`, `--ignore-user-config` and `-c` overrides, but **not**
+`--sandbox` or `--color`. The sandbox policy and tool switches therefore have to be re‑applied on every
+resumed turn through config overrides (`-c sandbox_mode="read-only"`, `-c features.shell_tool=false`,
+`-c web_search="disabled"`, `-c features.multi_agent=false`), and the adapter smoke test must assert from
+the `--json` events that no shell command ran during a resumed turn.
+An environment-gated adapter smoke test must exercise initial output, resumed output and recorded ids.
+Never weaken sandbox settings to make continuation work.
+
+The output schema describes the turn protocol; the separate plan schema validates contributions. No
+model-side filesystem/network tools or connectors are enabled. The model asks for retrieval in its
+structured response and only the host resolves it against allowed artifacts. Shell remains disabled
+throughout the thread, while the host can invoke the model and execute acquisition steps normally.
+Persistent session data is local run infrastructure, is not committed or exposed by retrieval, and must
+not be resumed across projects, unrelated groups or benchmark arms.
 
 V1 `discovered.json`, config field definitions and templates are never exposed through these tools.
 Resolve artifact ids through an allowlist, not arbitrary model-provided filesystem paths; reject path
@@ -508,15 +559,16 @@ researcher would want to watch; prefer getters, then storage slots, then events 
 name fields after the getter or variable; never embed addresses (plans are per source hash, executed at many
 addresses); use `use:` fragments for known patterns; mark large/unbounded collections with `forEach` limits;
 record acquisition limitations in `notes` and the worklist (e.g., "individual balances are readable for
-known keys; complete key enumeration remains unresolved"). Read the relevant source before proposing
+known keys; complete key enumeration was not established by the completed investigation"). Never use
+such a limitation to disguise unfinished analysis. Read the relevant source before proposing
 non-trivial acquisition logic; inspect initialization and dependent helpers, modifiers or external
 references when needed. Facts guide the reading scope; neither absent facts nor successful execution prove
 that acquisition is complete. Keep snapshot observations out of reusable plan constants unless the source
 establishes that they are invariant.
 
 Validation ladder (`ai/repair.ts`), used incrementally on contributions and again on the whole plan:
-errors are fed back to the responsible investigation, preserving unrelated accepted steps. During partial
-authoring, not-yet-covered getters remain worklist items rather than errors requiring every contribution
+errors are fed back to the responsible investigation, preserving unrelated validated draft steps. During
+incremental authoring, not-yet-covered getters remain worklist items rather than errors requiring every contribution
 to implement the entire contract. Whole-plan coverage and dependency checks run at finalization.
 
 1. The model response parses and matches the turn-protocol JSON Schema supplied to `--output-schema`.
@@ -556,18 +608,41 @@ to implement the entire contract. Whole-plan coverage and dependency checks run 
 5. Held‑out application: when `meta.json` knows another address with the same shape, the plan is executed
    there too, and its assertions must pass there as well; static literal checks catch address constants,
    this catches value constants. Up to 2 repair rounds (bake‑off: one round lifted Codex jq from 40 to 42/42
-   and Claude jq from 40 to 42). Then persist the valid executable plan: `status: ok | partial` with the
-   remaining errors and unresolved work. Outstanding or unresolved acquisition items make coverage partial;
-   intentional exclusions retain their reasons. Execution errors surface in `discovered.json` `errors`,
-   while coverage details remain in the sidecar/run metadata. No status claims semantic completeness.
+   and Claude jq from 40 to 42). Repairs continue the group's existing thread. Publish the plan only after
+   all required investigations finish and final validation passes. Unresolved validation failures or
+   unfinished investigations make authoring fail; save their draft/evidence for diagnosis or explicit
+   continuation, not in the accepted plan store. Completed outcomes with explicit acquisition limitations
+   remain labelled `limited`, with coverage/evidence in the sidecar. No status claims semantic completeness.
 
-Budgets (defaults, all CLI-tunable): 15 min per focused investigation attempt, 3 attempts (initial plus
-2 repair rounds), at most 24 retrieval requests per attempt, with per-response byte/item limits and a
-bounded active context. Retrieval turns are not counted as repair rounds. Record actual model invocations,
-usage, wall time and source bytes retrieved; a per-run `--max-ai N` cap counts every invocation, including
-retrieval and repair turns. Exhaustion preserves accepted steps and marks outstanding work unresolved.
-Further related-item investigations may reuse context within the budget; grouping and smaller contexts
-are a reliability hypothesis to test, not a guarantee that weaker models succeed or that more turns help.
+**Completion and operational limits.** There is **no fixed retrieval-count cap** and no default total
+investigation-duration or AI-spending allowance that truncates otherwise progressing analysis. In
+particular, needing a twenty-fifth retrieval is not a failure or a reason to stop. Larger contracts can
+create more groups; harder groups can take more turns. Two repair rounds for validation failures remain a
+configurable default, not a count of retrieval turns; exhausting repairs fails authoring rather than
+accepting an invalid or unfinished plan.
+
+Different safeguards have different purposes:
+
+| Safeguard | Purpose and outcome |
+| --- | --- |
+| Per-response byte/item limits | Paginate large results; remaining source/items stay available. A page boundary never counts as completed analysis. |
+| Model context capacity | Track available context/usage information and estimated supplied material, leaving room for a proposal. Thread continuation avoids application-side history dumps but does not make accumulated context free or unlimited. |
+| Per-operation timeout or stalled-process detection | Detect a hung model/tool invocation, not a contract that legitimately needs many turns. Retry where appropriate; unrecoverable failure fails authoring. Many distinct retrievals are not evidence of a stall. |
+| Optional user-selected spending/invocation/run-time ceiling | No default total cap. If the user supplies one (e.g. `--max-ai N`, counting every model invocation), reaching it fails unfinished authoring explicitly. |
+| Acquisition-executor resource limits (§3.8) | Bound RPC/iteration/jq execution independently of AI retrieval. Exceeding them is a visible execution/validation failure, not evidence that remaining data does not exist. |
+
+A context limit requires deliberate handling. The adapter may use the CLI's supported context compaction,
+with worklist/plan state retained by the application and original source evidence still retrievable.
+If the investigation cannot continue reliably, fail explicitly. Do not silently discard source, mark
+unfinished items complete, or reset a thread and pretend it retained the old evidence. An explicit restart
+can use saved application state plus identified evidence and re-read what it needs; phase 1 does not build
+its own automatic summarization system. The prototype's 120,000-character cap is not adopted as a universal
+context budget: characters are not tokens, and supported capacity depends on the model.
+
+Record model invocations, reported usage, source bytes retrieved, elapsed time, context-management events
+and failure causes. A finished investigation with a stated acquisition limitation is different from an
+unfinished investigation stopped by any limit. Only the former can be part of an accepted plan. Context
+management and a complete worklist do not prove the AI's conclusions correct.
 
 ### 3.7 Acquisition plan format v1
 
@@ -749,9 +824,14 @@ colorization applied.
 
 V2‑specific additions, all optional and namespaced so nothing downstream misreads them: top‑level
 `"discoveryV2": { "version": 1, "usedPlans": { "<address>": "<shapeHash>" }, "model": "...", "run": "<id>" }`
-and per entry `"plan": "<shapeHash>"` plus `"planStatus": "ok" | "partial" | "missing" | "inapplicable"`.
-`run.json` records authoring facts mode/availability and outstanding work, and links the coverage sidecar;
-`ok` does not mean correctness or completeness was proved. `fieldMeta.description` is populated from step `description`s when present (Disco UI ignores `fieldMeta`, the update monitor reads
+and per entry `"plan": "<shapeHash>"` for an accepted plan plus
+`"planStatus": "ok" | "limited" | "partial" | "failed" | "missing" | "inapplicable"`.
+`limited` denotes completed authoring with explicit acquisition limitations; `partial` is reserved for
+execution failures when replaying an accepted plan, never acceptance of unfinished authoring. `failed`
+records failed authoring, with no draft promoted as the entry's accepted plan. `run.json` records facts
+mode/availability, group/session ids, failure causes and outstanding work, and links the coverage sidecar
+or diagnostic draft. `ok` does not mean correctness or completeness was proved. `fieldMeta.description`
+is populated from step descriptions when present (Disco UI ignores `fieldMeta`, the update monitor reads
 `severity` only; harmless).
 
 What downstream consumers need (from the code, file references in the research notes):
@@ -799,20 +879,25 @@ Unit tests (no network, no external tools):
 - `jq/fragments`: `openzeppelin/accessControl` on the recorded Scroll timelock logs (already a fixture in
   `expr-bakeoff/fixtures-rolelogs.json`) equals V1's `AccessControlHandler` output.
 - `engine`: BFS with a scripted preparer/executor: limits, dedupe, multi‑chain, ignoreDiscovery, failure policy.
-- `plan/PlanStore`: layout, meta, hash lookup, reauthor, coverage sidecar and comparison-store separation.
+- `plan/PlanStore`: layout, meta, hash lookup, reauthor, coverage sidecar and comparison-store separation;
+  unfinished/failed drafts cannot be published or reused; failed reauthoring preserves the prior accepted
+  artifact without reporting it as a successful new authoring result.
 - `ai/Worklist`: deterministic inventory, inherited versus unrelated declarations, related-item grouping,
-  getter batches, preserved item ids, explicit unresolved/excluded outcomes, no silent pending-item loss,
+  getter batches, preserved item ids, completed limitations versus unfinished/failed items, no relabelling
+  operational failures as limitations/exclusions, no silent pending-item loss,
   shared-step reuse/conflict rejection and reopening outcomes when dependencies change.
 - `ai/inspect`: exact source ranges, qualified ids across compilation units, modifiers/helpers reachable
   beyond initial snippets, bounded pagination without dropped items, facts-off responses labelled
   unavailable, and forbidden-path/symlink rejection for every retrieval operation.
 - `ai/PlanAuthor`: scripted multi-turn investigation (inspect → source → propose → feedback → finish),
-  missing-source evidence for non-trivial proposals, local repair preserving other groups, and budget
-  exhaustion saving partial work. Prompt fixtures assert no full source/dossier dump and no derived-fact
-  leakage in facts-off mode; facts-on mode includes Soufflé assistance from the first authoring test.
-- `ai/repair`: ladder with a `ScriptedPlanAuthor` (first attempt invalid, second valid; exhausted attempts →
-  `partial`); getter coverage feedback (uncovered getters listed, `skip` honoured, uint256 array getters
-  flagged); prompt snapshot tests.
+  source evidence for non-trivial proposals, same-thread retrieval/repair and incremental-only continuation
+  inputs; unrelated groups get fresh threads with no transcript inheritance. Concurrent groups resume
+  explicit ids, never `--last`. Test at least 25 progressing retrievals with no artificial stop, context
+  exhaustion, operation timeout and a user-selected ceiling: failures preserve drafts but cannot publish
+  them. Prompt fixtures assert no whole-source/history dump and no cross-group/benchmark-arm leakage.
+- `ai/repair`: ladder with a `ScriptedPlanAuthor` (first attempt invalid, second valid; exhausted repairs →
+  failed contract authoring), preserving other groups' draft work; getter coverage feedback (uncovered
+  getters listed, `skip` honoured, uint256 array getters flagged); prompt snapshot tests.
 - `facts/emit`: checked‑in solc AST JSON fixtures (small contracts covering direct writes, index/member
   writes, `push`/`delete`, storage aliases, library storage params with using‑for, modifiers that write,
   overrides, emits, assembly) → expected TSV rows. Fixtures are generated once with the real compiler and
@@ -835,7 +920,10 @@ Integration tests with recorded chain data (deterministic, no RPC):
 Environment‑gated tests (`DISCOVERY_V2_TOOLS=1`; skipped in CI, which has no Soufflé):
 
 - facts pipeline on small fixture contracts (compile with two solc versions, emit, Soufflé, dossier);
-- `doctor`.
+- `doctor`;
+- an explicitly opted-in Codex adapter smoke: start/resume structured responses, persistence without
+  `--ephemeral`, same isolation settings across turns, fresh group ids and recorded incremental inputs.
+  This invokes the model; keep it separate from ordinary offline tests.
 
 Live smoke (manual, `DISCOVERY_V2_LIVE=1`): `plan eth:0x826714adD4dDA2b8750794A467C892c0Cd49216b` (Scroll
 TimelockEmergency) authors a plan whose executed values match V1's entry.
@@ -906,14 +994,17 @@ store. The run configuration supplies each store root to `PlanStore`. Within eac
 subsequent deterministic replay remain allowed and are reported separately from first authoring.
 
 Both arms use the same model/settings, prepared sources, compiler/ABI inventory, storage layout, previews,
-worklist machinery, acquisition executor, fixed examples/fragments, snapshot and configured budgets. Only
+worklist machinery, acquisition executor, fixed examples/fragments, snapshot, per-group fresh-session/
+continuation policy and operational limits (including any user-selected total ceiling). Only
 Soufflé-derived relationships and their retrieval responses differ. Facts-off mode does not expose raw
 base/derived fact files as a back door; basic inventory fields retain their normal meaning. It still
 retrieves source incrementally rather than receiving a full-source dump. Failed or unavailable facts in an
 on run are reported as degraded, not counted as a successful assisted run.
 
-Compare acquisition-task correspondence, value agreement, unresolved/skipped items, assertion failures,
-model usage, source bytes retrieved and elapsed time. Record budget exhaustion and repeat runs where
+Compare acquisition-task correspondence, value agreement, completed acquisition limitations/exclusions,
+failed or unfinished investigations, assertion failures, model usage, source bytes retrieved and elapsed
+time. Failed authoring is reported as failure; diagnostic drafts do not count as successful acquisition
+plans. Record context/timeout/budget failures separately and repeat runs where
 practical to expose model variance. Do not claim that a single comparison proves correctness or that
 smaller models will necessarily benefit. Source-index expansion and alternative grouping/context policies
 should be evaluated as separate changes rather than silently changing both arms at once.
@@ -940,17 +1031,22 @@ for whether assisted authoring is worth building.
   constructs remain visible; do not wait for comprehensive Solidity coverage. Acceptance: a focused
   `_roles` investigation can locate writers, initialization and relevant helpers; unrelated declarations
   do not pollute the worklist; related array/mapping items can be grouped; no pending item is lost.
-- **M3 — assisted AI authoring (3–4 days after M2).** Codex structured retrieval/proposal loop, compact
-  briefing, shared plan, local repair, applicability checks, plan hash and saved coverage. Facts are on by
-  default. On the same three examples, AI reads relevant source in multiple turns, writes acquisition
-  steps, produces values matching V1 on corresponded fields, and replays with `--no-ai`. Test a second
-  same-shape deployment and a later block with assertions and explicit unresolved outcomes. The first
-  researcher-facing version includes this assistance; it does not inline full flattened sources.
+- **M3 — assisted AI authoring (3–4 days after M2).** Codex structured retrieval/proposal loop, fresh
+  thread per group and explicit-id continuation within a group (including repairs), compact briefing,
+  shared plan, applicability checks, plan hash and saved coverage. Facts are on by default. No fixed
+  retrieval cap: acceptance includes a scripted investigation needing more than 24 retrievals. On the same
+  three examples, AI reads relevant source over multiple turns, finishes required investigations, writes
+  acquisition steps, matches V1 on corresponded fields, and replays with `--no-ai`. Test a second same-shape
+  deployment and a later block. Completed acquisition limitations remain explicit; unfinished/failed
+  investigations fail contract authoring and never publish a draft. Verify resumed structured output and
+  isolation with the pinned CLI. No full-source prompt or per-turn history reconstruction.
 - **M4 — project traversal + output (1–2 days).** BFS, limits, multi-chain, `Analysis` assembly, V1-compatible
   output, `.flat/` and run metadata; full Scroll run with assisted authoring. Compile/index failures and
-  budget exhaustion remain visible rather than silently producing an apparently complete discovery.
+  unfinished investigations fail contract authoring visibly; the project run cannot report success while
+  a required contract's authoring failed.
 - **M5 — benchmark and controlled comparison (2–3 days, then ongoing).** Correspondence/value reports for
-  Scroll and Zora, freshly authored facts-on/off arms in separate stores (§6), including unresolved work,
+  Scroll and Zora, freshly authored facts-on/off arms in separate stores and threads (§6), including
+  completed acquisition limitations and failed investigations,
   cost and retrieval volume. Inspect non-trivial disagreements; use findings to improve rules, retrieval
   or grouping rather than expanding the index indiscriminately.
 - **M6 — widen (ongoing).** Three more projects, prompt/fragment tuning driven by missing tasks and value
@@ -990,8 +1086,13 @@ fetch, multi‑address plans, permissions, Disco UI switch, update‑monitor int
   Mitigation: model-side shell and other filesystem tools disabled; structured retrieval is resolved by the
   host against an allowlist, with no V1 outputs/templates accessible. Tests cover path/symlink escapes and
   cross-arm plan/fact leakage (§3.6, §6).
-- **AI nondeterminism and cost**: plans are persisted and committed; re‑authoring only on hash change or
-  `--reauthor`; budgets and attempt caps; `--no-ai` reruns.
+- **AI nondeterminism and cost**: accepted plans are persisted and committed; re-authoring only on hash
+  change or `--reauthor`; `--no-ai` reruns. Larger investigations may use more turns, with no fixed retrieval
+  allowance. Optional user-selected ceilings and operation safeguards fail unfinished authoring explicitly.
+- **Growing context**: thread continuation avoids resending history from the application, but the model
+  still accumulates context. Fresh threads separate unrelated groups; paginate retrieval, track usage and
+  preserve authoritative plan/worklist/evidence outside the thread. If supported context management cannot
+  sustain an investigation, fail rather than silently omit work (§3.6).
 - **Plans that overfit an address** (seen in the bake‑off with CEL): static literal check + held‑out dry run
   at a second address of the same shape.
 - **Runaway plans** (huge `forEach`, unbounded logs, pathological jq): executor limits and worker timeouts.
@@ -1023,10 +1124,12 @@ fetch, multi‑address plans, permissions, Disco UI switch, update‑monitor int
    claims about what they cover, compiler selection copied in spirit
    from `packages/l2b` (explorer's exact version) with pragma resolution as fallback; no code from
    `spike/queryable-facts-v2` (§1.3, §3.5).
-6. Codex as the first `PlanAuthor`, with structured, host-controlled retrieval and incremental contributions
-   to one shared acquisition plan. No shell and no whole-source prompt (§3.6).
-7. Repair rounds: 2 per focused investigation; attempt timeout 15 min and 24 retrieval requests;
-   concurrency 4 addresses / 2 AI authorings, with an optional per-run invocation cap (§3.6).
+6. Codex as the first `PlanAuthor`, with structured host-controlled retrieval and incremental contributions
+   to one shared acquisition plan. Fresh session per group; resume its explicit id for retrieval/repairs,
+   sending only new results. No shell, `--ephemeral`, or per-turn history dump (§3.6).
+7. No fixed retrieval count or default total investigation-time/spending cap. Operation/context safeguards
+   and optional user-selected ceilings fail unfinished authoring, never accept a partial investigation.
+   Validation repair rounds default to 2 (configurable); concurrency 4 addresses / 2 AI authorings (§3.6).
 8. Phase 1 ignores everything in `config.jsonc` except `initialAddresses`, limits, `ignoreDiscovery`,
    manual `proxyType`, and colorization names (§3.2).
 9. Plan reuse keeps V1's shape hash as the candidate key (so plans are shared across proxy variants like
@@ -1043,7 +1146,9 @@ fetch, multi‑address plans, permissions, Disco UI switch, update‑monitor int
     The small facts stage precedes assisted authoring; facts-off is a controlled comparison (§7).
 14. A deterministic worklist accounts for inventory items; related variables can be investigated together,
     simple getters in batches. AI reads source and writes acquisition JSON directly. The dossier is backing
-    index data, and coverage is bookkeeping; neither is an intermediate executable specification (§3.6).
+    index data, and coverage is bookkeeping; neither is an intermediate executable specification. Completed
+    acquisition limitations are distinct from unfinished investigations, which fail authoring and cannot
+    publish a reusable plan (§3.6).
 15. Start with four retrieval operations, not AI-authored Datalog/SQL. Expand query flexibility only for
     demonstrated investigation needs; do not require all facts or source to be in the prompt (§3.6).
 
