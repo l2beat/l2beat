@@ -55,12 +55,7 @@
   --link: #2a5bd8;
   --scrollbar: #8a909d;
 
-  --row-highlight: #ce66f466;
-  --row-highlight-no-opacity: color-mix(
-    in srgb,
-    #ce66f4 40%,
-    var(--surface-primary)
-  );
+  --row-highlight: #ce66f4;
 
   /* Chart colors */
   --chart-ethereum: #2a5bd8;
@@ -130,12 +125,7 @@
   --link: #66b2ff;
   --scrollbar: #3f444c;
 
-  --row-highlight: #9521bf66;
-  --row-highlight-no-opacity: color-mix(
-    in srgb,
-    #9521bf 40%,
-    var(--surface-primary)
-  );
+  --row-highlight: #9521bf;
 
   /* Chart colors */
   --chart-ethereum: #3387ff;
@@ -563,62 +553,43 @@
   }
 
   @keyframes row-highlight {
-    0% {
-      background-color: transparent;
-    }
-    12% {
-      background-color: var(--row-highlight);
-    }
-    32% {
-      background-color: var(--row-highlight);
-    }
-    44% {
-      background-color: transparent;
-    }
-    52% {
-      background-color: transparent;
-    }
-    64% {
-      background-color: var(--row-highlight);
-    }
-    84% {
-      background-color: var(--row-highlight);
-    }
-    96% {
-      background-color: transparent;
-    }
+    0%,
+    44%,
+    52%,
+    96%,
     100% {
       background-color: transparent;
+    }
+    12%,
+    32%,
+    64%,
+    84% {
+      background-color: color-mix(
+        in srgb,
+        var(--row-highlight) 40%,
+        transparent
+      );
     }
   }
 
+  /* For pinned cells, which must stay opaque over the columns scrolling beneath. */
   @keyframes row-highlight-no-opacity {
-    0% {
-      background-color: var(--surface-primary);
-    }
-    12% {
-      background-color: var(--row-highlight-no-opacity);
-    }
-    32% {
-      background-color: var(--row-highlight-no-opacity);
-    }
-    44% {
-      background-color: var(--surface-primary);
-    }
-    52% {
-      background-color: var(--surface-primary);
-    }
-    64% {
-      background-color: var(--row-highlight-no-opacity);
-    }
-    84% {
-      background-color: var(--row-highlight-no-opacity);
-    }
-    96% {
-      background-color: var(--surface-primary);
-    }
+    0%,
+    44%,
+    52%,
+    96%,
     100% {
       background-color: var(--surface-primary);
+    }
+    12%,
+    32%,
+    64%,
+    84% {
+      background-color: color-mix(
+        in srgb,
+        var(--row-highlight) 40%,
+        var(--surface-primary)
+      );
     }
   }
 }
