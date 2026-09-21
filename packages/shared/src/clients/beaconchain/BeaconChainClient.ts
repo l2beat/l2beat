@@ -54,9 +54,7 @@ export class BeaconChainClient extends ClientCore {
     status?: string[]
   }) {
     const endpoint = `eth/v1/beacon/states/${stateId}/validators?${new URLSearchParams(
-      {
-        ...(status ? { status: status.join(',') } : {}),
-      },
+      status ? { status: status.join(',') } : {},
     ).toString()}`
 
     const response = await this.$.http.fetchRaw(

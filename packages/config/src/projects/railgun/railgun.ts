@@ -277,7 +277,7 @@ export const railgun: BaseProject = {
           'Governance token': `\`RAIL\` 1 token = 1 vote, delegated. Total supply: **${formatNumber(Number(railTotalSupply / 10n ** 18n))} RAIL**, DAO-owned treasury (unavailable for voting): **${formatNumber(railTreasuryBalance)} RAIL**, staked for voting: **${formatNumber(railStaked)} RAIL**, the rest is circulating supply.`,
           'Stake lock': `Unstaking has **${formatSeconds(stakeLocktime)}** delay.`,
           'Voting venue':
-            '[Voting contract](https://etherscan.io/address/0xc480F68A3dcC3EdD82134FAB45C14A0FcF1dA3CC) on Ethereum. Proposal text is distributed over IPFS, its CID is available as a parameter of \`createPropsal()\` call on the voting contract.',
+            '[Voting contract](https://etherscan.io/address/0xc480F68A3dcC3EdD82134FAB45C14A0FcF1dA3CC) on Ethereum. Proposal text is distributed over IPFS, its CID is available as a parameter of `createPropsal()` call on the voting contract.',
           'Proposal threshold': `**No threshold to create a proposal.** A proposal must receive sponsorship from **${formatNumber(Number(proposalSponsorThreshold / 10n ** 18n))} RAIL** stake within ${formatSeconds(sponsorWindow)}.`,
           Quorum: `**${formatNumber(Number(quorum / 10n ** 18n))} RAIL**, with a simple majority required for acceptance.`,
           'Execution model': `**Onchain calldata · Permissionless execution through the Delegator.** A passed proposal waits ${formatSeconds(executionStartOffset)}, after which anyone can execute it through the [Delegator contract](https://etherscan.io/address/0xB6d513f6222Ee92Fff975E901bd792E2513fB53B) within ${formatSeconds(executionEndOffset)}.`,

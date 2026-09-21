@@ -632,7 +632,7 @@ export const starknet: ScalingProject = {
       },
       tokenGovernance: {
         'Governance token':
-          '\`STRK\` — ~10.15B total supply, not permanently capped. Users can vote with L1 STRK, natively staked STRK or L2 vSTRK tokens, each gives 1 vote. In 2025 the Starknet Foundation [delegated ~1.7B STRK](https://www.starknet.io/blog/starknet-foundation-delegation-program/) to ~180 ecosystem delegates.',
+          '`STRK` — ~10.15B total supply, not permanently capped. Users can vote with L1 STRK, natively staked STRK or L2 vSTRK tokens, each gives 1 vote. In 2025 the Starknet Foundation [delegated ~1.7B STRK](https://www.starknet.io/blog/starknet-foundation-delegation-program/) to ~180 ecosystem delegates.',
         'Voting venue':
           '[Starknet Governance Hub](https://governance.starknet.io/) using Snapshot X — proposals, space configuration and results are recorded and verified on Starknet, with relayed gasless signed votes.',
         'Proposal threshold':
