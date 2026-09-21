@@ -1,3 +1,139 @@
+Generated with discovered.json: 0x9149e9d1cc738cf0b5ba60138950d5f537f601a5
+
+# Diff at Mon, 21 Sep 2026 11:24:02 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@231e4a5828ee5ff5a863f7b80215466ca39a5b1e block: 1787668991
+- current timestamp: 1787668991
+
+## Description
+
+ossification re-review: field severities
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1787668991 (main branch discovery), not current.
+
+```diff
+    contract UpgradeExecutor (eth:0x0F8cF337D5A0A45e61559f6Ab1999FF8aA0eACD5) [orbitstack/UpgradeExecutor] {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract Bridge (eth:0x1eeE9b9F024188E54930D2927d7a28e66E7649a7) [orbitstack/Bridge] {
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      fieldMeta.sequencerInbox:
++        {"severity":"HIGH"}
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract SequencerInbox (eth:0x661b39a5EB200dFcbb436d98453BdBf88Da02AA1) [orbitstack/SequencerInbox] {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      fieldMeta.maxTimeVariation.severity:
++        "HIGH"
+      fieldMeta.isUsingFeeToken:
++        {"severity":"HIGH"}
+      fieldMeta.isDelayBufferable:
++        {"severity":"HIGH"}
+      fieldMeta.rollup:
++        {"severity":"HIGH"}
+      fieldMeta.bridge:
++        {"severity":"HIGH"}
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
+      fieldMeta.batchPosterManager:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract RollupProxy (eth:0x769b70b6b1fA281ab5c99e9C5A284BE4117e4783) [orbitstack/RollupProxyBoLD] {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new assertions (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both called Validators).
+      fieldMeta.minimumAssertionPeriod.severity:
++        "HIGH"
+      fieldMeta.paused:
++        {"severity":"MEDIUM"}
+      fieldMeta.rollupEventInbox:
++        {"severity":"HIGH"}
+      fieldMeta.sequencerInbox:
++        {"severity":"HIGH"}
+      fieldMeta.outbox:
++        {"severity":"HIGH"}
+      fieldMeta.inbox:
++        {"severity":"HIGH"}
+      fieldMeta.bridge:
++        {"severity":"HIGH"}
+      fieldMeta.loserStakeEscrow:
++        {"severity":"HIGH"}
+      fieldMeta.stakeToken:
++        {"severity":"HIGH"}
+      fieldMeta.baseStake:
++        {"severity":"HIGH"}
+      fieldMeta.validatorAfkBlocks:
++        {"severity":"HIGH"}
+      fieldMeta.challengeGracePeriodBlocks:
++        {"severity":"HIGH"}
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract OneStepProofEntry (eth:0x91cB57F200Bd5F897E41C164425Ab4DB0991A64f) [orbitstack/OneStepProofEntry] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      fieldMeta:
++        {"proverMem":{"severity":"HIGH"},"proverMath":{"severity":"HIGH"},"proverHostIo":{"severity":"HIGH"},"prover0":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract Inbox (eth:0xa2809b5f031bf91d2408B3e2464774A28B0F4949) [orbitstack/Inbox] {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      fieldMeta:
++        {"paused":{"severity":"MEDIUM"},"allowListEnabled":{"severity":"HIGH"},"sequencerInbox":{"severity":"HIGH"},"bridge":{"severity":"HIGH"},"$admin":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract RollupEventInbox (eth:0xb343522e5663E0cE1060dd50EF04b12820F84890) [orbitstack/RollupEventInbox] {
+    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
+      fieldMeta:
++        {"rollup":{"severity":"HIGH"},"bridge":{"severity":"HIGH"},"$admin":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract EdgeChallengeManager (eth:0xbB31B4eD64fFF7ee149a8c7F7FA3E6BF35E8363B) [orbitstack/EdgeChallengeManager] {
+    +++ description: Contract that implements the main challenge protocol logic of the fraud proof system.
+      fieldMeta:
++        {"excessStakeReceiver":{"severity":"HIGH"},"stakeToken":{"severity":"HIGH"},"stakeAmounts":{"severity":"HIGH"},"challengePeriodBlocks":{"severity":"HIGH"},"oneStepProofEntry":{"severity":"HIGH"},"assertionChain":{"severity":"HIGH"},"$admin":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract Outbox (eth:0xDb5abc57397530DddC1e33BC023F2ef73Db6A86A) [orbitstack/Outbox] {
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
+      fieldMeta:
++        {"bridge":{"severity":"HIGH"},"$admin":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xF815C4c8A671395dAF5706DCB917CfA60DE7B3f9) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta.addressManager:
++        {"severity":"HIGH"}
+    }
+```
+
 Generated with discovered.json: 0xbc8eb1eecbc34f1bc0ee5f550c103c24b81492ae
 
 # Diff at Fri, 18 Sep 2026 10:24:50 GMT:

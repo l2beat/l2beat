@@ -1,3 +1,225 @@
+Generated with discovered.json: 0x40574d6f99e39d627c72219a15aaaa4eaddfc7c0
+
+# Diff at Mon, 21 Sep 2026 11:24:03 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@231e4a5828ee5ff5a863f7b80215466ca39a5b1e block: 1786719775
+- current timestamp: 1786719775
+
+## Description
+
+ossification re-review: field severities
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1786719775 (main branch discovery), not current.
+
+```diff
+    contract L1Staking (eth:0x0Dc417F8AF88388737c5053FF73f345f080543F7) [morph/L1Staking] {
+    +++ description: Contract keeping track of stakers which act as sequencers/proposes. It is responsible for staker registration and withdrawals and for verifying BLS signatures of stakers (currently not implemented).
+      fieldMeta.rewardPercentage:
++        {"severity":"HIGH"}
+      fieldMeta.messenger:
++        {"severity":"HIGH"}
+      fieldMeta.OTHER_STAKING:
++        {"severity":"HIGH"}
+      fieldMeta.MESSENGER:
++        {"severity":"HIGH"}
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract L1ETHGateway (eth:0x1C1Ffb5828c3A48B54E8910F1c75256a498aDE68) [morph/L1ETHGateway] {
+    +++ description: Contract used to bridge ETH from L1 to L2.
+      fieldMeta.router:
++        {"severity":"HIGH"}
+      fieldMeta.messenger:
++        {"severity":"HIGH"}
+      fieldMeta.counterpart:
++        {"severity":"HIGH"}
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract L1USDCGateway (eth:0x2C8314f5AADa5D7a9D32eeFebFc43aCCAbe1b289) [morph/L1USDCGateway] {
+    +++ description: Contract used to bridge USDC tokens from L1 to L2.
+      fieldMeta.withdrawPaused:
++        {"severity":"MEDIUM"}
+      fieldMeta.depositPaused:
++        {"severity":"MEDIUM"}
+      fieldMeta.circleCaller:
++        {"severity":"HIGH"}
+      fieldMeta.l2USDC:
++        {"severity":"HIGH"}
+      fieldMeta.router:
++        {"severity":"HIGH"}
+      fieldMeta.messenger:
++        {"severity":"HIGH"}
+      fieldMeta.counterpart:
++        {"severity":"HIGH"}
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x31110622D6CA24c9FF307d6ae1715F16E47F16A0) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta.addressManager:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract L1MessageQueueWithGasPriceOracle (eth:0x3931Ade842F5BB8763164bDd81E5361DcE6cC1EF) [morph/L1MessageQueueWithGasPriceOracle] {
+    +++ description: Contains the array of queued L1 -> L2 messages, either appended using the L1Messenger or the EnforcedTxGateway.
+      fieldMeta.ENFORCED_TX_GATEWAAY:
++        {"severity":"HIGH"}
+      fieldMeta.ROLLUP_CONTRACT:
++        {"severity":"HIGH"}
+      fieldMeta.MESSENGER:
++        {"severity":"HIGH"}
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract L1StandardERC20Gateway (eth:0x44c28f61A5C2Dd24Fc71D7Df8E85e18af4ab2Bd8) [morph/L1StandardERC20Gateway] {
+    +++ description: Contract used to bridge ERC20 tokens from L1 to L2. It uses a fixed token list.
+      fieldMeta.l2TokenImplementation:
++        {"severity":"HIGH"}
+      fieldMeta.l2TokenFactory:
++        {"severity":"HIGH"}
+      fieldMeta.router:
++        {"severity":"HIGH"}
+      fieldMeta.messenger:
++        {"severity":"HIGH"}
+      fieldMeta.counterpart:
++        {"severity":"HIGH"}
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract TimelockController (eth:0x542675E90E269F20ecbb9e0095d4751ac155B530) [global/TimelockController] {
+    +++ description: A timelock with access control. The current minimum delay is 0s.
+      fieldMeta.getMinDelay:
++        {"severity":"HIGH"}
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
+      fieldMeta.Proposer:
++        {"severity":"HIGH"}
+      fieldMeta.Canceller:
++        {"severity":"HIGH"}
+      fieldMeta.Executor:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract MultipleVersionRollupVerifier (eth:0x5d1584c27b4aD233283c6da1ca1B825d6f220EC1) [morph/MultipleVersionRollupVerifier] {
+    +++ description: Used to update the verifier and keep track of current and old versions. Routes to a registered verifier by batch index, so that every batch is verified by the latest verifier that is enabled for this batch.
+      fieldMeta.rollup:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract L1GatewayRouter (eth:0x7497756ADA7e656aE9f00781aF49Fc0fD08f8A8a) [morph/L1GatewayRouter] {
+    +++ description: Main entrypoint for depositing ETH and ERC20 tokens, which are then forwarded to the correct escrow.
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract Rollup (eth:0x759894Ced0e6af42c26668076Ffa84d02E3CeF60) [morph/Rollup] {
+    +++ description: The main contract of the Morph rollup. Allows to post transaction data and state roots and implements the the proof system. Sequencing and proposing are behind a whitelist. If the EnforcedTxGateway is not paused, any sequencer must include at least one L1 -> L2 message in their proposal if the oldest message is > 7d old. If the Sequencers are censoring or down for more than 7d, users can permissionlessly propose and prove via `commitBatchWithProof()`.
+      fieldMeta.rollupDelayPeriod:
++        {"severity":"HIGH"}
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x8654061457582c867B77A3a9f4ca714dFc84Ec17) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta.addressManager:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract L1CustomERC20Gateway (eth:0xA534BAdd09b4C62B7B1C32C41dF310AA17b52ef1) [morph/L1CustomERC20Gateway] {
+    +++ description: Contract used to bridge ERC20 tokens with custom L2 representations from L1 to L2. It allows to change the token mappings.
+      fieldMeta.router:
++        {"severity":"HIGH"}
+      fieldMeta.messenger:
++        {"severity":"HIGH"}
+      fieldMeta.counterpart:
++        {"severity":"HIGH"}
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract EnforcedTxGateway (eth:0xc5Fa3b8968c7FAbEeA2B530a20b88d0C2eD8abb7) [morph/EnforcedTxGateway] {
+    +++ description: Contracts to force L1 -> L2 messages with the L1 sender. Currently paused: false.
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract L1USDCGatewayLegacy (eth:0xc9045350712A1DCC3A74Eca18Bc985424Bbe7535) [morph/L1USDCGateway] {
+    +++ description: Contract used to bridge USDC tokens from L1 to L2.
+      fieldMeta.withdrawPaused:
++        {"severity":"MEDIUM"}
+      fieldMeta.depositPaused:
++        {"severity":"MEDIUM"}
+      fieldMeta.circleCaller:
++        {"severity":"HIGH"}
+      fieldMeta.l2USDC:
++        {"severity":"HIGH"}
+      fieldMeta.router:
++        {"severity":"HIGH"}
+      fieldMeta.messenger:
++        {"severity":"HIGH"}
+      fieldMeta.counterpart:
++        {"severity":"HIGH"}
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract L1CrossDomainMessenger (eth:0xDc71366EFFA760804DCFC3EDF87fa2A6f1623304) [morph/L1CrossDomainMessenger] {
+    +++ description: Contract used to send L1 -> L2 and relay messages from L2. It allows to replay failed messages and to drop skipped messages. L1 -> L2 messages sent using this contract pay for L2 gas on L1 and will have the aliased address of this contract as the sender.
+      fieldMeta.maxReplayTimes:
++        {"severity":"HIGH"}
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract Whitelist (eth:0xFFafDd9167777C0e5421e0B6789D6d7A5E386984) [morph/Whitelist] {
+    +++ description: Generic whitelist. Currently used to whitelist addresses that can send or relay messages to/from L2 without paying for L2 gas.
+      fieldMeta:
++        {"owner":{"severity":"HIGH"}}
+    }
+```
+
 Generated with discovered.json: 0x2347c5ae1e9f722259b1bf6739834cd4316ee7b3
 
 # Diff at Fri, 18 Sep 2026 10:24:51 GMT:

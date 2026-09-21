@@ -20,9 +20,19 @@
     },
     // active PLONK verifiers referenced by LineaRollup.verifiers: a code change lets forged proofs finalize arbitrary state and drain the bridge
     "eth:0x09ac9f7E5Fb37e241e0B1e52aaF01eFE0a488a77": {
+      "fields": {
+        "getChainConfiguration": {
+          "severity": "HIGH"
+        }
+      },
       "critical": true
     },
     "eth:0xAFF26999780901ee8B48f0a1271a177ff46fD53F": {
+      "fields": {
+        "getChainConfiguration": {
+          "severity": "HIGH"
+        }
+      },
       "critical": true
     },
     // former proof-type-0 verifier, replaced by 0xAFF2... in tx 0xbe5ba386... (VerifierAddressChanged, 2026-09-04)

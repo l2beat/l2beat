@@ -7,6 +7,28 @@
     "eth:0x091dF5E1284E49fA682407096aD34cfD42B95B72"
   ],
   "overrides": {
+    // Shared Karst upgrade tooling. Ignored so discovery does not follow it
+    // into bare implementations; the upgrade authority is the ProxyAdmin owner.
+    "eth:0x392Ec39d81fED36a42Ae8e29e9e493c0AeAa6971": {
+      // OPContractsManagerContainer
+      "ignoreDiscovery": true
+    },
+    "eth:0x3DC7caA3b8a43df953e83D2F6127DE7aa59C2Ac6": {
+      // OPContractsManagerMigrator
+      "ignoreDiscovery": true
+    },
+    "eth:0x437AA5EdF585B65680E20013c79F23aCc0D64d1E": {
+      // OPContractsManagerStandardValidator
+      "ignoreDiscovery": true
+    },
+    "eth:0x60Fb77F80B8319b6BDae875BCc29E2e37627F8d3": {
+      // OPContractsManagerV2
+      "ignoreDiscovery": true
+    },
+    "eth:0x9D89034e7123155A258cdBB94B3c54aF47826344": {
+      // OPContractsManagerUtils
+      "ignoreDiscovery": true
+    },
     "eth:0xF2dc77c697e892542cC53336178a78Bb313DFDC7": {
       // AddressManager of this chain: its owner can repoint the ResolvedDelegateProxy implementations
       "critical": true
@@ -22,6 +44,26 @@
       "critical": true
     },
     "eth:0xa23bf38299bbCbAA01b9ea8a1d3412D9f405b97d": {
+      "fields": {
+        "PERMIT_DURATION": {
+          "severity": "HIGH"
+        },
+        "PERMIT_DELAY": {
+          "severity": "HIGH"
+        },
+        "ROLLUP_CONFIG_HASH": {
+          "severity": "HIGH"
+        },
+        "RISC_ZERO_VERIFIER": {
+          "severity": "HIGH"
+        },
+        "FPVM_IMAGE_ID": {
+          "severity": "HIGH"
+        },
+        "$admin": {
+          "severity": "HIGH"
+        }
+      },
       "critical": true
     },
     // Active RISC Zero verification path: router, unpaused emergency stops and

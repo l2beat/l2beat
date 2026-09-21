@@ -1,3 +1,45 @@
+Generated with discovered.json: 0xdc886b192feb75216ed0c73505c94d4887484275
+
+# Diff at Sun, 20 Sep 2026 18:21:35 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@cb454ea5283bcf30e392f86e07ac240d516636b4 block: 1789917678
+- current timestamp: 1789917678
+
+## Description
+
+ossification re-review: record field severities on critical contracts in shared templates
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1789917678 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (eth:0x36194271a00dBBBae314E83dA56d0FF75fDa367B) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta.addressManager:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract TimelockController (eth:0x45828180bbE489350D621d002968A0585406d487) [global/TimelockController] {
+    +++ description: A timelock with access control. The current minimum delay is 1d.
+      fieldMeta.getMinDelay:
++        {"severity":"HIGH"}
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
+      fieldMeta.Proposer:
++        {"severity":"HIGH"}
+      fieldMeta.Canceller:
++        {"severity":"HIGH"}
+      fieldMeta.Executor:
++        {"severity":"HIGH"}
+    }
+```
+
 Generated with discovered.json: 0xaf02bf3d2575f1c1313ba167a4855c2c06e1f94f
 
 # Diff at Sun, 20 Sep 2026 15:22:29 GMT:

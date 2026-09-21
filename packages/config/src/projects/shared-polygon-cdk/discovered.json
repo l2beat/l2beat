@@ -22,6 +22,10 @@
         "VERIFIER_HASH": "0xd4e8ecd2357dd882209800acd6abb443d231cf287d77ba62b732ce937c8b56e7",
         "VERSION": "v5.0.0"
       },
+      "fieldMeta": {
+        "VERIFIER_HASH": { "severity": "HIGH" },
+        "VK_ROOT": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459": "SP1Verifier"
       }
@@ -198,7 +202,10 @@
         "$immutable": true,
         "owner": "eth:0xEf1462451C30Ea7aD8555386226059Fe837CA4EF"
       },
-      "fieldMeta": { "owner": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "addressManager": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A": "ProxyAdmin"
       }
@@ -1079,6 +1086,10 @@
         "VERIFIER_HASH": "0x5a093a2fcb46394f5cadfe55c44d4d572fad9cec7aeb38026b0278322ef07fac",
         "VERSION": "v6.1.0",
         "VK_ROOT": "0x002f850ee998974d6cc00e50cd0814b098c05bfade466d28573240d057f25352"
+      },
+      "fieldMeta": {
+        "VERIFIER_HASH": { "severity": "HIGH" },
+        "VK_ROOT": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0xc3c6dDDAc8829b233Dc6536Ec024775a57b0AF2A": "SP1Verifier"
@@ -2417,7 +2428,7 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
+    "global/ProxyAdmin": "0x67403097e6696257d6279d2cfb58155d82c5ea4e778d4c626bdfccd19354f527",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "polygon-cdk/AgglayerBridge": "0xa81aeeb573b6377dccef7c71fac6ad2e784a6c7be283b8020ec4ac648d780e46",
     "polygon-cdk/AgglayerGateway": "0x3119b04d3a7d74dbcbce6eb68fa36e4b7463b5b0606804a1406e5c73d8759f63",
@@ -2425,7 +2436,7 @@
     "polygon-cdk/AgglayerManager": "0x3c5b4cb44f69f247050cec379ef9c049f6c8bd7fca6aabab3b5159c190daa867",
     "polygon-cdk/BridgeLib": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "polygon-cdk/Timelock": "0x4278a10a23e0bf9d6e28d2f5699bcf08d530c06aa0d05cb0a60ec017fcd1b2cb",
-    "succinct/SP1Verifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
+    "succinct/SP1Verifier": "0xa4200167ac9dbb05e9c6aa1607235f3db0bd435f06d7c06b8150450addac2c8d"
   },
   "usedBlockNumbers": { "ethereum": 25830854 },
   "permissionsConfigHash": "0x0d5794bec779188b01680dec2a4f15feb405643223811ce01ae41842a263cb27",

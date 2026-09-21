@@ -4,6 +4,9 @@
   // Censorship escape hatch: forced L1 -> L2 transactions enter the message queue here.
   "critical": true,
   "fields": {
+    "$admin": {
+      "severity": "HIGH"
+    },
     "owner": {
       "severity": "HIGH",
       "permissions": [

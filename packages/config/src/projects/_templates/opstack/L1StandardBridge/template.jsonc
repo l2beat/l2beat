@@ -5,6 +5,31 @@
   "description": "The main entry point to deposit ERC20 tokens from host chain to this chain.",
   "ignoreRelatives": ["OTHER_BRIDGE", "otherBridge", "l2TokenBridge"],
   "fields": {
+    "superchainConfig": {
+      "severity": "HIGH"
+    },
+    "systemConfig": {
+      "severity": "HIGH"
+    },
+    "messenger": {
+      // the messenger this bridge trusts to relay withdrawal messages
+      "severity": "HIGH"
+    },
+    "MESSENGER": {
+      "severity": "HIGH"
+    },
+    "otherBridge": {
+      "severity": "HIGH"
+    },
+    "OTHER_BRIDGE": {
+      "severity": "HIGH"
+    },
+    "l2TokenBridge": {
+      "severity": "HIGH"
+    },
+    "paused": {
+      "severity": "MEDIUM"
+    },
     "$admin": {
       "severity": "HIGH",
       "permissions": [

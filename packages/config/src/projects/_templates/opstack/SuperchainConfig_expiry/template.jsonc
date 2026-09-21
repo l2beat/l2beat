@@ -10,7 +10,11 @@
     "paused": {
       "severity": "MEDIUM"
     },
+    "pauseExpiry": {
+      "severity": "HIGH"
+    },
     "pauseExpiryFmt": {
+      "severity": "HIGH",
       "handler": {
         "type": "call",
         "method": "pauseExpiry",
@@ -19,7 +23,7 @@
       "edit": ["format", "FormatSeconds"]
     },
     "guardian": {
-      "severity": "HIGH",
+      "severity": "MEDIUM",
       "permissions": [
         {
           "type": "interact",

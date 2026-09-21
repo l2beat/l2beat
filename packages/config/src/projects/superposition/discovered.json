@@ -101,6 +101,13 @@
         "paused": false,
         "sequencerInbox": "arb1:0xe0064A9fb8e45BfD8e5aB1cE7523888814A096E0"
       },
+      "fieldMeta": {
+        "paused": { "severity": "MEDIUM" },
+        "allowListEnabled": { "severity": "HIGH" },
+        "sequencerInbox": { "severity": "HIGH" },
+        "bridge": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "arb1:0x2EAf07A964c6601c4fAefd6D8969DF0B84f65e55": "TransparentUpgradeableProxy",
         "arb1:0xDD262dfDf2FCe29696f54eC5bB82C6994Ec2F639": "Inbox"
@@ -140,6 +147,11 @@
         "$upgradeCount": 2,
         "bridge": "arb1:0xEca0fEB4aA6112a3923823559e7197294Bc49CC7",
         "rollup": "arb1:0xf3C4a84a948658D012C915Ad4bb4b501F6C3c075"
+      },
+      "fieldMeta": {
+        "rollup": { "severity": "HIGH" },
+        "bridge": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" }
       },
       "implementationNames": {
         "arb1:0x31F535A566FE1Ef994858cf4D97b1207fC7388A8": "TransparentUpgradeableProxy",
@@ -196,7 +208,10 @@
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
         "executors": ["arb1:0x79C2abE3eBA9dc119318FdAaA48118e1CDB53F56"]
       },
-      "fieldMeta": { "executors": { "severity": "LOW" } },
+      "fieldMeta": {
+        "$admin": { "severity": "HIGH" },
+        "executors": { "severity": "LOW" }
+      },
       "implementationNames": {
         "arb1:0x458B2e28fb08258ef5Fdc11a4De5289A04A5eCf8": "TransparentUpgradeableProxy",
         "arb1:0xb6298031A9536600EBB8B59f3DD24b0e33d86008": "UpgradeExecutor"
@@ -272,6 +287,12 @@
         "proverHostIo": "arb1:0x18Cc27B3a95a6FdEf9EAA391eff28F48F42fFe3F",
         "proverMath": "arb1:0xB08Ca18499389ABfDF7b14b09BD2Bd4d56D7fbbb",
         "proverMem": "arb1:0x583F8BA007580c83EFB4B02C66694096cD5c56d1"
+      },
+      "fieldMeta": {
+        "proverMem": { "severity": "HIGH" },
+        "proverMath": { "severity": "HIGH" },
+        "proverHostIo": { "severity": "HIGH" },
+        "prover0": { "severity": "HIGH" }
       },
       "implementationNames": {
         "arb1:0x61006c8566fac9a3315F646dA4624C00BbCF15E4": "OneStepProofEntry"
@@ -352,6 +373,15 @@
         "oneStepProofEntry": "arb1:0x61006c8566fac9a3315F646dA4624C00BbCF15E4",
         "stakeAmounts": [0, "100000000000000000", "100000000000000000"],
         "stakeToken": "arb1:0x82aF49447D8a07e3bd95BD0d56f35241523fBab1"
+      },
+      "fieldMeta": {
+        "excessStakeReceiver": { "severity": "HIGH" },
+        "stakeToken": { "severity": "HIGH" },
+        "stakeAmounts": { "severity": "HIGH" },
+        "challengePeriodBlocks": { "severity": "HIGH" },
+        "oneStepProofEntry": { "severity": "HIGH" },
+        "assertionChain": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" }
       },
       "implementationNames": {
         "arb1:0x6aD424c3eBB11502FC72876106D9b3a562A64e7d": "TransparentUpgradeableProxy",
@@ -467,7 +497,10 @@
         "$immutable": true,
         "owner": "arb1:0x458B2e28fb08258ef5Fdc11a4De5289A04A5eCf8"
       },
-      "fieldMeta": { "owner": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "addressManager": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "arb1:0x83a4d6f7aEcBb9eABd3733b610b58403dc29910E": "ProxyAdmin"
       }
@@ -514,6 +547,13 @@
         "owner": "arb1:0x458B2e28fb08258ef5Fdc11a4De5289A04A5eCf8",
         "router": "arb1:0x0000000000000000000000000000000000000000",
         "whitelist": "arb1:0x0000000000000000000000000000000000000000"
+      },
+      "fieldMeta": {
+        "whitelist": { "severity": "HIGH" },
+        "router": { "severity": "HIGH" },
+        "inbox": { "severity": "HIGH" },
+        "counterpartGateway": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" }
       },
       "implementationNames": {
         "arb1:0x9FE42A08751E8566A0918807bF2870594bf22806": "TransparentUpgradeableProxy",
@@ -571,6 +611,10 @@
         "l2ToL1Timestamp": 0,
         "OUTBOX_VERSION": 2,
         "rollup": "arb1:0xf3C4a84a948658D012C915Ad4bb4b501F6C3c075"
+      },
+      "fieldMeta": {
+        "bridge": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" }
       },
       "implementationNames": {
         "arb1:0xa4b3B4D5f7976a8D283864ea83f1Bb3D815b1798": "TransparentUpgradeableProxy",
@@ -739,9 +783,16 @@
         "ZERO_HEAVY_MESSAGE_HEADER_FLAG": "0x20"
       },
       "fieldMeta": {
+        "isUsingFeeToken": { "severity": "HIGH" },
+        "isDelayBufferable": { "severity": "HIGH" },
+        "rollup": { "severity": "HIGH" },
+        "bridge": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" },
         "maxTimeVariation": {
+          "severity": "HIGH",
           "description": "Settable by the Rollup Owner. Transactions can only be force-included after the `delayBlocks` window (Sequencer-only) has passed."
         },
+        "batchPosterManager": { "severity": "HIGH" },
         "batchPosters": { "severity": "LOW" },
         "dacKeyset": { "severity": "HIGH" }
       },
@@ -812,6 +863,8 @@
         "sequencerReportedSubMessageCount": 3353288
       },
       "fieldMeta": {
+        "sequencerInbox": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" },
         "allowedOutboxList": {
           "severity": "HIGH",
           "description": "Can make calls as the bridge, steal all funds."
@@ -913,23 +966,36 @@
         "wasmModuleRoot": "0x8a7513bf7bb3e3db04b0d982d0e973bcf57bf8b88aef7c6d03dba3a81a56a499"
       },
       "fieldMeta": {
+        "paused": { "severity": "MEDIUM" },
+        "rollupEventInbox": { "severity": "HIGH" },
+        "sequencerInbox": { "severity": "HIGH" },
+        "outbox": { "severity": "HIGH" },
+        "inbox": { "severity": "HIGH" },
+        "bridge": { "severity": "HIGH" },
+        "loserStakeEscrow": { "severity": "HIGH" },
+        "stakeToken": { "severity": "HIGH" },
+        "baseStake": { "severity": "HIGH" },
+        "validatorAfkBlocks": { "severity": "HIGH" },
+        "challengeGracePeriodBlocks": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" },
+        "getValidators": { "severity": "LOW" },
         "minimumAssertionPeriod": {
+          "severity": "HIGH",
           "description": "Minimum time delta between newly created nodes (stateUpdates). This is checked on `stakeOnNewNode()`. Format is number of ETHEREUM blocks, even for L3s. "
         },
         "confirmPeriodBlocks": {
           "description": "Challenge period. (Number of ETHEREUM blocks until a node is confirmed, even for L3s)."
         },
         "wasmModuleRoot": {
-          "description": "Root hash of the WASM module used for execution, like a fingerprint of the L2 logic. Can be associated with ArbOS versions.",
-          "severity": "HIGH"
+          "severity": "HIGH",
+          "description": "Root hash of the WASM module used for execution, like a fingerprint of the L2 logic. Can be associated with ArbOS versions."
         },
         "arbOsFromWmRoot": {
           "description": "ArbOS version derived from known wasmModuleRoots."
         },
         "challenges": {
           "description": "Emitted on createChallenge() in RollupUserLogic."
-        },
-        "getValidators": { "severity": "LOW" }
+        }
       },
       "implementationNames": {
         "arb1:0xf3C4a84a948658D012C915Ad4bb4b501F6C3c075": "RollupProxy",
@@ -1788,23 +1854,23 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
+    "global/ProxyAdmin": "0x67403097e6696257d6279d2cfb58155d82c5ea4e778d4c626bdfccd19354f527",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
-    "orbitstack/Bridge": "0x021d1c558348a8ac876fad0f0af08c828492fdfc313056db0a923dec120b1f09",
-    "orbitstack/EdgeChallengeManager": "0xd8e4b2504241a40841671a287c90ff46798a14ac1394c9f496ffb3d6b0495c08",
+    "orbitstack/Bridge": "0x48e91a973a8cb6c8359eb5f99b7a8c6581fd0204f9be4c16ee0dc8c31cdb9f48",
+    "orbitstack/EdgeChallengeManager": "0xeaaa590ceeab252a14ceeb88a8d39ce03a969fdb64c2861704b072e3f885a748",
     "orbitstack/ERC20Gateway": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "orbitstack/GatewayRouter": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "orbitstack/Inbox": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "orbitstack/OneStepProofEntry": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "orbitstack/GatewayRouter": "0x158482b47e53cd684e16e1958fafbba9719c7bcb319f6710653b4ca535034350",
+    "orbitstack/Inbox": "0x2ef8ae6338e1c68033f26b7ee0d8639f2f7f14e155442e53a9e7eca3bf0b27cc",
+    "orbitstack/OneStepProofEntry": "0xd3e9a13fdc78d7892cbae612ab2c51643757e7e24b08d5d92312de2057607a4f",
     "orbitstack/OneStepProver0": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "orbitstack/OneStepProverHostIo": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "orbitstack/OneStepProverMath": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "orbitstack/OneStepProverMemory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "orbitstack/Outbox": "0x8dbaaf653890815197f4c39ef9d1000a8dfc0338ef34b273788a6d2087d4cfec",
-    "orbitstack/RollupEventInbox": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "orbitstack/RollupProxyBoLD": "0x2698d3d5c271b76e0481b26e00170b2cee6acdd8288354954fa73af2825ede23",
-    "orbitstack/SequencerInbox": "0x100e93a03486bc9e5e0302baf9dc4f98d011fa54d4088db1cd234f5812482ba1",
-    "orbitstack/UpgradeExecutor": "0xf65e73e609a464b657011e80920c1852ae19b0e3d493e4678f74b99052ee87fe"
+    "orbitstack/Outbox": "0xcd1388fa7046469178a9f3a8fc23db0f37c9d4ba90a3e02f702bea5e6396af03",
+    "orbitstack/RollupEventInbox": "0x4dc4c522a20e3a47a8ee3f421365820efc114453c7d3dbe378e7eecbae4782a7",
+    "orbitstack/RollupProxyBoLD": "0x72e5e9e0513e73b78195c53b0ce50cc87b648ac59ec0e226683bdfe568c69a42",
+    "orbitstack/SequencerInbox": "0x242c266139c0b675ee453744a901bca264036da90f68204820c26babc7888e1f",
+    "orbitstack/UpgradeExecutor": "0x966be81217020d6d0d621f3231401a3d45a56932437169256d01f26fda8ba301"
   },
   "usedBlockNumbers": { "arbitrum": 502808510 },
   "permissionsConfigHash": "0x30937f7fa8f433071f1914d3200b3e15b4cc755ba9230c338226f244808e7de6",

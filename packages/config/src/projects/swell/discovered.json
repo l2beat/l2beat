@@ -38,6 +38,14 @@
         "thresholdPercentage": 75,
         "version": "1.2.0"
       },
+      "fieldMeta": {
+        "minOwners": { "severity": "HIGH" },
+        "thresholdPercentage": { "severity": "HIGH" },
+        "ownershipTransferredToFallback": { "severity": "HIGH" },
+        "livenessInterval": { "severity": "HIGH" },
+        "fallbackOwner": { "severity": "HIGH" },
+        "livenessGuard": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0x0454092516c9A4d636d3CAfA1e82161376C8a748": "LivenessModule"
       }
@@ -217,7 +225,10 @@
         "isUpgrading": false,
         "owner": "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
       },
-      "fieldMeta": { "owner": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "owner": { "severity": "HIGH" },
+        "addressManager": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0x4C4710a4Ec3F514A492CC6460818C4A6A6269dd6": "ProxyAdmin"
       }
@@ -294,7 +305,16 @@
         "vmFromGame": "eth:0x6463dEE3828677F6270d83d45408044fc5eDB908",
         "wethFromGame": "eth:0xdD525E7E8fA35345D30e88018c9925F3C2876107"
       },
-      "fieldMeta": { "respectedGameType": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "respectedGameType": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" },
+        "retirementTimestamp": { "severity": "HIGH" },
+        "disputeGameFactory": { "severity": "HIGH" },
+        "superchainConfig": { "severity": "HIGH" },
+        "systemConfig": { "severity": "HIGH" },
+        "disputeGameFinalityDelaySeconds": { "severity": "HIGH" },
+        "paused": { "severity": "MEDIUM" }
+      },
       "implementationNames": {
         "eth:0x511fB9E172f8A180735ACF9c2beeb208cD0061Ac": "Proxy",
         "eth:0x36398155Cd17cfe804F69b233eDDA800DD4D5aA5": "AnchorStateRegistry"
@@ -328,7 +348,10 @@
         "isUpgrading": false,
         "owner": "eth:0x5a0Aae59D09fccBdDb6C6CcEB07B7279367C3d2A"
       },
-      "fieldMeta": { "owner": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "owner": { "severity": "HIGH" },
+        "addressManager": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0x543bA4AADBAb8f9025686Bd03993043599c6fB04": "ProxyAdmin"
       }
@@ -594,7 +617,14 @@
           "severity": "MEDIUM",
           "description": "Whether the contract is paused or not. Determined by the SuperchainConfig contract PAUSED_SLOT. Here it pauses withdrawals. If this is paused, also the L1CrossDomainMessenger and ERC-20, ERC-721 deposits are paused."
         },
-        "$admin": { "severity": "HIGH" }
+        "$admin": { "severity": "HIGH" },
+        "anchorStateRegistry": { "severity": "HIGH" },
+        "disputeGameFactory": { "severity": "HIGH" },
+        "systemConfig": { "severity": "HIGH" },
+        "superchainConfig": { "severity": "HIGH" },
+        "ethLockbox": { "severity": "HIGH" },
+        "proofMaturityDelaySeconds": { "severity": "HIGH" },
+        "disputeGameFinalityDelaySeconds": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x758E0EE66102816F5C3Ec9ECc1188860fbb87812": "Proxy",
@@ -647,6 +677,12 @@
         "superchainConfig": "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C",
         "version": "2.1.0"
       },
+      "fieldMeta": {
+        "superchainConfig": { "severity": "HIGH" },
+        "foundationSafe": { "severity": "MEDIUM" },
+        "guardianSafe": { "severity": "MEDIUM" },
+        "deputy": { "severity": "MEDIUM" }
+      },
       "implementationNames": {
         "eth:0x76fC2F971FB355D0453cF9F64d3F9E4f640E1754": "DeputyPauseModule"
       }
@@ -684,7 +720,17 @@
         "systemConfig": "eth:0xD3d4c6B703978a5d24FecF3a70a51127667Ff1A4",
         "version": "2.8.0"
       },
-      "fieldMeta": { "$admin": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "$admin": { "severity": "HIGH" },
+        "superchainConfig": { "severity": "HIGH" },
+        "systemConfig": { "severity": "HIGH" },
+        "messenger": { "severity": "HIGH" },
+        "MESSENGER": { "severity": "HIGH" },
+        "otherBridge": { "severity": "HIGH" },
+        "OTHER_BRIDGE": { "severity": "HIGH" },
+        "l2TokenBridge": { "severity": "HIGH" },
+        "paused": { "severity": "MEDIUM" }
+      },
       "implementationNames": {
         "eth:0x7aA4960908B13D104bf056B23E2C76B43c5AACc8": "L1ChugSplashProxy",
         "eth:0x61525EaaCDdB97D9184aFc205827E6A4fd0Bf62A": "L1StandardBridge"
@@ -825,7 +871,9 @@
         "game2000": { "severity": "HIGH" },
         "game42": { "severity": "HIGH" },
         "owner": { "severity": "HIGH" },
-        "wethFromDGF": { "severity": "HIGH" }
+        "wethFromDGF": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" },
+        "permissionedGameArgs": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x87690676786cDc8cCA75A472e483AF7C8F2f0F57": "Proxy",
@@ -911,7 +959,9 @@
       "fieldMeta": {
         "paused": { "severity": "MEDIUM" },
         "$admin": { "severity": "HIGH" },
-        "guardian": { "severity": "HIGH" }
+        "guardian": { "severity": "MEDIUM" },
+        "pauseExpiry": { "severity": "HIGH" },
+        "pauseExpiryFmt": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x95703e0982140D16f8ebA6d158FccEde42f04a4C": "Proxy",
@@ -1278,7 +1328,17 @@
         },
         "$admin": { "severity": "HIGH" },
         "batcherHash": { "severity": "LOW" },
-        "owner": { "severity": "HIGH" }
+        "owner": { "severity": "HIGH" },
+        "superchainConfig": { "severity": "HIGH" },
+        "disputeGameFactory": { "severity": "HIGH" },
+        "optimismPortal": { "severity": "HIGH" },
+        "l1CrossDomainMessenger": { "severity": "HIGH" },
+        "l1StandardBridge": { "severity": "HIGH" },
+        "delayedWETH": { "severity": "HIGH" },
+        "batchInbox": { "severity": "HIGH" },
+        "gasPayingToken": { "severity": "HIGH" },
+        "resourceConfig": { "severity": "HIGH" },
+        "paused": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "eth:0xD3d4c6B703978a5d24FecF3a70a51127667Ff1A4": "Proxy",
@@ -1332,7 +1392,10 @@
       },
       "fieldMeta": {
         "$admin": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" }
+        "owner": { "severity": "HIGH" },
+        "delay": { "severity": "HIGH" },
+        "config": { "severity": "HIGH" },
+        "systemConfig": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0xdD525E7E8fA35345D30e88018c9925F3C2876107": "Proxy",
@@ -1446,7 +1509,17 @@
         "TX_BASE_GAS": 21000,
         "version": "2.11.0"
       },
-      "fieldMeta": { "$admin": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "$admin": { "severity": "HIGH" },
+        "ResolvedDelegateProxy_addressManager": { "severity": "HIGH" },
+        "superchainConfig": { "severity": "HIGH" },
+        "systemConfig": { "severity": "HIGH" },
+        "portal": { "severity": "HIGH" },
+        "PORTAL": { "severity": "HIGH" },
+        "otherMessenger": { "severity": "HIGH" },
+        "OTHER_MESSENGER": { "severity": "HIGH" },
+        "paused": { "severity": "MEDIUM" }
+      },
       "implementationNames": {
         "eth:0xe6a99Ef12995DeFC5ff47EC0e13252f0E6903759": "ResolvedDelegateProxy",
         "eth:0xb686F13AfF1e427a1f993F29ab0F2E7383729FE0": "L1CrossDomainMessenger"

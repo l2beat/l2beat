@@ -12,6 +12,12 @@
   "ignoreRelatives": ["nativeToken", "outboxHistory", "inboxHistory"],
   "category": "core",
   "fields": {
+    "sequencerInbox": {
+      "severity": "HIGH"
+    },
+    "$admin": {
+      "severity": "HIGH"
+    },
     "allowedOutboxList": {
       "description": "Can make calls as the bridge, steal all funds.",
       "severity": "HIGH"

@@ -3,7 +3,17 @@
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "description": "Allows {{deputy}}, called the deputy pauser, to act on behalf of the {{foundationSafe}} if set as its Safe module.",
   "fields": {
+    "superchainConfig": {
+      "severity": "HIGH"
+    },
+    "foundationSafe": {
+      "severity": "MEDIUM"
+    },
+    "guardianSafe": {
+      "severity": "MEDIUM"
+    },
     "deputy": {
+      "severity": "MEDIUM",
       "permissions": [
         {
           "type": "act",

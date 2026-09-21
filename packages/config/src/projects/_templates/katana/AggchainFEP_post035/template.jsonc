@@ -13,6 +13,51 @@
   "ignoreMethods": ["computeL2Timestamp", "getL2Output"],
   "ignoreRelatives": ["gasTokenAddress", "pol"],
   "fields": {
+    "pendingOptimisticModeManager": {
+      "severity": "MEDIUM"
+    },
+    "pendingAggchainManager": {
+      "severity": "MEDIUM"
+    },
+    "pendingAdmin": {
+      "severity": "MEDIUM"
+    },
+    "rollupConfigHash": {
+      "severity": "LOW"
+    },
+    "gasTokenNetwork": {
+      "severity": "HIGH"
+    },
+    "gasTokenAddress": {
+      "severity": "HIGH"
+    },
+    "submissionInterval": {
+      "severity": "HIGH"
+    },
+    "threshold": {
+      "severity": "HIGH"
+    },
+    "forceBatchTimeout": {
+      "severity": "HIGH"
+    },
+    "forceBatchAddress": {
+      "severity": "HIGH"
+    },
+    "bridgeAddress": {
+      "severity": "HIGH"
+    },
+    "globalExitRootManager": {
+      "severity": "HIGH"
+    },
+    "rollupManager": {
+      "severity": "HIGH"
+    },
+    "aggLayerGateway": {
+      "severity": "HIGH"
+    },
+    "$admin": {
+      "severity": "HIGH"
+    },
     "CONSENSUS_TYPE": {
       "description": "0 - ECDSA sig verification, 1 - aggchainVkey verification (read by the pessimistic program)"
     },

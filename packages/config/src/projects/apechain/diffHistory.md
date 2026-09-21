@@ -1,3 +1,95 @@
+Generated with discovered.json: 0x24230e07a9cda8b13c31e633082cc863c3698bb8
+
+# Diff at Mon, 21 Sep 2026 11:23:57 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@231e4a5828ee5ff5a863f7b80215466ca39a5b1e block: 1787668924
+- current timestamp: 1787668924
+
+## Description
+
+ossification re-review: field severities
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1787668924 (main branch discovery), not current.
+
+```diff
+    contract Inbox (arb1:0x1B98e4ED82Ee1a91A65a38C690e2266364064D15) [orbitstack/Inbox] {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      fieldMeta:
++        {"paused":{"severity":"MEDIUM"},"allowListEnabled":{"severity":"HIGH"},"sequencerInbox":{"severity":"HIGH"},"bridge":{"severity":"HIGH"},"$admin":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (arb1:0x1E5f8ff72895aEa53DD62b590dA51E92dC75b507) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta.addressManager:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract Outbox (arb1:0x4F405BA65291063d8A524c2bDf55d4e67405c2aF) [orbitstack/Outbox] {
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
+      fieldMeta:
++        {"bridge":{"severity":"HIGH"},"$admin":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract Bridge (arb1:0x6B71AFb4b7725227ab944c96FE018AB9dc0434b8) [orbitstack/Bridge] {
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      fieldMeta.sequencerInbox:
++        {"severity":"HIGH"}
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract ProxyAdmin (arb1:0x927dCF5D08795eEFd7C2bEC89777CFCD67950870) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta.addressManager:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract OneStepProofEntry (arb1:0xa3180c7a17dd46DEf808477093592D8231e024a8) [orbitstack/OneStepProofEntry] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      fieldMeta:
++        {"proverMem":{"severity":"HIGH"},"proverMath":{"severity":"HIGH"},"proverHostIo":{"severity":"HIGH"},"prover0":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract SP1Verifier (arb1:0xD9d5C8456a168Dd25561064F47bF116111131B1D) [succinct/SP1Verifier] {
+    +++ description: Verifier contract for SP1 proofs (v6.1.0).
+      fieldMeta:
++        {"VERIFIER_HASH":{"severity":"HIGH"},"VK_ROOT":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract UpgradeExecutor (arb1:0xe032d15909e90f9A36901abB08944653e9E87d72) [orbitstack/UpgradeExecutor] {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract RollupEventInbox (arb1:0xf383814AE1eD316ed7d6FeA28810C77E8a15A49F) [orbitstack/RollupEventInbox] {
+    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
+      fieldMeta:
++        {"rollup":{"severity":"HIGH"},"bridge":{"severity":"HIGH"},"$admin":{"severity":"HIGH"}}
+    }
+```
+
 Generated with discovered.json: 0x7135e4317947c4cce0e55409541a5e8f8e9acf91
 
 # Diff at Fri, 18 Sep 2026 10:24:47 GMT:

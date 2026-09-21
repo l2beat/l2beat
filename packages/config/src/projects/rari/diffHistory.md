@@ -1,3 +1,95 @@
+Generated with discovered.json: 0x3bf3dd8d3932bf3eef716e9dc9db43cea555103b
+
+# Diff at Mon, 21 Sep 2026 11:13:15 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@231e4a5828ee5ff5a863f7b80215466ca39a5b1e block: 1782746888
+- current timestamp: 1782746888
+
+## Description
+
+ossification re-review: pause-role holders are identity, not mechanism (HIGH -> MEDIUM)
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1782746888 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (arb1:0x003e70B041abb993006C03E56c8515622a02928C) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta.addressManager:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract UpgradeExecutor (arb1:0x139C5A235632EDdad741ff380112B3161d31a21C) [orbitstack/UpgradeExecutor] {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract Bridge (arb1:0x255f80Ef2F09FCE0944faBb292b8510F01316Cf0) [orbitstack/Bridge] {
+    +++ description: Escrow contract for the project's gas token (can be different from ETH). Keeps a list of allowed Inboxes and Outboxes for canonical bridge messaging.
+      fieldMeta.sequencerInbox:
++        {"severity":"HIGH"}
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract GatewayRouter (arb1:0x2623C144B4d167f70893f6A8968B98c89a6C5F97) [orbitstack/GatewayRouter] {
+    +++ description: This routing contract maps tokens to the correct escrow (gateway) to be then bridged with canonical messaging.
+      fieldMeta:
++        {"whitelist":{"severity":"HIGH"},"router":{"severity":"HIGH"},"inbox":{"severity":"HIGH"},"counterpartGateway":{"severity":"HIGH"},"$admin":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract OneStepProofEntry (arb1:0x2BA5cB2D332E266c43D0Ef18F879650d00630B61) [orbitstack/OneStepProofEntry] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      fieldMeta:
++        {"proverMem":{"severity":"HIGH"},"proverMath":{"severity":"HIGH"},"proverHostIo":{"severity":"HIGH"},"prover0":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract RollupProxy (arb1:0x2e988Ea0873C9d712628F0bf38DAFdE754927C89) [orbitstack/RollupProxy_fastConfirm] {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      usedTypes.0.arg.0xc10cd7ec6acaf1c441a3f6bd0900ad20f15855ba775a96f1939118cbc629dc97:
++        "ArbOS v61 wasmModuleRoot"
+    }
+```
+
+```diff
+    contract Inbox (arb1:0x37e60F80d921dc5E7f501a7130F31f6548dBa564) [orbitstack/Inbox] {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      fieldMeta:
++        {"paused":{"severity":"MEDIUM"},"allowListEnabled":{"severity":"HIGH"},"sequencerInbox":{"severity":"HIGH"},"bridge":{"severity":"HIGH"},"$admin":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract RollupEventInbox (arb1:0x3bC4894370dE0Aa304ed717c2e01866c46F1CEa6) [orbitstack/RollupEventInbox] {
+    +++ description: Helper contract sending configuration data over the bridge during the systems initialization.
+      fieldMeta:
++        {"rollup":{"severity":"HIGH"},"bridge":{"severity":"HIGH"},"$admin":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract Outbox (arb1:0x91591BB66075BCfF94AA128B003134165C3Ab83a) [orbitstack/Outbox] {
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
+      fieldMeta:
++        {"bridge":{"severity":"HIGH"},"$admin":{"severity":"HIGH"}}
+    }
+```
+
 Generated with discovered.json: 0x3dbb4626848d6c6e4a9960914954b95f9a854c12
 
 # Diff at Fri, 18 Sep 2026 10:24:54 GMT:

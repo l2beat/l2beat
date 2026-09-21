@@ -18,6 +18,9 @@
     "protocolFees"
   ],
   "fields": {
+    "factory": {
+      "severity": "HIGH"
+    },
     "slot0": {
       "description": "Current sqrtPriceX96, tick, oracle observation index/cardinality, protocol fee setting, and the reentrancy lock; changes with every swap."
     },

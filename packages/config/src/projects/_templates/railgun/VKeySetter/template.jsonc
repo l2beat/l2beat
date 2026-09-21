@@ -7,6 +7,7 @@
   "canActIndependently": false,
   "fields": {
     "owner": {
+      "severity": "HIGH",
       "description": "Current operator that can stage verification keys, move the helper into WAITING, and return it to SETTING after governance has opened the COMMITTING phase.",
       "type": "PERMISSION",
       "permissions": [

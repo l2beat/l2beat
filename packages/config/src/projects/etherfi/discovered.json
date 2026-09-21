@@ -530,7 +530,10 @@
         "implementation": "eth:0xf4718766a7fc8c81F788669B0985FAC03D064D29",
         "owner": "eth:0x2093Bbb221f1d8C7c932c32ee28Be6dEe4a37A6a"
       },
-      "fieldMeta": { "implementation": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "implementation": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0x29b1C223be35CCB6bfBd43154528cD0B881756e9": "UpgradeableBeacon"
       }
@@ -973,7 +976,10 @@
         "implementation": "eth:0x556Db8c611FE63e694413F718d795f976dcF5881",
         "owner": "eth:0x25e821b7197B146F7713C3b89B6A4D83516B912d"
       },
-      "fieldMeta": { "implementation": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "implementation": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0x3c55986Cfee455E2533F4D29006634EcF9B7c03F": "UpgradeableBeacon"
       }
@@ -2018,7 +2024,10 @@
         "owner": "eth:0x9f26d4C958fD811A1F59B01B86Be7dFFc9d20761",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
-      "fieldMeta": { "owner": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "addressManager": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0xa9E9bBf04F95688D7fd82036f83544630E463CAc": "ProxyAdmin"
       }
@@ -2532,7 +2541,10 @@
         "owner": "eth:0x9f26d4C958fD811A1F59B01B86Be7dFFc9d20761",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
-      "fieldMeta": { "owner": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "addressManager": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0xDBf6bE120D4dc72f01534673a1223182D9F6261D": "ProxyAdmin"
       }
@@ -5256,7 +5268,7 @@
     "etherfi/WeETHWithdrawAdapter": "0x72499b0963cd5db192528a97c4767047d672f27e1e6b1111a87e6fa932b34282",
     "etherfi/WithdrawRequestNFT": "0x8a4a392c2ddd6d82749f6e031b8d8ba5209699d99ac17b73b7ac08c10e422a74",
     "global/DepositContract": "0xfc77f1d7412b523d27d6db22532ffaa54e0026a15c868272f2f454514cab5df5",
-    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
+    "global/ProxyAdmin": "0x67403097e6696257d6279d2cfb58155d82c5ea4e778d4c626bdfccd19354f527",
     "global/UpgradeableBeacon": "0x5131b8b980cf5a0a571c88590e4878fe796a0b46c9d9854db77dfdf4125f92c9",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },

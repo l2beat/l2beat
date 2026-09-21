@@ -720,7 +720,10 @@
         "owner": "eth:0x652a31c669f9AB37f6040f279139a75D04F2679e",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
-      "fieldMeta": { "owner": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "addressManager": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0x2DFb93A8C3cE68Be3d8129479d7870646d89aDa7": "ProxyAdmin"
       }
@@ -1542,7 +1545,10 @@
         "owner": "eth:0x652a31c669f9AB37f6040f279139a75D04F2679e",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
-      "fieldMeta": { "owner": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "addressManager": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0x9393573a9EF85c9A37d91E32702a340084A48b6E": "ProxyAdmin"
       }
@@ -2237,7 +2243,10 @@
         "owner": "eth:0x652a31c669f9AB37f6040f279139a75D04F2679e",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
-      "fieldMeta": { "owner": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "addressManager": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0xB3985D7fF844FA0F5E0aaC5feb5DD8BE15e88580": "ProxyAdmin"
       }
@@ -3087,7 +3096,10 @@
         "owner": "eth:0x652a31c669f9AB37f6040f279139a75D04F2679e",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
-      "fieldMeta": { "owner": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "addressManager": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0xf1511Fc32abf7Bd3a3213ddCF08C07259b53972b": "ProxyAdmin"
       }
@@ -5718,7 +5730,7 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
+    "global/ProxyAdmin": "0x67403097e6696257d6279d2cfb58155d82c5ea4e778d4c626bdfccd19354f527",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "interfold/AdminPlugin": "0xeb97b344f92a6893418d119daba2374375a4b8784f8f20b894a6ffd7cf50931b",
     "interfold/AragonExecutor": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",

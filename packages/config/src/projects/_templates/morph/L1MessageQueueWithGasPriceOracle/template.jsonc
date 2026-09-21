@@ -17,6 +17,18 @@
     "getFirstUnfinalizedMessageEnqueueTime"
   ],
   "fields": {
+    "ENFORCED_TX_GATEWAAY": {
+      "severity": "HIGH"
+    },
+    "ROLLUP_CONTRACT": {
+      "severity": "HIGH"
+    },
+    "MESSENGER": {
+      "severity": "HIGH"
+    },
+    "$admin": {
+      "severity": "HIGH"
+    },
     "owner": {
       "severity": "HIGH",
       "permissions": [

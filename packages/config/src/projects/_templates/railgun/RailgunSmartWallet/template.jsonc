@@ -54,6 +54,7 @@
       ]
     },
     "treasury": {
+      "severity": "HIGH",
       "description": "Treasury contract that receives shield and unshield fees. Changing the recipient does not change the fees charged to users."
     },
     "shieldFee": {

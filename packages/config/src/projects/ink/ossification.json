@@ -1,6 +1,13 @@
 {
   "events": [
     {
+      "timestamp": 1783526401,
+      "type": "code",
+      "contract": "ink:0x4200000000000000000000000000000000000016",
+      "transaction": "0xd2e9eb2ba77098610e7dda134e70f741f7456f4ec49912d667860c40988dfd8e",
+      "reason": "First recorded upgrade of the L2ToL1MessagePasser predeploy replaced an already initialized implementation (reviewed: a real code change, not an initialization)."
+    },
+    {
       "timestamp": 1787692559,
       "type": "state",
       "contract": "eth:0x62C0a111929fA32ceC2F76aDba54C16aFb6E8364",

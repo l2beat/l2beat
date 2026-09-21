@@ -338,7 +338,9 @@
         "inboxHistory": {
           "severity": "HIGH",
           "description": "All Inboxes that were ever set as allowed in the bridge."
-        }
+        },
+        "sequencerInbox": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x41Ec9456AB918f2aBA81F38c03Eb0B93b78E84d9": "TransparentUpgradeableProxy",
@@ -373,6 +375,11 @@
         "$upgradeCount": 1,
         "bridge": "eth:0x41Ec9456AB918f2aBA81F38c03Eb0B93b78E84d9",
         "rollup": "eth:0x1CA12290D954CFe022323b6A6Df92113ed6b1C98"
+      },
+      "fieldMeta": {
+        "rollup": { "severity": "HIGH" },
+        "bridge": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x4e008aEeA79Fcd5708A7b46CA1732dFAf2a25B7d": "TransparentUpgradeableProxy",
@@ -420,6 +427,13 @@
         "maxDataSize": 117964,
         "paused": false,
         "sequencerInbox": "eth:0xF75206c49c1694594E3e69252E519434f1579876"
+      },
+      "fieldMeta": {
+        "paused": { "severity": "MEDIUM" },
+        "allowListEnabled": { "severity": "HIGH" },
+        "sequencerInbox": { "severity": "HIGH" },
+        "bridge": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x56D8EC76a421063e1907503aDd3794c395256AEb": "TransparentUpgradeableProxy",
@@ -478,6 +492,10 @@
         "OUTBOX_VERSION": 2,
         "rollup": "eth:0x1CA12290D954CFe022323b6A6Df92113ed6b1C98"
       },
+      "fieldMeta": {
+        "bridge": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0x73bb50c32a3BD6A1032aa5cFeA048fBDA3D6aF6e": "TransparentUpgradeableProxy",
         "eth:0x19431dc37098877486532250FB3158140717C00C": "ERC20Outbox"
@@ -509,7 +527,10 @@
         "$immutable": true,
         "owner": "eth:0x830D41c5624EE982cddEd92Ba01DAB3a4856116f"
       },
-      "fieldMeta": { "owner": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "owner": { "severity": "HIGH" },
+        "addressManager": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0x80622fe04c5e1c3fbb3A9c62996dB27B53E9F77b": "ProxyAdmin"
       }
@@ -558,7 +579,10 @@
         "EXECUTOR_ROLE": "0xd8aa0f3194971a2a116679f7c2090f6939c8d4e01a2a8d7e41d55e5351469e63",
         "executors": ["eth:0xBeA2Bc852a160B8547273660E22F4F08C2fa9Bbb"]
       },
-      "fieldMeta": { "executors": { "severity": "LOW" } },
+      "fieldMeta": {
+        "executors": { "severity": "LOW" },
+        "$admin": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0x830D41c5624EE982cddEd92Ba01DAB3a4856116f": "TransparentUpgradeableProxy",
         "eth:0x6c21303F5986180B1394d2C89f3e883890E2867b": "UpgradeExecutor"
@@ -589,6 +613,12 @@
         "proverHostIo": "eth:0x0003A96B27ce73505b43ea1b71a5aB06bec568C4",
         "proverMath": "eth:0xCf4b98cFF2976E4eb579B9498f398b5bd279A6eD",
         "proverMem": "eth:0x1cD76B9C33b2e3b04D7B181399d492B3e49AD7fB"
+      },
+      "fieldMeta": {
+        "proverMem": { "severity": "HIGH" },
+        "proverMath": { "severity": "HIGH" },
+        "proverHostIo": { "severity": "HIGH" },
+        "prover0": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x8Faa21891B0b928afEbd5314D1D313f8f7B34DaC": "OneStepProofEntry"
@@ -818,6 +848,13 @@
         "router": "eth:0x0000000000000000000000000000000000000000",
         "whitelist": "eth:0x0000000000000000000000000000000000000000"
       },
+      "fieldMeta": {
+        "whitelist": { "severity": "HIGH" },
+        "router": { "severity": "HIGH" },
+        "inbox": { "severity": "HIGH" },
+        "counterpartGateway": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0xeBb17f398ed30d02F2e8733e7c1e5cf566e17812": "TransparentUpgradeableProxy",
         "eth:0x5Ff3feD7aad041ACe66E4ecDd7AfbCC43b6446b0": "L1OrbitGatewayRouter"
@@ -938,10 +975,17 @@
       },
       "fieldMeta": {
         "maxTimeVariation": {
-          "description": "Settable by the Rollup Owner. Transactions can only be force-included after the `delayBlocks` window (Sequencer-only) has passed."
+          "description": "Settable by the Rollup Owner. Transactions can only be force-included after the `delayBlocks` window (Sequencer-only) has passed.",
+          "severity": "HIGH"
         },
         "batchPosters": { "severity": "LOW" },
-        "dacKeyset": { "severity": "HIGH" }
+        "dacKeyset": { "severity": "HIGH" },
+        "isUsingFeeToken": { "severity": "HIGH" },
+        "isDelayBufferable": { "severity": "HIGH" },
+        "rollup": { "severity": "HIGH" },
+        "bridge": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" },
+        "batchPosterManager": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0xF75206c49c1694594E3e69252E519434f1579876": "TransparentUpgradeableProxy",

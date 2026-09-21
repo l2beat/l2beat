@@ -1,3 +1,61 @@
+Generated with discovered.json: 0x6a2e2bf51833a1ec14508c4a574cec02ee99dc7f
+
+# Diff at Mon, 21 Sep 2026 11:24:05 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@231e4a5828ee5ff5a863f7b80215466ca39a5b1e block: 1789711666
+- current timestamp: 1789711666
+
+## Description
+
+ossification re-review: field severities
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1789711666 (main branch discovery), not current.
+
+```diff
+    contract VerificationKeySetter_64DA (eth:0x64DA0892E8E24fECa6Eb5E3D8cbf2D9b6Fbe7598) [railgun/VKeySetter] {
+    +++ description: Auxiliary verifier-key staging contract. Its owner stores replacement verification keys locally and, if Railgun governance switches the contract into COMMITTING state, can register the new keys in the Railgun smart wallet verifier.
+      fieldMeta.owner.severity:
++        "HIGH"
+    }
+```
+
+```diff
+    contract VerificationKeySetter_9086 (eth:0x9086aFC6FC88667d4031Cabd556AfDD0E3903B46) [railgun/VKeySetter] {
+    +++ description: Auxiliary verifier-key staging contract. Its owner stores replacement verification keys locally and, if Railgun governance switches the contract into COMMITTING state, can register the new keys in the Railgun smart wallet verifier.
+      fieldMeta.owner.severity:
++        "HIGH"
+    }
+```
+
+```diff
+    contract Delegator (eth:0xB6d513f6222Ee92Fff975E901bd792E2513fB53B) [railgun/Delegator] {
+    +++ description: Permission router proxy owned by Railgun governance.
+      fieldMeta.verificationKeyDelegates.severity:
++        "HIGH"
+    }
+```
+
+```diff
+    contract Rail Token (eth:0xe76C6c83af64e4C60245D8C7dE953DF673a7A33D) [railgun/RailToken] {
+    +++ description: RAIL governance token contract with a capped (100,000,000 RAIL total supply) mint schedule and an early anti-bot transfer override.
+      fieldMeta.cap.severity:
++        "HIGH"
+    }
+```
+
+```diff
+    contract RailgunSmartWallet (eth:0xFA7093CDD9EE6932B4eb2c9e1cde7CE00B1FA4b9) [railgun/RailgunSmartWallet] {
+    +++ description: Main system contract and escrow that accepts shielded deposits, verifies private transactions and unshields, and maintains the commitment tree.
+      fieldMeta.treasury.severity:
++        "HIGH"
+    }
+```
+
 Generated with discovered.json: 0x5fa56c5f6f59c459691c05efe64396a9af5bac73
 
 # Diff at Fri, 18 Sep 2026 10:24:54 GMT:

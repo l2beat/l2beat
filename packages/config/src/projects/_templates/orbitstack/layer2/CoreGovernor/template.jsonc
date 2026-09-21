@@ -16,6 +16,36 @@
     "quorum"
   ],
   "fields": {
+    "lateQuorumVoteExtension": {
+      "severity": "HIGH"
+    },
+    "quorumDenominator": {
+      "severity": "HIGH"
+    },
+    "quorumNumerator": {
+      "severity": "HIGH"
+    },
+    "votingPeriod": {
+      "severity": "HIGH"
+    },
+    "votingDelay": {
+      "severity": "HIGH"
+    },
+    "proposalThreshold": {
+      "severity": "HIGH"
+    },
+    "token": {
+      "severity": "HIGH"
+    },
+    "timelock": {
+      "severity": "HIGH"
+    },
+    "owner": {
+      "severity": "HIGH"
+    },
+    "$admin": {
+      "severity": "HIGH"
+    },
     "l2CoreQuorumPercent": {
       "handler": {
         "type": "call",

@@ -4,6 +4,27 @@
   "critical": true,
   "description": "Registry of authorized TEE enclave signers and proposer addresses used by the TEEVerifier. Owner can add or remove allowlisted proposers via setProposer (onlyOwner) and set the AggregateVerifier game type lookup. Owner and Manager can register or deregister enclave signers via registerSigner / deregisterSigner. Registration requires a Risc0 ZK proof of a valid AWS Nitro attestation document verified by the NITRO_VERIFIER.",
   "fields": {
+    "getExpectedImageHash": {
+      "severity": "HIGH"
+    },
+    "DISPUTE_GAME_FACTORY": {
+      "severity": "HIGH"
+    },
+    "NITRO_VERIFIER": {
+      "severity": "HIGH"
+    },
+    "MAX_AGE": {
+      "severity": "HIGH"
+    },
+    "manager": {
+      "severity": "HIGH"
+    },
+    "owner": {
+      "severity": "HIGH"
+    },
+    "$admin": {
+      "severity": "HIGH"
+    },
     "gameType": {
       "severity": "HIGH"
     }

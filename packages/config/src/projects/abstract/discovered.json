@@ -175,7 +175,12 @@
           }
         }
       },
-      "fieldMeta": { "executionDelay_fmt": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "executionDelay": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" },
+        "executionDelay_fmt": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776": "TransparentUpgradeableProxy",
         "eth:0x6086051f93412F550C0820e76f0fbE85F64C7ef8": "ValidatorTimelock"
@@ -518,6 +523,14 @@
         "validators": ["eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776"]
       },
       "fieldMeta": {
+        "getL2EvmEmulatorBytecodeHash": { "severity": "HIGH" },
+        "getL2DefaultAccountBytecodeHash": { "severity": "HIGH" },
+        "getL2BootloaderBytecodeHash": { "severity": "HIGH" },
+        "getPriorityTxMaxGasLimit": { "severity": "HIGH" },
+        "getRollupDAManager": { "severity": "HIGH" },
+        "getChainTypeManager": { "severity": "HIGH" },
+        "getBridgehub": { "severity": "HIGH" },
+        "getVerifier": { "severity": "HIGH" },
         "getSettlementLayer": {
           "severity": "HIGH",
           "description": "Settlement layer for this chain: the zero address while batches are committed, proven and executed on Ethereum, otherwise the Gateway diamond that settles this chain. Moving it relocates the complete proof-verification and message path of the chain."
@@ -855,7 +868,10 @@
         "owner": "eth:0x7F3EaB9ccf1d8B9705F7ede895d3b4aC1b631063",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
-      "fieldMeta": { "owner": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "addressManager": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0x9B9256E7D5b696F7BD7525F42238Ba3d9BBD9cDA": "ProxyAdmin"
       }
@@ -1047,8 +1063,12 @@
         "validatorTimelock": "eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776"
       },
       "fieldMeta": {
+        "validatorTimelock": { "severity": "HIGH" },
+        "executionDelay": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" },
         "owner": { "severity": "HIGH" },
         "executionDelay_fmt": { "severity": "HIGH" },
+        "executor": { "severity": "HIGH" },
         "threshold": { "severity": "HIGH" }
       },
       "implementationNames": {
@@ -1083,7 +1103,10 @@
         "verificationKeyHash": "0xbaaa46d644f7034d609eea327e818bd9a93a3c0fdd60e887d233da8a35c4f8ae"
       },
       "fieldMeta": {
+        "PLONK_VERIFIER": { "severity": "HIGH" },
+        "FFLONK_VERIFIER": { "severity": "HIGH" },
         "verificationKeyHash": {
+          "severity": "HIGH",
           "description": "Verification key hash for the PLONK verifier ONLY (backwards compatibility)."
         }
       },
@@ -1745,15 +1768,15 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
+    "global/ProxyAdmin": "0x67403097e6696257d6279d2cfb58155d82c5ea4e778d4c626bdfccd19354f527",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "shared-zk-stack/ChainAdmin": "0x8be9e939e27d818ead1d430f9f603f4143a5f3d809e6f287aa3d463e5a8f5b8b",
-    "shared-zk-stack/Diamond": "0x9991c4f086f60a5f0605a052766841a0735c442ad7547cfcd2f3b347fe8a3c5d",
-    "shared-zk-stack/DualVerifier": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
-    "shared-zk-stack/ExecutionMultisigValidatorTimelock_Trackable": "0x87da0dde38a66bb86eec4b765e7816e862a68f2f0f5ce66e638909d2462a3247",
+    "shared-zk-stack/Diamond": "0x57a8af2e43f19d45b7496a20cca383d3aaa9f8617fbc179639ad84fd80daa9dc",
+    "shared-zk-stack/DualVerifier": "0x9378cf0ffe4ba30c57c7c2d9c7eefefc31c62efe9c6be4c177a9fbc3fedd4970",
+    "shared-zk-stack/ExecutionMultisigValidatorTimelock_Trackable": "0xc16e72da058ff83e0f85ed205bae5f53a06f0652ad801254e5ced2c3fdf68cec",
     "shared-zk-stack/L1VerifierFflonk": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
     "shared-zk-stack/L1VerifierPlonk": "0xa5872f4279977d125fbe7de800bcc56565d1b14b2acb9736ec9ef0be291ccc24",
-    "shared-zk-stack/ValidatorTimelock_post29": "0x5418e2a478522eb998ee59e7eda86d437c94a8654ddf6b348a51ff161b61bcf6"
+    "shared-zk-stack/ValidatorTimelock_post29": "0xc705047a5ab40ad374452332f3f56b976fd4ac0146b467df702b423427c8587e"
   },
   "usedBlockNumbers": { "ethereum": 25774510 },
   "permissionsConfigHash": "0x8846cc087fa4360611e537657bccd9d5de448aea117185bc16ce837d31e8cf4b",

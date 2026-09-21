@@ -1,3 +1,294 @@
+Generated with discovered.json: 0x0c3b735b2b7c184a7a13bdf0c842b417f5ce63bb
+
+# Diff at Mon, 21 Sep 2026 10:22:08 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@231e4a5828ee5ff5a863f7b80215466ca39a5b1e block: 1789471567
+- current timestamp: 1789471567
+
+## Description
+
+Discovery rerun on the same block number with only config-related changes.
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1789471567 (main branch discovery), not current.
+
+```diff
+    contract TimelockController (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711) [global/TimelockController] {
+    +++ description: A timelock with access control. The current minimum delay is 3d.
+      fieldMeta.getMinDelay:
++        {"severity":"HIGH"}
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
+      fieldMeta.Proposer:
++        {"severity":"HIGH"}
+      fieldMeta.Canceller:
++        {"severity":"HIGH"}
+      fieldMeta.Executor:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract RiscZeroVerifierEmergencyStop (eth:0x1efDd13f831ceeEa14940806705A53D3211CD698) [risc0/RiscZeroVerifierEmergencyStop] {
+    +++ description: A verifier wrapper for the eth:0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9 that allows pausing (emergency stop) the verifier by its owner.
+      fieldMeta.pendingOwner:
++        {"severity":"MEDIUM"}
+      fieldMeta.verifier:
++        {"severity":"HIGH"}
+      fieldMeta.owner:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract RiscZeroVerifierEmergencyStop (eth:0x44c220f0598345195cE99AD6A57aDfFcb9Ea33e7) [risc0/RiscZeroVerifierEmergencyStop] {
+    +++ description: A verifier wrapper for the eth:0xf70aBAb028Eb6F4100A24B203E113D94E87DE93C that allows pausing (emergency stop) the verifier by its owner.
+      fieldMeta.pendingOwner:
++        {"severity":"MEDIUM"}
+      fieldMeta.verifier:
++        {"severity":"HIGH"}
+      fieldMeta.owner:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract RiscZeroSetVerifier (eth:0x5005aBa3DFf7C940fcc1e48DccCAD611a80eEB85) [risc0/RiscZeroSetVerifier] {
+    +++ description: Set verifier contract for RISC Zero proofs (version 0.9.0). It allows verifying a whole set of proofs identified with a Merkle root at once, afterwards each individual proof could be efficiently verified just by checking Merkle inclusion against the verified root.
+      fieldMeta:
++        {"imageInfo":{"severity":"HIGH"},"VERIFIER":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract RiscZeroVerifierEmergencyStop (eth:0x68dC2cB4e61774873971c499D9b239ec5Ac540E3) [risc0/RiscZeroVerifierEmergencyStop] {
+    +++ description: A verifier wrapper for the eth:0x20ff7C2Cf391a5F096A2Cc181cb41916680f8E97 that allows pausing (emergency stop) the verifier by its owner.
+      fieldMeta.pendingOwner:
++        {"severity":"MEDIUM"}
+      fieldMeta.verifier:
++        {"severity":"HIGH"}
+      fieldMeta.owner:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract MainnetInbox (eth:0x6f21C543a4aF5189eBdb0723827577e1EF57ef1f) [taiko/MainnetInbox] {
+    +++ description: The core Layer 1 entrypoint for the Taiko rollup where L2 block batches are proposed and their corresponding state transitions are proven. Users can enqueue forced inclusions by publishing an L1 blob. Once an inclusion is due, subsequent proposals must process it, but proposing remains restricted by the configured proposer checker. If the configured prover whitelist is non-empty, proofs from non-whitelisted provers revert.
+      fieldMeta.getCurrentForcedInclusionFee:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract ZkRequiredVerifier (eth:0x7284aaC05555Ae6559bdAd8B4221eC9584254Eec) [taiko/ZkRequiredVerifier] {
+    +++ description: Immutable verifier policy contract for Taiko mainnet. Every accepted proof contains exactly two ordered sub-proofs and at least one must be a ZK proof. Accepted pairs are SGX-GETH or SGX-RETH with RISC0-RETH or SP1-RETH, and RISC0-RETH with SP1-RETH. The SGX-GETH plus SGX-RETH pair is not accepted.
+      fieldMeta.sgxGethVerifier.severity:
++        "HIGH"
+      fieldMeta.sgxRethVerifier.severity:
++        "HIGH"
+      fieldMeta.risc0RethVerifier.severity:
++        "HIGH"
+      fieldMeta.sp1RethVerifier.severity:
++        "HIGH"
+      fieldMeta.opVerifier.severity:
++        "HIGH"
+      fieldMeta.tdxGethVerifier.severity:
++        "HIGH"
+    }
+```
+
+```diff
+    contract RiscZeroVerifierEmergencyStop (eth:0x844D5f01161E3559d36f23d0Aa9E9620949aF782) [risc0/RiscZeroVerifierEmergencyStop] {
+    +++ description: A verifier wrapper for the eth:0x5005aBa3DFf7C940fcc1e48DccCAD611a80eEB85 that allows pausing (emergency stop) the verifier by its owner.
+      fieldMeta.pendingOwner:
++        {"severity":"MEDIUM"}
+      fieldMeta.verifier:
++        {"severity":"HIGH"}
+      fieldMeta.owner:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract RiscZeroVerifierRouter (eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319) [risc0/RiscZeroVerifierRouter] {
+    +++ description: A router proxy that routes to verifiers based on selectors. The mapping can be changed by a permissioned owner (eth:0x0b144E07A0826182B6b59788c34b32Bfa86Fb711).
+      fieldMeta.verifier.severity:
++        "HIGH"
+      fieldMeta.pendingOwner:
++        {"severity":"MEDIUM"}
+      fieldMeta.owner:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract DefaultResolver (eth:0x8Efa01564425692d0a0838DC10E300BD310Cb43e) [taiko/DefaultResolver] {
+    +++ description: Maps chainId-name pairs to contract addresses. Bridge and vault contracts resolve their counterparties through this registry, so changes in this mapping effectively act as contract upgrades. The pause function is intentionally disabled in this implementation.
+      fieldMeta.pendingOwner:
++        {"severity":"MEDIUM"}
+      fieldMeta.paused:
++        {"severity":"MEDIUM"}
+      fieldMeta.resolver:
++        {"severity":"HIGH"}
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract SignalService (eth:0x9e0a24964e5397B566c1ed39258e21aB5E35C77C) [taiko/SignalService] {
+    +++ description: Facilitates secure cross-chain message passing by storing signals and state-root checkpoints. Bridge escrows and other applications use it to prove that a specific L1<->L2 signal or checkpointed state transition occurred via Merkle proofs. Pausing disables signal proof verification.
+      fieldMeta.pauser.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.pendingOwner:
++        {"severity":"MEDIUM"}
+      fieldMeta.resolver:
++        {"severity":"HIGH"}
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract RiscZeroVerifierEmergencyStop (eth:0x9F9994Eb4Cb5200198FEfb470f8b50301662e696) [risc0/RiscZeroVerifierEmergencyStop] {
+    +++ description: A verifier wrapper for the eth:0x2a098988600d87650Fb061FfAff08B97149Fa84D that allows pausing (emergency stop) the verifier by its owner.
+      fieldMeta.pendingOwner:
++        {"severity":"MEDIUM"}
+      fieldMeta.verifier:
++        {"severity":"HIGH"}
+      fieldMeta.owner:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract MainnetBridge (eth:0xd60247c6848B7Ca29eDdF63AA924E53dB6Ddd8EC) [taiko/TaikoBridge] {
+    +++ description: Shared bridge escrow for Taiko chains for bridged ETH and arbitrary bridge messages. Pausing stops sending, processing, recalling, retrying, and failing messages. ETH released from the bridge is subject to the configured quota manager.
+      fieldMeta.pauser.severity:
+-        "HIGH"
++        "MEDIUM"
+    }
+```
+
+```diff
+    contract RiscZeroVerifierEmergencyStop (eth:0xDa8f3de6fBBdb261Ac771B813a578A7aBdA6B2b1) [risc0/RiscZeroVerifierEmergencyStop] {
+    +++ description: A verifier wrapper for the eth:0x54aCE3ED46529B4d4F3770C8Bad5dDC48717B9bF that allows pausing (emergency stop) the verifier by its owner.
+      fieldMeta.pendingOwner:
++        {"severity":"MEDIUM"}
+      fieldMeta.verifier:
++        {"severity":"HIGH"}
+      fieldMeta.owner:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract ProverWhitelist (eth:0xEa798547d97e345395dA071a0D7ED8144CD612Ae) [taiko/ProverWhitelist] {
+    +++ description: Defines the prover whitelist queried by the inbox before accepting proofs. If the inbox is configured with this contract and the whitelist is non-empty, only whitelisted provers can prove proposals.
+      fieldMeta.pendingOwner:
++        {"severity":"MEDIUM"}
+      fieldMeta.paused:
++        {"severity":"MEDIUM"}
+      fieldMeta.resolver:
++        {"severity":"HIGH"}
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
+      fieldMeta.proverManager:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract Bridge (taiko:0x1670000000000000000000000000000000000001) [taiko/L2Bridge] {
+    +++ description: Bridge escrow holding preminted ETH on Taiko.
+      fieldMeta.quotaManager.severity:
++        "HIGH"
+      fieldMeta.chainWatchdog.severity:
++        "MEDIUM"
+      fieldMeta.bridgeWatchdog.severity:
++        "MEDIUM"
+      fieldMeta.pendingOwner:
++        {"severity":"MEDIUM"}
+      fieldMeta.paused:
++        {"severity":"MEDIUM"}
+      fieldMeta.addressManager:
++        {"severity":"HIGH"}
+      fieldMeta.owner:
++        {"severity":"HIGH"}
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
+      fieldMeta.signalService:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract ERC20Vault (taiko:0x1670000000000000000000000000000000000002) [taiko/L2ERC20Vault] {
+    +++ description: Escrow for L2-native tokens sent to L1 via the canonical bridge.
+      fieldMeta:
++        {"pendingOwner":{"severity":"MEDIUM"},"paused":{"severity":"MEDIUM"},"MIN_MIGRATION_DELAY":{"severity":"HIGH"},"addressManager":{"severity":"HIGH"},"owner":{"severity":"HIGH"},"$admin":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract SignalService (taiko:0x1670000000000000000000000000000000000005) [taiko/SignalService] {
+    +++ description: Facilitates secure cross-chain message passing by storing signals and state-root checkpoints. Bridge escrows and other applications use it to prove that a specific L1<->L2 signal or checkpointed state transition occurred via Merkle proofs. Pausing disables signal proof verification.
+      fieldMeta.pauser.severity:
+-        "HIGH"
++        "MEDIUM"
+      fieldMeta.pendingOwner:
++        {"severity":"MEDIUM"}
+      fieldMeta.resolver:
++        {"severity":"HIGH"}
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract L2AddressManager (taiko:0x1670000000000000000000000000000000000006) [taiko/L2AddressManager] {
+    +++ description: Maps contract names to contract addresses. Changes in this mapping effectively act as contract upgrades.
+      fieldMeta.namedAddresses.severity:
++        "HIGH"
+      fieldMeta.pendingOwner:
++        {"severity":"MEDIUM"}
+      fieldMeta.paused:
++        {"severity":"MEDIUM"}
+      fieldMeta.addressManager:
++        {"severity":"HIGH"}
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
+      fieldMeta.owner:
++        {"severity":"HIGH"}
+      critical:
++        true
+    }
+```
+
+```diff
+    contract Anchor (taiko:0x1670000000000000000000000000000000010001) [taiko/Anchor] {
+    +++ description: Stores L1 block details on L2 as a cross-layer oracle and manages EIP-1559 gas pricing for L2 operations.
+      fieldMeta:
++        {"pendingOwner":{"severity":"MEDIUM"},"paused":{"severity":"MEDIUM"},"resolver":{"severity":"HIGH"},"checkpointStore":{"severity":"HIGH"},"owner":{"severity":"HIGH"},"$admin":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract DelegateController (taiko:0xfA06E15B8b4c5BF3FC5d9cfD083d45c53Cbe8C7C) [taiko/DelegateController] {
+    +++ description: Middleware contract that can maintain ownership of DAO-controlled assets and contracts. It can only be invoked by the TaikoDAOController on L1 through the L2 bridge.
+      critical:
++        true
+      fieldMeta:
++        {"owner":{"severity":"HIGH"},"$admin":{"severity":"HIGH"},"daoController":{"severity":"HIGH"}}
+    }
+```
+
 Generated with discovered.json: 0x30828b09c5e2227f4975edfbf510b4b1da4fa2d7
 
 # Diff at Fri, 18 Sep 2026 10:21:44 GMT:

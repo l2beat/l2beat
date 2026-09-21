@@ -732,7 +732,10 @@
         "$immutable": true,
         "owner": "eth:0xbf1752DE62d825aF0634F514226F881a449874b6"
       },
-      "fieldMeta": { "owner": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "addressManager": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0x8FbB8D00f7621B68F219B0B18738F07aF513D5C8": "ProxyAdmin"
       }
@@ -1317,7 +1320,13 @@
         "l1CrossDomainMessenger": "metis-andromeda:0x081D1101855bD523bA69A9794e0217F0DB6323ff",
         "messageNonce": 108123
       },
-      "fieldMeta": { "$admin": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "l1CrossDomainMessenger": { "severity": "HIGH" },
+        "otherMessenger": { "severity": "HIGH" },
+        "OTHER_MESSENGER": { "severity": "HIGH" },
+        "paused": { "severity": "MEDIUM" },
+        "$admin": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "metis-andromeda:0x4200000000000000000000000000000000000007": "L2CrossDomainMessenger"
       }
@@ -1402,7 +1411,15 @@
         "l1TokenBridge": "metis-andromeda:0x3980c9ed79d2c191A89E02Fa3529C60eD6e9c04b",
         "messenger": "metis-andromeda:0x4200000000000000000000000000000000000007"
       },
-      "fieldMeta": { "$admin": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "l1TokenBridge": { "severity": "HIGH" },
+        "otherBridge": { "severity": "HIGH" },
+        "OTHER_BRIDGE": { "severity": "HIGH" },
+        "messenger": { "severity": "HIGH" },
+        "MESSENGER": { "severity": "HIGH" },
+        "paused": { "severity": "MEDIUM" },
+        "$admin": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "metis-andromeda:0x4200000000000000000000000000000000000010": "L2StandardBridge"
       }
@@ -2508,7 +2525,7 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
+    "global/ProxyAdmin": "0x67403097e6696257d6279d2cfb58155d82c5ea4e778d4c626bdfccd19354f527",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "metis/BondManager": "0xc15ea5bd900a03d035d09672927e12bca9de34dc257c8754a23c4b30be8757ea",
     "metis/CanonicalTransactionChain": "0xbe89d4af7610966b7bde89c028905d0727775c8a35c88299b60e9d8da3f899b3",
@@ -2532,8 +2549,8 @@
     "metis/MVM_ProposerRegistry": "0xe1ffd265bd8338b3febfd389d682d407e4109970d138c349e86e6c131b918a57",
     "metis/MVM_StateCommitmentChain": "0x8496d4b5edbf854305227b9e0e5b8c845600e4bad4d3bd9aa391933a57a5e82e",
     "metis/PreimageOracle": "0x6c435c8491ea31b14ac576d12c5ae3988f849f8c365b3989e522aba5f84ca1ec",
-    "opstack/Layer2/L2CrossDomainMessenger": "0xea5dababc2d3c671bcdd37f0482105863487a55138d7c65cabe1044b4f4a7377",
-    "opstack/Layer2/L2StandardBridge": "0x1d7a39d8907362465f31e3072eaa78f2f2c42ba8a5b83ee617f65daf0facff5b"
+    "opstack/Layer2/L2CrossDomainMessenger": "0x4f9b9990a6afe1e6b1bb158664bb54aa6f5b87db83c5910cb795fc0aac0e106c",
+    "opstack/Layer2/L2StandardBridge": "0xb169f5343356f889fed850f883df4efb63018f3c72b4cd54ae4fc623edab25dd"
   },
   "usedBlockNumbers": { "ethereum": 24183445, "metis": 21929673 },
   "permissionsConfigHash": "0x15e40c87557873dc57873bcf260a1321d2c92043c0dbb5ea3e5040c9c1a802fa",

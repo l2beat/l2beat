@@ -6,7 +6,26 @@
   "ignoreMethods": ["getPastTotalSupply", "getTotalDelegationAt"],
   "ignoreInWatchMode": ["getTotalDelegation"],
   "fields": {
+    "l1Address": {
+      "severity": "HIGH"
+    },
+    "MIN_MINT_INTERVAL": {
+      "severity": "HIGH"
+    },
+    "MINT_CAP_DENOMINATOR": {
+      "severity": "HIGH"
+    },
+    "MINT_CAP_NUMERATOR": {
+      "severity": "HIGH"
+    },
+    "owner": {
+      "severity": "HIGH"
+    },
+    "$admin": {
+      "severity": "HIGH"
+    },
     "mintCapPerYer": {
+      "severity": "HIGH",
       "handler": {
         "type": "call",
         "method": "MINT_CAP_NUMERATOR",

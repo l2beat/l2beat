@@ -1,7 +1,7 @@
 {
   "name": "roninnetwork",
   "timestamp": 1789077777,
-  "configHash": "0x2b9c60a460dc339f818fa9ef56585541e2546d7717cff55f7ec2247d3624dbd6",
+  "configHash": "0xb067e947cc6ad7b4a225bcc0dd37add4f56888d8edc46e0cce4005e898dbf426",
   "entries": [
     {
       "address": "eth:0x000000000000000000000000000000000000dEaD",
@@ -393,8 +393,13 @@
         "PROPOSER_ROLE": "0xb09aa5aeb3702cfd50b6b62bc4532604938f21248a27a1d5ca736082b6819cc1"
       },
       "fieldMeta": {
+        "getMinDelay": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" },
         "getMinDelayFormatted": { "severity": "HIGH" },
         "accessControl": { "severity": "HIGH" },
+        "Proposer": { "severity": "HIGH" },
+        "Canceller": { "severity": "HIGH" },
+        "Executor": { "severity": "HIGH" },
         "callsScheduled": {
           "description": "since the RiscZeroVerifierRouter does not emit events on verifier changes, we watch the single upstream permissioned address."
         },
@@ -470,11 +475,17 @@
         "wethFromGame": "eth:0x69Fcd2E75af364295EaF48Dc058338F80CFfb434"
       },
       "fieldMeta": {
-        "respectedGameType": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" },
+        "retirementTimestamp": { "severity": "HIGH" },
+        "disputeGameFactory": { "severity": "HIGH" },
+        "superchainConfig": { "severity": "HIGH" },
+        "systemConfig": { "severity": "HIGH" },
         "disputeGameFinalityDelaySeconds": {
           "severity": "HIGH",
           "description": "Delay between a dispute game resolving and its root claim becoming usable to finalize withdrawals (the air gap)."
-        }
+        },
+        "paused": { "severity": "MEDIUM" },
+        "respectedGameType": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x0B95fF1d1B113bac3E29Ac0BBF2089126C9aE81A": "Proxy",
@@ -533,6 +544,9 @@
         "verifier": "eth:0xafB31f5b70623CDF4b20Ada3f7230916A5A79df9"
       },
       "fieldMeta": {
+        "pendingOwner": { "severity": "MEDIUM" },
+        "verifier": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" },
         "paused": {
           "severity": "HIGH",
           "description": "verifier is stopped, cannot be used to verify new proofs or verify the integrity of receipts."
@@ -972,6 +986,9 @@
         "verifier": "eth:0xf70aBAb028Eb6F4100A24B203E113D94E87DE93C"
       },
       "fieldMeta": {
+        "pendingOwner": { "severity": "MEDIUM" },
+        "verifier": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" },
         "paused": {
           "severity": "HIGH",
           "description": "verifier is stopped, cannot be used to verify new proofs or verify the integrity of receipts."
@@ -1039,11 +1056,13 @@
         "wethFromDGF": "eth:0x69Fcd2E75af364295EaF48Dc058338F80CFfb434"
       },
       "fieldMeta": {
+        "$admin": { "severity": "HIGH" },
         "owner": { "severity": "HIGH" },
         "gameImpls": { "severity": "HIGH" },
         "game1337": { "severity": "HIGH" },
         "game2000": { "severity": "HIGH" },
         "game42": { "severity": "HIGH" },
+        "permissionedGameArgs": { "severity": "HIGH" },
         "wethFromDGF": { "severity": "HIGH" }
       },
       "implementationNames": {
@@ -1159,6 +1178,10 @@
         "VERIFIER": "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
         "VERSION": "0.9.0"
       },
+      "fieldMeta": {
+        "imageInfo": { "severity": "HIGH" },
+        "VERIFIER": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0x5005aBa3DFf7C940fcc1e48DccCAD611a80eEB85": "RiscZeroSetVerifier"
       }
@@ -1182,7 +1205,10 @@
         "isUpgrading": false,
         "owner": "eth:0xE9Ad9723C24d946958f9FD3Bc861BbF983525607"
       },
-      "fieldMeta": { "owner": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "addressManager": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0x502e993a5aFC9fE59b00B07ee500729D71092E34": "ProxyAdmin"
       }
@@ -1576,6 +1602,13 @@
       },
       "fieldMeta": {
         "$admin": { "severity": "HIGH" },
+        "anchorStateRegistry": { "severity": "HIGH" },
+        "disputeGameFactory": { "severity": "HIGH" },
+        "systemConfig": { "severity": "HIGH" },
+        "superchainConfig": { "severity": "HIGH" },
+        "ethLockbox": { "severity": "HIGH" },
+        "proofMaturityDelaySeconds": { "severity": "HIGH" },
+        "disputeGameFinalityDelaySeconds": { "severity": "HIGH" },
         "respectedGameType": { "severity": "HIGH" },
         "paused": {
           "severity": "MEDIUM",
@@ -1626,6 +1659,9 @@
         "verifier": "eth:0x20ff7C2Cf391a5F096A2Cc181cb41916680f8E97"
       },
       "fieldMeta": {
+        "pendingOwner": { "severity": "MEDIUM" },
+        "verifier": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" },
         "paused": {
           "severity": "HIGH",
           "description": "verifier is stopped, cannot be used to verify new proofs or verify the integrity of receipts."
@@ -1676,6 +1712,9 @@
       },
       "fieldMeta": {
         "$admin": { "severity": "HIGH" },
+        "delay": { "severity": "HIGH" },
+        "config": { "severity": "HIGH" },
+        "systemConfig": { "severity": "HIGH" },
         "owner": { "severity": "HIGH" }
       },
       "implementationNames": {
@@ -1719,6 +1758,14 @@
         "RISC_ZERO_VERIFIER": "eth:0x8EaB2D97Dfce405A1692a21b3ff3A172d593D319",
         "ROLLUP_CONFIG_HASH": "0x96ff86054c51b6b832108a14d93ced530c42e0ee5a113b47671c912fc19f5b1a",
         "version": "1.2.0"
+      },
+      "fieldMeta": {
+        "PERMIT_DURATION": { "severity": "HIGH" },
+        "PERMIT_DELAY": { "severity": "HIGH" },
+        "ROLLUP_CONFIG_HASH": { "severity": "HIGH" },
+        "RISC_ZERO_VERIFIER": { "severity": "HIGH" },
+        "FPVM_IMAGE_ID": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x6b49976a7340D0A3C00d1bEBE0E36E2367D89c7C": "Proxy",
@@ -1788,7 +1835,10 @@
         "isUpgrading": false,
         "owner": "eth:0xE9Ad9723C24d946958f9FD3Bc861BbF983525607"
       },
-      "fieldMeta": { "owner": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "addressManager": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0x757077Ddf12B652430DCE8fF3e4c749F5Ca861fC": "ProxyAdmin"
       }
@@ -1830,6 +1880,9 @@
         "verifier": "eth:0x5005aBa3DFf7C940fcc1e48DccCAD611a80eEB85"
       },
       "fieldMeta": {
+        "pendingOwner": { "severity": "MEDIUM" },
+        "verifier": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" },
         "paused": {
           "severity": "HIGH",
           "description": "verifier is stopped, cannot be used to verify new proofs or verify the integrity of receipts."
@@ -1872,7 +1925,17 @@
         "systemConfig": "eth:0xc4f4F908C36C8119f1FBd52CebbDB30C6f2a23C1",
         "version": "2.8.0"
       },
-      "fieldMeta": { "$admin": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "superchainConfig": { "severity": "HIGH" },
+        "systemConfig": { "severity": "HIGH" },
+        "messenger": { "severity": "HIGH" },
+        "MESSENGER": { "severity": "HIGH" },
+        "otherBridge": { "severity": "HIGH" },
+        "OTHER_BRIDGE": { "severity": "HIGH" },
+        "l2TokenBridge": { "severity": "HIGH" },
+        "paused": { "severity": "MEDIUM" },
+        "$admin": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0x85Ce2Ccef125aa8d018c298d5eA0f2FB5E5063c1": "L1ChugSplashProxy",
         "eth:0x61525EaaCDdB97D9184aFc205827E6A4fd0Bf62A": "L1StandardBridge"
@@ -1920,6 +1983,9 @@
         "verifier_f536085a": "eth:0xDa8f3de6fBBdb261Ac771B813a578A7aBdA6B2b1"
       },
       "fieldMeta": {
+        "pendingOwner": { "severity": "MEDIUM" },
+        "verifier": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" },
         "verifier_310fe598": { "severity": "HIGH" },
         "verifier_9f39696c": { "severity": "HIGH" },
         "verifier_f536085a": { "severity": "HIGH" },
@@ -1973,6 +2039,9 @@
         "verifier": "eth:0x2a098988600d87650Fb061FfAff08B97149Fa84D"
       },
       "fieldMeta": {
+        "pendingOwner": { "severity": "MEDIUM" },
+        "verifier": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" },
         "paused": {
           "severity": "HIGH",
           "description": "verifier is stopped, cannot be used to verify new proofs or verify the integrity of receipts."
@@ -2189,6 +2258,16 @@
           "description": "Gas limit for blocks on L2."
         },
         "owner": { "severity": "HIGH" },
+        "superchainConfig": { "severity": "HIGH" },
+        "disputeGameFactory": { "severity": "HIGH" },
+        "optimismPortal": { "severity": "HIGH" },
+        "l1CrossDomainMessenger": { "severity": "HIGH" },
+        "l1StandardBridge": { "severity": "HIGH" },
+        "delayedWETH": { "severity": "HIGH" },
+        "batchInbox": { "severity": "HIGH" },
+        "gasPayingToken": { "severity": "HIGH" },
+        "resourceConfig": { "severity": "HIGH" },
+        "paused": { "severity": "MEDIUM" },
         "eip1559Denominator": {
           "description": "volatility param: lower denominator -> quicker fee changes on L2"
         }
@@ -2269,6 +2348,15 @@
         "version": "1.2.0",
         "wasRespectedGameTypeWhenCreated": false
       },
+      "fieldMeta": {
+        "anchorStateRegistry": { "severity": "HIGH" },
+        "DISPUTE_GAME_FACTORY": { "severity": "HIGH" },
+        "OPTIMISM_PORTAL": { "severity": "HIGH" },
+        "KAILUA_VERIFIER": { "severity": "HIGH" },
+        "vanguardAdvantage": { "severity": "HIGH" },
+        "participationBond": { "severity": "HIGH" },
+        "vanguard": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0xc7EaCDd1E755d2823463Abc4434CA445F752b336": "KailuaTreasury"
       },
@@ -2330,6 +2418,9 @@
         "verifier": "eth:0x54aCE3ED46529B4d4F3770C8Bad5dDC48717B9bF"
       },
       "fieldMeta": {
+        "pendingOwner": { "severity": "MEDIUM" },
+        "verifier": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" },
         "paused": {
           "severity": "HIGH",
           "description": "verifier is stopped, cannot be used to verify new proofs or verify the integrity of receipts."
@@ -2464,9 +2555,12 @@
         "version": "2.4.0"
       },
       "fieldMeta": {
+        "$admin": { "severity": "HIGH" },
+        "pauseExpiry": { "severity": "HIGH" },
         "paused": { "severity": "MEDIUM" },
+        "pauseExpiryFmt": { "severity": "HIGH" },
         "guardian": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "description": "Address that can pause Ronin withdrawals and blacklist dispute games."
         }
       },
@@ -2603,7 +2697,17 @@
         "TX_BASE_GAS": 21000,
         "version": "2.11.0"
       },
-      "fieldMeta": { "$admin": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "ResolvedDelegateProxy_addressManager": { "severity": "HIGH" },
+        "superchainConfig": { "severity": "HIGH" },
+        "systemConfig": { "severity": "HIGH" },
+        "portal": { "severity": "HIGH" },
+        "PORTAL": { "severity": "HIGH" },
+        "otherMessenger": { "severity": "HIGH" },
+        "OTHER_MESSENGER": { "severity": "HIGH" },
+        "paused": { "severity": "MEDIUM" },
+        "$admin": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0xF9aD628d9F907ad5d46Ab80100dacDf09EAc9A8e": "ResolvedDelegateProxy",
         "eth:0xb686F13AfF1e427a1f993F29ab0F2E7383729FE0": "L1CrossDomainMessenger"
@@ -4249,28 +4353,28 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
-    "global/TimelockController": "0x67edad38b59e4cfe883d5d3aea9856bddd5bbd9694ea78e137c09c8f3cd953d7",
+    "global/ProxyAdmin": "0x67403097e6696257d6279d2cfb58155d82c5ea4e778d4c626bdfccd19354f527",
+    "global/TimelockController": "0xdadafd0ba19f4517098cde4f542e2f441997df2fbff1e028dd7237714fdfb4b5",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "opstack/AddressManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
-    "opstack/AnchorStateRegistry_post13": "0x9888be337c8cfb54afe2910a16e6546f0c5a7d8feed51cca35875140b4e4da1f",
-    "opstack/DelayedWETH": "0x2bb65b9dcbc119352d4c860b2c99ea1ab78770cfd36c559c5150dadfc1580c84",
-    "opstack/DisputeGameFactory": "0x3dc99a5b14ca02c3f89e29f2e34581869209bafcf299f20dec1ac9d3bb2001f4",
-    "opstack/L1CrossDomainMessenger": "0xea24e2bfdb6536e3712d13097b867ff34904f65030f57e349694caa653cce8fa",
+    "opstack/AnchorStateRegistry_post13": "0x854e22e23be501be577c070e7d11bc5f4e83e99b2e6d595dc31e2d7fcf2c7d14",
+    "opstack/DelayedWETH": "0xb414c00260c9bbb0d57843aacfd5aef6f26fc6d94ccb910ef20dd3b4c29c063b",
+    "opstack/DisputeGameFactory": "0xc7fc61755f1890ab4865a9ed9c9fa80ff6360d23cda9433fd6313aadf9a7f141",
+    "opstack/L1CrossDomainMessenger": "0x479e8681e3398c878a3bdc1f56daf162d5fb660179c072fc7f2a7acbd3a49750",
     "opstack/L1ERC721Bridge": "0xafa13690ce8b74136cc340eaa940528c1a96aaf7b4c95715b884decb544f7c67",
-    "opstack/L1StandardBridge": "0x8cbd85e2852b26d67c72cb658b98929c845a20ccce30e84f84644c0b39e9252e",
+    "opstack/L1StandardBridge": "0xcd61740d25743cecf04c4cd894dc0b72df7e1b2938a4c5f90947be462e8f62ef",
     "opstack/MIPS": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/OptimismMintableERC20Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "opstack/OptimismPortal2": "0x682bbe60219050ce4c99189dc9348a889db497a91eb4bb0cae6730171491f103",
+    "opstack/OptimismPortal2": "0xeba6cb42b7d4fd68db8a8faeae5717eb1943fee08d7674dcc02dfd12d7256d71",
     "opstack/PermissionedDisputeGame": "0x7767458874d21640683474eaa7fb0c67552d513da9358bb1bcff2c755a165df3",
     "opstack/PreimageOracle": "0x6c435c8491ea31b14ac576d12c5ae3988f849f8c365b3989e522aba5f84ca1ec",
-    "opstack/SuperchainConfigFake_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
-    "opstack/SystemConfig": "0xa5ad1d7fe3bfc5d96d4166fbfb1e6ef0b1d5baaf568225c532428da4d84175c6",
+    "opstack/SuperchainConfigFake_expiry": "0x1fc8cd90b89237398882797e866e59d613d21f6a8c9ccbb2b72d507f3f7b620f",
+    "opstack/SystemConfig": "0x348bca7423658afd3bf0ff9a3d3822b71730f750558bff031419f760e1a5067b",
     "risc0/KailuaGame": "0x249c17fd26bbb0f5400d386b4cfbe2edc478f66aeca6ba5fe90e477d646ae9dd",
-    "risc0/KailuaTreasury": "0x74dc00c46f9739750e0f8e356c2dc96fc06800a44865544c70b5106073ef635c",
-    "risc0/RiscZeroSetVerifier": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "risc0/RiscZeroVerifierEmergencyStop": "0x51834983916be3dbcb2599e427fff7336cf176a2a5839ac470883eb1d9703763",
-    "risc0/RiscZeroVerifierRouter": "0xb74ea20385c8afa507c773dd57793a9fbf10ce64ed9c17b58dff13665aff9f7a",
+    "risc0/KailuaTreasury": "0xbec90e5e8e6c6c406c44396e7170c866a212a31856fa1acdefd101ee770371c8",
+    "risc0/RiscZeroSetVerifier": "0xc97e795145b9047acc8c6b65617edecc2b77a0e610c10b83ca7386ca63114ae1",
+    "risc0/RiscZeroVerifierEmergencyStop": "0xef0987a7d8a5d4cdb385d76339b97fb7e014e0ef73ce197a6311cc29d6aa7437",
+    "risc0/RiscZeroVerifierRouter": "0x736f3bb5bd191bd32f6b9b196ccea9c1aa8dac40fcb3cea29151a2ecb4078c6e",
     "taiko/RiscZeroGroth16Verifier": "0x5a8e570685c41094b4b892489bb6a8f0f7509e1e71111612b374075e6bc5e562",
     "taiko/RiscZeroGroth16VerifierLegacy": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c"
   },

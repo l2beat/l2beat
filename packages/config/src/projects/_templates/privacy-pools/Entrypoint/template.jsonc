@@ -14,7 +14,11 @@
   ],
   "ignoreRelatives": ["accessControl"],
   "fields": {
+    "$admin": {
+      "severity": "HIGH"
+    },
     "accessControl": {
+      "severity": "HIGH",
       "description": "Current role membership map for the Entrypoint's owner and postman roles.",
       "handler": {
         "type": "accessControl",
@@ -70,6 +74,7 @@
       ]
     },
     "aspPostmen": {
+      "severity": "HIGH",
       "description": "Addresses with ASP_POSTMAN.",
       "type": "PERMISSION",
       "handler": {

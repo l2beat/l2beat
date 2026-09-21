@@ -1,5 +1,10 @@
 {
   "$schema": "../../../../../../discovery/schemas/contract.v2.schema.json",
   "critical": true,
-  "description": "Standard implementation used for assets that are native to the other layer and are bridged to this layer."
+  "description": "Standard implementation used for assets that are native to the other layer and are bridged to this layer.",
+  "fields": {
+    "bridge": {
+      "severity": "HIGH"
+    }
+  }
 }

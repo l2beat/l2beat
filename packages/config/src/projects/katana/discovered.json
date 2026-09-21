@@ -152,6 +152,21 @@
         "version": "v3.0.0"
       },
       "fieldMeta": {
+        "pendingOptimisticModeManager": { "severity": "MEDIUM" },
+        "pendingAggchainManager": { "severity": "MEDIUM" },
+        "pendingAdmin": { "severity": "MEDIUM" },
+        "rollupConfigHash": { "severity": "LOW" },
+        "gasTokenNetwork": { "severity": "HIGH" },
+        "gasTokenAddress": { "severity": "HIGH" },
+        "submissionInterval": { "severity": "HIGH" },
+        "threshold": { "severity": "HIGH" },
+        "forceBatchTimeout": { "severity": "HIGH" },
+        "forceBatchAddress": { "severity": "HIGH" },
+        "bridgeAddress": { "severity": "HIGH" },
+        "globalExitRootManager": { "severity": "HIGH" },
+        "rollupManager": { "severity": "HIGH" },
+        "aggLayerGateway": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" },
         "CONSENSUS_TYPE": {
           "description": "0 - ECDSA sig verification, 1 - aggchainVkey verification (read by the pessimistic program)"
         },
@@ -220,7 +235,10 @@
         "owner": "eth:0x2De242e27386e224E5fbF110EA8406d5B70740ec",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
-      "fieldMeta": { "owner": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "addressManager": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0x14Be6579A41342ca6B402ec85E7be538e6Ade951": "ProxyAdmin"
       }
@@ -362,7 +380,10 @@
         "isUpgrading": false,
         "owner": "eth:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC"
       },
-      "fieldMeta": { "owner": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "addressManager": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0x19DbD16f0a8e706D817B7e3b7bcF72917Ebb8832": "ProxyAdmin"
       }
@@ -461,7 +482,17 @@
         "TX_BASE_GAS": 21000,
         "version": "2.11.1"
       },
-      "fieldMeta": { "$admin": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "ResolvedDelegateProxy_addressManager": { "severity": "HIGH" },
+        "superchainConfig": { "severity": "HIGH" },
+        "systemConfig": { "severity": "HIGH" },
+        "portal": { "severity": "HIGH" },
+        "PORTAL": { "severity": "HIGH" },
+        "otherMessenger": { "severity": "HIGH" },
+        "OTHER_MESSENGER": { "severity": "HIGH" },
+        "paused": { "severity": "MEDIUM" },
+        "$admin": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0x2008A6Ba8CAF85AaFAe7880664Dfe681D533ac2E": "ResolvedDelegateProxy",
         "eth:0x59D497530b00062f40950ba8EaB88868bf7F86f0": "L1CrossDomainMessenger"
@@ -623,6 +654,7 @@
         "version": "5.6.1-agglayer"
       },
       "fieldMeta": {
+        "$admin": { "severity": "HIGH" },
         "respectedGameType": { "severity": "LOW" },
         "paused": {
           "severity": "MEDIUM",
@@ -700,7 +732,10 @@
         "owner": "eth:0x9d851f8b8751c5FbC09b9E74E6e68E9950949052",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
-      "fieldMeta": { "owner": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "addressManager": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0x263b251D67BB154DD6b8352539466ACE7948ED56": "ProxyAdmin"
       }
@@ -1045,8 +1080,11 @@
         "version": "2.4.2"
       },
       "fieldMeta": {
+        "$admin": { "severity": "HIGH" },
+        "pauseExpiry": { "severity": "HIGH" },
         "paused": { "severity": "MEDIUM" },
-        "guardian": { "severity": "HIGH" }
+        "pauseExpiryFmt": { "severity": "HIGH" },
+        "guardian": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "eth:0x2F439B95fa789C5d3a5C99cc70EB3ee83D08a811": "Proxy",
@@ -1076,7 +1114,10 @@
         "owner": "eth:0x2De242e27386e224E5fbF110EA8406d5B70740ec",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
-      "fieldMeta": { "owner": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "addressManager": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0x377a9e5df2882DC1DF8A0bD162cbc640eA634010": "ProxyAdmin"
       }
@@ -1303,7 +1344,10 @@
         "owner": "eth:0x2De242e27386e224E5fbF110EA8406d5B70740ec",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
-      "fieldMeta": { "owner": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "addressManager": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0x420693B32113a0e00Eb9f3315D5D5ec3b32C2d69": "ProxyAdmin"
       }
@@ -1640,7 +1684,10 @@
         "isUpgrading": false,
         "owner": "eth:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC"
       },
-      "fieldMeta": { "owner": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "addressManager": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0x6d0ff67fb427422AfF35EEa8596949B374b09a52": "ProxyAdmin"
       }
@@ -1832,7 +1879,10 @@
         "owner": "eth:0xf4F2f5F6bAdBE05433C4604320ecC56BbECBC04E",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
-      "fieldMeta": { "owner": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "addressManager": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0x8970650CF3f1E57cA804C65B4DBcFf698789FE30": "ProxyAdmin"
       }
@@ -1885,7 +1935,17 @@
         "systemConfig": "eth:0xb6e1f8B589A14B79DDD3aD7F0589AB548c70C174",
         "version": "2.8.2"
       },
-      "fieldMeta": { "$admin": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "superchainConfig": { "severity": "HIGH" },
+        "systemConfig": { "severity": "HIGH" },
+        "messenger": { "severity": "HIGH" },
+        "MESSENGER": { "severity": "HIGH" },
+        "otherBridge": { "severity": "HIGH" },
+        "OTHER_BRIDGE": { "severity": "HIGH" },
+        "l2TokenBridge": { "severity": "HIGH" },
+        "paused": { "severity": "MEDIUM" },
+        "$admin": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0x98906C3f90A06B5484DD67bf32938815d2993dBC": "L1ChugSplashProxy",
         "eth:0xB37a11AadF167B2F0b8dD85372De4bC66CD4A891": "L1StandardBridge"
@@ -1938,6 +1998,9 @@
       },
       "fieldMeta": {
         "$admin": { "severity": "HIGH" },
+        "delay": { "severity": "HIGH" },
+        "config": { "severity": "HIGH" },
+        "systemConfig": { "severity": "HIGH" },
         "owner": { "severity": "HIGH" }
       },
       "implementationNames": {
@@ -2181,6 +2244,11 @@
         "version": "3.9.0"
       },
       "fieldMeta": {
+        "disputeGameFactory": { "severity": "HIGH" },
+        "superchainConfig": { "severity": "HIGH" },
+        "systemConfig": { "severity": "HIGH" },
+        "disputeGameFinalityDelaySeconds": { "severity": "HIGH" },
+        "paused": { "severity": "MEDIUM" },
         "$admin": { "severity": "HIGH" },
         "respectedGameType": { "severity": "HIGH" },
         "retirementTimestamp": { "severity": "HIGH" }
@@ -2358,6 +2426,16 @@
           "description": "Gas limit for blocks on L2."
         },
         "owner": { "severity": "HIGH" },
+        "superchainConfig": { "severity": "HIGH" },
+        "disputeGameFactory": { "severity": "HIGH" },
+        "optimismPortal": { "severity": "HIGH" },
+        "l1CrossDomainMessenger": { "severity": "HIGH" },
+        "l1StandardBridge": { "severity": "HIGH" },
+        "delayedWETH": { "severity": "HIGH" },
+        "batchInbox": { "severity": "HIGH" },
+        "gasPayingToken": { "severity": "HIGH" },
+        "resourceConfig": { "severity": "HIGH" },
+        "paused": { "severity": "MEDIUM" },
         "eip1559Denominator": {
           "description": "volatility param: lower denominator -> quicker fee changes on L2"
         }
@@ -2447,7 +2525,10 @@
         "owner": "eth:0xA8C31B2edd84c654d06d626383f4154D1E40C5Ff",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
-      "fieldMeta": { "owner": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "addressManager": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0xD1e389c046FB734D2a0c7C390312210c408ba832": "ProxyAdmin"
       }
@@ -2550,6 +2631,7 @@
         "wethFromDGF": "eth:0x99e1fe97767683bbba69fF570b4BbEd7C3e0649e"
       },
       "fieldMeta": {
+        "gameImpls": { "severity": "HIGH" },
         "$admin": { "severity": "HIGH" },
         "owner": { "severity": "HIGH" },
         "game1337": { "severity": "HIGH" },
@@ -2894,7 +2976,10 @@
         "$immutable": true,
         "owner": "katana:0xBBa0935Fa93Eb23de7990b47F0D96a8f75766d13"
       },
-      "fieldMeta": { "owner": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "addressManager": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "katana:0x0F99738B2Fc14D77308337f3e2596b63aE7BCC4A": "ProxyAdmin"
       }
@@ -2981,10 +3066,20 @@
         "WETHToken": "katana:0x0000000000000000000000000000000000000000"
       },
       "fieldMeta": {
+        "pendingProxiedTokensManager": { "severity": "MEDIUM" },
+        "pendingEmergencyBridgeUnpauser": { "severity": "MEDIUM" },
+        "pendingEmergencyBridgePauser": { "severity": "MEDIUM" },
+        "isEmergencyState": { "severity": "MEDIUM" },
+        "getWrappedTokenBridgeImplementation": { "severity": "HIGH" },
+        "WETHToken": { "severity": "HIGH" },
+        "bridgeLib": { "severity": "HIGH" },
+        "polygonRollupManager": { "severity": "HIGH" },
+        "globalExitRootManager": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" },
         "getProxiedTokensManager": { "severity": "HIGH" },
         "bridgeManager": { "severity": "HIGH" },
-        "emergencyBridgePauser": { "severity": "HIGH" },
-        "emergencyBridgeUnpauser": { "severity": "HIGH" }
+        "emergencyBridgePauser": { "severity": "MEDIUM" },
+        "emergencyBridgeUnpauser": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "katana:0x2a3DD3EB832aF982ec71669E178424b10Dca2EDe": "TransparentUpgradeableProxy",
@@ -3063,7 +3158,13 @@
         "RELAY_RESERVED_GAS": 40000,
         "version": "2.1.1-beta.1"
       },
-      "fieldMeta": { "$admin": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "l1CrossDomainMessenger": { "severity": "HIGH" },
+        "otherMessenger": { "severity": "HIGH" },
+        "OTHER_MESSENGER": { "severity": "HIGH" },
+        "paused": { "severity": "MEDIUM" },
+        "$admin": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "katana:0x4200000000000000000000000000000000000007": "Proxy",
         "katana:0xC0d3c0d3c0D3c0D3C0d3C0D3C0D3c0d3c0d30007": "L2CrossDomainMessenger"
@@ -3147,7 +3248,15 @@
         "paused": false,
         "version": "1.11.1-beta.1"
       },
-      "fieldMeta": { "$admin": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "l1TokenBridge": { "severity": "HIGH" },
+        "otherBridge": { "severity": "HIGH" },
+        "OTHER_BRIDGE": { "severity": "HIGH" },
+        "messenger": { "severity": "HIGH" },
+        "MESSENGER": { "severity": "HIGH" },
+        "paused": { "severity": "MEDIUM" },
+        "$admin": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "katana:0x4200000000000000000000000000000000000010": "Proxy",
         "katana:0xC0d3c0d3c0D3c0d3C0D3c0D3C0d3C0D3C0D30010": "L2StandardBridge"
@@ -3434,7 +3543,10 @@
         "isUpgrading": false,
         "owner": "katana:0xd0673F989bc3BA9314d0AAF28BfC84e99B7898CC"
       },
-      "fieldMeta": { "owner": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "addressManager": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "katana:0x4200000000000000000000000000000000000018": "Proxy",
         "katana:0xC0d3C0D3c0d3C0d3c0d3c0D3C0D3C0d3C0D30018": "ProxyAdmin"
@@ -3758,6 +3870,10 @@
         "removedGERHashChain": "0x0000000000000000000000000000000000000000000000000000000000000000"
       },
       "fieldMeta": {
+        "pendingGlobalExitRootUpdater": { "severity": "MEDIUM" },
+        "pendingGlobalExitRootRemover": { "severity": "MEDIUM" },
+        "bridgeAddress": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" },
         "globalExitRootRemover": { "severity": "HIGH" },
         "globalExitRootUpdater": { "severity": "HIGH" }
       },
@@ -3920,7 +4036,10 @@
         ]
       },
       "fieldMeta": {
+        "getMinDelay": { "severity": "HIGH" },
+        "timelockAdminAC": { "severity": "HIGH" },
         "getMinDelayFormatted": { "severity": "HIGH" },
+        "accessControl": { "severity": "HIGH" },
         "polygonZkEVM": {
           "severity": "HIGH",
           "description": "This is immutably the 0 address in this particular contract, which means emergency mode is never active"
@@ -4020,6 +4139,7 @@
         "symbol": "",
         "totalSupply": 0
       },
+      "fieldMeta": { "bridgeAddress": { "severity": "HIGH" } },
       "implementationNames": {
         "katana:0xF0777a825470092b3Debc9af291634460b8E1a2c": "TokenWrappedBridgeUpgradeable"
       }
@@ -6572,31 +6692,31 @@
     ]
   },
   "usedTemplates": {
-    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
+    "global/ProxyAdmin": "0x67403097e6696257d6279d2cfb58155d82c5ea4e778d4c626bdfccd19354f527",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
-    "katana/AggchainFEP_post035": "0xa34778d06409cd43d1b889dfe385e0d7a0c73c7fcac8680a8815d5b8fe10c1dd",
-    "katana/AgglayerBridgeL2": "0x26a12f6eb0f2fae1955dc3e6afe2db0b4234277a896f1f2509fde8ad8477cd1b",
+    "katana/AggchainFEP_post035": "0x0db5fb15ac3985fdc1f7b7cb77a5bef25fceff47d917eb5e6b085d13749f6c21",
+    "katana/AgglayerBridgeL2": "0xafa6a9f242e3db5c2aa9906c60a387a68f5f2163d781ed63d45f0e3e346d5363",
     "katana/BridgeLib": "0xb8ad695e33fde1c15595da1cbf166d648c6be57a47ec43405d330e10b3d6e6ec",
-    "katana/GlobalExitRootManagerL2SovereignChain": "0xb74e315d5528261b0f3aea62fc49dc10450d9eb9ee94555647fb733bb3230732",
+    "katana/GlobalExitRootManagerL2SovereignChain": "0xee2e6f4666c9875de4f92bea214450dba3928670580eec35758c7651a3de8ca8",
     "katana/L2ToL1MessagePasser": "0x3f407b76384248e32af67feefe154f34a2c61ee1576e0e3037e095d556534fc3",
-    "katana/OptimismPortal2": "0x52ecd41211faad3599bd32ca82e2af9561910cce6d33f93242e9bf13a426018c",
-    "katana/TokenWrappedBridgeUpgradeable": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
+    "katana/OptimismPortal2": "0xb05e64d3dbcd4f4ed0e43955bdd068116d5f37d13b108fe4e8e4a0af9d807db2",
+    "katana/TokenWrappedBridgeUpgradeable": "0x511db03568e9f6e33974f346eb1942ed7e3392f9dab5dd9b4e2e7f9f238f627d",
     "opstack/AddressManager": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
-    "opstack/AnchorStateRegistry_post20": "0x6bf8916daf3b007503e2aa81cc8920469b22cdf5eb4501c85b8743633076e00e",
-    "opstack/DelayedWETH": "0x2bb65b9dcbc119352d4c860b2c99ea1ab78770cfd36c559c5150dadfc1580c84",
-    "opstack/DisputeGameFactory_v2": "0x54a98ca8d78a1ab5eb0795847a776c4d3c5c7de392bcf1b29c206cfb7e7afa7d",
-    "opstack/L1CrossDomainMessenger": "0xea24e2bfdb6536e3712d13097b867ff34904f65030f57e349694caa653cce8fa",
+    "opstack/AnchorStateRegistry_post20": "0xd0d625ebafed18f8b0cddb022b9698de27f66c0771011c4f833377dcb9fb522b",
+    "opstack/DelayedWETH": "0xb414c00260c9bbb0d57843aacfd5aef6f26fc6d94ccb910ef20dd3b4c29c063b",
+    "opstack/DisputeGameFactory_v2": "0x4b0418e46a757f719bd7d23d20a4faf5d8ebf4e76d30788e8e9a88c1c6258f06",
+    "opstack/L1CrossDomainMessenger": "0x479e8681e3398c878a3bdc1f56daf162d5fb660179c072fc7f2a7acbd3a49750",
     "opstack/L1ERC721Bridge": "0xafa13690ce8b74136cc340eaa940528c1a96aaf7b4c95715b884decb544f7c67",
-    "opstack/L1StandardBridge": "0x8cbd85e2852b26d67c72cb658b98929c845a20ccce30e84f84644c0b39e9252e",
+    "opstack/L1StandardBridge": "0xcd61740d25743cecf04c4cd894dc0b72df7e1b2938a4c5f90947be462e8f62ef",
     "opstack/Layer2/BaseFeeVault": "0x356a6cb706ffd52cc68d7a5c06197e72a7388bb32090967ad5ce5a683b508aa4",
     "opstack/Layer2/EAS": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/Layer2/GasPriceOracle": "0x8f497de83556de92a063c31d97188024782f910b9b1f254812e9e6b58ece0ccf",
     "opstack/Layer2/L1Block": "0x285f931e841dfeccb9fd8de970781403669decd9880ffbed39a4c35bf5c15333",
     "opstack/Layer2/L1BlockNumber": "0x21c6e550d144ce1c4b375c15824ea847ca6ac0e5fcd4f3f388bd296e8f014797",
     "opstack/Layer2/L1FeeVault": "0x356a6cb706ffd52cc68d7a5c06197e72a7388bb32090967ad5ce5a683b508aa4",
-    "opstack/Layer2/L2CrossDomainMessenger": "0xea5dababc2d3c671bcdd37f0482105863487a55138d7c65cabe1044b4f4a7377",
+    "opstack/Layer2/L2CrossDomainMessenger": "0x4f9b9990a6afe1e6b1bb158664bb54aa6f5b87db83c5910cb795fc0aac0e106c",
     "opstack/Layer2/L2ERC721Bridge": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
-    "opstack/Layer2/L2StandardBridge": "0x1d7a39d8907362465f31e3072eaa78f2f2c42ba8a5b83ee617f65daf0facff5b",
+    "opstack/Layer2/L2StandardBridge": "0xb169f5343356f889fed850f883df4efb63018f3c72b4cd54ae4fc623edab25dd",
     "opstack/Layer2/OperatorFeeVault": "0x044085f5049dce846d88feaa0007d7805521906a1025bb3acc0ee57c09befe47",
     "opstack/Layer2/OptimismMintableERC20Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/Layer2/OptimismMintableERC721Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
@@ -6604,10 +6724,10 @@
     "opstack/Layer2/SequencerFeeVault": "0x356a6cb706ffd52cc68d7a5c06197e72a7388bb32090967ad5ce5a683b508aa4",
     "opstack/OptimismMintableERC20Factory": "0x6fbb45d11251921c07e800160fe95b7bb7e81f6f3b7d0c02107126e904d8cd9c",
     "opstack/PermissionedDisputeGame": "0x7767458874d21640683474eaa7fb0c67552d513da9358bb1bcff2c755a165df3",
-    "opstack/SuperchainConfigFake_expiry": "0x0b7f77df80d54ec62e70b2baa4cadfc7ac29a79be6ceaae3ce2d8a39017e71ec",
-    "opstack/SystemConfig": "0xa5ad1d7fe3bfc5d96d4166fbfb1e6ef0b1d5baaf568225c532428da4d84175c6",
+    "opstack/SuperchainConfigFake_expiry": "0x1fc8cd90b89237398882797e866e59d613d21f6a8c9ccbb2b72d507f3f7b620f",
+    "opstack/SystemConfig": "0x348bca7423658afd3bf0ff9a3d3822b71730f750558bff031419f760e1a5067b",
     "polygon-cdk/GenericVaultBridgeToken": "0x8f2f7de70d9d896531454700be7cf820d5095bd49d0c5da4ff998df7533d5823",
-    "polygon-cdk/L2Timelock": "0xa68acff21822229ec6117f6af99e810af110069ec1e2217cc3ac6c1e832f528e",
+    "polygon-cdk/L2Timelock": "0xabef12a0b5dfe935a21e07c0e869f49752b4e127836e2001215b9f0b2c24a5e7",
     "polygon-cdk/MigrationManager": "0xf0db03721cc15af078d6a93a1b8d8f8e438c2611fdb2fb5c22d599e6c939a384"
   },
   "usedBlockNumbers": { "ethereum": 25926257, "katana": 42050704 },

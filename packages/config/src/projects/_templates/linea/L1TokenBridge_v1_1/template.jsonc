@@ -4,12 +4,26 @@
   "critical": true,
   "description": "Contract used to bridge and escrow ERC-20 tokens.",
   "fields": {
+    "PAUSE_DURATION": {
+      "severity": "HIGH"
+    },
+    "COOLDOWN_DURATION": {
+      "severity": "HIGH"
+    },
+    "tokenBeacon": {
+      "severity": "HIGH"
+    },
+    "$admin": {
+      "severity": "HIGH"
+    },
     "accessControl": {
+      "severity": "HIGH",
       "handler": {
         "type": "accessControl"
       }
     },
     "defaultAdminAC": {
+      "severity": "HIGH",
       "handler": {
         "type": "accessControl",
         "pickRoleMembers": "DEFAULT_ADMIN_ROLE"
@@ -142,6 +156,7 @@
       }
     },
     "pauseTypeToRole": {
+      "severity": "HIGH",
       "handler": {
         "type": "event",
         "select": ["role"],
@@ -152,6 +167,7 @@
       }
     },
     "unpauseTypeToRole": {
+      "severity": "HIGH",
       "handler": {
         "type": "event",
         "select": ["role"],
@@ -222,6 +238,7 @@
       ]
     },
     "customContractSetters": {
+      "severity": "HIGH",
       "copy": "accessControl",
       "edit": ["get", "SET_CUSTOM_CONTRACT_ROLE", "members"],
       "permissions": [
@@ -232,6 +249,7 @@
       ]
     },
     "reserveTokenSetters": {
+      "severity": "HIGH",
       "copy": "accessControl",
       "edit": ["get", "SET_RESERVED_TOKEN_ROLE", "members"],
       "permissions": [
@@ -242,6 +260,7 @@
       ]
     },
     "reserveTokenRemovers": {
+      "severity": "HIGH",
       "copy": "accessControl",
       "edit": ["get", "REMOVE_RESERVED_TOKEN_ROLE", "members"],
       "permissions": [
@@ -252,6 +271,7 @@
       ]
     },
     "messageServiceSetters": {
+      "severity": "HIGH",
       "copy": "accessControl",
       "edit": ["get", "SET_MESSAGE_SERVICE_ROLE", "members"],
       "permissions": [

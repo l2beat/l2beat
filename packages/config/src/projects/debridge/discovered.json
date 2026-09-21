@@ -64,7 +64,10 @@
         "owner": "eth:0x844e5bd15b32B9F2245205AE59C9c6f5Fc696444",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
-      "fieldMeta": { "owner": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "addressManager": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0x368Fa5E37EF1aCefF359Dc2E9DC7393C1CbCC4A3": "ProxyAdmin"
       }
@@ -736,7 +739,10 @@
         "$immutable": true,
         "owner": "eth:0x6bec1faF33183e1Bc316984202eCc09d46AC92D5"
       },
-      "fieldMeta": { "owner": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "addressManager": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0xA7b88A746FA457578D5abd6234471f07D895F46b": "ProxyAdmin"
       }
@@ -758,7 +764,10 @@
         "owner": "eth:0x844e5bd15b32B9F2245205AE59C9c6f5Fc696444",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
-      "fieldMeta": { "owner": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "addressManager": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0xaBAc0E0AB68FC34441b36015bB952cD8f378283F": "ProxyAdmin"
       }
@@ -801,7 +810,10 @@
         "owner": "eth:0xd6dF82F60a2FE1e61aEc29679bc4954F33D8C1EC",
         "UPGRADE_INTERFACE_VERSION": "5.0.0"
       },
-      "fieldMeta": { "owner": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "addressManager": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0xb54CD1e74f232C6de444464C81f81D13E6978816": "ProxyAdmin"
       }
@@ -900,7 +912,10 @@
         "$immutable": true,
         "owner": "eth:0x6bec1faF33183e1Bc316984202eCc09d46AC92D5"
       },
-      "fieldMeta": { "owner": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "addressManager": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0xC86ab72dc6da7eF91a96650f3BC23125cD997130": "ProxyAdmin"
       }
@@ -1118,7 +1133,10 @@
         "$immutable": true,
         "owner": "eth:0x6bec1faF33183e1Bc316984202eCc09d46AC92D5"
       },
-      "fieldMeta": { "owner": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "addressManager": { "severity": "HIGH" },
+        "owner": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0xE4427af3555CD9303D728C491364FAdFDD7494Fe": "ProxyAdmin"
       }
@@ -2551,7 +2569,7 @@
     "debridge/IntentManagerValidator": "0xf041beaf993cf44b777d84da4360f6df2e8b6689c93751aee22ab830d8c06d3d",
     "debridge/SignatureVerifier": "0xfd8c11ebd8bdeb3c008261859cbc9f169adb486cad2a1b58a46c996cc4ac35ba",
     "debridge/SimpleFeeProxy": "0xd5828f448120a389545d315cab8b8aab3da791c84ae28ea30c8c516e185e7414",
-    "global/ProxyAdmin": "0x7d24ef68050bed263f4cfd0471631d16b2f33814fbbd4e9aadf666c81bbf0c2d",
+    "global/ProxyAdmin": "0x67403097e6696257d6279d2cfb58155d82c5ea4e778d4c626bdfccd19354f527",
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c"
   },
   "usedBlockNumbers": { "ethereum": 25882373 },

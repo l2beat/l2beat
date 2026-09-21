@@ -1,3 +1,75 @@
+Generated with discovered.json: 0x0bd86638f3ca8607f1ac23c108dfa5fe0753e529
+
+# Diff at Mon, 21 Sep 2026 07:13:41 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@cb454ea5283bcf30e392f86e07ac240d516636b4 block: 1770639543
+- current timestamp: 1770639543
+
+## Description
+
+ossification re-review: pause-role holders are identity, not mechanism (HIGH -> MEDIUM)
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1770639543 (main branch discovery), not current.
+
+```diff
+    contract ValidatorTimelock (eth:0x2e5110cF18678Ec99818bFAa849B8C881744b776) [shared-zk-stack/ValidatorTimelock_post29] {
+    +++ description: Intermediary contract between the *Validators* and the central diamond contract that delays block execution (ie withdrawals and other L2 --> L1 messages) by 3h.
+      fieldMeta.executionDelay:
++        {"severity":"HIGH"}
+      fieldMeta.owner:
++        {"severity":"HIGH"}
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x6B0d492D08d436d3BBC7Cc873C03002686Aef734) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta.addressManager:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract Gateway (eth:0x6E96D1172a6593D5027Af3c2664C5112Ca75F2B9) [shared-zk-stack/Diamond] {
+    +++ description: The main contract defining the Gateway settlement layer. Operator actions like commiting blocks, providing ZK proofs and executing batches ultimately target this contract which then processes transactions. During batch execution it processes L1 --> L2 and L2 --> L1 transactions. Bridging transactions that target L2s settling on the Gateway are routed through this contract and proofs are aggregated on L1. Data availability for rollups on the Gateway is provided by the Gateway operators sending the data together with Gateway data.. isPermanentRollup was set to true in this contract which prevents changing the DA mode to Validium in the future.
+      fieldMeta.getL2EvmEmulatorBytecodeHash:
++        {"severity":"HIGH"}
+      fieldMeta.getL2DefaultAccountBytecodeHash:
++        {"severity":"HIGH"}
+      fieldMeta.getL2BootloaderBytecodeHash:
++        {"severity":"HIGH"}
+      fieldMeta.getPriorityTxMaxGasLimit:
++        {"severity":"HIGH"}
+      fieldMeta.getRollupDAManager:
++        {"severity":"HIGH"}
+      fieldMeta.getChainTypeManager:
++        {"severity":"HIGH"}
+      fieldMeta.getBridgehub:
++        {"severity":"HIGH"}
+      fieldMeta.getVerifier:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract DualVerifier (eth:0xCD279BD537c8e1A1acC46aC2205bebD8902F7A45) [shared-zk-stack/DualVerifier] {
+    +++ description: A router contract for verifiers. Routes verification requests to eth:0xa38a0Df579F9eCA29fbA560b9885B1113b1Df442 or eth:0x7f33D100f482093182111d69a4a457289e99f4ec depending on the supplied proof type.
+      fieldMeta.verificationKeyHash.severity:
++        "HIGH"
+      fieldMeta.PLONK_VERIFIER:
++        {"severity":"HIGH"}
+      fieldMeta.FFLONK_VERIFIER:
++        {"severity":"HIGH"}
+    }
+```
+
 Generated with discovered.json: 0x011e9399c920e572ffbbd3196958f6c6df375c67
 
 # Diff at Fri, 18 Sep 2026 10:24:49 GMT:

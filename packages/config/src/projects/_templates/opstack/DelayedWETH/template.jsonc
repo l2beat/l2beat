@@ -8,6 +8,16 @@
     "$admin": {
       "severity": "HIGH"
     },
+    "delay": {
+      // how long a bond withdrawal is held before it can be claimed
+      "severity": "HIGH"
+    },
+    "config": {
+      "severity": "HIGH"
+    },
+    "systemConfig": {
+      "severity": "HIGH"
+    },
     "owner": {
       "severity": "HIGH",
       "permissions": [

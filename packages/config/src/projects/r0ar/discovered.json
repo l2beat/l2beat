@@ -87,6 +87,15 @@
         "systemConfig": "eth:0x689db31D7C367ed2c264994c0838a82EdD6Bc9AA",
         "version": "2.8.0"
       },
+      "fieldMeta": {
+        "paused": { "severity": "MEDIUM" },
+        "L1_MNT_ADDRESS": { "severity": "HIGH" },
+        "SYSTEM_CONFIG": { "severity": "HIGH" },
+        "L2_ORACLE": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" },
+        "guardian": { "severity": "MEDIUM" },
+        "GUARDIAN": { "severity": "MEDIUM" }
+      },
       "implementationNames": {
         "eth:0x2c6AF306F8D0Cd6d9E76D43b2DC9a4E60a7f446e": "Proxy",
         "eth:0x6C766cBbCeb166a6Bfc72A365100D153dF9A3B98": "OptimismPortal"
@@ -131,7 +140,10 @@
       },
       "fieldMeta": {
         "$admin": { "severity": "HIGH" },
-        "owner": { "severity": "HIGH" }
+        "owner": { "severity": "HIGH" },
+        "delay": { "severity": "HIGH" },
+        "config": { "severity": "HIGH" },
+        "systemConfig": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0x465833609d9ff2Cb9A070b0d71b700F318C97293": "Proxy",
@@ -186,7 +198,17 @@
         "systemConfig": "eth:0x689db31D7C367ed2c264994c0838a82EdD6Bc9AA",
         "version": "2.4.0"
       },
-      "fieldMeta": { "$admin": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "$admin": { "severity": "HIGH" },
+        "ResolvedDelegateProxy_addressManager": { "severity": "HIGH" },
+        "superchainConfig": { "severity": "HIGH" },
+        "systemConfig": { "severity": "HIGH" },
+        "portal": { "severity": "HIGH" },
+        "PORTAL": { "severity": "HIGH" },
+        "otherMessenger": { "severity": "HIGH" },
+        "OTHER_MESSENGER": { "severity": "HIGH" },
+        "paused": { "severity": "MEDIUM" }
+      },
       "implementationNames": {
         "eth:0x5b0e75a52862881b4077C865B244CC17cD2b531b": "ResolvedDelegateProxy",
         "eth:0x8bA829f040EB57668BDfb010472AEb0a16B2399C": "L1CrossDomainMessenger"
@@ -247,7 +269,17 @@
         "systemConfig": "eth:0x689db31D7C367ed2c264994c0838a82EdD6Bc9AA",
         "version": "2.2.0"
       },
-      "fieldMeta": { "$admin": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "$admin": { "severity": "HIGH" },
+        "superchainConfig": { "severity": "HIGH" },
+        "systemConfig": { "severity": "HIGH" },
+        "messenger": { "severity": "HIGH" },
+        "MESSENGER": { "severity": "HIGH" },
+        "otherBridge": { "severity": "HIGH" },
+        "OTHER_BRIDGE": { "severity": "HIGH" },
+        "l2TokenBridge": { "severity": "HIGH" },
+        "paused": { "severity": "MEDIUM" }
+      },
       "implementationNames": {
         "eth:0x683ca289a8418Cb090E42929A73a263d7b81DfC2": "L1ChugSplashProxy",
         "eth:0xBab69f0A56Aea1117C0298341ddE52F3DbAfe4D1": "L1StandardBridge"
@@ -340,7 +372,17 @@
         },
         "$admin": { "severity": "HIGH" },
         "batcherHash": { "severity": "LOW" },
-        "owner": { "severity": "HIGH" }
+        "owner": { "severity": "HIGH" },
+        "superchainConfig": { "severity": "HIGH" },
+        "disputeGameFactory": { "severity": "HIGH" },
+        "optimismPortal": { "severity": "HIGH" },
+        "l1CrossDomainMessenger": { "severity": "HIGH" },
+        "l1StandardBridge": { "severity": "HIGH" },
+        "delayedWETH": { "severity": "HIGH" },
+        "batchInbox": { "severity": "HIGH" },
+        "gasPayingToken": { "severity": "HIGH" },
+        "resourceConfig": { "severity": "HIGH" },
+        "paused": { "severity": "MEDIUM" }
       },
       "implementationNames": {
         "eth:0x689db31D7C367ed2c264994c0838a82EdD6Bc9AA": "Proxy",
@@ -436,7 +478,10 @@
         "isUpgrading": false,
         "owner": "eth:0xf758e2272FCe1330d8a1De38D5128A47B4041752"
       },
-      "fieldMeta": { "owner": { "severity": "HIGH" } },
+      "fieldMeta": {
+        "owner": { "severity": "HIGH" },
+        "addressManager": { "severity": "HIGH" }
+      },
       "implementationNames": {
         "eth:0x8E2dF5BfA8F8840C588662eE2D1b727b3982CdCA": "ProxyAdmin"
       }
@@ -754,7 +799,9 @@
         "game2000": { "severity": "HIGH" },
         "game42": { "severity": "HIGH" },
         "owner": { "severity": "HIGH" },
-        "wethFromDGF": { "severity": "HIGH" }
+        "wethFromDGF": { "severity": "HIGH" },
+        "$admin": { "severity": "HIGH" },
+        "permissionedGameArgs": { "severity": "HIGH" }
       },
       "implementationNames": {
         "eth:0xF014d8028A7028352baD6226A4894Ae596e2846c": "Proxy",

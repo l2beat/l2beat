@@ -24,12 +24,36 @@
     }
   },
   "fields": {
+    "$admin": {
+      "severity": "HIGH"
+    },
+    "retirementTimestamp": {
+      // moving it invalidates every game created before it
+      "severity": "HIGH"
+    },
+    "disputeGameFactory": {
+      "severity": "HIGH"
+    },
+    "superchainConfig": {
+      "severity": "HIGH"
+    },
+    "systemConfig": {
+      "severity": "HIGH"
+    },
+    "disputeGameFinalityDelaySeconds": {
+      "severity": "HIGH"
+    },
+    "paused": {
+      "severity": "MEDIUM"
+    },
+
     "respectedGameType": {
       "severity": "HIGH"
     },
     "RespectedGameString": {
       "handler": {
         "type": "call",
+        "expectRevert": true,
         "method": "respectedGameType",
         "args": []
       },

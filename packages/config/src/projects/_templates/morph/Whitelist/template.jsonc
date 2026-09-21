@@ -26,6 +26,7 @@
       ]
     },
     "owner": {
+      "severity": "HIGH",
       "permissions": [
         { "type": "interact", "description": "manage the whitelist." }
       ]

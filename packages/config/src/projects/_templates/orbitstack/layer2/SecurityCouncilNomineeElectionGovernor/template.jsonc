@@ -18,5 +18,52 @@
     "proposalSnapshot",
     "proposalVettingDeadline",
     "quorum"
-  ]
+  ],
+  "fields": {
+    "ROTATION_CUT_OFF_BLOCKS": {
+      "severity": "HIGH"
+    },
+    "firstNominationStartDate": {
+      "severity": "HIGH"
+    },
+    "cadenceInMonths": {
+      "severity": "HIGH"
+    },
+    "nomineeVettingDuration": {
+      "severity": "HIGH"
+    },
+    "nomineeVetter": {
+      "severity": "HIGH"
+    },
+    "securityCouncilMemberElectionGovernor": {
+      "severity": "HIGH"
+    },
+    "securityCouncilManager": {
+      "severity": "HIGH"
+    },
+    "quorumDenominator": {
+      "severity": "HIGH"
+    },
+    "quorumNumerator": {
+      "severity": "HIGH"
+    },
+    "votingPeriod": {
+      "severity": "HIGH"
+    },
+    "votingDelay": {
+      "severity": "HIGH"
+    },
+    "proposalThreshold": {
+      "severity": "HIGH"
+    },
+    "token": {
+      "severity": "HIGH"
+    },
+    "owner": {
+      "severity": "HIGH"
+    },
+    "$admin": {
+      "severity": "HIGH"
+    }
+  }
 }

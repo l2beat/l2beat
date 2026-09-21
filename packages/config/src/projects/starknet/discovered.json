@@ -653,6 +653,9 @@
         "withdrawLimitPct": 5
       },
       "fieldMeta": {
+        "isFrozen": { "severity": "MEDIUM" },
+        "getUpgradeActivationDelay": { "severity": "HIGH" },
+        "StarkWareProxy_upgradeDelay": { "severity": "HIGH" },
         "$admin": {
           "severity": "MEDIUM",
           "description": "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it."
@@ -662,14 +665,20 @@
           "description": "inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left."
         },
         "maxTotalBalance": {
+          "severity": "HIGH",
           "description": "The maximum total balance that can be locked in the bridge."
         },
         "depositStatus": {
           "description": "Token status managed by the Manager. Only affects deposits."
         },
         "withdrawLimitPct": {
+          "severity": "HIGH",
           "description": "The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed."
         },
+        "manager": { "severity": "HIGH" },
+        "bridgedToken": { "severity": "HIGH" },
+        "l2TokenContract": { "severity": "HIGH" },
+        "messagingContract": { "severity": "HIGH" },
         "accessControl": {
           "severity": "MEDIUM",
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
@@ -1226,6 +1235,9 @@
         "withdrawLimitPct": 5
       },
       "fieldMeta": {
+        "isFrozen": { "severity": "MEDIUM" },
+        "getUpgradeActivationDelay": { "severity": "HIGH" },
+        "StarkWareProxy_upgradeDelay": { "severity": "HIGH" },
         "$admin": {
           "severity": "HIGH",
           "description": "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation)."
@@ -1235,14 +1247,20 @@
           "description": "inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left."
         },
         "maxTotalBalance": {
+          "severity": "HIGH",
           "description": "The maximum total balance that can be locked in the bridge."
         },
         "depositStatus": {
           "description": "Token status managed by the Manager. Only affects deposits."
         },
         "withdrawLimitPct": {
+          "severity": "HIGH",
           "description": "The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed."
         },
+        "manager": { "severity": "HIGH" },
+        "bridgedToken": { "severity": "HIGH" },
+        "l2TokenContract": { "severity": "HIGH" },
+        "messagingContract": { "severity": "HIGH" },
         "accessControl": {
           "severity": "HIGH",
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
@@ -1392,6 +1410,9 @@
         "withdrawLimitPct": 5
       },
       "fieldMeta": {
+        "isFrozen": { "severity": "MEDIUM" },
+        "getUpgradeActivationDelay": { "severity": "HIGH" },
+        "StarkWareProxy_upgradeDelay": { "severity": "HIGH" },
         "$admin": {
           "severity": "MEDIUM",
           "description": "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it."
@@ -1401,14 +1422,20 @@
           "description": "inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left."
         },
         "maxTotalBalance": {
+          "severity": "HIGH",
           "description": "The maximum total balance that can be locked in the bridge."
         },
         "depositStatus": {
           "description": "Token status managed by the Manager. Only affects deposits."
         },
         "withdrawLimitPct": {
+          "severity": "HIGH",
           "description": "The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed."
         },
+        "manager": { "severity": "HIGH" },
+        "bridgedToken": { "severity": "HIGH" },
+        "l2TokenContract": { "severity": "HIGH" },
+        "messagingContract": { "severity": "HIGH" },
         "accessControl": {
           "severity": "MEDIUM",
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
@@ -1536,6 +1563,9 @@
         "withdrawLimitPct": 5
       },
       "fieldMeta": {
+        "isFrozen": { "severity": "MEDIUM" },
+        "getUpgradeActivationDelay": { "severity": "HIGH" },
+        "StarkWareProxy_upgradeDelay": { "severity": "HIGH" },
         "$admin": {
           "severity": "MEDIUM",
           "description": "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it."
@@ -1545,14 +1575,20 @@
           "description": "inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left."
         },
         "maxTotalBalance": {
+          "severity": "HIGH",
           "description": "The maximum total balance that can be locked in the bridge."
         },
         "depositStatus": {
           "description": "Token status managed by the Manager. Only affects deposits."
         },
         "withdrawLimitPct": {
+          "severity": "HIGH",
           "description": "The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed."
         },
+        "manager": { "severity": "HIGH" },
+        "bridgedToken": { "severity": "HIGH" },
+        "l2TokenContract": { "severity": "HIGH" },
+        "messagingContract": { "severity": "HIGH" },
         "accessControl": {
           "severity": "MEDIUM",
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
@@ -1730,6 +1766,9 @@
         "verifier": "eth:0x47312450B3Ac8b5b8e247a6bB6d523e7605bDb60"
       },
       "fieldMeta": {
+        "isFrozen": { "severity": "MEDIUM" },
+        "getUpgradeActivationDelay": { "severity": "HIGH" },
+        "StarkWareProxy_upgradeDelay": { "severity": "HIGH" },
         "messageCancellationDelay": { "severity": "HIGH" },
         "$admin": {
           "severity": "HIGH",
@@ -1760,6 +1799,7 @@
           "type": "CODE_CHANGE"
         },
         "feeCollector": {
+          "severity": "HIGH",
           "description": "Address receiving consumed L1 -> L2 message fees. Governance can change it even after application configuration is finalized; the zero address makes the submitting Operator the recipient.",
           "type": "RISK_PARAMETER"
         },
@@ -1850,6 +1890,8 @@
         "owner": "eth:0x83C0A700114101D1283D1405E2c8f21D3F03e988"
       },
       "fieldMeta": {
+        "executionExpiration": { "severity": "HIGH" },
+        "executionDelay": { "severity": "HIGH" },
         "owner": { "severity": "HIGH" },
         "executionDelayFmt": { "severity": "HIGH" }
       },
@@ -1986,6 +2028,9 @@
         "withdrawLimitPct": 5
       },
       "fieldMeta": {
+        "isFrozen": { "severity": "MEDIUM" },
+        "getUpgradeActivationDelay": { "severity": "HIGH" },
+        "StarkWareProxy_upgradeDelay": { "severity": "HIGH" },
         "$admin": {
           "severity": "HIGH",
           "description": "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it."
@@ -1995,14 +2040,20 @@
           "description": "inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left."
         },
         "maxTotalBalance": {
+          "severity": "HIGH",
           "description": "The maximum total balance that can be locked in the bridge."
         },
         "depositStatus": {
           "description": "Token status managed by the Manager. Only affects deposits."
         },
         "withdrawLimitPct": {
+          "severity": "HIGH",
           "description": "The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed."
         },
+        "manager": { "severity": "HIGH" },
+        "bridgedToken": { "severity": "HIGH" },
+        "l2TokenContract": { "severity": "HIGH" },
+        "messagingContract": { "severity": "HIGH" },
         "accessControl": {
           "severity": "HIGH",
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
@@ -2130,6 +2181,9 @@
         "withdrawLimitPct": 5
       },
       "fieldMeta": {
+        "isFrozen": { "severity": "MEDIUM" },
+        "getUpgradeActivationDelay": { "severity": "HIGH" },
+        "StarkWareProxy_upgradeDelay": { "severity": "HIGH" },
         "$admin": {
           "severity": "MEDIUM",
           "description": "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it."
@@ -2139,14 +2193,20 @@
           "description": "inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left."
         },
         "maxTotalBalance": {
+          "severity": "HIGH",
           "description": "The maximum total balance that can be locked in the bridge."
         },
         "depositStatus": {
           "description": "Token status managed by the Manager. Only affects deposits."
         },
         "withdrawLimitPct": {
+          "severity": "HIGH",
           "description": "The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed."
         },
+        "manager": { "severity": "HIGH" },
+        "bridgedToken": { "severity": "HIGH" },
+        "l2TokenContract": { "severity": "HIGH" },
+        "messagingContract": { "severity": "HIGH" },
         "accessControl": {
           "severity": "MEDIUM",
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
@@ -2307,6 +2367,9 @@
         "withdrawLimitPct": 5
       },
       "fieldMeta": {
+        "isFrozen": { "severity": "MEDIUM" },
+        "getUpgradeActivationDelay": { "severity": "HIGH" },
+        "StarkWareProxy_upgradeDelay": { "severity": "HIGH" },
         "$admin": {
           "severity": "MEDIUM",
           "description": "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it."
@@ -2316,14 +2379,20 @@
           "description": "inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left."
         },
         "maxTotalBalance": {
+          "severity": "HIGH",
           "description": "The maximum total balance that can be locked in the bridge."
         },
         "depositStatus": {
           "description": "Token status managed by the Manager. Only affects deposits."
         },
         "withdrawLimitPct": {
+          "severity": "HIGH",
           "description": "The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed."
         },
+        "manager": { "severity": "HIGH" },
+        "bridgedToken": { "severity": "HIGH" },
+        "l2TokenContract": { "severity": "HIGH" },
+        "messagingContract": { "severity": "HIGH" },
         "accessControl": {
           "severity": "MEDIUM",
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
@@ -2442,6 +2511,9 @@
         "withdrawLimitPct": 5
       },
       "fieldMeta": {
+        "isFrozen": { "severity": "MEDIUM" },
+        "getUpgradeActivationDelay": { "severity": "HIGH" },
+        "StarkWareProxy_upgradeDelay": { "severity": "HIGH" },
         "$admin": {
           "severity": "MEDIUM",
           "description": "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it."
@@ -2451,14 +2523,20 @@
           "description": "inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left."
         },
         "maxTotalBalance": {
+          "severity": "HIGH",
           "description": "The maximum total balance that can be locked in the bridge."
         },
         "depositStatus": {
           "description": "Token status managed by the Manager. Only affects deposits."
         },
         "withdrawLimitPct": {
+          "severity": "HIGH",
           "description": "The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed."
         },
+        "manager": { "severity": "HIGH" },
+        "bridgedToken": { "severity": "HIGH" },
+        "l2TokenContract": { "severity": "HIGH" },
+        "messagingContract": { "severity": "HIGH" },
         "accessControl": {
           "severity": "MEDIUM",
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
@@ -2576,6 +2654,9 @@
         "withdrawLimitPct": 5
       },
       "fieldMeta": {
+        "isFrozen": { "severity": "MEDIUM" },
+        "getUpgradeActivationDelay": { "severity": "HIGH" },
+        "StarkWareProxy_upgradeDelay": { "severity": "HIGH" },
         "$admin": {
           "severity": "MEDIUM",
           "description": "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it."
@@ -2585,14 +2666,20 @@
           "description": "inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left."
         },
         "maxTotalBalance": {
+          "severity": "HIGH",
           "description": "The maximum total balance that can be locked in the bridge."
         },
         "depositStatus": {
           "description": "Token status managed by the Manager. Only affects deposits."
         },
         "withdrawLimitPct": {
+          "severity": "HIGH",
           "description": "The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed."
         },
+        "manager": { "severity": "HIGH" },
+        "bridgedToken": { "severity": "HIGH" },
+        "l2TokenContract": { "severity": "HIGH" },
+        "messagingContract": { "severity": "HIGH" },
         "accessControl": {
           "severity": "MEDIUM",
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
@@ -2886,6 +2973,9 @@
         "withdrawLimitPct": 5
       },
       "fieldMeta": {
+        "isFrozen": { "severity": "MEDIUM" },
+        "getUpgradeActivationDelay": { "severity": "HIGH" },
+        "StarkWareProxy_upgradeDelay": { "severity": "HIGH" },
         "$admin": {
           "severity": "MEDIUM",
           "description": "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it."
@@ -2895,14 +2985,20 @@
           "description": "inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left."
         },
         "maxTotalBalance": {
+          "severity": "HIGH",
           "description": "The maximum total balance that can be locked in the bridge."
         },
         "depositStatus": {
           "description": "Token status managed by the Manager. Only affects deposits."
         },
         "withdrawLimitPct": {
+          "severity": "HIGH",
           "description": "The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed."
         },
+        "manager": { "severity": "HIGH" },
+        "bridgedToken": { "severity": "HIGH" },
+        "l2TokenContract": { "severity": "HIGH" },
+        "messagingContract": { "severity": "HIGH" },
         "accessControl": {
           "severity": "MEDIUM",
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
@@ -3075,6 +3171,9 @@
         "withdrawLimitPct": 5
       },
       "fieldMeta": {
+        "isFrozen": { "severity": "MEDIUM" },
+        "getUpgradeActivationDelay": { "severity": "HIGH" },
+        "StarkWareProxy_upgradeDelay": { "severity": "HIGH" },
         "$admin": {
           "severity": "MEDIUM",
           "description": "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation) but managed by it."
@@ -3084,14 +3183,20 @@
           "description": "inactive: withdrawals are not limited, any number: withdrawals are limited and the number is the intraday allowance that is left."
         },
         "maxTotalBalance": {
+          "severity": "HIGH",
           "description": "The maximum total balance that can be locked in the bridge."
         },
         "depositStatus": {
           "description": "Token status managed by the Manager. Only affects deposits."
         },
         "withdrawLimitPct": {
+          "severity": "HIGH",
           "description": "The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed."
         },
+        "manager": { "severity": "HIGH" },
+        "bridgedToken": { "severity": "HIGH" },
+        "l2TokenContract": { "severity": "HIGH" },
+        "messagingContract": { "severity": "HIGH" },
         "accessControl": {
           "severity": "MEDIUM",
           "description": "Access control map of the contract. The individual (pickRoleMembers) permissions need to be added if a new role becomes active."
@@ -4459,14 +4564,14 @@
   "usedTemplates": {
     "GnosisSafe": "0x12db59bec64fa8de67bbeb6a6e913f6c5ff1598c0a5fba90282afaf08e2a748c",
     "maker/L1Escrow": "0x98107b0558e4626b48569fdbbad9fba978047c3875c34b905adaa25d98e63d2a",
-    "starknet/DelayedExecutor": "0x1d70f046977cad3193f749db59913730ae9cbcda2784f2c3652a60d53ff99e23",
+    "starknet/DelayedExecutor": "0xe27f0a61864a2f889f7fe4d879e3da459475aea45f338de0b6491d9356129fc2",
     "starknet/L1EscrowDAI": "0x98107b0558e4626b48569fdbbad9fba978047c3875c34b905adaa25d98e63d2a",
     "starknet/LordsL1Bridge": "0x6f155638dd1434607b38c9304ae5de49b108365e50ae6968b56c16cab946c1f4",
     "starknet/StarkgateManager": "0x4b9115f849ab55459358778c2380fc07a7c113eba4d1ea123fccc3b0ee31385d",
     "starknet/StarkgateRegistry": "0x146d95b0ca7a2c08ff095b65a07bf282d92759ed499c9c175b0aae23c17c1072",
-    "starknet/Starknet": "0xf01cf432d074a3417a43b6dad120f3d2b6382edac6c12e28608c3ff6f608ade5",
-    "starknet/StarknetERC20Bridge": "0x823d646295cd3c589fdd26a112b0adb063e5b33a7c751523d6ba995a98d795b6",
-    "starknet/StarknetEthBridge": "0x823d646295cd3c589fdd26a112b0adb063e5b33a7c751523d6ba995a98d795b6",
+    "starknet/Starknet": "0x443048c973a40defabce9a46a86f3a71d1f19010649429ae87926e53521e3bdf",
+    "starknet/StarknetERC20Bridge": "0x4b148c56412c957c9c82b2bc3d0f22d7dd0aadf4ca529b0e1c7878db449f0d85",
+    "starknet/StarknetEthBridge": "0x4b148c56412c957c9c82b2bc3d0f22d7dd0aadf4ca529b0e1c7878db449f0d85",
     "starknet/StarknetMultiBridge": "0x4461bc7d3b7d5f2005e77088cd802162318e8813c7df5d1732e4b9172634626b",
     "starknet/StarknetMultiBridge_haltable": "0xe8353adf6ac366e8437be00a65d081e1d14c386d2b59bbfc9f50dcc2d80299b9"
   },

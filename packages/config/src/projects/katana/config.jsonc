@@ -139,7 +139,7 @@
       "critical": true,
       "fields": {
         "guardian": {
-          "severity": "HIGH",
+          "severity": "MEDIUM",
           "permissions": [
             {
               "type": "interact",

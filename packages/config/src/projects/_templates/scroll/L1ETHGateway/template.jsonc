@@ -4,7 +4,20 @@
   "critical": true,
   "category": "bridge-canonical",
   "fields": {
+    "router": {
+      "severity": "HIGH"
+    },
+    "messenger": {
+      "severity": "HIGH"
+    },
+    "owner": {
+      "severity": "HIGH"
+    },
+    "$admin": {
+      "severity": "HIGH"
+    },
     "counterpart": {
+      "severity": "HIGH",
       "edit": ["format", "ScrollAddress"]
     }
   }

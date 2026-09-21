@@ -4,6 +4,12 @@
   "critical": true,
   "description": "ZK-based verifier of AWS Nitro Enclave attestation documents. Used by TEEProverRegistry to validate new enclave signer registrations against the AWS Nitro PKI.",
   "fields": {
+    "revoker": {
+      "severity": "HIGH"
+    },
+    "proofSubmitter": {
+      "severity": "HIGH"
+    },
     "owner": {
       "severity": "HIGH"
     },

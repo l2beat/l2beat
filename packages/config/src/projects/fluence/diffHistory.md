@@ -1,3 +1,241 @@
+Generated with discovered.json: 0xf3985af51427892a5749bf904b527e0d5d697280
+
+# Diff at Mon, 21 Sep 2026 11:24:00 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@231e4a5828ee5ff5a863f7b80215466ca39a5b1e block: 1775220597
+- current timestamp: 1775220597
+
+## Description
+
+ossification re-review: field severities
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1775220597 (main branch discovery), not current.
+
+```diff
+    contract OneStepProverHostIo (eth:0x0003A96B27ce73505b43ea1b71a5aB06bec568C4) [orbitstack/OneStepProverHostIo] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sourceHashes.0:
+-        "0x2e969e0e83aea53307795f6826413e39bb416a64bc6da18f3a339ffeef444d32"
++        "0x081875b93df655e91ec23245390ad21db0990c12125dad497f1cbf118501ccc2"
+      deployerAddress:
++        "eth:0x10590a5c93E8695bDb134c22f04C4d5b50755DC4"
+    }
+```
+
+```diff
+    contract Inbox (eth:0x06084a0AC843084a1d1B8ba0f67E048e4f8f3B95) [orbitstack/Inbox] {
+    +++ description: Facilitates sending L1 to L2 messages like depositing ETH, but does not escrow funds.
+      sourceHashes.1:
+-        "0x25984fdfffb8141859c99299fb29e7a7460732d77111e5fe23792baa99f336a3"
++        "0xb33f29d585cf178f81b64440ee9a3c598cd398ad18d2b3c6dc6c711eaf63d5e4"
+      deployerAddress:
++        "eth:0xBc54708fB6C6C97086e3f6554a517DE5EF16c304"
+      fieldMeta:
++        {"paused":{"severity":"MEDIUM"},"allowListEnabled":{"severity":"HIGH"},"sequencerInbox":{"severity":"HIGH"},"bridge":{"severity":"HIGH"},"$admin":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x1c46E1029C2Bd8b18448faA9Ab0ac03412D46790) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta.addressManager:
++        {"severity":"HIGH"}
+      deployerAddress:
++        "eth:0xBc54708fB6C6C97086e3f6554a517DE5EF16c304"
+    }
+```
+
+```diff
+    contract OneStepProverMemory (eth:0x1cD76B9C33b2e3b04D7B181399d492B3e49AD7fB) [orbitstack/OneStepProverMemory] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sourceHashes.0:
+-        "0x3955092d1dbd80f0910d7782a25da1e3da45533c7890928a1c6c63cbf5def5bf"
++        "0x9e22e05e7953684e6f00507684bb902908d6d4383b2e82ecdce789027bebc33a"
+      deployerAddress:
++        "eth:0x10590a5c93E8695bDb134c22f04C4d5b50755DC4"
+    }
+```
+
+```diff
+    contract Fluence Token (eth:0x236501327e701692a281934230AF0b6BE8Df3353) [N/A] {
+    +++ description: None
+      sourceHashes.0:
+-        "0xbbe53a68c0042f4050bdf21e8d16eee4688dd35d24e49740915f0a0cf994f0d6"
++        "0xde02724123ae8b01dee6b4dde77cdd90312292ed8de088e823b7f4ca44dff156"
+      sourceHashes.1:
+-        "0x61e2fad21e980b9ccf622271ac82b5f3dc6b103ab5d5555d56b6fb28a9366903"
++        "0xb53698873d42ac6778439144acab8cd096286531db1448ac058f6a43a7a2a998"
+      deployerAddress:
++        "eth:0x568235236f039253F348F1503ce0690bA291675b"
+    }
+```
+
+```diff
+    contract ChallengeManager (eth:0x284696FB7BF57dB7133Fd8c9EB74f49A76b2485F) [orbitstack/ChallengeManager] {
+    +++ description: Contract that allows challenging state roots. Can be called through the RollupProxy by Validators or the UpgradeExecutor.
+      sourceHashes.1:
+-        "0x1a095768302d7d1c3d02375eaa3341833b4f1aaac707e1c608bce478c87cbf27"
++        "0x1eba00857f5477dbcd075b48ce8af9c74d5cb4f93a5e714dd27b3df498737e54"
+      deployerAddress:
++        "eth:0xBc54708fB6C6C97086e3f6554a517DE5EF16c304"
+    }
+```
+
+```diff
+    contract ValidatorUtils (eth:0x2b0E04Dc90e3fA58165CB41E2834B44A56E766aF) [orbitstack/ValidatorUtils] {
+    +++ description: This contract implements view only utilities for validators.
+      sourceHashes.0:
+-        "0xd9b36ec321be937cc727b5bdb0afa0e1a0a28448ef1a202d4f181a01ce57bdc8"
++        "0xebcd95194086ae9c3b9095578172a3192d9d209e5b159956f1d266910d248334"
+      deployerAddress:
++        "eth:0x7A9D9dAdDd745897c06e8664E1DC2702B6E6f341"
+    }
+```
+
+```diff
+    contract OneStepProver0 (eth:0x2dCCAbE89cF76132619a9B18e9F9e48E837222b5) [orbitstack/OneStepProver0] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sourceHashes.0:
+-        "0x642d283934aef1189cf62e1bcd34a5081762b33fdd3ec8e823f304f874e48748"
++        "0x063a1b3c4451e69f827acd833c42e986c2c617bfaabb13884fb438185b192407"
+      deployerAddress:
++        "eth:0x10590a5c93E8695bDb134c22f04C4d5b50755DC4"
+    }
+```
+
+```diff
+    contract Outbox (eth:0x50Df2E43aDefee3b6510b637697d30e7dc155e13) [orbitstack/Outbox] {
+    +++ description: Facilitates L2 to L1 contract calls: Messages initiated from L2 (for example withdrawal messages) eventually resolve in execution on L1.
+      deployerAddress:
++        "eth:0xBc54708fB6C6C97086e3f6554a517DE5EF16c304"
+      fieldMeta:
++        {"bridge":{"severity":"HIGH"},"$admin":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract Sweeper (eth:0x5d436201d1fD53Dc9ECeA4268f257C6fC87c598D) [N/A] {
+    +++ description: None
+      deployerAddress:
++        "eth:0xBc54708fB6C6C97086e3f6554a517DE5EF16c304"
+    }
+```
+
+```diff
+    contract Bridge (eth:0x5E6B2D08EA7B3251fef4a244F54D508E0cBD6D3A) [N/A] {
+    +++ description: None
+      deployerAddress:
++        "eth:0xBc54708fB6C6C97086e3f6554a517DE5EF16c304"
+    }
+```
+
+```diff
+    contract UpgradeExecutor (eth:0x6BCe4c44668C77ff67730C14d2378857103F53C7) [orbitstack/UpgradeExecutor] {
+    +++ description: Central contract defining the access control permissions for upgrading the system contract implementations.
+      sourceHashes.1:
+-        "0xa7ff878cfd433a428d567d3b90fe1df400a048a1af5298f22cd4cd4fc25bdecd"
++        "0x11607080f3c3b6b77778e75183e140bfe8604333e71de324adebee0f02b9dbcc"
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
+      deployerAddress:
++        "eth:0xBc54708fB6C6C97086e3f6554a517DE5EF16c304"
+    }
+```
+
+```diff
+    contract GnosisSafe (eth:0x7F629403fDCC02aD83aA5debd1D4B1548982afaC) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0xd42bbf9f7dcd3720a7fc6bdc6edfdfae8800a37d6dd4decfa0ef6ca4a2e88940"
++        "0x22c7fb8365a538c05d34b77dd9c1967d1ddb7427eda69f84989d4c56603312b7"
+      deployerAddress:
++        "eth:0xBe8C3Dd6ecaDEEcCFEcC447BeDc3C15F78B1E8b0"
+    }
+```
+
+```diff
+    contract OneStepProofEntry (eth:0x8Faa21891B0b928afEbd5314D1D313f8f7B34DaC) [orbitstack/OneStepProofEntry] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sourceHashes.0:
+-        "0x96f85480073b58d0e985cd6c68956f4a52f5ed8b2ce751b18868e2e830be3678"
++        "0x294155e99018f1d390be420f29ef940f9843f3ce54ed4e515d998653e2ce4293"
+      deployerAddress:
++        "eth:0x10590a5c93E8695bDb134c22f04C4d5b50755DC4"
+      fieldMeta:
++        {"proverMem":{"severity":"HIGH"},"proverMath":{"severity":"HIGH"},"proverHostIo":{"severity":"HIGH"},"prover0":{"severity":"HIGH"}}
+    }
+```
+
+```diff
+    contract GnosisSafeL2 (eth:0xC5Ec2e1EA44699FcF406aB19EA2aeB684CAC5C43) [GnosisSafe] {
+    +++ description: None
+      sourceHashes.1:
+-        "0x59fe14e95a8aa7f52213f18bae5c9329cf583a7ba31194698b15eddb97d5e825"
++        "0xf88f29d444411e68fef376c8e035ef1f39314143a7b6aff952709203095663bd"
+      deployerAddress:
++        "eth:0x530FE24D7Bb68C359325BDc8360B616Db99E31d9"
+    }
+```
+
+```diff
+    contract OneStepProverMath (eth:0xCf4b98cFF2976E4eb579B9498f398b5bd279A6eD) [orbitstack/OneStepProverMath] {
+    +++ description: One of the modular contracts used for the last step of a fraud proof, which is simulated inside a WASM virtual machine.
+      sourceHashes.0:
+-        "0x3de1ddc210fe283d7298c5f06879df577c6a475329a206b1928c74d10db656d5"
++        "0xd38b92884347e76d4ce463bc343cbf508eefb150146ed51cb80c2aee8c565122"
+      deployerAddress:
++        "eth:0x10590a5c93E8695bDb134c22f04C4d5b50755DC4"
+    }
+```
+
+```diff
+    contract SequencerInbox (eth:0xD04Cf183526aDC4a37B72D49bFe6eE19d9E19bd0) [orbitstack/SequencerInbox] {
+    +++ description: A sequencer (registered in this contract) can submit transaction batches or commitments here.
+      sourceHashes.1:
+-        "0x6bb86ac4bd0d31e049f543fcf0a8f94c952252222f115246ef9d5b8104d803cc"
++        "0x38fab1c44903c11839e1113e339b7268b07f99808721133182f57fdd891be63a"
+      fieldMeta.maxTimeVariation.severity:
++        "HIGH"
+      fieldMeta.isUsingFeeToken:
++        {"severity":"HIGH"}
+      fieldMeta.isDelayBufferable:
++        {"severity":"HIGH"}
+      fieldMeta.rollup:
++        {"severity":"HIGH"}
+      fieldMeta.bridge:
++        {"severity":"HIGH"}
+      fieldMeta.$admin:
++        {"severity":"HIGH"}
+      fieldMeta.batchPosterManager:
++        {"severity":"HIGH"}
+      deployerAddress:
++        "eth:0xBc54708fB6C6C97086e3f6554a517DE5EF16c304"
+    }
+```
+
+```diff
+    contract RollupProxy (eth:0xD085B74A57D1d7947B9C9f8E2d75cB6832d62d0f) [orbitstack/RollupProxy_fastConfirm] {
+    +++ description: Central contract for the project's configuration like its execution logic hash (`wasmModuleRoot`) and addresses of the other system contracts. Entry point for Proposers creating new Rollup Nodes (state commitments) and Challengers submitting fraud proofs (In the Orbit stack, these two roles are both held by the Validators).
+      sourceHashes.0:
+-        "0xb8da0b3748daac768860783e8555198fd2d1bbdffb775b81557a7124890c7eca"
++        "0xb739f8156f36efd1dca81c7048413241da1e5bf4a5f98001523a474136b8defd"
+      sourceHashes.1:
+-        "0x86c7032e0f4b5468f1eb92c79b73ab4c7f053fc7bdfc88fdd360e2fe7baa1072"
++        "0x6639f412df425cd0592b0ca4cf5e4ad9d39436f0e7255e83726bb7ac6a9e37b4"
+      usedTypes.0.arg.0xc10cd7ec6acaf1c441a3f6bd0900ad20f15855ba775a96f1939118cbc629dc97:
++        "ArbOS v61 wasmModuleRoot"
+      usedTypes.0.arg.0xc2c02df561d4afaf9a1d6785f70098ec3874765c638e3cb6dbe8d3c83333e14c:
++        "ArbOS v51.1 wasmModuleRoot"
+      deployerAddress:
++        "eth:0xBc54708fB6C6C97086e3f6554a517DE5EF16c304"
+    }
+```
+
 Generated with discovered.json: 0x6d538d38666fcb936f6a9a697443dab9f3668192
 
 # Diff at Fri, 18 Sep 2026 10:24:49 GMT:

@@ -1,3 +1,29 @@
+Generated with discovered.json: 0xc80e316f7bcadfb088cdbe4761d2986c67425e9b
+
+# Diff at Mon, 21 Sep 2026 11:24:00 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@231e4a5828ee5ff5a863f7b80215466ca39a5b1e block: 1769601454
+- current timestamp: 1769601454
+
+## Description
+
+ossification re-review: field severities
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1769601454 (main branch discovery), not current.
+
+```diff
+    contract SP1Verifier (eth:0x0459d576A6223fEeA177Fb3DF53C9c77BF84C459) [succinct/SP1Verifier] {
+    +++ description: Verifier contract for SP1 proofs (v5.0.0).
+      fieldMeta:
++        {"VERIFIER_HASH":{"severity":"HIGH"},"VK_ROOT":{"severity":"HIGH"}}
+    }
+```
+
 Generated with discovered.json: 0x20e5fa27dd3fcc3dbdeaf3d4a0cd2e2291429434
 
 # Diff at Fri, 18 Sep 2026 10:24:49 GMT:

@@ -22,6 +22,15 @@
     }
   },
   "fields": {
+    "isFrozen": {
+      "severity": "MEDIUM"
+    },
+    "getUpgradeActivationDelay": {
+      "severity": "HIGH"
+    },
+    "StarkWareProxy_upgradeDelay": {
+      "severity": "HIGH"
+    },
     "$admin": {
       "description": "NOT the same as the `GOVERNANCE_ADMIN` access control role (see implementation).",
       "severity": "HIGH",
@@ -43,6 +52,7 @@
       "edit": ["format", "UintMaxMeansInactive"]
     },
     "maxTotalBalance": {
+      "severity": "HIGH",
       "description": "The maximum total balance that can be locked in the bridge.",
       "handler": {
         "type": "call",
@@ -60,6 +70,7 @@
       "edit": ["format", "TokenStatus"]
     },
     "withdrawLimitPct": {
+      "severity": "HIGH",
       "description": "The withdrawal limit in percent of locked funds per 24 hours. This value is immutable and needs an implementation upgrade to be changed.",
       "handler": {
         "type": "starkWareNamedStorage",
@@ -68,6 +79,7 @@
       }
     },
     "manager": {
+      "severity": "HIGH",
       "handler": {
         "type": "starkWareNamedStorage",
         "tag": "STARKNET_TOKEN_BRIDGE_MANAGER_SLOT_TAG",
@@ -81,6 +93,7 @@
       ]
     },
     "bridgedToken": {
+      "severity": "HIGH",
       "handler": {
         "type": "starkWareNamedStorage",
         "tag": "STARKNET_ERC20_TOKEN_BRIDGE_TOKEN_ADDRESS",
@@ -88,6 +101,7 @@
       }
     },
     "l2TokenContract": {
+      "severity": "HIGH",
       "handler": {
         "type": "starkWareNamedStorage",
         "tag": "STARKNET_TOKEN_BRIDGE_L2_TOKEN_CONTRACT",
@@ -95,6 +109,7 @@
       }
     },
     "messagingContract": {
+      "severity": "HIGH",
       "handler": {
         "type": "starkWareNamedStorage",
         "tag": "STARKNET_TOKEN_BRIDGE_MESSAGING_CONTRACT",

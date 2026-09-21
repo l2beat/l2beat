@@ -9,8 +9,21 @@
     "nextMessageNumber"
   ],
   "fields": {
-    "accessControl": { "handler": { "type": "accessControl" } },
+    "PAUSE_DURATION": {
+      "severity": "HIGH"
+    },
+    "COOLDOWN_DURATION": {
+      "severity": "HIGH"
+    },
+    "$admin": {
+      "severity": "HIGH"
+    },
+    "accessControl": {
+      "severity": "HIGH",
+      "handler": { "type": "accessControl" }
+    },
     "l1l2MessageSetter": {
+      "severity": "HIGH",
       "copy": "accessControl",
       "edit": ["get", "L1_L2_MESSAGE_SETTER_ROLE", "members"],
       "permissions": [

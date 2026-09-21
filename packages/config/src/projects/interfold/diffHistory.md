@@ -1,3 +1,53 @@
+Generated with discovered.json: 0x1f678011c5d44b365f3b7fe6b72f06e40529e2f7
+
+# Diff at Mon, 21 Sep 2026 11:24:01 GMT:
+
+- author: sekuba (<29250140+sekuba@users.noreply.github.com>)
+- comparing to: main@231e4a5828ee5ff5a863f7b80215466ca39a5b1e block: 1789471922
+- current timestamp: 1789471922
+
+## Description
+
+ossification re-review: field severities
+
+## Config/verification related changes
+
+Following changes come from updates made to the config file,
+or/and contracts becoming verified, not from differences found during
+discovery. Values are for block 1789471922 (main branch discovery), not current.
+
+```diff
+    contract ProxyAdmin (eth:0x2DFb93A8C3cE68Be3d8129479d7870646d89aDa7) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta.addressManager:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0x9393573a9EF85c9A37d91E32702a340084A48b6E) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta.addressManager:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xB3985D7fF844FA0F5E0aaC5feb5DD8BE15e88580) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta.addressManager:
++        {"severity":"HIGH"}
+    }
+```
+
+```diff
+    contract ProxyAdmin (eth:0xf1511Fc32abf7Bd3a3213ddCF08C07259b53972b) [global/ProxyAdmin] {
+    +++ description: None
+      fieldMeta.addressManager:
++        {"severity":"HIGH"}
+    }
+```
+
 Generated with discovered.json: 0xf749285961d64ef74826b789adf529ac539d4c5c
 
 # Diff at Fri, 18 Sep 2026 10:24:50 GMT:

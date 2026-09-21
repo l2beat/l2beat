@@ -16,7 +16,12 @@
   },
   "fields": {
     "RespectedGameString": {
-      "handler": { "type": "call", "method": "respectedGameType", "args": [] },
+      "handler": {
+        "type": "call",
+        "expectRevert": true,
+        "method": "respectedGameType",
+        "args": []
+      },
       "edit": ["format", "DisputeGameMap"]
     },
     "paused": {

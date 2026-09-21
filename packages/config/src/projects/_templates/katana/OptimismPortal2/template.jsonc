@@ -20,6 +20,9 @@
     }
   },
   "fields": {
+    "$admin": {
+      "severity": "HIGH"
+    },
     "respectedGameType": {
       // inconsequential here: the dispute-game withdrawal path carries no assets
       // (bridging through this portal is disabled; custody is in the Agglayer bridge).
@@ -28,6 +31,7 @@
     "RespectedGameString": {
       "handler": {
         "type": "call",
+        "expectRevert": true,
         "method": "respectedGameType",
         "args": []
       },

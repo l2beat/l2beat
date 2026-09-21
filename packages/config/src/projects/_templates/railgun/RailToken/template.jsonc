@@ -17,6 +17,7 @@
       ]
     },
     "cap": {
+      "severity": "HIGH",
       "description": "Hard cap on total RAIL supply.",
       "type": "RISK_PARAMETER",
       "edit": ["format", "Undecimal18"]

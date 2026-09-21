@@ -2,5 +2,13 @@
   "$schema": "../../../../../../../discovery/schemas/contract.v2.schema.json",
   "displayName": "UpgradeExecRouteBuilder",
   "critical": true,
-  "ignoreMethods": ["upExecLocationExists", "upExecLocations"]
+  "ignoreMethods": ["upExecLocationExists", "upExecLocations"],
+  "fields": {
+    "l1TimelockMinDelay": {
+      "severity": "HIGH"
+    },
+    "l1TimelockAddr": {
+      "severity": "HIGH"
+    }
+  }
 }

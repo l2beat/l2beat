@@ -1,4 +1,12 @@
 {
   "$schema": "../../../../../../../discovery/schemas/contract.v2.schema.json",
-  "description": "Manager contract for minter management [sic]."
+  "description": "Manager contract for minter management [sic].",
+  "fields": {
+    "getMinterManager": {
+      "severity": "HIGH"
+    },
+    "owner": {
+      "severity": "HIGH"
+    }
+  }
 }
