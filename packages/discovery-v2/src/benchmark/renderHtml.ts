@@ -21,11 +21,23 @@ export interface NamedReport {
   report: ProjectBenchmark
 }
 
-export function renderHtml(reports: NamedReport[]): string {
-  const data = reports.map(({ label, report }) => ({
-    label,
-    ...report,
-  }))
+export interface RenderOptions {
+  /**
+   * One bar per setup over every contract of every project together,
+   * handler fields only, best first, floors left out: the view for "which
+   * setup did best", when per-project detail is noise.
+   */
+  combined?: boolean
+}
+
+export function renderHtml(
+  reports: NamedReport[],
+  options: RenderOptions = {},
+): string {
+  const data = {
+    combined: options.combined === true,
+    runs: reports.map(({ label, report }) => ({ label, ...report })),
+  }
   return `<!doctype html>
 <html lang="en">
 <head>
@@ -103,7 +115,8 @@ details > div { padding: 0 14px 14px; }
 `
 
 const SCRIPT = `
-const runs = JSON.parse(document.getElementById('data').textContent)
+const data = JSON.parse(document.getElementById('data').textContent)
+const runs = data.runs
 const SEGMENTS = [
   ['equal', 'equal', 'same field name, same value', c => c.equal],
   ['renamed', 'equal, other name', 'same value, V2 names the field after the Solidity getter', c => c.equalRenamed],
@@ -251,7 +264,49 @@ function costTiles() {
 }
 const tile = (v, k) => '<div class="tile"><div class="v">' + esc(v) + '</div><div class="k">' + esc(k) + '</div></div>'
 
-document.getElementById('app').innerHTML =
+/** Runs of one label summed over projects; the setup line comes from the first run. */
+function combineByLabel(list) {
+  const groups = new Map()
+  for (const run of list) {
+    const group = groups.get(run.label) ?? {
+      ...run,
+      project: 'all projects',
+      contracts: [],
+      totals: { ...run.totals, contracts: 0, wallMs: 0, modelMs: 0, roundsDistribution: {}, tokens: { input: 0, cached: 0, output: 0, reasoning: 0 } },
+    }
+    const t = group.totals
+    group.contracts = group.contracts.concat(run.contracts)
+    t.contracts += run.totals.contracts
+    t.wallMs += run.totals.wallMs
+    t.modelMs += run.totals.modelMs
+    for (const k of Object.keys(t.tokens)) t.tokens[k] += run.totals.tokens[k] ?? 0
+    for (const [rounds, n] of Object.entries(run.totals.roundsDistribution)) t.roundsDistribution[rounds] = (t.roundsDistribution[rounds] ?? 0) + n
+    groups.set(run.label, group)
+  }
+  return [...groups.values()]
+}
+
+function combinedPage() {
+  const setups = combineByLabel(runs.filter(run => !run.noPlan))
+    .map(run => ({ run, counts: handlerCounts(run) }))
+    .sort((a, b) => FOUND(b.counts) / b.counts.v1Fields - FOUND(a.counts) / a.counts.v1Fields)
+  return '<h1>Which setup extracts most of what V1 needed handlers for</h1>'
+    + '<p class="lede">All contracts of all projects as one group (' + esc(setups[0]?.run.totals.contracts ?? 0) + ' contracts). Only the V1 fields a researcher wrote a handler for are counted; getters and proxy values come out the same in every setup and are left out. Best setup first. Only red is a value V1 had and V2 does not.</p>'
+    + legend()
+    + '<div class="bars">' + setups.map(({ run, counts }) =>
+      '<div class="name"><b>' + esc(run.label) + '</b><small>' + esc(setup(run)) + ' · ' + counts.v1Fields + ' handler fields</small></div>'
+      + bar(counts, counts.v1Fields)
+      + '<div class="pct">' + pct(FOUND(counts), counts.v1Fields) + '</div>').join('') + '</div>'
+    + '<h2>Numbers</h2><div class="scroll"><table><thead><tr>' + ['setup', 'contracts', 'handler fields', 'equal', 'other name', 'other shape', 'different', 'missed', 'found', 'model calls', 'tokens in / out', 'wall'].map(h => '<th>' + esc(h) + '</th>').join('') + '</tr></thead><tbody>'
+    + setups.map(({ run, counts }) => {
+      const t = run.totals
+      const calls = Object.values(t.roundsDistribution).reduce((s, n) => s + n, 0)
+      return '<tr>' + [run.label, t.contracts, counts.v1Fields, counts.equal, counts.equalRenamed, counts.equalByValue, counts.different, counts.v1Only.handler, pct(FOUND(counts), counts.v1Fields), calls, kTokens(t.tokens.input) + ' / ' + kTokens(t.tokens.output), seconds(t.wallMs)]
+        .map((v, i) => '<td class="' + (i === 0 ? 'l' : '') + '">' + esc(v) + '</td>').join('') + '</tr>'
+    }).join('') + '</tbody></table></div>'
+}
+
+document.getElementById('app').innerHTML = data.combined ? combinedPage() :
   '<h1>Discovery V2 against V1 discovered.json</h1>'
   + '<p class="lede">Every run re-extracts a V1 project at the block of its committed discovered.json and compares values field by field. Each bar splits V1\\'s fields by what V2 produced for them. Only red means a value V1 had and V2 does not. The percentage is the share of V1\\'s extracted fields whose values V2 has, in any shape or name.</p>'
   + legend()

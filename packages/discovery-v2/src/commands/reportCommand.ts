@@ -17,11 +17,13 @@ export interface ReportArgs {
   out: string
   /** Also write the cross-run table as Markdown, for BENCHMARK.md. */
   markdown?: string
+  /** One sorted bar per setup over all projects together; see renderHtml. */
+  combined?: boolean
 }
 
 export function reportCommand(ctx: CommandContext, args: ReportArgs): void {
   const reports = args.inputs.flatMap(expandInput).map(readNamedReport)
-  fs.writeFileSync(args.out, renderHtml(reports))
+  fs.writeFileSync(args.out, renderHtml(reports, { combined: args.combined }))
   if (args.markdown !== undefined) {
     fs.writeFileSync(args.markdown, `${renderComparisonMarkdown(reports)}\n`)
   }

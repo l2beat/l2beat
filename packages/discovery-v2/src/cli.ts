@@ -404,6 +404,11 @@ const report = command({
       long: 'markdown',
       description: 'also write the cross-run table as a Markdown file',
     }),
+    combined: flag({
+      long: 'combined',
+      description:
+        'one bar per setup over all projects together, handler fields only, best first, floors left out',
+    }),
     envFile,
   },
   handler: (args) => {

@@ -52,7 +52,7 @@ describe(renderHtml.name, () => {
       },
     ])
     const data = JSON.parse(dataBlock(html))
-    expect(data.map((r: { label: string }) => r.label)).toEqual([
+    expect(data.runs.map((r: { label: string }) => r.label)).toEqual([
       'floor',
       'gpt-test',
     ])
@@ -68,7 +68,7 @@ describe(renderHtml.name, () => {
       },
     ])
     const data = JSON.parse(dataBlock(html))
-    expect(data[0].startedAt).toEqual('</script><b>')
+    expect(data.runs[0].startedAt).toEqual('</script><b>')
   })
 })
 
