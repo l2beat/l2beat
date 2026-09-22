@@ -26,9 +26,9 @@ import { TableLink } from '~/components/table/TableLink'
 import { useTable } from '~/hooks/useTable'
 import { ANONYMITY_SET_WINDOW_DAYS } from '~/server/features/privacy/anonymity-set/calculateAnonymitySets'
 import type { PrivacySummaryEntry } from '~/server/features/privacy/getPrivacySummaryEntries'
-import { PrivacyAdversariesCell } from '../../adversaries/PrivacyAdversariesCell'
 import { getPrivacyAdversariesScore } from '../../adversaries/privacyAdversaryUi'
 import { PRIVACY_ASSESSMENT } from '../../privacyAssessment'
+import { PrivacyRosetteCell } from '../../rosette/PrivacyRosetteCell'
 import { AnonymitySetCell } from './AnonymitySetCell'
 import { PrivacyAssessmentCell } from './PrivacyAssessmentCell'
 import { PrivacyTrustedSetupCell } from './PrivacyTrustedSetupCell'
@@ -91,18 +91,20 @@ const columns = [
       id: 'adversaries',
       header: PRIVACY_ASSESSMENT.title,
       cell: (ctx) => (
-        <PrivacyAdversariesCell
+        <PrivacyRosetteCell
           adversaries={ctx.row.original.adversaries}
+          trustedSetup={ctx.row.original.trustedSetup}
+          exitWindow={ctx.row.original.exitWindow}
+          reproducibility={ctx.row.original.reproducibility}
           href={ctx.row.original.href}
+          isUnderReview={ctx.row.original.isUnderReview}
         />
       ),
       sortDescFirst: true,
       meta: {
-        // Wide enough for the sentence to break over two lines rather than
-        // five; the table hands leftover width to whichever column can take it.
+        align: 'center',
         cellClassName: 'py-2',
-        headClassName: 'min-w-[200px]',
-        tooltip: PRIVACY_ASSESSMENT.tooltip,
+        tooltip: PRIVACY_ASSESSMENT.rosetteTooltip,
       },
     },
   ),
