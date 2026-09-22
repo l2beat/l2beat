@@ -1,0 +1,15 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "ZkEvmVerifierPostFeynman",
+    "shapeHash": "0xb3a66aa5cca01dc5d50d269a50641bdd730bda2957a782370e88208fa61da91d",
+    "steps": [],
+    "skips": []
+  },
+  "provenance": {
+    "source": "trivial",
+    "createdAt": "2026-09-22T12:33:55.469Z",
+    "rounds": 0,
+    "decisionHash": "0x32b6a262276934a2a9b54d2ba964d6869fefdfe73a1f60c043672bc2cba4e769"
+  }
+}

@@ -1,0 +1,76 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "TEEProverRegistry",
+    "shapeHash": "0x9831f0365a1629899a27a5e77f1445d6b78de4d90376053079da107921dda3a2",
+    "steps": [
+      {
+        "id": "signerImageHash",
+        "covers": [
+          "signerImageHash(address)"
+        ],
+        "fetch": {
+          "kind": "callEach",
+          "method": "signerImageHash(address)",
+          "keys": {
+            "from": "$baseline.getRegisteredSigners"
+          }
+        },
+        "use": "map@1",
+        "reason": "signerImageHash is written only in registerSigner (onlyOwnerOrManager) and its keys are exactly the currently registered signers returned by the baseline getter getRegisteredSigners"
+      },
+      {
+        "id": "isValidProposer",
+        "covers": [
+          "isValidProposer(address)"
+        ],
+        "fetch": {
+          "kind": "logs",
+          "events": [
+            "ProposerSet"
+          ]
+        },
+        "use": "set@1",
+        "args": {
+          "key": "proposer",
+          "add": [
+            {
+              "event": "ProposerSet",
+              "when": {
+                "arg": "isValid",
+                "equals": true
+              }
+            }
+          ],
+          "remove": [
+            {
+              "event": "ProposerSet",
+              "when": {
+                "arg": "isValid",
+                "equals": false
+              }
+            }
+          ]
+        },
+        "reason": "isValidProposer is written only by setProposer (onlyOwner) and initialize, which emit ProposerSet with the isValid flag"
+      }
+    ],
+    "skips": [
+      {
+        "item": "isRegisteredSigner(address)",
+        "reason": "covered"
+      },
+      {
+        "item": "isValidSigner(address)",
+        "reason": "computation"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T12:39:29.771Z",
+    "model": "opencode/deepseek-v4.1-flash",
+    "rounds": 1,
+    "decisionHash": "0xb4da50c60e238d36ee583017dde73fb317466a1cceb6b9f111a6b90252686dc9"
+  }
+}

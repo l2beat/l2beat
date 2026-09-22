@@ -1,0 +1,21 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "TEEVerifier",
+    "shapeHash": "0x3b192657a1f796d615500b86b546c112f7bdb0274db66e6840ec5ed9c4cea6e7",
+    "steps": [],
+    "skips": [
+      {
+        "item": "verify(bytes,bytes32,bytes32)",
+        "reason": "computation"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T12:41:46.007Z",
+    "model": "opencode/deepseek-v4.1-flash",
+    "rounds": 1,
+    "decisionHash": "0xa57468c4701c66954b1cf5873fcacfbd6bb45cbc15ad78623f21c2f24c65df6d"
+  }
+}

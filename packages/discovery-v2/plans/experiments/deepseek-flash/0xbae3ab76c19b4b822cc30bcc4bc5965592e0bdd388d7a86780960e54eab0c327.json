@@ -1,0 +1,106 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "ScrollChain",
+    "shapeHash": "0xbae3ab76c19b4b822cc30bcc4bc5965592e0bdd388d7a86780960e54eab0c327",
+    "steps": [
+      {
+        "id": "isProver",
+        "covers": [
+          "isProver(address)"
+        ],
+        "fetch": {
+          "kind": "logs",
+          "events": [
+            "UpdateProver"
+          ]
+        },
+        "use": "set@1",
+        "args": {
+          "key": "account",
+          "add": [
+            {
+              "event": "UpdateProver",
+              "when": {
+                "arg": "status",
+                "equals": true
+              }
+            }
+          ],
+          "remove": [
+            {
+              "event": "UpdateProver",
+              "when": {
+                "arg": "status",
+                "equals": true,
+                "negate": true
+              }
+            }
+          ]
+        },
+        "reason": "isProver is written only by addProver/removeProver (onlyOwner), which emit UpdateProver"
+      },
+      {
+        "id": "isSequencer",
+        "covers": [
+          "isSequencer(address)"
+        ],
+        "fetch": {
+          "kind": "logs",
+          "events": [
+            "UpdateSequencer"
+          ]
+        },
+        "use": "set@1",
+        "args": {
+          "key": "account",
+          "add": [
+            {
+              "event": "UpdateSequencer",
+              "when": {
+                "arg": "status",
+                "equals": true
+              }
+            }
+          ],
+          "remove": [
+            {
+              "event": "UpdateSequencer",
+              "when": {
+                "arg": "status",
+                "equals": true,
+                "negate": true
+              }
+            }
+          ]
+        },
+        "reason": "isSequencer is written only by addSequencer/removeSequencer (onlyOwner), which emit UpdateSequencer"
+      }
+    ],
+    "skips": [
+      {
+        "item": "committedBatches(uint256)",
+        "reason": "unbounded"
+      },
+      {
+        "item": "finalizedStateRoots(uint256)",
+        "reason": "unbounded"
+      },
+      {
+        "item": "withdrawRoots(uint256)",
+        "reason": "unbounded"
+      },
+      {
+        "item": "isBatchFinalized(uint256)",
+        "reason": "computation"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T12:33:18.270Z",
+    "model": "opencode/deepseek-v4.1-flash",
+    "rounds": 1,
+    "decisionHash": "0x355a87382062081687a28f99281102b8dd443b11198809c40eae284e824a1064"
+  }
+}

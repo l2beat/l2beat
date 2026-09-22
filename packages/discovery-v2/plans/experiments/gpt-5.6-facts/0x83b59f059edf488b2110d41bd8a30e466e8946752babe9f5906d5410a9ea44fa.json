@@ -1,0 +1,49 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "ScrollOwner",
+    "shapeHash": "0x83b59f059edf488b2110d41bd8a30e466e8946752babe9f5906d5410a9ea44fa",
+    "steps": [
+      {
+        "id": "accessControl",
+        "covers": [
+          "getRoleAdmin(bytes32)",
+          "getRoleMember(bytes32,uint256)",
+          "getRoleMemberCount(bytes32)",
+          "hasRole(bytes32,address)"
+        ],
+        "fetch": {
+          "kind": "logs",
+          "events": [
+            "RoleGranted",
+            "RoleRevoked"
+          ]
+        },
+        "use": "accessControl@1",
+        "args": {
+          "roleNames": {
+            "0x0000000000000000000000000000000000000000000000000000000000000000": "DEFAULT_ADMIN_ROLE"
+          }
+        },
+        "reason": "Role membership is written by grantRole and revokeRole (onlyRole), renounceRole (self-only check), and the constructor, which emit RoleGranted or RoleRevoked, while no entry point emits RoleAdminChanged."
+      }
+    ],
+    "skips": [
+      {
+        "item": "callableRoles(address,bytes4)",
+        "reason": "unbounded"
+      },
+      {
+        "item": "supportsInterface(bytes4)",
+        "reason": "not-state"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T12:38:05.815Z",
+    "model": "gpt-5.6-sol",
+    "rounds": 1,
+    "decisionHash": "0xe846cbfa85504a98cc3bbb48879737a987f8b11ba99b29c24d7903606bf4aee9"
+  }
+}

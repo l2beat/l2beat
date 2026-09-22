@@ -40,13 +40,23 @@ export interface OpenCodeClientOptions {
   timeoutMs?: number
 }
 
-export const DEFAULT_OPENCODE_TIMEOUT_MS = 15 * 60 * 1_000
+/** Shorter than Codex's: a turn that runs this long has hung on a tool prompt, not on thinking. */
+export const DEFAULT_OPENCODE_TIMEOUT_MS = 8 * 60 * 1_000
 
 /** Written into the scratch working directory before every turn. */
 export const OPENCODE_ISOLATION_CONFIG = {
   $schema: 'https://opencode.ai/config.json',
   tools: { '*': false },
+  instructions: ['NO_TOOLS.md'],
 } as const
+
+/**
+ * Some models emit tool calls from habit even when no tool is offered; the
+ * turn is then refused. Saying so in the system prompt is cheaper than the
+ * retry it would cost.
+ */
+export const NO_TOOLS_INSTRUCTION =
+  'You have no tools in this session. Never call a tool. Answer from the message alone, with exactly the output it asks for.\n'
 
 export class OpenCodeTurnError extends Error {
   constructor(
@@ -100,6 +110,7 @@ export class OpenCodeClient implements ModelClient {
     try {
       const configFile = path.join(workDir, 'opencode.json')
       fs.writeFileSync(configFile, JSON.stringify(OPENCODE_ISOLATION_CONFIG))
+      fs.writeFileSync(path.join(workDir, 'NO_TOOLS.md'), NO_TOOLS_INSTRUCTION)
       const args = [
         'run',
         '--format',

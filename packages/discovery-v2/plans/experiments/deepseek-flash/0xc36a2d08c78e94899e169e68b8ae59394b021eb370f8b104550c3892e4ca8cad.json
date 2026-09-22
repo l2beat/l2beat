@@ -1,0 +1,79 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "PermissionedDisputeGameV2",
+    "shapeHash": "0xc36a2d08c78e94899e169e68b8ae59394b021eb370f8b104550c3892e4ca8cad",
+    "steps": [
+      {
+        "id": "claimData",
+        "covers": [
+          "claimData(uint256)"
+        ],
+        "fetch": {
+          "kind": "callEach",
+          "method": "claimData(uint256)",
+          "keys": {
+            "range": {
+              "length": "$baseline.claimDataLen"
+            }
+          }
+        },
+        "use": "array@1",
+        "reason": "claimData is an append-only array appended by initialize and by move (onlyAuthorized), so its index set is exactly 0..claimDataLen-1 from the baseline claimDataLen getter"
+      }
+    ],
+    "skips": [
+      {
+        "item": "claims(bytes32)",
+        "reason": "unbounded"
+      },
+      {
+        "item": "credit(address)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "getChallengerDuration(uint256)",
+        "reason": "computation"
+      },
+      {
+        "item": "getNumToResolve(uint256)",
+        "reason": "computation"
+      },
+      {
+        "item": "getRequiredBond(uint128)",
+        "reason": "computation"
+      },
+      {
+        "item": "hasUnlockedCredit(address)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "normalModeCredit(address)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "refundModeCredit(address)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "resolutionCheckpoints(uint256)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "resolvedSubgames(uint256)",
+        "reason": "user-activity"
+      },
+      {
+        "item": "subgames(uint256,uint256)",
+        "reason": "unbounded"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T12:44:50.118Z",
+    "model": "opencode/deepseek-v4.1-flash",
+    "rounds": 1,
+    "decisionHash": "0x680821333d06b2e5fd65ed1d6b587a817eb011510ef8c777a52711742d240fbe"
+  }
+}

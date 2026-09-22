@@ -1,0 +1,25 @@
+{
+  "plan": {
+    "version": 1,
+    "contract": "ProxyAdmin",
+    "shapeHash": "0x68f689a23d3badd91255602a1eb13d4789baedc16d904c3103244642fc78ca8f",
+    "steps": [],
+    "skips": [
+      {
+        "item": "getProxyAdmin(address)",
+        "reason": "unbounded"
+      },
+      {
+        "item": "getProxyImplementation(address)",
+        "reason": "unbounded"
+      }
+    ]
+  },
+  "provenance": {
+    "source": "model",
+    "createdAt": "2026-09-22T12:44:07.334Z",
+    "model": "gpt-5.6-sol",
+    "rounds": 1,
+    "decisionHash": "0x724fb2397635bbb1e190dae69d8853d0b1ac424100ca600c1d4b03b3691c5f53"
+  }
+}
