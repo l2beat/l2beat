@@ -92,6 +92,11 @@ export async function runBenchmark(
   const startedAt = now()
   const contracts: ContractBenchmark[] = []
   for (const entry of project.entries) {
+    const quota = contracts.map(quotaFailure).find((f) => f !== undefined)
+    if (quota !== undefined) {
+      contracts.push(failedContract(entry, `skipped: ${quota}`, 0))
+      continue
+    }
     deps.ctx.logger.info('Benchmarking contract', {
       address: entry.address,
       name: entry.name ?? 'unnamed',
@@ -275,6 +280,21 @@ function toAttempt(result: AuthoringResult, durationMs: number): RepeatAttempt {
         : undefined,
     failure: result.failure,
   }
+}
+
+const QUOTA_FAILURE = /out of credits|usage limit|rate limit|quota/i
+
+/**
+ * Once the model provider refuses for quota, every later contract would be
+ * a floor entry counted as misses. Stopping keeps the run honest (they are
+ * recorded as skipped failures) and a rerun of the same label authors only
+ * what is missing, since accepted plans are already in the store.
+ */
+function quotaFailure(contract: ContractBenchmark): string | undefined {
+  const failure = contract.authoringFailure
+  return failure !== undefined && QUOTA_FAILURE.test(failure)
+    ? failure.slice(0, 120)
+    : undefined
 }
 
 function failedContract(
