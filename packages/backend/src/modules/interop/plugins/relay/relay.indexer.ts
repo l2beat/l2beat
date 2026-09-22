@@ -8,7 +8,7 @@ import { ManagedChildIndexer } from '../../../../tools/uif/ManagedChildIndexer'
 import type { InteropEventStore } from '../../engine/capture/InteropEventStore'
 import type { InteropConfigStore } from '../../engine/config/InteropConfigStore'
 import { createInteropEventType, findChain, type InteropEvent } from '../types'
-import type { RelayApiClient } from './RelayApiClient'
+import type { RelayApiClient, RelayRequest } from './RelayApiClient'
 import { buildRelayBootstrapChainNamesById, RelayConfig } from './relay.config'
 
 export interface RelayIndexerConfig {
@@ -123,22 +123,77 @@ export class RelayIndexer extends ManagedChildIndexer {
       return to
     }
 
-    const batchSize = this.relayConfig.batchSize
-    const syncedTo = from + batchSize < to ? from + batchSize : to
+    let syncedTo = Math.min(from + this.relayConfig.batchSize, to)
+    let res = await this.fetchWindow(from, syncedTo)
 
-    const res = await this.relayApiClient.getAllRequests({
-      startTimestamp: from,
-      endTimestamp: syncedTo + 1,
-      limit: this.relayConfig.maxRequestsPerUpdate,
-    })
-
-    if (res.continuation) {
-      throw new Error(
-        `Window ${from}-${syncedTo} exceeds INTEROP_RELAY_MAX_REQUESTS_PER_UPDATE=${this.relayConfig.maxRequestsPerUpdate}. Fetched ${res.requests.length} requests but a continuation remains`,
-      )
+    // A window holding more requests than the cap cannot be fetched in one go.
+    // Retrying it unchanged would fail forever, so halve it until it fits or
+    // until it cannot shrink any further.
+    while (res.continuation && syncedTo > from) {
+      const shrunkTo = from + Math.floor((syncedTo - from) / 2)
+      this.logger.warn('Window exceeds request cap, shrinking it', {
+        from,
+        syncedTo,
+        shrunkTo,
+        fetched: res.requests.length,
+        cap: this.relayConfig.maxRequestsPerUpdate,
+      })
+      syncedTo = shrunkTo
+      res = await this.fetchWindow(from, syncedTo)
     }
 
-    const successes = res.requests.filter((x) => x.status === 'success')
+    await this.saveRequests(res.requests)
+
+    // The narrowest window cannot be split by time, so the only way forward is
+    // to follow the continuation until it is exhausted. Requests are saved per
+    // chunk to keep memory bounded; ids already saved are skipped on retry.
+    let continuation = res.continuation
+    if (continuation) {
+      this.logger.warn(
+        'Narrowest window exceeds request cap, following continuation',
+        {
+          from,
+          fetched: res.requests.length,
+          cap: this.relayConfig.maxRequestsPerUpdate,
+        },
+      )
+    }
+    const seenCursors = new Set<string>()
+    while (continuation) {
+      // An API that hands back a cursor it already returned, or a cursor with
+      // nothing behind it, would otherwise keep this loop running forever.
+      if (seenCursors.has(continuation)) {
+        throw new Error(
+          `Relay API returned a repeated continuation cursor for window ${from}-${syncedTo}`,
+        )
+      }
+      seenCursors.add(continuation)
+      res = await this.fetchWindow(from, syncedTo, continuation)
+      if (res.requests.length === 0 && res.continuation) {
+        throw new Error(
+          `Relay API returned a continuation cursor without requests for window ${from}-${syncedTo}`,
+        )
+      }
+      await this.saveRequests(res.requests)
+      continuation = res.continuation
+    }
+
+    return syncedTo
+  }
+
+  private fetchWindow(from: number, syncedTo: number, continuation?: string) {
+    return this.relayApiClient.getAllRequests({
+      startTimestamp: from,
+      // Both bounds are inclusive. The extra second covers sub-second updatedAt
+      // values right at the boundary; duplicates are dropped by request id.
+      endTimestamp: syncedTo + 1,
+      limit: this.relayConfig.maxRequestsPerUpdate,
+      ...(continuation !== undefined ? { continuation } : {}),
+    })
+  }
+
+  private async saveRequests(requests: RelayRequest[]) {
+    const successes = requests.filter((x) => x.status === 'success')
 
     const events: InteropEvent[] = []
 
@@ -206,34 +261,46 @@ export class RelayIndexer extends ManagedChildIndexer {
       }
     }
 
+    // Ids are marked as saved only once persistence succeeded, so a failed
+    // save is retried instead of being silently skipped. The chunk-local sets
+    // still deduplicate within the chunk itself.
+    const chunkSentIds = new Set<string>()
+    const chunkReceivedIds = new Set<string>()
     const newTrackedEvents = events.filter((e) => {
       if (!this.trackedChains.includes(e.ctx.chain)) {
         return false
       }
 
       if (TokenSent.checkType(e)) {
-        if (this.sentIds.has(e.args.id)) {
+        if (this.sentIds.has(e.args.id) || chunkSentIds.has(e.args.id)) {
           return false
         }
-        this.sentIds.add(e.args.id)
+        chunkSentIds.add(e.args.id)
         return true
       }
       if (TokenReceived.checkType(e)) {
-        if (this.receivedIds.has(e.args.id)) {
+        if (
+          this.receivedIds.has(e.args.id) ||
+          chunkReceivedIds.has(e.args.id)
+        ) {
           return false
         }
-        this.receivedIds.add(e.args.id)
+        chunkReceivedIds.add(e.args.id)
         return true
       }
       return false
     })
 
     if (newTrackedEvents.length > 0) {
-      this.logger.info('Saved new events', { events: newTrackedEvents.length })
       await this.interopEventStore.saveNewEvents(newTrackedEvents)
+      this.logger.info('Saved new events', { events: newTrackedEvents.length })
     }
-
-    return syncedTo
+    for (const id of chunkSentIds) {
+      this.sentIds.add(id)
+    }
+    for (const id of chunkReceivedIds) {
+      this.receivedIds.add(id)
+    }
   }
 
   override async invalidate(targetHeight: number): Promise<number> {
